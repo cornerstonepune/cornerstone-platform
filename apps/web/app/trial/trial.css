@@ -1,0 +1,38 @@
+/* TRIAL ONLY (ATH-25). The school's tokens, as the educator shell loads them, plus shadcn's token names pointed at the
+   school's colours and scoped to .trial, so no real page changes. */
+@import "../../design-system/tokens.css" layer(tokens);
+
+.trial {
+  --background: var(--bg);
+  --foreground: var(--text);
+  --primary: var(--brand-basalt);
+  --primary-foreground: var(--brand-paper);
+  --secondary: var(--brand-sand-pale);
+  --muted: var(--brand-sand-pale);
+  --ring: var(--focus);
+  --destructive: var(--brand-clay-700);
+  --radius-md: 10px;
+  min-height: 100vh;
+  background: var(--brand-paper);
+  color: var(--text);
+  font-family: var(--font-source-serif), "Source Serif 4", Georgia, serif;
+  font-size: var(--text-body);
+  line-height: var(--lh-body);
+}
+@layer base {
+  .trial a, .trial a:hover { color: inherit; }
+}
+html:has([data-trial]), body:has([data-trial]) { background: var(--brand-paper); }
+.trial :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+/* shadcn's colour names as plain classes, scoped to the trial (this file is not run through Tailwind's @theme). */
+.trial .bg-primary { background-color: var(--brand-basalt); }
+.trial .text-primary-foreground { color: var(--brand-paper); }
+.trial .hover\:bg-primary\/80:hover { background-color: var(--brand-olive-deep); }
+.trial .bg-background, .trial .bg-card { background-color: var(--brand-paper); }
+.trial .text-card-foreground, .trial .text-foreground { color: var(--text); }
+.trial .border-border { border-color: var(--border-control); }
+.trial .hover\:bg-muted:hover, .trial .bg-muted { background-color: var(--sunken); }
+.trial .text-muted-foreground { color: var(--text-muted); }
+.trial .bg-secondary { background-color: var(--sunken); }
+.trial .text-secondary-foreground { color: var(--text); }
