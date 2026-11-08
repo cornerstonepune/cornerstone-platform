@@ -38,14 +38,14 @@ if [ -n "${PREFLIGHT_PLAYWRIGHT_CMD:-}" ]; then
   $PREFLIGHT_PLAYWRIGHT_CMD "$@" || browser=$?
 else
   : "${TEST_DATABASE_URL:?set TEST_DATABASE_URL to a Postgres to test on (it is built here when empty), e.g. postgresql://postgres@127.0.0.1:5432/postgres}"
-  # Before anything touches it: this resets two roles' passwords and may build a database, so it must be a local one with a user
-  # (the roles below are made by swapping that user), as playwright.config.ts also insists once Playwright starts
-  # No query part and one @ only: `?host=` and a second @ both let libpq connect somewhere other than the address shown
-  case "$TEST_DATABASE_URL" in
-    *'?'*|*@*@*) echo "preflight FAILED: TEST_DATABASE_URL may not hold a ? or a second @" >&2; exit 1 ;;
-    postgres://?*@127.0.0.1[:/]*|postgresql://?*@127.0.0.1[:/]*|postgres://?*@localhost[:/]*|postgresql://?*@localhost[:/]*) ;;
-    *) echo "preflight FAILED: TEST_DATABASE_URL must be a local database with a user, like postgresql://postgres@127.0.0.1:5432/postgres" >&2; exit 1 ;;
-  esac
+  # Before anything touches it: this resets two roles' passwords and may build a database. Only one plain shape is accepted
+  # (user, a local host, an optional port, a plain database name; nothing else, so no ?host=, second @, comma list or path
+  # trick can send libpq elsewhere or keep the owner role). Only this URL is read: PG* environment variables (PGSERVICE,
+  # PGHOSTADDR) are not checked. playwright.config.ts also insists on a local host once Playwright starts.
+  if ! printf '%s\n' "$TEST_DATABASE_URL" | grep -Eq '^postgres(ql)?://[A-Za-z0-9_]+@(127\.0\.0\.1|localhost)(:[0-9]+)?/[A-Za-z0-9_]+$'; then
+    echo "preflight FAILED: TEST_DATABASE_URL must look like postgresql://postgres@127.0.0.1:5432/postgres (a user, a local host, a plain database name)" >&2
+    exit 1
+  fi
   if [ -z "$(psql "$TEST_DATABASE_URL" -tAc "select to_regclass('public.skill')")" ]; then
     echo "building the test database (about 5 minutes; kept for the next run)"
     "$root/bin/testdb" fresh "$TEST_DATABASE_URL"
