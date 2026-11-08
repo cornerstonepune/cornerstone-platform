@@ -123,7 +123,9 @@ do $$ begin
   if exists (select from pg_roles where rolname = 'app_web') then
     grant select on graph_run, hand_check to app_web;
     revoke insert, update, delete, truncate on graph_run, hand_check from app_web;
-    grant execute on function public.unplanned_sessions(uuid, date, date) to app_web;
+    -- the website calls neither function; the engine's coordinator read and nightly job do
+    revoke execute on function public.graph_numbers(timestamptz), public.unplanned_sessions(uuid, date, date)
+      from app_web;
   end if;
 end $$;
 
