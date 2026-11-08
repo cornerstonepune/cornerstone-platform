@@ -6,6 +6,10 @@ lookup returns "nothing to go on", the prescriber falls back to the band default
 prescription says so honestly. The thresholds are rows, so the rule can be tuned without a deploy.
 """
 
+from typing import Any
+
+from psycopg import Connection
+
 
 def next_difficulty(conn, child_id: str, skill_set: str) -> tuple[str | None, str, list[str]]:
     """Return (difficulty, rule, misconception targets), or (None, "band_default", []) when there
@@ -49,3 +53,10 @@ def rebuild(conn, child_id: str | None = None) -> int:
         ).fetchone()["n"]
         for cid in ids
     )
+
+
+def state_changes(conn: Connection[dict[str, Any]], child_id: str | None = None) -> list[dict[str, Any]]:
+    """The states a rebuild would change, counted by grade and transition (migration 20270120090000). Writes nothing."""
+    return conn.execute(
+        "select * from graph_state_changes(%s) order by grade_code, old_state, new_state", (child_id,)
+    ).fetchall()

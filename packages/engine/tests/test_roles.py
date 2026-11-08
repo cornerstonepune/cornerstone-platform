@@ -61,6 +61,7 @@ WEB_CALLS = {
     "mistake_name",
     "operation_sign",
     "current_item_key",
+    "current_staff",  # who is asking: the website says it with every query (CP-2); the access rules read it (CP-3)
     "taught_in",  # whether a class has been taught a topic: any of its skills (goals/f1f-taught-per-class.yaml)
     "class_band",  # a class's grade, the one rule every page asks (goals/ux2-one-count-one-thing.yaml)
     "grade_ord",  # a grade's place among the grades, to order and compare by (goals/b0b-grades-from-the-table.yaml)

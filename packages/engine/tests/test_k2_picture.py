@@ -221,8 +221,9 @@ def test_written_evidence_is_read_exactly_as_before(conn, k2):
 
 def test_the_rule_is_rows_per_grade_and_way_of_entry(conn, k2):
     rule = conn.execute(
-        "select secure_level, secure_days, recheck_days, min_adults from observed_rule"
-        " where tenant_id = %s and grade_code = 'K2'",
+        "select r.secure_level, r.secure_days, r.recheck_days, g.min_adults from observed_rule r"
+        " join grade g on g.tenant_id = r.tenant_id and g.code = r.grade_code"
+        " where r.tenant_id = %s and r.grade_code = 'K2'",  # min_adults is the grade's (CP-13)
         (k2["tenant"],),
     ).fetchone()
     assert dict(rule) == {"secure_level": 3, "secure_days": 2, "recheck_days": 14, "min_adults": 1}

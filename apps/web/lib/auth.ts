@@ -2,7 +2,7 @@ import { randomBytes, scryptSync, timingSafeEqual } from "node:crypto";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { cache } from "react";
-import { sql, TENANT_SLUG } from "./db";
+import { sql, TENANT_SLUG, whoIsAsking } from "./db";
 import { deadline } from "./deadline";
 import { staffList, type Staff } from "./queries";
 import { devBypass, SESSION_COOKIE, SESSION_DAYS, sessionEmail, sessionIssued, sessionValue } from "./session-cookie";
@@ -108,6 +108,10 @@ export const currentStaff = cache(async (): Promise<Session | null> => {
   if (!Number.isNaN(set) && set > (sessionIssued(raw) ?? 0)) return null;
   return { id: staff.id, email: staff.email, name: staff.name, role: staff.role, classes: staff.classes ?? [], subjects: staff.subjects ?? [], devBypass: false };
 });
+
+// Every query made for a signed-in person carries their id to the database (CP-2, ADR 0100): the id comes from the
+// verified cookie above, nowhere else.
+whoIsAsking(async () => (await currentStaff())?.id);
 
 // For every page, route and server action: the signed-in staff member, or a redirect to /login. Each calls it
 // itself; a layout's check alone is not enough (Next 16's auth guide, "Layouts and auth checks").

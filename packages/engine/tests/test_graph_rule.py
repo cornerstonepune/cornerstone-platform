@@ -92,8 +92,8 @@ def _state(conn, days, adults):
     """The rule on a level that meets every other condition of secure, re-checked, with a harder level above."""
     return db.one(
         conn,
-        "select public.graph_state_of(%s, 10, 1.0, %s, %s, null, 1.0, true, true) as s",
-        (tenant(conn), days, adults),
+        "select public.graph_state_of(%s, 10, 1.0, %s, %s, 2, null, 1.0, true, true) as s",
+        (tenant(conn), days, adults),  # 2: a grade's minimum adults (grade.min_adults)
     )["s"]
 
 
@@ -110,7 +110,6 @@ RULE_ROWS = {
     "state.window_answers",
     "state.secure_min_answers",
     "state.min_days",
-    "state.min_adults",
     "state.repeat_min",
     "state.repeat_clears_after",
     "state.recheck_days",
@@ -133,6 +132,7 @@ def test_every_number_of_the_rule_is_a_row(conn):
     )["s"]
     for key in RULE_ROWS:
         assert key in src, key
+    assert "state.min_adults" not in have and "min_adults" in src  # the minimum is a grade's row (CP-13)
     conn.execute("update threshold set value = 4 where key = 'state.repeat_clears_after'")
     sc = dict(SCENARIOS["A repeating mistake clears after three right answers on a later paper"])
     got = scenarios_graph.measure(conn, sc)

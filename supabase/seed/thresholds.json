@@ -26,12 +26,6 @@
    "description": "Different school days a level's window must span before it can be secure: two papers on one day are one sitting (goals/gr1-state-from-recent-evidence.yaml)"
   },
   {
-   "key": "state.min_adults",
-   "value": 2,
-   "unit": "adults",
-   "description": "Different adults who saw it, for evidence that names them (observed, voice, project), before it can be secure. A written answer names none, so this does not apply to it (goals/gr1-state-from-recent-evidence.yaml)"
-  },
-  {
    "key": "state.repeat_min",
    "value": 2,
    "unit": "answers",

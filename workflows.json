@@ -121,7 +121,7 @@
       "who": "code (in the database)",
       "built": "live",
       "takes": ["item_result"],
-      "gives": ["evidence_event", "child_skill_state"],
+      "gives": ["evidence_event", "child_skill_state", "graph_run"],
       "files": ["engine/w3_read/gold.py", "engine/w3_read/cli_gold.py", "engine/w3_read/skill_links.py", "engine/w3_read/cli_skill_links.py", "engine/w3_read/nightly.py", "engine/w3_read/cli_nightly.py"],
       "commands": ["engine graph","engine gold check", "engine skill-links load", "engine skill-links confirm"],
       "screens": ["/growth", "/growth/class/[section]", "/growth/[id]"],

@@ -119,6 +119,9 @@ def graph_(
         "--hand-check",
         help="Record a hand calculation for --child: SKILL GRADE EXPECTED BY",
     ),
+    changes: bool = typer.Option(
+        False, "--changes", help="Only list, by grade, the states a rebuild would change"
+    ),
 ) -> None:
     """Rebuild Ring B — child_skill_state, and each question's item_stat — from confirmed evidence."""
     from engine.w1_bank import learn
@@ -126,6 +129,15 @@ def graph_(
 
     if nightly or any(hand_check):
         return cli_nightly.run(nightly, child_id, hand_check)
+    if changes:  # a list, counts only: nothing is rebuilt or written
+        with db.connect() as conn:
+            rows = graph.state_changes(conn, child_id or None)
+        for r in rows:
+            typer.echo(
+                f"  {r['grade_code']}: {r['old_state']} -> {r['new_state']} · {r['skills']} skills · {r['children']} children"
+            )
+        typer.echo(f"  {len(rows)} kinds of change" if rows else "  no state would change")
+        return
     with db.connect() as conn:
         n = graph.rebuild(conn, child_id or None)
         questions = learn.item_stats(conn)
