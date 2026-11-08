@@ -78,7 +78,6 @@ WEB_CALLS = {
     "staff_sees_capture",
     "sheet_subject",
     # who is asking and what their group lets them see: the database's access rules (CP-3)
-    "current_staff",
     "signed_in_staff",
     "my_tenant",
     "my_reach",
