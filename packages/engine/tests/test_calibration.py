@@ -363,7 +363,7 @@ def test_the_shared_rule_is_the_goals_rule_case_by_case():
                     got = db.one(
                         c,
                         "select public.graph_state_of(%s, %s::numeric, %s::numeric, %s::numeric, %s::numeric,"
-                        " %s::text, %s::numeric, %s, %s) as state",
+                        " 2::numeric, %s::text, %s::numeric, %s, %s) as state",
                         (t, n, share, days, adults, repeating, latest, rechecked, harder),
                     )["state"]
                     want = _the_rule(n, share, days, adults, repeating, latest, rechecked, harder)
