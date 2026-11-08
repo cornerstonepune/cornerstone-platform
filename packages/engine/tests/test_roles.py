@@ -77,6 +77,12 @@ WEB_CALLS = {
     "staff_sees_sheet",
     "staff_sees_capture",
     "sheet_subject",
+    # who is asking and what their group lets them see: the database's access rules (CP-3)
+    "signed_in_staff",
+    "my_tenant",
+    "my_reach",
+    "my_ids",
+    "grade_is_wholly",  # a yes or no, never a child: is every class of a grade among these (the levels page)
 }
 
 
@@ -171,15 +177,26 @@ def test_the_website_writes_only_what_a_person_changes_on_it(conn):
 
 def test_every_row_is_in_sight_of_both_services(conn):
     """Row security is forced on every table; a role no policy names would read none of its rows and write none,
-    silently. Each table names both."""
+    silently. Each table names both: by `app_all`, or, for a table in `access_table` (CP-3), by `engine_all` (the
+    engine) and `web_rule` (the website, by group)."""
+    ruled = {
+        f"{r['schema_name']}.{r['table_name']}"
+        for r in conn.execute("select schema_name, table_name from access_table").fetchall()
+    }
     for t in _tables(conn, "public") + _tables(conn, "pii"):
         schema, name = t.split(".")
-        roles = conn.execute(
-            "select roles::text[] as roles from pg_policies where schemaname = %s and tablename = %s"
-            " and policyname = 'app_all'",
-            (schema, name),
-        ).fetchone()
-        assert roles and set(ROLES) <= set(roles["roles"]), t
+        named = {
+            r["policyname"]: set(r["roles"])
+            for r in conn.execute(
+                "select policyname, roles::text[] as roles from pg_policies where schemaname = %s and tablename = %s",
+                (schema, name),
+            ).fetchall()
+        }
+        if t in ruled:
+            assert named.get("engine_all") == {"app_engine"} and named.get("web_rule") == {"app_web"}, t
+            assert set(named) == {"service_role_all", "engine_all", "web_rule"}, (t, set(named))
+        else:
+            assert set(ROLES) <= named.get("app_all", set()), t
 
 
 def test_finding_a_child_by_name_is_logged_like_any_read(conn):

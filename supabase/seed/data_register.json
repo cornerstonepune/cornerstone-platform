@@ -66,6 +66,14 @@
       "tables": ["public.access_log"]
     },
     {
+      "code": "who_may_look",
+      "what": "Which kinds of staff may see which kinds of information about your child: their class, their record and the notes written about them.",
+      "why": "So an educator sees the children of their own classes, and the people who look after the whole school see all of them.",
+      "how_long": "As long as the school keeps the rules. Nothing in these rules is about a child; they are about staff.",
+      "who_sees": "The school's coordinator.",
+      "tables": ["public.access_group", "public.access_kind", "public.access_role_group", "public.access_reach", "public.access_table"]
+    },
+    {
       "code": "consent",
       "what": "Whether you agreed to this register, or withdrew, when, and who at the school recorded it.",
       "why": "So the school keeps only what you agreed to, and can show it.",
