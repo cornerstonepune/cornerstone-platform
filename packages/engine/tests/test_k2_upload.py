@@ -297,3 +297,57 @@ def test_apply_without_by_is_refused_before_the_sheet_is_read_or_the_database_op
     )  # whatever colours or wraps it
     assert result.exit_code != 0 and "--by is required with --apply" in plain
     assert not isinstance(result.exception, AssertionError)
+
+
+# CP-1: the first write of an activity, and a link changed in place, are kept with who and when like every other edit.
+
+
+def _kept(conn, record, code):
+    return conn.execute(
+        "select field, before, after, changed_by from curriculum_edit where record = %s and code = %s order by created_at, after",
+        (record, code),
+    ).fetchall()
+
+
+def _activity_with_a_link(conn):
+    t = conn.execute("select id from tenant limit 1").fetchone()["id"]
+    conn.execute("select set_config('app.changed_by', 'cp1-test', true)")
+    for lo in ("LO-CP1-A", "LO-CP1-B"):
+        conn.execute(
+            "insert into learning_objective (tenant_id, code, band, subject, unit, title, signal)"
+            " values (%s, %s, 'K2', 'Numeracy', 'u', 't', 'Foundational')",
+            (t, lo),
+        )
+    conn.execute(
+        "insert into activity (tenant_id, code, band, strand, name) values (%s, 'ACT-CP1', 'K2', 'Maths', 'n')",
+        (t,),
+    )
+    conn.execute(
+        "insert into activity_objective (tenant_id, activity_code, lo_code, ord) values (%s, 'ACT-CP1', 'LO-CP1-A', 1)",
+        (t,),
+    )
+    return t
+
+
+def test_a_new_activity_is_kept_field_by_field_with_who_and_empty_fields_are_not(conn):
+    _activity_with_a_link(conn)
+    got = {(r["field"], r["before"], r["after"], r["changed_by"]) for r in _kept(conn, "activity", "ACT-CP1")}
+    assert got == {("strand", "", "Maths", "cp1-test"), ("name", "", "n", "cp1-test")}
+
+
+def test_a_link_changed_in_place_is_a_removal_and_an_addition_and_a_change_of_nothing_it_says_is_not_kept(
+    conn,
+):
+    t = _activity_with_a_link(conn)
+    conn.execute(
+        "update activity_objective set ord = 2 where tenant_id = %s and activity_code = 'ACT-CP1'", (t,)
+    )
+    assert len(_kept(conn, "activity_objective", "ACT-CP1")) == 1, "a new order is not a new link"
+    conn.execute(
+        "update activity_objective set lo_code = 'LO-CP1-B' where tenant_id = %s and activity_code = 'ACT-CP1'",
+        (t,),
+    )
+    got = [
+        (r["before"], r["after"], r["changed_by"]) for r in _kept(conn, "activity_objective", "ACT-CP1")[1:]
+    ]
+    assert sorted(got) == [("", "LO-CP1-B", "cp1-test"), ("LO-CP1-A", "", "cp1-test")]
