@@ -247,10 +247,13 @@ jobs:
         # not packages/engine: with the checkout skipped that folder does not exist, and the step could not start
         working-directory: ${{ github.workspace }}
         # As the browser roll-up: "cancelled" for a cancelled run, "failed" for a broken one (CP-21)
+        # the plan's reason holds changed files' names, so it reaches the shell as a variable and is never pasted into the script
+        env:
+          REASON: ${{ needs.plan.outputs.reason }}
         run: |
           checks='${{ needs.engine-checks.result }}'; [ "$checks" != failure ] || checks=failed
           shards='${{ needs.engine-shard.result }}'; [ "$shards" != failure ] || shards=failed
-          echo "plan: ${{ needs.plan.result }} (${{ needs.plan.outputs.reason }}), checks: $checks, shards: $shards"
+          echo "plan: ${{ needs.plan.result }} ($REASON), checks: $checks, shards: $shards"
           [ "${{ needs.plan.result }}" = success ] && [ "${{ needs.engine-checks.result }}" = success ] || exit 1
           [ "${{ needs.plan.outputs.engine }}" != true ] || [ "${{ needs.engine-shard.result }}" = success ]
 
@@ -389,9 +392,12 @@ jobs:
       - name: every browser shard passed
         if: always()
         # A cancelled run says "cancelled" and a broken one says "failed", so a red tick is read for what it is (CP-21)
+        # the plan's reason holds changed files' names, so it reaches the shell as a variable and is never pasted into the script
+        env:
+          REASON: ${{ needs.plan.outputs.reason }}
         run: |
           shards='${{ needs.browser-shard.result }}'; [ "$shards" != failure ] || shards=failed
-          echo "plan: ${{ needs.plan.result }} (${{ needs.plan.outputs.reason }}), shards: $shards"
+          echo "plan: ${{ needs.plan.result }} ($REASON), shards: $shards"
           [ "${{ needs.plan.result }}" = success ] || exit 1
           [ "${{ needs.plan.outputs.browser }}" != true ] || [ "${{ needs.browser-shard.result }}" = success ]
 

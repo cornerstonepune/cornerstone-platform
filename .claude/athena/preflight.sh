@@ -23,7 +23,7 @@ fi
 
 set --
 while IFS= read -r line; do
-  case "$line" in ''|'#'*) ;; *) set -- "$@" "$line" ;; esac
+  case "$line" in ''|'#'*) ;; *) set -- ${1+"$@"} "$line" ;; esac  # ${1+"$@"}: bash 3.2 (a Mac) calls an empty "$@" unbound under set -u
 done < "$list"
 [ "$#" -gt 0 ] || { echo "preflight FAILED: $list lists no browser spec" >&2; exit 1; }
 
@@ -38,6 +38,12 @@ if [ -n "${PREFLIGHT_PLAYWRIGHT_CMD:-}" ]; then
   $PREFLIGHT_PLAYWRIGHT_CMD "$@" || browser=$?
 else
   : "${TEST_DATABASE_URL:?set TEST_DATABASE_URL to a Postgres to test on (it is built here when empty), e.g. postgresql://postgres@127.0.0.1:5432/postgres}"
+  # Before anything touches it: this resets two roles' passwords and may build a database, so it must be a local one with a user
+  # (the roles below are made by swapping that user), as playwright.config.ts also insists once Playwright starts
+  case "$TEST_DATABASE_URL" in
+    postgres://?*@127.0.0.1[:/]*|postgresql://?*@127.0.0.1[:/]*|postgres://?*@localhost[:/]*|postgresql://?*@localhost[:/]*) ;;
+    *) echo "preflight FAILED: TEST_DATABASE_URL must be a local database with a user, like postgresql://postgres@127.0.0.1:5432/postgres" >&2; exit 1 ;;
+  esac
   if [ -z "$(psql "$TEST_DATABASE_URL" -tAc "select to_regclass('public.skill')")" ]; then
     echo "building the test database (about 5 minutes; kept for the next run)"
     "$root/bin/testdb" fresh "$TEST_DATABASE_URL"
