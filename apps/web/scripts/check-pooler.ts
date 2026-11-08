@@ -25,6 +25,9 @@ if (!address) {
 // The road a deployed page takes: the transaction pooler, in a serverless function.
 process.env.DATABASE_URL = address.replace(":5432/", ":6543/");
 process.env.VERCEL = "1";
+// One connection for the identity proof, so A, B and nobody really do share it. (The stacking check then runs on that one
+// connection too; run it without CHECK_POOLER_URL for the app's own pool size.)
+if (process.env.CHECK_POOLER_URL) process.env.DB_POOL_MAX = "1";
 
 const { sql, whoIsAsking } = await import("../lib/db.ts");
 const N = 8;
@@ -73,6 +76,8 @@ if (process.env.CHECK_POOLER_URL) {
 
   const shared = [...pids.get(A)!].filter((p) => pids.get(B)!.has(p) || pids.get("nobody")!.has(p));
   console.log(`backends seen: A ${[...pids.get(A)!].join(",")}; B ${[...pids.get(B)!].join(",")}; nobody ${[...pids.get("nobody")!].join(",")}; shared ${shared.length}`);
+  // one client connection: A, B and nobody must each have been served by the same backend, or nothing was shared
+  if (!shared.length || pids.get(A)!.size !== 1 || !pids.get(B)!.has([...pids.get(A)!][0])) failures.push("A and B did not share one backend");
   if (failures.length) {
     console.error(`${failures.length} request(s) saw the wrong identity:\n${failures.slice(0, 10).join("\n")}`);
     await sql.end();

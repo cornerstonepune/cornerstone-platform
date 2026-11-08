@@ -51,7 +51,7 @@ function connect(url: string): Sql {
     ssl: ["127.0.0.1", "localhost"].includes(new URL(url).hostname) ? false : "require",
     prepare: false,
     // Four connections keep a page's queries side by side now that none may stack.
-    max: SERVERLESS ? 4 : 3,
+    max: Number(process.env.DB_POOL_MAX) || (SERVERLESS ? 4 : 3), // DB_POOL_MAX: the pooler check sets 1 to prove one connection is shared
     idle_timeout: SERVERLESS ? 5 : 20,
     connect_timeout: 10,
   });
