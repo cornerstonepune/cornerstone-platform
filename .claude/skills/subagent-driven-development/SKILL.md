@@ -1,9 +1,12 @@
 ---
 name: subagent-driven-development
+model: sonnet
 description: Use when executing implementation plans with independent tasks in the current session
 ---
 
 # Subagent-Driven Development
+
+> **Athena:** `requesting-code-review` is replaced by gstack `review`, `finishing-a-development-branch` by `athena-ship`, and `executing-plans` by building the tasks yourself; tests follow `tdd`. When the scope is ambiguous or a proof looks wrong, `athena block` beats "rulings, not stalls".
 
 Execute plan by dispatching a fresh implementer subagent per task, a task review (spec compliance + code quality) after each, and a broad whole-branch review at the end.
 

@@ -66,3 +66,9 @@ strix_runs/
 *.webm
 *.aac
 *.flac
+.claude/plugins/winnow/sidecar/.venv/
+.claude/autoharness/*
+!.claude/autoharness/requests
+.aislop/history.jsonl
+graphify-out/
+!.claude/plugins/egm/.claude-plugin/icon.png

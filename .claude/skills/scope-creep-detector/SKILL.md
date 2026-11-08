@@ -1,5 +1,6 @@
 ---
 name: scope-creep-detector
+model: sonnet
 description: >-
   Analyzes git diffs against a stated intent to detect scope creep, unrelated
   files, broad pull requests, changes that grew beyond a fix, dependency

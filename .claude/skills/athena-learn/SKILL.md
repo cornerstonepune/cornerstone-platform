@@ -1,11 +1,12 @@
 ---
 name: athena-learn
+model: sonnet
 description: Use at the end of every shipped or blocked change, and in the monthly harness review. Records what this repo taught the agent so the next session starts smarter; prunes stale lessons.
 ---
 
 # athena-learn: the repo teaches the next agent
 
-Lessons live in `docs/athena/learnings.md`, newest last. Create the file if it is missing, with the heading `# What this repo has taught us`. The last 15 lessons load into every session.
+Lessons live in `docs/athena/learnings.md`, newest last. Create the file if it is missing, with the heading `# What this repo has taught us`. Session start loads the 5 to 10 lessons whose words match the current work, so write each lesson with the words a future task would use. In a product repository (one with `product/`), lessons are cards in `playbook.md` (`- <lesson> (helped 0, hurt 0)`), one per slice, and the same rules apply.
 
 ## After a change
 Add at most three lessons, and only ones that would change what the next agent does in **this** repo. For example:
