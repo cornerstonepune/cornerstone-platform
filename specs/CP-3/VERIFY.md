@@ -1,3 +1,5 @@
+VERDICT: PASS
+
 PASS. Items 1 to 7 are met. Item 8 holds when I read it against the migration, but it can only actually pass on the box after Nimish switches the site to the restricted login.
 
 **Criteria**
@@ -23,3 +25,6 @@ None of substance. Each addition is needed:
 - **Uploader clause.** It is limited to the person's school and to readings that have not been replaced. It covers the children kind only, not enrolment or notes, which matches "see a child".
 
 Not checked: CI's run on this head (I could not see it), and the design.md details beyond the scope.
+
+Round 2: PASS
+Independent verifier (orchestrator 4), head d298cf0: items 1-7 met; item 8 pending on the box until the site connects as app_web. Unasked-but-justified: staff.signin_id column + 3 sync triggers (design.md had rejected a trigger-synced copy; ADR 0101 records the 0.33 ms vs 0.05 ms measurement), class_band and staff_sees_sheet as SECURITY DEFINER, grade_is_wholly. Risks noted: owner-run yes/no functions can be called with any arguments by the website login (no rows, names or counts); capture and sheet_instance stay open until CP-4; internal.access_vocabulary and its trigger function lack pg_temp last in search_path (added in the push after this review: a search_path change only). Process: spec change (UNLOCK CP-3 + scope-change label) to be confirmed by Nimish on #451.

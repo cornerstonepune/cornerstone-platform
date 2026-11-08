@@ -94,7 +94,7 @@ end $$;
 -- 2. The seeds, for every school there is and every school added later ------------------------------------------------
 
 create or replace function internal.access_vocabulary(p_tenant uuid) returns void
-language plpgsql security definer set search_path = public as $$
+language plpgsql security definer set search_path = public, pg_temp as $$
 begin
   insert into access_group (tenant_id, code, label, by_role, ord) values
     (p_tenant, 'everything', 'Everything', true, 0),
@@ -125,7 +125,7 @@ begin
 end $$;
 
 create or replace function internal.access_vocabulary_on_new_school() returns trigger
-language plpgsql security definer set search_path = public as $$
+language plpgsql security definer set search_path = public, pg_temp as $$
 begin
   perform internal.access_vocabulary(new.id);
   return new;
