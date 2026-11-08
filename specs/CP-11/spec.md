@@ -1,7 +1,7 @@
 # CP-11: Timetable generator
 
 Source: https://github.com/cornerstonepune/cornerstone-platform/issues/459
-DRAFT for Nimish. Not locked. Waits for CP-6 in the plan (with this design it reads and writes nothing CP-6 adds; putting a draft live, which would need CP-6, is decision 1 below). Plan: docs/backend-plan.md. Roadmap task M1-14. Tier 3 (a migration and the engine image). Design: specs/CP-11/design.md.
+DRAFT for Nimish. Not locked. Waits for CP-6 in the plan (with this design it reads and writes nothing CP-6 adds; putting a draft live, which needs CP-6, is CP-21). Plan: docs/backend-plan.md. Roadmap task M1-14. Tier 3 (a migration and the engine image). Design: specs/CP-11/design.md.
 
 ## What
 
@@ -18,9 +18,9 @@ One command makes a draft timetable for one class and one fortnight (weeks A and
 
 ## Out of scope
 
-Putting a draft live in place of the current timetable (decision 1: CP-12 or its own scope). Hand moves and clashes (CP-12). Several classes at once, teachers and rooms. "Keep lessons where they are". Re-doing the FET install (#413). Any screen.
+Putting a draft live in place of the current timetable (CP-21). Recording which adult takes each lesson (grades 1 to 4 later; the draft can carry it without a table change). Hand moves and clashes (CP-12). Several classes at once, teachers and rooms. "Keep lessons where they are". Re-doing the FET install (#413). Any screen.
 
 ## Decisions for Nimish
 
-1. Putting a generated timetable live is a separate step, not in CP-11. Recommended: add it to CP-12, which already changes the live timetable under the fortnight freeze.
+1. Putting a generated timetable live is a separate step: decided, it is CP-21 (order CP-11, CP-21, CP-12).
 2. Lessons on a school holiday are dropped, not moved; lessons on a blocked day are moved. Recommended: yes.

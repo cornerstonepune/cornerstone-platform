@@ -86,7 +86,9 @@ placed int, input_text text, output_text text null, fet_version text, seed bigin
 draft jsonb, created_by text, created_at)`.
 - `input_text` and `output_text` are exactly what FET read and wrote. `fet_version` is the first line of
   `fet-cl --version`.
-- `draft`: one entry per placed lesson: date, week, period id, subject code.
+- `draft`: one entry per placed lesson: date, week, period id, subject code. Grades 1 to 4 have subject educators (Nimish,
+  8 Nov), so an entry may later carry an optional `staff_id` and the FET input a teacher per activity; both are a new
+  key and a new XML element, with no table change. K2 has one educator, so CP-11 records none.
 - Append-only: update and delete are refused by a trigger (the `internal.forbid_change()` pattern).
 - Who: `coalesce(nullif(btrim(current_setting('app.changed_by', true)), ''), session_user)`, as CP-6.
 - Every query that builds the input file has a fixed `order by`, so the same rules give the same file byte for byte.
@@ -109,8 +111,8 @@ command go on W2 step N4 in `workflows.json` (`files` and `commands`); `checks/r
    needs FET's soft preferences, measured first. A follow-up if the school dislikes reshuffles.
 
 ## Decisions for Nimish (what the school sees)
-1. **Putting a generated timetable live is a separate step, not in CP-11.** Recommend: add it to CP-12 (timetable by
-   hand), which already changes the live timetable under CP-6's freeze, or as its own scope. Reason: it is where all four
+1. **Putting a generated timetable live is a separate step, not in CP-11.** DECIDED (relayed 8 Nov): it is the new
+   scope CP-21; the order is CP-11, CP-21, CP-12. Reason: it is where all four
    reviewers found the risk: the first fortnight is 15 days and does not fit the week A/B frame, the live tables reject a
    second version of a fortnight, and replacing sessions would silently delete materials lines linked to them. CP-11
    then gives the school a draft to look at; nothing educators see changes.
@@ -118,7 +120,7 @@ command go on W2 step N4 in `workflows.json` (`files` and `commands`); `checks/r
    it matches what happens today (a holiday is a day off) and the rule already agreed for blocks.
 
 ## Alternatives considered
-- **Generate and put live in one command**: rejected for now (decision 1).
+- **Generate and put live in one command**: rejected; putting live is CP-21 (decision 1).
 - **Write sessions only**: the day page takes the subject from the slot, so it would show one subject's name with
   another's lesson.
 - **Our own placement code instead of FET**: the M1-06 note planned rule-based filling for one class; rejected because
@@ -132,7 +134,7 @@ command go on W2 step N4 in `workflows.json` (`files` and `commands`); `checks/r
   Debian package from the same release today).
 - Solve time grows with more classes; one K2 class (about 80 lessons) is small.
 - Changed-timing days are treated as normal days; dated `school_day` notes are not read.
-- Nothing yet puts a draft live (decision 1).
+- Nothing puts a draft live until CP-21.
 
 ## Review outcome (how the findings were resolved)
 - Putting live (apply), with the overlay, `_place` reuse, unique key, unplaced-cell text, materials-line cascade,
