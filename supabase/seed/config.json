@@ -149,11 +149,11 @@
     },
     {
       "key": "llm.campaigns",
-      "description": "A piece of work with its own money (M1-11, Nimish 4 Nov: up to 25 US dollars for the whole drafting run; 6 Nov: \"okay to spend up to 25 dollars, go ahead and finish the thing\", so the margin is 0.5 (the stop is 24.5) and dev_eval is 5.2 (3.78 was spent before the kept-draft run), held_out 4.8, Sonnet-class models, Haiku for simple steps). The adapter adds up what these purposes have cost (flow_run.cost_inr) and refuses a call before making it once the total reaches cap less margin; the margin covers calls in flight. inr_per_usd is the rate llm.prices was written at. The stages go in the order of `order`: one may not start until the one before it has made a call. A stage (dev_eval 5.2, held_out 4.8 dollars; draft has only the campaign's cap) is tagged on each call as flow_run.trigger 'engine:<stage>'. A call left 'running' longer than stale_minutes counts its spend as unknown and stops the campaign. Raise a cap here, by a pull request, never in code.",
+      "description": "A piece of work with its own money (M1-11, Nimish 4 Nov: up to 25 US dollars for the whole drafting run; 6 Nov: \"okay to spend up to 25 dollars, go ahead and finish the thing\", so the margin is 0.5; 8 Nov, Nimish said yes to finishing the last pages (about 1.3 more) after the stop at 24.5 was reached, so the cap is 26.5 and the stop is 26.0; dev_eval is 5.2 (3.78 was spent before the kept-draft run), held_out 4.8, Sonnet-class models, Haiku for simple steps). The adapter adds up what these purposes have cost (flow_run.cost_inr) and refuses a call before making it once the total reaches cap less margin; the margin covers calls in flight. inr_per_usd is the rate llm.prices was written at. The stages go in the order of `order`: one may not start until the one before it has made a call. A stage (dev_eval 5.2, held_out 4.8 dollars; draft has only the campaign's cap) is tagged on each call as flow_run.trigger 'engine:<stage>'. A call left 'running' longer than stale_minutes counts its spend as unknown and stops the campaign. Raise a cap here, by a pull request, never in code.",
       "value": {
         "m1-11": {
           "purposes": ["curriculum_map_propose", "curriculum_map_validate", "k2_page_draft", "k2_page_validate", "k2_page_check", "k2_page_check_b", "k2_materials_split"],
-          "cap_usd": 25,
+          "cap_usd": 26.5,
           "margin_usd": 0.5,
           "stages": {"dev_eval": 5.2, "held_out": 4.8, "draft": null},
           "order": ["dev_eval", "held_out", "draft"],

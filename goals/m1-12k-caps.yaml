@@ -3,15 +3,14 @@ goal: >
   The campaign may spend up to the 25 dollars Nimish approved and stops just under it; the dev stage has the money for the
   kept-draft run; the stages that have a cap of their own add up under the stop; the drafting keeps the rest; a tranche whose
   pages cost more than three cents each is flagged in the checkers report.
+# The "up to 25 dollars" sentence is superseded by Nimish's yes of 8 Nov to finish the last pages (goals/m1-12q-cap-26.yaml).
 # Written 2026-11-06 (task M1-12k). W1, gate N1. The words are the orchestrator's relay of Nimish's approval of 2026-11-06:
 # "okay to spend up to 25 dollars, go ahead and finish the thing". Config rows only; nothing here has made a model call.
 says:
-  - words: "okay to spend up to 25 dollars"
-    proved_by: "packages/engine/tests/test_llm_budget.py::test_the_stages_caps_add_up_under_the_campaigns_own_stop_which_is_just_under_the_25_nimish_approved"
   - words: "set the later stages' caps so their sum stays under the campaign cap"
     proved_by: "packages/engine/tests/test_llm_budget.py::test_the_seeded_stages_are_the_dev_eval_and_the_held_out_score_with_the_drafting_keeping_the_rest"
   - words: "keep the one-stage-at-a-time rule"
-    proved_by: "packages/engine/tests/test_llm_budget.py::test_the_stages_caps_add_up_under_the_campaigns_own_stop_which_is_just_under_the_25_nimish_approved"
+    proved_by: "packages/engine/tests/test_llm_budget.py::test_the_campaign_stops_at_26_after_nimishs_yes_of_8_nov_and_the_stages_add_up_under_it"
   - words: "report if measured cost per page > 0.03 for any tranche"
     proved_by: "packages/engine/tests/test_llm_budget.py::test_a_tranche_whose_pages_cost_more_than_three_cents_each_is_flagged_in_the_checkers_report"
 manual:
