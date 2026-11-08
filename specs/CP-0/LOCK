@@ -1,0 +1,11 @@
+{
+  "digest": "990a066a381f07d5c634fd05f3438f99b94dec70d99e58b39aee98ebadae2d9c",
+  "files": [
+    "spec.md",
+    "checks.sh",
+    "proofs/plan.py"
+  ],
+  "locked_at": "2026-11-08T09:05:21+00:00",
+  "criteria": 5,
+  "athena": "2.13.0"
+}
