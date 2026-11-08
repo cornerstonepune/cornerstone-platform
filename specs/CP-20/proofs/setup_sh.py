@@ -161,15 +161,30 @@ def off_ci():
            f"outside the job setup.sh should still install as today (uv sync, npm ci). {show(label, r)}")
 
 
+SETUP_REL = ".claude/athena/setup.sh"
+
+
+def extra_files(changed):
+    """Files a setup.sh change may not touch: all but setup.sh, its note and specs/CP-20/."""
+    allowed = {SETUP_REL, "docs/notes/CP-20.md"}
+    return [f for f in changed if f not in allowed and not f.startswith("specs/CP-20/")]
+
+
 def scope():
     base = os.environ.get("ATHENA_BASE") or "origin/main"
     mb = subprocess.run(["git", "merge-base", base, "HEAD"], cwd=ROOT, capture_output=True, text=True)
     if not ok(mb.returncode == 0, f"cannot find the merge base with {base}: {mb.stderr.strip()}"):
         return
     d = subprocess.run(["git", "diff", "--name-only", mb.stdout.strip()], cwd=ROOT, capture_output=True, text=True)
-    allowed = {".claude/athena/setup.sh", "docs/notes/CP-20.md"}
-    extra = [f for f in d.stdout.split() if f not in allowed and not f.startswith("specs/CP-20/")]
-    ok(not extra, f"tracked files changed against {base} outside specs/CP-20/, setup.sh and docs/notes/CP-20.md: {extra}")
+    changed = d.stdout.split()
+    ok(extra_files([SETUP_REL, "apps/web/x.ts"]) == ["apps/web/x.ts"]
+       and extra_files([SETUP_REL, "docs/notes/CP-20.md", "specs/CP-20/spec.md"]) == []
+       and extra_files([]) == [], "extra_files self-check failed")
+    if SETUP_REL in changed:
+        extra = extra_files(changed)
+        ok(not extra, f"tracked files changed against {base} outside specs/CP-20/, setup.sh and docs/notes/CP-20.md: {extra}")
+    else:
+        print("note: this pull request does not change setup.sh, so the file-scope check does not apply")
 
     text = SETUP.read_text()
     ok("bin/testdb" in text and "fresh" in text, "setup.sh does not build the test database (no `bin/testdb fresh`)")

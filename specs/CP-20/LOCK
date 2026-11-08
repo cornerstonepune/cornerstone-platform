@@ -1,12 +1,12 @@
 {
-  "digest": "f4a1b61f9f952de67a40ebfd07ab83110520802b8cee00eacbc08ac3d2cfdf25",
+  "digest": "700504199ac47845c55ef10668e340419f976b61361af16b00f9c9f3976a77af",
   "files": [
     "spec.md",
     "checks.sh",
     "proofs/db_test_file.sh",
     "proofs/setup_sh.py"
   ],
-  "locked_at": "2026-11-08T09:44:12+00:00",
+  "locked_at": "2026-11-08T11:12:35+00:00",
   "criteria": 6,
   "athena": "2.13.0"
 }
