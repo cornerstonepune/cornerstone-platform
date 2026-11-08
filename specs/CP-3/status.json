@@ -1,6 +1,25 @@
 {
-  "status": "locked",
+  "status": "built",
   "created_at": "2026-11-08T10:37:41+00:00",
-  "updated_at": "2026-11-08T11:10:51+00:00",
-  "locked_at": "2026-11-08T11:10:51+00:00"
+  "updated_at": "2026-11-08T12:49:43+00:00",
+  "locked_at": "2026-11-08T11:10:51+00:00",
+  "started_at": "2026-11-08T12:30:40+00:00",
+  "built_at": "2026-11-08T12:49:43+00:00",
+  "box_pending": [
+    "8 live: no rule on the four kinds allows everyone; the site connects as app_web, not the owner"
+  ],
+  "files": [
+    ".claude/autoharness/",
+    "apps/web/.claude/autoharness/",
+    "apps/web/lib/",
+    "apps/web/scripts/",
+    "apps/web/tests/",
+    "bin/",
+    "docs/adr/",
+    "docs/notes/",
+    "packages/engine/.claude/autoharness/",
+    "packages/engine/engine/checks/",
+    "packages/engine/tests/",
+    "supabase/migrations/"
+  ]
 }
