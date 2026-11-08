@@ -5,6 +5,12 @@
 source "$ATHENA_ROOT/.claude/athena/bin/checklib.sh"
 cd "$ATHENA_ROOT"
 
-# check "1 <the criterion in a few words>" <command that exits 0 only when it is true>
+# 2 reads issue titles from $CP0_ISSUE_TITLES_JSON if set, else the committed snapshot specs/CP-0/issue-titles.json
+#   (refresh it with: python3 specs/CP-0/proofs/plan.py fetch-titles). No network call inside the proof.
+check "1 id_prefix is CP and next-id on an empty checkout prints CP-1" python3 specs/CP-0/proofs/plan.py next-id
+check "2 plan lists exactly CP-1..CP-19, each with a GitHub issue titled by its ID" python3 specs/CP-0/proofs/plan.py issues
+check "3 no status words in the plan's table" python3 specs/CP-0/proofs/plan.py no-status
+check "4 HANDOFF points to the plan and is under 50 lines" python3 specs/CP-0/proofs/plan.py handoff
+check "5 fast checks pass" bash .claude/athena/fast-checks.sh
 
 finish

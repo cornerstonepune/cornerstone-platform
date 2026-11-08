@@ -27,7 +27,7 @@ shipped. One database change at a time (shared contracts, one task at a time).
 | CP-8 | Every period opens its activity: plan lines linked to activities | CP-4 | M1-06, M1-09 | 2 |
 | CP-9 | Observations become evidence for real, through the typed form: nightly rebuild, correction, "unplanned" computed | CP-4 | M1-01..04a | 2 |
 | CP-10 | Voice on: Sarvam retention recorded, 48-hour clean-up scheduled, 20 real notes confirmed | CP-9, Sarvam letter | M1-01 | 3 |
-| CP-11 | Timetable generator: FET merged, one command, unmeetable rules reported | CP-6 | M1-14 | 3 |
+| CP-11 | Timetable generator: FET proved on the box, one command, unmeetable rules reported | CP-6 | M1-14 | 3 |
 | CP-12 | Timetable by hand: moves kept with who, clashes detected and accepted | CP-11 | M1-14 | 3 |
 | CP-13 | Child level rule: a repeating mistake clears, one adult counts once, minimum adults per grade | CP-4 | M0-07 | 3 |
 | CP-14 | Skill links a person confirmed, and "ready next" per activity | CP-13 | M1-15, M1-17 | 3 |
