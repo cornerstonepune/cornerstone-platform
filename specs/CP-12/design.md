@@ -135,6 +135,11 @@ exists, nullable, and the swap already carries it; the grid gains a nullable `le
 come; the clash list gains one more kind (one adult in two lessons whose clock times overlap, across grades); the clash key
 gains the adult. Rooms stay out.
 
+## The fortnight is the unit (Nimish, 8 Nov: "a fortnight is the unit of the timetable, and then everything gets derived from that")
+Moves, the clash list, acceptances and approval all work on one fortnight. Week, day, hour and quarter views are derived
+from it later (screens); CP-12 builds no per-week or per-day store. "Week" appears only where existing data already carries
+it: a `timetable_limit` row with `span = 'week'`, and a cell's week A/B worked out from its date.
+
 ## Decided by Nimish (8 Nov, relayed by the orchestrator: "yes to all, split it")
 0. **Split.** CP-21 puts a draft live; CP-12 moves lessons by hand. Order: CP-11, CP-21, CP-12.
 1. **A hand move changes only that fortnight.** A lasting change is a rule (a fixed slot, a block), so the generator keeps it.

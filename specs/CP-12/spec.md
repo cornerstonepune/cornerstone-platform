@@ -25,4 +25,4 @@ Putting a generated draft live, and refusing to overwrite hand moves when a new 
 
 ## Decided by Nimish (8 Nov: "yes to all, split it")
 
-Split out CP-21 (a draft goes live), order CP-11, CP-21, CP-12. A hand move changes only that fortnight. Only the coordinator group may accept a clash.
+Split out CP-21 (a draft goes live), order CP-11, CP-21, CP-12. A hand move changes only that fortnight. Only the coordinator group may accept a clash. The fortnight is the unit; week and day views are derived later.
