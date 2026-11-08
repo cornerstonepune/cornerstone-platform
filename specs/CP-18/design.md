@@ -2,7 +2,7 @@
 
 Status: draft for Nimish. Reviewed by three fresh reviewers (simplicity, design, codebase accuracy); every blocker and
 "should" is applied below or answered in `specs/CP-18/design-review/summary.md`. Written unattended, so mechanical choices
-are mine, recorded with reasons; the one choice that is Nimish's is under "Decision for Nimish". Read with
+are mine, recorded with reasons; Nimish's one choice (how reminders reach people) is decided: see "Decided". Read with
 `specs/CP-18/spec.md`. Plan row: `docs/backend-plan.md` CP-18 (roadmap M1-10, M1-16).
 
 ## Problem (true on main, 8 Nov)
@@ -98,8 +98,8 @@ prompt. Enforcing rule 7 in code for all prompts.
 - **Sender (ring C): `packages/engine/engine/adapters/notify.py`.** `send(address, subject, text) -> (status,
   provider_ref)`, nothing more. It repeats the website's contract (`apps/web/lib/mail.ts`): the same five variables
   (`SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASSWORD`, `SMTP_FROM`), Python's `smtplib`, the same words `sent`,
-  `not configured` (any variable missing; no network call), `failed`; it never logs the address or the text. If Nimish
-  picks WhatsApp (decision), the same file holds that sender instead.
+  `not configured` (any variable missing; no network call), `failed`; it never logs the address or the text. When WhatsApp
+  is set up later (Nimish's decision), it is a second sender in the same file.
 - **The rules live in `materials_remind.deliver_due(conn, today, tenant, actor)`**, so the tests exercise them with a
   fake `notify.send`:
   - **Run lock:** `pg_try_advisory_lock` on the tenant; if held, the run exits with counts 0. Two runs never overlap.
@@ -129,7 +129,7 @@ prompt. Enforcing rule 7 in code for all prompts.
   migration revokes `select` from `app_web` (the site does not read it).
 
 ### 4. Consent
-- **Email (recommended channel):** messages go to the work address each staff member signs in with, about their work. No
+- **Email (decided channel):** messages go to the work address each staff member signs in with, about their work. No
   separate yes is collected; anyone can be taken off by clearing them from the setting or the class.
 - **WhatsApp business number (if chosen):** each person's recorded yes is required before the first message (Meta's
   rule), and a consent record is built with that option; it is not built now.
@@ -157,16 +157,12 @@ recipient; (c) per fortnight: reminders delivered, reminders owed with no delive
 7. No consent table now: email to work addresses about work; WhatsApp would bring one.
 8. Rules in `materials_remind`, adapter only sends: the rules run in tests; ring C stays "where an outside service is named".
 
-## Decision for Nimish
-**How reminders reach people** (changes what staff see).
-(a) **Email** from the school's mail account to the address each person signs in with. Works within days, no charge per
-message, no outside approval; the website already sends mail this way. Fails if staff do not read email.
-(b) **WhatsApp from a school business number** (Meta's WhatsApp Business service). Reaches phones, as the school talks
-today. Needs Meta to verify the school, a number used only for this, every message wording approved by Meta, a charge per
-message, and each person's recorded yes. Weeks of set-up outside our control.
-(c) **Only on the site**, as today. Reaches nobody who does not open it; "delivered" would only mean "shown".
-**Recommendation: (a)**, because it can be proved this fortnight and nothing outside the school can stall it; (b) later in
-the same file if staff do not act on email.
+## Decided (Nimish, 8 Nov)
+**Reminders go by email now; WhatsApp is a later addition.** His words, relayed by the orchestrator: "reminders go by
+email till the time we set up WhatsApp, and then maybe WhatsApp is used as a better mechanism." So the sender sits behind
+the one adapter file: adding WhatsApp later is a new sender there plus each person's recorded yes, not a change to this
+scope. Options weighed before he decided: email (chosen), a WhatsApp business number (Meta's verification, approved
+wordings, a charge per message, each person's yes), and site-only (reaches nobody who does not open it).
 
 ## Detailed implementation (files)
 - `supabase/migrations/<timestamp chosen at build>_materials_sends_and_reminders_reach_people.sql`: `to_staff` on both
@@ -216,7 +212,7 @@ and which the consolidated list. The school mail account's SMTP details as box s
 - No live data seen: whether the materials migrations are on live, whether send rows exist, whether the named staff have
   `phone` / `email` in `pii.staff`.
 - CP-17's check, unit and whether approval changes the list's state are assumed.
-- Whether staff read email (the decision's risk).
+- Whether staff read email (the reason WhatsApp may follow).
 - The model's "a person is visible" answer on photographs is unverified until the gold set has such a case.
 - Per-fortnight counts assume the list's dates fall inside one `fortnight` row; a monthly list is counted under the
   fortnight of its first day.
