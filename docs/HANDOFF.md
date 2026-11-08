@@ -13,6 +13,12 @@ Under 50 lines. Rewritten at the end of every session; the session-start hook sh
   [CP-2](https://github.com/cornerstonepune/cornerstone-platform/issues/449) (who is asking). Next: EGM design review of
   each, then Nimish adds `scope-locked`. `id_prefix` is `CP` in .claude/athena/config.json.
 
+- Canny: missing because the env setup script could not clone private athena-ops (no ~/.athena/ops), so tools.sh never
+  ran. Env setup script now installs Canny inline at the pinned commit f2c5e53 (saved 2026-11-08). UNPROVEN until a fresh
+  container starts: first check of the next session is `athena health` (Canny line must PASS). aislop and graphify are
+  also missing for the same reason. The Athena guard blocks agents from writing ~/.athena; do not work around it.
+- teacher-os is on Athena 2.13.0 (PR #49 merged).
+
 ## In flight
 - Backend reconciliation of Teacher OS Roadmap v23 against code and live data (2026-11-08):
   https://claude.ai/code/artifact/10633d1c-438c-4f4f-8341-3ae82770e1ae
