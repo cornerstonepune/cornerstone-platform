@@ -1,0 +1,17 @@
+{
+  "digest": "433fc5e706030f81d3f05d89556aab5b369f64b2a7810fddf0474c10067c59f4",
+  "files": [
+    "spec.md",
+    "checks.sh",
+    "proofs/conftest.py",
+    "proofs/cp7_world.py",
+    "proofs/live_settings.py",
+    "proofs/pytest.sh",
+    "proofs/suites_unchanged.sh",
+    "proofs/test_fortnight_plan.py",
+    "proofs/test_gate.py"
+  ],
+  "locked_at": "2026-11-08T17:13:16+00:00",
+  "criteria": 10,
+  "athena": "2.14.0"
+}

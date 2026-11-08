@@ -1,7 +1,7 @@
 # CP-7: The fortnight's timetable: draft, approve only what changed, an unchanged fortnight rolls forward
 
-Source: https://github.com/cornerstonepune/cornerstone-platform/issues/487 (draft, not locked)
-Scope status: DRAFT for Nimish. Not locked: no `scope-locked` label, no proofs.
+Source: https://github.com/cornerstonepune/cornerstone-platform/issues/487
+Scope locked by: Nimish (the label scope-locked on pull request #488, which carries this text, 8 Nov 2026)
 
 Waits for CP-6 (the fortnight cycle), and through it for CP-3 (the groups) and CP-4 (every new table listed as child
 data or school-wide). Plan: docs/backend-plan.md. Roadmap task M1-06 (its approval step). Tier 3 (data change).
