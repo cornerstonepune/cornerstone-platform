@@ -16,6 +16,7 @@ line tools, a cloud session, GitHub Actions).
   athena verify-locks               every LOCK still matches its files
   athena tier                       file list on stdin: the tier (0-3) of that change and what it needs
   athena check-pr-scope --base REF --body-file F   CI: a tier 1 pull request carries a short scope
+  athena check-pr-spec --base REF                  CI: a tier 2 or 3 pull request carries a locked scope with a verifier PASS
   athena pr-times OUT.json          CI nightly: tier and CI minutes of the last merged pull requests
   athena retire ID                  retire a finished spec; CI skips it once the 'spec-retired' label is on
   athena backfill-files             give each spec without a file list the folders its own commits changed
@@ -51,7 +52,7 @@ import sys
 import time
 from pathlib import Path
 
-VERSION = "2.13.0"
+VERSION = "2.14.0"
 ID_RE = re.compile(r"^[A-Z][A-Z0-9]*-\d+$")
 STRIKE_LIMIT = 3
 CHECK_TIMEOUT = int(os.environ.get("ATHENA_CHECK_TIMEOUT", "900"))
@@ -854,6 +855,91 @@ def cmd_check_pr_scope(args):
         return 0
     print(f"tier 1: {why}. The pull request description needs a short scope: one line starting 'What:' and "
           f"one or two starting 'Done when:' (three lines at most). Found {len(found)}.")
+    return 1
+
+
+# ATH-28: a tier 2 or 3 pull request carries a locked scope the independent verifier passed.
+# Same pattern as VERDICT in athena-ops scripts/automerge.py; a proof keeps the two equal.
+VERDICT = re.compile(r"(?:^VERDICT:|^#*\s*Round \d+\b[^\n]*?:|(?<=\. )Round \d+ \([^)]*\):)\s*\**(PASS|FAIL)\b", re.M)
+MANIFEST_REL = ".claude/athena/MANIFEST.json"
+# shortcut: matched by path only, a hand edit to these is not caught; the verifier and Nimish's review are the guard
+INSTALLER_EDITED = (MANIFEST_REL, ".claude/settings.json", ".gitignore", ".mcp.json",
+                    ".claude/athena/impeccable-baseline.json", ".claude/athena/hooks.allow.json",
+                    ".claude/athena/config.json", ".github/CODEOWNERS", "CLAUDE.md")
+# files the installer writes only when they are missing: installer output only if the base did not have them
+INSTALLER_CREATED = ("AGENTS.md", ".claude/athena/tiers.json", "docs/HANDOFF.md", "docs/athena/learnings.md",
+                     "docs/decisions/README.md", "specs/README.md")
+
+
+def _manifest_at(ref):
+    r = subprocess.run(["git", "show", f"{ref}:{MANIFEST_REL}"], cwd=str(ROOT), capture_output=True, text=True)
+    try:
+        return json.loads(r.stdout) if r.returncode == 0 else {}
+    except ValueError:
+        return {}
+
+
+def _is_installer_upgrade(base, changed, deleted):
+    """New harness version, every changed file unedited installer output, every deleted file one the base shipped."""
+    head_m, base_m = _manifest_at("HEAD"), _manifest_at(base)
+    managed = head_m.get("files") or {}
+    if not head_m.get("athena") or head_m.get("athena") == base_m.get("athena"):
+        return False
+
+    def new_at_head(p):
+        return subprocess.run(["git", "cat-file", "-e", f"{base}:{p}"], cwd=str(ROOT),
+                              capture_output=True).returncode != 0
+
+    def unedited(p):
+        f = ROOT / p
+        return (p in INSTALLER_EDITED or (p in INSTALLER_CREATED and new_at_head(p))
+                or (p in managed and f.is_file() and hashlib.sha256(f.read_bytes()).hexdigest() == managed[p]))
+    return all(unedited(p) for p in changed) and all(p in (base_m.get("files") or {}) for p in deleted)
+
+
+def cmd_check_pr_spec(args):
+    base = _opt(args, "--base", "origin/main")
+    r = subprocess.run(["git", "diff", "--name-status", "--no-renames", "-z", f"{base}...HEAD"], cwd=str(ROOT),
+                       capture_output=True, text=True)
+    if r.returncode != 0:
+        print(f"check-pr-spec: could not diff against {base}; the check fails rather than pass unseen")
+        return 1
+    fields = r.stdout.split("\0")
+    pairs = list(zip(fields[0::2], fields[1::2]))
+    changed = [p for s, p in pairs if not s.startswith("D")]
+    deleted = [p for s, p in pairs if s.startswith("D")]
+    tier, why = tier_for(changed + deleted)
+    if tier < 2:
+        print(f"tier {tier}: {why}. No locked scope is required for this tier.")
+        return 0
+    if _is_installer_upgrade(base, changed, deleted):
+        print("installer upgrade: a new harness version made only of unedited installer output. No scope is required.")
+        return 0
+    touched = {}
+    for p in changed:
+        parts = Path(p).parts
+        if len(parts) >= 3 and parts[0] == "specs" and ID_RE.match(parts[1]):
+            touched.setdefault(parts[1], set()).add(parts[2])
+    problems = []
+    for sid, names in sorted(touched.items()):
+        d, missing = ROOT / "specs" / sid, []
+        if not (d / "LOCK").exists():
+            missing.append("is not locked (no LOCK file)")
+        if "VERIFY.md" not in names:
+            missing.append("has no VERIFY.md added or changed in this pull request")
+        else:
+            found = VERDICT.findall((d / "VERIFY.md").read_text(errors="replace")) if (d / "VERIFY.md").exists() else []
+            if not found or found[-1] != "PASS":
+                missing.append("has a VERIFY.md whose last verdict is not PASS")
+        if not missing:
+            print(f"specs/{sid} is locked and the independent verifier passed it: the change carries its scope.")
+            return 0
+        problems.append(f"specs/{sid} " + " and ".join(missing))
+    print(f"tier {tier}: {why}. This pull request changes code and carries no locked, verified scope of its own.")
+    for p in problems:
+        print(f"  - {p}")
+    print("Begin with the athena-scope skill: it copies Nimish's locked scope into specs/<ID>/, has the proof-writer "
+          "write the checks, and athena-verify adds a VERIFY.md that says PASS. Then push again.")
     return 1
 
 
@@ -2291,7 +2377,7 @@ COMMANDS = {
     "check-scope-changes": cmd_check_scope_changes, "status": cmd_status, "hook": cmd_hook,
     "scorecard": cmd_scorecard, "health": cmd_health,
     "verify-hooks": cmd_verify_hooks, "scan-ioc": cmd_scan_ioc,
-    "tier": cmd_tier, "check-pr-scope": cmd_check_pr_scope, "retire": cmd_retire, "pr-times": cmd_pr_times,
+    "tier": cmd_tier, "check-pr-scope": cmd_check_pr_scope, "check-pr-spec": cmd_check_pr_spec, "retire": cmd_retire, "pr-times": cmd_pr_times,
     "backfill-files": cmd_backfill_files, "tokens": cmd_tokens, "rtk-install": cmd_rtk_install,
     "measure-ponytail": cmd_measure_ponytail, "plugin-dirs": cmd_plugin_dirs,
     "check-learned": cmd_check_learned, "ui-registry": cmd_ui_registry, "ui-slop": cmd_ui_slop, "journey-check": cmd_journey_check,

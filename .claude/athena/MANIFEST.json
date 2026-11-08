@@ -1,5 +1,5 @@
 {
-  "athena": "2.13.0",
+  "athena": "2.14.0",
   "files": {
     ".canny.json": "4286d6cd521f5d85bad2d7c482dd49696ad478e35a3f64ab7868f1453f992447",
     ".claude/agents/athena-explorer.md": "c59cd2e40e715b8c88205c07d082ed3804f80f1d64362018e19ce7e991483a2d",
@@ -11,7 +11,7 @@
     ".claude/athena/SUPERPOWERS-NOTICE.md": "c9621c9cf7e7b7f8d000ed99d449db7c0712bbc4a922f5d337477e74dc5d7e75",
     ".claude/athena/THIRD-PARTY.md": "14e94278500b7dff7effa67ae38aa224baf919a459a184f3ff7d2874d504199d",
     ".claude/athena/bin/assurance": "11ce729f7b9c750a4a63928749c302897f5b84e5bbdcc81f1dcc9d0db1ba3e13",
-    ".claude/athena/bin/athena": "135d0938966325cf3e051375edadbe3915ba8c22aee9c3c4421160fc52eca6ca",
+    ".claude/athena/bin/athena": "708ce3a8461af739753eb9ac525a42fd070904998ebd11f78c2847fc625ad2b0",
     ".claude/athena/bin/athena_measure.py": "6a401ab083906cb744954945e9f48a9b1b8ef788a2f4cfb35ea4c2c3b9b537bb",
     ".claude/athena/bin/checklib.sh": "8783a4a4827d1304e512a9eea4e57684172b9795b2790306fe1030c1d11eff78",
     ".claude/athena/bin/health_issue.py": "75a3eceb02e18f40fed538e6c765f6564b83cc89597940040653f3c9e5ad7345",
@@ -605,7 +605,7 @@
     ".claude/skills/writing-plans/SKILL.md": "cb8db50b14adaf559eb3fed96b2cd3c73c7e0f7068751959f318b1b8a12b675c",
     ".github/ISSUE_TEMPLATE/scope.yml": "f1bb5dd6e56f22d627cb308b43978532d29b8f365ebebfa65371b2ad275b5222",
     ".github/workflows/athena-health.yml": "5bb148e406e2bb9b6192f3e607f0b135ad02d1af904190f1329cebce2ae2f10f",
-    ".github/workflows/athena.yml": "b73e1645aca3e91072a72f3447906c6f9d0d06eb8d6a04b9c21710387421ca83"
+    ".github/workflows/athena.yml": "783a8a04c73a7f7a32329eaaa0aa4684a2d6c881ae4bcee75f6efb9e7367c9cd"
   },
   "settings": {
     "env": [
