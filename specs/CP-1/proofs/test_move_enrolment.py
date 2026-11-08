@@ -67,7 +67,8 @@ def _child_in(conn, t, section, class_id, roll, since, band="G3"):
 
 @pytest.fixture
 def school(conn):
-    """Two Grade 3 classes of this year; child `x` is roll 1 of class A, child `y` roll 1 of class B."""
+    """Two Grade 3 classes of this year; child `x` is roll 1 of class A, child `y` roll 1 of class B, and child `z`
+    roll 2 of class A, so class A still has a child when `x` leaves it."""
     t = _tenant(conn)
     year, campus = _year(conn, t), _campus(conn, t)
     a, a_id = _class(conn, t, campus, year)
@@ -75,6 +76,7 @@ def school(conn):
     since = year["starts_on"]
     x = _child_in(conn, t, a, a_id, "1", since)
     y = _child_in(conn, t, b, b_id, "1", since)
+    _child_in(conn, t, a, a_id, "2", since)
     return {"a": a, "a_id": a_id, "b": b, "b_id": b_id, "x": x, "y": y}
 
 
@@ -109,8 +111,9 @@ def test_a_move_closes_the_open_enrolment_and_opens_one_in_the_new_class(conn, s
 
 def test_a_child_never_has_two_open_enrolment_rows(conn, school):
     x = school["x"]
-    assert _move(conn, x, "G3", school["b"], "2")["moved"] is True
-    assert _move(conn, x, "G3", school["a"], "3")["moved"] is True
+    for where, roll in (("b", "2"), ("a", "3")):
+        said = _move(conn, x, "G3", school[where], roll)
+        assert said["moved"] is True, said
     opened = _open(conn, x)
     assert len(opened) == 1, f"{len(opened)} open enrolment rows"
     assert (opened[0]["class_id"], opened[0]["roll_no"]) == (school["a_id"], "3")
