@@ -82,6 +82,8 @@ WEB_CALLS = {
     "my_tenant",
     "my_reach",
     "my_ids",
+    "my_sections",  # the class labels of the classes a person may see (CP-4)
+    "sheet_code_exists",  # a yes or no: is there a paper with this printed code (the paper page's "not found" or "another class's")
     "grade_is_wholly",  # a yes or no, never a child: is every class of a grade among these (the levels page)
 }
 
@@ -177,11 +179,11 @@ def test_the_website_writes_only_what_a_person_changes_on_it(conn):
 
 def test_every_row_is_in_sight_of_both_services(conn):
     """Row security is forced on every table; a role no policy names would read none of its rows and write none,
-    silently. Each table names both: by `app_all`, or, for a table in `access_table` (CP-3), by `engine_all` (the
-    engine) and `web_rule` (the website, by group)."""
-    ruled = {
-        f"{r['schema_name']}.{r['table_name']}"
-        for r in conn.execute("select schema_name, table_name from access_table").fetchall()
+    silently. Every table is in `access_table` (CP-4) and names both services: the engine by `engine_all`, the website
+    by `web_rule` (child data, by group) or `web_all` (school-wide). No table carries the old allow-everyone `app_all`."""
+    listed = {
+        f"{r['schema_name']}.{r['table_name']}": r["data_class"]
+        for r in conn.execute("select schema_name, table_name, data_class from access_table").fetchall()
     }
     for t in _tables(conn, "public") + _tables(conn, "pii"):
         schema, name = t.split(".")
@@ -192,11 +194,10 @@ def test_every_row_is_in_sight_of_both_services(conn):
                 (schema, name),
             ).fetchall()
         }
-        if t in ruled:
-            assert named.get("engine_all") == {"app_engine"} and named.get("web_rule") == {"app_web"}, t
-            assert set(named) == {"service_role_all", "engine_all", "web_rule"}, (t, set(named))
-        else:
-            assert set(ROLES) <= named.get("app_all", set()), t
+        assert t in listed, f"{t} is in no access_table row"
+        web = "web_rule" if listed[t] == "child_data" else "web_all"
+        assert named.get("engine_all") == {"app_engine"} and named.get(web) == {"app_web"}, t
+        assert set(named) == {"service_role_all", "engine_all", web}, (t, set(named))
 
 
 def test_finding_a_child_by_name_is_logged_like_any_read(conn):

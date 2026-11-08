@@ -34,7 +34,8 @@ export default async function PaperPage({ params }: Props) {
   }
   if (!(await deadline(sees(me, [{ qr }])))) {
     // a code no paper has is not found; a paper the person does not see is refused in words
-    const [there] = await deadline(sql<{ id: string }[]>`select id from sheet_instance where qr_code = ${qr}`);
+    // (a yes or no asked of the database: the row itself is another class's, so the person's rule hides it from them)
+    const [{ there }] = await deadline(sql<{ there: boolean }[]>`select sheet_code_exists(${qr}) as there`);
     if (!there) notFound();
     return <NotYours what="This paper's class" paper />;
   }
