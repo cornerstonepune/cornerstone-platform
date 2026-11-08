@@ -1,6 +1,7 @@
 # ADR 0100 — A request says who is asking, in one transaction per query (CP-2)
 
 Status: chosen, pending proof on the real pooler (see "Result" below).
+Goal: none — plumbing for the access rules of CP-3 and CP-4; no goal file covers it (locked scope: specs/CP-2).
 
 ## Problem
 
