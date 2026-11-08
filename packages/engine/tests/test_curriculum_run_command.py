@@ -70,9 +70,10 @@ def test_the_held_out_replay_reads_the_kept_replies_free_and_the_proposing_run_i
     }
     (paid,) = lines("map_propose")
     assert paid == (
-        "engine curriculum propose --stage draft --version 3 --validate-version 2 --apply --by someone@school.invalid"
+        "engine curriculum propose --stage draft --version 3 --validate-version 2 --kind skill --apply --by someone@school.invalid"
     ), (
-        "proposed for the gaps from the draft stage, at the versions the held-out eval scored, recorded by the dispatcher"
+        "proposed for the activities with no skill link, from the draft stage, at the versions the held-out eval scored, "
+        "recorded by the dispatcher"
     )
     assert cmd.RUNS["map_propose"]["spends"] is True
     assert [
@@ -83,6 +84,8 @@ def test_the_held_out_replay_reads_the_kept_replies_free_and_the_proposing_run_i
         "3",
         "--validate-version",
         "2",
+        "--kind",
+        "skill",
         "--estimate",
     ] in cmd.RUNS["forecast"]["commands"], "the forecast prices the proposing run without making a call"
 
