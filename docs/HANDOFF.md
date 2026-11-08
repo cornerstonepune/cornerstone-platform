@@ -6,6 +6,13 @@ Under 50 lines. Rewritten at the end of every session; the session-start hook sh
 - Athena 2.13.0 here; `athena health` fails one check: Canny missing (~/.athena/bin/canny-hook), so no done-gate,
   secret or test-removal guard runs. teacher-os is still on Athena 2.6.0.
 
+## Start here
+- `docs/backend-plan.md` is the one list of what remains: scopes CP-1 to CP-19, their order and goalposts. It holds no
+  status. Status is `athena status`, `specs/<ID>/`, and the nightly run. Backend done = all 19 finished + LIVE proofs pass.
+- Drafted, not locked: [CP-1](https://github.com/cornerstonepune/cornerstone-platform/issues/448) (people),
+  [CP-2](https://github.com/cornerstonepune/cornerstone-platform/issues/449) (who is asking). Next: EGM design review of
+  each, then Nimish adds `scope-locked`. `id_prefix` is `CP` in .claude/athena/config.json.
+
 ## In flight
 - Backend reconciliation of Teacher OS Roadmap v23 against code and live data (2026-11-08):
   https://claude.ai/code/artifact/10633d1c-438c-4f4f-8341-3ae82770e1ae
