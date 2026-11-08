@@ -1,0 +1,11 @@
+{
+ "ok": false,
+ "passed": [],
+ "failed": [
+  "2 staff load leaves the sign-in list unchanged (before/after hash)",
+  "3 a move closes the open enrolment and opens one, never two open, refusal changes nothing",
+  "5 adding an activity and adding, changing or removing a link write edit history with who and when",
+  "6 new tables have a named owner and no staff name lands outside pii"
+ ],
+ "ran_at": "2026-11-08T09:08:04+00:00"
+}

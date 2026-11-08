@@ -2,46 +2,37 @@
 Under 50 lines. Rewritten at the end of every session; the session-start hook shows the top lines.
 
 ## Live
-- Main is green. Live database has all 130 migrations (as of the 8 Nov reconciliation). PR #413 (FET install) was merged
-  by Nimish on 8 Nov 08:08 UTC, before CP-11 was locked: CP-11 now proves it after the fact.
-- Athena 2.13.0. `athena health` 8 Nov (orchestrator session): Canny PASS (the setup-script fix worked). Still FAIL:
-  usage ledger never written, plan usage not recorded, many components "never fired" (they fire as scopes run).
+- Main is green. Live database had all 130 migrations at the 8 Nov reconciliation. PR #413 (FET install) was merged by
+  Nimish on 8 Nov; CP-11 proves it after the fact.
+- Athena 2.13.0. `athena health` 8 Nov: Canny PASS. Still FAIL: usage ledger never written, plan usage not recorded,
+  many components "never fired" (they fire as scopes run).
 
 ## Start here
 - `docs/backend-plan.md` is the one list of what remains: CP-1..CP-19. No status in it; status is `athena status`,
   `specs/<ID>/`, the issues' labels and the nightly run. Backend done = all 19 finished + LIVE proofs pass.
-- Issues drafted, none locked (no `scope-locked` label exists yet): CP-1 #448, CP-2 #449, CP-0 #450, CP-3 #451,
-  CP-4 #452, CP-5 #453, CP-6 #454, CP-7 #455, CP-8 #456, CP-9 #457, CP-10 #458, CP-11 #459, CP-12 #460, CP-13 #461,
-  CP-14 #462, CP-15 #463, CP-16 #464, CP-17 #465, CP-18 #466, CP-19 #467.
-- Draft spec folders (spec.md only, unlocked) are in specs/CP-1, CP-2, CP-5 on this branch.
-- The branch claude/bold-carson-f72yjv changes .claude/athena/config.json (tier 3): ships only through CP-0 once
-  Nimish locks it. Do not merge it directly.
+- Issues: CP-1 #448, CP-2 #449, CP-0 #450, CP-3 #451, CP-4 #452, CP-5 #453, CP-6 #454, CP-7 #455, CP-8 #456,
+  CP-9 #457, CP-10 #458, CP-11 #459, CP-12 #460, CP-13 #461, CP-14 #462, CP-15 #463, CP-16 #464, CP-17 #465,
+  CP-18 #466, CP-19 #467.
+- Locked by Nimish 8 Nov: CP-0, CP-1, CP-2, CP-5. CP-0, CP-2 and CP-5 have locked proofs; CP-1 proofs in progress.
+- CP-0 ships alone from branch cp-0-backend-plan (config prefix + plan + this file). CP-1/2/5 work stays on
+  claude/bold-carson-f72yjv until each is built; one pull request per scope.
 
-## Findings that change scopes (from the code, 8 Nov)
-- CP-1 item 5 may already hold: triggers write `curriculum_edit` rows for activity edits and for activity-objective
-  links (20261230090000). Prove it in the scope; do not rebuild it. `move_child` does not touch enrolment; a separate
-  `enrol_child` does. The "sign-in list" is a config row `app.staff`, not a table.
-- CP-2: one postgres.js pool (apps/web/lib/db.ts), transaction pooler port 6543, no sql.begin today; cookie `cs_staff`
-  is HMAC-signed (lib/session-cookie.ts). Option (a) needs every query wrapped in a transaction that sets the identity.
-- CP-5: no test scans function search paths; one tracked doc (docs/superpowers/plans/2026-09-17-phase-0-foundations.md)
-  holds the live project reference. The 35-function list still has to be computed from the live database.
+## Decisions taken (Nimish, 8 Nov)
+- Load all 7 staff (CP-1). Scrub the project reference from STATE.md (CP-5). Leaked-password protection: recorded
+  "not applicable" (CP-5). Access: coordinator, deputy, mentor, head, curriculum team, ops see everything; educators
+  and assistants see their own classes and subjects; everyone sees question bank, curriculum, plan, timetable.
 
-## Design reviews done (CP-1, CP-2, CP-5)
-- specs/<ID>/design.md revised after 4 goldfish reviewers each (zoom-out, design, implementation-readiness,
-  codebase-details). Preset used: stages 5-8 reviewers only; comprehension, structural, style, inventive-catalyst skipped.
-- Issue text still to amend (jev tripwire blocked the edit; CP-1 #448 was updated): CP-2 #449 (function in `public` not
-  `internal`; transport-only, not fail-closed; 200x test also concurrent/error/timeout) and CP-5 #453 (item 3 may become a
-  recorded "not applicable"; item 4 includes STATE.md; item 5 wording). Text is in the design files and the 8 Nov chat.
-- Decisions for Nimish: CP-1 live staff import needs his named signer, and class-scoped roles need a class; CP-5
-  STATE.md one-line scrub and item 3; CP-2 only if option (c) is needed.
+## Findings that changed scopes
+- CP-1: `import_staff` already exists; edit-history triggers do NOT cover activity inserts or link updates (real gap).
+- CP-2: proves identity transport only; function lives in `public`; real-pooler proof is box-only.
+- CP-5: 35-function list must be read from the live database; reference sits in 3 tracked files.
 
-## Not done this session (and why)
-- Access grid drafted (private artifact, 13 roles x 12 kinds of data): https://claude.ai/code/artifact/810b8620-1102-4d2a-afe7-351c42356117
-  Waiting for Nimish's corrections (cell ids like E5) and 5 yes/no questions. Issue edits to #449 and #453 are applied.
-- Layouts of one activity page, Sarvam request text, bars decision text: not drafted. CP-3..19 design reviews: not started.
-- Step 3 gate loop: nothing is locked, so nothing to run.
+## Next
+- CP-1 proofs, then lock; build CP-0 PR, then CP-1, CP-2, CP-5 (one migration scope at a time).
+- CP-3/CP-4: draft from the simplified access model; design reviews not started. CP-3 design reviews 6-19: not started.
+- Not drafted: three layouts of one activity page, Sarvam "no retention" request text, bars decision text.
+- Access grid page (13 roles) is superseded by the simplified model above; republish with CP-3.
 
-## Blocked (the decisions needed from Nimish)
-1. Lock CP-0 (#450) so the plan and the CP prefix can ship.
-2. Allow read access to teacher-os so the access grid can be drafted.
-3. Confirm: staff scope default "load all 7"; lowered bars only after a full 427 run; one model page (three layouts).
+## Blocked (decisions needed from Nimish)
+1. Named signer for the live staff import (CP-1); a class for any class-scoped role.
+2. Lock the next wave: CP-3 and CP-4 once drafted.
