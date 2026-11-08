@@ -92,7 +92,10 @@ export function whoIsAsking(resolver: Resolver): void {
   globalThis.cornerstoneWhoIsAsking = resolver;
 }
 
-const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+/** The setting's name, for scripts/check-pooler.ts to read it back without naming it a second time in its own text. */
+export const IDENTITY_SETTING = "app.staff_id";
+
+const UUID =/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 async function identity(): Promise<string | undefined> {
   try {

@@ -29,7 +29,7 @@ process.env.VERCEL = "1";
 // connection too; run it without CHECK_POOLER_URL for the app's own pool size.)
 if (process.env.CHECK_POOLER_URL) process.env.DB_POOL_MAX = "1";
 
-const { sql, whoIsAsking } = await import("../lib/db.ts");
+const { sql, whoIsAsking, IDENTITY_SETTING } = await import("../lib/db.ts");
 const N = 8;
 let answered = 0;
 const timer = setTimeout(() => {
@@ -50,7 +50,11 @@ if (process.env.CHECK_POOLER_URL) {
   const failures: string[] = [];
 
   const seen = async (id: string | undefined, label: string) => {
-    const [row] = await who.run(id, () => sql<{ s: string | null; pid: number }[]>`select public.current_staff()::text as s, pg_backend_pid() as pid`);
+    // The setting itself, read back, so this runs on the live pooler before the migration is deployed. A value that is
+    // unset reads as null or, once a transaction has set it on a backend, as ''.
+    const [row] = await who.run(id, () =>
+      sql<{ s: string | null; pid: number }[]>`select nullif(current_setting(${IDENTITY_SETTING}, true), '') as s, pg_backend_pid() as pid`,
+    );
     const want = id ?? null;
     if (row.s !== want) failures.push(`${label}: expected ${want}, saw ${row.s}`);
     const key = id ?? "nobody";
@@ -84,5 +88,19 @@ if (process.env.CHECK_POOLER_URL) {
     process.exit(1);
   }
   console.log("every request saw only its own identity");
+
+  // After the migration is deployed, the function itself must agree. Before, it is absent and this says so (not a failure).
+  const [fn] = await sql<{ here: boolean }[]>`select to_regprocedure('public.current_staff()') is not null as here`;
+  if (!fn.here) console.log("public.current_staff() is not on this database yet: checked again after the migration is deployed");
+  else {
+    const [a] = await who.run(A, () => sql<{ s: string | null }[]>`select public.current_staff()::text as s`);
+    const [n] = await who.run(undefined, () => sql<{ s: string | null }[]>`select public.current_staff()::text as s`);
+    if (a.s !== A || n.s !== null) {
+      console.error(`public.current_staff() gave ${a.s} for A and ${n.s} for nobody`);
+      await sql.end();
+      process.exit(1);
+    }
+    console.log("public.current_staff() agrees");
+  }
 }
 await sql.end();
