@@ -1,5 +1,5 @@
 {
-  "digest": "05dbf71eb0fc021e12da2524830ad2fde190db71599abd7aa54aa52ceaf80ab2",
+  "digest": "df5539a026cb9dec8a8ee6d0a27168c65a5f8f130a10a405eba0ae2414dfe2cd",
   "files": [
     "spec.md",
     "checks.sh",
@@ -10,7 +10,7 @@
     "proofs/repinned_calls.py",
     "proofs/tests_unchanged.sh"
   ],
-  "locked_at": "2026-11-08T09:07:32+00:00",
+  "locked_at": "2026-11-08T13:33:24+00:00",
   "criteria": 5,
-  "athena": "2.13.0"
+  "athena": "2.14.0"
 }

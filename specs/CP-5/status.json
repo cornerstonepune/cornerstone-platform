@@ -1,24 +1,16 @@
 {
   "status": "built",
   "created_at": "2026-11-08T08:31:26+00:00",
-  "updated_at": "2026-11-08T09:26:19+00:00",
-  "locked_at": "2026-11-08T09:07:32+00:00",
-  "built_at": "2026-11-08T09:26:19+00:00",
+  "updated_at": "2026-11-08T13:35:46+00:00",
+  "locked_at": "2026-11-08T13:33:24+00:00",
+  "built_at": "2026-11-08T13:35:46+00:00",
   "box_pending": [
     "1 live database has no function with a mutable search path",
     "5 each re-pinned function runs in a rolled-back read-only call"
   ],
   "files": [
-    ".claude/athena/",
     ".claude/autoharness/",
-    "DECISIONS-LOG.md",
-    "STATE.md",
-    "docs/",
-    "docs/adr/",
-    "docs/notes/",
-    "docs/superpowers/plans/",
-    "packages/engine/.claude/autoharness/",
-    "packages/engine/tests/",
-    "supabase/migrations/"
-  ]
+    "packages/engine/.claude/autoharness/"
+  ],
+  "unlocked_at": "2026-11-08T13:32:34+00:00"
 }

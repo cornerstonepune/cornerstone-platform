@@ -19,7 +19,8 @@ check "3 leaked-password decision recorded and nothing reads Supabase Auth users
 check "4 no tracked file holds the live project reference" python3 specs/CP-5/proofs/project_ref.py
 
 # 5 Tests unchanged here; the full suites passing is ci.yml's engine and web jobs; the calls run on the box.
-check "5 engine and web tests unchanged since main" bash specs/CP-5/proofs/tests_unchanged.sh
+check "5 engine and web tests unchanged since main (applies to CP-5's own change only)" bash specs/CP-5/proofs/tests_unchanged.sh
+check "5 that check applies to CP-5's own change and not to an unrelated pull request" bash specs/CP-5/proofs/tests_unchanged.sh --self-check
 check_box "5 each re-pinned function runs in a rolled-back read-only call" $PY specs/CP-5/proofs/repinned_calls.py
 
 finish
