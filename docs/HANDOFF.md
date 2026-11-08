@@ -26,10 +26,19 @@ Under 50 lines. Rewritten at the end of every session; the session-start hook sh
 - CP-5: no test scans function search paths; one tracked doc (docs/superpowers/plans/2026-09-17-phase-0-foundations.md)
   holds the live project reference. The 35-function list still has to be computed from the live database.
 
+## Design reviews done (CP-1, CP-2, CP-5)
+- specs/<ID>/design.md revised after 4 goldfish reviewers each (zoom-out, design, implementation-readiness,
+  codebase-details). Preset used: stages 5-8 reviewers only; comprehension, structural, style, inventive-catalyst skipped.
+- Issue text still to amend (jev tripwire blocked the edit; CP-1 #448 was updated): CP-2 #449 (function in `public` not
+  `internal`; transport-only, not fail-closed; 200x test also concurrent/error/timeout) and CP-5 #453 (item 3 may become a
+  recorded "not applicable"; item 4 includes STATE.md; item 5 wording). Text is in the design files and the 8 Nov chat.
+- Decisions for Nimish: CP-1 live staff import needs his named signer, and class-scoped roles need a class; CP-5
+  STATE.md one-line scrub and item 3; CP-2 only if option (c) is needed.
+
 ## Not done this session (and why)
-- Design reviews (EGM) for CP-1, CP-2, CP-5: not started. Fact sheet is ready; the designs and goldfish reviews are next.
-- Access grid for 13 roles: needs teacher-os (people-and-access.md). add_repo was denied by the auto-mode classifier;
-  Nimish must allow it or paste the file. Layouts of one activity page, Sarvam request text, bars decision text: not drafted.
+- Access grid for 13 roles: teacher-os now attached read-only (clone at /home/user/teacher-os). Source table is
+  blueprint/people-and-access.md section 2 (9 columns; deputy = coordinator, cover educator = educator). Not yet drafted.
+- Layouts of one activity page, Sarvam request text, bars decision text: not drafted. CP-3..19 design reviews: not started.
 - Step 3 gate loop: nothing is locked, so nothing to run.
 
 ## Blocked (the decisions needed from Nimish)
