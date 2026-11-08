@@ -1,6 +1,7 @@
 # CP-21: A draft goes live
 
-Source: DRAFT for Nimish (GitHub issue to follow). Not locked.
+Source: https://github.com/cornerstonepune/cornerstone-platform/issues/496
+Scope locked by: Nimish (the label scope-locked on pull request #495, 8 Nov 2026: "scope locked, tidy up as well"; the issue itself carries no label)
 
 Split out of CP-12 by Nimish on 8 Nov ("yes to all, split it"). Waits for CP-11 (the generator makes the draft), CP-6 (the fortnight cycle and its freeze) and CP-4 (the access table list). CP-12 (moving lessons by hand) waits for this. Plan: docs/backend-plan.md (a new row, CP-21). Roadmap task M1-14. Tier 3 (data change). Design: specs/CP-21/design.md.
 

@@ -1,0 +1,21 @@
+{
+  "digest": "fef4a8bb239ecd522dad349f3959732c1ce756105a8fbdbba0e8b15e8d7be1e8",
+  "files": [
+    "spec.md",
+    "checks.sh",
+    "proofs/conftest.py",
+    "proofs/live_trial_run.py",
+    "proofs/test_1_draft_shown.py",
+    "proofs/test_2_fifteen_days.py",
+    "proofs/test_3_sessions_follow.py",
+    "proofs/test_4_refusals.py",
+    "proofs/test_5_who.py",
+    "proofs/test_6_changed_since.py",
+    "proofs/test_7_frozen.py",
+    "proofs/test_8_trial_and_loader.py",
+    "proofs/tests_unchanged.sh"
+  ],
+  "locked_at": "2026-11-08T17:22:55+00:00",
+  "criteria": 8,
+  "athena": "2.14.0"
+}
