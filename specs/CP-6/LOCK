@@ -1,5 +1,5 @@
 {
-  "digest": "132de6c475ff47f8a0b57e39f0d70fe9ac0a58c7d7c8edc944611fb01d439fff",
+  "digest": "64d79a583603ee56c5435204e5a9e814a120670ede38c7bb3b0a611afd5baf8d",
   "files": [
     "spec.md",
     "checks.sh",
@@ -13,7 +13,7 @@
     "proofs/test_no_hardcode.py",
     "proofs/test_state.py"
   ],
-  "locked_at": "2026-11-08T12:18:46+00:00",
+  "locked_at": "2026-11-08T12:37:03+00:00",
   "criteria": 7,
   "athena": "2.13.0"
 }

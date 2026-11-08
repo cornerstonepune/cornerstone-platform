@@ -5,10 +5,9 @@ zoom-out) and after Nimish's decision of 8 Nov 2026, relayed by the orchestrator
 Plan: `docs/backend-plan.md` (roadmap task M1-12, tier 3: a migration). No staff or child name appears here or in the
 proofs; "who" is a staff id.
 
-## Mismatch to fix before the build (for Nimish)
-Issue #454 and `specs/CP-6/spec.md` are locked and say **"month"** in What, and in Done-when 1, 3, 4 and 7. Nimish's decision
-makes the **fortnight** the unit. The spec is not edited here. The proofs follow the decision, and each proof's comment
-names the Done-when line it answers and its fortnight reading:
+## Wording (resolved 8 Nov 2026)
+Issue #454 and `specs/CP-6/spec.md` said **"month"**; at Nimish's request both now say **"fortnight"**, matching his
+decision. The table shows the original line against its reading; each proof's comment names the Done-when line it answers:
 
 | Done-when (as locked) | Proved as |
 |---|---|
@@ -20,8 +19,6 @@ names the Done-when line it answers and its fortnight reading:
 | 6 no hard-coded "frozen" in engine or website | same (unchanged) |
 | 7 LIVE: the current month has a state row, settings exist | the current fortnight has a state row, settings exist |
 
-Nimish should amend the issue wording ("month" to "fortnight" in 1, 3, 4, 7 and What) and re-lock. Until then the proofs and
-the spec differ in that one word, on purpose.
 
 ## Dependency on CP-4 (named)
 CP-6 is built after CP-2, CP-3 and CP-4 merge, one at a time. Proofs are written now against `main` plus exactly what CP-4 adds:
@@ -135,7 +132,7 @@ Database proofs run on the throwaway Postgres (`TEST_DATABASE_URL`), rolled back
 5. **DECIDED (Nimish, 8 Nov 2026: "Freeze by fortnight, not month").** The fortnight holds the state. Options considered:
    month holds the state with plan lines following the month their fortnight starts in (rejected: a straddling fortnight
    would be half-locked); lock a fortnight when either month is frozen (rejected: double blocking). The issue's wording
-   needs amending (see the top).
+   has been amended to match (see the top).
 6. **"List sent" stays on the fortnight** (above) unless Nimish says it is monthly.
 
 ## Known gaps, named not fixed
