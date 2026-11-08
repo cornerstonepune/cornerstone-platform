@@ -6,8 +6,10 @@
 -- Nothing is added that holds a person: no new table.
 
 -- The class a move goes to is the one `school_class` row of this school year for the grade and section, on the child's
--- campus (their open enrolment's; any when they have none). The roll is checked against open enrolment rows, the record
--- of who sits where; `child.section` and `child.roll_no` are still written, as pages read them.
+-- campus (their open enrolment's; any when they have none). A child with an open enrolment is enrolled in that class, and
+-- is refused when it has no row. A child with no open enrolment (on 8 Nov: every child outside K2, as only K2 has class
+-- rows) moves as before, and is enrolled when the class has a row. A roll is taken when another child's row holds it or
+-- an open enrolment of the class does; `child.section` and `child.roll_no` are still written, as pages read them.
 create or replace function public.move_child(
   p_child uuid, p_band text, p_section text, p_roll text, p_by text, p_reason text default ''
 ) returns jsonb
@@ -45,14 +47,20 @@ begin
    where s.tenant_id = c.tenant_id and s.grade_code = p_band and s.section = p_section_t
      and current_date between y.starts_on and y.ends_on and (here is null or s.campus_id = here)
    order by s.created_at limit 1;
-  if there is null then return jsonb_build_object('moved', false, 'refused', 'no_such_class'); end if;
-  if exists (select 1 from enrolment where class_id = there and to_date is null and roll_no = p_roll_t and child_id <> c.id) then
+  if there is null and here is not null then  -- an enrolled child cannot be left on a class they are no longer in
+    return jsonb_build_object('moved', false, 'refused', 'no_such_class');
+  end if;
+  if exists (
+    select 1 from child where tenant_id = c.tenant_id and section = p_section_t and roll_no = p_roll_t and id <> c.id
+  ) or (there is not null and exists (
+    select 1 from enrolment where class_id = there and to_date is null and roll_no = p_roll_t and child_id <> c.id
+  )) then
     return jsonb_build_object('moved', false, 'refused', 'roll_taken');
   end if;
 
   begin  -- the child's row and their enrolment change together, or neither does
     update child set band = p_band, section = p_section_t, roll_no = p_roll_t where id = c.id;
-    perform enrol_child(c.id, there, p_roll_t, current_date, btrim(p_by));
+    if there is not null then perform enrol_child(c.id, there, p_roll_t, current_date, btrim(p_by)); end if;
   exception
     when unique_violation then  -- someone took the roll between the check and the change
       return jsonb_build_object('moved', false, 'refused', 'roll_taken');

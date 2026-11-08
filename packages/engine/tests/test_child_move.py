@@ -75,9 +75,6 @@ def _school_class(conn, t, band, section):
 
 
 def _move(conn, child, band, section, roll, by="coordinator@cornerstone.test", reason=""):
-    held = conn.execute("select tenant_id from child where id = %s", (child,)).fetchone()
-    if held:
-        _school_class(conn, held["tenant_id"], band, section)
     return conn.execute(
         "select move_child(%s, %s, %s, %s, %s, %s) as r", (child, band, section, roll, by, reason)
     ).fetchone()["r"]
@@ -338,6 +335,7 @@ def _open(conn, child):
 def test_a_move_moves_the_open_enrolment_with_it(conn):
     child, _ = _enrolled(conn, f"MOV-{uuid.uuid4().hex[:8].upper()}")
     there, _ = _class(conn, ["G3"])
+    _school_class(conn, rows.tenant(conn), "G3", there)
     assert _move(conn, child, "G3", there, "7")["moved"] is True
     [now] = _open(conn, child)
     assert now["roll_no"] == "7"
@@ -366,3 +364,12 @@ def test_a_roll_held_on_an_open_enrolment_is_taken(conn):
         "update child set roll_no = '2' where id = %s", (holder,)
     )  # the child row alone would allow roll 1
     assert _move(conn, child, "G3", there, "1") == {"moved": False, "refused": "roll_taken"}
+
+
+def test_a_child_not_yet_enrolled_moves_as_before_to_a_class_with_no_row(conn):
+    """On 8 Nov only K2 had class rows: every other child has no enrolment, and a move must still work for them."""
+    section, (child,) = _class(conn, ["G3"])
+    assert _move(conn, child, "G4", section, "1")["moved"] is True
+    assert (
+        conn.execute("select count(*) as n from enrolment where child_id = %s", (child,)).fetchone()["n"] == 0
+    )
