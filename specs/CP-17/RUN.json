@@ -1,0 +1,14 @@
+{
+ "ok": false,
+ "passed": [],
+ "failed": [
+  "1 each school has a rupee threshold; tracked when a value is entered and at or above it; the setting moves it",
+  "2 engine and website use the one rule; the old any-price rule is gone",
+  "3 any item can have received, issued, returned, counted, written-off records; on hand from them; append-only",
+  "4 refused: untracked stock when limited, more than on hand (also two at once), no reason, role not allowed",
+  "5 a fortnight list is approved only by its educator or a coordinator, after the freeze, on the lines shown",
+  "6 a changed list is no longer approved; no send of a fortnight list without a current approval; day and week as today",
+  "7 every new table has its access rule; the existing materials tests still pass"
+ ],
+ "ran_at": "2026-11-08T17:13:41+00:00"
+}

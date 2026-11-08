@@ -1,7 +1,8 @@
 # CP-17: Inventory: stock and issue records, rupee threshold, educator approval of the fortnight's list
 
-Source: https://github.com/cornerstonepune/cornerstone-platform/issues/491 (draft, not yet locked)
-Scope locked by: not locked. Nimish adds the label scope-locked when he agrees.
+Source: https://github.com/cornerstonepune/cornerstone-platform/issues/491
+Scope locked by: Nimish (the label scope-locked on pull request #492, 08-Nov-2026, "scope locked, tidy up as well"; this
+text is issue #491's scope, verbatim)
 
 Needs CP-6 (the fortnight schedule) and CP-4 (data access rules) finished first.
 

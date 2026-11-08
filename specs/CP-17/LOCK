@@ -1,0 +1,23 @@
+{
+  "digest": "dac36be12a56ddf211d49f839075e91ff69b290e7e9384631d10beb199911c62",
+  "files": [
+    "spec.md",
+    "checks.sh",
+    "proofs/conftest.py",
+    "proofs/cp17_world.py",
+    "proofs/existing_materials_tests.py",
+    "proofs/item7.sh",
+    "proofs/live_inventory.py",
+    "proofs/pytest.sh",
+    "proofs/test_access.py",
+    "proofs/test_approval.py",
+    "proofs/test_refusals.py",
+    "proofs/test_send_needs_approval.py",
+    "proofs/test_stock_records.py",
+    "proofs/test_threshold.py",
+    "proofs/test_tracked_rule.py"
+  ],
+  "locked_at": "2026-11-08T17:14:33+00:00",
+  "criteria": 8,
+  "athena": "2.14.0"
+}
