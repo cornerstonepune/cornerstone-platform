@@ -1,8 +1,8 @@
 {
-  "status": "built",
+  "status": "locked",
   "created_at": "2026-11-08T08:31:26+00:00",
-  "updated_at": "2026-11-08T09:26:19+00:00",
-  "locked_at": "2026-11-08T09:07:32+00:00",
+  "updated_at": "2026-11-08T13:33:24+00:00",
+  "locked_at": "2026-11-08T13:33:24+00:00",
   "built_at": "2026-11-08T09:26:19+00:00",
   "box_pending": [
     "1 live database has no function with a mutable search path",
@@ -20,5 +20,6 @@
     "packages/engine/.claude/autoharness/",
     "packages/engine/tests/",
     "supabase/migrations/"
-  ]
+  ],
+  "unlocked_at": "2026-11-08T13:32:34+00:00"
 }
