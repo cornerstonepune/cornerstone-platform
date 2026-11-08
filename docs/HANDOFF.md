@@ -1,44 +1,38 @@
 # Handoff: where things stand
-Under 50 lines. Rewritten at the end of every session; the session-start hook shows the top lines.
+Under 50 lines. Rewritten at the end of every session. Orchestrator #2 starts from this (8 Nov 2026, ~11:15 UTC).
 
-## Live
-- Main is green. Live database had all 130 migrations at the 8 Nov reconciliation. PR #413 (FET install) was merged by
-  Nimish on 8 Nov; CP-11 proves it after the fact.
-- Athena 2.13.0. `athena health` 8 Nov: Canny PASS. Still FAIL: usage ledger never written, plan usage not recorded,
-  many components "never fired" (they fire as scopes run).
+## Done (merged to main)
+- CP-0 #468 (plan, CP prefix), CP-5 #469 (35 function paths pinned; box proofs 1 and 5b still to run after deploy),
+  CP-20 #471 (throwaway Postgres in GitHub's athena job). CP-5 migration should be live: verify with the live advisor.
 
-## Start here
-- `docs/backend-plan.md` is the one list of what remains: CP-1..CP-19. No status in it; status is `athena status`,
-  `specs/<ID>/`, the issues' labels and the nightly run. Backend done = all 19 finished + LIVE proofs pass.
-- Issues: CP-1 #448, CP-2 #449, CP-0 #450, CP-3 #451, CP-4 #452, CP-5 #453, CP-6 #454, CP-7 #455, CP-8 #456,
-  CP-9 #457, CP-10 #458, CP-11 #459, CP-12 #460, CP-13 #461, CP-14 #462, CP-15 #463, CP-16 #464, CP-17 #465,
-  CP-18 #466, CP-19 #467.
-- Locked by Nimish 8 Nov: CP-0, CP-1, CP-2, CP-5, all with locked proofs. CP-0 MERGED (PR #468).
-- CP-5 is being built in its own session (session_01KEBF29SJ64px524jd4PQyT, tag cp-5): branch cp-5-database-hygiene,
-  draft PR with Closes #453. CP-1 and CP-2 wait (one migration scope at a time). This branch (claude/bold-carson-f72yjv)
-  is a working branch only: never open a PR from it; each scope ships from a clean branch off main.
-- Never commit .claude/autoharness/ or plugin-written .claude/skills/* on a PR branch: CI rejects them.
-- Merging: Athena lets the orchestrator merge when CI is green, VERIFY.md says PASS and the PR is mergeable; the Jev hook
-  needs Nimish's words in recent messages for a merge, and Nimish said (8 Nov) the orchestrator should merge by itself.
-- Test databases: Nimish chose (8 Nov) a throwaway local copy for write tests, live checks read-only on the box, and NO
-  test database in GitHub's proofs job. CP-1's database proofs will be red in that job: needs his UNLOCK to re-mark them.
+## In flight (one DB scope at a time, in this order)
+1. CP-1 PR #472 (draft, head bc517d9, VERIFY.md PASS, its DB proofs PASS in CI). Its ONLY red is CP-20 proof 5, a locked proof that
+   fails on every later PR (a tier 3 PR runs every finished spec; the proof says only setup.sh may change).
+   Fix: session_01KEBF2AH2FeLBZHPpSYBVfT (branch cp-20-proof5-scope; Nimish typed UNLOCK CP-20 there). Its PR needs Nimish's
+   `scope-change` label. Then: merge the fix, `update_pull_request_branch` #472, CI green, un-draft, merge #472.
+2. CP-2 (locked, specs on claude/bold-carson-f72yjv): start its build in a child session the moment #472 merges.
+3. CP-3 #451 and CP-4 #452 (locked, three-group access model): scoping session_01KEBF2A7DQSEjwZyyUgaLRE is writing design,
+   proofs, locks (cost ~$17: keep reviews lighter). Build after CP-2 merges. CP-3 item 8 needs Nimish to set the restricted login's password.
+- CP-6..CP-19: issues #454-#467 are drafts, not locked, no designs yet. Ask Nimish to lock in waves; scope each in a child session.
+- Cloudflare guide: session_01KEBF26KbRoFUTYc423FUv4 (read-only helper for Nimish). Cut over the real domain only after CP-2 merges.
 
-## Decisions taken (Nimish, 8 Nov)
-- Load all 7 staff (CP-1). Scrub the project reference from STATE.md (CP-5). Leaked-password protection: recorded
-  "not applicable" (CP-5). Access: coordinator, deputy, mentor, head, curriculum team, ops see everything; educators
-  and assistants see their own classes and subjects; everyone sees question bank, curriculum, plan, timetable.
+## How to build a scope (recipe that worked)
+Child session via create_session (source = repo, revision claude/bold-carson-f72yjv), prompt `athena-build <ID>`: branch from origin/main,
+bring over only specs/<ID>, no .claude/autoharness or plugin skill files in commits, draft PR `Closes #n`, verifier writes VERIFY.md. Never
+build two DB scopes at once. Hooks in the first orchestrator session died ~09:34: do unlock/lock steps from a fresh session.
 
-## Findings that changed scopes
-- CP-1: `import_staff` already exists; edit-history triggers do NOT cover activity inserts or link updates (real gap).
-- CP-2: proves identity transport only; function lives in `public`; real-pooler proof is box-only.
-- CP-5: 35-function list must be read from the live database; reference sits in 3 tracked files.
+## Merge rule and the jev hook
+Merge when our CI is green + VERIFY.md PASS + mergeable. Ignore Vercel (free plan limit, Nimish: "dont wait for vercel"; he will move to
+Cloudflare). GitHub download errors (setup-uv 504): re-run failed jobs ONCE (only works when the whole run has finished). The jev hook
+blocks PR writes: call once, read the tripwire id from the denial, then Bash `true # jev:intended <that id>: "<Nimish's sentence>"`, then
+repeat the call. Real sentences: "You should have the power to merge all these PRs by yourself", "keep going, merge when green".
 
-## Next
-- CP-1 proofs, then lock; build CP-0 PR, then CP-1, CP-2, CP-5 (one migration scope at a time).
-- CP-3/CP-4: draft from the simplified access model; design reviews not started. CP-3 design reviews 6-19: not started.
-- Not drafted: three layouts of one activity page, Sarvam "no retention" request text, bars decision text.
-- Access grid page (13 roles) is superseded by the simplified model above; republish with CP-3.
+## Rules Nimish set (8 Nov)
+Archive a child session once its PR is merged (done: CP-5 and CP-20 builds). Hand off to a new orchestrator at 50-60% context.
+Access: coordinator, deputy, mentor, head, curriculum team, ops see all; educators and assistants their own classes; all see curriculum.
+Test DB: throwaway copy, live checks read-only on the box, never write to live from a session. Load all 7 staff (CP-1). STATE.md scrub done.
 
-## Blocked (decisions needed from Nimish)
-1. Named signer for the live staff import (CP-1); a class for any class-scoped role.
-2. Lock the next wave: CP-3 and CP-4 once drafted.
+## Waiting on Nimish
+`scope-change` label on the CP-20 fix PR. CP-1 live steps after deploy: confirm all 7 sign-in entries are real people, name his staff entry as
+signer for `engine staff import --apply`, a class for class-level roles, check every live section has a school_class row. PR #473 (ATH-29) is his.
+Not yet drafted: three layouts of one activity page (CP-15), Sarvam no-retention request, mapping-bars decision text (CP-16).
