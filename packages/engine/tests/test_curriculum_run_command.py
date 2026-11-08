@@ -102,6 +102,11 @@ def test_recording_the_kept_drafts_and_applying_the_pages_are_runs_that_spend_no
     ], "only the drafted pages are applied, never a proposal of another kind"
 
 
+def test_the_check_of_who_the_curriculum_screens_let_in_is_a_free_run_that_names_nobody():
+    assert cmd.RUNS["gate_check"] == {"spends": False, "commands": [["engine", "curriculum", "gate-check"]]}
+    assert lines("gate_check", actor="", staff="") == ["engine curriculum gate-check"]
+
+
 def test_the_page_runs_are_the_dev_stage_with_a_limit_and_the_draft_stage_without():
     dev, full = lines("draft_dev")[0], lines("draft_all")[0]
     assert "--stage dev_eval" in dev and "--dev" in dev and "--limit" not in dev

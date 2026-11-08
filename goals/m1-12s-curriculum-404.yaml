@@ -1,0 +1,28 @@
+name: m1-12s-curriculum-404
+goal: >
+  When a signed-in head is shown a 404 on the curriculum screens, the cause can be read, by role and in counts, from the
+  gate itself: whether the person is in the people tables, whether they hold today a grant of the role they sign in with,
+  whether the config rows the gate reads are loaded, and whether the gate lets them through.
+# Written 2026-11-08 (task M1-12s). W1/W2 door, gate N1. The orchestrator, relaying Nimish (role head): "/curriculum/browse,
+# /curriculum/fill and the other K2 screen links show a 404 on the live site when signed in ... find the cause from code, not
+# guesses ... report counts only, no school text". Read from code: the routes are in the build and Vercel deployed main; the
+# 404 is the site's answer to a refusal by the engine's gate, which reads the people tables, not the sign-in list. Nothing
+# here changed who is let in, and no model was called.
+says:
+  - words: "find the cause from code, not guesses"
+    proved_by: "packages/engine/tests/test_gate_check.py::test_a_head_on_the_sign_in_list_with_no_staff_row_is_counted_as_not_in_the_people_tables"
+  - words: "does any gate call notFound() for a role that should pass (curriculum.review_roles / educator.preview_roles = head, coordinator)"
+    proved_by: "packages/engine/tests/test_gate_check.py::test_a_review_roles_row_that_was_never_loaded_shuts_the_gate_for_everyone_and_the_report_says_so"
+  - words: "report counts only, no school text"
+    proved_by: "packages/engine/tests/test_gate_check.py::test_the_report_holds_no_email_and_no_name"
+  - words: "does 'head' match"
+    proved_by: "packages/engine/tests/test_gate_check.py::test_a_head_with_an_open_grant_passes_and_may_review"
+manual:
+  - "After merge, dispatch the free run `gate_check`. Its one line says, for the role 'head': how many sign-in entries, how many are in the people tables, how many hold a grant of 'head' today, and how many the gate lets through; and whether curriculum.review_roles and educator.preview_roles are loaded. The fix follows from which of those is zero."
+criteria:
+  - name: the gate check and its run choice
+    run: cd packages/engine && uv run pytest -q -p no:cacheprovider tests/test_gate_check.py tests/test_curriculum_run_command.py
+    expect: "passed"
+  - name: the code sits where the map says; every promise has its command; lint
+    run: bin/check
+    expect: "passed"

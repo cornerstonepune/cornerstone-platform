@@ -6,6 +6,7 @@ import typer
 
 from engine.adapters.llm import LLMError
 from engine.assess import graph
+from engine.checks import gate_check  # noqa: F401 — registers `curriculum gate-check`
 from engine.checks.cli_check import register as register_checks
 from engine.checks.cli_live import live_app
 from engine.checks.evals import BY_VERSION

@@ -60,6 +60,7 @@ RUNS = {
         "spends": False,
         "commands": [["engine", "curriculum", "apply", "--kind", "page_part", "--apply", "--by", BY]],
     },
+    "gate_check": {"spends": False, "commands": [["engine", "curriculum", "gate-check"]]},
     "draft_dev": {
         "spends": True,
         "commands": [["engine", "curriculum", "draft", "--stage", "dev_eval", "--dev", "--by", BY]],
