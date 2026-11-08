@@ -3,7 +3,9 @@ Under 50 lines. Rewritten at the end of every session. Orchestrator #2 starts fr
 
 ## Done (merged to main)
 - CP-0 #468 (plan, CP prefix), CP-5 #469 (35 function paths pinned; box proofs 1 and 5b still to run after deploy),
-  CP-20 #471 (throwaway Postgres in GitHub's athena job). CP-5 migration should be live: verify with the live advisor.
+  CP-20 #471 (throwaway Postgres in GitHub's athena job). Main is green (athena runs for all three succeeded).
+  CP-5 is NOT live yet (checked 8 Nov ~11:15: advisor still shows 35 function_search_path_mutable; migration 20270110090000 absent from
+  live list). It lands when Nimish deploys. Re-check the advisor after deploy. Orchestrator #2 is subscribed to #472.
 
 ## In flight (one DB scope at a time, in this order)
 1. CP-1 PR #472 (draft, head bc517d9, VERIFY.md PASS, its DB proofs PASS in CI). Its ONLY red is CP-20 proof 5, a locked proof that
