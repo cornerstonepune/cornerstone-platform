@@ -35,6 +35,12 @@ ADR 0024 hang does not apply. The `true` makes the setting end with the transact
 
 ## Result
 
-Not yet run on the real pooler. The sandbox this was built in cannot reach the database, so the proof on Supabase's
-pooler (`specs/CP-2/proofs/pooler_alternation.sh`, box only) is outstanding. To be amended here with that run's outcome
-before this ADR is called settled.
+On the real pooler: NOT YET RUN. The sandbox this was built in cannot reach Supabase, so the proof on Supabase's pooler
+(`specs/CP-2/proofs/pooler_alternation.sh`, box only, needs `CHECK_POOLER_URL`) is outstanding. Until it passes, A1 is
+unproven where it matters; if it fails, the next step is A2, then (c), and (c) goes to Nimish.
+
+What was run: the same `apps/web/scripts/check-pooler.ts` against a throwaway Postgres 17 directly (no pooler in between),
+with `lib/db.ts` as built: 600 requests in alternation (A, B, nobody x200), 60 concurrent, after a failed query, and
+after a query that outlived its caller. Every request saw only its own identity, over 4 backend connections shared by
+all three. That proves the code's logic and that the setting ends with the transaction; it says nothing about
+Supabase's pooler pinning a backend between `begin` and `commit`.
