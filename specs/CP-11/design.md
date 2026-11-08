@@ -34,7 +34,7 @@ to the timetable, the sessions or the plan lines.
 For one class (found as `engine timetable load` finds it: grade, section, year) and one fortnight (by `number` within
 that academic year):
 1. **Days.** Every Monday to Friday from `starts_on` to `ends_on`, by date. A date with a `school_day` row of kind
-   `holiday` is left out: its lessons are dropped, not moved (decision 2). A weekday with no `school_day` row counts as a
+   `holiday` is left out: its lessons are dropped, not moved (decided, see Decisions). A weekday with no `school_day` row counts as a
    teaching day. Changed-timing days are normal days (named gap). Each day is labelled week A (fewer than 7 days after
    `starts_on`) or week B, the rule `k2_day.py:63` uses. FN10 (23 Nov to 7 Dec, 15 days) therefore has 11 teaching
    weekdays, 7 Dec being a sixth week-B day. The draft is kept by date, so no day is lost or refused.
@@ -110,14 +110,11 @@ command go on W2 step N4 in `workflows.json` (`files` and `commands`); `checks/r
 6. A fresh layout from the rules, not "move as little as possible": it can be tested exactly; keeping lessons in place
    needs FET's soft preferences, measured first. A follow-up if the school dislikes reshuffles.
 
-## Decisions for Nimish (what the school sees)
-1. **Putting a generated timetable live is a separate step, not in CP-11.** DECIDED (relayed 8 Nov): it is the new
-   scope CP-21; the order is CP-11, CP-21, CP-12. Reason: it is where all four
-   reviewers found the risk: the first fortnight is 15 days and does not fit the week A/B frame, the live tables reject a
-   second version of a fortnight, and replacing sessions would silently delete materials lines linked to them. CP-11
-   then gives the school a draft to look at; nothing educators see changes.
-2. **Lessons that fall on a school holiday are dropped, not moved; lessons on a blocked day are moved.** Recommend yes:
-   it matches what happens today (a holiday is a day off) and the rule already agreed for blocks.
+## Decisions (taken, 8 Nov 2026)
+1. **Putting a generated timetable live is not in CP-11**: it is the new scope CP-21; the order is CP-11, CP-21, CP-12.
+2. **Holidays and blocks.** Nimish: "If a calendar day is declared as a holiday, obviously on those days there won't be
+   a timetable." Lessons on a school holiday are dropped. Lessons on a blocked day are moved (a mechanical rule, as
+   M1-14a recorded). His framing: "a fortnight is the unit of the timetable, and then everything gets derived from that".
 
 ## Alternatives considered
 - **Generate and put live in one command**: rejected; putting live is CP-21 (decision 1).

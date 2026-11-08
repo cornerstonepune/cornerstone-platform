@@ -20,7 +20,7 @@ One command makes a draft timetable for one class and one fortnight (weeks A and
 
 Putting a draft live in place of the current timetable (CP-21). Recording which adult takes each lesson (grades 1 to 4 later; the draft can carry it without a table change). Hand moves and clashes (CP-12). Several classes at once, teachers and rooms. "Keep lessons where they are". Re-doing the FET install (#413). Any screen.
 
-## Decisions for Nimish
+## Decisions (taken, 8 Nov 2026)
 
-1. Putting a generated timetable live is a separate step: decided, it is CP-21 (order CP-11, CP-21, CP-12).
-2. Lessons on a school holiday are dropped, not moved; lessons on a blocked day are moved. Recommended: yes.
+1. Putting a generated timetable live is CP-21 (order CP-11, CP-21, CP-12).
+2. No timetable on a declared school holiday: its lessons are dropped. Lessons on a blocked day are moved.
