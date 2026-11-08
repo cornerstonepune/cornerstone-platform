@@ -1,27 +1,24 @@
-FAIL - CP-2 independent verification, second pass, 2026-11-08, branch cp-2-build against origin/main
+FAIL - CP-2 independent verification, third pass, 2026-11-08, branch cp-2-build (head 2c89555, PR #476, still a draft) against origin/main
 
-Verdict of the athena-verifier (separate read-only agent); the builder copied it here and added the last section.
-`athena done CP-2`: proofs 1, 2, 3 and 5 pass; proofs 4 and 6 are box-only and were not run.
+(Verdict of the athena-verifier, copied verbatim by the builder; the builder did not edit it. Read-only agent: it cannot write files.)
 
-1. Decision recorded then amended with the real-pooler result: NOT MET, waiting on the box (ADR 0100 says "NOT YET RUN").
-2. public.current_staff(): MET.
-3. Identity set in one place, only from the verified cookie: MET (rawSql allow-list test now exists).
-4. Real shared connection (one connection, x200, concurrent, after error, after timeout): NOT MET, waiting on the box. The
-   harness now forces one connection, fails unless A, B and nobody were served by one backend, and reads the setting directly
-   so it can run on the live pooler before the migration is deployed.
-5. Existing browser and speed suites: UNCLEAR until CI's browser job is green (signed-in queries are now 4 round trips).
-6. No rule switched on: MET from the code; live check waits on the box and the deployed migration.
-Unasked work: DB_POOL_MAX override, bin/check-pooler wrapper, uuid-shape test (all minor, all serve item 4).
-Wrapper: safe (reads DATABASE_URL from .env, never prints it; read-only).
-Risk named: check requires one backend for the whole run; Supavisor transaction mode may not promise that, so if the box run
-fails on that line, read the backend ids before calling it a leak.
-Risk named: the sql proxy ran a query twice when awaited through .catch/.finally/.execute (two inserts for a write).
+`athena done CP-2` (run in that session): CP-2 PASS. Proofs 1, 2, 3 and 5 pass. Proofs 4 and 6 are "box": they only run on the production box, so they were not run there.
 
-Builder's follow-up after this verdict (not re-verified): the double execution was real (reproduced: 8 rows where 5 expected).
-Fixed at the cause in apps/web/lib/db.ts (replaces postgres.js's single `handle` door, marks the query executed before the
-first await, keeps .values()/.raw()/.forEach, refuses cursor()/describe()). New check apps/web/scripts/check-identity-once.ts
-(each query runs once; needs TEST_DATABASE_URL) is run by packages/engine/tests/test_web_identity.py where the website's
-packages exist. Passes locally on a throwaway Postgres.
+1. Decision recorded, then amended with the real-connection result: MET.
+   - Proof 1 passes. ADR 0100 names the chosen option, A1, and the rejected options A2, A3, (b) and (c), each with a reason.
+   - Its "Result" section records the run on the real pooler: Nimish, on the box, 8 Nov, head 2f36a84. It says plainly that the orchestrator reported this run and that the builder did not see it. Recording a reported result, with its source named, is enough for this item.
+   - Not confirmed: no output from the box was available to the verifier; the reported lines match what check-pooler.ts prints.
+2. public.current_staff(): MET. Proof 2 passes. Returns a uuid or null and never raises.
+3. Identity set in one place, only from the verified cookie: MET. Proof 3 passes; the rawSql allow-list test exists.
+4. Real shared connection: UNCLEAR. Accepted for merge. The harness covers every case the scope lists. The only evidence it passed on Supabase's pooler is second-hand and at 2f36a84, not the head being merged; the only later change to db.ts runs the query through postgres.js's `handle` and leaves asking() (reserve, begin, set the setting, query, commit or rollback, release) unchanged. Proof 4 is check_box and must be re-run on the box after deploy, at the merged head, with its output shown, before CP-2 is called done in production. Nothing reads current_staff() yet, so a leak found after deploy would change no one's access.
+5. Existing browser and speed suites pass unchanged: NOT MET (not yet shown). Proof 5 only shows the test files are unchanged. PR #476 is a draft: on head 2c89555 the browser and engine shards were SKIPPED; the "browser" check is green only because it passes when its shards are left out (ci.yml:357-389). `bin/ci-plan decide --draft false` on this diff returns engine=true web=true browser=true, so once the PR is ready, CI runs all 3 browser shards (including the speed spec p6-check-is-quick.spec.ts) and all 12 engine shards. Limit: CI uses a local Postgres with no pooler, so it cannot measure the extra cost through the pooler (a reserved connection plus 4 round trips per signed-in query).
+6. No rule switched on, no row made invisible: MET from the code; the live check waits for deploy (proof 6, after merge).
 
-STILL OPEN, cannot be closed from the sandbox: run bin/check-pooler on the box (docs/notes/CP-2.md has the lines), amend
-ADR 0100 with the result, deploy the migration for proof 6, CI browser/speed green, then re-run the verifier.
+Unasked work: all small, all serving items 4 and 5 (DB_POOL_MAX override, bin/check-pooler, check-identity-once.ts and its runner, uuid-shape test, docs/notes/CP-2.md).
+Missing: a green browser and speed run on a non-draft PR (item 5); post-deploy box runs of proofs 4 and 6 (expected after merge).
+
+Risks: db.ts patches postgres.js internals (handle, executed, resolve, reject, isRaw, forEachFn), so an upgrade could silently break single execution or .values(); check-identity-once.ts guards this only where TEST_DATABASE_URL and node exist. identity() turns any resolver error into "nobody", harmless today, fail-closed under CP-3 but it hides the cause. Code that never imports lib/auth.ts runs anonymously (all pages call requireStaff; a note for CP-3). Each signed-in query reserves one of 4 pool connections for 4 round trips; only live use shows the effect. Migration is additive and non-destructive. bin/check-pooler never prints DATABASE_URL and is read-only. No real client data in the diff. The "proofs" check fails on 2c89555 only because this file's last verdict is not PASS.
+
+VERDICT: FAIL - mark PR #476 ready for review so CI's browser shards (with the speed spec) and engine shards run, and get them green at the head; then re-run the verifier. After merge, run proofs 4 and 6 on the box (ATHENA_ON_BOX=1) and show the output before CP-2 is called done in production.
+
+Not checked by the verifier: the box output itself (no access), and the shard logs from earlier heads.
