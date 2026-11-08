@@ -33,6 +33,17 @@ jobs:
         run: |
           printf '%s' "$BODY" > "$RUNNER_TEMP/pr-body.txt"
           python3 .claude/athena/bin/athena check-pr-scope --base "origin/${{ github.base_ref }}" --body-file "$RUNNER_TEMP/pr-body.txt"
+      - name: Requirements list is honest (a "done" claim names only proven lines; a harness change carries the list)
+        # Before any proof runs: the list is judged on what is committed, so the author's local output matches.
+        if: github.event_name == 'pull_request'
+        env:
+          BODY: ${{ github.event.pull_request.body }}
+        run: |
+          printf '%s' "$BODY" > "$RUNNER_TEMP/pr-body.txt"
+          python3 .claude/athena/bin/athena check-requirements --base "origin/${{ github.base_ref }}" --body-file "$RUNNER_TEMP/pr-body.txt"
+      - name: Learned skills reach main only through the weekly review (autoharness, ATH-21)
+        if: github.event_name == 'pull_request'
+        run: python3 .claude/athena/bin/athena check-learned --base "origin/${{ github.base_ref }}" --branch "${{ github.head_ref }}"
       - name: Any locked specs?
         id: specs
         run: if ls specs/*/LOCK >/dev/null 2>&1; then echo "any=true" >> "$GITHUB_OUTPUT"; else echo "any=false" >> "$GITHUB_OUTPUT"; echo "No locked specs yet; nothing to prove."; fi
@@ -53,3 +64,32 @@ jobs:
         if: github.event_name != 'pull_request' && steps.specs.outputs.any == 'true'
         # On main a retirement was already approved by its merge, so retired specs are skipped here.
         run: python3 .claude/athena/bin/athena done --all --ci --labels '["spec-retired"]'
+      - name: Interface checks (component registry, Impeccable, journey tests, screenshot baselines; pass without a web app)
+        if: github.event_name == 'pull_request'
+        env:
+          BODY: ${{ github.event.pull_request.body }}
+        run: |
+          B="origin/${{ github.base_ref }}"
+          A=.claude/athena/bin/athena
+          printf '%s' "$BODY" > "$RUNNER_TEMP/pr-body.txt"
+          python3 "$A" ui-registry --base "$B"
+          python3 "$A" ui-slop --base "$B"
+          python3 "$A" journey-check --base "$B"
+          python3 "$A" baseline-check --base "$B" --body-file "$RUNNER_TEMP/pr-body.txt"
+      - name: Journey tests in a real browser (axe and three widths; baselines are made here, not on the Mac)
+        if: github.event_name == 'pull_request'
+        run: python3 .claude/athena/bin/athena journey-run
+      - name: New screenshot baselines, to commit
+        if: failure() && github.event_name == 'pull_request'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: athena-snapshots
+          path: "**/*-snapshots/**"
+          if-no-files-found: ignore
+      - name: Research before build, and memory (a capability step has a scored decision record; a slice adds to the wiki log and playbook)
+        if: github.event_name == 'pull_request'
+        run: |
+          python3 .claude/athena/bin/athena check-capability --base "origin/${{ github.base_ref }}"
+          python3 .claude/athena/bin/athena check-memory --base "origin/${{ github.base_ref }}"
+      - name: Each skill, agent and routine runs on the model its kind asks for (models.json)
+        run: python3 .claude/athena/bin/athena check-models

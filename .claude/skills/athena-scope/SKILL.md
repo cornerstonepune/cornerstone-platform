@@ -1,5 +1,6 @@
 ---
 name: athena-scope
+model: opus
 description: Use when Nimish gives a GitHub issue (a number, a link or a spec ID like ATL-9), a scope file or a rough idea to build. Drafts the scope if needed, copies a locked scope into specs/<ID>/, has a separate agent write failing acceptance proofs, and locks them. Run before athena-build.
 ---
 
@@ -15,6 +16,14 @@ Draft the scope for him in plain English: **What**, **Done when** and **Out of s
   `gh api repos/{owner}/{repo}/issues -X POST -f title="<ID>: <title>" -F body=@<file>`.
   Use `gh api` (REST), not `gh issue`; some sessions block GitHub's GraphQL. If `gh` is not signed in, show Nimish the draft instead.
 - Also run `athena new <ID>` and copy the draft into `specs/<ID>/spec.md`, so the draft is in the repository too.
+- **Design first, for a tier 2 or 3 change** (`athena tier` on the files it will touch; tier 0 and 1 changes skip this step). One design path, in this order: the product questions first (ATH-10's questioning and architecture skills, where installed), then EGM's draft and review, then the milestone skills, then the scope lock. `specs/<ID>/design.md` describes the feature; `specs/<ID>/plan.md` (at build) describes the files. Before the scope is locked:
+  0. **Set up.** The plugin root is `.claude/plugins/egm`: read its `docs/claude.md` first, and pass absolute paths to every reviewer. The `Skill` tool refuses EGM skills, so run each one by reading its `SKILL.md` and following it in this thread. Start each EGM step, and each synthesizer task, with the line `EGM artifact directory: specs/<ID>/design-review`.
+  1. **Draft** the tier 2 or 3 design with `/egm:egm-draft` (`.claude/plugins/egm/skills/egm-draft/SKILL.md`), with `Context File` = `specs/<ID>/spec.md` and the draft target `specs/<ID>/design.md`.
+  2. **Review**, before the scope is locked, with `/egm:egm-review` (`.claude/plugins/egm/skills/egm-review/SKILL.md`), dispatching its goldfish reviewers with the Agent tool (`egm:egm-*` agents), which have not seen this conversation. Give them a `GoldfishContext` reading list: `specs/<ID>/spec.md`, `docs/HANDOFF.md`, the standard that applies (`.claude/athena/standards/`) and the files the change touches; never client data. Pick the preset yourself:
+     - all review stages (`Step: interactive`) for a new product, a tier 3 change, or a feature that adds a new capability or data model;
+     - `Step: feature_spec` ("Feature spec only") for any other tier 2 feature: stages 5 to 8, each with its own report (only the uninterrupted preset writes one consolidated report).
+  3. **Decide.** EGM leaves choices to the author without ranking them; Nimish is not technical, so for each choice recommend one option with its reason. Nimish decides only trade-offs a user would see; decide mechanical choices yourself and record them, with the reason, in `specs/<ID>/design.md`. Then save the approved design there and link it from the issue.
+  In an unattended run, skip the design and say in the issue that it still needs one (EGM in unattended runs is out of ATH-15's scope).
 - Stop there. He edits the issue and adds the label when he agrees. Never add `scope-locked` yourself.
 
 ## B. A locked scope exists

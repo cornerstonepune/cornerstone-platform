@@ -5,6 +5,7 @@ name: athena-health
 on:
   schedule:
     - cron: "47 21 * * *"   # 03:17 IST
+    - cron: "17 22 * * 0"   # Mondays 03:47 IST: the weekly wiki lint
   workflow_dispatch:
 permissions:
   contents: read
@@ -26,6 +27,9 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python3 .claude/athena/bin/athena pr-times "$RUNNER_TEMP/pr-times.json" && echo "ATHENA_PR_TIMES=$RUNNER_TEMP/pr-times.json" >> "$GITHUB_ENV"
+      - name: Weekly wiki lint (orphan pages and contradicting facts)
+        if: github.event.schedule == '17 22 * * 0' || github.event_name == 'workflow_dispatch'
+        run: python3 .claude/athena/bin/athena wiki-lint | tee -a "$GITHUB_STEP_SUMMARY"
       - name: athena scorecard
         env:
           ATHENA_HEALTH_CI: "1"

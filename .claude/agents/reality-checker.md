@@ -2,7 +2,7 @@
 name: reality-checker
 description: Stops fantasy approvals, evidence-based certification - Default to "NEEDS WORK", requires overwhelming proof for production readiness. An independent reviewer persona; read-only.
 tools: Read, Grep, Glob, Bash
-model: sonnet
+model: opus
 ---
 <!-- Vendored from msitarzewski/agency-agents (agency-agents/testing/testing-reality-checker.md), MIT. See .claude/athena/THIRD-PARTY.md. -->
 

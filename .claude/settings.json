@@ -79,7 +79,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 \"$CLAUDE_PROJECT_DIR/.claude/athena/bin/athena\" hook rtk",
+            "command": "[ -x \"$HOME/.athena/bin/rtk\" ] || command -v rtk >/dev/null 2>&1 || exit 0; PATH=\"$HOME/.athena/bin:$PATH\" rtk hook claude",
             "timeout": 15
           }
         ]
@@ -94,19 +94,28 @@
             "statusMessage": "canny: done-gate"
           }
         ]
-      },
-      {
-        "matcher": "Edit|Write",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "N=\"$HOME/.athena/bin/node\"; [ -x \"$N\" ] || N=node; \"$N\" \"$CLAUDE_PROJECT_DIR/.claude/skills/strategic-compact/scripts/hooks/suggest-compact.js\" || true",
-            "timeout": 10
-          }
-        ]
       }
     ],
     "PostToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$CLAUDE_PROJECT_DIR/.claude/athena/bin/athena\" hook ledger",
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$CLAUDE_PROJECT_DIR/.claude/athena/bin/athena\" hook ui-slop",
+            "timeout": 120
+          }
+        ]
+      },
       {
         "matcher": "Write|Edit|MultiEdit|NotebookEdit|Bash|PowerShell",
         "hooks": [
@@ -139,31 +148,23 @@
       "mcp__github__update_pull_request"
     ]
   },
-  "extraKnownMarketplaces": {
-    "athena": {
-      "source": {
-        "source": "github",
-        "repo": "nimishshah1989/athena-ops"
-      }
-    }
-  },
-  "enabledPlugins": {
-    "athena-mods@athena": true,
-    "autoharness@athena": true,
-    "spending-effort-with-jev@athena": true,
-    "toolgate@athena": true,
-    "winnow@athena": true,
-    "fast-jev-compaction@athena": true,
-    "jev@athena": true,
-    "ponytail@athena": true
-  },
   "env": {
     "AUTOHARNESS_DISABLE_GLOBAL": "1",
     "AUTOHARNESS_CAPACITY_PROJECT": "15",
     "PONYTAIL_DEFAULT_MODE": "full",
-    "WINNOW_MODE": "shadow",
+    "WINNOW_MODE": "active",
     "WINNOW_TOOLS": "Read,Grep",
     "WINNOW_SUMMARY": "0",
-    "WINNOW_MODEL": "jev-1.13.0"
+    "WINNOW_MODEL": "jev-1.13.0",
+    "AUTOHARNESS_REFLECT_EVERY_N": "150",
+    "RTK_SUPPRESS_HOOK_WARNING": "1",
+    "STRIX_TELEMETRY": "0",
+    "ARCHIFY_UPDATE_CHECK_DISABLED": "1",
+    "GRAPHIFY_BACKEND": "none",
+    "GRAPHIFY_NO_AUTO_REFRESH": "1",
+    "GRAPHIFY_NO_TIPS": "1",
+    "GRAPHIFY_QUERY_LOG": "~/.athena/graphify-queries.jsonl",
+    "DO_NOT_TRACK": "1",
+    "DISABLE_TELEMETRY": "1"
   }
 }

@@ -1,5 +1,6 @@
 ---
 name: thinking-out-loud
+model: sonnet
 description: >-
   A contract for what the agent does when a long, messy, stream-of-consciousness
   ramble arrives (usually voice dictation): act on nothing until the echo brief

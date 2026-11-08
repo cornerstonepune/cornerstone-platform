@@ -1,12 +1,13 @@
 {
   "commands": [
     "\"$CLAUDE_PROJECT_DIR\"/bin/check --claude",
-    "N=\"$HOME/.athena/bin/node\"; [ -x \"$N\" ] || N=node; \"$N\" \"$CLAUDE_PROJECT_DIR/.claude/skills/strategic-compact/scripts/hooks/suggest-compact.js\" || true",
+    "[ -x \"$HOME/.athena/bin/rtk\" ] || command -v rtk >/dev/null 2>&1 || exit 0; PATH=\"$HOME/.athena/bin:$PATH\" rtk hook claude",
     "if [ -x \"$HOME/.athena/bin/canny-hook\" ]; then \"$HOME/.athena/bin/canny-hook\"; elif command -v canny >/dev/null 2>&1; then canny hook --agent claude; fi",
     "python3 \"$CLAUDE_PROJECT_DIR/.claude/athena/bin/athena\" hook guard",
+    "python3 \"$CLAUDE_PROJECT_DIR/.claude/athena/bin/athena\" hook ledger",
     "python3 \"$CLAUDE_PROJECT_DIR/.claude/athena/bin/athena\" hook prompt",
-    "python3 \"$CLAUDE_PROJECT_DIR/.claude/athena/bin/athena\" hook rtk",
     "python3 \"$CLAUDE_PROJECT_DIR/.claude/athena/bin/athena\" hook session-start",
-    "python3 \"$CLAUDE_PROJECT_DIR/.claude/athena/bin/athena\" hook stop"
+    "python3 \"$CLAUDE_PROJECT_DIR/.claude/athena/bin/athena\" hook stop",
+    "python3 \"$CLAUDE_PROJECT_DIR/.claude/athena/bin/athena\" hook ui-slop"
   ]
 }

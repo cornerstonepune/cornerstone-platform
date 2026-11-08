@@ -1,9 +1,12 @@
 ---
 name: writing-plans
+model: sonnet
 description: Use when you have a spec or requirements for a multi-step task, before touching code
 ---
 
 # Writing Plans
+
+> **Athena:** a plan step that builds a capability (anything bigger than glue code: login, payments, a CRM, document ingestion) is tagged `[capability: NAME]` and names its decision record in `docs/decisions/`: `Capability: NAME`, `Chosen: <pick>`, and a table scoring at least 3 candidates on does the job, alive, licence, self-hosted, pinned and scanned, effort, cost. CI (`athena check-capability`) fails a plan that tags one without it. Save the plan to `specs/<ID>/plan.md`, and skip the "choose an execution method" question at the end: `athena-build` decides (`subagent-driven-development` for multi-task plans, otherwise you build the tasks yourself).
 
 ## Overview
 

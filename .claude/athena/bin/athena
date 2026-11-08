@@ -21,26 +21,37 @@ line tools, a cloud session, GitHub Actions).
   athena backfill-files             give each spec without a file list the folders its own commits changed
   athena done --all --ci [--base REF] [--labels JSON]   CI: touched specs only with --base, plus the fast checks
   athena scorecard [--json]         per component: times fired, sessions, cost, last fired (cloud and Mac sessions)
-  athena tokens [--days N]          tokens saved by rtk and Ponytail over the last N days (default 7)
+  athena tokens [--days N]          tokens saved by rtk and Ponytail over the last N days (default 7), then cost per model and
+                                    kind and the share that went to a bigger model than models.json asks for
+  athena check-models               CI: every skill, agent and scheduled routine is in models.json with the model its kind asks for
   athena rtk-install                install the pinned rtk release (session start does this when rtk is missing)
   athena measure-ponytail           weekly: the same task with and without Ponytail; records the output tokens saved
+  athena plugin-dirs                point ~/.claude/settings.json at this repo's .claude/plugins and install toolgate's CLI
+                                    if missing (the one setup line)
+  athena requirements [--json|--gate]   each line of requirements/harness.md with its status, computed from the specs and their recorded runs;
+                                    --gate exits 1 while a row (other than those the list excludes) is not proven
+  athena check-requirements --body-file F [--base REF]   CI: a "done" body may name only proven lines (R<n>); a harness change carries the list
   athena health                     one PASS/FAIL line per check; exit 1 if any fails
   athena verify-hooks               fail if a hook is not on the installer's allowlist or a VS Code task runs on folder open
   athena scan-ioc                   fail on a known indicator from the August npm worm (counts and file names only)
   athena check-scope-changes --base REF [--labels JSON]   CI: no silent scope edits
-  athena hook {session-start|guard|stop|prompt|rtk}       called by Claude Code
+  athena check-capability --base REF   CI: a plan step tagged [capability: NAME] has a decision record scoring 3+ candidates
+  athena check-memory --base REF       CI: in a repo with wiki/, a slice appends to wiki/log.md and adds to playbook.md
+  athena wiki-lint                  weekly: ORPHAN and CONTRADICTION lines for the wiki
+  athena hook {session-start|guard|stop|prompt|ui-slop|ledger}   called by Claude Code
 """
 import datetime as _dt
 import hashlib
 import json
 import os
 import re
+import shlex
 import subprocess
 import sys
 import time
 from pathlib import Path
 
-VERSION = "2.7.0"
+VERSION = "2.13.0"
 ID_RE = re.compile(r"^[A-Z][A-Z0-9]*-\d+$")
 STRIKE_LIMIT = 3
 CHECK_TIMEOUT = int(os.environ.get("ATHENA_CHECK_TIMEOUT", "900"))
@@ -483,6 +494,9 @@ def cmd_done(args):
     for i in ids:
         print(f"ran {i}")
         results.append(run_checks(i))
+        r = results[-1]  # the recorded run: what `athena requirements` reads to call a line proven
+        (SPECS / i / "RUN.json").write_text(json.dumps(
+            {"ok": r["ok"], "passed": r["passed"], "failed": r["failed"], "ran_at": now_iso()}, indent=1) + "\n")
     for r in results:
         print(describe(r))
     if fast is not None:
@@ -503,6 +517,112 @@ def cmd_done(args):
     return 0 if ok else 1
 
 
+# ---------------------------------------------------------------- the requirements list (ATH-17)
+REQ_ORDER = ["NONE", "draft", "locked", "building", "proven"]  # weakest first: a row takes its weakest spec
+DONE_RE = re.compile(r"\b(done|complete|completed|shipped|finished)\b", re.I)
+
+
+def _done_lines(d: Path):
+    m = re.search(r"^##\s+Done when\s*\n(.*?)(?=^##\s|\Z)", (d / "spec.md").read_text() if (d / "spec.md").exists() else "", re.S | re.M)
+    return sorted({int(n) for n in re.findall(r"^\s*(\d+)\.", m.group(1), re.M)}) if m else []
+
+
+def _spec_status(sid: str, lines_text: str) -> str:
+    d = SPECS / sid
+    if not d.is_dir():
+        return "draft"  # the scope exists only as an issue
+    building = read_status(d).get("status") == "building"
+    if not (d / "LOCK").exists():
+        return "building" if building else "draft"
+    if lines_text and "#" not in lines_text:  # "(5-7)" or "(1, 3)"; "(#31)" is an issue number, not lines
+        need = {k for a, b in re.findall(r"(\d+)(?:\s*[-–]\s*(\d+))?", lines_text) for k in range(int(a), int(b or a) + 1)}
+    else:
+        need = set(_done_lines(d))
+    try:
+        passed = json.loads((d / "RUN.json").read_text()).get("passed", [])
+    except Exception:
+        passed = []
+    # shortcut: RUN.json is trusted as committed; CI re-runs touched and nightly specs, which rewrites it
+    if need and all(any(p.startswith(f"{k} ") for p in passed) for k in need):
+        return "proven"
+    return "building" if building else "locked"
+
+
+def _requirement_rows():
+    f = ROOT / "requirements" / "harness.md"
+    if not f.exists():
+        die("requirements/harness.md is missing", 2)
+    rows = []
+    for line in f.read_text().splitlines():
+        m = re.match(r"\|\s*(\d+)\s*\|(.*?)\|(.*?)\|", line)
+        if m:
+            scope = m.group(3).strip()
+            found = [_spec_status(s, p) for s, p in re.findall(r"([A-Z][A-Z0-9]*-\d+)(?:\s*\(([^)]*)\))?", scope)]
+            rows.append({"n": int(m.group(1)), "status": min(found, key=REQ_ORDER.index) if found else "NONE",
+                         "scope": scope, "ask": re.sub(r"\s+", " ", m.group(2)).strip()})
+    return rows
+
+
+def _requirements_text(rows) -> str:
+    return "\n".join(f"{r['n']:>2}  {r['status']:<8} {r['ask']}  [{r['scope']}]" for r in rows) + "\n"
+
+
+def cmd_requirements(args):
+    rows = _requirement_rows()
+    if "--gate" in args:  # before the final rollout: every row proven, except the rows the list excludes (rules of work)
+        listing = (ROOT / "requirements" / "harness.md").read_text()
+        skip = {int(n) for m in re.findall(r"^Excluded from the gate:\s*(.+)$", listing, re.M) for n in re.findall(r"\d+", m)}
+        open_ = [r for r in rows if r["n"] not in skip and r["status"] != "proven"]
+        print(f"gate: {len(open_)} of {len(rows) - len(skip & {r['n'] for r in rows})} rows not proven" +
+              "".join(f"\n  R{r['n']} {r['status']}: {r['ask']}" for r in open_))
+        return 1 if open_ else 0
+    if "--json" in args:
+        print(json.dumps(rows, indent=1))
+    else:
+        sys.stdout.write(_requirements_text(rows))
+    return 0
+
+
+def cmd_check_requirements(args):
+    body_file, base = _opt(args, "--body-file"), _opt(args, "--base")
+    if not body_file:
+        die("--body-file is required")
+    if not (ROOT / "requirements" / "harness.md").exists():  # this workflow ships to every repository; only athena-ops has the list
+        print("no requirements list in this repository; nothing to check")
+        return 0
+    body = Path(body_file).read_text().replace("\r\n", "\n")
+    rows = _requirement_rows()
+    by_n = {r["n"]: r for r in rows}
+    bad = []
+    if DONE_RE.search(body):
+        for n in sorted({int(x) for x in re.findall(r"\bR(\d+)\b", body)}):
+            r = by_n.get(n)
+            if not r:
+                bad.append(f"R{n} is not a line of requirements/harness.md")
+            elif r["status"] != "proven":
+                bad.append(f"R{n} is {r['status']}, not proven: {r['ask']}")
+    if base:
+        changed = changed_files(base)
+        if changed is None:
+            die("could not diff against base", 2)
+        if any(c.startswith(("harness/", "plugins/", ".claude/athena/")) for c in changed):
+            listing = _requirements_text(rows).strip()
+            if listing not in body:
+                bad.append("this changes the harness, so the description must carry the output of `athena requirements`:\n" + _requirements_text(rows))
+            # Nimish, 7 Nov: a harness change may not claim anything finished while a line with a scope is unproven
+            claims = "\n".join(l for l in body.replace(listing, "").splitlines() if not l.lstrip().startswith("#"))
+            claims = re.sub(r"(?i)done when", "", claims)  # the athena-ship table header, not a claim
+            open_ = [r for r in rows if r["status"] not in ("proven", "NONE")]
+            if DONE_RE.search(claims) and open_:
+                bad.append(f"this claims something finished while {len(open_)} lines of the list are not proven "
+                           f"({', '.join('R%d' % r['n'] for r in open_)}); say built or working until they are")
+    if bad:
+        print("requirements check failed:\n" + "\n".join(bad))
+        return 1
+    print("requirements check: ok")
+    return 0
+
+
 def _files_covered():
     """The folders this build changed, outside specs/: what CI uses to tell which specs a pull request touches."""
     files = _session_files() or []
@@ -513,6 +633,11 @@ def cmd_finish(args):
     if not args:
         die("usage: athena finish ID")
     spec_id = args[0]
+    if web_apps() and any(f.endswith(UI_FILES) for f in (_session_files() or [])):
+        write_status(spec_dir(spec_id), ui=True)  # the files decide whether a slice has an interface, not the model
+    missing = ui_missing(spec_id)  # checked first: it is quick, and no proof run can supply it
+    if missing:
+        die(f"{spec_id} is not ready to try; missing: " + "; ".join(missing), 1)
     res = run_checks(spec_id)
     if not res["ok"]:
         print(describe(res))
@@ -526,8 +651,8 @@ def cmd_finish(args):
     _strikes_reset(spec_id)
     tail = (f" {len(res['box'])} box-only proof(s) must still pass on the production box after deploy."
             if res["box"] else "")
-    print(f"{spec_id} built: every proof that can run here passes.{tail} It now waits for Nimish's review "
-          "of the pull request.")
+    print(f"{spec_id} built: every proof that can run here passes.{tail} Ship it: merge it under the merge "
+          "rule once every gate holds.")
     return 0
 
 
@@ -746,6 +871,10 @@ def cmd_health(args):
     sys.path.insert(0, str(Path(__file__).resolve().parent))
     import athena_measure
     results = athena_measure.health(ROOT, Path.home(), VERSION)
+    for app in web_apps():  # shadcn's own init makes components/ui; components.json alone sets nothing up (ATH-13)
+        if (app / "components.json").exists() and not any((app / p).is_dir() for p in UI_DIRS):
+            results.append(("FAIL", f"{app.relative_to(ROOT)}: components.json but no components/ui; "
+                                    f"run `cd {app.relative_to(ROOT)} && npx shadcn@4.23.0 init`"))
     print(athena_measure.render(results))
     return 1 if any(s == "FAIL" for s, _ in results) else 0
 
@@ -832,7 +961,7 @@ def _push_problem(cmd: str):
         if not refspecs or "HEAD" in targets:
             targets.append(_current_branch())
         if any(t in ("main", "master") for t in targets):
-            return "Never push to main or master. Push a feature branch and open a pull request; Nimish merges."
+            return "Never push to main or master. Push a feature branch and open a pull request; merge it under the merge rule once every gate holds."
     return None
 
 
@@ -841,6 +970,34 @@ def _deny(reason):
                                              "permissionDecision": "deny",
                                              "permissionDecisionReason": reason}}))
     return 0
+
+
+SKILLS_CLI = "1.7.6"  # vercel-labs/skills, the CLI find-skills calls; its telemetry is off through DO_NOT_TRACK (stack.json)
+PRODUCT_DOCS = ("BRIEF", "ARCHITECTURE", "DESIGN")
+APPROVED = r"^status:\s*approved\s*$"
+NOT_PRODUCT_CODE = ("product", "docs", "wiki", "specs", ".claude", ".github")
+
+
+def _approved(p: Path) -> bool:
+    return p.exists() and re.search(APPROVED, p.read_text(errors="replace"), re.I | re.M) is not None
+
+
+def _product_gate(path: Path):
+    """In a product repository (one with product/), product code waits for an approved brief, architecture and design."""
+    if not (ROOT / "product").is_dir():
+        return None
+    try:
+        rel = path.resolve().relative_to(ROOT.resolve())
+    except ValueError:
+        return None
+    if rel.suffix == ".md" or (rel.parts and rel.parts[0] in NOT_PRODUCT_CODE):
+        return None
+    waiting = [n for n in PRODUCT_DOCS if not _approved(ROOT / "product" / f"{n}.md")]
+    if not waiting:
+        return None
+    return (f"No product code before the brief, architecture and design are approved. Waiting on: "
+            + ", ".join(f"product/{n}.md" for n in waiting)
+            + ". Each is approved by a line `Status: approved` once Nimish signs it off (stages 0 to 2).")
 
 
 def hook_guard(payload):
@@ -862,6 +1019,12 @@ def hook_guard(payload):
             return _deny(f"{rel} is Athena's own state; it is changed only by the athena command.")
         except Exception:
             pass
+        gate = _product_gate(path)
+        if gate:
+            return _deny(gate)
+        new = str(ti.get("content") or "") + str(ti.get("new_string") or "") + "".join(str(e.get("new_string") or "") for e in ti.get("edits") or [])
+        if path.parent.name == "product" and path.stem in PRODUCT_DOCS and re.search(APPROVED, new, re.I | re.M):
+            return _deny(f"Only Nimish approves product/{path.name}. Leave its status as it is and ask him to sign it off.")
         return 0
     if tool == "Bash":
         cmd = ti.get("command", "")
@@ -886,6 +1049,12 @@ def hook_guard(payload):
             return _deny(problem)
         if "--no-verify" in cmd:
             return _deny("Skipping git hooks (--no-verify) is not allowed.")
+        if re.search(r"(?:--(?:add-)?labels?|\s-l)[=\s]+[\"']?[\w ,-]*\bscope-locked\b|labels[^;&|]*\bscope-locked\b", cmd):
+            return _deny("Only Nimish adds the scope-locked label. File the issue with the Scope form and ask him to lock it.")
+        for m in re.finditer(r"\b(?:npx|bunx|pnpm\s+dlx|npm\s+exec)\s+(?:-\S+\s+)*skills(@[\w.]+)?\s+(\w+)", cmd):
+            if m.group(1) != f"@{SKILLS_CLI}" or m.group(2) != "find":
+                return _deny(f"find-skills searches only: `npx skills@{SKILLS_CLI} find <query>`. A skill is adopted as a "
+                             "pinned, reviewed copy in harness/template/skills (athena-ops), never installed with `skills add`.")
     return 0
 
 
@@ -929,14 +1098,19 @@ RTK_HOME = Path.home() / ".athena" / "bin"
 
 def _rtk():
     import shutil
-    return shutil.which("rtk") or (str(RTK_HOME / "rtk") if (RTK_HOME / "rtk").exists() else None)
+    return str(RTK_HOME / "rtk") if (RTK_HOME / "rtk").exists() else shutil.which("rtk")
 
 
 def cmd_rtk_install(args):
-    """Install the pinned rtk release into ~/.athena/bin after checking its SHA-256. Quiet when already there."""
+    """Install the pinned rtk release into ~/.athena/bin after checking its SHA-256. Quiet when that version is there;
+    another rtk elsewhere (Homebrew) does not count, so the Mac and the cloud run the same release (ATH-21)."""
     import hashlib as _h, platform, tarfile, tempfile, urllib.request
-    if _rtk():
-        return 0
+    try:
+        have = subprocess.run([str(RTK_HOME / "rtk"), "--version"], capture_output=True, text=True, timeout=10).stdout
+    except OSError:
+        have = ""
+    if have.split()[1:2] == [RTK_VERSION]:
+        return _rtk_on_path()
     asset = RTK_SHA256.get((platform.system(), platform.machine()))
     if not asset:
         die(f"no pinned rtk for {platform.system()} {platform.machine()}", 1)
@@ -952,6 +1126,20 @@ def cmd_rtk_install(args):
             member = next(m for m in t.getmembers() if Path(m.name).name == "rtk" and m.isfile())
             (RTK_HOME / "rtk").write_bytes(t.extractfile(member).read())
     (RTK_HOME / "rtk").chmod(0o755)
+    return _rtk_on_path()
+
+
+def _rtk_on_path():
+    """rtk's native hook rewrites a command to plain `rtk ...`, so the pinned binary must be on the shell's PATH:
+    link it from ~/.local/bin (on PATH in cloud sessions and where uv installs on the Mac). A real file there is kept."""
+    link = Path.home() / ".local" / "bin" / "rtk"
+    if link.exists() and not link.is_symlink():
+        print(f"warning: {link} is not Athena's pinned rtk; remove it so every session runs rtk {RTK_VERSION}",
+              file=sys.stderr)
+        return 1
+    link.parent.mkdir(parents=True, exist_ok=True)
+    link.unlink(missing_ok=True)
+    link.symlink_to(RTK_HOME / "rtk")
     return 0
 
 
@@ -966,20 +1154,123 @@ def _rtk_saved():
         return 0
 
 
-def hook_rtk(payload):
-    """PreToolUse on Bash: let rtk shorten the command's output. No rtk on this machine: change nothing."""
-    exe = _rtk()
-    cmd = (payload.get("tool_input") or {}).get("command")
-    if not exe or not cmd:
+# ---- autoharness's lifecycle state travels with its skills (ATH-21) ---------------------------------------------
+# autoharness counts requests (.claude/autoharness/requests) and keeps each learned skill's .ledger.jsonl (its marker)
+# and .sidecar.json (use/view/patch) beside the skill. A cloud session starts from a fresh clone, so that state is
+# carried on origin's `athena-learned` branch: each commit is origin/main's tree plus these files, so the one weekly
+# review pull request (routines/weekly-skill-review.md) from that branch to main shows only learned skills and state.
+LEARNED = "athena-learned"
+LEARNED_REF = f"refs/remotes/origin/{LEARNED}"
+REQUESTS = ".claude/autoharness/requests"
+
+
+def _learned_files(root=None) -> list:
+    """Repository-relative paths of autoharness's tracking state in the working tree (locks excluded)."""
+    root = Path(root or ROOT)
+    out = [REQUESTS] if (root / REQUESTS).is_file() else []
+    for ledger in sorted((root / ".claude" / "skills").rglob(".ledger.jsonl")):
+        for f in sorted(ledger.parent.rglob("*")):
+            if f.is_file() and not f.name.endswith(".lock"):
+                out.append(f.relative_to(root).as_posix())
+    return out
+
+
+def _is_learned(rel: str, ledgers: set) -> bool:
+    parts = rel.split("/")
+    return rel == REQUESTS or (rel.startswith(".claude/skills/") and
+                               any("/".join(parts[:i]) in ledgers for i in range(3, len(parts))))
+
+
+def _git_ok(*args, env=None, inp=None):
+    r = subprocess.run(["git", *args], cwd=str(ROOT), capture_output=True, text=True, env=env, input=inp, timeout=60)
+    return r.stdout.strip() if r.returncode == 0 else None
+
+
+def _exclude(paths):
+    """Hide restored, untracked learned files from `git status` on this machine only (.git/info/exclude)."""
+    info = _git_ok("rev-parse", "--git-path", "info/exclude")
+    if not info:
+        return
+    f = ROOT / info
+    have = set(f.read_text().splitlines()) if f.exists() else set()
+    new = [f"/{p}" for p in paths if f"/{p}" not in have and _git_ok("ls-files", "--error-unmatch", p) is None]
+    if new:
+        f.parent.mkdir(parents=True, exist_ok=True)
+        f.write_text("".join(l + "\n" for l in sorted(have) + new if l))
+
+
+def learned_restore() -> bool:
+    """Session start: bring origin's athena-learned copies of the tracking state into the working tree."""
+    if _git_ok("fetch", "-q", "origin", f"+refs/heads/{LEARNED}:{LEARNED_REF}") is None:
+        # no branch yet (ls-remote exits 2) is a clean start; no origin or no network is not
+        r = subprocess.run(["git", "ls-remote", "--exit-code", "origin", LEARNED], cwd=str(ROOT), capture_output=True, timeout=60)
+        return r.returncode == 2
+    import io, tarfile
+    tar = subprocess.run(["git", "archive", "--format=tar", LEARNED_REF, "--", ".claude"], cwd=str(ROOT),
+                         capture_output=True, timeout=60).stdout
+    restored = []
+    with tarfile.open(fileobj=io.BytesIO(tar)) as t:
+        members = [m for m in t.getmembers() if m.isfile()]
+        ledgers = {m.name.rsplit("/", 1)[0] for m in members if m.name.endswith("/.ledger.jsonl")}
+        for m in members:
+            if _is_learned(m.name, ledgers):
+                dest = ROOT / m.name
+                dest.parent.mkdir(parents=True, exist_ok=True)
+                dest.write_bytes(t.extractfile(m).read())
+                restored.append(m.name)
+    _exclude(restored)
+    return True
+
+
+def learned_push() -> bool:
+    """Stop: put this working tree's tracking state on origin's athena-learned branch (git plumbing, no checkout)."""
+    files = _learned_files()
+    if not files or _git_ok("fetch", "-q", "origin", "+refs/heads/main:refs/remotes/origin/main") is None:
+        return False
+    _git_ok("fetch", "-q", "origin", f"+refs/heads/{LEARNED}:{LEARNED_REF}")
+    prev = _git_ok("rev-parse", "-q", "--verify", LEARNED_REF)
+    main = _git_ok("rev-parse", "-q", "--verify", "refs/remotes/origin/main")
+    if not main:
+        return False
+    idx = STATE / "learned.index"
+    STATE.mkdir(exist_ok=True)
+    env = {**os.environ, "GIT_INDEX_FILE": str(idx), "GIT_AUTHOR_NAME": "athena", "GIT_AUTHOR_EMAIL": "athena@localhost",
+           "GIT_COMMITTER_NAME": "athena", "GIT_COMMITTER_EMAIL": "athena@localhost"}
+    try:
+        idx.unlink(missing_ok=True)
+        _git_ok("read-tree", main, env=env)
+        for rel in files:
+            blob = _git_ok("hash-object", "-w", "--", rel)
+            _git_ok("update-index", "--add", "--cacheinfo", f"100644,{blob},{rel}", env=env)
+        tree = _git_ok("write-tree", env=env)
+        if prev and _git_ok("rev-parse", prev + "^{tree}") == tree:
+            return True
+        parents = [x for p in dict.fromkeys([prev, main]) if p for x in ("-p", p)]
+        commit = _git_ok("commit-tree", tree, *parents, "-m", "autoharness: learned skills and tracking state", env=env)
+        ok = bool(commit) and _git_ok("push", "-q", "origin", f"{commit}:refs/heads/{LEARNED}") is not None
+        if ok:
+            _exclude(files)
+        return ok
+    finally:
+        idx.unlink(missing_ok=True)
+
+
+def cmd_check_learned(args):
+    """CI: learned skills and their tracking state reach main only through the weekly review (branch athena-learned)."""
+    base = _opt(args, "--base") or die("usage: athena check-learned --base REF [--branch NAME]")
+    branch = _opt(args, "--branch") or os.environ.get("GITHUB_HEAD_REF") or _git_ok("rev-parse", "--abbrev-ref", "HEAD")
+    if branch == LEARNED:
         return 0
-    out = subprocess.run([exe, "rewrite", cmd], capture_output=True, text=True, timeout=10)
-    new = out.stdout.strip()
-    if out.returncode != 0 or not new or new == cmd:
-        return 0
-    print(json.dumps({"hookSpecificOutput": {"hookEventName": "PreToolUse", "permissionDecision": "allow",
-                                             "permissionDecisionReason": "rtk shortens this command's output",
-                                             "updatedInput": {**payload["tool_input"], "command": new}}}))
-    return 0
+    changed = (_git_ok("diff", "--name-only", f"{base}...HEAD") or "").split()
+    ledgers = set()
+    for ref in (base, "HEAD"):
+        ledgers |= {p.rsplit("/", 1)[0] for p in (_git_ok("ls-tree", "-r", "--name-only", ref, "--", ".claude/skills") or "").split()
+                    if p.endswith("/.ledger.jsonl")}
+    bad = [p for p in changed if _is_learned(p, ledgers)]
+    for p in bad:
+        print(f"{p}: autoharness's learned skills and state reach main only through the weekly review pull request "
+              f"from {LEARNED} (routines/weekly-skill-review.md); drop it from this branch (git restore --source {base} -- {p})")
+    return 1 if bad else 0
 
 
 def _record_session(payload):
@@ -993,6 +1284,7 @@ def _record_session(payload):
     start = int(base.read_text()) if base.exists() else 0
     rec = athena_measure.session_record(ROOT, payload.get("transcript_path"), sid, max(0, _rtk_saved() - start))
     athena_measure.save(ROOT, rec)
+    athena_measure.catch_up(ROOT, Path.home(), sid)
 
 
 PONYTAIL_SHA = "9b58c1ffb790c075ca32e70a89cf1d80588f4abf"  # the commit the athena marketplace pins
@@ -1033,8 +1325,49 @@ def cmd_tokens(args):
     sys.path.insert(0, str(Path(__file__).resolve().parent))
     import athena_measure
     for name, n in athena_measure.tokens(ROOT, days).items():
-        print(f"{name}: {n} tokens saved")
+        print(f"{name}: {n} tokens saved" if n is not None else
+              f"{name}: not measured in the last {days} days (no ponytail-measure record), so no saving is claimed")
+    print("\n".join(athena_measure.model_report(ROOT, days)))
     return 0
+
+
+def cmd_check_models(args):
+    """Every first-party skill, agent and scheduled routine is in models.json and names the model its kind asks for."""
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import athena_measure
+    t = athena_measure.models_table(ROOT)
+    kinds, names = t.get("kinds", {}), t.get("names", {})
+    if not (kinds and names):
+        print("MODELS no models.json (or it has no kinds and names)")
+        return 1
+    found = []  # (file, name, model line value)
+    for base in (".claude", "harness/template"):
+        for f in sorted((ROOT / base / "skills").glob("*/SKILL.md")) + sorted((ROOT / base / "agents").glob("*.md")):
+            m = re.search(r"\A---\n(.*?)\n---", f.read_text(errors="replace"), re.S)
+            mm = re.search(r"^model:\s*(\S+)", m.group(1), re.M) if m else None
+            found.append((f, f.parent.name if f.name == "SKILL.md" else f.stem, mm and mm.group(1)))
+    for f in sorted((ROOT / "routines").glob("*.md")):
+        text = f.read_text(errors="replace")
+        if re.search(r"^- Schedule:", text, re.M):
+            n, mm = re.search(r"^- Name: `?([\w-]+)", text, re.M), re.search(r"^- Model:\s*(\w+)", text, re.M)
+            found.append((f, n.group(1) if n else f.stem, mm and mm.group(1)))
+    bad = []
+    for f, name, model in found:
+        fam = athena_measure.family(model or "")
+        want = kinds.get(names.get(name))
+        if not model:
+            bad.append(f"{name}: no model line ({f.relative_to(ROOT)})")
+        elif not fam:
+            bad.append(f"{name}: unknown model '{model}' ({f.relative_to(ROOT)})")
+        elif name not in names:
+            bad.append(f"{name}: not in models.json ({f.relative_to(ROOT)})")
+        elif fam != want:
+            bad.append(f"{name}: says {fam}, models.json asks for {want} ({f.relative_to(ROOT)})")
+    for b in bad:
+        print(f"MODELS {b}")
+    if not bad:
+        print(f"models check: {len(found)} skills, agents and routines agree with models.json")
+    return 1 if bad else 0
 
 
 def hook_stop(payload):
@@ -1042,6 +1375,11 @@ def hook_stop(payload):
         _record_session(payload)
     except Exception as e:  # measuring must never hold a session
         print(f"athena: session record not saved: {e}", file=sys.stderr)
+    try:  # only a session that restored the branch's state may overwrite it (a failed restore would lose skills)
+        if not (STATE / "learned-unrestored").exists():
+            learned_push()
+    except Exception as e:
+        print(f"athena: learned skills not saved to {LEARNED}: {e}", file=sys.stderr)
     sid = active_id()
     if not sid:
         # No spec: a tier 0 or 1 change still has to pass the repository's fast checks before the session ends.
@@ -1087,7 +1425,10 @@ def hook_stop(payload):
 
 def hook_prompt(payload):
     prompt = payload.get("prompt") or ""
-    ids = re.findall(r"\bUNLOCK\s+([A-Z][A-Z0-9]*-\d+)\b", prompt)
+    # Only a message that is nothing but the unlock line counts: Nimish types it. A brief, a subagent's report or tool
+    # output that quotes "UNLOCK <ID>" arrives as a prompt too (7 Nov: a relayed brief unlocked ATH-13).
+    m = re.fullmatch(r"\s*UNLOCK((?:\s+[A-Z][A-Z0-9]*-\d+)+)\s*", prompt)
+    ids = m[1].split() if m else []
     if not ids:
         return 0
     STATE.mkdir(exist_ok=True)
@@ -1119,17 +1460,61 @@ def _refresh_assurance():
         return None
 
 
+def _canny_trust():
+    """Canny obeys .canny.json's verify list only after `canny trust` (its README). Trust it only while it is exactly
+    the copy the harness ships, so an edited file (by anyone, or an agent that was blocked) stays untrusted."""
+    shipped, cfg = HARNESS / "canny.json", ROOT / ".canny.json"
+    if not (shipped.is_file() and cfg.is_file() and cfg.read_bytes() == shipped.read_bytes()):
+        return
+    import shutil
+    exe = Path.home() / ".athena" / "bin" / "canny"
+    exe = str(exe) if os.access(exe, os.X_OK) else shutil.which("canny")
+    if exe:
+        subprocess.run([exe, "trust"], cwd=str(ROOT), capture_output=True, timeout=30)
+
+
+def _pick_lessons(query: str, lessons: list, most=10, least=5) -> list:
+    """The lessons that share the most words with the current work; the newest fill up to `least` when few match."""
+    words = lambda t: set(re.findall(r"[a-z0-9]{4,}", t.lower()))
+    q = words(query)
+    scored = sorted(((len(q & words(l)), i) for i, l in enumerate(lessons)), key=lambda x: (-x[0], -x[1]))
+    keep = [i for score, i in scored if score][:most]
+    for i in range(len(lessons) - 1, -1, -1):
+        if len(keep) >= least:
+            break
+        if i not in keep:
+            keep.append(i)
+    return [lessons[i] for i in sorted(keep)]
+
+
 def hook_session_start(payload):
     lines = [f"Athena harness v{VERSION} is installed in this repo. Read .claude/athena/CLAUDE.md if you have not."]
     try:
-        if not _rtk():  # fetch the pinned rtk in the background; the session does not wait for it
+        if not (RTK_HOME / "rtk").exists():  # fetch the pinned rtk in the background; the session does not wait for it
             subprocess.Popen([sys.executable, str(Path(__file__).resolve()), "rtk-install"], cwd=ROOT,
                              stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, start_new_session=True)
-        elif payload.get("session_id"):
-            STATE.mkdir(exist_ok=True)
-            (STATE / f"rtk0-{payload['session_id']}").write_text(str(_rtk_saved()))
+        else:
+            if not (Path.home() / ".local" / "bin" / "rtk").exists():
+                _rtk_on_path()  # rtk's hook rewrites to plain `rtk ...`: it must be on the shell's PATH
+            if payload.get("session_id"):
+                STATE.mkdir(exist_ok=True)
+                (STATE / f"rtk0-{payload['session_id']}").write_text(str(_rtk_saved()))
     except Exception:
         pass
+    try:  # the plugin setting follows the repository opened last (the Mac); quiet, never fails the hook
+        plugin_dirs()
+    except Exception:
+        pass
+    try:
+        STATE.mkdir(exist_ok=True)
+        (STATE / "learned-unrestored").write_text(now_iso())  # first: a hook killed mid-restore must not let Stop overwrite the branch
+        if learned_restore():
+            (STATE / "learned-unrestored").unlink(missing_ok=True)
+        else:
+            lines.append(f"autoharness's learned skills could not be fetched from {LEARNED}; they are not saved this session.")
+    except Exception:
+        pass
+    _canny_trust()
     handoff = ROOT / "docs" / "HANDOFF.md"
     if read_config().get("proof_data") == "real":
         lines.append("Proof data: REAL. This repo forbids synthetic, mocked or placeholder data, even in tests. "
@@ -1146,20 +1531,42 @@ def hook_session_start(payload):
     built = [i for i in specs if read_status(SPECS / i).get("status") == "built"]
     if built:
         lines.append("Built, awaiting Nimish's review: " + ", ".join(built))
-    if handoff.exists():
-        top = [l for l in handoff.read_text().splitlines() if l.strip()][:30]
-        lines.append(f"Where things stand ({handoff.relative_to(ROOT)}, top lines; rewrite it before you end the session):")
-        lines += top
-    if LEARNINGS.exists():
-        tail = [l for l in LEARNINGS.read_text().splitlines() if l.startswith("- ")][-15:]
-        if tail:
-            lines.append("Lessons this repo has learned (apply them):")
-            lines += tail
     grade = _refresh_assurance()
     if grade:
         lines.append(f"Assurance grade on main: {grade}. Read ASSURANCE.md on the assurance branch before "
                      "claiming a change improves quality.")
-    ctx = "\n".join(lines)[:9500]
+    if (ROOT / "product").is_dir():  # a product repository: brief, milestone and slice, wiki index, playbook
+        brief = ROOT / "product" / "BRIEF.md"
+        m = re.search(r"^## Summary\s*\n(.*?)(?=^## |\Z)", brief.read_text(errors="replace"), re.M | re.S) if brief.exists() else None
+        if m:
+            lines.append("The product (product/BRIEF.md, summary):")
+            lines += [l for l in m.group(1).splitlines() if l.strip()][:6]
+        lines += [f"{k}: {_progress_field(k)}" for k in ("Stage", "Milestone", "Slice") if _progress_field(k)]
+        index = ROOT / "wiki" / "index.md"
+        if index.exists():
+            lines.append("Wiki index (wiki/index.md; open pages on demand):")
+            lines += [l for l in index.read_text(errors="replace").splitlines() if l.strip()][:20]
+        source, query = ROOT / "playbook.md", _progress_field("Slice") + " " + _progress_field("Milestone")
+    else:
+        if handoff.exists():
+            top = [l for l in handoff.read_text().splitlines() if l.strip()][:20]
+            lines.append(f"Where things stand ({handoff.relative_to(ROOT)}, top lines; rewrite it before you end the session):")
+            lines += top
+        spec = SPECS / a / "spec.md" if a else None
+        source, query = LEARNINGS, (spec.read_text(errors="replace")[:2000] if spec and spec.exists() else "")
+    if source.exists():
+        picked = _pick_lessons(query, [l for l in source.read_text(errors="replace").splitlines() if l.startswith("- ")])
+        if picked:
+            lines.append(f"Lessons that match this work ({source.relative_to(ROOT)}; apply them):")
+            lines += picked
+    page, size = [], 0  # at most one page
+    for l in lines[:60]:
+        l = l[:400]
+        if size + len(l) + 1 > 5000:
+            break
+        page.append(l)
+        size += len(l) + 1
+    ctx = "\n".join(page)
     print(json.dumps({"hookSpecificOutput": {"hookEventName": "SessionStart", "additionalContext": ctx}}))
     return 0
 
@@ -1172,16 +1579,25 @@ def cmd_hook(args):
     except Exception:
         payload = {}
     fn = {"guard": hook_guard, "stop": hook_stop, "prompt": hook_prompt,
-          "session-start": hook_session_start, "rtk": hook_rtk}.get(args[0])
+          "session-start": hook_session_start,
+          "ui-slop": hook_ui_slop, "ledger": hook_ledger}.get(args[0])
     if not fn:
         die(f"unknown hook {args[0]}")
     try:
-        return fn(payload)
+        code = fn(payload)
     except SystemExit:
         raise
     except Exception as e:  # a broken hook must never wedge the session
         print(f"athena hook {args[0]} error: {e}", file=sys.stderr)
         return 0
+    try:  # written only once the hook has done its work: the scorecard's evidence that it acted (ATH-16, ATH-21)
+        if payload.get("session_id"):
+            mark = STATE / "fired" / str(payload["session_id"]).replace("/", "_")
+            mark.mkdir(parents=True, exist_ok=True)
+            (mark / args[0]).touch()
+    except OSError:
+        pass
+    return code
 
 
 # ---------------------------------------------------------------- main
@@ -1315,6 +1731,551 @@ def cmd_scan_ioc(args):
     return 1 if total else 0
 
 
+# ---- the plugins: shipped in .claude/plugins/, loaded by Claude Code from one user setting ------------------
+PLUGIN_DIRS = ".claude/plugins"
+PLUGIN_VAR = "CLAUDE_CODE_PLUGIN_DIRS"  # read from the process environment or ~/.claude/settings.json, never a project's
+TOOLGATE_CLI = "@riskaverse/toolgate@0.16.0"  # the toolgate plugin gates through this CLI; same pin as mac/setup.sh
+
+
+def _toolgate_cli():
+    """Install the pinned toolgate CLI when it is missing: globally, else into ~/.athena (then the plugin is told
+    its path). Quiet; never fails. Returns the path to set as the plugin's `binary` option, or None."""
+    import shutil
+    if shutil.which("toolgate") or not shutil.which("npm"):
+        return None
+    for extra in ([], ["--prefix", str(Path.home() / ".athena")]):
+        try:
+            subprocess.run(["npm", "install", "-g", "-s", *extra, TOOLGATE_CLI], capture_output=True, timeout=300)
+        except (OSError, subprocess.SubprocessError):
+            continue
+        if shutil.which("toolgate"):
+            return None
+        local = Path.home() / ".athena" / "bin" / "toolgate"
+        if extra and local.exists():
+            return str(local)
+    return None
+
+
+def _bootstrap() -> list:
+    """athena-bootstrap from the harness's own source (athena-ops), so a repository with no harness gets one (ATH-14).
+    The source is this repository, $ATHENA_OPS, or ~/.athena/ops (Mac setup and the cloud setup line put it there)."""
+    for ops in (ROOT, Path(os.environ.get("ATHENA_OPS") or ROOT), Path.home() / ".athena" / "ops"):
+        b = ops / "plugins" / "athena-bootstrap"
+        if (b / "hooks" / "hooks.json").exists():
+            return [b.resolve()]
+    return []
+
+
+def _winnow_env():
+    """ATH-22: winnow's sidecar is a long-lived server; its mode is its own environment, else ~/.winnow/env (upstream
+    config.py load_env_file, README "The resident sidecar"), and `serve --ensure` keeps a running one. So a server
+    started while the settings said shadow stayed in shadow. Write this repository's WINNOW_* settings into that file
+    and, when it changed, stop the running server; the next hook call starts a fresh one in the configured mode."""
+    try:
+        want = {k: v for k, v in json.loads((ROOT / ".claude" / "settings.json").read_text()).get("env", {}).items()
+                if k.startswith("WINNOW_")}
+    except (OSError, ValueError):
+        return
+    if not want:
+        return
+    path = Path(os.environ.get("WINNOW_HOME") or Path.home() / ".winnow").expanduser() / "env"
+    old = path.read_text() if path.is_file() else ""
+    lines = [l for l in old.splitlines() if l.strip().removeprefix("export ").partition("=")[0].strip() not in want]
+    new = "\n".join(lines + [f"{k}={v}" for k, v in want.items()]) + "\n"
+    if new == old:
+        return
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(new)
+    path.chmod(0o600)  # upstream keeps keys in this file
+    import urllib.request
+    try:
+        urllib.request.urlopen(urllib.request.Request(
+            f"http://127.0.0.1:{os.environ.get('WINNOW_PORT') or 47311}/shutdown", data=b"", method="POST",
+            headers={"Content-Type": "application/json"}), timeout=2)  # the sidecar refuses any other (serve.py)
+    except OSError:
+        pass  # no server running: the next one starts with the new file
+
+
+def plugin_dirs(install=False) -> bool:
+    """Point ~/.claude/settings.json at this repository's plugin folders and write their reviewed options.
+    Every other setting is kept. A marketplace copy of the same plugin (`<name>@athena`) is switched off so
+    nothing loads twice. Returns True when the file changed."""
+    pdir = ROOT / PLUGIN_DIRS
+    names = list(json.loads((pdir / "plugins.lock.json").read_text())["plugins"])
+    value = os.pathsep.join([str(pdir / n) for n in names] + [str(b) for b in _bootstrap()])
+    path = Path.home() / ".claude" / "settings.json"
+    try:
+        s = json.loads(path.read_text())
+    except (OSError, ValueError):
+        s = {}
+    before = json.dumps(s, sort_keys=True)
+    s.setdefault("env", {})[PLUGIN_VAR] = value
+    opts = json.loads((pdir / "options.json").read_text())
+    off = typesafe_off()
+    for name, fields in opts.items():
+        if name.startswith("_"):
+            continue
+        given = {k: os.environ.get(v[1:]) or None if isinstance(v, str) and v.startswith("$") else v for k, v in fields.items()}
+        o = s.setdefault("pluginConfigs", {}).setdefault(name, {}).setdefault("options", {})
+        o.update({k: v for k, v in given.items() if v is not None})
+        if off:  # a real-data repository: no TypeSafe key in the settings, so no plugin sends anything there
+            for k, v in fields.items():
+                if v == "$TYPESAFE_API_KEY":
+                    o.pop(k, None)
+    binary = _toolgate_cli() if install else None
+    if binary:
+        s["pluginConfigs"]["toolgate"]["options"]["binary"] = binary
+    for key in s.get("enabledPlugins", {}):
+        if key.split("@")[0] in names and key.endswith("@athena"):
+            s["enabledPlugins"][key] = False
+    _winnow_env()
+    if json.dumps(s, sort_keys=True) == before:
+        return False
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(s, indent=2) + "\n")
+    path.chmod(0o600)  # it may hold a key
+    return True
+
+
+def typesafe_off() -> bool:
+    """True when this repository switches TypeSafe off (docs/decisions/2026-11-07-typesafe-data.md)."""
+    try:
+        return json.loads((HARNESS / "config.json").read_text()).get("typesafe") == "off"
+    except (OSError, ValueError):
+        return False
+
+
+def cmd_plugin_dirs(args):
+    changed = plugin_dirs(install=True)
+    print(f"{PLUGIN_VAR} in ~/.claude/settings.json {'now points' if changed else 'already points'} at {ROOT / PLUGIN_DIRS}")
+    if not typesafe_off() and not os.environ.get("TYPESAFE_API_KEY"):
+        print("FAIL: TYPESAFE_API_KEY is not set, so jev, toolgate, winnow and fast-jev-compaction "
+              "load with no key and do nothing. Add it to this environment's secrets (or the Mac's shell profile) and "
+              "run this again; a real-data repository switches TypeSafe off instead (\"typesafe\": \"off\" in "
+              ".claude/athena/config.json).", file=sys.stderr)
+        return 1
+    return 0
+
+
+# ---- web interface checks (ATH-13): the component registry, Impeccable, journey tests, readiness ----------
+UI_FILES = (".tsx", ".jsx", ".css", ".html", ".vue", ".svelte")
+RAW_CONTROL = re.compile(r"<(button|dialog|table|input|select|textarea)\b")
+IMPECCABLE = "npx --yes impeccable@4.8.0 detect --json"  # pinned; its telemetry is switched off below
+UI_BASELINE = HARNESS / "impeccable-baseline.json"
+UI_DIRS = ("components/ui", "src/components/ui")
+
+
+def web_apps(root=None) -> list:
+    """Folders whose package.json depends on next or react (dependency folders and hidden folders skipped)."""
+    root, out = Path(root or ROOT), []
+    for d, dirs, files in os.walk(root):
+        dirs[:] = [x for x in dirs if x != "node_modules" and not x.startswith(".")]
+        if "package.json" in files:
+            try:
+                pkg = json.loads((Path(d) / "package.json").read_text())
+            except (OSError, ValueError):
+                continue
+            deps = {**pkg.get("dependencies", {}), **pkg.get("devDependencies", {})}
+            if "next" in deps or "react" in deps:
+                out.append(Path(d))
+    return out
+
+
+def _added_lines(base: str, globs: list) -> dict:
+    """{file: [(line number, text)]} for lines added since base...HEAD in files matching globs."""
+    diff = subprocess.run(["git", "diff", "-U0", f"{base}...HEAD", "--", *globs], cwd=str(ROOT),
+                          capture_output=True, text=True)
+    if diff.returncode != 0:
+        die(f"could not diff against {base}", 2)
+    out, cur, n = {}, None, 0
+    for line in diff.stdout.splitlines():
+        if line.startswith("+++ "):
+            cur = line[6:] if line.startswith("+++ b/") else None
+        elif line.startswith("@@"):
+            n = int(re.search(r"\+(\d+)", line).group(1))
+        elif cur and line.startswith("+"):
+            out.setdefault(cur, []).append((n, line[1:]))
+            n += 1
+    return out
+
+
+def cmd_ui_registry(args):
+    base = _opt(args, "--base") or die("usage: athena ui-registry --base REF")
+    bad = [(f, n, m.group(0)) for f, lines in _added_lines(base, ["*.tsx", "*.jsx"]).items()
+           if "components/ui/" not in f for n, t in lines for m in [RAW_CONTROL.search(t)] if m]
+    for f, n, tag in bad:
+        print(f"{f}:{n}: raw {tag}> outside the component registry; use the components/ui one (shadcn)")
+    return 1 if bad else 0
+
+
+def _findings(target: str) -> list:
+    """Impeccable's primary findings for target, as sorted (file, antipattern) pairs relative to the repository.
+    Impeccable 4.8.0 names a finding's rule `antipattern` and marks advisory ones, which never fail, as its own exit
+    status does (docs/CLI-CONTRACT.md, "Finding object" and "Exit status"). Exit 0 or 2 is a finished scan."""
+    cmd = f"{os.environ.get('ATHENA_IMPECCABLE_CMD') or IMPECCABLE} {shlex.quote(target)}"
+    env = dict(os.environ, IMPECCABLE_NO_TELEMETRY="1", DO_NOT_TRACK="1")
+    r = subprocess.run(cmd, shell=True, cwd=str(ROOT), capture_output=True, text=True, env=env, timeout=300)
+    try:
+        items = json.loads(r.stdout) if r.returncode in (0, 2) else None
+    except ValueError:
+        items = None
+    if not isinstance(items, list):
+        raise RuntimeError(f"Impeccable did not run (exit {r.returncode}): {r.stderr.strip()[:200]}")
+    out = set()
+    for i in items:
+        if i.get("advisory") is True or i.get("severity") == "advisory":
+            continue
+        f, rule = str(i.get("file") or ""), str(i.get("antipattern") or "")
+        if Path(f).is_absolute():
+            try:
+                f = str(Path(f).resolve().relative_to(ROOT.resolve()))
+            except ValueError:
+                pass
+        out.add((f.removeprefix("./"), rule))
+    return sorted(out)
+
+
+def _baseline() -> set:
+    """Frozen (file, antipattern) pairs. A baseline from before 7 Nov 2026 keyed `rule`, which was always empty."""
+    try:
+        data = json.loads(UI_BASELINE.read_text())
+    except (OSError, ValueError):
+        return set()
+    if not isinstance(data, list) or not all(isinstance(i, dict) and "antipattern" in i for i in data):
+        die(f"ui-slop: {UI_BASELINE.relative_to(ROOT)} is in the old format and froze nothing; "
+            "freeze it again with `athena ui-slop --write-baseline`", 1)
+    return {(i["file"], i["antipattern"]) for i in data}
+
+
+def cmd_ui_slop(args):
+    """Impeccable's detectors; any finding not in the repository's baseline fails. --write-baseline freezes today's."""
+    if not web_apps():
+        return 0
+    base = _opt(args, "--base")
+    if base and not any(f.endswith(UI_FILES) for f in (changed_files(base) or [])):
+        print("ui-slop: no interface file changed")
+        return 0
+    try:
+        found = _findings(_opt(args, "--file") or ".")
+    except (RuntimeError, subprocess.TimeoutExpired) as e:
+        die(f"ui-slop: {e}", 1)
+    if "--write-baseline" in args:
+        UI_BASELINE.write_text(json.dumps([{"file": f, "antipattern": r} for f, r in found], indent=2) + "\n")
+        print(f"ui-slop: {len(found)} finding(s) frozen in {UI_BASELINE.relative_to(ROOT)}")
+        return 0
+    frozen = _baseline()
+    new = [x for x in found if x not in frozen]
+    for f, r in new:
+        print(f"{f}: Impeccable {r}")
+    return 1 if new else 0
+
+
+def hook_ui_slop(payload):
+    """After an edit to an interface file: Impeccable's new findings go back to Claude (exit 2)."""
+    f = (payload.get("tool_input") or {}).get("file_path") or ""
+    if not f.endswith(UI_FILES) or not web_apps():
+        return 0
+    rel = str(Path(f).resolve().relative_to(ROOT.resolve())) if Path(f).is_absolute() else f
+    try:
+        frozen = _baseline()
+        new = [x for x in _findings(rel) if x not in frozen and x[0] in (rel, "")]
+    except (RuntimeError, subprocess.TimeoutExpired, ValueError) as e:
+        print(f"ui-slop skipped, no design check ran on {rel}: {e}", file=sys.stderr)
+        return 1  # a non-blocking error: shown, never a silent pass
+    if new:
+        print("Impeccable found new design problems in " + rel + ": " + ", ".join(r for _, r in new) +
+              ". Fix them before moving on.", file=sys.stderr)
+        return 2
+    return 0
+
+
+JOURNEY = re.compile(r"""from\s+["'][^"']*athena-journey["']""")
+
+
+def cmd_journey_check(args):
+    """Every journey test (*.spec.* under e2e/ or tests/) imports the athena-journey fixture. --base: changed ones."""
+    base = _opt(args, "--base")
+    if base:
+        files = [ROOT / f for f in (changed_files(base) or [])]
+    else:
+        files = []
+        for d, dirs, names in os.walk(ROOT):
+            dirs[:] = [x for x in dirs if x != "node_modules" and not x.startswith(".")]
+            files += [Path(d) / n for n in names]
+    bad = [f.relative_to(ROOT) for f in files if f.exists() and re.search(r"\.spec\.[jt]sx?$", f.name)
+           and {"e2e", "tests"} & set(f.relative_to(ROOT).parts[:-1]) and not JOURNEY.search(f.read_text())]
+    for f in bad:
+        print(f"{f}: does not import the athena-journey fixture (axe and phone, tablet and desktop screenshots)")
+    return 1 if bad else 0
+
+
+JOURNEY_LIBS = ("@playwright/test", "@axe-core/playwright")
+
+
+def _deps(app: Path) -> dict:
+    try:
+        pkg = json.loads((app / "package.json").read_text())
+    except (OSError, ValueError):
+        return {}
+    return {**pkg.get("dependencies", {}), **pkg.get("devDependencies", {})}
+
+
+def _journey_tests(app: Path) -> list:
+    """The app's journey tests: *.spec.* under e2e/ or tests/ that import the athena-journey fixture."""
+    return [f for sub in ("e2e", "tests") for f in (app / sub).rglob("*") if f.is_file()
+            and re.search(r"\.spec\.[jt]sx?$", f.name) and "node_modules" not in f.parts and JOURNEY.search(f.read_text())]
+
+
+def _new_baselines(app: Path) -> list:
+    r = subprocess.run(["git", "ls-files", "--others", "--exclude-standard", "--", "."], cwd=str(app),
+                       capture_output=True, text=True)
+    return [f for f in r.stdout.splitlines() if f.endswith(".png") and "-snapshots/" in f]
+
+
+def cmd_journey_run(args):
+    """Run every web app's journey tests in a real browser (axe and three widths). Baselines are made here, in CI:
+    Playwright names them per platform, so the Mac's never match. A run that made new ones fails until they are
+    committed. Apps without the two libraries are skipped (ATH-20 adds them)."""
+    failed = 0
+    for app in web_apps():
+        name = str(app.relative_to(ROOT)) if app != ROOT else "."
+        if not all(lib in _deps(app) for lib in JOURNEY_LIBS):
+            print(f"{name}: journey tests skipped: no {' and '.join(JOURNEY_LIBS)} (ATH-20 adds them)")
+            continue
+        # shortcut: npm only; a pnpm or yarn lockfile is installed by npm from package.json. Upgrade when a repo needs it.
+        steps = [["npm", "ci" if (app / "package-lock.json").exists() else "install", "--no-audit", "--no-fund"]]
+        if os.environ.get("CI") == "true":  # locally the browser is already there
+            steps.append(["npx", "playwright", "install", "--with-deps", "chromium"])
+        steps.append(["npx", "playwright", "test", "--update-snapshots=missing"])
+        for step in steps:
+            print(f"{name}: {' '.join(step)}", flush=True)
+            r = subprocess.run(step, cwd=str(app))
+            if r.returncode != 0:
+                print(f"{name}: `{' '.join(step)}` failed (exit {r.returncode})")
+                failed = 1
+                break
+        else:
+            new = _new_baselines(app)
+            if new:
+                print(f"{name}: {len(new)} new screenshot baseline(s) made in this run; commit them (CI uploads them as "
+                      f"the athena-snapshots artifact): " + ", ".join(new))
+                failed = 1
+    return failed
+
+
+IMAGE_MD = r"(!\[[^\]]*\]\([^)]+\)|<img\s[^>]*src=)"
+
+
+def cmd_baseline_check(args):
+    """A changed screenshot baseline needs the before and after images in the pull request's description."""
+    base = _opt(args, "--base") or die("usage: athena baseline-check --base REF --body-file F")
+    snaps = [f for f in (changed_files(base) or []) if f.endswith(".png") and ("-snapshots" in f or "__screenshots__" in f)]
+    if not snaps:
+        return 0
+    body = Path(_opt(args, "--body-file") or "/dev/null").read_text()
+    if re.search(rf"(?is)\bbefore\b.*?{IMAGE_MD}.*?\bafter\b.*?{IMAGE_MD}", body):
+        return 0
+    print(f"{len(snaps)} screenshot baseline(s) changed ({', '.join(snaps[:5])}). Put 'Before' with the old image and "
+          "'After' with the new one in the pull request's description.")
+    return 1
+
+
+def ui_missing(spec_id: str) -> list:
+    """What a slice with an interface still lacks before it may be Ready to try (empty when ready or not a UI slice).
+    The evidence is what the tests produce in CI: every web app can run journey tests and has at least one."""
+    if not read_status(spec_dir(spec_id)).get("ui"):
+        return []
+    missing = []
+    for app in web_apps():
+        name = str(app.relative_to(ROOT)) if app != ROOT else "."
+        lacking = [lib for lib in JOURNEY_LIBS if lib not in _deps(app)]
+        if lacking:
+            missing.append(f"{name} cannot run journey tests: add {' and '.join(lacking)} (ATH-20)")
+        elif not _journey_tests(app):
+            missing.append(f"{name} has no journey test (a *.spec.ts under e2e/ or tests/ importing athena-journey)")
+    return missing
+
+
+def cmd_ui_ready(args):
+    if not args:
+        die("usage: athena ui-ready ID")
+    missing = ui_missing(args[0])
+    for m in missing:
+        print(f"{args[0]} missing {m}")
+    return 1 if missing else 0
+
+
+# ---- ATH-10: research before build, wiki memory, the per-stage ledger ----------------------------------
+RUBRIC = {"does the job": "job", "alive": "alive", "licence": "licen", "self-hosted": "host",
+          "pinned and scanned": "pinned", "effort": "effort", "cost": "cost"}
+
+
+def _cells(line: str) -> list:
+    return [c.strip() for c in line.strip().strip("|").split("|")]
+
+
+def _record_problem(text: str) -> str:
+    """Why a decision record falls short of the Blueprint's research rule, or '' when it holds."""
+    if not re.search(r"^Chosen:\s*\S", text, re.M | re.I):
+        return "no `Chosen:` line"
+    lines = text.splitlines()
+    for i, line in enumerate(lines):
+        if not line.lstrip().startswith("|") or i + 1 >= len(lines) or not re.match(r"^\s*\|[\s:|-]+\|\s*$", lines[i + 1]):
+            continue
+        head = " ".join(_cells(line)).lower()
+        missing = [name for name, key in RUBRIC.items() if key not in head]
+        if missing:
+            return "the candidate table does not score: " + ", ".join(missing)
+        width = len(_cells(line))
+        rows = []
+        for row in lines[i + 2:]:
+            if not row.lstrip().startswith("|"):
+                break
+            rows.append(_cells(row))
+        if any(len(r) != width or not all(r) for r in rows):
+            return "a candidate has an unscored criterion"
+        if len(rows) < 3:
+            return f"{len(rows)} candidates scored; at least 3 are needed"
+        return ""
+    return "no table of candidates scored on the rubric"
+
+
+def cmd_check_capability(args):
+    """A plan step tagged [capability: NAME] needs a decision record that scored at least 3 candidates."""
+    base = _opt(args, "--base", "origin/main")
+    names = []
+    for lines in _added_lines(base, ["specs/*/plan.md"]).values():
+        names += [m.strip() for _, t in lines for m in re.findall(r"\[capability:\s*([^\]]+)\]", t, re.I)]
+    records = {}
+    for p in sorted((ROOT / "docs" / "decisions").glob("*.md")):
+        text = p.read_text(errors="replace")
+        for m in re.findall(r"^Capability:\s*(.+?)\s*$", text, re.M | re.I):
+            records.setdefault(m.lower(), []).append((p, text))
+    bad = []
+    for n in dict.fromkeys(names):
+        found = records.get(n.lower())
+        if not found:
+            bad.append(f"{n}: no decision record in docs/decisions/ with `Capability: {n}`")
+            continue
+        problems = [f"{p.relative_to(ROOT)}: {_record_problem(t)}" for p, t in found if _record_problem(t)]
+        if len(problems) == len(found):
+            bad.append(f"{n}: " + "; ".join(problems))
+    for b in bad:
+        print(f"CAPABILITY {b}")
+    if bad:
+        print("Research before build: search (find-skills, GitHub, npm, PyPI), score 3 to 5 candidates on the rubric "
+              "(does the job, alive, licence, self-hosted, pinned and scanned, effort, cost), name the one chosen.")
+        return 1
+    print(f"capability check: {len(names)} capability step(s), each with a scored decision record")
+    return 0
+
+
+def _diff_counts(base: str, path: str):
+    out = subprocess.run(["git", "diff", "-U0", f"{base}...HEAD", "--", path], cwd=str(ROOT),
+                         capture_output=True, text=True).stdout.splitlines()
+    added = sum(1 for l in out if l.startswith("+") and not l.startswith("+++") and l[1:].strip())
+    removed = sum(1 for l in out if l.startswith("-") and not l.startswith("---"))
+    return added, removed
+
+
+def cmd_check_memory(args):
+    """In a repository with a wiki, a slice (a change under specs/) adds to wiki/log.md and playbook.md."""
+    base = _opt(args, "--base", "origin/main")
+    if not (ROOT / "wiki").is_dir():
+        print("memory check: no wiki/ in this repository; nothing to check")
+        return 0
+    files = changed_files(base)
+    if files is None:
+        print(f"MEMORY could not diff against {base}")
+        return 2
+    if not any(f.startswith("specs/") for f in files):
+        print("memory check: no slice in this change")
+        return 0
+    bad = []
+    added, removed = _diff_counts(base, "wiki/log.md")
+    if not added:
+        bad.append("wiki/log.md: a slice adds a line to the wiki log")
+    if removed:
+        bad.append(f"wiki/log.md: the log is append-only; {removed} line(s) were changed or deleted")
+    if not _diff_counts(base, "playbook.md")[0]:
+        bad.append("playbook.md: a slice adds at least one lesson card to the playbook")
+    for b in bad:
+        print(f"MEMORY {b}")
+    return 1 if bad else 0
+
+
+def cmd_wiki_lint(args):
+    """ORPHAN: a wiki page no other wiki page links to. CONTRADICTION: two pages state different values for one Fact."""
+    wiki = ROOT / "wiki"
+    pages = sorted(p for p in wiki.rglob("*.md")) if wiki.is_dir() else []
+    linked, facts = set(), {}
+    for p in pages:
+        text = p.read_text(errors="replace")
+        for target in re.findall(r"\]\(([^)#\s]+\.md)(?:#[^)]*)?\)", text):
+            linked.add(((p.parent / target).resolve(), p))
+        for subj, val in re.findall(r"^Fact:\s*(.+?)\s*=\s*(.+?)\s*$", text, re.M):
+            facts.setdefault(subj.lower(), []).append((val, p))
+    rel = lambda p: str(p.relative_to(ROOT))
+    found = 0
+    for p in pages:
+        if p.name in ("index.md", "log.md"):
+            continue
+        if not any(t == p.resolve() and src != p for t, src in linked):
+            print(f"ORPHAN {rel(p)}")
+            found += 1
+    for subj, vals in sorted(facts.items()):
+        for i, (va, pa) in enumerate(vals):
+            for vb, pb in vals[i + 1:]:
+                if va.lower() != vb.lower():
+                    print(f"CONTRADICTION {subj} {rel(pa)} {rel(pb)} ({va} vs {vb})")
+                    found += 1
+    print(f"wiki lint: {len(pages)} pages, {found} finding(s)")
+    return 0
+
+
+def _progress_field(name: str) -> str:
+    p = ROOT / "PROGRESS.md"
+    m = re.search(rf"^{name}:\s*(.+?)\s*$", p.read_text(errors="replace"), re.M) if p.exists() else None
+    return m.group(1) if m else ""
+
+
+def hook_ledger(payload):
+    """After each tool call: the model and tokens of the latest assistant message, with the product's stage."""
+    tp, sid = payload.get("transcript_path"), str(payload.get("session_id") or "")
+    if not tp or not sid or not Path(tp).exists():
+        return 0
+    with open(tp, "rb") as f:
+        f.seek(0, 2)
+        f.seek(max(0, f.tell() - 400_000))
+        tail = f.read().decode("utf-8", "replace").splitlines()
+    msg = None
+    for line in reversed(tail):
+        try:
+            row = json.loads(line)
+        except ValueError:
+            continue
+        if row.get("type") == "assistant" and (row.get("message") or {}).get("usage"):
+            msg = row["message"]
+            break
+    if not msg:
+        return 0
+    usage_dir = Path.home() / ".athena" / "usage"
+    usage_dir.mkdir(parents=True, exist_ok=True)
+    last = usage_dir / f".ledger-{sid.replace('/', '_')}"
+    mid = str(msg.get("id") or "")
+    if mid and last.exists() and last.read_text() == mid:  # several tool calls in one message count once
+        return 0
+    u = msg["usage"]
+    tokens = sum(int(u.get(k) or 0) for k in ("input_tokens", "output_tokens", "cache_creation_input_tokens"))
+    row = {"ts": now_iso(), "kind": "stage", "session": sid, "repo": ROOT.name,
+           "stage": _progress_field("Stage") or "unknown", "model": msg.get("model", ""), "tokens": tokens, "message": mid}
+    with open(usage_dir / f"{now_iso()[:10]}.jsonl", "a") as f:
+        f.write(json.dumps(row) + "\n")
+    if mid:
+        last.write_text(mid)
+    return 0
+
+
 def _opt(args, name, default=None):
     if name in args:
         i = args.index(name)
@@ -1324,6 +2285,7 @@ def _opt(args, name, default=None):
 
 
 COMMANDS = {
+    "requirements": cmd_requirements, "check-requirements": cmd_check_requirements,
     "new": cmd_new, "next-id": cmd_next_id, "lock": cmd_lock, "start": cmd_start, "done": cmd_done, "finish": cmd_finish,
     "block": cmd_block, "unlock": cmd_unlock, "verify-locks": cmd_verify_locks,
     "check-scope-changes": cmd_check_scope_changes, "status": cmd_status, "hook": cmd_hook,
@@ -1331,7 +2293,10 @@ COMMANDS = {
     "verify-hooks": cmd_verify_hooks, "scan-ioc": cmd_scan_ioc,
     "tier": cmd_tier, "check-pr-scope": cmd_check_pr_scope, "retire": cmd_retire, "pr-times": cmd_pr_times,
     "backfill-files": cmd_backfill_files, "tokens": cmd_tokens, "rtk-install": cmd_rtk_install,
-    "measure-ponytail": cmd_measure_ponytail,
+    "measure-ponytail": cmd_measure_ponytail, "plugin-dirs": cmd_plugin_dirs,
+    "check-learned": cmd_check_learned, "ui-registry": cmd_ui_registry, "ui-slop": cmd_ui_slop, "journey-check": cmd_journey_check,
+    "baseline-check": cmd_baseline_check, "ui-ready": cmd_ui_ready, "journey-run": cmd_journey_run,
+    "check-models": cmd_check_models, "check-capability": cmd_check_capability, "check-memory": cmd_check_memory, "wiki-lint": cmd_wiki_lint,
 }
 
 
