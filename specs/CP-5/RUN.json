@@ -1,0 +1,11 @@
+{
+ "ok": true,
+ "passed": [
+  "2 a function added without a fixed search path fails a test",
+  "3 leaked-password decision recorded and nothing reads Supabase Auth users",
+  "4 no tracked file holds the live project reference",
+  "5 engine and web tests unchanged since main"
+ ],
+ "failed": [],
+ "ran_at": "2026-11-08T09:25:23+00:00"
+}
