@@ -73,7 +73,7 @@ Key types (a fixed set; each is one expression in the generator, no free SQL in 
 - `sheet`, `capture`, `item_result`: CP-3's `public.my_ids(kind, key_type)` gains these three key types (CP-4 redefines it).
   `sheet` = sheets of the person's children plus sheets they uploaded (`uploaded_by`), as `staff_sees_sheet` does;
   `capture` = captures of those sheets plus ones they uploaded, so an unmatched scan stays visible to its uploader;
-  `item_result` = results of those captures. The generated test is `col = any ((select public.my_ids(K, T)))`, as for the
+  `item_result` = results of those captures. The generated test is `col = any ((select public.my_ids(K, T))::uuid[])`, as for the
   CP-3 types. One definer helper per hop replaces nested parent subplans: the meaning sits in one place and is evaluated
   once per statement (R).
 - Where a key is null the row is visible to `everything` and, if it carries an uploader, to that person; otherwise only

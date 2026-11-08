@@ -104,7 +104,7 @@ as well as `app_engine` (R). For a table in `access_table` it drops every policy
 - `engine_all for all to app_engine using (true) with check (true)`, and
 - `web_rule as permissive for all to app_web using (E) with check (E)`, with
   `E = tenant_id = (select public.my_tenant()) and ((select public.my_reach(K)) = 'all' or ((select public.my_reach(K))
-  = 'own' and T))`, `T` = `col = any ((select public.my_ids(K, 'class'|'child'|'note')))` or, for staff,
+  = 'own' and T))`, `T` = `col = any ((select public.my_ids(K, 'class'|'child'|'note'))::uuid[])` or, for staff,
   `col = (select public.signed_in_staff())`. `K` and names are quoted with `%L`/`%I`.
 Dropping every foreign policy on a listed table is the guard (a stray permissive policy would otherwise widen the rule)
 (R, with a CI test that the policy set per listed table is exactly {service_role_all, engine_all, web_rule}).
