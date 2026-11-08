@@ -15,8 +15,8 @@ GITHUB_ACTIONS) then `bin/testdb fresh <url>` (every migration, seed, bank, libr
 3. Order inside the block (R), after `uv sync --extra dev` has finished:
    a. `bin/ci-postgres` in the foreground (the server must be up first); then `export PATH="/usr/lib/postgresql/17/bin:$PATH"`
       so `psql` inside this script is the one just installed (ci-postgres only extends PATH for later steps).
-   b. start `bin/testdb fresh "$URL"` in the background, its log and exit code written under `$RUNNER_TEMP` (the pattern in
-      ci.yml: `( cmd >log 2>&1; echo $? >rc ) &`, which cannot trip `set -e`), using the repo-root path of `bin/testdb`.
+   b. start `bin/testdb fresh "$URL"` in the background, its log and exit code written under `$RUNNER_TEMP` (NOT ci.yml's bare `( cmd; echo $? >rc ) &`: under setup.sh's `set -e` the subshell exits before writing the rc file and the wait
+      hangs. Use `( rc=0; bin/testdb fresh "$URL" >"$RUNNER_TEMP/testdb.log" 2>&1 || rc=$?; echo $rc >"$RUNNER_TEMP/testdb.rc" ) &`, found by the proof-writer), using the repo-root path of `bin/testdb`.
    c. `npm ci` runs meanwhile.
    d. wait for the exit-code file, `cat` the log, and `exit` with that code if it is not 0 (so the proofs job goes red).
    e. only on code 0, `echo "TEST_DATABASE_URL=$URL" >> "$GITHUB_ENV"` (never before: half-built databases must not be visible).
