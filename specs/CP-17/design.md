@@ -75,7 +75,7 @@ No money moves. Rupee values only label items.
 ## Non-goals
 Any screen. Sending lists, reminders and moving the fortnight to `list_sent` (CP-18). The monthly consolidated list.
 Purchases, orders, suppliers, invoices, payments. Entering rupee values. Automatic reordering. A second sign-off for
-write-offs. Sending a list back with a reason. A command-line entry point (proofs call the database functions).
+write-offs. Sending a list back with a reason. A command-line entry point (the one Python function CP-18 needs is the only code door).
 
 ## Data (the names are the contract the proofs use)
 - Settings (`config` rows for every school, `seed_once`, `on conflict do nothing`, bare values):
@@ -167,6 +167,14 @@ write-offs. Sending a list back with a reason. A command-line entry point (proof
   `unit_value` decides tracking in `packages/engine/engine` or `apps/web`. The website's `kept`
   (`apps/web/components/educator/materials-table.tsx:16`) only displays the engine's `tracked` value; it is not a rule.
 
+## Names CP-18 depends on
+CP-18's locked proofs (`origin/cp-18-scope:specs/CP-18/proofs/conftest.py`, `approve`) call
+`engine.w2_print.materials_approval.approve(conn, list_id, who)`: approve a class's fortnight list as it reads now. CP-17
+provides exactly that, in the new file `packages/engine/engine/w2_print/materials_approval.py`: it reads the list's
+current `materials_list_digest` and inserts the `materials_list_approval` row for `who` (a staff uuid). It decides
+nothing; the trigger (D6) does every check and its refusal propagates. Name and signature must not change without
+telling CP-18. CP-18 also reads "a current approval" from the database rule (D8), not from this function.
+
 ## How this meets CP-6's cycle
 CP-17 reads the cycle (approval only after the freeze) and changes no CP-6 step. Moving a fortnight to `list_sent` is
 CP-18's, when its sends are recorded; CP-18 should require a current approval for every class's list first. CP-6's own
@@ -242,6 +250,7 @@ Database proofs run on the throwaway Postgres (`TEST_DATABASE_URL`), rolled back
 - `supabase/seed/config.json`, `supabase/seed/vocabulary.json`: the four settings and the approval kind's words.
 - `packages/engine/engine/api/routes/materials.py:211`, `packages/engine/engine/w2_print/materials_list.py:154`: call
   the one rule in SQL.
+- `packages/engine/engine/w2_print/materials_approval.py`: the one function above (listed on its step in `workflows.json`).
 - Tests: `packages/engine/tests/test_stock.py` (items 1, 3, 4), `test_materials_approval.py` (items 5, 6) and
   `test_tracked_rule.py` (item 2). One helper in `packages/engine/tests/materials_rows.py`, `approvable(conn, school,
   klass)`, makes a teaching fortnight matching the list's dates, a frozen `fortnight_cycle` row and an open
