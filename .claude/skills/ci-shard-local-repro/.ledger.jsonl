@@ -1,0 +1,1 @@
+{"action": "create", "reason": "In one session, multi-run databases made three specs fail that passed on fresh databases, and a hook block was answered by disabling fixture triggers on the scratch copy. The next browser-shard investigation needs the fresh-database rule stated up front.", "evidence": "references/evidence-61aae64e.md"}
