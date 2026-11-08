@@ -7,14 +7,25 @@ Under 50 lines. Rewritten at the end of every session. Orchestrator #2 starts fr
   CP-5 is NOT live yet (checked 8 Nov ~11:15: advisor still shows 35 function_search_path_mutable; migration 20270110090000 absent from
   live list). It lands when Nimish deploys. Re-check the advisor after deploy. Orchestrator #2 is subscribed to #472.
 
-## In flight (one DB scope at a time, in this order)
-Merged 8 Nov: CP-20 proof-5 fix #474 (Nimish), CP-1 #472 (squash f5e7446; main run 42476724178 was still running, watch it).
-1. CP-2 build: session_01KEBF29sGFc8njKT9gg3Nsu (started ~11:40 UTC). Merge its draft PR under the merge rule when green + VERIFY PASS.
-2. CP-3 #451 and CP-4 #452 (locked): build after CP-2 merges, one at a time. Scoping session_01KEBF2A7DQSEjwZyyUgaLRE.
-   CP-3 item 8 needs Nimish to set the restricted login's password.
-- Archive CP-1 build session_01KEBF27Mw5y4RasFJXU7g4G: auto-mode classifier DENIED archive_session; Nimish to allow it or archive by hand.
-- CP-6..CP-19 (#454-#467): drafts. Ask Nimish to lock CP-6, CP-8, CP-9 first so scoping can run while CP-2..4 build.
-- Cloudflare guide: session_01KEBF26KbRoFUTYc423FUv4. Cut over the real domain only after CP-2 merges.
+## In flight (8 Nov ~12:30 UTC)
+Merged: CP-0, CP-5, CP-20 + its proof-5 fix #474, CP-1 #472 (main green). Athena 2.14.0 is on main (#475): a code PR needs VERIFY.md = PASS.
+1. CP-2 PR #476 (ready, head 545cfc9): first full CI (12 engine + 3 browser shards) running; then verifier re-run for PASS, then merge.
+   Nimish ran bin/check-pooler on the real pooler: PASS (recorded in ADR 0100). Proofs 4 and 6 repeat on the box after deploy.
+   Build session session_01KEBF29sGFc8njKT9gg3Nsu. Do not merge on a FAIL or red check.
+2. CP-3 build (STACKED on cp-2-build): session_01KEBF27howCR1C6e5zKKBP6. Its PR bases on cp-2-build; after #476 merges, retarget to main,
+   merge when green + PASS. CP-3 item 8 (restricted login password) is Nimish's own step. CP-4 (#452) starts when CP-3 is near merge.
+3. Scoped and locked, waiting for CP-4 (specs on claude/bold-carson-f72yjv): CP-6 (fortnight cycle), CP-8, CP-9, CP-13.
+   Before building CP-6 and CP-8, Nimish must type UNLOCK CP-6 / UNLOCK CP-8 in their sessions: CP-6's locked text says 'month' (he decided
+   'freeze by fortnight'); CP-8's proof wants a decision file but he wants those as settings. CP-9: n8n nightly job import + 20 real notes (manual gate).
+- Archive CP-1 build session_01KEBF27Mw5y4RasFJXU7g4G: classifier denied archive_session; Nimish archives by hand or allows it.
+- CP-7, CP-10-12, CP-14-19 not scoped. Cloudflare guide: session_01KEBF26KbRoFUTYc423FUv4; cut over only after CP-2 merges.
+- After 'update-live' (Nimish ran it): re-check live advisor (35 function_search_path_mutable should be gone; migration 20270110090000 applied).
+
+## Nimish's rules (8 Nov)
+The FORTNIGHT is the school's planning unit (week A/B inside it): scope everything from it, read the school's files before assuming month/week.
+Values that may change are SETTINGS ROWS with a default; do not bring them to him as questions. Ask only for what changes what the school
+sees or what is safe. Frontend is a separate session after the backend (CP-15/CP-16 wait for it). He wants parallel builds where safe.
+Conway 'automaton' repo evaluated: not relevant; only idea worth a later scope is input-injection checks on prompts.
 
 ## How to build a scope (recipe that worked)
 Child session via create_session (source = repo, revision claude/bold-carson-f72yjv), prompt `athena-build <ID>`: branch from origin/main,
