@@ -47,3 +47,15 @@ I re-ran `athena done CP-5` in this session: **CP-5: PASS**. Proofs 2, 3, 4 and 
 Two things must still happen after deploy: on the box, `ATHENA_ON_BOX=1 athena done --all` must pass for proof 1 (live advisor shows 0) and proof 5b (the re-pinned functions run). CI's web speed job must also be green.
 
 VERDICT: PASS
+
+## Re-verification: proof 5 applies only to CP-5's own change (branch cp-5-proof-5-applies-only-to-own-change)
+
+Independent verifier, read-only, on the commit that edits `specs/CP-5/proofs/tests_unchanged.sh`; the spec was unlocked by Nimish and re-locked with `athena lock CP-5`.
+
+- The unchanged-tests check now applies only when the diff against the merge-base adds or changes `supabase/migrations/20270110090000_pin_function_search_paths.sql` or changes a `specs/CP-5/` file other than VERIFY.md and RUN.json. Otherwise it prints one line saying it does not apply and exits 0. When it applies it behaves exactly as before.
+- The self-check (`--self-check`, wired in as a second criterion-5 line in checks.sh) covers three cases in a scratch repository: an unrelated change that rewrites a test passes; CP-5's own change with a rewritten test line fails with the original message; CP-5's own change that only adds test lines passes.
+- Only `specs/CP-5/` changed. The verifier found nothing unasked.
+- Known gap: the self-check triggers "applies" only through the migration; the "specs/CP-5 changed" and "only VERIFY/RUN changed" branches are not tested separately.
+- Re-run after building the engine venv: `athena done CP-5` shows proofs 2, 3, 4 and both proof-5 lines passing; proof 1 and the second half of proof 5 are box-only and did not run.
+
+VERDICT: PASS

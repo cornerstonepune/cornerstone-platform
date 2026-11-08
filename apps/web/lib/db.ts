@@ -51,7 +51,7 @@ function connect(url: string): Sql {
     ssl: ["127.0.0.1", "localhost"].includes(new URL(url).hostname) ? false : "require",
     prepare: false,
     // Four connections keep a page's queries side by side now that none may stack.
-    max: SERVERLESS ? 4 : 3,
+    max: Number(process.env.DB_POOL_MAX) || (SERVERLESS ? 4 : 3), // DB_POOL_MAX: the pooler check sets 1 to prove one connection is shared
     idle_timeout: SERVERLESS ? 5 : 20,
     connect_timeout: 10,
   });
@@ -75,8 +75,107 @@ declare global {
 // One pool per process; dev's hot reload would otherwise open a new one on every edit.
 const url = process.env.DATABASE_URL;
 const absent = new Proxy<Sql>(unset as never, { get: () => unset });
-export const sql: Sql = globalThis.cornerstoneSql ?? (url ? connect(url) : absent);
-if (process.env.NODE_ENV !== "production" && url) globalThis.cornerstoneSql = sql;
+/** The anonymous pool: it never says who is asking. For the path that works out who is asking (`staffList`), where the
+ *  identity-carrying `sql` would wait on itself. Nothing else should use it. */
+export const rawSql: Sql = globalThis.cornerstoneSql ?? (url ? connect(url) : absent);
+if (process.env.NODE_ENV !== "production" && url) globalThis.cornerstoneSql = rawSql;
+
+// ---- Who is asking (CP-2, ADR 0100). The signed-in person's staff id travels to Postgres with each query, as a
+// transaction-local setting that `public.current_staff()` reads. This is the only place it is set, and the id comes only
+// from the verified sign-in: `lib/auth.ts` registers the resolver; nothing here reads the request.
+type Resolver = () => Promise<string | undefined>;
+// The parts of a postgres.js query this file reaches into (its type file does not export them).
+type PendingQuery = {
+  handle: () => Promise<void>;
+  executed: boolean;
+  cursorFn?: unknown;
+  onlyDescribe?: boolean;
+  isRaw?: unknown;
+  forEachFn?: (row: unknown) => void;
+  resolve: (x: unknown) => void;
+  reject: (x: unknown) => void;
+  values: () => unknown;
+  raw: () => unknown;
+  forEach: (fn: (row: unknown) => void) => unknown;
+};
+declare global {
+  var cornerstoneWhoIsAsking: Resolver | undefined;
+}
+// On globalThis, like the pool: Next may load this file once per bundle, and each copy must see the one resolver.
+export function whoIsAsking(resolver: Resolver): void {
+  globalThis.cornerstoneWhoIsAsking = resolver;
+}
+
+/** The setting's name, for scripts/check-pooler.ts to read it back without naming it a second time in its own text. */
+export const IDENTITY_SETTING = "app.staff_id";
+
+const UUID =/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+async function identity(): Promise<string | undefined> {
+  try {
+    const id = await globalThis.cornerstoneWhoIsAsking?.();
+    return id && UUID.test(id) ? id : undefined; // the dev bypass has no id; never the text "undefined"
+  } catch {
+    return undefined; // outside a request (a script, a build) there is nobody asking
+  }
+}
+
+// One connection is held for the whole of the request's query, and nothing is stacked on it: BEGIN, the setting, the
+// query, COMMIT, each awaited before the next. Under transaction pooling BEGIN pins one backend until COMMIT, so the
+// setting cannot reach another request's query, and `true` (transaction-local) means it cannot outlive this one.
+async function asking<T>(staff: string, run: (tx: Sql) => Promise<T>): Promise<T> {
+  const tx = await rawSql.reserve();
+  try {
+    await tx`begin`;
+    try {
+      await tx`select set_config('app.staff_id', ${staff}, true)`;
+      const out = await run(tx as unknown as Sql);
+      await tx`commit`;
+      return out;
+    } catch (e) {
+      await tx`rollback`.catch(() => {});
+      throw e;
+    }
+  } finally {
+    tx.release();
+  }
+}
+
+/** The pool every page, route and action reads and writes through. With a signed-in person each query runs carrying
+ *  their id; with nobody it is the plain pool. Same tagged-template shape as postgres.js, so call sites do not change. */
+export const sql: Sql = new Proxy(rawSql, {
+  apply(target, _this, args: unknown[]) {
+    const strings = args[0] as { raw?: unknown } | undefined;
+    // a helper (`sql("column")`), not a query
+    if (!Array.isArray(strings?.raw)) return Reflect.apply(target, _this, args);
+    // Built on the pool so it is still a postgres.js query, which is what lets it sit inside another query as a
+    // fragment. `handle` is the one door postgres.js runs a query through (then, catch, finally, execute and forEach all
+    // call it), so it is replaced here: the query runs once, on a connection that carries the identity.
+    const query = Reflect.apply(target, _this, args) as PendingQuery;
+    // Asked now, in the context that built the query, not when it is awaited: that is the context that knows the person.
+    const asked = identity();
+    const plain = query.handle;
+    query.handle = async function (this: PendingQuery) {
+      if (this.executed) return;
+      this.executed = true; // before the first await: catch() and then() each call handle(), and the query must run once
+      const staff = await asked;
+      if (!staff) {
+        this.executed = false;
+        return plain.call(this); // nobody asking: the plain pool, as before
+      }
+      if (this.cursorFn || this.onlyDescribe) return this.reject(new Error("cursor() and describe() are not available on a query made for a signed-in person"));
+      const done = asking(staff, (tx) => {
+        const q = (tx as unknown as (...a: unknown[]) => PendingQuery)(...args);
+        if (this.isRaw === "values") q.values();
+        else if (this.isRaw) q.raw();
+        if (this.forEachFn) q.forEach(this.forEachFn);
+        return q as unknown as Promise<unknown>;
+      });
+      done.then(this.resolve, this.reject);
+    };
+    return query;
+  },
+});
 
 // The school these rows belong to, as the engine names it (`db.tenant_slug()`): the website writes a few rows of its own.
 export const TENANT_SLUG = process.env.TENANT_SLUG ?? "cornerstone-pune";

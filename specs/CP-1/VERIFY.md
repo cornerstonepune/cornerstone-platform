@@ -1,3 +1,27 @@
+# CP-1 verification: the seed-label fix (commit 1fb407d, branch cp-1-fix-seed-edits)
+
+Independent athena-verifier report, 2026-11-08, recorded here by the builder (the verifier is read-only).
+Re-run on a throwaway Postgres 16 built with `bin/testdb fresh`:
+- `tests/test_k2_upload.py`: 18 passed, including the 3 new tests and the test that was red on main.
+- CP-1 proofs 2, 3, 5, 6 through `specs/CP-1/proofs/pytest.sh`: all passed. `athena done CP-1`: PASS (items 1 and 4 box-only, not run).
+
+**1. Criteria.** 2, 3, 5, 6 MET. 1 and 4 UNCLEAR, box-only, pending: this fix does not touch them.
+Item 5 still holds: the trigger is unchanged, so every first write of an activity is still kept. The loader's writes are now kept under "seed load" instead of the bare login `postgres`.
+The label is set once at the top of `_registry`, inside the load's single transaction, before the loader's first write to any tracked table.
+**Root cause.** The loader was the only writer that did not say who it was. The label is a setting (`seed_label`, beside `upload_label`), and `snapshot()` ignores rows under either label. The rejected alternative (the trigger skipping non-person inserts) would have broken item 5. No migration.
+**A person's first add** is still kept under their name and still reads as theirs (new test).
+**2. Unasked work.** None of substance: one setting key, three tests, the branch note.
+**3. Missing.** Nothing. Named on purpose: a future script that writes under a bare login would still read as a person's edit.
+**4. Risks.** No secrets, personal data, destructive change or permission change. Live reloads will now write history rows labelled "seed load", which the upload ignores as intended.
+**5. Requirements.** Not provided, so not assessed.
+Not checked by the verifier: the full engine suite, and that the K2 test fails on main without the fix (the builder reproduced it).
+
+VERDICT: PASS
+
+---
+
+# History: CP-1 original verification
+
 # CP-1 verification (athena-verifier, independent)
 
 PASS on everything that can be checked before deploy. Items 1 and 4 are not met yet. Both can only be checked on the production box, and both also need data work that has not been done: loading the staff, and fixing the K2-A roll numbers. No code in this diff does either. Do not call items 1 or 4 done until their box checks pass on the box.

@@ -5,6 +5,7 @@
   "band": "K2",
   "year": "SR KG",
   "upload_label": "K2 upload",
+  "seed_label": "seed load",
   "columns": {
     "sheet_no": "B", "strand": "C", "pillar": "D", "year": "F", "name": "G", "materials": "H", "steps": "J",
     "objective": "M", "level_0": "P", "level_1": "Q", "level_2": "R", "level_3": "S"

@@ -1,5 +1,5 @@
 import { cache } from "react";
-import { sql, TENANT_SLUG } from "./db";
+import { rawSql, sql, TENANT_SLUG } from "./db";
 import { EVERY_CLASS, inScope, type Scope } from "./scope";
 import { seesSheet, type Who } from "./reach";
 import { skillTaughtFor, skillTaughtIn } from "./taught";
@@ -193,7 +193,8 @@ export const RULE_WORDS: Record<string, string> = {
 export type Staff = { id?: string; email: string; name: string; role: string; password?: string; password_set_at?: string; classes?: string[]; subjects?: string[] };
 
 export async function staffList(): Promise<Staff[]> {
-  const row = await sql<{ value: Staff[] }[]>`select value from config where key = 'app.staff'`;
+  // Anonymous on purpose: this is how we learn who is asking, so asking "who" through `sql` would wait on itself.
+  const row = await rawSql<{ value: Staff[] }[]>`select value from config where key = 'app.staff'`;
   return row[0]?.value ?? [];
 }
 
