@@ -219,8 +219,8 @@ def snapshot(conn, tenant) -> tuple[list[dict], set[tuple[str, str]]]:
         (r["code"], r["field"])
         for r in conn.execute(
             "select code, field from curriculum_edit where tenant_id = %s and record = 'activity'"
-            " and changed_by not like %s",
-            (tenant, cfg["upload_label"] + "%"),
+            " and changed_by not like %s and changed_by <> %s",  # neither the upload's nor the seed's words
+            (tenant, cfg["upload_label"] + "%", cfg["seed_label"]),
         ).fetchall()
     }
     return dbrows, edited

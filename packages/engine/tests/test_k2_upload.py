@@ -351,3 +351,40 @@ def test_a_link_changed_in_place_is_a_removal_and_an_addition_and_a_change_of_no
         (r["before"], r["after"], r["changed_by"]) for r in _kept(conn, "activity_objective", "ACT-CP1")[1:]
     ]
     assert sorted(got) == [("", "LO-CP1-B", "cp1-test"), ("LO-CP1-A", "", "cp1-test")]
+
+
+# CP-1 fix: the seed loader's first write of an activity is kept under its own label, which the upload does not
+# mistake for a person's edit on the site.
+
+
+def _new_activity(conn, code, who):
+    t = conn.execute("select id from tenant limit 1").fetchone()["id"]
+    conn.execute("select set_config('app.changed_by', %s, true)", (who,))
+    conn.execute(
+        "insert into activity (tenant_id, code, band, strand, name, objective) values (%s, %s, %s, 'Maths', 'n', 'o')",
+        (t, code, up.config()["band"]),
+    )
+    return t
+
+
+def test_an_activity_the_seed_wrote_is_kept_but_does_not_read_as_edited_on_the_site(conn):
+    cfg = up.config()
+    assert cfg["seed_label"] and not cfg["seed_label"].startswith(cfg["upload_label"])
+    t = _new_activity(conn, "ACT-SEED-FIX", cfg["seed_label"])
+    assert {r["changed_by"] for r in _kept(conn, "activity", "ACT-SEED-FIX")} == {cfg["seed_label"]}
+    _, edited = up.snapshot(conn, t)
+    assert not {f for c, f in edited if c == "ACT-SEED-FIX"}
+
+
+def test_an_activity_a_person_adds_is_kept_and_does_read_as_edited_on_the_site(conn):
+    t = _new_activity(conn, "ACT-PERSON-FIX", "An Educator")
+    assert {r["changed_by"] for r in _kept(conn, "activity", "ACT-PERSON-FIX")} == {"An Educator"}
+    _, edited = up.snapshot(conn, t)
+    assert {f for c, f in edited if c == "ACT-PERSON-FIX"} == {"strand", "name", "objective"}
+
+
+def test_the_seed_load_leaves_no_activity_history_under_the_bare_database_login(conn):
+    n = conn.execute(
+        "select count(*) as n from curriculum_edit where record = 'activity' and changed_by = session_user::text"
+    ).fetchone()["n"]
+    assert n == 0, "the loader must say who it is; a bare login would read as a person"
