@@ -102,9 +102,13 @@ kept with who, when and which draft, and it cannot silently overwrite a person's
    plan lines with no lesson; the box proof runs it in a read-only transaction, which needs a placed CP-11 run on the box.
    `engine timetable go-live` goes on W2 step N4's `commands` in `workflows.json`.
 
-## Decisions for Nimish (what the school sees, or safety)
-1. **Who may put a draft live?** It replaces what educators see for a whole fortnight. Recommendation: only the coordinator
-   group ("everything" in CP-3), the same people who accept clashes in CP-12.
+## Decided by Nimish (8 Nov)
+- **Only the coordinator puts a draft live** ("Only the coordinator puts a draft timetable. That is okay."). A settings
+  row `timetable.go_live_group` (default: the coordinator group, "everything" in CP-3) in `supabase/seed/config.json`, read
+  with `settings.config`; the step refuses anyone whose role is not in that group, before any write.
+- **The fortnight is the unit** ("a fortnight is the unit of the timetable, and then everything gets derived from that").
+  Going live works on one fortnight; week, day, hour and quarter views are derived later. CP-21 builds no per-week or
+  per-day store: the dated layer rows are the fortnight's cells, and week A/B is worked out from the date as today.
 
 ## Implementation list (files)
 - `supabase/migrations/<next, after CP-4, CP-6, CP-11>_a_draft_goes_live.sql`: `timetable_slot.fortnight_id`, the partial unique
@@ -113,7 +117,8 @@ kept with who, when and which draft, and it cannot silently overwrite a person's
 - `packages/engine/engine/w2_print/cli_timetable.py`: `go-live`. `k2_day.py`: the layer row wins. `k2_timetable_sql.py`:
   `where not exists`, and the refusal for a live fortnight.
   `workflows.json`: N4. `engine/checks/rules.json` regenerated.
-- Tests: `test_timetable_go_live.py`: exact draft on every date, before/after fortnights unchanged, 15-day fortnight,
+- `supabase/seed/config.json`: `timetable.go_live_group`.
+- Tests: `test_timetable_go_live.py`: someone outside the go-live group is refused, exact draft on every date, before/after fortnights unchanged, 15-day fortnight,
   holiday, FN10's 7 Dec, only subject sessions move, week A lines stay in week A, materials dates follow, the
   stop-and-list cases, a second fortnight's draft not stale after the first goes live, loader re-run and its refusal, each refusal, record append-only, changed-since
   guard with and without discard, frozen with and without reason, `--dry` writes nothing, reader pages unchanged.
