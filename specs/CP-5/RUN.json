@@ -1,12 +1,11 @@
 {
- "ok": false,
+ "ok": true,
  "passed": [
-  "5 engine and web tests unchanged since main"
- ],
- "failed": [
   "2 a function added without a fixed search path fails a test",
   "3 leaked-password decision recorded and nothing reads Supabase Auth users",
-  "4 no tracked file holds the live project reference"
+  "4 no tracked file holds the live project reference",
+  "5 engine and web tests unchanged since main"
  ],
- "ran_at": "2026-11-08T09:06:40+00:00"
+ "failed": [],
+ "ran_at": "2026-11-08T09:24:25+00:00"
 }
