@@ -63,8 +63,9 @@ looked at it, including after the system has rebuilt it.
 - No stock, quantity on hand, issue, purchase or threshold exists anywhere in schema or engine.
 
 ## Goals
-1. One per-school setting says from how many rupees an item is worth tracking. One function computes "tracked".
-2. For tracked items the school keeps a record of every unit that comes in, goes to a class, comes back, is counted or is
+1. One per-school setting says from how many rupees an item is "tracked" (marked on the class lists the educator
+   approves). One function computes it.
+2. For every item (by default; a setting can later limit it to tracked items) the school keeps a record of every unit that comes in, goes to a class, comes back, is counted or is
    written off. How many are on hand, and where, is the sum of those records and can never go below zero.
 3. Each class's fortnight list is approved by an educator of that class, on the lines they were shown, before any send.
    Any change to its lines after approval, by a person or by a rebuild, means it must be approved again.
@@ -79,10 +80,14 @@ write-offs. Sending a list back with a reason. A command-line entry point (proof
 ## Data (the names are the contract the proofs use)
 - Settings (`config` rows for every school, `seed_once`, `on conflict do nothing`, bare values):
   - `inventory.track_from_rupees` = `500` (placeholder; the school changes the row).
+  - `inventory.record_items` = `"all"` (or `"tracked"`): which items may have stock records. Default all items
+    (Nimish, 08-Nov-2026); a school tightens it with this row, not code.
   - `inventory.record_roles` = `["ops", "coordinator", "head"]`: the roles whose open grant lets a person write stock
     records.
-  - `materials.approve_roles` = `["class_teacher", "educator", "subject_educator", "cover_educator"]`: the roles whose
-    open grant **on that class** lets a person approve its fortnight list.
+  - `materials.approve_roles` = `["class_teacher", "educator", "subject_educator", "cover_educator", "coordinator"]`:
+    the roles whose open grant lets a person approve a class's fortnight list. A grant tied to a class covers that
+    class only; a grant tied to no class (the coordinator's) covers every class, so a coordinator can approve for an
+    absent educator (Nimish, 08-Nov-2026).
 - `public.material_is_tracked(tenant_id, material_code) -> boolean`: `unit_value is not null and unit_value >=` the
   setting. Raises when the setting is missing, not a JSON number, or below 0. An item with no value is never tracked.
 - `stock_move(id uuid, tenant_id, material_code, kind, quantity numeric, class_id uuid null, counted_on_hand numeric
@@ -133,8 +138,8 @@ write-offs. Sending a list back with a reason. A command-line entry point (proof
   insists that a table with a class column is class-keyed, the builder runs `athena block CP-17`.
 
 ## The rules (database triggers; no application code decides)
-- **D1 Tracked to come in.** A `received` row, or a `counted` row for an item with no records yet, is refused for an
-  item that is not tracked, naming the item and the threshold; so is a `counted` row that would add stock to an untracked
+- **D1 Which items.** Only when `inventory.record_items` is `"tracked"`: a `received` row, or a `counted` row for an
+  item with no records yet, is refused for an item that is not tracked, naming the item and the threshold; so is a `counted` row that would add stock to an untracked
   item. Other kinds are bounded by what is on hand, so stock already recorded can still be moved, counted down or
   written off after the threshold or the price changes.
 - **D2 Never below zero.** Every `stock_move` insert, of every kind, first takes one transaction lock per tenant and
@@ -146,7 +151,7 @@ write-offs. Sending a list back with a reason. A command-line entry point (proof
   taken from its list, never from the caller.
 - **D6 Approval.** The insert of an approval is refused unless: the list's `period = 'fortnight'` and its `from_on` and
   `to_on` equal one teaching fortnight's `starts_on` and `ends_on`; the approver holds an open grant on the list's class
-  with a role in `materials.approve_roles`; that fortnight is past planning (`fortnight_is_frozen`); and the `lines_digest`
+  (or a grant tied to no class) with a role in `materials.approve_roles`; that fortnight is past planning (`fortnight_is_frozen`); and the `lines_digest`
   the caller sends equals the digest now, so an educator never approves lines they were not shown. Before the freeze the plan, and so
   the list, can still change. The trigger takes the list row `for update`.
 - **D7 Any change voids approval.** Nothing is updated or deleted: if the lines change, the digest no longer matches.
@@ -172,19 +177,16 @@ CP-18's, when its sends are recorded; CP-18 should require a current approval fo
 |---|---|---|
 | Change the threshold or role lists | whoever may edit `config` today (unchanged) | the `config` row |
 | Record stock in, out, back, counted, written off | roles in `inventory.record_roles` | `stock_move`, append-only |
-| Approve a class's fortnight list | an educator with an open grant on that class, role in `materials.approve_roles` | `materials_list_approval`, append-only; on the one approval list |
+| Approve a class's fortnight list | an educator with an open grant on that class, or a coordinator (any class); roles in `materials.approve_roles` | `materials_list_approval`, append-only; on the one approval list |
 | Send the list | unchanged (CP-18), now refused without a current approval | `materials_send`, `materials_list.state` |
 
 ## Decisions
-For Nimish (they change what the school sees, or what is safe). The draft scope follows each recommendation until he
-decides otherwise:
-1. **May a coordinator approve a class's list when its educators are away?** Recommendation: no. "Educator approval"
-   means someone who teaches that class looked at it; a cover educator on the class can approve, and the role list is a
-   setting the school can widen.
-2. **Do write-offs need a second person?** Recommendation: no, for now. A write-off needs a reason, names who did it and
-   stays in the record for good; a second sign-off can be its own scope if losses appear.
-3. **Stock records only for items at or above the threshold?** Recommendation: yes. Cheap consumables are not counted,
-   which is the point of a threshold; an item whose price nobody has entered is not tracked until a person enters it.
+Decided by Nimish, 08-Nov-2026 ("Do not restrict the coordinator from these things right now. If you want data, or we
+can think about rules later."), relayed by the orchestrator:
+1. A coordinator may approve a class's list for an absent educator (in `materials.approve_roles` by default).
+2. Write-offs need no second sign-off; each needs a reason and is kept for good.
+3. Stock is recorded for all items by default (`inventory.record_items` = `"all"`). The rupee threshold stays a setting
+   that marks tracked items on the lists; a school can limit stock records to tracked items later with the row.
 
 Mechanical (decided here, reason given):
 - Default threshold ₹500 and the role lists are placeholders in settings rows; proofs check the settings exist and work,
@@ -223,21 +225,21 @@ Database proofs run on the throwaway Postgres (`TEST_DATABASE_URL`), rolled back
 
 | Done-when | Proof covers |
 |---|---|
-| 1 | `material_is_tracked` against the setting; changing the setting; empty value |
+| 1 | `material_is_tracked` against the setting; changing the setting; empty value; `record_items` default all |
 | 2 | D9: search, and the engine's materials route uses the rule |
 | 3 | each kind, its place effects, `stock_on_hand`; update and delete refused; truncate refused for `app_engine` |
-| 4 | D1 to D5, including two concurrent issues |
+| 4 | D1 (with `record_items` = tracked) to D5, including two concurrent issues |
 | 5 | D6 (including a fortnight list whose dates are not one teaching fortnight), and the `approval_list` row |
 | 6 | D7 and D8: an educator edit and a rebuild void approval; send by each route and re-send refused |
 | 7 | `access_table` rows; existing materials tests |
-| 8 | LIVE, read-only counts: three settings per school; no negative `stock_on_hand` |
+| 8 | LIVE, read-only counts: four settings per school; no negative `stock_on_hand` |
 
 ## Implementation list
 - `supabase/migrations/<ts after CP-4 and CP-6>_inventory.sql`: settings rows, the functions, `stock_move`,
   `stock_on_hand`, `materials_list_approval`, the triggers on `stock_move`, `materials_line`, `materials_send` and
   `materials_list` and `approval`, the `approval_kind` row, the `approval_list` branch,
   `access_table` rows; ends with `select internal.apply_conventions()`. Idempotent. No timestamp chosen here.
-- `supabase/seed/config.json`, `supabase/seed/vocabulary.json`: the three settings and the approval kind's words.
+- `supabase/seed/config.json`, `supabase/seed/vocabulary.json`: the four settings and the approval kind's words.
 - `packages/engine/engine/api/routes/materials.py:211`, `packages/engine/engine/w2_print/materials_list.py:154`: call
   the one rule in SQL.
 - Tests: `packages/engine/tests/test_stock.py` (items 1, 3, 4), `test_materials_approval.py` (items 5, 6) and
