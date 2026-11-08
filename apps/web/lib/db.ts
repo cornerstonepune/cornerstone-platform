@@ -163,7 +163,7 @@ export const sql: Sql = new Proxy(rawSql, {
         this.executed = false;
         return plain.call(this); // nobody asking: the plain pool, as before
       }
-      if (this.cursorFn || this.onlyDescribe) return this.reject(new Error("cursor() and describe() are not available on a query that carries an identity"));
+      if (this.cursorFn || this.onlyDescribe) return this.reject(new Error("cursor() and describe() are not available on a query made for a signed-in person"));
       const done = asking(staff, (tx) => {
         const q = (tx as unknown as (...a: unknown[]) => PendingQuery)(...args);
         if (this.isRaw === "values") q.values();
