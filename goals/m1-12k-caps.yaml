@@ -10,7 +10,7 @@ says:
   - words: "set the later stages' caps so their sum stays under the campaign cap"
     proved_by: "packages/engine/tests/test_llm_budget.py::test_the_seeded_stages_are_the_dev_eval_and_the_held_out_score_with_the_drafting_keeping_the_rest"
   - words: "keep the one-stage-at-a-time rule"
-    proved_by: "packages/engine/tests/test_llm_budget.py::test_the_campaign_stops_at_26_after_nimishs_yes_of_8_nov_and_the_stages_add_up_under_it"
+    proved_by: "packages/engine/tests/test_llm_budget.py::test_the_campaign_stops_at_39_5_after_nimishs_word_of_8_nov_and_the_stages_add_up_under_it"
   - words: "report if measured cost per page > 0.03 for any tranche"
     proved_by: "packages/engine/tests/test_llm_budget.py::test_a_tranche_whose_pages_cost_more_than_three_cents_each_is_flagged_in_the_checkers_report"
 manual:

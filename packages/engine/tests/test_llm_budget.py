@@ -196,7 +196,7 @@ def test_the_seeded_campaign_has_a_cap_less_a_margin_over_exactly_the_three_prom
         for c in json.loads((db.REPO_ROOT / "supabase" / "seed" / "config.json").read_text())["config"]
         if c["key"] == "llm.campaigns"
     )["value"]["m1-11"]
-    assert seeded["cap_usd"] == 26.5 and 0 < seeded["margin_usd"] < seeded["cap_usd"]
+    assert seeded["cap_usd"] == 40 and 0 < seeded["margin_usd"] < seeded["cap_usd"]
     assert seeded["stale_minutes"] == 10
     assert set(seeded["purposes"]) == {
         "curriculum_map_propose",
@@ -377,12 +377,13 @@ def _seeded(key):
     return next(c for c in rows if c["key"] == key)["value"]
 
 
-def test_the_campaign_stops_at_26_after_nimishs_yes_of_8_nov_and_the_stages_add_up_under_it():
-    """Nimish, 2026-11-08: yes to finishing the last pages (about $1.3 more) after the campaign stopped at $24.51. The cap
-    is 26.5 and the margin 0.5, so the stop is 26.0; each stage that has a cap of its own stops at its cap less the stage
+def test_the_campaign_stops_at_39_5_after_nimishs_word_of_8_nov_and_the_stages_add_up_under_it():
+    """Nimish, 2026-11-08: yes to finishing the last pages after the campaign stopped at $24.51, then "don't worry about
+    usage; important that you do quality work and conclude". The cap is 40 and the margin 0.5, so the stop is 39.5, which
+    holds the last pages and the linking run; each stage that has a cap of its own stops at its cap less the stage
     margin; the drafting has none, the campaign's holds. Nothing else moved."""
     c = _seeded("llm.campaigns")["m1-11"]
-    assert c["cap_usd"] == 26.5 and c["margin_usd"] == 0.5 and c["cap_usd"] - c["margin_usd"] == 26.0
+    assert c["cap_usd"] == 40 and c["margin_usd"] == 0.5 and c["cap_usd"] - c["margin_usd"] == 39.5
     assert c["stages"]["dev_eval"] == 5.2 and c["stages"]["held_out"] == 4.8 and c["stages"]["draft"] is None
     capped = [v for v in c["stages"].values() if v is not None]
     assert sum(capped) < c["cap_usd"] - c["margin_usd"], (
