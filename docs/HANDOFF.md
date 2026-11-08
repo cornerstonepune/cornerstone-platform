@@ -1,38 +1,42 @@
 # Handoff: where things stand
-Under 50 lines. Rewritten at the end of every session; the session-start hook shows the top lines.
+Under 50 lines. Written by orchestrator 3, 8 Nov 2026 (~11 PM IST). Verify every fact before acting. Times to Nimish: IST, never UTC.
 
-## Live
-- Main is green. Live database had all 130 migrations at the 8 Nov reconciliation. PR #413 (FET install) was merged by
-  Nimish on 8 Nov; CP-11 proves it after the fact.
-- Athena 2.13.0. `athena health` 8 Nov: Canny PASS. Still FAIL: usage ledger never written, plan usage not recorded,
-  many components "never fired" (they fire as scopes run).
+## Done (main, all 8 Nov)
+CP-0 plan; CP-1 people (live; box proofs pass: staff 7=7, K2-A rolls 1-22); CP-2 who-is-asking (live; pooler repeat passed);
+CP-5 hygiene; CP-20 test DB in CI; CP-13 min adults (#479, live); plan split #494 (CP-11 draft / CP-21 goes live / CP-12 by hand).
 
-## Start here
-- `docs/backend-plan.md` is the one list of what remains: CP-1..CP-19. No status in it; status is `athena status`,
-  `specs/<ID>/`, the issues' labels and the nightly run. Backend done = all 19 finished + LIVE proofs pass.
-- Issues: CP-1 #448, CP-2 #449, CP-0 #450, CP-3 #451, CP-4 #452, CP-5 #453, CP-6 #454, CP-7 #455, CP-8 #456,
-  CP-9 #457, CP-10 #458, CP-11 #459, CP-12 #460, CP-13 #461, CP-14 #462, CP-15 #463, CP-16 #464, CP-17 #465,
-  CP-18 #466, CP-19 #467.
-- Locked by Nimish 8 Nov: CP-0, CP-1, CP-2, CP-5. CP-0, CP-2 and CP-5 have locked proofs; CP-1 proofs in progress.
-- CP-0 ships alone from branch cp-0-backend-plan (config prefix + plan + this file). CP-1/2/5 work stays on
-  claude/bold-carson-f72yjv until each is built; one pull request per scope.
+## Open: CP-3 #477 (build session_01KEBF27howCR1C6e5zKKBP6), the chain's bottleneck
+- Speed bug FIXED (class_band reads as owner; staff.signin_id key; migration 20270120100000): browser shard 1 green in CI.
+- Shards 2/3 red: old specs invent educators with only a class label (no school_class, enrolment, staff row, grant). Nimish chose
+  option A (honest rows via one central apps/web/tests/access-fixture.sql, K2-A shape) and typed UNLOCK CP-3; label `scope-change` is on #477.
+  Session decisions: no uploader-sees-own exception; counts-only definer fn only for sites it proves broken (6 call sites listed, 1 proven);
+  item 7 reworded and relocked. Merge when: all CI shards green + verifier re-PASS on the final diff (athena-verifier agent).
+- Then tell CP-9 session "CP-3 merged" and start the CP-4 build (below).
 
-## Decisions taken (Nimish, 8 Nov)
-- Load all 7 staff (CP-1). Scrub the project reference from STATE.md (CP-5). Leaked-password protection: recorded
-  "not applicable" (CP-5). Access: coordinator, deputy, mentor, head, curriculum team, ops see everything; educators
-  and assistants see their own classes and subjects; everyone sees question bank, curriculum, plan, timetable.
+## Next after CP-3
+- CP-4 #452 (locked; design session_01KEBF2A7DQSEjwZyyUgaLRE): fresh branch from main, recipe below. Then CP-6, CP-8, CP-9, CP-11.
+- CP-9 #478 draft (session_01KEBF28jjY9zjqqD8bexQeL): waits for CP-3; data-register entries done; then browser preflight, ready, verifier.
+- CP-6 session_01KEBF2ATKNsoYRi1UU1QL8b, CP-8 session_01KEBF27vass2Hk5iXWoehr3: scoped and locked, wait for CP-4.
+- Eight scopes LOCKED by Nimish on the PRs (not the issues): CP-7 #488 (proofs locked), CP-11 #486 (locked), CP-18 #490 (locked), CP-12 #485,
+  CP-14 #483, CP-17 #492, CP-19 #489, CP-21 #495 (issues #487 #459 #466 #460 #482 #491 #467 #496). Each scope session writes proofs and runs
+  athena lock; sessions: CP-7 ...tTQkRZserHHBXBJd, CP-11 ...294xSdNbUzu5W38YiQ, CP-12+21 ...28neuwnS7mNrCzQcqU, CP-14 ...28EPCNCPen2s3LvKjT,
+  CP-17 ...28cQGxXK59RxjQTEWt, CP-18 ...29tBLA6f9MBovGRhf3, CP-19 ...27Y8mGj8Gq8KxdnPAC (all prefixed session_01KEBF). Order CP-11, CP-21, CP-12.
+- CP-18's proofs guess CP-17's `materials_approval.approve` and CP-6's `fortnight_cycle.step/state`: build those with exactly those names.
+- Not scoped: CP-10 (Sarvam letter), CP-15/16 (page format; frontend). Old duplicate issues closed (#455 #462 #465 #484).
 
-## Findings that changed scopes
-- CP-1: `import_staff` already exists; edit-history triggers do NOT cover activity inserts or link updates (real gap).
-- CP-2: proves identity transport only; function lives in `public`; real-pooler proof is box-only.
-- CP-5: 35-function list must be read from the live database; reference sits in 3 tracked files.
+## Nimish's rules (his words, 8 Nov)
+- Merge: "Once we know that it's safe to merge, you should merge... take some judgment call." Needs verifier PASS on final code + real tests green.
+- The FORTNIGHT is the unit; week/day/quarter are derived views. Values are settings rows. Coordinator unrestricted for now.
+- No questions on values; ask only what changes what the school sees or is unsafe. Short plain answers; challenge him; say when unsure.
 
-## Next
-- CP-1 proofs, then lock; build CP-0 PR, then CP-1, CP-2, CP-5 (one migration scope at a time).
-- CP-3/CP-4: draft from the simplified access model; design reviews not started. CP-3 design reviews 6-19: not started.
-- Not drafted: three layouts of one activity page, Sarvam "no retention" request text, bars decision text.
-- Access grid page (13 roles) is superseded by the simplified model above; republish with CP-3.
+## Lessons (hours lost)
+- A DRAFT PR skips most CI (its green is empty). BUILD RECIPE: guard tests; browser specs the change touches run LOCALLY as app_web on an
+  accumulated DB in CI order; check each failure against main; numbers in the PR; mark READY only then; CI once. Never stack on an unmerged branch.
+- 'cancelled' roll-up jobs (engine/browser) show red when a newer push cancelled the run: not a failure. Cancel a doomed run at once.
+- Jev hook: read the tripwire id from the denial, run Bash `true # jev:intended <id>: "<his real sentence>"`, repeat. Sessions cannot pass it
+  for issue/PR writes: the orchestrator does those. Locked proofs that guard another scope need his UNLOCK typed alone in that session.
+- Local checkout is stale: read main from GitHub. Do not commit .claude/autoharness or plugin skills (the stop hook nags: ignore).
 
-## Blocked (decisions needed from Nimish)
-1. Named signer for the live staff import (CP-1); a class for any class-scoped role.
-2. Lock the next wave: CP-3 and CP-4 once drafted.
+## Waiting on Nimish (none blocks a merge)
+Restricted-login password + switch-on gate (after CP-3); CP-9 box steps (n8n flow f4, cp9.real_notes_from, 20 notes, 5 hand checks);
+CP-13 item 4 list; the Athena request (local preflight gate) he was given to paste.
