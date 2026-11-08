@@ -42,7 +42,9 @@ else
   # (user, a local host, an optional port, a plain database name; nothing else, so no ?host=, second @, comma list or path
   # trick can send libpq elsewhere or keep the owner role). Only this URL is read: PG* environment variables (PGSERVICE,
   # PGHOSTADDR) are not checked. playwright.config.ts also insists on a local host once Playwright starts.
-  if ! printf '%s\n' "$TEST_DATABASE_URL" | grep -Eq '^postgres(ql)?://[A-Za-z0-9_]+@(127\.0\.0\.1|localhost)(:[0-9]+)?/[A-Za-z0-9_]+$'; then
+  # (matched whole in bash, not line by line: a value with a line break must not pass on one of its lines)
+  url_shape='^postgres(ql)?://[A-Za-z0-9_]+@(127\.0\.0\.1|localhost)(:[0-9]+)?/[A-Za-z0-9_]+$'
+  if ! [[ $TEST_DATABASE_URL =~ $url_shape ]]; then
     echo "preflight FAILED: TEST_DATABASE_URL must look like postgresql://postgres@127.0.0.1:5432/postgres (a user, a local host, a plain database name)" >&2
     exit 1
   fi
