@@ -608,9 +608,10 @@ def test_each_service_can_call_what_it_may_and_neither_can_delete_history(tmp_pa
         # an enrolment ends; it is not removed
         conn.execute("update enrolment set to_date = from_date where id = %s", (enrol,))
         conn.rollback()
-        # as the website: it reads the school's structure, and calls neither lookup
+        # as the website: enrolment is under the access rules (CP-3), so with no identity set it reads none; it calls
+        # neither lookup
         conn.execute("set local role app_web")
-        assert conn.execute("select count(*) n from enrolment").fetchone()["n"] == 22
+        assert conn.execute("select count(*) n from enrolment").fetchone()["n"] == 0
         for call in (
             "select public.staff_of_email('ann@example.test')",
             f"select * from pii.read_staff('{sid}', 'web')",

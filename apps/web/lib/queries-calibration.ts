@@ -34,9 +34,7 @@ export async function levelRows(scope: Scope): Promise<LevelRow[]> {
   const classes = scope.classes;
   const visible = classes
     ? sql`(l.scope_kind = 'class' and l.scope_value = any(${classes}))
-          or (l.scope_kind = 'grade' and not exists (
-                select 1 from child c where c.tenant_id = l.tenant_id and c.band = l.scope_value and c.active
-                  and c.section <> all(${classes})))`
+          or (l.scope_kind = 'grade' and grade_is_wholly(l.scope_value, ${classes}::text[]))`
     : sql`true`;
   return sql<LevelRow[]>`
     select l.scope_kind as kind, l.scope_value as scope, l.grade, g.name as "gradeName", l.skill_code as skill,

@@ -2,7 +2,7 @@
 // them, signed exactly as lib/auth.ts signs one. The tests then use the site the way a person does
 // after signing in — no development bypass, which a production build never has.
 import { createHmac } from "node:crypto";
-import { mkdirSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import postgres from "postgres";
 import { GITHUB_PORT, MAIL_PORT, SIGNED_IN, WEB_PORT } from "../playwright.config";
@@ -20,6 +20,26 @@ export default async function globalSetup(): Promise<void> {
   await sql`
     update config set value = value || ${sql.json([TEST_STAFF])}
     where key = 'app.staff' and not value @> ${sql.json([{ email: TEST_STAFF.email }])}`;
+  // The database's access rules (CP-3) show a person only what their role's group allows, and the site runs as app_web
+  // in CI. So the test user is a member of staff with a current deputy_coordinator grant (the group that sees everything, and not a preview or review role).
+  const [{ id: school }] = await sql<{ id: string }[]>`select id from tenant order by created_at limit 1`;
+  const [{ id: campus }] = await sql<{ id: string }[]>`select id from campus where tenant_id = ${school} limit 1`;
+  const [had] = await sql<{ staff_id: string }[]>`select staff_id from pii.staff where email = ${TEST_STAFF.email}`;
+  const staff =
+    had?.staff_id ??
+    (await sql<{ id: string }[]>`insert into staff (tenant_id, campus_id) values (${school}, ${campus}) returning id`)[0].id;
+  if (!had) {
+    await sql`insert into pii.staff (tenant_id, staff_id, name, email) values (${school}, ${staff}, ${TEST_STAFF.name}, ${TEST_STAFF.email})`;
+  }
+  await sql`
+    insert into staff_role_grant (tenant_id, staff_id, role_code, valid_from, granted_by)
+    select ${school}, ${staff}, 'deputy_coordinator', current_date - 1, 'e2e global-setup'
+    where not exists (
+      select 1 from staff_role_grant
+      where staff_id = ${staff} and role_code = 'deputy_coordinator' and valid_to is null)`;
+  // The educators the specs invent (a sign-in entry with classes, children with a class label) get the staff row,
+  // class, enrolment and grant the rules read: see access-fixture.sql. Local copy only.
+  await sql.unsafe(readFileSync(path.join(__dirname, "access-fixture.sql"), "utf8"));
   await sql.end();
 
   const expiry = String(Date.now() + 86_400_000);
