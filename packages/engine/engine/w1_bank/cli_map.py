@@ -16,7 +16,6 @@ from typing import cast
 
 import typer
 
-from engine.adapters import llm_budget
 from engine.adapters.llm import LLMError
 from engine.core import db
 from engine.w1_bank import map_ledger, map_why
@@ -24,7 +23,6 @@ from engine.w1_bank import map_probe as map_probe_mod
 from engine.w1_bank import map_replay as map_replay_mod
 from engine.w1_bank.k2_upload import config, curriculum_app
 from engine.w1_bank.map_agents import (
-    PROPOSE,
     Ask,
     Band,
     Proposal,
@@ -36,6 +34,7 @@ from engine.w1_bank.map_agents import (
     recorded_ask,
 )
 from engine.w1_bank.map_eval import Scored, score, split
+from engine.w1_bank.map_scope import estimate, estimate_line, only_kind, to_propose
 
 PURPOSE = "curriculum_map"  # its bars: eval.curriculum_map.*
 RECORDED = typer.Option(None, "--recorded", help="Replies a file holds, in place of the model (no key here)")
@@ -55,28 +54,6 @@ def _ask(
     validate_version: int | None = None,
 ) -> Ask:
     return recorded_ask(recorded) if recorded else model_ask(conn, propose_version, validate_version, stage)
-
-
-def estimate(conn: db.Conn, gaps: int) -> tuple[int, float | None, int]:
-    """(gaps, dollars a proposer call has cost on average, calls that average is taken from). Reads only."""
-    camp = llm_budget.campaign_for(conn, PROPOSE)
-    got = db.one(
-        conn,
-        "select count(*) as calls, avg(cost_inr) as inr from flow_run where flow = %s and cost_inr is not null",
-        (PROPOSE,),
-    )
-    if not got["calls"] or camp is None:
-        return gaps, None, 0
-    return gaps, float(got["inr"]) / camp["inr_per_usd"], got["calls"]
-
-
-def estimate_line(gaps: int, per_call: float | None, calls: int) -> str:
-    if per_call is None:
-        return f"{gaps} gaps to propose for; the cost of a call is not measured (none was paid for yet)"
-    return (
-        f"{gaps} gaps to propose for; about ${per_call:.4f} a proposer call over {calls} paid calls, "
-        f"so about ${per_call * gaps:.2f} before any validator call"
-    )
 
 
 def _rules(conn: db.Conn, tenant: db.Id) -> Rules:
@@ -133,28 +110,34 @@ def propose_(
     version: int = typer.Option(0, "--version", help="The proposer's prompt version (0: the active one)"),
     validate_version: int = typer.Option(0, "--validate-version", help="The validator's (0: the active one)"),
     estimate_only: bool = typer.Option(False, "--estimate", help="Count the gaps and price them; no call"),
+    kind: str = typer.Option(
+        "", "--kind", help="Only activities with this gap, and only its proposals: skill"
+    ),
 ) -> None:
     """Propose for every gap of the band not already proposed, and record where each went."""
     _needs_by(write, by)
+    if kind not in ("", "skill"):
+        raise typer.BadParameter("--kind takes skill (or nothing: every kind)")
     with db.connect() as conn:
         tenant = _tenant(conn)
         staff = staff_of(conn, by) if write else None
         b, rules = read_band(conn, tenant, band or config()["band"]), _rules(conn, tenant)
         b.pool = frozenset(gold_split(conn, b)[0])
         done = map_ledger.proposed(conn, tenant)
-        todo = [
-            c for c in sorted(b.gaps) if not any((k, c, "") in done for k in ("skill", "objective", "levels"))
-        ]
+        todo = to_propose(b, done, kind)
         if estimate_only:
             typer.echo(estimate_line(*estimate(conn, len(todo))))
             return
         ask = _ask(conn, recorded, version or None, stage or None, validate_version or None)
         pairs = frozenset((c, s) for k, c, s in done if k == "lo_skill")
         try:
-            made = [
-                *propose(b, todo, ask, rules, map_ledger.asked(conn, tenant)),
-                *propose_lo_skills(b, ask, rules, pairs),
-            ]
+            made = only_kind(
+                [
+                    *propose(b, todo, ask, rules, map_ledger.asked(conn, tenant)),
+                    *([] if kind else propose_lo_skills(b, ask, rules, pairs)),
+                ],
+                kind,
+            )
         except (
             LLMError
         ) as e:  # no active prompt (none is, until its eval meets the bars), no key, no recorded reply

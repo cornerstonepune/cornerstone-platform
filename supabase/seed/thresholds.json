@@ -526,15 +526,15 @@
   },
   {
    "key": "eval.curriculum_map.skill_all_right",
-   "value": 0.9,
+   "value": 0.8,
    "unit": "proportion",
-   "description": "Of the held-out activities whose skills the agents linked on their own, the share whose every skill a person also linked. Set before any run by the orchestrator for Nimish, D-047, 2026-11-03 (goals/m1-05-mapping-agents.yaml); nothing applies until a run meets it"
+   "description": "Of the held-out activities whose skills the agents linked on their own, the share whose every skill a person also linked. Set before any run by the orchestrator for Nimish, D-047, 2026-11-03 (goals/m1-05-mapping-agents.yaml) at 0.90; lowered to 0.80 by Nimish on 2026-11-08, after the held-out run measured 0.80 on the 245 activities it reached (95% interval 0.732 to 0.854; the 182 it did not reach were never read): '80% bar is alright ... educators will change it if required' (DECISIONS-LOG 2026-11-08). Nothing applies until a run meets it"
   },
   {
    "key": "eval.curriculum_map.skill_found",
-   "value": 0.85,
+   "value": 0.75,
    "unit": "proportion",
-   "description": "Of the skills people linked to those same held-out activities, the share the agents found. Set by the orchestrator for Nimish, D-047, 2026-11-03 (goals/m1-05-mapping-agents.yaml)"
+   "description": "Of the skills people linked to those same held-out activities, the share the agents found. Set by the orchestrator for Nimish, D-047, 2026-11-03 (goals/m1-05-mapping-agents.yaml) at 0.85; lowered to 0.75 on 2026-11-08 with the precision bar, after the held-out run found 0.784 of the people's skills on the 245 activities it reached (DECISIONS-LOG 2026-11-08)"
   },
   {
    "key": "eval.curriculum_map.auto_passed",
