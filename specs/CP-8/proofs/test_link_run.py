@@ -1,9 +1,10 @@
-"""CP-8 item 4: a linking run (`plan_link_apply`) records which rule linked each line, and can be undone as a whole
-(`plan_link_undo`). Placeholder rows, one rolled-back transaction (see conftest.py)."""
+"""CP-8 item 4: a linking run (`plan_link_apply`) records which rule linked each line, can be limited to one fortnight
+(`p_fortnight`, a fortnight number), and can be undone as a whole (`plan_link_undo`). Placeholder rows, one rolled-back
+transaction (see conftest.py)."""
 
 import uuid
 
-from conftest import BY, apply_run, row, undo_run, unmatched
+from conftest import BY, FN_A, FN_B, apply_run, row, undo_run, unmatched
 from engine.core import db
 
 
@@ -82,6 +83,45 @@ def test_a_tie_is_never_linked_and_is_listed_for_a_person(conn, k2):
     apply_run(conn, k2)
     assert row(conn, tie)["activity_id"] is None, "a run broke a tie"
     assert unmatched(conn, k2).get(tie) == ("several_matches", 2)
+
+
+def _fortnights_of(conn, ids):
+    if not ids:
+        return set()
+    return {
+        r["number"]
+        for r in conn.execute(
+            "select distinct f.number from plan_entry pe join fortnight f on f.id = pe.fortnight_id where pe.id = any(%s)",
+            (list(ids),),
+        ).fetchall()
+    }
+
+
+def test_a_run_limited_to_one_fortnight_touches_only_that_fortnights_lines_and_undoes_as_a_whole(conn, k2):
+    lines, acts = k2["lines"], k2["acts"]
+    run = apply_run(conn, k2, fortnight=FN_B)
+    in_run = _run_lines(conn, run)
+    assert lines["ready_b"] in in_run, f"the run for fortnight {FN_B} did not link its line with one match"
+    r = row(conn, lines["ready_b"])
+    assert (r["activity_id"], r["link_rule"], r["linked_by"]) == (acts["ready_b"], "exact_name", BY), r
+    assert _fortnights_of(conn, in_run) == {FN_B}, "the run limited to one fortnight linked lines of another"
+    for role in ("ready", "ready2"):
+        assert row(conn, lines[role])["activity_id"] is None, f"the {FN_B} run linked a fortnight {FN_A} line"
+    assert unmatched(conn, k2).get(lines["ready"]) == ("ready_to_link", 1)
+    assert undo_run(conn, run) == len(in_run)
+    assert row(conn, lines["ready_b"])["activity_id"] is None, "the undo left the fortnight's line linked"
+    assert undo_run(conn, run) == 0
+
+
+def test_a_run_over_all_fortnights_links_in_each(conn, k2):
+    lines = k2["lines"]
+    run = apply_run(conn, k2)
+    in_run = _run_lines(conn, run)
+    assert {lines["ready"], lines["ready2"], lines["ready_b"]} <= in_run, (
+        "a run over all fortnights missed a line with one match"
+    )
+    assert {FN_A, FN_B} <= _fortnights_of(conn, in_run)
+    assert undo_run(conn, run) == len(in_run)
 
 
 def test_apply_never_changes_an_existing_link(conn, k2):

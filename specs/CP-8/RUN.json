@@ -4,10 +4,10 @@
   "6 existing engine and website tests (pages and speed) unchanged since main"
  ],
  "failed": [
-  "1 the dry run counts lines per fortnight and writes nothing",
-  "2 every unlinked line is on plan_unmatched with the right reason, also after an undo and a new line",
-  "4 a run records the rule on each line it links and undoes as a whole, leaving loader and hand links",
+  "1 the share holds in each fortnight; the dry run counts per fortnight, one fortnight on request, and writes nothing",
+  "2 every unlinked line is on plan_unmatched with the right reason and its fortnight, also after an undo and a new line",
+  "4 a run records its rule per line, can be limited to one fortnight, and undoes as a whole, leaving loader and hand links",
   "5 a decision on showing a draft marked not written yet is recorded"
  ],
- "ran_at": "2026-11-08T12:14:56+00:00"
+ "ran_at": "2026-11-08T12:41:31+00:00"
 }

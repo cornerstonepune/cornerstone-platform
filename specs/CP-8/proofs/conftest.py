@@ -8,8 +8,8 @@ the real loader (`k2_timetable_sql.apply`), so the lines the loader links are ma
   - `loader` : text equal to exactly one activity name   -> the loader links it (rule exact_name)
   - `none`   : text equal to no activity                 -> unlinked, reason no_match
   - `tie`    : text equal to two activities' names       -> unlinked, reason several_matches
-  - `ready`, `ready2` : text equal to an activity added after the load (as CP-15 will add them)
-                                                         -> unlinked, reason ready_to_link
+  - `ready`, `ready2` (fortnight 37), `ready_b` (fortnight 38) : text equal to an activity added after the load (as
+                                                           CP-15 will add them) -> unlinked, reason ready_to_link
 """
 
 import runpy
@@ -113,7 +113,9 @@ def k2(conn):
         "tie_2": _activity(conn, t, names["tie"], tag, 3),
         "other": _activity(conn, t, names["other"], tag, 4),
     }
-    # Fortnight FN_A: loader, none, tie, ready, ready2 (5 lines). Fortnight FN_B: two more no_match lines (2 lines).
+    names["ready_b"] = f"Placeholder later bee {tag}"
+    # Fortnight FN_A: loader, none (week A), tie, ready, ready2 (5 lines).
+    # Fortnight FN_B: two no_match lines (week B) and ready_b (3 lines).
     load = ld.Load(
         fortnights=[
             (FN_A, date(2087, 11, 17), date(2087, 11, 30)),
@@ -121,18 +123,20 @@ def k2(conn):
         ],
         plan_entries=[
             ld.PlanEntry(FN_A, "math", 1, names["loader"]),
-            ld.PlanEntry(FN_A, "math", 2, names["none"]),
+            ld.PlanEntry(FN_A, "math", 2, names["none"], week="A"),
             ld.PlanEntry(FN_A, "math", 3, names["tie"]),
             ld.PlanEntry(FN_A, "math", 4, names["ready"].upper()),
             ld.PlanEntry(FN_A, "math", 5, names["ready2"]),
-            ld.PlanEntry(FN_B, "math", 1, f"Placeholder unmatched b1 {tag}"),
-            ld.PlanEntry(FN_B, "math", 2, f"Placeholder unmatched b2 {tag}"),
+            ld.PlanEntry(FN_B, "math", 1, f"Placeholder unmatched b1 {tag}", week="B"),
+            ld.PlanEntry(FN_B, "math", 2, f"Placeholder unmatched b2 {tag}", week="B"),
+            ld.PlanEntry(FN_B, "math", 3, names["ready_b"]),
         ],
     )
     sq.apply(conn, load, ld.Target("K2", section, YEAR, db.tenant_slug(), "CP-8 proof"))
     # Activities written after the load (as CP-15 will write them): their lines are unlinked but now have a match.
     acts["ready"] = _activity(conn, t, names["ready"], tag, 5)
     acts["ready2"] = _activity(conn, t, names["ready2"], tag, 6)
+    acts["ready_b"] = _activity(conn, t, names["ready_b"], tag, 7)
     k = {
         "tenant": t,
         "class": klass,
@@ -146,12 +150,18 @@ def k2(conn):
         role: line(conn, k, "math", o)["id"]
         for role, o in (("loader", 1), ("none", 2), ("tie", 3), ("ready", 4), ("ready2", 5))
     }
+    k["lines"]["ready_b"] = line(conn, k, "math", 3, FN_B)["id"]
     k["lines_b"] = [line(conn, k, "math", o, FN_B)["id"] for o in (1, 2)]
     return k
 
 
-def apply_run(conn, k):
-    return db.one(conn, "select plan_link_apply(%s, 'K2', %s) as run", (k["tenant"], BY))["run"]
+def apply_run(conn, k, fortnight=None):
+    """A run over every fortnight (the three-argument call), or limited to one fortnight number."""
+    if fortnight is None:
+        return db.one(conn, "select plan_link_apply(%s, 'K2', %s) as run", (k["tenant"], BY))["run"]
+    return db.one(conn, "select plan_link_apply(%s, 'K2', %s, %s) as run", (k["tenant"], BY, fortnight))[
+        "run"
+    ]
 
 
 def undo_run(conn, run):

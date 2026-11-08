@@ -1,8 +1,9 @@
-"""CP-8 item 2 (test part): every K2 plan line is either linked or on the named list `plan_unmatched` with a reason
-(no_match / several_matches / ready_to_link); none is silently unlinked, also after an undo and after a new line is
-added. Placeholder rows, one rolled-back transaction (see conftest.py)."""
+"""CP-8 item 2 (test part): every K2 plan line, in every fortnight, is either linked or on the named list
+`plan_unmatched` with a reason (no_match / several_matches / ready_to_link), and the list shows its fortnight
+(`fortnight_number`, with `week_code`); none is silently unlinked, also after an undo and after a new line is added.
+Placeholder rows, one rolled-back transaction (see conftest.py)."""
 
-from conftest import add_line, apply_run, undo_run, unmatched
+from conftest import FN_A, FN_B, add_line, apply_run, undo_run, unmatched
 from engine.core import db
 
 REASONS = {"no_match", "several_matches", "ready_to_link"}
@@ -16,8 +17,39 @@ def test_each_unlinked_line_is_listed_with_its_reason_and_a_linked_line_is_not(c
     assert got.get(lines["tie"]) == ("several_matches", 2), got.get(lines["tie"])
     assert got.get(lines["ready"]) == ("ready_to_link", 1), got.get(lines["ready"])
     assert got.get(lines["ready2"]) == ("ready_to_link", 1), got.get(lines["ready2"])
+    assert got.get(lines["ready_b"]) == ("ready_to_link", 1), got.get(lines["ready_b"])
     for b in k2["lines_b"]:
         assert got.get(b) == ("no_match", 0), got.get(b)
+
+
+def test_the_list_shows_each_lines_fortnight_and_week(conn, k2):
+    lines = k2["lines"]
+    shown = {
+        r["plan_entry_id"]: (r["fortnight_number"], r["week_code"])
+        for r in conn.execute(
+            "select plan_entry_id, fortnight_number, week_code from plan_unmatched where school_class_id = %s",
+            (k2["class"],),
+        ).fetchall()
+    }
+    want = {
+        lines["none"]: (FN_A, "A"),
+        lines["tie"]: (FN_A, None),
+        lines["ready"]: (FN_A, None),
+        lines["ready2"]: (FN_A, None),
+        lines["ready_b"]: (FN_B, None),
+        **{b: (FN_B, "B") for b in k2["lines_b"]},
+    }
+    assert shown == want, f"the list's fortnight and week are not the lines' own: {shown} != {want}"
+
+
+def test_every_listed_line_shows_the_number_of_its_own_fortnight(conn, k2):
+    wrong = db.one(
+        conn,
+        "select count(*) as n from plan_unmatched u join plan_entry pe on pe.id = u.plan_entry_id"
+        " join fortnight f on f.id = pe.fortnight_id"
+        " where u.fortnight_number is distinct from f.number or u.week_code is distinct from pe.week_code",
+    )["n"]
+    assert wrong == 0, f"{wrong} listed lines show a fortnight or week that is not their own"
 
 
 def test_no_plan_line_anywhere_is_unlinked_and_unlisted(conn, k2):

@@ -95,6 +95,7 @@ main's schema now plus what CP-4 adds that CP-8 touches:
    and `week_code` are reused.
    Output format the proofs rely on: `engine timetable link` and `engine timetable unmatched` write one line per fortnight
    group headed `FN<n>` (or `Fortnight <n>`), and each unmatched line prints its reason on the same output line as its text.
+   `engine timetable link --apply` prints exactly one run id (one UUID); `link --fortnight N` prints no other fortnight's marker.
    Proof choices to know: item 3 counts K2 only, using the FN10 row of the class's own school year; a "school day" is any day
    not marked holiday; item 6 proves the engine and website tests are unchanged against main (CI's engine and browser jobs run
    the suites, as for CP-2, CP-3 and CP-5).

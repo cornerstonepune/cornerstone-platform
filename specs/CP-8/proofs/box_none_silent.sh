@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# CP-8 item 2, on the box, read-only: every K2 plan line is linked or on plan_unmatched, and every line on plan_unmatched
-# has one of the three reasons. Prints counts only (in total and per fortnight, design decision 10), never a name or text.
+# CP-8 item 2, on the box, read-only: every K2 plan line, in every fortnight, is linked or on plan_unmatched; every line
+# on plan_unmatched has one of the three reasons and shows its own fortnight (fortnight_number, week_code). Prints counts only (in total and per fortnight, design decision 10), never a name or text.
 set -euo pipefail
 root=$(cd "$(dirname "$0")/../../.." && pwd)
 url="${DATABASE_URL:-$(sed -n 's/^DATABASE_URL=//p' "$root/.env" 2>/dev/null | tail -1)}"
@@ -22,14 +22,16 @@ from k2 join fortnight f on f.id = k2.fortnight_id left join plan_unmatched u on
 group by 1, 2 order by 1, 2;
 SQL
 
-read -r total unlinked unlisted noreason < <(q <<SQL
+read -r total unlinked unlisted noreason nofortnight < <(q <<SQL
 $K2
 select count(*), count(*) filter (where activity_id is null),
        count(*) filter (where activity_id is null and not exists (select 1 from plan_unmatched u where u.plan_entry_id = k2.id)),
        (select count(*) from plan_unmatched u join k2 on k2.id = u.plan_entry_id
-         where u.reason is null or u.reason not in ('no_match', 'several_matches', 'ready_to_link'))
+         where u.reason is null or u.reason not in ('no_match', 'several_matches', 'ready_to_link')),
+       (select count(*) from plan_unmatched u join k2 on k2.id = u.plan_entry_id join fortnight f on f.id = k2.fortnight_id
+         where u.fortnight_number is distinct from f.number or u.week_code is distinct from k2.week_code)
 from k2;
 SQL
 )
-echo "$(date -u +%F): K2 lines=$total unlinked=$unlinked unlinked-and-unlisted=$unlisted listed-without-reason=$noreason"
-[ "$total" -gt 0 ] && [ "$unlisted" -eq 0 ] && [ "$noreason" -eq 0 ]
+echo "$(date -u +%F): K2 lines=$total unlinked=$unlinked unlinked-and-unlisted=$unlisted listed-without-reason=$noreason listed-without-its-fortnight=$nofortnight"
+[ "$total" -gt 0 ] && [ "$unlisted" -eq 0 ] && [ "$noreason" -eq 0 ] && [ "$nofortnight" -eq 0 ]
