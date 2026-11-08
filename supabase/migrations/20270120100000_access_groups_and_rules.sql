@@ -278,6 +278,22 @@ begin
   end if;
 end $$;
 
+-- 3b. A class's grade is not a child's record ---------------------------------------------------------------------------
+-- `class_band` is the one rule every page asks for a class's grade (the most common grade among its active children).
+-- Pages call it once per row of a long list (the Skill Map: some 6,000 times in one statement), and each call is a new
+-- statement, so the row rule on `child` would be worked out 6,000 times (0.7 ms each: 4.3 s, and the site's 8-second limit
+-- is the next step). It returns one grade, never a child, a name or a count; it is read as the owner, so the rule is
+-- not worked out per call. Its body is unchanged.
+create or replace function public.class_band(tenant uuid, section text) returns text
+language sql stable security definer set search_path = public as $$
+  select c.band from child c
+  join grade g on g.tenant_id = c.tenant_id and g.code = c.band
+  where c.tenant_id = $1 and c.section = $2 and c.active
+  group by c.band, g.ord
+  order by count(*) desc, g.ord
+  limit 1
+$$;
+
 -- 4. The rule, generated -----------------------------------------------------------------------------------------------
 
 -- Today's body (row security, service_role_all, app_all, touch_updated_at, ledger revoke) with one change: a table
