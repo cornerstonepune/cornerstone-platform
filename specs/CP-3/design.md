@@ -1,148 +1,194 @@
 # CP-3 design: role rules on children, enrolment, staff and notes
 
-Status: DRAFT for goldfish review. Scope: `specs/CP-3/spec.md` (locked by Nimish, 8 Nov 2026). Waits for CP-1 and CP-2.
-(R) will mark a change forced by a review finding. "Open" marks a question the reviewers should attack.
+Status: REVISED after goldfish review (zoom-out, design, implementation-readiness, codebase-details; dispositions in
+`specs/CP-3/design-review/summary.md`). Scope: `specs/CP-3/spec.md` (locked by Nimish, 8 Nov 2026, issue #451). Waits for
+CP-1 and CP-2. (R) marks a change forced by a review finding.
 
-## What exists (verified in the repository, 8 Nov)
-- `internal.apply_conventions()` (20261021090000) ends every migration. For every table in `public` and `pii` it turns
-  row security on and forces it, then gives `app_web` and `app_engine` one policy `app_all ... using (true)`. That is
-  "every rule says allow everyone". `service_role` gets the same.
-- `role` (13 codes per school: subject_educator, class_teacher, mentor, assistant, coordinator, deputy_coordinator,
-  curriculum_team, head, ops, cover_educator, special_educator, specialist, educator), each with a scope
-  (campus, class, class_subject, child). `staff_role_grant` holds one person, one role, optional class/subject/child, and
-  `valid_from` / `valid_to`; a grant is never deleted, it ends. `enrolment` links child and class; an open row has
-  `to_date` null. `school_class`, `staff`, `pii.staff`, `child`, `pii.child`, `pii.educator_note` (class_id, staff_id),
-  `pii.note_claim` (note_id).
-- Neither app login can use schema `internal` (20261225090000 header), so every helper goes in `public`.
-- The website's present rule is `public.staff_sees` (20261222090000), fed by the sign-in list's classes and subjects
-  (config `app.staff`), and it stays: it is the first line; this scope is the backstop under it.
-- `public.current_staff()` arrives with CP-2: the id the website put on the request, null when none or not a uuid.
-- The site connects as the owner login today (skips every rule). `app_web` and `app_engine` exist without passwords.
-- `pii.read_child(uuid, actor)` is granted to `app_web` and called by 20+ website query files: it returns any child's
-  name for any child id, logged. `pii.staff`, `pii.educator_note`, `pii.note_claim`: no privilege for `app_web` at all
-  (the engine only).
-- ~30 views over child data exist in 21 migrations. A view runs with its owner's rights, so it skips row rules.
-- `config` key `school.time_zone` = Asia/Kolkata.
+## What exists (verified in the repository)
+- `internal.apply_conventions()` (20261021090000) ends every migration: row security on and forced on every table in
+  `public` and `pii`; `service_role_all`; `app_all for all to app_web, app_engine using (true)`; the `touch_updated_at`
+  trigger; revoke of update/delete/truncate on `forbid_change` ledgers. "Every rule says allow everyone" is `app_all`.
+- `role` (13 codes), `staff_role_grant` (`staff_id`, `role_code`, `school_class_id`, `subject_code`, `child_id`,
+  `valid_from`, `valid_to`; never deleted, ends by `valid_to`, which is the first day it no longer holds), `enrolment`
+  (open row: `to_date` null), `school_class`, `staff` (`active`), `pii.staff` (email unique per tenant), `child`,
+  `pii.child`, `pii.educator_note` (`class_id`, `staff_id`), `pii.note_claim` (`note_id`).
+- Neither app login can use schema `internal`; helpers go in `public` (`20261225090000:316`).
+- **The browser suite in CI already runs the website as `app_web`** (`ci.yml:320-330` sets `TEST_WEB_DATABASE_URL`;
+  `playwright.config.ts` starts the site on it) (R). Its signed-in test user is added only to the sign-in list
+  (`apps/web/tests/global-setup.ts`): no `staff` row, no grant. Without a fix, the day CP-3 merges every page that reads
+  the four kinds goes empty and item 7 fails. So `global-setup.ts` is modified (below) and item 7 is a real gate.
+- Every view is `security_invoker = true` (30 statements, 21 migrations) (R): the rules apply through views. The ones that
+  read the four kinds (for example `level_calibration`, `child_level_state`, `class_band`) change what an own-classes
+  person sees; the builder lists them from `pg_depend` and the browser suite covers the pages that use them.
+- `pii.staff`: neither app login holds any privilege on it (`20261225090000:338`) (R). Notes tables: `app_web` none;
+  `app_engine` select/insert/update (claims select/insert). The sign-in list (config `app.staff`) is the website's master of
+  identity; `staff_have_ids` gives each entry an id; the website sets that id.
+- `public.current_staff()` arrives with CP-2: the id the website set, null if none or not a uuid.
+- `internal.school_day(p_tenant, p_at)` exists (20261206090000:55) and reads `school.time_zone`.
+- Both services still connect as the owner on the live site; the passwords of `app_web` and `app_engine` are not set.
+
+## Threat model (R)
+The rules are a backstop against a mistake in the website (a page that forgets a filter, an id that leaks) and make "no
+identity means nothing". They do not stop someone who holds the `app_web` password: that person can claim any identity.
+Write paths through security-definer functions (`move_child`, `confirm_results`, `resolve_result`) are not governed here.
 
 ## Goal
-With a person's identity on the request, the database itself returns, for the four kinds, only what the person's group
-allows, and nothing with no identity. Nothing the engine does changes. Nothing changes on the live site until the site
-connects as `app_web` (Nimish sets the password); the rules are built and proved before that.
+With an identity on the request, the database returns for the four kinds only what the person's group allows, and nothing
+with no identity. Nothing the engine does changes. Nothing changes on the live site until it connects as `app_web`.
 
-## The linchpin problem: two id spaces (open)
-The website's identity is the id on the sign-in list entry (config `app.staff`, `staff_have_ids`). `staff`,
-`staff_role_grant` and the new rules use `staff.id`, a different uuid made by `engine staff import`, which matches people
-by email (engine/core/people.py). `current_staff()` returns whatever the site sets. If the site sets the sign-in id,
-no grant ever matches and everyone silently sees nothing.
-Decision: the database resolves it. `public.signed_in_staff()` = (1) `current_staff()` if that id is a `staff.id`;
-else (2) the sign-in list entry with that id, its email, matched in lower case to `pii.staff.email`, giving the
-`staff.id` (null if no entry, no match, or two matches). It works whichever id the site sets, so CP-2's build need not
-change. Stable, security definer. It reads `pii.staff.email` only as a lookup key, returns an id, and does not write
-`access_log` (one write per row-rule check would flood it).
-Rejected: a `staff.signin_id` column with two sync triggers (more moving parts, same result); making the site resolve
-the id (CP-2 is locked and its build is another session's).
+## Who is asking: one id space (R)
+The website's identity is the sign-in list's entry id; grants hang on `staff.id`. `internal.resolve_staff()` (definer,
+stable) returns `(staff_id, tenant_id)`: the config row `app.staff` whose entry has `id = current_staff()`; that entry's
+email as `lower(btrim(email))`; the one `staff` row, with `active`, whose `pii.staff.email` equals it in the same tenant.
+Null unless exactly one. The first draft also accepted a `staff.id` directly; dropped, because nothing sets one (R).
+`public.signed_in_staff()` and `public.my_tenant()` return its two fields. It reads the email only as a key, returns ids,
+and writes no `access_log` (one write per row check would flood it; this is why `staff_of_email` is not reused).
+Rejected: a `staff.signin_id` column filled once at import (needs CP-1's locked import changed, and a backfill of the three
+live rows; revisit if resolution proves slow); a trigger-synced copy. Known limit: a sign-in email edited without
+`pii.staff` being re-synced makes that person see nothing (fail closed); the switch-on gate checks it.
 
-## The groups are rows
-Created by the migration and given to every school by `internal.access_vocabulary(tenant)` plus a trigger on `tenant`,
-as `people_vocabulary` does (a database built from the files alone has them).
-- `access_group(tenant_id, code, label, by_role, ord)`: `everything`, `own_classes`, `signed_in` (by_role false: everyone
-  signed in belongs to it; it is the school-wide kind, used by CP-4).
-- `access_role_group(tenant_id, role_code, group_code)`, primary key (tenant_id, role_code): one group per role, by
-  construction. Foreign keys to `role` and `access_group`. A test requires every `role` row to have one.
-- `access_kind(tenant_id, code, label)`: `children`, `enrolment`, `staff`, `notes` (CP-4 adds more by insert).
-- `access_reach(tenant_id, group_code, kind_code, reach)`, reach in `all`, `own`, `none`. `own` means: the classes
-  (and single children) the person holds a current grant for; for the `staff` kind it means the person's own row.
-  everything: all four kinds `all`. own_classes: `children`, `enrolment`, `notes` `own`; `staff` `own`.
-- Seeds (Nimish, 8 Nov): everything = coordinator, deputy_coordinator, mentor, head, curriculum_team, ops.
-  own_classes = educator, class_teacher, subject_educator, cover_educator, specialist, assistant.
-- **special_educator is in neither list** and item 2 needs it in exactly one group. Recommendation (needs Nimish):
-  own_classes, and `own` also covers a child named in a child-scope grant (that is how a counsellor reaches one child).
-  Rejected: everything (counsellors would see every child), a fourth group (Nimish said three).
-- A person's reach for a kind = the strongest of the groups of the roles on their current grants (all > own > none). No
-  current grant = none, even if a `staff` row exists. A grant is current when `valid_from <= today` and
-  `valid_to` is null or after today; today is the school's date (config `school.time_zone`), as the grant check already
-  treats `valid_to` as the first day it no longer holds.
-- Subjects: for these four kinds the class alone decides (as `staff_sees` says for a child). A `subject_educator`'s
-  subject narrows only tables that have a subject (CP-4's question).
+## The groups are rows (R: full definition)
+All in `public`, with `created_at`/`updated_at` and the `touch_updated_at` trigger from `apply_conventions`. Privileges:
+`app_web` select; `app_engine` select, insert, update, no delete (precedent `20261225090000:343`); explicit
+`revoke ... from public, anon, authenticated`.
+- `access_group(tenant_id, code, label, by_role boolean, ord)`, pk (tenant_id, code), unique (tenant_id, code, by_role).
+  Rows: `everything` (0, true), `own_classes` (1, true), `signed_in` (2, false: everyone signed in; used by nothing in CP-3
+  and kept because the scope names three groups).
+- `access_kind(tenant_id, code, label, ord)`, pk (tenant_id, code). Rows: `children`, `enrolment`, `staff`, `notes`.
+- `access_role_group(tenant_id, role_code, group_code, by_role boolean not null default true check (by_role))`,
+  pk (tenant_id, role_code) so a role is in at most one group; fk (tenant_id, role_code) to `role`; fk (tenant_id,
+  group_code, by_role) to `access_group` so only role groups can be mapped. A test requires a row for every `role`.
+- `access_reach(tenant_id, group_code, kind_code, reach text check (reach in ('all','own','none')))`, pk (tenant_id,
+  group_code, kind_code), foreign keys to both. A missing row means `none` (tested). `own` = the classes the person holds
+  a current grant for; for `staff`, the person's own row.
+  everything: all four `all`. own_classes: all four `own`. signed_in: all four `none`.
+- Seeds by `internal.access_vocabulary(tenant)`, idempotent (`on conflict do nothing`). It is called from a trigger on
+  `tenant` named `people_vocabulary_then_access` (R): Postgres fires same-event triggers in name order, so the name must
+  sort after `people_vocabulary`, which makes the `role` rows the foreign key needs. A test inserts a tenant on a database
+  built from the files and expects every row. Run once over existing tenants at the end of the migration.
+- Seeds, Nimish 8 Nov: everything = coordinator, deputy_coordinator, mentor, head, curriculum_team, ops. own_classes =
+  educator, class_teacher, subject_educator, cover_educator, specialist, assistant.
+- **special_educator is in neither list** and item 2 needs it in one group. Recommendation: `everything`, as `mentor`
+  (also child-scoped) already is, because the other choice needs a second route (a named child, reached through enrolment
+  and notes keyed by class) that would be half-built (R). If Nimish wants it narrower, that route is a follow-up. Seeded as
+  `everything` until he answers; a one-row update changes it.
+- A person's reach for a kind = the best of the groups of the roles on their current grants (all > own > none), no current
+  grant = none. A grant is current when `valid_from <= today` and (`valid_to` is null or after today); today is
+  `internal.school_day(my_tenant(), now())` (R, reuse); no config = no grant current (fail closed). `my_class_ids` counts
+  only grants whose role's group gives `own` for that kind (R, groups can differ per kind later).
+- Subjects: for these kinds the class alone decides. A subject educator's subject narrows only tables with a subject.
 
-## Which tables (the CP-3 list, an explicit floor)
-`access_table(schema_name, table_name, kind_code, key_column, key_type, owner_column)`, primary key (schema, table).
+## Which tables
+`access_table(schema_name, table_name, kind_code, key_column, key_type)`, pk (schema_name, table_name),
+`key_type in ('class','child','note','staff')`. Same privileges as above. Every listed table has a `tenant_id`
+(a test checks it).
 - children: `public.child` (id, child), `pii.child` (child_id, child).
 - enrolment: `public.enrolment` (class_id, class).
 - staff: `public.staff` (id, staff), `public.staff_role_grant` (staff_id, staff), `pii.staff` (staff_id, staff).
-- notes: `pii.educator_note` (class_id, class; owner_column staff_id: an author always sees their own note),
-  `pii.note_claim` (note_id; reached through its note: `note_id in (select id from pii.educator_note)`).
-`public.activity_observation`, `child_move` and the rest are child data for CP-4 (they are evidence, not notes).
+- notes: `pii.educator_note` (class_id, class), `pii.note_claim` (note_id, note).
+No author-sees-own clause on notes (R): item 3 says another class's notes return 0 rows, so a cover educator of Y who wrote
+a note for X sees it only while holding X. `activity_observation`, `child_move` and the rest are CP-4's.
 
-## The rule, generated, not hand-written per table
-`internal.apply_conventions()` is redefined (it runs at the end of every later migration, so the redefinition is what
-keeps the rules in place). For a table listed in `access_table`: no `app_all`; instead
-- `engine_all for all to app_engine using (true) with check (true)` (the engine is one trusted service login, not
-  "everyone"), and
-- `web_rule for all to app_web using (E) with check (E)` where, with `R = (select public.my_reach('<kind>'))`:
-  `E = R = 'all' or (R = 'own' and <key test>)` and the key test is
-  class: `col in (select public.my_class_ids())`; child: `col in (select public.my_child_ids())`;
-  staff: `col = (select public.signed_in_staff())`; plus `or owner_col = (select public.signed_in_staff())` when set.
-  The scalar `(select ...)` form makes Postgres evaluate each helper once per statement, not once per row.
-Every table not listed keeps today's `app_all` until CP-4. `service_role_all` stays (Supabase's backend key).
-"Allows everyone" means: a policy that applies to `app_web`, `public`, `authenticated` or `anon` and whose test is
-true or empty. The engine's and `service_role`'s own policies are not that; the LIVE proof says so.
-Helpers, all in `public`, stable, security definer, `search_path` fixed, execute for `app_web` and `app_engine` only:
-`school_today()`, `signed_in_staff()`, `my_reach(kind)`, `my_class_ids()` (classes of current class or class_subject
-grants), `my_child_ids()` (children with an open enrolment in those classes, plus children named in current child
-grants). The definer owner bypasses row security (Supabase `postgres` and the CI image's superuser do); a test calls
-every helper as `app_web` to prove no recursion.
+## The rule, generated
+Helpers, all in `public`, `language sql` or `plpgsql` as the builder finds necessary, stable, `security definer`,
+`set search_path = public, pg_temp`, `revoke execute from public, anon, authenticated`, execute for `app_web` and
+`app_engine` (a test reads `proacl` back) (R):
+- `my_reach(kind text) returns text`: `all`, `own` or `none`; `none` for no identity, no grant, unknown kind.
+- `my_ids(kind text, key_type text) returns uuid[]`: `class` = `school_class_id` of current class/class_subject grants
+  whose role gives `own` for that kind; `child` = children with an open enrolment (same date rule) in those classes;
+  `note` = `pii.educator_note` ids in those classes; else `{}`.
+- `signed_in_staff()`, `my_tenant()` as above.
+`internal.apply_conventions()` is redefined (it runs at the end of every later migration, so this keeps the rules in place).
+It keeps today's body verbatim (row security, `service_role_all`, `touch_updated_at`, ledger revoke) and guards `app_web`
+as well as `app_engine` (R). For a table in `access_table` it drops every policy except `service_role_all` and creates
+- `engine_all for all to app_engine using (true) with check (true)`, and
+- `web_rule as permissive for all to app_web using (E) with check (E)`, with
+  `E = tenant_id = (select public.my_tenant()) and ((select public.my_reach(K)) = 'all' or ((select public.my_reach(K))
+  = 'own' and T))`, `T` = `col = any ((select public.my_ids(K, 'class'|'child'|'note')))` or, for staff,
+  `col = (select public.signed_in_staff())`. `K` and names are quoted with `%L`/`%I`.
+Dropping every foreign policy on a listed table is the guard (a stray permissive policy would otherwise widen the rule)
+(R, with a CI test that the policy set per listed table is exactly {service_role_all, engine_all, web_rule}).
+Tables not listed keep `app_all` until CP-4. A row added to `access_table` takes effect at the next run of
+`apply_conventions()`, in the migration that adds it (the claim "an insert is enough" was wrong) (R).
+"Allows everyone" means: a policy that applies to `app_web`, `public`, `authenticated` or `anon` and whose `qual` or
+`with_check` is true or empty. `engine_all` (one trusted service login) and `service_role_all` are not that; this reading is
+put to Nimish.
+Cost: `E` has two scalar initplans per policy, so about two identity resolutions per listed table per statement; the speed
+suite, which now runs as `app_web`, is the gate. A test counts helper calls per statement.
 
 ## Staff details (item 6)
-`pii.staff` has no privilege for `app_web` and keeps none (least privilege). The way to the details is a new
-`public.read_staff_details(p_staff uuid)` (definer, returns name, email, phone) that returns a row only when
-`my_reach('staff') = 'all'` or `p_staff = signed_in_staff()`, logs the read to `access_log` with the signed-in id as
-the actor, and is granted to `app_web`. The engine keeps `pii.read_staff` unchanged. The policy on `pii.staff` is the
-same rule, so a future direct grant cannot open it.
+By the row rule on `pii.staff`, `staff`, `staff_role_grant`: the `everything` group and the person themselves. No new
+function (R). `app_web` still holds no privilege on `pii.staff`; the proof grants it to a test login. The engine keeps
+`pii.read_staff` unchanged.
 
-## Names (children kind, a gap found in review of the current code)
-`pii.read_child` would hand any child's name to any signed-in person who has the id (ids appear in rows they can still
-read, e.g. through CP-4's tables before it lands). It gains the same test, unless the caller is a service login
-(`session_user` is `app_engine`): no row for a child the person does not see. `session_user`, not `current_user`,
-because inside a definer function `current_user` is the owner; tests therefore use `set session authorization`, which
-`set role` does not change. (Open: is changing `read_child` in this scope right, or CP-4's?)
+## Names (R)
+`pii.read_child` is not changed here: both services use the owner login today, so any "is this the engine" test would
+return no names to the engine and the site on deploy. Recorded as a known gap (an id seen through another table is still a
+way to a name); the right fix is a test applied only when `session_user = 'app_web'`, after CP-4 closes the other tables.
 
-## What this scope does not do (stated so nobody assumes)
-- It turns nothing on for the live site until the site connects as `app_web`. Item 8's second half waits for Nimish: set
-  the two passwords, point the site's `DATABASE_URL` at `app_web`.
-- Item 7 can only prove nothing broke in the schema: the website's browser and speed suites connect as the owner and
-  skip every rule. The real check of the site under the rules is the switch-on (below).
-- Views over child data skip the rules (owner's rights). Setting `security_invoker` on them is CP-4's.
+## Existing tests and fixtures this changes (R)
+- `packages/engine/tests/test_roles.py`: the `app_all`-on-every-table test (`:171-181`) accepts `engine_all` +
+  `web_rule` for listed tables; `WEB_CALLS` (`:52-79`) gains `my_reach`, `my_ids`, `signed_in_staff`, `my_tenant` (and
+  CP-2's `current_staff` if absent).
+- `packages/engine/tests/test_people.py:612`: counts enrolment as `app_web` with no identity (22); it sets the identity
+  of a person in `everything`, or its expected count changes.
+- `packages/engine/tests/test_voice_tables.py:202-211`: still expected to pass; checked, not assumed.
+- `apps/web/tests/global-setup.ts`: the test user also gets a `staff` row, a `pii.staff` row with the same email, and a
+  current grant of `coordinator` (the `everything` group), so the browser suite sees what it saw.
+- `packages/engine/engine/checks/rules.json`: regenerate with `engine live rules --write` on a fresh test database.
+- Not touched: `workflows.json` (the layout test names no tables); `supabase/seed/data_register.json` (its words say "your
+  child's educators and the school's coordinator"; the `everything` group also holds head, deputy coordinator, mentor,
+  curriculum team and ops: told to Nimish as a wording point).
 
-## Switch-on gate (not a proof; goes in `docs/notes/CP-3.md` and the handoff)
-Only the K2-A class has a `school_class` row, enrolments and (per CP-1) campus-wide grants; the `educator` role is
-campus-scoped, so it carries no class. On switch-on an educator with no class grant sees no children. Before Nimish
-points the site at `app_web`: a read-only report of, per educator, the classes on the sign-in list against classes
-granted, and per class its open-enrolment count, must show no educator with a class and no grant. If it cannot, the
-switch waits.
+## Risks and alternatives
+- Generated vs hand-written policies: generated, because `apply_conventions` re-runs every migration and hand-written
+  policies would be dropped by it, and CP-4 needs the same registry to list every table. Permissive vs restrictive:
+  restrictive needs a permissive `using (true)` base, which is the very thing item 8 forbids.
+- Definer helpers assume the function owner bypasses row security (Supabase `postgres`, the CI superuser). A test asserts
+  `rolsuper or rolbypassrls` for the owner of every helper; the LIVE proof reads the same. Whether policies listed `to
+  app_web` apply to a member role through inheritance is to be verified in the current Postgres docs; the proofs use such a
+  member as the test login.
+- If CP-2 falls back to the Data API, `session_user` no longer names the caller; CP-3 does not rely on it.
+- New child tables are open until someone lists them: CP-4's check and the raise in `apply_conventions` close that.
+
+## Switch-on gate (not a proof; in `docs/notes/CP-3.md` and the handoff)
+Only K2-A has a `school_class` row and enrolments, and the `educator` role is campus-scoped, so it carries no class. The
+specialist role was left ungranted by the import. Before Nimish points the site at `app_web`, a read-only report must
+show, for every sign-in entry: it resolves to exactly one active staff row; the reach it gets per kind; the classes on the
+list against classes granted (a list entry such as `K2` is matched to `school_class.grade_code`, the section `A`
+ignored, which the report states); and per class its open-enrolment count. Any entry with a class and no grant, or
+unresolved, blocks the switch.
 
 ## Decisions for Nimish (only what a user would see)
-1. Special educator or counsellor: own classes plus the children named for them (recommended), or everything.
-2. Switch-on waits until every educator's classes have a row, enrolments and a grant (today only K2-A does).
-3. The database checks the class only; a subject educator's subject stays narrowed by the website (as now).
-4. He sets the two database passwords and the site's connection setting when the gate above is green.
+1. Special educator or counsellor: `everything` (recommended: simplest, as the mentor) or narrower (follow-up work).
+2. Is it right that a mentor, who holds a role for one child, sees every child? (In your list; confirming.)
+3. Switch-on waits for the gate above; today only K2-A is ready.
+4. The database checks the class only; a subject educator's subject narrowing stays in the website.
+5. "A rule that allows everyone" is read as a rule for the website login; the engine's own full access is not counted.
+6. The parent-facing wording of "who sees it" is now narrower than the real list of groups.
+7. He sets the two database passwords and the site's connection setting when the gate is green.
 
-## Mechanical decisions (recorded)
-- Rules are rows plus one generator, not a policy per table by hand: adding a table to a kind is an insert.
-- Policies are `for all` so the same test guards any write privilege a login later gets.
-- The notes tables stay unreadable by `app_web` (no grant); their policy is proved with a test login that has the grant.
-- Migration name `<timestamp later than the newest file>_access_groups_and_rules.sql`. Rule 9 holds. The proofs use the
-  CP-20 throwaway database (`TEST_DATABASE_URL`).
+## Phases
+1. Tables, seeds, trigger, role-coverage and new-tenant tests.
+2. Helpers (`resolve_staff`, `signed_in_staff`, `my_tenant`, `my_reach`, `my_ids`) and their tests, including each as
+   `app_web`, proacl, owner bypass.
+3. `access_table` rows, `apply_conventions()` redefinition, `select internal.apply_conventions()` last; policy tests.
+4. The existing-test and fixture changes above; `rules.json`; ADR `docs/adr/<next free number>-access-by-rows.md`; notes.
+Order inside the migration: tables, vocabulary function and trigger, vocabulary run, `access_table` rows, helpers and
+grants, `apply_conventions()` redefinition, final call. Re-run safe: `if not exists`, `on conflict do nothing`,
+`drop trigger if exists`, `create or replace`. Timestamp: later than the newest file and CP-2's.
 
-## Proofs (what the builder must make pass; the proof-writer writes the checks)
-Items 1, 2, 6: tests reading the rows and the functions. Items 3, 4, 5: a database test builds two classes, a child and
-a note in each, an educator of X, a person in each group, and runs the four kinds as `app_web` with the identity set the
-way the website sets it (`set_config('app.staff_id', ..., true)`), per group not per role. Item 7: the existing suites.
-Item 8: box only, read-only counts from `pg_policies` and `pg_stat_activity`/the connection role.
+## Proofs (what the builder must make pass)
+Items 1, 2, 6: tests on the rows, helpers and the rule. Items 3, 4, 5: a database test on the CP-20 throwaway database:
+two classes, a child, enrolment and note in each, an educator of X, a person in each group, run as a member of `app_web`
+with `set_config('app.staff_id', <sign-in id>, true)` as the website sets it; per group, not per role; cases: grant ending
+today, starting tomorrow, no grant, no identity, an unmatched email, a deactivated person, `note_claim` following its
+note, a second tenant. Item 7: the browser and speed suites, now as `app_web` in CI. Item 8: box only, read-only:
+`pg_policies` for the listed tables, the connection role of the site, and `rolbypassrls`/`rolsuper` for helper owners;
+counts and names, no rows.
 
 ## Implementation list
-- Create `supabase/migrations/<ts>_access_groups_and_rules.sql`: the tables, `access_vocabulary`, the helpers,
-  `read_staff_details`, the `read_child` change, the redefined `internal.apply_conventions()`.
-- Modify `packages/engine/engine/checks/rules.json` (regenerate: new constraints) and the map `workflows.json` if
-  `test_layout` requires new tables to be named.
-- Create `packages/engine/tests/test_access_rules.py`; `docs/adr/<n>-access-groups-as-rows.md`; `docs/notes/CP-3.md`.
+- Create `supabase/migrations/<ts>_access_groups_and_rules.sql`; `packages/engine/tests/test_access_rules.py`;
+  `docs/adr/<n>-access-by-rows.md`; `docs/notes/CP-3.md`; the switch-on report (read-only SQL in the notes).
+- Modify `packages/engine/tests/test_roles.py`, `test_people.py`, `packages/engine/engine/checks/rules.json`,
+  `apps/web/tests/global-setup.ts`.
