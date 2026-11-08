@@ -1,6 +1,6 @@
 # ADR 0100 — A request says who is asking, in one transaction per query (CP-2)
 
-Status: chosen, pending proof on the real pooler (see "Result" below).
+Status: chosen, confirmed on the real pooler (see "Result" below); the live check of the function waits for its deploy.
 Goal: none — plumbing for the access rules of CP-3 and CP-4; no goal file covers it (locked scope: specs/CP-2).
 
 ## Problem
@@ -36,9 +36,15 @@ ADR 0024 hang does not apply. The `true` makes the setting end with the transact
 
 ## Result
 
-On the real pooler: NOT YET RUN. The sandbox this was built in cannot reach Supabase, so the proof on Supabase's pooler
-(`specs/CP-2/proofs/pooler_alternation.sh`, box only, needs `CHECK_POOLER_URL`) is outstanding. Until it passes, A1 is
-unproven where it matters; if it fails, the next step is A2, then (c), and (c) goes to Nimish.
+On the real pooler: run, 8 Nov 2026, by Nimish on the box with `bin/check-pooler` against Supabase's transaction pooler,
+at branch head 2f36a84. This is reported to the builder by the orchestrator session, not run by the builder (whose sandbox
+cannot reach Supabase). Reported output: 8 of 8 answered; alternation, 600 requests (A, B, nobody x200), done; concurrent,
+60 requests, done; A, B and nobody all on one backend (shared 1); "every request saw only its own identity";
+`public.current_staff()` not on the database yet, as expected (the migration is not deployed). Option A1 is therefore
+chosen and confirmed on the real pooler; A2 and (c) stay rejected. Still not run: the check of `public.current_staff()`
+itself on the live database (proof 6), which waits for the migration to be deployed after merge.
+That head predates two later changes (a query now runs once however it is awaited; the function's search path). Neither
+touches how the identity travels through the pooler.
 
 What was run: the same `apps/web/scripts/check-pooler.ts` against a throwaway Postgres 17 directly (no pooler in between),
 with `lib/db.ts` as built: 600 requests in alternation (A, B, nobody x200), 60 concurrent, after a failed query, and

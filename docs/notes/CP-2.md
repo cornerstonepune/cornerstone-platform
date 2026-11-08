@@ -18,9 +18,10 @@ migration; once the migration is deployed it also prints "public.current_staff()
 `npm ci --prefix ~/cornerstone/assessment-engine/apps/web` done once; it says so in a sentence if not.
 
 Open, said plainly:
-- Proof 4 (real Supabase pooler) is box-only and NOT run yet: run the three lines above, then ADR 0100's Result is amended.
-  Proof 6 (live, read-only) needs the migration deployed. A1 is unproven on the real pooler until then;
-  if it fails, A2 then (c) — (c) is Nimish's decision.
+- Proof 4 (real Supabase pooler): run by Nimish on 8 Nov at head 2f36a84 and passed (counts in ADR 0100's Result; reported
+  by the orchestrator, not seen by the builder). Proof 6 (live, read-only) cannot pass until the migration is deployed,
+  which happens after merge; it is pending until then. The three lines above stay useful: re-run after deploy and the
+  output also says "public.current_staff() agrees".
 - Cost: a signed-in query is now 4 round trips instead of 1. The browser and speed suites are the gate; I could not run them
   against the real database here.
 - Nothing calls `current_staff()` yet and the site still connects as an owner-class login: no rule is on, nothing fails closed
