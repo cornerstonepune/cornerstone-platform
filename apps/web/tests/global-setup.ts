@@ -20,6 +20,23 @@ export default async function globalSetup(): Promise<void> {
   await sql`
     update config set value = value || ${sql.json([TEST_STAFF])}
     where key = 'app.staff' and not value @> ${sql.json([{ email: TEST_STAFF.email }])}`;
+  // The database's access rules (CP-3) show a person only what their role's group allows, and the site runs as app_web
+  // in CI. So the test user is a member of staff with a current coordinator grant (the group that sees everything).
+  const [{ id: school }] = await sql<{ id: string }[]>`select id from tenant order by created_at limit 1`;
+  const [{ id: campus }] = await sql<{ id: string }[]>`select id from campus where tenant_id = ${school} limit 1`;
+  const [had] = await sql<{ staff_id: string }[]>`select staff_id from pii.staff where email = ${TEST_STAFF.email}`;
+  const staff =
+    had?.staff_id ??
+    (await sql<{ id: string }[]>`insert into staff (tenant_id, campus_id) values (${school}, ${campus}) returning id`)[0].id;
+  if (!had) {
+    await sql`insert into pii.staff (tenant_id, staff_id, name, email) values (${school}, ${staff}, ${TEST_STAFF.name}, ${TEST_STAFF.email})`;
+  }
+  await sql`
+    insert into staff_role_grant (tenant_id, staff_id, role_code, valid_from, granted_by)
+    select ${school}, ${staff}, 'coordinator', current_date - 1, 'e2e global-setup'
+    where not exists (
+      select 1 from staff_role_grant
+      where staff_id = ${staff} and role_code = 'coordinator' and granted_by = 'e2e global-setup' and valid_to is null)`;
   await sql.end();
 
   const expiry = String(Date.now() + 86_400_000);

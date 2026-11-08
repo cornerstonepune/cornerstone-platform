@@ -1,0 +1,14 @@
+{
+ "ok": false,
+ "passed": [],
+ "failed": [
+  "1 groups are rows; a role's group or a group's kinds change by one insert or update",
+  "2 every role code is in exactly one group",
+  "3 educator of X gets 0 rows of class Y's children, enrolment and notes",
+  "4 no identity: 0 rows of children, enrolment, staff and notes",
+  "5 everything group sees every row",
+  "6 staff private details only for the everything group and the person",
+  "7 browser and speed tests unchanged; the suite's user may see everything"
+ ],
+ "ran_at": "2026-11-08T11:03:38+00:00"
+}
