@@ -89,6 +89,11 @@ main's schema now plus what CP-4 adds that CP-8 touches:
    Graph tab; the sheet's Fortnights 10 and 11 disagree on the end date, so item 3 uses the stored `starts_on`/`ends_on`
    as they are and does not correct them). No new fortnight table or column: the existing `fortnight`, `plan_entry.fortnight_id`
    and `week_code` are reused.
+   Output format the proofs rely on: `engine timetable link` and `engine timetable unmatched` write one line per fortnight
+   group headed `FN<n>` (or `Fortnight <n>`), and each unmatched line prints its reason on the same output line as its text.
+   Proof choices to know: item 3 counts K2 only, using the FN10 row of the class's own school year; a "school day" is any day
+   not marked holiday; item 6 proves the engine and website tests are unchanged against main (CI's engine and browser jobs run
+   the suites, as for CP-2, CP-3 and CP-5).
 9. **No live writes from a session.** Every LIVE proof is `check_box`, read-only, prints counts only. The apply run on live
    is a deploy-time step by Nimish or the box.
 
