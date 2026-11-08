@@ -17,5 +17,8 @@ Branch `cp-3-build`, stacked on `cp-2-build` (PR #476). Must not merge before it
   does `internal.resolve_staff()` give exactly one active staff row; the reach it gets per kind (`my_reach`); entries
   with a class but no grant; open enrolments per class. Only K2-A had a class and enrolments when scoped; the
   `educator` role is campus-scoped, so an educator with no class grant sees nothing. Any unresolved entry blocks.
+- Gate SQL (read-only; counts and codes, no names; run as the owner):
+  `select e->>'id' as entry, (select count(*) from pii.staff p join staff s on s.id=p.staff_id and s.active where p.email=lower(btrim(e->>'email'))) as active_staff_rows, (select string_agg(distinct g.role_code,',') from pii.staff p join staff_role_grant g on g.staff_id=p.staff_id and g.valid_from<=current_date and (g.valid_to is null or g.valid_to>current_date) where p.email=lower(btrim(e->>'email'))) as current_roles, (select count(*) from pii.staff p join staff_role_grant g on g.staff_id=p.staff_id and g.school_class_id is not null and g.valid_to is null where p.email=lower(btrim(e->>'email'))) as class_grants from config c, jsonb_array_elements(c.value) e where c.key='app.staff'`
+  and, per class, `select school_class_id, count(*) from enrolment where to_date is null group by 1`.
 - For Nimish: special educator is in `everything` (one update to change); the head-of-class wording in
   `data_register.json` is narrower than the real groups; the database checks the class, not the subject.
