@@ -232,7 +232,9 @@ def test_the_third_proposer_names_all_four_levels_so_the_vendor_can_hold_it_and_
     assert levels["additionalProperties"] is False and sorted(levels["properties"]) == sorted(LEVELS)
     assert levels["required"] == list(levels["properties"])
     text = (SEED / v3["text_file"]).read_text().lower()
-    assert "no other field" in text and "empty string" in text and v3["active"] is False
+    assert "no other field" in text and "empty string" in text
+    assert v3["active"] is True, "switched on 8 Nov by the held-out score in DECISIONS-LOG"
+    assert v2["active"] is False, "v2 is left as it was"
     jsonschema.validate({**GOOD, "levels": dict.fromkeys(LEVELS, "")}, v3["json_schema"])
     with pytest.raises(jsonschema.ValidationError):
         jsonschema.validate({**GOOD, "levels": {"level_0": "x"}}, v3["json_schema"])
