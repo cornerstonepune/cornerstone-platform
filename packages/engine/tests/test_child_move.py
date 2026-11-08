@@ -12,7 +12,7 @@ from datetime import date
 
 import pytest
 
-from engine.core import db, people, roster
+from engine.core import db, roster
 from engine.w4_close import card
 from tests import rows
 
@@ -44,6 +44,8 @@ def _class(conn, bands):
 def _school_class(conn, t, band, section):
     """The `school_class` row of this school year for a grade and section, made when it is not there (CP-1: a move goes
     to a class, and these tests make children and sections only)."""
+    from engine.core import people
+
     label = people.year_label(date.today())
     start = int(label[:4])
     conn.execute(
