@@ -1,5 +1,8 @@
 {
-  "status": "locked",
+  "status": "blocked",
   "locked_at": "2026-11-08T12:18:01+00:00",
-  "updated_at": "2026-11-08T12:18:01+00:00"
+  "updated_at": "2026-11-08T12:59:18+00:00",
+  "started_at": "2026-11-08T12:34:43+00:00",
+  "blocked_at": "2026-11-08T12:59:18+00:00",
+  "blocked_reason": "Proof 1's access_table check reads a table CP-4 creates; CP-4 is not on main. The rest of CP-9 is built and passing. Needs CP-4 merged first (then the migration inserts graph_run and hand_check into access_table), or Nimish's decision to unlock and amend that one check."
 }
