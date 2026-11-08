@@ -82,6 +82,7 @@ WEB_CALLS = {
     "my_tenant",
     "my_reach",
     "my_ids",
+    "grade_is_wholly",  # a yes or no, never a child: is every class of a grade among these (the levels page)
 }
 
 

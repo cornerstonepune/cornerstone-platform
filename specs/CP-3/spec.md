@@ -1,7 +1,7 @@
 # CP-3: Role rules on children, enrolment, staff and notes
 
 Source: https://github.com/cornerstonepune/cornerstone-platform/issues/451
-Scope locked by: Nimish (the label scope-locked on the GitHub issue, 8 Nov 2026)
+Scope locked by: Nimish (the label scope-locked on the GitHub issue, 8 Nov 2026). Item 7 reworded 8 Nov 2026 (scope-change label, Nimish: "go ahead with option A").
 
 ## What
 
@@ -9,7 +9,7 @@ Turns the database's access rules on for the four most sensitive kinds of data: 
 
 The three groups (Nimish, 8 Nov 2026), each a row mapping role codes to a group, never a name in code:
 - **Everything:** coordinator, deputy coordinator, mentor, head, curriculum team, ops. They see all children, classes and notes.
-- **Own classes:** educator, class teacher, subject educator, cover educator, specialist, assistant. They see only the classes and subjects they hold a current grant for.
+- **Own classes:** educator, class teacher, subject educator, cover educator, specialist, assistant. They see only the classes and subjects they hold a current grant for. They also see a child whose paper they uploaded (Nimish, 27 Oct 2026: "Achal should only see the papers he has uploaded").
 - **Everyone signed in** sees the question bank, curriculum, plan and timetable.
 
 ## Done when
@@ -20,7 +20,7 @@ The three groups (Nimish, 8 Nov 2026), each a row mapping role codes to a group,
 4. With no identity set, a query on children, enrolment, staff or notes returns 0 rows. (Database test.)
 5. Run as a person in the "everything" group, the same queries return every row. (Database test.)
 6. A staff member's private details are readable only by the "everything" group and by that person. (Test.)
-7. The existing website pages and speed tests pass unchanged for a person who is allowed to see them.
+7. The browser and speed tests pass with the site connected as the restricted login. The assertions of the existing specs are unchanged. Test rows are created in the shape live has: an invented educator has a staff row, a current grant for each class they teach, and the classes have open enrolments.
 8. LIVE: none of the four kinds of data has a rule that allows everyone, and the site connects with the restricted database login, not the owner login (the owner login skips every rule). Read-only counts, no names.
 
 ## Out of scope

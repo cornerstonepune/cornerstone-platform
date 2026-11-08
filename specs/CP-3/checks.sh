@@ -20,15 +20,16 @@ check "2 every role code is in exactly one group" \
   run "$T::test_2_every_role_belongs_to_exactly_one_group"
 check "3 educator of X gets 0 rows of class Y's children, enrolment and notes" \
   run "$T::test_3_educator_of_x_sees_x" "$T::test_3_educator_of_x_gets_0_rows_of_y" \
-  "$T::test_3_a_grant_not_current_gives_nothing"
+  "$T::test_3_a_grant_not_current_gives_nothing" "$T::test_3_the_uploader_of_a_class_y_paper_sees_that_child_only"
 check "4 no identity: 0 rows of children, enrolment, staff and notes" \
   run "$T::test_4_no_identity_sees_nothing" "$T::test_4_an_identity_that_is_no_one_sees_nothing"
 check "5 everything group sees every row" \
   run "$T::test_5_everything_group_sees_every_row"
 check "6 staff private details only for the everything group and the person" \
   run "$T::test_6_staff_details_only_for_everything_and_self"
-check "7 browser and speed tests unchanged; the suite's user may see everything" \
-  run "$B::test_7_existing_browser_and_speed_tests_unchanged" "$B::test_7_the_suites_user_is_in_the_everything_group"
+check "7 browser and speed tests unchanged; test rows shaped as live (staff, grant per class, open enrolment)" \
+  run "$B::test_7_existing_browser_and_speed_tests_unchanged" "$B::test_7_test_rows_have_the_shape_live_has" \
+  "$B::test_7_the_suites_user_is_in_the_everything_group"
 check_box "8 live: no rule on the four kinds allows everyone; the site connects as app_web, not the owner" \
   $PY specs/CP-3/proofs/live_rules.py
 

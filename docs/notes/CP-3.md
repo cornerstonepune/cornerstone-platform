@@ -22,3 +22,27 @@ Branch `cp-3-build`, stacked on `cp-2-build` (PR #476). Must not merge before it
   and, per class, `select school_class_id, count(*) from enrolment where to_date is null group by 1`.
 - For Nimish: special educator is in `everything` (one update to change); the head-of-class wording in
   `data_register.json` is narrower than the real groups; the database checks the class, not the subject.
+
+## School-wide facts under an educator's identity (for CP-4)
+Queries in `apps/web` that derive a fact about the whole school from the `child` table. With the rule on, an educator
+sees only their own classes' children, so each answers about their classes only. Verdict per site:
+1. `lib/queries-calibration.ts` `levelRows` ("is this grade wholly the educator's"): WRONG under the rule (showed an
+   educator a grade whose other classes they cannot see; `u66:148`). Fix: a counts-only function (see below).
+2. `lib/taught.ts:35` (every class, for the taught tables): an educator now lists their own classes. Intended; no change.
+3. `lib/choices.ts:20` (class and grade choices): same. Intended; no change.
+4. `lib/queries-staff.ts:36` (staff page class list): the coordinator's page, who is in "everything". No change.
+5. `lib/reach.ts:48` (a person's classes): staff page, the coordinator's. No change.
+6. `app/(app)/staff/actions.ts:31` (sections for a staff action): the coordinator's. No change.
+
+## The uploader exception stays (decision log)
+An educator sees a child whose paper they uploaded, whatever the child's class: Nimish's own words of 27 Oct 2026 ("Achal
+should only see the papers he has uploaded", `u68-who-sees-answers.spec.ts`). `public.my_ids('children','child')` adds those
+children (one `capture.uploaded_by` lookup; `uploaded_by` is the sign-in entry id, as `current_staff()` is). Orchestrator 3's
+first call ("no exception, edit the u68 assertions") was reversed by orchestrator 4 to follow his words: no u68 edit.
+
+## Speed (what the rule cost and what was done)
+Functions the pages call once per row re-ran the row rule on every call (a new statement each): `class_band` (the Skill Map,
+about 6,000 calls in one statement: 4,350 ms to 155 ms) and `staff_sees_sheet` (the papers lists, about 4,000 calls: 22 s). Both
+now read as the owner; they return one grade and a yes or no. "Who is asking" is `staff.signin_id` (0.40 ms to 0.05 ms).
+`grade_is_wholly` replaces counting other classes' children on the levels page. A test that fixes rows for the educators the
+specs invent is `apps/web/tests/access-fixture.sql` (local copy only).

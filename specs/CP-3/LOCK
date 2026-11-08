@@ -1,5 +1,5 @@
 {
-  "digest": "78fcdc73e6c632842a194994480408e47d06844a848008e9d00d72d8ee79b68d",
+  "digest": "e07faf901dc34dfa52a6b99607f36351aceafc0671d71770972e2829ae28e113",
   "files": [
     "spec.md",
     "checks.sh",
@@ -8,7 +8,7 @@
     "proofs/test_access_rules.py",
     "proofs/test_browser_suite.py"
   ],
-  "locked_at": "2026-11-08T11:10:51+00:00",
+  "locked_at": "2026-11-08T19:12:04+00:00",
   "criteria": 8,
-  "athena": "2.13.0"
+  "athena": "2.14.0"
 }

@@ -2,7 +2,7 @@
 // them, signed exactly as lib/auth.ts signs one. The tests then use the site the way a person does
 // after signing in — no development bypass, which a production build never has.
 import { createHmac } from "node:crypto";
-import { mkdirSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import postgres from "postgres";
 import { GITHUB_PORT, MAIL_PORT, SIGNED_IN, WEB_PORT } from "../playwright.config";
@@ -37,6 +37,9 @@ export default async function globalSetup(): Promise<void> {
     where not exists (
       select 1 from staff_role_grant
       where staff_id = ${staff} and role_code = 'deputy_coordinator' and valid_to is null)`;
+  // The educators the specs invent (a sign-in entry with classes, children with a class label) get the staff row,
+  // class, enrolment and grant the rules read: see access-fixture.sql. Local copy only.
+  await sql.unsafe(readFileSync(path.join(__dirname, "access-fixture.sql"), "utf8"));
   await sql.end();
 
   const expiry = String(Date.now() + 86_400_000);

@@ -108,6 +108,34 @@ def test_3_a_grant_not_current_gives_nothing(school):
         assert seen == {k: 0 for k in seen}, f"{who}: rows of class X with no current grant: {seen}"
 
 
+def test_3_the_uploader_of_a_class_y_paper_sees_that_child_only(school):
+    # Own classes also see a child whose paper they uploaded (Nimish, 27 Oct 2026); nothing else of class Y.
+    s, c = school, school.c
+    other = one(c, "insert into child (tenant_id, roll_no, band, section) values (%s, 'P4', 'G1', 'PY') returning id",
+                (s.t,))
+    c.execute("insert into pii.child (tenant_id, child_id, first_name) values (%s, %s, 'Fake')", (s.t, other))
+    c.execute("insert into enrolment (tenant_id, child_id, class_id, roll_no, from_date, recorded_by) "
+              "values (%s, %s, %s, 'P4', %s::date - 30, 'cp3 proof')", (s.t, other, s.y, s.today))
+    paper_kid = s.kids[s.y][0]
+    tpl = one(c, "insert into sheet_template (tenant_id, band, level, week) values (%s, 'G1', 'L0', '2099-W01') "
+                 "returning id", (s.t,))
+    sheet = one(c, "insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id) "
+                   "values (%s, 'CSC0FFEE', %s, %s) returning id", (s.t, tpl, paper_kid))
+    c.execute("insert into capture (tenant_id, path, sheet_instance_id, uploaded_by) values (%s, 'proof/scan.jpg', %s, %s)",
+              (s.t, sheet, s.entry["edx"]))  # uploaded_by holds the sign-in list entry id, as the website sets it
+    s.grant("nogrant", "assistant", s.x)  # a second educator of X, who uploaded nothing
+
+    def sees(who, kid):
+        return {t: s.seen(who, f"select 1 from {t} where {col} = %s", (kid,))
+                for t, col in (("public.child", "id"), ("pii.child", "child_id"))}
+
+    assert sees("edx", paper_kid) == {"public.child": 1, "pii.child": 1}, "the uploader does not see the paper's child"
+    assert sees("edx", other) == {"public.child": 0, "pii.child": 0}, "the uploader sees another class-Y child"
+    assert s.seen("edx", "select 1 from public.enrolment where class_id = %s", (s.y,)) == 0, \
+        "the uploader sees class Y's enrolment"
+    assert sees("nogrant", paper_kid) == {"public.child": 0, "pii.child": 0}, "an educator who did not upload sees the child"
+
+
 # ---- 4 ----------------------------------------------------------------------------------------------------------
 
 def test_4_no_identity_sees_nothing(school):

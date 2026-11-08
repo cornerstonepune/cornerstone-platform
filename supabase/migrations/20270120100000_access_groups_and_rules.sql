@@ -247,9 +247,17 @@ language sql stable security definer set search_path = public, pg_temp as $$
   )
   select coalesce(case p_key_type
     when 'class' then (select array_agg(id) from cls)
-    when 'child' then (select array_agg(distinct e.child_id) from enrolment e join cls
-                         on e.tenant_id = cls.tenant_id and e.class_id = cls.id
-                       where e.from_date <= cls.d and (e.to_date is null or e.to_date > cls.d))
+    -- the children enrolled in those classes now, and (Nimish, 27 Oct 2026: "Achal should only see the papers he has
+    -- uploaded") the children whose papers this person put in, whatever their class
+    when 'child' then (select array_agg(distinct x.child_id) from (
+                         select e.child_id from enrolment e join cls
+                           on e.tenant_id = cls.tenant_id and e.class_id = cls.id
+                         where e.from_date <= cls.d and (e.to_date is null or e.to_date > cls.d)
+                         union
+                         select si.child_id from capture c
+                           join sheet_instance si on si.id = c.sheet_instance_id and si.child_id is not null
+                         where c.uploaded_by = public.current_staff() and c.superseded_by is null  -- uploaded_by is the sign-in entry id, as current_staff() is
+                           and c.tenant_id = (select tenant_id from me)) x)
     when 'note' then (select array_agg(n.id) from pii.educator_note n join cls
                         on n.tenant_id = cls.tenant_id and n.class_id = cls.id)
   end, '{}'::uuid[])
@@ -293,6 +301,40 @@ language sql stable security definer set search_path = public as $$
   order by count(*) desc, g.ord
   limit 1
 $$;
+
+-- `staff_sees_sheet` is the website's one rule for whether a person sees a printed copy; it reads the copy's child only
+-- for the child's class and answers yes or no from the role and classes it is given. The papers lists ask it once per
+-- copy (one statement did so some 4,000 times, 22 s), and each call would work out the row rule on `child` again. It
+-- reads as the owner, as `class_band` does. `staff_sees_capture` reaches `child` only through it.
+alter function public.staff_sees_sheet(text, text[], text[], uuid, uuid) security definer;
+
+-- 3c. A fact about the whole school, never a child --------------------------------------------------------------------
+-- "Is every active class of this grade among these sections?" The levels page shows a grade's figures to an educator
+-- only when the grade is wholly theirs. It was worked out by counting children of other classes, which the rule now
+-- hides from an educator: they would see no other class and the answer would turn into "yes". The answer is one yes or
+-- no and names no child, class or number. With nobody asking it is "no".
+create or replace function public.grade_is_wholly(p_grade text, p_sections text[]) returns boolean
+language sql stable security definer set search_path = public, pg_temp as $$
+  select public.my_tenant() is not null and not exists (
+    select 1 from child c
+    where c.tenant_id = public.my_tenant() and c.band = p_grade and c.active and c.section <> all (p_sections))
+$$;
+
+revoke all on function public.grade_is_wholly(text, text[]) from public;
+do $$ begin
+  if exists (select from pg_roles where rolname = 'anon') then
+    revoke all on function public.grade_is_wholly(text, text[]) from anon;
+  end if;
+  if exists (select from pg_roles where rolname = 'authenticated') then
+    revoke all on function public.grade_is_wholly(text, text[]) from authenticated;
+  end if;
+  if exists (select from pg_roles where rolname = 'app_web') then
+    grant execute on function public.grade_is_wholly(text, text[]) to app_web;
+  end if;
+  if exists (select from pg_roles where rolname = 'app_engine') then
+    grant execute on function public.grade_is_wholly(text, text[]) to app_engine;
+  end if;
+end $$;
 
 -- 4. The rule, generated -----------------------------------------------------------------------------------------------
 
