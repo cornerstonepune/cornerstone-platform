@@ -1,99 +1,107 @@
 # CP-13 design: child level rule, second change
 
-Status: DRAFT for review. Scope: `specs/CP-13/spec.md` (issue #461). Tier 3. Waits for CP-4 (plan order); CP-2/3/4 are built
-one at a time, so this design and its proofs are written against **the schema on main today plus what CP-4 adds**.
+Status: REVISED after goldfish review (zoom-out, codebase-details, implementation-readiness; dispositions in
+`specs/CP-13/design-review/summary.md`). Scope: `specs/CP-13/spec.md` (issue #461). Tier 3. Waits for CP-4.
+CP-2/3/4 are built one at a time, so proofs are written against **the schema on main plus what CP-4 adds**.
 
-## Dependency on CP-4 (named, not hidden)
-CP-4 adds `access_table.data_class` and makes `apply_conventions()` **raise** when a base table has no `access_table`
-row. Consequence for CP-13: any new table CP-13 creates must insert its own `access_table` row in the same migration,
-as `school_wide` with a reason (it holds a rule number, no child data). Proofs build the throwaway database from
-**every migration present**, so they run before and after CP-4 lands: the new table's row is asserted only if
-`access_table` exists. Nothing else here reads CP-3/CP-4 objects.
+## Dependency on CP-4
+CP-4 makes `apply_conventions()` raise for a base table with no `access_table` row. CP-13 creates **no new table**
+(D1 is a column on `grade`; `grade` is already a table CP-4 lists), so it needs no CP-4 object and no conditional. The
+proofs build the throwaway database from every migration present (CP-4's `conftest.py` pattern: `TEST_DATABASE_URL`, else
+a temp Postgres; never `DATABASE_URL`), so they run before and after CP-4 lands.
 
-## What already exists on main (read from the migrations; the proof-writer must confirm by running)
-- Migration `20261223090000` (goal gr1) already did most of items 1, 2, 5, 6 in the **written** graph:
-  - `graph_level_window` computes `repeating` from the level's last `state.window_answers` answers only; a mistake
-    absent from that window is not repeating, and `state.repeat_clears_after` right answers on later papers clear it.
-  - `adults` is `count(distinct seen_by)` over the window, so one adult twice is one. `seen_by` is the staff id as text
-    (`voice_confirm.py` writes `str(staff)`), so the same adult is the same string.
-  - `graph_skill_states()` is the single rule; `rebuild_child_skill_state` deletes and re-inserts from it under an
-    advisory lock; `graph_answer` reads `confirmed_by is not null` only.
-- **Not yet true, and the real work of CP-13:**
-  - the minimum adults is one **global** threshold row `state.min_adults` = 2 (`graph_state_of` reads it per school, no
-    grade). K2's 1 lives separately in `observed_rule.min_adults`, read only by the K2 observed path. (Item 3.)
-  - nothing produces the list of states that would change (item 4). `engine live data` (`checks/live_data.py`,
-    `_stale_graph`) already compares stored `child_skill_state` with `graph_skill_states()` but prints stale rows, not
-    counts by transition.
-- On live today every row the graph reads is a written answer with `seen_by` null, so `adults` = 0 and the adults rule
-  holds nothing back (`graph_state_of` applies it only when `adults > 0`). Expect the item-4 list for the adults change
-  to be empty or tiny on live; it is still produced and shown.
+## What exists on main (reviewers read the migrations; the proof-writer confirms by running)
+- Items 1, 5, 6 hold in the written graph (migration `20261223090000`): `graph_level_window` computes `repeating` over a
+  level's last `state.window_answers` answers (a mistake absent from the window is not repeating; `state.repeat_clears_after`
+  right answers observed after its last showing, inside the window, also clear it); blank = `correct` null, wrong =
+  `correct` false with empty `misconception_codes`, wrong-with-working = `correct` false with codes; `graph_answer` reads
+  `confirmed_by is not null` and drops superseded captures; `rebuild_child_skill_state(uuid) returns integer` deletes and
+  re-inserts from `graph_skill_states()` under an advisory lock.
+- Item 2: `adults` is `count(distinct seen_by)`; `seen_by` is a staff id as text (`voice_confirm.py` writes `str(staff)`).
+  **But the written graph never sees an adult today**: `evidence_placed`/`graph_answer` read `kind = 'written'` and written
+  rows carry `seen_by` null, so `adults` = 0 and `graph_state_of` skips the adults test (`p_adults > 0 and ...`). The K2
+  observed path (`graph_observed_states`, kind `observed`) is where adults are real: `who` array.
+- Item 3 is missing: the minimum is the global threshold `state.min_adults` = 2; K2's 1 is `observed_rule.min_adults`.
+- Item 4 is missing: `engine live data` (`checks/live_data.py:_stale_graph`) lists stale rows, not counts by transition.
 
-**Honest consequence for the proofs:** items 1, 2, 5 and 6 may already pass on main. Those proofs are regression locks
-(they pin behaviour so a later change cannot lose it), and the proof-writer reports for each item whether it failed
-before the build. Only items 3 and 4 are expected to fail first. Nimish should read that before locking.
+**Consequence for the proofs.** Items 1, 5, 6 and the written-graph half of 2 should already pass on main: those proofs are
+regression locks, the whole deliverable for those items, and the proof-writer reports for each whether it failed first. Any
+proof that fails on main becomes build work. Items 3 and 4 fail first (no column; no function).
 
 ## Decisions
 
-### D1. Minimum adults: a table, one row per grade (item 3)
-New table `state_adults (tenant_id, grade_code, min_adults int check > 0, unique (tenant_id, grade_code), fk to
-grade(tenant_id, code))`. Seeded for every existing grade at 2, K2 at 1, and for a new school by a trigger named to sort
-after the vocabulary triggers (the `voice_vocabulary_then_observed_rules` precedent). Idempotent (`on conflict do
-nothing`).
-- `graph_state_of(...)` stops reading `state.min_adults`; the window function supplies the **child's grade minimum**
-  (`child.band` is the grade code today; the build reads it the same way after CP-1, which keeps `band`). A grade with
-  no row falls back to the largest value in the table for that school, never to a number in code. [open for review:
-  see Q1]
-- The threshold row `state.min_adults` and its seed entry are removed in the same migration so there is one home;
-  `test_graph_rule.py:113` lists it and is updated.
-- Alternative rejected: reuse `observed_rule.min_adults`. It has `secure_level/secure_days/recheck_days` NOT NULL, so a
-  G1 row would invent K2-observed numbers.
-- Duplication kept on purpose: `observed_rule.min_adults` (K2 observed path) stays. A test asserts both equal for K2,
-  so they cannot drift. Retiring one belongs to a later scope (not asked here).
-- No Python or TypeScript carries the number (rule 1); a test greps for it.
+### D1. Minimum adults: one column on `grade` (item 3)
+`alter table grade add column min_adults int not null default 2 check (min_adults > 0)`. Every grade, existing or added later,
+has the value, so no new table, no seeding trigger, no fallback rule. K2 is set to 1 in the migration for existing schools, and
+by one added statement inside `internal.observed_rules(p_tenant)` for schools added later (that function already runs after the
+vocabulary for every new school).
+- **One home.** `graph_observed_states` reads `grade.min_adults` instead of `observed_rule.min_adults`; the column
+  `observed_rule.min_adults` is dropped. The threshold row `state.min_adults` and its seed entry go.
+- `graph_level_window` returns the child's grade minimum (the child's current `child.band`, an FK to `grade`; migration
+  `20261220090000` lets a child change grade, so it is read live). `graph_state_of` takes it as a parameter, replacing its
+  threshold lookup. This changes its 9-argument signature, so the migration also recreates what the earlier migration
+  dropped around it: views `child_level_state`, `level_calibration`, and the grants naming the signature (`app_engine`,
+  `app_web`).
+- Callers and tests the build must update (reviewer-listed): `packages/engine/tests/test_graph_rule.py` (`_state` at 95,
+  `RULE_ROWS` at 113, the source-grep at 129-135), `test_calibration.py` (`_the_rule` hard-codes `0 < adults < 2`; line 192
+  checks the definition text; call at 365), `test_roles.py:72-73`, `test_k2_picture.py:224` (the `observed_rule` row),
+  `supabase/seed/thresholds.json`, and the docs that cite `state.min_adults` (ADR 0098, `docs/notes/gr1-...`,
+  `docs/notes/m1-02-...`; goals/ stays read-only history).
+- Rejected: a new `state_adults` table with a trigger and a "largest value" fallback (more code, same effect); reusing
+  `observed_rule` (its other columns are NOT NULL K2 numbers).
 
 ### D2. One adult counts once (item 2)
-Behaviour exists. Build adds nothing unless the proof shows a gap: the proof covers the written graph (two answers
-same `seen_by` = 1 adult), the K2 observed path (`who` array), and the case of different-case or padded text, which is
-**not** normalised today. Decision: no normalisation, because `seen_by` is a staff id, not typed text; the proof pins
-that two *different* ids count as two and one id twice as one. [open: Q2]
+Behaviour exists; no normalisation, because `seen_by` is a staff id. Proof on the K2 observed path with real inserts: two
+confirmed observed notes by the same staff id, on different days, on one skill give `adults` = 1 in `child_observed_state`
+and (with the grade minimum 2) never `secure`; a second different staff id gives 2. Plus the written-graph function
+(`graph_state_of` called directly) with the adults argument 1 vs 2. Known edge, stated not fixed: in the written graph a
+window mixing null-`seen_by` rows with one adult-named row has `adults` = 1, so it reads as `practising` under a minimum of 2.
 
 ### D3. Repeating clears (item 1)
-Behaviour exists in the window rule. Proof: a mistake in 2 of the last answers marks the skill `patterned_error`; the
-same child after more answers push it out of the window (or enough right answers on later papers) is no longer
-`patterned_error`, and `repeating_misconception` in the rebuilt `child_skill_state` row is null. Plus
-`next_difficulty` no longer targets it.
+Proof through `rebuild_child_skill_state`: a mistake code in 2 of a level's window gives `state = 'patterned_error'` and
+`repeating_misconception` = that code in `child_skill_state`; after enough later answers without it, a rebuild gives a state
+other than `patterned_error` and `repeating_misconception` null.
 
-### D4. The three signals (item 5)
-Blank, wrong, wrong-with-working are distinct in ring A today (`correct`/`misconception_codes`/mark kinds). Proof: the
-three evidence kinds written separately are three distinct stored values after a rebuild, and no migration or function
-collapses them (checked by inserting each and reading back what the graph exposes). Exact column names are read by the
-proof-writer from `evidence_event` and `graph_answer`; the design does not restate them.
+### D4. Three signals (item 5)
+Blank / wrong / wrong-with-working are three distinct stored values (`correct` null; `correct` false + empty codes;
+`correct` false + codes). Proof: write one answer of each kind through `answer_evidence` (migration `20261015090000`),
+read back `graph_answer`, assert three distinct `(correct, misconception_codes)` shapes and that only the non-blank two
+count toward the window (`n_events`).
 
 ### D5. Rebuilt from confirmed only, twice the same (item 6)
-Proof: unconfirmed evidence changes nothing; `rebuild_child_skill_state` run twice gives identical rows (ignoring
-`computed_at`/timestamps); a superseded read is ignored.
+Proof: an unconfirmed evidence row changes no `child_skill_state` row; two consecutive `rebuild_child_skill_state` calls give
+identical rows apart from timestamp columns.
 
-### D6. The list of states that would change (item 4), a separate approval
-- New function `public.graph_state_changes(p_child uuid default null)` returns one row per
-  `(grade_code, old_state, new_state)` with `skills` (rows) and `children` (distinct) **counts only**. No child id,
-  name or skill code is returned. `old_state` is the stored `child_skill_state` row (absent = `none`), `new_state`
-  is `graph_skill_states()`. It is `stable`, writes nothing, and is read-only for `app_engine`.
-- Thin CLI `engine graph --changes` prints the table and exits 0; it never rebuilds. `workflows.json` gets the
-  command (test_layout checks it). Nimish reads this list **on a copy of live data**; saying yes is a separate
-  step: the existing `engine graph` rebuild, run by a person after his yes. The proof checks the list exists and is
-  counts-only, and that producing it leaves `child_skill_state` unchanged. It never runs the rebuild on anything but
-  its own throwaway database.
-- Output saved to `docs/notes/CP-13.md` by the builder on the copy run, counts only. No live write anywhere.
+### D6. Item 3's proof: edit the row, see the result move
+Same child answers, K2 observed path: with `grade.min_adults` = 1 for K2 the skill reaches `secure_to_recheck`/`secure` on one
+adult; `update grade set min_adults = 2 where code = 'K2'`, rebuild with no code change, and it does not; and a non-K2 grade
+defaults to 2. A static test asserts no Python/TypeScript under `packages/engine/engine`, `apps/web` carries a
+`min_adults` literal or a `state.min_adults` key.
 
-## Out of scope kept out
-Skill links (CP-14), any screen, changing `observed_rule`'s other numbers, retiring `observed_rule.min_adults`.
+### D7. The list of states that would change (item 4), a separate approval
+```
+public.graph_state_changes(p_child uuid default null)
+returns table (grade_code text, old_state text, new_state text, skills int, children int)
+language sql stable
+```
+One row per grade and transition where `old_state is distinct from new_state`. `old_state` is the stored
+`child_skill_state.state` (the literal `'none'` when no stored row); `new_state` is `graph_skill_states(p_child)`'s state;
+`skills` = rows, `children` = distinct children. Grade is the child's `child.band`. Counts only: no uuid or free-text
+column. `p_child` filters to one child. Execute granted to `app_engine`; it writes nothing.
+- `engine graph --changes` (`packages/engine/engine/cli.py:113`, which calls `engine/assess/graph.py`) prints the rows and
+  exits 0; it never calls the rebuild. `workflows.json` gets the flag (`test_layout.py` checks it). A new SQL function is
+  kept over extending `_stale_graph` because `_stale_graph` returns row-level differences, not counts by grade and
+  transition, and counts-only is enforced by the function's column types.
+- **Separate approval.** Nimish reads this list on a copy of live data; saying yes is a human step; applying is the existing
+  `engine graph` rebuild, run by a person afterwards. The proofs check only that the list exists and is counts-only, that
+  `provolatile` is stable, that running the function and the CLI flag leaves every `child_skill_state` row identical, and
+  that the rebuild is never invoked by them. `docs/notes/CP-13.md` (counts, from the copy run) is written by the builder
+  and is not tested.
 
-## Open questions for review
-- Q1: grade with no `state_adults` row: fall back to the school's largest value, or fail the rebuild loudly?
-- Q2: is `seen_by` always a staff id (so no normalisation), or can typed text reach it?
+## Out of scope
+Skill links (CP-14), any screen, other `observed_rule` numbers, new-school behaviour beyond K2's value.
 
-## Files the build touches (for the proof-writer)
-`supabase/migrations/<next>.sql` (table, seed, trigger, `graph_state_of`/`graph_level_window` or `graph_skill_states`
-change, `graph_state_changes`, grants, `access_table` row if present), `supabase/seed/thresholds.json`,
-`packages/engine/engine/cli.py` + the w3_read graph command file, `workflows.json`, `packages/engine/tests/
-test_graph_rule.py`. No `apps/web` change.
+## Files the build touches
+One migration `supabase/migrations/<next after main>_grade_min_adults.sql`; `supabase/seed/thresholds.json`;
+`packages/engine/engine/cli.py`, `engine/assess/graph.py`; `workflows.json`; the tests and docs in D1.
+No `apps/web` change.
