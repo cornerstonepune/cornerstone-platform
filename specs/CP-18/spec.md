@@ -1,7 +1,7 @@
 # CP-18: Materials: reading prompt scored and on, sends recorded, reminders delivered
 
 Source: https://github.com/cornerstonepune/cornerstone-platform/issues/466
-DRAFT for Nimish. Not locked.
+Scope locked by: Nimish (the label scope-locked on pull request #490, 8 Nov 2026; issue #466 carries the same text)
 
 Waits for CP-17 (the educator's approval of a list), CP-6 (the fortnight's "list sent" step) and CP-4 (the table list, which a new table must join). Plan: docs/backend-plan.md. Roadmap tasks M1-10, M1-16. Tier 3: a model prompt switched on, messages that leave the system, a data change. Design: specs/CP-18/design.md. Assumption until CP-17 is scoped: CP-17 gives one check, "is this list approved as it reads now", and works per fortnight.
 

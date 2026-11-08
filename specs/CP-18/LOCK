@@ -1,0 +1,21 @@
+{
+  "digest": "b2ed7576a563123d4d97e77215abbe5df639c1dd0bad1aaa8113046831737d6e",
+  "files": [
+    "spec.md",
+    "checks.sh",
+    "proofs/conftest.py",
+    "proofs/decisions.py",
+    "proofs/live_counts.py",
+    "proofs/live_prompt.py",
+    "proofs/test_approval.py",
+    "proofs/test_fortnight_list_sent.py",
+    "proofs/test_no_contact_in_logs.py",
+    "proofs/test_no_real_message.py",
+    "proofs/test_prompt_scored.py",
+    "proofs/test_reminders.py",
+    "proofs/test_send_record.py"
+  ],
+  "locked_at": "2026-11-08T17:20:47+00:00",
+  "criteria": 8,
+  "athena": "2.14.0"
+}

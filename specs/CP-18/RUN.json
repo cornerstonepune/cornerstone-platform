@@ -1,0 +1,14 @@
+{
+ "ok": false,
+ "passed": [],
+ "failed": [
+  "1 note-reading prompt scored on >= the lines bar (60) incl. a photographed note, each bar in the decisions log, the scored version is the one on",
+  "2 a list is sent only when approved as it reads now; a combined list with an unapproved class is refused naming it (needs CP-17)",
+  "3 every send records who, text, when and the staff member; none named or no number: not configured, list unsent, reminders on (needs CP-17)",
+  "4 a combined list of exactly one fortnight marks it list sent with the same who and when (needs CP-6 and CP-17)",
+  "5 each due reminder emailed once per person or recorded why not; never twice, even in two runs; none after a send or past the day (one case needs CP-17)",
+  "6 no phone, email or name in any log, send record or delivery record (sends need CP-17)",
+  "7 no proof sends a real message; with no sending account delivery records not configured and contacts nothing"
+ ],
+ "ran_at": "2026-11-08T17:18:51+00:00"
+}
