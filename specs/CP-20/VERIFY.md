@@ -19,3 +19,13 @@ Risks: no secrets or real data involved; the password in the default URL is the 
 Not checked by the verifier: it did not re-run `athena done CP-20` locally (proof 4 needs the throwaway database). It took the 5 min 50 s job time from the brief; the orchestrator and builder both read it from the job's own step timestamps (10:10:34 to 10:16:24).
 
 VERDICT: PASS
+
+## Follow-up: proof 5 scope (2026-11-08)
+
+PASS. Independent read-only verifier (athena-verifier) on commit f348b4f against origin/main.
+
+- Intent met: proof 5's file-scope check now runs only when the pull request changes `.claude/athena/setup.sh`; otherwise it prints a note and skips just that one check. When it runs, the rule is unchanged (setup.sh, `docs/notes/CP-20.md`, `specs/CP-20/`).
+- No other proof-5 assertion was weakened: `bin/testdb fresh`, not in MANIFEST, header says never overwrites, `timeout-minutes: 30`, no wait of a minute or more, stubbed run under 30 s all still run every time.
+- A pull request that changes setup.sh plus other files still fails (also if setup.sh is deleted). The new `extra_files()` self-check covers both cases.
+- Shown on a CP-1-like diff (origin/cp-1-people-complete merged with this fix: 25 files, setup.sh untouched): proof 5 passes.
+- Known gaps, not blocking: the exit status of `git diff --name-only` is not checked (pre-existing; a failure reads as "no changes"); proof 4 needs GitHub's throwaway Postgres, so it fails in a session without one and was not re-run here (proofs 1, 2, 3, 5, 6 pass locally).
