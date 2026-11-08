@@ -49,7 +49,9 @@ def nightly_rebuild(
     the call takes no clock of its own."""
     key = idempotency_key or f"nightly-{dt.date.today().isoformat()}"
     try:
-        result, already = run_idempotent(conn, tenant_id, "graph_nightly", key, {}, lambda: nightly.nightly(conn))
+        result, already = run_idempotent(
+            conn, tenant_id, "graph_nightly", key, {}, lambda: nightly.nightly(conn)
+        )
     except Exception as e:
         nightly.failed(conn, e)  # run_idempotent has rolled back; the failure is the ledger's to keep
         conn.commit()

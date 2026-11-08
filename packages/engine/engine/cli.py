@@ -113,37 +113,19 @@ def asks_(
 @app.command("graph")
 def graph_(
     child_id: str = typer.Option("", "--child", help="One child id; default every child with evidence"),
-    nightly: bool = typer.Option(False, "--nightly", help="The scheduled rebuild: rebuild everything and log the run"),
-    hand_check: bool = typer.Option(False, "--hand-check", help="Record a hand calculation: --child --skill --grade --expected --by"),
-    skill: str = typer.Option("", "--skill"),
-    grade: str = typer.Option("", "--grade"),
-    expected: str = typer.Option("", "--expected", help="The state worked out by hand"),
-    by: str = typer.Option("", "--by", help="Who calculated it"),
+    nightly: bool = typer.Option(False, "--nightly", help="The scheduled rebuild, logged"),
+    hand_check: tuple[str, str, str, str] = typer.Option(
+        ("", "", "", ""),
+        "--hand-check",
+        help="Record a hand calculation for --child: SKILL GRADE EXPECTED BY",
+    ),
 ) -> None:
     """Rebuild Ring B — child_skill_state, and each question's item_stat — from confirmed evidence."""
     from engine.w1_bank import learn
-    from engine.w3_read import nightly as night
+    from engine.w3_read import cli_nightly
 
-    if nightly:
-        with db.connect() as conn:
-            try:
-                got = night.nightly(conn)
-            except Exception as e:
-                conn.rollback()
-                night.failed(conn, e)
-                conn.commit()
-                raise
-            conn.commit()
-        typer.echo("  skipped: a run is already going" if got["skipped"] else f"  {got['skill_states']} + {got['observed_states']} states for {got['children']} children")
-        return
-    if hand_check:
-        if not (child_id and skill and grade and expected and by):
-            raise typer.BadParameter("--hand-check needs --child --skill --grade --expected --by")
-        with db.connect() as conn:
-            got = night.hand_check(conn, child_id, skill, grade, expected, by)
-            conn.commit()
-        typer.echo(f"  system says {got['system_state']}: {'matches' if got['matches'] else 'DOES NOT MATCH'}")
-        return
+    if nightly or any(hand_check):
+        return cli_nightly.run(nightly, child_id, hand_check)
     with db.connect() as conn:
         n = graph.rebuild(conn, child_id or None)
         questions = learn.item_stats(conn)

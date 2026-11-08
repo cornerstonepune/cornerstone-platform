@@ -44,14 +44,31 @@ def nightly(conn: db.Conn, now: dt.datetime | None = None) -> dict:
             " evidence_digest_after, skill_states_before, skill_states_after, observed_states_before,"
             " observed_states_after, states_digest_before, states_digest_after)"
             " values (%s, %s, %s, true, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
-            (_tenant(conn), started, ran_at, after["children"], after["evidence_rows"], before["evidence_digest"],
-             after["evidence_digest"], before["skill_states"], after["skill_states"], before["observed_states"],
-             after["observed_states"], before["states_digest"], after["states_digest"]),
+            (
+                _tenant(conn),
+                started,
+                ran_at,
+                after["children"],
+                after["evidence_rows"],
+                before["evidence_digest"],
+                after["evidence_digest"],
+                before["skill_states"],
+                after["skill_states"],
+                before["observed_states"],
+                after["observed_states"],
+                before["states_digest"],
+                after["states_digest"],
+            ),
         )
-    return {"skipped": False, "children": after["children"], "evidence_rows": after["evidence_rows"],
-            "skill_states": after["skill_states"], "observed_states": after["observed_states"],
-            "evidence_unchanged": before["evidence_digest"] == after["evidence_digest"],
-            "states_unchanged": before["states_digest"] == after["states_digest"]}
+    return {
+        "skipped": False,
+        "children": after["children"],
+        "evidence_rows": after["evidence_rows"],
+        "skill_states": after["skill_states"],
+        "observed_states": after["observed_states"],
+        "evidence_unchanged": before["evidence_digest"] == after["evidence_digest"],
+        "states_unchanged": before["states_digest"] == after["states_digest"],
+    }
 
 
 def failed(conn: db.Conn, error: Exception, now: dt.datetime | None = None) -> None:
@@ -64,8 +81,9 @@ def failed(conn: db.Conn, error: Exception, now: dt.datetime | None = None) -> N
     )
 
 
-def hand_check(conn: db.Conn, child_id: str, skill: str, grade: str, expected: str, by: str,
-               on: dt.date | None = None) -> dict:
+def hand_check(
+    conn: db.Conn, child_id: str, skill: str, grade: str, expected: str, by: str, on: dt.date | None = None
+) -> dict:
     """One hand calculation against the system's state at this moment, stored with whether they matched so a later
     change of the system cannot make an honest old row wrong (CP-9 item 7). Append-only; the caller commits."""
     row = conn.execute(
