@@ -1,0 +1,13 @@
+{
+ "ok": true,
+ "passed": [
+  "1 a mistake absent from a child's recent answers stops marking them repeating",
+  "2 two notes by the same adult count as one adult",
+  "3 minimum adults is grade.min_adults: 2 by default, 1 for K2; editing the row moves the result, no code literal",
+  "4 graph_state_changes and engine graph --changes list counts per grade and transition, and change nothing",
+  "5 blank, wrong and wrong-with-working stay three distinct signals",
+  "6 rebuilt from confirmed evidence only, and the same when rebuilt twice"
+ ],
+ "failed": [],
+ "ran_at": "2026-11-08T13:02:48+00:00"
+}
