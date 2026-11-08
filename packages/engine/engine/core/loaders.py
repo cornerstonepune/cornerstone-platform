@@ -72,6 +72,13 @@ def _registry(conn: db.Conn, t: db.Id) -> None:
     """
     reg = json.loads((SEED / "registry.json").read_text())
 
+    # The database keeps the first write of a curriculum record under whoever made it; the loader says it is the seed,
+    # so the K2 upload can tell the system's words from a person's (the label is a setting, beside the upload's own).
+    conn.execute(
+        "select set_config('app.changed_by', %s, true)",
+        (json.loads((settings.SEED / "k2_sheet.json").read_text())["seed_label"],),
+    )
+
     # 11k rows: `executemany` pipelines them, one statement per table instead of one round trip
     # per row. Loading the whole map takes seconds that way and minutes the other way, and the
     # loader runs three times in the test suite.
