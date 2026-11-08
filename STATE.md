@@ -54,7 +54,7 @@ a silent model change would invalidate every accuracy measurement taken against 
 
 ## Phase 0 — schema
 
-Two migrations applied to the hosted project `ruznbyngtfjsaymuylhm` (ap-south-1) with
+Two migrations applied to the hosted project `<project-ref>` (ap-south-1) with
 `supabase db push --db-url "$DATABASE_URL"`: `20260917090000_ring_a.sql` (Ring A, the `pii`
 schema, `internal.apply_conventions()`) and `20260917090100_ring_b.sql` (the three derived
 tables). The full schema exists now, so Phases 1–4 add rows, never DDL. Every check below is

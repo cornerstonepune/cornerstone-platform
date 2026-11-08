@@ -4,7 +4,7 @@
 
 **Goal:** Stand up the repository, the full Supabase schema, the four Phase 0 seed files and the `engine load` CLI, with the validated prototype `assess/` moved in under tests, so that every structural fact the engine needs is a row in Postgres and loading it twice changes nothing.
 
-**Architecture:** One hosted Supabase Postgres (`ruznbyngtfjsaymuylhm`, ap-south-1) holds Ring A truth, Ring B derived shells, and a separate `pii` schema; every table carries `tenant_id`, has RLS enabled *and* forced, and a `service_role` policy. A Python package `packages/engine/engine/` holds the moved prototype (`assess/`, deterministic, no I/O), one connection helper (`db.py`), pure row builders plus one generic idempotent upsert (`loaders.py`), and a Typer CLI (`cli.py`). Structural content — skills, milestones, rungs, levels, misconceptions, prompts — lives in `supabase/seed/*.json`, never in Python.
+**Architecture:** One hosted Supabase Postgres (`<project-ref>`, ap-south-1) holds Ring A truth, Ring B derived shells, and a separate `pii` schema; every table carries `tenant_id`, has RLS enabled *and* forced, and a `service_role` policy. A Python package `packages/engine/engine/` holds the moved prototype (`assess/`, deterministic, no I/O), one connection helper (`db.py`), pure row builders plus one generic idempotent upsert (`loaders.py`), and a Typer CLI (`cli.py`). Structural content — skills, milestones, rungs, levels, misconceptions, prompts — lives in `supabase/seed/*.json`, never in Python.
 
 **Tech Stack:** Python 3.12 in a `uv`-managed venv (typer, psycopg 3, python-dotenv, pytest, pytest-cov) · PostgreSQL 15 on hosted Supabase, changed only by numbered migrations applied with `supabase db push` · JSON seed files · Anthropic model id `claude-opus-5` recorded on every `prompt` row.
 
@@ -211,8 +211,8 @@ The pre-write hook blocks real credentials. Every secret value here is the liter
 # Cornerstone Cloud — Supabase (project cornerstone-cloud, ap-south-1 Mumbai).
 # Copy to .env and fill in. .env is gitignored and never committed.
 
-SUPABASE_PROJECT_REF=ruznbyngtfjsaymuylhm
-SUPABASE_URL=https://ruznbyngtfjsaymuylhm.supabase.co
+SUPABASE_PROJECT_REF=<project-ref>
+SUPABASE_URL=https://<project-ref>.supabase.co
 
 # Session pooler, ap-south-1. Percent-encode any ! # @ : / in the password.
 DATABASE_URL=postgresql://postgres.<project-ref>:<password>@<pooler-host>:5432/postgres
@@ -542,7 +542,7 @@ cd /Users/nimishshah/cornerstone/assessment-engine && set -a && . ./.env && set 
   psql "$DATABASE_URL" -Atc "select current_database(), current_user"
 ```
 
-Expected output: `postgres|postgres.ruznbyngtfjsaymuylhm`
+Expected output: `postgres|postgres.<project-ref>`
 
 - [ ] **Step 2: Write `packages/engine/tests/conftest.py`.**
 
@@ -745,7 +745,7 @@ Expected: a browser tab opens; after approval the terminal prints `Finished supa
 
 ```bash
 cd /Users/nimishshah/cornerstone/assessment-engine && \
-  supabase link --project-ref ruznbyngtfjsaymuylhm
+  supabase link --project-ref <project-ref>
 ```
 
 Expected output: a database-password prompt (type it; it is not echoed and never written to a file), then `Finished supabase link.` This is a hosted project — never run `supabase start` or `supabase db reset`, which target a local Docker stack that does not exist here.
@@ -3365,7 +3365,7 @@ Replace those two sections of `/Users/nimishshah/cornerstone/assessment-engine/S
 
 - Docker, Supabase CLI 2.109.0, psql, Node 24, Python 3.14 present; the engine runs on a
   uv-managed Python 3.12 venv at `packages/engine/.venv`.
-- Supabase is the hosted project `ruznbyngtfjsaymuylhm` (ap-south-1). Migrations are applied
+- Supabase is the hosted project `<project-ref>` (ap-south-1). Migrations are applied
   with `supabase db push --db-url "$DATABASE_URL"`. There is no local stack: never
   `supabase start`, never `supabase db reset`.
 - n8n not installed (Docker); `gh` authenticated as nimishshah1989, admin of `cornerstonepune`.

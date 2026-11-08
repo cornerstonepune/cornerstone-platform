@@ -44,6 +44,20 @@ def test_no_function_of_ours_runs_for_the_api_roles(conn):
     assert [(f["sig"], r) for f in funcs for r in API_ROLES if _runs(conn, r, f["oid"])] == []
 
 
+def test_every_function_of_ours_pins_its_search_path(conn):
+    """A function with no fixed search path resolves names through the caller's path (advisor function_search_path_mutable)."""
+    funcs = conn.execute(
+        f"select o.sig, p.proconfig from ({OURS}) o join pg_proc p on p.oid = o.oid"
+    ).fetchall()
+    assert funcs, "no function of ours found?"
+
+    def pinned(config):
+        paths = [c.split("=", 1)[1].strip() for c in config or [] if c.startswith("search_path=")]
+        return bool(paths) and paths[0] not in ("", '""') and "$user" not in paths[0]
+
+    assert [f["sig"] for f in funcs if not pinned(f["proconfig"])] == []
+
+
 def test_a_function_made_later_is_closed_to_them_too(conn):
     conn.execute("create function public._made_later() returns int language sql as 'select 1'")
     for role in API_ROLES:
