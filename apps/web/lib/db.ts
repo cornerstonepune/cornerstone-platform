@@ -84,6 +84,20 @@ if (process.env.NODE_ENV !== "production" && url) globalThis.cornerstoneSql = ra
 // transaction-local setting that `public.current_staff()` reads. This is the only place it is set, and the id comes only
 // from the verified sign-in: `lib/auth.ts` registers the resolver; nothing here reads the request.
 type Resolver = () => Promise<string | undefined>;
+// The parts of a postgres.js query this file reaches into (its type file does not export them).
+type PendingQuery = {
+  handle: () => Promise<void>;
+  executed: boolean;
+  cursorFn?: unknown;
+  onlyDescribe?: boolean;
+  isRaw?: unknown;
+  forEachFn?: (row: unknown) => void;
+  resolve: (x: unknown) => void;
+  reject: (x: unknown) => void;
+  values: () => unknown;
+  raw: () => unknown;
+  forEach: (fn: (row: unknown) => void) => unknown;
+};
 declare global {
   var cornerstoneWhoIsAsking: Resolver | undefined;
 }
@@ -135,16 +149,30 @@ export const sql: Sql = new Proxy(rawSql, {
     // a helper (`sql("column")`), not a query
     if (!Array.isArray(strings?.raw)) return Reflect.apply(target, _this, args);
     // Built on the pool so it is still a postgres.js query, which is what lets it sit inside another query as a
-    // fragment; only when it is awaited does it run on a connection that carries the identity.
-    const query = Reflect.apply(target, _this, args) as PromiseLike<unknown>;
+    // fragment. `handle` is the one door postgres.js runs a query through (then, catch, finally, execute and forEach all
+    // call it), so it is replaced here: the query runs once, on a connection that carries the identity.
+    const query = Reflect.apply(target, _this, args) as PendingQuery;
     // Asked now, in the context that built the query, not when it is awaited: that is the context that knows the person.
     const asked = identity();
-    (query as { then: unknown }).then = (ok: never, fail: never) =>
-      asked
-        .then((staff) =>
-          staff ? asking(staff, (tx) => (tx as unknown as (...a: unknown[]) => Promise<unknown>)(...args)) : rawSql(...(args as [TemplateStringsArray])),
-        )
-        .then(ok, fail);
+    const plain = query.handle;
+    query.handle = async function (this: PendingQuery) {
+      if (this.executed) return;
+      this.executed = true; // before the first await: catch() and then() each call handle(), and the query must run once
+      const staff = await asked;
+      if (!staff) {
+        this.executed = false;
+        return plain.call(this); // nobody asking: the plain pool, as before
+      }
+      if (this.cursorFn || this.onlyDescribe) return this.reject(new Error("cursor() and describe() are not available on a query that carries an identity"));
+      const done = asking(staff, (tx) => {
+        const q = (tx as unknown as (...a: unknown[]) => PendingQuery)(...args);
+        if (this.isRaw === "values") q.values();
+        else if (this.isRaw) q.raw();
+        if (this.forEachFn) q.forEach(this.forEachFn);
+        return q as unknown as Promise<unknown>;
+      });
+      done.then(this.resolve, this.reject);
+    };
     return query;
   },
 });

@@ -1,21 +1,27 @@
-FAIL - CP-2 independent verification, 2026-11-08, branch cp-2-build against origin/main
+FAIL - CP-2 independent verification, second pass, 2026-11-08, branch cp-2-build against origin/main
 
-Verdict of the athena-verifier (a separate read-only agent; the builder copied its report here, it did not edit the verdict).
+Verdict of the athena-verifier (separate read-only agent); the builder copied it here and added the last section.
 `athena done CP-2`: proofs 1, 2, 3 and 5 pass; proofs 4 and 6 are box-only and were not run.
 
-1. Decision recorded then amended with the real-connection result: NOT MET. ADR 0100 says "On the real pooler: NOT YET RUN".
+1. Decision recorded then amended with the real-pooler result: NOT MET, waiting on the box (ADR 0100 says "NOT YET RUN").
 2. public.current_staff(): MET.
-3. Identity from the verified cookie, set in one place: MET.
-4. Real shared connection, A/B/nobody x200, concurrent, after error and timeout: NOT MET (not run on the real pooler).
-   The verifier also found the test did not force one connection or fail when none was shared.
-5. Existing browser and speed suites: UNCLEAR until CI's browser job is green (a signed-in query is now 4 round trips).
-6. No rule switched on: UNCLEAR (box-only); the diff adds no policy.
-Unasked work: none. Missing: the rawSql allow-list test, a uuid shape test, a max:1 shared-backend assertion.
+3. Identity set in one place, only from the verified cookie: MET (rawSql allow-list test now exists).
+4. Real shared connection (one connection, x200, concurrent, after error, after timeout): NOT MET, waiting on the box. The
+   harness now forces one connection, fails unless A, B and nobody were served by one backend, and reads the setting directly
+   so it can run on the live pooler before the migration is deployed.
+5. Existing browser and speed suites: UNCLEAR until CI's browser job is green (signed-in queries are now 4 round trips).
+6. No rule switched on: MET from the code; live check waits on the box and the deployed migration.
+Unasked work: DB_POOL_MAX override, bin/check-pooler wrapper, uuid-shape test (all minor, all serve item 4).
+Wrapper: safe (reads DATABASE_URL from .env, never prints it; read-only).
+Risk named: check requires one backend for the whole run; Supavisor transaction mode may not promise that, so if the box run
+fails on that line, read the backend ids before calling it a leak.
+Risk named: the sql proxy ran a query twice when awaited through .catch/.finally/.execute (two inserts for a write).
 
-Builder's follow-up after this verdict (not re-verified): added the rawSql allow-list test and a uuid-shape test
-(packages/engine/tests/test_web_identity.py); check-pooler.ts now runs at one connection (DB_POOL_MAX=1) and fails unless A,
-B and nobody were served by the same backend (passes on a direct local Postgres, one shared backend).
+Builder's follow-up after this verdict (not re-verified): the double execution was real (reproduced: 8 rows where 5 expected).
+Fixed at the cause in apps/web/lib/db.ts (replaces postgres.js's single `handle` door, marks the query executed before the
+first await, keeps .values()/.raw()/.forEach, refuses cursor()/describe()). New check apps/web/scripts/check-identity-once.ts
+(each query runs once; needs TEST_DATABASE_URL) is run by packages/engine/tests/test_web_identity.py where the website's
+packages exist. Passes locally on a throwaway Postgres.
 
-STILL OPEN, cannot be closed from the sandbox: run `CHECK_POOLER_URL=... node scripts/check-pooler.ts` on the box against
-Supabase's pooler and amend ADR 0100 with the result (items 1, 4); box proof 6 after deploy; CI browser/speed jobs green (item 5).
-Do not merge until those are done; this file must be re-run by the verifier after them.
+STILL OPEN, cannot be closed from the sandbox: run bin/check-pooler on the box (docs/notes/CP-2.md has the lines), amend
+ADR 0100 with the result, deploy the migration for proof 6, CI browser/speed green, then re-run the verifier.
