@@ -7,7 +7,7 @@ Branch `cp-3-build`, stacked on `cp-2-build` (PR #476). Must not merge before it
 - `packages/engine/tests/test_roles.py`, `test_people.py`, `test_voice_tables.py`, `test_layout.py`, `test_rules.py`
   pass on a `bin/testdb fresh` database.
 - Item 7: `apps/web/tests/global-setup.ts` now gives the suite's user a staff row, a `pii.staff` row and a current
-  coordinator grant; no other browser/speed file changed. The browser job in CI is the gate.
+  deputy_coordinator grant; no other browser/speed file changed. The browser job in CI is the gate.
 - Item 8 (LIVE, box only): `specs/CP-3/proofs/live_rules.py`. Fails until the site connects as `app_web`.
 
 ## Handoff

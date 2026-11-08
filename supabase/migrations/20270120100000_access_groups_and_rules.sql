@@ -293,7 +293,7 @@ end $$;
 -- is the next step). It returns one grade, never a child, a name or a count; it is read as the owner, so the rule is
 -- not worked out per call. Its body is unchanged.
 create or replace function public.class_band(tenant uuid, section text) returns text
-language sql stable security definer set search_path = public as $$
+language sql stable security definer set search_path = public, pg_temp as $$
   select c.band from child c
   join grade g on g.tenant_id = c.tenant_id and g.code = c.band
   where c.tenant_id = $1 and c.section = $2 and c.active
@@ -306,7 +306,7 @@ $$;
 -- for the child's class and answers yes or no from the role and classes it is given. The papers lists ask it once per
 -- copy (one statement did so some 4,000 times, 22 s), and each call would work out the row rule on `child` again. It
 -- reads as the owner, as `class_band` does. `staff_sees_capture` reaches `child` only through it.
-alter function public.staff_sees_sheet(text, text[], text[], uuid, uuid) security definer;
+alter function public.staff_sees_sheet(text, text[], text[], uuid, uuid) security definer set search_path = public, pg_temp;
 
 -- 3c. A fact about the whole school, never a child --------------------------------------------------------------------
 -- "Is every active class of this grade among these sections?" The levels page shows a grade's figures to an educator

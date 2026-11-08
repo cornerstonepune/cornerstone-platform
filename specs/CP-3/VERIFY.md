@@ -1,45 +1,25 @@
-PASS. Items 1 to 7 pass. For item 8, the database half is met by the migration. The other half (the live site connecting as `app_web`) is a deployment step that is still to come and is not proven. Nothing of substance was built outside the scope. Some extra tests that design.md promised are not in the diff.
+PASS. Items 1 to 7 are met. Item 8 holds when I read it against the migration, but it can only actually pass on the box after Nimish switches the site to the restricted login.
 
-I re-ran `python3 .claude/athena/bin/athena done CP-3` in this session. Result: "CP-3: PASS". Items 1 to 7 passed; item 8 is box-only and was not run. This matches /tmp/cp3-done.txt.
+**Criteria**
+- **Items 1 to 6: MET.** `athena done CP-3` (/tmp/cp3-done2.txt) passes all of them. The rows are in supabase/migrations/20270120100000_access_groups_and_rules.sql at 13-72 and 96-151. The rules are built at 344-401: lines 372-378 make `web_rule` for app_web only, and lines 362-365 drop every other policy except `service_role_all`.
+- **Item 7: MET.** The locked proof test_browser_suite.py passes. Under apps/web/tests the only existing file changed is `global-setup.ts`; `access-fixture.sql` is new. The browser half rests on your local run (3 shards on a fresh database as app_web, 194 passed each). CI's browser job on this head still has to go green before merge, because it is the real gate for this item.
+- **Item 8: met by reading, box only.** Every listed table gets `web_rule`, which is limited to app_web with a condition that is never "true". `engine_all` goes to app_engine and `service_role_all` to service_role. live_rules.py skips both of those, so 0 rules allow everyone. The helpers are security definer and owned by the migration owner. The "site connects as app_web" part fails until Nimish sets the password and the connection setting. The scope puts that outside this change, and docs/notes/CP-3.md:13-15 says the same.
 
-**1. Criteria**
-1. **MET.** Proof: `test_1_*` (4 tests) pass. The groups are stored as rows in `access_group`, `access_role_group` and `access_reach` (migration lines 13–59). The access rules call `my_reach()` and `my_ids()`, which read those rows at query time. The proofs show that one update or insert changes what a person sees.
-2. **MET.** Proof: `test_2_every_role_belongs_to_exactly_one_group` passes. The primary key `(tenant_id, role_code)` stops a role being in two groups. The seeds place all 13 roles, including `special_educator` in `everything`, which is a choice Nimish has not made.
-3. **MET.** Proofs: `test_3_*` pass. An educator of X sees 0 rows of class Y. A grant that starts tomorrow, one that ended today, and no grant all give nothing.
-4. **MET.** Proofs: `test_4_*` pass. No identity, an empty identity, an unknown id, an entry with no matching staff row and a deactivated person all see 0 rows on the 8 tables.
-5. **MET.** Proof: `test_5_everything_group_sees_every_row` passes.
-6. **MET.** Proof: `test_6_staff_details_only_for_everything_and_self` passes. In the migration, staff-type tables use `key_column = signed_in_staff()`, so "own" means the person's own row.
-7. **MET** as far as the repo can show. Proof: `test_browser_suite.py` (2 tests) passes. The only test file changed under apps/web/tests is `global-setup.ts` (17 lines), which gives the test user a staff row, a `pii.staff` row and a current coordinator grant. The real gate is the CI browser job, which runs the site as `app_web`.
-8. **Database half MET; connection half not proven.** I read `specs/CP-3/proofs/live_rules.py` against the migration:
-   - After the migration, `apply_conventions()` drops every policy except `service_role_all` on each of the 8 listed tables. It then creates `engine_all`, which applies to `app_engine` only, and `web_rule`, which applies to `app_web` with a real condition. That condition is not empty or true, so the live check counts 0 rules that allow everyone.
-   - The 8 tables in `access_table` match the proof's list exactly.
-   - All 5 helper functions exist. They are owned by the migration runner (Supabase `postgres`, which has bypassrls), so the owner check should pass.
-   - The connection half will fail until Nimish sets the `app_web` password and points the site at it. Nothing in this diff can do that: the spec's Out-of-scope section excludes setting the password. `docs/notes/CP-3.md` says this. Item 8 only counts as done once `ATHENA_ON_BOX=1 athena done` passes on the box after that switch.
+**Unasked work**
+None of substance. Each addition is needed:
+- **Needed for the reworded item 7:** `access-fixture.sql`, the `global-setup.ts` grant, and the uploader clause in `my_ids` (migration:257-260). The "papers he has uploaded" line is now in the scope.
+- **Speed fixes:** `staff.signin_id` (160-197), `class_band` as security definer (295-303) and `staff_sees_sheet` as security definer (309).
+- **Correctness under the new rule:** `grade_is_wholly` (316-321) plus the levels query in queries-calibration.ts:37, which would otherwise wrongly report a grade as wholly an educator's.
+- **Required plumbing:** the data_register.json entry, the rules.json snapshot, and the changes to test_roles.py and test_people.py (22 becomes 0 enrolments for app_web with no identity, which follows directly from the rule).
 
-**2. Unasked work** (all small, none of substance)
-- The redefined `apply_conventions()` adds `set search_path = public`. It was not asked for; it is harmless hardening. The rest of the function body matches 20261021090000 apart from the new branch.
-- The `signed_in` group is seeded with reach `none` on all four kinds. Nothing uses it in CP-3. The scope names the group, so this is acceptable.
-- These follow from the scope, the design or repo rules and are not creep: `docs/adr/0101-access-by-rows.md`, `docs/notes/CP-3.md`, the regenerated `rules.json`, the `test_roles.py` changes (`WEB_CALLS` and the new policy-set check), and `test_people.py` (expected enrolment count changed from 22 to 0 for the website login with no identity). The scope-creep tool marked some of these as likely creep, but its only reason was "no keyword overlap".
+**Missing**
+- Nothing promised is left out.
+- Small text slip: the comment in global-setup.ts and docs/notes/CP-3.md:9 say "coordinator grant", but the code grants `deputy_coordinator`. Both are in the everything group. (Fixed after this review.)
 
-**3. Missing (promised in design.md; there is no plan.md)**
-- `packages/engine/tests/test_access_rules.py` (design.md line 191) was not created. The behaviour is covered only by the spec's own proofs in `specs/CP-3/proofs/`.
-- Tests design.md promised that I could not find in the diff or in the proofs:
-  - a check that every table in `access_table` has a `tenant_id` column;
-  - a count of helper calls per statement;
-  - a check that each helper's owner is superuser or bypasses row security, run in CI (only the live check has it);
-  - a check that a missing reach row means "none";
-  - a second-tenant case.
+**Risks**
+- **Search paths.** The new definer functions pin `public, pg_temp`. `class_band` (295-297) and `staff_sees_sheet` (pinned earlier in 20270110090000:42) use `public` only, without `pg_temp` last. A caller who can make temporary tables could shadow `child`, `capture` or `sheet_instance`, but only to change their own yes/no or grade answer. That is low risk, but adding `pg_temp` is the textbook fix. (Done after this review: both now pin `public, pg_temp`.)
+- **Execute grants.** Default privileges (20261019090000:31) take execute away from public. app_web was already granted `class_band` and `staff_sees_sheet`, and the migration grants `grade_is_wholly`, `my_*`, `signed_in_staff` and `my_tenant` to app_web and app_engine only; `resolve_staff` gets no grant. The new `internal.*` definers carry no grants.
+- **Can app_web learn more than before?** `staff_sees_sheet` accepts the role and classes as arguments, so a direct app_web caller could ask "is this sheet's child in section S?" for a child outside its reach. ADR 0101 already accepts that whoever holds the app_web login can claim any identity, so this adds nothing new. The website passes the session's own values. `grade_is_wholly` and `class_band` return one yes/no or one grade, and class and section information is already readable (`school_class` and `sheet_instance` stay open until CP-4).
+- **Uploader clause.** It is limited to the person's school and to readings that have not been replaced. It covers the children kind only, not enrolment or notes, which matches "see a child".
 
-  Execute grants may be covered by the existing `WEB_CALLS` test in `test_roles.py`; I did not confirm that.
-- The switch-on report was promised as "read-only SQL in the notes". The notes describe it in prose only and contain no SQL.
-
-**4. Risks**
-- Permissions and row security: this whole change is about them. Two limits are documented: anyone holding the `app_web` password can claim any identity, and `pii.read_child` is unchanged (a child's id seen through another table still leads to a name, left for CP-4).
-- Turning on `app_web` before the switch-on gate is clean would leave educators who have no class grant seeing nothing. The notes say only K2-A is ready today.
-- There are no secrets and no real data. The CI password `ci-web` already existed in `ci.yml`. `global-setup.ts` writes only to the test copy (its existing guard is at line 19). No data is deleted; the migration only adds tables and replaces functions and policies.
-
-**5. Requirements:** not given, so not answered.
-
-VERDICT: PASS
-
-I did not check how fast the policies run (the speed suite runs only in CI's browser job), or whether a policy written for `app_web` also applies to logins that are members of it. The risk to know: item 8's live proof will fail on the box until Nimish switches the site to `app_web`, so CP-3 is not done in production.
+Not checked: CI's run on this head (I could not see it), and the design.md details beyond the scope.

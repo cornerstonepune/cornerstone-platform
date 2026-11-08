@@ -21,7 +21,7 @@ export default async function globalSetup(): Promise<void> {
     update config set value = value || ${sql.json([TEST_STAFF])}
     where key = 'app.staff' and not value @> ${sql.json([{ email: TEST_STAFF.email }])}`;
   // The database's access rules (CP-3) show a person only what their role's group allows, and the site runs as app_web
-  // in CI. So the test user is a member of staff with a current coordinator grant (the group that sees everything).
+  // in CI. So the test user is a member of staff with a current deputy_coordinator grant (the group that sees everything, and not a preview or review role).
   const [{ id: school }] = await sql<{ id: string }[]>`select id from tenant order by created_at limit 1`;
   const [{ id: campus }] = await sql<{ id: string }[]>`select id from campus where tenant_id = ${school} limit 1`;
   const [had] = await sql<{ staff_id: string }[]>`select staff_id from pii.staff where email = ${TEST_STAFF.email}`;
