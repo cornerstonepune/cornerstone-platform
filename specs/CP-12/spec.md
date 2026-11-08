@@ -2,7 +2,7 @@
 
 Source: https://github.com/cornerstonepune/cornerstone-platform/issues/460 (DRAFT for Nimish. Not locked.)
 
-Waits for CP-21 (a draft goes live; split agreed by Nimish, 8 Nov), and through it CP-11 (the generator), CP-6 (the fortnight cycle) and CP-4 (the access table list). Plan: docs/backend-plan.md. Roadmap task M1-14. Tier 3 (data change). Design: specs/CP-12/design.md.
+Waits for CP-21 (a draft goes live, issue #496; split agreed by Nimish, 8 Nov), and through it CP-11 (the generator), CP-6 (the fortnight cycle) and CP-4 (the access table list). Plan: docs/backend-plan.md. Roadmap task M1-14. Tier 3 (data change). Design: specs/CP-12/design.md.
 
 ## What
 

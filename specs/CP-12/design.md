@@ -56,12 +56,12 @@ build follows that scope and this file is corrected before the proofs are writte
   no code calls it yet; live has 0 rules entered. CP-11 makes a **draft only**, for one class and one fortnight, kept by date
   in `timetable_run.draft` (append-only), and writes nothing to `timetable_slot`, `session` or `plan_entry`. It records no
   teachers and no rooms. Putting a draft live is out of CP-11 (its decision 1).
-- **CP-21 (a draft goes live; split out by Nimish on 8 Nov: "yes to all, split it").** CP-12 moves lessons in a live
-  fortnight, so it waits for CP-21. CP-21 writes a live fortnight as one grid row per date and period (`valid_from` =
-  `valid_to` = the date), adds the exclusion constraint that forbids two rows for one place on one date, makes every reader
-  of the grid (including `tt_rules.py`) pick rows by date, and has one function that gives a fortnight its own dated rows
-  from the standing frame. It also refuses to put a draft live over a fortnight whose rows changed since it last went live
-  (which covers hand moves) unless the person discards them knowingly, recorded with who.
+- **CP-21 (a draft goes live, issue #496, PR #495; split out by Nimish on 8 Nov: "yes to all, split it").** CP-12 moves
+  lessons in a live fortnight, so it waits for CP-21. A live fortnight is a layer of dated grid rows (`fortnight_id` set,
+  `valid_from = valid_to = the date`, one per date and period) on top of the standing frame, which is never edited; the
+  educator's day prefers the layer. CP-21 provides `timetable_fortnight_layer(class, fortnight, source)`, a lock on
+  (tenant, class), and a snapshot guard that refuses to put a new draft live over a fortnight whose layer or sessions
+  changed since it went live (which covers hand moves) unless the person discards them knowingly, recorded with who.
 - **CP-6 (the fortnight cycle, issue #454; relocked at fortnight level on 8 Nov, so the backend plan's "month" wording is
   stale).** Assumed names, from CP-6's design on its own branch:
   1. the freeze unit is the fortnight; states planning, frozen, aligned, approved, list sent;
@@ -76,7 +76,7 @@ build follows that scope and this file is corrected before the proofs are writte
 ## Mechanical decisions (recorded, with reasons)
 1. **A lesson is one dated cell; a move swaps what two cells hold.**
    - **Dated rows first.** If the fortnight does not yet have its own dated rows (it was never put live by CP-21), the first
-     move calls CP-21's function to give it them, once, under the same lock. A 15-day fortnight (FN10, 23 Nov to 7 Dec)
+     move calls `timetable_fortnight_layer` with the frame as source, once, under CP-21's lock on (tenant, class). A 15-day fortnight (FN10, 23 Nov to 7 Dec)
      needs no special case: every date has its own rows.
    - **A move is a swap of contents.** Every cell (`empty` included) has a row. `timetable_move(p_slot, p_to_slot, p_by uuid,
      p_reason)` exchanges `kind`, `subject_code` and `text` between the two rows in one `update`. The cells (date, period)
@@ -96,12 +96,12 @@ build follows that scope and this file is corrected before the proofs are writte
    not null references staff, at timestamptz default clock_timestamp())`, with `internal.forbid_change()` as a statement
    trigger. No name stored. An undo is a move back, also kept.
 3. **Clashes are worked out, not stored.** View `timetable_clash (tenant_id, fortnight_id, fortnight_number, week_code, kind,
-   clash_key, places, staff_id, rule_id, detail, accepted)`, over each fortnight's grid rows. Kinds:
+   clash_key, places, staff_id, rule_id, detail, accepted)`, over each fortnight's layer rows (a fortnight with no layer has had no hand move and is read from the frame). Kinds:
    - `blocked`: a lesson on a `timetable_block` of its class (a date in the fortnight, or a weekday with optional week; all
      periods or that period);
    - `over_limit` / `under_limit`: a subject's count for a class in week A, week B or the whole fortnight above `most` or below
      `fewest`; driven from `timetable_limit`, so a subject with no lessons at all still shows as `under_limit` (no places).
-   Not kinds now: "the same class twice" (CP-21's exclusion constraint makes it impossible); "the same adult twice" (a later
+   Not kinds now: "the same class twice" (CP-21's unique index on layer rows makes it impossible); "the same adult twice" (a later
    add-on for grades 1 to 4, see "Room for ... later"); rooms (dropped). A fortnight with no
    `number` is shown by its dates. Reason: a derived list cannot go stale after a move, an undo or a rule edit.
 4. **An acceptance covers exactly one clash, by what it is, not by row ids.** `clash_key` = a hash of: kind, fortnight id, the
@@ -110,8 +110,8 @@ build follows that scope and this file is corrected before the proofs are writte
    clash is open again. Table `timetable_clash_accept (id, tenant_id, fortnight_id, clash_key, kind, reason not blank, who uuid
    not null references staff, at)`, append-only, no class column (a clash can span classes). Function
    `timetable_clash_accept(p_key, p_by, p_reason)` refuses a key that is not a current clash.
-5. **One lock per fortnight.** Move, copy, accept, and the approval check each take
-   `pg_advisory_xact_lock` on (tenant, fortnight) first, so a move cannot slip in between an approval's count and its commit,
+5. **One lock per class, shared with CP-21.** Move, the layer copy, accept and the approval check each take
+   `pg_advisory_xact_lock` on (tenant, class) first, so a move cannot slip in between an approval's count and its commit,
    and two moves cannot copy the same grid twice.
 6. **Approval waits for clashes, as a setting.** Seed row `timetable.open_clash_blocks_approval` = `true` in
    `supabase/seed/config.json`, read with `settings.config`. When true, CP-6's step into `approved` is refused while the
@@ -158,7 +158,7 @@ gains the adult. Rooms stay out.
 - **Refuse any move that makes a clash.** Rejected: the roadmap says a clash can be accepted by a person.
 - **Move rows between places (change period and weekday).** Rejected after review: breaks the non-deferrable unique keys
   part-way through a swap and changes row ids, which an acceptance would have depended on.
-- **Split rows on every move.** Rejected after review: multiplies rows and reopens accepted clashes in later fortnights.
+- **Split rows on every move.** Rejected after review: multiplies rows and reopens accepted clashes; CP-21's layer replaces it.
 - **Move the dated lesson (`session`) only.** Rejected: the educator's day, the generator and CP-6's freeze all read the grid.
 
 ## Risks not verified
