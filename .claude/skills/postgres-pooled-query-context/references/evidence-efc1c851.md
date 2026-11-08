@@ -1,3 +1,0 @@
-Risk named: the sql proxy ran a query twice when awaited through .catch/.finally/.execute (two inserts for a write).
-Builder's follow-up after this verdict (not re-verified): the double execution was real (reproduced: 8 rows where 5 expected). Fixed at the cause in apps/web/lib/db.ts (replaces postgres.js's single `handle` door, marks the query executed before the first await, keeps .values()/.raw()/.forEach, refuses cursor()/describe()).
-Chosen: (a) identity and query in one transaction, variant A1. For a signed-in person, each query reserves one connection and runs, one awaited step at a time: `begin`, `select set_config('app.staff_id', <id>, true)` (transaction-local), the query, `commit` (`rollback` on error), then releases the connection.
