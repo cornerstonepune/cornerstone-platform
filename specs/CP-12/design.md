@@ -1,13 +1,13 @@
 # CP-12 design: the timetable by hand
 
-Status: reviewed by three fresh reviewers (simplicity, design, codebase accuracy); every blocker and major finding is applied
+Status: reviewed by three fresh reviewers, then updated on 8 Nov to CP-11's draft scope (PR #486) and split (see "Split") (simplicity, design, codebase accuracy); every blocker and major finding is applied
 below (see `specs/CP-12/design-review/summary.md`). Written unattended (no author gates), so mechanical choices are mine,
 recorded with reasons; the ones that are Nimish's are under "Decisions for Nimish". Read with `specs/CP-12/spec.md`.
 
 ## Problem
 After the generator (CP-11) places a fortnight's lessons, the school will want to move some by hand: swap two lessons, put a
 specialist's lesson on another day. Today nothing supports that. No record says who moved a lesson, and nothing notices when a
-move breaks a rule: the same adult in two classes at once, a lesson on a blocked day or period, a subject above its most or
+move breaks a rule: a lesson on a blocked day or period, a subject above its most or
 below its fewest. A broken rule may be acceptable (the school knows something the rules do not), but only when a person has
 said so, by name and with a reason.
 
@@ -23,9 +23,9 @@ for a class, set a subject's fewest and most per week or fortnight, and pin or r
 lesson in that place). Each of those changes is kept with who and what it was before (`timetable_rule_edit`). A period time
 that overlaps its neighbour is refused. FET is installed (#413).
 Not done: moving or swapping a lesson inside a generated fortnight; a record of such moves; finding clashes between lessons
-(same adult twice, a lesson on a blocked day, a subject outside its limits) in the timetable as it stands; accepting a clash;
-stopping approval while a clash is open; protecting hand moves from being wiped by a new generation run. CP-11 adds the
-generated timetable; CP-12 adds all of the "not done" list on top of it. No screen in either: the calendar and drag to move
+(a lesson on a blocked day, a subject outside its limits) in the timetable as it stands; accepting a clash;
+stopping approval while a clash is open. CP-11 makes a draft; CP-21 (proposed) puts it live; CP-12 adds the rest
+on top of the live timetable. No screen in either: the calendar and drag to move
 wait for the frontend.
 
 ## What exists today (main at 1d80380, 8 Nov 2026)
@@ -52,14 +52,14 @@ wait for the frontend.
 ## Dependencies (named, with assumptions)
 None of CP-4, CP-6 or CP-11 is on main yet. Each is used through stated assumptions; if a locked scope's words differ, the
 build follows that scope and this file is corrected before the proofs are written.
-- **CP-11 (the generator; its scope branch did not exist when this was written).**
-  1. It writes a generated fortnight into `timetable_slot`. If it writes rows valid only inside that fortnight, the one-time
-     copy in decision 1 never runs.
-  2. It records which adult leads each grid lesson (FET needs teachers to avoid a specialist's double booking). If it does not,
-     CP-12 adds a nullable `timetable_slot.lead_staff_id` that nothing fills, and then the "same adult" check finds nothing on
-     live: lessons with no adult are counted and printed as "not checked for same adult", and the LIVE proof prints that count.
-     Done-when 4's "same adult" part is then met in tests only, and the PR says so.
-  3. It has one command that (re)generates a fortnight and records when it did (decision 7 needs that time).
+- **CP-11 (the generator, issue #459, PR #486). Facts from its draft scope, no longer assumptions:** FET is installed but
+  no code calls it yet; live has 0 rules entered. CP-11 makes a **draft only**, for one class and one fortnight, kept by date
+  in `timetable_run.draft` (append-only), and writes nothing to `timetable_slot`, `session` or `plan_entry`. It records no
+  teachers and no rooms. Putting a draft live is out of CP-11 (its decision 1).
+- **CP-21 (putting a draft live; proposed, not yet scoped; see "Split" below).** CP-12 moves lessons in a fortnight that is
+  live, so it waits for CP-21. If CP-21 writes a fortnight as rows valid only inside it, the one-time copy in decision 1
+  never runs. Refusing to put a new draft live over a fortnight that has hand moves (unless they are knowingly discarded, and
+  recorded) is CP-21's job, because CP-21 owns overwriting the live timetable.
 - **CP-6 (the fortnight cycle, issue #454; relocked at fortnight level on 8 Nov, so the backend plan's "month" wording is
   stale).** Assumed names, from CP-6's design on its own branch:
   1. the freeze unit is the fortnight; states planning, frozen, aligned, approved, list sent;
@@ -82,13 +82,18 @@ build follows that scope and this file is corrected before the proofs are writte
      `[valid_from, valid_to]`, `btree_gist`) makes two rows valid for the same place on the same day impossible. The build
      checks that live data already obeys it before adding it.
    - **A move is a swap of contents.** Every place in the copied grid has a row (`empty` included). `timetable_move(p_slot,
-     p_to_slot, p_by uuid, p_reason)` exchanges `kind`, `subject_code`, `text` and the lead adult between the two rows in one
+     p_to_slot, p_by uuid, p_reason)` exchanges `kind`, `subject_code` and `text` between the two rows in one
      `update`. The places (period, week, weekday, dates) never change, so neither unique key is touched part-way and row ids
      stay put. Moving into an empty place is a swap with that empty row.
-   - **The dated lessons follow.** For the one date each place has in the fortnight, the two `session` rows exchange
+   - **A place can have two dates.** Week A/B comes from the date (`k2_day.py`), and a fortnight can run 15 days (FN10: 23 Nov
+     to 7 Dec, so 7 Dec is a sixth week-B day and week B's Monday falls twice). A move acts on the place, so it moves the
+     lesson on every date that place has in the fortnight; the move row lists the dates.
+   - **The dated lessons follow.** For each date each place has in the fortnight, the two `session` rows exchange
      `subject_code`, `plan_entry_id`, `text` and `led_by_staff_id` in one `update`. If only one place has a session, that
      session's `school_day_id`/`period_id` change to the other place (that place is free, so no key clash). State stays
      `planned`: the lesson is rescheduled in the plan, not recorded on the day; `moved` keeps its existing meaning.
+     Session rows are updated in place, never deleted and re-inserted: `materials_line_session.session_id` is `on delete
+     cascade`, so a delete would silently drop the materials lines linked to that lesson.
    - **Refused, writing nothing, with the reason:** either place `fixed` (slot or period); the two places in different classes
      or different fortnights; a period not of the class's grade; either date already past (`now()` in `Asia/Kolkata`); either
      date a `holiday` or with no `school_day` row; a session at either place not `planned` or with `planned = false`.
@@ -99,21 +104,22 @@ build follows that scope and this file is corrected before the proofs are writte
    trigger. No name stored. An undo is a move back, also kept.
 3. **Clashes are worked out, not stored.** View `timetable_clash (tenant_id, fortnight_id, fortnight_number, week_code, kind,
    clash_key, places, staff_id, rule_id, detail, accepted)`, over each fortnight's grid rows. Kinds:
-   - `same_adult`: one adult leads two lessons whose clock times overlap on the same week and weekday (compared by
-     `starts_at`/`ends_at`, not period id, because grades' periods differ; week A/B is the same for every grade, `k2_day.py`);
    - `blocked`: a lesson on a `timetable_block` of its class (a date in the fortnight, or a weekday with optional week; all
      periods or that period);
    - `over_limit` / `under_limit`: a subject's count for a class in week A, week B or the whole fortnight above `most` or below
      `fewest`; driven from `timetable_limit`, so a subject with no lessons at all still shows as `under_limit` (no places).
-   Not kinds: "the same class twice" (the exclusion constraint makes it impossible); rooms (no data). A fortnight with no
+   Not kinds: "the same class twice" (the exclusion constraint makes it impossible); "the same adult twice" and rooms: no
+   adult or room is recorded on any lesson (CP-11 records no teachers; K2 is one class with one educator), so neither can be
+   checked or proved. They come with the scope that records who teaches a lesson; the clash list is built so a kind can be
+   added as one more `union` branch. A fortnight with no
    `number` is shown by its dates. Reason: a derived list cannot go stale after a move, an undo or a rule edit.
 4. **An acceptance covers exactly one clash, by what it is, not by row ids.** `clash_key` = a hash of: kind, fortnight id, the
-   sorted places (class, week, weekday, period) involved, the adult (for `same_adult`), the rule id with its `fewest`/`most`,
-   and the count (for limits). If a lesson moves, the adult changes, or the limit or count changes, the key changes and the
+   sorted places (class, week, weekday, period) involved, the rule id with its `fewest`/`most`, and the count (for limits).
+   If a lesson moves, or the limit or count changes, the key changes and the
    clash is open again. Table `timetable_clash_accept (id, tenant_id, fortnight_id, clash_key, kind, reason not blank, who uuid
    not null references staff, at)`, append-only, no class column (a clash can span classes). Function
    `timetable_clash_accept(p_key, p_by, p_reason)` refuses a key that is not a current clash.
-5. **One lock per fortnight.** Move, copy, accept, the approval check and the regenerate guard each take
+5. **One lock per fortnight.** Move, copy, accept, and the approval check each take
    `pg_advisory_xact_lock` on (tenant, fortnight) first, so a move cannot slip in between an approval's count and its commit,
    and two moves cannot copy the same grid twice.
 6. **Approval waits for clashes, as a setting.** Seed row `timetable.open_clash_blocks_approval` = `true` in
@@ -122,39 +128,52 @@ build follows that scope and this file is corrected before the proofs are writte
    school, so an approver who sees only some classes cannot miss a cross-class clash. A move in a fortnight already approved (or
    later) is refused if it would leave an unaccepted clash in that fortnight; one that leaves none is allowed (with CP-6's
    reason).
-7. **Regenerating keeps no surprises.** CP-11's generate command, for a fortnight with moves made after its last generation,
-   refuses and prints the number, unless given `--discard-moves`; a discard writes one `fortnight_edit` row (who, reason
-   "regenerated, N hand moves discarded"). The `timetable_move` rows stay (history is append-only); the next run counts only
-   moves after the new generation time, so it is not refused again.
+7. **Hand moves are not wiped by a new draft.** Moved to CP-21 (it owns putting a draft live over the timetable). CP-12 gives
+   it what it needs: `timetable_move` rows per fortnight with `at`, so CP-21 can count moves made since the fortnight last
+   went live.
 8. **Who.** Every write takes the person as a staff id resolved from their email through the existing `voice_intake.staff_of`.
    CLI: `engine timetable move`, `engine timetable accept` take a required `--by EMAIL` (as `cli_map.py`);
    `engine timetable clashes --fortnight N` prints one group per fortnight headed `FN<n>` (or its dates), each clash on one
-   line with kind, week and detail, adults as staff ids, never a name. The commands go in `cli_timetable.py` and on N4's
+   line with kind, week and detail, never a name. The commands go in `cli_timetable.py` and on N4's
    `commands` in `workflows.json`; any new engine file also goes on N4's `files`. No API route (no screen in scope).
 9. **The rules screen stays right after a copy.** `tt_rules.py`'s fixed-slot pin and release change every row of that place
    valid from today on, including a fortnight's own rows, not only the `valid_to is null` row; one test proves a pin after a
    move leaves one lesson in that period.
 10. **No live writes from a session.** The LIVE proof is `check_box`, read-only, counts per fortnight only.
 
+## Split: CP-12 is two scopes, not one (proposed 8 Nov, after CP-11 moved "putting a draft live" out)
+CP-11's reviewers found every risk in putting a draft live: FN10 is 15 days and does not fit the week A/B grid; the grid
+refuses a second version of a fortnight (unique key on `valid_from`); replacing `session` rows would cascade-delete their
+materials lines; and it changes what educators see under CP-6's freeze. Those are a different job from moving one lesson, with
+their own proofs. Stretching CP-12 to hold both would double its Done-when list and put two tier-3 data changes in one
+migration. Proposal:
+- **CP-21: a draft goes live** (new row in `docs/backend-plan.md`, a change Nimish approves). Waits for CP-11, CP-6, CP-4.
+  Puts one CP-11 draft live for one class and one fortnight, by date (so a 15-day fortnight loses no day); updates sessions
+  in place so plan lines and materials lines stay linked; refuses under CP-6's freeze without a reason; refuses to overwrite
+  hand moves unless they are knowingly discarded, with who recorded; can be undone as a whole.
+- **CP-12: the timetable by hand** (this file). Waits for CP-21.
+Order: CP-11, then CP-21, then CP-12. I have not drafted CP-21's scope: that waits for Nimish's yes to the split.
+
 ## Decisions for Nimish (only what changes what the school sees, or safety)
+0. **The split above** (CP-21 puts a draft live; CP-12 moves lessons by hand). Recommendation: yes.
 1. **Does a hand move change only that fortnight, or every fortnight after it?** Recommendation: only that fortnight. The
    fortnight is the planning unit, and a lasting change belongs in the rules (a fixed slot, a block) so the generator keeps it.
-2. **Who may accept a clash?** Safety: an accepted "same adult" clash means a class may be left without its adult.
-   Recommendation: only the coordinator group ("everything" in CP-3), not the educator who made the move. Moving stays open to
-   anyone who may change the timetable. Until he decides, the proofs use this default.
-3. **Rooms.** The roadmap's clash list names rooms; the school has no room records. Recommendation: leave rooms out and add
-   them only if a room is really shared (for example a music room).
+2. **Who may accept a clash?** Accepting means the school knowingly breaks its own rule (a lesson on a blocked day, a
+   subject over its limit). Recommendation: only the coordinator group ("everything" in CP-3), not the educator who made the
+   move. Moving stays open to anyone who may change the timetable. Until he decides, the proofs use this default.
+Not asked (no data to decide on): "the same adult twice" and rooms. No lesson records its teacher or room, so both wait for
+the scope that records who teaches what.
 
 ## Implementation list (files)
 - `supabase/migrations/<next, after CP-4 and CP-6>_a_lesson_moved_by_hand_is_kept.sql`: `btree_gist`, the exclusion
   constraint, `timetable_move`, `timetable_clash_accept`, the view, the functions (`revoke ... from public`, grants as CP-4
-  sets), `access_table` rows, `lead_staff_id` only if CP-11 does not add one, `select internal.apply_conventions();`.
-- `supabase/seed/config.json`: the setting. CP-6's step function: the clash check. CP-11's generate command: the guard.
+  sets), `access_table` rows, `select internal.apply_conventions();`.
+- `supabase/seed/config.json`: the setting. CP-6's step function: the clash check.
 - `packages/engine/engine/w2_print/cli_timetable.py`: three commands. `packages/engine/engine/w2_print/tt_rules.py`:
   date-aware fixed-slot edits. `workflows.json`: N4.
 - Tests: `test_timetable_move.py` (copy once, swap, move into empty, sessions follow, every refusal, history append-only, frozen
-  with and without reason, lock); `test_timetable_clash.py` (one per kind, cross-grade overlap, accept, reopen after a second
-  move, after an adult change and after a limit change, approval refused and allowed, approved-fortnight move, regenerate guard).
+  with and without reason, lock); `test_timetable_clash.py` (one per kind, accept, reopen after a second
+  move, after a limit change, approval refused and allowed, approved-fortnight move).
 - `engine/checks/rules.json` regenerated. `docs/notes/CP-12.md`: the branch note. Not touched: `apps/web`, `STATE.md`,
   `HANDOFF.md`.
 
