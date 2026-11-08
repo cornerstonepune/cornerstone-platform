@@ -8,15 +8,13 @@ Under 50 lines. Rewritten at the end of every session. Orchestrator #2 starts fr
   live list). It lands when Nimish deploys. Re-check the advisor after deploy. Orchestrator #2 is subscribed to #472.
 
 ## In flight (one DB scope at a time, in this order)
-1. CP-1 PR #472 (draft, head bc517d9, VERIFY.md PASS, its DB proofs PASS in CI). Its ONLY red is CP-20 proof 5, a locked proof that
-   fails on every later PR (a tier 3 PR runs every finished spec; the proof says only setup.sh may change).
-   Fix: session_01KEBF2AH2FeLBZHPpSYBVfT (branch cp-20-proof5-scope; Nimish typed UNLOCK CP-20 there). Its PR needs Nimish's
-   `scope-change` label. Then: merge the fix, `update_pull_request_branch` #472, CI green, un-draft, merge #472.
-2. CP-2 (locked, specs on claude/bold-carson-f72yjv): start its build in a child session the moment #472 merges.
-3. CP-3 #451 and CP-4 #452 (locked, three-group access model): scoping session_01KEBF2A7DQSEjwZyyUgaLRE is writing design,
-   proofs, locks (cost ~$17: keep reviews lighter). Build after CP-2 merges. CP-3 item 8 needs Nimish to set the restricted login's password.
-- CP-6..CP-19: issues #454-#467 are drafts, not locked, no designs yet. Ask Nimish to lock in waves; scope each in a child session.
-- Cloudflare guide: session_01KEBF26KbRoFUTYc423FUv4 (read-only helper for Nimish). Cut over the real domain only after CP-2 merges.
+Merged 8 Nov: CP-20 proof-5 fix #474 (Nimish), CP-1 #472 (squash f5e7446; main run 42476724178 was still running, watch it).
+1. CP-2 build: session_01KEBF29sGFc8njKT9gg3Nsu (started ~11:40 UTC). Merge its draft PR under the merge rule when green + VERIFY PASS.
+2. CP-3 #451 and CP-4 #452 (locked): build after CP-2 merges, one at a time. Scoping session_01KEBF2A7DQSEjwZyyUgaLRE.
+   CP-3 item 8 needs Nimish to set the restricted login's password.
+- Archive CP-1 build session_01KEBF27Mw5y4RasFJXU7g4G: auto-mode classifier DENIED archive_session; Nimish to allow it or archive by hand.
+- CP-6..CP-19 (#454-#467): drafts. Ask Nimish to lock CP-6, CP-8, CP-9 first so scoping can run while CP-2..4 build.
+- Cloudflare guide: session_01KEBF26KbRoFUTYc423FUv4. Cut over the real domain only after CP-2 merges.
 
 ## How to build a scope (recipe that worked)
 Child session via create_session (source = repo, revision claude/bold-carson-f72yjv), prompt `athena-build <ID>`: branch from origin/main,
