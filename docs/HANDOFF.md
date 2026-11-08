@@ -36,8 +36,8 @@ Under 50 lines. Rewritten at the end of every session; the session-start hook sh
   STATE.md one-line scrub and item 3; CP-2 only if option (c) is needed.
 
 ## Not done this session (and why)
-- Access grid for 13 roles: teacher-os now attached read-only (clone at /home/user/teacher-os). Source table is
-  blueprint/people-and-access.md section 2 (9 columns; deputy = coordinator, cover educator = educator). Not yet drafted.
+- Access grid drafted (private artifact, 13 roles x 12 kinds of data): https://claude.ai/code/artifact/810b8620-1102-4d2a-afe7-351c42356117
+  Waiting for Nimish's corrections (cell ids like E5) and 5 yes/no questions. Issue edits to #449 and #453 are applied.
 - Layouts of one activity page, Sarvam request text, bars decision text: not drafted. CP-3..19 design reviews: not started.
 - Step 3 gate loop: nothing is locked, so nothing to run.
 
