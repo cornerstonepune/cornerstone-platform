@@ -83,6 +83,12 @@ main's schema now plus what CP-4 adds that CP-8 touches:
    count by name. I have not seen the live count. If it is not zero, the build must stop and ask (stop rule), not
    reinterpret the scope. FN10's lines are split into weeks A and B by `plan_entry.week_code`; the session already points
    at its own line, so the week needs no extra rule.
+10. **The fortnight is the unit of report** (relayed from Nimish via the orchestrator, 8 Nov). Every count the commands and live
+   proofs print is also given per `fortnight.number` (via `plan_entry.fortnight_id`, with week A/B from `plan_entry.week_code`):
+   lines, linked, listed by reason. "FN10" in item 3 is the `fortnight` row numbered 10 (23 Nov to 7 Dec on the
+   Graph tab; the sheet's Fortnights 10 and 11 disagree on the end date, so item 3 uses the stored `starts_on`/`ends_on`
+   as they are and does not correct them). No new fortnight table or column: the existing `fortnight`, `plan_entry.fortnight_id`
+   and `week_code` are reused.
 9. **No live writes from a session.** Every LIVE proof is `check_box`, read-only, prints counts only. The apply run on live
    is a deploy-time step by Nimish or the box.
 
