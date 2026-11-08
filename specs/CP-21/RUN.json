@@ -1,0 +1,11 @@
+{
+ "ok": false,
+ "passed": [],
+ "failed": [
+  "1 browser shards have a time limit and stop early after repeated failures in CI",
+  "2 roll-ups say cancelled for a cancelled shard and failed for a failed one",
+  "3 preflight.sh runs and fails when a guard test or a listed browser spec fails",
+  "4 preflight prints each page's seconds and fails a page over the 3-second limit"
+ ],
+ "ran_at": "2026-11-08T16:06:18+00:00"
+}
