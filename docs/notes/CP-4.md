@@ -5,8 +5,8 @@ Branch `cp-4-build`, from main at CP-3 (750ec6f). Scope `specs/CP-4`, design `sp
 ## Verified (local, on databases built by `bin/testdb fresh` plus this migration)
 - `specs/CP-4/proofs`: 19 passed, 2 failed: `test_6_engine_privileges_unchanged_by_the_cp4_migration` and
   `test_3_own_classes_group_sees_its_class_and_not_another`. Neither can pass as written; both need one proof line changed
-  (see "The two proof changes proposed"), which only Nimish's UNLOCK allows. With the two lines changed (checked on a copy
-  of the proofs), everything passes.
+  (see "The two proof changes proposed"), which only Nimish's UNLOCK allows. The rule itself was checked by hand on a synthetic school (below);
+  the two edited proofs have not been run, because the guard stops any copy of the locked proofs.
 - Engine suite (4,140 tests, 3 local shards on separate databases): all pass but `test_spine_provenance` (2, downloads
   NCERT PDFs; this sandbox lacks the certificate) and `test_curriculum_versions` (deselected, fails before 9 Nov).
   Two engine tests changed (below). `bin/check`: 34 passed. `engine load --check`: unchanged on a second run.
