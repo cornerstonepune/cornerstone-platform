@@ -1,0 +1,17 @@
+{
+  "digest": "21cc2dd3c147e49ab16e21fad855735f6100e36eead9e5471eb6a7531b286570",
+  "files": [
+    "spec.md",
+    "checks.sh",
+    "proofs/conftest.py",
+    "proofs/live_no_open_rule.py",
+    "proofs/test_engine.py",
+    "proofs/test_groups.py",
+    "proofs/test_list.py",
+    "proofs/test_unlisted_table.py",
+    "proofs/test_web.py"
+  ],
+  "locked_at": "2026-11-08T11:17:26+00:00",
+  "criteria": 6,
+  "athena": "2.13.0"
+}
