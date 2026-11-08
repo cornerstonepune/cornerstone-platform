@@ -1,6 +1,6 @@
 # CP-12 design: the timetable by hand
 
-Status: reviewed by three fresh reviewers, then updated on 8 Nov to CP-11's draft scope (PR #486) and split (see "Split") (simplicity, design, codebase accuracy); every blocker and major finding is applied
+Status: reviewed by three fresh reviewers, then updated on 8 Nov to CP-11's draft scope (PR #486), Nimish's decisions and the CP-21 split (simplicity, design, codebase accuracy); every blocker and major finding is applied
 below (see `specs/CP-12/design-review/summary.md`). Written unattended (no author gates), so mechanical choices are mine,
 recorded with reasons; the ones that are Nimish's are under "Decisions for Nimish". Read with `specs/CP-12/spec.md`.
 
@@ -56,10 +56,12 @@ build follows that scope and this file is corrected before the proofs are writte
   no code calls it yet; live has 0 rules entered. CP-11 makes a **draft only**, for one class and one fortnight, kept by date
   in `timetable_run.draft` (append-only), and writes nothing to `timetable_slot`, `session` or `plan_entry`. It records no
   teachers and no rooms. Putting a draft live is out of CP-11 (its decision 1).
-- **CP-21 (putting a draft live; proposed, not yet scoped; see "Split" below).** CP-12 moves lessons in a fortnight that is
-  live, so it waits for CP-21. If CP-21 writes a fortnight as rows valid only inside it, the one-time copy in decision 1
-  never runs. Refusing to put a new draft live over a fortnight that has hand moves (unless they are knowingly discarded, and
-  recorded) is CP-21's job, because CP-21 owns overwriting the live timetable.
+- **CP-21 (a draft goes live; split out by Nimish on 8 Nov: "yes to all, split it").** CP-12 moves lessons in a live
+  fortnight, so it waits for CP-21. CP-21 writes a live fortnight as one grid row per date and period (`valid_from` =
+  `valid_to` = the date), adds the exclusion constraint that forbids two rows for one place on one date, makes every reader
+  of the grid (including `tt_rules.py`) pick rows by date, and has one function that gives a fortnight its own dated rows
+  from the standing frame. It also refuses to put a draft live over a fortnight whose rows changed since it last went live
+  (which covers hand moves) unless the person discards them knowingly, recorded with who.
 - **CP-6 (the fortnight cycle, issue #454; relocked at fortnight level on 8 Nov, so the backend plan's "month" wording is
   stale).** Assumed names, from CP-6's design on its own branch:
   1. the freeze unit is the fortnight; states planning, frozen, aligned, approved, list sent;
@@ -72,34 +74,25 @@ build follows that scope and this file is corrected before the proofs are writte
   The build regenerates `engine/checks/rules.json` (`engine live rules --write`) and keeps `test_roles.py` green.
 
 ## Mechanical decisions (recorded, with reasons)
-1. **Each fortnight gets its own grid rows; a move swaps what two places hold.**
-   - **Copy once.** The first move in a fortnight for a class copies that class's grid into rows valid only from the
-     fortnight's first to its last day, and splits any open-ended row around it (the row before ends the day before; a new
-     open-ended row starts the day after). Nothing is copied twice. Splitting writes `valid_to` on a row that may cover an
-     earlier, frozen fortnight; the copy sets `app.change_reason` to "fortnight N given its own rows; nothing before it
-     changed", so CP-6 records it rather than refusing it.
-   - **No double lessons, ever.** An exclusion constraint on `timetable_slot` (class, period, week, weekday, date range
-     `[valid_from, valid_to]`, `btree_gist`) makes two rows valid for the same place on the same day impossible. The build
-     checks that live data already obeys it before adding it.
-   - **A move is a swap of contents.** Every place in the copied grid has a row (`empty` included). `timetable_move(p_slot,
-     p_to_slot, p_by uuid, p_reason)` exchanges `kind`, `subject_code` and `text` between the two rows in one
-     `update`. The places (period, week, weekday, dates) never change, so neither unique key is touched part-way and row ids
-     stay put. Moving into an empty place is a swap with that empty row.
-   - **A place can have two dates.** Week A/B comes from the date (`k2_day.py`), and a fortnight can run 15 days (FN10: 23 Nov
-     to 7 Dec, so 7 Dec is a sixth week-B day and week B's Monday falls twice). A move acts on the place, so it moves the
-     lesson on every date that place has in the fortnight; the move row lists the dates.
-   - **The dated lessons follow.** For each date each place has in the fortnight, the two `session` rows exchange
+1. **A lesson is one dated cell; a move swaps what two cells hold.**
+   - **Dated rows first.** If the fortnight does not yet have its own dated rows (it was never put live by CP-21), the first
+     move calls CP-21's function to give it them, once, under the same lock. A 15-day fortnight (FN10, 23 Nov to 7 Dec)
+     needs no special case: every date has its own rows.
+   - **A move is a swap of contents.** Every cell (`empty` included) has a row. `timetable_move(p_slot, p_to_slot, p_by uuid,
+     p_reason)` exchanges `kind`, `subject_code` and `text` between the two rows in one `update`. The cells (date, period)
+     never change, so no unique key is touched part-way and row ids stay put. Moving into an empty cell is a swap with it.
+   - **The dated lessons follow.** The two `session` rows of the two cells exchange
      `subject_code`, `plan_entry_id`, `text` and `led_by_staff_id` in one `update`. If only one place has a session, that
      session's `school_day_id`/`period_id` change to the other place (that place is free, so no key clash). State stays
      `planned`: the lesson is rescheduled in the plan, not recorded on the day; `moved` keeps its existing meaning.
      Session rows are updated in place, never deleted and re-inserted: `materials_line_session.session_id` is `on delete
      cascade`, so a delete would silently drop the materials lines linked to that lesson.
-   - **Refused, writing nothing, with the reason:** either place `fixed` (slot or period); the two places in different classes
+   - **Refused, writing nothing, with the reason:** either cell `fixed` (slot or period); the two cells in different classes
      or different fortnights; a period not of the class's grade; either date already past (`now()` in `Asia/Kolkata`); either
      date a `holiday` or with no `school_day` row; a session at either place not `planned` or with `planned = false`.
    - `app.change_reason` is set to `p_reason`, or explicitly cleared when there is none, so CP-6's freeze applies unchanged.
 2. **The move history is one append-only table.** `timetable_move (id, tenant_id, school_class_id, fortnight_id, from_slot,
-   to_slot, from_week, from_weekday, from_period, to_week, to_weekday, to_period, moved_kind, moved_subject, reason, who uuid
+   to_slot, from_date, from_period, to_date, to_period, moved_kind, moved_subject, reason, who uuid
    not null references staff, at timestamptz default clock_timestamp())`, with `internal.forbid_change()` as a statement
    trigger. No name stored. An undo is a move back, also kept.
 3. **Clashes are worked out, not stored.** View `timetable_clash (tenant_id, fortnight_id, fortnight_number, week_code, kind,
@@ -108,13 +101,11 @@ build follows that scope and this file is corrected before the proofs are writte
      periods or that period);
    - `over_limit` / `under_limit`: a subject's count for a class in week A, week B or the whole fortnight above `most` or below
      `fewest`; driven from `timetable_limit`, so a subject with no lessons at all still shows as `under_limit` (no places).
-   Not kinds: "the same class twice" (the exclusion constraint makes it impossible); "the same adult twice" and rooms: no
-   adult or room is recorded on any lesson (CP-11 records no teachers; K2 is one class with one educator), so neither can be
-   checked or proved. They come with the scope that records who teaches a lesson; the clash list is built so a kind can be
-   added as one more `union` branch. A fortnight with no
+   Not kinds now: "the same class twice" (CP-21's exclusion constraint makes it impossible); "the same adult twice" (a later
+   add-on for grades 1 to 4, see "Room for ... later"); rooms (dropped). A fortnight with no
    `number` is shown by its dates. Reason: a derived list cannot go stale after a move, an undo or a rule edit.
 4. **An acceptance covers exactly one clash, by what it is, not by row ids.** `clash_key` = a hash of: kind, fortnight id, the
-   sorted places (class, week, weekday, period) involved, the rule id with its `fewest`/`most`, and the count (for limits).
+   sorted cells (class, date, period) involved, the rule id with its `fewest`/`most`, and the count (for limits).
    If a lesson moves, or the limit or count changes, the key changes and the
    clash is open again. Table `timetable_clash_accept (id, tenant_id, fortnight_id, clash_key, kind, reason not blank, who uuid
    not null references staff, at)`, append-only, no class column (a clash can span classes). Function
@@ -128,50 +119,35 @@ build follows that scope and this file is corrected before the proofs are writte
    school, so an approver who sees only some classes cannot miss a cross-class clash. A move in a fortnight already approved (or
    later) is refused if it would leave an unaccepted clash in that fortnight; one that leaves none is allowed (with CP-6's
    reason).
-7. **Hand moves are not wiped by a new draft.** Moved to CP-21 (it owns putting a draft live over the timetable). CP-12 gives
-   it what it needs: `timetable_move` rows per fortnight with `at`, so CP-21 can count moves made since the fortnight last
-   went live.
+7. **Hand moves are not wiped by a new draft.** CP-21's guard does it: putting a draft live over a fortnight whose rows
+   changed since it last went live is refused unless discarded knowingly, recorded with who. CP-12 adds nothing for it.
 8. **Who.** Every write takes the person as a staff id resolved from their email through the existing `voice_intake.staff_of`.
    CLI: `engine timetable move`, `engine timetable accept` take a required `--by EMAIL` (as `cli_map.py`);
    `engine timetable clashes --fortnight N` prints one group per fortnight headed `FN<n>` (or its dates), each clash on one
    line with kind, week and detail, never a name. The commands go in `cli_timetable.py` and on N4's
    `commands` in `workflows.json`; any new engine file also goes on N4's `files`. No API route (no screen in scope).
-9. **The rules screen stays right after a copy.** `tt_rules.py`'s fixed-slot pin and release change every row of that place
-   valid from today on, including a fortnight's own rows, not only the `valid_to is null` row; one test proves a pin after a
-   move leaves one lesson in that period.
-10. **No live writes from a session.** The LIVE proof is `check_box`, read-only, counts per fortnight only.
+9. **No live writes from a session.** The LIVE proof is `check_box`, read-only, counts per fortnight only.
 
-## Split: CP-12 is two scopes, not one (proposed 8 Nov, after CP-11 moved "putting a draft live" out)
-CP-11's reviewers found every risk in putting a draft live: FN10 is 15 days and does not fit the week A/B grid; the grid
-refuses a second version of a fortnight (unique key on `valid_from`); replacing `session` rows would cascade-delete their
-materials lines; and it changes what educators see under CP-6's freeze. Those are a different job from moving one lesson, with
-their own proofs. Stretching CP-12 to hold both would double its Done-when list and put two tier-3 data changes in one
-migration. Proposal:
-- **CP-21: a draft goes live** (new row in `docs/backend-plan.md`, a change Nimish approves). Waits for CP-11, CP-6, CP-4.
-  Puts one CP-11 draft live for one class and one fortnight, by date (so a 15-day fortnight loses no day); updates sessions
-  in place so plan lines and materials lines stay linked; refuses under CP-6's freeze without a reason; refuses to overwrite
-  hand moves unless they are knowingly discarded, with who recorded; can be undone as a whole.
-- **CP-12: the timetable by hand** (this file). Waits for CP-21.
-Order: CP-11, then CP-21, then CP-12. I have not drafted CP-21's scope: that waits for Nimish's yes to the split.
+## Room for "the same adult twice" later (Nimish, 8 Nov)
+Nimish: nursery, K1 and K2 have one educator for all lessons, so this check is not needed now; from grade 1 to grade 4 there
+are subject educators, and it becomes relevant then. Nothing here has to be redone for it: `session.led_by_staff_id` already
+exists, nullable, and the swap already carries it; the grid gains a nullable `lead_staff_id` additively when grades 1 to 4
+come; the clash list gains one more kind (one adult in two lessons whose clock times overlap, across grades); the clash key
+gains the adult. Rooms stay out.
 
-## Decisions for Nimish (only what changes what the school sees, or safety)
-0. **The split above** (CP-21 puts a draft live; CP-12 moves lessons by hand). Recommendation: yes.
-1. **Does a hand move change only that fortnight, or every fortnight after it?** Recommendation: only that fortnight. The
-   fortnight is the planning unit, and a lasting change belongs in the rules (a fixed slot, a block) so the generator keeps it.
-2. **Who may accept a clash?** Accepting means the school knowingly breaks its own rule (a lesson on a blocked day, a
-   subject over its limit). Recommendation: only the coordinator group ("everything" in CP-3), not the educator who made the
-   move. Moving stays open to anyone who may change the timetable. Until he decides, the proofs use this default.
-Not asked (no data to decide on): "the same adult twice" and rooms. No lesson records its teacher or room, so both wait for
-the scope that records who teaches what.
+## Decided by Nimish (8 Nov, relayed by the orchestrator: "yes to all, split it")
+0. **Split.** CP-21 puts a draft live; CP-12 moves lessons by hand. Order: CP-11, CP-21, CP-12.
+1. **A hand move changes only that fortnight.** A lasting change is a rule (a fixed slot, a block), so the generator keeps it.
+2. **Only the coordinator group ("everything" in CP-3) may accept a clash**, not the educator who made the move. Moving is
+   open to anyone who may change the timetable.
+3. **"The same adult twice"** is a later add-on (above); rooms dropped.
 
 ## Implementation list (files)
-- `supabase/migrations/<next, after CP-4 and CP-6>_a_lesson_moved_by_hand_is_kept.sql`: `btree_gist`, the exclusion
-  constraint, `timetable_move`, `timetable_clash_accept`, the view, the functions (`revoke ... from public`, grants as CP-4
+- `supabase/migrations/<next, after CP-4 and CP-6>_a_lesson_moved_by_hand_is_kept.sql`: `timetable_move`, `timetable_clash_accept`, the view, the functions (`revoke ... from public`, grants as CP-4
   sets), `access_table` rows, `select internal.apply_conventions();`.
 - `supabase/seed/config.json`: the setting. CP-6's step function: the clash check.
-- `packages/engine/engine/w2_print/cli_timetable.py`: three commands. `packages/engine/engine/w2_print/tt_rules.py`:
-  date-aware fixed-slot edits. `workflows.json`: N4.
-- Tests: `test_timetable_move.py` (copy once, swap, move into empty, sessions follow, every refusal, history append-only, frozen
+- `packages/engine/engine/w2_print/cli_timetable.py`: three commands. `workflows.json`: N4.
+- Tests: `test_timetable_move.py` (dated rows made once, swap, move into empty, sessions follow, every refusal, history append-only, frozen
   with and without reason, lock); `test_timetable_clash.py` (one per kind, accept, reopen after a second
   move, after a limit change, approval refused and allowed, approved-fortnight move).
 - `engine/checks/rules.json` regenerated. `docs/notes/CP-12.md`: the branch note. Not touched: `apps/web`, `STATE.md`,
@@ -187,5 +163,4 @@ the scope that records who teaches what.
 
 ## Risks not verified
 - CP-4, CP-6 and CP-11 words (assumptions above). No live data seen.
-- That live `timetable_slot` already obeys the exclusion constraint (the build checks before adding it).
-- That `btree_gist` can be enabled on the live Supabase project (it is a standard extension; not checked).
+- CP-21's words (its scope is a draft too).
