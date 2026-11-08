@@ -26,6 +26,9 @@ jobs:
         env:
           LABELS: ${{ toJson(github.event.pull_request.labels.*.name) }}
         run: python3 .claude/athena/bin/athena check-scope-changes --base "origin/${{ github.base_ref }}" --labels "$LABELS"
+      - name: A code change carries a locked scope the verifier passed (ATH-28)
+        if: github.event_name == 'pull_request'
+        run: python3 .claude/athena/bin/athena check-pr-spec --base "origin/${{ github.base_ref }}"
       - name: A small change carries its own short scope
         if: github.event_name == 'pull_request'
         env:
