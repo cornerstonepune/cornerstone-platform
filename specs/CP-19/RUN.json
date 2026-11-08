@@ -1,0 +1,14 @@
+{
+ "ok": false,
+ "passed": [],
+ "failed": [
+  "1 each line stored on its own with its confirmed, dated evidence; wrong child, unconfirmed or late evidence refused",
+  "2 a line with less evidence than state.min_events shows thin; changing the row changes which",
+  "3 two approvals per line, class educator then coordinator; same person, third, nobody, engine refused",
+  "4 only report_mark_sent marks sent: consent and register, every line approved twice, has lines, not sent",
+  "5 each per-class measure of coordinator_counts equals a direct count for the fortnight",
+  "6 per-educator figures are note counts only, no score or rank; coordinator sees all, educator own",
+  "7 k2_reads and the reports page read coordinator_counts; own counting gone; existing tests unchanged"
+ ],
+ "ran_at": "2026-11-08T17:14:56+00:00"
+}

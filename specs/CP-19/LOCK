@@ -1,0 +1,19 @@
+{
+  "digest": "43abd68bf8c7c566d912625f96e5989755f09f059f3c8d6580de707e0125466d",
+  "files": [
+    "spec.md",
+    "checks.sh",
+    "proofs/conftest.py",
+    "proofs/hand_counts.py",
+    "proofs/live_counts.py",
+    "proofs/test_approvals.py",
+    "proofs/test_counts.py",
+    "proofs/test_lines.py",
+    "proofs/test_one_place.py",
+    "proofs/test_send.py",
+    "proofs/test_thin.py"
+  ],
+  "locked_at": "2026-11-08T17:21:21+00:00",
+  "criteria": 8,
+  "athena": "2.14.0"
+}
