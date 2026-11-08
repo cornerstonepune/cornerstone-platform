@@ -13,6 +13,12 @@ Branch `cp-4-build`, from main at CP-3 (750ec6f). Scope `specs/CP-4`, design `sp
 - Browser suite, 3 shards in CI order, each on its own fresh database, the site as `app_web`: 194 + 194 + 194 passed, 0
   flaky, 0 skipped. Before the fix of `worksheets/[qr]` one test failed (see "What the rules broke").
 
+## The one proof change proposed (needs Nimish's `UNLOCK CP-4`)
+In `specs/CP-4/proofs/test_engine.py`, `test_6_engine_privileges_unchanged_by_the_cp4_migration`, replace the line
+`post = {x for x in post if x[0] in existed}  # a table CP-4 itself creates has no "before"` with
+`had = {(t, c) for t, c, _ in pre if c}; post = {x for x in post if x[0] in existed and (not x[1] or (x[0], x[1]) in had)}  # a table or column CP-4 itself adds has no "before"`.
+Table-level privileges and every column that existed are still compared exactly.
+
 ## Speed (synthetic school: 150 children, 6 classes, 6,000 papers and scans, 120,000 answers, 30,000 evidence rows)
 Best of 3, milliseconds, as `app_web`; "before" adds an allow-everyone rule beside the new ones. Educator of one class
 (25 children, 1,000 papers, 20,000 answers), then a coordinator ("everything").
