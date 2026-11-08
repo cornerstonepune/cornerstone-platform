@@ -1,6 +1,6 @@
 # CP-5: Database hygiene
 
-Source: https://github.com/cornerstonepune/cornerstone-platform/issues/452 (DRAFT, not locked)
+Source: https://github.com/cornerstonepune/cornerstone-platform/issues/453 (DRAFT, not locked)
 
 ### What
 
