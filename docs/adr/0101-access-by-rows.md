@@ -10,7 +10,10 @@ Goal: none — the Athena scope CP-3 (locked scope: specs/CP-3); no goal file co
   engine, `web_rule` for the website; every other policy on a listed table except `service_role_all` is dropped.
   Tables not listed keep `app_all` until CP-4.
 - Who is asking: the sign-in list entry id the website sets (`current_staff()`), matched by email to one active
-  `pii.staff` row (`internal.resolve_staff()`). Anything else sees nothing.
+  staff row (`internal.resolve_staff()`). Anything else sees nothing. The match is stored as `staff.signin_id`, kept
+  by triggers on the sign-in list and on `pii.staff`, and not worked out from the list on every question: a function
+  that reads a protected table asks again on every call, and worked out from the list a question cost 0.33 ms
+  (a key lookup costs about 0.05 ms). Limit: a person listed twice on the sign-in list resolves by one of the entries.
 - `own` = the classes of the person's current grants (ends on `valid_to`, the first day it no longer holds); for
   staff, their own row. The class decides, not the subject.
 

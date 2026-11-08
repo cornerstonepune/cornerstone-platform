@@ -152,19 +152,55 @@ on conflict do nothing;
 
 -- 3. Who is asking -----------------------------------------------------------------------------------------------------
 
--- The one active staff row the sign-in list entry named by current_staff() belongs to (matched by email, in the same
--- school); nothing unless exactly one. The email is read only as a key; no name leaves and nothing is logged.
-create or replace function internal.resolve_staff() returns table (staff_id uuid, tenant_id uuid)
-language sql stable security definer set search_path = public, pg_temp as $$
-  with hit as (
-    select s.id, s.tenant_id
+-- Which staff row each sign-in list entry belongs to (matched by email, in the same school). The rules ask "who is
+-- asking" on every statement, and a function that reads a protected table asks again on every call, so the answer is
+-- a column looked up by key and not worked out from the list each time (measured: 0.33 ms a question worked out from
+-- the list, against a key lookup). Only an entry whose email matches exactly one staff row is set. Kept by the
+-- triggers below; the id is a key only, no name or email is kept here.
+alter table staff add column if not exists signin_id uuid;
+create unique index if not exists staff_signin_id_idx on staff (signin_id) where signin_id is not null;
+
+create or replace function internal.rebuild_staff_signin() returns void
+language plpgsql security definer set search_path = public, pg_temp as $$
+begin
+  with want as (
+    select min(p.staff_id::text)::uuid as staff_id, (e ->> 'id')::uuid as signin_id
     from config c
     cross join lateral jsonb_array_elements(case when jsonb_typeof(c.value) = 'array' then c.value else '[]'::jsonb end) e
     join pii.staff p on p.tenant_id = c.tenant_id and p.email = lower(btrim(e ->> 'email'))
-    join staff s on s.id = p.staff_id and s.tenant_id = p.tenant_id and s.active
-    where c.key = 'app.staff' and public.current_staff() is not null and (e ->> 'id') = public.current_staff()::text
+    where c.key = 'app.staff' and (e ->> 'id') ~* '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
+    group by (e ->> 'id')::uuid, c.tenant_id
+    having count(*) = 1
   )
-  select id, tenant_id from hit where (select count(*) from hit) = 1
+  update staff s set signin_id = w.signin_id
+  from (select st.id, x.signin_id from staff st left join want x on x.staff_id = st.id) w
+  where w.id = s.id and s.signin_id is distinct from w.signin_id;
+end $$;
+
+create or replace function internal.rebuild_staff_signin_trigger() returns trigger
+language plpgsql security definer set search_path = public, pg_temp as $$
+begin
+  perform internal.rebuild_staff_signin();
+  return null;
+end $$;
+
+drop trigger if exists staff_signin_from_list on config;
+create trigger staff_signin_from_list after insert or update on config
+  for each row when (new.key = 'app.staff') execute function internal.rebuild_staff_signin_trigger();
+drop trigger if exists staff_signin_from_list_gone on config;
+create trigger staff_signin_from_list_gone after delete on config
+  for each row when (old.key = 'app.staff') execute function internal.rebuild_staff_signin_trigger();
+drop trigger if exists staff_signin_from_email on pii.staff;
+create trigger staff_signin_from_email after insert or update or delete on pii.staff
+  for each statement execute function internal.rebuild_staff_signin_trigger();
+
+select internal.rebuild_staff_signin();
+
+-- The one active staff row the sign-in list entry named by current_staff() belongs to; nothing otherwise. Nothing is
+-- logged.
+create or replace function internal.resolve_staff() returns table (staff_id uuid, tenant_id uuid)
+language sql stable security definer set search_path = public, pg_temp as $$
+  select s.id, s.tenant_id from staff s where s.signin_id = public.current_staff() and s.active
 $$;
 
 create or replace function public.signed_in_staff() returns uuid

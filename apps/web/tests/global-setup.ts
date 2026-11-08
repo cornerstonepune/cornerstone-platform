@@ -36,7 +36,7 @@ export default async function globalSetup(): Promise<void> {
     select ${school}, ${staff}, 'coordinator', current_date - 1, 'e2e global-setup'
     where not exists (
       select 1 from staff_role_grant
-      where staff_id = ${staff} and role_code = 'coordinator' and granted_by = 'e2e global-setup' and valid_to is null)`;
+      where staff_id = ${staff} and role_code = 'coordinator' and valid_to is null)`;
   await sql.end();
 
   const expiry = String(Date.now() + 86_400_000);
