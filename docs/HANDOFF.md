@@ -13,9 +13,15 @@ Under 50 lines. Rewritten at the end of every session; the session-start hook sh
 - Issues: CP-1 #448, CP-2 #449, CP-0 #450, CP-3 #451, CP-4 #452, CP-5 #453, CP-6 #454, CP-7 #455, CP-8 #456,
   CP-9 #457, CP-10 #458, CP-11 #459, CP-12 #460, CP-13 #461, CP-14 #462, CP-15 #463, CP-16 #464, CP-17 #465,
   CP-18 #466, CP-19 #467.
-- Locked by Nimish 8 Nov: CP-0, CP-1, CP-2, CP-5. CP-0, CP-2 and CP-5 have locked proofs; CP-1 proofs in progress.
-- CP-0 ships alone from branch cp-0-backend-plan (config prefix + plan + this file). CP-1/2/5 work stays on
-  claude/bold-carson-f72yjv until each is built; one pull request per scope.
+- Locked by Nimish 8 Nov: CP-0, CP-1, CP-2, CP-5, all with locked proofs. CP-0 MERGED (PR #468).
+- CP-5 is being built in its own session (session_01KEBF29SJ64px524jd4PQyT, tag cp-5): branch cp-5-database-hygiene,
+  draft PR with Closes #453. CP-1 and CP-2 wait (one migration scope at a time). This branch (claude/bold-carson-f72yjv)
+  is a working branch only: never open a PR from it; each scope ships from a clean branch off main.
+- Never commit .claude/autoharness/ or plugin-written .claude/skills/* on a PR branch: CI rejects them.
+- Merging: Athena lets the orchestrator merge when CI is green, VERIFY.md says PASS and the PR is mergeable; the Jev hook
+  needs Nimish's words in recent messages for a merge, and Nimish said (8 Nov) the orchestrator should merge by itself.
+- Test databases: Nimish chose (8 Nov) a throwaway local copy for write tests, live checks read-only on the box, and NO
+  test database in GitHub's proofs job. CP-1's database proofs will be red in that job: needs his UNLOCK to re-mark them.
 
 ## Decisions taken (Nimish, 8 Nov)
 - Load all 7 staff (CP-1). Scrub the project reference from STATE.md (CP-5). Leaked-password protection: recorded
