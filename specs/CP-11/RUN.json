@@ -1,0 +1,11 @@
+{
+ "ok": false,
+ "passed": [],
+ "failed": [
+  "2 generate places every needed lesson on free periods within the rules and keeps FET's exact input and output",
+  "3 unmet rules report placed against needed and name the rule; a timeout says no timetable found in time; nothing written",
+  "4 the same rules twice give the same input file and the same draft",
+  "5 a 15-day fortnight drafted day by day, a holiday empty, a kept draft cannot be changed or deleted"
+ ],
+ "ran_at": "2026-11-08T17:17:28+00:00"
+}

@@ -1,7 +1,7 @@
 # CP-11: Timetable generator
 
 Source: https://github.com/cornerstonepune/cornerstone-platform/issues/459
-DRAFT for Nimish. Not locked. Waits for CP-6 in the plan (with this design it reads and writes nothing CP-6 adds; putting a draft live, which needs CP-6, is CP-21). Plan: docs/backend-plan.md. Roadmap task M1-14. Tier 3 (a migration and the engine image). Design: specs/CP-11/design.md.
+Scope locked by: Nimish (the label scope-locked on pull request #486, 8 Nov 2026: "scope locked, tidy up as well"; relayed by the orchestrator). Waits for CP-6 in the plan (with this design it reads and writes nothing CP-6 adds; putting a draft live, which needs CP-6, is CP-21). Plan: docs/backend-plan.md. Roadmap task M1-14. Tier 3 (a migration and the engine image). Design: specs/CP-11/design.md.
 
 ## What
 
