@@ -190,13 +190,13 @@ def test_an_accepted_reply_is_kept_too_with_its_prompt_version(conn, monkeypatch
     assert row["request"]["version"] == 1
 
 
-def test_the_seeded_campaign_is_twenty_five_dollars_less_a_margin_over_exactly_the_three_prompts():
+def test_the_seeded_campaign_has_a_cap_less_a_margin_over_exactly_the_three_prompts():
     seeded = next(
         c
         for c in json.loads((db.REPO_ROOT / "supabase" / "seed" / "config.json").read_text())["config"]
         if c["key"] == "llm.campaigns"
     )["value"]["m1-11"]
-    assert seeded["cap_usd"] == 25 and 0 < seeded["margin_usd"] < seeded["cap_usd"]
+    assert seeded["cap_usd"] == 40 and 0 < seeded["margin_usd"] < seeded["cap_usd"]
     assert seeded["stale_minutes"] == 10
     assert set(seeded["purposes"]) == {
         "curriculum_map_propose",
@@ -377,17 +377,20 @@ def _seeded(key):
     return next(c for c in rows if c["key"] == key)["value"]
 
 
-def test_the_stages_caps_add_up_under_the_campaigns_own_stop_which_is_just_under_the_25_nimish_approved():
-    """Nimish, 2026-11-06: "okay to spend up to 25 dollars". The campaign stops at cap less margin (24.5); each stage that
-    has a cap of its own stops at its cap less the stage margin; the drafting has none, the campaign's holds."""
+def test_the_campaign_stops_at_39_5_after_nimishs_word_of_8_nov_and_the_stages_add_up_under_it():
+    """Nimish, 2026-11-08: yes to finishing the last pages after the campaign stopped at $24.51, then "don't worry about
+    usage; important that you do quality work and conclude". The cap is 40 and the margin 0.5, so the stop is 39.5, which
+    holds the last pages and the linking run; each stage that has a cap of its own stops at its cap less the stage
+    margin; the drafting has none, the campaign's holds. Nothing else moved."""
     c = _seeded("llm.campaigns")["m1-11"]
-    assert c["cap_usd"] == 25 and c["cap_usd"] - c["margin_usd"] == 24.5
-    assert c["stages"]["dev_eval"] == 5.2 and c["stages"]["draft"] is None
+    assert c["cap_usd"] == 40 and c["margin_usd"] == 0.5 and c["cap_usd"] - c["margin_usd"] == 39.5
+    assert c["stages"]["dev_eval"] == 5.2 and c["stages"]["held_out"] == 4.8 and c["stages"]["draft"] is None
     capped = [v for v in c["stages"].values() if v is not None]
     assert sum(capped) < c["cap_usd"] - c["margin_usd"], (
         "the stages that have a cap cannot add up past the stop"
     )
     assert c["order"] == ["dev_eval", "held_out", "draft"], "one stage at a time, in this order"
+    assert _seeded("k2.drafting")["report_usd_per_page_limit"] == 0.03, "the per-page limit is unchanged"
 
 
 def test_a_tranche_whose_pages_cost_more_than_three_cents_each_is_flagged_in_the_checkers_report():
