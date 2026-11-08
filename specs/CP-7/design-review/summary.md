@@ -32,3 +32,10 @@ Not applied: the readiness reviewer's suggestion to read the approver from `app.
 codebase reviewer showed that `current_staff()` (`app.staff_id`, set at sign-in) is the verified mechanism.
 Gate scope: the reviewers offered "K2 grade only" or "every class with a timetable". Chosen: every class with slots in the
 fortnight, so that no grade is named in code (rule 1).
+
+## Second revision (8 Nov, Nimish's decision relayed by the orchestrator)
+"A fortnight is the unit of the timetable, and then everything gets derived from that." Week-level approval removed:
+`week_plan`/`week_plan_line` became `fortnight_plan`/`fortnight_plan_line` (one draft and one comparison per class per
+fortnight; weeks, days and periods are filters). Both open decisions closed by him: the timetable grid is what is
+approved; the CP-6 gate stays. Approver: coordinator or "Everything" group, a settings row. Every reviewer fix above is
+kept; none was re-reviewed by a fresh reviewer after this change.
