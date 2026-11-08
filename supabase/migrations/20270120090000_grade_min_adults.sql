@@ -23,9 +23,16 @@ begin
   on conflict (tenant_id, grade_code, kind, entry_mode) do nothing;
 end $$;
 
+-- a value a school tuned for the written rule moves to its grades (K2 takes observed_rule's, next), before the row goes
+update grade g set min_adults = t.value::int from threshold t
+ where t.tenant_id = g.tenant_id and t.key = 'state.min_adults' and t.value >= 1 and t.value::int <> g.min_adults;
 -- the value moves from observed_rule to grade, for schools there now, before the column goes
-update grade g set min_adults = r.min_adults from observed_rule r
- where r.tenant_id = g.tenant_id and r.grade_code = g.code and g.min_adults is distinct from r.min_adults;
+do $$ begin
+  if exists (select from information_schema.columns where table_name = 'observed_rule' and column_name = 'min_adults') then
+    update grade g set min_adults = r.min_adults from observed_rule r
+     where r.tenant_id = g.tenant_id and r.grade_code = g.code and g.min_adults is distinct from r.min_adults;
+  end if;
+end $$;
 alter table observed_rule drop column if exists min_adults;
 delete from threshold where key = 'state.min_adults';
 
