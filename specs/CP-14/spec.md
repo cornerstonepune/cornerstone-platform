@@ -21,7 +21,8 @@ decided on live.
    reason is refused. (Test.)
 3. Every confirmation and withdrawal is kept in the edit history with who and when; a later decision never erases an
    earlier one. (Test.)
-4. [Only if Nimish chooses "a different person confirms"] The person who loaded a list cannot confirm its links. (Test.)
+4. Only a coordinator or an educator can confirm or withdraw a link, and the person who loaded a list cannot confirm its
+   links. Which roles count is a settings row, not code. (Test.)
 5. The child page lists the activities of the child's grade that are ready next, each with the ready skills that make it
    so. An activity is listed when at least one of its skills is ready and none of its skills still waits on a confirmed
    "must come before" skill. A skill with no confirmed link is never claimed either way. (Test, worked by hand.)

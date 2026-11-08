@@ -60,23 +60,31 @@ exclusive; one is required. All or nothing: any pair that is not `confirmed` or 
 and the caller's transaction leaves nothing written, as `load` does. Output: counts of confirmed and already.
 
 New database function `confirm_skill_link_pair(p_tenant, p_before, p_after, p_staff) returns text` finds the link and
-calls `confirm_skill_link`. Words: `confirmed | already | no link | not staff | same person | no confirming state`.
+calls `confirm_skill_link`. Words: `confirmed | already | no link | not staff | not a decider | same person | no confirming state`.
 `not staff` also covers a staff member of another school.
 
-**Who may confirm (decision N1).** If Nimish chooses (b): `skill_link.proposed_by uuid references staff(id)`;
-`load` requires `--by <email>` and records it; `confirm_skill_link` returns `same person` when the confirmer is the
-proposer of a `skill_link` row (the rule does not touch `skill_prerequisite`, which has no proposer). A fixed rule, not a
-setting: it is a safety rule, and a true/false row would double the paths to test for a value nobody plans to flip. Rows
-loaded before CP-14 have `proposed_by` null and the rule does not fire for them. If he chooses (a), none of this is built.
+**Who may confirm (decided by Nimish, 8 Nov: "I just told you and gave simple blanket authority to two coordinators
+and educators").** Two rules, both on `skill_link` only (`skill_prerequisite` has no proposer and is untouched):
+- *A different person.* `skill_link.proposed_by uuid references staff(id)`; `load` requires `--by <email>` and records it;
+  `confirm_skill_link` returns `same person` when the confirmer is the proposer. A fixed rule, not a setting: it is a
+  safety rule nobody plans to switch off. Rows loaded before CP-14 have `proposed_by` null and the rule does not fire.
+- *Any coordinator or educator.* The confirmer (and the person who withdraws) must hold an open role grant
+  (`people.staff_role_grant`) whose role is in the settings row `skill_link.decider_roles` (`supabase/seed/config.json`),
+  default `["coordinator", "deputy_coordinator", "class_teacher", "subject_educator", "cover_educator",
+  "special_educator", "educator"]`: the coordinator and educator roles seeded in `20261225090000`. A value that may change
+  is a row, not code (rule 1). Otherwise `not a decider`. A missing row stops the command with a message naming the fix,
+  as `k2.child_page` does.
 
 ### 2. Withdraw a link (goal 2)
 
 `engine skill-links withdraw --before <code> --after <code> --by <email> --reason "<text>"`, through one function
 `withdraw_skill_link(p_tenant, p_before, p_after, p_staff, p_reason) returns text`. Words:
-`withdrawn | already withdrawn | no link | not staff | blank reason`.
+`withdrawn | already withdrawn | no link | not staff | not a decider | blank reason`.
 
 - **Proposed or confirmed** links can be withdrawn. "Withdrawn" means "a person said no". This is how a reviewer rejects
   a pair, without a false confirmation first.
+- The person withdrawing must be a decider (any coordinator or educator, §1); they may be the person who loaded the list,
+  since saying no is safe.
 - New vocabulary row `link_status ('withdrawn', ord 2, confirmed false)`, added inside
   `internal.skill_link_vocabulary`; the migration re-runs it for every existing school (it is `on conflict do nothing`).
 - New columns on `skill_link`: `withdrawn_by uuid references staff(id)`, `withdrawn_reason text`, and a table CHECK
@@ -153,7 +161,7 @@ The build chooses the migration timestamp; none is chosen here.
 
 | File | Change and why |
 |---|---|
-| `supabase/migrations/<next>_skill_link_decisions.sql` | `withdrawn` row in `internal.skill_link_vocabulary` + re-run for every tenant; columns `proposed_by` (if N1 = b), `withdrawn_by`, `withdrawn_reason` + CHECK; widen `curriculum_edit_record_check`; `internal.skill_link_kept()` + trigger; new `confirm_skill_link_pair`, `withdraw_skill_link`; redefined `confirm_skill_link` (clears withdrawn columns, sets `app.changed_by`, `same person` if N1 = b) and `propose_skill_link` (optional proposer: drop the 5-argument version first so the call is not ambiguous). Every function keeps `set search_path = public` (CP-5). Grants to `app_engine` only; ends with `internal.apply_conventions()`. |
+| `supabase/migrations/<next>_skill_link_decisions.sql` | `withdrawn` row in `internal.skill_link_vocabulary` + re-run for every tenant; columns `proposed_by`, `withdrawn_by`, `withdrawn_reason` + CHECK; widen `curriculum_edit_record_check`; `internal.skill_link_kept()` + trigger; new `confirm_skill_link_pair`, `withdraw_skill_link`; redefined `confirm_skill_link` (clears withdrawn columns, sets `app.changed_by`, `same person`, `not a decider`) and `propose_skill_link` (optional proposer: drop the 5-argument version first so the call is not ambiguous). Every function keeps `set search_path = public` (CP-5). Grants to `app_engine` only; ends with `internal.apply_conventions()`. |
 | `packages/engine/engine/w3_read/skill_links.py` | `load(conn, path, by)`, `confirm_file(conn, path, by)` (uses `pairs()`), `withdraw(conn, before, after, by, reason)`; words for each refusal; no SQL about the link tables. |
 | `packages/engine/engine/w3_read/cli_skill_links.py` | `load --by`, `confirm --file` (exclusive with the id), `withdraw`. |
 | `packages/engine/engine/checks/links.py` | `--k2` counts by status through `skill_link_audit`. |
@@ -162,18 +170,18 @@ The build chooses the migration timestamp; none is chosen here.
 | `packages/engine/engine/api/routes/k2.py` | response model gains `ready_activities`. |
 | `workflows.json` | N10 commands: `skill-links load`, `skill-links confirm`, `skill-links withdraw`, `links check` (as `test_layout.py` expects). |
 | `packages/engine/engine/checks/rules.json` | regenerated (`engine live rules --write`): new CHECKs and the widened one. |
-| tests: `test_k2_growth.py`, `test_k2_child_growth.py`, `test_skill_links.py`, `test_k2_picture_reads.py` (budget 9 → 10) | hand-worked tables for the activity rule; confirm by file, withdraw proposed and confirmed, same person (if b), history rows, reconfirm. |
+| tests: `test_k2_growth.py`, `test_k2_child_growth.py`, `test_skill_links.py`, `test_k2_picture_reads.py` (budget 9 → 10) | hand-worked tables for the activity rule; confirm by file, withdraw proposed and confirmed, same person, a staff member with no coordinator or educator role refused, history rows, reconfirm. |
+| `supabase/seed/config.json` | row `skill_link.decider_roles` (default above). |
 | `docs/adr/<next>-…` | withdrawal and the confirmer rule, extending ADR 0099. |
 | `docs/notes/CP-14.md` | the branch note: list line count, live counts after the people's steps. |
 
 ## Decisions
 
-### For Nimish (what the school sees, or what is safe)
+### Decided by Nimish (8 Nov)
 
-- **N1. Who may confirm a link.** (a) Anyone on the active staff list, including the person who wrote the list (today);
-  (b) a different member of staff from the person who loaded it. **Recommend (b)**: a wrong hard link hides a skill from
-  every child's "ready next" with no warning, and the school already uses two people for report lines. Cost: the
-  coordinator (or another educator) must read the K2 list before anything shows.
+- **N1. Who may confirm a link.** A different person from the one who loaded the list; any coordinator or educator
+  (blanket, no further restriction). His words: "I just told you and gave simple blanket authority to two coordinators
+  and educators." Built as §1 describes. Not to be asked again.
 
 ### Mechanical (decided, with reason)
 
