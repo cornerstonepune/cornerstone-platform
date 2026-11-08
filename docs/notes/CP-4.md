@@ -3,21 +3,33 @@
 Branch `cp-4-build`, from main at CP-3 (750ec6f). Scope `specs/CP-4`, design `specs/CP-4/design.md`, ADR 0101 amended.
 
 ## Verified (local, on databases built by `bin/testdb fresh` plus this migration)
-- `specs/CP-4/proofs`: 34 passed, 1 failed. The one failure is `test_6_engine_privileges_unchanged_by_the_cp4_migration`
-  and it cannot pass as written: proofs 1 and 4 require `access_table` to gain `data_class` and `reason`, `app_engine` holds
-  a table-level grant on `access_table` (CP-3), and the proof counts the two new columns as privileges "gained". Needs a
-  one-line edit of the proof (compare only columns that existed before) which only Nimish's UNLOCK allows.
+- `specs/CP-4/proofs`: 19 passed, 2 failed: `test_6_engine_privileges_unchanged_by_the_cp4_migration` and
+  `test_3_own_classes_group_sees_its_class_and_not_another`. Neither can pass as written; both need one proof line changed
+  (see "The two proof changes proposed"), which only Nimish's UNLOCK allows. With the two lines changed (checked on a copy
+  of the proofs), everything passes.
 - Engine suite (4,140 tests, 3 local shards on separate databases): all pass but `test_spine_provenance` (2, downloads
   NCERT PDFs; this sandbox lacks the certificate) and `test_curriculum_versions` (deselected, fails before 9 Nov).
   Two engine tests changed (below). `bin/check`: 34 passed. `engine load --check`: unchanged on a second run.
 - Browser suite, 3 shards in CI order, each on its own fresh database, the site as `app_web`: 194 + 194 + 194 passed, 0
   flaky, 0 skipped. Before the fix of `worksheets/[qr]` one test failed (see "What the rules broke").
 
-## The one proof change proposed (needs Nimish's `UNLOCK CP-4`)
-In `specs/CP-4/proofs/test_engine.py`, `test_6_engine_privileges_unchanged_by_the_cp4_migration`, replace the line
-`post = {x for x in post if x[0] in existed}  # a table CP-4 itself creates has no "before"` with
-`had = {(t, c) for t, c, _ in pre if c}; post = {x for x in post if x[0] in existed and (not x[1] or (x[0], x[1]) in had)}  # a table or column CP-4 itself adds has no "before"`.
-Table-level privileges and every column that existed are still compared exactly.
+## The two proof changes proposed (one `UNLOCK CP-4` covers both)
+`public.sheet_template` has a nullable `child_id` (migration 20260918100000: a focus paper is made for one child), so
+it is child data keyed by `child_id`; a spare blueprint with no child is open to everyone who reaches `papers`
+(key type `child_open`). The first draft called it school-wide, which let any website login read which child got which
+remediation paper (ids only). Found by the independent verifier; two locked proof lines rest on the old premise.
+1. `specs/CP-4/proofs/test_engine.py`, `test_6_engine_privileges_unchanged_by_the_cp4_migration`: replace
+   `post = {x for x in post if x[0] in existed}  # a table CP-4 itself creates has no "before"` with
+   `had = {(t, c) for t, c, _ in pre if c}; post = {x for x in post if x[0] in existed and (not x[1] or (x[0], x[1]) in had)}`.
+   Table privileges and every column that existed are still compared exactly (the two new `access_table` columns cannot
+   have a "before").
+2. `specs/CP-4/proofs/test_groups.py`, `test_3_own_classes_group_sees_its_class_and_not_another`: the fixture seeds a
+   child-less template (`ins(c, "public.sheet_template", ...)`) and expects the educator of class Z to see 0 rows of every
+   child-data table. Replace `z = _count(school, "Z", s, t)` with
+   `z = _count(school, "Z", s, t, sql.SQL("{} is not null").format(sql.Identifier(key_column)) if key_type == "child_open" else sql.SQL("true"))`
+   (a child-less template is read by all; a template with a child is read only through that child's class).
+   Checked by hand on a synthetic school: educator of one class sees the spare templates and their own children's, not
+   another class's; no identity sees none; the coordinator sees all.
 
 ## Speed (synthetic school: 150 children, 6 classes, 6,000 papers and scans, 120,000 answers, 30,000 evidence rows)
 Best of 3, milliseconds, as `app_web`; "before" adds an allow-everyone rule beside the new ones. Educator of one class
@@ -54,7 +66,7 @@ owner like `staff_sees_sheet`. Fallback not needed: a trigger-kept `child_id` on
 
 ## Decisions for Nimish, in plain words
 1. School-wide data (the skill registry, curriculum, question bank, plan, timetable, materials and the tool's own records:
-   127 tables) stays open to the website login, as today, not "signed-in staff only": the sign-in page reads seven of them
+   126 tables) stays open to the website login, as today, not "signed-in staff only": the sign-in page reads seven of them
    before anyone is signed in, and a rule needing a person there would switch off the brute-force wait. Nothing is opened
    that was not open. Narrowing it needs sign-in moved behind a function (separate scope). `config` holds the sign-in
    list's password hashes and `password_link` token hashes, readable by the website login as today.

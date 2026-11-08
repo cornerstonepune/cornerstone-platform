@@ -19,10 +19,11 @@ alter table access_table alter column kind_code drop not null;
 alter table access_table alter column key_column drop not null;
 alter table access_table alter column key_type drop not null;
 
--- a paper (sheet), a scan (capture), an answer (item_result), and the legacy class label (section) join CP-3's key types
+-- a paper (sheet), a scan (capture), an answer (item_result), the legacy class label (section) and a child column that may
+-- be empty (child_open: a paper blueprint for one child, or a spare one for nobody) join CP-3's key types
 alter table access_table drop constraint if exists access_table_key_type_check;
 alter table access_table add constraint access_table_key_type_check
-  check (key_type in ('class', 'child', 'note', 'staff', 'sheet', 'capture', 'item_result', 'section'));
+  check (key_type in ('class', 'child', 'note', 'staff', 'sheet', 'capture', 'item_result', 'section', 'child_open'));
 alter table access_table drop constraint if exists access_table_data_class_check;
 alter table access_table add constraint access_table_data_class_check check (data_class in ('child_data', 'school_wide'));
 -- child data names its kind and key and has no reason; school-wide names a one-line reason and no kind or key
@@ -109,6 +110,7 @@ insert into access_table (schema_name, table_name, kind_code, key_column, key_ty
   ('public', 'prescription', 'papers', 'child_id', 'child', 'child_data', null),
   ('public', 'read_correction', 'answers', 'child_id', 'child', 'child_data', null),
   ('public', 'sheet_instance', 'papers', 'id', 'sheet', 'child_data', null),
+  ('public', 'sheet_template', 'papers', 'child_id', 'child_open', 'child_data', null),
   ('public', 'staff', 'staff', 'id', 'staff', 'child_data', null),
   ('public', 'staff_role_grant', 'staff', 'staff_id', 'staff', 'child_data', null),
   ('public', 'academic_year', null, null, null, 'school_wide', 'the school''s structure (years, campuses, classes, days, periods, grades, subjects, roles); no child'),
@@ -208,7 +210,6 @@ insert into access_table (schema_name, table_name, kind_code, key_column, key_ty
   ('public', 'school_class', null, null, null, 'school_wide', 'the school''s structure (years, campuses, classes, days, periods, grades, subjects, roles); no child'),
   ('public', 'school_day', null, null, null, 'school_wide', 'the school''s structure (years, campuses, classes, days, periods, grades, subjects, roles); no child'),
   ('public', 'session', null, null, null, 'school_wide', 'plan and timetable: what a class is to do and when, by class id; no child (the scope names both school-wide)'),
-  ('public', 'sheet_template', null, null, null, 'school_wide', 'a blueprint of a paper (its questions and layout), made before any child is named; the register lists it as a paper but it holds no answer'),
   ('public', 'sign_in_failure', null, null, null, 'school_wide', 'sign-in before anyone is known: the website reads and writes these as the login itself, so they stay open to it'),
   ('public', 'skill', null, null, null, 'school_wide', 'skill registry and curriculum: the school''s own teaching content, open to every educator; no child'),
   ('public', 'skill_level', null, null, null, 'school_wide', 'skill registry and curriculum: the school''s own teaching content, open to every educator; no child'),
@@ -386,6 +387,9 @@ begin
       else
         cond := case a.key_type
           when 'staff' then format('%I = (select public.signed_in_staff())', a.key_column)
+          -- a row with no child named is open to everyone who reaches the kind (a spare paper blueprint)
+          when 'child_open' then format('(%1$I is null or %1$I = any ((select public.my_ids(%2$L, ''child''))::uuid[]))',
+                                        a.key_column, a.kind_code)
           when 'section' then format('%I = any ((select public.my_sections(%L))::text[])', a.key_column, a.kind_code)
           else format('%I = any ((select public.my_ids(%L, %L))::uuid[])', a.key_column, a.kind_code, a.key_type)
         end;

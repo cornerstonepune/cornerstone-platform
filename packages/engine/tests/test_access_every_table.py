@@ -22,7 +22,6 @@ pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DAT
 REGISTER = Path(__file__).resolve().parents[3] / "supabase" / "seed" / "data_register.json"
 # a paper's blueprint and the school's structure hold no child, though the register or a column names them
 EXEMPT = {
-    "public.sheet_template",
     "public.school_class",
     "public.campus",
     "public.academic_year",

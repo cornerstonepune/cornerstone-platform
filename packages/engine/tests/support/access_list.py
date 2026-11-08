@@ -51,6 +51,8 @@ CHILD = {
     "public.gold": ("answers", "capture_id", "capture"),
     "public.narrative_observation": ("answers", "capture_id", "capture"),
     "public.mistake_named": ("answers", "item_result_id", "item_result"),
+    # a paper blueprint made for one child (focus papers) carries child_id; a spare one carries none and is open
+    "public.sheet_template": ("papers", "child_id", "child_open"),
     # CP-4: legacy class label (section) with child ids inside
     "public.class_card": ("learning", "section", "section"),
     "public.class_card_confirmation": ("learning", "section", "section"),
@@ -108,11 +110,6 @@ SCHOOL_WIDE = [
     (
         "sign-in before anyone is known: the website reads and writes these as the login itself, so they stay open to it",
         "sign_in_failure password_ask password_link",
-    ),
-    (
-        "a blueprint of a paper (its questions and layout), made before any child is named; the register lists it as a "
-        "paper but it holds no answer",
-        "sheet_template",
     ),
 ]
 
