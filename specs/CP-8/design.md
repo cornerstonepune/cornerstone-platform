@@ -42,12 +42,15 @@ main's schema now plus what CP-4 adds that CP-8 touches:
    - View `plan_line_candidate (plan_entry_id, activity_id, rule, rank)`: for each line with `activity_id is null`, every
      activity of the class's band that a rule matches. Rank 1 is `exact_name` (the loader's rule). Further rules are
      added by later migrations only after the box dry run (decision 3).
-   - View `plan_unmatched (plan_entry_id, tenant_id, school_class_id, fortnight_id, plan_key, text, reason, candidates)`:
+   - View `plan_unmatched (plan_entry_id, tenant_id, school_class_id, fortnight_id, fortnight_number, week_code, plan_key,
+     text, reason, candidates)` (the issue's "list shows its fortnight": `fortnight_number` from `fortnight.number`):
      every line with `activity_id is null`, computed live, so none can be silently unlinked and it cannot go stale.
      `reason`: `no_match` (no candidate at any rank), `several_matches` (two or more at the best rank: a person picks),
      `ready_to_link` (exactly one at the best rank: a run has not been applied yet). `candidates` is the count at the best
      rank.
-   - Function `plan_link_apply(p_tenant uuid, p_band text, p_by text) returns uuid`: takes `pg_advisory_xact_lock` on
+   - Function `plan_link_apply(p_tenant uuid, p_band text, p_by text, p_fortnight int default null) returns uuid`:
+     `p_fortnight` is a `fortnight.number`; when given, the run touches only lines of that fortnight (item 4: "limited to
+     one fortnight"), when null, all fortnights. Takes `pg_advisory_xact_lock` on
      (tenant, band), then in one statement links every line with exactly one candidate at its best rank where
      `activity_id is null` (so it never changes an existing link), setting `link_rule` = that rule, one new `link_run`,
      `linked_at`, `linked_by`. Returns the run id (also when it links nothing).
@@ -69,7 +72,8 @@ main's schema now plus what CP-4 adds that CP-8 touches:
 4. **Concurrency.** One transaction per apply and per undo; the advisory lock stops two applies racing; the update's
    `where activity_id is null` plus the rowcount returned stop an overwrite.
 5. **Engine surface, thin.** In `engine/w2_print/cli_timetable.py` (the `timetable` group, where the loader's command lives): `engine timetable link` (dry run: counts of
-   lines, would link by rule, listed by reason; `--apply` writes via `plan_link_apply` and prints the run id),
+   lines, would link by rule, listed by reason; `--apply` writes via `plan_link_apply` and prints the run id; `--fortnight N` limits the dry run or the apply to
+   fortnight number N),
    `engine timetable link-undo RUN_ID`, `engine timetable unmatched` (plan key, line text, class section, reason). Plan
    line text is school curriculum text; no person's name is read or printed. The commands go in `workflows.json` N4's
    `commands`; `test_layout.py` is unchanged (it reads the map).
@@ -97,7 +101,12 @@ main's schema now plus what CP-4 adds that CP-8 touches:
 9. **No live writes from a session.** Every LIVE proof is `check_box`, read-only, prints counts only. The apply run on live
    is a deploy-time step by Nimish or the box.
 
-## Measuring item 1
+## Measuring item 1 (per fortnight, and overall)
+The issue now says the share holds "overall and in each fortnight". The default target is checked in each fortnight and
+overall; a numeric `Target: N%` must be met in each fortnight and overall. A fortnight with no K2 lines is skipped and
+named in the output, not counted as passing silently.
+
+## Measuring item 1 (original text)
 Denominator: all K2 `plan_entry` rows (the issue's 375). If the dry run shows some of them are headings and not lessons, the
 denominator is fixed before the build, and Nimish told. Default target, used because none is set: **no line with a match is
 left unlinked**, i.e. `plan_unmatched` holds no `ready_to_link` line after the run; the share `linked / total` is printed
