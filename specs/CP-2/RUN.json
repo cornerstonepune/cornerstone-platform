@@ -1,0 +1,12 @@
+{
+ "ok": false,
+ "passed": [
+  "5 existing browser and speed tests unchanged"
+ ],
+ "failed": [
+  "1 decision recorded before code, amended with the real-pooler result",
+  "2 public.current_staff() returns the id, nothing when unset, empty or invalid",
+  "3 identity set only in apps/web/lib/db.ts, transaction-local, never from the request"
+ ],
+ "ran_at": "2026-11-08T09:06:34+00:00"
+}
