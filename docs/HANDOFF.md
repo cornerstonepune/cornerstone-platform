@@ -19,6 +19,12 @@ Under 50 lines. Rewritten at the end of every session; the session-start hook sh
   also missing for the same reason. The Athena guard blocks agents from writing ~/.athena; do not work around it.
 - teacher-os is on Athena 2.13.0 (PR #49 merged).
 
+- Orchestrator session (started 2026-11-08, tag cp-orchestrator): session_01KEBF262XzywYXyTAcXVKuz. It drafts CP-0 and
+  CP-3..CP-19, runs the design reviews, drafts the access grid, three model-page layouts and the Sarvam request, then
+  runs the gate loop for every scope Nimish locks. The planning session that started it is archived.
+- This branch changes .claude/athena/config.json (id_prefix), which is tier 3: it ships only through a locked scope
+  (CP-0). Do not merge it directly. PR #413 has no spec, so it is folded into CP-11, not merged.
+
 ## In flight
 - Backend reconciliation of Teacher OS Roadmap v23 against code and live data (2026-11-08):
   https://claude.ai/code/artifact/10633d1c-438c-4f4f-8341-3ae82770e1ae
