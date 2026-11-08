@@ -40,7 +40,9 @@ else
   : "${TEST_DATABASE_URL:?set TEST_DATABASE_URL to a Postgres to test on (it is built here when empty), e.g. postgresql://postgres@127.0.0.1:5432/postgres}"
   # Before anything touches it: this resets two roles' passwords and may build a database, so it must be a local one with a user
   # (the roles below are made by swapping that user), as playwright.config.ts also insists once Playwright starts
+  # No query part and one @ only: `?host=` and a second @ both let libpq connect somewhere other than the address shown
   case "$TEST_DATABASE_URL" in
+    *'?'*|*@*@*) echo "preflight FAILED: TEST_DATABASE_URL may not hold a ? or a second @" >&2; exit 1 ;;
     postgres://?*@127.0.0.1[:/]*|postgresql://?*@127.0.0.1[:/]*|postgres://?*@localhost[:/]*|postgresql://?*@localhost[:/]*) ;;
     *) echo "preflight FAILED: TEST_DATABASE_URL must be a local database with a user, like postgresql://postgres@127.0.0.1:5432/postgres" >&2; exit 1 ;;
   esac
