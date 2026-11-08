@@ -5,7 +5,7 @@
 -- A uuid or nothing: unset, empty, blank or anything that is not a uuid gives null, and it never raises. The shape is
 -- checked before the cast so a bad value cannot fail a query that merely asked who is asking.
 create or replace function public.current_staff() returns uuid
-language sql stable security invoker set search_path = '' as $$
+language sql stable security invoker set search_path = pg_catalog, public as $$
   select case when v ~* '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$' then v::uuid end
   from (select nullif(btrim(current_setting('app.staff_id', true)), '') as v) s
 $$;
