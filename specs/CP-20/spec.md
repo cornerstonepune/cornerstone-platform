@@ -1,6 +1,6 @@
 # CP-20: A throwaway database in the proofs job
 
-Source: https://github.com/cornerstonepune/cornerstone-platform/issues/470 (DRAFT, not locked)
+Source: https://github.com/cornerstonepune/cornerstone-platform/issues/470 (locked by Nimish, 8 Nov 2026)
 
 ## What
 
