@@ -21,7 +21,8 @@ child state ──> report_item · consent ──> parent report
 ```
 
 `activity_observation.session_id` is still free (the migration says the next slice points it at `session`). Until then a
-note links to its activity and class, not to the period it was taught in. Worth closing when F2 (Today, joined) is scoped.
+note links to its activity and class, not to the period it was taught in. Orchestrator 4 holds it for the backend audit;
+no new Core scope without Nimish.
 
 ## What the sketch adds
 
@@ -32,22 +33,22 @@ learning objective -> skill (the class grid on it; after / ready next) -> a chil
 often seen; every observation with the educator's words beside the mark) -> back to any skill. The coordinator's Today is
 what waits on them, next week's events and new activities, and "does the system have what it needs".
 
-## Decisions this raises for Nimish
+## Decisions this raised, and where they stand
 
-1. **White ground.** He asked for it; the sketch is white. It reverses the brand book's lime wash (D-073) for the site.
-   Record as his decision before any screen is built on it.
-2. **No educator score.** Nothing in the database ranks staff; the agreed workflow puts effectiveness in a later phase.
-   The sketch shows three fair numbers per class: sessions done of planned, notes confirmed late, reader accuracy (how
-   much of the reader's draft she kept). A ranking is a decision with the school, not a screen to draw.
-3. **Graph technology.** The data is already a graph and the nightly rebuild is `engine graph`. What was missing is the
-   walk on screen, which needs no new store. A graph database would be a second copy of the truth beside the one
-   Postgres (ARCHITECTURE: one Postgres, four rings) and buys nothing at 100 children. If many-hop queries ever get slow,
-   Apache AGE (graph queries inside Postgres; not verified hands-on) keeps one database. Not before a real slow query.
-4. **No visible sidebar tree.** Trail plus rail gives "go anywhere" with the full width; a tree is one component if he
-   still wants it after using the sketch.
+1. **White ground.** Decided: `docs/decisions/2026-11-09-white-ground-for-the-site.md`. It supersedes the lime wash of
+   `design-system/PRINCIPLES.md` and D-073's paper-warm for the page ground only; D-073's contrast table must be re-run
+   on white. The font conflict in `docs/design-tokens.md` stays open.
+2. **No educator score.** Agreed with orchestrator 4. Nothing in the database ranks staff; the agreed workflow puts
+   effectiveness in a later phase. The sketch shows three fair numbers per class: sessions done of planned, notes
+   confirmed late, reader accuracy (how much of the reader's draft she kept). A ranking is a decision with the school.
+3. **Graph technology.** Agreed with orchestrator 4. The data is already a graph and the nightly rebuild is `engine
+   graph`. What was missing is the walk on screen, which needs no new store. A graph database would be a second copy of
+   the truth beside the one Postgres (ARCHITECTURE: one Postgres, four rings). Apache AGE (graph queries inside Postgres;
+   not verified hands-on) only after a measured slow query.
+4. **No visible sidebar tree.** Trail plus rail gives "go anywhere" with the full width; a tree is one component if
+   Nimish still wants it after using the sketch.
 
-## Questions asked
+## Questions still open for Nimish
 
 1. Does the walk feel right; anything expected but unreachable?
-2. Confirm white replaces ivory for the site.
-3. Are the coordinator's three numbers enough?
+2. Are the coordinator's three numbers enough?
