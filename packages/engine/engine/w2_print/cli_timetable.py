@@ -14,6 +14,7 @@ import psycopg
 import typer
 
 from engine.core import db, settings
+from engine.w1_bank.cli_map import staff_of
 from engine.w2_print import cli_plan_link, tt_need
 from engine.w2_print import fortnight_cycle as fc
 from engine.w2_print import k2_timetable as tt
@@ -173,7 +174,7 @@ def go_live(
     with db.connect() as conn:
         if dry:  # looking the person up logs itself; a trial run rolls that back with everything else
             conn.execute("set transaction read write")
-        who = _staff_of(conn, by)
+        who = staff_of(conn, by)
         if dry:
             conn.execute("set transaction read only")
         try:
@@ -199,15 +200,6 @@ def go_live(
             conn.commit()
     for line in report.lines():
         typer.echo(line)
-
-
-def _staff_of(conn: db.Conn, by: str) -> db.Id:
-    """The member of staff an email names, by id (the lookup is logged by `staff_of_email`); refused when no one, or
-    more than one, has it."""
-    row = conn.execute("select public.staff_of_email(%s) as id", (by,)).fetchone()
-    if not row or row["id"] is None:
-        raise typer.BadParameter("no one member of staff has the email given to --by")
-    return row["id"]
 
 
 def _run(
