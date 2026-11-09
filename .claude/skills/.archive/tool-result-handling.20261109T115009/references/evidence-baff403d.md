@@ -1,0 +1,3 @@
+{"type":"user","message":{"role":"user","content":[{"type":"tool_result","content":"The server-side auto mode classifier gave no verdict for Bash: a hook changed this call's input after auto mode reviewed it, so the review does not cover what would run. ... The hook produced this input: {\"command\":\"rtk git add specs/CP-25/design.md\"}. In your next response, issue the Bash call once more with exactly that input so auto mode reviews it.","is_error":true}]}}
+{"message":{"content":[{"type":"tool_use","name":"Bash","input":{"command":"rtk git add specs/CP-25/design.md"}}]}}
+{"tool_use_id":"toolu_01BPFWRMcwWp2rdvkWUHxurZ","type":"tool_result","content":"ok 1 file changed, 256 insertions(+)","is_error":false}
