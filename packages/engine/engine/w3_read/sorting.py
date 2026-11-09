@@ -1,0 +1,242 @@
+"""N8 — one scanned file of many children's papers, sorted by the QR code on each page.
+
+A school scanner hands over one PDF for a whole class. Each page the engine printed carries a QR: a child's own
+paper carries its sheet's (`CS` + 6 hex, `assemble._qr`), looked up in `sheet_instance` for whose paper it is; a
+library worksheet carries the worksheet's code (`R8-H02`, `library.pdf`), the same on every child's copy, so its
+pages are counted off in the worksheet's own length, and whose each copy is can only be read from the name
+written on it. Every page is drawn and its QR read — lined up by the page's four corner marks first, exactly as
+marking does (`assess.mark`), else searched for on the page as it came. Nothing is written: this says what is
+in the file before anything reads a child's answers from it.
+"""
+
+import re
+
+import cv2
+import pymupdf
+import zxingcpp
+
+from engine.adapters import ocr
+from engine.assess import mark
+from engine.w3_read import render_pdf
+
+OURS = re.compile(r"^CS[0-9A-F]{6}$")
+WORKSHEET = re.compile(r"^[RMX]\d{1,2}-[A-Z]\d{2,3}$")  # the library's codes, as the website checks them
+
+
+_QR = zxingcpp.BarcodeFormats(zxingcpp.BarcodeFormat.QRCode)
+_BINARIZERS = (
+    zxingcpp.Binarizer.LocalAverage,
+    zxingcpp.Binarizer.GlobalHistogram,
+    zxingcpp.Binarizer.FixedThreshold,
+)
+
+
+def _looks(img):
+    """The page, and the corner the QR prints in, as a decoder can best see them: as they are, then drawn two
+    and three times larger, then four times and softened. On the 16 photographed pages of 2026-09-24 the corner
+    as it came read 11, two and three times larger 12, four times softened 13 — each variant finds a page the
+    others miss, and the union is what is tried."""
+    h, w = img.shape[:2]
+    corner = img[: int(h * 0.2), int(w * 0.55) :]
+    g = cv2.cvtColor(corner, cv2.COLOR_BGR2GRAY)
+    yield corner
+    for s in (2, 3):
+        yield cv2.resize(g, None, fx=s, fy=s, interpolation=cv2.INTER_CUBIC)
+    yield cv2.GaussianBlur(cv2.resize(g, None, fx=4, fy=4, interpolation=cv2.INTER_CUBIC), (0, 0), 3.2)
+    yield img
+
+
+def qr_of(img) -> str | None:
+    """The QR code on one page, or None. zxing first (it decodes a code OpenCV's detector gives up on: 8 of
+    the 16 pages of 2026-09-24 against 3), in every look `_looks` gives, then the old detector."""
+    for look in _looks(img):
+        for binarizer in _BINARIZERS:
+            found = zxingcpp.read_barcodes(look, formats=_QR, binarizer=binarizer)
+            if found and found[0].text:
+                return found[0].text
+    canon, _ = mark.deskew(img)
+    if canon is not None and (code := mark.read_qr(canon)):
+        return code
+    det = cv2.QRCodeDetector()
+    # the page as it is and halved, and the corner the code prints in doubled — never the whole page doubled:
+    # that alone took 240 MB a page, and the engine was killed for memory reading 24 Sep (2026-09-26)
+    h, w = img.shape[:2]
+    corner = img[: int(h * 0.2), int(w * 0.55) :]
+    for im in (img, cv2.resize(img, None, fx=0.5, fy=0.5, interpolation=cv2.INTER_AREA), _doubled(corner)):
+        code, _, _ = det.detectAndDecode(im)
+        if code:
+            return code
+    return None
+
+
+def _doubled(img):
+    return cv2.resize(img, None, fx=2.0, fy=2.0, interpolation=cv2.INTER_AREA)
+
+
+# Letters a reader mistakes for one another in a printed code (a scan's "CS56DB32" is read "CS560832"): folded alike
+# on both sides, the printed code and a code this system printed still meet.
+_FOLD = str.maketrans(
+    {"O": "0", "Q": "0", "D": "0", "S": "5", "I": "1", "L": "1", "B": "8", "G": "6", "Z": "2"}
+)
+_SEEN = re.compile(r"C\s*[S5]\s*([0-9A-Z]{6})")
+
+
+def printed_code(lines, known) -> str | None:
+    """The code printed as words under a page's QR (`CS3DB381`), read from the page's text where the QR itself
+    would not scan: the one code this system printed that a code on the page matches, allowing for the letters a
+    reader mistakes (`_FOLD`). None when nothing matches, or two different printed codes do (a double scan)."""
+    folded = {}
+    for k in known:
+        folded.setdefault(k[2:].translate(_FOLD), set()).add(k)
+    found = set()
+    for line in lines:
+        for m in _SEEN.finditer(line.upper()):
+            found |= folded.get(m.group(1).translate(_FOLD), set())
+    return found.pop() if len(found) == 1 else None
+
+
+def _text_of(img, cli):
+    ok, jpg = cv2.imencode(".jpg", img, [cv2.IMWRITE_JPEG_QUALITY, 90])
+    return [line["text"] for line in ocr.read(jpg.tobytes(), cli)["lines"]]
+
+
+def group(codes: list[str | None], length=lambda code: 0) -> list[dict]:
+    """Pages in file order → papers: a run of pages with one code is one paper. `length(code)` is how many pages one
+    copy has when every child's copy carries the same code (a library worksheet); such a run is cut into copies of that
+    many pages. A page with no code joins no paper: it is a paper of its own, unread, until a person says whose it is
+    (`give`). Until 2026-10-22 it joined the paper before it, and a page that was not that child's was read as theirs;
+    Nimish, that day: "yes, stop guessing" (goals/ux9a-no-guessed-pages.yaml)."""
+    out = []
+    for n, code in enumerate(codes, 1):
+        last = out[-1] if out else None
+        full = last and length(last["qr"]) and len(last["pages"]) >= length(last["qr"])
+        if code and last and last["qr"] == code and not full:
+            last["pages"].append(n)
+        else:
+            out.append({"qr": code, "pages": [n], "unread": [] if code else [n]})
+    return out
+
+
+def give(papers: list[dict], given: dict[int, str]) -> list[dict]:
+    """Papers → the same, each page with no code that a person said is a child's (`given`, {page: child}) moved onto
+    that child's own paper in the file as a run of its own, said in its `given`. A page given to a child whose paper is
+    not in the file stays as it was: unread."""
+    theirs = {p["sheet"]["child_id"]: p for p in papers if p.get("sheet") and p["sheet"]["child_id"]}
+    out = []
+    for p in papers:
+        whose = None if p["qr"] else theirs.get(given.get(p["pages"][0]))
+        if whose is None:
+            out.append(p)
+            continue
+        whose["pages"] = sorted(whose["pages"] + p["pages"])
+        whose["runs"].append(list(p["pages"]))
+        whose["given"] = whose.get("given", []) + p["pages"]
+    return out
+
+
+def pages_said(pages: list[int]) -> str:
+    """A copy's pages as a person reads them: "p3–4", or "p1, p9–10" for one whose pages lie apart in the file."""
+    runs: list[list[int]] = []
+    for n in pages:
+        if runs and n == runs[-1][-1] + 1:
+            runs[-1].append(n)
+        else:
+            runs.append([n])
+    return ", ".join(f"p{r[0]}" + (f"–{r[-1]}" if len(r) > 1 else "") for r in runs)
+
+
+def gather(papers: list[dict]) -> list[dict]:
+    """Papers in file order → each child's own paper as one, wherever its pages lie: a code printed for one child
+    (`OURS`) is theirs alone, so every run of pages carrying it is the same copy, kept where it first appears, `runs`
+    each stretch of it as the scanner took them. A library worksheet's code is on every child's copy, so its runs stay
+    apart. 2026-10-16: a child's first page was photographed a second time, read as a copy of its own, and its reading
+    replaced the whole copy's (goals/l11-a-scan-is-read-whole.yaml)."""
+    out, mine = [], {}
+    for p in papers:
+        own = p["qr"] and OURS.match(p["qr"])
+        if own and p["qr"] in mine:
+            one = mine[p["qr"]]
+            one["pages"] += p["pages"]
+            one["unread"] += p["unread"]
+            one["runs"].append(list(p["pages"]))
+            continue
+        one = {**p, "pages": list(p["pages"]), "unread": list(p["unread"]), "runs": [list(p["pages"])]}
+        out.append(one)
+        if own:
+            mine[p["qr"]] = one
+    return out
+
+
+def worksheets(conn, codes) -> dict:
+    """{code: the library worksheet} for the codes that are one: its skill, level and questions."""
+    return {
+        r["code"]: dict(r)
+        for r in conn.execute(
+            "select t.code, coalesce(s.name, t.skill_set_code) as skill, t.difficulty as level, t.band,"
+            "       coalesce(array_length(t.item_ids, 1), 0) as questions"
+            " from sheet_template t left join skill s on s.tenant_id = t.tenant_id and s.code = t.skill_set_code"
+            " where t.source = 'library' and t.code = any(%s)",
+            (list(codes),),
+        )
+    }
+
+
+def codes(path):
+    """Each page's QR, read from the photograph one page at a time and let go. Held all at once, the 24 Sep
+    file's 16 photographs took 750 MB, and the engine was killed for memory reading it (2026-09-26)."""
+    return [qr_of(img) for img in render_pdf.photos(path)]
+
+
+def sort_file(conn, path, pages_of=None, read_text=None) -> list[dict]:
+    """Each paper in the file: its pages, its QR, and whose paper the database says it is — a child's own sheet
+    (`sheet`), a library worksheet (`worksheet`, whose copy it is being written on it, not in the code), or
+    neither. Pages are drawn at the resolution the reader uses (`render_pdf.DPI`). `pages_of(code)` is a library
+    worksheet's length in pages, by default its printed PDF's (`library.pdf`); a child's own paper is as long as
+    it printed (`sheet_instance.key`). `read_text(img)` gives a page's lines of text, for a QR that will not scan."""
+    found = codes(path)  # each page at its own pixels: a code is read from the photograph
+    if any(c is None for c in found):
+        # a QR the scan spoiled: the same code is printed beside it in words, read with the page's text — only
+        # those pages are drawn again
+        mine = [
+            r["qr_code"] for r in conn.execute("select qr_code from sheet_instance where qr_code like 'CS%%'")
+        ]
+        read_text = read_text or (lambda img, cli=ocr.client(): _text_of(img, cli))
+        found = [
+            c or printed_code(read_text(render_pdf.photo(path, n)[0]), mine) for n, c in enumerate(found, 1)
+        ]
+    library = worksheets(conn, {c for c in found if c and WORKSHEET.match(c)})
+    if pages_of is None:
+        from engine.w2_print import library as printed
+
+        pages_of = lambda code: len(pymupdf.open(printed.pdf(conn, code)))  # noqa: E731
+    length = {c: pages_of(c) for c in library}
+    length |= {
+        r["qr_code"]: r["pages"]
+        for r in conn.execute(
+            "select qr_code, (key ->> 'pages')::int as pages from sheet_instance"
+            " where qr_code = any(%s) and key ? 'pages'",
+            ([c for c in found if c and OURS.match(c)],),
+        )
+    }
+    papers = gather(group(found, lambda c: length.get(c, 0)))
+    qrs = [p["qr"] for p in papers if p["qr"]]
+    known = {
+        r["qr_code"]: dict(r)
+        for r in conn.execute(
+            "select si.qr_code, si.kind, si.week, si.child_id, si.pdf_path, ch.band, ch.section, ch.roll_no, t.source, t.code,"
+            "       t.id as template_id,"
+            "       coalesce(t.key ->> 'title', t.code, t.batch_id) as paper,"
+            "       coalesce(array_length(t.item_ids, 1), 0) as questions,"
+            "       (select count(*) from capture c where c.sheet_instance_id = si.id and c.superseded_by is null)"
+            "         as captures"
+            " from sheet_instance si join sheet_template t on t.id = si.sheet_template_id"
+            " left join child ch on ch.id = si.child_id where si.qr_code = any(%s)",
+            (qrs,),
+        )
+    }
+    for p in papers:
+        p["ours"] = bool(p["qr"] and (OURS.match(p["qr"]) or p["qr"] in library))
+        p["sheet"] = known.get(p["qr"])
+        p["worksheet"] = library.get(p["qr"])
+        p["length"] = length.get(p["qr"], 0)
+    return papers

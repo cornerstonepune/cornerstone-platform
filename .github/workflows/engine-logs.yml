@@ -1,0 +1,131 @@
+# What the engine on the server is doing, for whoever is working on it without a way onto the server: its last log
+# lines, its processes, and the reading runs of the last day. Run by hand (Actions → engine logs → Run workflow);
+# nothing is changed. 2026-09-25: a scan's reading said "running" for 25 minutes and nobody could see why.
+#
+# The engine logs requests and errors, never a child's name (rule 6); run logs are visible only to the repository.
+name: engine logs
+on:
+  workflow_dispatch:
+    inputs:
+      lines: { description: "how many log lines", default: "300" }
+
+jobs:
+  look:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4  # the measures in .github/measure/, piped into the engine
+      - name: a way in
+        env:
+          KEY: "${{ secrets.LIGHTSAIL_SSH_KEY }}"
+          HOST: "${{ secrets.LIGHTSAIL_HOST }}"
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$KEY" > ~/.ssh/server
+          chmod 600 ~/.ssh/server
+          ssh -i ~/.ssh/server -o StrictHostKeyChecking=accept-new -o ConnectTimeout=15 "ubuntu@$HOST" true
+      - name: the engine
+        env:
+          HOST: "${{ secrets.LIGHTSAIL_HOST }}"
+          LINES: "${{ inputs.lines }}"
+        run: |
+          S="ssh -i $HOME/.ssh/server -o ConnectTimeout=15 ubuntu@$HOST"
+          echo "== containers"; $S 'sudo docker ps --format "{{.Names}} {{.Status}}"'
+          echo "== processes in the engine"; $S 'sudo docker top deploy-engine-1 -o pid,etime,pcpu,rss,args' || true
+          echo "== memory"; $S 'free -m'
+          # what a new dependency must fit in (ADR 0035: the digit reader's size and memory are measured before merge)
+          echo "== restarts and the kernel's kills"
+          $S "sudo docker inspect deploy-engine-1 --format 'oom_killed={{.State.OOMKilled}} restarts={{.RestartCount}} started={{.State.StartedAt}} exit={{.State.ExitCode}}'" || true
+          $S "sudo dmesg -T 2>/dev/null | grep -iE 'out of memory|oom-kill|killed process' | tail -12" || true
+          echo "== machine"; $S 'nproc; uname -m; df -h / | tail -1; sudo docker images --format "{{.Repository}} {{.Size}}"'
+          # the reader's key file, its shape only: every value masked, line ends shown as $ so a stray space shows
+          echo "== ~/.aws/credentials (values masked)"
+          $S "sed -E 's/=.*/= <set>/' ~/.aws/credentials | cat -A" || true
+          # Jev's key (ADR 0036), whether the engine has it and never its value: the key lives in the server's .env, which
+          # every deploy carries across and hands to the engine (deploy/compose.server.yml, env_file).
+          echo "== Jev's key in the engine"
+          cat > jevkey.py <<'PY'
+          import os
+          if os.environ.get("TYPESAFE_API_KEY"):
+              print("TYPESAFE_API_KEY is set")
+          else:
+              print("TYPESAFE_API_KEY is missing: one line TYPESAFE_API_KEY=<key> in ~/assessment-engine/.env on the server,"
+                    " then Actions -> deploy engine -> Run workflow, which restarts the engine with it")
+          PY
+          $S 'sudo docker exec -i deploy-engine-1 python -' < jevkey.py || true
+          echo "== reading runs, last day"
+          cat > runs.py <<'PY'
+          from engine.core import db
+          with db.connect() as c:
+              for r in c.execute("select id, status, started_at, finished_at, left(coalesce(error, ''), 300) as error"
+                                 " from flow_run where flow = 'read-scan' and started_at > now() - interval '1 day'"
+                                 " order by started_at"):
+                  print(r["id"], r["status"], r["started_at"], r["finished_at"], r["error"])
+          PY
+          $S 'sudo docker exec -i deploy-engine-1 python -' < runs.py || true
+          echo "== answers waiting for a person, by paper and reason (read only)"
+          cat > waiting.py <<'PY'
+          from engine.core import db
+          q = """
+          with w as (
+            select coalesce(t.source, '(no template)') as source,
+                   case when r.status = 'unreadable' then 'unreadable'
+                        when r.raw_read like '%%every wrong answer%%' then 'read wrong'
+                        when r.raw_read like '%%every blank%%' then 'read blank'
+                        when r.raw_read like '%%until the reader is trusted%%' then 'read right, kind not trusted'
+                        else 'reader unsure' end as why
+            from item_result r join capture c on c.id = r.capture_id
+            left join sheet_instance si on si.id = c.sheet_instance_id
+            left join sheet_template t on t.id = si.sheet_template_id
+            where c.superseded_by is null and r.state = 'candidate' and r.status in ('unreadable', 'needs_teacher'))
+          select source, why, count(*) as n from w group by 1, 2 order by 1, 3 desc"""
+          with db.connect() as c:
+              for r in c.execute(q):
+                  print(r["source"], "|", r["why"], "|", r["n"])
+              for r in c.execute("select coalesce(t.source, '(no template)') as source, count(*) as n, count(distinct c.id) as papers"
+                                 " from item_result r join capture c on c.id = r.capture_id"
+                                 " left join sheet_instance si on si.id = c.sheet_instance_id"
+                                 " left join sheet_template t on t.id = si.sheet_template_id"
+                                 " where c.superseded_by is null and r.state = 'confirmed' group by 1"):
+                  print("checked already:", r["source"], r["n"], "answers on", r["papers"], "papers")
+          PY
+          $S 'sudo docker exec -i deploy-engine-1 python -' < waiting.py || true
+          # A skill set may name only mistakes the vocabulary holds (`loaders.orphans`); the ones the mistake-finding
+          # prompt added on live are printed in supabase/seed/misconceptions.json's own shape, to be kept in the seed.
+          # The reader's standing from every check people made (ADR 0032): the total, each kind against the gate, and
+          # how many answers a person no longer has to check — the numbers `engine read report` prints.
+          echo "== how the reader is doing (read only)"
+          cat > reader.py <<'PY'
+          import json
+          from engine.core import db
+          from engine.w3_read import profiles
+          with db.connect() as c:
+              r = profiles.report(c)
+          print(json.dumps({"total": r["total"], "kinds": r["kinds"], "batches": r["batches"][-8:]}, default=str, indent=1))
+          PY
+          $S 'sudo docker exec -i deploy-engine-1 python -' < reader.py || true
+          echo "== mistakes skill sets name that the seed does not hold (read only)"
+          cat > vocabulary.py <<'PY'
+          import json
+          from engine.core import db
+          seed = {m["code"] for m in json.load(open(db.REPO_ROOT / "supabase/seed/misconceptions.json"))["misconceptions"]}
+          with db.connect() as c:
+              rows = c.execute("select code, op, name, description, repair_hint, detectable_by, source, external_ref,"
+                               " skill_from, skill_code from misconception m"
+                               " where exists (select 1 from skill s where m.code = any(s.misconception_codes))"
+                               " order by code, op").fetchall()
+          print(json.dumps([dict(r) for r in rows if r["code"] not in seed], ensure_ascii=False, indent=1))
+          PY
+          $S 'sudo docker exec -i deploy-engine-1 python -' < vocabulary.py || true
+          # Whether every check teaches the reader (ADR 0032): the notebooks, the answers sent to a person week by week,
+          # each kind against the gate, the 16 Oct papers, the second reader. Counts and dates only, in a read-only transaction.
+          echo "== the reader learns from every check (read only)"
+          $S 'sudo docker exec -i deploy-engine-1 python -' < .github/measure/reader_learns.py || true
+          echo "== the newest scan, answer by answer (read only)"
+          $S 'sudo docker exec -i deploy-engine-1 python -' < .github/measure/scan_vs_eye.py || true
+          # goals/ck1: is the picture shown for an answer waiting for a person its own question? Counts by kind of paper.
+          echo "== the picture is the question (read only)"
+          $S 'sudo docker exec -i deploy-engine-1 python -' < .github/measure/box_is_question.py || true
+          # goals/ck2: which printed page is each photograph of the newest scan? Tiles found against each page, counts only.
+          echo "== which page each photograph is (read only)"
+          $S 'sudo docker exec -i deploy-engine-1 python -' < .github/measure/photo_is_page.py || true
+          echo "== log"; $S "sudo docker logs --tail ${LINES:-300} deploy-engine-1 2>&1"

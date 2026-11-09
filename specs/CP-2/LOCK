@@ -1,0 +1,14 @@
+{
+  "digest": "849762d7115fbf3f565a89e0ceda524ef07a8cdc633f1a341034ec50cbbb3dd8",
+  "files": [
+    "spec.md",
+    "checks.sh",
+    "proofs/no_rule_switched_on.py",
+    "proofs/pooler_alternation.sh",
+    "proofs/test_current_staff.py",
+    "proofs/test_static.py"
+  ],
+  "locked_at": "2026-11-08T09:07:22+00:00",
+  "criteria": 6,
+  "athena": "2.13.0"
+}

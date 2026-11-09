@@ -1,0 +1,516 @@
+{
+ "components": [
+  {
+   "name": "archify",
+   "kind": "skill",
+   "purpose": "draws architecture, workflow and data-flow diagrams from the code as standalone HTML",
+   "trigger": "Claude loads it with the Skill tool when the task matches",
+   "metric": "times fired; sessions; tokens of the messages that fired it"
+  },
+  {
+   "name": "athena-build",
+   "kind": "skill",
+   "purpose": "Use to build a scoped change end to end, for example \"build UNC-12\"",
+   "trigger": "Claude loads it with the Skill tool when the task matches",
+   "metric": "times fired; sessions; tokens of the messages that fired it"
+  },
+  {
+   "name": "athena-learn",
+   "kind": "skill",
+   "purpose": "Use at the end of every shipped or blocked change, and in the monthly harness review",
+   "trigger": "Claude loads it with the Skill tool when the task matches",
+   "metric": "times fired; sessions; tokens of the messages that fired it"
+  },
+  {
+   "name": "athena-scope",
+   "kind": "skill",
+   "purpose": "Use when Nimish gives a GitHub issue (a number, a link or a spec ID like ATL-9), a scope file or a rough idea to build",
+   "trigger": "Claude loads it with the Skill tool when the task matches",
+   "metric": "times fired; sessions; tokens of the messages that fired it"
+  },
+  {
+   "name": "athena-ship",
+   "kind": "skill",
+   "purpose": "Use when a scoped change is built and verified (athena finish succeeded)",
+   "trigger": "Claude loads it with the Skill tool when the task matches",
+   "metric": "times fired; sessions; tokens of the messages that fired it"
+  },
+  {
+   "name": "athena-verify",
+   "kind": "skill",
+   "purpose": "Use after a scoped change's proofs pass and before shipping",
+   "trigger": "Claude loads it with the Skill tool when the task matches",
+   "metric": "times fired; sessions; tokens of the messages that fired it"
+  },
+  {
+   "name": "pentest",
+   "kind": "skill",
+   "purpose": "attacks a code folder or staging app like a real attacker, using the open-source Strix tester",
+   "trigger": "Claude loads it with the Skill tool when the task matches",
+   "metric": "times fired; sessions; tokens of the messages that fired it"
+  },
+  {
+   "name": "subagent-driven-development",
+   "kind": "skill",
+   "purpose": "Use when executing implementation plans with independent tasks in the current session",
+   "trigger": "Claude loads it with the Skill tool when the task matches",
+   "metric": "times fired; sessions; tokens of the messages that fired it"
+  },
+  {
+   "name": "using-git-worktrees",
+   "kind": "skill",
+   "purpose": "gives feature work an isolated workspace via native tools or a git worktree",
+   "trigger": "Claude loads it with the Skill tool when the task matches",
+   "metric": "times fired; sessions; tokens of the messages that fired it"
+  },
+  {
+   "name": "writing-plans",
+   "kind": "skill",
+   "purpose": "Use when you have a spec or requirements for a multi-step task, before touching code",
+   "trigger": "Claude loads it with the Skill tool when the task matches",
+   "metric": "times fired; sessions; tokens of the messages that fired it"
+  },
+  {
+   "name": "athena-proof-writer",
+   "kind": "agent",
+   "purpose": "writes the failing acceptance proofs before any product code",
+   "trigger": "dispatched with the Agent tool by subagent_type",
+   "metric": "times dispatched; sessions; tokens"
+  },
+  {
+   "name": "athena-verifier",
+   "kind": "agent",
+   "purpose": "independent read-only check of a change against its locked scope",
+   "trigger": "dispatched with the Agent tool by subagent_type",
+   "metric": "times dispatched; sessions; tokens"
+  },
+  {
+   "name": "reality-checker",
+   "kind": "agent",
+   "purpose": "independent read-only reviewer persona",
+   "trigger": "dispatched with the Agent tool by subagent_type",
+   "metric": "times dispatched; sessions; tokens"
+  },
+  {
+   "name": "athena-mods",
+   "kind": "plugin",
+   "purpose": "the band, token ledger and Jhaveri guard",
+   "trigger": "every session (hooks)",
+   "metric": "times fired (hooks, tools, skills carrying its name); sessions"
+  },
+  {
+   "name": "autoharness",
+   "kind": "plugin",
+   "purpose": "learns project skills from sessions",
+   "trigger": "session hooks",
+   "metric": "times fired (hooks, tools, skills carrying its name); sessions"
+  },
+  {
+   "name": "toolgate",
+   "kind": "plugin",
+   "purpose": "Jev seven risk questions before a tool call",
+   "trigger": "PreToolUse",
+   "metric": "times fired (hooks, tools, skills carrying its name); sessions"
+  },
+  {
+   "name": "winnow",
+   "kind": "plugin",
+   "purpose": "Jev output filter after a file read or search",
+   "trigger": "PostToolUse on Read and Grep",
+   "metric": "times fired (hooks, tools, skills carrying its name); sessions"
+  },
+  {
+   "name": "fast-jev-compaction",
+   "kind": "plugin",
+   "purpose": "drops stale tool results at compaction",
+   "trigger": "context compaction",
+   "metric": "times fired (hooks, tools, skills carrying its name); sessions"
+  },
+  {
+   "name": "jev",
+   "kind": "plugin",
+   "purpose": "Jev checks claims against the diff at done",
+   "trigger": "Stop and jevwire tools",
+   "metric": "times fired (hooks, tools, skills carrying its name); sessions"
+  },
+  {
+   "name": "ponytail",
+   "kind": "plugin",
+   "purpose": "always-on simplest-thing-that-works mode",
+   "trigger": "SessionStart",
+   "metric": "times fired (hooks, tools, skills carrying its name); sessions"
+  },
+  {
+   "name": "egm",
+   "kind": "plugin",
+   "purpose": "Google's Elephant-Goldfish Model: the design step for tier 2 and 3 scopes",
+   "trigger": "athena-scope runs egm-draft and egm-review for a tier 2 or 3 scope",
+   "metric": "times fired (skills carrying its name, typed or loaded); sessions"
+  },
+  {
+   "name": "egm-review",
+   "kind": "skill",
+   "purpose": "fresh reviewers who have not seen the conversation attack the drafted design before the scope is locked",
+   "trigger": "athena-scope reads its SKILL.md and dispatches egm reviewer agents (or a person types /egm:egm-review)",
+   "metric": "times fired; sessions; tokens of the messages that fired it"
+  },
+  {
+   "name": "athena-hook-session-start",
+   "kind": "hook",
+   "purpose": "shows the repo's HANDOFF and learnings at session start",
+   "trigger": "SessionStart",
+   "metric": "times it ran (hook records in sessions)",
+   "match": [
+    "hook session-start"
+   ]
+  },
+  {
+   "name": "athena-hook-prompt",
+   "kind": "hook",
+   "purpose": "reminds the session of the active spec on each prompt",
+   "trigger": "UserPromptSubmit",
+   "metric": "times it ran (hook records in sessions)",
+   "match": [
+    "hook prompt"
+   ]
+  },
+  {
+   "name": "athena-hook-guard",
+   "kind": "hook",
+   "purpose": "blocks edits to locked proofs and pushes to main",
+   "trigger": "PreToolUse on Edit, Write, Bash",
+   "metric": "times it ran (hook records in sessions)",
+   "match": [
+    "hook guard"
+   ]
+  },
+  {
+   "name": "athena-hook-stop",
+   "kind": "hook",
+   "purpose": "the stop gate: re-runs the proofs before a session may end",
+   "trigger": "Stop",
+   "metric": "times it ran (hook records in sessions)",
+   "match": [
+    "hook stop"
+   ]
+  },
+  {
+   "name": "canny-done-gate",
+   "kind": "hook",
+   "purpose": "Canny done-gate on edits and at Stop",
+   "trigger": "Pre/PostToolUse and Stop",
+   "metric": "times it ran (hook records in sessions)",
+   "match": [
+    "canny"
+   ]
+  },
+  {
+   "name": "athena-health",
+   "kind": "gate",
+   "purpose": "nightly, no AI: runs athena health and athena scorecard and keeps one issue open",
+   "trigger": "nightly schedule",
+   "metric": "last GitHub Actions run"
+  },
+  {
+   "name": "athena",
+   "kind": "gate",
+   "purpose": "CI re-runs every locked proof on the pull request and nightly",
+   "trigger": "pull request and nightly schedule",
+   "metric": "last GitHub Actions run"
+  },
+  {
+   "name": "athena-builder",
+   "kind": "task",
+   "purpose": "builds scoped issues unattended",
+   "trigger": "scheduled routine",
+   "metric": "last_run and status in usage/review-status.json"
+  },
+  {
+   "name": "brain-router",
+   "kind": "task",
+   "purpose": "files recordings and documents into the brain repos",
+   "trigger": "scheduled routine",
+   "metric": "last_run and status in usage/review-status.json"
+  },
+  {
+   "name": "fortnightly-scorecard-review",
+   "kind": "task",
+   "purpose": "keep, fix or remove each component using the scorecard",
+   "trigger": "scheduled routine",
+   "metric": "last_run and status in usage/review-status.json"
+  },
+  {
+   "name": "monthly-harness-review",
+   "kind": "task",
+   "purpose": "monthly review: prune, adopt, retire",
+   "trigger": "scheduled routine",
+   "metric": "last_run and status in usage/review-status.json"
+  },
+  {
+   "name": "weekly-cto-review",
+   "kind": "task",
+   "purpose": "weekly review of the repos and the harness",
+   "trigger": "scheduled routine",
+   "metric": "last_run and status in usage/review-status.json"
+  },
+  {
+   "name": "rtk-hook",
+   "kind": "hook",
+   "purpose": "rtk's own native hook (`rtk hook claude`) shortens shell command output before it enters the context (ATH-9, ATH-21)",
+   "trigger": "every Bash tool call in a session",
+   "metric": "rtk tokens saved per session (rtk's own tracker), in athena tokens; a session counts only when that is above 0"
+  },
+  {
+   "name": "graphify",
+   "kind": "plugin",
+   "log_env": "GRAPHIFY_QUERY_LOG",
+   "purpose": "a code map the agent queries before searching or reading files (graphify 0.9.103, code-only, no model) (ATH-21)",
+   "trigger": "graphify query, explain, path or affected, run by the agent",
+   "metric": "lines in graphify's own query log (GRAPHIFY_QUERY_LOG), one per query"
+  },
+  {
+   "name": "weekly-skill-review",
+   "kind": "task",
+   "purpose": "opens the one weekly pull request that brings autoharness's learned skills and their tracking state from the athena-learned branch to main (ATH-21)",
+   "trigger": "scheduled routine every Monday",
+   "metric": "last_run and status in usage/review-status.json"
+  },
+  {
+   "name": "athena-hook-ui-slop",
+   "kind": "hook",
+   "match": [
+    "hook ui-slop"
+   ],
+   "purpose": "runs Impeccable's design detectors on an edited interface file and hands new findings back to Claude (ATH-13)",
+   "trigger": "every Edit or Write of a .tsx, .jsx, .css, .html, .vue or .svelte file in a repository with a web app",
+   "metric": "new Impeccable findings caught at edit time per session"
+  },
+  {
+   "name": "ponytail-measure",
+   "kind": "task",
+   "purpose": "measures Ponytail's saving weekly: the same task with and without its instructions (ATH-9)",
+   "trigger": "scheduled task every Monday",
+   "metric": "the weekly measure record on the athena-telemetry branch"
+  },
+  {
+   "name": "monthly-improvement",
+   "kind": "task",
+   "purpose": "takes the worst red number, replays a recent slice with 2 or 3 harness changes side by side, opens a pull request (ATH-11)",
+   "trigger": "scheduled routine, the 9th of every month",
+   "metric": "last_run and status in usage/review-status.json"
+  },
+  {
+   "name": "weekly-watchlist",
+   "kind": "task",
+   "purpose": "posts up to 3 new candidate repositories or skills, plus links Nimish shared, to the Linear inbox (ATH-11)",
+   "trigger": "scheduled routine every Saturday",
+   "metric": "last_run and status in usage/review-status.json"
+  },
+  {
+   "name": "canary",
+   "kind": "skill",
+   "purpose": "Post-deploy canary monitoring",
+   "trigger": "Claude loads it with the Skill tool when the task matches",
+   "metric": "times fired; sessions; tokens of the messages that fired it"
+  },
+  {
+   "name": "codebase-design",
+   "kind": "skill",
+   "purpose": "Shared vocabulary for designing deep modules",
+   "trigger": "Claude loads it with the Skill tool when the task matches",
+   "metric": "times fired; sessions; tokens of the messages that fired it"
+  },
+  {
+   "name": "cso",
+   "kind": "skill",
+   "purpose": "Security audit: supported static findings; qualified profiles add reproduction and repair candidates",
+   "trigger": "Claude loads it with the Skill tool when the task matches",
+   "metric": "times fired; sessions; tokens of the messages that fired it"
+  },
+  {
+   "name": "design-consultation",
+   "kind": "skill",
+   "purpose": "writes the product's design system file (DESIGN.md) from an interview and references",
+   "trigger": "Claude loads it with the Skill tool when the task matches",
+   "metric": "times fired; sessions; tokens of the messages that fired it"
+  },
+  {
+   "name": "design-review",
+   "kind": "skill",
+   "purpose": "visual audit of built screens, report only under Athena",
+   "trigger": "Claude loads it with the Skill tool when the task matches",
+   "metric": "times fired; sessions; tokens of the messages that fired it"
+  },
+  {
+   "name": "design-shotgun",
+   "kind": "skill",
+   "purpose": "Design shotgun: generate multiple AI design variants, open a comparison board, collect structured feedback, and iterate",
+   "trigger": "Claude loads it with the Skill tool when the task matches",
+   "metric": "times fired; sessions; tokens of the messages that fired it"
+  },
+  {
+   "name": "diagnosing-bugs",
+   "kind": "skill",
+   "purpose": "Diagnosis loop for hard bugs and performance regressions",
+   "trigger": "Claude loads it with the Skill tool when the task matches",
+   "metric": "times fired; sessions; tokens of the messages that fired it"
+  },
+  {
+   "name": "domain-modeling",
+   "kind": "skill",
+   "purpose": "Build and sharpen a project's domain model",
+   "trigger": "Claude loads it with the Skill tool when the task matches",
+   "metric": "times fired; sessions; tokens of the messages that fired it"
+  },
+  {
+   "name": "find-skills",
+   "kind": "skill",
+   "purpose": "searches the open skills directory before anything new is built (search only under Athena)",
+   "trigger": "Claude loads it with the Skill tool when the task matches",
+   "metric": "times fired; sessions; tokens of the messages that fired it"
+  },
+  {
+   "name": "frontend-design",
+   "kind": "skill",
+   "purpose": "Guidance for distinctive, intentional visual design when building new UI or reshaping an existing one",
+   "trigger": "Claude loads it with the Skill tool when the task matches",
+   "metric": "times fired; sessions; tokens of the messages that fired it"
+  },
+  {
+   "name": "grill-with-docs",
+   "kind": "skill",
+   "purpose": "A relentless interview to sharpen a plan or design, which also creates docs (ADR's and glossary) as we go",
+   "trigger": "Claude loads it with the Skill tool when the task matches",
+   "metric": "times fired; sessions; tokens of the messages that fired it"
+  },
+  {
+   "name": "grilling",
+   "kind": "skill",
+   "purpose": "Grill the user relentlessly about a plan, decision, or idea",
+   "trigger": "Claude loads it with the Skill tool when the task matches",
+   "metric": "times fired; sessions; tokens of the messages that fired it"
+  },
+  {
+   "name": "learn",
+   "kind": "skill",
+   "purpose": "Manage project learnings",
+   "trigger": "Claude loads it with the Skill tool when the task matches",
+   "metric": "times fired; sessions; tokens of the messages that fired it"
+  },
+  {
+   "name": "office-hours",
+   "kind": "skill",
+   "purpose": "YC Office Hours — two modes",
+   "trigger": "Claude loads it with the Skill tool when the task matches",
+   "metric": "times fired; sessions; tokens of the messages that fired it"
+  },
+  {
+   "name": "plan-ceo-review",
+   "kind": "skill",
+   "purpose": "CEO/founder-mode plan review",
+   "trigger": "Claude loads it with the Skill tool when the task matches",
+   "metric": "times fired; sessions; tokens of the messages that fired it"
+  },
+  {
+   "name": "plan-eng-review",
+   "kind": "skill",
+   "purpose": "Eng manager-mode plan review",
+   "trigger": "Claude loads it with the Skill tool when the task matches",
+   "metric": "times fired; sessions; tokens of the messages that fired it"
+  },
+  {
+   "name": "qa",
+   "kind": "skill",
+   "purpose": "tests the site, API or CLI like a user; report only under Athena",
+   "trigger": "Claude loads it with the Skill tool when the task matches",
+   "metric": "times fired; sessions; tokens of the messages that fired it"
+  },
+  {
+   "name": "retro",
+   "kind": "skill",
+   "purpose": "Conduct a retrospective on a coding session",
+   "trigger": "Claude loads it with the Skill tool when the task matches",
+   "metric": "times fired; sessions; tokens of the messages that fired it"
+  },
+  {
+   "name": "review",
+   "kind": "skill",
+   "purpose": "Use when you review this PR's diff",
+   "trigger": "Claude loads it with the Skill tool when the task matches",
+   "metric": "times fired; sessions; tokens of the messages that fired it"
+  },
+  {
+   "name": "tdd",
+   "kind": "skill",
+   "purpose": "Test-driven development",
+   "trigger": "Claude loads it with the Skill tool when the task matches",
+   "metric": "times fired; sessions; tokens of the messages that fired it"
+  },
+  {
+   "name": "to-spec",
+   "kind": "skill",
+   "purpose": "Turn the current conversation into a spec and publish it to the project issue tracker: no interview, just synthesis of what you've already discussed",
+   "trigger": "Claude loads it with the Skill tool when the task matches",
+   "metric": "times fired; sessions; tokens of the messages that fired it"
+  },
+  {
+   "name": "to-tickets",
+   "kind": "skill",
+   "purpose": "Break a plan, spec, or the current conversation into a set of tracer-bullet tickets, each declaring its blocking edges",
+   "trigger": "Claude loads it with the Skill tool when the task matches",
+   "metric": "times fired; sessions; tokens of the messages that fired it"
+  },
+  {
+   "name": "writing-for-agents",
+   "kind": "skill",
+   "purpose": "Writing documents for agents",
+   "trigger": "Claude loads it with the Skill tool when the task matches",
+   "metric": "times fired; sessions; tokens of the messages that fired it"
+  },
+  {
+   "name": "documentation-and-adrs",
+   "kind": "skill",
+   "purpose": "Records decisions and documentation",
+   "trigger": "Claude loads it with the Skill tool when the task matches",
+   "metric": "times fired; sessions; tokens of the messages that fired it"
+  },
+  {
+   "name": "scope-creep-detector",
+   "kind": "skill",
+   "purpose": "checks a diff against its stated intent for unrelated files, broad changes and added dependencies; athena-verify runs its script",
+   "trigger": "Claude loads it with the Skill tool when the task matches; athena-verify runs scripts/scope_creep.py",
+   "metric": "times fired; sessions; tokens of the messages that fired it"
+  },
+  {
+   "name": "security-and-hardening",
+   "kind": "skill",
+   "purpose": "Hardens code against vulnerabilities",
+   "trigger": "Claude loads it with the Skill tool when the task matches",
+   "metric": "times fired; sessions; tokens of the messages that fired it"
+  },
+  {
+   "name": "thinking-out-loud",
+   "kind": "skill",
+   "purpose": "holds all action on a long spoken ramble until an echo brief of it is approved",
+   "trigger": "Claude loads it with the Skill tool when the task matches",
+   "metric": "times fired; sessions; tokens of the messages that fired it"
+  },
+  {
+   "name": "athena-explorer",
+   "kind": "agent",
+   "purpose": "cheap read-only exploration on Haiku; returns the conclusion, not the file dumps",
+   "trigger": "dispatched with the Agent tool by subagent_type",
+   "metric": "times dispatched; sessions; tokens"
+  },
+  {
+   "name": "athena-hook-ledger",
+   "kind": "hook",
+   "purpose": "records model and tokens per product stage in ~/.athena/usage (ATH-10)",
+   "trigger": "PostToolUse, every tool call",
+   "metric": "ledger rows per stage; sessions",
+   "match": [
+    "hook ledger"
+   ]
+  }
+ ]
+}

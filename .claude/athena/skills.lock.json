@@ -1,0 +1,170 @@
+{
+  "_what": "Every outside skill Athena ships: source, the pinned commit, and the record of reading it end to end (ATH-10). Copies are unchanged apart from a `model:` frontmatter line and the patches named. swaps: Blueprint name -> installed skill.",
+  "skills": {
+    "office-hours": {
+      "source": "https://github.com/garrytan/gstack",
+      "path": "office-hours",
+      "sha": "297f50c7e1d46aab1404f5f2e8a9584af76ad6b2",
+      "reviewed": "read end to end 7 Nov 2026 (ATH-10). Six forcing questions, premise challenge, alternatives, design doc; no code. Codex second opinion and mockups need gstack's runtime (absent in the cloud; off on the Mac). Output feeds the Scope form."
+    },
+    "plan-ceo-review": {
+      "source": "https://github.com/garrytan/gstack",
+      "path": "plan-ceo-review",
+      "sha": "297f50c7e1d46aab1404f5f2e8a9584af76ad6b2",
+      "reviewed": "read end to end 7 Nov 2026 (ATH-10). Scope review in four modes; expansion-biased, so Athena runs it in HOLD SCOPE or REDUCTION. Exit gate needs gstack's review log (Mac). Patched: frontmatter hook and bin/ removed."
+    },
+    "plan-eng-review": {
+      "source": "https://github.com/garrytan/gstack",
+      "path": "plan-eng-review",
+      "sha": "297f50c7e1d46aab1404f5f2e8a9584af76ad6b2",
+      "reviewed": "read end to end 7 Nov 2026 (ATH-10). Locks architecture, data flow, failure modes and a test diagram; never builds. Exit gate needs gstack's review log (Mac); Codex outside voice disabled without the runtime."
+    },
+    "design-consultation": {
+      "source": "https://github.com/garrytan/gstack",
+      "path": "design-consultation",
+      "sha": "297f50c7e1d46aab1404f5f2e8a9584af76ad6b2",
+      "reviewed": "read end to end 7 Nov 2026 (ATH-10). Interview, then writes DESIGN.md (design system). Image previews and Codex voice need the runtime; falls back to an HTML preview. Defers to Athena's DESIGN standard."
+    },
+    "design-shotgun": {
+      "source": "https://github.com/garrytan/gstack",
+      "path": "design-shotgun",
+      "sha": "297f50c7e1d46aab1404f5f2e8a9584af76ad6b2",
+      "reviewed": "read end to end 7 Nov 2026 (ATH-10). Mockup variants from gstack's design binary, which calls OpenAI's image API with your key; inert without it. Mac only, on Nimish's request."
+    },
+    "design-review": {
+      "source": "https://github.com/garrytan/gstack",
+      "path": "design-review",
+      "sha": "297f50c7e1d46aab1404f5f2e8a9584af76ad6b2",
+      "reviewed": "read end to end 7 Nov 2026 (ATH-10). Visual audit of built screens (about 80 checks, A-F score). Needs gstack's browser (Mac). Its fix loop commits code: Athena runs it report-only into specs/<ID>/ui/."
+    },
+    "review": {
+      "source": "https://github.com/garrytan/gstack",
+      "path": "review",
+      "sha": "297f50c7e1d46aab1404f5f2e8a9584af76ad6b2",
+      "reviewed": "read end to end 7 Nov 2026 (ATH-10). Pre-landing diff review: checklist, specialists, adversarial pass. Many steps need gstack's helpers and skip without them; auto-fix is off under Athena (report only). Codex voice disabled without the runtime."
+    },
+    "qa": {
+      "source": "https://github.com/garrytan/gstack",
+      "path": "qa",
+      "sha": "297f50c7e1d46aab1404f5f2e8a9584af76ad6b2",
+      "reviewed": "read end to end 7 Nov 2026 (ATH-10). Browser and API QA with a fix loop and health score. Needs gstack's browser (Mac). Athena: report-only into specs/<ID>/ui/, no test-bootstrap writes to CI or CLAUDE.md."
+    },
+    "cso": {
+      "source": "https://github.com/garrytan/gstack",
+      "path": "cso",
+      "sha": "297f50c7e1d46aab1404f5f2e8a9584af76ad6b2",
+      "reviewed": "read end to end 7 Nov 2026 (ATH-10). Security audit (secrets, deps, CI, OWASP, STRIDE). Needs gstack's cso launcher and Docker; without them it reports 'not assessed'. Sends no source or findings."
+    },
+    "canary": {
+      "source": "https://github.com/garrytan/gstack",
+      "path": "canary",
+      "sha": "297f50c7e1d46aab1404f5f2e8a9584af76ad6b2",
+      "reviewed": "read end to end 7 Nov 2026 (ATH-10). Post-deploy browser watch of a live URL, baseline compare. Needs gstack's browser (Mac); refuses a curl fallback. Never rolls back without Nimish."
+    },
+    "learn": {
+      "source": "https://github.com/garrytan/gstack",
+      "path": "learn",
+      "sha": "297f50c7e1d46aab1404f5f2e8a9584af76ad6b2",
+      "reviewed": "read end to end 7 Nov 2026 (ATH-10). Shows, searches and prunes learnings kept in ~/.gstack through gstack's scripts (Mac). The repository's playbook.md is written by athena-learn."
+    },
+    "grill-with-docs": {
+      "source": "https://github.com/mattpocock/skills",
+      "path": "skills/engineering/grill-with-docs",
+      "sha": "4ae2317ddb22b046e26455e4f9c9b3aaaf62212d",
+      "reviewed": "read end to end 7 Nov 2026 (ATH-10). Runs grilling plus domain-modeling: rounds of numbered questions with recommended answers, then glossary and decisions. No network."
+    },
+    "grilling": {
+      "source": "https://github.com/mattpocock/skills",
+      "path": "skills/productivity/grilling",
+      "sha": "4ae2317ddb22b046e26455e4f9c9b3aaaf62212d",
+      "reviewed": "read end to end 7 Nov 2026 (ATH-10). Dependency of grill-with-docs: asks the open questions in rounds until understanding is shared. No network."
+    },
+    "codebase-design": {
+      "source": "https://github.com/mattpocock/skills",
+      "path": "skills/engineering/codebase-design",
+      "sha": "4ae2317ddb22b046e26455e4f9c9b3aaaf62212d",
+      "reviewed": "read end to end 7 Nov 2026 (ATH-10). Vocabulary for deep modules, seams and adapters; optional design-it-twice with parallel agents. No network."
+    },
+    "domain-modeling": {
+      "source": "https://github.com/mattpocock/skills",
+      "path": "skills/engineering/domain-modeling",
+      "sha": "4ae2317ddb22b046e26455e4f9c9b3aaaf62212d",
+      "reviewed": "read end to end 7 Nov 2026 (ATH-10). Keeps a glossary and sparse decision records during design talks. No network. Decisions go to docs/decisions/ under Athena."
+    },
+    "to-spec": {
+      "source": "https://github.com/mattpocock/skills",
+      "path": "skills/engineering/to-spec",
+      "sha": "4ae2317ddb22b046e26455e4f9c9b3aaaf62212d",
+      "reviewed": "read end to end 7 Nov 2026 (ATH-10). Turns the conversation into a PRD-style issue. It labels ready-for-agent; under Athena it files a Scope-form draft for Nimish, never scope-locked (guard refuses it)."
+    },
+    "to-tickets": {
+      "source": "https://github.com/mattpocock/skills",
+      "path": "skills/engineering/to-tickets",
+      "sha": "4ae2317ddb22b046e26455e4f9c9b3aaaf62212d",
+      "reviewed": "read end to end 7 Nov 2026 (ATH-10). Cuts a plan into thin vertical slices in blocker order, publishes after approval. Under Athena: GitHub issues, Scope form, spec-ID titles, never scope-locked."
+    },
+    "tdd": {
+      "source": "https://github.com/mattpocock/skills",
+      "path": "skills/engineering/tdd",
+      "sha": "4ae2317ddb22b046e26455e4f9c9b3aaaf62212d",
+      "reviewed": "read end to end 7 Nov 2026 (ATH-10). One test, then the code that passes it; no horizontal test batches; mocks only at boundaries. Unattended, the seams come from the locked proofs. No network."
+    },
+    "diagnosing-bugs": {
+      "source": "https://github.com/mattpocock/skills",
+      "path": "skills/engineering/diagnosing-bugs",
+      "sha": "4ae2317ddb22b046e26455e4f9c9b3aaaf62212d",
+      "reviewed": "read end to end 7 Nov 2026 (ATH-10). Build a red feedback loop first, then hypotheses, tagged logs, regression test, cleanup. Redacts secrets. Local script template only."
+    },
+    "retro": {
+      "source": "https://github.com/mattpocock/skills",
+      "path": "skills/engineering/retro",
+      "sha": "4ae2317ddb22b046e26455e4f9c9b3aaaf62212d",
+      "reviewed": "read end to end 7 Nov 2026 (ATH-10). Retrospective on a session from local logs; suggests improvements, edits nothing. Run per milestone. Never edits the managed CLAUDE.md."
+    },
+    "writing-for-agents": {
+      "source": "https://github.com/mattpocock/skills",
+      "path": "skills/productivity/writing-for-agents",
+      "sha": "4ae2317ddb22b046e26455e4f9c9b3aaaf62212d",
+      "reviewed": "read end to end 7 Nov 2026 (ATH-10). Dependency of retro: how to write instructions agents follow. Text only."
+    },
+    "frontend-design": {
+      "source": "https://github.com/anthropics/skills",
+      "path": "skills/frontend-design",
+      "sha": "2c5958ecac7cee2b583967a2c4981d0f4a75c579",
+      "reviewed": "read end to end 7 Nov 2026 (ATH-10). UI design guidance, text only, Apache-2.0. Athena's DESIGN standard and shadcn/ui win on conflict."
+    },
+    "find-skills": {
+      "source": "https://github.com/vercel-labs/skills",
+      "path": "skills/find-skills",
+      "sha": "d3701c11b1101251af14c9d148f026e1a47ebe17",
+      "reviewed": "read end to end 7 Nov 2026 (ATH-10). Searches skills.sh via the skills CLI. The CLI's telemetry is on by default: off through DO_NOT_TRACK; guard allows only `npx skills@1.7.6 find` (no installs)."
+    },
+    "subagent-driven-development": {
+      "source": "https://github.com/obra/superpowers",
+      "path": "skills/subagent-driven-development",
+      "sha": "bb92a77741419a4ab5f06e711a283343f1ada0c3",
+      "reviewed": "read end to end 7 Nov 2026 (ATH-10). Fresh implementer and reviewer per task. Harness copy of v7.0.0, superpowers: prefixes removed; Athena's block rule beats its 'rulings, not stalls'."
+    },
+    "using-git-worktrees": {
+      "source": "https://github.com/obra/superpowers",
+      "path": "skills/using-git-worktrees",
+      "sha": "bb92a77741419a4ab5f06e711a283343f1ada0c3",
+      "reviewed": "read end to end 7 Nov 2026 (ATH-10). Detects or makes a worktree, installs deps, runs a baseline test. Identical to upstream. Commit .gitignore on the feature branch only."
+    },
+    "writing-plans": {
+      "source": "https://github.com/obra/superpowers",
+      "path": "skills/writing-plans",
+      "sha": "bb92a77741419a4ab5f06e711a283343f1ada0c3",
+      "reviewed": "read end to end 7 Nov 2026 (ATH-10). Bite-sized test-first plans with self-review. Prefix-only change; Athena adds the [capability:] rule; the plan path is specs/<ID>/plan.md. ATH-23: model line changed from opus to sonnet (plans are written at build time; kind `build`)."
+    }
+  },
+  "swaps": {
+    "investigate": "diagnosing-bugs"
+  },
+  "swap_reasons": {
+    "investigate": "gstack retired /investigate on 7 Nov 2026 (GST-1717): its own evaluation found no gain over no skill. Pocock's diagnosing-bugs is already the Debug stage's primary."
+  },
+  "cli": {
+    "skills": "1.7.6"
+  }
+}

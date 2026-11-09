@@ -1,0 +1,6 @@
+**B1. The views are not owner's-rights views (design.md:24, design.md:115).** The design says "A view runs with its owner's rights, so it skips row rules" and "Setting `security_invoker` on them is CP-4's". Both are false.
+- Evidence: every view in the migrations is already created `with (security_invoker = true)`. There are 30 `create ... view` statements in 21 files and 30 `security_invoker` occurrences in the same 21 files, with matching counts per file.
+
+The CP-3 codebase-details report contradicts something I and another reviewer assumed. It says the CI browser suite already runs the website as `app_web`, not as the owner. That would make item 7 a real gate, and CP-3 would turn CI red unless the test user gets grants. I'll verify before relying on it.
+
+The browser-suite claim is confirmed. `ci.yml:329` sets `TEST_WEB_DATABASE_URL` to the `app_web` login, and `playwright.config.ts` starts the site on it. The CI test user exists only in the sign-in list, with no staff row or grant. So the CP-3 rules will blank every page in CI unless the test fixture is updated. I was wrong to say it only runs as the owner.

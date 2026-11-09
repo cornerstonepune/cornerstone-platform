@@ -1,0 +1,3 @@
+VERDICT: PASS
+
+Independent verifier on 2f7a6d3: items 2-5 met by reading; items 1 and 6 hold by reading and are proven only on the box (docker exec fet-cl --version; a dry run that changes nothing). One defect found, a migration numbered before main's newest (fixed by renaming after it). Locked spec and proofs unchanged; setup.sh change is exactly the approved install line; nothing else under .claude/. The generator writes only its own timetable_run record; FET is named only in adapters/fet.py. Fixed after the check: a FET timeout is now kept as a run, and the two settings are read only from settings rows.
