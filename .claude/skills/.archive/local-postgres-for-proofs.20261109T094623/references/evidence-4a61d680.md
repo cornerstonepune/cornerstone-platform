@@ -1,0 +1,1 @@
+export DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:5432/engine_restore TEST_DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:5432/engine_restore; python3 .claude/athena/bin/athena done CP-24 2>&1 | tail -8
