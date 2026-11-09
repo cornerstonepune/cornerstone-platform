@@ -55,7 +55,6 @@ export function WalkProvider({ doors, children }: { doors: readonly FrameDoor[];
     seen.current.set(path, next);
     current.current = next;
     // the lit door follows the walk after the page has changed: a render cannot read the click that caused it
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setLit(next);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [path]);

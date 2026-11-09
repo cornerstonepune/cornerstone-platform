@@ -97,7 +97,7 @@ async function theBar(page: Page, doors: string[]) {
   expect(main && main.x < 100, "the content starts at the left, no gutter for a menu").toBe(true);
 }
 
-test("an educator with one class and one subject: the bar, only hers, no Class or Subject boxes, no approve-all", async ({ browser }) => {
+test("an educator with one class and one subject: top menu, only hers, no Class or Subject boxes, no approve-all", async ({ browser }) => {
   const { context, page } = await asEducator(browser);
   await open(page, "/today", /What needs doing/);
   await theBar(page, DOORS);
@@ -130,7 +130,7 @@ test("an educator with one class and one subject: the bar, only hers, no Class o
   await context.close();
 });
 
-test("an admin: the same bar with Setup, and no Viewing control", async ({ page }) => {
+test("an admin: the same top menu, and no Viewing control", async ({ page }) => {
   await open(page, "/today", /What needs doing/);
   await theBar(page, DOORS);
   await expect(page.locator("[data-viewing], #bar-subject, #bar-class")).toHaveCount(0);

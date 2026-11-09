@@ -66,13 +66,12 @@ test.afterAll(async () => {
 test("a teacher can reach every section from the menu, and the menu says where they are", async ({ page }) => {
   await page.goto("/");
   const sections = [
-    ["What needs doing", "What needs doing"],
+    ["Today", "What needs doing"],
     ["Setup", "Curriculum"],
-    ["Assessments", "Assessments"],
-    ["Results", "Class results"],
+    ["Children", "Children"],
   ];
   for (const [label, heading] of sections) {
-    const group = page.getByRole("navigation", { name: "Sections" }).getByRole("link", { name: new RegExp(`^${label}\\b`) });
+    const group = page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" }).getByRole("link", { name: new RegExp(`^${label}\\b`) });
     await group.click();
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(heading);
     await expect(group).toHaveAttribute(

@@ -38,7 +38,7 @@ const noteOf = async (m: string) =>
 
 const issuesWith = (m: string) => issuesMade().filter((i) => i.body.includes(m));
 
-test("the report link is at the foot of every signed-in page", async ({ page }) => {
+test("the report button is on the top bar of every signed-in page", async ({ page }) => {
   for (const at of ["/today", "/papers", "/growth"]) {
     await page.goto(at);
     await expect(page.locator("[data-frame]").getByRole("link", { name: "Report a problem or suggest something" })).toBeVisible();

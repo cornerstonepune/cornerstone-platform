@@ -121,13 +121,13 @@ test("any block opens its period: the time, the school's words, the planner's li
   await expect(page).toHaveURL(/\/educator\?class=.*day=2026-11-23/);
 });
 
-test("her pages are the door's row under the bar on a desktop and the doors at the foot of a phone, each with where she is marked", async ({ page }) => {
+test("her menu is a sidebar on a desktop and tabs at the foot of a phone, each with where she is marked", async ({ page }) => {
   await timetableSwitch(sql, true);
   await page.goto(`/educator/week?class=${klass}&day=${MONDAY}`);
   const row = page.getByRole("navigation", { name: "Pages in this section" });
   await expect(row).toBeVisible();
   await expect(row.getByRole("link", { name: "This week" })).toHaveAttribute("aria-current", "page");
-  await expect(page.locator("[data-bar]").first().getByRole("link", { name: /^Timetable/ })).toHaveAttribute("aria-current", "page");
+  await expect(page.locator("[data-bar] [data-door=timetable]").first()).toHaveAttribute("aria-current", "page");
   await page.setViewportSize({ width: 390, height: 900 });
   await page.goto(`/educator?class=${klass}&day=${MONDAY}`);
   const tabs = page.locator("nav[data-bar=doors]");

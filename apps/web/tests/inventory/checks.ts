@@ -9,9 +9,8 @@ export type Ctx = { inv: Inventory; role: "educator" | "coordinator"; width: num
 type Problems = string[];
 
 const CONTROLS = "a[href], button, [role=button], summary, input:not([type=hidden]), select, textarea";
-/** The controls of the main column and the rail: the trail is the frame's, not the screen's, and Next's own action fields are not controls. */
-const inMain = (page: Page) => page.locator("main").locator(CONTROLS).filter({ hasNot: page.locator("[data-trail]") });
 
+/** The controls of the main column and the rail (the trail is the frame's, and Next's own action fields are not controls), as measured boxes. */
 async function mainControls(page: Page) {
   return page.evaluate((sel) => {
     const main = document.querySelector("main");

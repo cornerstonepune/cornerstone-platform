@@ -15,7 +15,7 @@ export function BrandMark({ size = "bar" }: { size?: "bar" | "large" }) {
       {size === "bar" ? <source media="(max-width: 700px) and (prefers-color-scheme: dark)" srcSet={F("mark-on-white-tile")} /> : null}
       {size === "bar" ? <source media="(max-width: 700px)" srcSet={F("mark")} /> : null}
       <source media="(prefers-color-scheme: dark)" srcSet={F("lockup-for-dark-backgrounds")} />
-      {/* eslint-disable-next-line @next/next/no-img-element -- a vector, drawn as it is: the server never resizes it */}
+      {/* a vector, drawn as it is: the server never resizes it */}
       <img src={F("lockup-colour")} alt={BRAND_NAME} height={height} style={{ height, width: "auto" }} />
     </picture>
   );
