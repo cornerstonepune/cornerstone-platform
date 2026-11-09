@@ -9,11 +9,11 @@
   "3c POST /timetable/generate is a keyed engine route in the website's route list",
   "3d POST /timetable/link is a keyed engine route in the website's route list",
   "3e POST /timetable/unmatched is a keyed engine route in the website's route list",
-  "4 step_date refuses step settings not in the order freeze > align > approve > list_sent",
+  "4 the live watch reports step settings not in the order freeze > align > approve > list_sent; step_date still answers",
   "5 the live watch reports a nightly run older than graph.nightly_stale_hours",
   "6 docs/backup.md states Supabase's setting, Lightsail's retention, a dated restore drill and the 48-hour promise",
   "7 docs/backend-plan.md has the rule: a Core scope a screen calls ships one keyed route"
  ],
  "failed": [],
- "ran_at": "2026-11-09T07:07:21+00:00"
+ "ran_at": "2026-11-09T07:53:56+00:00"
 }

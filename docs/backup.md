@@ -19,10 +19,11 @@ connector; the project's size that day: 261 MB):
 So the project is on Supabase's physical backup and WAL archive (the default for every project on Postgres 15.8 or
 newer, per Supabase's backup guide), with a daily base backup and the log pushed every two minutes.
 
-**Not readable from here, so not stated as fact:** whether the Point-in-Time Recovery add-on is switched on, and how
-many days the project can be restored back to. The Supabase connector exposes no backups endpoint and no Management
-API token is in this environment. Without the add-on, a Pro plan keeps the last 7 daily backups; with it, 7, 14 or 28
-days to the second. **Nimish reads it** at Database → Backups in the Supabase dashboard and writes the number here.
+**Not known, Nimish to read from the dashboard:** whether the Point-in-Time Recovery add-on is switched on, and how many
+days the project can be restored back to. The Supabase connector exposes no backups endpoint and no Management API token
+is in this environment. Look at **Supabase dashboard → project `cornerstone-cloud` → Database → Backups**: the
+*Scheduled backups* tab lists the daily backups kept (a Pro plan keeps 7), and the *Point in time* tab shows the recovery
+period if the add-on is on (7, 14 or 28 days, to the second). Write the number here.
 
 How a restore is done: Database → Backups in the dashboard, pick the backup or the moment, confirm; the project is
 unreachable while it restores. Custom roles' passwords are not in a backup and are reset after.
@@ -33,10 +34,11 @@ The engine's server holds, outside the database, every scan (`~/cornerstone/asse
 the library's worksheets and the print packs (`~/cornerstone/data`; `deploy/compose.server.yml`). Lightsail keeps a
 server's disk by automatic snapshots, one a day, the newest 7 kept, when the add-on is switched on for the instance.
 
-**Not readable from here, so not stated as fact:** whether the instance's automatic-snapshot add-on is on, and so what
-the retention is. The AWS credentials in this environment belong to the Textract user, which Lightsail refuses
-(`lightsail:GetInstances` not authorised). **Nimish reads it** at Lightsail → the instance → Snapshots, or runs
-`aws lightsail get-instances --profile cornerstone` on his Mac, and writes it here.
+**Not known, Nimish to read from the console:** whether the instance's automatic-snapshot add-on is on, and so what the
+retention is. The AWS credentials in this environment belong to the Textract user, which Lightsail refuses
+(`lightsail:GetInstances` not authorised). Look at **AWS Lightsail console (Mumbai) → the engine's instance → Snapshots
+tab → Automatic snapshots**: it shows the time of day and the snapshots kept. Or on his Mac, `aws lightsail
+get-instances --profile cornerstone`. Write the retention here.
 
 ## The restore drill (run once, 2026-11-09)
 
@@ -52,9 +54,10 @@ file holds children's names (`pii`), so it is deleted as soon as it is restored,
 ## Retention beside the voice promise
 
 The longest retention anyone can rely on today is the database's: the 7 daily backups Supabase keeps on a Pro plan,
-longer only if the Point-in-Time add-on is on (the line above Nimish fills in). A K2 voice note's raw audio and raw
-transcript are promised gone after **48 hours** (`voice.confirm_within_hours`, a config row, is 48; `docs/backend-plan.md`
-rule 1). A database backup taken while a raw copy was still inside the 48 hours holds that copy for as long as the
-backup is kept: up to 7 days, or the add-on's retention. The promise therefore holds on the live database and not yet
-on its backups; `voice.audio_retention_days` is still null (nothing deletes audio until it is a number), so today no
-audio is deleted at all, and that is CP-10's to build.
+longer only if the Point-in-Time add-on is on (the line above, which Nimish fills in). A K2 voice note's raw audio and raw
+transcript are deleted **48 hours** after the note was received (CP-10: `voice.confirm_within_hours`, a config row, is 48,
+and is the one key for both how long a note waits and how long its raw copies are kept; `docs/backend-plan.md` rule 1).
+A database backup taken while a raw copy was still inside those 48 hours holds that copy for as long as the backup is
+kept: up to 7 days, or the add-on's retention. So the promise holds on the live database and not on its backups, and the
+gap is the backup retention (7 days or more) against 48 hours. What the educator confirmed stays; only the raw copies go.
+Whether that gap is acceptable, or the backups need a shorter retention, is Nimish's call once the two lines above are filled in.

@@ -26,7 +26,7 @@ check "3d POST /timetable/link is a keyed engine route in the website's route li
   bash $P/pytest.sh --no-db $P/test_routes.py -k timetable_link
 check "3e POST /timetable/unmatched is a keyed engine route in the website's route list" \
   bash $P/pytest.sh --no-db $P/test_routes.py -k timetable_unmatched
-check "4 step_date refuses step settings not in the order freeze > align > approve > list_sent" \
+check "4 the live watch reports step settings not in the order freeze > align > approve > list_sent; step_date still answers" \
   bash $P/pytest.sh $P/db/test_step_order.py
 check "5 the live watch reports a nightly run older than graph.nightly_stale_hours" \
   bash $P/pytest.sh $P/db/test_nightly_watch.py

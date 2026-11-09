@@ -11,6 +11,7 @@ import os
 
 from engine.checks import rules
 from engine.core import db, settings
+from engine.w2_print import fortnight_cycle
 
 
 def nightly_stale(conn: db.Conn, tenant_id: db.Id) -> str | None:
@@ -29,6 +30,20 @@ def nightly_stale(conn: db.Conn, tenant_id: db.Id) -> str | None:
         return f"the nightly rebuild has never run ok (nothing on graph_run; the limit is {int(hours)} hours)"
     if age > int(hours):
         return f"the nightly rebuild last ran ok {int(age)} hours ago, more than {int(hours)} hours"
+    return None
+
+
+def fortnight_steps(conn: db.Conn, tenant_id: db.Id) -> str | None:
+    """The line when the school's four fortnight step settings cannot be used or are not in the order freeze, align,
+    approve, list_sent (CP-24, audit F9). `step_date` still answers with whatever is set; this is what tells a person
+    to look. Settings and counts only, never a name."""
+    try:
+        days = fortnight_cycle.step_days(conn, tenant_id)
+    except fortnight_cycle.CycleError as no:
+        return f"the fortnight step settings cannot be read: {no}"
+    if fortnight_cycle.out_of_order(days):
+        said = ", ".join(f"{s} {days[s]}" for s in fortnight_cycle.STEPS)
+        return f"the fortnight steps are not in order freeze, align, approve, list_sent (days before the start: {said})"
     return None
 
 
@@ -112,6 +127,8 @@ def problems(conn: db.Conn, free_bytes: int) -> list[str]:
     tenant = db.one(conn, "select id from tenant where slug = %s", (db.tenant_slug(),))["id"]
     if stale := nightly_stale(conn, tenant):
         out.append(stale)
+    if steps := fortnight_steps(conn, tenant):
+        out.append(steps)
     if not os.environ.get("TYPESAFE_API_KEY"):  # the engine's own environment: the watch runs inside it
         out.append("Jev's key is missing on the engine: every judgement Jev makes goes to a person")
     return out

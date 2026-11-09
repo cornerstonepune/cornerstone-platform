@@ -118,10 +118,9 @@ def fortnights_touched(
     ]
 
 
-def _step_days(conn: db.Conn, tenant_id: Any) -> dict[str, int]:
-    """The school's four `fortnight.<step>` settings as days before the fortnight starts, each well-formed, in the
-    order of the steps: freeze > align > approve > list_sent, or `CycleError` (audit F9: a later step dated before an
-    earlier one would be silently out of order)."""
+def step_days(conn: db.Conn, tenant_id: Any) -> dict[str, int]:
+    """The school's four `fortnight.<step>` settings as days before the fortnight starts, each well-formed, by step.
+    `CycleError` for a missing or malformed one."""
     rows = conn.execute(
         "select key, value from config where tenant_id = %s and key = any(%s)",
         (tenant_id, [f"fortnight.{s}" for s in STEPS]),
@@ -140,14 +139,13 @@ def _step_days(conn: db.Conn, tenant_id: Any) -> dict[str, int]:
         if not isinstance(n, int) or isinstance(n, bool) or n < 0:
             raise CycleError(f'fortnight.{step} must be {{"days_before_start": a whole number, 0 or more}}.')
         days[step] = n
-    if not all(days[a] > days[b] for a, b in zip(STEPS, STEPS[1:], strict=False)):
-        raise CycleError(
-            "The step settings are out of order: fortnight.freeze must fall before align, align before approve,"
-            " approve before list_sent ("
-            + ", ".join(f"{s}={days[s]}" for s in STEPS)
-            + " days before the start)."
-        )
     return days
+
+
+def out_of_order(days: dict[str, int]) -> bool:
+    """True when the steps do not fall freeze, then align, then approve, then list_sent: each one fewer days before
+    the fortnight starts than the one before it (audit F9). Reported by the live watch; `step_date` still answers."""
+    return not all(days[a] > days[b] for a, b in zip(STEPS, STEPS[1:], strict=False))
 
 
 def step_date(conn: db.Conn, fortnight_id: Any, step: str) -> dt.date:
@@ -160,7 +158,7 @@ def step_date(conn: db.Conn, fortnight_id: Any, step: str) -> dt.date:
     ).fetchone()
     if fortnight is None:
         raise CycleError("That fortnight is not there.")
-    days = _step_days(conn, fortnight["tenant_id"])[step]
+    days = step_days(conn, fortnight["tenant_id"])[step]
     day = fortnight["starts_on"] - dt.timedelta(days=days)
     holidays = {
         r["on_date"]

@@ -25,7 +25,7 @@ Lean: each item is the smallest working fix. The audit's evidence is quoted in e
    - making a timetable draft (CP-11);
    - linking a fortnight's plan lines and listing unmatched lines (CP-8).
    Each route is in the website's generated route list. (Test per route.) (Audit F6.)
-4. `step_date` refuses settings whose order is not freeze > align > approve > list_sent. (Test.) (Audit F9.)
+4. `engine live watch` reports a problem when the school's step settings are not in the order freeze > align > approve > list_sent (days before the fortnight starts, largest first); `step_date` keeps working with whatever values are set. (Test.) (Audit F9.)
 5. `engine live watch` reports a problem when the newest ok nightly run in `graph_run` is older than `graph.nightly_stale_hours`. (Test; LIVE: box-only read.) (Audit F1.)
 6. `docs/backup.md` states:
    - the Supabase backup or point-in-time setting in use (read from the project, not guessed);
