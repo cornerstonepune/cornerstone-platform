@@ -8,9 +8,9 @@
  "failed": [
   "3 bin/check --db builds the schema from the migrations and fails on a table with no owner",
   "4 bin/check --db fails on a stale rules.json and prints run `engine live rules --write`",
-  "5 bin/check --db runs test_grades.py and test_rules.py with no skips",
+  "5 bin/check --db runs test_grades.py and test_rules.py with no skips, and passes on an unplanted tree",
   "6 bin/check --claude runs the --db checks when TEST_DATABASE_URL is set (fails on an ownerless table)",
   "8 learnings.md has a card: number a migration just after origin/main's newest, check with bin/check --db"
  ],
- "ran_at": "2026-11-09T06:23:46+00:00"
+ "ran_at": "2026-11-09T06:35:44+00:00"
 }

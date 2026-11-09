@@ -1,5 +1,5 @@
 {
-  "digest": "478bbac8fcc1d69942a98ba7cd3492438a259929e5652a8a1d815d3dab07fa2f",
+  "digest": "0cbb45d9a7e7b5d159404a98b220633e422c3663ccf216ec7972f8ab34021a9e",
   "files": [
     "spec.md",
     "checks.sh",
@@ -14,7 +14,7 @@
     "proofs/lib.sh",
     "proofs/no_skips.py"
   ],
-  "locked_at": "2026-11-09T06:26:52+00:00",
+  "locked_at": "2026-11-09T06:38:53+00:00",
   "criteria": 8,
   "athena": "2.15.0"
 }

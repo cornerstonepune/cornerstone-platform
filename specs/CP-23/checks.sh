@@ -19,7 +19,7 @@ check "3 bin/check --db builds the schema from the migrations and fails on a tab
   bash $P/c3_ownerless_table.sh
 check "4 bin/check --db fails on a stale rules.json and prints run \`engine live rules --write\`" \
   bash $P/c4_rules_json_stale.sh
-check "5 bin/check --db runs test_grades.py and test_rules.py with no skips" \
+check "5 bin/check --db runs test_grades.py and test_rules.py with no skips, and passes on an unplanted tree" \
   bash $P/c5_db_tests_no_skips.sh
 check "6 bin/check --claude runs the --db checks when TEST_DATABASE_URL is set (fails on an ownerless table)" \
   bash $P/c6_claude_gate.sh
