@@ -10,7 +10,8 @@ line tools, a cloud session, GitHub Actions).
   athena lock ID [--regression]     lock spec + proofs (proofs must fail first)
   athena start ID                   mark ID as the spec being built here
   athena done [ID ... | --all]      run the proofs; exit 0 only if all pass
-  athena finish ID                  proofs pass: mark built, awaiting review
+  athena finish ID                  proofs pass (and the repository's preflight, if it has one): mark built, awaiting review
+  athena preflight                  run .claude/athena/preflight.sh if the repository has one; run it before a push and before marking ready
   athena block ID REASON            stop work, write BLOCKED.md for Nimish
   athena unlock ID                  only after Nimish types "UNLOCK ID"
   athena verify-locks               every LOCK still matches its files
@@ -52,7 +53,7 @@ import sys
 import time
 from pathlib import Path
 
-VERSION = "2.14.0"
+VERSION = "2.15.0"
 ID_RE = re.compile(r"^[A-Z][A-Z0-9]*-\d+$")
 STRIKE_LIMIT = 3
 CHECK_TIMEOUT = int(os.environ.get("ATHENA_CHECK_TIMEOUT", "900"))
@@ -424,6 +425,20 @@ def cmd_lock(args):
     return 0
 
 
+def _stacked_on(spec_id):
+    """Branches this one sits on that are not merged to main (ATH-30): they are in HEAD's history, not in main's.
+    Reads refs already fetched; a squash-merged branch counts as unmerged, since a branch cut from it would conflict."""
+    def git(*a):
+        return subprocess.run(["git", *a], cwd=str(ROOT), capture_output=True, text=True)
+    main = next((r for r in ("origin/main", "origin/master") if git("rev-parse", "--verify", "-q", r).returncode == 0), None)
+    cur = git("symbolic-ref", "-q", "--short", "HEAD").stdout.strip()
+    if not main or not cur:
+        return []
+    listed = git("branch", "-a", "--no-merged", main, "--merged", "HEAD", "--format=%(refname:short)").stdout.split()
+    skip = {cur, f"origin/{cur}", "origin/HEAD", "origin", "main", "master", "origin/main", "origin/master"}
+    return sorted(b for b in listed if b not in skip)
+
+
 def cmd_start(args):
     if not args:
         die("usage: athena start ID")
@@ -434,6 +449,10 @@ def cmd_start(args):
         die(f"{spec_id} is not locked; run the athena-scope skill first")
     if intact is False:
         die(f"{spec_id}'s proofs changed after locking; ask Nimish")
+    stacked = _stacked_on(spec_id)
+    if stacked:
+        die(f"{spec_id} sits on {', '.join(stacked)}, which is not merged to main: cut a branch from main, or wait for "
+            "that merge (if it was merged just now, run `git fetch origin main` first)", 1)
     set_active(spec_id)
     _strikes_reset(spec_id)
     told = STATE / f"told-{spec_id}"
@@ -630,6 +649,22 @@ def _files_covered():
     return sorted({f.rsplit("/", 1)[0] + "/" if "/" in f else f for f in files if not f.startswith("specs/")})
 
 
+def _preflight():
+    """Run the repository's own preflight (ATH-30). 0 when it passes or the repository has none."""
+    script = ROOT / ".claude" / "athena" / "preflight.sh"
+    if not script.is_file():
+        print("no preflight in this repository")
+        return 0
+    rc = subprocess.run(["bash", str(script)], cwd=str(ROOT)).returncode
+    if rc != 0:
+        print("preflight failed: do not push or mark ready")
+    return 1 if rc != 0 else 0
+
+
+def cmd_preflight(args):
+    return _preflight()
+
+
 def cmd_finish(args):
     if not args:
         die("usage: athena finish ID")
@@ -643,6 +678,9 @@ def cmd_finish(args):
     if not res["ok"]:
         print(describe(res))
         die(f"{spec_id} is not done; its proofs fail", 1)
+    if _preflight() != 0:  # after the proofs, before it is called built: a broken build is found here, not in a long CI run
+        sys.stdout.flush()
+        die(f"{spec_id} is not built; the repository's preflight failed", 1)
     write_status(spec_dir(spec_id), status="built", built_at=now_iso(), box_pending=res["box"])
     covers = _files_covered()
     if covers:
@@ -2372,7 +2410,7 @@ def _opt(args, name, default=None):
 
 COMMANDS = {
     "requirements": cmd_requirements, "check-requirements": cmd_check_requirements,
-    "new": cmd_new, "next-id": cmd_next_id, "lock": cmd_lock, "start": cmd_start, "done": cmd_done, "finish": cmd_finish,
+    "new": cmd_new, "next-id": cmd_next_id, "lock": cmd_lock, "start": cmd_start, "done": cmd_done, "finish": cmd_finish, "preflight": cmd_preflight,
     "block": cmd_block, "unlock": cmd_unlock, "verify-locks": cmd_verify_locks,
     "check-scope-changes": cmd_check_scope_changes, "status": cmd_status, "hook": cmd_hook,
     "scorecard": cmd_scorecard, "health": cmd_health,

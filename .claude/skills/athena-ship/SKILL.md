@@ -8,7 +8,7 @@ description: Use when a scoped change is built and verified (athena finish succe
 
 1. **Check readiness.** `specs/<ID>/status.json` must say `built`, and `specs/<ID>/VERIFY.md` must exist. If not, go back to `athena-verify`.
 2. **Commit.** Run `git add -A` and `git commit -m "<ID>: <title>"`. Never commit secrets, `.env` files or client data.
-3. **Push** the feature branch: `git push -u origin HEAD`. Never push to main. In a cloud session, push to the branch the session allows.
+3. **Preflight, then push** the feature branch. If the repository has `.claude/athena/preflight.sh`, run `python3 .claude/athena/bin/athena preflight` immediately before the push and again before marking a pull request ready; do not push or mark ready while it fails (the full CI run takes 30 to 60 minutes). Then `git push -u origin HEAD`. Never push to main. In a cloud session, push to the branch the session allows.
 4. **Open the pull request.** Use `gh api repos/{owner}/{repo}/pulls -X POST` (REST; `gh pr create` needs GraphQL, which some sessions block); otherwise use the GitHub tools available; otherwise give the compare URL. The title is `<ID>: <title>`. The body follows this layout:
 
    ```
