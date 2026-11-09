@@ -8,7 +8,7 @@
     "StatusChip": "icon + word + colour from the STATES rows; pill for work, square for a child's mark",
     "DataTable": "≤10 rows then grouped/paged; needs-you first; numbers right, status centred; cards on a phone",
     "FilterBar": "dropdowns + compact search over any table of 6+ rows; filters in the address",
-    "ClassGrid": "squares by Sr. No. on one skill; secure/practising/emerging/not seen; tap = act",
+    "ClassGrid": "squares by Sr. No. with the child's name beside it, on one skill; secure/practising/emerging/not seen; tap = act",
     "Stepper": "the steps of a thing; done green, waiting amber, late red, rest quiet",
     "Details": "a fold that opens on click, eye icon; never hides the main action",
     "Timeline": "what was seen, newest last; words beside the mark; a details fold each",
@@ -21,7 +21,7 @@
     "FortnightGrid": "week A and B × periods, cells coloured by subject; moved = amber outline, clash = red outline",
     "CaptureBar": "Voice note · Photo; the whole screen on a phone",
     "DropZone": "choose scans or drop them; or a Drive link",
-    "PageImage": "the child's page as photographed, QR corner, never a name",
+    "PageImage": "the child's page as photographed, QR corner; the one picture of a child allowed on any screen (photos of children are otherwise not decided: none)",
     "EmptyState": "nothing to show, with the next step",
     "Form": "a short form of labelled fields; one main button",
     "KeyValue": "facts as label: value pairs, five lines at most",
@@ -38,6 +38,7 @@
     "filter": "changes the rows and writes itself into the address; × clears one; Clear clears all; a reload keeps them",
     "field": "a form field with a label; empty when required shows the stated message and submits nothing",
     "switch": "a two-state control; the state is spoken (aria-checked) and shown as a word, never colour alone",
+    "child_name": "not a control: text. The child's name, read from the pii schema at render time and joined by child_id, shown only where an element of this kind is listed. The test asserts the name is present and, on every other screen, absent; it is never in a URL, a log line, a state word or an analytics call",
     "upload": "accepts the stated file kinds; a wrong kind shows a message; a right one shows the file's name before anything is sent"
   },
 
@@ -48,7 +49,7 @@
     "Roles: an element marked for one group is absent for the others; the address or request behind it is refused for the others (redirect to /refused or 403), never silently ignored.",
     "Keyboard: Tab reaches every control in reading order; Enter or Space activates it; the focused control shows a visible ring (outline at least 2 px); Escape closes an open Sheet or Dialog.",
     "Touch: at 400 px every control is at least 44 × 44 px with at least 8 px to its neighbour.",
-    "Words: every state shown is a word from the STATES rows beside its icon, never colour alone; no child's name anywhere in the DOM (the test knows the fixture's names and searches for them); 'educator' never 'teacher'.",
+    "Words: every state shown is a word from the STATES rows beside its icon, never colour alone; a child's name appears only on screens whose element list marks a `child_name` element, read from pii by child_id, and on no other screen; the page text and every URL carry no name where the spec says none; every fixture, test, screenshot and committed baseline uses obviously fake names (the repository is public; a test scans them against a list of real names kept off the repository); 'educator' never 'teacher'.",
     "Accessibility: axe reports no serious or critical violation at either width, in light and in dark.",
     "Empty: with the fixture's empty class or empty filter, the screen shows exactly its stated empty text and its next-step link, and no table head over no rows, no zero columns, no dash columns.",
     "Themes: a screenshot in light and in dark at 1440 is committed as a baseline; sampled text nodes measure at least 4.5:1 against what is behind them in both."
@@ -272,7 +273,8 @@
         { "t": "link", "label": "rail: The period", "to": "period" },
         { "t": "link", "label": "rail: The activity", "to": "activity" },
         { "t": "link", "label": "rail: The class", "to": "picture" },
-        { "t": "link", "label": "rail: Correct a confirmed note", "to": "notes" }
+        { "t": "link", "label": "rail: Correct a confirmed note", "to": "notes" },
+        { "t": "child_name", "label": "each square and each claim line", "note": "the name beside the Sr. No., so she can check the right child is marked" }
       ],
       "rail": ["The period", "The activity", "The class", "Correct a confirmed note"], "capture": [], "main": "Confirm this note", "next": "the next note waiting",
       "data": "pii.educator_note + draft claims from the engine; activity_observation written at confirm, one row per child, confirmation_id",
@@ -287,6 +289,7 @@
         { "t": "filter", "label": "class", "roles": ["coordinator"], "note": "an educator with one class has no class filter" },
         { "t": "filter", "label": "state" },
         { "t": "filter", "label": "week" },
+        { "t": "child_name", "label": "the children named column", "note": "each named child's name beside the Sr. No." },
         { "t": "button", "label": "× on a filter chip", "effect": "removes that filter from the address" },
         { "t": "button", "label": "Clear", "effect": "removes every filter" },
         { "t": "row", "label": "Confirm (a waiting note)", "to": "confirm" },
@@ -442,6 +445,7 @@
         { "t": "filter", "label": "skill" },
         { "t": "filter", "label": "domain" },
         { "t": "cell", "label": "each square", "to": "child" },
+        { "t": "child_name", "label": "each square", "note": "the name beside the Sr. No." },
         { "t": "link", "label": "rail: Show: each skill seen", "to": "picture", "note": "same screen, the skill filter changes" },
         { "t": "link", "label": "rail: a child", "to": "child" },
         { "t": "link", "label": "rail: Record a note", "to": "record" },
@@ -452,13 +456,14 @@
       "rail": ["Show: each skill seen", "a child", "Record a note", "Assessments (grades 1–4: Class results folds here)"], "capture": ["voice", "photo"], "main": "a child", "next": "the skill",
       "data": "child_observed_state (K2) or child_skill_state (grades 1–4) for the class by skill; graph_run date", "empty": "No child seen yet: the grid of dashed squares with 'not seen yet, nothing more'", "phone": "8 columns",
       "folds": ["/growth (Class results)", "/growth/class/[section]"],
-      "done_when": ["an empty square's title reads 'not seen yet', never 'not secure'", "no name or photo on any square (DOM scan)", "the stack bar's counts equal the squares by state", "the squares are in Sr. No. order, 10 per row at 1440, 8 at 400"] },
+      "done_when": ["an empty square's title reads 'not seen yet', never 'not secure'", "each square shows the Sr. No. and the child's name read from pii by child_id, and no photo (DOM scan)", "the stack bar's counts equal the squares by state", "the squares are in Sr. No. order, 10 per row at 1440, 8 at 400"] },
 
     { "id": "child", "route": "/children/[class]/[roll]", "group": "Children", "who": "both", "phase": "Core", "backend": ["CP-13", "CP-14"], "exists": "part (/k2/[class]/[roll], /growth/[id])",
-      "eyebrow": "K2 Red · Sr. No. 12", "title": "Where this child is",
+      "eyebrow": "K2 Red · Sr. No. 12 · the child's name", "title": "Where this child is",
       "purpose": "The left is the shape: each skill seen, coloured by state, sized by how often. The right is every observation behind it, the educator's own words beside the mark.",
       "blocks": [["ChildGraph", "skills as nodes; notes and papers both feed it"], ["Trend", "level per sitting on the skill chosen"], ["Timeline", "every observation and paper result, newest last; details: observed by (role), confirmed by, clocks, route, counts toward secure?"], ["DataTable", "skill · state · named days · last seen · ready next (CP-14, confirmed links only)"]],
       "elements": [
+        { "t": "child_name", "label": "the page header", "note": "the child's name beside the Sr. No. in the eyebrow and the trail" },
         { "t": "link", "label": "each graph node", "to": "skill" },
         { "t": "filter", "label": "skill for the trend", "note": "the trend redraws; the address carries it" },
         { "t": "fold", "label": "details on each timeline entry" },
@@ -476,7 +481,7 @@
       "rail": ["each skill", "Back to the class", "Add a note about this child", "Reports (Next)"], "capture": ["voice", "photo"], "main": "Add a note", "next": "the class",
       "data": "child_observed_state + child_skill_state; activity_observation (+note words); evidence_event / item_result for papers; skill_link_confirmed", "empty": "Not seen yet on any skill: the graph is the child alone with 'not seen yet'", "phone": "graph, then timeline; table last",
       "folds": ["/growth/[id]", "/k2/[class]/[roll]"],
-      "done_when": ["a paper's result and a voice note appear on one timeline in date order", "a correction shows as a new entry that names the entry it replaces", "no name on the page: Sr. No. only (DOM scan)", "the graph's node count equals the skills the child was seen on, and each node's state equals the table's"] },
+      "done_when": ["a paper's result and a voice note appear on one timeline in date order", "a correction shows as a new entry that names the entry it replaces", "the header shows the child's name beside the Sr. No., read from pii by child_id; the address is by Sr. No. and carries no name; no photo (DOM scan)", "the graph's node count equals the skills the child was seen on, and each node's state equals the table's"] },
 
     { "id": "assessments", "route": "/children/assessments", "group": "Children", "who": "both", "phase": "Core", "backend": [], "exists": "yes (/papers, /capture)",
       "eyebrow": "Grades 1 to 4 · your classes", "title": "Assessments",
@@ -561,6 +566,7 @@
       "blocks": [["FilterBar", "class · state"], ["DataTable", "child (Sr. No.) · lines drafted · educator approved · coordinator approved · consent · sent; each row its own action"], ["Details", "a line: the system's state beside the educator's words"]],
       "elements": [
         { "t": "filter", "label": "class · state" },
+        { "t": "child_name", "label": "each report row", "note": "the child's name beside the Sr. No.; what a parent's copy shows is the school's decision with CP-19" },
         { "t": "fold", "label": "each child's lines" },
         { "t": "field", "label": "a line's words", "effect": "the educator edits her words; the system's state beside it is read-only" },
         { "t": "button", "label": "Approve (educator, a line)", "effect": "educator approval row; the line's chip moves to 'to approve (coordinator)'" },
@@ -620,6 +626,7 @@
       "elements": [
         { "t": "filter", "label": "class", "roles": ["coordinator"] },
         { "t": "cell", "label": "each square", "to": "child" },
+        { "t": "child_name", "label": "each square", "note": "the name beside the Sr. No. (same ClassGrid as the class picture)" },
         { "t": "link", "label": "Comes after: each skill", "to": "skill" },
         { "t": "link", "label": "Ready next: each skill", "to": "skill" },
         { "t": "fold", "label": "Each level in a sentence" },
@@ -818,6 +825,6 @@
       ],
       "rail": [], "capture": ["photo"], "main": "Send", "next": "back to the page",
       "data": "staff_note → GitHub issue", "empty": "none", "phone": "full form",
-      "done_when": ["Send writes one staff_note and one issue; the issue body has no child's name (none exist on screens)"] }
+      "done_when": ["Send writes one staff_note and one issue; the issue body carries no child's name: the page warns not to type one, and a screenshot is kept on the private side, linked by id, never attached to the public GitHub issue (names now appear on some screens and the repository is public)"] }
   ]
 }

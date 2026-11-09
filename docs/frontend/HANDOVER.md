@@ -34,7 +34,7 @@ Nothing here is open for re-design. Where you find a conflict or a gap, stop and
 - One navigation: Today, Timetable, Children, Setup on one slim bar; a trail; a rail with Connected to and Capture here; no
   sidebar. The K2 side menu goes.
 - The assessment loop is rebuilt on the same parts; its queries and its seven steps are unchanged.
-- No ranking of educators anywhere. No graph database. No parent login. No name or photo of a child on any screen.
+- No ranking of educators anywhere. No graph database. No parent login. A child's name shows only where screens.json marks a `child_name` element (read from `pii` by `child_id`); every fixture, test and baseline uses fake names because the repository is public; no child photo except the child's own page as photographed.
 - The site's words are rows (`STATES`, `state_colour`, `voice-words.ts`); a screen never types a state word or an icon name.
 
 **How to proceed**

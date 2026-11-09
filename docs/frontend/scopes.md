@@ -69,7 +69,7 @@ Period, record, confirm, notes, children, class picture, child, activity, object
 3. The journey `e2e/an-educators-tuesday.spec.ts` passes: Today → the lit period → Type the marks → a note written with one activity_observation per named child and none for a child not mentioned → Confirm → Class picture shows the change → the child → the skill → trail back to Today; axe at each step; at 1440 and 400.
 4. A correction from Notes writes a superseding activity_observation row and never updates the old one (database assertion).
 5. The period → note link: a note confirmed from a period carries that session's id, and the period page lists its notes. This line waits for CP-25 (to be scoped: `activity_observation.session_id` is free today); the slice starts and merges without it, and the line is proved when CP-25 lands.
-6. Every one of the 101 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
+6. Every one of the 106 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
 7. the session's name: a period with no activity shows no capture controls and the words 'Nothing to record here'
 8. the session's name: the last-time bar's segments sum to the number of children named in the last session's observations
 9. the session's name: the steps fold is open on load and the others closed
@@ -85,12 +85,12 @@ Period, record, confirm, notes, children, class picture, child, activity, object
 19. Notes: a note left unconfirmed past 48 hours carries the red 'late' chip and sorts first
 20. Children: an educator with one class is taken straight to its picture; with several, picks; the coordinator picks from every class
 21. Class picture: an empty square's title reads 'not seen yet', never 'not secure'
-22. Class picture: no name or photo on any square (DOM scan)
+22. Class picture: each square shows the Sr. No. and the child's name read from pii by child_id, and no photo (DOM scan)
 23. Class picture: the stack bar's counts equal the squares by state
 24. Class picture: the squares are in Sr. No. order, 10 per row at 1440, 8 at 400
 25. Where this child is: a paper's result and a voice note appear on one timeline in date order
 26. Where this child is: a correction shows as a new entry that names the entry it replaces
-27. Where this child is: no name on the page: Sr. No. only (DOM scan)
+27. Where this child is: the header shows the child's name beside the Sr. No., read from pii by child_id; the address is by Sr. No. and carries no name; no photo (DOM scan)
 28. Where this child is: the graph's node count equals the skills the child was seen on, and each node's state equals the table's
 29. the activity's name: a drafted part carries the 'drafted' badge until Keep, Edit or Send back; an educator sees the badge but not the three buttons
 30. the activity's name: every edit writes a curriculum_edit row with who
@@ -241,7 +241,7 @@ Each child's report, line by line, in the educator's words: two approvals per li
 1. The screen passes the ten generic checks and every element behaves as its kind says, as educator and as coordinator.
 2. A line sends only when the educator's approval, the coordinator's approval and consent are all present; the test tries each missing one and the send is refused.
 3. The rendered parent copy contains none of: 'teacher', a rung code (R\d+), a skill code (NUM\.), 'borrow' (regex test over the PDF text).
-4. Every one of the 10 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
+4. Every one of the 11 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
 5. Reports: nothing is sent without both approvals and consent (each missing case refused)
 6. Reports: the parent's copy contains 'educator' and the four level words only, no rung or code (regex over the PDF text)
 
