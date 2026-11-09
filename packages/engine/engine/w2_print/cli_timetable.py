@@ -12,12 +12,14 @@ import psycopg
 import typer
 
 from engine.core import db, settings
+from engine.w2_print import cli_plan_link
 from engine.w2_print import k2_timetable as tt
 from engine.w2_print import k2_timetable_load as ld
 from engine.w2_print import k2_timetable_sql as sq
 
 timetable_app = typer.Typer(help="W2 — the K2 timetable from the school's tabs", no_args_is_help=True)
 VOCABULARY = "timetable.vocabulary"
+cli_plan_link.mount(timetable_app)
 
 
 def _held(items: list[str]) -> dict[date, str]:

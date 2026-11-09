@@ -581,6 +581,8 @@
  "period.period_tenant_id_grade_code_starts_at_key": "UNIQUE (tenant_id, grade_code, starts_at)",
  "plan_entry.plan_entry_activity_id_fkey": "FOREIGN KEY (activity_id) REFERENCES activity(id)",
  "plan_entry.plan_entry_fortnight_id_fkey": "FOREIGN KEY (fortnight_id) REFERENCES fortnight(id)",
+ "plan_entry.plan_entry_link_names_rule": "CHECK (((activity_id IS NULL) = (link_rule IS NULL)))",
+ "plan_entry.plan_entry_link_rule_check": "CHECK ((link_rule = ANY (ARRAY['exact_name'::text, 'person'::text])))",
  "plan_entry.plan_entry_ord_check": "CHECK ((ord > 0))",
  "plan_entry.plan_entry_pkey": "PRIMARY KEY (id)",
  "plan_entry.plan_entry_plan_key_check": "CHECK ((btrim(plan_key) <> ''::text))",

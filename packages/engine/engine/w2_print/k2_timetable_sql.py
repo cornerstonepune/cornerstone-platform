@@ -75,7 +75,9 @@ def tables(load: ld.Load, t: ld.Target) -> list[tuple[str, sql.Composed]]:
         ]
         out.append(("plan_entry", S(
             "insert into plan_entry (tenant_id, school_class_id, fortnight_id, plan_key, ord, text, activity_id, source,"
-            " week_code)\nselect x.tenant, x.klass, f.id, v.k, v.o::int, v.t, act.id, v.s, v.w from k2_ctx x cross join"
+            " week_code, link_rule, linked_at, linked_by)\nselect x.tenant, x.klass, f.id, v.k, v.o::int, v.t, act.id, v.s, v.w,"
+            " case when act.id is not null then 'exact_name' end, case when act.id is not null then now() end,"
+            " case when act.id is not null then 'loader' end from k2_ctx x cross join"
             " (values\n  {rows}\n) as v(n, k, o, t, s, w)\njoin fortnight f on f.academic_year_id = x.year and f.number = v.n::int\n"
             "left join lateral (select case when count(*) = 1 then min(a.id::text)::uuid end as id from activity a"
             " where a.tenant_id = x.tenant and a.band = {g} and regexp_replace(lower(a.name), '[^a-z0-9]+', '', 'g')"
