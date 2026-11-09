@@ -74,6 +74,15 @@ New asks for the backend. None needs a new table, and none is built; the wirefra
 | `children`, `picture`, `skill`, `today-educator`, `notes`, `period`, `confirm` | **ChildPeek: a child's recent history in date order**, with who and when: notes (`pii.educator_note`), observations (`activity_observation`), papers (`item_result`), state changes (`evidence_event`), corrections (`change_log`). | Every source exists or is decided, but nothing merges them. `change_log` is not built yet, and a note's words are private-side data. | One engine query that merges the five by date and returns who and when; which role may see a note's words in a peek; the page size. |
 | `today-educator`, `notes`, `assessments` | The boards need no new data: a lane is the table's rows in one state (`pii.educator_note.status`, `session`, the assessment's step). | none | none (noted so a builder does not look for a column). |
 
+## Added by wireframe batch 3 (today-coordinator, assessments, assessment, paper)
+
+| Screen | What the screens ask | Why it is a gap | Backend must answer |
+|---|---|---|---|
+| `assessments` | **The name an educator chose for an assessment.** The list shows the built name (topic · skill · level · kind · class · day) unless an educator named it. | Today an `assessment_name` table holds those rows (one per naming, never edited). It is not one of the 77. | Where the chosen name goes without a table: a `change_log` row keyed by `sheet_instance.key` (newest wins), as #551 did for other edits. |
+| `assessments`, `assessment` | **An assessment's step** (Created, Approved, Printed, Uploaded, Read, Checked, Results in) and its counts per step. | Not a gap in tables: the step is derived (`apps/web/lib/assessment-steps.ts`) from `sheet_instance.approved_at`, `printed_at`, `capture.status`, `item_result.status`, `confirmed_at`. Noted so a builder does not look for a column. | none |
+| `assessment` | **Two packs of one assessment** (a first pack, and later copies for absent or new children) each approved on its own. | `approval` rows (kind, target) can carry it; the wireframe assumes one `approval` row per pack, target = the pack's copies. | Confirm the `approval.target` shape for a pack. |
+| `paper` | The wireframe uses `item_result.read_confidence` and `read_correction.human_read` for "the engine was 61% sure" and "your answer, beside the engine's read". | Both exist today. | none |
+
 ## Other things the frontend noticed (not table gaps)
 
 - Decided 9 Nov 2026 (frontend orchestrator): the class grid is 8 columns at 1440 and 3 on a phone (SPEC §2 rule 10,
