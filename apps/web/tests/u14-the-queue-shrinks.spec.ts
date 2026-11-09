@@ -7,7 +7,7 @@
  */
 import { expect, test } from "@playwright/test";
 import postgres from "postgres";
-import { isoWeek } from "../lib/week";
+import { THIS_WEEK } from "./this-week";
 import { queueByWeek, trustNow } from "../lib/queries-today";
 import { aClass, aReadPaper, aWorksheet } from "./rows";
 
@@ -37,7 +37,7 @@ test.beforeAll(async () => {
 // The trend left What needs doing on 26 Oct 2026 (goals/nav3_what_needs_doing.yaml) and waits for a Results or Setup page
 // (docs/notes/nav3-what-needs-doing.md, "Parked"): what is held here is its data, the two functions that page will call.
 test("the queue's trend, week by week, says how many answers needed a person", async () => {
-  const week = isoWeek();
+  const week = THIS_WEEK;
   const [want] = await sql<{ read: number; alone: number; person: number; waiting: number }[]>`
     select count(*)::int as read,
            count(*) filter (where s.standing = 'engine')::int as alone,

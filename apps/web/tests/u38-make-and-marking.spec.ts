@@ -14,12 +14,12 @@ import { scryptSync } from "node:crypto";
 import { expect, test, type Browser, type Locator, type Page } from "@playwright/test";
 import postgres from "postgres";
 import { aClass, aReadPaper } from "./rows";
-import { isoWeek } from "../lib/week";
+import { THIS_WEEK } from "./this-week";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 const SECTION = "U38-CLASS";
-const THIS = isoWeek();
+const THIS = THIS_WEEK;
 const QR = { asha: "CS38A001", bina: "CS38B002", dev: "CS38D003", home: "CS38D0F1" };
 const EDUCATOR = { email: "u38-educator@cornerstone.test", name: "U38 Educator", role: "educator", classes: [SECTION] };
 const PASSWORD = "u38-a-long-test-password";

@@ -4,7 +4,7 @@ import { currentStaff } from "@/lib/auth";
 import { mayDecide } from "@/lib/decides";
 import { childrenSections, notYoursResponse } from "@/lib/scope";
 import { EngineDown, engineSend } from "@/lib/engine";
-import { isoWeek } from "@/lib/week";
+import { schoolWeek } from "@/lib/school-clock";
 
 const CODE = /^[RMX]\d{1,2}-[A-Z]\d{2,3}$/;
 const ID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
@@ -19,7 +19,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ cod
   // a worksheet printed for named children is a paper made for them: their classes must be the educator's
   if (!(await mayDecide(me, "class_papers", await childrenSections(children)))) return notYoursResponse();
   try {
-    const res = await engineSend(`/worksheet/${code}/for.pdf`, { children, week: isoWeek(), by: me.email });
+    const res = await engineSend(`/worksheet/${code}/for.pdf`, { children, week: await schoolWeek(), by: me.email });
     if (!res.ok) {
       const why = ((await res.json().catch(() => ({}))) as { detail?: string }).detail;
       return new Response(why ?? "the engine could not print the worksheet", { status: res.status });

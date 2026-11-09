@@ -12,13 +12,13 @@ import { scryptSync } from "node:crypto";
 import { expect, test, type Browser, type Page } from "@playwright/test";
 import postgres from "postgres";
 import { aClass, aReadPaper } from "./rows";
-import { isoWeek } from "../lib/week";
+import { THIS_WEEK } from "./this-week";
 import { queueByWeek } from "../lib/queries-today";
 
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 const MINE = "U44-MINE";
 const OTHER = "U44-OTHER";
-const THIS = isoWeek();
+const THIS = THIS_WEEK;
 const QR = { signed: "CS44A001", waiting: "CS44A002", other: "CS44C001", home: "CS44B0F1" };
 const EDUCATOR = { email: "u44-educator@cornerstone.test", name: "U44 Educator", role: "educator", classes: [MINE] };
 const PASSWORD = "u44-a-long-test-password";

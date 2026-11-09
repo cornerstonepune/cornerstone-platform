@@ -14,11 +14,11 @@ import { expect, test, type Browser, type Page } from "@playwright/test";
 import postgres from "postgres";
 import { aClass, aReadPaper } from "./rows";
 import { SIGNED_IN } from "../playwright.config";
-import { isoWeek } from "../lib/week";
+import { THIS_WEEK } from "./this-week";
 
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 const SECTION = "U43-CLASS";
-const THIS = isoWeek();
+const THIS = THIS_WEEK;
 const QR = { asha: "CS43A001", home: "CS43A0F1", spare: "CS43C001" };
 const EDUCATOR = { email: "u43-educator@cornerstone.test", name: "U43 Educator", role: "educator", classes: [SECTION] };
 const PASSWORD = "u43-a-long-test-password";

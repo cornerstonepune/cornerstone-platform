@@ -11,12 +11,12 @@
 import { expect, test, type Page } from "@playwright/test";
 import postgres from "postgres";
 import { aClass, aReadPaper } from "./rows";
-import { isoWeek } from "../lib/week";
+import { THIS_WEEK } from "./this-week";
 
 test.use({ viewport: { width: 1440, height: 900 } });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 const SECTION = "ASM-CLASS";
-const THIS = isoWeek();
+const THIS = THIS_WEEK;
 const QR = { asha: "CSA5A001", bina: "CSA5A002", chetan: "CSA5A003", home: "CSA5A004" };
 let skillName = "";
 

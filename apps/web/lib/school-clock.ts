@@ -1,5 +1,6 @@
 import { cache } from "react";
 import { sql } from "./db";
+import { isoWeek } from "./week";
 
 // The school's clock (config `school.time_zone`), as the engine reads it: never the server's zone, never a name written
 // in the code (CP-24, audit F5). Once per request, for every page that asks.
@@ -9,8 +10,14 @@ export const schoolZone = cache(async (): Promise<string> => {
   return row.z;
 });
 
+/** The day a moment falls on in a zone ("2026-10-22"), pure so a test can try 01:00 on a Monday. */
+export const dayIn = (zone: string, at: Date) => at.toLocaleDateString("en-CA", { timeZone: zone });
+
 /** Today on the school's clock, as a date input reads it ("2026-10-22"). */
-export const schoolToday = async () => new Date().toLocaleDateString("en-CA", { timeZone: await schoolZone() });
+export const schoolToday = async () => dayIn(await schoolZone(), new Date());
+
+/** This ISO week by the school's clock ("2026-W43"), as the engine names the week a paper is made for. */
+export const schoolWeek = async () => isoWeek(await schoolToday());
 
 /** The time now on the school's clock, "HH:MM": a page drawn at 03:54 in Pune is about that Pune day. */
 export const nowAtSchool = async () => new Date().toLocaleTimeString("en-GB", { timeZone: await schoolZone(), hour: "2-digit", minute: "2-digit", hour12: false });

@@ -10,11 +10,11 @@ import { classPacksWaiting, reportsWaiting } from "./queries-today";
 import { inScope } from "./scope";
 import { reachOf, seesSheet } from "./reach";
 import { buildTasks, type Sources, type Task } from "./todo";
-import { isoWeek, weekWords } from "./week";
+import { weekWords } from "./week";
 import { mayUse } from "./access";
 import { choices } from "./choices";
 import { myVoice } from "./voice";
-import { schoolZone } from "./school-clock";
+import { schoolWeek, schoolZone } from "./school-clock";
 
 type PaperRef = { id: string; section: string | null; code: string; topic: string | null; topic_name: string | null; subject: string | null };
 
@@ -51,7 +51,7 @@ export const tasksFor = cache(async (me: Session): Promise<Task[]> => {
           where s.status <> 'ratified'
           order by t.ord, s.ladder_order, s.code`
       : Promise.resolve([]),
-    may("home_papers") ? homeByClass(isoWeek(), scope) : Promise.resolve([]),
+    may("home_papers") ? homeByClass(await schoolWeek(), scope) : Promise.resolve([]),
     may("answers") ? checkQueue(me) : Promise.resolve([]),
     may("papers")
       ? sql<{ id: string; n: number }[]>`

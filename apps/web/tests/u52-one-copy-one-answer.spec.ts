@@ -17,13 +17,13 @@ import path from "node:path";
 import { expect, test, type Browser, type Page } from "@playwright/test";
 import postgres from "postgres";
 import { aClass, aReadPaper } from "./rows";
-import { isoWeek } from "../lib/week";
+import { THIS_WEEK } from "./this-week";
 
 // with SHOTS set the tests run apart, so a picture is kept of each screen even where an earlier check fails
 test.describe.configure({ mode: process.env.SHOTS ? "default" : "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 const SECTION = "U52-CLASS";
-const THIS = isoWeek();
+const THIS = THIS_WEEK;
 const QR = { asha: "CS520A01", ashaTwin: "CS520A02", bina: "CS520B01", chetan: "CS520C01", dev: "CS520D01" };
 const EDUCATOR = { email: "u52-educator@cornerstone.test", name: "U52 Educator", role: "educator", classes: [SECTION] };
 const PASSWORD = "u52-a-long-test-password";

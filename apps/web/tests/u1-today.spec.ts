@@ -7,7 +7,7 @@
  */
 import { expect, type Page, test } from "@playwright/test";
 import postgres from "postgres";
-import { isoWeek } from "../lib/week";
+import { THIS_WEEK } from "./this-week";
 import { ENGINE_PORT } from "../playwright.config";
 
 test.describe.configure({ mode: "serial" });
@@ -109,7 +109,7 @@ test("today lists everything waiting on a teacher, each with its count and one c
     select count(distinct s.child_id)::int as n from child_skill_state s join child c on c.id = s.child_id
     where c.active and s.state in ('patterned_error', 'emerging', 'practising', 'secure', 'stretch_ready')
       and not exists (select 1 from sheet_instance si where si.child_id = s.child_id and si.kind = 'focus'
-                      and si.week = ${isoWeek()})`;
+                      and si.week = ${THIS_WEEK})`;
   const home = await kind(page, "home");
   expect(home.n).toBe(n);
   if (n) {

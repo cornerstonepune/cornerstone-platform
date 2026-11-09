@@ -11,7 +11,7 @@
 import { expect, test } from "@playwright/test";
 import postgres from "postgres";
 import { ENGINE_PORT } from "../playwright.config";
-import { isoWeek } from "../lib/week";
+import { THIS_WEEK } from "./this-week";
 import { TEST_STAFF } from "./global-setup";
 import { daysAgo } from "./rows";
 
@@ -269,11 +269,11 @@ test("a child's page lists every paper made for them or read from them, with its
   const [had] = await sql`select 1 from sheet_instance where child_id = ${ids.Asha}::uuid and kind = 'focus'`;
   if (!had) {
     // printed only as shown (goals/preview-before-print.yaml): the plan's code for its questions goes back with it
-    const plan = await fetch(`http://127.0.0.1:${ENGINE_PORT}/child/${ids.Asha}/focus?week=${isoWeek()}`, {
+    const plan = await fetch(`http://127.0.0.1:${ENGINE_PORT}/child/${ids.Asha}/focus?week=${THIS_WEEK}`, {
       headers: { "X-Engine-Key": process.env.E2E_ENGINE_KEY! },
     });
     const { seen } = (await plan.json()) as { seen: string };
-    await engine(`/child/${ids.Asha}/focus`, { week: isoWeek(), by: TEST_STAFF.email, seen });
+    await engine(`/child/${ids.Asha}/focus`, { week: THIS_WEEK, by: TEST_STAFF.email, seen });
   }
   const rows = await sql<{ qr_code: string; kind: string; approved_by: string | null }[]>`
     select qr_code, kind, approved_by from sheet_instance where child_id = ${ids.Asha}::uuid`;

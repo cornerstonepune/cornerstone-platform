@@ -13,12 +13,12 @@ import { expect, test, type Page } from "@playwright/test";
 import postgres from "postgres";
 import { aClass, aReadPaper } from "./rows";
 import { createHmac } from "node:crypto";
-import { isoWeek } from "../lib/week";
+import { THIS_WEEK } from "./this-week";
 
 test.use({ viewport: { width: 1440, height: 900 } });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 const SECTION = "WV1-CLASS";
-const THIS = isoWeek();
+const THIS = THIS_WEEK;
 const QR = { asha: "CSF10A01", bina: "CSF10B02", chetan: "CSF10C03", spare: "CSF10D04" };
 let kids: Record<string, string> = {};
 

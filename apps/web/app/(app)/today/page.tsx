@@ -16,7 +16,8 @@ import { count, filterTasks, KINDS, sectionsOf, TODO_GROUPS, type Kind, type Sec
 import type { Column } from "@/lib/ux-rules";
 import { subjectsFor } from "@/lib/viewing";
 import { noteLines, weekNote } from "@/lib/queries-week-note";
-import { isoWeek, weekWords } from "@/lib/week";
+import { schoolWeek } from "@/lib/school-clock";
+import { weekWords } from "@/lib/week";
 import { switchTopic } from "../topic-actions";
 
 // What needs doing (goals/nav3_what_needs_doing.yaml; it was Today, and keeps its address). Nimish, 26 Oct 2026: "When I go to
@@ -69,6 +70,7 @@ const SECTION_ORDER = (a: string, b: string) => a.localeCompare(b, "en", { numer
 export default async function WhatNeedsDoing({ searchParams }: { searchParams: Promise<Q> }) {
   const q = await searchParams;
   const me = await requireStaff();
+  const thisWeek = await schoolWeek();
   // The list (the layout asks for it too, once per request) and the note under it are read together, never the note after the
   // list: they depend on each other for nothing, and read in turn the page was its list plus its note (goals/m0-03-today-speed.yaml).
   const listed = tasksFor(me);
@@ -131,7 +133,7 @@ export default async function WhatNeedsDoing({ searchParams }: { searchParams: P
       <details className="panel mt-6 p-4" data-know>
         <summary className="cursor-pointer font-heading text-[17px]">What the system now knows</summary>
         <p className="mt-1 text-[12.5px] text-basalt/62">
-          {offered.subjects.find((x) => x.code === (subject ?? mine[0]?.code))?.label ?? "Every subject"}, {weekWords(isoWeek())}, in the classes you see
+          {offered.subjects.find((x) => x.code === (subject ?? mine[0]?.code))?.label ?? "Every subject"}, {weekWords(thisWeek)}, in the classes you see
         </p>
         <ol className="mt-2 grid list-decimal gap-1 pl-5 text-[14px] leading-snug">
           {noteLines(known).map((l) => (

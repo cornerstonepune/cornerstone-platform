@@ -3,7 +3,7 @@ import { inScope, type Scope } from "./scope";
 import { topics as topicRows } from "./queries-people";
 import { classResult, topicFlow, topicStatuses, type Flow, type Sheet, type TopicStatus } from "./topic-flow";
 import type { State } from "@/components/status-chip";
-import { isoWeek } from "./week";
+import { schoolWeek } from "./school-clock";
 
 // What Teaching shows (goals/nav_teacher_scope_and_todo.yaml): every topic of the school in the curriculum's order, with its
 // skills, whether each class has been taught it, the topic's flow in each class (lib/topic-flow.ts, derived from the papers on
@@ -25,6 +25,7 @@ export type TeachingTopic = {
 };
 
 export async function teaching(scope: Scope): Promise<TeachingTopic[]> {
+  const week = await schoolWeek();
   const [topics, skills, sheets, declared, states] = await Promise.all([
     topicRows(scope),
     sql<{ topic: string; code: string; name: string; approved: boolean; levels: string[] }[]>`
@@ -41,7 +42,7 @@ export async function teaching(scope: Scope): Promise<TeachingTopic[]> {
     sql<{ topic: string }[]>`
       select distinct s.topic_code as topic from week_declaration w
       join skill s on s.code = any(w.skill_sets)
-      where w.week = ${isoWeek()} and s.topic_code is not null and ${inScope(scope, sql`w.section`)}`,
+      where w.week = ${week} and s.topic_code is not null and ${inScope(scope, sql`w.section`)}`,
     sql<{ topic: string; colour: string; n: number }[]>`
       select s.topic_code as topic, cs.colour, count(*)::int as n
       from child_skill_state k
