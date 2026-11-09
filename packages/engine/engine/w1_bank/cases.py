@@ -1,0 +1,171 @@
+"""Every taxonomy case of both documents, counted in the bank. `engine bank taxonomy`.
+
+A case (`taxonomy_case`) is a combination of tags; a question is one when its stored tags satisfy it
+(`assess/taxonomy.py`). A case is covered when the active bank holds at least `min_items` such
+questions — one worksheet's worth — thin below that, missing at none.
+"""
+
+from collections import Counter, defaultdict
+
+from engine.assess import cards, stale, taxonomy, verify, words
+from engine.core import levels
+from engine.w1_bank import kinds
+
+
+def matches(conn, codes=None):
+    """{case code: match} — every case, or the ones named."""
+    rows = conn.execute(
+        "select code, match from taxonomy_case" + (" where code = any(%s)" if codes is not None else ""),
+        (list(codes),) if codes is not None else (),
+    ).fetchall()
+    return {r["code"]: r["match"] for r in rows}
+
+
+def listed(check):
+    """The cases a level holds and the written methods it prints them in (`methods`, ADR 0055)."""
+    return [*check["cases"], *check.get("methods", [])]
+
+
+def on_level(check, rows):
+    """{case code: match} of the level's `listed` cases among `rows` ({case code: match}), each on the level's own
+    numbers when its skill has a shape: what `draw.level` draws from, crossing the cases with the methods."""
+    return {c: taxonomy.within(rows[c], check.get("within")) for c in listed(check) if c in rows}
+
+
+def for_level(conn, check):
+    """`on_level` from the database's rows."""
+    return on_level(check, matches(conn, listed(check)))
+
+
+def of(fmt, tags, all_matches):
+    """The taxonomy cases a question is, as measured: every case whose match its tags satisfy."""
+    return sorted(c for c, m in all_matches.items() if taxonomy.matches(m, fmt, tags))
+
+
+def count(conn):
+    cases = conn.execute(
+        "select code, taxonomy, section, section_name, label, match, min_items from taxonomy_case order by id"
+    ).fetchall()
+    rows = conn.execute(
+        "select fmt, tags, skill_set_code, difficulty from item where status = 'active' and skill_set_code is not null"
+    ).fetchall()
+    held = {c["code"]: Counter() for c in cases}
+    layout = defaultdict(Counter)
+    for r in rows:
+        for c in cases:
+            if taxonomy.matches(c["match"], r["fmt"], r["tags"]):
+                held[c["code"]][(r["skill_set_code"], r["difficulty"])] += 1
+                layout[c["code"]][r["tags"].get("presentation", "")] += 1
+    out = []
+    for c in cases:
+        n = sum(held[c["code"]].values())
+        state = "missing" if n == 0 else ("thin" if n < c["min_items"] else "covered")
+        out.append(
+            dict(
+                c,
+                n=n,
+                state=state,
+                vertical=layout[c["code"]]["VERTICAL"],
+                horizontal=layout[c["code"]]["HORIZONTAL"],
+                where=held[c["code"]].most_common(3),
+            )
+        )
+    return out
+
+
+def propose_levels(conn, codes=None):
+    """The seed's levels and kinds onto the skill sets already in the database (step 8h).
+
+    `engine load` never overwrites a skill set — a person may have edited it on the screen — so a
+    rewritten level reaches an existing row only through this, on purpose. The words a person approved
+    (name, outcome) are kept; only `difficulty` and `formats` change, and the versioning trigger
+    withdraws the ratification, so every changed skill waits on the Skill Map for one approval.
+    Returns the codes that changed."""
+    import json
+
+    from engine.core import settings
+
+    seed = {s["code"]: s for s in settings.seed("skill_sets.json", "skill_sets")}
+    changed = []
+    for r in conn.execute("select code, difficulty, formats from skill order by code").fetchall():
+        s = seed.get(r["code"])
+        if not s or (codes and r["code"] not in codes):
+            continue
+        if s["difficulty"] != r["difficulty"] or list(s["formats"]) != list(r["formats"]):
+            conn.execute(
+                "update skill set difficulty = %s, formats = %s where code = %s",
+                (json.dumps(s["difficulty"]), list(s["formats"]), r["code"]),
+            )
+            changed.append(r["code"])
+    return changed
+
+
+def outside_their_level(conn):
+    """Every active generated question the rule of its own level no longer holds — re-measured against
+    that level's region, not only its own arithmetic (BUILD-ORDER gate 4, amended; step 8h) — or keyed by
+    a rule its kind has since corrected (`stale.key_problems`), or a story holding a number its world does not
+    (`words.range_problems`: "Each box has 933 pencils", goals/md4d2a-story-ranges.yaml)."""
+    held = holds(conn)
+    out = []
+    for r in conn.execute(
+        "select id, tenant_id, item_key, fmt, stem, tags, spec, responses, skill_set_code, difficulty from item"
+        " where status = 'active' and source = 'generated' and skill_set_code is not null"
+    ).fetchall():
+        if why := held(r):
+            out.append(dict(r, why=why))
+    return out
+
+
+def holds(conn):
+    """A reading of each level's rule, case and range as they stand: `held(row)` is why the row's own level no longer
+    holds it, empty when it does (`outside_their_level`, and `refill.reinstate` for a retired one)."""
+    regions = {
+        (s["code"], band): spec.get("check", {})
+        for s in conn.execute(f"select s.code, {levels.LEVELS} as difficulty from skill s").fetchall()
+        for band, spec in s["difficulty"].items()
+    }
+    case_matches = matches(conn)
+    rows = kinds.of(conn)
+
+    def held(r):
+        region = regions.get((r["skill_set_code"], r["difficulty"]))
+        if r["fmt"] == "card":
+            # a kind that is a row, read against its kind and its level as they now stand (ADR 0075)
+            kind = rows.get(r["spec"].get("kind"))
+            if kind is None or not region or kind["code"] not in region.get("cards", []):
+                return [f"{r['spec'].get('kind')} is not a kind its level draws"]
+            return cards.belongs(kind, region, r)
+        why = verify.dimension_problems(r["tags"], region, r["fmt"], case_matches) if region else []
+        return (
+            why
+            + stale.key_problems(r["fmt"], r["spec"], r["responses"])
+            + words.range_problems(r["stem"], r["spec"])
+        )
+
+    return held
+
+
+def placed(conn):
+    """Where every taxonomy case sits among the levels in use (goals/s13-levels-by-taxonomy.yaml): the levels
+    that name it, or — for a section the `taxonomy.across_levels` row names — the rule those levels climb.
+    Returns [(code, taxonomy, section, [(skill, level), ...], 'placed' | 'pattern' | 'unplaced')], in each document's
+    order. A section number is its own document's: both have a §11."""
+    row = conn.execute("select value from config where key = 'taxonomy.across_levels'").fetchone()
+    across = set((row["value"] if row else {}).get("sections", []))
+    named = defaultdict(list)
+    for s in conn.execute(f"select s.code, {levels.LEVELS} as difficulty from skill s order by s.code"):
+        for level, spec in s["difficulty"].items():
+            check = spec.get("check", {})
+            for c in [*check.get("cases", []), *check.get("methods", [])]:
+                named[c].append((s["code"], level))
+    out = []
+    for c in conn.execute(
+        "select code, taxonomy, section from taxonomy_case"
+        " order by taxonomy, string_to_array(section, '.')::int[], code"
+    ):
+        where = named.get(c["code"], [])
+        # the sections `taxonomy.across_levels` names are the addition and subtraction document's
+        pattern = c["taxonomy"] == "ADD_SUB" and c["section"] in across
+        state = "placed" if where else ("pattern" if pattern else "unplaced")
+        out.append((c["code"], c["taxonomy"], c["section"], where, state))
+    return out

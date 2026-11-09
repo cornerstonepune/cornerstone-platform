@@ -1,0 +1,403 @@
+# What must hold before anything reaches main. The style is machine-enforced here (ruff format
+# --check) so it cannot drift back into hand formatting. The engine suite runs against a database built
+# from this repository alone (`bin/testdb fresh`: every migration, the seed, the question bank and the
+# worksheet library), so a test that reads the database runs here instead of skipping itself.
+# Deployment: once this passes on main, migrate.yml applies the merge's migrations to the live database and sets the
+# commit's `live database` status, which Vercel waits on before putting the merge's website live (ADR 0074); and
+# deploy-engine.yml rebuilds the engine server once live has those migrations. None of them starts beside this.
+#
+# Which jobs a run starts is decided once, by the `plan` job, from the changed files (bin/ci-plan, goals/ci-fast-paths.yaml,
+# docs/notes/ci-fast-paths.md). Every pull request used to start 19 jobs, GitHub runs 20 at once, and with 13 open pull requests a
+# docs-only change waited two hours for a runner (measured 2026-11-05: while jobs waited, 20 were always running). Now:
+#   main, the nightly run, a run by hand   everything: no merge is ever skipped
+#   a draft                                the checks that need no database (and the website's types and lint); everything when it is
+#                                          marked ready, and on each push after. All 10 drafts open on 2026-11-05 touched the engine.
+#   engine, schema, seed, map, gates       everything, once ready
+#   documents alone                        the checks that need no database
+#   the website alone                      the website's job, the browser tests, and the engine tests that read the website
+#   anything else, or anything unreadable  everything
+# The jobs a gate waits on keep their names (`engine`, `web`, `browser`, `engine-checks`): a job left out reports "skipped", which
+# a required check counts as passing, and `engine` and `browser` say so themselves.
+name: ci
+on:
+  push:
+    branches: [main]
+  pull_request:
+    # `ready_for_review` is not in GitHub's default list: without it, marking a draft ready would start nothing
+    types: [opened, synchronize, reopened, ready_for_review]
+  # Every night the full suite runs on main, whatever the day's merges touched
+  schedule:
+    - cron: "13 20 * * *" # 01:43 IST
+  workflow_dispatch:
+
+# A newer push cancels the older run of the same pull request, and a newer merge cancels main's older run: the engine's
+# shards take 12 of the jobs GitHub runs at once (20 on its free plan), and runs queued behind each other. Two runs of one
+# branch did on 2026-10-21; seven merges in a row held main for over an hour on 2026-10-22. Cancelling main's older run
+# loses nothing, because migrate.yml and deploy-engine.yml act only for main's newest commit, which carries every older
+# merge ("main has moved on").
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+# Every uv call below uses the engine image's Python (packages/engine/Dockerfile, packages/engine/.python-version), never the
+# runner image's: on 2026-11-05 ubuntu-latest began shipping 3.14, and paddlepaddle has no wheel for it (tests/test_python_pin.py).
+env:
+  UV_PYTHON: "3.12"
+
+jobs:
+  # Which of the jobs below this run starts. It fails to everything: if the files cannot be listed or the script breaks, every
+  # output says true.
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      engine: ${{ steps.plan.outputs.engine }}
+      web: ${{ steps.plan.outputs.web }}
+      browser: ${{ steps.plan.outputs.browser }}
+      web_reads: ${{ steps.plan.outputs.web_reads }}
+      reason: ${{ steps.plan.outputs.reason }}
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - id: plan
+        env:
+          EVENT: ${{ github.event_name }}
+          DRAFT: ${{ github.event.pull_request.draft || 'false' }}
+          BASE: ${{ github.event.pull_request.base.sha }}
+          HEAD: ${{ github.event.pull_request.head.sha }}
+        # --no-renames: a file moved out of bin/ shows as a change to bin/ as well as one to its new place
+        run: |
+          files=$(git diff --name-only --no-renames "$BASE...$HEAD" 2>/dev/null) || files=""
+          printf '%s\n' "$files" | bin/ci-plan decide --event "$EVENT" --draft "$DRAFT" >"$RUNNER_TEMP/plan.txt" \
+            || printf 'engine=true\nweb=true\nbrowser=true\nweb_reads=false\nreason=bin/ci-plan failed: everything\n' >"$RUNNER_TEMP/plan.txt"
+          cat "$RUNNER_TEMP/plan.txt" >>"$GITHUB_OUTPUT"
+          { echo '### ci plan'; echo; echo "event \`$EVENT\`, draft \`$DRAFT\`, $(printf '%s\n' "$files" | grep -c .) changed files"; echo; sed 's/^/- /' "$RUNNER_TEMP/plan.txt"; } | tee -a "$GITHUB_STEP_SUMMARY"
+
+  # The engine's checks that need no database, beside the shards rather than before them. They run on every change.
+  engine-checks:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: packages/engine } }
+    steps:
+      # the whole history, for the ratchet below to read the baselines of the commit this change starts from
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: astral-sh/setup-uv@v5
+      # The server builds with `uv sync --frozen`, which installs the lockfile and nothing else. A
+      # lock missing boto3 passed every check here (a fresh resolve found it) and the deployed
+      # engine could not start. The lock must match pyproject.toml, or the build is refused.
+      - run: uv lock --check
+      - run: uv sync --extra dev
+      - run: uv run ruff format --check engine tests
+      - run: uv run ruff check engine tests
+      # Today's debt is frozen in workflows.json and pyproject.toml (files over 400 lines, functions past the
+      # complexity limits, the coverage floor); a change may tighten each number and never loosen it
+      # (goals/p1-the-gates-hold.yaml). The base is the pull request's, or the commit main was at before a push.
+      # a nightly or by-hand run has neither, so it holds main to the commit before it
+      - run: uv run engine ratchet --base "${{ github.event.pull_request.base.sha || github.event.before || 'HEAD~1' }}"
+      # A migration this change adds must sort after main's newest: live has applied that one, and `supabase db push`
+      # refuses an older one, so migrate live would fail after the merge (tests/test_migration_order.py). It reads
+      # origin/main, which the full-history checkout above fetched.
+      - run: uv run pytest -q -p no:cacheprovider -o addopts= tests/test_migration_order.py
+      # What a draft is held to: the code against workflows.json, every goal line a command, the types, the website's contract
+      # with the engine, and lint (bin/check, ADR 0033). None needs the database.
+      - run: ../../bin/check
+
+  # The engine's tests, cut across runners by file (bin/ci-shard), each with its own database built afresh: one
+  # runner took 37 minutes on 2026-10-21, 31 of them tests (goals/ci-engine-shards.yaml, docs/notes/ci-engine-shards.md).
+  # A file stays whole on one runner, so its module fixtures and its tests' order are as they were.
+  engine-shard:
+    name: engine shard ${{ matrix.shard }}
+    needs: [plan]
+    if: needs.plan.outputs.engine == 'true'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      # SHARDS below, here and in the engine job, must be this list's length; 12 runners finish their tests together at
+      # the slowest single test (149 s), and more would only wait on it (docs/notes/ci-engine-shards.md)
+      matrix: { shard: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] }
+    defaults: { run: { working-directory: packages/engine } }
+    env:
+      SHARDS: 12
+      OUT: ${{ github.workspace }}/shard
+      # the tests refuse any database that is not on this machine (conftest.py, core/db.py)
+      DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/postgres
+      TEST_DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/postgres
+    steps:
+      # the whole history, as the single runner had it
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      # Postgres 17 from the PostgreSQL apt repository, no container image: two registries' anonymous-pull limits
+      # stopped every job before its first step (Docker Hub 2026-10-09, AWS's copy 2026-10-15). See bin/ci-postgres.
+      - run: ../../bin/ci-postgres
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync --extra dev
+      # The database is built from this repository alone (`bin/testdb fresh`: every migration, the seed, the question
+      # bank and the worksheet library), a fresh draw of the bank on every runner. It takes about six minutes, nearly
+      # all `engine bank refill` on one core, so it starts first and the steps below run beside it.
+      - name: the test database, started
+        run: |
+          mkdir -p "$OUT"
+          ( ../../bin/testdb fresh "$DATABASE_URL" >"$RUNNER_TEMP/testdb.log" 2>&1; echo $? >"$RUNNER_TEMP/testdb.rc" ) &
+      # A paper is printed through Chromium (assess/render.py); the test that scans printed papers needs it.
+      - run: uv run playwright install --with-deps chromium
+      # The timetable generator (M1-14b): FET's command-line program, the package the engine image installs too.
+      - run: sudo apt-get update -qq && sudo apt-get install -y --no-install-recommends fet && fet-cl --version | head -1
+      # The digit reader's models (ADR 0035, ~135 MB): test_digits and test_boxes run the real reader.
+      - uses: actions/cache@v4
+        with:
+          path: ~/.paddlex/official_models
+          key: paddlex-${{ hashFiles('packages/engine/uv.lock') }}
+      # The spine's provenance check (goals/spine-traceable.yaml) reads NCERT's own PDFs (~69 MB), fetched from
+      # ncert.nic.in and refused unless each matches the fingerprint recorded when the import read it.
+      - uses: actions/cache@v4
+        with:
+          path: data/spine_sources
+          key: spine-sources-${{ hashFiles('docs/spine/sources/official_documents.json') }}
+      - name: the test database, built
+        run: |
+          while [ ! -f "$RUNNER_TEMP/testdb.rc" ]; do sleep 2; done
+          cat "$RUNNER_TEMP/testdb.log"
+          exit "$(cat "$RUNNER_TEMP/testdb.rc")"
+      # Every runner collects the whole suite on its own database, and takes its cut of it; the engine job below
+      # checks the cuts together are the suite, each test in one.
+      - name: this shard's tests
+        run: |
+          uv run pytest --collect-only -q >"$OUT/collected.txt"
+          ../../bin/ci-shard pick ${{ matrix.shard }} "$SHARDS" "$OUT/collected.txt" ../../.github/ci-durations.json >"$OUT/assigned.txt"
+          [ -s "$OUT/assigned.txt" ] || { echo "::error::shard ${{ matrix.shard }} has no tests: fewer files than shards"; exit 1; }
+          echo "$(wc -l <"$OUT/assigned.txt") tests here"
+      # The coverage floor is the whole suite's, so it is applied once, to every shard's data combined (the engine job).
+      # The data is kept when a test fails too: the engine job refuses to combine without every shard's.
+      - run: |
+          rc=0
+          uv run pytest -q --cov=engine --cov-report= --cov-fail-under=0 \
+            -o junit_family=xunit1 --junitxml="$OUT/report.xml" "@$OUT/assigned.txt" || rc=$?
+          mv .coverage "$OUT/coverage.data" || true
+          exit "$rc"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: engine-shard-${{ matrix.shard }}
+          path: shard/
+          retention-days: 7
+
+  # A change to the website alone skips the engine's twelve shards, but 27 of the engine's test files read apps/web (the UX rules, the
+  # sign-in gate, the school's words…) and most of their tests need the database. They run here, on one runner and a database built the
+  # same way, so a website change meets them as it always did (bin/ci-plan web-tests, goals/ci-fast-paths.yaml).
+  engine-web-reads:
+    name: engine tests that read the website
+    needs: [plan]
+    if: needs.plan.outputs.web_reads == 'true'
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: packages/engine } }
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/postgres
+      TEST_DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/postgres
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - run: ../../bin/ci-postgres
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync --extra dev
+      - name: the test database, started
+        run: ( ../../bin/testdb fresh "$DATABASE_URL" >"$RUNNER_TEMP/testdb.log" 2>&1; echo $? >"$RUNNER_TEMP/testdb.rc" ) &
+      - run: uv run playwright install --with-deps chromium
+      - name: the test database, built
+        run: |
+          while [ ! -f "$RUNNER_TEMP/testdb.rc" ]; do sleep 2; done
+          cat "$RUNNER_TEMP/testdb.log"
+          exit "$(cat "$RUNNER_TEMP/testdb.rc")"
+      - name: the tests that read the website
+        run: |
+          ../../bin/ci-plan web-tests tests >"$RUNNER_TEMP/web-tests.txt"
+          [ -s "$RUNNER_TEMP/web-tests.txt" ] || { echo "::error::no test reads the website; the search reads nothing"; exit 1; }
+          echo "$(wc -l <"$RUNNER_TEMP/web-tests.txt") test files"
+          uv run pytest -q -p no:cacheprovider $(cat "$RUNNER_TEMP/web-tests.txt")
+
+  # The one pass or fail for the engine, under the name the single job had: every shard green, every test run exactly
+  # once across them, and coverage below the floor in pyproject.toml ([tool.coverage.report] fail_under) fails it.
+  # When the plan left the shards out (a draft, a change of documents or of the website alone) there is nothing to combine, and
+  # this says so and passes on the checks alone; it still fails if the plan itself failed.
+  engine:
+    needs: [plan, engine-checks, engine-shard]
+    if: always()
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: packages/engine } }
+    env:
+      SHARDS: 12
+    steps:
+      - if: needs.plan.outputs.engine == 'true'
+        uses: actions/checkout@v4
+      - if: needs.plan.outputs.engine == 'true'
+        uses: astral-sh/setup-uv@v5
+      - if: needs.plan.outputs.engine == 'true'
+        run: uv sync --extra dev
+      - if: needs.plan.outputs.engine == 'true'
+        uses: actions/download-artifact@v4
+        with: { pattern: engine-shard-*, path: shards }
+      - name: every test ran, and ran once
+        if: needs.plan.outputs.engine == 'true'
+        run: |
+          for k in $(seq "$SHARDS"); do mv "../../shards/engine-shard-$k" "../../shards/$k" 2>/dev/null || true; done
+          ../../bin/ci-shard check "$SHARDS" ../../shards
+      - name: the whole suite's coverage, against the floor
+        if: needs.plan.outputs.engine == 'true'
+        run: uv run coverage combine --keep ../../shards/*/coverage.data && uv run coverage report --skip-covered
+      - name: every engine job passed
+        if: always()
+        # not packages/engine: with the checkout skipped that folder does not exist, and the step could not start
+        working-directory: ${{ github.workspace }}
+        # As the browser roll-up: "cancelled" for a cancelled run, "failed" for a broken one (CP-21)
+        # the plan's reason holds changed files' names, so it reaches the shell as a variable and is never pasted into the script
+        env:
+          REASON: ${{ needs.plan.outputs.reason }}
+        run: |
+          checks='${{ needs.engine-checks.result }}'; [ "$checks" != failure ] || checks=failed
+          shards='${{ needs.engine-shard.result }}'; [ "$shards" != failure ] || shards=failed
+          echo "plan: ${{ needs.plan.result }} ($REASON), checks: $checks, shards: $shards"
+          [ "${{ needs.plan.result }}" = success ] && [ "${{ needs.engine-checks.result }}" = success ] || exit 1
+          [ "${{ needs.plan.outputs.engine }}" != true ] || [ "${{ needs.engine-shard.result }}" = success ]
+
+  web:
+    needs: [plan]
+    if: needs.plan.outputs.web == 'true'
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: apps/web } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 24, cache: npm, cache-dependency-path: apps/web/package-lock.json }
+      - run: npm ci
+      # PageProps / LayoutProps are global types Next generates during dev, build or typegen. A fresh
+      # checkout has none, so tsc failed on every run from 2026-09-18 with "Cannot find name
+      # 'LayoutProps'" while the engine job stayed green — and nobody was looking.
+      - run: npx next typegen
+      - run: npx tsc --noEmit
+      # Every warning is an error here: lint ran nowhere until 2026-10-01 (goals/p1-the-gates-hold.yaml).
+      - run: npx eslint --max-warnings 0
+      # No DATABASE_URL, as on Vercel's previews: a page's import must never touch the database (lib/db.ts). One did
+      # (lib/queries-papers.ts, a fragment built at import), and every preview failed from #140 to #143 while this
+      # build, handed a URL, passed.
+      - run: npm run build
+
+  # Every browser spec, against a production build and the engine (playwright.config.ts starts both), on a database
+  # built from this repository alone — the engine job's `bin/testdb fresh`. Until 2026-10-01 these ran on a laptop
+  # against a copy of live, some leaned on live's classes, and none ran here. A spec builds the rows it needs
+  # (tests/rows.ts); one that skips itself fails this job (goals/p1-browser-tests-in-ci.yaml).
+  # The browser specs cut across three runners by Playwright's own --shard, each runner with its own database and servers,
+  # so the specs that share rows or lock tables still run one at a time on their runner (workers: 1). One runner took 24
+  # minutes on 2026-10-23, 6 installing Chromium, 4 building the database and 14 testing, one after another
+  # (goals/ci-browser-shards.yaml). Each runner now builds its database while it installs, as the engine shards do.
+  browser-shard:
+    name: browser shard ${{ matrix.shard }}
+    needs: [plan]
+    if: needs.plan.outputs.browser == 'true'
+    runs-on: ubuntu-latest
+    # A hung shard used to run for GitHub's default six hours; a healthy one takes about 15 minutes (CP-21)
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      # SHARDS below and in the browser job must be this list's length
+      matrix: { shard: [1, 2, 3] }
+    env:
+      SHARDS: 3
+      DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/postgres
+      TEST_DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/postgres
+    steps:
+      - uses: actions/checkout@v4
+      # Postgres 17 with no container image, as the engine job's (bin/ci-postgres)
+      - run: bin/ci-postgres
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync --frozen
+        working-directory: packages/engine
+      # The database is built from this repository alone (bin/testdb fresh), started first so the installs below run
+      # beside it; its result is waited on before the roles and the tests.
+      - name: the test database, started
+        run: ( bin/testdb fresh "$DATABASE_URL" >"$RUNNER_TEMP/testdb.log" 2>&1; echo $? >"$RUNNER_TEMP/testdb.rc" ) &
+      # the engine prints a paper through Chromium (assess/render.py)
+      - run: uv run playwright install --with-deps chromium
+        working-directory: packages/engine
+      - uses: actions/setup-node@v4
+        with: { node-version: 24, cache: npm, cache-dependency-path: apps/web/package-lock.json }
+      - run: npm ci
+        working-directory: apps/web
+      - run: npx playwright install --with-deps chromium
+        working-directory: apps/web
+      - name: the test database, built
+        run: |
+          while [ ! -f "$RUNNER_TEMP/testdb.rc" ]; do sleep 2; done
+          cat "$RUNNER_TEMP/testdb.log"
+          exit "$(cat "$RUNNER_TEMP/testdb.rc")"
+      # The website and the engine reach the database as their own roles, as live will, with passwords made for this
+      # run alone; a page or a route needing a grant its role lacks fails here (goals/p1-the-roles-hold.yaml).
+      - run: >-
+          psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -c "alter role app_web password 'ci-web'"
+          -c "alter role app_engine password 'ci-engine'"
+      - run: npx playwright test --shard=${{ matrix.shard }}/${{ env.SHARDS }} --max-failures=10 --reporter=list,json
+        working-directory: apps/web
+        env:
+          PLAYWRIGHT_JSON_OUTPUT_NAME: results.json
+          TEST_WEB_DATABASE_URL: postgresql://app_web:ci-web@127.0.0.1:5432/postgres
+          TEST_ENGINE_DATABASE_URL: postgresql://app_engine:ci-engine@127.0.0.1:5432/postgres
+      # A test that failed once and passed on its retry is flaky: the run passes and the test is listed here (docs/adr/0094).
+      # One that failed twice is "unexpected", and fails the step before this one.
+      - name: the flaky tests, listed
+        if: always()
+        run: bin/ci-flaky-summary apps/web/results.json
+      - name: no test skipped or left unrun
+        working-directory: apps/web
+        run: >-
+          node -e "const s = require('./results.json').stats; console.log(s);
+          if (s.skipped || s.unexpected) process.exit(1)"
+      # every statement over a second (bin/ci-postgres), so a page the database was too slow for names the statement
+      - name: the database's slow statements
+        if: failure()
+        run: grep -A2 "duration:" "$RUNNER_TEMP/postgres/log" || echo "no statement took over a second"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: browser-shard-${{ matrix.shard }}
+          path: apps/web/results.json
+          retention-days: 7
+
+  # The one pass or fail for the browser tests, under the name the single job had: every shard green, and every listed
+  # test ran in exactly one shard, none skipped (bin/ci-browser-check).
+  # As `engine` above: with the shards left out it says so and passes; it fails if the plan did.
+  browser:
+    needs: [plan, browser-shard]
+    if: always()
+    runs-on: ubuntu-latest
+    env:
+      SHARDS: 3
+      DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/postgres
+      TEST_DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/postgres
+    steps:
+      - if: needs.plan.outputs.browser == 'true'
+        uses: actions/checkout@v4
+      - if: needs.plan.outputs.browser == 'true'
+        uses: actions/setup-node@v4
+        with: { node-version: 24, cache: npm, cache-dependency-path: apps/web/package-lock.json }
+      - if: needs.plan.outputs.browser == 'true'
+        run: npm ci
+        working-directory: apps/web
+      # the whole suite as Playwright lists it, without running anything
+      - if: needs.plan.outputs.browser == 'true'
+        run: npx playwright test --list --reporter=json >"$RUNNER_TEMP/list.json"
+        working-directory: apps/web
+      - if: needs.plan.outputs.browser == 'true'
+        uses: actions/download-artifact@v4
+        with: { pattern: browser-shard-*, path: shards }
+      - name: every browser test ran, and ran once
+        if: needs.plan.outputs.browser == 'true'
+        run: bin/ci-browser-check "$RUNNER_TEMP/list.json" $(for k in $(seq "$SHARDS"); do echo "shards/browser-shard-$k/results.json"; done)
+      - name: every browser shard passed
+        if: always()
+        # A cancelled run says "cancelled" and a broken one says "failed", so a red tick is read for what it is (CP-21)
+        # the plan's reason holds changed files' names, so it reaches the shell as a variable and is never pasted into the script
+        env:
+          REASON: ${{ needs.plan.outputs.reason }}
+        run: |
+          shards='${{ needs.browser-shard.result }}'; [ "$shards" != failure ] || shards=failed
+          echo "plan: ${{ needs.plan.result }} ($REASON), shards: $shards"
+          [ "${{ needs.plan.result }}" = success ] || exit 1
+          [ "${{ needs.plan.outputs.browser }}" != true ] || [ "${{ needs.browser-shard.result }}" = success ]
+

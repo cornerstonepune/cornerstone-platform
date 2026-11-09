@@ -33,3 +33,4 @@ The fsync and synchronous-commit settings in that restart file are for the throw
 
 ## Engine data rules
 - Derived lists, machine-made links, matching rules and the fortnight rule are in `references/engine-data-rules.md`. Read it before changing any command that links rows or prints a count.
+- Machine-made links (undo by run), first-rule-wins matching with ties listed, and per-fortnight counts are in `references/links-matching-timetables.md`.

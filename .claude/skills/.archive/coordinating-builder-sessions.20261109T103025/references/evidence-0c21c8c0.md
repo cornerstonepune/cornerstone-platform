@@ -1,0 +1,3 @@
+I have restarted the proof-writer twice because the spec moved under it. Please make no further change to screens.json, tokens.json or scopes.md for slices UI-1, UI-14 and UI-13 until I report them merged; if you find a real defect, send it to me as a message first with the reason.
+
+Freeze acknowledged. I will not touch screens.json, tokens.json or scopes.md for UI-1, UI-14 and UI-13 until you report them merged.

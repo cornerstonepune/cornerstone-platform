@@ -1,0 +1,1 @@
+database-schema-and-access [project]: Use when editing Postgres migrations, tables or RLS grants. | postgres-schema-and-access [project]: Use when changing Postgres schema, grants, or RLS rules. | database-changes [project]: Use when writing Postgres migrations, grants, RLS or views.

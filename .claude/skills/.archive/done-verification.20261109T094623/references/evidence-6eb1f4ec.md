@@ -1,0 +1,1 @@
+ALL DONE (1/1 specs pass)\n M specs/CP-24/RUN.json — and the stop gate: "Canny: specs/CP-24/checks.sh, specs/CP-24/status.json, specs/CP-24/proofs/pytest.sh and 233 more files changed, but no check has passed since the last edit." Stop hook 4: "There are uncommitted changes in the repository. Please commit and push these changes to the remote branch."

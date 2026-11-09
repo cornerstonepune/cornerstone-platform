@@ -1,0 +1,55 @@
+# toolgate policy for the Athena harness (reviewed 7 Nov 2026, ATH-21). Upstream: RiskAverseTech/toolgate 0.16.0
+# (commit 31e8a2a); every key and default below is from its examples/toolgate.yaml. toolgate reads policy only from
+# ~/.toolgate/toolgate.yaml (never from a project), so harness/tools.sh and mac/setup.sh copy this file there.
+# Why each choice: docs/decisions/2026-11-07-toolgate-policy.md (also the rule for leaving shadow mode).
+
+# provider: the key Athena already uses (TYPESAFE_API_KEY), never auto-picked from another key.
+# model: pinned; upstream's default is jev-latest, which can change under us.
+backend:
+  provider: typesafe
+  model: jev-1.13.0
+  timeout_ms: 5000
+
+fail_mode: ask             # model unreachable: a confirmation prompt, never a silent allow (upstream default)
+
+thresholds:
+  deny: 0.85
+  ask: 0.55
+  authorized: 0.8
+
+# Upstream's list, minus autoharness's stage_skill: it only queues a proposed skill for autoharness's own promoter
+# (its reflector "proposes intents only, never writes to disk"), its payloads exceed input_chars (25 "input too
+# large" asks in the 7 Nov audit), and learned skills reach main only through the weekly review pull request.
+gated_tools: "Bash|Write|Edit|MultiEdit|NotebookEdit|WebFetch|WebSearch|mcp__(?!plugin_autoharness_stage_skill__).*"
+
+trusted_hosts: [github.com, api.github.com]   # the harness's own remote: pushing there is not exfiltration
+trusted_tools: "mcp__github__.*"              # the GitHub server this harness runs; still gated on every other axis
+
+include_task_context: true
+show_allows: false
+
+# input_chars: upstream default; beyond it the verdict can be no better than ask.
+limits:
+  input_chars: 40000
+  task_chars: 6000
+  earlier_prompts: 2
+  session_goal_chars: 1200
+
+# Routines and agents that run with nobody to answer: an ask becomes a deny (upstream default). Auto mode is not
+# listed, because a hook's ask still shows a dialog there.
+unattended:
+  modes: [bypassPermissions, dontAsk]
+  ask: deny
+
+audit:
+  enabled: true
+  path: ~/.toolgate/audit.jsonl
+  log_input: true
+
+ledger:
+  enabled: true
+  dir: ~/.toolgate/ledger
+  max_events: 1000
+
+rules: []
+questions: {}
