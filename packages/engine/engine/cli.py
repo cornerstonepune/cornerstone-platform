@@ -32,6 +32,7 @@ from engine.w1_bank import (
 from engine.w1_bank.cli_bank import bank_app
 from engine.w1_bank.k2_upload import curriculum_app
 from engine.w1_bank.question_types import types_app
+from engine.w2_print.cli_fortnight import fortnight_app
 from engine.w2_print.cli_library import library_app
 from engine.w2_print.cli_materials import register_materials
 from engine.w2_print.cli_timetable import timetable_app
@@ -64,6 +65,7 @@ app.add_typer(bank_app, name="bank")
 app.add_typer(curriculum_app, name="curriculum")
 app.add_typer(week_app, name="week")
 app.add_typer(timetable_app, name="timetable")
+app.add_typer(fortnight_app, name="fortnight")
 app.add_typer(legacy_app, name="legacy")
 app.add_typer(read_app, name="read")
 app.add_typer(live_app, name="live")
