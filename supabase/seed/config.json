@@ -877,6 +877,12 @@
       "description": "The fixed random seed given to FET, so the same rules give the same draft. Kept in every run.",
       "value": 20261109,
       "seed_once": true
+    },
+    {
+      "key": "timetable.go_live_group",
+      "description": "The access group (access_group.code) whose members may put a draft timetable live; the coordinator's group by default.",
+      "value": "everything",
+      "seed_once": true
     }
   ]
 }
