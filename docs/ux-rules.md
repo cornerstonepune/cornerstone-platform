@@ -9,7 +9,8 @@ Educators use the site on a desktop, so every screen is designed, tested and scr
 was the K2 screens' width until UI-13). A phone (400 px) must not break: every screen passes a smoke test there (it
 renders, one h1, no console error, no sideways scroll of the page). The screens marked `phone_gate` in
 `docs/frontend/screens.json` are held to more at 400 px: the same order, controls of at least 44 × 44 px with 8 px between,
-the keyboard, and the words. KG observation (S9) is done on a phone and is such a screen.
+the keyboard, and the words; a page's heading sits within the top 240 px (the 64 px bar, the door's row of pages and the
+trail come first). KG observation (S9) is done on a phone and is such a screen.
 
 **Four work states, not five chips.** Work is one of green (done), amber (to confirm, waiting on someone), red (do now,
 late, a fix) or a quiet grey (to do), each an icon, a word and a colour (rule 10), taken from the STATES rows in

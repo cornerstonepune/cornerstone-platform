@@ -10,17 +10,18 @@ export function Trail({ thing }: { thing: string }) {
   const door = doors.find((d) => d.key === lit);
   return (
     <nav aria-label="Where you are" data-trail className="mb-[var(--space-2)] print:hidden">
-      <ol className="flex flex-wrap items-center gap-[var(--space-1)] text-[length:var(--text-label)] text-[var(--ink-muted)]">
+      <ol className="flex flex-nowrap items-center gap-[var(--space-1)] text-[length:var(--text-label)] text-[var(--ink-muted)]">
         {door ? (
-          <li className="inline-flex items-center gap-[var(--space-1)]">
+          <li className="inline-flex shrink-0 items-center gap-[var(--space-1)]">
             <Link href={door.href} data-trail-door className="inline-flex min-h-[var(--tap)] min-w-[var(--tap)] items-center text-[var(--link)] underline">
               {door.label}
             </Link>
             <span aria-hidden="true">›</span>
           </li>
         ) : null}
-        <li>
-          <span aria-current="page" className="font-medium text-[var(--ink)]">
+        <li className="min-w-0">
+          {/* one line: a long title is cut here and said in full by the heading just below */}
+          <span aria-current="page" className="block truncate font-medium text-[var(--ink)]">
             {thing}
           </span>
         </li>
