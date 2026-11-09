@@ -61,7 +61,8 @@ A pair that fails is fixed in `docs/frontend/tokens.json`, never exempted.
 | subject-numeracy | ground | the numeracy top edge | 3:1 | 6.81 | 9.34 | pass |
 | subject-language | subject-language-bg | the language word and icon on its fill | 4.5:1 | 6.16 | 6.48 | pass |
 | subject-language | ground | the language top edge | 3:1 | 7.49 | 8.45 | pass |
-| subject-arts | ground | the Arts top edge | 3:1 | 3.40 | 10.26 | pass |
+| subject-arts | ground | the Arts top edge | 3:1 | 3.44 | 10.26 | pass |
+| subject-arts | subject-arts-bg | the Arts top edge on its own fill | 3:1 | 3.04 | 7.42 | pass |
 | subject-arts-ink | subject-arts-bg | the Arts word and icon on its fill | 4.5:1 | 5.23 | 7.42 | pass |
 | subject-fixed | subject-fixed-bg | the fixed parts of the day | 4.5:1 | 5.70 | 5.75 | pass |
 | ink | subject-numeracy-bg | text in a numeracy cell | 4.5:1 | 15.01 | 11.21 | pass |
@@ -73,9 +74,9 @@ The four colours that sit near each other are at least 20 apart (CIE76 ΔE, ligh
 
 | Colour | Colour | ΔE | Result |
 |---|---|---|---|
-| subject-language | subject-arts | 44.2 | pass |
+| subject-language | subject-arts | 43.8 | pass |
 | subject-language | state-wait | 24.7 | pass |
 | subject-language | state-late | 33.2 | pass |
-| subject-arts | state-wait | 23.8 | pass |
-| subject-arts | state-late | 44.5 | pass |
+| subject-arts | state-wait | 23.3 | pass |
+| subject-arts | state-late | 44.1 | pass |
 | state-wait | state-late | 34.1 | pass |
