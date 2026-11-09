@@ -106,9 +106,10 @@
   --press-transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-/* Dark follows the system setting; there is no in-app switch. */
+/* Dark follows the system setting; there is no in-app switch. A page held light (data-scheme="light", the whole site
+   until its screens are restyled) keeps the light values; tests take the dark ones by dropping the hold. */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-scheme="light"]) {
     color-scheme: dark;
     --ground: #141416;
     --surface: #1b1b1f;

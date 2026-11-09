@@ -17,11 +17,11 @@ test("spacing is on the 8 px scale, taps are at least 44 px, one type scale, one
   expect(space.length).toBeGreaterThan(4);
   for (const k of space) expect(k === "--space-1" ? px(T[k]) === 4 : px(T[k]) % 8 === 0, `${k} ${T[k]}`).toBe(true); // 4 inside a control only
   expect(px(T["--tap"])).toBeGreaterThanOrEqual(44);
-  const scale = ["--text-caption", "--text-label", "--text-body", "--text-lead", "--text-h3", "--text-h2", "--text-h1"].map((k) => px(T[k]));
+  const scale = ["--text-caption", "--text-label", "--text-body", "--text-lead", "--text-title-small", "--text-title-section", "--text-title-page"].map((k) => px(T[k]));
   expect(scale).toEqual([12, 14, 16, 18, 20, 24, 32]);
-  expect(T["--font-body"]).toMatch(/^"Jost", sans-serif$/);
-  expect(T["--font-display"]).toMatch(/^"Cormorant Garamond", serif$/);
-  expect(T["--font-script"]).toMatch(/^"Eczar", serif$/);
+  // UI-14: Source Sans 3 for everything read, Source Serif 4 for titles (tokens.json); no Devanagari face is loaded today
+  expect(T["--font-body"]).toMatch(/^"Source Sans 3", /);
+  expect(T["--font-serif"]).toMatch(/^"Source Serif 4", /);
 });
 
 test("every text colour on its background reaches 4.5:1", () => {

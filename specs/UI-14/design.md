@@ -7,7 +7,7 @@ beyond "the same pages in the new white and type".
 | # | Choice | Reason |
 |---|---|---|
 | 1 | `scripts/tokens.mjs` copies `docs/frontend/tokens.json` byte for byte to `design-system/tokens.json`, writes `tokens.css`, copies the four logo SVGs to `public/brand/` and `mark-on-white-tile` to `app/icon.svg`. `--check` writes nothing and exits 1 naming each stale file. | One script owns every generated file, so one test (regenerate and diff) guards them all. |
-| 2 | tokens.css: light values on `:root`, dark under `@media (prefers-color-scheme: dark)`; the root layout no longer holds pages light (`data-scheme="light"` removed). | SPEC: "Dark follows the system; every pair has a dark value." No in-app switch exists. |
+| 2 | tokens.css: light values on `:root`, dark under `@media (prefers-color-scheme: dark)` on `:root:not([data-scheme="light"])`. The root layout keeps `data-scheme="light"`, so the site stays light in this slice; tests take the dark values by removing the attribute and emulating the dark scheme. | Decided by the orchestrator (9 Nov 2026): turning dark on site-wide would show dark on every old page before UI-13/UI-2 restyle them, a user-visible change nobody asked for in UI-14. |
 | 3 | Names: a colour is `--<name>`; type style `s` is `--font-s`, `--text-s`, `--lh-s`, `--weight-s` (`--tracking-s`); families `--font-sans`, `--font-serif`; spacing, radius and shadow by their names; a motion token's declarations become `--press-transform` and `--press-transition`. | Every tokens.json name appears as a custom property; the existing `--text-label`, `--lh-body`, `--space-*`, `--tap` keep their names, so the educator screens' size tokens did not move. |
 | 4 | tokens.css is imported once, in `app/globals.css`, in the `tokens` layer, for every page. The two other imports (the educator shell, the timetable rules page) are removed. | "One source … for the whole site." |
 | 5 | "Nearest token" means nearest by role, not by colour value. | By value, the lime ground maps to `subject-fixed-bg` and the cream look stays, contradicting "the same pages in the new white". |
@@ -22,3 +22,28 @@ beyond "the same pages in the new white and type".
 | 14 | App icon: `app/apple-icon.tsx` renders `public/brand/Cornerstone-logo-mark-on-white-tile.svg` with `ImageResponse` (180 px PNG, made at build, statically optimised per the installed Next 16.3.5 docs `app-icons.md`); PNGs are already git-ignored. | Line 6. |
 | 15 | Contrast: `scripts/contrast.mjs` measures the pairs the usage notes name (both themes, WCAG 2; 4.5:1 text, 3:1 edges and icons) and ΔE76 ≥ 20 for language/arts/wait/late in light; writes `docs/design-tokens-contrast.md`; `--check` fails if the table is stale or a pair is short. | Line 3. The Arts top edge on its own fill measures 2.998:1; the usage note names it only "3:1 on white", so it is not in the table; reported to the orchestrator as a finding for the spec owner. |
 | 16 | The shadow tokens' rgba values and `color-mix` washes are not hex and stay; the only shadow is `--shadow-card`. | One elevation. |
+
+## The full map, old name → token (choices 6 and 7)
+
+Old Tailwind materials (`globals.css`, `:root`): `--lime` → `--ground` · `--basalt` → `--ink` · `--chalk` → `--panel` ·
+`--terracotta` → `--state-late` · `--neem` → `--state-ok` · `--bamboo` → `--state-wait` · `--mud` → `--kind-note` ·
+`--monsoon` → `--state-quiet` · `--ink-NN` → `color-mix(in srgb, var(--ink) NN%, transparent)` · base `a` → `--link`.
+Hand-written classes in `globals.css`: `.btn` → `--action`/`--action-ink`; `.chip.on` → `--action`/`--action-ink`;
+`.pill-neem/-bamboo/-terracotta/-monsoon` → `--state-ok/-wait/-late/-quiet` with their `-bg`; focus outline → `--focus`;
+a table row's hover → `--highlight`.
+
+Old D-073 names (educator, K2, curriculum, timetable, page-part): `--text` → `--ink` · `--text-muted` → `--ink-muted` ·
+`--bg` → `--ground` · `--surface` → `--panel` · `--sunken` → `--surface` · `--border` → `--line` ·
+`--border-control` → `--line-control` · `--chip-donow-fg/bg/bd` → `--action-ink`/`--action`/`--action` (a selected tab,
+the Now line), except the K2 "do now" chip → `--state-late(-bg)` · `--chip-confirm-*` and `--state-soon-*` → `--state-wait(-bg)` ·
+`--chip-soon-*` and `--state-coming-*` → `--state-quiet(-bg)` · `--chip-done-*` and `--state-done-*` → `--state-ok(-bg)` ·
+`--chip-late-*` and `--state-late-fg` → `--state-late(-bg)` · `--needs-you-fg/bg/bd` → `--ink`/`--panel`/`--state-wait` ·
+`--words-school-*` and `--origin-school-*` → `--kind-note(-bg)` · `--origin-drafted-*` → `--state-wait(-bg)` ·
+`--origin-edited-*` → `--state-quiet(-bg)` · `--brand-basalt` → `--action` · `--brand-paper` → `--panel` ·
+`--brand-line` → `--line` · `--brand-stone` → `--ink-muted` · `--brand-bamboo` → `--kind-note` ·
+`--brand-bamboo-deep` → `--state-wait` · `--radius-m` → `--radius-control` · `--radius-l` → `--radius-card` ·
+`--text-h1/h2/h3`, `--lh-h1/h2/h3` → `--text-/--lh-title-page/-section/-small` · `--font-display`, `--font-heading` → `--font-serif` ·
+`--font-body` → (tokens' own `--font-body`, the sans).
+
+Other literals: `bg-white` → `bg-chalk` (panel); `shadow-sm/md` → `shadow-[var(--shadow-card)]`; the active door's underline
+→ `--brand-clay`; the dark bar's `text-bamboo` labels → `text-chalk/75`; skill map's white ink on a state fill → `--panel`.
