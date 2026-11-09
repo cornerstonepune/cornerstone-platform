@@ -186,7 +186,8 @@ a { color: var(--link); text-decoration: underline; text-underline-offset: 3px; 
 /* ---------- HeatGrid, FortnightGrid ---------- */
 .heat { display: grid; grid-template-columns: 96px repeat(var(--cols), minmax(0, 1fr)); gap: var(--space-0); }
 .heat .h { font: var(--type-label); color: var(--ink-muted); padding: var(--space-1); }
-.hc { display: flex; align-items: center; gap: var(--space-1); padding: var(--space-2) var(--space-1); border-radius: 8px; background: var(--cb); color: var(--c); font: var(--type-label); }
+.hc { display: flex; align-items: center; gap: var(--space-1); padding: var(--space-2) var(--space-1); border-radius: 8px; background: var(--cb); color: var(--c); font: var(--type-label); text-decoration: none; }
+.hc[data-state="unseen"] { outline: 2px dashed var(--line-control); outline-offset: -2px; }
 .fgrid-box { overflow-x: auto; }
 .fgrid { display: grid; grid-template-columns: 64px repeat(var(--cols), minmax(150px, 1fr)); gap: var(--space-1); }
 .fgrid .dh { padding: var(--space-1) var(--space-2); font-weight: 600; border-radius: var(--radius-control); }
