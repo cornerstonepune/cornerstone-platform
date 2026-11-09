@@ -1,7 +1,7 @@
 ---
 name: database-changes
 category: database
-description: Use when Postgres migrations, grants, RLS or DB proofs.
+description: Use when Postgres migrations, RLS, grants, or DB proofs.
 ---
 
 # Database changes: migrations, grants, row rules and local proofs
