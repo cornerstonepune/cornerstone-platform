@@ -1,0 +1,1 @@
+Stop hook: "Failed with non-blocking status code: engine is not installed yet: cd /home/user/cornerstone-platform/packages/engine && uv sync"

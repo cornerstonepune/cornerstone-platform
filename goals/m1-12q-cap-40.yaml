@@ -1,0 +1,22 @@
+name: m1-12q-cap-40
+goal: >
+  The drafting campaign has the money to finish the last pages and the linking run, as Nimish said on 8 Nov: its cap is 40 and its
+  margin 0.5, so it stops at 39.5; nothing else about the money moves (the stage caps, their order and the per-page limit are as they were).
+# Written 2026-11-08 (task M1-12q). W1, gate N1. Nimish's words of 8 Nov, relayed by the orchestrator: yes to "finishing the last ~65
+# pages" after the campaign stopped at $24.51 (cap 25, margin 0.5); then "don't worry about usage; important that you do quality
+# work and conclude", so "llm.campaigns m1-11 cap 40, margin 0.5 (stop 39.5) ... per-page limit 0.03 stays for page drafting".
+# A config row only; no model call.
+says:
+  - words: "llm.campaigns m1-11 cap 40, margin 0.5 (stop 39.5)"
+    proved_by: "packages/engine/tests/test_llm_budget.py::test_the_campaign_stops_at_39_5_after_nimishs_word_of_8_nov_and_the_stages_add_up_under_it"
+  - words: "per-page limit 0.03 stays for page drafting"
+    proved_by: "packages/engine/tests/test_llm_budget.py::test_a_tranche_whose_pages_cost_more_than_three_cents_each_is_flagged_in_the_checkers_report"
+manual:
+  - "Run `load_settings` after merge: the row is read from the database, not from the file."
+criteria:
+  - name: the caps and the budget
+    run: cd packages/engine && uv run pytest -q -p no:cacheprovider tests/test_llm_budget.py
+    expect: "passed"
+  - name: the code sits where the map says; every promise has its command; lint
+    run: bin/check
+    expect: "passed"
