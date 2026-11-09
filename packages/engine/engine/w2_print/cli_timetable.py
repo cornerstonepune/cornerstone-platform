@@ -1,8 +1,10 @@
-"""W2's timetable command — `engine timetable load …`: the school's tabs (as CSV) into the six timetable tables, or into
-one SQL file for a person to run where this machine cannot reach. `engine/cli.py` only mounts this."""
+"""W2's timetable commands — `engine timetable load …`: the school's tabs (as CSV) into the six timetable tables, or into
+one SQL file for a person to run where this machine cannot reach; `generate`: a draft by FET (CP-11); `go-live`: a
+placed draft becomes the fortnight's timetable (CP-22). `engine/cli.py` only mounts this."""
 
 import hashlib
 import json
+import uuid
 from collections import Counter
 from contextlib import ExitStack
 from datetime import date
@@ -17,6 +19,7 @@ from engine.w2_print import k2_timetable as tt
 from engine.w2_print import k2_timetable_load as ld
 from engine.w2_print import k2_timetable_sql as sq
 from engine.w2_print import tt_generate as gen
+from engine.w2_print import tt_live as live
 from engine.w2_print import tt_need
 
 timetable_app = typer.Typer(help="W2 — the K2 timetable from the school's tabs", no_args_is_help=True)
@@ -142,6 +145,70 @@ def generate(
         raise typer.Exit(1)
 
 
+@timetable_app.command("go-live")
+def go_live(
+    grade: str = typer.Option(..., help="the grade code of the class, as in the grade table"),
+    section: str = typer.Option(..., help="the section of the class on this database"),
+    year: str = typer.Option("2026-27"),
+    fortnight: int = typer.Option(..., help="the fortnight's number in that year"),
+    run: str = typer.Option(
+        ..., "--run", help="the id of the placed draft (`engine timetable generate` kept it)"
+    ),
+    by: str = typer.Option(..., "--by", help="the email of the person putting it live"),
+    reason: str | None = typer.Option(None, "--reason", help="why, when the fortnight is frozen (CP-6)"),
+    discard: bool = typer.Option(
+        False, "--discard-changes", help="overwrite changes made by hand since the fortnight last went live"
+    ),
+    dry: bool = typer.Option(
+        False, "--dry", help="a trial run: show what would change, date by date; write nothing"
+    ),
+) -> None:
+    """Put a placed draft live for one class and one fortnight: the educator's day shows the draft on every date; planned
+    lessons keep their plan line and materials; who, when and which draft are kept. A refusal writes nothing."""
+    try:
+        run_id = str(uuid.UUID(run))
+    except ValueError as bad:
+        raise typer.BadParameter("--run wants the draft's id") from bad
+    with db.connect() as conn:
+        if dry:  # looking the person up logs itself; a trial run rolls that back with everything else
+            conn.execute("set transaction read write")
+        who = _staff_of(conn, by)
+        if dry:
+            conn.execute("set transaction read only")
+        try:
+            report = live.go_live(
+                conn,
+                grade,
+                section,
+                year,
+                fortnight,
+                run_id=run_id,
+                who=who,
+                reason=reason,
+                discard=discard,
+                dry=dry,
+            )
+        except (live.Refused, tt_need.NoSuchFortnight, fc.CycleError) as no:
+            conn.rollback()
+            typer.echo(f"{no}\nNothing was written.")
+            raise typer.Exit(1) from no
+        if dry:
+            conn.rollback()
+        else:
+            conn.commit()
+    for line in report.lines():
+        typer.echo(line)
+
+
+def _staff_of(conn: db.Conn, by: str) -> db.Id:
+    """The member of staff an email names, by id (the lookup is logged by `staff_of_email`); refused when no one, or
+    more than one, has it."""
+    row = conn.execute("select public.staff_of_email(%s) as id", (by,)).fetchone()
+    if not row or row["id"] is None:
+        raise typer.BadParameter("no one member of staff has the email given to --by")
+    return row["id"]
+
+
 def _run(
     conn: db.Conn, plan: ld.Load, target: ld.Target, apply: bool, reason: str | None = None
 ) -> tuple[tuple[dict[str, int], dict[str, int]] | None, int | None]:
@@ -155,6 +222,12 @@ def _run(
         counted, linked = None, None
     except fc.CycleError as no:
         typer.echo(f"  {no} Nothing was written.")
+        conn.rollback()
+        raise typer.Exit(1) from no
+    except sq.LiveFortnight as no:
+        typer.echo(
+            f"  fortnight {no} is live from a generated draft: the sheet is not loaded over it. Nothing was written."
+        )
         conn.rollback()
         raise typer.Exit(1) from no
     if apply and counted is not None:
