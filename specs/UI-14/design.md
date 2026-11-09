@@ -47,3 +47,13 @@ the Now line), except the K2 "do now" chip → `--state-late(-bg)` · `--chip-co
 
 Other literals: `bg-white` → `bg-chalk` (panel); `shadow-sm/md` → `shadow-[var(--shadow-card)]`; the active door's underline
 → `--brand-clay`; the dark bar's `text-bamboo` labels → `text-chalk/75`; skill map's white ink on a state fill → `--panel`.
+
+## Three readings of the scope no proof can observe (agreed with the orchestrator, 9 Nov 2026: "lock as is")
+
+1. Line 2, "`screens.spec.ts` is re-baselined once": it has no committed baselines (it saves screenshots to the test output
+   and never compares them), so there is nothing to re-baseline. Covered by `screens.spec.ts` passing (line 9) and the
+   before/after screenshots on the pull request.
+2. Line 2, "the nearest token with no change of layout": covered by the committed map above and `screens.spec.ts` passing.
+3. Line 7, "the stock look is gone": every shadcn theme variable points at a tokens.json name, and a Button/Tabs screenshot
+   baseline is tracked and changed in this slice. `git add -f` only for files under a `*-snapshots/` folder that show the
+   primitives, never anything with a child's name or page data.

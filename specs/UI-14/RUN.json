@@ -1,0 +1,17 @@
+{
+ "ok": false,
+ "passed": [
+  "1 tokens.json is docs/frontend/tokens.json byte for byte; tokens.mjs regenerates tokens.css; the suite diffs them",
+  "2 no hex colour literal in apps/web/app, components or lib outside tokens.css",
+  "3 every usage-note pair meets 4.5:1 or 3:1 in both themes; four near colours >= 20 dE apart; table is the script's",
+  "4 tokens.css carries every token of tokens.json: colours both themes, radius, shadow, spacing, press",
+  "5 press is the only motion: 0.97 in 160 ms on :active; hover colour-only on a fine pointer; still under reduced motion",
+  "6 the four logos copied byte for byte by tokens.mjs; icon.svg is the tile; apple icon a PNG made at build",
+  "8 Source Serif 4 and Source Sans 3 self-hosted; no request off the site; every text's first family is one of them",
+  "9 bin/check, test_ux_rules.py, u51 and screens.spec.ts pass; ux.frozen has not grown"
+ ],
+ "failed": [
+  "7 each components/ui file uses var(-- and no hex; shadcn theme on tokens; Button/Tabs baseline committed"
+ ],
+ "ran_at": "2026-11-09T12:15:51+00:00"
+}
