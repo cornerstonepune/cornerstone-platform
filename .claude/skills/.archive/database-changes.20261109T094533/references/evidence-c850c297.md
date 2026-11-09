@@ -1,1 +1,0 @@
-test_loaders left committed rows (table: rows added): {'public.config': 1}. A test must roll back what it writes (`conn.rollback()` in its fixture), or clean up what a command it starts commits.
