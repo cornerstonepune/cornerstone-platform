@@ -15,7 +15,7 @@ import unicodedata
 from zoneinfo import ZoneInfo
 
 from engine.core import db, settings
-from engine.w3_read import k2_growth, voice_intake
+from engine.w3_read import k2_growth, voice_intake, voice_note
 from engine.w3_read.voice_store import Refused
 
 CELLS_SQL = """
