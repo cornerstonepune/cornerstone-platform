@@ -29,14 +29,16 @@ const { Button } = await import("../components/ui/button.tsx");
 const { Tabs, TabsList, TabsTrigger, TabsContent } = await import("../components/ui/tabs.tsx");
 
 const VARIANTS = ["default", "outline", "secondary", "ghost", "destructive", "link"];
+// every word in a span the test masks: the baseline records the primitives' shapes and colours, not one browser's glyphs
+const label = (text) => h("span", { "data-label": "" }, text);
 const what = {
-  button: () => h("div", { style: { display: "flex", gap: "8px" } }, ...VARIANTS.map((v) => h(Button, { key: v, variant: v }, v))),
+  button: () => h("div", { style: { display: "flex", gap: "8px" } }, ...VARIANTS.map((v) => h(Button, { key: v, variant: v }, label(v)))),
   tabs: () =>
     h(
       Tabs,
       { defaultValue: "week" },
-      h(TabsList, null, h(TabsTrigger, { value: "today" }, "Today"), h(TabsTrigger, { value: "week" }, "This week")),
-      h(TabsContent, { value: "week" }, "The week's periods."),
+      h(TabsList, null, h(TabsTrigger, { value: "today" }, label("Today")), h(TabsTrigger, { value: "week" }, label("This week"))),
+      h(TabsContent, { value: "week" }, label("The week's periods.")),
     ),
 }[process.argv[2]];
 if (!what) throw new Error(`render-ui.mjs: say button or tabs, not ${process.argv[2]}`);

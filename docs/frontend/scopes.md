@@ -159,7 +159,7 @@ Period, record, confirm, notes, children, class picture, child, activity, object
 21. Class picture: an empty square's title reads 'not seen yet', never 'not secure'
 22. Class picture: each square shows the Sr. No. and the child's name read from pii by child_id, and no photo (DOM scan)
 23. Class picture: the stack bar's counts equal the squares by state
-24. Class picture: the squares are in Sr. No. order, 10 per row at 1440, 8 at 400
+24. Class picture: the squares are in Sr. No. order, 8 per row at 1440, 3 at 400
 25. Where this child is: a paper's result and a voice note appear on one timeline in date order
 26. Where this child is: a correction shows as a new entry that names the entry it replaces
 27. Where this child is: the header shows the child's name beside the Sr. No., read from pii by child_id; the address is by Sr. No. and carries no name; no photo (DOM scan)
