@@ -10,7 +10,7 @@ import pytest
 
 from engine.core import db
 from engine.w2_print import fortnight_cycle as fc
-from engine.w2_print import tt_move
+from engine.w2_print import tt_clash, tt_move
 from tests import tt_hand_world as tw
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
@@ -247,3 +247,24 @@ def test_a_lesson_whose_materials_list_is_sent_or_does_not_cover_the_new_date_is
     with pytest.raises(tt_move.Refused, match=why):
         _move(c, w, MON, "p1", THU, "p2", reason=REASON)
     assert _snapshot(c, w) == was
+
+
+def test_in_an_approved_fortnight_swapping_two_lessons_of_an_accepted_limit_clash_is_refused(world):
+    c, w = world
+    c.execute(
+        "insert into timetable_limit (tenant_id, school_class_id, subject_code, span, most)"
+        " values (%s, %s, 'math', 'fortnight', 8)",
+        (w["tenant"], w["class"]),
+    )
+    (clash,) = c.execute(
+        "select clash_key from timetable_clash where fortnight_id = %s", (w["fortnight"],)
+    ).fetchall()
+    tt_clash.accept(c, clash["clash_key"], who=w["staff"]["coordinator"]["id"], reason=REASON, today=MON)
+    tw.set_state(c, w, "approved")
+    was = _snapshot(c, w)
+    with pytest.raises(tt_move.Refused, match="clash"):
+        _move(c, w, MON, "p1", TUE, "p1", reason=REASON)  # two maths lessons: counts and cells do not change
+    assert _snapshot(c, w) == was
+    assert c.execute(
+        "select accepted from timetable_clash where fortnight_id = %s", (w["fortnight"],)
+    ).fetchone()["accepted"]

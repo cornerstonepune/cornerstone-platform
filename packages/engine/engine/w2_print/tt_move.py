@@ -204,6 +204,12 @@ def move(
         moved = dict(a.slot)
         _materials_stay_valid(conn, a, b)
         _swap(conn, a, b)
+        conn.execute(
+            "insert into timetable_move (tenant_id, school_class_id, fortnight_id, from_date, from_period, to_date,"
+            " to_period, moved_kind, moved_subject, reason, who) values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+            (k["tenant_id"], k["id"], f["id"], frm, a.period["id"], to, b.period["id"], moved["kind"],
+             moved["subject_code"], (reason or "").strip() or None, who),
+        )  # fmt: skip
         state = conn.execute(
             "select state from fortnight_cycle where fortnight_id = %s", (f["id"],)
         ).fetchone()
@@ -213,12 +219,6 @@ def move(
                 raise Refused(
                     f"fortnight {f['number']} is {state['state']} and this move would leave {tt_clash.words(open_)}."
                 )
-        conn.execute(
-            "insert into timetable_move (tenant_id, school_class_id, fortnight_id, from_date, from_period, to_date,"
-            " to_period, moved_kind, moved_subject, reason, who) values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
-            (k["tenant_id"], k["id"], f["id"], frm, a.period["id"], to, b.period["id"], moved["kind"],
-             moved["subject_code"], (reason or "").strip() or None, who),
-        )  # fmt: skip
     return {
         "fortnight": f["number"], "moved": moved["subject_code"] or moved["kind"], "from": f"{frm} {a.period['label']}",
         "to": f"{to} {b.period['label']}", "swapped_with": (b.slot or {}).get("subject_code") if b.slot and b.slot["kind"] != "empty" else None,
