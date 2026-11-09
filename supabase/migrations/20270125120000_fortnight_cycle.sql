@@ -6,7 +6,8 @@
 --   * four settings per school, `fortnight.freeze|align|approve|list_sent`: how many days before the fortnight starts
 --     each step falls. The numbers below are PLACEHOLDERS: the roadmap's real dates are not in this repository. A school
 --     changes them by updating the row.
--- No triggers and no SQL functions: the engine enforces the order and the freeze. Hand-run SQL is not stopped.
+-- The engine enforces the order and the freeze (no triggers on the two tables); the only trigger here gives a school
+-- added later its four settings. Hand-run SQL is not stopped.
 -- Additive and written to run twice.
 
 create table if not exists fortnight_cycle (
@@ -46,16 +47,32 @@ create table if not exists fortnight_edit (
 create index if not exists fortnight_edit_fortnight_idx on fortnight_edit (fortnight_id, created_at);
 
 -- Placeholder step dates (days before the fortnight starts), one row each per school. Not Nimish's real dates.
-insert into config (tenant_id, key, value, description)
-select t.id, s.key, jsonb_build_object('days_before_start', s.days), s.description
-from tenant t
-cross join (values
-  ('fortnight.freeze',    14, 'Days before a fortnight starts when its plan and timetable freeze (a placeholder until the roadmap''s date is set).'),
-  ('fortnight.align',     10, 'Days before a fortnight starts when the plan is aligned (a placeholder until the roadmap''s date is set).'),
-  ('fortnight.approve',    7, 'Days before a fortnight starts when the plan is approved (a placeholder until the roadmap''s date is set).'),
-  ('fortnight.list_sent',  3, 'Days before a fortnight starts when the materials list is sent (a placeholder until the roadmap''s date is set).')
-) as s(key, days, description)
-on conflict (tenant_id, key) do nothing;
+create or replace function internal.fortnight_settings(p_tenant uuid) returns void
+language plpgsql security definer set search_path = public, pg_temp as $$
+begin
+  insert into config (tenant_id, key, value, description)
+  select p_tenant, s.key, jsonb_build_object('days_before_start', s.days), s.description
+  from (values
+    ('fortnight.freeze',    14, 'Days before a fortnight starts when its plan and timetable freeze (a placeholder until the roadmap''s date is set).'),
+    ('fortnight.align',     10, 'Days before a fortnight starts when the plan is aligned (a placeholder until the roadmap''s date is set).'),
+    ('fortnight.approve',    7, 'Days before a fortnight starts when the plan is approved (a placeholder until the roadmap''s date is set).'),
+    ('fortnight.list_sent',  3, 'Days before a fortnight starts when the materials list is sent (a placeholder until the roadmap''s date is set).')
+  ) as s(key, days, description)
+  on conflict (tenant_id, key) do nothing;
+end $$;
+
+create or replace function internal.fortnight_settings_on_new_school() returns trigger
+language plpgsql security definer set search_path = public, pg_temp as $$
+begin
+  perform internal.fortnight_settings(new.id);
+  return new;
+end $$;
+
+drop trigger if exists fortnight_settings on tenant;
+create trigger fortnight_settings after insert on tenant
+  for each row execute function internal.fortnight_settings_on_new_school();
+
+select internal.fortnight_settings(id) from tenant;
 
 -- Every teaching fortnight of a year that has not ended starts at planning (stamped by the column defaults).
 insert into fortnight_cycle (tenant_id, fortnight_id)

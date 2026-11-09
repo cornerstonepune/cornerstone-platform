@@ -38,9 +38,13 @@ def tables(load: ld.Load, t: ld.Target) -> list[tuple[str, sql.Composed]]:
     g, out = L(t.grade), []
     if load.fortnights:
         out.append(("fortnight", S(
+            "with new_fortnight as (\n"
             "insert into fortnight (tenant_id, academic_year_id, number, kind, starts_on, ends_on)\n"
             "select x.tenant, x.year, v.n::int, 'teaching', v.s::date, v.e::date from k2_ctx x cross join (values\n  {rows}\n"
-            ") as v(n, s, e)\non conflict do nothing"
+            ") as v(n, s, e)\non conflict do nothing returning id, tenant_id)\n"
+            # a fortnight made here starts at planning (CP-6), or the freeze would silently not apply to it
+            "insert into fortnight_cycle (tenant_id, fortnight_id) select tenant_id, id from new_fortnight"
+            " on conflict do nothing"
         ).format(rows=_values(load.fortnights))))  # fmt: skip
     if load.school_days:
         out.append(("school_day", S(
@@ -110,10 +114,16 @@ def statements(load: ld.Load, t: ld.Target) -> list[str]:
 
 
 def _frozen_gate(
-    conn: db.Conn, load: ld.Load, added: dict[str, int], reason: str | None, actor: str | None
+    conn: db.Conn,
+    load: ld.Load,
+    added: dict[str, int],
+    reached: list,
+    reason: str | None,
+    actor: str | None,
 ) -> None:
-    """Rows added to a fortnight past planning need a reason (CP-6). Plan lines reach the fortnights they name; slots with
-    no end reach every fortnight from their first day on. A rerun that adds nothing asks for nothing."""
+    """Rows added to a fortnight past planning need a reason (CP-6). Plan lines reach only the fortnights that received
+    a new line (`reached`); slots with no end reach every fortnight from their first day on. A rerun that adds nothing
+    asks for nothing."""
     who = (
         actor
         or db.one(
@@ -122,9 +132,7 @@ def _frozen_gate(
     )
     ctx = db.one(conn, "select year, klass::text as klass from k2_ctx")
     touched = {
-        "plan_entry": fc.fortnights_touched(
-            conn, ctx["year"], numbers={e.fortnight for e in load.plan_entries}
-        ),
+        "plan_entry": reached,
         "timetable_slot": fc.fortnights_touched(
             conn, ctx["year"], from_day=min((f[1] for f in load.fortnights), default=None)
         ),
@@ -146,8 +154,15 @@ def apply(
     if db.one(conn, "select klass from k2_ctx")["klass"] is None:
         raise NoSuchClass(f"{t.grade} {t.section} {t.year}")
     with conn.transaction():
-        added = dict.fromkeys(TABLES, 0) | {name: conn.execute(q).rowcount for name, q in tables(load, t)}
-        _frozen_gate(conn, load, added, reason, actor)
+        added: dict[str, int] = dict.fromkeys(TABLES, 0)
+        reached: list = []
+        for name, q in tables(load, t):
+            if name == "plan_entry":  # which fortnights got a new line, so only they are checked
+                rows = conn.execute(q + S(" returning fortnight_id")).fetchall()
+                added[name], reached = len(rows), list({r["fortnight_id"] for r in rows})
+            else:
+                added[name] = conn.execute(q).rowcount
+        _frozen_gate(conn, load, added, reached, reason, actor)
     return added
 
 
