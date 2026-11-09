@@ -1,3 +1,0 @@
-VERDICT: PASS
-
-Independent verifier, three rounds. Round 1 (841206b) found sheet_template classed school-wide although it holds child_id; fixed in 6d097e7 with Nimish's UNLOCK for two proof lines. Round 2 (601842f) found flow_run holding child data in json; fixed in 3b5e48f. Round 3 (3b5e48f): flow_run (kind papers, key type run) and approval (kind reports, key approval_target) are now child data with correct rules; locked spec and proofs byte-identical to 601842f; no test weakened; my_ids stays SECURITY DEFINER, search_path public, pg_temp, returns uuid[] only. Not run by the verifier: any suite. Nimish decided on 9 Nov that the role rules are not a gate for this school: remaining items are on the pre-switch-on checklist in docs/notes/CP-4.md.
