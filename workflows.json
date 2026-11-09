@@ -165,7 +165,7 @@
     {"from": "engine/w4_close/card.py", "to": "engine/w2_print/focus_paper.py", "why": "The class card names each child's home area as W2 makes the home paper (`home_area`), never a second rule."},
     {"from": "engine/w2_print/library.py", "to": "engine/w1_bank/inventory.py", "why": "A worksheet is dealt from the bank's active questions, each read back as the question it is."},
     {"from": "engine/w2_print/cli_timetable.py", "to": "engine/w1_bank/cli_map.py", "why": "A person who puts a draft timetable live is named by email and found as the one member of staff it names, as every command's --by is (CP-22)."},
-    {"from": "engine/w2_print/assemble.py", "to": "engine/w1_bank/inventory.py","why": "A child's paper is built from the bank's questions, each read back as the question it is."},
+    {"from": "engine/w2_print/assemble.py", "to": "engine/w1_bank/inventory.py", "why": "A child's paper is built from the bank's questions, each read back as the question it is."},
     {"from": "engine/w2_print/focus_paper.py", "to": "engine/w1_bank/question_types.py", "why": "A paper that cannot be made says which level or question type waits, in the words the bank keeps (B2)."},
     {"from": "engine/w2_print/assemble.py", "to": "engine/w1_bank/question_types.py", "why": "A child left without a paper this week is named with the level or question type that waits (B2)."},
     {"from": "engine/w2_print/handout.py", "to": "engine/w1_bank/question_types.py", "why": "A worksheet that cannot be printed says which level or question type waits (B2)."},
