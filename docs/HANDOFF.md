@@ -14,8 +14,8 @@ CP-3/CP-4 rules are inert until the site connects as the restricted login (Nimis
 - CP-10 voice SCOPE (session_01KEBF29kft7fbJa78ZhXLYP): issue #502 created; Nimish decides A/B/C in it and adds scope-locked. Build waits for CP-9.
 
 ## Next builds (up to 3 in parallel, merge one at a time)
-CP-6 (session_01KEBF2ATKNsoYRi1UU1QL8b, waits for Nimish's lean decision), then CP-7, CP-21, CP-12; CP-10 after CP-9.
-Locked scopes live on PRs: CP-7 #488, CP-11 #486, CP-12 #485, CP-17 #492, CP-18 #490, CP-19 #489, CP-21 #495; CP-6/CP-8 scopes on branch
+CP-6 (session_01KEBF2ATKNsoYRi1UU1QL8b, waits for Nimish's lean decision), then CP-7, CP-22, CP-12; CP-10 after CP-9.
+Locked scopes live on PRs: CP-7 #488, CP-11 #486, CP-12 #485, CP-17 #492, CP-18 #490, CP-19 #489, CP-22 #495 (as specs/CP-21; rename at build); CP-6/CP-8 on branch
 claude/bold-carson-f72yjv (never a PR; bring a scope over with `git checkout origin/<branch> -- specs/CP-N` in the build branch).
 CP-18's proofs guess CP-17's materials_approval.approve and CP-6's fortnight_cycle.step/state: build those exact names.
 
@@ -23,10 +23,10 @@ CP-18's proofs guess CP-17's materials_approval.approve and CP-6's fortnight_cyc
 - CP-14: scope locked in session_01KEBF28EPCNCPen2s3LvKjT but the guard refused git add/commit of specs/CP-14 (5 times). The Athena coordinator read it:
   the guard refuses a command that names a locked spec path AND has a mutator word (cp, mv, rm, checkout, redirect...); "locked" = a LOCK file on disk in
   the main checkout, so a worktree does not escape it. Try add, commit, push as separate single commands. Real fix is an athena-ops change (Nimish's scope).
-- Lean drafts are in: CP-6 (engine, not database triggers), CP-7 (one approval per fortnight), CP-12 (command check; keep materials links), CP-21
+- Lean drafts are in: CP-6 (engine, not database triggers), CP-7 (one approval per fortnight), CP-12 (command check; keep materials links), CP-22
   (changed-since flag). A reduced scope replaces the long one only after Nimish types UNLOCK <ID> in that session.
-- Latent: CP-0's locked proof 2 expects exactly CP-1..CP-19 in the plan table, but the table also has CP-21 (since #494): CP-0 fails when re-run.
-  Needs Nimish's UNLOCK CP-0 to change the expected list. CP-0 proof 4 (this file points to the plan) is fixed by line 3 above.
+- CP-21 was two scopes (CI speed #493, and draft-goes-live #496). Draft-goes-live is now CP-22 (Nimish's UNLOCK CP-0, 9 Nov);
+  CP-0 proof 2 expects CP-1..CP-19 and CP-22.
 
 ## Nimish's rules (his words)
 - Merge: "Once we know that it's safe to merge, you should merge... take some judgment call." Needs verifier PASS on final code + real tests green.

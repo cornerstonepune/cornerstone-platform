@@ -1,14 +1,50 @@
 {
  "source": "https://api.github.com/repos/cornerstonepune/cornerstone-platform/issues?state=all",
- "fetched_at": "2026-11-08T09:03:21+00:00",
+ "fetched_at": "2026-11-09T05:56:40+00:00",
  "issues": [
   {
+   "number": 508,
+   "title": "CP-23: bin/check catches the guards that fail CI"
+  },
+  {
+   "number": 502,
+   "title": "CP-10: Voice on: a voice note joins the typed path, safe without the Sarvam letter"
+  },
+  {
+   "number": 496,
+   "title": "CP-22: A draft goes live"
+  },
+  {
+   "number": 493,
+   "title": "CP-21: a broken build is found in minutes, not after a 45-minute CI run"
+  },
+  {
+   "number": 491,
+   "title": "CP-17: Inventory: stock and issue records, rupee threshold, educator approval of the fortnight's list"
+  },
+  {
+   "number": 487,
+   "title": "CP-7: The fortnight's timetable: one approval per fortnight, an unchanged fortnight rolls forward"
+  },
+  {
+   "number": 484,
+   "title": "CP-12: The timetable by hand"
+  },
+  {
+   "number": 482,
+   "title": "CP-14: Skill links a person confirmed, and \"ready next\" per activity"
+  },
+  {
+   "number": 470,
+   "title": "CP-20: A throwaway database in the proofs job"
+  },
+  {
    "number": 467,
-   "title": "CP-19: Reports and the coordinator's list"
+   "title": "CP-19: Reports line by line, consent before any send, and the coordinator's counts"
   },
   {
    "number": 466,
-   "title": "CP-18: Materials"
+   "title": "CP-18: Materials: reading prompt scored and on, sends recorded, reminders delivered"
   },
   {
    "number": 465,
@@ -56,7 +92,7 @@
   },
   {
    "number": 454,
-   "title": "CP-6: The month cycle"
+   "title": "CP-6: The fortnight cycle"
   },
   {
    "number": 453,
@@ -88,7 +124,7 @@
   },
   {
    "number": 442,
-   "title": "Athena health: 2026-11-08"
+   "title": "Athena health: 2026-11-09"
   },
   {
    "number": 387,

@@ -37,6 +37,7 @@ class Change(Ask):
     fewest: int | None = None
     most: int | None = None
     text: str | None = None
+    frozen_reason: str | None = None  # asked for when a fixed slot reaches a fortnight that is frozen (CP-6)
 
 
 def _staff(conn, email: str):
@@ -58,7 +59,7 @@ def read(body: Ask, conn=Depends(get_conn, scope="function")):
 @keyed.post("/timetable/rules/change")
 def change(body: Change, conn=Depends(get_conn, scope="function")):
     staff = _staff(conn, body.actor)
-    fields = body.model_dump(exclude={"actor", "class_id"})
+    fields = body.model_dump(exclude={"actor", "class_id", "frozen_reason"})
     try:
         return tt_rules.change(
             conn,
@@ -66,6 +67,7 @@ def change(body: Change, conn=Depends(get_conn, scope="function")):
             body.class_id,
             tt_rules.Change(**fields),
             voice_intake.school_day(conn, dt.datetime.now(dt.UTC)),
+            reason=body.frozen_reason,
         )
     except tt_rules.Refused as no:
         raise HTTPException(status_code=no.status, detail=str(no)) from no

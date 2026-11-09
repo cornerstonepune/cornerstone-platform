@@ -1,0 +1,19 @@
+{
+  "digest": "65d235a823330cebe4029b5b95d94c14191470b1135a278e7ca3aa2da18ac9eb",
+  "files": [
+    "spec.md",
+    "checks.sh",
+    "proofs/conftest.py",
+    "proofs/cp6_world.py",
+    "proofs/live_fortnight.py",
+    "proofs/pytest.sh",
+    "proofs/test_dates.py",
+    "proofs/test_freeze.py",
+    "proofs/test_history.py",
+    "proofs/test_no_hardcode.py",
+    "proofs/test_state.py"
+  ],
+  "locked_at": "2026-11-09T04:17:18+00:00",
+  "criteria": 7,
+  "athena": "2.13.0"
+}

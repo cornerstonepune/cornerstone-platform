@@ -2,7 +2,7 @@
 """CP-0 proofs. Standard library only; run from the repository root.
 
   plan.py next-id        criterion 1: config id_prefix is CP; `athena next-id` on a copy with no spec folders prints CP-1
-  plan.py issues         criterion 2: the plan lists exactly CP-1..CP-19 and each has an issue titled with its ID
+  plan.py issues         criterion 2: the plan lists exactly CP-1..CP-19 and CP-22 and each has an issue titled with its ID
   plan.py no-status      criterion 3: no status words in the plan's scope table
   plan.py handoff        criterion 4: HANDOFF points to the plan as the list of what remains, under 50 lines
   plan.py fetch-titles   writes specs/CP-0/issue-titles.json from GitHub's public API (not a proof; run by hand)
@@ -28,7 +28,7 @@ PLAN = ROOT / "docs" / "backend-plan.md"
 HANDOFF = ROOT / "docs" / "HANDOFF.md"
 SNAPSHOT = ROOT / "specs" / "CP-0" / "issue-titles.json"
 REPO = "cornerstonepune/cornerstone-platform"
-EXPECTED = [f"CP-{n}" for n in range(1, 20)]
+EXPECTED = [f"CP-{n}" for n in range(1, 20)] + ["CP-22"]
 STATUS_WORDS = re.compile(r"\b(done|merged|in progress|blocked)\b", re.I)
 
 
@@ -94,7 +94,7 @@ def issues():
     missing = [i for i in ids if not any(re.match(rf"{re.escape(i)}(?!\d)", t) for t in all_titles)]
     if missing:
         fail(f"no GitHub issue whose title starts with: {missing}")
-    print("plan = CP-1..CP-19, each with an issue")
+    print("plan = CP-1..CP-19 and CP-22, each with an issue")
 
 
 def no_status():

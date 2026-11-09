@@ -12,12 +12,16 @@ import psycopg
 import typer
 
 from engine.core import db, settings
+from engine.w2_print import cli_plan_link, tt_need
+from engine.w2_print import fortnight_cycle as fc
 from engine.w2_print import k2_timetable as tt
 from engine.w2_print import k2_timetable_load as ld
 from engine.w2_print import k2_timetable_sql as sq
+from engine.w2_print import tt_generate as gen
 
 timetable_app = typer.Typer(help="W2 — the K2 timetable from the school's tabs", no_args_is_help=True)
 VOCABULARY = "timetable.vocabulary"
+cli_plan_link.mount(timetable_app)
 
 
 def _held(items: list[str]) -> dict[date, str]:
@@ -74,6 +78,9 @@ def load(
         help="write the rows as one SQL file here, to run elsewhere in one transaction",
     ),
     apply: bool = typer.Option(False, "--apply", help="write to this database (otherwise a dry run)"),
+    reason: str | None = typer.Option(
+        None, "--reason", help="why, when rows reach a fortnight that is frozen (without it they are refused)"
+    ),
 ) -> None:
     """Dry run unless --apply: prints counts, never the school's text. Safe to run twice."""
     with ExitStack() as stack:
@@ -96,7 +103,7 @@ def load(
         plan = ld.build(frame_in, plan_in, cal_in, vocab, first, last, held)
         source = f"{planner.name} sha256:{digests[planner.name][:12]}"
         target = ld.Target(grade, section, year, db.tenant_slug() if conn else "", source)
-        counted, linked = _run(conn, plan, target, apply) if conn else (None, None)
+        counted, linked = _run(conn, plan, target, apply, reason) if conn else (None, None)
     _report(plan, counted, linked, apply, f"fortnights {first} to {last}, {grade} {section} {year}")
     if sql:
         sql.write_text(sq.sql_file(plan, target, digests))
@@ -105,17 +112,52 @@ def load(
         )
 
 
+@timetable_app.command("generate")
+def generate(
+    grade: str = typer.Option(..., help="the grade code of the class, as in the grade table"),
+    section: str = typer.Option(..., help="the section of the class on this database"),
+    year: str = typer.Option("2026-27"),
+    fortnight: int = typer.Option(..., help="the fortnight's number in that year"),
+    dry: bool = typer.Option(
+        False, "--dry", help="do everything in a read-only transaction and keep nothing"
+    ),
+) -> None:
+    """A draft timetable for one class and one fortnight, made by FET from the school's rules and kept with FET's input
+    and output. Never writes to the timetable, the sessions or the plan lines; --dry keeps nothing at all."""
+    with db.connect() as conn:
+        if dry:
+            conn.execute("set transaction read only")
+        try:
+            run = gen.generate(conn, grade, section, year, fortnight)
+        except (tt_need.NoSuchFortnight, gen.MissingSetting) as no:
+            typer.echo(str(no))
+            raise typer.Exit(1) from no
+        if dry:
+            conn.rollback()
+        else:
+            gen.keep(conn, run)
+            conn.commit()
+    for line in gen.lines(run):
+        typer.echo(line)
+    if run.outcome != "placed":
+        raise typer.Exit(1)
+
+
 def _run(
-    conn: db.Conn, plan: ld.Load, target: ld.Target, apply: bool
+    conn: db.Conn, plan: ld.Load, target: ld.Target, apply: bool, reason: str | None = None
 ) -> tuple[tuple[dict[str, int], dict[str, int]] | None, int | None]:
     """What the load added and what the class holds after it (so before = after - added), and how many lines linked."""
     try:
-        added = sq.apply(conn, plan, target)
+        added = sq.apply(conn, plan, target, reason=reason)
         counted: tuple[dict[str, int], dict[str, int]] | None = (added, sq.counts(conn))
         linked: int | None = sq.linked(conn)
     except sq.NoSuchClass as no:
         typer.echo(f"  no such class on this database: {no}; nothing was written")
         counted, linked = None, None
+    except fc.CycleError as no:
+        typer.echo(f"  {no} Nothing was written.")
+        conn.rollback()
+        raise typer.Exit(1) from no
     if apply and counted is not None:
         conn.commit()
     else:
