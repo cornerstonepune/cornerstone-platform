@@ -7,10 +7,15 @@ written by `engine live rules --write` from a database built from the migrations
 rule live holds otherwise, within ten minutes.
 """
 
+import dataclasses
+import json
 import os
+import random
+import uuid
 
 import pytest
 
+from engine.assess import items
 from engine.checks import rules, watch
 from engine.core import db
 
@@ -63,6 +68,16 @@ def test_a_table_made_on_live_by_hand_goes_to_the_attic_with_its_rows(conn):
         " skill_set_code text not null, difficulty text not null"
         " check (difficulty in ('Easy', 'Medium', 'Hard', 'Advance')), unique (item_id, skill_set_code, difficulty))"
     )
+    # one question of its own, as test_learn makes it: a database with the seed and no bank (bin/check --db) has none
+    q = items.bare_sum(random.Random(0), "R5", "Procedural", "+", 2, 2, [0, 1])
+    conn.execute(
+        "insert into item (tenant_id, item_key, template, rung_code, signal, fmt, stem, spec, responses,"
+        " skill_set_code, difficulty, skill_codes) select (select id from tenant limit 1), %s, %s,"
+        " (select rung_code from skill order by rung_code limit 1), %s, 'bare_sum', '', %s, %s, 'ADD.2D2D', 'Easy',"
+        " '{NUM.OPS.01}'",
+        (f"T-RULES-{uuid.uuid4().hex[:8]}", q.template, q.signal, json.dumps(q.spec),
+         json.dumps([dataclasses.asdict(r) for r in q.responses])),
+    )  # fmt: skip
     conn.execute(
         "insert into item_placement (tenant_id, item_id, skill_set_code, difficulty)"
         " select tenant_id, id, skill_set_code, 'Easy' from item where skill_set_code is not null limit 1"
