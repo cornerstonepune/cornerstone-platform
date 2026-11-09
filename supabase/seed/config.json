@@ -879,6 +879,18 @@
       "seed_once": true
     },
     {
+      "key": "timetable.open_clash_blocks_approval",
+      "description": "On: a fortnight with a timetable clash nobody accepted cannot be approved, and a move in an approved fortnight that would leave one is refused (CP-12).",
+      "value": true,
+      "seed_once": true
+    },
+    {
+      "key": "timetable.accept_clash_group",
+      "description": "The access group (access_group.code) whose members may accept a timetable clash with a reason; the coordinator's group by default (CP-12).",
+      "value": "everything",
+      "seed_once": true
+    },
+    {
       "key": "timetable.go_live_group",
       "description": "The access group (access_group.code) whose members may put a draft timetable live; the coordinator's group by default.",
       "value": "everything",
