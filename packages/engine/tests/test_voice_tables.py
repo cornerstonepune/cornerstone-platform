@@ -199,8 +199,13 @@ def test_the_engine_writes_and_never_deletes_and_the_website_never_sees_a_note(c
     conn.rollback()
     s = _school(conn)
     _observe(conn, s)
-    conn.execute("set local role app_web")
     assert conn.execute("select count(*) n from activity_observation").fetchone()["n"] >= 1
+    conn.execute("set local role app_web")
+    assert conn.execute(
+        "select has_table_privilege('app_web', 'activity_observation', 'select') p"
+    ).fetchone()["p"]
+    # nobody is signed in here, so the access rule (CP-4) shows the website none of a child's observation
+    assert conn.execute("select count(*) n from activity_observation").fetchone()["n"] == 0
     assert conn.execute("select count(*) n from observation_outcome").fetchone()["n"] >= 5
     for sql in (
         "select * from pii.educator_note",

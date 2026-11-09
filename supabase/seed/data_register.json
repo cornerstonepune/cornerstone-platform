@@ -23,7 +23,7 @@
       "why": "So each answer can be read and checked, and the next paper fits what your child is ready for.",
       "how_long": "While your child is at the school. How long after they leave is for the school to decide.",
       "who_sees": "Your child's educators and the school's coordinator. A computer service reads the handwriting on a scan; it is given the picture of the page, never your child's name.",
-      "tables": ["public.sheet_template", "public.sheet_instance", "public.capture", "public.prescription", "public.home_sheet", "public.item_exposure", "public.paper_edit"]
+      "tables": ["public.sheet_template", "public.sheet_instance", "public.capture", "public.prescription", "public.home_sheet", "public.item_exposure", "public.paper_edit", "public.capture_page", "public.page_choice"]
     },
     {
       "code": "answers",
@@ -31,7 +31,7 @@
       "why": "So marking is checked by a person, and a mistake in reading is put right rather than counted against your child.",
       "how_long": "While your child is at the school. How long after they leave is for the school to decide.",
       "who_sees": "Your child's educators and the school's coordinator.",
-      "tables": ["public.item_result", "public.read_correction", "public.gold_finding", "public.child_reading_profile"]
+      "tables": ["public.item_result", "public.read_correction", "public.gold_finding", "public.child_reading_profile", "public.mistake_named", "public.gold", "public.narrative_observation"]
     },
     {
       "code": "learning",
@@ -39,7 +39,7 @@
       "why": "So your child's educators know what to teach next. A record is kept as it was written; a correction is added beside it, never in its place.",
       "how_long": "While your child is at the school. How long after they leave is for the school to decide.",
       "who_sees": "Your child's educators and the school's coordinator.",
-      "tables": ["public.evidence_event", "public.child_skill_state", "public.child_observed_state"]
+      "tables": ["public.evidence_event", "public.child_skill_state", "public.child_observed_state", "public.class_card", "public.class_card_confirmation"]
     },
     {
       "code": "observations",
