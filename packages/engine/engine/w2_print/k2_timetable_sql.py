@@ -6,6 +6,7 @@ so run twice the second adds nothing and the file stays small. Values are quoted
 from psycopg import sql
 
 from engine.core import db
+from engine.w2_print import fortnight_cycle as fc
 from engine.w2_print import k2_timetable_load as ld
 
 TABLES = ("fortnight", "school_day", "period", "timetable_slot", "plan_entry", "session")
@@ -108,13 +109,46 @@ def statements(load: ld.Load, t: ld.Target) -> list[str]:
     return [p.as_string() for p in [*_context(t), _guard(t), *(q for _, q in tables(load, t))]]
 
 
-def apply(conn: db.Conn, load: ld.Load, t: ld.Target) -> dict[str, int]:
-    """Run the statements on this connection; the rows each added (none the second time)."""
+def _frozen_gate(
+    conn: db.Conn, load: ld.Load, added: dict[str, int], reason: str | None, actor: str | None
+) -> None:
+    """Rows added to a fortnight past planning need a reason (CP-6). Plan lines reach the fortnights they name; slots with
+    no end reach every fortnight from their first day on. A rerun that adds nothing asks for nothing."""
+    who = (
+        actor
+        or db.one(
+            conn, "select coalesce(nullif(current_setting('app.changed_by', true), ''), session_user) as who"
+        )["who"]
+    )
+    ctx = db.one(conn, "select year, klass::text as klass from k2_ctx")
+    touched = {
+        "plan_entry": fc.fortnights_touched(
+            conn, ctx["year"], numbers={e.fortnight for e in load.plan_entries}
+        ),
+        "timetable_slot": fc.fortnights_touched(
+            conn, ctx["year"], from_day=min((f[1] for f in load.fortnights), default=None)
+        ),
+    }
+    for table, ids in touched.items():
+        if added[table]:
+            fc.ensure_editable(
+                conn, ids, reason=reason, table=table, record_id=ctx["klass"], op="insert", actor=who
+            )
+
+
+def apply(
+    conn: db.Conn, load: ld.Load, t: ld.Target, *, reason: str | None = None, actor: str | None = None
+) -> dict[str, int]:
+    """Run the statements on this connection; the rows each added (none the second time). Rows added to a frozen
+    fortnight are refused (`CycleError`, nothing written) unless `reason` is given, and the reason is kept."""
     for stmt in _context(t):
         conn.execute(stmt)
     if db.one(conn, "select klass from k2_ctx")["klass"] is None:
         raise NoSuchClass(f"{t.grade} {t.section} {t.year}")
-    return dict.fromkeys(TABLES, 0) | {name: conn.execute(q).rowcount for name, q in tables(load, t)}
+    with conn.transaction():
+        added = dict.fromkeys(TABLES, 0) | {name: conn.execute(q).rowcount for name, q in tables(load, t)}
+        _frozen_gate(conn, load, added, reason, actor)
+    return added
 
 
 def linked(conn: db.Conn) -> int:

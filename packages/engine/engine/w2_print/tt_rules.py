@@ -14,6 +14,7 @@ from typing import Any
 import psycopg
 
 from engine.core import db
+from engine.w2_print import fortnight_cycle as fc
 
 
 class Refused(Exception):
@@ -337,12 +338,36 @@ def _fixed_rule(conn: db.Conn, k: dict, c: Change, today: dt.date) -> tuple[dict
     return _fixed_slot(old), _fixed_slot(new)
 
 
-def change(conn: db.Conn, staff: Any, class_id: str | None, c: Change, today: dt.date) -> dict:
-    """One change, checked, written and kept with who made it. A refusal writes nothing."""
+def _frozen_gate(conn: db.Conn, k: dict, c: Change, staff: Any, today: dt.date, reason: str | None) -> None:
+    """A fixed slot with no end covers every fortnight from `today` on: one already past planning needs a reason (CP-6)."""
+    year = db.one(conn, "select academic_year_id from school_class where id = %s", (k["id"],))[
+        "academic_year_id"
+    ]
+    try:
+        fc.ensure_editable(
+            conn,
+            fc.fortnights_touched(conn, year, from_day=today),
+            reason=reason,
+            table="timetable_slot",
+            record_id=c.id or f"{c.period_id}/{c.week_code}/{c.weekday}",
+            op="delete" if c.action == "remove" else "insert",
+            actor=staff,
+        )
+    except fc.CycleError as no:
+        raise Refused(str(no), 409) from no
+
+
+def change(
+    conn: db.Conn, staff: Any, class_id: str | None, c: Change, today: dt.date, *, reason: str | None = None
+) -> dict:
+    """One change, checked, written and kept with who made it. A refusal writes nothing. `reason` is asked for only when
+    a fixed slot would reach a fortnight that is frozen (not the block's own `Change.reason`)."""
     k = klass(conn, class_id)
     if c.rule not in ("period", "block", "limit", "fixed") or c.action not in ("set", "remove"):
         raise Refused("That is not a rule I know.")
     with conn.transaction():
+        if c.rule == "fixed":
+            _frozen_gate(conn, k, c, staff, today, reason)
         if c.rule == "period":
             before, after = _period(conn, k, c)
         elif c.rule == "block":
