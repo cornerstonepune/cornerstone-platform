@@ -1,0 +1,1 @@
+fast-checks-gate [project]: Use when fast checks or the done-gate block finishing. | verify-before-done [project]: Use when calling work done or checking a task's done-when.
