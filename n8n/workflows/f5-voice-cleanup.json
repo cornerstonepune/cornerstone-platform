@@ -1,0 +1,64 @@
+{
+  "name": "F5 — delete old voice recordings and transcripts every hour",
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Kolkata"
+  },
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 1,
+              "triggerAtMinute": 10
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [-400, 0],
+      "id": "every-hour",
+      "name": "Every hour at :10"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://engine:8000/voice/cleanup",
+        "sendHeaders": true,
+        "specifyHeaders": "keypair",
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Idempotency-Key",
+              "value": "={{ 'voice-cleanup-' + $now.setZone('UTC').toFormat('yyyy-MM-dd-HH') }}"
+            }
+          ]
+        },
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpCustomAuth",
+        "options": {
+          "timeout": 300000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-180, 0],
+      "id": "clean-up-voice-notes",
+      "name": "Delete old voice recordings and transcripts",
+      "credentials": {
+        "httpCustomAuth": {
+          "id": "ENGINE_KEY",
+          "name": "engine key"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Every hour at :10": {
+      "main": [[{ "node": "Delete old voice recordings and transcripts", "type": "main", "index": 0 }]]
+    }
+  }
+}

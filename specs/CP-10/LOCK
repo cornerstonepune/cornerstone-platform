@@ -1,0 +1,19 @@
+{
+  "digest": "de44d65e021a6ec77a2d592309ad1afa138b93a934e333662fc095c814f7fa90",
+  "files": [
+    "spec.md",
+    "checks.sh",
+    "proofs/conftest.py",
+    "proofs/live_voice_cleanup.py",
+    "proofs/test_1_raw_gone_at_48h.py",
+    "proofs/test_2_confirmed_stays.py",
+    "proofs/test_3_cleanup_runs_itself.py",
+    "proofs/test_4_sarvam_setting.py",
+    "proofs/test_5_register_wording.py",
+    "proofs/test_6_same_as_typed.py",
+    "proofs/test_7_no_raw_anywhere.py"
+  ],
+  "locked_at": "2026-11-09T04:50:05+00:00",
+  "criteria": 7,
+  "athena": "2.14.0"
+}
