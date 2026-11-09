@@ -5,7 +5,7 @@
 # Lean design (design.md): the engine (packages/engine/engine/w2_print/fortnight_cycle.py) enforces the cycle; there are
 # no database triggers and no SQL functions. Database proofs run on TEST_DATABASE_URL, rolled back; item 7 alone reads
 # the live database, read-only, on the box.
-source "$ATHENA_ROOT/.claude/athena/bin/checklib.sh"
+source "$ATHENA_ROOT/bin/checklib.sh"
 cd "$ATHENA_ROOT"
 
 P=specs/CP-6/proofs

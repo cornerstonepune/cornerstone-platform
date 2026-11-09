@@ -2,7 +2,7 @@
 # Acceptance proofs for CP-0. Written BEFORE the product code, by a different agent.
 # After `athena lock CP-0` this file, spec.md and proofs/ cannot be edited.
 # One `check` per "Done when" line, same numbering. Each check must be a real command.
-source "$ATHENA_ROOT/.claude/athena/bin/checklib.sh"
+source "$ATHENA_ROOT/bin/checklib.sh"
 cd "$ATHENA_ROOT"
 
 # 2 reads issue titles from $CP0_ISSUE_TITLES_JSON if set, else the committed snapshot specs/CP-0/issue-titles.json

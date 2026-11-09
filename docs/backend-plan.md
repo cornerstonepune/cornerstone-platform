@@ -8,6 +8,13 @@ Source: the reconciliation of Teacher OS Roadmap v23 against the code and the li
 that re-runs every finished spec on main. A scope is finished only when `athena done <ID>` passes and, for goalposts marked
 LIVE, its read-only box proof (`check_box`) has passed on the live database after deploy.
 
+## Freeze: CP-27 is the only scope in flight (Nimish, 9 Nov 2026)
+
+Until CP-27 (#534, trim the backend to its target tables) merges, no other scope that changes the database or adds a
+feature is built. Why: the schema grew to 170 tables against about 75 the school needs, because each scope added its
+own history, approval, settings and word-list tables; trimming while nothing else moves is the cheap, safe moment, and
+`supabase/table-budget.json` stops the growth coming back.
+
 ## What we are building now (Nimish, 9 Nov 2026)
 
 **Working backend = every scope tagged Core in the table below, finished.** This is the software the school runs on:

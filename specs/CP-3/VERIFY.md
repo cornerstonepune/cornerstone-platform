@@ -1,12 +1,16 @@
 VERDICT: PASS
-# CP-3 amendment: independent check (rides in PR #514 / CP-24, 1cadb96 against main fd777c84)
-Read-only review. Not run by the reviewer: athena done CP-3, the browser suite, anything needing a database (the branch RUN.json records CP-3's 7 proofs passing at 09:24:56).
-What changed: only proofs/test_browser_suite.py (test_7). spec.md, checks.sh and every other proof are byte-identical to main; the LOCK digest was recomputed and matches (c8f0a219...eaeaf). The amendment lets apps/web/tests/u70-feedback-rules.spec.ts differ from main by exactly one `const ZONE = "<literal>";` line plus `, ZONE` as the second argument of issueBody(...) calls, compared byte for byte; every other existing file under apps/web/tests (except global-setup.ts) stays forbidden. Nimish unlocked CP-3 for this on 9 Nov 2026.
-Strictness: tested against 12 hand-made changes to u70. Changing '14:05 IST', removing an assertion, skipping a test, a second or non-literal or `let` ZONE, any extra line, and any change to another existing spec all FAIL. Three changes still pass (dropping one `, ZONE`; adding `, ZONE` to a one-argument call; ZONE set to another literal); they are type errors or fail the '14:05 IST' assertion, and CI's web job runs tsc --noEmit and the browser suite, so they are covered.
-The u70 diff is only the ZONE line and the extra argument in four calls; every assertion and expected value is kept. Only u70 (modified) and u72 (new) differ from main under apps/web/tests. The week at Monday 01:00 IST resolves to 2026-W46.
-One finding of the reviewer's, NOT fixed here and accepted by the orchestrator: specs/CP-3/status.json reads 'locked' after the re-lock, not 'built', so the nightly re-proof will skip CP-3 until `athena finish CP-3` is run. athena finish is refused for every spec by the ATH-20 web-readiness gate (needs @axe-core/playwright in apps/web, which the frontend UI-1 slice adds); the same applies to CP-0, CP-6, CP-7, CP-8, CP-11 and CP-22 on main. The orchestrator will run finish for all of them after UI-1 merges. The reviewer's raw verdict was FAIL on this bookkeeping point alone; the amendment itself was found correct and strict.
+# CP-3 amendment: proof 7 applies only to CP-3's own change (PR #531, a569d468 against main e7b0c2e1)
+Read-only review through git refs plus proofs run in a throwaway clone. Not run: proof 8 (box only), the real GitHub Actions run (merge-ref layout simulated), the browser and speed suites.
+Integrity: spec.md and every other proof and test are byte-identical to main; only test_browser_suite.py (test_7 became check_existing_tests_unchanged(root), one new self-check test) and checks.sh (check 7 also runs the new test) changed; the LOCK digest was recomputed with athena's method and equals specs/CP-3/LOCK (01f8440c...435dfe).
+Rule: 'CP-3's own change' = the migration 20270120100000_access_groups_and_rules.sql or any file under specs/CP-3/ except VERIFY.md, RUN.json and status.json (the CP-5 precedent, plus status.json as a record). When it is CP-3's own change the OLD rule applies word for word (any existing file under apps/web/tests or playwright.config.ts modified/deleted/renamed/retyped fails, except global-setup.ts); otherwise the check passes with one line. Simulated CI layouts: an unrelated web PR editing a spec passes; the same plus a file added under specs/CP-3 fails naming the file; a PR editing the CP-3 migration plus a test fails; records-only plus a test edit passes; a push to main (merge-base equals HEAD) passes.
+Self-check: 10 deliberate breakages were tried; the 8 that touch the 'does it apply' logic were all caught; 2 only touch the old rule (removing playwright.config.ts from the checked paths; narrowing the diff filter to MD), which had no self-test before. Not blocking.
+Limits noted, not blocking: a PR that renames the CP-3 migration file and also edits a test would pass because default rename detection lists only the new name (renaming an applied numbered migration is not a realistic change); a follow-up unlock could add --no-renames at test_browser_suite.py:53 and a self-check case for playwright.config.ts.
+Unasked, small: merge_base() now tries origin/main, then main, then master (needed for the self-check's scratch repos); one docstring sentence; the notes paragraph. status.json reads 'locked' as athena wrote it (athena finish is refused repo-wide by the ATH-20 web-readiness gate).
+VERDICT: PASS
 
 ## Earlier verification of CP-3 (kept from main, unchanged)
+VERDICT: PASS
+
 PASS. Items 1 to 7 are met. Item 8 holds when I read it against the migration, but it can only actually pass on the box after Nimish switches the site to the restricted login.
 
 **Criteria**
@@ -35,5 +39,3 @@ Not checked: CI's run on this head (I could not see it), and the design.md detai
 
 Round 2: PASS
 Independent verifier (orchestrator 4), head d298cf0: items 1-7 met; item 8 pending on the box until the site connects as app_web. Unasked-but-justified: staff.signin_id column + 3 sync triggers (design.md had rejected a trigger-synced copy; ADR 0101 records the 0.33 ms vs 0.05 ms measurement), class_band and staff_sees_sheet as SECURITY DEFINER, grade_is_wholly. Risks noted: owner-run yes/no functions can be called with any arguments by the website login (no rows, names or counts); capture and sheet_instance stay open until CP-4; internal.access_vocabulary and its trigger function lack pg_temp last in search_path (added in the push after this review: a search_path change only). Process: spec change (UNLOCK CP-3 + scope-change label) to be confirmed by Nimish on #451.
-
-VERDICT: PASS
