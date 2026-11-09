@@ -1,0 +1,20 @@
+{
+  "digest": "32a91d177c770587a15bd34b6660ce6b7c2d60358f12dbbd8f6bdc69db5e8c1b",
+  "files": [
+    "spec.md",
+    "checks.sh",
+    "proofs/box_fn10_periods.sh",
+    "proofs/box_link_share.sh",
+    "proofs/box_none_silent.sh",
+    "proofs/conftest.py",
+    "proofs/draft_decision.py",
+    "proofs/pytest.sh",
+    "proofs/test_fortnight_report.py",
+    "proofs/test_link_run.py",
+    "proofs/test_unmatched_list.py",
+    "proofs/tests_unchanged.sh"
+  ],
+  "locked_at": "2026-11-08T12:41:57+00:00",
+  "criteria": 6,
+  "athena": "2.13.0"
+}
