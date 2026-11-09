@@ -26,7 +26,7 @@ const COLUMNS: Column<Line>[] = [
       <span className="inline-flex flex-wrap items-center gap-[var(--space-2)] tabular-nums">
         {l.quantity === null ? W.noQty : `${l.quantity} ${l.unit}`}
         {l.to_confirm ? (
-          <span data-chip="toConfirm" className="inline-flex items-center gap-[var(--space-1)] rounded-[var(--radius-pill)] border px-[var(--space-2)] py-[var(--space-1)] text-[length:var(--text-label)] font-medium" style={{ color: "var(--needs-you-fg)", borderColor: "var(--needs-you-bd)" }}>
+          <span data-chip="toConfirm" className="inline-flex items-center gap-[var(--space-1)] rounded-[var(--radius-pill)] border px-[var(--space-2)] py-[var(--space-1)] text-[length:var(--text-label)] font-medium" style={{ color: "var(--ink)", borderColor: "var(--state-wait)" }}>
             <Icon name="to-confirm" size={16} />
             {W.toConfirm}
           </span>
@@ -47,7 +47,7 @@ export default async function SchoolListPage({ searchParams }: { searchParams: P
   const list = await schoolListOf(me, from, to);
   const confirm = list?.lines.filter((l) => l.to_confirm) ?? [];
   return (
-    <PageShell stage={E.area} title={W.schoolTitle} purpose={W.schoolPurpose} action={<span className="text-[length:var(--text-label)] text-[var(--text-muted)] tabular-nums">{month}</span>} next={{ href: "/educator/materials", label: W.classList }}>
+    <PageShell stage={E.area} title={W.schoolTitle} purpose={W.schoolPurpose} action={<span className="text-[length:var(--text-label)] text-[var(--ink-muted)] tabular-nums">{month}</span>} next={{ href: "/educator/materials", label: W.classList }}>
       <Crumbs trail={[{ label: E.area }, { label: W.nav, href: "/educator/materials" }, { label: W.schoolList }]} />
       {list === null ? (
         <EmptyState>{W.notCoordinator}</EmptyState>

@@ -26,7 +26,7 @@ export function GroupNav({ groups, counts }: { groups: readonly MenuGroup[]; cou
               href={g.href}
               aria-current={g.key === here ? "page" : undefined}
               aria-describedby={n ? `waiting-${g.key}` : undefined}
-              className={`${bar} gap-2 ${g.key === here ? "text-chalk shadow-[inset_0_-3px_0_var(--terracotta)]" : "text-bamboo hover:text-chalk"}`}
+              className={`${bar} gap-2 ${g.key === here ? "text-chalk shadow-[inset_0_-3px_0_var(--brand-clay)]" : "text-chalk/75 hover:text-chalk"}`}
             >
               {g.label}
               {/* the count is the link's description, not its name: the group is "Teaching" to a reader and a test */}
@@ -62,7 +62,7 @@ export function GroupTabs() {
             <Link
               href={t.href}
               aria-current={t.href === here ? "page" : undefined}
-              className={`flex min-h-11 items-center whitespace-nowrap px-3 text-[14px] no-underline ${t.href === here ? "font-medium text-basalt shadow-[inset_0_-3px_0_var(--terracotta)]" : "text-basalt/65 hover:text-basalt"}`}
+              className={`flex min-h-11 items-center whitespace-nowrap px-3 text-[14px] no-underline ${t.href === here ? "font-medium text-basalt shadow-[inset_0_-3px_0_var(--brand-clay)]" : "text-basalt/65 hover:text-basalt"}`}
             >
               {t.label}
             </Link>
@@ -100,7 +100,7 @@ export function MenuButton({ counts, children }: { counts: Partial<Record<string
         </svg>
       </button>
       {open ? (
-        <div id="site-menu" role="dialog" aria-label="Menu" className="absolute inset-x-0 top-full z-40 max-h-[calc(100dvh-56px)] overflow-y-auto border-b border-basalt/30 bg-chalk text-basalt shadow-md">
+        <div id="site-menu" role="dialog" aria-label="Menu" className="absolute inset-x-0 top-full z-40 max-h-[calc(100dvh-56px)] overflow-y-auto border-b border-basalt/30 bg-chalk text-basalt shadow-[var(--shadow-card)]">
           <div className="mx-auto grid w-full max-w-[1560px] gap-x-8 gap-y-6 px-4 py-6 md:grid-cols-5 md:px-8">
             {GROUPS.map((g) => (
               <section key={g.key} aria-label={g.label}>

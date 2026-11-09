@@ -151,7 +151,7 @@ function Group({ s, open, page, q }: { s: Section; open: boolean; page: number; 
     <li className="min-w-0">
       <details open={open} className="group panel" data-group={group.key}>
         <summary className="flex min-h-12 cursor-pointer list-none flex-wrap items-center gap-x-4 gap-y-1 px-4 py-2">
-          <svg aria-hidden="true" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" className="shrink-0 text-basalt/55 transition-transform group-open:rotate-90">
+          <svg aria-hidden="true" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" className="shrink-0 text-basalt/55 group-open:rotate-90">
             <path d="M6 3l5 5-5 5" />
           </svg>
           <h2 className="min-w-0 flex-1 text-[16px]">

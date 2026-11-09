@@ -39,7 +39,7 @@ export default async function ActivityPage({ params, searchParams }: { params: P
       stage={E.area}
       title={page.name}
       purpose={W.purpose}
-      action={<span className="text-[length:var(--text-label)] text-[var(--text-muted)]">{[page.section, page.code].filter(Boolean).join(" · ")}</span>}
+      action={<span className="text-[length:var(--text-label)] text-[var(--ink-muted)]">{[page.section, page.code].filter(Boolean).join(" · ")}</span>}
       next={{ href: back, label: E.today.title }}
     >
       <Crumbs trail={[{ label: E.area }, { label: E.today.title, href: back }, { label: page.name }]} />
@@ -57,12 +57,12 @@ export default async function ActivityPage({ params, searchParams }: { params: P
           ))}
         </div>
         <aside className="col-span-12 grid content-start gap-[var(--space-3)] lg:col-span-4">
-          <h2 className="text-[length:var(--text-h3)] font-semibold">{W.levels}</h2>
+          <h2 className="text-[length:var(--text-title-small)] font-semibold">{W.levels}</h2>
           {levels.map((p) => (
             <Part key={p.part} code={page.code} p={p} />
           ))}
-          <section id="materials" className="grid gap-[var(--space-2)] rounded-[var(--radius-m)] border border-[var(--border)] p-[var(--space-3)]">
-            <h2 className="text-[length:var(--text-h3)] font-semibold">{W.materials}</h2>
+          <section id="materials" className="grid gap-[var(--space-2)] rounded-[var(--radius-control)] border border-[var(--line)] p-[var(--space-3)]">
+            <h2 className="text-[length:var(--text-title-small)] font-semibold">{W.materials}</h2>
             {page.materials.items.length ? (
               <ul className="grid list-disc gap-[var(--space-1)] pl-[var(--space-4)]">
                 {page.materials.items.map((m, i) => (

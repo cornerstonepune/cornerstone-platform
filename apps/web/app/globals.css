@@ -1,28 +1,38 @@
-/* The layers, lowest first. `tokens` is the school's design tokens (D-073, design-system/tokens.css), imported only by
-   the school's own screens' shell (components/educator/shell.tsx): the other pages keep their look. */
+/* The layers, lowest first. `tokens` is design-system/tokens.css, generated from tokens.json by scripts/tokens.mjs
+   (UI-14): every colour, font, size, shape, shadow and the press on every page comes from it. */
 @layer tokens, theme, base, components, utilities;
 @import "tailwindcss";
+@import "../design-system/tokens.css" layer(tokens);
 
-/* The material library — Cornerstone Brand Book, Edition 02 (design-system/PRINCIPLES.md).
-   Lime wash 70 % · basalt 20 % · everything else 10 %. */
+/* Hover changes colour only, and only where there is a real pointer (a mouse or a trackpad), never on a touch screen. */
+@custom-variant hover {
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      @slot;
+    }
+  }
+}
+
+/* The old material names the screens' classes still use (text-basalt/55, bg-chalk…), each on the token of its role,
+   until each screen is rebuilt on the tokens' own names. No colour is written here: tokens.css holds them all. */
 :root {
-  color-scheme: light;
-  --lime: #f3eee4;
-  --basalt: #26241f;
-  --terracotta: #b8562f;
-  --neem: #5f6b45;
-  --bamboo: #c9a96a;
-  --mud: #7a5a3e;
-  --monsoon: #6f7f8c;
-  --chalk: #fffdf8;
-  --ink-62: rgba(38, 36, 31, 0.62);
-  --ink-55: rgba(38, 36, 31, 0.55);
-  --ink-30: rgba(38, 36, 31, 0.3);
-  --ink-16: rgba(38, 36, 31, 0.16);
-  --ink-14: rgba(38, 36, 31, 0.14);
-  --ink-12: rgba(38, 36, 31, 0.12);
-  --ink-09: rgba(38, 36, 31, 0.09);
-  --ink-03: rgba(38, 36, 31, 0.03);
+  --lime: var(--ground);
+  --basalt: var(--ink);
+  --terracotta: var(--state-late);
+  --neem: var(--state-ok);
+  --bamboo: var(--state-wait);
+  --mud: var(--kind-note);
+  --monsoon: var(--state-quiet);
+  --chalk: var(--panel);
+  --ink-62: color-mix(in srgb, var(--ink) 62%, transparent);
+  --ink-55: color-mix(in srgb, var(--ink) 55%, transparent);
+  --ink-30: color-mix(in srgb, var(--ink) 30%, transparent);
+  --ink-16: color-mix(in srgb, var(--ink) 16%, transparent);
+  --ink-14: color-mix(in srgb, var(--ink) 14%, transparent);
+  --ink-12: color-mix(in srgb, var(--ink) 12%, transparent);
+  --ink-09: color-mix(in srgb, var(--ink) 9%, transparent);
+  --ink-03: color-mix(in srgb, var(--ink) 3%, transparent);
+  --focus-ring: 2px solid var(--focus);
 }
 
 @theme inline {
@@ -34,28 +44,28 @@
   --color-mud: var(--mud);
   --color-monsoon: var(--monsoon);
   --color-chalk: var(--chalk);
-  --font-body: var(--font-source-serif), "Source Serif 4", Georgia, serif;
-  --font-heading: var(--font-body);
+  --font-body: var(--font-sans);
+  --font-heading: var(--font-serif);
   --radius: 0;
 }
 
 html {
-  background: var(--lime);
+  background: var(--ground);
 }
 
+/* Source Sans 3 for everything a person reads; Source Serif 4 for titles (tokens.json, type). */
 body {
-  background: var(--lime);
-  color: var(--basalt);
-  font-family: var(--font-body);
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--font-sans);
   font-size: 15px;
   line-height: 1.55;
 }
 
-/* Headings: the same serif, a weight heavier; never all-caps. */
 h1,
 h2,
 h3 {
-  font-family: var(--font-heading);
+  font-family: var(--font-serif);
   font-weight: 600;
   margin: 0;
 }
@@ -64,10 +74,48 @@ h3 {
    sidebar's `hover:text-chalk` and turned a menu item basalt on basalt — it vanished on hover. */
 @layer base {
   a {
-    color: var(--terracotta);
+    color: var(--link);
   }
-  a:hover {
-    color: var(--basalt);
+  @media (hover: hover) and (pointer: fine) {
+    a:hover {
+      color: var(--ink);
+    }
+  }
+
+  /* Press, the only motion (tokens.json, motion): anything pressable gives way on :active. Nothing else moves. */
+  button,
+  a,
+  summary,
+  [role="button"],
+  [role="tab"],
+  [data-press] {
+    transition: var(--press-transition);
+  }
+  button:active,
+  a:active,
+  summary:active,
+  [role="button"]:active,
+  [role="tab"]:active,
+  [data-press]:active {
+    transform: var(--press-transform);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    button,
+    a,
+    summary,
+    [role="button"],
+    [role="tab"],
+    [data-press] {
+      transition: none;
+    }
+    button:active,
+    a:active,
+    summary:active,
+    [role="button"]:active,
+    [role="tab"]:active,
+    [data-press]:active {
+      transform: none;
+    }
   }
 }
 
@@ -208,8 +256,10 @@ table.grid.steady thead th {
   z-index: 2;
   background: linear-gradient(var(--ink-03), var(--ink-03)), var(--chalk);
 }
-table.grid.steady tbody tr:not(.under):hover td {
-  background: var(--ink-03);
+@media (hover: hover) and (pointer: fine) {
+  table.grid.steady tbody tr:not(.under):hover td {
+    background: var(--highlight);
+  }
 }
 table.grid.steady tr.under td {
   background: var(--ink-03);
@@ -226,24 +276,24 @@ table.grid.steady tr.under td {
   white-space: nowrap;
 }
 .pill-neem {
-  background: rgba(95, 107, 69, 0.14);
-  color: var(--neem);
-  border-color: rgba(95, 107, 69, 0.3);
+  background: var(--state-ok-bg);
+  color: var(--state-ok);
+  border-color: var(--state-ok);
 }
 .pill-bamboo {
-  background: rgba(201, 169, 106, 0.22);
-  color: var(--mud);
-  border-color: rgba(201, 169, 106, 0.45);
+  background: var(--state-wait-bg);
+  color: var(--state-wait);
+  border-color: var(--state-wait);
 }
 .pill-terracotta {
-  background: rgba(184, 86, 47, 0.13);
-  color: var(--terracotta);
-  border-color: rgba(184, 86, 47, 0.3);
+  background: var(--state-late-bg);
+  color: var(--state-late);
+  border-color: var(--state-late);
 }
 .pill-monsoon {
-  background: rgba(111, 127, 140, 0.15);
-  color: var(--monsoon);
-  border-color: rgba(111, 127, 140, 0.35);
+  background: var(--state-quiet-bg);
+  color: var(--state-quiet);
+  border-color: var(--state-quiet);
 }
 
 .chip {
@@ -255,14 +305,16 @@ table.grid.steady tr.under td {
   color: var(--basalt);
   text-decoration: none;
 }
-.chip:hover {
-  color: var(--basalt);
-  border-color: var(--basalt);
+@media (hover: hover) and (pointer: fine) {
+  .chip:hover {
+    color: var(--ink);
+    border-color: var(--ink);
+  }
 }
 .chip.on {
-  background: var(--basalt);
-  color: var(--lime);
-  border-color: var(--basalt);
+  background: var(--action);
+  color: var(--action-ink);
+  border-color: var(--action);
 }
 
 /* The one loud colour: one primary action per screen. */
@@ -271,26 +323,30 @@ table.grid.steady tr.under td {
   align-items: center;
   gap: 8px;
   padding: 10px 18px;
-  background: var(--terracotta);
-  color: var(--chalk);
-  font-family: var(--font-body);
+  background: var(--action);
+  color: var(--action-ink);
+  font-family: var(--font-sans);
   font-size: 13.5px;
   font-weight: 700;
   border: none;
   cursor: pointer;
 }
-.btn:hover {
-  background: var(--basalt);
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover {
+    background: color-mix(in srgb, var(--action) 85%, var(--ground));
+  }
 }
 .btn.secondary {
   background: transparent;
-  color: var(--basalt);
+  color: var(--ink);
   border: 1px solid var(--ink-30);
   font-weight: 400;
 }
-.btn.secondary:hover {
-  border-color: var(--basalt);
-  background: transparent;
+@media (hover: hover) and (pointer: fine) {
+  .btn.secondary:hover {
+    border-color: var(--ink);
+    background: transparent;
+  }
 }
 .btn:disabled {
   opacity: 0.45;
@@ -326,9 +382,9 @@ table.grid.steady tr.under td {
   padding: 9px 12px;
   border: 1px solid var(--ink-30);
   background: var(--chalk);
-  font-family: var(--font-body);
+  font-family: var(--font-sans);
   font-size: 13.5px;
-  color: var(--basalt);
+  color: var(--ink);
   width: 100%;
 }
 .textarea {
@@ -338,7 +394,7 @@ table.grid.steady tr.under td {
 .input:focus,
 .select:focus,
 .textarea:focus {
-  outline: 2px solid var(--terracotta);
+  outline: 2px solid var(--focus);
   outline-offset: 1px;
 }
 

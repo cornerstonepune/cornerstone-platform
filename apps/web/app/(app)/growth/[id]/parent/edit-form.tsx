@@ -27,7 +27,7 @@ export function EditForm({
     <form
       action={editParentReport}
       data-testid="edit-report"
-      className="mx-auto grid max-w-[800px] gap-5 bg-chalk px-6 py-8 text-[14px] shadow-sm md:px-12"
+      className="mx-auto grid max-w-[800px] gap-5 bg-chalk px-6 py-8 text-[14px] shadow-[var(--shadow-card)] md:px-12"
     >
       <input type="hidden" name="child_id" value={id} />
       <input type="hidden" name="note_id" value={note.id} />

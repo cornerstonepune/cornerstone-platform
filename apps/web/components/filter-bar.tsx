@@ -45,13 +45,13 @@ export function FilterBar({
     const s = q.toString();
     return s ? `${action}?${s}` : action;
   };
-  const control = "min-h-[40px] border border-basalt/30 bg-chalk px-3 !text-[15px] text-basalt";
+  const control = "min-h-[40px] border border-[var(--line-control)] bg-[var(--panel)] px-3 !text-[15px] text-[var(--ink)]";
   return (
     <section data-filterbar aria-label="Filters" className="mb-3">
       <form ref={form} action={action} method="get" role="search" className="flex flex-wrap items-center gap-2">
         {Object.entries(keep).map(([k, v]) => (v ? <input key={k} type="hidden" name={k} value={v} /> : null))}
         {filters.map((f) => (
-          <label key={f.name} className="flex items-center gap-2 text-[13px] text-basalt/70">
+          <label key={f.name} className="flex items-center gap-2 text-[13px] text-[var(--ink-muted)]">
             <span>{f.label}</span>
             <select name={f.name} defaultValue={f.value ?? ""} onChange={() => form.current?.requestSubmit()} className={`select ${control} !w-auto`}>
               {f.required ? null : <option value="">{f.all}</option>}
@@ -66,7 +66,7 @@ export function FilterBar({
         {search ? (
           <label className="relative ml-auto flex items-center">
             <span className="sr-only">Search the list</span>
-            <svg width="15" height="15" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.7" className="pointer-events-none absolute left-3 text-basalt/55">
+            <svg width="15" height="15" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.7" className="pointer-events-none absolute left-3 text-[var(--ink-muted)]">
               <circle cx="7" cy="7" r="4.6" />
               <path d="M10.6 10.6L14 14" />
             </svg>
@@ -83,7 +83,7 @@ export function FilterBar({
         <ul data-active-filters aria-label="Filters on" className="mt-2 flex flex-wrap items-center gap-2 text-[13px]">
           {on.map((a) => (
             <li key={a.name}>
-              <Link href={href([a.name])} aria-label={`Remove filter ${a.label}`} className="inline-flex min-h-8 items-center gap-2 border border-basalt/30 bg-basalt/5 px-3 text-basalt no-underline hover:border-basalt">
+              <Link href={href([a.name])} aria-label={`Remove filter ${a.label}`} className="inline-flex min-h-8 items-center gap-2 border border-[var(--line-control)] bg-[var(--surface)] px-3 text-[var(--ink)] no-underline hover:border-[var(--ink)]">
                 {a.label}
                 <span aria-hidden="true">×</span>
               </Link>

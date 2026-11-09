@@ -2,7 +2,7 @@ import Link from "@/components/link";
 
 // The strip of counts at the top of a page (D-075): what the page holds, each count a link to the first of what it
 // counts. A count of nothing is shown and not linked.
-const BOX = "inline-flex min-h-[var(--tap)] items-center gap-[var(--space-1)] rounded-[var(--radius-m)] border border-[var(--border)] px-[var(--space-3)]";
+const BOX = "inline-flex min-h-[var(--tap)] items-center gap-[var(--space-1)] rounded-[var(--radius-control)] border border-[var(--line)] px-[var(--space-3)]";
 
 export function Summary({ items }: { items: { label: readonly [string, string]; n: number; href?: string }[] }) {
   return (
@@ -16,11 +16,11 @@ export function Summary({ items }: { items: { label: readonly [string, string]; 
         return (
           <li key={i.label[1]}>
             {i.href && i.n ? (
-              <Link href={i.href} className={`${BOX} text-[var(--text)] no-underline hover:border-[var(--border-control)]`}>
+              <Link href={i.href} className={`${BOX} text-[var(--ink)] no-underline hover:border-[var(--line-control)]`}>
                 {body}
               </Link>
             ) : (
-              <span className={`${BOX} text-[var(--text-muted)]`}>{body}</span>
+              <span className={`${BOX} text-[var(--ink-muted)]`}>{body}</span>
             )}
           </li>
         );
