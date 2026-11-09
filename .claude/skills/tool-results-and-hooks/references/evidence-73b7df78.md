@@ -1,1 +1,0 @@
-Tripwire: "PreToolUse:Edit hook error: [jev] tripwire t-37e58f33: this Edit call was not run. The jev classifier scored the new text as removing or disabling a test or assertion (p=0.98)". Marker used: "true # jev:intended t-e0126b91: A recording that cannot be deleted fails the run and is tried again at the next run (Done when 3 of the locked CP-10 scope, #502)".
