@@ -1,1 +1,0 @@
-bash-denied-after-hook-rewrite [project]: Use when Bash is denied: a hook changed this call's input.
