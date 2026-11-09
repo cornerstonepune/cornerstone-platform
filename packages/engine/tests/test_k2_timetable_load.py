@@ -389,3 +389,50 @@ def test_the_report_prints_the_rows_before_and_after_when_there_is_a_database(ca
     assert "before" in out and "after" in out
     n, after_n = added["session"], after["session"]
     assert re.search(rf"session\s+{n}\s+{n}\s+{after_n - n}\s+{after_n}\b", out), out
+
+
+@needs_db
+def test_a_fortnight_the_loader_makes_starts_at_planning_so_the_freeze_applies_to_it(conn):
+    """CP-6: a fortnight made by the load has its cycle row, or freezing it later would silently do nothing."""
+    k, target = a_target(conn)
+    sq.apply(conn, loaded(), target)
+    bare = conn.execute(
+        "select count(*) n from fortnight f left join fortnight_cycle c on c.fortnight_id = f.id"
+        " where f.kind = 'teaching' and c.fortnight_id is null and f.academic_year_id ="
+        " (select academic_year_id from school_class where id = %s)",
+        (k["class"],),
+    ).fetchone()["n"]
+    assert bare == 0
+
+
+@needs_db
+def test_only_a_fortnight_that_gets_a_new_line_is_asked_about_its_freeze(conn):
+    """CP-6: a load naming a frozen fortnight only through lines it already holds, and adding a line to a fortnight
+    still at planning, needs no reason and writes no frozen_change row."""
+    from engine.w2_print import fortnight_cycle as fc
+
+    k, target = a_target(conn)
+    sq.apply(conn, loaded(), target)
+    held = conn.execute(
+        "select p.plan_key, p.ord, p.text, f.id as fid, f.number, f.tenant_id, f.academic_year_id from plan_entry p"
+        " join fortnight f on f.id = p.fortnight_id where p.school_class_id = %s order by p.created_at limit 1",
+        (k["class"],),
+    ).fetchone()
+    fc.move(conn, held["fid"], "frozen", "staff:cp6-test")
+    later = db.one(
+        conn,
+        "insert into fortnight (tenant_id, academic_year_id, number, kind, starts_on, ends_on)"
+        " values (%s, %s, 99, 'teaching', '2031-09-01', '2031-09-14') returning id",
+        (held["tenant_id"], held["academic_year_id"]),
+    )["id"]
+    conn.execute(
+        "insert into fortnight_cycle (tenant_id, fortnight_id) values (%s, %s)", (held["tenant_id"], later)
+    )
+    again = ld.PlanEntry(fortnight=held["number"], key=held["plan_key"], ord=held["ord"], text=held["text"])
+    new = ld.PlanEntry(fortnight=99, key="math", ord=1, text="CP-6 test line")
+    added = sq.apply(conn, ld.Load(plan_entries=[again, new]), target)
+    assert added["plan_entry"] == 1
+    assert (
+        conn.execute("select count(*) n from fortnight_edit where kind = 'frozen_change'").fetchone()["n"]
+        == 0
+    )
