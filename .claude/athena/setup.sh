@@ -15,6 +15,8 @@ if [ "${GITHUB_ACTIONS:-}" = true ]; then
     *) echo "setup.sh: the test database must be on this runner (127.0.0.1 or localhost), not at: @${URL#*@}" >&2; exit 1 ;;
   esac
   bin/ci-postgres
+  # CP-11: the timetable program, so the timetable proofs can run (the engine image installs the same package)
+  sudo apt-get update -qq && sudo apt-get install -y --no-install-recommends fet && fet-cl --version >"$RUNNER_TEMP/fet-version" && head -1 "$RUNNER_TEMP/fet-version"
   export PATH="/usr/lib/postgresql/17/bin:$PATH"
   # rc is written even when set -e would end the subshell early, so the wait below cannot hang
   ( rc=0; bin/testdb fresh "$URL" >"$RUNNER_TEMP/testdb.log" 2>&1 || rc=$?; echo "$rc" >"$RUNNER_TEMP/testdb.rc" ) &
