@@ -1,0 +1,11 @@
+{
+  "why": "Columns decided in issue #551 (CP-27 decisions: the frontend's data gaps, 0 new tables) that the migrations do not have yet. Nothing is built. The names are the orchestrator's proposals and the builder of the CP-27 group named in #551 confirms each against the code, so a wireframe may bind to one (check.mjs prints a note, not an error) and the name may still change. When a column is built it is deleted from this file in the same commit; the migrations then carry it and check.mjs holds the wireframe to them.",
+  "decided_in": "https://github.com/cornerstonepune/cornerstone-platform/issues/551",
+  "columns": {
+    "child_skill_state": ["kind", "named_days", "adults", "rechecked_on"],
+    "fortnight": ["state"],
+    "item": ["key", "review"],
+    "pii.educator_note": ["session_id", "route"],
+    "pii.note_claim": ["flag", "outcome", "entry_mode", "child_id"]
+  }
+}
