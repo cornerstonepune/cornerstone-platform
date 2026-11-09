@@ -49,7 +49,7 @@ this one merges.
 
 **The target**
 
-4. The tables in `public` and `pii` are exactly the 75 named in `specs/CP-27/target-tables.md`, plus four kept until
+4. The tables in `public` and `pii` are exactly the 77 named in `specs/CP-27/target-tables.md`, plus four kept until
    sign-in moves to the platform's own login: `password_ask`, `password_link`, `sign_in_failure` and `web_error`. (Test:
    the database catalogue is compared with the list; LIVE: the same comparison, names of tables only.)
 5. No table is specific to one subject. English questions, passages and rubrics live in the same tables as maths.
@@ -102,11 +102,13 @@ this one merges.
 15. The timetable of a date is its `session` rows. Timetable rules live in one table. No table keeps a second copy of a
     fortnight's periods. No table has a text `week` column: each holds a date. (Tests; LIVE: sessions per date equal,
     as in item 8.)
-16. Exactly four tables refuse edits and deletes:
+16. Exactly six tables refuse edits and deletes (amendment 2):
     - `evidence_event`;
     - `activity_observation`;
     - `approval`;
-    - `change_log`.
+    - `change_log`;
+    - `curriculum_proposal`;
+    - `timetable_run`.
 
     (Test: a count of such triggers.)
 
@@ -129,7 +131,7 @@ this one merges.
 
 19. `docs/data-model.md` lists the school's nouns and the one home of each shared job. The repository's `CLAUDE.md`
     tells every session to read it before designing. (Test: the file exists and is linked.)
-20. CI fails if the number of tables rises above 79 or the number of database functions rises above the count after
+20. CI fails if the number of tables rises above 81 or the number of database functions rises above the count after
     this scope, unless an allow-list file names the scope and a one-line reason. (Test: adding a table in a test
     database fails CI.)
 21. The Scope issue form asks every future scope why a new table cannot be a column, a row in a shared table, a rule on
@@ -150,3 +152,7 @@ this one merges.
 - Switching the access rules on (Nimish's step).
 - Squashing the 144 migrations into one baseline. This is a follow-up once this scope is merged and stable.
 - Rooms, the same-adult check for grades 1–4, and incidents.
+
+## Amendment 2 (Nimish, 9 Nov 2026, issue #534)
+
+77 target tables (`read_correction`, `item_exposure` stay); budget ceiling 81; six tables refuse edits; role grants unchanged (the role, classes and subjects the website shows become columns on `staff`); `child.band` stays; the week A/B frame becomes `timetable_rule` rows; removing staff deactivates.
