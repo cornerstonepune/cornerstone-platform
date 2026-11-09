@@ -38,16 +38,18 @@ Nothing new to do yet except the look. Every colour in the site now comes from o
 
 ### What
 
-One source of colour, type and space for the whole site. tokens.css is generated from tokens.json; every colour literal in the app is replaced by a token, including in the blocks that exist today (StatusChip, DataTable, FilterBar, EmptyState, Count) and in the shadcn files from UI-1; the fonts are self-hosted. No page changes shape in this slice.
+One source of colour, type, shape, elevation and motion for the whole site, in the look Nimish chose on 9 Nov 2026 (the rich draft, B). tokens.css is generated from tokens.json; every colour literal in the app is replaced by a token, including in the blocks that exist today (StatusChip, DataTable, FilterBar, EmptyState, Count) and in the shadcn files from UI-1; the fonts are self-hosted. No page changes shape in this slice.
 
 ### Done when
 
 1. `apps/web/design-system/tokens.json` is byte-identical to `docs/frontend/tokens.json`, and `apps/web/design-system/tokens.css` is produced from it by `apps/web/scripts/tokens.mjs`; a test regenerates and diffs, so the two cannot drift.
 2. No hex colour literal remains in `apps/web/app`, `apps/web/components` or `apps/web/lib` outside `tokens.css` (a grep test; the count today is the baseline and must be 0 at the end of this slice). Each literal becomes the nearest token with no change of layout, and `screens.spec.ts` is re-baselined once, in this slice.
 3. Every pair named in tokens.json's usage notes measures at least 4.5:1 (text) or 3:1 (borders, icons, outlines) in both themes by the WCAG formula, including link on ground, the main-action text on the basalt button, the amber outline on ground and each state text on its fill; and the four colours that sit near each other (the Language edge, the Arts edge, the wait amber and the late red) are at least 20 apart pairwise (CIE76 ΔE in light). The script lives in the suite and its table is committed as `docs/design-tokens-contrast.md`. A pair that fails is fixed in tokens.json, not exempted.
-4. Each shadcn file under `components/ui/` references `var(--` and no hex, and the stock look is gone (screenshot baseline).
-5. next/font loads Source Serif 4 and Source Sans 3 from the build: no page makes a request to a font host or any host other than the site's own (a test records the requests of one page); the computed font-family first names across every page are within {Source Serif 4, Source Sans 3}.
-6. `bin/check`, `test_ux_rules.py`, `u51` and `screens.spec.ts` pass; `ux.frozen` in workflows.json has not grown.
+4. `tokens.css` carries every token of tokens.json: the colours in both themes (including the seven kind colours and their tints and the subject colours), radius-card 14 px, radius-control 10 px, radius-pill, shadow-card in both themes and the press motion; a test reads tokens.json and finds each name as a CSS custom property.
+5. Press is the only motion: every button, link-row, tile and square scales to 0.97 on :active in 160 ms with the token's curve; hover changes colour only and only under `(hover: hover) and (pointer: fine)`; under `prefers-reduced-motion` nothing moves (a test reads the computed styles in both media settings).
+6. Each shadcn file under `components/ui/` references `var(--` and no hex, and the stock look is gone (screenshot baseline).
+7. next/font loads Source Serif 4 and Source Sans 3 from the build: no page makes a request to a font host or any host other than the site's own (a test records the requests of one page); the computed font-family first names across every page are within {Source Serif 4, Source Sans 3}.
+8. `bin/check`, `test_ux_rules.py`, `u51` and `screens.spec.ts` pass; `ux.frozen` in workflows.json has not grown.
 
 ### Out of scope
 
@@ -68,16 +70,17 @@ One navigation for the whole site: the top bar with its four doors, search, acti
 ### Done when
 
 1. AppFrame (bar, trail, main column, rail, Capture here) replaces `components/educator/shell.tsx`, `components/shell.tsx`, `components/page-shell.tsx`, `components/top-bar.tsx`, `components/educator/shell-nav.tsx` and `lib/educator/menu.ts`, all deleted; `components/educator/crumbs.tsx` becomes the trail; `components/icons.tsx` is merged into `lib/icons.tsx` (one icon file); `rg -l 'PageShell|TopBar|ShellNav'` over `apps/web` returns nothing; every existing page renders inside AppFrame.
-2. `lib/menu.ts` GROUPS are exactly Today, Timetable, Children, Setup and carry the map of every existing route to its door (assessments, papers, capture and growth under Children; library, curriculum, skill-sets, school and rules under their `group` in screens.json); a test walks the app's route list and reaches each route by clicking from the bar in at most three clicks; `u53-the-menu.spec.ts` passes against it.
-3. The trail is two fixed levels (the door, then the thing) plus the browser's Back; the door lit on the bar is the door the walk started from, so an Activity opened from Today lights Today, not Setup.
-4. `docs/ux-rules.md` is rewritten in this slice and named in its changed files: rules 3, 7, 11 and 12 and the menu table now state the new frame (the rail replaces the side menu, acting-as replaces 'Viewing', four doors, 1440 px not 1280, four work states not five chips, the phone gate list); `test_ux_rules.py` and `u51` are updated to match.
-5. AppFrame's search field is a typeahead, with no results page: typing a Sr. No. in the person's classes offers that child; one outside them offers nothing; a fake fixture name typed offers that child within their classes only; at most five suggestions; choosing one opens its screen; the typed term is sent in a POST body and is in no address, no log line and no analytics call (a test reads the request log); signed out, the request is refused.
-6. `lib/built.ts` exports `isBuilt(screenId)` from `merged_slices` in screens.json; the doors, the rail and every link to another screen draw nothing for a target that is not built.
-7. `tests/u70-inventory.spec.ts` reads `docs/frontend/screens.json` (or the file named by `INVENTORY=`) and, for every screen of a slice in `merged_slices` (a full run) or named by `SLICE=UI-n` / `SCREEN=<id>` (a pull request run), signs in as educator and as coordinator and runs the ten generic checks at 1440 and 400 and drives every control by its kind; dynamic routes take a concrete address from `tests/inventory-fixtures.ts`, built from the test's own rows; the `bar` list is driven once per run; every other screen is `test.fixme` and counted in the report.
-8. The test is proved on `tests/fixtures/mini-inventory.json`, a two-screen inventory of pages that exist and are framed by this slice: it passes on them, and a deliberately broken copy (a missing control, a dead link, a name not in the allow-list) fails with the reason named.
-9. `tests/fake-names.ts` is the one list of names in the repository; the inventory test fails on any rendered child name that is not in it.
-10. The bare frame (logo and the form, no bar, no rail) exists for the screen marked `frame: bare`.
-11. `bin/check`, `test_ux_rules.py`, `u51`, `u53` and `screens.spec.ts` pass; `ux.frozen` in workflows.json has not grown.
+2. On a phone (400 px) the four doors are a bottom tab bar (icon above word, at least 44 px tall, the chosen door's icon in brand clay and its word in ink), and the top bar keeps the mark, search and the person; at 1440 they are the top bar's doors (test at both widths).
+3. `lib/menu.ts` GROUPS are exactly Today, Timetable, Children, Setup and carry the map of every existing route to its door (assessments, papers, capture and growth under Children; library, curriculum, skill-sets, school and rules under their `group` in screens.json); a test walks the app's route list and reaches each route by clicking from the bar in at most three clicks; `u53-the-menu.spec.ts` passes against it.
+4. The trail is two fixed levels (the door, then the thing) plus the browser's Back; the door lit on the bar is the door the walk started from, so an Activity opened from Today lights Today, not Setup.
+5. `docs/ux-rules.md` is rewritten in this slice and named in its changed files: rules 3, 7, 11 and 12 and the menu table now state the new frame (the rail replaces the side menu, acting-as replaces 'Viewing', four doors, 1440 px not 1280, four work states not five chips, the phone gate list); `test_ux_rules.py` and `u51` are updated to match.
+6. AppFrame's search field is a typeahead, with no results page: typing a Sr. No. in the person's classes offers that child; one outside them offers nothing; a fake fixture name typed offers that child within their classes only; at most five suggestions; choosing one opens its screen; the typed term is sent in a POST body and is in no address, no log line and no analytics call (a test reads the request log); signed out, the request is refused.
+7. `lib/built.ts` exports `isBuilt(screenId)` from `merged_slices` in screens.json; the doors, the rail and every link to another screen draw nothing for a target that is not built.
+8. `tests/u70-inventory.spec.ts` reads `docs/frontend/screens.json` (or the file named by `INVENTORY=`) and, for every screen of a slice in `merged_slices` (a full run) or named by `SLICE=UI-n` / `SCREEN=<id>` (a pull request run), signs in as educator and as coordinator and runs the ten generic checks at 1440 and 400 and drives every control by its kind; dynamic routes take a concrete address from `tests/inventory-fixtures.ts`, built from the test's own rows; the `bar` list is driven once per run; every other screen is `test.fixme` and counted in the report.
+9. The test is proved on `tests/fixtures/mini-inventory.json`, a two-screen inventory of pages that exist and are framed by this slice: it passes on them, and a deliberately broken copy (a missing control, a dead link, a name not in the allow-list) fails with the reason named.
+10. `tests/fake-names.ts` is the one list of names in the repository; the inventory test fails on any rendered child name that is not in it.
+11. The bare frame (logo and the form, no bar, no rail) exists for the screen marked `frame: bare`.
+12. `bin/check`, `test_ux_rules.py`, `u51`, `u53` and `screens.spec.ts` pass; `ux.frozen` in workflows.json has not grown.
 
 ### Out of scope
 
@@ -104,9 +107,12 @@ The school's new blocks of SPEC §5, built once, each with sample data on a staf
 5. Each chart block (StackBar, LevelBars, Spark, Trend, HeatGrid) is fed known data by a test and every text label in its SVG is a value or a date from that data; colours come from tokens only; a chart with no data renders its empty words, never an empty axis.
 6. Details is a native `<details>`; a main action inside a closed Details fails the inventory test.
 7. No file outside `lib/icons.tsx` imports from `lucide-react` (grep test).
-8. Every one of the 1 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
-9. The blocks: there is one fold per entry of `blocks`, and a block with no sample fails the test
-10. The blocks: the page is absent for an educator and linked only from Setup's details link
+8. KindTile exists and draws each of the seven kinds with its icon from lib/icons.tsx and its colour from the tokens; every rail link, card header and timeline entry in the gallery starts with one (DOM test).
+9. A state chip placed on a tinted cell or square sits on the panel colour with a 1 px ring in its state colour (the gallery shows a Moved chip on an Arts cell and a To confirm chip on a Language cell; a screenshot baseline holds it), because those fills are within 5 of each other (CIE76) and the chip would otherwise vanish.
+10. Every one of the 1 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
+11. The blocks: there is one fold per entry of `blocks`, and a block with no sample fails the test
+12. The blocks: the page is absent for an educator and linked only from Setup's details link
+13. The blocks: its first section is the legend: every state with its icon, word and colour, every action with its tile, every kind of thing with its tile, the subjects and the shapes, all read from STATES and tokens.json, nothing typed
 
 ### Out of scope
 
@@ -154,13 +160,16 @@ Period, record, confirm, notes, children, class picture, child, activity, object
 26. Where this child is: a correction shows as a new entry that names the entry it replaces
 27. Where this child is: the header shows the child's name beside the Sr. No., read from pii by child_id; the address is by Sr. No. and carries no name; no photo (DOM scan)
 28. Where this child is: the graph's node count equals the skills the child was seen on, and each node's state equals the table's
-29. the activity's name: a drafted part carries the 'drafted' badge until Keep, Edit or Send back; an educator sees the badge but not the three buttons
-30. the activity's name: every edit writes a curriculum_edit row with who
-31. the activity's name: a photo attaches to the activity, never to a child
-32. the objective's title: no number, percentage or state is shown for the objective itself (DOM scan)
-33. the skill's name: a prerequisite or next skill is shown only when its link is confirmed (a proposed link in the fixture does not appear)
-34. the skill's name: the spark's last value equals the grid's secure count
-35. the skill's name: the grid's squares equal the class's enrolment in Sr. No. order
+29. Where this child is: a table equivalent sits beside the graph: the DataTable lists the same skills with the same state words and times seen, the graph's SVG has role=img and an aria-label that names the counts by state, and axe reports no violation on it
+30. Where this child is: keyboard order: Tab reaches the graph's nodes one by one, in the order of the table's rows (domain, then skill), each with a visible focus ring and each opening that skill; no node is reachable by pointer only, and every node's link target is at least 44 × 44 px
+31. Where this child is: on a phone (400 px) the graph is not drawn: the list of skills shows each skill's name, times seen and its state chip (icon + word), each row a link of at least 44 px height, in the same order as the table
+32. the activity's name: a drafted part carries the 'drafted' badge until Keep, Edit or Send back; an educator sees the badge but not the three buttons
+33. the activity's name: every edit writes a curriculum_edit row with who
+34. the activity's name: a photo attaches to the activity, never to a child
+35. the objective's title: no number, percentage or state is shown for the objective itself (DOM scan)
+36. the skill's name: a prerequisite or next skill is shown only when its link is confirmed (a proposed link in the fixture does not appear)
+37. the skill's name: the spark's last value equals the grid's secure count
+38. the skill's name: the grid's squares equal the class's enrolment in Sr. No. order
 
 ### Out of scope
 

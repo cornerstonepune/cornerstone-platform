@@ -60,24 +60,34 @@ Where this specification and `docs/ux-rules.md` disagree, this specification win
 10. Desktop first at 1440 px. Every screen is smoke-tested at 400 px (it renders, no console error, no sideways scroll of the
     page). The screens designed for a phone are Record, Confirm, Period, Today (educator) and Sign in; only they carry the
     full 400 px gate (`phone_gate` in `screens.json`: 44 px targets, keyboard, empty states). A table scrolls sideways in its
-    own box and is not redrawn as cards. A phone class grid has six columns of 44 px squares.
+    own box and is not redrawn as cards. On a phone the four doors are a bottom tab bar; a class grid has three columns (a
+    name and a state word do not fit a 44 px square); the child graph becomes a list of skills.
 
 ## 3. The system
 
-**Tokens** (`tokens.json`; `tokens.css` generated from it, nothing retyped): ground white `#ffffff`; surface `#f7f7f5`; ink
-`#1c1b19`; ink-muted `#5e5a52`; line `#e4e3df`; line-control `#8a8984`; brand clay `#b8562f` (the mark, the active group's
-underline, the trail's accent; never on a child, never a state); basalt `#26241f` (the one main action: a filled button with
-white text); monsoon `#3f4d55` (links, always underlined, and Numeracy); olive `#4a5435` ok; the wait amber `#6f5900`
-(bamboo `#9a7a3a` is a brand material only and appears on no screen); bark `#8a6a45`; haldi `#e2a43f` (the source of the
-Arts hue only: about 2.2:1 on white, so never a border or text; the Arts edge is the deepened `#b8700a`); a part that needs
-a person is outlined in the wait amber; sand `#ede3d3`. States: ok / wait / late / quiet with `-bg` fills. Subjects from
-the materials: Numeracy monsoon, Language bark, Arts haldi, fixed sand; the Language edge, the Arts edge, the wait amber and
-the late red are at least 20 apart pairwise (CIE76, light; my arithmetic, which UI-14's script must confirm), and a subject
-is always shown with its word. Three hues are never confused: links are blue-grey and underlined; work states are red, amber,
-green and grey with their words; the main action is the one dark button. Dark follows the system; every pair has a dark
-value in `tokens.json`, and dark is tested on the journeys and the block gallery only, light everywhere else. The contrast
-table in `docs/design-tokens.md` was measured on paper-warm; UI-14 re-measures every pair on white and commits the new
-table.
+**The look** (decided by Nimish, 9 Nov 2026, from the clickable draft "Cornerstone look draft", variant B: "Whatever is
+coming out in the B rich, that's the one I want"): white, colourful and calm at once. One colour means one thing, and the
+colour families never overlap in meaning:
+
+- **Work states** (red, amber, green, grey), only ever with their icon and word: late `#b42318`, wait `#8a4b00`, ok
+  `#17663b`, quiet `#52525b`, each with a tint for its chip, tile or square. Red is for work, never for a child.
+- **Kinds of thing** (seven, each with its icon in a KindTile, on card headers, rail links and timeline entries): period
+  and fortnight slate `#475569`, child teal `#0f766e`, activity indigo `#4338ca`, objective violet `#7e22ce`, skill orchid
+  `#a21caf`, assessment and paper sky `#0369a1`, note and material stone `#6b5e50`. None is red, amber or green.
+- **Subjects**, always with their icon and word: Numeracy blue `#1d5f8f`, Language brown `#87402f`, Arts gold `#c27c0e`
+  (its icon and word `#8a5a00`), the fixed parts of the day sand.
+- **Everything else** is neutral: ground white `#ffffff`, surface `#f5f6f8`, ink `#18181b`, ink-muted `#5b5b66`, line
+  `#e7e7ec`; links blue-grey `#3a5a73`, always underlined; the one main action a dark filled button (`action` `#1f1d1a`,
+  white text); brand clay `#b8562f` only for the mark and the chosen door.
+
+The brand's materials (olive, bamboo, monsoon, bark, sand, haldi, basalt) stay in `tokens.json` as the source of these hues
+and appear on no screen themselves. Dark follows the system; every pair has a dark value. Checked by formula before this was
+written (WCAG 2 contrast and CIE76 distance, both themes): every text colour is at least 4.5:1 on its own tint and on the
+ground, every icon and edge at least 3:1, ink at least 4.5:1 on every tint; the Language edge, the Arts edge, the wait amber
+and the late red are at least 21 apart. Two fills are not apart: the Arts tint and the amber tint (about 3), the Language
+tint and the red tint (about 5), so a state chip on a tinted cell or square sits on the panel colour with a 1 px ring in
+its state colour (StatusChip). UI-14's script repeats all of it and commits the table; dark is tested on the journeys and
+the block gallery only.
 
 **Type** (decided by Nimish, 9 Nov 2026: `docs/decisions/2026-11-09-site-type-and-subject-colours.md`): Source Serif 4 for
 titles (32/24/20) and Source Sans 3 for everything else (18/16/14/12); weights 400/500/600; nothing under 14 px carries a
@@ -87,8 +97,17 @@ Nimish: Source Sans 3 has no Devanagari and nothing in Devanagari is rendered to
 is added. The fonts and every colour are in `docs/frontend/tokens.json`, which the build copies to
 `apps/web/design-system/tokens.json`.
 
-**Space and shape**: 4 / 8 / 16 / 24 / 32 / 48 / 64 px; 44 px tap; square corners everywhere except the pill of a work-state
-chip and a count badge; no shadows, no gradients; hairlines separate, a one-step surface groups.
+**Space and shape**: 4 / 8 / 16 / 24 / 32 / 48 / 64 px; 44 px tap. Three shapes, each with a meaning: a card (14 px corners:
+cards, period rows, timetable cells, a child's square, the rail box), a control (10 px: buttons, inputs, tabs, icon tiles),
+a pill (a state chip, the count badge, a name chip). One elevation, `shadow-card`, a faint ring and a soft shadow under a
+card, a period row and the chosen tab; it replaces the card's border. No other shadow, no gradient; hairlines separate rows
+inside a card, a surface box groups the rail.
+
+**Motion**: one, press. Anything pressable gives way to 0.97 in 160 ms (`cubic-bezier(0.23, 1, 0.32, 1)`); hover changes
+colour only and only on a fine pointer; nothing fades in, slides or bounces; reduced motion removes the press. The reasons
+are from the two references Nimish gave (Apple's interface guidance as summarised in `dickwu/apple-design-skill`, and
+`emilkowalski/skills`): motion is never the only carrier of meaning, and what a person does a hundred times a day is not
+animated.
 
 **Icons**: Lucide only, stroke 1.9, 16 / 20 / 24 px, one icon per concept in `lib/icons.tsx`; the map is in the design
 system's README. A screen never imports an icon by its Lucide name.
@@ -103,7 +122,7 @@ when the first slice that uses it needs it: Button and Tabs first; DataTable, St
 become AppFrame in UI-13; `voice/board` becomes ClassGrid and `voice/record` CaptureBar when their screens are built; the
 new blocks are built once with a preview and a screenshot in both themes (UI-2).
 
-**Node contract**: a node page = AppFrame + eyebrow (the kind's icon and two or three facts) + title + purpose + its blocks +
+**Node contract**: a node page = AppFrame + eyebrow (the kind's icon, in its kind colour, and two or three facts) + title + purpose + its blocks +
 its rail of edges (Connected to) + Capture here where a lesson or a child is in view. The rail lists only edges that are not
 already links in the main column, and is defined once per kind of node (a hub such as Children or Setup has none). The trail
 is two fixed levels, the door and then the thing, plus the browser's Back; the door lit on the bar is the door the walk
@@ -143,30 +162,31 @@ built.
 
 | Block | What it is |
 |---|---|
-| AppFrame | top bar (four groups, search, acting-as), trail, main column, rail (Connected to; Capture here) |
-| AttentionStrip | three tiles: do now (red) · this week (amber) · done (green); number, icon+word, one sentence; each a link |
-| PeriodRow | time · subject edge+tag · name · state chip; the row is the link |
-| StatusChip | icon + word + colour from the STATES rows; pill for work, square for a child's mark |
-| DataTable | ≤10 rows then grouped/paged; needs-you first; numbers right, status centred; cards on a phone |
+| AppFrame | top bar (four doors with their icons, search, acting-as), trail, main column, rail (Connected to; Capture here) in a surface box; on a phone the four doors are a bottom tab bar (icon above word, the chosen door filled in brand clay) |
+| AttentionStrip | three tiles filled with their state's tint: do now (red) · this week (amber) · done (green); number, icon+word, one sentence; each a link; no border, no shadow |
+| PeriodRow | time · the subject's icon tile and colour edge · name · subject and one fact · state chip; the row is the link, a panel with shadow-card; the current period carries the action outline; fixed parts of the day are a quiet sand row |
+| StatusChip | pill: icon + word + colour from the STATES rows, on its tint; on a tinted cell (a subject cell, a child's square) the chip sits on the panel colour with a 1 px ring in its state colour, because a state's fill and a subject's fill can be near each other |
+| DataTable | ≤10 rows then grouped/paged; needs-you first; numbers right, status centred; FilterBar built in at 6+ rows; on a phone it scrolls sideways in its own box; inside a card with shadow-card |
 | FilterBar | dropdowns + compact search over any table of 6+ rows; filters in the address |
-| ClassGrid | squares by Sr. No. with the child's name beside it, on one skill; secure/practising/emerging/not seen; tap = act |
+| ClassGrid | a tinted square per child by Sr. No., radius-card: Sr. No., the child's initials disc, the name, and the state's icon + word on the state's tint; not seen = an untinted square with a dashed ring; tap = act; 8 columns at 1440, 3 on a phone |
 | Stepper | the steps of a thing; done green, waiting amber, late red, rest quiet |
 | Details | a fold that opens on click, eye icon; never hides the main action |
 | Timeline | what was seen, newest last; words beside the mark; a details fold each |
-| ChildGraph | the child at the centre, skills as nodes coloured by state, sized by how often seen; each a link |
+| ChildGraph | the child's initials at the centre in the child colour; a coloured ring around it marks each domain (Number, Language, Arts); each skill is a node on the outer ring, filled with its state's tint and edged in its state colour, sized by times seen, labelled with the skill name and the state word; every node and its label form one link with a 44 px target; a DataTable of the same skills sits beside it; on a phone the graph is replaced by that list |
 | StackBar | one bar split by state with a key of counts |
 | LevelBars | four bars, levels 0–3, how many children at each |
 | Spark | one line over six fortnights with the last value labelled |
 | Trend | a child's level per sitting over dates |
 | HeatGrid | classes × days: done / moved / not done / holiday, icon + word in each cell |
-| FortnightGrid | week A and B × periods, cells coloured by subject; moved = amber outline, clash = red outline |
-| CaptureBar | Voice note · Photo; the whole screen on a phone |
+| FortnightGrid | days across, periods down; each cell is filled with its subject's tint, a 3 px top edge in the subject colour, the subject's icon and word, the activity name and a Done tick once taught; the fixed parts of the day are full-width sand bands; today's column head is filled with the action colour; the current period has the action outline; moved = a dashed amber outline plus the Moved chip; clash = a red outline plus the Clash chip |
+| CaptureBar | Voice note · Photo, two buttons on the panel colour with the note colour's icon; the whole screen on a phone |
 | DropZone | choose scans or drop them; or a Drive link |
 | PageImage | the child's page as photographed, QR corner; the one picture of a child allowed on any screen (photos of children are otherwise not decided: none) |
 | EmptyState | nothing to show, with the next step |
 | Form | a short form of labelled fields; one main button |
 | KeyValue | facts as label: value pairs, five lines at most |
-| Cards | two to three bordered blocks side by side, each with a title, a few lines and one link |
+| Cards | two to three panels side by side, each with a header tinted in its kind's colour (kind tile + title) and a few lines and one link |
+| KindTile | a 32 px tile, radius-control, filled with a kind's tint and holding that kind's icon in its colour (period slate, child teal, activity indigo, objective violet, skill orchid, assessment sky, note stone); every rail link, card header and timeline entry starts with one |
 
 ## 6. Every screen
 
@@ -584,16 +604,16 @@ Done when (on top of the ten generic checks):
 #### Where this child is `/children/[class]/[roll]`
 Who: both · Phase: Core · Backend: CP-13 · CP-14 · Old page today: part (/k2/[class]/[roll], /growth/[id]) · Slice: UI-3
 Eyebrow: K2 Red · Sr. No. 12 · the child's name
-Purpose: The left is the shape: each skill seen, coloured by state, sized by how often. The right is every observation behind it, the educator's own words beside the mark.
+Purpose: Each skill this child was seen on, coloured by how secure it is and sized by how often. Every mark opens the note or paper behind it.
 Blocks, in order:
-- **ChildGraph**: skills as nodes; notes and papers both feed it
+- **ChildGraph**: the ChildGraph: the child at the centre, a ring per domain, a node per skill seen (state tint, state word, size by times seen); notes and papers both feed it
 - **Trend**: level per sitting on the skill chosen
 - **Timeline**: every observation and paper result, newest last; details: observed by (role), confirmed by, clocks, route, counts toward secure?
 - **DataTable**: skill · state · named days · last seen · ready next (CP-14, confirmed links only)
 Rail (Connected to): each skill · Back to the class · Add a note about this child · Reports (Next) · Capture here: voice, photo
 Main action: Add a note · Next step: the class
 Data: child_observed_state + child_skill_state; activity_observation (+note words); evidence_event / item_result for papers; skill_link_confirmed
-Empty: Not seen yet on any skill: the graph is the child alone with 'not seen yet' · Phone: graph, then timeline; table last
+Empty: Not seen yet on any skill: the graph is the child alone with 'not seen yet' · Phone: the graph is replaced by the list of skills (name, times seen, state chip), then the trend, then the timeline
 Folds in: /growth/[id], /k2/[class]/[roll]
 Every control on the screen (14), and what the test does with each:
 - **child_name** the page header (the child's name beside the Sr. No. in the eyebrow and the trail)
@@ -615,6 +635,9 @@ Done when (on top of the ten generic checks):
 - a correction shows as a new entry that names the entry it replaces
 - the header shows the child's name beside the Sr. No., read from pii by child_id; the address is by Sr. No. and carries no name; no photo (DOM scan)
 - the graph's node count equals the skills the child was seen on, and each node's state equals the table's
+- a table equivalent sits beside the graph: the DataTable lists the same skills with the same state words and times seen, the graph's SVG has role=img and an aria-label that names the counts by state, and axe reports no violation on it
+- keyboard order: Tab reaches the graph's nodes one by one, in the order of the table's rows (domain, then skill), each with a visible focus ring and each opening that skill; no node is reachable by pointer only, and every node's link target is at least 44 × 44 px
+- on a phone (400 px) the graph is not drawn: the list of skills shows each skill's name, times seen and its state chip (icon + word), each row a link of at least 44 px height, in the same order as the table
 
 
 #### Assessments `/children/assessments`
@@ -1041,6 +1064,7 @@ Every control on the screen (1), and what the test does with each:
 Done when (on top of the ten generic checks):
 - there is one fold per entry of `blocks`, and a block with no sample fails the test
 - the page is absent for an educator and linked only from Setup's details link
+- its first section is the legend: every state with its icon, word and colour, every action with its tile, every kind of thing with its tile, the subjects and the shapes, all read from STATES and tokens.json, nothing typed
 
 
 ### Outside the bar
@@ -1126,7 +1150,7 @@ test or a script named in it. The generic checks apply to every screen a slice b
 
 The bar is on every signed-in screen and is driven once per run, not once per screen (its controls are outside each screen's count):
 
-- **link** Today → Today (`/today`) (a coordinator lands on Today, the school)
+- **link** Today → Today (`/today`) (a coordinator lands on Today, the school; on a phone the four doors are a bottom tab bar, the same four links)
 - **link** Timetable → Timetable (`/timetable`)
 - **link** Children → Children (`/children`)
 - **link** Setup → Setup (`/setup`) (shown to the coordinator group only)
@@ -1154,7 +1178,7 @@ What the test does with each kind of control:
 | Slice | What | Screens | Waits for |
 |---|---|---|---|
 | UI-1 The test harness | Only what the Athena loop demands before any interface change can be marked built (`athena finish` is refused repo-wide without it): the axe dependency, the journey harness and one passing journey spec, and shadcn/ui initialised with the two primitives used first. No page changes in this slice. | none (infrastructure) | nothing |
-| UI-14 Tokens, fonts and the existing parts on them | One source of colour, type and space for the whole site. tokens.css is generated from tokens.json; every colour literal in the app is replaced by a token, including in the blocks that exist today (StatusChip, DataTable, FilterBar, EmptyState, Count) and in the shadcn files from UI-1; the fonts are self-hosted. No page changes shape in this slice. | none (infrastructure) | UI-1 |
+| UI-14 Tokens, fonts and the existing parts on them | One source of colour, type, shape, elevation and motion for the whole site, in the look Nimish chose on 9 Nov 2026 (the rich draft, B). tokens.css is generated from tokens.json; every colour literal in the app is replaced by a token, including in the blocks that exist today (StatusChip, DataTable, FilterBar, EmptyState, Count) and in the shadcn files from UI-1; the fonts are self-hosted. No page changes shape in this slice. | none (infrastructure) | UI-1 |
 | UI-13 The frame and the inventory test | One navigation for the whole site: the top bar with its four doors, search, acting-as, help and sign out, the trail and the rail (AppFrame), replacing the four shells and the K2 side menu; every existing page reachable from the bar; docs/ux-rules.md brought in line; and the inventory test that reads screens.json and drives every screen like a person, proved here on a small inventory of pages that already exist. | none (infrastructure) | UI-14 |
 | UI-2 The blocks | The school's new blocks of SPEC §5, built once, each with sample data on a staff-only gallery screen (`blocks`) and screenshots in both themes; every chart drawn to scale from its data. AppFrame is built in UI-13 and the existing blocks moved onto the tokens in UI-1. | The blocks | UI-13 |
 | UI-3 Node pages: the K2 walk | Period, record, confirm, notes, children, class picture, child, activity, objective and skill as node pages on the blocks, each walking to its neighbours through the rail and back through the trail; the old routes redirect. | the session's name, Record a note, Confirm what the reader heard, Notes, Children, Class picture, Where this child is, the activity's name, the objective's title, the skill's name | UI-2; the K2 switch (a config row) on for the pages behind it |

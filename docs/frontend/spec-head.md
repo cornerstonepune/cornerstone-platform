@@ -60,24 +60,34 @@ Where this specification and `docs/ux-rules.md` disagree, this specification win
 10. Desktop first at 1440 px. Every screen is smoke-tested at 400 px (it renders, no console error, no sideways scroll of the
     page). The screens designed for a phone are Record, Confirm, Period, Today (educator) and Sign in; only they carry the
     full 400 px gate (`phone_gate` in `screens.json`: 44 px targets, keyboard, empty states). A table scrolls sideways in its
-    own box and is not redrawn as cards. A phone class grid has six columns of 44 px squares.
+    own box and is not redrawn as cards. On a phone the four doors are a bottom tab bar; a class grid has three columns (a
+    name and a state word do not fit a 44 px square); the child graph becomes a list of skills.
 
 ## 3. The system
 
-**Tokens** (`tokens.json`; `tokens.css` generated from it, nothing retyped): ground white `#ffffff`; surface `#f7f7f5`; ink
-`#1c1b19`; ink-muted `#5e5a52`; line `#e4e3df`; line-control `#8a8984`; brand clay `#b8562f` (the mark, the active group's
-underline, the trail's accent; never on a child, never a state); basalt `#26241f` (the one main action: a filled button with
-white text); monsoon `#3f4d55` (links, always underlined, and Numeracy); olive `#4a5435` ok; the wait amber `#6f5900`
-(bamboo `#9a7a3a` is a brand material only and appears on no screen); bark `#8a6a45`; haldi `#e2a43f` (the source of the
-Arts hue only: about 2.2:1 on white, so never a border or text; the Arts edge is the deepened `#b8700a`); a part that needs
-a person is outlined in the wait amber; sand `#ede3d3`. States: ok / wait / late / quiet with `-bg` fills. Subjects from
-the materials: Numeracy monsoon, Language bark, Arts haldi, fixed sand; the Language edge, the Arts edge, the wait amber and
-the late red are at least 20 apart pairwise (CIE76, light; my arithmetic, which UI-14's script must confirm), and a subject
-is always shown with its word. Three hues are never confused: links are blue-grey and underlined; work states are red, amber,
-green and grey with their words; the main action is the one dark button. Dark follows the system; every pair has a dark
-value in `tokens.json`, and dark is tested on the journeys and the block gallery only, light everywhere else. The contrast
-table in `docs/design-tokens.md` was measured on paper-warm; UI-14 re-measures every pair on white and commits the new
-table.
+**The look** (decided by Nimish, 9 Nov 2026, from the clickable draft "Cornerstone look draft", variant B: "Whatever is
+coming out in the B rich, that's the one I want"): white, colourful and calm at once. One colour means one thing, and the
+colour families never overlap in meaning:
+
+- **Work states** (red, amber, green, grey), only ever with their icon and word: late `#b42318`, wait `#8a4b00`, ok
+  `#17663b`, quiet `#52525b`, each with a tint for its chip, tile or square. Red is for work, never for a child.
+- **Kinds of thing** (seven, each with its icon in a KindTile, on card headers, rail links and timeline entries): period
+  and fortnight slate `#475569`, child teal `#0f766e`, activity indigo `#4338ca`, objective violet `#7e22ce`, skill orchid
+  `#a21caf`, assessment and paper sky `#0369a1`, note and material stone `#6b5e50`. None is red, amber or green.
+- **Subjects**, always with their icon and word: Numeracy blue `#1d5f8f`, Language brown `#87402f`, Arts gold `#c27c0e`
+  (its icon and word `#8a5a00`), the fixed parts of the day sand.
+- **Everything else** is neutral: ground white `#ffffff`, surface `#f5f6f8`, ink `#18181b`, ink-muted `#5b5b66`, line
+  `#e7e7ec`; links blue-grey `#3a5a73`, always underlined; the one main action a dark filled button (`action` `#1f1d1a`,
+  white text); brand clay `#b8562f` only for the mark and the chosen door.
+
+The brand's materials (olive, bamboo, monsoon, bark, sand, haldi, basalt) stay in `tokens.json` as the source of these hues
+and appear on no screen themselves. Dark follows the system; every pair has a dark value. Checked by formula before this was
+written (WCAG 2 contrast and CIE76 distance, both themes): every text colour is at least 4.5:1 on its own tint and on the
+ground, every icon and edge at least 3:1, ink at least 4.5:1 on every tint; the Language edge, the Arts edge, the wait amber
+and the late red are at least 21 apart. Two fills are not apart: the Arts tint and the amber tint (about 3), the Language
+tint and the red tint (about 5), so a state chip on a tinted cell or square sits on the panel colour with a 1 px ring in
+its state colour (StatusChip). UI-14's script repeats all of it and commits the table; dark is tested on the journeys and
+the block gallery only.
 
 **Type** (decided by Nimish, 9 Nov 2026: `docs/decisions/2026-11-09-site-type-and-subject-colours.md`): Source Serif 4 for
 titles (32/24/20) and Source Sans 3 for everything else (18/16/14/12); weights 400/500/600; nothing under 14 px carries a
@@ -87,8 +97,17 @@ Nimish: Source Sans 3 has no Devanagari and nothing in Devanagari is rendered to
 is added. The fonts and every colour are in `docs/frontend/tokens.json`, which the build copies to
 `apps/web/design-system/tokens.json`.
 
-**Space and shape**: 4 / 8 / 16 / 24 / 32 / 48 / 64 px; 44 px tap; square corners everywhere except the pill of a work-state
-chip and a count badge; no shadows, no gradients; hairlines separate, a one-step surface groups.
+**Space and shape**: 4 / 8 / 16 / 24 / 32 / 48 / 64 px; 44 px tap. Three shapes, each with a meaning: a card (14 px corners:
+cards, period rows, timetable cells, a child's square, the rail box), a control (10 px: buttons, inputs, tabs, icon tiles),
+a pill (a state chip, the count badge, a name chip). One elevation, `shadow-card`, a faint ring and a soft shadow under a
+card, a period row and the chosen tab; it replaces the card's border. No other shadow, no gradient; hairlines separate rows
+inside a card, a surface box groups the rail.
+
+**Motion**: one, press. Anything pressable gives way to 0.97 in 160 ms (`cubic-bezier(0.23, 1, 0.32, 1)`); hover changes
+colour only and only on a fine pointer; nothing fades in, slides or bounces; reduced motion removes the press. The reasons
+are from the two references Nimish gave (Apple's interface guidance as summarised in `dickwu/apple-design-skill`, and
+`emilkowalski/skills`): motion is never the only carrier of meaning, and what a person does a hundred times a day is not
+animated.
 
 **Icons**: Lucide only, stroke 1.9, 16 / 20 / 24 px, one icon per concept in `lib/icons.tsx`; the map is in the design
 system's README. A screen never imports an icon by its Lucide name.
@@ -103,7 +122,7 @@ when the first slice that uses it needs it: Button and Tabs first; DataTable, St
 become AppFrame in UI-13; `voice/board` becomes ClassGrid and `voice/record` CaptureBar when their screens are built; the
 new blocks are built once with a preview and a screenshot in both themes (UI-2).
 
-**Node contract**: a node page = AppFrame + eyebrow (the kind's icon and two or three facts) + title + purpose + its blocks +
+**Node contract**: a node page = AppFrame + eyebrow (the kind's icon, in its kind colour, and two or three facts) + title + purpose + its blocks +
 its rail of edges (Connected to) + Capture here where a lesson or a child is in view. The rail lists only edges that are not
 already links in the main column, and is defined once per kind of node (a hub such as Children or Setup has none). The trail
 is two fixed levels, the door and then the thing, plus the browser's Back; the door lit on the bar is the door the walk
