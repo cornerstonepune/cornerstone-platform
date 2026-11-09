@@ -1,3 +1,0 @@
-fast-checks-gate [project]: Use when fast checks or the done-gate block finishing.
-reconcile-done-when [project]: Use when checking a roadmap task against its done-when.
-verify-before-done [project]: Use when calling work done or checking a task's done-when.
