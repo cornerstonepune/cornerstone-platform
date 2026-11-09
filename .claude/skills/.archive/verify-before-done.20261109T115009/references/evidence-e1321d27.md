@@ -1,0 +1,1 @@
+Note text written: "- Watch: on a Mac with TEST_DATABASE_URL in the environment, every stop now builds a database (time not measured there; in the cloud the --db proofs took about 25 s each)." Then after timing: "exit 0 in 45 s" and the agent's line "That note states a time I haven't measured, so I'm timing `bin/check --db` now."
