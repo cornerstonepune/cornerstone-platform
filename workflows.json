@@ -49,7 +49,7 @@
       "who": "Jev proposes, the educator confirms",
       "built": "partly",
       "takes": ["the educator's note"],
-      "gives": ["the week's skill sets"],
+      "gives": ["the week's skill sets", "fortnight_cycle", "fortnight_edit"],
       "files": ["engine/w2_print/week_note.py", "engine/w2_print/k2_timetable.py", "engine/w2_print/materials_list.py", "engine/w2_print/materials_reminders.py", "engine/w2_print/materials_remind.py", "engine/w2_print/materials_send.py", "engine/w2_print/materials_text.py", "engine/w2_print/cli_materials.py", "engine/w2_print/materials_consolidate.py", "engine/w2_print/materials_intake.py", "engine/w2_print/materials_inventory.py", "engine/w2_print/materials_read_eval.py", "engine/w2_print/materials_month.py", "engine/w2_print/materials_cost.py", "engine/w2_print/materials_coverage.py", "engine/w2_print/materials_review.py", "engine/w2_print/k2_timetable_load.py", "engine/w2_print/k2_timetable_sql.py", "engine/w2_print/k2_day.py", "engine/w2_print/educator_gate.py", "engine/w2_print/tt_rules.py", "engine/w2_print/cli_timetable.py", "engine/w2_print/fortnight_cycle.py"],
       "commands": ["engine eval", "engine reminders", "engine timetable load", "engine materials month", "engine materials cost"],
       "screens": ["/make/[section]/week", "/timetable/rules", "/educator", "/educator/week", "/educator/period/[id]", "/educator/activity/[code]", "/educator/materials", "/educator/materials/school", "/educator/materials/review"],

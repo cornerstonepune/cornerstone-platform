@@ -4,8 +4,10 @@
 --   * `fortnight_edit`: the history. One row per state change, and one row per change made in a fortnight that is no
 --     longer planning (with the reason that was given).
 --   * four settings per school, `fortnight.freeze|align|approve|list_sent`: how many days before the fortnight starts
---     each step falls. The numbers below are PLACEHOLDERS: the roadmap's real dates are not in this repository. A school
---     changes them by updating the row.
+--     each step falls. The defaults are D-072 (teacher-os blueprint/decisions.md, Nimish 4 Nov), converted to days before
+--     the fortnight starts: for a month starting on the 1st, frozen by the 12th, aligned by the 15th, approved by the
+--     18th and the list out by the 21st of the month before, which is 19, 16, 13 and 10 days before a 30-day month
+--     starts. A school changes them by updating the row.
 -- The engine enforces the order and the freeze (no triggers on the two tables); the only trigger here gives a school
 -- added later its four settings. Hand-run SQL is not stopped.
 -- Additive and written to run twice.
@@ -46,17 +48,17 @@ create table if not exists fortnight_edit (
 );
 create index if not exists fortnight_edit_fortnight_idx on fortnight_edit (fortnight_id, created_at);
 
--- Placeholder step dates (days before the fortnight starts), one row each per school. Not Nimish's real dates.
+-- Default step dates (days before the fortnight starts), one row each per school: D-072, converted (see the top).
 create or replace function internal.fortnight_settings(p_tenant uuid) returns void
 language plpgsql security definer set search_path = public, pg_temp as $$
 begin
   insert into config (tenant_id, key, value, description)
   select p_tenant, s.key, jsonb_build_object('days_before_start', s.days), s.description
   from (values
-    ('fortnight.freeze',    14, 'Days before a fortnight starts when its plan and timetable freeze (a placeholder until the roadmap''s date is set).'),
-    ('fortnight.align',     10, 'Days before a fortnight starts when the plan is aligned (a placeholder until the roadmap''s date is set).'),
-    ('fortnight.approve',    7, 'Days before a fortnight starts when the plan is approved (a placeholder until the roadmap''s date is set).'),
-    ('fortnight.list_sent',  3, 'Days before a fortnight starts when the materials list is sent (a placeholder until the roadmap''s date is set).')
+    ('fortnight.freeze',    19, 'Days before a fortnight starts when its plan and timetable freeze (D-072, converted to days before the fortnight starts).'),
+    ('fortnight.align',     16, 'Days before a fortnight starts when the plan is aligned (D-072, converted to days before the fortnight starts).'),
+    ('fortnight.approve',   13, 'Days before a fortnight starts when the plan is approved (D-072, converted to days before the fortnight starts).'),
+    ('fortnight.list_sent', 10, 'Days before a fortnight starts when the materials list is sent (D-072, converted to days before the fortnight starts).')
   ) as s(key, days, description)
   on conflict (tenant_id, key) do nothing;
 end $$;
