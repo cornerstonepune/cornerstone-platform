@@ -49,7 +49,7 @@ def test_loading_the_schools_sheet_again_refuses_a_live_fortnight(conn, engine, 
     staff = conn.execute("insert into staff (tenant_id, campus_id) values (%s, %s) returning id",
                          (t, campus)).fetchone()["id"]
     run = ins(conn, "timetable_run", tenant_id=t, school_class_id=klass, fortnight_id=fn, outcome="placed",
-              input_text="proof", draft="[]")
+              input_text="proof", draft="[]", solve_seconds=1)
     ins(conn, "timetable_live", tenant_id=t, school_class_id=klass, fortnight_id=fn, run_id=run, state_hash="proof",
         discarded=False, who=staff)
     gone = conn.execute(
