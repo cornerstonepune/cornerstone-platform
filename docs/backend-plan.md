@@ -33,14 +33,14 @@ Rules that keep us inside Core (Nimish, 9 Nov 2026):
    restricted login"). Switching it on is Nimish's step, later.
 3. **Lean first.** A scope is built in its simplest working form. A heavier form (database-enforced approvals,
    clash triggers, never-lose guarantees, anything that guards against a risk the school does not have yet) is added
-   when it is needed. CP-6, CP-7, CP-12 and CP-21 are being reduced to their simplest working versions; a reduced
+   when it is needed. CP-6, CP-7, CP-12 and CP-22 are being reduced to their simplest working versions; a reduced
    scope replaces its long version only after Nimish types `UNLOCK <ID>` for it.
 4. **Build in parallel, merge one at a time.** Up to three builds at once, each on its own branch from main.
    Merges stay one at a time, each on the verifier's PASS and real tests green.
 5. **No new scope joins Core without Nimish.** Adding, splitting or dropping a scope is a change to this file in a
    pull request Nimish approves, never a quiet edit.
 
-**Full backend done = CP-1 to CP-19 and CP-21 all finished, the nightly run green, every LIVE proof passing.**
+**Full backend done = CP-1 to CP-19 and CP-22 all finished, the nightly run green, every LIVE proof passing.**
 
 ## The scopes
 
@@ -61,7 +61,7 @@ shipped. One database change at a time (shared contracts, one task at a time).
 | CP-9 | Observations become evidence for real, through the typed form: nightly rebuild, correction, "unplanned" computed | CP-4 | M1-01..04a | 2 | Core |
 | CP-10 | Voice on: Sarvam retention recorded as a setting, 48-hour clean-up of our raw copies scheduled, 20 real notes confirmed | CP-9 | M1-01 | 2 | Core |
 | CP-11 | Timetable generator: a draft from the rules via FET, one command, unmeetable rules reported, FET proved on the box | none | M1-14 | 3 | Core |
-| CP-12 | Timetable by hand: moves kept with who, clashes detected and accepted (the same-adult check comes with grades 1-4) | CP-21 | M1-14 | 3 | Core |
+| CP-12 | Timetable by hand: moves kept with who, clashes detected and accepted (the same-adult check comes with grades 1-4) | CP-22 | M1-14 | 3 | Core |
 | CP-13 | Child level rule: a repeating mistake clears, one adult counts once, minimum adults per grade | CP-4 | M0-07 | 3 | Core |
 | CP-14 | Skill links a person confirmed, and "ready next" per activity | CP-13 | M1-15, M1-17 | 3 | Next |
 | CP-15 | Curriculum complete: agreed page format, no empty part on any K2 activity, every draft checked | page format | M1-11 | 4 | Later |
@@ -69,7 +69,7 @@ shipped. One database change at a time (shared contracts, one task at a time).
 | CP-17 | Inventory: stock and issue records, rupee threshold, educator approval of the month's list | CP-6 | M1-13 | 4 | Later |
 | CP-18 | Materials: reading prompt scored and on, sends recorded, reminders delivered | CP-17 | M1-10, M1-16 | 4 | Later |
 | CP-19 | Reports and the coordinator's list: per-line two approvals, consent before any send, counts that match the database | CP-4, CP-9 | M1-07, M1-08 | 4 | Next |
-| CP-21 | A timetable draft goes live: the fortnight by date, sessions updated in place, freeze respected, hand moves never wiped unrecorded (split out of CP-12, 8 Nov) | CP-11, CP-6 | M1-14 | 3 | Core |
+| CP-22 | A timetable draft goes live: the fortnight by date, sessions updated in place, freeze respected, hand moves never wiped unrecorded (split out of CP-12, 8 Nov; numbered CP-21 until 9 Nov, renumbered because CP-21 is the CI-speed scope, #493) | CP-11, CP-6 | M1-14 | 3 | Core |
 
 Interface work (screens, buttons, menus) is not in these scopes. It waits for the frontend revamp and is listed in the
 reconciliation page for reference.
@@ -86,6 +86,6 @@ chased in parallel. It is not a reason to wait.
 
 Decided by Nimish on 8 Nov 2026 and no longer open: load all 7 staff (CP-1); access is three simple groups, kept as
 rows so it can change (CP-3, CP-4); the FET install was merged by him (CP-11); the timetable work is split into CP-11
-(a draft), CP-21 (a draft goes live) and CP-12 (by hand), in that order; a hand move changes only its own fortnight and
+(a draft), CP-22 (a draft goes live) and CP-12 (by hand), in that order; a hand move changes only its own fortnight and
 only the coordinator group accepts a clash (CP-12); nursery to K2 have one educator for all lessons, so the same-adult
-check is not needed now and comes with grades 1-4, where subject educators teach (CP-11, CP-21, CP-12 keep room for it).
+check is not needed now and comes with grades 1-4, where subject educators teach (CP-11, CP-22, CP-12 keep room for it).
