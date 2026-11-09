@@ -1,0 +1,1 @@
+psql:/tmp/t0.sql:2: ERROR:  new row for relation "sheet_template" violates check constraint "sheet_template_library_has_a_code" ... FAILED tests/test_rules.py::test_the_watcher_names_a_rule_live_holds_otherwise ... `846 rules written to rules.json` ... rtk psql $U/postgres -qc "create database z$n template fresh1"
