@@ -58,10 +58,10 @@ export const STATES = {
 export type State = keyof typeof STATES;
 export type Tone = (typeof STATES)[State]["tone"];
 
-const GREEN = "text-neem bg-neem/12 border-neem/30";
-const AMBER = "text-mud bg-bamboo/22 border-bamboo/45";
-const RED = "text-terracotta bg-terracotta/12 border-terracotta/35";
-const GREY = "text-monsoon bg-monsoon/12 border-monsoon/30";
+const GREEN = "text-[var(--state-ok)] bg-[var(--state-ok-bg)] border-[var(--state-ok)]";
+const AMBER = "text-[var(--state-wait)] bg-[var(--state-wait-bg)] border-[var(--state-wait)]";
+const RED = "text-[var(--state-late)] bg-[var(--state-late-bg)] border-[var(--state-late)]";
+const GREY = "text-[var(--state-quiet)] bg-[var(--state-quiet-bg)] border-[var(--state-quiet)]";
 export const TONE_CLASS: Record<Tone, string> = { ok: GREEN, wait: AMBER, act: RED, quiet: GREY };
 
 // A different shape for each tone, so a chip reads without its colour: a tick, a clock, a triangle with a mark, a ring.

@@ -59,7 +59,7 @@ test.describe("drawn on a real page", () => {
     const [mark, token] = await page.evaluate(() => {
       const m = document.querySelector("[data-card=thinking] mark")!;
       const probe = document.createElement("div");
-      probe.style.background = "var(--state-soon-bg)";
+      probe.style.background = "var(--state-wait-bg)";
       document.body.append(probe);
       return [getComputedStyle(m).backgroundColor, getComputedStyle(probe).backgroundColor];
     });

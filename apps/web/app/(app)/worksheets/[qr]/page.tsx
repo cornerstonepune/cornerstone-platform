@@ -65,7 +65,7 @@ export default async function PaperPage({ params }: Props) {
                   <img
                     src={`/api/paper/${p.qr_code}/${i + 1}`}
                     alt={`Page ${i + 1} of paper ${p.qr_code}, as printed`}
-                    className="w-full border border-basalt/14 bg-white"
+                    className="w-full border border-basalt/14 bg-chalk"
                   />
                 </figure>
               ))

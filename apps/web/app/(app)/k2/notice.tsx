@@ -5,8 +5,8 @@ export function Notice({ children, flush }: { children: React.ReactNode; flush?:
     <p
       role="status"
       data-ux="empty"
-      className={`${flush ? "" : "mb-[var(--space-3)] "}rounded-[var(--radius-m)] border p-[var(--space-3)] text-[length:var(--text-body)]`}
-      style={{ color: "var(--chip-soon-fg)", background: "var(--chip-soon-bg)", borderColor: "var(--chip-soon-bd)" }}
+      className={`${flush ? "" : "mb-[var(--space-3)] "}rounded-[var(--radius-control)] border p-[var(--space-3)] text-[length:var(--text-body)]`}
+      style={{ color: "var(--state-quiet)", background: "var(--state-quiet-bg)", borderColor: "var(--state-quiet)" }}
     >
       {children}
     </p>

@@ -31,7 +31,7 @@ export function ShellNav({ as, items, label }: { as: "side" | "tabs"; items: Men
                 href={`${i.path}${keep()}`}
                 aria-current={on(i) ? "page" : undefined}
                 data-nav={i.key}
-                className={`flex min-h-[var(--tap)] items-center gap-[var(--space-2)] rounded-[var(--radius-m)] px-[var(--space-2)] font-medium no-underline ${on(i) ? "bg-[var(--chip-donow-bg)] text-[var(--chip-donow-fg)]" : "text-[var(--text)] hover:bg-[var(--border)]/45"}`}
+                className={`flex min-h-[var(--tap)] items-center gap-[var(--space-2)] rounded-[var(--radius-control)] px-[var(--space-2)] font-medium no-underline ${on(i) ? "bg-[var(--action)] text-[var(--action-ink)]" : "text-[var(--ink)] hover:bg-[var(--line)]/45"}`}
               >
                 <Icon name={i.icon} />
                 {i.label}
@@ -43,7 +43,7 @@ export function ShellNav({ as, items, label }: { as: "side" | "tabs"; items: Men
                       <Link
                         href={`${s.path}${keep(s.extra)}`}
                         data-nav={`${i.key}-${s.key}`}
-                        className="flex min-h-[var(--tap)] items-center text-[length:var(--text-label)] text-[var(--text-muted)] no-underline hover:text-[var(--text)]"
+                        className="flex min-h-[var(--tap)] items-center text-[length:var(--text-label)] text-[var(--ink-muted)] no-underline hover:text-[var(--ink)]"
                       >
                         {s.label}
                       </Link>
@@ -59,7 +59,7 @@ export function ShellNav({ as, items, label }: { as: "side" | "tabs"; items: Men
   return (
     <nav
       aria-label={label}
-      className="fixed inset-x-0 bottom-0 z-40 border-t border-[var(--border)] bg-[var(--surface)] pb-[env(safe-area-inset-bottom)] md:hidden"
+      className="fixed inset-x-0 bottom-0 z-40 border-t border-[var(--line)] bg-[var(--panel)] pb-[env(safe-area-inset-bottom)] md:hidden"
       data-educator-nav="tabs"
     >
       <ul className="grid grid-flow-col auto-cols-fr">
@@ -69,7 +69,7 @@ export function ShellNav({ as, items, label }: { as: "side" | "tabs"; items: Men
               href={`${i.path}${keep()}`}
               aria-current={on(i) ? "page" : undefined}
               data-tab={i.key}
-              className={`flex min-h-[var(--space-7)] flex-col items-center justify-center gap-[var(--space-1)] text-[length:var(--text-label)] font-medium no-underline ${on(i) ? "text-[var(--text)]" : "text-[var(--text-muted)]"}`}
+              className={`flex min-h-[var(--space-7)] flex-col items-center justify-center gap-[var(--space-1)] text-[length:var(--text-label)] font-medium no-underline ${on(i) ? "text-[var(--ink)]" : "text-[var(--ink-muted)]"}`}
             >
               <Icon name={i.icon} />
               {i.label}

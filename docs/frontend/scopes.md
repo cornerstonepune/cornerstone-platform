@@ -141,7 +141,7 @@ Period, record, confirm, notes, children, class picture, child, activity, object
 3. The journey `e2e/an-educators-tuesday.spec.ts` passes: Today → the lit period → Type the marks → a note written with one activity_observation per named child and none for a child not mentioned → Confirm → Class picture shows the change → the child → the skill → trail back to Today; axe at each step; at 1440 and 400.
 4. A correction from Notes writes a superseding activity_observation row and never updates the old one (database assertion).
 5. The period → note link: a note confirmed from a period carries that session's id, and the period page lists its notes. This line waits for CP-25 (to be scoped: `activity_observation.session_id` is free today); the slice starts and merges without it, and the line is proved when CP-25 lands.
-6. Every one of the 101 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
+6. Every one of the 109 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
 7. the session's name: a period with no activity shows no capture controls and the words 'Nothing to record here'
 8. the session's name: the last-time bar's segments sum to the number of children named in the last session's observations
 9. the session's name: the steps fold is open on load and the others closed
@@ -155,25 +155,30 @@ Period, record, confirm, notes, children, class picture, child, activity, object
 17. Notes: a correction writes a superseding row with a reason and never updates the old one
 18. Notes: the coordinator sees every class, an educator their own (access fixture)
 19. Notes: a note left unconfirmed past 48 hours carries the red 'late' chip and sorts first
-20. Children: an educator with one class is taken straight to its picture; with several, picks; the coordinator picks from every class
-21. Class picture: an empty square's title reads 'not seen yet', never 'not secure'
-22. Class picture: each square shows the Sr. No. and the child's name read from pii by child_id, and no photo (DOM scan)
-23. Class picture: the stack bar's counts equal the squares by state
-24. Class picture: the squares are in Sr. No. order, 10 per row at 1440, 8 at 400
-25. Where this child is: a paper's result and a voice note appear on one timeline in date order
-26. Where this child is: a correction shows as a new entry that names the entry it replaces
-27. Where this child is: the header shows the child's name beside the Sr. No., read from pii by child_id; the address is by Sr. No. and carries no name; no photo (DOM scan)
-28. Where this child is: the graph's node count equals the skills the child was seen on, and each node's state equals the table's
-29. Where this child is: a table equivalent sits beside the graph: the DataTable lists the same skills with the same state words and times seen, the graph's SVG has role=img and an aria-label that names the counts by state, and axe reports no violation on it
-30. Where this child is: keyboard order: Tab reaches the graph's nodes one by one, in the order of the table's rows (domain, then skill), each with a visible focus ring and each opening that skill; no node is reachable by pointer only, and every node's link target is at least 44 × 44 px
-31. Where this child is: on a phone (400 px) the graph is not drawn: the list of skills shows each skill's name, times seen and its state chip (icon + word), each row a link of at least 44 px height, in the same order as the table
-32. the activity's name: a drafted part carries the 'drafted' badge until Keep, Edit or Send back; an educator sees the badge but not the three buttons
-33. the activity's name: every edit writes a curriculum_edit row with who
-34. the activity's name: a photo attaches to the activity, never to a child
-35. the objective's title: no number, percentage or state is shown for the objective itself (DOM scan)
-36. the skill's name: a prerequisite or next skill is shown only when its link is confirmed (a proposed link in the fixture does not appear)
-37. the skill's name: the spark's last value equals the grid's secure count
-38. the skill's name: the grid's squares equal the class's enrolment in Sr. No. order
+20. Children: for a signed-in educator the table lists their own children; a coordinator sees every class, with a class filter
+21. Children: the class column and the class filter appear only when the person has several classes
+22. Children: the how-they-are-doing bar's segments are secure, practising and not seen, and sum to the child's skill count; never a red segment
+23. Children: searching a Sr. No. or part of a name narrows the rows and writes itself into the address; a reload keeps it
+24. Children: the attendance column is a dashed placeholder naming the gap
+25. Children: a row opens the child; the toggle opens the class picture grid and the picture's toggle returns here
+26. Class picture: an empty square's title reads 'not seen yet', never 'not secure'
+27. Class picture: each square shows the Sr. No. and the child's name read from pii by child_id, and no photo (DOM scan)
+28. Class picture: the stack bar's counts equal the squares by state
+29. Class picture: the squares are in Sr. No. order, 8 per row at 1440, 3 at 400
+30. Where this child is: a paper's result and a voice note appear on one timeline in date order
+31. Where this child is: a correction shows as a new entry that names the entry it replaces
+32. Where this child is: the header shows the child's name beside the Sr. No., read from pii by child_id; the address is by Sr. No. and carries no name; no photo (DOM scan)
+33. Where this child is: the graph's node count equals the skills the child was seen on, and each node's state equals the table's
+34. Where this child is: a table equivalent sits beside the graph: the DataTable lists the same skills with the same state words and times seen, the graph's SVG has role=img and an aria-label that names the counts by state, and axe reports no violation on it
+35. Where this child is: keyboard order: Tab reaches the graph's nodes one by one, in the order of the table's rows (domain, then skill), each with a visible focus ring and each opening that skill; no node is reachable by pointer only, and every node's link target is at least 44 × 44 px
+36. Where this child is: on a phone (400 px) the graph is not drawn: the list of skills shows each skill's name, times seen and its state chip (icon + word), each row a link of at least 44 px height, in the same order as the table
+37. the activity's name: a drafted part carries the 'drafted' badge until Keep, Edit or Send back; an educator sees the badge but not the three buttons
+38. the activity's name: every edit writes a curriculum_edit row with who
+39. the activity's name: a photo attaches to the activity, never to a child
+40. the objective's title: no number, percentage or state is shown for the objective itself (DOM scan)
+41. the skill's name: a prerequisite or next skill is shown only when its link is confirmed (a proposed link in the fixture does not appear)
+42. the skill's name: the spark's last value equals the grid's secure count
+43. the skill's name: the grid's squares equal the class's enrolment in Sr. No. order
 
 ### Out of scope
 

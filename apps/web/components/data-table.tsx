@@ -102,7 +102,7 @@ function Grid<T>({ label, cols, rows, rowKey, extras, sort, dense }: { label: st
             {cols.map((c) => (
               <th key={c.key} scope="col" className={`${cls(c)}${c.num ? " num" : ""}`} aria-sort={sort && c.sortable && c.key === sort.key ? sort.dir : undefined}>
                 {sort && c.sortable ? (
-                  <Link href={sort.href(c.key)} className={`no-underline ${c.key === sort.key ? "text-basalt" : "text-inherit"}`}>
+                  <Link href={sort.href(c.key)} className={`no-underline ${c.key === sort.key ? "text-[var(--ink)]" : "text-inherit"}`}>
                     {c.label}
                     {c.key === sort.key ? " ▾" : ""}
                   </Link>
@@ -139,5 +139,5 @@ function Grid<T>({ label, cols, rows, rowKey, extras, sort, dense }: { label: st
 
 // A cell with nothing in it says so, quietly, so a row never has a hole in it; a column of nothing is not drawn at all.
 function Value({ v }: { v: string | number | null | undefined }) {
-  return v == null || v === "" ? <span className="text-basalt/45">—</span> : <>{v}</>;
+  return v == null || v === "" ? <span className="text-[var(--ink-muted)]">—</span> : <>{v}</>;
 }

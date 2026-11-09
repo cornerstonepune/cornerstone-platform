@@ -1564,51 +1564,95 @@
       "exists": "part (/k2)",
       "eyebrow": "Your classes",
       "title": "Children",
-      "purpose": "Where each child stands, two ways in: the class picture from notes (nursery to K2) and the papers (grades 1 to 4). Both feed the same child.",
+      "purpose": "Your children in one table: how each is doing, last seen, notes waiting. Search, filter, open a child.",
       "blocks": [
         [
-          "Cards",
-          "Class picture: my class, count, from confirmed notes · Assessments: grades, live count, answers to check · Notes"
+          "FilterBar",
+          "search by name or Sr. No. · class (coordinator) · needs attention"
         ],
         [
           "DataTable",
-          "coordinator: every class with children count, seen this fortnight, not seen"
+          "Sr. No. · name · class (only when several) · how they are doing (stacked bar of secure / practising / not seen skills) · last seen · notes waiting · attendance, last 7 days (placeholder)"
         ]
       ],
       "elements": [
         {
-          "t": "link",
-          "label": "Open the class",
-          "to": "picture"
+          "t": "filter",
+          "label": "search by name or Sr. No."
+        },
+        {
+          "t": "filter",
+          "label": "class",
+          "roles": [
+            "coordinator"
+          ],
+          "note": "an educator with one class has no class filter and no class column"
+        },
+        {
+          "t": "filter",
+          "label": "needs attention",
+          "note": "all / needs attention"
+        },
+        {
+          "t": "button",
+          "label": "× on a filter chip",
+          "effect": "removes that filter from the address"
+        },
+        {
+          "t": "button",
+          "label": "Clear",
+          "effect": "removes every filter and the search"
+        },
+        {
+          "t": "row",
+          "label": "each child",
+          "to": "child"
+        },
+        {
+          "t": "child_name",
+          "label": "the name column",
+          "note": "the name beside the Sr. No."
         },
         {
           "t": "link",
-          "label": "Open the assessments",
+          "label": "Class picture grid",
+          "to": "picture",
+          "note": "the toggle between this table and the class picture grid; the picture's own toggle returns here"
+        },
+        {
+          "t": "link",
+          "label": "rail: Assessments",
           "to": "assessments"
         },
         {
           "t": "link",
-          "label": "Open the notes",
+          "label": "rail: Notes",
           "to": "notes"
         },
         {
-          "t": "row",
-          "label": "each class row",
-          "to": "picture",
-          "roles": [
-            "coordinator"
-          ]
+          "t": "link",
+          "label": "page: Later →",
+          "to": "children",
+          "note": "the next ten rows; the address carries the page"
         }
       ],
-      "rail": [],
+      "rail": [
+        "Assessments",
+        "Notes"
+      ],
       "capture": [],
-      "main": "Open the class",
-      "next": "Class picture",
-      "data": "school_class, enrolment counts, child_observed_state coverage",
-      "empty": "No class linked to you: 'The coordinator links you to the classes you teach'",
+      "main": "Class picture grid",
+      "next": "a child",
+      "data": "school_class, enrolment, pii.child, child_skill_state counts per child, pii.educator_note waiting per child, attendance_mark (last 7 school days)",
+      "empty": "No class linked to you: 'The coordinator links you to the classes you teach'; no match: 'No child matches' with Clear",
       "phone": "the table scrolls sideways in its own box",
       "done_when": [
-        "an educator with one class is taken straight to its picture; with several, picks; the coordinator picks from every class"
+        "for a signed-in educator the table lists their own children; a coordinator sees every class, with a class filter",
+        "the class column and the class filter appear only when the person has several classes",
+        "the how-they-are-doing bar's segments are secure, practising and not seen, and sum to the child's skill count; never a red segment",
+        "searching a Sr. No. or part of a name narrows the rows and writes itself into the address; a reload keeps it",
+        "the attendance column is a dashed placeholder naming the gap",
+        "a row opens the child; the toggle opens the class picture grid and the picture's toggle returns here"
       ]
     },
     {
@@ -1692,6 +1736,12 @@
           "t": "link",
           "label": "capture: Photo",
           "to": "record"
+        },
+        {
+          "t": "link",
+          "label": "Show as a table",
+          "to": "children",
+          "note": "the toggle between the class picture grid and the table of children"
         }
       ],
       "rail": [
@@ -1708,7 +1758,7 @@
       "next": "the skill",
       "data": "child_observed_state (K2) or child_skill_state (grades 1–4) for the class by skill; graph_run date",
       "empty": "No child seen yet: the grid of dashed squares with 'not seen yet, nothing more'",
-      "phone": "6 columns of 44 px squares",
+      "phone": "3 columns of squares (a name and a state word do not fit a 44 px square; SPEC §2 rule 10)",
       "folds": [
         "/growth (Class results)",
         "/growth/class/[section]"
@@ -1717,7 +1767,7 @@
         "an empty square's title reads 'not seen yet', never 'not secure'",
         "each square shows the Sr. No. and the child's name read from pii by child_id, and no photo (DOM scan)",
         "the stack bar's counts equal the squares by state",
-        "the squares are in Sr. No. order, 10 per row at 1440, 8 at 400"
+        "the squares are in Sr. No. order, 8 per row at 1440, 3 at 400"
       ]
     },
     {
@@ -2642,7 +2692,7 @@
       "next": "the next skill",
       "data": "child_observed_state / child_skill_state by skill; skill_link_confirmed; skill_level; misconception",
       "empty": "nobody seen on it yet",
-      "phone": "grid 6 columns of 44 px squares",
+      "phone": "grid of 3 columns of squares (SPEC §2 rule 10)",
       "folds": [
         "/skill-sets/[code]",
         "/skill-sets/[code]/edit"

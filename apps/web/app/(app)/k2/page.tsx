@@ -31,7 +31,7 @@ export default async function Children() {
         <ul className="flex flex-wrap gap-[var(--space-2)]" aria-label="Your classes">
           {classes.map((c) => (
             <li key={c.id}>
-              <Link href={`/k2/${c.id}`} className="inline-flex min-h-[var(--tap)] items-center rounded-[var(--radius-m)] border border-[var(--border-control)] px-[var(--space-3)] text-[var(--text)] no-underline">
+              <Link href={`/k2/${c.id}`} className="inline-flex min-h-[var(--tap)] items-center rounded-[var(--radius-control)] border border-[var(--line-control)] px-[var(--space-3)] text-[var(--ink)] no-underline">
                 {classWords(c)}
               </Link>
             </li>

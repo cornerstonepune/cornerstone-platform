@@ -29,7 +29,7 @@ export async function Chrome({ here, crumb, children }: { here: keyof typeof ARE
   return (
     <>
       <Crumbs trail={trail(here, crumb)} />
-      {!reviews ? <p data-preview className="mb-[var(--space-3)] text-[length:var(--text-label)] text-[var(--text-muted)]">Preview: you can look, and change nothing, until the educator screens are switched on.</p> : null}
+      {!reviews ? <p data-preview className="mb-[var(--space-3)] text-[length:var(--text-label)] text-[var(--ink-muted)]">Preview: you can look, and change nothing, until the educator screens are switched on.</p> : null}
       <Summary
         items={[
           { label: ["drafted part to check", "drafted parts to check"], n: drafted.length, href: "/curriculum/fill/walk" },

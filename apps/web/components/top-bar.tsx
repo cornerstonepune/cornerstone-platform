@@ -37,7 +37,7 @@ export function Search() {
       />
       </div>
       {open && found && !busy ? (
-        <div className="absolute inset-x-2 top-full z-40 mt-1 border border-basalt/20 bg-chalk p-2 text-basalt shadow-sm md:right-8 md:left-auto md:w-[480px]">
+        <div className="absolute inset-x-2 top-full z-40 mt-1 border border-basalt/20 bg-chalk p-2 text-basalt shadow-[var(--shadow-card)] md:right-8 md:left-auto md:w-[480px]">
           {found.hits.length ? (
             <ul aria-label="Found" className="grid">
               {found.hits.map((h) => (
@@ -70,7 +70,7 @@ export function ReportLink() {
       prefetch={false}
       aria-label="Report a problem or suggest something"
       title="Report a problem or suggest something"
-      className="inline-flex min-h-10 shrink-0 items-center px-1 text-[13px] whitespace-nowrap text-bamboo no-underline hover:text-chalk"
+      className="inline-flex min-h-10 shrink-0 items-center px-1 text-[13px] whitespace-nowrap text-chalk/75 no-underline hover:text-chalk"
     >
       <span className="max-lg:hidden">Report a problem</span>
       <span className="lg:hidden" aria-hidden="true">

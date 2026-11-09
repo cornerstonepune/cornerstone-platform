@@ -563,21 +563,33 @@ Done when (on top of the ten generic checks):
 #### Children `/children`
 Who: both · Phase: Core · Backend: CP-13 · Old page today: part (/k2) · Slice: UI-3
 Eyebrow: Your classes
-Purpose: Where each child stands, two ways in: the class picture from notes (nursery to K2) and the papers (grades 1 to 4). Both feed the same child.
+Purpose: Your children in one table: how each is doing, last seen, notes waiting. Search, filter, open a child.
 Blocks, in order:
-- **Cards**: Class picture: my class, count, from confirmed notes · Assessments: grades, live count, answers to check · Notes
-- **DataTable**: coordinator: every class with children count, seen this fortnight, not seen
-Rail (Connected to): none
-Main action: Open the class · Next step: Class picture
-Data: school_class, enrolment counts, child_observed_state coverage
-Empty: No class linked to you: 'The coordinator links you to the classes you teach' · Phone: the table scrolls sideways in its own box
-Every control on the screen (4), and what the test does with each:
-- **link** Open the class → Class picture (`/children/[class]`)
-- **link** Open the assessments → Assessments (`/children/assessments`)
-- **link** Open the notes → Notes (`/notes`)
-- **row** each class row → Class picture (`/children/[class]`) [coordinator only; absent and refused for others]
+- **FilterBar**: search by name or Sr. No. · class (coordinator) · needs attention
+- **DataTable**: Sr. No. · name · class (only when several) · how they are doing (stacked bar of secure / practising / not seen skills) · last seen · notes waiting · attendance, last 7 days (placeholder)
+Rail (Connected to): Assessments · Notes
+Main action: Class picture grid · Next step: a child
+Data: school_class, enrolment, pii.child, child_skill_state counts per child, pii.educator_note waiting per child, attendance_mark (last 7 school days)
+Empty: No class linked to you: 'The coordinator links you to the classes you teach'; no match: 'No child matches' with Clear · Phone: the table scrolls sideways in its own box
+Every control on the screen (11), and what the test does with each:
+- **filter** search by name or Sr. No.
+- **filter** class [coordinator only; absent and refused for others] (an educator with one class has no class filter and no class column)
+- **filter** needs attention (all / needs attention)
+- **button** × on a filter chip: removes that filter from the address
+- **button** Clear: removes every filter and the search
+- **row** each child → Where this child is (`/children/[class]/[roll]`)
+- **child_name** the name column (the name beside the Sr. No.)
+- **link** Class picture grid → Class picture (`/children/[class]`) (the toggle between this table and the class picture grid; the picture's own toggle returns here)
+- **link** rail: Assessments → Assessments (`/children/assessments`)
+- **link** rail: Notes → Notes (`/notes`)
+- **link** page: Later → → Children (`/children`) (the next ten rows; the address carries the page)
 Done when (on top of the ten generic checks):
-- an educator with one class is taken straight to its picture; with several, picks; the coordinator picks from every class
+- for a signed-in educator the table lists their own children; a coordinator sees every class, with a class filter
+- the class column and the class filter appear only when the person has several classes
+- the how-they-are-doing bar's segments are secure, practising and not seen, and sum to the child's skill count; never a red segment
+- searching a Sr. No. or part of a name narrows the rows and writes itself into the address; a reload keeps it
+- the attendance column is a dashed placeholder naming the gap
+- a row opens the child; the toggle opens the class picture grid and the picture's toggle returns here
 
 
 #### Class picture `/children/[class]`
@@ -592,9 +604,9 @@ Blocks, in order:
 Rail (Connected to): Show: each skill seen · a child · Record a note · Assessments (grades 1–4: Class results folds here) · Capture here: voice, photo
 Main action: a child · Next step: the skill
 Data: child_observed_state (K2) or child_skill_state (grades 1–4) for the class by skill; graph_run date
-Empty: No child seen yet: the grid of dashed squares with 'not seen yet, nothing more' · Phone: 6 columns of 44 px squares
+Empty: No child seen yet: the grid of dashed squares with 'not seen yet, nothing more' · Phone: 3 columns of squares (a name and a state word do not fit a 44 px square; SPEC §2 rule 10)
 Folds in: /growth (Class results), /growth/class/[section]
-Every control on the screen (10), and what the test does with each:
+Every control on the screen (11), and what the test does with each:
 - **filter** skill
 - **filter** domain
 - **cell** each square → Where this child is (`/children/[class]/[roll]`)
@@ -605,11 +617,12 @@ Every control on the screen (10), and what the test does with each:
 - **link** rail: Assessments → Assessments (`/children/assessments`)
 - **link** capture: Voice note → Record a note (`/record`)
 - **link** capture: Photo → Record a note (`/record`)
+- **link** Show as a table → Children (`/children`) (the toggle between the class picture grid and the table of children)
 Done when (on top of the ten generic checks):
 - an empty square's title reads 'not seen yet', never 'not secure'
 - each square shows the Sr. No. and the child's name read from pii by child_id, and no photo (DOM scan)
 - the stack bar's counts equal the squares by state
-- the squares are in Sr. No. order, 10 per row at 1440, 8 at 400
+- the squares are in Sr. No. order, 8 per row at 1440, 3 at 400
 
 
 #### Where this child is `/children/[class]/[roll]`
@@ -854,7 +867,7 @@ Blocks, in order:
 Rail (Connected to): the class picture on this skill · its objectives · after / next skills · Question bank for this skill
 Main action: a child · Next step: the next skill
 Data: child_observed_state / child_skill_state by skill; skill_link_confirmed; skill_level; misconception
-Empty: nobody seen on it yet · Phone: grid 6 columns of 44 px squares
+Empty: nobody seen on it yet · Phone: grid of 3 columns of squares (SPEC §2 rule 10)
 Folds in: /skill-sets/[code], /skill-sets/[code]/edit
 Every control on the screen (13), and what the test does with each:
 - **filter** class [coordinator only; absent and refused for others]
