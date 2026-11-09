@@ -2,7 +2,7 @@
 # Acceptance proofs for CP-13. Written BEFORE the product code, by a different agent.
 # After `athena lock CP-13` this file, spec.md and proofs/ cannot be edited.
 # One `check` per "Done when" line, same numbering. Each check must be a real command.
-source "$ATHENA_ROOT/.claude/athena/bin/checklib.sh"
+source "$ATHENA_ROOT/bin/checklib.sh"
 cd "$ATHENA_ROOT"
 
 # Every proof uses TEST_DATABASE_URL (a throwaway Postgres in the athena job) or builds its own in a temp folder from

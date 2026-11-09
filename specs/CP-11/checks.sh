@@ -8,7 +8,7 @@
 # Item 1 is box only as a whole: its image and CI parts are asserted inside the same box script, so the line stays one
 # check (the CI side is also exercised by items 2 to 5, which cannot pass without fet-cl). Item 6 reads the live
 # database read-only and runs the command with --dry inside the engine container.
-source "$ATHENA_ROOT/.claude/athena/bin/checklib.sh"
+source "$ATHENA_ROOT/bin/checklib.sh"
 cd "$ATHENA_ROOT"
 
 P=specs/CP-11/proofs

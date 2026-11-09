@@ -1,0 +1,26 @@
+# The acceptance proofs of the CP specs that pass today (bin/specs), on a throwaway Postgres built from this
+# repository alone. Replaces the Athena harness's proof job (removed 9 Nov 2026).
+name: specs
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  proofs:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      TEST_DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/postgres
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          fetch-depth: 0
+      - uses: astral-sh/setup-uv@v5
+      - run: cd packages/engine && uv sync --extra dev
+      - run: bin/ci-postgres
+      - name: Build the test database from every migration and the seed
+        run: PATH="/usr/lib/postgresql/17/bin:$PATH" bin/testdb fresh "$TEST_DATABASE_URL"
+      - run: bin/specs
