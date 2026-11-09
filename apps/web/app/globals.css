@@ -1,6 +1,6 @@
 /* The layers, lowest first. `tokens` is design-system/tokens.css, generated from tokens.json by scripts/tokens.mjs
    (UI-14): every colour, font, size, shape, shadow and the press on every page comes from it. */
-@layer tokens, theme, base, components, utilities;
+@layer theme, tokens, base, components, utilities;
 @import "tailwindcss";
 @import "../design-system/tokens.css" layer(tokens);
 
