@@ -6,8 +6,10 @@
 --     (the fortnight's dated layer when it has one, else the standing frame on the fortnight's dates), so the list
 --     cannot go stale. Kinds: `blocked` (a lesson on a timetable_block of its class), `over_limit` and `under_limit`
 --     (a subject above its most or below its fewest in a week or in the fortnight; a subject with no lesson at all is
---     below its fewest with no places). `clash_key` is what the clash is (kind, fortnight, the cells, the rule and its
---     numbers, the count), so a lesson that moves again or a limit that changes opens the clash afresh.
+--     below its fewest with no places). `clash_key` is what the clash is (kind, fortnight, the cells and for a block
+--     the lesson in the cell, the rule and its numbers, the count); an acceptance also lapses when a lesson of the clash
+--     is moved after it was accepted, so a lesson that moves again (or leaves and comes back) or a limit that changes
+--     opens the clash afresh.
 --   * `timetable_fortnight_layer(class, fortnight)`: the fortnight's own dated rows (CP-22's layer, `fortnight_id` set,
 --     one row per teaching date and period) copied once from the standing frame, for a fortnight no draft put live.
 --     The first hand move in a fortnight calls it; the frame itself is never edited.
@@ -84,7 +86,7 @@ with cell as (
   -- every cell of every teaching fortnight of every class with a timetable in it: the layer's rows when the fortnight
   -- has them, else the frame's rows on the fortnight's teaching dates
   select f.tenant_id, f.id as fortnight_id, f.number as fortnight_number, c.id as school_class_id, d.day as on_date,
-         w.code as week_code, s.period_id, s.kind, s.subject_code
+         w.code as week_code, s.period_id, s.kind, s.subject_code, n.id as session_id
   from fortnight f
   join school_class c on c.tenant_id = f.tenant_id and c.academic_year_id = f.academic_year_id
   cross join lateral (select g::date as day from generate_series(f.starts_on, f.ends_on, interval '1 day') g) d
@@ -96,11 +98,13 @@ with cell as (
     and s.week_code = w.code and s.weekday = extract(isodow from d.day)
     and s.valid_from <= d.day and (s.valid_to is null or s.valid_to >= d.day)
     and ((x.layered and s.fortnight_id = f.id) or (not x.layered and s.fortnight_id is null))
+  left join session n on n.school_class_id = c.id and n.school_day_id = sd.id and n.period_id = s.period_id
   where f.kind = 'teaching' and extract(isodow from d.day) <= 5
 ),
 blocked as (
   select k.tenant_id, k.fortnight_id, k.fortnight_number, k.week_code, 'blocked'::text as kind,
-         md5(format('blocked|%s|%s|%s|%s|%s', k.fortnight_id, k.school_class_id, k.on_date, k.period_id, b.id)) as clash_key,
+         md5(format('blocked|%s|%s|%s|%s|%s|%s|%s', k.fortnight_id, k.school_class_id, k.on_date, k.period_id, b.id,
+                    coalesce(k.subject_code, k.kind), coalesce(k.session_id::text, ''))) as clash_key,
          jsonb_build_array(jsonb_build_object('class', k.school_class_id, 'date', k.on_date, 'period', k.period_id)) as places,
          b.id as rule_id,
          format('%s on %s: %s', coalesce(k.subject_code, k.kind), k.on_date, b.reason) as detail
@@ -131,8 +135,8 @@ limited as (
 limits as (
   select tenant_id, fortnight_id, fortnight_number, week_code,
          case when most is not null and lessons > most then 'over_limit' else 'under_limit' end as kind,
-         md5(format('limit|%s|%s|%s|%s|%s|%s', fortnight_id, rule_id, coalesce(week_code, ''), coalesce(fewest::text, ''),
-                    coalesce(most::text, ''), lessons)) as clash_key,
+         md5(format('limit|%s|%s|%s|%s|%s|%s|%s', fortnight_id, rule_id, coalesce(week_code, ''),
+                    coalesce(fewest::text, ''), coalesce(most::text, ''), lessons, places::text)) as clash_key,
          places, rule_id,
          format('%s: %s lessons in %s, %s', subject_code, lessons,
                 case when week_code is null then 'the fortnight' else 'week ' || week_code end,
@@ -141,7 +145,14 @@ limits as (
   where (most is not null and lessons > most) or (fewest is not null and lessons < fewest)
 )
 select k.tenant_id, k.fortnight_id, k.fortnight_number, k.week_code, k.kind, k.clash_key, k.places, k.rule_id, k.detail,
-       exists (select 1 from timetable_clash_accept a where a.fortnight_id = k.fortnight_id and a.clash_key = k.clash_key)
+       exists (select 1 from timetable_clash_accept a
+               where a.fortnight_id = k.fortnight_id and a.clash_key = k.clash_key
+                 -- a lesson in the clash moved after it was accepted (even away and back): it is open again
+                 and not exists (select 1 from timetable_move m, jsonb_array_elements(k.places) p
+                                 where m.fortnight_id = k.fortnight_id and m.at > a.at
+                                   and m.school_class_id = (p ->> 'class')::uuid
+                                   and ((m.from_date::text = p ->> 'date' and m.from_period::text = p ->> 'period')
+                                     or (m.to_date::text = p ->> 'date' and m.to_period::text = p ->> 'period'))))
          as accepted
 from (select * from blocked union all select * from limits) k;
 

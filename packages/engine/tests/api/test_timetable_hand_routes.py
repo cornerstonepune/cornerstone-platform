@@ -66,6 +66,9 @@ def test_the_accept_route_accepts_a_clash_for_the_coordinator_group_only(engine)
         "select * from timetable_clash where fortnight_id = %s", (w["fortnight"],)
     ).fetchall()
     body = {"actor": w["staff"]["educator"]["email"], "key": clash["clash_key"], "reason": "Test reason"}
+    assert client.post("/timetable/clash/accept", json=body).status_code in (401, 500), (
+        "the engine key is needed"
+    )
     assert client.post("/timetable/clash/accept", headers=H, json=body).status_code == 409
     r = client.post(
         "/timetable/clash/accept", headers=H, json=body | {"actor": w["staff"]["coordinator"]["email"]}

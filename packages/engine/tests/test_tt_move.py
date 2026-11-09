@@ -4,6 +4,7 @@ the long form. Each test works in a transaction that is rolled back, on a made-u
 
 import datetime as dt
 import os
+import uuid
 
 import pytest
 
@@ -34,9 +35,14 @@ def _move(c, w, frm, fp, to, tp, *, reason=None, who=None):
 
 
 def _snapshot(c, w):
-    return [
+    own = [
         c.execute(f"select * from {t} where school_class_id = %s order by id", (w["class"],)).fetchall()  # noqa: S608
         for t in ("timetable_slot", "session", "timetable_move")
+    ]
+    return [
+        *own,
+        c.execute("select * from materials_line_source order by line_id, session_id").fetchall(),
+        c.execute("select * from materials_line order by id").fetchall(),
     ]
 
 
@@ -163,3 +169,81 @@ def test_in_an_approved_fortnight_a_move_that_leaves_an_open_clash_is_refused_un
     )
     _move(c, w, MON, "p1", TUE, "p3", reason=REASON)
     assert tw.cell(c, w, TUE, "p3")["subject"] == "math"
+
+
+def _line(c, w, sessions, *, state="draft", from_on=MON, to_on=tw.START + dt.timedelta(13), lst=None):
+    """One materials list for the class with one line fed by the given sessions."""
+    lst = (
+        lst
+        or db.one(
+            c,
+            "insert into materials_list (tenant_id, school_class_id, period, from_on, to_on, state)"
+            " values (%s, %s, 'fortnight', %s, %s, %s) returning id",
+            (w["tenant"], w["class"], from_on, to_on, state),
+        )["id"]
+    )
+    code = f"MAT-{uuid.uuid4().hex[:6]}"
+    c.execute(
+        "insert into material_item (tenant_id, code, name) values (%s, %s, %s)",
+        (w["tenant"], code, f"Test material {code}"),
+    )
+    line = db.one(
+        c,
+        "insert into materials_line (tenant_id, list_id, material_code, unit, quantity, needed_on, source)"
+        " values (%s, %s, %s, 'piece', 1, %s, 'educator') returning id",
+        (w["tenant"], lst, code, MON),
+    )["id"]
+    for sid in sessions:
+        c.execute(
+            "insert into materials_line_source (line_id, session_id, activity_code, on_date, quantity)"
+            " values (%s, %s, 'ACT-TEST', %s, 1)",
+            (line, sid, MON),
+        )
+    return line
+
+
+def _list_of(c, line):
+    return db.one(c, "select list_id from materials_line where id = %s", (line,))["list_id"]
+
+
+def test_a_lessons_materials_follow_it_but_a_line_shared_with_another_lesson_keeps_its_date(world):
+    c, w = world
+    maths, english = tw.session_at(c, w, MON, "p1"), tw.session_at(c, w, THU, "p2")
+    alone = _line(c, w, [maths["id"]])
+    shared = _line(c, w, [maths["id"], english["id"]], lst=_list_of(c, alone))
+    _move(c, w, MON, "p1", THU, "p2", reason=REASON)
+    dates = {
+        (r["line_id"], r["session_id"]): r["on_date"]
+        for r in c.execute("select * from materials_line_source").fetchall()
+    }
+    assert dates[(alone, maths["id"])] == THU and dates[(shared, maths["id"])] == THU
+    assert dates[(shared, english["id"])] == MON
+    needed = {
+        r["id"]: r["needed_on"] for r in c.execute("select id, needed_on from materials_line").fetchall()
+    }
+    assert needed[alone] == THU, "a line only this lesson feeds follows it"
+    assert needed[shared] == MON, "a line shared with another lesson keeps its date"
+
+
+def test_a_lesson_keeps_its_creation_time_on_a_swap(world):
+    c, w = world
+    maths, english = tw.session_at(c, w, MON, "p1"), tw.session_at(c, w, THU, "p2")
+    _move(c, w, MON, "p1", THU, "p2", reason=REASON)
+    got = {r["id"]: r["created_at"] for r in c.execute("select id, created_at from session").fetchall()}
+    assert (got[maths["id"]], got[english["id"]]) == (maths["created_at"], english["created_at"])
+
+
+@pytest.mark.parametrize(
+    ("case", "why"), [("sent", "already sent"), ("outside", "outside its materials list")]
+)
+def test_a_lesson_whose_materials_list_is_sent_or_does_not_cover_the_new_date_is_not_moved(world, case, why):
+    c, w = world
+    maths = tw.session_at(c, w, MON, "p1")
+    if case == "sent":
+        _line(c, w, [maths["id"]], state="sent")
+    else:
+        _line(c, w, [maths["id"]], to_on=TUE)  # the list ends before Thursday
+    was = _snapshot(c, w)
+    with pytest.raises(tt_move.Refused, match=why):
+        _move(c, w, MON, "p1", THU, "p2", reason=REASON)
+    assert _snapshot(c, w) == was

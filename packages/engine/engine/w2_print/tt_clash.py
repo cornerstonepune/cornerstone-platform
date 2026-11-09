@@ -6,14 +6,12 @@ import datetime as dt
 from typing import Any
 
 from engine.core import db
+from engine.w2_print.tt_live import in_group
+from engine.w2_print.tt_live_plan import Refused
 
 SETTING = "timetable.open_clash_blocks_approval"  # on: an open clash stops approval, and a move that would leave one
 GROUP = "timetable.accept_clash_group"  # the access group (CP-3) whose members may accept a clash
 KINDS = ("blocked", "over_limit", "under_limit")
-
-
-class Refused(Exception):
-    """A check failed; nothing was written."""
 
 
 def setting(conn: db.Conn, tenant: Any, key: str, default: Any) -> Any:
@@ -62,17 +60,16 @@ def heading(row: dict) -> str:
     return f"{row['starts_on']} to {row['ends_on']}" if "starts_on" in row else "a fortnight with no number"
 
 
-def in_group(conn: db.Conn, tenant: Any, who: Any, group: str, today: dt.date) -> bool:
-    """Whether `who` holds a current grant (CP-3: from valid_from, not on valid_to) in a role of the group."""
-    return (
-        conn.execute(
-            "select 1 from staff_role_grant g join access_role_group rg on rg.tenant_id = g.tenant_id"
-            " and rg.role_code = g.role_code where g.tenant_id = %s and g.staff_id = %s and rg.group_code = %s"
-            " and g.valid_from <= %s and (g.valid_to is null or g.valid_to > %s)",
-            (tenant, who, group, today, today),
-        ).fetchone()
-        is not None
-    )
+def _classes(conn: db.Conn, clash: dict) -> list[str]:
+    """The classes a clash touches (its lessons' and its rule's), in a fixed order so two locks never cross."""
+    found = {p["class"] for p in clash["places"]}
+    for r in conn.execute(
+        "select school_class_id::text as k from timetable_limit where id = %s union"
+        " select school_class_id::text from timetable_block where id = %s",
+        (clash["rule_id"], clash["rule_id"]),
+    ).fetchall():
+        found.add(r["k"])
+    return sorted(found)
 
 
 def accept(conn: db.Conn, key: str, *, who: Any, reason: str | None, today: dt.date) -> dict:
@@ -82,13 +79,19 @@ def accept(conn: db.Conn, key: str, *, who: Any, reason: str | None, today: dt.d
     if not why:
         raise Refused("give a reason: an accepted clash is kept with why.")
     clash = conn.execute("select * from timetable_clash where clash_key = %s", (key,)).fetchone()
+    if (
+        clash is not None
+    ):  # the same per-class lock a move takes, so a move cannot slip in between the look and the write
+        for k in _classes(conn, clash):
+            conn.execute(
+                "select pg_advisory_xact_lock(hashtext(%s), hashtext(%s))", (str(clash["tenant_id"]), k)
+            )
+        clash = conn.execute("select * from timetable_clash where clash_key = %s", (key,)).fetchone()
     if clash is None:
         raise Refused("that is not a clash in any fortnight as the timetable stands.")
     if clash["accepted"]:
         raise Refused("that clash is accepted already.")
-    group = str(setting(conn, clash["tenant_id"], GROUP, "everything")).strip('"')
-    if not in_group(conn, clash["tenant_id"], who, group, today):
-        raise Refused(f"only the '{group}' group may accept a clash ({GROUP}); this person is not in it.")
+    in_group(conn, clash["tenant_id"], who, today, GROUP, "accept a clash")
     conn.execute(
         "insert into timetable_clash_accept (tenant_id, fortnight_id, clash_key, kind, reason, who)"
         " values (%s, %s, %s, %s, %s, %s)",

@@ -104,7 +104,7 @@ def test_a_week_limit_counts_each_week_and_a_move_back_clears_it(world):
     assert _clashes(c, w) == []
 
 
-def test_an_acceptance_is_kept_with_who_and_why_and_reopens_when_the_limit_or_the_lesson_changes(world):
+def test_an_acceptance_is_kept_with_who_and_why_and_reopens_when_its_limit_changes(world):
     c, w = world
     _limit(c, w, "math", "fortnight", most=8)
     (clash,) = _clashes(c, w)
@@ -157,3 +157,42 @@ def test_the_approve_command_refuses_an_open_clash_and_the_list_names_no_one(wor
     assert "Test Person" not in listed.output and "@example.org" not in listed.output
     out = run.invoke(app, [*args, "nobody@example.org"])
     assert out.exit_code != 0 and "--by" in out.output
+
+
+def _accept(c, w, clash):
+    tt_clash.accept(c, clash["clash_key"], who=w["staff"]["coordinator"]["id"], reason=REASON, today=MON)
+
+
+def test_an_accepted_limit_clash_reopens_when_a_lesson_in_it_moves_within_the_same_week(world):
+    c, w = world
+    _limit(c, w, "math", "fortnight", most=8)
+    (clash,) = _clashes(c, w)
+    _accept(c, w, clash)
+    assert _clashes(c, w)[0]["accepted"] is True
+    _move(c, w, MON, "p1", TUE, "p3")  # a maths lesson to another place of week A: the counts do not change
+    (now,) = _clashes(c, w)
+    assert now["accepted"] is False, "an acceptance carried over to a lesson that moved again"
+
+
+def test_a_different_lesson_swapped_into_an_accepted_blocked_cell_reopens_it(world):
+    c, w = world
+    _block(c, w, on_date=TUE, period_id=w["period"]["p3"])
+    _move(c, w, MON, "p1", TUE, "p3")  # maths into the blocked cell
+    (clash,) = [r for r in _clashes(c, w) if r["kind"] == "blocked"]
+    _accept(c, w, clash)
+    _move(c, w, TUE, "p3", MON, "p2")  # English now sits in the blocked cell
+    (now,) = [r for r in _clashes(c, w) if r["kind"] == "blocked"]
+    assert now["accepted"] is False and now["clash_key"] != clash["clash_key"]
+
+
+def test_the_same_lesson_leaving_and_coming_back_reopens_an_accepted_clash(world):
+    c, w = world
+    _block(c, w, on_date=TUE, period_id=w["period"]["p3"])
+    _move(c, w, MON, "p1", TUE, "p3")
+    (clash,) = [r for r in _clashes(c, w) if r["kind"] == "blocked"]
+    _accept(c, w, clash)
+    _move(c, w, TUE, "p3", MON, "p1")
+    assert [r for r in _clashes(c, w) if r["kind"] == "blocked"] == []
+    _move(c, w, MON, "p1", TUE, "p3")  # back where it was: the same clash, but a move came after the yes
+    (again,) = [r for r in _clashes(c, w) if r["kind"] == "blocked"]
+    assert again["clash_key"] == clash["clash_key"] and again["accepted"] is False

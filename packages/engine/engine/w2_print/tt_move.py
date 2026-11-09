@@ -16,6 +16,7 @@ from engine.w2_print import educator_gate as gate
 from engine.w2_print import fortnight_cycle as fc
 from engine.w2_print import tt_clash
 from engine.w2_print.tt_clash import Refused
+from engine.w2_print.tt_live_plan import Plan, _materials
 
 SETTLED = ("approved", "list_sent")  # cycle states in which a move may not leave a clash nobody accepted
 
@@ -96,6 +97,24 @@ def _fill(conn: db.Conn, k: dict, f: dict, p: Place) -> None:
         )
 
 
+def _materials_stay_valid(conn: db.Conn, a: Place, b: Place) -> None:
+    """CP-22's own check (`tt_live_plan._materials`): a lesson whose materials list was already sent, or whose new date
+    falls outside its list's dates, is not moved. Refused, naming the lesson, before anything is written."""
+    plan = Plan()
+    for s, to in ((a.session, b), (b.session, a)):
+        if s:
+            here = {
+                **s,
+                "on_date": (a if s is a.session else b).date,
+                "period_id": str(s["period_id"]),
+                "line": None,
+            }
+            plan.moves.append((here, (to.date, str(to.period["id"]))))
+    _materials(conn, plan, {})
+    if plan.stops:
+        raise Refused("the move stops:\n  " + "\n  ".join(plan.stops))
+
+
 def _swap(conn: db.Conn, a: Place, b: Place) -> None:
     """Exchange what the two cells hold. The cells (date, period) stay, so no key is touched and the layer rows' ids
     stay put. The dated lessons travel with their id (their materials lines point at it): two lessons swap places by
@@ -129,10 +148,10 @@ def _swap(conn: db.Conn, a: Place, b: Place) -> None:
         for s, to in going:
             conn.execute(
                 "insert into session (id, tenant_id, school_class_id, school_day_id, period_id, subject_code,"
-                " led_by_staff_id, state, planned, plan_entry_id, text)"
-                " values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+                " led_by_staff_id, state, planned, plan_entry_id, text, created_at)"
+                " values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
                 (s["id"], s["tenant_id"], s["school_class_id"], to.day_id, to.period["id"], s["subject_code"],
-                 s["led_by_staff_id"], s["state"], s["planned"], s["plan_entry_id"], s["text"]),
+                 s["led_by_staff_id"], s["state"], s["planned"], s["plan_entry_id"], s["text"], s["created_at"]),
             )  # fmt: skip
     day_of = {s["id"]: to.date for s, to in going}
     for r in links:
@@ -141,8 +160,13 @@ def _swap(conn: db.Conn, a: Place, b: Place) -> None:
             " values (%s, %s, %s, %s, %s)",
             (r["line_id"], r["session_id"], r["activity_code"], day_of[r["session_id"]], r["quantity"]),
         )
+    for r in (
+        links
+    ):  # a line shared with another lesson keeps its date: only a line this lesson alone feeds follows it
         conn.execute(
-            "update materials_line set needed_on = %s where id = %s", (day_of[r["session_id"]], r["line_id"])
+            "update materials_line set needed_on = %s where id = %s and not exists"
+            " (select 1 from materials_line_source where line_id = %s and session_id <> %s)",
+            (day_of[r["session_id"]], r["line_id"], r["line_id"], r["session_id"]),
         )
 
 
@@ -163,15 +187,22 @@ def move(
     if not f["starts_on"] <= to <= f["ends_on"]:
         raise Refused(f"{to} is in another fortnight; a move stays inside fortnight {f['number']}.")
     a, b = _place(conn, k, grade, frm, from_ord, today), _place(conn, k, grade, to, to_ord, today)
-    fc.ensure_editable(
-        conn, [f["id"]], reason=reason, table="timetable_slot", record_id=str(k["id"]), op="update", actor=who
-    )
-    with conn.transaction():  # a refusal after the layer is laid down takes it back too
+    with conn.transaction():  # a refusal at any point takes back the layer, the freeze record and every write
+        fc.ensure_editable(
+            conn,
+            [f["id"]],
+            reason=reason,
+            table="timetable_slot",
+            record_id=str(k["id"]),
+            op="update",
+            actor=who,
+        )
         conn.execute("select public.timetable_fortnight_layer(%s, %s)", (k["id"], f["id"]))
         _fill(conn, k, f, a)
         _fill(conn, k, f, b)
         assert a.slot is not None
         moved = dict(a.slot)
+        _materials_stay_valid(conn, a, b)
         _swap(conn, a, b)
         state = conn.execute(
             "select state from fortnight_cycle where fortnight_id = %s", (f["id"],)
