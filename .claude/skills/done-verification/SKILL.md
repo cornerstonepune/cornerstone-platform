@@ -18,8 +18,6 @@ category: verification
 - Runtime files are not yours to commit: plugin writes under `.claude/autoharness/` and `*.ledger.jsonl` / `*.sidecar.json` show as changed to the gate. Leave them out of commits and say so in one line.
 - Permission rewrites: if the classifier denies a call because a hook rewrote its input, reissue that exact input once; if denied again, report it to Nimish and stop retrying.
 - Say "passes" only when the output you read shows it.
-- A number a builder or subagent reports ("17 of 20 passed") is theirs. Attribute it ("the builder reports ...") or read the run yourself before repeating it as a result. Re-run any command that failed earlier before claiming a check passes.
-- If the done-gate fires again after you answered "no check applies", the trigger is still in the tree. Delete the scratch files it names when they sit outside the repository, or run the named check. Restating "no check applies" does not clear the gate and loops every stop.
 
 ## Task audit: reconcile a done-when clause by clause
 
