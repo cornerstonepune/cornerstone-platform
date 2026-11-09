@@ -23,6 +23,15 @@ def conn():
         c.rollback()
 
 
+def test_today_is_the_school_day_not_the_servers(monkeypatch, conn):
+    import datetime as dt
+    from types import SimpleNamespace
+
+    at = dt.datetime(2026, 11, 9, 19, 30, tzinfo=dt.UTC)  # 01:00 on 10 November in Pune, still the 9th in UTC
+    monkeypatch.setattr(vc, "db", SimpleNamespace(one=lambda c, sql, *a: {"n": at}))
+    assert vc._today(conn) == dt.date(2026, 11, 10)
+
+
 def _rows(conn, confirmation):
     return {
         str(r["child_id"]): r

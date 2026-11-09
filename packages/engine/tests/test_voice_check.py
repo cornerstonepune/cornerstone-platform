@@ -8,7 +8,7 @@ import os
 import pytest
 
 from engine.core import db
-from engine.w3_read import voice_check, voice_store
+from engine.w3_read import voice_check, voice_intake, voice_store
 from tests.voice_rows import a_k2_class, a_note
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
@@ -66,30 +66,64 @@ def test_a_typed_transcript_is_read_against_the_class_and_writes_nothing(conn):
     assert conn.execute("select count(*) n from pii.educator_note").fetchone()["n"] == before
 
 
-def test_with_no_retention_decided_every_recording_is_kept(conn, tmp_path):
+def test_one_recording_that_cannot_be_deleted_does_not_undo_the_notes_that_were_cleaned(conn, tmp_path):
     k = a_k2_class(conn)
-    note = a_note(conn, k, "Activity 12. Above 3.", hours_ago=24 * 400)
-    conn.execute("update pii.educator_note set status = 'confirmed' where id = %s", (note["id"],))
-    voice_store.save(note["audio_key"], b"placeholder-audio")
-    assert voice_store.retention(conn) == (None, 0)
-    assert (tmp_path / note["audio_key"]).exists()
+    stuck = a_note(conn, k, "Activity 12. Above 3.", hours_ago=60)
+    fine = a_note(conn, k, "Activity 12. Above 4.", hours_ago=60)
+    for n in (stuck, fine):
+        voice_store.save(n["audio_key"], b"placeholder-audio")
+    (tmp_path / stuck["audio_key"]).unlink()
+    (tmp_path / stuck["audio_key"]).mkdir()  # a path no unlink can remove
+    ((tmp_path / stuck["audio_key"]) / "held").write_bytes(b"x")
+    got = voice_intake.cleanup(conn)
+    assert got["stuck"] >= 1
+    assert got["recordings"] >= 1  # the note that could be cleaned was counted
+    row = {
+        r["id"]: r
+        for r in conn.execute(
+            "select id, transcript, audio_deleted_at, transcript_cleared_at from pii.educator_note where id = any(%s)",
+            ([stuck["id"], fine["id"]],),
+        ).fetchall()
+    }
+    assert row[fine["id"]]["transcript"] is None and row[fine["id"]]["audio_deleted_at"] is not None
+    assert (
+        row[stuck["id"]]["transcript"] and row[stuck["id"]]["audio_deleted_at"] is None
+    )  # words stay with the file
 
 
-def test_a_retention_deletes_only_finished_recordings_older_than_it(conn, tmp_path):
+def test_a_cleanup_deletes_the_recording_and_transcript_of_notes_past_the_hours_a_note_waits(conn, tmp_path):
     k = a_k2_class(conn)
-    old = a_note(conn, k, "Activity 12. Above 3.", hours_ago=24 * 40)
-    waiting = a_note(conn, k, "Activity 12. Above 4.", hours_ago=24 * 40)  # still drafted: kept
-    young = a_note(conn, k, "Activity 12. Above 5.", hours_ago=24 * 5)
-    for n in (old, young):
-        conn.execute("update pii.educator_note set status = 'confirmed' where id = %s", (n["id"],))
+    old = a_note(conn, k, "Activity 12. Above 3.", hours_ago=60)
+    waiting = a_note(conn, k, "Activity 12. Above 4.", hours_ago=60)  # never confirmed: its copies go too
+    young = a_note(conn, k, "Activity 12. Above 5.", hours_ago=5)
+    conn.execute("update pii.educator_note set status = 'confirmed' where id = %s", (old["id"],))
     for n in (old, waiting, young):
         voice_store.save(n["audio_key"], b"placeholder-audio")
-    conn.execute("update config set value = '30'::jsonb where key = 'voice.audio_retention_days'")
-    assert voice_store.retention(conn) == (30, 1)
-    assert [(tmp_path / n["audio_key"]).exists() for n in (old, waiting, young)] == [False, True, True]
-    assert conn.execute(
-        "select audio_key from pii.educator_note where id = %s", (old["id"],)
-    ).fetchone()  # row kept
+    voice_intake.cleanup(conn)
+    assert [(tmp_path / n["audio_key"]).exists() for n in (old, waiting, young)] == [False, False, True]
+    kept = {
+        r["id"]: r["transcript"]
+        for r in conn.execute(
+            "select id, transcript from pii.educator_note where id = any(%s)",
+            ([n["id"] for n in (old, waiting, young)],),
+        ).fetchall()
+    }
+    assert (
+        kept[old["id"]] is None and kept[waiting["id"]] is None and kept[young["id"]]
+    )  # rows stay, words go
+
+
+def test_a_note_whose_words_were_cleared_is_counted_as_cleared_not_as_missing(conn):
+    k = a_k2_class(conn)
+    note = a_note(conn, k, "Activity 12. Above 3.", hours_ago=60)
+    conn.execute("update pii.educator_note set status = 'left_unconfirmed' where id = %s", (note["id"],))
+    conn.execute(
+        "update pii.educator_note set transcript = null, transcript_cleared_at = now() where id = %s",
+        (note["id"],),
+    )
+    s = voice_check.score(conn, [{"note_id": str(note["id"]), "activity": k["activity"], "above": ["3"]}])
+    assert s.cleaned == [str(note["id"])] and s.missing == [] and s.notes == 0
+    assert any(line.startswith("words cleared after 48 hours") for line in s.lines())
 
 
 def test_the_expected_file_is_plain_json_a_person_can_write():

@@ -72,8 +72,8 @@ icon dependency; before it, every icon was drawn by hand. One icon per concept, 
 
 - `bin/engine read voice switch screens on --by <your email>` (and `off`; and `recording on|off`). Each turn writes
   the config row and an `access_log` line under the signer's staff id (`core/signer.py`, as a people load is signed);
-  nothing prints an email. `recording on` is refused without `--retention-ref "<reference of Sarvam's written No
-  retention>"` (D-065), and the reference is kept in the log. No raw SQL on live; no migration.
+  nothing prints an email. `recording on` no longer needs Sarvam's letter (CP-10): that is a separate record,
+  `switch sarvam on --by <email> --ref "<reference of Sarvam's written No retention>"` (D-065), and the reference is kept in the log. No raw SQL on live; no migration.
 - The form's activity picker held only activities with a number; the K2 sheet leaves 321 of live's 871 without one
   (orchestrator, checked on live, 4 Nov). It now holds every activity of the grade, numbered ones first; one with no
   number is found by a word of its name and shown by its name alone.

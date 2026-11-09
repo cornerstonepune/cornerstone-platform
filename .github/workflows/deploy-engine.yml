@@ -174,7 +174,8 @@ jobs:
                 sudo docker cp deploy-engine-1:/app/data/. ~/cornerstone/data/ 2>/dev/null \
                   && echo "carried $(find ~/cornerstone/data -type f | wc -l) files across" \
                   || echo "the old container had no data folder"
-              fi'
+              fi
+              mkdir -p ~/cornerstone/data/voice'  # the voice clean-up (CP-10) fails, on purpose, if this folder is not there
           # the new engine answers beside the old before the old is replaced, so the engine never goes away
           # (deploy/switch.sh, goals/l8-deploy-without-downtime.yaml)
           $S "cd ~/assessment-engine/deploy && sudo ENGINE_HOST=$ENGINE_HOST HOME=/home/ubuntu PACKS_AS_RECORDED='${PACKS:-/unused/packs}' bash switch.sh"
