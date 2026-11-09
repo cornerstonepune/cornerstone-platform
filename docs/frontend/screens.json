@@ -1708,7 +1708,7 @@
       "next": "the skill",
       "data": "child_observed_state (K2) or child_skill_state (grades 1–4) for the class by skill; graph_run date",
       "empty": "No child seen yet: the grid of dashed squares with 'not seen yet, nothing more'",
-      "phone": "6 columns of 44 px squares",
+      "phone": "3 columns of squares (a name and a state word do not fit a 44 px square; SPEC §2 rule 10)",
       "folds": [
         "/growth (Class results)",
         "/growth/class/[section]"
@@ -1717,7 +1717,7 @@
         "an empty square's title reads 'not seen yet', never 'not secure'",
         "each square shows the Sr. No. and the child's name read from pii by child_id, and no photo (DOM scan)",
         "the stack bar's counts equal the squares by state",
-        "the squares are in Sr. No. order, 10 per row at 1440, 8 at 400"
+        "the squares are in Sr. No. order, 8 per row at 1440, 3 at 400"
       ]
     },
     {
@@ -2642,7 +2642,7 @@
       "next": "the next skill",
       "data": "child_observed_state / child_skill_state by skill; skill_link_confirmed; skill_level; misconception",
       "empty": "nobody seen on it yet",
-      "phone": "grid 6 columns of 44 px squares",
+      "phone": "grid of 3 columns of squares (SPEC §2 rule 10)",
       "folds": [
         "/skill-sets/[code]",
         "/skill-sets/[code]/edit"
