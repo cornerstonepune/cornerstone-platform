@@ -1,13 +1,13 @@
 """Where a K2 voice note's recording is kept (task M1-01): the engine box's own disk, under the gitignored `data/`
 folder, as scans are (`data/scans`). Only the key, `voice/<year>/<note id>.<ext>`, is in the database; the recording
-never enters git (`.gitignore` refuses audio) or a log. How long a recording is kept is O-14, open: config row
-`voice.audio_retention_days`, null keeps it (`engine read voice retention`)."""
+never enters git (`.gitignore` refuses audio) or a log. A recording is deleted `voice.confirm_within_hours` after the
+note was received, by `voice_intake.cleanup` (`engine read voice cleanup`, run hourly by n8n's F5)."""
 
 import re
 import uuid
 from pathlib import Path
 
-from engine.core import db, settings
+from engine.core import db
 
 ROOT = db.REPO_ROOT / "data"
 KINDS = {".m4a", ".mp3", ".wav", ".ogg", ".opus", ".webm", ".aac", ".mp4", ".flac"}
@@ -52,24 +52,3 @@ def read(key: str) -> bytes:
     if not p.exists():
         raise Refused("This recording is no longer kept.", 404)
     return p.read_bytes()
-
-
-def retention(conn: db.Conn) -> tuple[int | None, int]:
-    """→ (the days a recording is kept, how many were deleted). With no number decided (O-14) nothing is deleted.
-    Only a recording of a note that is finished (confirmed, or left unconfirmed) and older than that is deleted; its
-    row and its key stay, so a page says the recording is no longer kept."""
-    days = settings.config(conn, "voice.audio_retention_days")
-    if days is None:
-        return None, 0
-    rows = conn.execute(
-        "select audio_key from pii.educator_note where status in ('confirmed', 'left_unconfirmed')"
-        " and received_at < now() - make_interval(days => %s)",
-        (int(days),),
-    ).fetchall()
-    gone = 0
-    for r in rows:
-        p = path(r["audio_key"])
-        if p.exists():
-            p.unlink()
-            gone += 1
-    return int(days), gone

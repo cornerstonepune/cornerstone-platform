@@ -35,7 +35,7 @@ says:
   - words: "All parts should just function like a well-oiled machine, right?"
     proved_by: "apps/web/tests/u64-what-needs-doing-groups.spec.ts::with recording off the K2 group reads Fill the form and each class opens the form, never Record (D-065)"
   - words: "All parts should just function like a well-oiled machine, right?"
-    proved_by: "packages/engine/tests/test_voice_switch.py::test_recording_does_not_go_on_without_the_written_no_retention_reference"
+    proved_by: "packages/engine/tests/test_voice_switch.py::test_recording_goes_on_without_a_reference_and_sarvams_no_retention_is_a_record_that_needs_one"
   - words: "All parts should just function like a well-oiled machine, right?"
     proved_by: "packages/engine/tests/test_voice_switch.py::test_a_member_of_staff_turns_the_screens_on_and_off_and_each_turn_is_logged_by_staff_id"
   - words: "All parts should just function like a well-oiled machine, right?"

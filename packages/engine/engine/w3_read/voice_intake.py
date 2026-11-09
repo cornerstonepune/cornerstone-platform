@@ -8,6 +8,8 @@ with no child, an activity not on the list, is a problem shown to her, never gue
 """
 
 import datetime as dt
+import os
+import time
 import uuid
 from dataclasses import dataclass, field
 from zoneinfo import ZoneInfo
@@ -210,3 +212,60 @@ def expire(conn: db.Conn) -> int:
         " and received_at <= now() - make_interval(hours => %s)",
         (int(hours),),
     ).rowcount
+
+
+class CleanupFailed(Exception):
+    """A clean-up run that could not finish. Its words carry counts only: they are written to the run's record."""
+
+
+def cleanup(conn: db.Conn) -> dict[str, int]:
+    """Every note past the hours a note waits (`voice.confirm_within_hours`, 48) loses its raw copies: first the
+    recording, then, only once that is gone, the transcript (CP-10). What she confirmed stays: the observation, its
+    evidence, her decision on each line, and her free sentence (kept here when it was not yet; the child's page reads
+    it from the note). Each note's row keeps when its recording was deleted and its transcript cleared. Counts only.
+    A recording that cannot be deleted fails the run, and its note is tried again at the next one. A recordings folder
+    that cannot be read fails it before anything is cleared, so an unmounted disk never reads as "all deleted"."""
+    hours = int(settings.config(conn, "voice.confirm_within_hours", 48))
+    folder = voice_store.ROOT / "voice"
+    if not (folder.is_dir() and os.access(folder, os.R_OK | os.X_OK)):
+        raise CleanupFailed("the recordings folder cannot be read; nothing was cleared")
+    left = expire(conn)
+    notes = conn.execute(
+        "select id, status, audio_key, transcript, sentence from pii.educator_note"
+        " where received_at <= now() - make_interval(hours => %s)"
+        " and (audio_deleted_at is null or transcript_cleared_at is null) order by received_at",
+        (hours,),
+    ).fetchall()
+    gone = stuck = 0
+    for n in notes:
+        try:
+            voice_store.path(n["audio_key"]).unlink(missing_ok=True)
+        except OSError:
+            stuck += 1  # the recording stays, so its words do too
+            continue
+        gone += 1
+        sentence = n["sentence"]
+        if sentence is None and n["status"] == "confirmed" and n["transcript"]:
+            sentence = voice_note.sentence(n["transcript"])
+        conn.execute(
+            "update pii.educator_note set transcript = null, sentence = %s, audio_deleted_at = now(),"
+            " transcript_cleared_at = now() where id = %s",
+            (sentence, n["id"]),
+        )
+    kept = {r["audio_key"] for r in conn.execute("select audio_key from pii.educator_note").fetchall()}
+    cutoff = time.time() - hours * 3600
+    orphans = 0
+    for f in folder.rglob("*"):  # a recording whose note was never written (a save whose commit failed)
+        if (
+            f.is_file()
+            and f.stat().st_mtime < cutoff
+            and f.relative_to(voice_store.ROOT).as_posix() not in kept
+        ):
+            try:
+                f.unlink()
+                orphans += 1
+            except OSError:
+                stuck += 1
+    if stuck:
+        raise CleanupFailed(f"{stuck} recordings could not be deleted")
+    return {"notes": len(notes), "recordings": gone, "no_note": orphans, "left_unconfirmed": left}

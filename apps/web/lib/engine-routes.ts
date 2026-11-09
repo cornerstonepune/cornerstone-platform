@@ -114,6 +114,7 @@ export type EngineRoutes = {
   "POST /timetable/rules/read": { actor: string; class_id?: string | null };
   "POST /timetable/week": { actor: string; class_id?: string | null; day?: string | null; week_of?: string | null; period_id?: string | null };
   "POST /voice/class": { actor: string; class_id: string; day?: string | null };
+  "POST /voice/cleanup": null;
   "POST /voice/form": { actor: string; activity: string; level: number; lists?: Record<string, string[]>; rest?: boolean; day?: string | null; class_id: string };
   "POST /voice/notes": null;
   "POST /voice/notes/audio": { actor: string; note_id: string };

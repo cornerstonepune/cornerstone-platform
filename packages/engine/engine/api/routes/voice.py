@@ -9,12 +9,13 @@ import mimetypes
 import os
 from typing import Literal
 
-from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Request
+from fastapi import APIRouter, BackgroundTasks, Depends, Header, HTTPException, Request
 from fastapi.responses import Response
 from pydantic import BaseModel, Field
 
 from engine.adapters import speech
-from engine.api.deps import get_conn, require_engine_key, require_upload_token
+from engine.api.deps import get_conn, get_tenant_id, require_engine_key, require_upload_token
+from engine.api.idempotency import run_idempotent
 from engine.core import db
 from engine.w3_read import voice_confirm, voice_intake, voice_note, voice_store
 
@@ -213,3 +214,19 @@ def correct(body: Correction, conn=Depends(get_conn, scope="function")):
     except voice_store.Refused as no:
         raise _refused(no) from no
     return {"observation_id": str(new)}
+
+
+@keyed.post("/voice/cleanup")
+def cleanup(
+    idempotency_key: str | None = Header(None, alias="Idempotency-Key"),
+    conn=Depends(get_conn, scope="function"),
+    tenant_id: str = Depends(get_tenant_id),
+):
+    """The scheduled clean-up (CP-10, n8n's F5): every note past the hours a note waits loses its recording and
+    transcript. Runs whether or not the voice switches are on. The hour is the key, so a retry the same hour after a
+    failed run runs again and one after a good run returns that run's counts; a run is on record as counts only."""
+    key = idempotency_key or f"voice-cleanup-{dt.datetime.now(dt.UTC):%Y-%m-%d-%H}"
+    result, already = run_idempotent(
+        conn, tenant_id, "voice_cleanup", key, {}, lambda: voice_intake.cleanup(conn)
+    )
+    return {**result, "already": already}

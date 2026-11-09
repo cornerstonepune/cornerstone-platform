@@ -19,12 +19,22 @@ import pytest
 from engine.assess import graph
 from engine.core import db
 from engine.w3_read import k2_picture_reads as reads
+from engine.w3_read import voice_note
 from engine.w3_read.voice_store import Refused
 from tests.rows import a_child
 from tests.test_k2_reads import BANNED, Counting, _coordinator, _walk
 from tests.voice_rows import a_k2_class, a_note
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
+
+
+def _confirm(conn, note):
+    """The note confirmed, with her free sentence kept on it as `confirm_note` keeps it (the transcript goes later)."""
+    conn.execute(
+        "update pii.educator_note set status = 'confirmed', sentence = %s where id = %s",
+        (voice_note.sentence(note["transcript"]), note["id"]),
+    )
+
 
 MARK = {0: "not_yet", 1: "not_yet", 2: "sometimes", 3: "yes"}  # worked by hand, not read from the rows
 MOVE = {"above": 1, "as_expected": 0, "below": -1}
@@ -182,7 +192,7 @@ def test_a_childs_page_lists_her_skills_newest_first_with_the_sentence_she_said(
         k["skills"][1],
     )  # roll 9 shares the remainder 1 with skills 1, 5, 9, 13, 17
     note = a_note(conn, k, "Activity 12. Above 9. The rest did as expected. She counted to twenty today.")
-    conn.execute("update pii.educator_note set status = 'confirmed' where id = %s", (note["id"],))
+    _confirm(conn, note)
     _observe(conn, k, child, k["skills"][5], 15, "above", note=note["id"])
     graph.rebuild(conn, child)
     page = reads.child_page(conn, k["email"], k["class"], "9")
@@ -289,7 +299,7 @@ def _with_sentence(conn, sentence):
             (first, last, k["children"][roll]),
         )
     note = a_note(conn, k, SAID.format(sentence))
-    conn.execute("update pii.educator_note set status = 'confirmed' where id = %s", (note["id"],))
+    _confirm(conn, note)
     _observe(conn, k, k["children"]["9"], k["skills"][5], 15, "above", note=note["id"])
     graph.rebuild(conn, k["children"]["9"])
     return k

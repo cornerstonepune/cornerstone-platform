@@ -15,7 +15,7 @@ import unicodedata
 from zoneinfo import ZoneInfo
 
 from engine.core import db, settings
-from engine.w3_read import k2_growth, voice_intake, voice_note
+from engine.w3_read import k2_growth, voice_intake
 from engine.w3_read.voice_store import Refused
 
 CELLS_SQL = """
@@ -179,12 +179,12 @@ def child_page(conn: db.Conn, email: str, class_id: str, roll_no: str) -> dict:
     notes = {
         n["id"]: n
         for n in conn.execute(
-            "select id, transcript, staff_id from pii.educator_note where id = any(%s)",
+            "select id, sentence, staff_id from pii.educator_note where id = any(%s)",
             ([c["note_id"] for c in cells if c["note_id"]],),
         ).fetchall()
     }
     cells.sort(key=lambda c: (c["last_seen"], c["skill_code"]), reverse=True)
-    said = {i: _sentence(n) for i, n in notes.items()}
+    said = {i: n["sentence"] for i, n in notes.items()}  # kept at confirm; the transcript it came from goes
     # before the name check: if that check's read fails it leaves the transaction aborted, and these reads would fail with it
     moved = _growth_and_next(conn, where, roll_no, cells, names_by_code)
     names: set[str] | None = None
@@ -262,8 +262,3 @@ def _growth_and_next(
             for r in ready
         ],
     }  # fmt: skip
-
-
-def _sentence(note: dict) -> str | None:
-    line = voice_note.read(note["transcript"] or "").line("sentence")
-    return (line.text or line.words) if line else None

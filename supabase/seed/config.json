@@ -482,7 +482,7 @@
     },
     {
       "key": "voice.confirm_within_hours",
-      "description": "A K2 voice note not confirmed within this many hours leaves the educator's queue, is kept as unconfirmed, and never becomes evidence (observation model, section 4). The migration 20261226090000 writes the same for every school.",
+      "description": "A K2 voice note not confirmed within this many hours leaves the educator's queue, is kept as unconfirmed, and never becomes evidence (observation model, section 4). The migration 20261226090000 writes the same for every school. The same hours are how long a note's recording and transcript are kept: the clean-up deletes both then (CP-10).",
       "value": 48,
       "seed_once": true
     },
@@ -495,12 +495,6 @@
       "key": "k2.child_page",
       "description": "What a K2 child's page takes from the school: how many months a skill must have been seen in before its growth shows a trend (fewer reads 'too few'), and which skill states count as done when working out what is ready next. Only 'secure' is done; 'secure, to re-check' is not (orchestrator, 5 Nov).",
       "value": {"growth_min_months": 2, "done_states": ["secure"]}
-    },
-    {
-      "key": "voice.audio_retention_days",
-      "description": "How many days a voice note's audio is kept. Not decided (O-14): null keeps it. Nothing deletes audio until this is a number and a deletion is built.",
-      "value": null,
-      "seed_once": true
     },
     {
       "key": "voice.outcome_moves_level",
@@ -741,7 +735,13 @@
     },
     {
       "key": "voice.recording_enabled",
-      "description": "Whether the K2 educator may record a spoken note (and hear it back), on top of voice.screens_enabled. Off until Sarvam confirms 'No retention' in writing (D-065); with it off she uses the form, and no recording is kept or sent anywhere. A missing row is off.",
+      "description": "Whether the K2 educator may record a spoken note (and hear it back), on top of voice.screens_enabled. Turned on by `engine read voice switch recording on --by EMAIL`; with it off she uses the form, and no recording is kept or sent anywhere. Sarvam's 'No retention' (D-065) is a recorded setting, voice.sarvam_no_retention_confirmed, and not a condition. A missing row is off.",
+      "value": false,
+      "seed_once": true
+    },
+    {
+      "key": "voice.sarvam_no_retention_confirmed",
+      "description": "Whether Sarvam's written 'No retention' for the school's workspace has been recorded (D-065). Not a gate: recording works with it false. Set by `engine read voice switch sarvam on --by EMAIL --ref REFERENCE`, which logs who and the reference. A missing row is false.",
       "value": false,
       "seed_once": true
     },

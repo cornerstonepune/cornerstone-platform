@@ -130,9 +130,9 @@ def _claims(conn: db.Conn, note: dict, found: voice_intake.Resolved, final: Conf
         same = read_as == kept[line.section]
         decision = "accepted" if same else ("removed" if not kept[line.section] else "changed")
         conn.execute(
-            "insert into pii.note_claim (tenant_id, note_id, section, read_as, words, span_start, span_end, decision,"
-            " kept_as, decided_by) values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
-            (note["tenant_id"], note["id"], line.section, ", ".join(read_as), line.words, max(start, 0),
+            "insert into pii.note_claim (tenant_id, note_id, section, read_as, span_start, span_end, decision,"
+            " kept_as, decided_by) values (%s, %s, %s, %s, %s, %s, %s, %s, %s)",
+            (note["tenant_id"], note["id"], line.section, ", ".join(read_as), max(start, 0),
              max(start, 0) + len(line.words), decision, ", ".join(kept[line.section]) if decision == "changed" else None,
              staff),
         )  # fmt: skip
@@ -162,7 +162,10 @@ def confirm_note(conn: db.Conn, note_id: str, email: str, final: Confirmed) -> u
     at = _observed_at(conn, final.day, note["received_at"])
     # confirmed first, in the same transaction: the database refuses evidence from a note that is not
     # (`internal.evidence_of_a_confirmed_note`), and a refusal below undoes the confirmation with everything else
-    conn.execute("update pii.educator_note set status = 'confirmed' where id = %s", (note["id"],))
+    conn.execute(
+        "update pii.educator_note set status = 'confirmed', sentence = %s where id = %s",
+        (voice_note.sentence(note["transcript"] or ""), note["id"]),
+    )  # her free sentence is kept; the transcript it came from is cleared after the hours a note is kept
     confirmation = _write(
         conn,
         class_id=note["class_id"],

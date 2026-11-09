@@ -343,3 +343,9 @@ def read(transcript: str, tpl: Template | None = None) -> Draft:
         day,
         day_problems,
     )
+
+
+def sentence(transcript: str) -> str | None:
+    """The free sentence of a note, as the child's page shows it. Kept at confirm: the transcript it is read from goes."""
+    line = read(transcript).line("sentence")
+    return (line.text or line.words) if line else None

@@ -110,18 +110,16 @@ reads, each line beside its words, a person confirms.
 
 The engine runs on the box as the container `deploy-engine-1`. The deploy runs its commands as
 `sudo docker exec deploy-engine-1 engine …` (`.github/workflows/deploy-engine.yml`), so the timer does the same. On the box,
-`sudo crontab -e`, then add these two lines exactly (the box's clock is UTC):
+`sudo crontab -e`, then add this line exactly (the box's clock is UTC). **The second line this note used to give, `retention`, is gone (CP-10):
+recordings and transcripts are deleted by `engine read voice cleanup`, which n8n's F5 calls hourly; see `docs/notes/CP-10.md`.**
 
     17 * * * * docker exec deploy-engine-1 engine read voice expire >> /var/log/voice-expire.log 2>&1
-    43 21 * * * docker exec deploy-engine-1 engine read voice retention >> /var/log/voice-retention.log 2>&1
 
 - **The first line, hourly:** a note past `voice.confirm_within_hours` (48) is left unconfirmed and never becomes
   evidence. Confirm already refuses a late note by itself, so this keeps the queue and the coordinator's count honest.
   It is safe to run at any time and changes nothing the second time.
-- **The second line, daily at 03:13 in Pune:** it deletes nothing while `voice.audio_retention_days` is null (O-14,
-  open). It prints "kept: … nothing deleted" until Nimish sets a number. It is safe to add now.
-- Both print counts only, never a transcript, a name or which note. `tests/test_cli_voice.py` holds these two lines to
-  commands the engine has.
+- It prints counts only, never a transcript, a name or which note. `tests/test_cli_voice.py` holds this line to a
+  command the engine has.
 
 ## Step 4a extras, what any front end needs from the engine (branch m1-01-voice-engine-extras)
 

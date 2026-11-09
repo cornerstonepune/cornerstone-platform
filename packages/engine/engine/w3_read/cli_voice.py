@@ -1,10 +1,10 @@
-"""`engine read voice expire`, `retention`, `check`, `replay` and `switch` (tasks M1-01, M1-04): the two jobs a K2 voice
-note needs on a clock, the reader's score against what was said, a typed transcript read with no recording, and the
-two switches turned by a signed command (`voice_switch.py`).
+"""`engine read voice expire`, `cleanup`, `status`, `check`, `replay` and `switch` (tasks M1-01, M1-04, CP-10): the two
+jobs a K2 voice note needs on a clock, what the switches and the last run say, the reader's score against what was said,
+a typed transcript read with no recording, and the switches turned by a signed command (`voice_switch.py`).
 
 `expire` leaves every note older than `voice.confirm_within_hours` (48) unconfirmed: it leaves her queue and never
-becomes evidence. `retention` deletes recordings older than `voice.audio_retention_days`; that is O-14, open, and null
-keeps every recording, so today it deletes nothing. Neither prints a transcript, a name or a recording.
+becomes evidence. `cleanup` (n8n's F5 calls it hourly through `POST /voice/cleanup`) also deletes the recording and the
+transcript of every note that old. None prints a transcript, a name or a recording.
 """
 
 import json
@@ -13,7 +13,7 @@ from pathlib import Path
 import typer
 
 from engine.core import db
-from engine.w3_read import voice_check, voice_intake, voice_store, voice_switch
+from engine.w3_read import voice_check, voice_intake, voice_switch
 
 voice_app = typer.Typer(help="K2 voice notes", no_args_is_help=True)
 
@@ -25,15 +25,28 @@ def expire() -> None:
         typer.echo(f"left unconfirmed: {voice_intake.expire(conn)}")
 
 
-@voice_app.command("retention")
-def retention() -> None:
-    """Delete recordings older than the school's retention; with none decided, keep them all."""
+@voice_app.command("cleanup")
+def cleanup() -> None:
+    """Delete the recording and the transcript of every note older than the hours a note waits (counts only)."""
     with db.connect() as conn:
-        days, gone = voice_store.retention(conn)
-    if days is None:
-        typer.echo("kept: how long a recording is kept is not decided (O-14); nothing deleted")
-    else:
-        typer.echo(f"recordings deleted: {gone} (older than {days} days)")
+        try:
+            got = voice_intake.cleanup(conn)
+        except voice_intake.CleanupFailed as e:
+            conn.rollback()
+            typer.echo(str(e), err=True)
+            raise typer.Exit(1) from e
+        conn.commit()
+    typer.echo(
+        f"recordings deleted: {got['recordings']}; notes cleaned: {got['notes']}; files with no note: {got['no_note']}"
+    )
+
+
+@voice_app.command("status")
+def status() -> None:
+    """The voice switches, whether Sarvam's no-retention is recorded, and the last clean-up run."""
+    with db.connect() as conn:
+        for line in voice_switch.status(conn):
+            typer.echo(line)
 
 
 @voice_app.command("check")
@@ -61,17 +74,18 @@ def replay(
 @voice_app.command("switch")
 def switch(
     which: str = typer.Argument(
-        ..., help="screens (What needs doing, the form, Confirm) or recording (record and play)"
+        ...,
+        help="screens (What needs doing, the form, Confirm), recording (record and play) or sarvam (its no-retention)",
     ),
     state: str = typer.Argument(..., help="on or off"),
     by: str = typer.Option(..., "--by", help="your email, the one you sign in with; your staff id is logged"),
     retention_ref: str = typer.Option(
         None,
-        "--retention-ref",
-        help="recording on only: the reference of Sarvam's written 'No retention' (D-065)",
+        "--ref",
+        help="sarvam on only: the reference of Sarvam's written 'No retention' (D-065)",
     ),
 ) -> None:
-    """Turn a K2 voice switch on or off, logged under your staff id. Recording needs --retention-ref to go on."""
+    """Turn a K2 voice switch on or off, logged under your staff id. `sarvam` needs --ref to go on."""
     if state not in ("on", "off"):
         raise typer.BadParameter("say on or off")
     with db.connect() as conn:

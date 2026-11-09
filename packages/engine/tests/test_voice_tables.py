@@ -216,7 +216,7 @@ def test_the_engine_writes_and_never_deletes_and_the_website_never_sees_a_note(c
         _refused(conn, psycopg.errors.InsufficientPrivilege, sql)  # fmt: skip
 
 
-def test_the_words_and_the_waiting_time_are_rows_and_audio_is_kept_until_retention_is_decided(conn):
+def test_the_words_and_the_waiting_time_are_rows(conn):
     t = tenant(conn)
     words = lambda table: [  # noqa: E731
         r["code"]
@@ -233,7 +233,10 @@ def test_the_words_and_the_waiting_time_are_rows_and_audio_is_kept_until_retenti
             "select key, value from config where tenant_id = %s and key like 'voice.%%'", (t,)
         )
     }
-    assert (config["voice.confirm_within_hours"], config["voice.audio_retention_days"]) == (48, None)
+    assert config["voice.confirm_within_hours"] == 48
+    assert "voice.audio_retention_days" not in config, (
+        "retired by CP-10: the same hours keep a note's raw copies"
+    )
 
 
 def test_a_correction_is_of_the_same_child_and_activity_in_the_same_school_and_happens_once(conn):
