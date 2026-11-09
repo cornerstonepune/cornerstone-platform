@@ -1,7 +1,6 @@
 {
- "ok": false,
- "passed": [],
- "failed": [
+ "ok": true,
+ "passed": [
   "1 a draft records one line per period of each day of weeks A and B on its real date, with who and when",
   "2 a fortnight matching the last settled one rolls forward with no approval; any difference waits for approval",
   "3 approving records exactly one approval with who and when and counts as approved; rolled forward has none",
@@ -11,5 +10,6 @@
   "7 the fortnight cannot be marked approved while a class's fortnight is unsettled or stale",
   "8 the existing timetable and approval-list suites and the timetable pages are unchanged and pass"
  ],
- "ran_at": "2026-11-09T04:16:38+00:00"
+ "failed": [],
+ "ran_at": "2026-11-09T06:32:12+00:00"
 }
