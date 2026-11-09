@@ -16,6 +16,9 @@ Branch `cp-8-build`, from main at CP-4 (e575a38). Scope `specs/CP-8`, design `sp
 `docs/decisions/CP-8-not-written-draft.md`: `Decision: show` (a page marked "not written yet" may be shown, marked).
 Nimish answered "a" in chat on 9 Nov; the orchestrator relayed it.
 
+## Grade is a setting
+The commands' default grade is the config row `timetable.link_band` (`K2`), not Python (`test_grades.py`, rule 1); `--band` overrides it. A required `--band` would break the locked proofs, which call the commands without one (orchestrator chose this, 9 Nov).
+
 ## Item 1 target
 Not hard-coded. The proof reads an optional `Target: N%` line in `docs/decisions/CP-8-link-target.md`; without it the
 default is "no line with a match is left unlinked". Only `exact_name` exists as a rule: a further rule needs the box dry

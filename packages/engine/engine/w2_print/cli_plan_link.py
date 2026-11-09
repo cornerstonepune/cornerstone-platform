@@ -8,12 +8,21 @@ from uuid import UUID
 
 import typer
 
-from engine.core import db
+from engine.core import db, settings
 
 BY = "engine timetable link"
 REASONS = ("no_match", "several_matches", "ready_to_link")
 FORTNIGHT = typer.Option(None, "--fortnight", help="only this fortnight, by its number")
-BAND = typer.Option("K2", "--band", help="the grade whose classes are linked")
+BAND = typer.Option(
+    None, "--band", help="the grade whose classes are linked (default: the timetable.link_band row)"
+)
+
+
+def _band(conn: db.Conn, given: str | None) -> str:
+    band = given or settings.config(conn, "timetable.link_band")
+    if not band:
+        raise typer.BadParameter("no --band given and no timetable.link_band config row: run `engine load`")
+    return band
 
 
 def _lines(conn: db.Conn, tenant: str, band: str, fortnight: int | None) -> list[dict]:
@@ -50,11 +59,11 @@ def _counts(rows: list[dict]) -> None:
 def link(
     apply: bool = typer.Option(False, "--apply", help="write a run (otherwise a dry run: counts only)"),
     fortnight: int | None = FORTNIGHT,
-    band: str = BAND,
+    band: str | None = BAND,
 ) -> None:
     """Link every plan line that names exactly one activity. Counts per fortnight; a tie is never broken."""
     with db.connect() as conn:
-        tenant = db.tenant_slug()
+        tenant, band = db.tenant_slug(), _band(conn, band)
         if apply:
             run = db.one(
                 conn,
@@ -77,9 +86,10 @@ def link_undo(run: UUID = typer.Argument(..., help="the run id `link --apply` pr
     typer.echo(f"undid run {run}: {n} lines unlinked")
 
 
-def unmatched(fortnight: int | None = FORTNIGHT, band: str = BAND) -> None:
+def unmatched(fortnight: int | None = FORTNIGHT, band: str | None = BAND) -> None:
     """The lines with no activity, by fortnight, each with its reason (and week A or B when the fortnight has two)."""
     with db.connect() as conn:
+        band = _band(conn, band)
         rows = [r for r in _lines(conn, db.tenant_slug(), band, fortnight) if not r["linked"]]
     for n in sorted({r["fortnight"] for r in rows}):
         part = [r for r in rows if r["fortnight"] == n]

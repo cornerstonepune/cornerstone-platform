@@ -539,6 +539,11 @@
       "seed_once": true
     },
     {
+      "key": "timetable.link_band",
+      "description": "The grade whose plan lines `engine timetable link` and `unmatched` work on when no --band is given (CP-8). Today only K2 has a Monthly Planner.",
+      "value": "K2"
+    },
+    {
       "key": "timetable.vocabulary",
       "description": "How the K2 timetable generator reads the school's sheets (goals/m1-06-plan-today.yaml): which phrases in a period name its subject, which subject draws its lines from which Monthly Planner heading, which planner headings open a section, which sections head the week rather than fill a period, and which one-word lines join the line after them. A new wording in the school's sheet is an edit to this row, never to code.",
       "value": {
