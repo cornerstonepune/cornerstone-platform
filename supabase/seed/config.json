@@ -527,6 +527,18 @@
       "seed_once": true
     },
     {
+      "key": "graph.nightly_stale_hours",
+      "description": "How many hours the ledger of the nightly rebuild (graph_run) may go without an ok run before the live check says the nightly flow has stopped.",
+      "value": 26,
+      "seed_once": true
+    },
+    {
+      "key": "cp9.real_notes_from",
+      "description": "The date (YYYY-MM-DD) from which a K2 note counts as a real one, not a test, for the 20-notes acceptance gate. Empty until Nimish sets it at go-live.",
+      "value": "",
+      "seed_once": true
+    },
+    {
       "key": "timetable.vocabulary",
       "description": "How the K2 timetable generator reads the school's sheets (goals/m1-06-plan-today.yaml): which phrases in a period name its subject, which subject draws its lines from which Monthly Planner heading, which planner headings open a section, which sections head the week rather than fill a period, and which one-word lines join the line after them. A new wording in the school's sheet is an edit to this row, never to code.",
       "value": {

@@ -1,0 +1,31 @@
+{
+  "status": "built",
+  "locked_at": "2026-11-08T12:18:01+00:00",
+  "updated_at": "2026-11-09T03:59:09+00:00",
+  "started_at": "2026-11-09T03:57:39+00:00",
+  "blocked_at": "2026-11-08T12:59:18+00:00",
+  "blocked_reason": "Proof 1's access_table check reads a table CP-4 creates; CP-4 is not on main. The rest of CP-9 is built and passing. Needs CP-4 merged first (then the migration inserts graph_run and hand_check into access_table), or Nimish's decision to unlock and amend that one check.",
+  "built_at": "2026-11-09T03:59:09+00:00",
+  "box_pending": [
+    "1b LIVE: an ok nightly run is logged within graph.nightly_stale_hours (read-only)",
+    "6b LIVE: every logged run left evidence and states unchanged; first run counts equal before and after",
+    "7 LIVE manual gate: 20 real K2 notes confirmed and 5 children's hand calculations all match (counts only)"
+  ],
+  "files": [
+    ".claude/autoharness/",
+    "apps/web/.claude/autoharness/",
+    "apps/web/lib/",
+    "docs/notes/",
+    "n8n/",
+    "n8n/workflows/",
+    "packages/engine/.claude/autoharness/",
+    "packages/engine/engine/",
+    "packages/engine/engine/api/routes/",
+    "packages/engine/engine/checks/",
+    "packages/engine/engine/w3_read/",
+    "packages/engine/tests/",
+    "supabase/migrations/",
+    "supabase/seed/",
+    "workflows.json"
+  ]
+}

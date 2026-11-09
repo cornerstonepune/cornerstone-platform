@@ -17,6 +17,21 @@ Goal: none — the Athena scope CP-3 (locked scope: specs/CP-3); no goal file co
 - `own` = the classes of the person's current grants (ends on `valid_to`, the first day it no longer holds); for
   staff, their own row. The class decides, not the subject.
 
+## Amended by CP-4 (every other table)
+- Every table is a row of `access_table`, `data_class` `child_data` (kind, key column, key type) or `school_wide`
+  (one-line `reason`). `apply_conventions()` raises, naming the table, when a base table has no row: a new table fails
+  in its own migration. `app_all` is gone; school-wide tables get `web_all` (the website login, as before).
+- Why school-wide stays open to the website login: sign-in itself reads and writes seven of those tables before anyone is
+  signed in (`config`, `sign_in_failure`, `threshold`, `tenant`, `password_ask`, `password_link`, `web_error`), so a rule
+  needing an identity would switch brute-force protection off silently. Narrowing needs sign-in moved behind a
+  function first (a separate scope). Nothing is opened that was not open.
+- More kinds (`papers`, `answers`, `learning`, `reports`, `who_looked`, `consent`) and key types (`sheet`, `capture`,
+  `item_result` through `public.my_ids`; `section` through `public.my_sections`, for the class card, whose key is the
+  class label that `school_class.section` also carries). Rows with no such key are seen by `everything` only.
+  `who_looked` and `consent`: the register says the coordinator alone sees them, so `own_classes` is `none`.
+- Tables that only name a class (plan, timetable, materials) hold no child: school-wide, as the scope says of plan and
+  timetable.
+
 ## Rejected
 - Hand-written policies: `apply_conventions` re-runs every migration and would drop them; CP-4 needs the same list.
 - Restrictive policies: they need a permissive `using (true)` base, the very thing the live check forbids.
