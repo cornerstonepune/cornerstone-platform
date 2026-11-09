@@ -49,10 +49,11 @@ def may_record(conn: db.Conn, staff: uuid.UUID, class_id: str) -> None:
     """She records for a class only while she holds an open grant on it in a role that records
     (`voice.roles_that_record`, a config row). Anyone else is refused, a campus-wide role too unless the row names it."""
     roles = list(settings.config(conn, "voice.roles_that_record", []))
+    today = settings.school_today(conn)
     held = conn.execute(
         "select 1 from staff_role_grant where staff_id = %s and school_class_id = %s and role_code = any(%s)"
-        " and valid_from <= current_date and (valid_to is null or valid_to >= current_date)",
-        (staff, valid_id(str(class_id)), roles),
+        " and valid_from <= %s and (valid_to is null or valid_to >= %s)",
+        (staff, valid_id(str(class_id)), roles, today, today),
     ).fetchone()
     if held is None:
         raise voice_store.Refused("You do not hold this class.", 403)
@@ -63,7 +64,7 @@ def receive(conn: db.Conn, email: str, class_id: str, filename: str, data: bytes
     staff = staff_of(conn, email)
     may_record(conn, staff, class_id)
     note_id = uuid.uuid4()
-    key = voice_store.key_for(note_id, filename, dt.date.today().year)
+    key = voice_store.key_for(note_id, filename, dt.datetime.now(dt.UTC).year)
     note = conn.execute(
         "insert into pii.educator_note (id, tenant_id, staff_id, class_id, audio_key)"
         " select %s, c.tenant_id, %s, c.id, %s from school_class c where c.id = %s::text::uuid returning *",

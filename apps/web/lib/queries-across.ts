@@ -78,8 +78,8 @@ export async function across(actor: string, me: Who): Promise<Across> {
                         and a.request ->> 'qr' = si.qr_code order by a.started_at desc, a.id desc limit 1), false) = false
       )
       select section, class_band(tenant_id, section) as band, roll_no, qr, title, since::text as since,
-             (current_date - since)::int as days
-      from out where since < current_date - (select value from threshold where key = 'across.papers_missing_days')::int
+             ((now() at time zone (select value #>> '{}' from config where key = 'school.time_zone'))::date - since)::int as days
+      from out where since < (now() at time zone (select value #>> '{}' from config where key = 'school.time_zone'))::date - (select value from threshold where key = 'across.papers_missing_days')::int
       order by grade_ord(tenant_id, class_band(tenant_id, section)), section, roll_order(roll_no), roll_no, since`,
     // a child who needs help (a red state with enough answers) in two or more subjects; names read through
     // pii.read_child, which logs who asked

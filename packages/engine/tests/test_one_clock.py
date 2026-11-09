@@ -47,6 +47,40 @@ def test_the_zone_is_named_once_in_the_seed_and_nowhere_in_the_code():
     assert ZONE in (ROOT / "supabase" / "seed" / "config.json").read_text()
 
 
+SERVER_DATE = re.compile(r"\bdate\.today\(|\bdatetime\.now\(\s*\)|\bcurrent_date\b", re.I)
+
+
+def test_no_engine_or_website_source_reads_the_servers_date():
+    """CP-24 (audit F5): a date the school lives by comes from `settings.school_today` / `school_day` (engine) or
+    `lib/school-clock.ts` (website), never `date.today()`, a zone-less `datetime.now()` or SQL `current_date`. A moment
+    stamped in an explicit zone (`datetime.now(dt.UTC)`) is not a school date and is allowed."""
+    files = subprocess.run(
+        [
+            "git",
+            "ls-files",
+            "--cached",
+            "--others",
+            "--exclude-standard",
+            "packages/engine/engine",
+            "apps/web/lib",
+            "apps/web/app",
+        ],
+        cwd=ROOT,
+        capture_output=True,
+        text=True,
+        check=True,
+    ).stdout.split()
+    code = [f for f in files if re.search(r"\.(py|tsx?)$", f) and (ROOT / f).is_file()]
+    assert code, "git listed no source files"
+    hits = [
+        f"{f}:{n}: {line.strip()}"
+        for f in code
+        for n, line in enumerate((ROOT / f).read_text(errors="replace").splitlines(), 1)
+        if SERVER_DATE.search(line)
+    ]
+    assert hits == [], "source reads the server's date:\n" + "\n".join(hits)
+
+
 pytestmark_db = pytest.mark.skipif(
     not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)"
 )

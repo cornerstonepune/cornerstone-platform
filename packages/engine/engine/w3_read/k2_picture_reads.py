@@ -92,15 +92,15 @@ def _allowed(conn: db.Conn, email: str, class_id: str) -> dict:
         "select c.grade_code, c.section, (select z.value #>> '{}' from config z where z.key = 'school.time_zone') as zone,"
         " (select k.value from config k where k.key = 'k2.child_page') as child_page,"
         " exists (select 1 from staff_role_grant g where g.staff_id = %(staff)s and g.school_class_id = c.id"
-        "   and g.valid_from <= current_date and (g.valid_to is null or g.valid_to >= current_date)) as on_class,"
+        "   and g.valid_from <= %(today)s and (g.valid_to is null or g.valid_to >= %(today)s)) as on_class,"
         " exists (select 1 from staff_role_grant g join staff s on s.id = g.staff_id"
-        "   where g.staff_id = %(staff)s and g.valid_from <= current_date"
-        "   and (g.valid_to is null or g.valid_to >= current_date)"
+        "   where g.staff_id = %(staff)s and g.valid_from <= %(today)s"
+        "   and (g.valid_to is null or g.valid_to >= %(today)s)"
         "   and g.school_class_id is null and s.campus_id = c.campus_id"
         "   and g.role_code in (select jsonb_array_elements_text(k.value -> 'coordinator_roles')"
         "                       from config k where k.key = 'k2.reads')) as coordinator"
         " from school_class c where c.id = %(class)s",
-        {"staff": staff, "class": class_id},
+        {"staff": staff, "class": class_id, "today": settings.school_today(conn)},
     ).fetchone()
     if got is None:
         raise Refused("Not found.", 404)
