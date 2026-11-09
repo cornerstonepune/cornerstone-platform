@@ -57,6 +57,9 @@ export default async function StaffPage({ searchParams }: Props) {
           them from now on.
         </Notice>
       ) : null}
+      {q.denied ? (
+        <Notice tone="terracotta">Nothing changed: only the coordinators can change the staff list.</Notice>
+      ) : null}
       {q.refused && q.of === "new" ? (
         <Notice tone="terracotta">
           Nobody was added: {NOT_ADDED[q.refused] ?? "that cannot be saved"}.
