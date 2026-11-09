@@ -2,6 +2,8 @@
    (UI-14): every colour, font, size, shape, shadow and the press on every page comes from it. */
 @layer theme, tokens, base, components, utilities;
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 @import "../design-system/tokens.css" layer(tokens);
 
 /* Hover changes colour only, and only where there is a real pointer (a mouse or a trackpad), never on a touch screen. */
@@ -33,6 +35,25 @@
   --ink-09: color-mix(in srgb, var(--ink) 9%, transparent);
   --ink-03: color-mix(in srgb, var(--ink) 3%, transparent);
   --focus-ring: 2px solid var(--focus);
+  /* shadcn/ui's theme names (components/ui), each on the token of its role: the stock look is gone (UI-14). */
+  --background: var(--ground);
+  --foreground: var(--ink);
+  --card: var(--panel);
+  --card-foreground: var(--ink);
+  --popover: var(--panel);
+  --popover-foreground: var(--ink);
+  --primary: var(--action);
+  --primary-foreground: var(--action-ink);
+  --secondary: var(--surface);
+  --secondary-foreground: var(--ink);
+  --muted: var(--surface);
+  --muted-foreground: var(--ink-muted);
+  --accent: var(--highlight);
+  --accent-foreground: var(--ink);
+  --destructive: var(--state-late);
+  --border: var(--line);
+  --input: var(--line-control);
+  --ring: var(--focus);
 }
 
 @theme inline {
@@ -47,6 +68,24 @@
   --font-body: var(--font-sans);
   --font-heading: var(--font-serif);
   --radius: 0;
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
 }
 
 html {
