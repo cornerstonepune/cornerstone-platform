@@ -103,6 +103,21 @@ Scanned every school-wide table for json, jsonb, array and free-text columns (al
   class's plan and materials, written by educators; free text could name a child if the writer typed one),
   `english_sample`, `maths_sample`, `passage`, `curriculum_proposal` (curriculum content).
 
+## Before the site is switched to the restricted login (checklist; Nimish, 9 Nov: "access rules are not a gate anymore")
+The rules are inert until the site and the engine connect as `app_web` / `app_engine`. Clear these before that switch:
+- [ ] CP-3's switch-on gate: every sign-in entry resolves to one active staff row with the right grants; open enrolments per class.
+- [ ] Free text that could name a child, no key to protect it by: `staff_note` (doing, happened; also goes to GitHub),
+      `week_declaration.note`, `session.text`, `plan_entry.text`, `materials_*` text, `item_feedback.note`, `item_review.note`,
+      `ask.answer`. Decide: tell writers not to, or key each to its class.
+- [ ] `bank_proposal.evidence` and `learned_mistake.rule`: confirm the examples are never a live child's answer
+      (`w1_bank/learned.py` was read only in part).
+- [ ] `pii.read_child` and the security-definer functions `resolve_result`, `confirm_results`, `move_child`, `say_taught`
+      take any id (a guard is a separate scope). `config` holds the sign-in list's password hashes, open to the website login.
+- [ ] Class cards are keyed by the class label (`school_class.section`): check each class's card as its educator.
+- [ ] Re-run the full engine suite (last full run was before the `sheet_template`, `flow_run` and `approval` changes) and the
+      three browser shards against a copy of live, as the restricted login.
+- [ ] School-wide tables are still open to the website login (sign-in reads seven of them first): narrowing is its own scope.
+
 ## Handoff
 - Not live: both services still connect as the owner; nothing changes on the live site until the roles are switched on.
   Before that, run CP-3's switch-on gate and, per class, check the class card and papers pages as an educator.
