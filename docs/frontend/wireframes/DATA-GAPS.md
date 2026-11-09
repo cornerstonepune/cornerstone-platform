@@ -64,3 +64,13 @@ migrations, and fails if a row here does not name both the screen and the missin
 | `period`, `confirm` | the words above / as expected / below / not willing / absent | `observation_outcome` is not a target table | Do the outcome words become a `config` word list? |
 | `children` | attendance for the last 7 school days (a dashed placeholder column) | no target table holds attendance (`attendance_mark` in screens.json `data`) | A table or a column for daily presence, or drop the strip. |
 | `children` | notes waiting per child | a note names children only in `pii.note_claim.read_as` text; no `child_id` | Are children parsed into a child column on `pii.note_claim`, or is the count dropped? |
+
+## Found while drawing batch 2 (child, activity, objective, skill, today-educator)
+
+| Screen | What is missing | Why | Backend must answer |
+|---|---|---|---|
+| `child` | named days per skill | `child_skill_state` has `n_events` and `last_seen` but no count of distinct days (`child_observed_state.named_days` is not a target table) | Add a derived `named_days` column to `child_skill_state`, or compute it from `activity_observation` by date. |
+| `skill` | secure count per fortnight (the Spark) | Same as `picture`: `child_skill_state` keeps today only | One answer for both screens. |
+| `skill` | "Change a level's sentence" writes a `skill_level_version` row | `skill_level_version` is not a target table; `skill_level` has a `version` column | Does each save insert a new `skill_level` row with the next `version`? |
+| `activity` | which source each part came from (school / drafted / person) | `activity_skill`, `activity_objective` and `activity_material` carry `source`; the steps, thinking and level text on `activity` do not | A `source` per text part (a jsonb on `activity`, or rows in `curriculum_proposal`). Already listed above as `activity_part_source`. |
+| `activity` | a photo of the set-up attached to an activity | `capture` holds scanned sheets (`sheet_instance_id`), not photos of an activity; nothing may attach a photo to a child | A target for activity photos, or drop the capture from this screen. |
