@@ -48,8 +48,9 @@ create table if not exists fortnight_plan_line (
 create index if not exists fortnight_plan_fortnight_idx on fortnight_plan (school_class_id, fortnight_id);
 
 -- Nothing is ever deleted.
+-- (Not `internal.forbid_delete()`: its message tells the reader to end the row with valid_to, which a plan has not got.)
 create or replace function internal.fortnight_plan_no_delete() returns trigger
-language plpgsql as $$
+language plpgsql set search_path = public, pg_temp as $$
 begin
   raise exception 'a fortnight plan is never deleted' using errcode = 'P0001';
 end $$;
@@ -99,6 +100,9 @@ language sql stable set search_path = public as $$
   join timetable_slot s on s.school_class_id = p_class and s.week_code = w.code and s.weekday = g.wd
    and s.valid_from <= d.day and (s.valid_to is null or s.valid_to >= d.day)
   where f.id = p_fortnight
+    -- a holiday has no lessons (as CP-6's step dates and CP-22): the class's own campus decides
+    and not exists (select 1 from school_class c join school_day sd on sd.campus_id = c.campus_id
+                    where c.id = p_class and sd.on_date = d.day and sd.kind = 'holiday')
 $$;
 
 -- The lines of a draft: refused when a period has two slots on a date, or the class has no timetable in the fortnight.
@@ -144,17 +148,20 @@ language sql stable set search_path = public as $$
   from fortnight_plan_line l where l.fortnight_plan_id = p_plan
 $$;
 
--- Who may approve: an active member of staff of the school, holding a role valid today that CP-3 puts in one of the
--- groups the school's `fortnight.approver_groups` names. `current_staff()` is the website's identity (a uuid or nothing).
+-- Who may approve: the active member of staff the sign-in entry in `current_staff()` belongs to (CP-3's
+-- `resolve_staff()`; the entry id is not the staff id), holding a role on the school's today that CP-3 puts in one of
+-- the groups the school's `fortnight.approver_groups` names. A grant holds from valid_from and not on valid_to, as in
+-- CP-3's `my_reach`. No school clock, no grant.
 create or replace function internal.fortnight_is_approver(p_tenant uuid) returns boolean
 language sql stable security definer set search_path = public, pg_temp as $$
   select exists (
     select 1
-    from staff s
-    join staff_role_grant g on g.tenant_id = s.tenant_id and g.staff_id = s.id
+    from internal.resolve_staff() me
+    cross join lateral (select internal.school_day(me.tenant_id, now()) as d) today
+    join staff_role_grant g on g.tenant_id = me.tenant_id and g.staff_id = me.staff_id
+      and g.valid_from <= today.d and (g.valid_to is null or g.valid_to > today.d)
     join access_role_group rg on rg.tenant_id = g.tenant_id and rg.role_code = g.role_code
-    where s.id = public.current_staff() and s.tenant_id = p_tenant and s.active
-      and g.valid_from <= current_date and (g.valid_to is null or g.valid_to >= current_date)
+    where me.tenant_id = p_tenant
       and rg.group_code in (select jsonb_array_elements_text(c.value) from config c
                             where c.tenant_id = p_tenant and c.key = 'fortnight.approver_groups'
                               and jsonb_typeof(c.value) = 'array')
@@ -179,7 +186,7 @@ declare
   f fortnight%rowtype;
   cls school_class%rowtype;
   st text;
-  who text := coalesce(nullif(current_setting('app.changed_by', true), ''), public.current_staff()::text,
+  who text := coalesce(nullif(current_setting('app.changed_by', true), ''), (select staff_id::text from internal.resolve_staff()),
                        session_user::text);
   year_label text;
   exempt boolean;
@@ -252,7 +259,7 @@ create or replace function public.fortnight_approve(p_plan uuid) returns void
 language plpgsql security definer set search_path = public, pg_temp as $$
 declare
   p fortnight_plan%rowtype;
-  who text := coalesce(nullif(current_setting('app.changed_by', true), ''), public.current_staff()::text);
+  who text := coalesce(nullif(current_setting('app.changed_by', true), ''), (select staff_id::text from internal.resolve_staff()));
 begin
   select * into p from fortnight_plan where id = p_plan for update;
   if not found then

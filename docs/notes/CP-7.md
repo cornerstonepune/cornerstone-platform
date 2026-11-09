@@ -23,13 +23,19 @@ Branch `cp-7-build` from main after CP-6 (e7398d4). Scope `specs/CP-7` (lean, re
 - `workflows.json` N4: the command, and the two tables it gives.
 
 ## Decisions to know
-- The design said `internal.forbid_delete()`; no such function exists (`forbid_change` forbids updates too), so the
-  migration has a small delete-blocker of its own.
+- **Who is asking is the sign-in entry, not the staff id** (CP-3, ADR 0101): the approver check and the stamps go through
+  `internal.resolve_staff()`, "today" is the school's day (`internal.school_day`), and a grant holds from `valid_from`
+  and not on `valid_to`, exactly as CP-3's `my_reach`. Found by the independent verifier at b01827b: the locked proofs
+  give the sign-in entry and the staff row one uuid, so they could not see it. `tests/test_fortnight_plan.py` covers it
+  with a sign-in id that differs from the staff id, and the grant's end.
+- **A holiday has no lessons**: a draft skips a day the class's campus marks `holiday` in `school_day`, as CP-6's step
+  dates and CP-22 do. Decided by the orchestrator on 9 Nov; tested in `tests/test_fortnight_plan.py`.
+- `internal.forbid_delete()` exists, but its message says "end it with valid_to", which a plan has not got, so the
+  migration keeps a small delete-blocker of its own with a message that fits.
 - `tests/test_roles.py` lists the functions the website login may call; `fortnight_approve` is added (it is the point of
   CP-7, and it checks the approving group itself).
 
 ## Handoff
 - No screen yet: nothing calls `fortnight_approve` from the website, and `engine timetable draft` is the only way to draft.
   A frame change after a fortnight is `approved` leaves a later draft waiting; it does not move the fortnight back.
-- A holiday in `school_day` does not remove a day from the draft: the draft takes Monday to Friday of weeks A and B.
 - The coordinator is not shown which periods changed; there is no send-back reason (lean scope).
