@@ -1,0 +1,395 @@
+"""A child's own paper: the home paper chosen from the child's graph, or one a teacher asks for.
+
+A paper is asked for as areas — a skill set, a level, how many questions each. A home paper's one area is the
+engine's (`assess.focus.home`: the weakest skill, or a stretch); a custom paper's areas are the teacher's, any
+skills, any levels, any count. One engine makes both.
+
+`plan` draws the paper's questions: at random from the bank's active questions for each area, at the area's level, none the child
+was given in the last `exposure.days` days, the ones that can show the child's own repeated mistake first. It writes nothing, and the same
+child in the same week always gets the same plan, so what the Growth page shows is what `make` prints.
+
+`make` is a person approving that plan: it prints it as a paper with its QR, exactly as a library worksheet is
+handed out — a sheet_template made for this child, the child's sheet_instance, the questions recorded as seen — and
+the paper names who approved it. One next paper a week: a second approval is refused (`approved` says which).
+"""
+
+import json
+import random
+import re
+import tempfile
+from dataclasses import replace
+from datetime import UTC, datetime
+from fractions import Fraction
+from pathlib import Path
+
+from engine.assess import focus
+from engine.assess.pick import Sheet
+from engine.assess.render import render_sheet
+from engine.core import db, mistake_names, roster, settings, vocabulary
+from engine.w1_bank import question_types
+from engine.w1_bank.inventory import item_from_row
+from engine.w2_print import seen as shown
+from engine.w2_print.assemble import _qr
+from engine.w2_print.shelf import _levels, _once, catalog, home_length, rule, seen_by
+
+ASKED = "chosen by a teacher"  # an area an educator asked for has no state behind it
+NUMBER = ("one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten")
+WITHIN = re.compile(r"\{([a-z_.]+)\}")
+
+
+def share_words(share: float) -> str:
+    """A threshold's share as a paper says it: 0.5 "half", 0.8 "four in five", 0.75 "three in four"."""
+    f = Fraction(share).limit_denominator(10)
+    return "half" if f == Fraction(1, 2) else f"{NUMBER[f.numerator - 1]} in {NUMBER[f.denominator - 1]}"
+
+
+def reasons(conn) -> dict[str, str]:
+    """{state: the reason a paper prints for an area in it}, from each state's row (`child_state.why`), every
+    {threshold.key} in it said as that row's share — so the words follow the rule in force (ADR 0086)."""
+    return {
+        # a threshold with no row is NaN, which no share says: the paper is refused, never printed with a made-up share
+        s["code"]: WITHIN.sub(lambda m: share_words(settings.threshold(conn, m[1], float("nan"))), s["why"])
+        for s in vocabulary.states(conn)
+        if s["why"]
+    }
+
+
+HOW = {"focus": "chosen from their own checked papers", "custom": "chosen by their educator"}
+# What the paper says it is, at the top of the page: a paper chosen from a child's graph is the one sent home
+# (Nimish, 2026-09-24: "it needs to be explicitly written as home assessment").
+# Nimish, 2026-09-27: "The home assessment part reads as 'home assessment.'" A paper an educator chooses instead of
+# the proposed one is a different home assessment, so both say so; the week label says who chose it.
+TITLE = "Home assessment"
+# A paper the maker makes for the class (goal m3-the-maker) says so instead: it is sat in class, not sent home.
+TITLES = {"practice": "Class practice", "assessment": "Class assessment"}
+MOST_ASKED = 40
+PREVIEW = (
+    "PREVIEW"  # the QR a paper seen before approval carries: no sheet has it, so a stray copy never reads
+)
+NOTHING = "nothing to work on: the child's graph shows no area they lag in, or the bank has no unseen question for it"  # questions in one area of a paper a teacher asks for
+
+
+def question_text(item):
+    """The question as a line of text: its stem, or for a bare sum its numbers (the page prints it in full)."""
+    sp = item["spec"]
+    if item["fmt"] == "missing_digit" and "c" in sp:
+        return f"{sp['a']} {sp['op'].replace('-', '−')} {sp['b']} = {sp['c']}"
+    if item["stem"]:
+        return item["stem"]
+    if sp.get("text"):
+        return sp["text"]
+    nums = sp.get("addends") or [sp.get("a"), sp.get("b")]
+    how = " (in columns)" if sp.get("layout") == "column" else ""
+    return f" {sp.get('op', '+').replace('-', '−')} ".join(str(n) for n in nums) + " = ?" + how
+
+
+def _can_show(item, mistake):
+    return bool(mistake) and any(mistake in (r.get("misconceptions") or {}) for r in item["responses"])
+
+
+LONG_AGO = datetime.min.replace(tzinfo=UTC)
+
+
+def _draw(conn, whose, area, want, rng, days, taken=(), own=()):
+    """`want` active questions for one area at its level, never one this paper already holds (`own`), in the order a
+    paper takes them (goals/l6-a-paper-is-always-made.yaml): first those none of `whose` (one child, or every child of
+    a paper for all) was given in the last `days` days — the week's window — and no other child's paper of the batch
+    holds (`taken`); then, when those run short, those they were given longest ago; last, those another child's paper
+    holds. So a paper is short only when its level holds fewer questions than it asks. Within each, the area's own
+    skill first, and those that can show the child's repeated mistake before the rest. Each row says whether it is a
+    repeat (`recent`)."""
+    rows = conn.execute(
+        "select i.*, x.last as last_seen, coalesce(x.last > now() - make_interval(days => %s), false) as recent"
+        " from drawable_item i left join lateral (select max(e.created_at) as last from item_exposure e"
+        "   where e.child_id = any(%s::uuid[]) and e.item_id = i.id) x on true"
+        " where i.skill_set_code = %s and i.difficulty = %s order by i.item_key",
+        (days, list(whose), area.skill_set, area.level),
+    ).fetchall()
+    rng.shuffle(rows)
+
+    def order(r):
+        tier = 2 if str(r["id"]) in taken else 1 if r["recent"] else 0
+        when = r["last_seen"] if tier == 1 else LONG_AGO
+        return (tier, when, area.skill_code not in r["skill_codes"], not _can_show(r, area.mistake))
+
+    rows.sort(key=order)
+    return [r for r in rows if str(r["id"]) not in own][:want]
+
+
+def _short(k, name, level, earlier=False) -> str:
+    """Why an area cannot be filled, in words: it asks for more questions than its level holds at all."""
+    besides = " besides those on a line above" if earlier else ""
+    then = f"ask for {k} or fewer" if k else "choose another skill or level"
+    return f"{name} holds {k} questions at {level}{besides}; {then}"
+
+
+def _states(conn, child_id):
+    return conn.execute(
+        "select skill_code, rung_code, state, n_events, n_correct, repeating_misconception"
+        " from child_skill_state where child_id = %s",
+        (child_id,),
+    ).fetchall()
+
+
+def _where_it_shows(conn, area, levels) -> focus.Area:
+    """A repeated mistake is worked on where it can happen: the home paper moves up from its level to the first
+    the skill set defines whose questions can show the mistake. Taking the smaller digit from the larger needs an
+    exchange, which Easy never asks for — an Easy paper could not show the child the mistake it is for. When no level
+    from there up can show it, it moves down to the nearest that can: dividing a number by itself and writing 0 is a
+    mistake only MD.EQUALITY's Easy questions can show, made by a child mostly right, whose share calls for Medium.
+
+    The paper draws the child's own skill first (`_draw`), so a level is taken where questions of that skill can show
+    the mistake, and only failing that one where any of its questions can: reversing an equation's claim (equations'
+    mistake) shows at Medium only in a division check of another skill, and a Medium paper of equations never showed
+    it."""
+    if not area.mistake:
+        return area
+    defined = levels.get(area.skill_set, ())
+    order = rule(conn)["order"]
+    at = order.index(area.level)
+    up, down = order[at:], order[:at][::-1]
+    order = [d for d in (*up, *down) if d in defined]
+    rows = {
+        level: conn.execute(
+            "select responses, skill_codes from drawable_item where skill_set_code = %s and difficulty = %s",
+            (area.skill_set, level),
+        ).fetchall()
+        for level in order
+    }
+    for own in (True, False):
+        for level in order:
+            if any(
+                _can_show(r, area.mistake) and (not own or area.skill_code in r["skill_codes"])
+                for r in rows[level]
+            ):
+                return replace(area, level=level)
+    return area
+
+
+def _asked(conn, states, ask) -> list:
+    """The areas an educator asked for, each checked against the bank's own skill sets and levels: any skill set of any
+    topic at any level it has, taught in the class or not, whatever the grade. Her choice decides (L7, ADR 0081); what
+    the engine chooses by itself keeps to the class's grade and to what it was taught (`home_area`). Each comes with
+    the child's repeated mistake in that skill, if any, so the questions that can show it come first."""
+    cat = {c["code"]: c for c in catalog(conn, every=True)}
+    levels = _levels(conn)
+    out = []
+    for a in ask:
+        code, level, n = a.get("skill_set"), a.get("level"), a.get("n")
+        if code not in cat:
+            raise ValueError(f"no skill set {code!r}")
+        if level not in levels.get(code, ()):
+            raise ValueError(
+                f"{code} has no level {level!r}: it has {', '.join(levels.get(code, ())) or 'none'}"
+            )
+        if not isinstance(n, int) or not 1 <= n <= MOST_ASKED:
+            raise ValueError(f"ask for 1 to {MOST_ASKED} questions in an area, not {n!r}")
+        own = cat[code]["own"]
+        # the child's states on this skill set's own rung (ADR 0048: a rung is one skill set), whatever skill a mistake
+        # there was charged to; a state of the same skill on another rung is another skill set's
+        lagging = rule(conn)["lagging"]
+        mine = [x for x in states if x["rung_code"] == cat[code]["rung"] and x["state"] in lagging]
+        weakest = min(mine, key=lambda x: lagging.index(x["state"]), default=None)
+        mistake = weakest["repeating_misconception"] if weakest else None
+        out.append((focus.Area(code, own, level, 0, 0, mistake, "asked"), n))
+    return out
+
+
+def home_area(conn, child_id: str, states: list | None = None) -> list:
+    """[the one Area a child's home paper works on], at the level where its mistake shows — or [] when the graph shows
+    none. What `plan` draws a home paper from, and what Friday's class card names for each child."""
+    if states is None:
+        states = _states(conn, child_id)
+    child = conn.execute("select band, section from child where id = %s", (child_id,)).fetchone()
+    levels = _levels(conn, child["band"])
+    taught = catalog(conn, child["section"])
+    return [_where_it_shows(conn, a, levels) for a in focus.home(states, taught, rule(conn), levels)]
+
+
+def plan(conn, child_id: str, week: str, ask: list | None = None, taken=(), draw: int = 0) -> dict:
+    """The areas and the questions for a paper for this child; nothing is written. Without `ask`, the home paper
+    the graph proposes; with it, the areas a teacher asked for — refused, never padded, when the bank holds too
+    few questions the child has not seen. `taken`: questions already on another child's paper of the same batch.
+    `draw`: the educator's "different questions", the same areas drawn again (goals/preview-before-print.yaml)."""
+    states = _states(conn, child_id)
+    if ask:
+        chosen = _asked(conn, states, ask)
+    else:
+        n = home_length(conn)
+        chosen = [(a, n) for a in home_area(conn, child_id, states)]
+    rng = random.Random(f"{child_id}|{week}" + (f"|{draw}" if draw else ""))
+    return {
+        "child_id": child_id,
+        "week": week,
+        **drawn(conn, [child_id], chosen, rng, taken, strict=bool(ask)),
+    }
+
+
+def drawn(conn, whose, chosen, rng, taken=(), strict=True) -> dict:
+    """Each chosen (area, how many) filled as `_draw` orders the level's questions — none of `whose` was given lately
+    first, then the ones given longest ago — as a paper shows them, each area saying how many it repeats
+    (`seen_before`); `strict` refuses an area its level cannot fill at all rather than printing it short."""
+    names = _once(
+        "set names", lambda: {r["code"]: r["name"] for r in conn.execute("select code, name from skill")}
+    )
+    skills = _once(
+        "skill names",
+        lambda: {r["code"]: r["name"] for r in conn.execute("select code, name from registry_skill")},
+    )
+    name_of = _once("mistake names", lambda: mistake_names.names(conn))
+    days = _once("exposure days", lambda: settings.exposure_days(conn))
+    said = _once("reasons", lambda: reasons(conn))
+    # what the paper never repeats: its own lines' questions, or two lines alike drew the same (code review,
+    # 2026-09-30); another child's paper's questions it takes only last
+    out, own = [], set()
+    for i, (area, want) in enumerate(chosen):
+        questions = _draw(conn, whose, area, want, rng, days, set(taken), own)
+        own.update(str(q["id"]) for q in questions)
+        if strict and len(questions) < want:
+            alike = any((a.skill_set, a.level) == (area.skill_set, area.level) for a, _ in chosen[:i])
+            why = question_types.why_not(conn, area.skill_set, area.level)
+            raise ValueError(
+                _short(len(questions), names.get(area.skill_set), area.level, alike)
+                + (f": {why}" if why else "")
+            )
+        why = (
+            ASKED if area.state == "asked" else f"Right {area.right} of {area.answered} — {said[area.state]}"
+        )
+        if area.mistake:
+            why += f": {name_of(area.mistake, skill=area.skill_code)}"
+        out.append(
+            {
+                "skill_set": area.skill_set,
+                "name": names.get(area.skill_set, area.skill_set),
+                "skill": skills.get(area.skill_code, area.skill_code),
+                "level": area.level,
+                "right": area.right,
+                "answered": area.answered,
+                "mistake": area.mistake,
+                "why": why + ".",
+                "seen_before": sum(1 for q in questions if q["recent"]),
+                "questions": [
+                    {
+                        "item_key": q["item_key"],
+                        "text": question_text(q),
+                        "fmt": q["fmt"],
+                        "shows_mistake": _can_show(q, area.mistake),
+                        "id": str(q["id"]),
+                    }
+                    for q in questions
+                ],
+            }
+        )
+    return {"areas": out, "n": sum(len(a["questions"]) for a in out)}
+
+
+def approved(conn, child_id: str, week: str) -> dict | None:
+    """This week's home assessment for this child: the newest made, its QR, who approved it and when, and the QRs of
+    the earlier ones it replaced, newest first. Nimish, 2026-10-21: an educator makes it again as often as they like;
+    an earlier paper is kept and still reads as itself."""
+    rows = conn.execute(
+        "select qr_code as qr, approved_by, approved_at from sheet_instance"
+        # an edit's earlier copy is void (`edit_paper`): the edit replaced it, not a new paper
+        " where child_id = %s and week = %s and kind = 'focus' and print_status <> 'void'"
+        " order by created_at desc, id desc",
+        (child_id, week),
+    ).fetchall()
+    return {**rows[0], "replaced": [r["qr"] for r in rows[1:]]} if rows else None
+
+
+def make(
+    conn,
+    child_id: str,
+    week: str,
+    actor: str,
+    ask: list | None = None,
+    replaces: str | None = None,
+    draw: int = 0,
+    seen: str | None = None,
+) -> dict:
+    """`actor` approves the plan: it prints as this child's paper, its QR, its questions seen, and names them.
+    Made again the same week, the newest is the week's home assessment (`approved`): `replaces` is the one the
+    educator saw (None: none), and a click that saw an older one is refused, so two clicks together print one paper.
+    A teacher may ask for as many custom papers as the bank can fill. It prints the `draw` the educator saw, and only
+    while it is still the questions they saw (`seen`, `seen.check`)."""
+    # one approval at a time per child, so two teachers clicking together cannot both print a paper at once
+    conn.execute("select id from child where id = %s for update", (child_id,))
+    kind = "custom" if ask else "focus"
+    now = None if ask else approved(conn, child_id, week)
+    if now and now["qr"] != replaces:
+        raise ValueError(f"this week's home assessment was just made: {now['qr']} by {now['approved_by']}")
+    p, _ = _planned(conn, child_id, week, ask, draw)
+    shown.check([p], seen)
+    return {**print_paper(conn, child_id, week, actor, kind, p, HOW[kind]), "areas": p["areas"]}
+
+
+def print_paper(conn, child_id, week, actor, kind, p, how, pw=None, ids=None, waiting=False) -> dict:
+    """One child's drawn paper `p`, approved by `actor`: a template of its own, the child's copy with its code, its
+    kind, class and week, its questions recorded as seen, and the page rendered, saying `how` it was chosen. An edited
+    paper (`edit_paper`) passes its questions in order (`ids`) and `waiting`: made by `actor`, approved by no one yet."""
+    ids = ids or [q["id"] for a in p["areas"] for q in a["questions"]]
+    child = conn.execute("select tenant_id, band, section from child where id = %s", (child_id,)).fetchone()
+    template = conn.execute(
+        "insert into sheet_template (tenant_id, band, week, item_ids, source, child_id)"
+        " values (%s,%s,%s,%s::uuid[],'focus',%s) returning id",
+        (child["tenant_id"], child["band"], week, ids, child_id),
+    ).fetchone()["id"]
+    qr = _qr(template, child_id, week, kind)
+    instance = conn.execute(
+        # made again the same week, the newest is the week's: its moment is the click's own, not its transaction's
+        "insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, week, section, kind,"
+        " print_status, printed_at, approved_by, approved_at, created_at)"
+        " values (%s,%s,%s,%s,%s,%s,%s,'printed',now(),%s,now(),clock_timestamp()) returning id",
+        (child["tenant_id"], qr, template, child_id, week, child["section"], kind, actor),
+    ).fetchone()["id"]
+    if waiting:  # made again by an edit (`edit_paper`): approved by no one yet, given to no one yet
+        conn.execute(
+            "update sheet_instance set print_status = 'new', approved_by = null where id = %s", (instance,)
+        )
+    else:
+        seen_by(conn, child["tenant_id"], child_id, week, ids)
+    outdir = db.REPO_ROOT / "data" / "focus" / week
+    key = _render(conn, child_id, week, actor, kind, p, ids, qr, outdir, how, pw)
+    # its own page says how it was chosen and what it works on: a maker's class paper is not a home paper (2026-09-30)
+    key = {**key, "how": how, "areas": [{"name": a["name"], "level": a["level"]} for a in p["areas"]]}
+    pdf = outdir / f"{qr}.pdf"
+    conn.execute(
+        "update sheet_instance set pdf_path = %s, key = %s where id = %s",
+        (str(pdf), json.dumps(key), instance),
+    )
+    return {"qr": qr, "pdf_path": str(pdf), "pages": key["pages"], "questions": len(ids)}
+
+
+def _planned(conn, child_id, week, ask, draw=0):
+    p = plan(conn, child_id, week, ask, draw=draw)
+    ids = [q["id"] for a in p["areas"] for q in a["questions"]]
+    if not ids:
+        raise ValueError(NOTHING)
+    return p, ids
+
+
+def _render(conn, child_id, week, actor, kind, p, ids, qr, outdir, how=None, pw=None):
+    """The paper as it prints, into `outdir` as `<qr>.pdf`; returns its key. Approving and seeing it both come here;
+    a batch passes its one Playwright (`pw`) to every paper."""
+    band = conn.execute("select band from child where id = %s", (child_id,)).fetchone()["band"]
+    rows = {str(r["id"]): r for r in conn.execute("select * from item where id = any(%s::uuid[])", (ids,))}
+    name = roster.names(conn, [child_id], actor).get(child_id, "")
+    title, label = heading(kind, [a["name"] for a in p["areas"]], name, how)
+    sheet = Sheet(qr, band, "Focus", 1, week, [item_from_row(rows[i]) for i in ids], title=title)
+    return render_sheet(sheet, outdir, week_label=label, pw=pw)
+
+
+def heading(kind, areas, name, how=None):
+    """→ (the paper's title, the line under it): what a child's paper says at its top — a home assessment, or the
+    class's practice or assessment — and who chose it."""
+    title = TITLES.get(kind, TITLE)
+    return f"{title}: " + " · ".join(areas), f"{name or title} · {title}, {how or HOW[kind]}"
+
+
+def preview(conn, child_id: str, week: str, actor: str, ask: list | None = None, draw: int = 0) -> bytes:
+    """The paper `make` would print now, as PDF bytes, before anyone approves it: the same plan, the same page,
+    its QR `PREVIEW`. Nothing is written — no sheet, no QR, no question marked seen."""
+    p, ids = _planned(conn, child_id, week, ask, draw)
+    with tempfile.TemporaryDirectory() as tmp:
+        _render(conn, child_id, week, actor, "custom" if ask else "focus", p, ids, PREVIEW, tmp)
+        return (Path(tmp) / f"{PREVIEW}.pdf").read_bytes()

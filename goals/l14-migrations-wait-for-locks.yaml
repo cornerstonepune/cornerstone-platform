@@ -1,0 +1,52 @@
+name: l14-migrations-wait-for-locks
+goal: >
+  A change to live's database never queues educators' pages behind it, and never fails because they were busy. The
+  migration gives up a lock it cannot have within 3 seconds and tries again, six times 20 seconds apart; a migration
+  that fails for any other reason fails at once; one that holds its locks has 10 minutes for its work, not live's 2.
+  If live's connection would ignore those settings, nothing is pushed and the run says so.
+# Written 2026-10-21, before the code. Measured first, on migrate live's own log (run 39603041282, attempt 1, read
+# with `gh api`; nothing run on live): at 12:52 UTC, school in session, `create or replace view answer_checked` —
+# a catalogue change, milliseconds of work — waited 121 s for a lock live's readers of the view held, until live's
+# 2-minute statement timeout cancelled it (SQLSTATE 57014). Attempt 2 at 13:25 applied it in 14 s
+# (docs/notes/l14-migrations-wait-for-locks.md). Named L14: L9 is goals/l9-not-taught-is-said-where-it-shows.yaml.
+says:
+  - words: "a database update waits briefly and tries again by itself instead of failing"
+    proved_by: packages/engine/tests/test_deploy.py::test_a_migration_waits_briefly_for_a_lock_and_long_for_its_work
+  - words: "a database update waits briefly and tries again by itself instead of failing"
+    proved_by: packages/engine/tests/test_deploy.py::test_a_migration_held_by_a_lock_tries_again_by_itself
+  - words: "a database update waits briefly and tries again by itself instead of failing"
+    proved_by: packages/engine/tests/test_deploy.py::test_a_migration_caught_in_a_deadlock_tries_again_by_itself
+  - words: "a database update waits briefly and tries again by itself instead of failing"
+    proved_by: packages/engine/tests/test_deploy.py::test_a_migration_that_fails_for_another_reason_stops_at_once
+  - words: "a database update waits briefly and tries again by itself instead of failing"
+    proved_by: packages/engine/tests/test_deploy.py::test_a_migration_still_held_after_six_tries_fails
+  - words: "a database update waits briefly and tries again by itself instead of failing"
+    proved_by: packages/engine/tests/test_deploy.py::test_the_settings_travel_inside_each_migration_not_with_the_connection
+  - words: "a database update waits briefly and tries again by itself instead of failing"
+    proved_by: packages/engine/tests/test_deploy.py::test_a_migration_whose_session_lacks_the_settings_stops_before_any_change
+  - words: "a database update waits briefly and tries again by itself instead of failing"
+    proved_by: packages/engine/tests/test_deploy.py::test_a_hand_update_of_live_pushes_the_same_settings
+  - words: "a database update waits briefly and tries again by itself instead of failing"
+    proved_by: packages/engine/tests/test_deploy.py::test_every_path_to_live_pushes_through_one_step
+  - words: "a database update waits briefly and tries again by itself instead of failing"
+    proved_by: packages/engine/tests/test_deploy.py::test_the_cli_that_pushes_is_the_version_rehearsed
+# 2026-10-22 (L14b, docs/notes/l14b-timeouts-in-band.md): the settings rode on the connection (PGOPTIONS), which
+# Supabase's pooler does not pass on; the check on a second connection failed both times it ran and held the website.
+# They are now the first statements of each migration, and the migration checks them itself.
+# 2026-10-22 (L14c, docs/notes/l14c-update-live-in-band.md): bin/update-live still pushed by hand without them, and
+# migrate live took whichever CLI was newest. Both now run bin/push-migrations, and migrate live's CLI is pinned.
+# 2026-10-22 (L14d, docs/notes/l14d-a-deadlock-is-tried-again.md): B4's migration met a reader of live in a deadlock
+# (SQLSTATE 40P01) and migrate live stopped at once; a deadlock rolls back whole like a lock timeout, so it is tried again.
+manual:
+  - "The next merge with a migration: migrate live's 'apply what live is missing' step applies it, and live's supabase_migrations.schema_migrations row for it starts with the set lock_timeout and statement_timeout lines; any 'try n of 6' warning names a lock it waited out."
+scenarios: []
+criteria:
+  - name: the push's settings and its retry are as the tests say
+    run: cd packages/engine && uv run pytest -q tests/test_deploy.py
+    expect: "passed"
+  - name: every migration a change adds sorts after main's newest, which db push otherwise refuses
+    run: cd packages/engine && uv run pytest -q tests/test_migration_order.py
+    expect: "passed"
+  - name: the code sits where the map says; every promise has its command; lint
+    run: bin/check
+    expect: "passed"

@@ -1,0 +1,220 @@
+# The engine server takes a merge's code as the website does. Vercel deploys main on every merge; before this,
+# the engine changed only when `deploy/go-live.sh` ran on Nimish's Mac, from whatever that Mac had checked out —
+# on 2026-09-25 the server was still running code from before the box reader and `/read/file` were merged.
+#
+# Does what go-live.sh steps 4 and 6 do, from the merged commit: the code, exactly as committed, onto the
+# server, and the engine rebuilt and restarted. The server's settings (.env, the reader's AWS key) and its scans
+# stay as they are: they are the server's, put there once by go-live.sh, never carried by a deploy.
+#
+# Needs repository secrets LIGHTSAIL_SSH_KEY (Lightsail → Account → SSH keys → the Mumbai default key),
+# LIGHTSAIL_HOST (the server's static address) and LIVE_DATABASE_URL (asked which migrations live has).
+name: deploy engine
+on:
+  # After CI passes on a merge to main, never beside it: on a push this ran while CI was still running, so a red merge
+  # rebuilt the engine and re-marked live answers (code review, 2026-09-30; goals/p0-live-changes-wait-for-ci.yaml).
+  # GitHub runs this file as main has it, once CI on main completes.
+  workflow_run:
+    workflows: [ci]
+    types: [completed]
+    branches: [main]
+  # By hand: main's newest, or an earlier commit to roll back to (goals/p2-live-recovers.yaml). The next merge deploys
+  # main again. Migrations only go forward; an older engine reads tables a newer one added and ignores them.
+  workflow_dispatch:
+    inputs:
+      commit: { description: "a full commit id to roll back to; empty deploys main's newest", default: "" }
+
+concurrency: { group: deploy-engine, cancel-in-progress: false }
+
+jobs:
+  deploy:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    permissions: { contents: read, actions: read }
+    env:
+      # the commit CI passed on; `github.sha` is whatever main holds when this starts, which can be a later merge
+      SHA: "${{ github.event.workflow_run.head_sha || inputs.commit || github.sha }}"
+    steps:
+      - uses: actions/checkout@v4
+        with: { ref: "${{ env.SHA }}", fetch-depth: 0 }
+      - name: the secrets are set
+        env:
+          KEY: "${{ secrets.LIGHTSAIL_SSH_KEY }}"
+          HOST: "${{ secrets.LIGHTSAIL_HOST }}"
+        run: |
+          if [ -z "$KEY" ] || [ -z "$HOST" ]; then
+            echo "::error::LIGHTSAIL_SSH_KEY and LIGHTSAIL_HOST must be set under Settings → Secrets and variables → Actions"
+            exit 1
+          fi
+      - name: a way in
+        env:
+          KEY: "${{ secrets.LIGHTSAIL_SSH_KEY }}"
+          HOST: "${{ secrets.LIGHTSAIL_HOST }}"
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$KEY" > ~/.ssh/server
+          chmod 600 ~/.ssh/server
+          ssh -i ~/.ssh/server -o StrictHostKeyChecking=accept-new -o ConnectTimeout=15 "ubuntu@$HOST" true
+      - name: this commit is main's newest, and it changes what the server runs
+        id: plan
+        env: { HOST: "${{ secrets.LIGHTSAIL_HOST }}", EVENT: "${{ github.event_name }}" }
+        # Two merges close together: the older one's CI can finish last. Only main's newest is deployed — it carries
+        # every older merge — so the server never goes back to older code. The server records the commit it runs, and
+        # a merge that changes nothing it runs (the website alone) leaves it as it is. A run started by hand deploys.
+        run: |
+          S="ssh -i $HOME/.ssh/server -o ConnectTimeout=15 ubuntu@$HOST"
+          if [ "$EVENT" = workflow_run ]; then
+            tip=$(git ls-remote origin refs/heads/main | cut -f1)
+            if [ "$tip" != "$SHA" ]; then
+              echo "main has moved on to ${tip::7}; its own run deploys this merge with it"
+              echo "go=no" >> "$GITHUB_OUTPUT"; exit 0
+            fi
+            was=$($S 'cat ~/cornerstone/engine-commit 2>/dev/null' || true)
+            if [ -n "$was" ] && git cat-file -e "$was^{commit}" 2>/dev/null \
+               && git diff --quiet "$was" "$SHA" -- packages/engine deploy supabase/seed .github/workflows/deploy-engine.yml; then
+              echo "the engine runs ${was::7}, and nothing it runs has changed since"
+              echo "go=no" >> "$GITHUB_OUTPUT"; exit 0
+            fi
+          fi
+          echo "deploying ${SHA::7}"
+          echo "go=yes" >> "$GITHUB_OUTPUT"
+      - name: live has every migration this commit carries, before the engine runs code that reads them
+        if: steps.plan.outputs.go == 'yes'
+        env: { LIVE: "${{ secrets.LIVE_DATABASE_URL }}" }
+        # `migrate live` runs after the same CI and nothing orders the two, so the engine could restart on code that
+        # reads a table live does not have yet (2026-09-30: `key_correction`, read by the papers step below). Live is
+        # asked itself: every version in this commit's supabase/migrations is recorded there.
+        run: |
+          command -v psql >/dev/null || { sudo apt-get update -qq && sudo apt-get install -y -qq postgresql-client; }
+          want=$(ls supabase/migrations/*.sql | sed 's#.*/##; s#_.*##' | sort)
+          for _ in $(seq 60); do
+            have=$(psql "$LIVE" -Atc "select version from supabase_migrations.schema_migrations") \
+              || { echo "::error::could not ask live which migrations it has"; exit 1; }
+            have=$(echo "$have" | sort)
+            missing=$(comm -23 <(echo "$want") <(echo "$have") | tr '\n' ' ')
+            if [ -z "${missing// }" ]; then echo "live has all $(echo "$want" | wc -l) migrations"; exit 0; fi
+            echo "live lacks $missing; waiting for migrate live"
+            sleep 10
+          done
+          echo "::error::live still lacks $missing after ten minutes; the engine keeps its old code"; exit 1
+      - name: room to read a scan — 2 GB of swap
+        if: steps.plan.outputs.go == 'yes'
+        env: { HOST: "${{ secrets.LIGHTSAIL_HOST }}" }
+        # The server has 1.9 GB and no swap. The handwriting reader holds about 700 MB while it reads (ADR 0035);
+        # with the system and the engine resident, the kernel killed the engine mid-read on 2026-09-26 and again
+        # on 2026-09-28 07:14 (the 23 Sep re-read; `engine logs`: "Out of memory: Killed process … uvicorn").
+        # A swapfile lets it page out what is idle instead of killing the engine. Made once; a no-op after.
+        run: |
+          S="ssh -i $HOME/.ssh/server -o ConnectTimeout=15 ubuntu@$HOST"
+          $S 'set -e
+            if ! sudo swapon --show=NAME --noheadings | grep -qx /swapfile; then
+              [ -f /swapfile ] || { sudo fallocate -l 2G /swapfile && sudo chmod 600 /swapfile && sudo mkswap /swapfile; }
+              sudo swapon /swapfile
+            fi
+            grep -q "^/swapfile " /etc/fstab || echo "/swapfile none swap sw 0 0" | sudo tee -a /etc/fstab >/dev/null
+            free -m'
+      - name: the code, exactly as committed
+        if: steps.plan.outputs.go == 'yes'
+        env: { HOST: "${{ secrets.LIGHTSAIL_HOST }}" }
+        run: |
+          S="ssh -i $HOME/.ssh/server -o ConnectTimeout=15 ubuntu@$HOST"
+          $S 'rm -rf ~/assessment-engine.new && mkdir -p ~/assessment-engine.new'
+          git archive --format=tar HEAD | $S 'tar -x -C ~/assessment-engine.new'
+          # the server's own settings go across to the new copy; they are never in git
+          $S 'cp ~/assessment-engine/.env ~/assessment-engine.new/.env && rm -rf ~/assessment-engine && mv ~/assessment-engine.new ~/assessment-engine'
+      - name: the model key, from the repository's secret
+        if: steps.plan.outputs.go == 'yes'
+        env: { HOST: "${{ secrets.LIGHTSAIL_HOST }}", ANTHROPIC_API_KEY: "${{ secrets.ANTHROPIC_API_KEY }}" }
+        # The key lived only in the server's .env, put there by hand; from 29 Sep it was not there, and every call the
+        # second reader made failed quietly for three weeks ("ANTHROPIC_API_KEY is not set", PR #248). It now lives in
+        # the repository's secret, and each deploy writes it into .env. It goes over ssh on stdin, never on a command
+        # line that a log or `ps` would show. A server without it is said on the run, not found weeks later.
+        run: |
+          S="ssh -i $HOME/.ssh/server -o ConnectTimeout=15 ubuntu@$HOST"
+          if [ -n "$ANTHROPIC_API_KEY" ]; then
+            printf '%s' "$ANTHROPIC_API_KEY" | $S 'k=$(cat); f=~/assessment-engine/.env
+              { grep -v "^ANTHROPIC_API_KEY=" "$f"; printf "ANTHROPIC_API_KEY=%s\n" "$k"; } > "$f.tmp"
+              chmod 600 "$f.tmp" && mv "$f.tmp" "$f"'
+          fi
+          $S 'grep -q "^ANTHROPIC_API_KEY=." ~/assessment-engine/.env' \
+            || echo "::warning::the server has no ANTHROPIC_API_KEY: every model call fails. Add the repository secret ANTHROPIC_API_KEY, then deploy again."
+      - name: wait for scans being read
+        if: steps.plan.outputs.go == 'yes'
+        env: { HOST: "${{ secrets.LIGHTSAIL_HOST }}" }
+        # Restarting the engine kills a reading in progress (2026-09-25: the first live read of the 24 Sep scan
+        # never finished — a deploy restarted the engine under it). A run started in the last hour and still
+        # "running" is waited for, up to 30 minutes; one older than that died with an earlier engine.
+        run: |
+          S="ssh -i $HOME/.ssh/server -o ConnectTimeout=15 ubuntu@$HOST"
+          cat > running.py <<'PY'
+          from engine.core import db
+          with db.connect() as c:
+              sql = "select count(*) as n from flow_run where status = 'running' and started_at > now() - interval '1 hour'"
+              print(c.execute(sql).fetchone()["n"])
+          PY
+          for _ in $(seq 60); do
+            n=$($S "sudo docker exec -i deploy-engine-1 python -" < running.py 2>/dev/null || echo 0)
+            [ "$n" = 0 ] && exit 0
+            echo "$n scan(s) still being read; waiting"
+            sleep 30
+          done
+          echo "::warning::a reading was still running after 30 minutes; deploying anyway"
+      - name: start the engine
+        if: steps.plan.outputs.go == 'yes'
+        env: { HOST: "${{ secrets.LIGHTSAIL_HOST }}" }
+        run: |
+          S="ssh -i $HOME/.ssh/server -o ConnectTimeout=15 ubuntu@$HOST"
+          # where the packs were recorded as rendered: read off the running engine, as go-live.sh set it
+          PACKS=$($S "sudo docker inspect deploy-engine-1 --format '{{range .Mounts}}{{if eq .Source \"/home/ubuntu/cornerstone/packs\"}}{{.Destination}}{{end}}{{end}}'" || true)
+          ENGINE_HOST="${HOST//./-}.sslip.io"
+          echo "::add-mask::$ENGINE_HOST"  # the repository is public, and so are its logs
+          # the engine's data folder is the server's from now on (compose.server.yml); the papers the old container
+          # rendered into its own layer come across once, while the folder is still empty
+          $S 'mkdir -p ~/cornerstone/data
+              if [ -z "$(ls -A ~/cornerstone/data)" ] && sudo docker inspect deploy-engine-1 >/dev/null 2>&1; then
+                sudo docker cp deploy-engine-1:/app/data/. ~/cornerstone/data/ 2>/dev/null \
+                  && echo "carried $(find ~/cornerstone/data -type f | wc -l) files across" \
+                  || echo "the old container had no data folder"
+              fi'
+          # the new engine answers beside the old before the old is replaced, so the engine never goes away
+          # (deploy/switch.sh, goals/l8-deploy-without-downtime.yaml)
+          $S "cd ~/assessment-engine/deploy && sudo ENGINE_HOST=$ENGINE_HOST HOME=/home/ubuntu PACKS_AS_RECORDED='${PACKS:-/unused/packs}' bash switch.sh"
+          for _ in $(seq 60); do
+            if [ "$(curl -s -o /dev/null -w '%{http_code}' "https://$ENGINE_HOST/health")" = 200 ]; then
+              echo "the engine is online at https://$ENGINE_HOST ($(git rev-parse --short HEAD))"
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "::error::the engine did not come up"
+          exit 1
+      - name: the settings the code reads — prompts, thresholds, config — from the seed it was merged with
+        if: steps.plan.outputs.go == 'yes'
+        env: { HOST: "${{ secrets.LIGHTSAIL_HOST }}" }
+        run: |
+          S="ssh -i $HOME/.ssh/server -o ConnectTimeout=15 ubuntu@$HOST"
+          $S 'sudo docker exec deploy-engine-1 engine load --settings'
+      - name: the papers the engine marks against — each as its file now says
+        if: steps.plan.outputs.go == 'yes'
+        env: { HOST: "${{ secrets.LIGHTSAIL_HOST }}" }
+        # A paper's key or equation corrected in its file is live with the code that marks by it, as a setting is: on
+        # 2026-09-29 question 5's "638 = 600 + [ ] + [ ]" marked 19 and 19 wrong until its file named the equation, and
+        # only `bin/update-live`, from one Mac, entered papers again. `legacy paper` upserts each question by its key,
+        # a sum on the rung `bank rehome` files it on, so nothing needs rehoming after (test_legacy.py pins both).
+        run: |
+          S="ssh -i $HOME/.ssh/server -o ConnectTimeout=15 ubuntu@$HOST"
+          $S 'sudo docker exec deploy-engine-1 sh -c "for p in /app/supabase/seed/papers/*.json; do engine legacy paper \$p >/dev/null || exit 1; done"'
+      - name: every answer a person read, marked by the rule as it now stands
+        if: steps.plan.outputs.go == 'yes'
+        env: { HOST: "${{ secrets.LIGHTSAIL_HOST }}" }
+        # A marking rule put right reaches answers already marked, signed off or not, with the deploy that carries it:
+        # on 2026-09-30 "false" typed for "odd + odd = odd" stayed wrong against "Not true" on every signed-off paper.
+        # Only a changed mark is written; a signed-off one gets a new batch of evidence, the old one kept. Names each.
+        run: |
+          S="ssh -i $HOME/.ssh/server -o ConnectTimeout=15 ubuntu@$HOST"
+          $S "sudo docker exec deploy-engine-1 engine legacy mark-again --by 'the marking rule, deploy ${SHA::7}'"
+      - name: the server records the commit it now runs
+        if: steps.plan.outputs.go == 'yes'
+        env: { HOST: "${{ secrets.LIGHTSAIL_HOST }}" }
+        run: |
+          S="ssh -i $HOME/.ssh/server -o ConnectTimeout=15 ubuntu@$HOST"
+          $S "mkdir -p ~/cornerstone && echo $SHA > ~/cornerstone/engine-commit"

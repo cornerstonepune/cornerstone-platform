@@ -1,0 +1,612 @@
+{
+ "note": "Every threshold the engine reads, as rows (CLAUDE.md rule 1). `engine load` upserts them into `threshold`; a change is an edit here and a load, never a number in code.",
+ "thresholds": [
+  {
+   "key": "state.min_events",
+   "value": 3,
+   "unit": "events",
+   "description": "Below this an estimate stays 'not enough yet'"
+  },
+  {
+   "key": "state.window_answers",
+   "value": 10,
+   "unit": "answers",
+   "description": "A level's state reads only this many of its latest answers that are right or wrong (goals/gr1-state-from-recent-evidence.yaml)"
+  },
+  {
+   "key": "state.secure_min_answers",
+   "value": 6,
+   "unit": "answers",
+   "description": "Fewest answers at a level, in its window, before it can be secure (goals/gr1-state-from-recent-evidence.yaml)"
+  },
+  {
+   "key": "state.min_days",
+   "value": 2,
+   "unit": "days",
+   "description": "Different school days a level's window must span before it can be secure: two papers on one day are one sitting (goals/gr1-state-from-recent-evidence.yaml)"
+  },
+  {
+   "key": "state.repeat_min",
+   "value": 2,
+   "unit": "answers",
+   "description": "A mistake repeats while it shows in at least this many of a level's window; the next paper targets it then (goals/gr1-state-from-recent-evidence.yaml)"
+  },
+  {
+   "key": "state.repeat_clears_after",
+   "value": 3,
+   "unit": "answers",
+   "description": "Right answers on papers after a mistake's last showing that clear it (goals/gr1-state-from-recent-evidence.yaml)"
+  },
+  {
+   "key": "state.recheck_days",
+   "value": 14,
+   "unit": "days",
+   "description": "A secure level is re-checked by a paper at least this many days later, at it or harder, that reaches next_sheet.promote_at; until then it is 'secure, to re-check' (goals/gr1-state-from-recent-evidence.yaml)"
+  },
+  {
+   "key": "next_sheet.promote_at",
+   "value": 0.8,
+   "unit": "proportion",
+   "description": "At-level share right over the last next_sheet.papers papers to move up a level; also what a level's window and its latest day must reach to be secure (goals/gr1-state-from-recent-evidence.yaml)"
+  },
+  {
+   "key": "next_sheet.demote_below",
+   "value": 0.5,
+   "unit": "proportion",
+   "description": "Below this, the next sheet drops to L-"
+  },
+  {
+   "key": "next_sheet.papers",
+   "value": 2,
+   "unit": "papers",
+   "description": "The latest papers at the current level the next paper's level is read from (goals/gr1-state-from-recent-evidence.yaml)"
+  },
+  {
+   "key": "exposure.days",
+   "value": 21,
+   "unit": "days",
+   "description": "An item a child has seen within this window is not reused"
+  },
+  {
+   "key": "item.flag_low_p",
+   "value": 0.2,
+   "unit": "proportion",
+   "description": "Below this p_correct the item may be mis-levelled"
+  },
+  {
+   "key": "item.flag_high_p",
+   "value": 0.95,
+   "unit": "proportion",
+   "description": "Above this p_correct the item may be too easy"
+  },
+  {
+   "key": "item.min_attempts",
+   "value": 10,
+   "unit": "count",
+   "description": "Confirmed answers a question needs before its share right proposes anything"
+  },
+  {
+   "key": "mistake.learn_min_questions",
+   "value": 2,
+   "unit": "count",
+   "description": "Different questions a rule must explain unexplained answers on before it is proposed as a mistake (goals/s22)"
+  },
+  {
+   "key": "read.auto_confirm_above",
+   "value": 0.9,
+   "unit": "confidence",
+   "description": "A digit in its boxes read this surely stands (ADR 0035)"
+  },
+  {
+   "key": "read.ink_line",
+   "value": 0.76,
+   "unit": "ratio",
+   "description": "A pixel is pencil when it is darker than the paper around it by this much (`boxes.dark`). Measured on live, 2026-10-16, on the 328 answers a person settled on copies read in their boxes (`engine read ink`): 0.72 agreed with the digits settled on 281, 0.76 on 291, 0.80 on 289, 0.84 on 286; no settled blank was given ink at any of them (goals/l12b, ADR 0083)"
+  },
+  {
+   "key": "read.route_above_overturn",
+   "value": 0.25,
+   "unit": "proportion",
+   "description": "A (child, format) pair overturned by the validator more often than this routes to the queue even above auto_confirm_above"
+  },
+  {
+   "key": "read.second_opinion",
+   "value": 0,
+   "unit": "switch",
+   "description": "ADR 0091: the second reader also reads again what the box reader guessed, and a disagreement waits with both readings. 0 until its eval is scored on live (rule 7): on 21 Oct the live engine had no model key, so every call failed and nothing could be scored. 1 turns it on"
+  },
+  {
+   "key": "marking.agreement_gate",
+   "value": 0.95,
+   "unit": "proportion",
+   "description": "Agreement with teacher marking before marks are trusted"
+  },
+  {
+   "key": "marking.agreement_window",
+   "value": 50,
+   "unit": "count",
+   "description": "The newest checks of one kind of question the reader stood behind that its trust is measured over (ADR 0032): trusted once there are this many and agreement_gate of them matched the person"
+  },
+  {
+   "key": "marking.spot_check_rate",
+   "value": 0.15,
+   "unit": "proportion",
+   "description": "Of a trusted kind's right answers, the share a person still checks (step 4, goals/s20-routine-intake.yaml)"
+  },
+  {
+   "key": "read.page_margin",
+   "value": 1.25,
+   "unit": "ratio",
+   "description": "How much better the best run of a worksheet's pages must fit a part-copy's photographs than the next best before its answers are read against those pages (`boxes.placed`); less, and a person places them. On the 2026-09-29 photographs the right run led by 1.5-46 times."
+  },
+  {
+   "key": "ocr.min_confidence",
+   "value": 70,
+   "unit": "confidence",
+   "description": "Below this the engine does not stand behind a reading: it is kept, flagged, and a person decides. At 0 a stray mark read as a minus sign reached a child's graph unchallenged",
+   "why": "How the transcriber finds a child's answer on a page (ADR 0019). Every one of these was tuned against a hand-read page, and every one is a property of how a PAPER is laid out rather than of the code — so the next paper will want them different, and rule 1 says that is a row to edit, not a Python file to change."
+  },
+  {
+   "key": "ocr.answer_column",
+   "value": 0.085,
+   "unit": "page fraction",
+   "description": "How far either side of a question its answer may sit. These papers print four boxes across, about 0.19 apart, so anything wider reaches into the neighbouring child's answer"
+  },
+  {
+   "key": "ocr.answer_drop",
+   "value": 0.095,
+   "unit": "page fraction",
+   "description": "How far below a question its answer may sit, when no following question bounds the region"
+  },
+  {
+   "key": "ocr.row_band",
+   "value": 0.02,
+   "unit": "page fraction",
+   "description": "Answers within this of each other vertically are one row, read left to right. The scans sit a degree off square, so rounding instead of clustering gave every child the next one's answer"
+  },
+  {
+   "key": "ocr.first_page_mask",
+   "value": 0.34,
+   "unit": "page fraction",
+   "description": "Top of page one painted out before anything is sent: the name band lives there (rule 6)"
+  },
+  {
+   "key": "ocr.box_min_width",
+   "value": 0.04,
+   "unit": "page fraction",
+   "description": "A printed answer box is at least this wide. Narrower rectangles are tick boxes and stray marks, not fields. Used only on a paper whose row says its answers live in boxes"
+  },
+  {
+   "key": "ocr.box_min_height",
+   "value": 0.015,
+   "unit": "page fraction",
+   "description": "And at least this tall. With box_min_width this separates the boxes a paper prints for its answers from the noise on a photograph of it"
+  },
+  {
+   "key": "ocr.box_max_width",
+   "value": 0.35,
+   "unit": "page fraction",
+   "description": "Wider than this is a frame around a number line or a working area, not an answer box. Counting one as a field handed a slot its neighbour's answer when the count happened to match"
+  },
+  {
+   "key": "ocr.box_ink_blank",
+   "value": 0.004,
+   "unit": "fraction of pixels",
+   "description": "A field with more ink than this and no word the transcriber could read is a doubt for a person, never a blank"
+  },
+  {
+   "key": "ocr.red_pen_mask",
+   "value": 1,
+   "unit": "switch",
+   "description": "Paint out red ink before a page is read. The educator marks in red and the child writes in pencil or blue; a red circle over 5147 read back as 147 at 95%. 0 turns it off"
+  },
+  {
+   "key": "ocr.reread_dpi",
+   "value": 500,
+   "unit": "dots per inch",
+   "description": "A flagged answer gets a second look at this resolution. The page itself goes to the transcriber at 150 dpi, where a 40x25-pixel answer is at the limit of what it can resolve — a third of everything that reaches a person sits one band under the floor. 0 turns the second look off"
+  },
+  {
+   "key": "ocr.reread_pad",
+   "value": 0.012,
+   "unit": "page fraction",
+   "description": "How much of the page around a doubtful answer goes into its crop. Too tight and the transcriber has no baseline to read the digits against; too loose and the neighbouring answer comes with it and the crop is refused for holding two numbers"
+  },
+  {
+   "key": "ocr.stencil_min_inliers",
+   "value": 50,
+   "unit": "matched features",
+   "description": "A child's page is read against its paper's rebuilt blank only when at least this many printed features line the two up. Pages that align measure 300-1000; a page too bare to align reads as it did before, never against a stencil that is not on it"
+  },
+  {
+   "key": "ocr.stencil_empty",
+   "value": 0.03,
+   "unit": "fraction of pixels",
+   "description": "The rebuilt blank counts as empty where fewer than this share of its pixels are dark. A child's number Textract took for print is given back to the child only where the blank is empty; a printed word's patch runs 10-25% dark, an empty box's interior under 1%"
+  },
+  {
+   "key": "confirm.queue_minutes",
+   "value": 2,
+   "unit": "minutes",
+   "description": "Target time for a teacher to clear one class"
+  },
+  {
+   "key": "llm.daily_budget_inr",
+   "value": 150,
+   "unit": "INR",
+   "description": "The adapter refuses a new call once today's cost_inr for the tenant passes this. A row, not a limit in code — raise it here."
+  },
+  {
+   "key": "week.skill_yes_above",
+   "value": 0.5,
+   "unit": "probability",
+   "description": "A skill set Jev says the week's note covered at least this surely comes ticked (N4, goals/n4-week-declaration.yaml)"
+  },
+  {
+   "key": "story.shape_sure_above",
+   "value": 0.6,
+   "unit": "probability",
+   "description": "A story's shape Jev is at least this sure of is taken; below it a person names it (goals/j3-story-shape.yaml)"
+  },
+  {
+   "key": "review.jev_wrong_below",
+   "value": 0.1,
+   "unit": "probability",
+   "description": "A parent report's sentence Jev gives less than this chance of following from its facts goes back to the writer (goals/j5-parent-review-jev.yaml)"
+  },
+  {
+   "key": "review.jev_sure_above",
+   "value": 0.5,
+   "unit": "probability",
+   "description": "A parent report's sentence Jev gives at least this chance passes; between the two bars the model reads it (goals/j5-parent-review-jev.yaml)"
+  },
+  {
+   "key": "eval.parent_report.held",
+   "value": 1,
+   "unit": "proportion",
+   "description": "Every draft of the eval held to its facts by code: Nimish's bar, \"the bar is all of them\" (goals/w4c-parent-report.yaml). v12 is active at 11 of 12, with an educator's approval as the last gate (DECISIONS-LOG 2026-09-29)"
+  },
+  {
+   "key": "eval.parent_review.caught",
+   "value": 1,
+   "unit": "proportion",
+   "description": "Every wrong sentence of the gold drafts caught: the bar it stays inactive until (DECISIONS-LOG 2026-09-29, 14 of 14)"
+  },
+  {
+   "key": "eval.parent_review.flagged_right_at_most",
+   "value": 0,
+   "unit": "count",
+   "description": "Right sentences flagged as wrong: none, the same bar (DECISIONS-LOG 2026-09-29)"
+  },
+  {
+   "key": "eval.misconception_list.useful",
+   "value": 0.75,
+   "unit": "proportion",
+   "description": "The model's proposals that survive as additions: 0.75, the score recorded when this became its eval (STATE.md, the mistake list becomes an engine output, 2026-09-19; ADR 0014)"
+  },
+  {
+   "key": "eval.story_shape.shape_right",
+   "value": 0.9729,
+   "unit": "proportion",
+   "description": "Stories placed in the right case: 144 of 148 (0.97297…, rounded down so that score meets it), v2's score on live when made active (run 38251975489, DECISIONS-LOG 2026-10-12); v1's was 63 of 65 (2026-09-28), 66 of 66 on the corrected gold"
+  },
+  {
+   "key": "eval.story_shape.wrong_answers_at_most",
+   "value": 0,
+   "unit": "count",
+   "description": "One-step answers computed wrong: none, v1's score when made active (DECISIONS-LOG 2026-09-28) and v2's (2026-10-12)"
+  },
+  {
+   "key": "eval.mistake_guess.first",
+   "value": 0.5583,
+   "unit": "proportion",
+   "description": "The right mistake named first: 67 of 120 on the gold set (seed 7), v1's score when made active (DECISIONS-LOG 2026-09-27)"
+  },
+  {
+   "key": "eval.mistake_guess.listed",
+   "value": 0.9083,
+   "unit": "proportion",
+   "description": "The right mistake among the three: 109 of 120 on the gold set (seed 7), v1's score when made active (DECISIONS-LOG 2026-09-27)"
+  },
+  {
+   "key": "eval.mistake_guess.slips_none",
+   "value": 1,
+   "unit": "proportion",
+   "description": "Slips called NONE: 30 of 30, v1's score when made active (DECISIONS-LOG 2026-09-27)"
+  },
+  {
+   "key": "eval.mistake_guess.false_named_at_most",
+   "value": 0,
+   "unit": "count",
+   "description": "Slips given a mistake: none, v1's score when made active (DECISIONS-LOG 2026-09-27)"
+  },
+  {
+   "key": "eval.week_skills.exact",
+   "value": 0.8333,
+   "unit": "proportion",
+   "description": "Notes whose skill sets were ticked exactly: 20 of 24, v1's score when made active (DECISIONS-LOG 2026-09-28)"
+  },
+  {
+   "key": "eval.week_skills.precision",
+   "value": 0.933,
+   "unit": "proportion",
+   "description": "Skill sets ticked that the note covered: 0.933, v1's score when made active (DECISIONS-LOG 2026-09-28)"
+  },
+  {
+   "key": "eval.week_skills.recall",
+   "value": 0.933,
+   "unit": "proportion",
+   "description": "Skill sets the note covered that were ticked: 0.933, v1's score when made active (DECISIONS-LOG 2026-09-28)"
+  },
+  {
+   "key": "eval.language_review.agreed",
+   "value": 1,
+   "unit": "proportion",
+   "description": "Agreement with the hand-judged cases: 6 of 6, v1's score (STATE.md, W1 gates 4 and 5, 2026-09-19)"
+  },
+  {
+   "key": "eval.language_review.right_reason",
+   "value": 1,
+   "unit": "proportion",
+   "description": "Agreed for the right reason: 6 of 6, v1's score (STATE.md, W1 gates 4 and 5, 2026-09-19)"
+  },
+  {
+   "key": "eval.pedagogy_review.agreed",
+   "value": 0.8333,
+   "unit": "proportion",
+   "description": "Agreement with the hand-judged cases: 5 of 6, v1's score (STATE.md, W1 gates 4 and 5, 2026-09-19)"
+  },
+  {
+   "key": "eval.pedagogy_review.right_reason",
+   "value": 0.8333,
+   "unit": "proportion",
+   "description": "Agreed for the right reason: 5 of 6, v1's score (STATE.md, W1 gates 4 and 5, 2026-09-19)"
+  },
+  {
+   "key": "watch.stuck_minutes",
+   "value": 30,
+   "unit": "minutes",
+   "description": "A run still running after this long died or hangs: the live watcher says so (goals/p2-live-is-watched.yaml)"
+  },
+  {
+   "key": "watch.window_minutes",
+   "value": 30,
+   "unit": "minutes",
+   "description": "The live watcher reports a failed run or a website error this recent; longer than its ten-minute round, so a late round misses none"
+  },
+  {
+   "key": "watch.disk_free_gb",
+   "value": 2,
+   "unit": "GB",
+   "description": "Below this much free on the server's disk, the live watcher says so: scans, papers and every deploy's build live there"
+  },
+  {
+   "key": "sign_in.max_failures",
+   "value": 10,
+   "unit": "wrong passwords",
+   "description": "This many wrong passwords for one email inside sign_in.window_minutes and the sign-in page refuses that email until the window passes (goals/p2-live-recovers.yaml)"
+  },
+  {
+   "key": "sign_in.window_minutes",
+   "value": 15,
+   "unit": "minutes",
+   "description": "How far back the sign-in page counts an email's wrong passwords"
+  },
+  {
+   "key": "password.min_length",
+   "value": 10,
+   "unit": "characters",
+   "description": "The shortest a password a member of staff sets may be (goals/auth-email-password.yaml)"
+  },
+  {
+   "key": "password.scrypt_n",
+   "value": 65536,
+   "unit": "scrypt n",
+   "description": "How hard a password set from now on is hashed (scrypt n, r=8, p=1); each hash carries the n it was made with, so raising this costs only new passwords more"
+  },
+  {
+   "key": "password_link.reset_minutes",
+   "value": 60,
+   "unit": "minutes",
+   "description": "How long a \"Forgot your password?\" link works before it runs out"
+  },
+  {
+   "key": "password_link.first_days",
+   "value": 7,
+   "unit": "days",
+   "description": "How long the first \"set your password\" link of a new member of staff works"
+  },
+  {
+   "key": "password_ask.max_per_email",
+   "value": 5,
+   "unit": "asks",
+   "description": "This many \"Forgot your password?\" asks for one email inside password_ask.window_minutes and the form stops sending, while saying what it always says"
+  },
+  {
+   "key": "password_ask.max_per_ip",
+   "value": 20,
+   "unit": "asks",
+   "description": "This many asks from one address inside password_ask.window_minutes and the form stops sending"
+  },
+  {
+   "key": "password_ask.window_minutes",
+   "value": 60,
+   "unit": "minutes",
+   "description": "How far back the forgot-password form counts what one email and one address asked for"
+  },
+  {
+   "key": "watch.mail_window_minutes",
+   "value": 1440,
+   "unit": "minutes",
+   "description": "How far back `engine live watch` counts the set-password emails that could not be sent (goals/auth-email-password.yaml)"
+  },
+  {
+   "key": "across.papers_missing_days",
+   "value": 3,
+   "unit": "days",
+   "description": "A paper given (or printed, where no one said the day) this many days ago and not back is listed on the page across classes (goals/s7-across-classes.yaml)"
+  },
+  {
+   "key": "across.check_overdue_hours",
+   "value": 48,
+   "unit": "hours",
+   "description": "An answer waiting for a person this long after its paper was read is overdue on the page across classes (goals/s7-across-classes.yaml)"
+  },
+  {
+   "key": "samples.per_kind",
+   "value": 3,
+   "unit": "samples",
+   "description": "Samples a level keeps of each kind of question it asks, read by its approver (goals/edt_edit_samples_and_kinds.yaml)"
+  },
+  {
+   "key": "generate.max_per_request",
+   "value": 20,
+   "unit": "questions",
+   "description": "The most questions an educator may ask for at once from one sample (goals/gen_from_a_sample.yaml). Nimish, 2026-10-26: \"a certain number of questions\"; the brief: a small number, like 10 or 20"
+  },
+  {
+   "key": "eval.english_generate.kept",
+   "value": 0.8,
+   "unit": "proportion",
+   "description": "Of the questions english_generate returns on the eval set, the share that pass every code check (english_check.py). The checks keep a wrong one from ever being stored, so this bar is what it costs, not what it risks: a lower share is more thrown away per request. Set before its first score; the score is recorded in DECISIONS-LOG.md before the prompt is made active (rule 7)"
+   },
+   {
+   "key": "calibration.too_easy_share",
+   "value": 0.8,
+   "unit": "proportion",
+   "description": "A level is suggested for review when at least this share of the children assessed at it are secure (goals/cal_levels_to_review.yaml)"
+  },
+  {
+   "key": "calibration.min_children",
+   "value": 8,
+   "unit": "children",
+   "description": "Fewest children assessed at a level before it is judged at all (goals/cal_levels_to_review.yaml)"
+  },
+  {
+   "key": "calibration.review_again_children",
+   "value": 2,
+   "unit": "children",
+   "description": "A suggestion marked looked-at comes back when the children assessed, or the children secure, moved by this many"
+  },
+  {
+   "key": "feedback.max_per_hour",
+   "value": 5,
+   "unit": "notes",
+   "description": "This many notes from one member of staff inside an hour and the \"Report a problem\" form asks them to wait (goals/feed_report_from_the_tool.yaml)"
+  },
+  {
+   "key": "feedback.max_chars",
+   "value": 2000,
+   "unit": "characters",
+   "description": "The longest a box of the \"Report a problem\" form may be (goals/feed_report_from_the_tool.yaml)"
+  },
+  {
+   "key": "feedback.send_per_try",
+   "value": 5,
+   "unit": "notes",
+   "description": "How many waiting notes one visit to the form tries to send to GitHub, oldest first (goals/feed_report_from_the_tool.yaml)"
+  },
+  {
+   "key": "assessment.min_questions",
+   "value": 1,
+   "unit": "count",
+   "description": "The fewest questions a child's paper may hold: an edit that would leave fewer is refused. One, because a paper with none has nothing to read or mark"
+  },
+  {
+   "key": "assessment.max_questions",
+   "value": 40,
+   "unit": "count",
+   "description": "The most questions a child's paper may hold: an edit that would add more is refused. Forty, the most a teacher may ask of one area (focus_paper.MOST_ASKED); the page flows over as many sides as it needs, a code on each"
+  },
+  {
+   "key": "eval.curriculum_map.skill_all_right",
+   "value": 0.8,
+   "unit": "proportion",
+   "description": "Of the held-out activities whose skills the agents linked on their own, the share whose every skill a person also linked. Set before any run by the orchestrator for Nimish, D-047, 2026-11-03 (goals/m1-05-mapping-agents.yaml) at 0.90; lowered to 0.80 by Nimish on 2026-11-08, after the held-out run measured 0.80 on the 245 activities it reached (95% interval 0.732 to 0.854; the 182 it did not reach were never read): '80% bar is alright ... educators will change it if required' (DECISIONS-LOG 2026-11-08). Nothing applies until a run meets it"
+  },
+  {
+   "key": "eval.curriculum_map.skill_found",
+   "value": 0.75,
+   "unit": "proportion",
+   "description": "Of the skills people linked to those same held-out activities, the share the agents found. Set by the orchestrator for Nimish, D-047, 2026-11-03 (goals/m1-05-mapping-agents.yaml) at 0.85; lowered to 0.75 on 2026-11-08 with the precision bar, after the held-out run found 0.784 of the people's skills on the 245 activities it reached (DECISIONS-LOG 2026-11-08)"
+  },
+  {
+   "key": "eval.curriculum_map.auto_passed",
+   "value": 0.6,
+   "unit": "proportion",
+   "description": "The share of held-out activities whose skills passed on their own (the rest go to a person): below it the agents save nobody time. Set by the orchestrator for Nimish, D-047, 2026-11-03 (goals/m1-05-mapping-agents.yaml)"
+  },
+  {
+   "key": "map.dev_count",
+   "value": 100,
+   "unit": "count",
+   "description": "How many of the activities people mapped are the dev set, for tuning the mapping prompts and as the proposer's examples; the rest are held out for the final score only (blueprint chapter P-08, goals/m1-05-mapping-agents.yaml)"
+  },
+  {
+   "key": "map.min_confidence",
+   "value": 0.8,
+   "unit": "proportion",
+   "description": "A mapping proposal below this confidence goes to a person, whatever the validator says (goals/m1-05-mapping-agents.yaml)"
+  },
+  {
+   "key": "map.skill_min_confidence",
+   "value": 0.7,
+   "unit": "proportion",
+   "description": "The confidence a skill proposal must reach to pass on its own once every skill in it came from the nearest examples (map.require_examples). Chosen on the dev run of 2026-11-04 (33 passed, 30 right) before the held-out run, and not to be changed after it (M1-12c)"
+  },
+  {
+   "key": "map.require_examples",
+   "value": 1,
+   "unit": "flag",
+   "description": "1: a skill passes on its own only if an example the proposer was shown carried it; every other skill is offered to a person to add. 0: as before (M1-12c)"
+  },
+  {
+   "key": "map.use_checker",
+   "value": 0,
+   "unit": "flag",
+   "description": "1: the second model reads each mapping proposal and must agree. 0: it is not asked. It was off from 2026-11-05: on the dev run it added no signal (agree 46 of 88 right, disagree 5 of 9)"
+  },
+  {
+   "key": "map.audit_share",
+   "value": 0.1,
+   "unit": "proportion",
+   "description": "The share of proposals that would pass on their own sent to a person instead, drawn by code, to keep the agents honest; 10% to start (orchestrator for Nimish, D-047, 2026-11-03; goals/m1-05-mapping-agents.yaml)"
+  },
+  {
+   "key": "map.audit_rejected_at_most",
+   "value": 0.1,
+   "unit": "proportion",
+   "description": "When people turn down more than this share of a kind's audit sample (at least audit_min_decided decided), that kind stops passing on its own (goals/m1-05-mapping-agents.yaml)"
+  },
+  {
+   "key": "map.audit_min_decided",
+   "value": 10,
+   "unit": "count",
+   "description": "How many audit-sample decisions a kind needs before its rejected share can stop it (goals/m1-05-mapping-agents.yaml)"
+  },
+  {
+   "key": "map.examples",
+   "value": 5,
+   "unit": "count",
+   "description": "How many already-mapped activities, nearest by their words, the proposer sees beside an activity (goals/m1-05-mapping-agents.yaml)"
+  },
+  {
+   "key": "eval.materials_read.confirmed_wrong_at_most",
+   "value": 0,
+   "unit": "count",
+   "description": "Readings code confirmed that a person did not mark, over the gold set: none. A wrong item or quantity must never go into a list. PROPOSED by the M1-16 builder on 4 Nov (goals/m1-16-materials-consolidated.yaml); the orchestrator and Nimish confirm or change it before the first run."
+  },
+  {
+   "key": "eval.materials_read.found",
+   "value": 0.8,
+   "unit": "proportion",
+   "description": "Of the items a person marked in the gold set, the share code confirmed. PROPOSED by the M1-16 builder on 4 Nov (goals/m1-16-materials-consolidated.yaml); to be confirmed or changed before the first run."
+  },
+  {
+   "key": "eval.materials_read.held_back_right",
+   "value": 0.95,
+   "unit": "proportion",
+   "description": "Of the gold cases a person marked as needing a person, the share where nothing was confirmed. PROPOSED by the M1-16 builder on 4 Nov (goals/m1-16-materials-consolidated.yaml); to be confirmed or changed before the first run."
+  }
+ ]
+}

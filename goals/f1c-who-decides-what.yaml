@@ -1,0 +1,29 @@
+name: f1c-who-decides-what
+goal: >
+  Every decision taken on the site is checked on the server before it writes, through the one place that says who may
+  take it (`apps/web/lib/access.ts`). Since 2026-10-22 (goals/ux9c-one-role.yaml) it says every member of staff may take
+  every decision, on every class, in their own name; `people.decides` keeps whose each decision is, for the day the roles
+  split again.
+# Written 2026-10-14, before the code: slice F1c of BUILD-ORDER "One flow for the educator" (ADR 0073, decision 3).
+# Nimish, the same day: "This is done by the relevance of mapping. So people who are there for one thing like educator
+# only see something that's relevant for their class and their students." On the list's D3: "go with your
+# recommendations". Measured first: the 27 server actions call `requireStaff()` and nothing else; the role is read in two
+# places, neither of them a decision; `people.decides` is read by the engine's staff list alone.
+# Superseded on 2026-10-22: Nimish, "Just keep all the features available for both educators and coordinators for now"
+# (goals/ux9c-one-role.yaml). His 2026-10-14 sentence holds again the day the roles split, in `mayUse`.
+# Superseded in part on 2026-10-27: Nimish, "their assessments, answers to be checked etc. should be restricted to their
+# grade" (goals/own_who_sees_answers.yaml): a class's children, papers and answers are its own educators' and the
+# coordinator's. The tests below that said every class is open now say the reverse, each in its own words.
+says:
+  - words: "Just keep all the features available for both educators and coordinators for now."
+    proved_by: "apps/web/tests/u27-who-decides-what.spec.ts::an educator approves a skill, in their own name"
+  - words: "but their assessments, answers to be checked etc. should be restricted to their grade."
+    proved_by: "apps/web/tests/u27-who-decides-what.spec.ts::an educator's approval of another class's pack is refused in words, and nothing is approved"
+  - words: "Just keep all the features available for both educators and coordinators for now."
+    proved_by: "apps/web/tests/u27-who-decides-what.spec.ts::the coordinator takes any decision"
+manual: []
+scenarios: []
+criteria:
+  - name: the code sits where the map says; every promise has its command; lint
+    run: bin/check
+    expect: "passed"

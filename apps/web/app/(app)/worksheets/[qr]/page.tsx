@@ -1,0 +1,222 @@
+import type { ReactNode } from "react";
+import Link from "@/components/link";
+import { notFound, redirect } from "next/navigation";
+import { Answers, kindWords, Mistakes, Question } from "@/components/question";
+import { questionKinds } from "@/lib/question-types";
+import { Body, PageHeader, Panel, Pill } from "@/components/shell";
+import { RULE_WORDS } from "@/lib/queries";
+import { KIND_WORDS } from "@/lib/queries-papers";
+import { sql } from "@/lib/db";
+import { mistakeBook, paperItems, printedPaper, type PrintedPaper } from "@/lib/queries-bank";
+import { deadline } from "@/lib/deadline";
+import { LIBRARY_CODE, LibraryWorksheetPage, sheetWords } from "./library-sheet";
+import { requireStaff } from "@/lib/auth";
+import { NotYours } from "@/components/not-yours";
+import { sees } from "@/lib/reach";
+import { weekWords } from "@/lib/week";
+
+type Props = { params: Promise<{ qr: string }> };
+
+// One paper, end to end: the page as it was printed, how the engine drew it from the bank, and the
+// key it is marked against. Every sentence is filled from the paper's own rows.
+export default async function PaperPage({ params }: Props) {
+  const me = await requireStaff();
+  const { qr } = await params;
+  // A library worksheet (R22-H07) or a child's printed paper (CS + six hex): one address for both.
+  if (LIBRARY_CODE.test(qr)) return <LibraryWorksheetPage code={qr} />;
+  if (!/^CS[0-9A-F]{6}$/.test(qr)) {
+    // A paper that carries no printed code of ours — one sat before QR codes, or a library copy read by the name on
+    // it — has a code of its own (`LEGACY-…`) and opens as the paper read: its answers and its pages.
+    if (!/^[A-Za-z0-9-]{1,80}$/.test(qr)) notFound();
+    const [found] = await sql<{ id: string }[]>`select id from sheet_instance where qr_code = ${qr}`;
+    if (found) redirect(`/capture/${found.id}`);
+    notFound();
+  }
+  if (!(await deadline(sees(me, [{ qr }])))) {
+    // a code no paper has is not found; a paper the person does not see is refused in words
+    // (a yes or no asked of the database: the row itself is another class's, so the person's rule hides it from them)
+    const [{ there }] = await deadline(sql<{ there: boolean }[]>`select sheet_code_exists(${qr}) as there`);
+    if (!there) notFound();
+    return <NotYours what="This paper's class" paper />;
+  }
+  const [p, questions, book, { words }] = await deadline(
+    Promise.all([printedPaper(qr), paperItems(qr), mistakeBook(), questionKinds()]),
+  );
+  if (!p) notFound();
+  const back = p.section && p.week ? `/papers/approve?section=${p.section}&week=${p.week}&kind=${p.kind}` : "/papers";
+
+  return (
+    <>
+      <PageHeader
+        stage="Assessments · a printed paper"
+        title={paperTitle(p)}
+        sub={`Printed code ${p.qr_code}: the printed page, how it was made, and its answer key.`}
+      />
+      <Body>
+        <Link href={back} className="mb-4 inline-block text-[13px]">
+          ← {p.section && p.week ? `${p.section}'s papers, ${weekWords(p.week)}` : "Every paper"}
+        </Link>
+        <div className="grid gap-[18px] lg:grid-cols-[minmax(0,1fr)_400px]">
+          <Panel title="The page as printed" aside={`${p.pages} ${p.pages === 1 ? "page" : "pages"}`}>
+            {p.rendered ? (
+              Array.from({ length: p.pages }, (_, i) => (
+                <figure key={i} className="mb-3 last:mb-0">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={`/api/paper/${p.qr_code}/${i + 1}`}
+                    alt={`Page ${i + 1} of paper ${p.qr_code}, as printed`}
+                    className="w-full border border-basalt/14 bg-white"
+                  />
+                </figure>
+              ))
+            ) : (
+              <p className="note">
+                This paper has not been turned into a printable page yet, so there is nothing to show here. Its questions and
+                answers are below.
+              </p>
+            )}
+          </Panel>
+
+          <Panel title="How it was made" label="How it was made">
+            <dl className="grid gap-[14px] text-[13.5px] leading-[1.5]">
+              {facts(p).map(([label, value]) => (
+                <div key={label}>
+                  <dt className="label mb-[3px]">{label}</dt>
+                  <dd>{value}</dd>
+                </div>
+              ))}
+            </dl>
+          </Panel>
+        </div>
+
+        <div className="mt-[18px]">
+          <Panel title="The answer key" aside={`${questions.length} questions`}>
+            <div className="overflow-x-auto">
+              <table className="grid" aria-label="Answer key">
+                <thead>
+                  <tr>
+                    <th className="num">#</th>
+                    <th>Question</th>
+                    <th>Kind</th>
+                    <th>Answer</th>
+                    <th>Wrong answers it catches</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {questions.map((it, i) => (
+                    <tr key={it.item_key}>
+                      <td className="num">{i + 1}</td>
+                      <td className="min-w-[200px] max-w-[420px]">
+                        <Link href={`/library/${it.item_key}`} className="block text-basalt hover:text-terracotta">
+                          <Question it={it} />
+                        </Link>
+                      </td>
+                      <td className="text-[12.5px]">{kindWords(words, it.fmt)}</td>
+                      <td>
+                        <Answers it={it} />
+                      </td>
+                      <td className="min-w-[200px] max-w-[340px]">
+                        <Mistakes it={it} book={book} more={`/library/${it.item_key}`} />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </Panel>
+        </div>
+      </Body>
+    </>
+  );
+}
+
+// A paper by what it tests, never by its printed code (goals/ux8b-papers-named.yaml): a home assessment drawn for one
+// child, each area at its own level, by its kind.
+function paperTitle(p: PrintedPaper): string {
+  if (p.difficulty) return `${p.skill_set_name} · ${p.difficulty}`;
+  return p.areas ? "Home assessment" : p.skill_set_name;
+}
+
+// A paper's facts, in the order they happened, one line each.
+function facts(p: PrintedPaper): [string, ReactNode][] {
+  const pool = p.pool.toLocaleString("en-IN");
+  return [
+    ["For", p.roll_no ? forWords(p) : "A spare copy, no name — for a late child or a spoilt page"],
+    [
+      "Tests",
+      <>
+        {p.areas ? (
+          p.areas.map((a, i) => (
+            <span key={i} className="mr-2 inline-block">
+              {a.name} · <Pill tone="monsoon">{a.level}</Pill>
+            </span>
+          ))
+        ) : (
+          <>
+            {p.skill_set_name} · <Pill tone="monsoon">{p.difficulty ?? "each area at its own level"}</Pill>
+          </>
+        )}
+        {p.rule_fired ? (
+          <span className="note block">
+            {RULE_WORDS[p.rule_fired] ?? p.rule_fired}
+            {p.override_reason ? ` “${p.override_reason}”` : ""}
+          </span>
+        ) : null}
+      </>,
+    ],
+    [
+      "Questions",
+      // how it was chosen is the engine's to say: every maker paper was said to be "chosen from this child's own checked
+      // papers", a class practice an educator chose too (code review, 2026-09-30); a paper from before says only what holds
+      p.source === "focus" ? (
+        `${p.n_items} ${p.how ?? "drawn for this child"} — none they had been given before`
+      ) : p.worksheet ? (
+        <>
+          <Link href={`/worksheets/${p.worksheet}`}>{sheetWords(p.worksheet).replace("sheet", "Sheet")}</Link> of the library&rsquo;s{" "}
+          {p.worksheets} at this level —{" "}
+          {p.roll_no
+            ? `never sat by this child, none of its ${p.n_items} questions seen in ${p.window_days} days, none on a classmate's paper this week`
+            : "not given to a named child this week"}
+        </>
+      ) : p.roll_no ? (
+        `${p.n_items} picked at random from ${pool} at this level — none this child saw in ${p.window_days} days, none shared with a classmate`
+      ) : (
+        `${p.n_items} picked at random from ${pool} at this level — none given to a named child this week`
+      ),
+    ],
+    [
+      "QR code",
+      p.roll_no
+        ? `${p.qr_code} on every page. It points to this record: the child, the questions and their answers.`
+        : `${p.qr_code} on every page. It points to this record: the questions and their answers. The child writes their name.`,
+    ],
+    [
+      "Status",
+      p.replaced_by ? (
+        <>
+          Approved by {p.approved_by}; replaced by <Link href={`/worksheets/${p.replaced_by}`}>{p.replaced_by}</Link>, this week&rsquo;s
+          home assessment. A copy that comes back is still read and marked as this paper.
+        </>
+      ) : (
+        STATUS_WORDS[p.print_status]?.(p.approved_by) ?? p.print_status
+      ),
+    ],
+  ];
+}
+
+// Who a paper is for, each part said only when the paper has it: an older paper has no week and no kind
+// (goals/ux8a-numbers-true.yaml).
+function forWords(p: PrintedPaper): string {
+  const kind = p.kind ? KIND_WORDS[p.kind]?.toLowerCase() : null;
+  return [`Roll ${p.roll_no}`, p.section, p.week ? weekWords(p.week) : null, kind].filter(Boolean).join(" · ");
+}
+
+// Where a paper stands, by its print status: a paper that came back is read, never "waiting for approval".
+const by = (who: string | null) => (who ? ` by ${who}` : "");
+const STATUS_WORDS: Record<string, (approvedBy: string | null) => string> = {
+  new: () => "Waiting for an educator to approve it before it prints",
+  printed: (who) => `Approved${by(who)} and printed`,
+  with_teacher: (who) => `Approved${by(who)}; with the children`,
+  returned: (who) => (who ? `Approved${by(who)}; came back and was read` : "Came back and was read"),
+  void: () => "Withdrawn: it will not be printed",
+};

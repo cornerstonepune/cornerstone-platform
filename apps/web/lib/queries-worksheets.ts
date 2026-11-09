@@ -1,0 +1,93 @@
+// The worksheet library (ADR 0026): every question in the bank on a numbered worksheet of twelve.
+// A worksheet is a `sheet_template` row with source 'library'; which worksheets hold a question is
+// read from their question ids, never copied onto the question.
+import { sql } from "./db";
+import { EVERY_CLASS, type Scope } from "./scope";
+import { skillTaughtFor } from "./taught";
+import { itemColumns, type ItemRow } from "./queries-bank";
+import type { Difficulty } from "./queries";
+
+export type WorksheetRow = {
+  code: string;
+  skill_set_code: string;
+  skill: string;
+  difficulty: Difficulty;
+  kinds: Record<string, number>;
+};
+
+/** `scope`: the classes whose taught skills it lists, every class unless said; `grades`: only worksheets at a level of
+ *  these grades (its row's grade, `skill_level.grade`), none being every grade (goals/ux6-curriculum-for-the-educator.yaml). */
+export type WorksheetFilter = { set?: string; level?: string; scope?: Scope; grades?: string[] };
+
+// A library worksheet of a skill taught in some class: what the page's total counts, so its pager and its list count
+// the same worksheets (goals/ux2-one-count-one-thing.yaml) — never one of a skill since replaced, which no list shows.
+const live = (f: WorksheetFilter) => sql`
+  t.source = 'library' and t.retired_at is null
+  and (t.tenant_id, t.skill_set_code) in (select ls.tenant_id, ls.code from skill ls  -- found once, as the bank's (queries-bank.ts)
+                                          where ${skillTaughtFor(f.scope ?? EVERY_CLASS, sql`ls.tenant_id`, sql`ls.code`)})
+  ${f.grades?.length ? sql`and exists (select 1 from skill_level wl where wl.tenant_id = t.tenant_id and wl.skill_code = t.skill_set_code
+                                      and wl.difficulty = t.difficulty and wl.grade = any(${f.grades}))` : sql``}
+  ${f.set ? sql`and t.skill_set_code = ${f.set}` : sql``}
+  ${f.level ? sql`and t.difficulty = ${f.level}` : sql``}`;
+
+// In the order a teacher reads them: the ladder, then Easy to Advance, then the worksheet's number.
+export async function worksheets(f: WorksheetFilter, limit: number, offset: number): Promise<WorksheetRow[]> {
+  return sql<WorksheetRow[]>`
+    select t.code, t.skill_set_code, s.name as skill, t.difficulty,
+           (select json_object_agg(k.fmt, k.n) from (
+              select i.fmt, count(*)::int as n from item i where i.id = any(t.item_ids) group by i.fmt) k) as kinds
+    from sheet_template t
+    join skill s on s.tenant_id = t.tenant_id and s.code = t.skill_set_code
+    join difficulty d on d.tenant_id = t.tenant_id and d.code = t.difficulty
+    where ${live(f)}
+    order by s.ladder_order nulls last, s.code, d.ord, t.variant
+    limit ${limit} offset ${offset}`;
+}
+
+export async function worksheetCount(f: WorksheetFilter): Promise<number> {
+  const [{ n }] = await sql<{ n: number }[]>`select count(*)::int as n from sheet_template t where ${live(f)}`;
+  return n;
+}
+
+/** The library: every live worksheet of a skill, taught or not — the number the workflow map names too. */
+export async function libraryTotal(): Promise<number> {
+  const [{ n }] = await sql<{ n: number }[]>`
+    select count(*)::int as n from sheet_template t join skill s on s.tenant_id = t.tenant_id and s.code = t.skill_set_code
+    where t.source = 'library' and t.retired_at is null`;
+  return n;
+}
+
+export type LibraryWorksheet = {
+  code: string;
+  skill_set_code: string;
+  skill: string;
+  /** False for a worksheet of a skill set since replaced (ADR 0034): it has no skill page to go back to. */
+  skill_live: boolean;
+  outcome: string;
+  band: string;
+  difficulty: Difficulty;
+  level_words: string | null;
+  created_at: string;
+  retired_at: string | null;
+};
+
+export async function libraryWorksheet(code: string): Promise<LibraryWorksheet | undefined> {
+  const rows = await sql<LibraryWorksheet[]>`
+    select t.code, t.skill_set_code, coalesce(s.name, t.skill_set_code) as skill, s.code is not null as skill_live,
+           coalesce(s.learning_objective, '') as outcome, t.band, t.difficulty,
+           l.looks_like as level_words, t.created_at, t.retired_at
+    -- a worksheet printed from a skill set since replaced (ADR 0034) still opens, under the name it was made for
+    from sheet_template t left join skill s on s.tenant_id = t.tenant_id and s.code = t.skill_set_code
+    left join skill_level l on l.tenant_id = s.tenant_id and l.skill_code = s.code and l.difficulty = t.difficulty
+    where t.source = 'library' and t.code = ${code}`;
+  return rows[0];
+}
+
+// A worksheet's questions in the order they print.
+export async function worksheetItems(code: string): Promise<ItemRow[]> {
+  return sql<ItemRow[]>`
+    select ${itemColumns()} from sheet_template t, unnest(t.item_ids) with ordinality as u(id, n)
+    join item i on i.id = u.id
+    where t.source = 'library' and t.code = ${code}
+    order by u.n`;
+}
