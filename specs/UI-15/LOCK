@@ -1,0 +1,16 @@
+{
+  "digest": "f7b3efa094dcaf0f90f4be0f44220ea17374a0ffa9402fbe3d2e4a13646a1ec8",
+  "files": [
+    "spec.md",
+    "checks.sh",
+    "proofs/browser.sh",
+    "proofs/playwright.config.ts",
+    "proofs/staff_page.sh",
+    "proofs/static.py",
+    "proofs/suite.sh",
+    "proofs/ui15.spec.ts"
+  ],
+  "locked_at": "2026-11-09T12:54:02+00:00",
+  "criteria": 5,
+  "athena": "2.15.0"
+}
