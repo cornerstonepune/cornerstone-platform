@@ -1,1 +1,0 @@
-UI-6 says "CP-21". The draft-goes-live scope is CP-22 (CP-21 is the finished CI-speed scope). Fix every mention.

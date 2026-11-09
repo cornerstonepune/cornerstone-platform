@@ -1,1 +1,0 @@
-Child names will certainly be there. That was a stupid thing. My Claude, for no reason, only keeps on telling about child privacy, etc. Child names will definitely be there. It's our school, and we'll need to move to Cloudflare for sure.
