@@ -14,6 +14,7 @@ import uuid
 import pytest
 
 from engine.core import db, settings
+from engine.w3_read import nightly
 from tests import rows
 
 ROOT = db.REPO_ROOT
@@ -145,12 +146,11 @@ def test_a_move_at_one_in_the_morning_in_pune_is_dated_that_pune_day(conn):
 def test_a_hand_check_with_no_date_is_dated_by_the_schools_clock(conn):
     t = rows.tenant(conn)
     _, _, child = _class(conn, t)
+    nightly.hand_check(conn, child, "S1", "G3", "secure", "test")
     row = db.one(
         conn,
-        "insert into hand_check (tenant_id, child_id, skill_code, grade_code, expected_state, matches, checked_by)"
-        " values (%s, %s, 'S1', 'G3', 'secure', false, 'test') returning checked_on,"
-        " internal.school_day(tenant_id, now()) as school_today",
-        (t, child),
+        "select checked_on, internal.school_day(tenant_id, now()) as school_today from hand_check where child_id = %s",
+        (child,),
     )
     assert row["checked_on"] == row["school_today"] == settings.school_today(conn)
     assert not re.search(

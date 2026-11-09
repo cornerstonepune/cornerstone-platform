@@ -12,7 +12,7 @@ P=specs/CP-24/proofs
 PY=packages/engine/.venv/bin/python
 check "1a one clock: no current_date in a new migration, no hard-coded Asia/Kolkata in engine or website code" \
   bash $P/pytest.sh --no-db $P/test_one_clock.py
-check "1b one clock: move_child and hand_check.checked_on date by internal.school_day in the database" \
+check "1b one clock: move_child and the engine's hand check date by internal.school_day in the database" \
   bash $P/pytest.sh $P/db/test_school_day.py -k test_1_
 check "2 a child moved at 01:00 IST is enrolled from that IST day, not the day before" \
   bash $P/pytest.sh $P/db/test_school_day.py -k test_2_

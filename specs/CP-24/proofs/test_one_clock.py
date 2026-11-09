@@ -4,8 +4,8 @@ files may name it). Git's list (tracked and not yet added, never ignored), so no
 
 "New" is every migration numbered after 20270125120000, the newest on main when these proofs were written (CP-6's
 fortnight cycle). Its one-off backfill (`ends_on >= current_date`) and the audited `hand_check` default of
-20270125090000 are already applied and are not edited (rule 9); the new migration supersedes the second, which
-test_school_day.py proves on the database.
+20270125090000 are already applied and are not edited (rule 9); the column default stays and is CP-27's, while
+test_school_day.py proves on the database that the engine's own hand check is dated by the school's day.
 """
 
 import re

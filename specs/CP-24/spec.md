@@ -16,7 +16,8 @@ Lean: each item is the smallest working fix. The audit's evidence is quoted in e
 ## Done when
 
 1. No migration or engine code computes the school's date from the server's clock:
-   - `move_child` (20270111090000) and `hand_check.checked_on` (20270125090000) use `internal.school_day(...)`;
+   - `move_child` (20270111090000) uses `internal.school_day(...)`, and the engine dates a hand check (`nightly.hand_check`)
+     by the school's day; the `hand_check.checked_on` column default is left to CP-27 (no new function under its budget);
    - Python and web code read the time zone from the `school.time_zone` setting, not a hard-coded "Asia/Kolkata".
    A test fails if `current_date` appears in a new migration or the zone string appears outside the seed. (Audit F5.)
 2. A move of a child made at 01:00 IST is dated that IST day, not the day before. (Test.)

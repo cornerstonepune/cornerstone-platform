@@ -13,7 +13,7 @@ import datetime as dt
 import time
 
 from engine.assess import graph
-from engine.core import db
+from engine.core import db, settings
 
 LOCK = ("graph_nightly", "run")  # one run at a time, over every connection
 
@@ -86,7 +86,7 @@ def hand_check(
 ) -> dict:
     """One hand calculation against the system's state at this moment, stored with whether they matched so a later
     change of the system cannot make an honest old row wrong (CP-9 item 7). Append-only; the caller commits. With no
-    `on`, the table dates it by the school's clock (trigger `hand_check_school_day`, CP-24)."""
+    `on`, it is dated by the school's clock (CP-24), never the server's."""
     row = conn.execute(
         "select state from child_observed_state where child_id = %s and skill_code = %s and grade_code = %s",
         (child_id, skill, grade),
@@ -95,6 +95,16 @@ def hand_check(
     conn.execute(
         "insert into hand_check (tenant_id, child_id, skill_code, grade_code, expected_state, system_state, matches,"
         " checked_by, checked_on) values (%s, %s, %s, %s, %s, %s, %s, %s, %s)",
-        (_tenant(conn), child_id, skill, grade, expected, system, system == expected, by, on),
+        (
+            _tenant(conn),
+            child_id,
+            skill,
+            grade,
+            expected,
+            system,
+            system == expected,
+            by,
+            on or settings.school_today(conn),
+        ),
     )
     return {"system_state": system, "matches": system == expected}

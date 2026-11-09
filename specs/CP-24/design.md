@@ -8,8 +8,9 @@ choices so the proofs, the build and the verifier agree on names. No choice here
 - **SQL.** `internal.school_day(tenant, at)` (20261206090000) is the one date function. The migration
   `20270125170000_one_clock.sql` replaces `move_child` so every `current_date` becomes `internal.school_day(c.tenant_id, p_at)`,
   with a new trailing parameter `p_at timestamptz default now()` (so a test can move a child at 01:00 IST); the old
-  signature is dropped first, since `create or replace` with a new parameter would add an overload. `hand_check.checked_on`
-  loses its `default current_date`; a `before insert` trigger fills a null `checked_on` with `internal.school_day(new.tenant_id, now())`.
+  signature is dropped first, since `create or replace` with a new parameter would add an overload (one function replaced,
+  none added). `hand_check.checked_on` keeps its `default current_date`: a trigger would add a function, and CP-27's
+  budget may only fall, so the engine's `nightly.hand_check` passes the school's day itself and the column is CP-27's.
 - **Python.** `engine.core.settings` gains `time_zone(conn)` (the `school.time_zone` row, raised as `MissingSetting`-style
   error when absent, no default) and `school_day(conn, at)`. `voice_intake.school_day` delegates to it (rule 10). Every
   `settings.config(conn, "school.time_zone", "Asia/Kolkata")` and every `at time zone 'Asia/Kolkata'` in the engine reads

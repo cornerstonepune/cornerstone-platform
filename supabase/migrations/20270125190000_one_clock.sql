@@ -3,8 +3,9 @@
 --   * `move_child` (20270111090000) takes `p_at timestamptz default now()` and dates the move, the enrolment and the
 --     week it withdraws papers from by the school's day of that moment. The old signature is dropped first: a `create or
 --     replace` with a new parameter would have left two `move_child`s.
---   * `hand_check.checked_on` (20270125090000) loses `default current_date`; a trigger fills a null `checked_on` with the
---     school's day. A default cannot read the row's tenant, a trigger can.
+--   * `hand_check.checked_on` (20270125090000) still defaults to `current_date`: changing it needs a trigger function,
+--     which CP-27's budget (functions may only fall) does not allow. The engine dates its hand checks itself
+--     (`nightly.hand_check`); the column is CP-27's to settle.
 -- Written to run twice.
 
 drop function if exists public.move_child(uuid, text, text, text, text, text);
@@ -102,16 +103,3 @@ do $$ begin
     grant execute on function public.move_child(uuid, text, text, text, text, text, timestamptz) to app_web;
   end if;
 end $$;
-
-alter table hand_check alter column checked_on drop default;
-
-create or replace function internal.hand_check_school_day() returns trigger
-language plpgsql set search_path = public as $$
-begin
-  if new.checked_on is null then new.checked_on := internal.school_day(new.tenant_id, now()); end if;
-  return new;
-end $$;
-
-drop trigger if exists hand_check_school_day on hand_check;
-create trigger hand_check_school_day before insert on hand_check
-  for each row execute function internal.hand_check_school_day();

@@ -1,8 +1,6 @@
 {
   "why": "CP-27: the schema may only shrink. Equal to today's counts; lower them when a change removes tables or functions. Raising one needs a line in raised_by naming the spec and why the new table cannot be a column, a row in a shared table, a rule on a column, or a view.",
   "tables": 170,
-  "functions": 160,
-  "raised_by": [
-    "CP-24: one trigger function gives a hand_check row with no date the school's day; a column default cannot read the row's tenant, and the school's day is the one clock the whole scope removes the server's date for"
-  ]
+  "functions": 159,
+  "raised_by": []
 }

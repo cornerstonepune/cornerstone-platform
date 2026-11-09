@@ -1,7 +1,7 @@
 """CP-24 items 1 and 2, in the database.
 
-Item 1: `move_child` as the database holds it says no `current_date`, and `hand_check.checked_on` has no
-`current_date` default; a hand check written with no date is dated `internal.school_day(...)`.
+Item 1: `move_child` as the database holds it says no `current_date`, and a hand check the engine writes with no date
+is dated `internal.school_day(...)` (the column's own default is left to CP-27).
 Item 2: a move made at 01:00 IST (19:30 UTC the day before) opens the new enrolment on that IST day. `move_child` takes
 the moment as its 7th parameter, `p_at timestamptz` (specs/CP-24/design.md, "One clock").
 
@@ -30,26 +30,19 @@ def test_1_move_child_says_no_current_date(conn):
     assert "school_day" in defs[0], "move_child does not date the move with internal.school_day"
 
 
-def test_1_hand_check_checked_on_is_the_school_day(conn, tenant):
-    default = conn.execute(
-        "select pg_get_expr(d.adbin, d.adrelid) as e from pg_attrdef d join pg_attribute a"
-        " on a.attrelid = d.adrelid and a.attnum = d.adnum where d.adrelid = 'public.hand_check'::regclass"
-        " and a.attname = 'checked_on'"
-    ).fetchone()
-    assert default is None or "current_date" not in default["e"].lower(), (
-        f"hand_check.checked_on still defaults to the server's date: {default['e']}"
-    )
+def test_1_a_hand_check_the_engine_writes_is_dated_by_the_school_day(conn, tenant):
+    from engine.w3_read import nightly
+
     child = db.one(
         conn,
         "insert into child (tenant_id, roll_no, section, band) values (%s, '1', %s, 'G3') returning id",
         (tenant, f"CP24-{uuid.uuid4().hex[:6].upper()}"),
     )["id"]
+    nightly.hand_check(conn, child, "NUM.OPS.01", "G3", "secure", BY)
     row = db.one(
         conn,
-        "insert into hand_check (tenant_id, child_id, skill_code, grade_code, expected_state, matches, checked_by)"
-        " values (%s, %s, 'NUM.OPS.01', 'G3', 'secure', true, %s)"
-        " returning checked_on, internal.school_day(tenant_id, now()) as school_day",
-        (tenant, child, BY),
+        "select checked_on, internal.school_day(tenant_id, now()) as school_day from hand_check where child_id = %s",
+        (child,),
     )
     assert row["checked_on"] == row["school_day"]
 
