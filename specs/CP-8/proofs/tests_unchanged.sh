@@ -11,7 +11,7 @@
 # proofs may use, so they are not run a second time here (as CP-2, CP-3 and CP-5 do).
 # It guards CP-8's own change only, as CP-3's proof 7 and CP-5's tests_unchanged.sh do: every later scope's pull request
 # is re-run through this proof and may rightly edit an existing test (CP-24 does). So it applies when the diff against
-# the merge-base adds or changes CP-8's migration, or changes specs/CP-8 beyond VERIFY.md, RUN.json, status.json and this file;
+# the merge-base adds or changes CP-8's migration, or changes specs/CP-8 beyond VERIFY.md, RUN.json, status.json, checks.sh and this file (the check's own wiring);
 # otherwise it says so in one line and passes. When it applies it behaves exactly as before.
 #   bash specs/CP-8/proofs/tests_unchanged.sh              the check
 #   bash specs/CP-8/proofs/tests_unchanged.sh --self-check  both cases, in a scratch repository
@@ -49,7 +49,7 @@ fi
 cd "${CP8_REPO:-$(dirname "$0")/../../..}"
 base=$(git merge-base HEAD origin/main 2>/dev/null || git merge-base HEAD main) \
   || { echo "no main to compare with: this proof needs the repository's history"; exit 1; }
-own=$(git diff --name-only "$base" | awk -v m="$MIGRATION" '$0 == m || ($0 ~ /^specs\/CP-8\// && $0 !~ /^specs\/CP-8\/(VERIFY\.md|RUN\.json|status\.json|proofs\/tests_unchanged\.sh)$/)')
+own=$(git diff --name-only "$base" | awk -v m="$MIGRATION" '$0 == m || ($0 ~ /^specs\/CP-8\// && $0 !~ /^specs\/CP-8\/(VERIFY\.md|RUN\.json|status\.json|checks\.sh|proofs\/tests_unchanged\.sh)$/)')
 if [ -z "$own" ]; then
   echo "this pull request is not CP-8's own change, so the unchanged-tests check does not apply"
   exit 0

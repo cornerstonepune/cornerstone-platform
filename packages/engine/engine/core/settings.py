@@ -14,6 +14,7 @@ from engine.core import db
 SEED = db.REPO_ROOT / "supabase" / "seed"
 # The school's clock inside SQL: `now() at time zone <this>` (CP-24: one clock, never the server's)
 ZONE_SQL = "(select value #>> '{}' from config where key = 'school.time_zone')"
+TODAY_SQL = f"(now() at time zone {ZONE_SQL})::date"  # the school's date inside a query that has no second lookup to spare
 
 
 class MissingSetting(Exception):
