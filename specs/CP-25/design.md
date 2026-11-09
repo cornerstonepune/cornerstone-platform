@@ -96,7 +96,12 @@ One new SQL function, `public.fortnight_days(p_class uuid, p_fortnight uuid)` re
 `(on_date date, week_code text, weekday smallint, school_day_id uuid)`: every date from `starts_on` to `ends_on`, Monday
 to Friday, that is not a holiday on the class's campus; week A is the first seven days from `starts_on`, B the rest;
 `school_day_id` is the date's `school_day` row when there is one (null otherwise). This is the rule three of the four
-copies already use (the day page's rule), so only CP-7's reader changes meaning.
+copies already use (the day page's rule), so only CP-7's reader changes meaning. The function does not require a
+`school_day` row (as `tt_need.load` and `fortnight_slots` today; CP-22's locked proof
+`test_a_date_with_no_school_day_on_record_is_refused_and_named` relies on a date with no row reaching go-live's own
+refusal). The two readers that today also need a calendar row (the layer and the clash view) keep that as their own
+filter, `school_day_id is not null`: which dates and which week stays one rule; "a calendar row is on record" is a
+separate condition of those two readers.
 
 - `internal.fortnight_slots` is redefined (`create or replace`, same signature) to take its dates from
   `fortnight_days` and its rows from the fortnight's layer when the class has one for that fortnight, else from the
@@ -111,6 +116,12 @@ copies already use (the day page's rule), so only CP-7's reader changes meaning.
   weekday and period (the 15-day case) give the same signature every time.
 
 ### Item 3: who may, through one helper
+- **Where the check sits: at the doors** (each engine command and each keyed route), before the library call, not
+  inside `fortnight_cycle.move`, `draft_classes` or `tt_move.move`. Reason: CP-6's locked proofs and three engine test
+  files call those library functions with a free-text actor (`"staff:<uuid>"`) that holds no grant; a check inside the
+  library would break locked proofs of a merged spec. People reach these actions only through the doors, so the doors
+  are where "who may" is decided (as CP-12 put its clash check in the command). The checks CP-22 and CP-12 already
+  make inside `go_live` and `tt_clash.accept` stay where they are.
 - The check stays the one `tt_live.in_group` already makes (CP-3's `staff_role_grant` → `access_role_group`, the
   grant current on the school's day), moved unchanged to a shared `w2_print/who_may.py` (`tt_live` and `tt_clash`
   import it from there), plus one condition: the staff row is active (as `internal.fortnight_is_approver` already
@@ -137,10 +148,13 @@ copies already use (the day page's rule), so only CP-7's reader changes meaning.
 
 ### Item 4: a setting the school changed is kept
 `config` gains one column, `seed_value jsonb` (what the loader last wrote). `load_config`'s upsert, for a row not
-marked `seed_once`, becomes: set `value` to the seed's only while the live `value` still equals `seed_value` (the school
-has not changed it), and always record the new `seed_value` and description. A new key is inserted as before. On the
-first deploy after the migration `seed_value` is null for every row, so every live value is kept and the seed is
-recorded; from then on a changed seed reaches every row the school left alone. `seed_once` rows are untouched.
+marked `seed_once`, becomes: set `value` to the seed's when `seed_value` is null (the loader has never written this row:
+a migration or a new-school trigger put it there) or the live `value` still equals `seed_value` (the school has not
+changed it); otherwise keep `value`. Always record the new `seed_value` and description. A new key is inserted as
+before, with its `seed_value`. The first deploy after the migration therefore behaves as every deploy does today (it
+writes the seed), and from then on a value the school changes is kept while a changed seed still reaches every row the
+school left alone. A fresh test school whose rows came from triggers still gets the seed's values (CP-10's proof
+conftest relies on that). `seed_once` rows are untouched. No data is backfilled.
 
 ### Item 5: the late jobs
 CP-24 adds the nightly line (`graph.nightly_stale_hours`, default 26). CP-25 adds the clean-up line beside it: the
@@ -208,8 +222,10 @@ view, `internal.fortnight_signature`; the `fortnight_plan_line` key swap; `confi
 `as_signed_in(conn, staff_id)` sets `app.staff_id` to the staff row's `signin_id` for the transaction.
 
 #### 3. `packages/engine/engine/w2_print/tt_need.py`, `tt_live.py`, `tt_clash.py`, `tt_move.py`, `tt_rules.py`, `fortnight_cycle.py` (Modify)
-`tt_need.load` reads `fortnight_days`. `tt_live`, `tt_clash` import `in_group` from `who_may`. `tt_move.move`,
-`tt_rules.change`, `fortnight_cycle.move`, `fortnight_cycle.draft_classes` call `in_group` with their setting.
+`tt_need.load` reads `fortnight_days`. `tt_live`, `tt_clash` import `in_group` from `who_may`. The library functions
+`tt_move.move`, `tt_rules.change`, `fortnight_cycle.move`, `fortnight_cycle.draft_classes` are unchanged; their doors
+(`cli_fortnight.py`, `cli_timetable.py` `draft`, `cli_tt_hand.py`, `api/routes/plan.py`, `timetable_hand.py`,
+`timetable_rules.py`) call `in_group` with the action's setting before them.
 `fortnight_cycle.approve_class(conn, grade, section, year, number, who)` finds the class's newest plan and calls
 `fortnight_approve` inside `as_signed_in`.
 
@@ -234,10 +250,21 @@ The logo in the page header.
 
 ### Which existing proofs and tests are touched
 
-See the section below the line "Impact on merged specs" (filled from the reading of every CP-6, CP-7, CP-12 and CP-22
-proof and engine test). Rule: CP-25 edits no locked file of a merged spec. Where a merged proof's fixture would be
-refused by a new group check, the fix is in CP-25's code path (the check reads a setting whose default is the group
-the fixture's actor already holds), never in the locked proof.
+Read from every CP-6, CP-7, CP-12 and CP-22 proof and the engine tests (9 Nov). CP-25 edits no locked file of a merged
+spec; no locked proof conflicts with the design as revised:
+* **Date rule (items 1, 2):** every drafting fixture (CP-7, engine `test_fortnight_plan`) uses a Monday-start 14-day
+  fortnight, so CP-7's dates do not change for them. CP-12 and CP-22 have 15-day cases and a Tuesday-start neighbour;
+  they already use the day page's rule, which becomes the one rule. CP-22's "no school day on record" proof is kept by
+  not requiring a calendar row in `fortnight_days` (above). No test inserts `fortnight_plan_line` directly or names its
+  key.
+* **Group checks (item 3):** CP-6's proofs, `test_fortnight_cycle.py` and `test_k2_timetable_load.py` call the library
+  with a free-text actor; kept green by putting the checks at the doors. The engine test `test_cli_timetable.py` drives
+  the `timetable draft` *command* with `--by staff:<uuid>`; that door now asks for a person in the group, so this
+  (unlocked) test is updated to pass a coordinator's email: the behaviour change item 3 asks for. CP-7, CP-12 and CP-22
+  act as a coordinator (group `everything`) and are unaffected.
+* **Settings (item 4):** `test_loaders.py` covers only a `seed_once` row; CP-10's conftest loads config on a fresh
+  school, kept by "null `seed_value` means the loader owns it".
+* No test drafts after a go-live or a hand move: the item 1 journey is new coverage.
 
 ### Verification Plan
 * `cd packages/engine && pytest -q` (engine), `bin/check --db` with `TEST_DATABASE_URL` on a local Postgres (every
@@ -249,8 +276,9 @@ the fixture's actor already holds), never in the locked proof.
 1. The highest: item 1's journey crosses five scopes; a second fault may sit behind the first (for example the gate
    meeting a class whose layer and plan disagree after a move made after the class was approved). The journey test is
    the only guard; it runs first.
-2. CP-7's proofs may expect the Monday rule for a fortnight that starts mid-week; if a locked proof does, CP-25 blocks
-   and says so rather than amend it.
-3. The new group checks could refuse an actor in a merged spec's fixture that holds no grant in `everything`.
+2. A locked proof not listed above that expects the Monday rule: none found; if the build meets one, CP-25 blocks and
+   says so rather than amend it.
+3. Checks at the doors leave the library callable without a group check by code; acceptable because no person reaches
+   the library except through a door, and `test_layout.py` already holds which files are doors.
 4. Item 7: a header mark the reader mistakes for ink, or that moves the lined-up page; the reader's own tests decide.
 5. CP-24 not merged: its route file and watch function are prerequisites.
