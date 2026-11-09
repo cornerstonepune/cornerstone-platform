@@ -14,6 +14,7 @@ Make each schema change one additive numbered migration in `supabase/migrations/
 - Default privileges already give `app_engine` select, insert, update and delete, and `app_web` select, on new public tables. To withhold a privilege, add an explicit `revoke` inside the `if exists (select from pg_roles ...)` guard the neighbouring migration uses. A grant line alone adds nothing.
 - A new constraint means regenerating `packages/engine/engine/checks/rules.json` with `engine live rules --write`, or `tests/test_rules.py` fails.
 - A new command group lives in `packages/engine/engine/w2_print/cli_*.py` as a Typer app that `cli.py` mounts with `add_typer`, and its commands are listed in N4's `commands` in `workflows.json`. `cli.py` sits near its 400-line ceiling; do not grow it.
+- Migration filenames: the next number comes from the highest number on main AND in every open pull request's `supabase/migrations/`, not only main's newest. Two branches on one number break whichever merges second. When several builders run at once, the coordinator assigns each its slot up front; a rename is checked against the open list before pushing. If a locked proof names the old filename, stop and report instead of renaming.
 
 ## Access and row-level security
 - Prove denied rows are absent and allowed rows present, both through the restricted login with identity set the way the app sets it. Full checklist: `references/access-proof-checklist.md`.
