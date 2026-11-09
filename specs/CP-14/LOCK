@@ -1,0 +1,18 @@
+{
+  "digest": "ee2afa5ba9726f95d1bcae6d5a08bde2b54eca1afb2f955be7a5d5bc75c63003",
+  "files": [
+    "spec.md",
+    "checks.sh",
+    "proofs/conftest.py",
+    "proofs/live_k2_links.py",
+    "proofs/test_confirm_list.py",
+    "proofs/test_history.py",
+    "proofs/test_ready_activities.py",
+    "proofs/test_same_answers.py",
+    "proofs/test_who_decides.py",
+    "proofs/test_withdraw.py"
+  ],
+  "locked_at": "2026-11-08T17:35:49+00:00",
+  "criteria": 7,
+  "athena": "2.14.0"
+}
