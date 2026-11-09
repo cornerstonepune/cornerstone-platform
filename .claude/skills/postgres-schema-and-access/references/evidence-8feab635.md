@@ -1,0 +1,2 @@
+- database-access-rules [project]: Use when proving Postgres row-level security or grants.
+- postgres-schema-and-access [project]: Use when changing Postgres schema, grants, or RLS rules.
