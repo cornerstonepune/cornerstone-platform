@@ -1,7 +1,7 @@
 # CP-25: The fortnight works end to end, plus the backend's basics
 
-Status: reviewed (EGM, all stages; reports in `design-review/`), 9 Nov 2026. Scope: issue #530, copied verbatim to
-`spec.md`. Tier 3 (database, `.github/`).
+Status: reviewed (EGM stages 5 to 9; reports and the resolution of every finding in `design-review/`), 9 Nov 2026.
+Scope: issue #530, copied verbatim to `spec.md` at lock. Tier 3 in Athena's terms (database, `.github/`: the full loop).
 
 Builds on CP-24 (#514, not merged yet). CP-24 adds the keyed routes `/fortnight/state` and `/fortnight/move`
 (`packages/engine/engine/api/routes/plan.py`), the nightly line in `engine live watch` and `fortnight_cycle.step_days`.
@@ -160,7 +160,9 @@ still agree. A 15-day fortnight never rolls forward from a 14-day one (it has mo
   (security definer, fixed `search_path`): the staff row is active, and holds a `staff_role_grant` valid on the school's
   day (`internal.school_day(tenant, now())`) in a role CP-3 maps (`access_role_group`) to a group the setting `p_key`
   names. The setting must be a string or a list of strings; missing or any other shape is false (refused).
-  `internal.fortnight_is_approver` is redefined to call it for the signed-in staff row. One rule, one clock.
+  `internal.fortnight_is_approver` is redefined to call it for the signed-in staff row. One rule, one clock. This
+  generalises the function CP-7 already has (the same rule hard-wired to one key); it is not the out-of-scope
+  "simplifying the parallel mechanisms" (approvals stay where they are).
 * **One door helper**, `packages/engine/engine/core/who_may.py` (core: it reads CP-3 tables and config, which every
   workflow may use):
   * `ACTIONS`: a dict, action name → setting key (the table below).
@@ -174,15 +176,17 @@ still agree. A 15-day fortnight never rolls forward from a 14-day one (it has mo
     sign-in list (`app.staff`) to approve a class: the database's check (`fortnight_approve`) is CP-3's.
 * **Where the check sits: the doors.** Each door calls `as_actor` before the library call. Not inside the library:
   CP-6's locked proofs and three engine test files call `fortnight_cycle.move` and `draft_classes` with a free-text
-  actor that holds no grant. A door cannot get a staff id for the library without `as_actor` (one place, one dict, one
-  test walking it). The checks CP-22 and CP-12 already make inside `go_live` and `tt_clash.accept` stay, now through
-  `internal.in_groups`; they gain the active-staff condition the database rule already had.
+  actor that holds no grant. Every such door passes the library the id `as_actor` returned;
+  `test_who_may.py` walks `ACTIONS` and each door. Go-live and clash-accept keep their one check where it is, inside
+  `go_live` and `tt_clash.accept` (their doors do not call `as_actor` again); that check now calls `who_may.as_actor`,
+  so it reads `internal.in_groups` and gains the active-staff condition the database rule already had.
 * **Approve a class.** The door calls `fortnight_cycle.approve_class(conn, grade, section, year, number, staff_id)`,
   which finds the class's newest plan and calls `fortnight_approve` inside `as_signed_in`. No separate Python group
   check: the database refuses (42501) and the door turns that into `NotInGroup`.
 * **The clash rule for approving a fortnight** moves out of `cli_fortnight.approve` into
-  `tt_clash.check_approval(conn, tenant_id, fortnight_id, number)`, raising `CycleError`, called by every door that steps
-  to `approved`. It is not put inside `fortnight_cycle.move` because `tt_clash` imports `tt_live`, which imports
+  `tt_clash.check_approval(conn, tenant_id, fortnight_id, number)`, raising `CycleError` when the school's
+  `timetable.open_clash_blocks_approval` is on and a clash is not accepted, called by every door that steps to
+  `approved`. It is not put inside `fortnight_cycle.move` because `tt_clash` imports `tt_live`, which imports
   `fortnight_cycle` (an import cycle).
 
 | Action | Command | Route | Setting (default) |
@@ -196,7 +200,9 @@ still agree. A 15-day fortnight never rolls forward from a 14-day one (it has mo
 | load the standing timetable | `engine timetable load --apply` (gains `--by`) | none | `timetable.change_group` |
 | accept a clash | `engine timetable accept` | `/timetable/clash/accept` | `timetable.accept_clash_group` (CP-12) |
 
-`everything` is the coordinator's group (Nimish, 8 Nov 2026, recorded in `docs/backend-plan.md`). Interface change:
+`everything` is the coordinator's group (the descriptions of `timetable.go_live_group` and
+`timetable.accept_clash_group` in `supabase/seed/config.json`; `docs/backend-plan.md`: only the coordinator accepts a
+clash). The two new keys' default is this design's choice, the same group. Interface change:
 `engine timetable draft --by` was a staff id written as "who drafted"; it becomes an email like every other `--by`, and
 the resolved staff id is what is written. Its one caller outside the engine is `test_cli_timetable.py`.
 
@@ -221,7 +227,7 @@ The scope's "48-hour voice clean-up" is the job that deletes a note's raw copies
 (`voice.confirm_within_hours`); n8n runs it every hour (`n8n/workflows/f5-voice-cleanup.json`). So "late" is three hours
 without an ok run. CP-24 adds the nightly line (CP-9's `graph.nightly_stale_hours`, 26). CP-25 adds in `watch.problems`:
 `voice clean-up has had no ok run for {n} hours (limit {h})`, or `voice clean-up has never run ok`, reading the newest
-`flow_run` with `flow = 'voice_cleanup'` and `status = 'ok'` (the query `voice_switch.status` already uses). The limit is
+`flow_run` with `flow = 'voice_cleanup'` and `status = 'ok'` (like `voice_switch.status`'s query, restricted to ok). The limit is
 a threshold row, `watch.voice_cleanup_hours` = 3, as the watch's other limits are (`supabase/seed/thresholds.json`; no
 migration lines). `docs/runbooks/scheduled-jobs.md`: import F4 and F5 into n8n on the server, attach the engine-key
 credential, switch both on, confirm with `engine live watch`; it links `n8n/README.md` for each workflow's detail.
@@ -263,7 +269,8 @@ scanner's existing tests on a rendered sheet must pass unchanged.
 
 ## Risks & Mitigations
 
-1. **The journey crosses five scopes; a second fault may sit behind the first.** The journey test is written first and
+1. **The journey crosses five earlier scopes (CP-6, CP-7, CP-11, CP-12, CP-22); a second fault may sit behind the
+   first.** The journey test is written first and
    run after every step of the build.
 2. **Plans drafted under the old date rule.** Fortnights that do not start on a Monday or are not 14 days get new dates;
    an approved plan for one would fail the gate. Mitigation: before deploy, a read-only query on the server lists open
@@ -297,7 +304,8 @@ scanner's existing tests on a rendered sheet must pass unchanged.
 
 ### Order of work
 1. #514 merged; branch from main; confirm the migration number.
-2. Write `test_fortnight_journey.py` (fails: "two slots for one period"). Until step 4, it approves through
+2. Write `test_fortnight_journey.py` (fails: "two slots for one period"). It gets a placed draft without running FET,
+   the way `test_timetable_go_live.py` does (a placed `timetable_run` fixture). Until step 4, it approves through
    `fortnight_approve` with `app.staff_id` set in the test and steps with `fortnight_cycle.move`; at step 4 it switches
    to the doors.
 3. Items 1 and 2: migration (functions, readers, key swap, signature), `tt_need`, `k2_day`, `k2_timetable(_load)`,
@@ -333,7 +341,9 @@ scanner's existing tests on a rendered sheet must pass unchanged.
 | 21 | `workflows.json` | M | `engine/core/who_may.py` on the base; `engine fortnight move` and `engine fortnight approve-class` on N4's commands (routes are not in the map) |
 
 Tests: `packages/engine/tests/test_fortnight_journey.py` (C), `test_fortnight_days.py` (C), `test_who_may.py` (C),
-`test_loaders.py` (M), `test_watch.py` (M), `test_cli_timetable.py` (M: `--by` email), `test_render.py` (M); the proofs
+`test_loaders.py` (M), `test_watch.py` (M), `test_cli_timetable.py` (M: `--by` email), `test_k2_timetable.py` (M:
+`generate` takes `week_of`), `test_render.py` (M); the scanner's tests on rendered sheets (`test_render_pdf.py` and the
+`w3_read` tests that read a rendered sheet) run unchanged; the proofs
 in `specs/CP-25/` (written by the proof-writer, not the builder).
 
 ### Done-when → what proves it
