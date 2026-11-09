@@ -2,7 +2,7 @@
 # Acceptance proofs for CP-22. Written BEFORE the product code, by a different agent.
 # After `athena lock CP-22` this file, spec.md and proofs/ cannot be edited.
 # One `check` per "Done when" line, same numbering. Each check must be a real command.
-source "$ATHENA_ROOT/.claude/athena/bin/checklib.sh"
+source "$ATHENA_ROOT/bin/checklib.sh"
 cd "$ATHENA_ROOT"
 
 # Every database proof uses TEST_DATABASE_URL (CP-20's throwaway Postgres in the athena job) or builds its own in a
