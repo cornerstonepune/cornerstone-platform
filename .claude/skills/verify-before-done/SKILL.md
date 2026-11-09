@@ -1,7 +1,7 @@
 ---
 name: verify-before-done
 category: verification
-description: Use when calling work done, a fast-checks gate blocks finishing, or checking a roadmap task against its done-when.
+description: Use when calling work done or a fast-checks gate blocks.
 ---
 
 # Verify before calling work done
