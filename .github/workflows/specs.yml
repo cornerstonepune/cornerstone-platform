@@ -6,6 +6,8 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+env:
+  UV_PYTHON: "3.12"
 permissions:
   contents: read
 jobs:
