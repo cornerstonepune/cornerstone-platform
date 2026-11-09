@@ -258,6 +258,10 @@ a { color: var(--link); text-decoration: underline; text-underline-offset: 3px; 
 .peek .timeline .tli:last-child { border-bottom: 0; }
 .peek-more { justify-self: start; }
 
+.split { display: grid; grid-template-columns: minmax(240px, 320px) minmax(0, 1fr); gap: var(--space-4); align-items: start; }
+@container (max-width: 700px) { .split { grid-template-columns: 1fr; } }
+.pimg .hit { position: absolute; left: var(--x); top: var(--y); width: var(--w); height: var(--h); border-radius: 4px; outline: 2px solid var(--action); outline-offset: 2px; }
+
 /* ---------- wireframe-only: a data gap, and the sheet that holds frames ---------- */
 [data-gap] { outline: 2px dashed var(--state-wait); outline-offset: 3px; position: relative; }
 [data-gap]::after { content: "GAP: " attr(data-gap); display: block; margin-top: var(--space-1); font: var(--type-caption); color: var(--state-wait); }
