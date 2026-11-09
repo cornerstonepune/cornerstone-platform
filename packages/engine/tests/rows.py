@@ -159,3 +159,44 @@ def forget_paper(conn, paper):
     conn.execute("delete from item where id = any(%s)", (items,))
     conn.execute("delete from child where id = %s", (paper["child"],))
     conn.execute("set local session_replication_role = origin")
+
+
+# Approvals as a test needs them (CP-27 group 3): the one place that knows where a question type's approval and a
+# question's retirement are kept, so a later step that moves them changes these and no test.
+
+
+def a_waiting_type(conn, code):
+    """The question type `code` as a new one is: not approved. Rolled back with the test."""
+    conn.execute("delete from question_type_approval where question_type = %s", (code,))
+
+
+def no_type_approved(conn):
+    """No question type approved, as a school's database is before its first approval. Rolled back with the test."""
+    conn.execute("delete from question_type_approval")
+
+
+def an_approved_type(conn, code, by):
+    """The question type `code` approved by `by`, unless it already is."""
+    conn.execute(
+        "insert into question_type_approval (tenant_id, question_type, approved_by) select tenant_id, code, %s"
+        " from question_type where code = %s on conflict do nothing",
+        (by, code),
+    )
+
+
+def a_retired_question(conn, item, by, note=""):
+    """The question `item` flagged to retire by `by`, with `note`: the database retires it, as a person's flag does."""
+    conn.execute(
+        "insert into item_feedback (tenant_id, item_id, actor, verdict, note)"
+        " select tenant_id, id, %s, 'retire', %s from item where id = %s",
+        (by, note, item),
+    )
+
+
+def an_approved_paper(conn, template, child, by, status="printed"):
+    """A child's copy of `template`, approved by `by` and at `status`; its id."""
+    return conn.execute(
+        "insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, print_status, approved_by)"
+        " select tenant_id, %s, id, %s, %s, %s from sheet_template where id = %s returning id",
+        ("CS" + uuid.uuid4().hex.upper(), child, status, by, template),
+    ).fetchone()["id"]

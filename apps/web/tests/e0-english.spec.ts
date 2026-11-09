@@ -12,6 +12,7 @@ import { mkdirSync } from "node:fs";
 import path from "node:path";
 import { expect, test, type Browser, type Page } from "@playwright/test";
 import postgres from "postgres";
+import { aWaitingWay } from "./rows";
 
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 const EDUCATOR = { email: "e0-educator@cornerstone.test", name: "E0 Educator", role: "educator", classes: [] as string[] };
@@ -48,7 +49,7 @@ test.beforeAll(async () => {
 
 /** English stays a draft: what a test approved is withdrawn. */
 async function withdraw() {
-  await sql`delete from question_type_approval where question_type = ${way.code}`;
+  await aWaitingWay(sql, way.code);
   await sql`update skill set level_approved = '{}'::jsonb where code = ${skill.code}`;
 }
 

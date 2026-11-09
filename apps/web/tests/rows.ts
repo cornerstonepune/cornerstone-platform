@@ -39,6 +39,30 @@ export async function aWaitingSkill(sql: Sql, code: string): Promise<() => Promi
   };
 }
 
+/** A way of asking (a question type) waiting for approval, as a new one is. Approvals live in one place a later step
+ *  moves (CP-27 group 3), so a browser test withdraws, approves and forgets them only through these. */
+export async function aWaitingWay(sql: Sql, code: string): Promise<void> {
+  await sql`delete from question_type_approval where question_type = ${code}`;
+}
+
+/** A way of asking approved by `by`, unless it already is; the function it returns takes back only an approval this
+ *  made, so a way approved before the test stays approved after it. */
+export async function anApprovedWay(sql: Sql, code: string, by: string): Promise<() => Promise<void>> {
+  const made = await sql`
+    insert into question_type_approval (tenant_id, question_type, approved_by)
+    select tenant_id, code, ${by} from question_type where code = ${code} on conflict do nothing returning 1`;
+  return async () => {
+    if (made.length) await sql`delete from question_type_approval where question_type = ${code} and approved_by = ${by}`;
+  };
+}
+
+/** The flags a test left on questions taken back: every flag whose note is like `note`, on `item` only if one is
+ *  named. The caller puts the question's own status back. */
+export async function forgetFlags(sql: Sql, note: string, item?: string): Promise<void> {
+  if (item) await sql`delete from item_feedback where item_id = ${item} and note like ${note}`;
+  else await sql`delete from item_feedback where note like ${note}`;
+}
+
 /** A class of the test's own, `band`, its children named in roll order — made once and kept: a child some test has
  *  signed a paper off for holds evidence, which is append-only. → {name: child id} */
 export async function aClass(sql: Sql, section: string, band: string, names: string[]): Promise<Record<string, string>> {
