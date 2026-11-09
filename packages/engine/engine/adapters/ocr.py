@@ -20,6 +20,8 @@ import boto3
 import cv2
 import numpy as np
 
+from engine.core import settings as school_settings
+
 # Textract's synchronous call refuses an image over 5 MB with `UnsupportedDocumentException`, which
 # names neither the size nor the limit. Rendering a page at 250 dpi crosses it. The adapter keeps
 # itself inside the limit rather than leaving every caller to discover it: re-encode at falling
@@ -114,13 +116,11 @@ DEFAULTS = {
 
 
 def settings(conn=None):
-    """The geometry, from `threshold` rows. Falls back to the measured defaults where a row is
+    """The geometry, from the `ocr.*` settings. Falls back to the measured defaults where a row is
     absent, so a fresh database reads the same way a loaded one does."""
     if conn is None:
         return dict(DEFAULTS)
-    rows = conn.execute("select key, value from threshold where key like 'ocr.%%'").fetchall()
-    got = {r["key"].split(".", 1)[1]: float(r["value"]) for r in rows}
-    return {**DEFAULTS, **{k: v for k, v in got.items() if k in DEFAULTS}}
+    return {**DEFAULTS, **{k: v for k, v in school_settings.numbers(conn, "ocr.").items() if k in DEFAULTS}}
 
 
 def _box(b):

@@ -64,7 +64,7 @@ test("an email with too many wrong passwords waits, whatever password it tries",
   await sql`
     insert into sign_in_failure (tenant_id, email)
     select t.id, ${email} from tenant t,
-      generate_series(1, (select value::int from threshold where key = 'sign_in.max_failures'))
+      generate_series(1, (select value::int from config where key = 'sign_in.max_failures'))
     where t.slug = ${process.env.TENANT_SLUG ?? "cornerstone-pune"}`;
   await page.goto("/login");
   await page.getByLabel("School email").fill(email);

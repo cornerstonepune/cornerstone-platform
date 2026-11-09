@@ -17,6 +17,16 @@ async function tenant(sql: Sql): Promise<string> {
   return (await sql<{ id: string }[]>`select id from tenant limit 1`)[0].id;
 }
 
+/** A setting as a test needs it, for the school; the function it returns puts the value it had back. Every setting,
+ *  numbers included, is a `config` row (CP-27): the one helper a browser test changes one through. */
+export async function aSetting(sql: Sql, key: string, value: Parameters<Sql["json"]>[0]): Promise<() => Promise<void>> {
+  const [was] = await sql<{ value: Parameters<Sql["json"]>[0] }[]>`select value from config where key = ${key}`;
+  await sql`update config set value = ${sql.json(value)} where key = ${key}`;
+  return async () => {
+    await sql`update config set value = ${sql.json(was.value)} where key = ${key}`;
+  };
+}
+
 /** A skill waiting for the coordinator's approval, as a test needs one. The copy starts with every level approved, as
  *  live has them (`bin/testdb`, goals/b2-question-types-are-rows.yaml), so this withdraws the skill's level approvals;
  *  the function it returns puts them back, so no other test finds a level a paper may not draw. */

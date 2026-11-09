@@ -18,7 +18,7 @@ from engine.adapters import llm, ocr
 from engine.assess import equation, placing, tags
 from engine.assess import misconceptions as M
 from engine.assess.items import Item
-from engine.core import db, levels
+from engine.core import db, levels, settings
 from engine.w3_read import checked, paper_file, reading, render_pdf
 from engine.w3_read.marking import _MINUS, normalise_answer, response_of, verdicts
 
@@ -44,7 +44,7 @@ def where_they_go(conn):
         skills,
         cases,
         {r["c"]: r["s"] for r in conn.execute("select rung_code c, registry_codes s from skill")},
-        conn.execute("select value from config where key = 'skills.by_operation'").fetchone()["value"],
+        settings.config(conn, "skills.by_operation"),
     )
 
 

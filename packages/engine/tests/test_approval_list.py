@@ -5,7 +5,6 @@ approval before anything reaches a parent; the existing approvals unchanged". Th
 existing approvals could not hold (a sending back with its reason, a second approval) is `approval`, never edited.
 """
 
-import json
 import os
 
 import psycopg
@@ -15,8 +14,6 @@ from engine.core import db
 from tests.rows import a_child, tenant
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
-
-SEED = json.loads((db.REPO_ROOT / "supabase/seed/vocabulary.json").read_text())
 
 
 @pytest.fixture
@@ -58,11 +55,17 @@ def _note(conn):
     )["id"]
 
 
-def test_what_is_approved_is_rows_and_where_it_stands_one_of_four_words(conn):
-    kinds = conn.execute("select code, words, reaches_parent from approval_kind order by ord").fetchall()
-    assert [tuple(k.values()) for k in kinds] == [
-        (k["code"], k["words"], k["reaches_parent"]) for k in SEED["approval_kinds"]
-    ]
+def test_what_is_approved_is_one_of_three_kinds_and_where_it_stands_one_of_four_words(conn):
+    """A skill at a level, a way of asking, a report for a parent: a rule on the column (CP-27: it was the table
+    approval_kind); a fourth kind is refused."""
+    kinds = {r["kind"] for r in conn.execute("select distinct kind from approval_list")}
+    assert kinds <= {"skill_level", "question_type", "parent_note"}, kinds
+    with pytest.raises(psycopg.errors.CheckViolation), conn.transaction():
+        conn.execute(
+            "insert into approval (tenant_id, kind, target, decision, by, reason)"
+            " values (%s, 'a_new_kind', 'x', 'sent_back', 'a coordinator', 'a reason')",
+            (tenant(conn),),
+        )
     states = {r["state"] for r in conn.execute("select distinct state from approval_list")}
     assert states <= {"draft", "sent_back", "waiting_second", "approved"}, states
 
@@ -158,7 +161,9 @@ def test_the_existing_approvals_are_unchanged(conn):
             conn, "select count(*) as n from approval_list where kind = 'skill_level' and state = 'approved'"
         )["n"]
     )
-    conn.execute("select internal.approval_begins(id) from tenant")
+    conn.execute(
+        "insert into tenant (slug, name) values ('a-second-school', 'A second school')"
+    )  # a new school's setup
     after = (
         conn.execute(
             "select md5(string_agg(code || level_approved::text, ',' order by code)) as s from skill"

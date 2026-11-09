@@ -9,6 +9,7 @@ itself is not moved: a level is a rule its questions are measured against (digit
 level's questions are off, it is the rule people revisit.
 """
 
+from engine.core import settings
 from engine.w1_bank import learned, question
 
 LOW, HIGH, MIN = ("item.flag_low_p", 0.20), ("item.flag_high_p", 0.95), ("item.min_attempts", 10)
@@ -16,8 +17,7 @@ LOW, HIGH, MIN = ("item.flag_low_p", 0.20), ("item.flag_high_p", 0.95), ("item.m
 
 def _bar(conn, row):
     key, default = row
-    found = conn.execute("select value from threshold where key = %s", (key,)).fetchone()
-    return float(found["value"]) if found else default
+    return settings.threshold(conn, key, default)
 
 
 def item_stats(conn) -> int:

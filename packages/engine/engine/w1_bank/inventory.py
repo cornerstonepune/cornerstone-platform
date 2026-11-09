@@ -11,7 +11,7 @@ from engine.assess.items import Item, Response
 from engine.assess.layout import WORKING_LINES
 from engine.assess.pick import Sheet, sheet_id
 from engine.assess.render import render_sheet
-from engine.core import levels
+from engine.core import levels, settings
 from engine.w1_bank import cases, kinds
 
 
@@ -20,8 +20,7 @@ def _class_need(conn):
     spares, drawn without replacement (`assemble.for_week`). All three numbers are config rows."""
 
     def cfg(key, default):
-        row = conn.execute("select value from config where key = %s", (key,)).fetchone()
-        return int(default if row is None else row["value"])
+        return int(settings.config(conn, key, default))
 
     return (cfg("bank.class_size", 16) + cfg("assemble.spares_per_difficulty", 2)) * cfg(
         "assemble.items_per_sheet", 12

@@ -905,6 +905,17 @@
       "description": "The access group (role.access_group) whose members may put a draft timetable live; the coordinator's group by default.",
       "value": "everything",
       "seed_once": true
+    },
+    {
+      "key": "observed.weights",
+      "description": "How each observed record counts toward a grade's observed picture, by grade: a record of this kind and entry mode opens_secure (its yes counts toward secure), rechecks (a later yes re-checks) and lowers (a not-yet re-opens). A record with no entry here is not read (CP-27: was observed_weight).",
+      "value": {
+        "K2": [
+          {"kind": "observed", "entry_mode": "group_as_expected", "opens_secure": false, "rechecks": true, "lowers": false},
+          {"kind": "observed", "entry_mode": "individual", "opens_secure": true, "rechecks": true, "lowers": true}
+        ]
+      },
+      "seed_once": true
     }
   ]
 }

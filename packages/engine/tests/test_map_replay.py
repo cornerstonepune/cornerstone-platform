@@ -13,6 +13,7 @@ import pytest
 from psycopg.types.json import Json
 
 from engine.adapters import llm
+from engine.core import settings
 from engine.w1_bank import map_replay as mr
 from engine.w1_bank.map_agents import PROPOSE, VALIDATE, Proposal
 
@@ -195,7 +196,7 @@ def test_a_run_rebuilt_from_its_stored_replies_scores_what_the_run_scored(monkey
     monkeypatch.setattr(cli_map, "config", lambda: {"band": "KX"})
     with db.connect() as conn:
         _band(conn)
-        conn.execute("update threshold set value = 100 where key = 'map.dev_count'")
+        settings.put(conn, "map.dev_count", 100)
         tenant = conn.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()["id"]
         made, gold, _ = cli_map.replay_dev(conn, scripted)
         want = cli_map.score(
@@ -331,7 +332,7 @@ def test_the_held_out_run_is_read_back_for_the_activities_that_were_answered_and
 
     with db.connect() as conn:
         _band(conn)
-        conn.execute("update threshold set value = 1 where key = 'map.dev_count'")
+        settings.put(conn, "map.dev_count", 1)
         monkey = pytest.MonkeyPatch()
         monkey.setattr(cli_map, "config", lambda: {"band": "KX"})
         tenant = conn.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()["id"]

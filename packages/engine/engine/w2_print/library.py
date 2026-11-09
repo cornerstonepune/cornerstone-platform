@@ -21,7 +21,7 @@ from collections import Counter
 
 from engine.assess.pick import Sheet
 from engine.assess.render import render_sheet
-from engine.core import db, vocabulary
+from engine.core import db, settings, vocabulary
 from engine.w1_bank.inventory import item_from_row
 
 MIN_PER_LEVEL = 10
@@ -30,8 +30,7 @@ PDF_DIR = db.REPO_ROOT / "data" / "worksheets"
 
 
 def per_sheet(conn):
-    row = conn.execute("select value from config where key = 'assemble.items_per_sheet'").fetchone()
-    return int(row["value"]) if row else 12
+    return int(settings.config(conn, "assemble.items_per_sheet", 12))
 
 
 def worksheets_needed(n_questions, n, minimum=MIN_PER_LEVEL):
@@ -321,10 +320,10 @@ def check(conn):
 def layouts(conn):
     """Every layout a worksheet has printed in (`render.layouts`, goals/s18-read-as-printed.yaml), oldest first;
     the last is today's."""
-    row = conn.execute("select value from config where key = 'render.layouts'").fetchone()
-    if not row:
+    found = settings.config(conn, "render.layouts")
+    if not found:
         raise LookupError("no render.layouts row: `engine load --settings` loads it")
-    return row["value"]
+    return found
 
 
 def pdf(conn, code, layout=None):

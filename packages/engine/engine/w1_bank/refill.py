@@ -15,7 +15,7 @@ from collections import Counter
 
 from engine.assess import draw, taxonomy
 from engine.assess import draw_case as K
-from engine.core import db
+from engine.core import db, settings
 from engine.w1_bank import bank, cases, inventory, labels
 from engine.w1_bank.spec import read as spec
 
@@ -79,10 +79,10 @@ def retire_outside(conn, actor=ACTOR):
 
 def fairness_rule(conn):
     """The row that says when a choice is answered by ticking one place (`bank.choice_answer_max_share`)."""
-    row = conn.execute("select value from config where key = 'bank.choice_answer_max_share'").fetchone()
-    if not row:
+    rule = settings.config(conn, "bank.choice_answer_max_share")
+    if not rule:
         raise ValueError("the config row bank.choice_answer_max_share is missing (engine load)")
-    return row["value"]
+    return rule
 
 
 def _drawn_now(conn, code, difficulty, n):

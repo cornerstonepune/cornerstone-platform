@@ -12,7 +12,7 @@ test that happens to notice it. What this file does NOT check is, by definition,
 
 from engine.assess import bands, verify
 from engine.assess import misconceptions as M
-from engine.core import db, levels, references
+from engine.core import db, levels, references, settings
 from engine.w1_bank import cases, inventory, labels, spec
 
 PREDICTOR_CODES = {c for table in (M.ADD_PREDICTORS, M.SUB_PREDICTORS, M.MULTI_PREDICTORS) for c in table}
@@ -205,19 +205,16 @@ def no_choice_is_answered_by_ticking_one_place(conn):
     most of the time: every closest-hundred question was the middle option, every "is your exact answer
     close to your estimate?" was yes. Counted per level and kind; the limit is a row. A group a corrected rule
     made is drawn again by `engine bank refill`; one its level's own design fixes waits for a person."""
-    rule = conn.execute("select value from config where key = 'bank.choice_answer_max_share'").fetchone()
+    rule = settings.config(conn, "bank.choice_answer_max_share")
     if not rule:
         return ["the config row bank.choice_answer_max_share is missing (engine load)"]
-    return lopsided(inventory.tick_places(conn), rule["value"])
+    return lopsided(inventory.tick_places(conn), rule)
 
 
 def what_a_mistake_charges_is_approved(conn):
     """The (kind, mistake) → skill table was drafted by the engine; a person approves the table itself,
     so a table changed after it was approved is not approved (step 8b, as the gold was)."""
-    rows = {
-        r["key"]: r["value"]
-        for r in conn.execute("select key, value from config where key like 'skills.charges_by_kind%'")
-    }
+    rows = settings.every(conn, "skills.charges_by_kind")
     approved = rows.get("skills.charges_by_kind.approved") or {}
     if approved.get("table") == rows.get("skills.charges_by_kind") and approved.get("by"):
         return []

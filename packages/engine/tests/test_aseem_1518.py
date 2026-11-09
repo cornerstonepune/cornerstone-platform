@@ -9,7 +9,7 @@ import pytest
 
 from engine.adapters import ocr
 from engine.assess import graph
-from engine.core import db
+from engine.core import db, settings
 from engine.w2_print import focus_paper
 from engine.w3_read import legacy, marking
 
@@ -108,7 +108,7 @@ def test_56_times_3_written_1518_on_aseems_paper_is_named_counted_and_aimed_at(
 
     # made again on the next two quizzes: named as repeating from the second, and the child's pattern on MUL.2D1D once
     # the graph has as many of their answers there as the school's row asks before it says anything (`state.min_events`)
-    least = conn.execute("select value from threshold where key = 'state.min_events'").fetchone()["value"]
+    least = settings.threshold(conn, "state.min_events", 3)
     for n in range(2, int(least) + 1):
         _read(conn, child, tmp_path / f"quiz20-kabir-{n}.pdf", {"18": "1518"}, monkeypatch)
         graph.rebuild(conn, child)

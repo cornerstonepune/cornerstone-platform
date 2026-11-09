@@ -103,7 +103,6 @@ def rehome(conn):
         " where source = 'library' and skill_set_code = any(%s)",
         (old,),
     )
-    conn.execute("delete from skill_set_version where code = any(%s)", (old,))
     removed_sets = [
         r["code"] for r in conn.execute("delete from skill where code = any(%s) returning code", (old,))
     ]

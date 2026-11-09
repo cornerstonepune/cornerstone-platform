@@ -10,7 +10,7 @@ import os
 
 import pytest
 
-from engine.core import db
+from engine.core import db, history
 from engine.w1_bank import bank
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
@@ -37,10 +37,7 @@ def test_editing_a_rule_files_the_old_one_and_bumps_the_version(conn):
     _edit_rule(conn, SET, "edited by a test")
     after = conn.execute("select version, difficulty from skill where code = %s", (SET,)).fetchone()
     assert after["version"] == before + 1
-    filed = conn.execute(
-        "select version, difficulty from skill_set_version where code = %s order by version desc limit 1",
-        (SET,),
-    ).fetchone()
+    filed = history.of(conn, "skill", SET)[-1]["before"]
     assert filed["version"] == before
     assert filed["difficulty"]["Hard"]["words"] != "edited by a test", "the OLD rule is what is filed"
 

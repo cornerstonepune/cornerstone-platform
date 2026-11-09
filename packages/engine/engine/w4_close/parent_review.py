@@ -18,7 +18,7 @@ import json
 import re
 
 from engine.adapters import jev, llm
-from engine.core import db
+from engine.core import db, settings
 from engine.w4_close.parent_check import _texts as texts
 from engine.w4_close.parent_check import check, subject_words
 
@@ -40,9 +40,7 @@ def split(text):
 
 
 def _bars(conn):
-    rows = {r["key"]: float(r["value"]) for r in conn.execute(
-        "select key, value from threshold where key = any(%s)", ([k for k, _ in BARS],))}  # fmt: skip
-    return tuple(rows.get(k, default) for k, default in BARS)
+    return tuple(settings.threshold(conn, k, default) for k, default in BARS)
 
 
 def _on(conn, purpose):

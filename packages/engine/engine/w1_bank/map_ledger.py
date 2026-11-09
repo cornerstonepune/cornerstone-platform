@@ -14,7 +14,7 @@ import uuid
 from psycopg.rows import DictRow
 from psycopg.types.json import Jsonb
 
-from engine.core import db
+from engine.core import db, history, settings
 from engine.w1_bank.k2_format import LISTS, render
 from engine.w1_bank.k2_gaps import column
 from engine.w1_bank.map_agents import Proposal
@@ -22,9 +22,8 @@ from engine.w1_bank.map_check import LEVELS
 
 
 def rules(conn: db.Conn) -> dict[str, float]:
-    """The `map.*` threshold rows, by their name after `map.`."""
-    rows = conn.execute("select key, value from threshold where starts_with(key, 'map.')").fetchall()
-    return {r["key"].removeprefix("map."): float(r["value"]) for r in rows}
+    """The `map.*` settings, by their name after `map.`."""
+    return settings.numbers(conn, "map.")
 
 
 def record(conn: db.Conn, tenant: db.Id, made: list[Proposal], staff: db.Id) -> uuid.UUID:
@@ -132,7 +131,7 @@ def settle(conn: db.Conn, tenant: db.Id, about: db.Id, yes: bool, staff: db.Id, 
 
 
 def changed_by(conn: db.Conn, who: str) -> None:
-    conn.execute("select set_config('app.changed_by', %s, true)", (who,))
+    history.by(conn, who)
 
 
 def _link(conn: db.Conn, tenant: db.Id, p: DictRow, only: set[str] | None = None) -> str:

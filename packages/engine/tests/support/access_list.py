@@ -71,15 +71,15 @@ SCHOOL_WIDE = [
     ),
     (
         "a word list the screens read (names, order, colour of states, marks, routes); no child",
-        "approval_kind case_dimension child_state difficulty validation_stage",
+        "case_dimension child_state difficulty",
     ),
     (
         "skill registry and curriculum: the school's own teaching content, open to every educator; no child",
         "registry_skill skill skill_level skill_level_kind_change skill_level_kind_stop skill_level_question_type "
-        "skill_level_sample skill_level_version skill_link skill_mistake skill_prerequisite skill_registry_link "
-        "skill_set_version curriculum_edit curriculum_proposal curriculum_version curriculum_version_skill "
+        "skill_level_sample skill_link skill_mistake skill_prerequisite skill_registry_link "
+        "curriculum_proposal curriculum_version curriculum_version_skill "
         "learning_objective learning_objective_skill milestone misconception trait rubric level_rule "
-        "validation_rule observed_rule observed_weight question_format question_type question_type_approval",
+        "question_format question_type question_type_approval",
     ),
     (
         "activities and sample material the school wrote or approved for its curriculum; no child",
@@ -105,7 +105,11 @@ SCHOOL_WIDE = [
     ),
     (
         "the tool's own records: settings, prompts, errors, staff feedback notes, register text; no child",
-        "config threshold prompt web_error staff_note ask data_register",
+        "config prompt web_error staff_note ask data_register",
+    ),
+    (
+        "the one history log of the school's own records (curriculum, skills, levels); no child",
+        "change_log",
     ),
     (
         "sign-in before anyone is known: the website reads and writes these as the login itself, so they stay open to it",
