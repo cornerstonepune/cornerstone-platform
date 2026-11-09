@@ -13,7 +13,9 @@ description: Use before saying done, or checking a task's done-when.
 - Write long output to a file and read the file. Do not pipe into `tail`, which stays empty until the process exits. Use `set -o pipefail` so the check's own status is the result.
 - Engine not installed ("engine is not installed yet: uv sync"): run `uv sync` once in `packages/engine`, then note it in the handoff as an environment step.
 - Fix failures at their cause. Never raise a limit or loosen a rule to pass. Drift from `workflows.json` means fix the map or the code against `test_layout.py`.
+- When the done-gate names files you changed, run the named check on them, or say in one line that no check applies. Deleting the flagged files does not clear the gate.
 - Runtime files (`.claude/autoharness/`, `*.ledger.jsonl`, `*.sidecar.json`) are not yours to commit. Say so in one line.
+- A check a builder or subagent reports is their claim. Write "the builder reports PASS; I have not run it", or run the check yourself. Never write "checks pass" on someone else's word.
 - If the RTK hook rewrote a Bash input and the classifier denies it, reissue that exact input once. If denied again, report it and stop.
 
 ## Checking a roadmap task against its done-when
