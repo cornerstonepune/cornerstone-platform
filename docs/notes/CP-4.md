@@ -64,7 +64,7 @@ owner like `staff_sees_sheet`. Fallback not needed: a trigger-kept `child_id` on
 
 ## Decisions for Nimish, in plain words
 1. School-wide data (the skill registry, curriculum, question bank, plan, timetable, materials and the tool's own records:
-   126 tables) stays open to the website login, as today, not "signed-in staff only": the sign-in page reads seven of them
+   124 tables) stay open to the website login, as today, not "signed-in staff only": the sign-in page reads seven of them
    before anyone is signed in, and a rule needing a person there would switch off the brute-force wait. Nothing is opened
    that was not open. Narrowing it needs sign-in moved behind a function (separate scope). `config` holds the sign-in
    list's password hashes and `password_link` token hashes, readable by the website login as today.
@@ -83,6 +83,26 @@ Known gaps, named: `pii.read_child` and the security-definer functions `resolve_
 `say_taught` take any id and run as their owner (proposed follow-up); the rules guard against a page's mistake, not
 someone holding the `app_web` password.
 
+## Child words inside school-wide tables (second verifier round)
+Scanned every school-wide table for json, jsonb, array and free-text columns (all 124, by column type and name, then the writers of the ones that could carry a child).
+- `flow_run` (request, result, error): holds the child and the scan inside json (a copy per child in `result.copies`, a
+  paper per absent child from `given.py`, the posted body of the capture routes). Now child data, key
+  `id` (key type `run`, the website's own `seesRun`): seen by whoever put the file in, by whoever sees a paper read from it
+  (a copy of the run's result names the scan), and by `everything`; machine runs by `everything` only. A first version
+  by uploader alone broke `u68-who-sees-answers` (a file's line on the Scans page for the educator whose child's copy it holds), which
+  is how the second clause was found.
+- `approval` (target, reason): the sent-back reason of a parent report is words about one child's report. Now child data,
+  kind `reports`, key type `approval_target`: an approval of a skill level or a way of asking is seen by all who reach the kind;
+  one of kind `parent_note` only through the report's child's class (`target` is the report's id).
+- `staff_note` (doing, happened): free text a member of staff sends to GitHub about the tool; the form says nothing about
+  children, so a child could be named by the writer. Kept school-wide; it is sent outside the school by design. Nimish's call.
+- Looked at, no child key: `bank_proposal.evidence` and `learned_mistake.rule` (a question and a wrong answer as text; the
+  writer is `w1_bank/learned.py`, which I read only in part, not row by row: worth a second look if bank examples ever come
+  from live answers),
+  `item_feedback`, `item_review`, `ask`, `week_declaration.note`, `session.text`, `plan_entry.text`, `materials_*` text (a
+  class's plan and materials, written by educators; free text could name a child if the writer typed one),
+  `english_sample`, `maths_sample`, `passage`, `curriculum_proposal` (curriculum content).
+
 ## Handoff
 - Not live: both services still connect as the owner; nothing changes on the live site until the roles are switched on.
   Before that, run CP-3's switch-on gate and, per class, check the class card and papers pages as an educator.
@@ -97,6 +117,7 @@ someone holding the `app_web` password.
 | `pii.staff` | child data | staff | `staff_id` (staff) | |
 | `public.access_log` | child data | who_looked | `child_id` (child) | |
 | `public.activity_observation` | child data | notes | `child_id` (child) | |
+| `public.approval` | child data | reports | `target` (approval_target) | |
 | `public.capture` | child data | papers | `id` (capture) | |
 | `public.capture_page` | child data | papers | `capture_id` (capture) | |
 | `public.child` | child data | children | `id` (child) | |
@@ -109,6 +130,7 @@ someone holding the `app_web` password.
 | `public.consent` | child data | consent | `child_id` (child) | |
 | `public.enrolment` | child data | enrolment | `class_id` (class) | |
 | `public.evidence_event` | child data | learning | `child_id` (child) | |
+| `public.flow_run` | child data | papers | `id` (run) | |
 | `public.gold` | child data | answers | `capture_id` (capture) | |
 | `public.gold_finding` | child data | answers | `child_id` (child) | |
 | `public.home_sheet` | child data | papers | `child_id` (child) | |
@@ -122,6 +144,7 @@ someone holding the `app_web` password.
 | `public.prescription` | child data | papers | `child_id` (child) | |
 | `public.read_correction` | child data | answers | `child_id` (child) | |
 | `public.sheet_instance` | child data | papers | `id` (sheet) | |
+| `public.sheet_template` | child data | papers | `child_id` (child_open) | |
 | `public.staff` | child data | staff | `id` (staff) | |
 | `public.staff_role_grant` | child data | staff | `staff_id` (staff) | |
 | `public.academic_year` | school-wide | | | the school's structure (years, campuses, classes, days, periods, grades, subjects, roles); no child |
@@ -135,10 +158,9 @@ someone holding the `app_web` password.
 | `public.activity_objective` | school-wide | | | activities and sample material the school wrote or approved for its curriculum; no child |
 | `public.activity_part_source` | school-wide | | | activities and sample material the school wrote or approved for its curriculum; no child |
 | `public.activity_skill` | school-wide | | | activities and sample material the school wrote or approved for its curriculum; no child |
-| `public.approval` | school-wide | | | the tool's own records: settings, prompts, runs, errors, feedback notes, approvals, register text; no child |
 | `public.approval_kind` | school-wide | | | a word list the screens read (names, order, colour of states, marks, routes); no child |
 | `public.approval_state` | school-wide | | | a word list the screens read (names, order, colour of states, marks, routes); no child |
-| `public.ask` | school-wide | | | the tool's own records: settings, prompts, runs, errors, feedback notes, approvals, register text; no child |
+| `public.ask` | school-wide | | | the tool's own records: settings, prompts, errors, staff feedback notes, register text; no child |
 | `public.assessment_name` | school-wide | | | the question bank: questions, their keys, checks, statistics and reviews; no child |
 | `public.bank_decision` | school-wide | | | the question bank: questions, their keys, checks, statistics and reviews; no child |
 | `public.bank_proposal` | school-wide | | | the question bank: questions, their keys, checks, statistics and reviews; no child |
@@ -149,12 +171,12 @@ someone holding the `app_web` password.
 | `public.child_state` | school-wide | | | a word list the screens read (names, order, colour of states, marks, routes); no child |
 | `public.claim_decision` | school-wide | | | a word list the screens read (names, order, colour of states, marks, routes); no child |
 | `public.class_skill` | school-wide | | | plan and timetable: what a class is to do and when, by class id; no child (the scope names both school-wide) |
-| `public.config` | school-wide | | | the tool's own records: settings, prompts, runs, errors, feedback notes, approvals, register text; no child |
+| `public.config` | school-wide | | | the tool's own records: settings, prompts, errors, staff feedback notes, register text; no child |
 | `public.curriculum_edit` | school-wide | | | skill registry and curriculum: the school's own teaching content, open to every educator; no child |
 | `public.curriculum_proposal` | school-wide | | | skill registry and curriculum: the school's own teaching content, open to every educator; no child |
 | `public.curriculum_version` | school-wide | | | skill registry and curriculum: the school's own teaching content, open to every educator; no child |
 | `public.curriculum_version_skill` | school-wide | | | skill registry and curriculum: the school's own teaching content, open to every educator; no child |
-| `public.data_register` | school-wide | | | the tool's own records: settings, prompts, runs, errors, feedback notes, approvals, register text; no child |
+| `public.data_register` | school-wide | | | the tool's own records: settings, prompts, errors, staff feedback notes, register text; no child |
 | `public.difficulty` | school-wide | | | a word list the screens read (names, order, colour of states, marks, routes); no child |
 | `public.domain` | school-wide | | | the school's structure (years, campuses, classes, days, periods, grades, subjects, roles); no child |
 | `public.english_sample` | school-wide | | | activities and sample material the school wrote or approved for its curriculum; no child |
@@ -163,7 +185,6 @@ someone holding the `app_web` password.
 | `public.evidence_kind` | school-wide | | | a word list the screens read (names, order, colour of states, marks, routes); no child |
 | `public.evidence_mark` | school-wide | | | a word list the screens read (names, order, colour of states, marks, routes); no child |
 | `public.evidence_scale` | school-wide | | | a word list the screens read (names, order, colour of states, marks, routes); no child |
-| `public.flow_run` | school-wide | | | the tool's own records: settings, prompts, runs, errors, feedback notes, approvals, register text; no child |
 | `public.fortnight` | school-wide | | | the school's structure (years, campuses, classes, days, periods, grades, subjects, roles); no child |
 | `public.grade` | school-wide | | | the school's structure (years, campuses, classes, days, periods, grades, subjects, roles); no child |
 | `public.item` | school-wide | | | the question bank: questions, their keys, checks, statistics and reviews; no child |
@@ -209,7 +230,7 @@ someone holding the `app_web` password.
 | `public.password_link` | school-wide | | | sign-in before anyone is known: the website reads and writes these as the login itself, so they stay open to it |
 | `public.period` | school-wide | | | the school's structure (years, campuses, classes, days, periods, grades, subjects, roles); no child |
 | `public.plan_entry` | school-wide | | | plan and timetable: what a class is to do and when, by class id; no child (the scope names both school-wide) |
-| `public.prompt` | school-wide | | | the tool's own records: settings, prompts, runs, errors, feedback notes, approvals, register text; no child |
+| `public.prompt` | school-wide | | | the tool's own records: settings, prompts, errors, staff feedback notes, register text; no child |
 | `public.question_format` | school-wide | | | skill registry and curriculum: the school's own teaching content, open to every educator; no child |
 | `public.question_type` | school-wide | | | skill registry and curriculum: the school's own teaching content, open to every educator; no child |
 | `public.question_type_approval` | school-wide | | | skill registry and curriculum: the school's own teaching content, open to every educator; no child |
@@ -221,7 +242,6 @@ someone holding the `app_web` password.
 | `public.school_class` | school-wide | | | the school's structure (years, campuses, classes, days, periods, grades, subjects, roles); no child |
 | `public.school_day` | school-wide | | | the school's structure (years, campuses, classes, days, periods, grades, subjects, roles); no child |
 | `public.session` | school-wide | | | plan and timetable: what a class is to do and when, by class id; no child (the scope names both school-wide) |
-| `public.sheet_template` | school-wide | | | a blueprint of a paper (its questions and layout), made before any child is named; the register lists it as a paper but it holds no answer |
 | `public.sign_in_failure` | school-wide | | | sign-in before anyone is known: the website reads and writes these as the login itself, so they stay open to it |
 | `public.skill` | school-wide | | | skill registry and curriculum: the school's own teaching content, open to every educator; no child |
 | `public.skill_level` | school-wide | | | skill registry and curriculum: the school's own teaching content, open to every educator; no child |
@@ -235,12 +255,12 @@ someone holding the `app_web` password.
 | `public.skill_prerequisite` | school-wide | | | skill registry and curriculum: the school's own teaching content, open to every educator; no child |
 | `public.skill_registry_link` | school-wide | | | skill registry and curriculum: the school's own teaching content, open to every educator; no child |
 | `public.skill_set_version` | school-wide | | | skill registry and curriculum: the school's own teaching content, open to every educator; no child |
-| `public.staff_note` | school-wide | | | the tool's own records: settings, prompts, runs, errors, feedback notes, approvals, register text; no child |
+| `public.staff_note` | school-wide | | | the tool's own records: settings, prompts, errors, staff feedback notes, register text; no child |
 | `public.state_colour` | school-wide | | | a word list the screens read (names, order, colour of states, marks, routes); no child |
 | `public.subject` | school-wide | | | the school's structure (years, campuses, classes, days, periods, grades, subjects, roles); no child |
 | `public.taxonomy_case` | school-wide | | | activities and sample material the school wrote or approved for its curriculum; no child |
 | `public.tenant` | school-wide | | | the school's structure (years, campuses, classes, days, periods, grades, subjects, roles); no child |
-| `public.threshold` | school-wide | | | the tool's own records: settings, prompts, runs, errors, feedback notes, approvals, register text; no child |
+| `public.threshold` | school-wide | | | the tool's own records: settings, prompts, errors, staff feedback notes, register text; no child |
 | `public.timetable_block` | school-wide | | | plan and timetable: what a class is to do and when, by class id; no child (the scope names both school-wide) |
 | `public.timetable_limit` | school-wide | | | plan and timetable: what a class is to do and when, by class id; no child (the scope names both school-wide) |
 | `public.timetable_rule_edit` | school-wide | | | plan and timetable: what a class is to do and when, by class id; no child (the scope names both school-wide) |
@@ -249,5 +269,5 @@ someone holding the `app_web` password.
 | `public.trait` | school-wide | | | skill registry and curriculum: the school's own teaching content, open to every educator; no child |
 | `public.validation_rule` | school-wide | | | skill registry and curriculum: the school's own teaching content, open to every educator; no child |
 | `public.validation_stage` | school-wide | | | a word list the screens read (names, order, colour of states, marks, routes); no child |
-| `public.web_error` | school-wide | | | the tool's own records: settings, prompts, runs, errors, feedback notes, approvals, register text; no child |
+| `public.web_error` | school-wide | | | the tool's own records: settings, prompts, errors, staff feedback notes, register text; no child |
 | `public.week_declaration` | school-wide | | | plan and timetable: what a class is to do and when, by class id; no child (the scope names both school-wide) |

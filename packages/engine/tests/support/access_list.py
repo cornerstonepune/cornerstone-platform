@@ -53,6 +53,10 @@ CHILD = {
     "public.mistake_named": ("answers", "item_result_id", "item_result"),
     # a paper blueprint made for one child (focus papers) carries child_id; a spare one carries none and is open
     "public.sheet_template": ("papers", "child_id", "child_open"),
+    # a run of the reader keeps the child and the scan inside its request and result: seen by whoever put the file in or sees a paper read from it
+    "public.flow_run": ("papers", "id", "run"),
+    # a sent-back reason on a parent report is words about that child's report; the other kinds are the school's
+    "public.approval": ("reports", "target", "approval_target"),
     # CP-4: legacy class label (section) with child ids inside
     "public.class_card": ("learning", "section", "section"),
     "public.class_card_confirmation": ("learning", "section", "section"),
@@ -104,8 +108,8 @@ SCHOOL_WIDE = [
         "materials_note_review materials_send materials_send_ack reminder",
     ),
     (
-        "the tool's own records: settings, prompts, runs, errors, feedback notes, approvals, register text; no child",
-        "config threshold prompt flow_run web_error staff_note ask approval data_register",
+        "the tool's own records: settings, prompts, errors, staff feedback notes, register text; no child",
+        "config threshold prompt web_error staff_note ask data_register",
     ),
     (
         "sign-in before anyone is known: the website reads and writes these as the login itself, so they stay open to it",

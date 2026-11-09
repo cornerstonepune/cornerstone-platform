@@ -20,10 +20,12 @@ alter table access_table alter column key_column drop not null;
 alter table access_table alter column key_type drop not null;
 
 -- a paper (sheet), a scan (capture), an answer (item_result), the legacy class label (section) and a child column that may
--- be empty (child_open: a paper blueprint for one child, or a spare one for nobody) join CP-3's key types
+-- be empty (child_open: a paper blueprint for one child, or a spare one for nobody), a run of the reader (run: its request
+-- and result carry the child and the scan; seen by whoever put the file in and by whoever sees a paper read from it) and an approval's target (approval_target: the
+-- reasons for sending a parent report back are words about one child's report) join CP-3's key types
 alter table access_table drop constraint if exists access_table_key_type_check;
 alter table access_table add constraint access_table_key_type_check
-  check (key_type in ('class', 'child', 'note', 'staff', 'sheet', 'capture', 'item_result', 'section', 'child_open'));
+  check (key_type in ('class', 'child', 'note', 'staff', 'sheet', 'capture', 'item_result', 'section', 'child_open', 'run', 'approval_target'));
 alter table access_table drop constraint if exists access_table_data_class_check;
 alter table access_table add constraint access_table_data_class_check check (data_class in ('child_data', 'school_wide'));
 -- child data names its kind and key and has no reason; school-wide names a one-line reason and no kind or key
@@ -85,6 +87,7 @@ insert into access_table (schema_name, table_name, kind_code, key_column, key_ty
   ('pii', 'staff', 'staff', 'staff_id', 'staff', 'child_data', null),
   ('public', 'access_log', 'who_looked', 'child_id', 'child', 'child_data', null),
   ('public', 'activity_observation', 'notes', 'child_id', 'child', 'child_data', null),
+  ('public', 'approval', 'reports', 'target', 'approval_target', 'child_data', null),
   ('public', 'capture', 'papers', 'id', 'capture', 'child_data', null),
   ('public', 'capture_page', 'papers', 'capture_id', 'capture', 'child_data', null),
   ('public', 'child', 'children', 'id', 'child', 'child_data', null),
@@ -97,6 +100,7 @@ insert into access_table (schema_name, table_name, kind_code, key_column, key_ty
   ('public', 'consent', 'consent', 'child_id', 'child', 'child_data', null),
   ('public', 'enrolment', 'enrolment', 'class_id', 'class', 'child_data', null),
   ('public', 'evidence_event', 'learning', 'child_id', 'child', 'child_data', null),
+  ('public', 'flow_run', 'papers', 'id', 'run', 'child_data', null),
   ('public', 'gold', 'answers', 'capture_id', 'capture', 'child_data', null),
   ('public', 'gold_finding', 'answers', 'child_id', 'child', 'child_data', null),
   ('public', 'home_sheet', 'papers', 'child_id', 'child', 'child_data', null),
@@ -124,10 +128,9 @@ insert into access_table (schema_name, table_name, kind_code, key_column, key_ty
   ('public', 'activity_objective', null, null, null, 'school_wide', 'activities and sample material the school wrote or approved for its curriculum; no child'),
   ('public', 'activity_part_source', null, null, null, 'school_wide', 'activities and sample material the school wrote or approved for its curriculum; no child'),
   ('public', 'activity_skill', null, null, null, 'school_wide', 'activities and sample material the school wrote or approved for its curriculum; no child'),
-  ('public', 'approval', null, null, null, 'school_wide', 'the tool''s own records: settings, prompts, runs, errors, feedback notes, approvals, register text; no child'),
   ('public', 'approval_kind', null, null, null, 'school_wide', 'a word list the screens read (names, order, colour of states, marks, routes); no child'),
   ('public', 'approval_state', null, null, null, 'school_wide', 'a word list the screens read (names, order, colour of states, marks, routes); no child'),
-  ('public', 'ask', null, null, null, 'school_wide', 'the tool''s own records: settings, prompts, runs, errors, feedback notes, approvals, register text; no child'),
+  ('public', 'ask', null, null, null, 'school_wide', 'the tool''s own records: settings, prompts, errors, staff feedback notes, register text; no child'),
   ('public', 'assessment_name', null, null, null, 'school_wide', 'the question bank: questions, their keys, checks, statistics and reviews; no child'),
   ('public', 'bank_decision', null, null, null, 'school_wide', 'the question bank: questions, their keys, checks, statistics and reviews; no child'),
   ('public', 'bank_proposal', null, null, null, 'school_wide', 'the question bank: questions, their keys, checks, statistics and reviews; no child'),
@@ -138,12 +141,12 @@ insert into access_table (schema_name, table_name, kind_code, key_column, key_ty
   ('public', 'child_state', null, null, null, 'school_wide', 'a word list the screens read (names, order, colour of states, marks, routes); no child'),
   ('public', 'claim_decision', null, null, null, 'school_wide', 'a word list the screens read (names, order, colour of states, marks, routes); no child'),
   ('public', 'class_skill', null, null, null, 'school_wide', 'plan and timetable: what a class is to do and when, by class id; no child (the scope names both school-wide)'),
-  ('public', 'config', null, null, null, 'school_wide', 'the tool''s own records: settings, prompts, runs, errors, feedback notes, approvals, register text; no child'),
+  ('public', 'config', null, null, null, 'school_wide', 'the tool''s own records: settings, prompts, errors, staff feedback notes, register text; no child'),
   ('public', 'curriculum_edit', null, null, null, 'school_wide', 'skill registry and curriculum: the school''s own teaching content, open to every educator; no child'),
   ('public', 'curriculum_proposal', null, null, null, 'school_wide', 'skill registry and curriculum: the school''s own teaching content, open to every educator; no child'),
   ('public', 'curriculum_version', null, null, null, 'school_wide', 'skill registry and curriculum: the school''s own teaching content, open to every educator; no child'),
   ('public', 'curriculum_version_skill', null, null, null, 'school_wide', 'skill registry and curriculum: the school''s own teaching content, open to every educator; no child'),
-  ('public', 'data_register', null, null, null, 'school_wide', 'the tool''s own records: settings, prompts, runs, errors, feedback notes, approvals, register text; no child'),
+  ('public', 'data_register', null, null, null, 'school_wide', 'the tool''s own records: settings, prompts, errors, staff feedback notes, register text; no child'),
   ('public', 'difficulty', null, null, null, 'school_wide', 'a word list the screens read (names, order, colour of states, marks, routes); no child'),
   ('public', 'domain', null, null, null, 'school_wide', 'the school''s structure (years, campuses, classes, days, periods, grades, subjects, roles); no child'),
   ('public', 'english_sample', null, null, null, 'school_wide', 'activities and sample material the school wrote or approved for its curriculum; no child'),
@@ -152,7 +155,6 @@ insert into access_table (schema_name, table_name, kind_code, key_column, key_ty
   ('public', 'evidence_kind', null, null, null, 'school_wide', 'a word list the screens read (names, order, colour of states, marks, routes); no child'),
   ('public', 'evidence_mark', null, null, null, 'school_wide', 'a word list the screens read (names, order, colour of states, marks, routes); no child'),
   ('public', 'evidence_scale', null, null, null, 'school_wide', 'a word list the screens read (names, order, colour of states, marks, routes); no child'),
-  ('public', 'flow_run', null, null, null, 'school_wide', 'the tool''s own records: settings, prompts, runs, errors, feedback notes, approvals, register text; no child'),
   ('public', 'fortnight', null, null, null, 'school_wide', 'the school''s structure (years, campuses, classes, days, periods, grades, subjects, roles); no child'),
   ('public', 'grade', null, null, null, 'school_wide', 'the school''s structure (years, campuses, classes, days, periods, grades, subjects, roles); no child'),
   ('public', 'item', null, null, null, 'school_wide', 'the question bank: questions, their keys, checks, statistics and reviews; no child'),
@@ -198,7 +200,7 @@ insert into access_table (schema_name, table_name, kind_code, key_column, key_ty
   ('public', 'password_link', null, null, null, 'school_wide', 'sign-in before anyone is known: the website reads and writes these as the login itself, so they stay open to it'),
   ('public', 'period', null, null, null, 'school_wide', 'the school''s structure (years, campuses, classes, days, periods, grades, subjects, roles); no child'),
   ('public', 'plan_entry', null, null, null, 'school_wide', 'plan and timetable: what a class is to do and when, by class id; no child (the scope names both school-wide)'),
-  ('public', 'prompt', null, null, null, 'school_wide', 'the tool''s own records: settings, prompts, runs, errors, feedback notes, approvals, register text; no child'),
+  ('public', 'prompt', null, null, null, 'school_wide', 'the tool''s own records: settings, prompts, errors, staff feedback notes, register text; no child'),
   ('public', 'question_format', null, null, null, 'school_wide', 'skill registry and curriculum: the school''s own teaching content, open to every educator; no child'),
   ('public', 'question_type', null, null, null, 'school_wide', 'skill registry and curriculum: the school''s own teaching content, open to every educator; no child'),
   ('public', 'question_type_approval', null, null, null, 'school_wide', 'skill registry and curriculum: the school''s own teaching content, open to every educator; no child'),
@@ -223,12 +225,12 @@ insert into access_table (schema_name, table_name, kind_code, key_column, key_ty
   ('public', 'skill_prerequisite', null, null, null, 'school_wide', 'skill registry and curriculum: the school''s own teaching content, open to every educator; no child'),
   ('public', 'skill_registry_link', null, null, null, 'school_wide', 'skill registry and curriculum: the school''s own teaching content, open to every educator; no child'),
   ('public', 'skill_set_version', null, null, null, 'school_wide', 'skill registry and curriculum: the school''s own teaching content, open to every educator; no child'),
-  ('public', 'staff_note', null, null, null, 'school_wide', 'the tool''s own records: settings, prompts, runs, errors, feedback notes, approvals, register text; no child'),
+  ('public', 'staff_note', null, null, null, 'school_wide', 'the tool''s own records: settings, prompts, errors, staff feedback notes, register text; no child'),
   ('public', 'state_colour', null, null, null, 'school_wide', 'a word list the screens read (names, order, colour of states, marks, routes); no child'),
   ('public', 'subject', null, null, null, 'school_wide', 'the school''s structure (years, campuses, classes, days, periods, grades, subjects, roles); no child'),
   ('public', 'taxonomy_case', null, null, null, 'school_wide', 'activities and sample material the school wrote or approved for its curriculum; no child'),
   ('public', 'tenant', null, null, null, 'school_wide', 'the school''s structure (years, campuses, classes, days, periods, grades, subjects, roles); no child'),
-  ('public', 'threshold', null, null, null, 'school_wide', 'the tool''s own records: settings, prompts, runs, errors, feedback notes, approvals, register text; no child'),
+  ('public', 'threshold', null, null, null, 'school_wide', 'the tool''s own records: settings, prompts, errors, staff feedback notes, register text; no child'),
   ('public', 'timetable_block', null, null, null, 'school_wide', 'plan and timetable: what a class is to do and when, by class id; no child (the scope names both school-wide)'),
   ('public', 'timetable_limit', null, null, null, 'school_wide', 'plan and timetable: what a class is to do and when, by class id; no child (the scope names both school-wide)'),
   ('public', 'timetable_rule_edit', null, null, null, 'school_wide', 'plan and timetable: what a class is to do and when, by class id; no child (the scope names both school-wide)'),
@@ -237,7 +239,7 @@ insert into access_table (schema_name, table_name, kind_code, key_column, key_ty
   ('public', 'trait', null, null, null, 'school_wide', 'skill registry and curriculum: the school''s own teaching content, open to every educator; no child'),
   ('public', 'validation_rule', null, null, null, 'school_wide', 'skill registry and curriculum: the school''s own teaching content, open to every educator; no child'),
   ('public', 'validation_stage', null, null, null, 'school_wide', 'a word list the screens read (names, order, colour of states, marks, routes); no child'),
-  ('public', 'web_error', null, null, null, 'school_wide', 'the tool''s own records: settings, prompts, runs, errors, feedback notes, approvals, register text; no child'),
+  ('public', 'web_error', null, null, null, 'school_wide', 'the tool''s own records: settings, prompts, errors, staff feedback notes, register text; no child'),
   ('public', 'week_declaration', null, null, null, 'school_wide', 'plan and timetable: what a class is to do and when, by class id; no child (the scope names both school-wide)')
 on conflict (schema_name, table_name) do update set kind_code = excluded.kind_code,
   key_column = excluded.key_column, key_type = excluded.key_type, data_class = excluded.data_class,
@@ -293,6 +295,15 @@ language sql stable security definer set search_path = public, pg_temp as $$
                         on n.tenant_id = cls.tenant_id and n.class_id = cls.id)
     when 'sheet' then (select array_agg(id) from sheets)
     when 'capture' then (select array_agg(id) from caps)
+    when 'run' then (select array_agg(f.id) from flow_run f
+                       where f.tenant_id = (select tenant_id from me)
+                         and (f.uploaded_by = public.current_staff()
+                              or (f.result ? 'copies' and exists (
+                                    select 1 from jsonb_array_elements(case when jsonb_typeof(f.result -> 'copies') = 'array'
+                                                                            then f.result -> 'copies' else '[]'::jsonb end) k
+                                    where k ->> 'capture_id' in (select id::text from caps)))))
+    when 'parent_note' then (select array_agg(n.id) from parent_note n
+                               where n.tenant_id = (select tenant_id from me) and n.child_id in (select child_id from kids))
     when 'item_result' then (select array_agg(r.id) from item_result r where r.capture_id in (select id from caps))
   end, '{}'::uuid[])
 $$;
@@ -390,6 +401,10 @@ begin
           -- a row with no child named is open to everyone who reaches the kind (a spare paper blueprint)
           when 'child_open' then format('(%1$I is null or %1$I = any ((select public.my_ids(%2$L, ''child''))::uuid[]))',
                                         a.key_column, a.kind_code)
+          -- an approval of a skill level or a way of asking is the school's; one of a parent report is of that child
+          when 'approval_target' then format(
+            '(kind <> ''parent_note'' or %I = any ((select public.my_ids(%L, ''parent_note''))::text[]))',
+            a.key_column, a.kind_code)
           when 'section' then format('%I = any ((select public.my_sections(%L))::text[])', a.key_column, a.kind_code)
           else format('%I = any ((select public.my_ids(%L, %L))::uuid[])', a.key_column, a.kind_code, a.key_type)
         end;
