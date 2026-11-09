@@ -1,0 +1,1 @@
+verify-before-done [project]: Use when calling work done or checking a task's done-when. (Its body previously pointed to references/gate-details.md for setup steps and runtime-file noise; that content now sits inline in the umbrella.)

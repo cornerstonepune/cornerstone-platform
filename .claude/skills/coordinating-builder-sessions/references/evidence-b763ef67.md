@@ -1,0 +1,1 @@
+**CP-6 fails** under item 4. Six tests in CP-6's locked `test_dates.py` set one step to values like 3 days while the others stay at the seeded 16, 13, 10, so the new order check refuses them. The seeded defaults are in order, so live data is fine.
