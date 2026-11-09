@@ -1,0 +1,62 @@
+[
+  {
+    "file": "apps/web/app/(app)/growth/[id]/report-panel.tsx",
+    "antipattern": "side-tab"
+  },
+  {
+    "file": "apps/web/app/(app)/growth/[id]/report/parts.tsx",
+    "antipattern": "side-tab"
+  },
+  {
+    "file": "apps/web/components/shell.tsx",
+    "antipattern": "side-tab"
+  },
+  {
+    "file": "docs/brainstorms/2026-09-27-curriculum-skeleton.html",
+    "antipattern": "border-accent-on-rounded"
+  },
+  {
+    "file": "docs/brainstorms/2026-09-27-curriculum-skeleton.html",
+    "antipattern": "low-contrast"
+  },
+  {
+    "file": "docs/brainstorms/2026-09-27-curriculum-skeleton.html",
+    "antipattern": "side-tab"
+  },
+  {
+    "file": "docs/brainstorms/2026-09-27-curriculum-skeleton.html",
+    "antipattern": "tiny-text"
+  },
+  {
+    "file": "docs/brainstorms/2026-09-28-crosswalk-tables.html",
+    "antipattern": "low-contrast"
+  },
+  {
+    "file": "docs/brainstorms/2026-09-28-crosswalk-tables.html",
+    "antipattern": "tiny-text"
+  },
+  {
+    "file": "docs/brainstorms/2026-09-28-indicative-timetable.html",
+    "antipattern": "low-contrast"
+  },
+  {
+    "file": "docs/screens/m1-04/index.html",
+    "antipattern": "cream-palette"
+  },
+  {
+    "file": "docs/sources/cornerstone-blueprint-v2.html",
+    "antipattern": "cramped-padding"
+  },
+  {
+    "file": "docs/sources/cornerstone-blueprint-v2.html",
+    "antipattern": "hero-eyebrow-chip"
+  },
+  {
+    "file": "docs/sources/cornerstone-blueprint-v2.html",
+    "antipattern": "undersized-ui-text"
+  },
+  {
+    "file": "research/spine_page.html",
+    "antipattern": "low-contrast"
+  }
+]

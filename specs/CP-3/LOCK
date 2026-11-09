@@ -1,0 +1,14 @@
+{
+  "digest": "e07faf901dc34dfa52a6b99607f36351aceafc0671d71770972e2829ae28e113",
+  "files": [
+    "spec.md",
+    "checks.sh",
+    "proofs/conftest.py",
+    "proofs/live_rules.py",
+    "proofs/test_access_rules.py",
+    "proofs/test_browser_suite.py"
+  ],
+  "locked_at": "2026-11-08T19:12:04+00:00",
+  "criteria": 8,
+  "athena": "2.14.0"
+}
