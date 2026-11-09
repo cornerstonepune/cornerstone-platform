@@ -1,0 +1,1 @@
+PreToolUse:Bash hook error: That command could change a locked spec or its proofs. Read them freely, but change the product code instead; if a proof is wrong, use `athena block`. ... "the two edited proofs have not been run, because the guard stops any copy of the locked proofs."
