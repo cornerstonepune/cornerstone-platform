@@ -19,4 +19,16 @@ No blocker. Main results 1 and 2.
 8. 🟢 Say which shape (string or list) the new group keys are seeded with.
 
 ## egm-zoom-out
-(pending)
+Verdict: not ready to lock. Item 1's root cause confirmed correct; the key swap and signature order are needed.
+1. 🔴 Item 7: option A drops "parent reports" from a fixed Done-when line. Either the issue's line 7 is amended first
+   (Nimish) or the design plans B.
+2. 🟡 A fifth copy of the A/B rule: `w2_print/k2_day.py` line 65 (the day page). Add it to the table and remove it.
+3. 🟡 Item 3's table misses `engine timetable load --apply` (writes the frame, no `--by`, no check) and wrongly lists a
+   command for rule changes (route only). Say whether `engine plan link` changes the timetable.
+4. 🟡 Non-Goals says go-live and clash-accept checks do not change, but the shared helper adds "active staff".
+5. 🟢 Approve-class checked twice (Python and SQL): call `fortnight_approve` and map its refusal instead.
+6. 🟢 The clean-up limit should be a `watch.*` threshold row like the watch's other limits (no migration lines).
+7. 🟢 Say why item 4 covers config only (only config has a writer outside the loader).
+8. 🟢 Item 6: delete the raw steps rather than add counting code; the proof must also cover `.github/measure/*.py`.
+9. 🟢 `who_may` takes a staff id the door already resolved; item 7 needs only `assess/render.render_sheet` (packs merge
+   its PDFs); give a reason for granting `fortnight_days` to `app_web`.
