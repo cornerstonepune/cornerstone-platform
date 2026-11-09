@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wireframe kit: the 26 blocks</title>
+<link rel="stylesheet" href="kit.css">
+</head>
+<!-- Each block of docs/frontend/SPEC.md §5 drawn once, root element data-block="<Name>", kit.css classes only.
+     This markup is what a builder ports into components/<Name>.tsx: same element, same class, same data-state /
+     data-kind / data-subject attribute. Sample content only; names from fake-names.json. -->
+<body>
+<main class="gallery">
+  <header class="head">
+    <p class="eyebrow"><i class="ic s" data-icon="checklist"></i>Wireframe kit · 26 blocks</p>
+    <h1 class="title">The blocks</h1>
+    <p class="purpose">Every screen is built from these. A wireframe copies a block's markup; a builder ports it into a component.</p>
+  </header>
+
+  <section><h2>AppFrame</h2>
+    <div class="frame card" data-block="AppFrame">
+      <header class="bar">
+        <a class="brand" href="#" aria-label="Cornerstone Gurukul, go to Today">
+          <img class="wide on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-colour.svg" alt="">
+          <img class="wide on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-for-dark-backgrounds.svg" alt="">
+          <img class="small on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark.svg" alt="">
+          <img class="small on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark-on-white-tile.svg" alt="">
+        </a>
+        <ul class="doors" aria-label="Doors">
+          <li><a class="door" href="#" aria-current="page"><i class="ic" data-icon="today"></i>Today <span class="badge num">7</span></a></li>
+          <li><a class="door" href="#"><i class="ic" data-icon="timetable"></i>Timetable</a></li>
+          <li><a class="door" href="#"><i class="ic" data-icon="children"></i>Children</a></li>
+          <li><a class="door" href="#"><i class="ic" data-icon="setup"></i>Setup</a></li>
+        </ul>
+        <label class="search"><i class="ic s" data-icon="search"></i><span class="vh">Search</span><input type="search" placeholder="Sr. No., name or activity"></label>
+        <button class="barbtn press" type="button" role="switch" aria-checked="false"><i class="ic" data-icon="acting-as"></i><span class="w">Acting as</span></button>
+        <a class="barbtn" href="#" aria-label="Help"><i class="ic" data-icon="help"></i></a>
+        <button class="barbtn press" type="button"><i class="ic" data-icon="sign-out"></i><span class="w">Sign out</span></button>
+      </header>
+      <ol class="trail"><li><a href="#">Today</a></li><li><i class="ic s" data-icon="trail"></i></li><li aria-current="page">Counting in tens</li></ol>
+      <div class="page">
+        <div class="main"><div class="head"><p class="eyebrow"><i class="ic s" data-icon="activity"></i>Activity · Numeracy</p><p class="title">The page's one h1</p><p class="purpose">The purpose line, at most 140 characters.</p></div></div>
+        <aside class="rail"><section class="rail-box"><h2>Connected to</h2><ul class="rlist"><li><a class="ritem" href="#"><span class="tile" data-kind="objective"><i class="ic" data-icon="objective"></i></span><span>Counts objects to 20<small>the objective</small></span></a></li></ul></section></aside>
+      </div>
+      <nav class="tabbar" aria-label="Doors">
+        <a class="tab" href="#" aria-current="page"><i class="ic" data-icon="today"></i>Today</a><a class="tab" href="#"><i class="ic" data-icon="timetable"></i>Timetable</a><a class="tab" href="#"><i class="ic" data-icon="children"></i>Children</a><a class="tab" href="#"><i class="ic" data-icon="setup"></i>Setup</a>
+      </nav>
+    </div>
+  </section>
+
+  <section><h2>AttentionStrip</h2>
+    <div class="strip" data-block="AttentionStrip">
+      <a class="att press" data-state="late" href="#"><span class="n">2</span><span class="w"><i class="ic s" data-icon="late"></i>Do now</span><span class="muted">Notes past 48 hours, still to confirm.</span></a>
+      <a class="att press" data-state="wait" href="#"><span class="n">5</span><span class="w"><i class="ic s" data-icon="to-confirm"></i>This week</span><span class="muted">Notes waiting for you to confirm.</span></a>
+      <a class="att press" data-state="ok" href="#"><span class="n">11</span><span class="w"><i class="ic s" data-icon="done"></i>Done</span><span class="muted">Periods taught and confirmed this week.</span></a>
+    </div>
+  </section>
+
+  <section><h2>PeriodRow</h2>
+    <ol class="periods" data-block="PeriodRow">
+      <li><a class="prow press" data-subject="fixed" href="#"><span class="t num">08:30</span><span class="stile"><i class="ic" data-icon="break"></i></span><span class="nm"><b>Settling in</b></span></a></li>
+      <li><a class="prow press" data-subject="numeracy" href="#"><span class="t num">08:45</span><span class="stile"><i class="ic" data-icon="numeracy"></i></span><span class="nm"><b>Counting in tens with bundles</b><span>Numeracy · note confirmed</span></span><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Done</span></a></li>
+      <li><a class="prow press" data-subject="language" href="#" aria-current="time"><span class="t num">09:30</span><span class="stile"><i class="ic" data-icon="language"></i></span><span class="nm"><b>Story circle: the lost mitten</b><span>Language · now</span></span><span class="chip" data-state="quiet"><i class="ic s" data-icon="to-do"></i>To do</span></a></li>
+    </ol>
+  </section>
+
+  <section><h2>StatusChip</h2>
+    <div class="keyrow" data-block="StatusChip">
+      <span class="chip" data-state="late"><i class="ic s" data-icon="late"></i>Late</span>
+      <span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To confirm</span>
+      <span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Done</span>
+      <span class="chip" data-state="quiet"><i class="ic s" data-icon="to-do"></i>To do</span>
+      <span class="chip on-tint" data-state="wait"><i class="ic s" data-icon="moved"></i>Moved (on a tinted cell)</span>
+    </div>
+  </section>
+
+  <section><h2>DataTable</h2>
+    <div class="table-box" data-block="DataTable">
+      <table class="table">
+        <thead><tr><th>Class</th><th class="n">Children</th><th class="st">Notes</th></tr></thead>
+        <tbody>
+          <tr><td><a href="#">K2 Red</a></td><td class="n">24</td><td class="st"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>3 to confirm</span></td></tr>
+          <tr><td><a href="#">K2 Blue</a></td><td class="n">23</td><td class="st"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Done</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section><h2>FilterBar</h2>
+    <div class="filters" data-block="FilterBar">
+      <label class="sel"><i class="ic s" data-icon="filter"></i>Class <select><option>All</option><option>K2 Red</option></select></label>
+      <label class="sel"><i class="ic s" data-icon="search"></i><span class="vh">Search</span><input type="search" placeholder="Search this table"></label>
+      <a href="#">Clear</a>
+    </div>
+  </section>
+
+  <section><h2>ClassGrid</h2>
+    <ol class="cgrid" data-block="ClassGrid">
+      <li><a class="sq press" data-state="ok" href="#"><span class="top"><span class="no num">01</span><span class="disc" aria-hidden="true">AA</span></span><span class="nm" data-source="pii.child.first_name pii.child.last_name">Alba Ant</span><span class="st"><i class="ic s" data-icon="secure"></i>Secure</span></a></li>
+      <li><a class="sq press" data-state="wait" href="#"><span class="top"><span class="no num">02</span><span class="disc" aria-hidden="true">BB</span></span><span class="nm" data-source="pii.child.first_name pii.child.last_name">Bea Badger</span><span class="st"><i class="ic s" data-icon="practising"></i>Practising</span></a></li>
+      <li><a class="sq press" data-state="quiet" href="#"><span class="top"><span class="no num">03</span><span class="disc" aria-hidden="true">CC</span></span><span class="nm" data-source="pii.child.first_name pii.child.last_name">Cal Crow</span><span class="st"><i class="ic s" data-icon="emerging"></i>Emerging</span></a></li>
+      <li><a class="sq press" data-state="unseen" href="#" title="not seen yet"><span class="top"><span class="no num">04</span><span class="disc" aria-hidden="true">DD</span></span><span class="nm" data-source="pii.child.first_name pii.child.last_name">Dot Deer</span><span class="st"><i class="ic s" data-icon="not-seen"></i>Not seen yet</span></a></li>
+    </ol>
+  </section>
+
+  <section><h2>Stepper</h2>
+    <ol class="stepper" data-block="Stepper">
+      <li class="step" data-state="ok"><i class="ic s" data-icon="done"></i>Printed</li>
+      <li class="step" data-state="ok"><i class="ic s" data-icon="done"></i>Scanned</li>
+      <li class="step" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To approve</li>
+      <li class="step" data-state="quiet"><i class="ic s" data-icon="to-do"></i>Sent home</li>
+    </ol>
+  </section>
+
+  <section><h2>Details</h2>
+    <details class="details" data-block="Details"><summary><i class="ic s" data-icon="details"></i>What the note said</summary><div><p>Counted 20 bundles of ten and said how many without recounting.</p></div></details>
+  </section>
+
+  <section><h2>Timeline</h2>
+    <ol class="timeline" data-block="Timeline">
+      <li class="tli"><span class="tile" data-kind="note"><i class="ic" data-icon="note"></i></span><div><b>Voice note, confirmed</b><p>Counts on from 30 in tens, with bundles.</p></div><span class="caption">18-Nov · voice</span></li>
+      <li class="tli"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><div><b>Paper, sheet 3</b><p>4 right, 1 wrong with working, 1 blank.</p></div><span class="caption">20-Nov · paper</span></li>
+    </ol>
+  </section>
+
+  <section><h2>ChildGraph</h2>
+    <div class="cgraph" data-block="ChildGraph">
+      <svg viewBox="-80 0 560 310" role="img" aria-label="Skills seen around one child">
+        <circle class="ring" cx="200" cy="150" r="110"></circle>
+        <path class="dom" data-subject="numeracy" d="M200 40 A110 110 0 0 1 295 205"></path>
+        <path class="dom" data-subject="language" d="M295 205 A110 110 0 0 1 105 205"></path>
+        <path class="dom" data-subject="arts" d="M105 205 A110 110 0 0 1 200 40"></path>
+        <circle class="ctr" cx="200" cy="150" r="30"></circle><text class="ctr-t" x="200" y="155" text-anchor="middle">AA</text>
+        <a href="#"><circle class="node" data-state="ok" cx="295" cy="95" r="16"></circle><text x="318" y="92">Counting in tens</text><text class="w" data-state="ok" x="318" y="110">secure</text></a>
+        <a href="#"><circle class="node" data-state="wait" cx="200" cy="260" r="12"></circle><text x="218" y="275">Retelling</text><text class="w" data-state="wait" x="218" y="292">practising</text></a>
+        <a href="#"><circle class="node" data-state="unseen" cx="105" cy="95" r="10"></circle><text x="-70" y="70">Clay shapes</text><text class="w" data-state="unseen" x="-70" y="86">not seen</text></a>
+      </svg>
+      <div class="table-box"><table class="table"><thead><tr><th>Skill</th><th class="st">State</th></tr></thead><tbody>
+        <tr><td><a href="#">Counting in tens</a></td><td class="st"><span class="chip" data-state="ok"><i class="ic s" data-icon="secure"></i>Secure</span></td></tr>
+        <tr><td><a href="#">Retelling</a></td><td class="st"><span class="chip" data-state="wait"><i class="ic s" data-icon="practising"></i>Practising</span></td></tr>
+      </tbody></table></div>
+    </div>
+  </section>
+
+  <section><h2>StackBar</h2>
+    <div class="stack" data-block="StackBar">
+      <div class="sbar" role="img" aria-label="10 secure, 7 practising, 4 emerging, 3 not seen yet"><i data-state="ok" style="--n: 10"></i><i data-state="wait" style="--n: 7"></i><i data-state="quiet" style="--n: 4"></i><i data-state="unseen" style="--n: 3"></i></div>
+      <div class="keyrow"><span class="chip" data-state="ok"><i class="ic s" data-icon="secure"></i>10 secure</span><span class="chip" data-state="wait"><i class="ic s" data-icon="practising"></i>7 practising</span><span class="chip" data-state="quiet"><i class="ic s" data-icon="emerging"></i>4 emerging</span><span class="chip" data-state="unseen"><i class="ic s" data-icon="not-seen"></i>3 not seen yet</span></div>
+    </div>
+  </section>
+
+  <section><h2>LevelBars</h2>
+    <div class="lbars" data-block="LevelBars">
+      <div class="lbar"><span>Level 0</span><i style="--n: 12"></i><span class="num">3</span></div>
+      <div class="lbar"><span>Level 1</span><i style="--n: 40"></i><span class="num">10</span></div>
+      <div class="lbar"><span>Level 2</span><i style="--n: 32"></i><span class="num">8</span></div>
+      <div class="lbar"><span>Level 3</span><i style="--n: 12"></i><span class="num">3</span></div>
+    </div>
+  </section>
+
+  <section><h2>Spark</h2>
+    <svg class="spark" data-block="Spark" viewBox="0 0 300 64" role="img" aria-label="Secure: 2, 3, 5, 6, 9, 11 over six fortnights"><polyline points="10,54 66,50 122,42 178,38 234,26 290,18"></polyline><circle cx="290" cy="18" r="4"></circle><text x="250" y="12">11 now</text></svg>
+  </section>
+
+  <section><h2>Trend</h2>
+    <svg class="trend" data-block="Trend" viewBox="0 0 600 120" role="img" aria-label="Level by sitting: 0, 1, 1, 2"><polyline points="40,100 220,70 400,70 580,40"></polyline><circle cx="40" cy="100" r="4"></circle><circle cx="220" cy="70" r="4"></circle><circle cx="400" cy="70" r="4"></circle><circle cx="580" cy="40" r="4"></circle><text x="20" y="118">4-Aug · level 0</text><text x="500" y="30">18-Nov · level 2</text></svg>
+  </section>
+
+  <section><h2>HeatGrid</h2>
+    <div class="heat" data-block="HeatGrid" style="--cols: 3">
+      <span class="h"></span><span class="h">Mon</span><span class="h">Tue</span><span class="h">Wed</span>
+      <span class="h">K2 Red</span><span class="hc" data-state="ok"><i class="ic s" data-icon="done"></i>Done</span><span class="hc" data-state="wait"><i class="ic s" data-icon="moved"></i>Moved</span><span class="hc" data-state="quiet"><i class="ic s" data-icon="to-do"></i>Not done</span>
+      <span class="h">K2 Blue</span><span class="hc" data-state="ok"><i class="ic s" data-icon="done"></i>Done</span><span class="hc" data-state="ok"><i class="ic s" data-icon="done"></i>Done</span><span class="hc" data-state="quiet"><i class="ic s" data-icon="frozen"></i>Holiday</span>
+    </div>
+  </section>
+
+  <section><h2>FortnightGrid</h2>
+    <div class="fgrid-box" data-block="FortnightGrid">
+      <div class="fgrid" style="--cols: 3">
+        <span></span><span class="dh">Mon 16</span><span class="dh" aria-current="date">Tue 17</span><span class="dh">Wed 18</span>
+        <span class="band"><i class="ic s" data-icon="break"></i>Settling in · 08:30</span>
+        <span class="tm">08:45</span>
+        <a class="cell press" data-subject="numeracy" href="#"><span class="subj"><i class="ic s" data-icon="numeracy"></i>Numeracy</span><b>Counting in tens</b><span class="chip on-tint" data-state="ok"><i class="ic s" data-icon="done"></i>Done</span></a>
+        <a class="cell press" data-subject="language" href="#" aria-current="time"><span class="subj"><i class="ic s" data-icon="language"></i>Language</span><b>Story circle</b></a>
+        <a class="cell moved press" data-subject="arts" href="#"><span class="subj"><i class="ic s" data-icon="arts"></i>Arts</span><b>Leaf printing</b><span class="chip on-tint" data-state="wait"><i class="ic s" data-icon="moved"></i>Moved</span></a>
+        <span class="tm">09:30</span>
+        <a class="cell clash press" data-subject="numeracy" href="#"><span class="subj"><i class="ic s" data-icon="numeracy"></i>Numeracy</span><b>Sorting by size</b><span class="chip on-tint" data-state="late"><i class="ic s" data-icon="clash"></i>Clash</span></a>
+        <a class="cell press" data-subject="arts" href="#"><span class="subj"><i class="ic s" data-icon="arts"></i>Arts</span><b>Clay pots</b></a>
+        <a class="cell press" data-subject="language" href="#"><span class="subj"><i class="ic s" data-icon="language"></i>Language</span><b>Rhyme time</b></a>
+      </div>
+    </div>
+  </section>
+
+  <section><h2>CaptureBar</h2>
+    <div class="capture" data-block="CaptureBar"><a class="btn btn-capture press" href="#"><i class="ic" data-icon="record"></i>Voice note</a><a class="btn btn-capture press" href="#"><i class="ic" data-icon="photo"></i>Photo</a></div>
+  </section>
+
+  <section><h2>DropZone</h2>
+    <label class="drop" data-block="DropZone"><i class="ic l" data-icon="upload"></i><span>Choose scans or drop them here, or paste a Drive link</span><input type="file" accept="application/pdf,image/*" multiple></label>
+  </section>
+
+  <section><h2>PageImage</h2>
+    <figure class="pimg" data-block="PageImage"><span class="qr" aria-hidden="true"></span><figcaption>The child's page as photographed</figcaption></figure>
+  </section>
+
+  <section><h2>EmptyState</h2>
+    <div class="empty" data-block="EmptyState"><i class="ic l" data-icon="not-seen"></i><b>No child seen yet on this skill</b><span class="muted">Record a note in a period and the squares fill in.</span><a href="#">Record a note</a></div>
+  </section>
+
+  <section><h2>Form</h2>
+    <form class="form" data-block="Form">
+      <div class="field"><label for="f-name">Material</label><input id="f-name" value="Bundling sticks"></div>
+      <div class="field"><label for="f-qty">How many</label><input id="f-qty" inputmode="numeric" value="200"></div>
+      <div><button class="btn btn-main press" type="submit">Save material</button></div>
+    </form>
+  </section>
+
+  <section><h2>KeyValue</h2>
+    <dl class="kv" data-block="KeyValue"><dt>Class</dt><dd>K2 Red</dd><dt>Sr. No.</dt><dd class="num">01</dd><dt>Educator</dt><dd data-source="pii.staff.name">Asha Almond</dd><dt>Since</dt><dd>June 2026</dd></dl>
+  </section>
+
+  <section><h2>Cards</h2>
+    <div class="cards" data-block="Cards">
+      <article class="card" data-kind="activity"><div class="card-h"><span class="tile"><i class="ic" data-icon="activity"></i></span>Counting in tens with bundles</div><div class="card-b"><span class="muted">Numeracy · 40 minutes</span><a href="#">Open the activity</a></div></article>
+      <article class="card" data-kind="objective"><div class="card-h"><span class="tile"><i class="ic" data-icon="objective"></i></span>Counts objects to 100</div><div class="card-b"><span class="muted">3 skills</span><a href="#">Open the objective</a></div></article>
+      <article class="card" data-kind="skill"><div class="card-h"><span class="tile"><i class="ic" data-icon="skill"></i></span>Counting in tens</div><div class="card-b"><span class="muted">14 children seen</span><a href="#">Open the skill</a></div></article>
+    </div>
+  </section>
+
+  <section><h2>KindTile</h2>
+    <div class="keyrow" data-block="KindTile">
+      <span class="tile" data-kind="period" title="Period"><i class="ic" data-icon="period"></i></span>
+      <span class="tile" data-kind="child" title="Child"><i class="ic" data-icon="child"></i></span>
+      <span class="tile" data-kind="activity" title="Activity"><i class="ic" data-icon="activity"></i></span>
+      <span class="tile" data-kind="objective" title="Objective"><i class="ic" data-icon="objective"></i></span>
+      <span class="tile" data-kind="skill" title="Skill"><i class="ic" data-icon="skill"></i></span>
+      <span class="tile" data-kind="assessment" title="Assessment"><i class="ic" data-icon="assessment"></i></span>
+      <span class="tile" data-kind="note" title="Note"><i class="ic" data-icon="note"></i></span>
+    </div>
+  </section>
+
+  <section><h2>BrandMark</h2>
+    <a class="brand large" data-block="BrandMark" href="#" aria-label="Cornerstone Gurukul">
+      <img class="on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-colour.svg" alt="">
+      <img class="on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-for-dark-backgrounds.svg" alt="">
+    </a>
+  </section>
+</main>
+</body>
+</html>

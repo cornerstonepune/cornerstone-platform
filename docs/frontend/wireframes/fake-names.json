@@ -1,5 +1,5 @@
 {
-  "why": "The repository is public: no real child's or staff member's name is ever in git. Every name drawn in a wireframe, a block gallery, a fixture or a screenshot comes from these lists, and from nowhere else. Alliterative animals, so nobody could take one for a real child. UI-1 generates apps/web/tests/fake-names.ts from this file, so the site has one list.",
+  "why": "The repository is public: no real child's or staff member's name is ever in git. Every name drawn in a wireframe, a block or a fixture comes from these lists (check.mjs fails on any other). Alliterative animals, so nobody could take one for a real child. UI-1 generates apps/web/tests/fake-names.ts from this file, so the site has one list.",
   "children": ["Alba Ant", "Bea Badger", "Cal Crow", "Dot Deer", "Eli Eel", "Finn Fox", "Gus Goat", "Hazel Hare", "Ivy Ibis", "Jo Jay", "Kit Koala", "Lou Lynx", "Mina Mouse", "Nat Newt", "Otto Owl", "Pia Panda", "Quin Quail", "Rex Rook", "Sam Seal", "Tia Toad", "Uri Urial", "Vik Vole", "Wren Wolf", "Xan Xerus", "Yara Yak", "Zed Zebra"],
   "staff": ["Asha Almond", "Bina Basil", "Chetan Clove", "Dev Dill", "Esha Elder", "Farah Fennel", "Gopal Ginger"]
 }
