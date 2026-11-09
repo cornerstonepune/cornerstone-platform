@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# Run the acceptance proofs of the given CP specs (default: the ones CI keeps green). From anywhere:
+#   bin/specs            bin/specs CP-9 CP-10
+# A spec's checks.sh needs TEST_DATABASE_URL (a throwaway Postgres; see bin/testdb fresh) and the engine's venv.
+set -uo pipefail
+ATHENA_ROOT="$(cd "$(dirname "$0")/.." && pwd)"   # the name the old checks.sh files read
+export ATHENA_ROOT
+specs=("$@"); [ ${#specs[@]} -gt 0 ] || specs=(CP-1 CP-5 CP-9 CP-10)
+fail=0
+for s in "${specs[@]}"; do
+  echo "== $s"
+  bash "$ATHENA_ROOT/specs/$s/checks.sh" || fail=1
+done
+exit $fail
