@@ -12,9 +12,9 @@ Branch `cp-8-build`, from main at CP-4 (e575a38). Scope `specs/CP-8`, design `sp
 - `engine timetable link [--fortnight N] [--apply]`, `link-undo RUN_ID`, `unmatched [--fortnight N]` in
   `w2_print/cli_plan_link.py`, mounted by `cli_timetable.py`; every count is per fortnight (`FN<n>`).
 
-## Open: item 5 is Nimish's
-`docs/decisions/CP-8-not-written-draft.md` (`Decision: show | hide | school-text-only`, `Decided-by:`) does not exist and
-is not written here: the answer is his. Item 5's proof fails until it does.
+## Item 5 (decided)
+`docs/decisions/CP-8-not-written-draft.md`: `Decision: show` (a page marked "not written yet" may be shown, marked).
+Nimish answered "a" in chat on 9 Nov; the orchestrator relayed it.
 
 ## Item 1 target
 Not hard-coded. The proof reads an optional `Target: N%` line in `docs/decisions/CP-8-link-target.md`; without it the
