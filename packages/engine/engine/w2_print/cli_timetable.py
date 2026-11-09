@@ -16,6 +16,8 @@ from engine.w2_print import cli_plan_link
 from engine.w2_print import k2_timetable as tt
 from engine.w2_print import k2_timetable_load as ld
 from engine.w2_print import k2_timetable_sql as sq
+from engine.w2_print import tt_generate as gen
+from engine.w2_print import tt_need
 
 timetable_app = typer.Typer(help="W2 — the K2 timetable from the school's tabs", no_args_is_help=True)
 VOCABULARY = "timetable.vocabulary"
@@ -105,6 +107,37 @@ def load(
         typer.echo(
             f"  wrote {sql} ({len(plan.sessions)} sessions); run it in one transaction, it prints counts before and after"
         )
+
+
+@timetable_app.command("generate")
+def generate(
+    grade: str = typer.Option(..., help="the grade code of the class, as in the grade table"),
+    section: str = typer.Option(..., help="the section of the class on this database"),
+    year: str = typer.Option("2026-27"),
+    fortnight: int = typer.Option(..., help="the fortnight's number in that year"),
+    dry: bool = typer.Option(
+        False, "--dry", help="do everything in a read-only transaction and keep nothing"
+    ),
+) -> None:
+    """A draft timetable for one class and one fortnight, made by FET from the school's rules and kept with FET's input
+    and output. Never writes to the timetable, the sessions or the plan lines; --dry keeps nothing at all."""
+    with db.connect() as conn:
+        if dry:
+            conn.execute("set transaction read only")
+        try:
+            run = gen.generate(conn, grade, section, year, fortnight)
+        except (tt_need.NoSuchFortnight, gen.MissingSetting) as no:
+            typer.echo(str(no))
+            raise typer.Exit(1) from no
+        if dry:
+            conn.rollback()
+        else:
+            gen.keep(conn, run)
+            conn.commit()
+    for line in gen.lines(run):
+        typer.echo(line)
+    if run.outcome != "placed":
+        raise typer.Exit(1)
 
 
 def _run(
