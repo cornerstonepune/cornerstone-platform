@@ -36,3 +36,6 @@ Artifacts (private to Nimish): plan https://claude.ai/artifact/6m7k3zFwCZAap7eLg
 - Old tests describing the old look (m1-09, m1-13c, u51/u53) were rewritten properly for the new frame, never switched off.
 - Still pending, small: educator-screens.ts displayFaceOnlyLarge checks Cormorant (unused) so passes vacuously; an old u43 test cleanup deletes sheet_instance rows another spec points at (flaky once). The live Staff page now refuses anyone not in the 'everything' access group: every real coordinator needs that grant (backend lane, unverified live).
 - Nimish's open items for him only: the 25+ data gaps, attendance, saved groups, assessment-flow feedback, Devanagari font (not needed: the logo wordmark is outlined), Cloudflare move for previews (#515, needs his Cloudflare account).
+
+## Decision since (9 Nov 2026, Nimish)
+The seven assessment steps are confirmed as they are: Created, Approved, Printed, Uploaded, Read, Checked, Results in. The "scanned/read" wording is fine. The screens fold the seven old pages into three; the steps themselves do not change.
