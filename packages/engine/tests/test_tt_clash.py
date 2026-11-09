@@ -156,7 +156,13 @@ def test_the_approve_command_refuses_an_open_clash_and_the_list_names_no_one(wor
     assert listed.exit_code == 0 and f"FN{w['number']}" in listed.output and "over_limit" in listed.output
     assert "Test Person" not in listed.output and "@example.org" not in listed.output
     out = run.invoke(app, [*args, "nobody@example.org"])
-    assert out.exit_code != 0 and "--by" in out.output
+    assert (
+        out.exit_code == 2
+    )  # typer's bad-parameter code; its coloured box can split the words, so none are matched
+    assert (
+        db.one(c, "select state from fortnight_cycle where fortnight_id = %s", (w["fortnight"],))["state"]
+        == "aligned"
+    )
 
 
 def _accept(c, w, clash):
