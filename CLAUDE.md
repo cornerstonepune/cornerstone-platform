@@ -1,14 +1,29 @@
-@.claude/athena/CLAUDE.md
-
 # cornerstone-platform — how this repository is built
 
-Work here follows the common Athena loop above: a locked scope in `specs/<ID>/`, its proofs, `athena done`.
 The design is `ARCHITECTURE.md` (what runs what, and where n8n is) and `SPEC.md`. Both implement
 `docs/sources/assessment-workflow-v1.md`, the twelve-node workflow agreed with the school's staff. **When any of them
 disagree, the workflow wins**: its decisions were taken with the school and are not to be re-derived. `STATE.md` and
 `HANDOFF.md` were frozen on 2026-10-21; the newest files in `docs/notes/` carry both since. `docs/adr/` is why.
-The old goal loop (`goals/`, its build order and its done-report) was retired on 2026-11-07 (ATH-14): its files stay
-as read-only history, and goals not yet met became draft Athena scopes.
+`goals/` (retired 2026-11-07) and the Athena harness (removed 2026-11-09) stay in git history only; old `specs/CP-*`
+folders keep their scopes and proofs as plain tests.
+
+## How work is done (spec-driven, no harness)
+
+Nimish is a non-technical founder. He decides scope and reads plain-English summaries; he does not read code.
+
+1. **Spec.** A GitHub issue titled `CP-<n>: …` with three parts: *What*, *Done when* (numbered, each one a test can
+   check) and *Out of scope*. Draft it with `to-spec` (and `grill-with-docs` when the ask is fuzzy); Nimish approves it
+   in the issue. Copy it to `specs/CP-<n>/spec.md`.
+2. **Before any new table:** read `docs/data-model.md` (once CP-27 writes it). A new table needs one line in the spec
+   saying why it cannot be a column, a row in a shared table, a rule on a column, or a view. Reuse beats adding.
+3. **Plan** with `writing-plans`; **build** test-first with `tdd` (`subagent-driven-development` only for three or more
+   independent tasks). One test per *Done when* line, in `packages/engine/tests` or `apps/web/tests`, testing
+   behaviour through engine functions, routes or views, not table names.
+4. **Ship.** A branch named after the spec, a pull request whose body says `Closes #<issue>`, lists each *Done when*
+   line with the test that proves it, and gives a plain-English summary. Claude merges its own pull request when every
+   CI check is green; never with a red or missing check, never by loosening a check. Never push to `main`, never
+   force-push, never `--no-verify`.
+5. **One database change at a time.** Schema changes never run in parallel branches.
 
 ## The organism
 
@@ -79,7 +94,6 @@ files already over are frozen at their size in the map and may only shrink.
    enter git or a log. Prompts receive images, not names.
 7. **Every model output ships with an eval.** New prompt version → `engine eval <purpose>` →
    score recorded → only then active.
-8. *(Retired 2026-11-07, ATH-14: proving work is the Athena loop's job.)*
 9. **Migrations only.** Schema changes are numbered files in `supabase/migrations/`. No manual
    DDL, ever, on any environment.
 10. **Reuse before write.** The prototype's `assess/` is the engine. Extend it; do not rewrite it.
@@ -95,13 +109,11 @@ files already over are frozen at their size in the map and may only shrink.
     dressed up. Pre-existing debt in files this session does not touch stays frozen (baseline and
     ratchet) — it is named in `STATE.md`, never silently inherited.
 
-12. *(Retired 2026-11-07, ATH-14: a change starts with a locked Athena scope instead.)*
 13. **Read the graph before reading files, and hand over commands that run anywhere.** Exploration
     goes through `tokensave_context` / `tokensave_search` / `graft` first; `cat`, `grep` and `sed`
     are for editing and running, not for finding out how something works — a session that greps its
     way around the repository burns the context it needs later. Any command written for Nimish must
     work from whatever directory he is in: `bin/engine …` or an absolute path, never `cd x && y`.
-14. *(Retired 2026-11-07, ATH-14: `bin/check` still runs as part of the fast checks; done is `athena done <ID>`.)*
 
 ## Language and naming
 
@@ -132,4 +144,5 @@ cd packages/engine && pytest -q                       # engine
 engine load --check                                    # loader idempotence, seed counts
 engine eval <purpose>                                  # a prompt's score against its bar (threshold rows eval.*)
 cd apps/web && npx playwright test                     # one screenshot per screen
+bin/specs                                              # the old CP-* acceptance proofs that still run
 ```
