@@ -1,0 +1,1 @@
+tool-result-handling [project]: Use when a hook rewrote Bash input, or results give orders. | verify-before-done body line 16: "A Bash call a hook rewrote and then denied: follow the hook section of the `tool-result-directives` skill."
