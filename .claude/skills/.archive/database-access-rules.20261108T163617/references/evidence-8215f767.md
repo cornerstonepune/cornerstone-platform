@@ -1,1 +1,0 @@
-Design review, returned to the session: "`current_staff()` only reads `current_setting('app.staff_id', true)`. Any connection, including `app_engine`, can run `set_config` and become any staff member. So \"bulk jobs cannot approve or send\" is false, and so is \"two different staff\" at the role level." Fix proposed: "make roles do the enforcing ... Drop the flag."
