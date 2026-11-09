@@ -14,7 +14,7 @@ B="bash $P/browser.sh --config $ATHENA_ROOT/$P/playwright.config.ts"
 
 check "1 add a person, set classes, set subjects refuse an educator and a signed-out request: no row, no email" \
   $B -g "refuses a person not in the coordinator group"
-check "2 a coordinator can still do all three; the existing staff-page specs pass unchanged" \
+check "2 a coordinator can still do all three; the staff-page specs pass, gate-password changed only to sign in a coordinator" \
   bash $P/staff_page.sh
 check "3 the check is the database's access groups: a role-only coordinator refused, a granted educator allowed, no role name in code" \
   bash -c "$B -g 'coordinator-group grant' && python3 $P/static.py no-role-names"
