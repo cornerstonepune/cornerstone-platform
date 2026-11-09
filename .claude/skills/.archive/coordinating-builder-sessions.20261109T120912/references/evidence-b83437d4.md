@@ -1,1 +1,0 @@
-CP-24 pushed once to cp-24-build (PR #514, still draft). Head SHA: 1cadb96014169950018709a5fdc5e484234f76c2. ... 2. CP-3's lock, proof, status and run record changed, so CI may ask for a VERIFY.md for CP-3. I have not written one. CP-24's VERIFY.md is as you added it.
