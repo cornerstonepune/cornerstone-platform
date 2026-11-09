@@ -156,8 +156,9 @@ def run(conn, path, pages=None, mask=None):
 def spend_today(conn):
     return conn.execute(
         "select coalesce(sum(f.cost_inr), 0) as n from flow_run f join tenant t on t.id = f.tenant_id"
-        f" where t.slug = %s and (f.started_at at time zone {settings.ZONE_SQL})::date = %s",
-        (db.tenant_slug(), settings.school_today(conn)),
+        f" where t.slug = %s and (f.started_at at time zone {settings.ZONE_SQL})::date"
+        f" = (now() at time zone {settings.ZONE_SQL})::date",
+        (db.tenant_slug(),),
     ).fetchone()["n"]
 
 
