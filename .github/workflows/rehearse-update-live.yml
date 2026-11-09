@@ -82,7 +82,6 @@ jobs:
           psql "$COPY" -tAc "select 'copy: grade table ' || coalesce(to_regclass('public.grade')::text, 'absent')"
           psql "$COPY" -c "select 'child' as held_by, band as grade, count(*) from child group by 2
             union all select 'sheet_template', band, count(*) from sheet_template group by 2
-            union all select 'blueprint', band, count(*) from blueprint group by 2
             union all select 'level_rule', band, count(*) from level_rule group by 2
             union all select 'registry', band, count(*) from (select band from milestone union all select band from learning_objective union all select band from activity union all select band from report_item union all select band from trait) r group by 2
             order by 1, 2"
