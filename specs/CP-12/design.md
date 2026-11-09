@@ -67,7 +67,10 @@ build follows that scope and this file is corrected before the proofs are writte
   1. the freeze unit is the fortnight; states planning, frozen, aligned, approved, list sent;
   2. a change to `timetable_slot` in a non-planning fortnight is refused unless `app.change_reason` is set for the transaction,
      and then one `fortnight_edit` row is written; `session` is not gated;
-  3. one function moves a fortnight to its next step; CP-12 adds a check to the step into `approved` (decision 6).
+  3. the engine function `fortnight_cycle.move(conn, fortnight_id, to_state, actor)` in
+     `packages/engine/engine/w2_print/fortnight_cycle.py` moves a fortnight to its next state (there is no function named
+     `step`); CP-12's `engine fortnight approve` runs its clash check and then calls `move(..., 'approved', actor)`
+     (decision 6).
 - **CP-4 (access, issue #452).** CP-4 adds `public.access_table`, and a CI check fails on any unlisted table. CP-12's migration
   must come after CP-4's and adds one row per new table: `timetable_move` is child data keyed by class (it has
   `school_class_id`); `timetable_clash_accept` is school-wide with the reason "a clash can span classes; holds no child data".
@@ -115,8 +118,8 @@ build follows that scope and this file is corrected before the proofs are writte
    and two moves cannot copy the same grid twice.
 6. **Approval waits for clashes, as a setting.** Seed row `timetable.open_clash_blocks_approval` = `true` in
    `supabase/seed/config.json`, read with `settings.config`. When true, the approve command (CP-12 adds `engine fortnight approve --year --fortnight --by`, decided 9 Nov by orchestrator 4:
-   CP-6 gives only the cycle state and step, and CP-7 only a per-class database function; the command runs this clash check,
-   then moves the cycle through CP-6's step, which CP-7's gate may refuse until every class is settled) refuses the step into
+   CP-6 gives only the cycle state and `fortnight_cycle.move`, and CP-7 only a per-class database function; the command runs
+   this clash check, then calls `fortnight_cycle.move(conn, fortnight_id, 'approved', actor)`, which CP-7's gate may refuse until every class is settled) refuses the step into
    `approved` while the fortnight has an unaccepted clash, naming the count by kind. Lean version (Nimish, 9 Nov: cut 1
    only): the check sits in the engine's approve command, not in a database trigger, so a direct update of the fortnight's
    state skips it; any later screen must go through the command. The count runs in a `security definer` function over the
@@ -156,7 +159,7 @@ it: a `timetable_limit` row with `span = 'week'`, and a cell's week A/B worked o
   sets), `access_table` rows, `select internal.apply_conventions();`.
 - `supabase/seed/config.json`: the setting.
 - `packages/engine/engine/w2_print/cli_timetable.py`: the three timetable commands. A new `cli_fortnight.py` in the same
-  folder holds `engine fortnight approve` (clash check, then CP-6's step), mounted as its own group. `workflows.json`: both
+  folder holds `engine fortnight approve` (clash check, then `fortnight_cycle.move`), mounted as its own group. `workflows.json`: both
   on N4 (`files` and `commands`).
 - Tests: `test_timetable_move.py` (dated rows made once, swap, move into empty, sessions follow, every refusal, history append-only, frozen
   with and without reason, lock); `test_timetable_clash.py` (one per kind, accept, reopen after a second
