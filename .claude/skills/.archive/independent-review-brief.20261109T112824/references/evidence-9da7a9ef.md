@@ -1,0 +1,3 @@
+READ-ONLY. Do not edit, commit, push, comment on GitHub, or touch any database. Never print or copy child or staff names or any personal data. Secrets: never.
+- Give evidence for every claim: path:line or a commit. When you are unsure, say "I am not certain". Never present a guess as fact. Do not invent function names; if you cite one, you found it.
+- Do not re-open decisions Nimish has already made (listed below). You may say a decision has a cost he should see, once, plainly.
