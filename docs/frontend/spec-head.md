@@ -49,7 +49,7 @@ Where this specification and `docs/ux-rules.md` disagree, this specification win
    screen.
 9. Names (decided by Nimish, 9 Nov 2026: it is his school): a signed-in staff member sees a child's name wherever a screen's
    element list in `screens.json` has a `child_name` element (the class grid squares, the child page header, the confirm
-   screen, notes, reports, Classes, search results, a skill's grid), and on no other screen. Names are read from the `pii`
+   screen, notes, reports, Classes, the search typeahead's suggestions, a skill's grid), and on no other screen. Names are read from the `pii`
    schema at render time and joined by `child_id`; the application tables keep carrying `child_id` only (CLAUDE.md rule 6
    stays true); no name is ever typed into a screen, a state word, a log or a URL. What a parent's copy shows is the school's
    decision with CP-19. One constraint stays, because the repository is public: no real child's name in git, tests,
@@ -67,13 +67,17 @@ Where this specification and `docs/ux-rules.md` disagree, this specification win
 **Tokens** (`tokens.json`; `tokens.css` generated from it, nothing retyped): ground white `#ffffff`; surface `#f7f7f5`; ink
 `#1c1b19`; ink-muted `#5e5a52`; line `#e4e3df`; line-control `#8a8984`; brand clay `#b8562f` (the mark, the active group's
 underline, the trail's accent; never on a child, never a state); basalt `#26241f` (the one main action: a filled button with
-white text); monsoon `#3f4d55` (links, always underlined, and Numeracy); olive `#4a5435` ok; bamboo `#9a7a3a` wait; bark
-`#8a6a45`; haldi `#e2a43f` (the source of the Arts hue only: about 2.2:1 on white, so never a border or text; a part that
-needs a person is outlined in the wait amber); sand `#ede3d3`. States: ok / wait / late / quiet with `-bg` fills. Subjects
-from the materials: Numeracy monsoon, Language bark, Arts haldi (darkened for text), fixed sand. Three hues are therefore
-never confused: links are blue-grey and underlined; work states are red, amber, green and grey with their words; the main
-action is the one dark button. Dark follows the system; every pair has a dark value in `tokens.json`. The contrast table in
-`docs/design-tokens.md` was measured on paper-warm; UI-1 re-measures every pair on white and commits the new table.
+white text); monsoon `#3f4d55` (links, always underlined, and Numeracy); olive `#4a5435` ok; the wait amber `#6f5900`
+(bamboo `#9a7a3a` is a brand material only and appears on no screen); bark `#8a6a45`; haldi `#e2a43f` (the source of the
+Arts hue only: about 2.2:1 on white, so never a border or text; the Arts edge is the deepened `#b8700a`); a part that needs
+a person is outlined in the wait amber; sand `#ede3d3`. States: ok / wait / late / quiet with `-bg` fills. Subjects from
+the materials: Numeracy monsoon, Language bark, Arts haldi, fixed sand; the Language edge, the Arts edge, the wait amber and
+the late red are at least 20 apart pairwise (CIE76, light; my arithmetic, which UI-14's script must confirm), and a subject
+is always shown with its word. Three hues are never confused: links are blue-grey and underlined; work states are red, amber,
+green and grey with their words; the main action is the one dark button. Dark follows the system; every pair has a dark
+value in `tokens.json`, and dark is tested on the journeys and the block gallery only, light everywhere else. The contrast
+table in `docs/design-tokens.md` was measured on paper-warm; UI-14 re-measures every pair on white and commits the new
+table.
 
 **Type** (decided by Nimish, 9 Nov 2026: `docs/decisions/2026-11-09-site-type-and-subject-colours.md`): Source Serif 4 for
 titles (32/24/20) and Source Sans 3 for everything else (18/16/14/12); weights 400/500/600; nothing under 14 px carries a
@@ -95,7 +99,7 @@ when the first slice that uses it needs it: Button and Tabs first; DataTable, St
 (section 5) → 3 node pages (one page shape per kind of thing) → Today composed last.
 
 **Blocks** (`components/`): the list and one-line contract of each is in section 5. The blocks that exist today (`StatusChip`,
-`DataTable`, `FilterBar`, `EmptyState`, `Count`) move onto the tokens in UI-1; `PageShell`, `TopBar` and the K2 side menu
+`DataTable`, `FilterBar`, `EmptyState`, `Count`) move onto the tokens in UI-14; `PageShell`, `TopBar` and the K2 side menu
 become AppFrame in UI-13; `voice/board` becomes ClassGrid and `voice/record` CaptureBar when their screens are built; the
 new blocks are built once with a preview and a screenshot in both themes (UI-2).
 
@@ -109,7 +113,7 @@ bare frame of Sign in, says so in `screens.json`.
 
 ## 4. How to build it: order, tests, done
 
-The order is the slice table in section 7, the only list of what is built when and what each waits for: tokens (UI-1), the
+The order is the slice table in section 7, the only list of what is built when and what each waits for: the test harness (UI-1, merges first), tokens and fonts (UI-14), the
 frame and the inventory test (UI-13), the new blocks (UI-2), then the node pages and views (UI-3 to UI-6 and UI-11), Today
 (UI-7), reports and materials (UI-8, UI-9), the screens outside the bar (UI-12), and the as-built document (UI-10, any time
 after UI-13). The slices that wait for a backend scope (UI-6, UI-8, UI-9) wait for it; the others do not.

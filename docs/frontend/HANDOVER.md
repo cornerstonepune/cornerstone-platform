@@ -16,11 +16,11 @@ Nothing here is open for re-design. Where you find a conflict or a gap, stop and
 2. `docs/frontend/screens.json`: the same inventory as data. It is the oracle: the inventory test reads it, the help page
    is generated from it, and `node docs/frontend/build-spec.mjs` regenerates SPEC.md, scopes.md and the wireframes from
    it. Change the JSON, run the script; never edit the generated files by hand.
-3. `docs/frontend/scopes.md`: the slices UI-1 to UI-13 as paste-ready GitHub issues in the Scope form.
+3. `docs/frontend/scopes.md`: the slices UI-1 to UI-14 as paste-ready GitHub issues in the Scope form.
 4. `docs/frontend/tokens.json`: every colour, font, size and space. Copy it to `apps/web/design-system/tokens.json` and
    generate `tokens.css` from it (UI-1). The design system that mirrors it, with the brand book, the icon map and the first
    blocks' previews: https://claude.ai/code/artifact/caaa43e4-681b-4ac0-82c9-ffb866116514 (`read` its `project/README.md`).
-5. The wireframes of all 34 screens: https://claude.ai/code/artifact/c6bf8133-9aaa-4c8c-b951-b27afc114996. The clickable
+5. The wireframes of all 33 screens: https://claude.ai/code/artifact/c6bf8133-9aaa-4c8c-b951-b27afc114996. The clickable
    sketch of the walk: https://claude.ai/code/artifact/43bfce16-b41c-42fe-8b20-1ec11960ea74.
 6. `docs/decisions/2026-11-09-white-ground-for-the-site.md` and `docs/decisions/2026-11-09-site-type-and-subject-colours.md`.
 7. `docs/ux-rules.md`, `apps/web/lib/ux-rules.ts`, `apps/web/lib/menu.ts`, `apps/web/lib/icons.tsx`,
@@ -39,7 +39,7 @@ Nothing here is open for re-design. Where you find a conflict or a gap, stop and
 
 **How to proceed**
 
-1. For each slice in `scopes.md`, in order UI-1 (tokens) → UI-13 (the frame and the inventory test) → UI-2 (blocks) → UI-3 and UI-4
+1. For each slice in `scopes.md`, in order UI-1 (the test harness, merges first) → UI-14 (tokens and fonts) → UI-13 (the frame and the inventory test) → UI-2 (blocks) → UI-3 and UI-4
    (either order) → UI-5 → UI-6 (timetable, rules, fortnight; when its backend has merged) → UI-7 → UI-8 → UI-9; UI-11 any
    time after UI-2; UI-12 any time after UI-13; UI-10 (the as-built document) right after UI-13: open a GitHub issue titled `UI-n: <title>` with the section's text verbatim; Nimish adds
    `scope-locked`; run the `athena-scope` skill (the proof-writer turns every Done-when line into a check, including the
@@ -54,7 +54,7 @@ Nothing here is open for re-design. Where you find a conflict or a gap, stop and
    and asserts its stated effect; and asserts that controls marked for one role are absent and refused for the other.
    Its completeness check counts the interactive controls on the page and fails if the count differs from the inventory.
    A screen whose slice is not merged is `test.fixme`. Every slice's last commit adds its id to `merged_slices`.
-   (`exists` only describes the old page; every screen belongs to exactly one slice, UI-1 to UI-13.)
+   (`exists` only describes the old page; every screen belongs to exactly one slice, UI-1 to UI-14.)
 3. Build nothing that is not in the inventory. A new screen or control goes into `screens.json` first, the script is
    run, and the test fails until the screen exists. That is how there is no rework.
 4. Every block gets a preview on `/setup/blocks` and a screenshot in both themes (UI-2); every slice gets its journey test
@@ -70,7 +70,7 @@ Nothing here is open for re-design. Where you find a conflict or a gap, stop and
 - The K2 screens are behind a config switch in production ("Voice notes are not switched on"); UI-3's proofs run with the
   switch on in the test database; turning it on live is Nimish's step.
 - The live What-needs-doing badge counts 109 English skills to approve; UI-7 moves that count to Setup › Curriculum.
-- The contrast table in `docs/design-tokens.md` was measured on paper-warm; UI-1 re-measures on white and commits the table.
+- The contrast table in `docs/design-tokens.md` was measured on paper-warm; UI-14 re-measures on white and commits the table.
 - Lucide icon names in the design system's README that are not yet in `lib/icons.tsx` must be checked against the
   installed `lucide-react` before use.
 
@@ -81,7 +81,7 @@ Nothing here is open for re-design. Where you find a conflict or a gap, stop and
 | File | What it is |
 | --- | --- |
 | `docs/frontend/SPEC.md` | the consolidated specification (generated from the two below plus `spec-head.md`) |
-| `docs/frontend/screens.json` | the inventory: groups, blocks, element kinds, generic checks, slices, the bar, 34 screens with every control |
+| `docs/frontend/screens.json` | the inventory: groups, blocks, element kinds, generic checks, slices, the bar, 33 screens with every control |
 | `docs/frontend/spec-head.md` | the written part of the spec (sections 1 to 5 and the frame of 6 and 7) |
 | `docs/frontend/build-spec.mjs` | regenerates SPEC.md, scopes.md and the wireframes page; refuses an inventory with a dangling target |
 | `docs/frontend/scopes.md` | the slices as paste-ready Scope-form issues |

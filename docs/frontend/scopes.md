@@ -5,36 +5,57 @@ titled with its id (for example `UI-13: The frame and the inventory test`). Nimi
 every Done-when line into an executable check in `specs/<ID>/`; then the build starts. Lines that name a screen come from that
 screen's own `done_when`; the generic checks of SPEC §7 apply to every screen a slice builds, and are what the inventory test runs.
 
-## UI-1: Tokens and the existing parts on them
+## UI-1: The test harness
 
-Tier 2. Waits for: nothing (type and colours decided 9 Nov). Specification: docs/frontend/SPEC.md; inventory: docs/frontend/screens.json; wireframes: (see docs/notes/frontend-landscape.md).
+Tier 2. Waits for: nothing. Specification: docs/frontend/SPEC.md; inventory: docs/frontend/screens.json; wireframes: (see docs/notes/frontend-landscape.md).
 
 ### In plain English
 
-Nothing looks different yet except the colours and letters. Every colour in the site now comes from one list, and the two chosen typefaces load from the site itself. After this, a change of colour is one edit in one place. What Nimish can see: the same pages, in the new white and type.
+Nothing changes on screen. This adds the testing tools every later slice needs, so that finished backend work can be marked built and every later screen is checked in a real browser, including for accessibility. It should merge within hours.
 
 ### What
 
-One source of colour, type and space for the whole site. tokens.css is generated from tokens.json; every colour literal in the app is replaced by a token, including in the blocks that exist today (StatusChip, DataTable, FilterBar, EmptyState, Count); shadcn/ui is initialised with the two primitives used first; the fonts are self-hosted; the journey-test harness the Athena loop demands exists. No page changes shape in this slice.
+Only what the Athena loop demands before any interface change can be marked built (`athena finish` is refused repo-wide without it): the axe dependency, the journey harness and one passing journey spec, and shadcn/ui initialised with the two primitives used first. No page changes in this slice.
+
+### Done when
+
+1. `@axe-core/playwright` is a dependency of `apps/web`, and the journey spec runs axe on every step it visits.
+2. `apps/web/e2e/athena-journey.ts` exists and one journey spec imports it, signs in, opens an existing page and passes, so `athena ui-ready` passes for the slice.
+3. shadcn/ui is initialised (`npx shadcn@4.23.0 init`; `components/ui/` does not exist today) with Button and Tabs only; every other primitive is added by the first slice that uses it, and none is added unused. The stock look is left as installed; UI-14 restyles it.
+4. `bin/check`, `test_ux_rules.py`, `u51` and `screens.spec.ts` pass; `ux.frozen` in workflows.json has not grown.
+
+### Out of scope
+
+Any change to a page, a colour or a font (UI-14); the frame and the inventory test (UI-13); new screens, blocks or queries.
+
+## UI-14: Tokens, fonts and the existing parts on them
+
+Tier 2. Waits for: UI-1. Specification: docs/frontend/SPEC.md; inventory: docs/frontend/screens.json; wireframes: (see docs/notes/frontend-landscape.md).
+
+### In plain English
+
+Nothing new to do yet except the look. Every colour in the site now comes from one list, and the two chosen typefaces load from the site itself. After this a change of colour is one edit in one place. What Nimish sees: the same pages in the new white and type.
+
+### What
+
+One source of colour, type and space for the whole site. tokens.css is generated from tokens.json; every colour literal in the app is replaced by a token, including in the blocks that exist today (StatusChip, DataTable, FilterBar, EmptyState, Count) and in the shadcn files from UI-1; the fonts are self-hosted. No page changes shape in this slice.
 
 ### Done when
 
 1. `apps/web/design-system/tokens.json` is byte-identical to `docs/frontend/tokens.json`, and `apps/web/design-system/tokens.css` is produced from it by `apps/web/scripts/tokens.mjs`; a test regenerates and diffs, so the two cannot drift.
 2. No hex colour literal remains in `apps/web/app`, `apps/web/components` or `apps/web/lib` outside `tokens.css` (a grep test; the count today is the baseline and must be 0 at the end of this slice). Each literal becomes the nearest token with no change of layout, and `screens.spec.ts` is re-baselined once, in this slice.
-3. Every pair named in tokens.json's usage notes measures at least 4.5:1 (text) or 3:1 (borders, icons, outlines) in both themes by the WCAG formula, including link on ground, the main-action text on the basalt button, the amber outline on ground, and each state text on its fill; the script lives in the suite and its table is committed as `docs/design-tokens-contrast.md`. A pair that fails is fixed in tokens.json, not exempted.
-4. shadcn/ui is initialised (`npx shadcn@4.23.0 init`; `components/ui/` does not exist today) with Button and Tabs only; each file references `var(--` and no hex. Every other primitive is added by the first slice that uses it (the same `shadcn add`), and none is added unused.
-5. `apps/web/e2e/athena-journey.ts` exists and one journey spec imports it, signs in, opens an existing page and passes (so `athena ui-ready` passes for the slice).
-6. `@axe-core/playwright` is a dependency of `apps/web` and the journey test runs axe on every step it visits.
-7. next/font loads Source Serif 4 and Source Sans 3 from the build: no page makes a request to a font host or any host other than the site's own (a test records the requests of one page); the computed font-family first names across every page are within {Source Serif 4, Source Sans 3}.
-8. `bin/check`, `test_ux_rules.py`, `u51` and `screens.spec.ts` pass; `ux.frozen` in workflows.json has not grown.
+3. Every pair named in tokens.json's usage notes measures at least 4.5:1 (text) or 3:1 (borders, icons, outlines) in both themes by the WCAG formula, including link on ground, the main-action text on the basalt button, the amber outline on ground and each state text on its fill; and the four colours that sit near each other (the Language edge, the Arts edge, the wait amber and the late red) are at least 20 apart pairwise (CIE76 ΔE in light). The script lives in the suite and its table is committed as `docs/design-tokens-contrast.md`. A pair that fails is fixed in tokens.json, not exempted.
+4. Each shadcn file under `components/ui/` references `var(--` and no hex, and the stock look is gone (screenshot baseline).
+5. next/font loads Source Serif 4 and Source Sans 3 from the build: no page makes a request to a font host or any host other than the site's own (a test records the requests of one page); the computed font-family first names across every page are within {Source Serif 4, Source Sans 3}.
+6. `bin/check`, `test_ux_rules.py`, `u51` and `screens.spec.ts` pass; `ux.frozen` in workflows.json has not grown.
 
 ### Out of scope
 
-The frame, the menu and the inventory test (UI-13); new blocks (UI-2); new screens, changed queries, the K2 switch, parents.
+The frame, the menu and the inventory test (UI-13); new blocks (UI-2); new screens, changed queries.
 
 ## UI-13: The frame and the inventory test
 
-Tier 2. Waits for: UI-1. Specification: docs/frontend/SPEC.md; inventory: docs/frontend/screens.json; wireframes: (see docs/notes/frontend-landscape.md).
+Tier 2. Waits for: UI-14. Specification: docs/frontend/SPEC.md; inventory: docs/frontend/screens.json; wireframes: (see docs/notes/frontend-landscape.md).
 
 ### In plain English
 
@@ -50,7 +71,7 @@ One navigation for the whole site: the top bar with its four doors, search, acti
 2. `lib/menu.ts` GROUPS are exactly Today, Timetable, Children, Setup and carry the map of every existing route to its door (assessments, papers, capture and growth under Children; library, curriculum, skill-sets, school and rules under their `group` in screens.json); a test walks the app's route list and reaches each route by clicking from the bar in at most three clicks; `u53-the-menu.spec.ts` passes against it.
 3. The trail is two fixed levels (the door, then the thing) plus the browser's Back; the door lit on the bar is the door the walk started from, so an Activity opened from Today lights Today, not Setup.
 4. `docs/ux-rules.md` is rewritten in this slice and named in its changed files: rules 3, 7, 11 and 12 and the menu table now state the new frame (the rail replaces the side menu, acting-as replaces 'Viewing', four doors, 1440 px not 1280, four work states not five chips, the phone gate list); `test_ux_rules.py` and `u51` are updated to match.
-5. AppFrame's search field: typing a Sr. No. in the person's classes offers that child; one outside them offers nothing; a fake fixture name typed offers that child within their classes only (at most five); the typed term is in no address, no log line and no analytics call (a test reads the request log).
+5. AppFrame's search field is a typeahead, with no results page: typing a Sr. No. in the person's classes offers that child; one outside them offers nothing; a fake fixture name typed offers that child within their classes only; at most five suggestions; choosing one opens its screen; the typed term is sent in a POST body and is in no address, no log line and no analytics call (a test reads the request log); signed out, the request is refused.
 6. `lib/built.ts` exports `isBuilt(screenId)` from `merged_slices` in screens.json; the doors, the rail and every link to another screen draw nothing for a target that is not built.
 7. `tests/u70-inventory.spec.ts` reads `docs/frontend/screens.json` (or the file named by `INVENTORY=`) and, for every screen of a slice in `merged_slices` (a full run) or named by `SLICE=UI-n` / `SCREEN=<id>` (a pull request run), signs in as educator and as coordinator and runs the ten generic checks at 1440 and 400 and drives every control by its kind; dynamic routes take a concrete address from `tests/inventory-fixtures.ts`, built from the test's own rows; the `bar` list is driven once per run; every other screen is `test.fixme` and counted in the report.
 8. The test is proved on `tests/fixtures/mini-inventory.json`, a two-screen inventory of pages that exist and are framed by this slice: it passes on them, and a deliberately broken copy (a missing control, a dead link, a name not in the allow-list) fails with the reason named.
@@ -181,17 +202,17 @@ Assessments, one assessment and one child's paper as node pages on the blocks; t
 
 The question bank's content; making questions; reports.
 
-## UI-5: The coordinator's views: staff, classes, setup and search
+## UI-5: The coordinator's views: staff, classes and setup
 
 Tier 2. Waits for: UI-2 for the views; CP-1 merged for moving a child. Specification: docs/frontend/SPEC.md; inventory: docs/frontend/screens.json; wireframes: (see docs/notes/frontend-landscape.md).
 
 ### In plain English
 
-The coordinator's people pages: who has access to what, which children are in which class (and moving one), the Setup home with its cards, and the search box by name or Sr. No. No ranking of educators anywhere.
+The coordinator's people pages: who has access to what, which children are in which class (and moving one), and the Setup home with its cards. No ranking of educators anywhere.
 
 ### What
 
-Staff and grants, classes and children, the Setup home and search; the small writes that exist today (a grant, a child move) through their own rows.
+Staff and grants, classes and children and the Setup home; the small writes that exist today (a grant, a child move) through their own rows. Search is the bar's typeahead (UI-13); there is no results page.
 
 ### Done when
 
@@ -199,19 +220,15 @@ Staff and grants, classes and children, the Setup home and search; the small wri
 2. Every old route listed under `folds` answers 308 to the new address.
 3. `/setup/staff` has no column, sort or text that ranks people: the table cannot be sorted by the three numbers and no ordinal appears (test asserts absence).
 4. A child move writes a child_move row and a new enrolment and deletes nothing; the class picture of both classes reflects it on the next render (database and DOM assertion).
-5. Search finds a child by a fake fixture name or by Sr. No. within the person's classes and never outside them; the term is not in the address, the log or an analytics call.
-6. Every one of the 27 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
-7. Staff and classes: no sort, rank, ordinal or colour grading on the three numbers; the table cannot be sorted by them
-8. Staff and classes: a grant edit is a new row or a valid_to, never a delete (row count never drops)
-9. Staff and classes: no staff name appears unless the viewer is in the everything group (names are pii)
-10. Classes and children: a move writes child_move and a new enrolment and deletes nothing
-11. Classes and children: each child row shows the name beside the Sr. No., read from pii by child_id; the address and the change log's stored text carry no name (DOM scan)
-12. Classes and children: the change log lists the move with who and when
-13. Setup: every setup page is reachable in two clicks from the bar
-14. Setup: an educator sees only the cards their group may open
-15. Search: a name or Sr. No. of a child in the person's classes returns that child; one outside their classes returns nothing
-16. Search: the search term never appears in the address, the server log or an analytics call (the test submits a name and inspects all three)
-17. Search: search is available from signed-in screens only; signed out, the request is refused
+5. Every one of the 21 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
+6. Staff and classes: no sort, rank, ordinal or colour grading on the three numbers; the table cannot be sorted by them
+7. Staff and classes: a grant edit is a new row or a valid_to, never a delete (row count never drops)
+8. Staff and classes: no staff name appears unless the viewer is in the everything group (names are pii)
+9. Classes and children: a move writes child_move and a new enrolment and deletes nothing
+10. Classes and children: each child row shows the name beside the Sr. No., read from pii by child_id; the address and the change log's stored text carry no name (DOM scan)
+11. Classes and children: the change log lists the move with who and when
+12. Setup: every setup page is reachable in two clicks from the bar
+13. Setup: an educator sees only the cards their group may open
 
 ### Out of scope
 
@@ -372,7 +389,7 @@ Making questions; changing what a level asks; the curriculum upload.
 
 ## UI-12: The screens outside the bar: sign in, help, report a problem
 
-Tier 1. Waits for: UI-1 and UI-13 (lands on Today once UI-7 is merged). Specification: docs/frontend/SPEC.md; inventory: docs/frontend/screens.json; wireframes: (see docs/notes/frontend-landscape.md).
+Tier 1. Waits for: UI-13 (lands on Today once UI-7 is merged). Specification: docs/frontend/SPEC.md; inventory: docs/frontend/screens.json; wireframes: (see docs/notes/frontend-landscape.md).
 
 ### In plain English
 

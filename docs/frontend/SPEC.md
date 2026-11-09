@@ -49,7 +49,7 @@ Where this specification and `docs/ux-rules.md` disagree, this specification win
    screen.
 9. Names (decided by Nimish, 9 Nov 2026: it is his school): a signed-in staff member sees a child's name wherever a screen's
    element list in `screens.json` has a `child_name` element (the class grid squares, the child page header, the confirm
-   screen, notes, reports, Classes, search results, a skill's grid), and on no other screen. Names are read from the `pii`
+   screen, notes, reports, Classes, the search typeahead's suggestions, a skill's grid), and on no other screen. Names are read from the `pii`
    schema at render time and joined by `child_id`; the application tables keep carrying `child_id` only (CLAUDE.md rule 6
    stays true); no name is ever typed into a screen, a state word, a log or a URL. What a parent's copy shows is the school's
    decision with CP-19. One constraint stays, because the repository is public: no real child's name in git, tests,
@@ -67,13 +67,17 @@ Where this specification and `docs/ux-rules.md` disagree, this specification win
 **Tokens** (`tokens.json`; `tokens.css` generated from it, nothing retyped): ground white `#ffffff`; surface `#f7f7f5`; ink
 `#1c1b19`; ink-muted `#5e5a52`; line `#e4e3df`; line-control `#8a8984`; brand clay `#b8562f` (the mark, the active group's
 underline, the trail's accent; never on a child, never a state); basalt `#26241f` (the one main action: a filled button with
-white text); monsoon `#3f4d55` (links, always underlined, and Numeracy); olive `#4a5435` ok; bamboo `#9a7a3a` wait; bark
-`#8a6a45`; haldi `#e2a43f` (the source of the Arts hue only: about 2.2:1 on white, so never a border or text; a part that
-needs a person is outlined in the wait amber); sand `#ede3d3`. States: ok / wait / late / quiet with `-bg` fills. Subjects
-from the materials: Numeracy monsoon, Language bark, Arts haldi (darkened for text), fixed sand. Three hues are therefore
-never confused: links are blue-grey and underlined; work states are red, amber, green and grey with their words; the main
-action is the one dark button. Dark follows the system; every pair has a dark value in `tokens.json`. The contrast table in
-`docs/design-tokens.md` was measured on paper-warm; UI-1 re-measures every pair on white and commits the new table.
+white text); monsoon `#3f4d55` (links, always underlined, and Numeracy); olive `#4a5435` ok; the wait amber `#6f5900`
+(bamboo `#9a7a3a` is a brand material only and appears on no screen); bark `#8a6a45`; haldi `#e2a43f` (the source of the
+Arts hue only: about 2.2:1 on white, so never a border or text; the Arts edge is the deepened `#b8700a`); a part that needs
+a person is outlined in the wait amber; sand `#ede3d3`. States: ok / wait / late / quiet with `-bg` fills. Subjects from
+the materials: Numeracy monsoon, Language bark, Arts haldi, fixed sand; the Language edge, the Arts edge, the wait amber and
+the late red are at least 20 apart pairwise (CIE76, light; my arithmetic, which UI-14's script must confirm), and a subject
+is always shown with its word. Three hues are never confused: links are blue-grey and underlined; work states are red, amber,
+green and grey with their words; the main action is the one dark button. Dark follows the system; every pair has a dark
+value in `tokens.json`, and dark is tested on the journeys and the block gallery only, light everywhere else. The contrast
+table in `docs/design-tokens.md` was measured on paper-warm; UI-14 re-measures every pair on white and commits the new
+table.
 
 **Type** (decided by Nimish, 9 Nov 2026: `docs/decisions/2026-11-09-site-type-and-subject-colours.md`): Source Serif 4 for
 titles (32/24/20) and Source Sans 3 for everything else (18/16/14/12); weights 400/500/600; nothing under 14 px carries a
@@ -95,7 +99,7 @@ when the first slice that uses it needs it: Button and Tabs first; DataTable, St
 (section 5) → 3 node pages (one page shape per kind of thing) → Today composed last.
 
 **Blocks** (`components/`): the list and one-line contract of each is in section 5. The blocks that exist today (`StatusChip`,
-`DataTable`, `FilterBar`, `EmptyState`, `Count`) move onto the tokens in UI-1; `PageShell`, `TopBar` and the K2 side menu
+`DataTable`, `FilterBar`, `EmptyState`, `Count`) move onto the tokens in UI-14; `PageShell`, `TopBar` and the K2 side menu
 become AppFrame in UI-13; `voice/board` becomes ClassGrid and `voice/record` CaptureBar when their screens are built; the
 new blocks are built once with a preview and a screenshot in both themes (UI-2).
 
@@ -109,7 +113,7 @@ bare frame of Sign in, says so in `screens.json`.
 
 ## 4. How to build it: order, tests, done
 
-The order is the slice table in section 7, the only list of what is built when and what each waits for: tokens (UI-1), the
+The order is the slice table in section 7, the only list of what is built when and what each waits for: the test harness (UI-1, merges first), tokens and fonts (UI-14), the
 frame and the inventory test (UI-13), the new blocks (UI-2), then the node pages and views (UI-3 to UI-6 and UI-11), Today
 (UI-7), reports and materials (UI-8, UI-9), the screens outside the bar (UI-12), and the as-built document (UI-10, any time
 after UI-13). The slices that wait for a backend scope (UI-6, UI-8, UI-9) wait for it; the others do not.
@@ -1041,29 +1045,6 @@ Done when (on top of the ten generic checks):
 
 ### Outside the bar
 
-#### Search `/search`
-Who: both · Phase: Core · Backend: none · Old page today: part (top bar search) · Slice: UI-5
-Eyebrow: Search
-Purpose: A child by name or Sr. No. in your classes, an activity, a skill, an assessment by its built name.
-Blocks, in order:
-- **DataTable**: kind icon · what · where · open
-Rail (Connected to): none
-Main action: the first result · Next step: none
-Data: enrolment roll_no and pii names in the person's scope (matched on the server, joined by child_id); activity, skill names; assessment names
-Empty: Nothing found: try a Sr. No. or part of a name · Phone: full screen
-Every control on the screen (6), and what the test does with each:
-- **field** the search field (in the bar) (Enter submits by POST; the term never appears in the address, a log line or an analytics call; typing offers up to five, from signed-in screens only)
-- **row** a child result → Where this child is (`/children/[class]/[roll]`) (found by name or Sr. No., within the person's classes)
-- **child_name** each child result (the name beside the Sr. No.)
-- **row** an activity result → the activity's name (`/setup/activities/[code]`)
-- **row** a skill result → the skill's name (`/setup/skills/[code]`)
-- **row** an assessment result → the built name (`/children/assessments/[key]`)
-Done when (on top of the ten generic checks):
-- a name or Sr. No. of a child in the person's classes returns that child; one outside their classes returns nothing
-- the search term never appears in the address, the server log or an analytics call (the test submits a name and inspects all three)
-- search is available from signed-in screens only; signed out, the request is refused
-
-
 #### Sign in `/login`
 Who: both · Phase: Core · Backend: CP-2 · Old page today: yes · Slice: UI-12
 Eyebrow: Staff only
@@ -1139,9 +1120,9 @@ test or a script named in it. The generic checks apply to every screen a slice b
 5. Keyboard: Tab reaches every control in reading order; Enter or Space activates it; the focused control shows a visible ring (outline at least 2 px); Escape closes an open Sheet or Dialog. Nothing is shown by hover alone.
 6. Touch: on a `phone_gate` screen at 400 px every control is at least 44 × 44 px with at least 8 px to its neighbour.
 7. Words: every state shown is a word from the STATES rows beside its icon, never colour alone; a child's name appears only on screens whose element list marks a `child_name` element, read from pii by child_id, and on no other screen; every name the test finds on a page is in `tests/fake-names.ts`, the one list of names in the repository (the repository is public: a real name fails the run, and no fixture, test or baseline holds any other); no name is in any address; 'educator' never 'teacher'; no page loads a script or font from a host other than the site's own.
-8. Accessibility: axe reports no serious or critical violation at either width, in light and in dark.
+8. Accessibility: axe reports no serious or critical violation at either width in light; in dark it runs only on the journey steps and on the `blocks` screen.
 9. Empty: with the fixture's empty class or empty filter, the screen shows exactly its stated empty text and its next-step link, and no table head over no rows, no zero columns, no dash columns.
-10. Themes: a screenshot in light and in dark at 1440 is committed as a baseline; sampled text nodes measure at least 4.5:1 against what is behind them in both.
+10. Themes: a screenshot in light at 1440 is committed as the baseline; the `blocks` screen and the journey steps are also committed in dark. Text contrast is measured by the token-pair script (UI-14) and by axe, not by sampling every page.
 
 The bar is on every signed-in screen and is driven once per run, not once per screen (its controls are outside each screen's count):
 
@@ -1149,7 +1130,7 @@ The bar is on every signed-in screen and is driven once per run, not once per sc
 - **link** Timetable → Timetable (`/timetable`)
 - **link** Children → Children (`/children`)
 - **link** Setup → Setup (`/setup`) (shown to the coordinator group only)
-- **field** Search (Sr. No. or name; Enter submits by POST; typeahead offers at most five)
+- **field** Search (a typeahead of at most five suggestions (children within the person's classes, activities, skills, assessments); choosing one opens it; there is no results page; the typed term goes in a POST body only, never an address or a log line)
 - **switch** Acting as (coordinator only: shows the site as an educator would see it; a view, never a permission)
 - **link** ? → Start here (`/guide`) (opens the guide at this page's section)
 - **button** Sign out: ends the session and lands on Sign in
@@ -1172,16 +1153,17 @@ What the test does with each kind of control:
 
 | Slice | What | Screens | Waits for |
 |---|---|---|---|
-| UI-1 Tokens and the existing parts on them | One source of colour, type and space for the whole site. tokens.css is generated from tokens.json; every colour literal in the app is replaced by a token, including in the blocks that exist today (StatusChip, DataTable, FilterBar, EmptyState, Count); shadcn/ui is initialised with the two primitives used first; the fonts are self-hosted; the journey-test harness the Athena loop demands exists. No page changes shape in this slice. | none (infrastructure) | nothing (type and colours decided 9 Nov) |
-| UI-13 The frame and the inventory test | One navigation for the whole site: the top bar with its four doors, search, acting-as, help and sign out, the trail and the rail (AppFrame), replacing the four shells and the K2 side menu; every existing page reachable from the bar; docs/ux-rules.md brought in line; and the inventory test that reads screens.json and drives every screen like a person, proved here on a small inventory of pages that already exist. | none (infrastructure) | UI-1 |
+| UI-1 The test harness | Only what the Athena loop demands before any interface change can be marked built (`athena finish` is refused repo-wide without it): the axe dependency, the journey harness and one passing journey spec, and shadcn/ui initialised with the two primitives used first. No page changes in this slice. | none (infrastructure) | nothing |
+| UI-14 Tokens, fonts and the existing parts on them | One source of colour, type and space for the whole site. tokens.css is generated from tokens.json; every colour literal in the app is replaced by a token, including in the blocks that exist today (StatusChip, DataTable, FilterBar, EmptyState, Count) and in the shadcn files from UI-1; the fonts are self-hosted. No page changes shape in this slice. | none (infrastructure) | UI-1 |
+| UI-13 The frame and the inventory test | One navigation for the whole site: the top bar with its four doors, search, acting-as, help and sign out, the trail and the rail (AppFrame), replacing the four shells and the K2 side menu; every existing page reachable from the bar; docs/ux-rules.md brought in line; and the inventory test that reads screens.json and drives every screen like a person, proved here on a small inventory of pages that already exist. | none (infrastructure) | UI-14 |
 | UI-2 The blocks | The school's new blocks of SPEC §5, built once, each with sample data on a staff-only gallery screen (`blocks`) and screenshots in both themes; every chart drawn to scale from its data. AppFrame is built in UI-13 and the existing blocks moved onto the tokens in UI-1. | The blocks | UI-13 |
 | UI-3 Node pages: the K2 walk | Period, record, confirm, notes, children, class picture, child, activity, objective and skill as node pages on the blocks, each walking to its neighbours through the rail and back through the trail; the old routes redirect. | the session's name, Record a note, Confirm what the reader heard, Notes, Children, Class picture, Where this child is, the activity's name, the objective's title, the skill's name | UI-2; the K2 switch (a config row) on for the pages behind it |
 | UI-4 Node pages: assessments | Assessments, one assessment and one child's paper as node pages on the blocks; the seven old assessment pages and Class results fold in; the queries and the seven steps are unchanged. | Assessments, the built name, Check the answers | UI-2 |
-| UI-5 The coordinator's views: staff, classes, setup and search | Staff and grants, classes and children, the Setup home and search; the small writes that exist today (a grant, a child move) through their own rows. | Staff and classes, Classes and children, Setup, Search | UI-2 for the views; CP-1 merged for moving a child |
+| UI-5 The coordinator's views: staff, classes and setup | Staff and grants, classes and children and the Setup home; the small writes that exist today (a grant, a child move) through their own rows. Search is the bar's typeahead (UI-13); there is no results page. | Staff and classes, Classes and children, Setup | UI-2 for the views; CP-1 merged for moving a child |
 | UI-6 Timetable, rules and the fortnight's actions | The timetable's day, week and fortnight views and the timetable rules, the fortnight node with Approve and Go live, the draft from the rules with its unmet rules, and moves by hand with clashes accepted by the coordinator only. Until this merges the bar's Timetable door opens the page that exists today. | Timetable, Timetable rules, Fortnight 9, Draft from the rules, Moves by hand | CP-6, CP-11, CP-12 and CP-22 merged |
 | UI-7 Today, both kinds | The educator's Today (the day, the attention strip, notes to confirm, the class) and the coordinator's Today (what waits, last week's heat grid, next week), composed from the blocks over the queries that exist; What needs doing folds in and its count moves to Setup where it belongs. | Today, Today, the school | UI-3 and UI-5; UI-6 for the coordinator's clash and draft rows (rows for a backend not yet merged simply do not appear) |
 | UI-8 Reports | Each child's report, line by line, in the educator's words: two approvals per line, consent on file, then sent. The parent's copy says educator, Easy / Medium / Hard / Advance, no rung and no code. | Reports | CP-19 merged (Next) |
 | UI-9 Materials | The class's materials list for a fortnight, the school's list, the notes the system could not read, and the educator's approval of her own class's list. | Materials, this fortnight | CP-17 and CP-18 merged (Later) |
 | UI-11 Setup content pages: curriculum, skills to approve, question bank, a question | The four existing Setup pages that carry content rather than people, rebuilt on the frame and the blocks: Curriculum (activities and skills under one filter row, with drafts and offers), Skills to approve, the Question bank and one question as it prints. Their queries and their one-row-at-a-time approvals are unchanged; the old routes fold in. | Curriculum, Skills to approve, Question bank, the question as it prints | UI-2 |
-| UI-12 The screens outside the bar: sign in, help, report a problem | Sign in (with forgot and new password), the help pages and the feedback form, rebuilt on the tokens and the blocks; help is generated from screens.json so a new screen gets its section without a hand edit; the feedback form keeps names out of the public GitHub issue. | Sign in, Start here, Report a problem or suggest something | UI-1 and UI-13 (lands on Today once UI-7 is merged) |
+| UI-12 The screens outside the bar: sign in, help, report a problem | Sign in (with forgot and new password), the help pages and the feedback form, rebuilt on the tokens and the blocks; help is generated from screens.json so a new screen gets its section without a hand edit; the feedback form keeps names out of the public GitHub issue. | Sign in, Start here, Report a problem or suggest something | UI-13 (lands on Today once UI-7 is merged) |
 | UI-10 The as-built milestone document | A script that generates docs/frontend/AS-BUILT.md from screens.json plus the last inventory-test run: the milestone document Nimish asked for, so he can see exactly what exists, what each screen's controls are, and what the checks reported. Every slice adds its id to `merged_slices` in screens.json when its proofs pass, so the document is always true. | none (infrastructure) | UI-13 (it can be built early and re-run after every slice) |
