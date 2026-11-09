@@ -30,7 +30,7 @@ Any change to a page, a colour or a font (UI-14); the frame and the inventory te
 
 ## UI-14: Tokens, fonts and the existing parts on them
 
-Tier 2. Waits for: UI-1. Specification: docs/frontend/SPEC.md; inventory: docs/frontend/screens.json; wireframes: (see docs/notes/frontend-landscape.md).
+Tier 2. Waits for: UI-1, and PR #528 (the logo pack) merged. Specification: docs/frontend/SPEC.md; inventory: docs/frontend/screens.json; wireframes: (see docs/notes/frontend-landscape.md).
 
 ### In plain English
 
@@ -47,9 +47,10 @@ One source of colour, type, shape, elevation and motion for the whole site, in t
 3. Every pair named in tokens.json's usage notes measures at least 4.5:1 (text) or 3:1 (borders, icons, outlines) in both themes by the WCAG formula, including link on ground, the main-action text on the basalt button, the amber outline on ground and each state text on its fill; and the four colours that sit near each other (the Language edge, the Arts edge, the wait amber and the late red) are at least 20 apart pairwise (CIE76 ΔE in light). The script lives in the suite and its table is committed as `docs/design-tokens-contrast.md`. A pair that fails is fixed in tokens.json, not exempted.
 4. `tokens.css` carries every token of tokens.json: the colours in both themes (including the seven kind colours and their tints and the subject colours), radius-card 14 px, radius-control 10 px, radius-pill, shadow-card in both themes and the press motion; a test reads tokens.json and finds each name as a CSS custom property.
 5. Press is the only motion: every button, link-row, tile and square scales to 0.97 on :active in 160 ms with the token's curve; hover changes colour only and only under `(hover: hover) and (pointer: fine)`; under `prefers-reduced-motion` nothing moves (a test reads the computed styles in both media settings).
-6. Each shadcn file under `components/ui/` references `var(--` and no hex, and the stock look is gone (screenshot baseline).
-7. next/font loads Source Serif 4 and Source Sans 3 from the build: no page makes a request to a font host or any host other than the site's own (a test records the requests of one page); the computed font-family first names across every page are within {Source Serif 4, Source Sans 3}.
-8. `bin/check`, `test_ux_rules.py`, `u51` and `screens.spec.ts` pass; `ux.frozen` in workflows.json has not grown.
+6. The four official logo files are copied byte for byte from `docs/brand/cornerstone-logo/SVG-vector/` (PR #528) into `apps/web/public/brand/` by the tokens script, never edited; `app/icon.svg` (the browser tab) is `mark-on-white-tile`; the app icon is made at build time from `mark-on-white-tile` (PNG files are ignored by git), for example with `app/apple-icon.tsx`, verified against the installed Next.js version; a test compares the hashes.
+7. Each shadcn file under `components/ui/` references `var(--` and no hex, and the stock look is gone (screenshot baseline).
+8. next/font loads Source Serif 4 and Source Sans 3 from the build: no page makes a request to a font host or any host other than the site's own (a test records the requests of one page); the computed font-family first names across every page are within {Source Serif 4, Source Sans 3}.
+9. `bin/check`, `test_ux_rules.py`, `u51` and `screens.spec.ts` pass; `ux.frozen` in workflows.json has not grown.
 
 ### Out of scope
 
@@ -65,22 +66,24 @@ After this, every page in the site sits inside one new top bar with four doors: 
 
 ### What
 
-One navigation for the whole site: the top bar with its four doors, search, acting-as, help and sign out, the trail and the rail (AppFrame), replacing the four shells and the K2 side menu; every existing page reachable from the bar; docs/ux-rules.md brought in line; and the inventory test that reads screens.json and drives every screen like a person, proved here on a small inventory of pages that already exist.
+One navigation for the whole site: the top bar with the school's logo, its four doors, search, acting-as, help and sign out, the trail and the rail (AppFrame), replacing the four shells and the K2 side menu; every existing page reachable from the bar; docs/ux-rules.md brought in line; and the inventory test that reads screens.json and drives every screen like a person, proved here on a small inventory of pages that already exist.
 
 ### Done when
 
 1. AppFrame (bar, trail, main column, rail, Capture here) replaces `components/educator/shell.tsx`, `components/shell.tsx`, `components/page-shell.tsx`, `components/top-bar.tsx`, `components/educator/shell-nav.tsx` and `lib/educator/menu.ts`, all deleted; `components/educator/crumbs.tsx` becomes the trail; `components/icons.tsx` is merged into `lib/icons.tsx` (one icon file); `rg -l 'PageShell|TopBar|ShellNav'` over `apps/web` returns nothing; every existing page renders inside AppFrame.
 2. On a phone (400 px) the four doors are a bottom tab bar (icon above word, at least 44 px tall, the chosen door's icon in brand clay and its word in ink), and the top bar keeps the mark, search and the person; at 1440 they are the top bar's doors (test at both widths).
-3. `lib/menu.ts` GROUPS are exactly Today, Timetable, Children, Setup and carry the map of every existing route to its door (assessments, papers, capture and growth under Children; library, curriculum, skill-sets, school and rules under their `group` in screens.json); a test walks the app's route list and reaches each route by clicking from the bar in at most three clicks; `u53-the-menu.spec.ts` passes against it.
-4. The trail is two fixed levels (the door, then the thing) plus the browser's Back; the door lit on the bar is the door the walk started from, so an Activity opened from Today lights Today, not Setup.
-5. `docs/ux-rules.md` is rewritten in this slice and named in its changed files: rules 3, 7, 11 and 12 and the menu table now state the new frame (the rail replaces the side menu, acting-as replaces 'Viewing', four doors, 1440 px not 1280, four work states not five chips, the phone gate list); `test_ux_rules.py` and `u51` are updated to match.
-6. AppFrame's search field is a typeahead, with no results page: typing a Sr. No. in the person's classes offers that child; one outside them offers nothing; a fake fixture name typed offers that child within their classes only; at most five suggestions; choosing one opens its screen; the typed term is sent in a POST body and is in no address, no log line and no analytics call (a test reads the request log); signed out, the request is refused.
-7. `lib/built.ts` exports `isBuilt(screenId)` from `merged_slices` in screens.json; the doors, the rail and every link to another screen draw nothing for a target that is not built.
-8. `tests/u70-inventory.spec.ts` reads `docs/frontend/screens.json` (or the file named by `INVENTORY=`) and, for every screen of a slice in `merged_slices` (a full run) or named by `SLICE=UI-n` / `SCREEN=<id>` (a pull request run), signs in as educator and as coordinator and runs the ten generic checks at 1440 and 400 and drives every control by its kind; dynamic routes take a concrete address from `tests/inventory-fixtures.ts`, built from the test's own rows; the `bar` list is driven once per run; every other screen is `test.fixme` and counted in the report.
-9. The test is proved on `tests/fixtures/mini-inventory.json`, a two-screen inventory of pages that exist and are framed by this slice: it passes on them, and a deliberately broken copy (a missing control, a dead link, a name not in the allow-list) fails with the reason named.
-10. `tests/fake-names.ts` is the one list of names in the repository; the inventory test fails on any rendered child name that is not in it.
-11. The bare frame (logo and the form, no bar, no rail) exists for the screen marked `frame: bare`.
-12. `bin/check`, `test_ux_rules.py`, `u51`, `u53` and `screens.spec.ts` pass; `ux.frozen` in workflows.json has not grown.
+3. The bar carries BrandMark as a link to Today: `lockup-colour` at 40 px high in a 64 px bar on a light ground and `lockup-for-dark-backgrounds` on a dark ground at 1440; `mark` alone (or `mark-on-white-tile` on dark) at 400; `components/logo.tsx` is replaced by `components/brand-mark.tsx` and deleted, and `public/brand/cornerstone-mark.svg` (a redrawn copy in slightly wrong colours, #B9572F and #262520) is deleted.
+4. BrandMark's rules are tests, run on every screen the inventory opens and in both themes: the file served is byte-identical to its source in `docs/brand/cornerstone-logo/SVG-vector/` (a hash compare); the image and every ancestor up to the bar have `filter: none`, no `box-shadow`, no transform other than none, and a width-to-height ratio equal to the file's; the nearest other element is at least a quarter of the mark's height away on every side; under a dark colour scheme the dark-ground file is the one shown; the accessible name is 'Cornerstone Gurukul'.
+5. `lib/menu.ts` GROUPS are exactly Today, Timetable, Children, Setup and carry the map of every existing route to its door (assessments, papers, capture and growth under Children; library, curriculum, skill-sets, school and rules under their `group` in screens.json); a test walks the app's route list and reaches each route by clicking from the bar in at most three clicks; `u53-the-menu.spec.ts` passes against it.
+6. The trail is two fixed levels (the door, then the thing) plus the browser's Back; the door lit on the bar is the door the walk started from, so an Activity opened from Today lights Today, not Setup.
+7. `docs/ux-rules.md` is rewritten in this slice and named in its changed files: rules 3, 7, 11 and 12 and the menu table now state the new frame (the rail replaces the side menu, acting-as replaces 'Viewing', four doors, 1440 px not 1280, four work states not five chips, the phone gate list); `test_ux_rules.py` and `u51` are updated to match.
+8. AppFrame's search field is a typeahead, with no results page: typing a Sr. No. in the person's classes offers that child; one outside them offers nothing; a fake fixture name typed offers that child within their classes only; at most five suggestions; choosing one opens its screen; the typed term is sent in a POST body and is in no address, no log line and no analytics call (a test reads the request log); signed out, the request is refused.
+9. `lib/built.ts` exports `isBuilt(screenId)` from `merged_slices` in screens.json; the doors, the rail and every link to another screen draw nothing for a target that is not built.
+10. `tests/u70-inventory.spec.ts` reads `docs/frontend/screens.json` (or the file named by `INVENTORY=`) and, for every screen of a slice in `merged_slices` (a full run) or named by `SLICE=UI-n` / `SCREEN=<id>` (a pull request run), signs in as educator and as coordinator and runs the ten generic checks at 1440 and 400 and drives every control by its kind; dynamic routes take a concrete address from `tests/inventory-fixtures.ts`, built from the test's own rows; the `bar` list is driven once per run; every other screen is `test.fixme` and counted in the report.
+11. The test is proved on `tests/fixtures/mini-inventory.json`, a two-screen inventory of pages that exist and are framed by this slice: it passes on them, and a deliberately broken copy (a missing control, a dead link, a name not in the allow-list) fails with the reason named.
+12. `tests/fake-names.ts` is the one list of names in the repository; the inventory test fails on any rendered child name that is not in it.
+13. The bare frame (logo and the form, no bar, no rail) exists for the screen marked `frame: bare`.
+14. `bin/check`, `test_ux_rules.py`, `u51`, `u53` and `screens.spec.ts` pass; `ux.frozen` in workflows.json has not grown.
 
 ### Out of scope
 
@@ -113,6 +116,7 @@ The school's new blocks of SPEC §5, built once, each with sample data on a staf
 11. The blocks: there is one fold per entry of `blocks`, and a block with no sample fails the test
 12. The blocks: the page is absent for an educator and linked only from Setup's details link
 13. The blocks: its first section is the legend: every state with its icon, word and colour, every action with its tile, every kind of thing with its tile, the subjects and the shapes, all read from STATES and tokens.json, nothing typed
+14. The blocks: the legend shows the four logo files with where each is used and the rules (no recolour, dark ground uses the tile, clear space a quarter of the mark, no stretch, rotate or shadow)
 
 ### Out of scope
 
@@ -331,9 +335,10 @@ Each child's report, line by line, in the educator's words: two approvals per li
 1. The screen passes the ten generic checks and every element behaves as its kind says, as educator and as coordinator.
 2. A line sends only when the educator's approval, the coordinator's approval and consent are all present; the test tries each missing one and the send is refused.
 3. The rendered parent copy contains none of: 'teacher', a rung code (R\d+), a skill code (NUM\.), 'borrow' (regex test over the PDF text).
-4. Every one of the 11 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
-5. Reports: nothing is sent without both approvals and consent (each missing case refused)
-6. Reports: the parent's copy contains 'educator' and the four level words only, no rung or code (regex over the PDF text)
+4. The parent's copy and every printed page carry `lockup-colour` in their head, at its clear space, from the official file (the same hash test).
+5. Every one of the 11 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
+6. Reports: nothing is sent without both approvals and consent (each missing case refused)
+7. Reports: the parent's copy contains 'educator' and the four level words only, no rung or code (regex over the PDF text)
 
 ### Out of scope
 
@@ -415,13 +420,14 @@ Sign in (with forgot and new password), the help pages and the feedback form, re
 3. The help page has one section per screen in screens.json, generated from it by a script, and every page's ? opens its own section (test over all screens).
 4. After sign in the person lands on `/today` once `UI-7` is in `merged_slices`, and on the existing home page until then (test reads `merged_slices`); sign in uses the bare frame.
 5. A used password link is refused the second time, and no development bypass exists in a production build (the existing gate tests kept).
-6. Every one of the 11 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
-7. Sign in: lands on Today for the person's group
-8. Sign in: no development bypass in production
-9. Sign in: a used password link is refused the second time
-10. Start here: every page's ? opens its own section
-11. Start here: the sections are generated from screens.json so a new screen gets its help without a hand edit
-12. Report a problem or suggest something: Send writes one staff_note and one issue; the issue body carries no child's name: the page warns not to type one, and a screenshot is kept on the private side, linked by id, never attached to the public GitHub issue (names now appear on some screens and the repository is public)
+6. Sign in shows the large `lockup-colour` (`lockup-for-dark-backgrounds` in dark) above the form with its clear space, and the help pages carry the lockup in their head; the BrandMark tests of UI-13 pass on both.
+7. Every one of the 11 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
+8. Sign in: lands on Today for the person's group
+9. Sign in: no development bypass in production
+10. Sign in: a used password link is refused the second time
+11. Start here: every page's ? opens its own section
+12. Start here: the sections are generated from screens.json so a new screen gets its help without a hand edit
+13. Report a problem or suggest something: Send writes one staff_note and one issue; the issue body carries no child's name: the page warns not to type one, and a screenshot is kept on the private side, linked by id, never attached to the public GitHub issue (names now appear on some screens and the repository is public)
 
 ### Out of scope
 

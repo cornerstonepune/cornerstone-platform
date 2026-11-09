@@ -103,6 +103,16 @@ a pill (a state chip, the count badge, a name chip). One elevation, `shadow-card
 card, a period row and the chosen tab; it replaces the card's border. No other shadow, no gradient; hairlines separate rows
 inside a card, a surface box groups the rail.
 
+**The logo** (the school's logo pack, `docs/brand/cornerstone-logo/`, sent by Nimish on 9 Nov 2026: "that needs to be
+incorporated everywhere"): "Cornerstone" with "गुरुकुल", the terracotta courtyard mark with its basalt dot. Four files, used
+as given, never redrawn: `lockup-colour` on a light ground, `lockup-for-dark-backgrounds` on a dark ground, `mark` alone
+where the space is small, `mark-on-white-tile` where it is small on a dark ground and as the tab and app icon. It appears on
+the bar (a link to Today; the mark alone on a phone), on Sign in (large), at the head of the help pages, the parent's copy
+and every printed page, and as the browser tab and app icon. The school's rules for it: never recoloured, stretched,
+rotated or shadowed (so never inside a card and never under `shadow-card`), clear space a quarter of the mark's height, on
+a dark ground always the white tile. The Devanagari in the wordmark is drawn as shapes inside the file, so it asks for no
+font on the site. The BrandMark block holds these rules as tests (UI-13).
+
 **Motion**: one, press. Anything pressable gives way to 0.97 in 160 ms (`cubic-bezier(0.23, 1, 0.32, 1)`); hover changes
 colour only and only on a fine pointer; nothing fades in, slides or bounces; reduced motion removes the press. The reasons
 are from the two references Nimish gave (Apple's interface guidance as summarised in `dickwu/apple-design-skill`, and
@@ -162,7 +172,7 @@ built.
 
 | Block | What it is |
 |---|---|
-| AppFrame | top bar (four doors with their icons, search, acting-as), trail, main column, rail (Connected to; Capture here) in a surface box; on a phone the four doors are a bottom tab bar (icon above word, the chosen door filled in brand clay) |
+| AppFrame | top bar (BrandMark, a link to Today; four doors with their icons, search, acting-as), trail, main column, rail (Connected to; Capture here) in a surface box; on a phone the four doors are a bottom tab bar (icon above word, the chosen door filled in brand clay) |
 | AttentionStrip | three tiles filled with their state's tint: do now (red) · this week (amber) · done (green); number, icon+word, one sentence; each a link; no border, no shadow |
 | PeriodRow | time · the subject's icon tile and colour edge · name · subject and one fact · state chip; the row is the link, a panel with shadow-card; the current period carries the action outline; fixed parts of the day are a quiet sand row |
 | StatusChip | pill: icon + word + colour from the STATES rows, on its tint; on a tinted cell (a subject cell, a child's square) the chip sits on the panel colour with a 1 px ring in its state colour, because a state's fill and a subject's fill can be near each other |
@@ -187,6 +197,7 @@ built.
 | KeyValue | facts as label: value pairs, five lines at most |
 | Cards | two to three panels side by side, each with a header tinted in its kind's colour (kind tile + title) and a few lines and one link |
 | KindTile | a 32 px tile, radius-control, filled with a kind's tint and holding that kind's icon in its colour (period slate, child teal, activity indigo, objective violet, skill orchid, assessment sky, note stone); every rail link, card header and timeline entry starts with one |
+| BrandMark | the school's logo (Cornerstone Gurukul) as one of the four official files, drawn as given: `lockup-colour` on a light ground, `lockup-for-dark-backgrounds` on a dark ground, `mark` alone where the space is small on a light ground, `mark-on-white-tile` where it is small on a dark ground and for the tab and app icon; accessible name 'Cornerstone Gurukul'; never recoloured, stretched, rotated, filtered or shadowed, never inside a card; clear space on every side at least a quarter of the mark's height |
 
 ## 6. Every screen
 
@@ -1065,6 +1076,7 @@ Done when (on top of the ten generic checks):
 - there is one fold per entry of `blocks`, and a block with no sample fails the test
 - the page is absent for an educator and linked only from Setup's details link
 - its first section is the legend: every state with its icon, word and colour, every action with its tile, every kind of thing with its tile, the subjects and the shapes, all read from STATES and tokens.json, nothing typed
+- the legend shows the four logo files with where each is used and the rules (no recolour, dark ground uses the tile, clear space a quarter of the mark, no stretch, rotate or shadow)
 
 
 ### Outside the bar
@@ -1074,6 +1086,7 @@ Who: both · Phase: Core · Backend: CP-2 · Old page today: yes · Slice: UI-12
 Eyebrow: Staff only
 Purpose: School email and password. Forgot it: a link by email, set by its owner.
 Blocks, in order:
+- **BrandMark**: the large lockup above the form; the dark-ground lockup in dark
 - **Form**: school email · password · Sign in (main) · Forgot your password?
 Rail (Connected to): none
 Main action: Sign in · Next step: Today
@@ -1178,8 +1191,8 @@ What the test does with each kind of control:
 | Slice | What | Screens | Waits for |
 |---|---|---|---|
 | UI-1 The test harness | Only what the Athena loop demands before any interface change can be marked built (`athena finish` is refused repo-wide without it): the axe dependency, the journey harness and one passing journey spec, and shadcn/ui initialised with the two primitives used first. No page changes in this slice. | none (infrastructure) | nothing |
-| UI-14 Tokens, fonts and the existing parts on them | One source of colour, type, shape, elevation and motion for the whole site, in the look Nimish chose on 9 Nov 2026 (the rich draft, B). tokens.css is generated from tokens.json; every colour literal in the app is replaced by a token, including in the blocks that exist today (StatusChip, DataTable, FilterBar, EmptyState, Count) and in the shadcn files from UI-1; the fonts are self-hosted. No page changes shape in this slice. | none (infrastructure) | UI-1 |
-| UI-13 The frame and the inventory test | One navigation for the whole site: the top bar with its four doors, search, acting-as, help and sign out, the trail and the rail (AppFrame), replacing the four shells and the K2 side menu; every existing page reachable from the bar; docs/ux-rules.md brought in line; and the inventory test that reads screens.json and drives every screen like a person, proved here on a small inventory of pages that already exist. | none (infrastructure) | UI-14 |
+| UI-14 Tokens, fonts and the existing parts on them | One source of colour, type, shape, elevation and motion for the whole site, in the look Nimish chose on 9 Nov 2026 (the rich draft, B). tokens.css is generated from tokens.json; every colour literal in the app is replaced by a token, including in the blocks that exist today (StatusChip, DataTable, FilterBar, EmptyState, Count) and in the shadcn files from UI-1; the fonts are self-hosted. No page changes shape in this slice. | none (infrastructure) | UI-1, and PR #528 (the logo pack) merged |
+| UI-13 The frame and the inventory test | One navigation for the whole site: the top bar with the school's logo, its four doors, search, acting-as, help and sign out, the trail and the rail (AppFrame), replacing the four shells and the K2 side menu; every existing page reachable from the bar; docs/ux-rules.md brought in line; and the inventory test that reads screens.json and drives every screen like a person, proved here on a small inventory of pages that already exist. | none (infrastructure) | UI-14 |
 | UI-2 The blocks | The school's new blocks of SPEC §5, built once, each with sample data on a staff-only gallery screen (`blocks`) and screenshots in both themes; every chart drawn to scale from its data. AppFrame is built in UI-13 and the existing blocks moved onto the tokens in UI-1. | The blocks | UI-13 |
 | UI-3 Node pages: the K2 walk | Period, record, confirm, notes, children, class picture, child, activity, objective and skill as node pages on the blocks, each walking to its neighbours through the rail and back through the trail; the old routes redirect. | the session's name, Record a note, Confirm what the reader heard, Notes, Children, Class picture, Where this child is, the activity's name, the objective's title, the skill's name | UI-2; the K2 switch (a config row) on for the pages behind it |
 | UI-4 Node pages: assessments | Assessments, one assessment and one child's paper as node pages on the blocks; the seven old assessment pages and Class results fold in; the queries and the seven steps are unchanged. | Assessments, the built name, Check the answers | UI-2 |

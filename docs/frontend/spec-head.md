@@ -103,6 +103,16 @@ a pill (a state chip, the count badge, a name chip). One elevation, `shadow-card
 card, a period row and the chosen tab; it replaces the card's border. No other shadow, no gradient; hairlines separate rows
 inside a card, a surface box groups the rail.
 
+**The logo** (the school's logo pack, `docs/brand/cornerstone-logo/`, sent by Nimish on 9 Nov 2026: "that needs to be
+incorporated everywhere"): "Cornerstone" with "गुरुकुल", the terracotta courtyard mark with its basalt dot. Four files, used
+as given, never redrawn: `lockup-colour` on a light ground, `lockup-for-dark-backgrounds` on a dark ground, `mark` alone
+where the space is small, `mark-on-white-tile` where it is small on a dark ground and as the tab and app icon. It appears on
+the bar (a link to Today; the mark alone on a phone), on Sign in (large), at the head of the help pages, the parent's copy
+and every printed page, and as the browser tab and app icon. The school's rules for it: never recoloured, stretched,
+rotated or shadowed (so never inside a card and never under `shadow-card`), clear space a quarter of the mark's height, on
+a dark ground always the white tile. The Devanagari in the wordmark is drawn as shapes inside the file, so it asks for no
+font on the site. The BrandMark block holds these rules as tests (UI-13).
+
 **Motion**: one, press. Anything pressable gives way to 0.97 in 160 ms (`cubic-bezier(0.23, 1, 0.32, 1)`); hover changes
 colour only and only on a fine pointer; nothing fades in, slides or bounces; reduced motion removes the press. The reasons
 are from the two references Nimish gave (Apple's interface guidance as summarised in `dickwu/apple-design-skill`, and

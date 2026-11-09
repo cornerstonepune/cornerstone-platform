@@ -7,7 +7,7 @@
     "Outside the bar"
   ],
   "blocks": {
-    "AppFrame": "top bar (four doors with their icons, search, acting-as), trail, main column, rail (Connected to; Capture here) in a surface box; on a phone the four doors are a bottom tab bar (icon above word, the chosen door filled in brand clay)",
+    "AppFrame": "top bar (BrandMark, a link to Today; four doors with their icons, search, acting-as), trail, main column, rail (Connected to; Capture here) in a surface box; on a phone the four doors are a bottom tab bar (icon above word, the chosen door filled in brand clay)",
     "AttentionStrip": "three tiles filled with their state's tint: do now (red) · this week (amber) · done (green); number, icon+word, one sentence; each a link; no border, no shadow",
     "PeriodRow": "time · the subject's icon tile and colour edge · name · subject and one fact · state chip; the row is the link, a panel with shadow-card; the current period carries the action outline; fixed parts of the day are a quiet sand row",
     "StatusChip": "pill: icon + word + colour from the STATES rows, on its tint; on a tinted cell (a subject cell, a child's square) the chip sits on the panel colour with a 1 px ring in its state colour, because a state's fill and a subject's fill can be near each other",
@@ -31,7 +31,8 @@
     "Form": "a short form of labelled fields; one main button",
     "KeyValue": "facts as label: value pairs, five lines at most",
     "Cards": "two to three panels side by side, each with a header tinted in its kind's colour (kind tile + title) and a few lines and one link",
-    "KindTile": "a 32 px tile, radius-control, filled with a kind's tint and holding that kind's icon in its colour (period slate, child teal, activity indigo, objective violet, skill orchid, assessment sky, note stone); every rail link, card header and timeline entry starts with one"
+    "KindTile": "a 32 px tile, radius-control, filled with a kind's tint and holding that kind's icon in its colour (period slate, child teal, activity indigo, objective violet, skill orchid, assessment sky, note stone); every rail link, card header and timeline entry starts with one",
+    "BrandMark": "the school's logo (Cornerstone Gurukul) as one of the four official files, drawn as given: `lockup-colour` on a light ground, `lockup-for-dark-backgrounds` on a dark ground, `mark` alone where the space is small on a light ground, `mark-on-white-tile` where it is small on a dark ground and for the tab and app icon; accessible name 'Cornerstone Gurukul'; never recoloured, stretched, rotated, filtered or shadowed, never inside a card; clear space on every side at least a quarter of the mark's height"
   },
   "element_kinds": {
     "link": "click lands on the target screen: its h1 equals the target's title (or matches its pattern); Back returns",
@@ -80,7 +81,7 @@
       "id": "UI-14",
       "title": "Tokens, fonts and the existing parts on them",
       "tier": 2,
-      "waits_for": "UI-1",
+      "waits_for": "UI-1, and PR #528 (the logo pack) merged",
       "screens": [],
       "what": "One source of colour, type, shape, elevation and motion for the whole site, in the look Nimish chose on 9 Nov 2026 (the rich draft, B). tokens.css is generated from tokens.json; every colour literal in the app is replaced by a token, including in the blocks that exist today (StatusChip, DataTable, FilterBar, EmptyState, Count) and in the shadcn files from UI-1; the fonts are self-hosted. No page changes shape in this slice.",
       "done_when": [
@@ -89,6 +90,7 @@
         "Every pair named in tokens.json's usage notes measures at least 4.5:1 (text) or 3:1 (borders, icons, outlines) in both themes by the WCAG formula, including link on ground, the main-action text on the basalt button, the amber outline on ground and each state text on its fill; and the four colours that sit near each other (the Language edge, the Arts edge, the wait amber and the late red) are at least 20 apart pairwise (CIE76 ΔE in light). The script lives in the suite and its table is committed as `docs/design-tokens-contrast.md`. A pair that fails is fixed in tokens.json, not exempted.",
         "`tokens.css` carries every token of tokens.json: the colours in both themes (including the seven kind colours and their tints and the subject colours), radius-card 14 px, radius-control 10 px, radius-pill, shadow-card in both themes and the press motion; a test reads tokens.json and finds each name as a CSS custom property.",
         "Press is the only motion: every button, link-row, tile and square scales to 0.97 on :active in 160 ms with the token's curve; hover changes colour only and only under `(hover: hover) and (pointer: fine)`; under `prefers-reduced-motion` nothing moves (a test reads the computed styles in both media settings).",
+        "The four official logo files are copied byte for byte from `docs/brand/cornerstone-logo/SVG-vector/` (PR #528) into `apps/web/public/brand/` by the tokens script, never edited; `app/icon.svg` (the browser tab) is `mark-on-white-tile`; the app icon is made at build time from `mark-on-white-tile` (PNG files are ignored by git), for example with `app/apple-icon.tsx`, verified against the installed Next.js version; a test compares the hashes.",
         "Each shadcn file under `components/ui/` references `var(--` and no hex, and the stock look is gone (screenshot baseline).",
         "next/font loads Source Serif 4 and Source Sans 3 from the build: no page makes a request to a font host or any host other than the site's own (a test records the requests of one page); the computed font-family first names across every page are within {Source Serif 4, Source Sans 3}.",
         "`bin/check`, `test_ux_rules.py`, `u51` and `screens.spec.ts` pass; `ux.frozen` in workflows.json has not grown."
@@ -101,11 +103,13 @@
       "title": "The frame and the inventory test",
       "tier": 2,
       "waits_for": "UI-14",
-      "what": "One navigation for the whole site: the top bar with its four doors, search, acting-as, help and sign out, the trail and the rail (AppFrame), replacing the four shells and the K2 side menu; every existing page reachable from the bar; docs/ux-rules.md brought in line; and the inventory test that reads screens.json and drives every screen like a person, proved here on a small inventory of pages that already exist.",
+      "what": "One navigation for the whole site: the top bar with the school's logo, its four doors, search, acting-as, help and sign out, the trail and the rail (AppFrame), replacing the four shells and the K2 side menu; every existing page reachable from the bar; docs/ux-rules.md brought in line; and the inventory test that reads screens.json and drives every screen like a person, proved here on a small inventory of pages that already exist.",
       "screens": [],
       "done_when": [
         "AppFrame (bar, trail, main column, rail, Capture here) replaces `components/educator/shell.tsx`, `components/shell.tsx`, `components/page-shell.tsx`, `components/top-bar.tsx`, `components/educator/shell-nav.tsx` and `lib/educator/menu.ts`, all deleted; `components/educator/crumbs.tsx` becomes the trail; `components/icons.tsx` is merged into `lib/icons.tsx` (one icon file); `rg -l 'PageShell|TopBar|ShellNav'` over `apps/web` returns nothing; every existing page renders inside AppFrame.",
         "On a phone (400 px) the four doors are a bottom tab bar (icon above word, at least 44 px tall, the chosen door's icon in brand clay and its word in ink), and the top bar keeps the mark, search and the person; at 1440 they are the top bar's doors (test at both widths).",
+        "The bar carries BrandMark as a link to Today: `lockup-colour` at 40 px high in a 64 px bar on a light ground and `lockup-for-dark-backgrounds` on a dark ground at 1440; `mark` alone (or `mark-on-white-tile` on dark) at 400; `components/logo.tsx` is replaced by `components/brand-mark.tsx` and deleted, and `public/brand/cornerstone-mark.svg` (a redrawn copy in slightly wrong colours, #B9572F and #262520) is deleted.",
+        "BrandMark's rules are tests, run on every screen the inventory opens and in both themes: the file served is byte-identical to its source in `docs/brand/cornerstone-logo/SVG-vector/` (a hash compare); the image and every ancestor up to the bar have `filter: none`, no `box-shadow`, no transform other than none, and a width-to-height ratio equal to the file's; the nearest other element is at least a quarter of the mark's height away on every side; under a dark colour scheme the dark-ground file is the one shown; the accessible name is 'Cornerstone Gurukul'.",
         "`lib/menu.ts` GROUPS are exactly Today, Timetable, Children, Setup and carry the map of every existing route to its door (assessments, papers, capture and growth under Children; library, curriculum, skill-sets, school and rules under their `group` in screens.json); a test walks the app's route list and reaches each route by clicking from the bar in at most three clicks; `u53-the-menu.spec.ts` passes against it.",
         "The trail is two fixed levels (the door, then the thing) plus the browser's Back; the door lit on the bar is the door the walk started from, so an Activity opened from Today lights Today, not Setup.",
         "`docs/ux-rules.md` is rewritten in this slice and named in its changed files: rules 3, 7, 11 and 12 and the menu table now state the new frame (the rail replaces the side menu, acting-as replaces 'Viewing', four doors, 1440 px not 1280, four work states not five chips, the phone gate list); `test_ux_rules.py` and `u51` are updated to match.",
@@ -267,7 +271,8 @@
       "done_when": [
         "The screen passes the ten generic checks and every element behaves as its kind says, as educator and as coordinator.",
         "A line sends only when the educator's approval, the coordinator's approval and consent are all present; the test tries each missing one and the send is refused.",
-        "The rendered parent copy contains none of: 'teacher', a rung code (R\\d+), a skill code (NUM\\.), 'borrow' (regex test over the PDF text)."
+        "The rendered parent copy contains none of: 'teacher', a rung code (R\\d+), a skill code (NUM\\.), 'borrow' (regex test over the PDF text).",
+        "The parent's copy and every printed page carry `lockup-colour` in their head, at its clear space, from the official file (the same hash test)."
       ],
       "out_of_scope": "Delivery channel (WhatsApp vs print): the backend scope's.",
       "plain": "Each child's report, line by line: two approvals per line, consent on file, then sent. The parent's copy uses the school's words (educator, Easy/Medium/Hard/Advance), no codes. It waits for the report backend."
@@ -325,7 +330,8 @@
         "Every old route listed under `folds` for these screens answers 308 to the new address.",
         "The help page has one section per screen in screens.json, generated from it by a script, and every page's ? opens its own section (test over all screens).",
         "After sign in the person lands on `/today` once `UI-7` is in `merged_slices`, and on the existing home page until then (test reads `merged_slices`); sign in uses the bare frame.",
-        "A used password link is refused the second time, and no development bypass exists in a production build (the existing gate tests kept)."
+        "A used password link is refused the second time, and no development bypass exists in a production build (the existing gate tests kept).",
+        "Sign in shows the large `lockup-colour` (`lockup-for-dark-backgrounds` in dark) above the form with its clear space, and the help pages carry the lockup in their head; the BrandMark tests of UI-13 pass on both."
       ],
       "out_of_scope": "A parent login; a new way to sign in.",
       "plain": "Sign in (with forgot password), the help pages and the report-a-problem form on the new look. Help is generated from the screen list, so a new screen gets its section without anyone writing it."
@@ -3256,6 +3262,10 @@
       "purpose": "School email and password. Forgot it: a link by email, set by its owner.",
       "blocks": [
         [
+          "BrandMark",
+          "the large lockup above the form; the dark-ground lockup in dark"
+        ],
+        [
           "Form",
           "school email · password · Sign in (main) · Forgot your password?"
         ]
@@ -3445,7 +3455,8 @@
       "done_when": [
         "there is one fold per entry of `blocks`, and a block with no sample fails the test",
         "the page is absent for an educator and linked only from Setup's details link",
-        "its first section is the legend: every state with its icon, word and colour, every action with its tile, every kind of thing with its tile, the subjects and the shapes, all read from STATES and tokens.json, nothing typed"
+        "its first section is the legend: every state with its icon, word and colour, every action with its tile, every kind of thing with its tile, the subjects and the shapes, all read from STATES and tokens.json, nothing typed",
+        "the legend shows the four logo files with where each is used and the rules (no recolour, dark ground uses the tile, clear space a quarter of the mark, no stretch, rotate or shadow)"
       ]
     }
   ],
