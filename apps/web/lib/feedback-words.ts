@@ -101,10 +101,10 @@ export function issueTitle(n: Pick<Note, "doing" | "happened" | "kind">): string
   return neutralise(cut);
 }
 
-/** When, as the school says a time: 27-Oct-2026 14:05 IST. */
-export function whenSaid(at: Date): string {
+/** When, as the school says a time: 27-Oct-2026 14:05 IST (`zone` is the school's clock, config `school.time_zone`). */
+export function whenSaid(at: Date, zone: string): string {
   const f = new Intl.DateTimeFormat("en-GB", {
-    timeZone: "Asia/Kolkata",
+    timeZone: zone,
     day: "2-digit",
     month: "short",
     year: "numeric",
@@ -118,7 +118,7 @@ export function whenSaid(at: Date): string {
 
 /** The issue's body, headed as .github/ISSUE_TEMPLATE/from-the-tool.yml heads a hand-made one. Only the person's two
  *  boxes are their words; every other line is chosen by the system from a fixed list or a fixed shape. */
-export function issueBody(n: Note): string {
+export function issueBody(n: Note, zone: string): string {
   return [
     "### What kind?",
     KINDS[n.kind].words,
@@ -134,7 +134,7 @@ export function issueBody(n: Note): string {
     "### Browser",
     neutralise(n.browser),
     "### When",
-    whenSaid(n.at),
+    whenSaid(n.at, zone),
     "",
     "_Made by the Report a problem form of the assessment site._",
   ].join("\n\n");

@@ -9,7 +9,7 @@ import Link from "@/components/link";
 import { Panel, Pill } from "@/components/shell";
 import { sql } from "@/lib/db";
 import { EngineDown, engineGet } from "@/lib/engine";
-import { isoWeek } from "@/lib/week";
+import { schoolWeek } from "@/lib/school-clock";
 import { seeHref } from "@/lib/next-paper";
 import { DifferentQuestions, Questions } from "@/components/questions";
 import { approveNextPaper } from "../actions";
@@ -38,7 +38,7 @@ async function windowDays(): Promise<number> {
 }
 
 export async function FocusPanel({ childId, name, staff, draw }: { childId: string; name: string; staff: Record<string, string>; draw: number }) {
-  const week = isoWeek();
+  const week = await schoolWeek();
   const [p, days] = await Promise.all([plan(childId, week, draw), windowDays()]);
   return (
     <Panel title={TITLE} label={TITLE} aside={typeof p === "string" ? undefined : `${p.n} questions`}>

@@ -118,6 +118,33 @@ def fortnights_touched(
     ]
 
 
+def step_days(conn: db.Conn, tenant_id: Any) -> dict[str, int]:
+    """The school's four `fortnight.<step>` settings as days before the fortnight starts, each well-formed, by step.
+    `CycleError` for a missing or malformed one."""
+    rows = settings.many(conn, [f"fortnight.{s}" for s in STEPS], tenant_id)
+    found = {k.removeprefix("fortnight."): v for k, v in rows.items()}
+    days: dict[str, int] = {}
+    for step in STEPS:
+        if step not in found:
+            raise CycleError(f"This school has no fortnight.{step} setting.")
+        value = found[step]
+        n = (
+            value.get("days_before_start")
+            if isinstance(value, dict) and set(value) == {"days_before_start"}
+            else None
+        )
+        if not isinstance(n, int) or isinstance(n, bool) or n < 0:
+            raise CycleError(f'fortnight.{step} must be {{"days_before_start": a whole number, 0 or more}}.')
+        days[step] = n
+    return days
+
+
+def out_of_order(days: dict[str, int]) -> bool:
+    """True when the steps do not fall freeze, then align, then approve, then list_sent: each one fewer days before
+    the fortnight starts than the one before it (audit F9). Reported by the live watch; `step_date` still answers."""
+    return not all(days[a] > days[b] for a, b in zip(STEPS, STEPS[1:], strict=False))
+
+
 def draft_classes(conn: db.Conn, year: str, number: int, by: str) -> list[dict]:
     """Draft the fortnight's timetable of every class that has one (CP-7). The database decides, class by class, whether
     it rolls forward or waits for a yes, and who drafted it is `by`. Returns grade, section and the plan's state."""
@@ -154,16 +181,7 @@ def step_date(conn: db.Conn, fortnight_id: Any, step: str) -> dt.date:
     ).fetchone()
     if fortnight is None:
         raise CycleError("That fortnight is not there.")
-    value = settings.config(conn, f"fortnight.{step}", tenant=fortnight["tenant_id"])
-    if value is None:
-        raise CycleError(f"This school has no fortnight.{step} setting.")
-    days = (
-        value.get("days_before_start")
-        if isinstance(value, dict) and set(value) == {"days_before_start"}
-        else None
-    )
-    if not isinstance(days, int) or isinstance(days, bool) or days < 0:
-        raise CycleError(f'fortnight.{step} must be {{"days_before_start": a whole number, 0 or more}}.')
+    days = step_days(conn, fortnight["tenant_id"])[step]
     day = fortnight["starts_on"] - dt.timedelta(days=days)
     holidays = {
         r["on_date"]

@@ -21,7 +21,7 @@ from typing import Any
 
 import psycopg
 
-from engine.core import db, signer
+from engine.core import db, settings, signer
 from engine.core import staff_write as write
 from engine.core.report import Report
 from engine.core.staff import staff as signin_list
@@ -251,7 +251,7 @@ def enrol_k2(
     """`by` is the signer's email, refused before anything is read unless it is a member of staff; rows carry their id."""
     out = Report()
     who = signer.resolve(conn, by) if by.strip() or apply else ""
-    today = date.today()
+    today = settings.school_today(conn)
     since = since or today
     rows = read_list(path, today, out)
     tenant = _tenant(conn)

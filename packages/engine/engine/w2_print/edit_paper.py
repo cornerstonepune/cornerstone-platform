@@ -267,9 +267,9 @@ def _given_days(conn, child_id, ids: list) -> dict[str, int]:
     return {
         str(r["item_id"]): r["days"]
         for r in conn.execute(
-            "select item_id, (current_date - max(created_at)::date) as days from item_exposure"
+            f"select item_id, (%s::date - (max(created_at) at time zone {settings.ZONE_SQL})::date) as days from item_exposure"
             " where child_id = %s and item_id = any(%s::uuid[]) group by item_id"
             " having max(created_at) > now() - make_interval(days => %s)",
-            (child_id, ids, window),
+            (settings.school_today(conn), child_id, ids, window),
         )
     }

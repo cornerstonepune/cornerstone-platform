@@ -1,10 +1,8 @@
-import { SCHOOL_ZONE } from "../voice-types";
-import { schoolToday } from "../voice-page";
-
-// The school's clock, not the server's (a page drawn at 03:54 in Pune is about that Pune day): the date and HH:MM.
-export const nowAtSchool = () => new Date().toLocaleTimeString("en-GB", { timeZone: SCHOOL_ZONE, hour: "2-digit", minute: "2-digit", hour12: false });
+// The school's clock, not the server's (a page drawn at 03:54 in Pune is about that Pune day): the date and HH:MM come
+// from lib/school-clock.ts, which reads the school's zone; a page reads them once and passes them down.
+export { nowAtSchool } from "../school-clock";
 export type When = "past" | "today" | "future";
-export const whenIs = (day: string, today = schoolToday()): When => (day < today ? "past" : day > today ? "future" : "today");
+export const whenIs = (day: string, today: string): When => (day < today ? "past" : day > today ? "future" : "today");
 
 const iso = (t: number) => new Date(t).toISOString().slice(0, 10);
 const at = (day: string) => Date.parse(`${day}T00:00:00Z`);

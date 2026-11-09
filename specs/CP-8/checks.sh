@@ -28,5 +28,6 @@ check "4 a run records its rule per line, can be limited to one fortnight, and u
 check "5 a decision on showing a draft marked not written yet is recorded" python3 $P/draft_decision.py
 
 check "6 existing engine and website tests (pages and speed) unchanged since main" bash $P/tests_unchanged.sh
+check "6 that check applies to CP-8's own change and not to an unrelated pull request" bash $P/tests_unchanged.sh --self-check
 
 finish

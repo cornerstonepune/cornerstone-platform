@@ -206,7 +206,7 @@ def test_the_history_table_has_row_security_and_the_web_role_reads_it_and_adds_o
 
         assert (can("select"), can("insert"), can("update"), can("delete")) == (True, False, False, False)
         calls = conn.execute(
-            "select has_function_privilege('app_web', 'move_child(uuid,text,text,text,text,text)', 'execute') as c"
+            "select has_function_privilege('app_web', 'move_child(uuid,text,text,text,text,text,timestamptz)', 'execute') as c"
         ).fetchone()
         assert calls["c"] is True
 

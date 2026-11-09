@@ -93,22 +93,29 @@ def _allowed(conn: db.Conn, email: str, class_id: str) -> dict:
     except Refused:
         valid = None  # said after who is asking, as before: an unknown sign-in is refused first
     cfg = settings.many(conn, ["school.time_zone", "k2.child_page", "k2.reads"])
+    zone = cfg.get("school.time_zone")
+    if not zone:
+        raise settings.MissingSetting(
+            "this database has no school.time_zone setting: run the migrations and `engine load`"
+        )
+    today = dt.datetime.now(ZoneInfo(zone)).date()
     got = conn.execute(
         "with me as (select public.staff_of_email(%(email)s) as staff)"
         " select me.staff, c.id is not null as found, c.grade_code, c.section, %(zone)s::text as zone,"
         " %(child_page)s::jsonb as child_page,"
         " exists (select 1 from staff_role_grant g where g.staff_id = me.staff and g.school_class_id = c.id"
-        "   and g.valid_from <= current_date and (g.valid_to is null or g.valid_to >= current_date)) as on_class,"
+        "   and g.valid_from <= %(today)s::date and (g.valid_to is null or g.valid_to >= %(today)s::date)) as on_class,"
         " exists (select 1 from staff_role_grant g join staff s on s.id = g.staff_id"
-        "   where g.staff_id = me.staff and g.valid_from <= current_date"
-        "   and (g.valid_to is null or g.valid_to >= current_date)"
+        "   where g.staff_id = me.staff and g.valid_from <= %(today)s::date"
+        "   and (g.valid_to is null or g.valid_to >= %(today)s::date)"
         "   and g.school_class_id is null and s.campus_id = c.campus_id"
         "   and g.role_code = any(%(coordinators)s)) as coordinator"
         " from me left join school_class c on c.id = %(class)s::uuid",
         {
             "email": email,
             "class": valid,
-            "zone": cfg.get("school.time_zone", "Asia/Kolkata"),
+            "zone": zone,
+            "today": today,
             "child_page": json.dumps(cfg.get("k2.child_page")),
             "coordinators": list((cfg.get("k2.reads") or {}).get("coordinator_roles", [])),
         },
@@ -138,7 +145,7 @@ def classes(conn: db.Conn, staff, also: list[dict]) -> list[dict]:
     every class whose timetable is in force today: the timetable's own rule), each once. Only the grades the K2 reads are for
     (config `k2.reads`)."""
     grades = list((settings.config(conn, "k2.reads", {}) or {}).get("grades", []))
-    today = dt.datetime.now(ZoneInfo(settings.config(conn, "school.time_zone", "Asia/Kolkata"))).date()
+    today = settings.school_today(conn)
     held = conn.execute(
         "select distinct c.id::text as id, c.grade_code as grade, c.section from staff_role_grant g"
         " join school_class c on c.id = g.school_class_id where g.staff_id = %s and g.valid_from <= %s"

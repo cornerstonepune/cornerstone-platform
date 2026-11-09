@@ -122,6 +122,9 @@ The rules are inert until the site and the engine connect as `app_web` / `app_en
 - [ ] Re-run the full engine suite (last full run was before the `sheet_template`, `flow_run` and `approval` changes) and the
       three browser shards against a copy of live, as the restricted login.
 - [ ] School-wide tables are still open to the website login (sign-in reads seven of them first): narrowing is its own scope.
+- [ ] The planning routes (CP-24, `api/routes/plan.py`: `/fortnight/move`, `/timetable/link` with `apply`, `/timetable/generate`) check only that
+      the actor is on the staff list, with no role check, and `/timetable/link` records the constant `engine timetable link`, not the actor.
+      The website layer must check the coordinator group before it calls them.
 
 ## Handoff
 - Not live: both services still connect as the owner; nothing changes on the live site until the roles are switched on.

@@ -19,6 +19,7 @@ import { createIssue, githubConnected, toolIssues } from "../lib/github";
 
 const CHROME = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36";
 
+const ZONE = "Asia/Kolkata"; // the school's clock: on the site it is the config row `school.time_zone`
 const NOTE: Note = {
   kind: "bug",
   doing: "Printing the Grade 3 papers",
@@ -42,7 +43,7 @@ test("a phone number or an email in the note is refused with a kind message", ()
 });
 
 test("an @mention or #number in the note cannot ping anyone or link an issue", () => {
-  const body = issueBody({ ...NOTE, happened: "ask @nimishshah1989 and @cornerstonepune/team about #12\n~~~\n<b>x</b> https://evil.test" });
+  const body = issueBody({ ...NOTE, happened: "ask @nimishshah1989 and @cornerstonepune/team about #12\n~~~\n<b>x</b> https://evil.test" }, ZONE);
   // no @ or # is followed straight by a name or a number anywhere in the issue
   expect(body).not.toMatch(/[@#][\w]/);
   expect(neutralise("@a #1")).toBe("@​a #​1");
@@ -53,7 +54,7 @@ test("an @mention or #number in the note cannot ping anyone or link an issue", (
 });
 
 test("the issue says the role and class, the page without its ids, the browser and the time, and nothing else", () => {
-  const body = issueBody(NOTE);
+  const body = issueBody(NOTE, ZONE);
   expect(body.split("\n").filter((l) => l.startsWith("### "))).toEqual([
     "### What kind?",
     "### What were you doing?",
@@ -72,8 +73,8 @@ test("the issue says the role and class, the page without its ids, the browser a
   expect(body).toContain("Chrome 130 on Windows");
   expect(body).not.toContain("Mozilla");
   expect(body).toContain("27-Oct-2026 14:05 IST");
-  expect(issueBody({ ...NOTE, role: "coordinator", classes: "" })).toContain("a coordinator");
-  expect(issueBody({ ...NOTE, kind: "feature" })).not.toContain("How often");
+  expect(issueBody({ ...NOTE, role: "coordinator", classes: "" }, ZONE)).toContain("a coordinator");
+  expect(issueBody({ ...NOTE, kind: "feature" }, ZONE)).not.toContain("How often");
   expect(routeOnly("/worksheets/CS0A1B2C/print#top")).toBe("/worksheets/[id]/print");
   expect(routeOnly("https://elsewhere.test/x")).toBe("/");
 });

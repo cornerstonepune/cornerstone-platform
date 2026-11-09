@@ -46,6 +46,10 @@ Rules that keep us inside Core (Nimish, 9 Nov 2026):
    Merges stay one at a time, each on the verifier's PASS and real tests green.
 5. **No new scope joins Core without Nimish.** Adding, splitting or dropping a scope is a change to this file in a
    pull request Nimish approves, never a quiet edit.
+6. **A Core scope a screen will call ships one keyed route beside its command** (CP-24, audit F6). The command is
+   for the coordinator's terminal; the thin keyed engine route, in `packages/engine/engine/api/routes/`, is what the
+   screen built later will call, and it is in the website's generated route list the day the scope merges. No
+   screen is built with it; a screen is interface work, outside these scopes.
 
 **Full backend done = CP-1 to CP-19 and CP-22 all finished, the nightly run green, every LIVE proof passing.**
 

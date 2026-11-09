@@ -24,7 +24,7 @@ export default async function MaterialsPage({ searchParams }: { searchParams: Pr
   const me = await requireStaff();
   const q = await searchParams;
   if (q.day !== undefined && !isDay(q.day)) notFound();
-  const day = q.day ?? schoolToday();
+  const day = q.day ?? (await schoolToday());
   const span: Span = SPANS.includes(q.span as Span) ? (q.span as Span) : "week";
   const d = await dayOf(me, { class_id: q.class, day }); // not found when her screens are closed to her
   const [list, catalogue, { previewing }] = await Promise.all([materialsOf(me, d.class.id, day, span), catalogueOf(me), openTo(me)]);

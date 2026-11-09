@@ -89,7 +89,8 @@ def generate(
     if budget is not None:
         spent = conn.execute(
             "select coalesce(sum(f.cost_inr), 0) as n from flow_run f join tenant t on t.id = f.tenant_id"
-            " where t.slug = %s and f.started_at::date = current_date and not (f.flow = any(%s))",
+            f" where t.slug = %s and (f.started_at at time zone {settings.ZONE_SQL})::date"
+            f" = (now() at time zone {settings.ZONE_SQL})::date and not (f.flow = any(%s))",
             (db.tenant_slug(), own_money),
         ).fetchone()["n"]
         if spent >= budget:
