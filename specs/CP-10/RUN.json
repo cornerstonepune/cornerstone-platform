@@ -1,0 +1,14 @@
+{
+ "ok": false,
+ "passed": [],
+ "failed": [
+  "1 at 48 hours a note's recording and transcript are gone, confirmed or not; kept before; no words in new lines",
+  "2 the observation, evidence, her decisions and her sentence on the child's page stay after the clean-up",
+  "3 an n8n schedule calls /voice/cleanup; counts only; fails and retries; unreadable folder clears nothing; orphans; set-once times",
+  "4 Sarvam no-retention is a setting, false by default, set on only with a reference by staff, logged; status prints it",
+  "5 the data register's voice entry says the decided words",
+  "6 a confirmed voice note and the typed form give the same rows and state; an unconfirmed note gives nothing",
+  "7 no recording, transcript word or name in git, logs, responses or command output, failed run included"
+ ],
+ "ran_at": "2026-11-09T04:47:29+00:00"
+}
