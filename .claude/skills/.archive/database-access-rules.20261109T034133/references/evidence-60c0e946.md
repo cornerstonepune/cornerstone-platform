@@ -1,1 +1,0 @@
-database-access-rules [project]: Use when proving Postgres row-level security or grants.
