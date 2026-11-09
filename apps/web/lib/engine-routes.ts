@@ -58,6 +58,7 @@ export type EngineRoutes = {
   "POST /curriculum/page/gate": { actor: string };
   "POST /curriculum/page/read": { actor: string; code: string };
   "POST /curriculum/page/revert": { actor: string; code: string; part: string };
+  "POST /graph/nightly": null;
   "POST /graph/rebuild": { child_id?: string | null };
   "POST /ingest": { path: string; paper_code: string; child_id: string; actor: string; pages?: number[] | null; masks?: Record<string, number> | null; narrative?: boolean };
   "POST /k2/child": { actor: string; class_id: string; roll_no: string };

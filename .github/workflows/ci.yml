@@ -246,8 +246,14 @@ jobs:
         if: always()
         # not packages/engine: with the checkout skipped that folder does not exist, and the step could not start
         working-directory: ${{ github.workspace }}
+        # As the browser roll-up: "cancelled" for a cancelled run, "failed" for a broken one (CP-21)
+        # the plan's reason holds changed files' names, so it reaches the shell as a variable and is never pasted into the script
+        env:
+          REASON: ${{ needs.plan.outputs.reason }}
         run: |
-          echo 'plan: ${{ needs.plan.result }} (${{ needs.plan.outputs.reason }}), checks: ${{ needs.engine-checks.result }}, shards: ${{ needs.engine-shard.result }}'
+          checks='${{ needs.engine-checks.result }}'; [ "$checks" != failure ] || checks=failed
+          shards='${{ needs.engine-shard.result }}'; [ "$shards" != failure ] || shards=failed
+          echo "plan: ${{ needs.plan.result }} ($REASON), checks: $checks, shards: $shards"
           [ "${{ needs.plan.result }}" = success ] && [ "${{ needs.engine-checks.result }}" = success ] || exit 1
           [ "${{ needs.plan.outputs.engine }}" != true ] || [ "${{ needs.engine-shard.result }}" = success ]
 
@@ -286,6 +292,8 @@ jobs:
     needs: [plan]
     if: needs.plan.outputs.browser == 'true'
     runs-on: ubuntu-latest
+    # A hung shard used to run for GitHub's default six hours; a healthy one takes about 15 minutes (CP-21)
+    timeout-minutes: 30
     strategy:
       fail-fast: false
       # SHARDS below and in the browser job must be this list's length
@@ -324,7 +332,7 @@ jobs:
       - run: >-
           psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -c "alter role app_web password 'ci-web'"
           -c "alter role app_engine password 'ci-engine'"
-      - run: npx playwright test --shard=${{ matrix.shard }}/${{ env.SHARDS }} --reporter=list,json
+      - run: npx playwright test --shard=${{ matrix.shard }}/${{ env.SHARDS }} --max-failures=10 --reporter=list,json
         working-directory: apps/web
         env:
           PLAYWRIGHT_JSON_OUTPUT_NAME: results.json
@@ -383,8 +391,13 @@ jobs:
         run: bin/ci-browser-check "$RUNNER_TEMP/list.json" $(for k in $(seq "$SHARDS"); do echo "shards/browser-shard-$k/results.json"; done)
       - name: every browser shard passed
         if: always()
+        # A cancelled run says "cancelled" and a broken one says "failed", so a red tick is read for what it is (CP-21)
+        # the plan's reason holds changed files' names, so it reaches the shell as a variable and is never pasted into the script
+        env:
+          REASON: ${{ needs.plan.outputs.reason }}
         run: |
-          echo 'plan: ${{ needs.plan.result }} (${{ needs.plan.outputs.reason }}), shards: ${{ needs.browser-shard.result }}'
+          shards='${{ needs.browser-shard.result }}'; [ "$shards" != failure ] || shards=failed
+          echo "plan: ${{ needs.plan.result }} ($REASON), shards: $shards"
           [ "${{ needs.plan.result }}" = success ] || exit 1
           [ "${{ needs.plan.outputs.browser }}" != true ] || [ "${{ needs.browser-shard.result }}" = success ]
 

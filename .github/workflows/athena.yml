@@ -29,6 +29,17 @@ jobs:
       - name: A code change carries a locked scope the verifier passed (ATH-28)
         if: github.event_name == 'pull_request'
         run: python3 .claude/athena/bin/athena check-pr-spec --base "origin/${{ github.base_ref }}"
+      - name: A draft says what CI skipped (ATH-30)
+        # A draft that skipped some of the repository's checks must not look green. A repository whose own CI skips jobs on
+        # a draft says which by setting the repository variable CI_SKIPPED to their names; this repository skips none.
+        if: github.event_name == 'pull_request' && github.event.pull_request.draft
+        env:
+          CI_SKIPPED: ${{ vars.CI_SKIPPED }}
+        run: |
+          [ -z "$CI_SKIPPED" ] || {
+            echo "::notice title=CI skipped: draft::CI skipped: draft ($CI_SKIPPED); they run when it is marked ready"
+            echo "CI skipped: draft ($CI_SKIPPED); they run when it is marked ready" >> "$GITHUB_STEP_SUMMARY"
+          }
       - name: A small change carries its own short scope
         if: github.event_name == 'pull_request'
         env:
