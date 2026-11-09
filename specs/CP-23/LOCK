@@ -1,0 +1,20 @@
+{
+  "digest": "79845305b5c2b64d863798a70777826920985530e2e63234855a4843fdaeeebe",
+  "files": [
+    "spec.md",
+    "checks.sh",
+    "proofs/c1_grade_and_borrow.sh",
+    "proofs/c2_migration_numbers.sh",
+    "proofs/c3_ownerless_table.sh",
+    "proofs/c4_rules_json_stale.sh",
+    "proofs/c5_db_tests_no_skips.sh",
+    "proofs/c6_claude_gate.sh",
+    "proofs/c7_no_database_fast.sh",
+    "proofs/c8_learning_card.py",
+    "proofs/lib.sh",
+    "proofs/no_skips.py"
+  ],
+  "locked_at": "2026-11-09T06:15:51+00:00",
+  "criteria": 8,
+  "athena": "2.15.0"
+}
