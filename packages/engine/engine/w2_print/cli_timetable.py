@@ -1,6 +1,7 @@
 """W2's timetable commands — `engine timetable load …`: the school's tabs (as CSV) into the six timetable tables, or into
 one SQL file for a person to run where this machine cannot reach; `generate`: a draft by FET (CP-11); `go-live`: a
-placed draft becomes the fortnight's timetable (CP-22). `engine/cli.py` only mounts this."""
+placed draft becomes the fortnight's timetable (CP-22); `move`, `accept`, `clashes`: the timetable by hand (CP-12,
+`cli_tt_hand`). `engine/cli.py` only mounts this."""
 
 import hashlib
 import json
@@ -15,7 +16,7 @@ import typer
 
 from engine.core import db, settings
 from engine.w1_bank.cli_map import staff_of
-from engine.w2_print import cli_plan_link, tt_need
+from engine.w2_print import cli_plan_link, cli_tt_hand, tt_need
 from engine.w2_print import fortnight_cycle as fc
 from engine.w2_print import k2_timetable as tt
 from engine.w2_print import k2_timetable_load as ld
@@ -26,6 +27,7 @@ from engine.w2_print import tt_live as live
 timetable_app = typer.Typer(help="W2 — the K2 timetable from the school's tabs", no_args_is_help=True)
 VOCABULARY = "timetable.vocabulary"
 cli_plan_link.mount(timetable_app)
+cli_tt_hand.mount(timetable_app)
 
 
 def _held(items: list[str]) -> dict[date, str]:
