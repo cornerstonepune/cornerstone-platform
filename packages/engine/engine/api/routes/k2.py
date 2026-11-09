@@ -52,8 +52,7 @@ class CoordinatorRow(NoteRow):
 
 class Counts(BaseModel):
     late: int
-    unplanned: int | None
-    unplanned_why: str
+    unplanned: int
     children_without_notes: int
     class_days_without_notes: int
 
