@@ -5,7 +5,7 @@
 # Database proofs run on TEST_DATABASE_URL (`bin/testdb fresh`), in a fake school of their own, academic year 2031-32,
 # inside one transaction that is rolled back. They need CP-6, CP-4 and CP-3 and fail saying which until those are on
 # main. Item 9 alone reads the live database, read-only, counts only, on the box.
-source "$ATHENA_ROOT/.claude/athena/bin/checklib.sh"
+source "$ATHENA_ROOT/bin/checklib.sh"
 cd "$ATHENA_ROOT"
 
 P=specs/CP-7/proofs
