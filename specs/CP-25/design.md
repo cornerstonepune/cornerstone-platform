@@ -61,7 +61,9 @@ One per Done-when line, same numbers.
      belongs to a document, and the parent report's document will be the website's.
    * **(B)** The engine builds a parent-report PDF now. A new feature, roughly doubling item 7.
 
-   A changes the wording of a Done-when line, so only Nimish can do it, in the issue, before the label.
+   A changes the wording of a Done-when line, so only Nimish can do it. The label went on with line 7 unchanged
+   (9 Nov); the question was sent to the orchestrator for him the same day, and `athena lock` waits for his answer.
+   Proof 7 is never written to pass merely because no parent-report document exists.
 
 ## Critical User Journeys (CUJs)
 
