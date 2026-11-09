@@ -72,7 +72,7 @@
   --subject-numeracy-bg: #e1eef8;
   --subject-language: #87402f;
   --subject-language-bg: #f6e6dc;
-  --subject-arts: #c27c0e;
+  --subject-arts: #c17b0e;
   --subject-arts-ink: #8a5a00;
   --subject-arts-bg: #fdf0cf;
   --subject-fixed: #5b5b66;
@@ -273,6 +273,7 @@
 [data-icon="trail"] { --i: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2024%2024%27%20fill%3D%27none%27%20stroke%3D%27black%27%20stroke-width%3D%271.9%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%3E%3Cpath%20d%3D%27m9%2018%206-6-6-6%27%2F%3E%3C%2Fsvg%3E"); }
 [data-icon="moved"] { --i: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2024%2024%27%20fill%3D%27none%27%20stroke%3D%27black%27%20stroke-width%3D%271.9%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%3E%3Cpath%20d%3D%27M18%208L22%2012L18%2016%27%2F%3E%3Cpath%20d%3D%27M2%2012H22%27%2F%3E%3C%2Fsvg%3E"); }
 [data-icon="clash"] { --i: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2024%2024%27%20fill%3D%27none%27%20stroke%3D%27black%27%20stroke-width%3D%271.9%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%3E%3Cpath%20d%3D%27m21.73%2018-8-14a2%202%200%200%200-3.48%200l-8%2014A2%202%200%200%200%204%2021h16a2%202%200%200%200%201.73-3%27%2F%3E%3Cpath%20d%3D%27M12%209v4%27%2F%3E%3Cpath%20d%3D%27M12%2017h.01%27%2F%3E%3C%2Fsvg%3E"); }
+
 
 
 /* ===== blocks: components.css ===== */
