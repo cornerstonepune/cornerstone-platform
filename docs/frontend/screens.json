@@ -1564,19 +1564,15 @@
       "exists": "part (/k2)",
       "eyebrow": "Your classes",
       "title": "Children",
-      "purpose": "Your children in one table: how each is doing and who was in. Search, filter, open a child.",
+      "purpose": "Your children in one table: how each is doing, last seen, notes waiting. Search, filter, open a child.",
       "blocks": [
         [
           "FilterBar",
-          "search by name or Sr. No. · class (coordinator) · how they are doing · seen"
+          "search by name or Sr. No. · class (coordinator) · needs attention"
         ],
         [
           "DataTable",
-          "Sr. No. · name · class (coordinator) · how they are doing (secure / practising / not seen) · last 7 school days present · last seen"
-        ],
-        [
-          "StackBar",
-          "per child, from child_skill_state"
+          "Sr. No. · name · class (only when several) · how they are doing (stacked bar of secure / practising / not seen skills) · last seen · notes waiting · attendance, last 7 days (placeholder)"
         ]
       ],
       "elements": [
@@ -1590,17 +1586,12 @@
           "roles": [
             "coordinator"
           ],
-          "note": "an educator with one class has no class filter"
+          "note": "an educator with one class has no class filter and no class column"
         },
         {
           "t": "filter",
-          "label": "how they are doing",
-          "note": "all / needs a look / mostly secure"
-        },
-        {
-          "t": "filter",
-          "label": "seen",
-          "note": "this week / this fortnight / not seen"
+          "label": "needs attention",
+          "note": "all / needs attention"
         },
         {
           "t": "button",
@@ -1624,9 +1615,9 @@
         },
         {
           "t": "link",
-          "label": "Open the class",
+          "label": "Class picture grid",
           "to": "picture",
-          "note": "the class picture of the first class, or the one filtered"
+          "note": "the toggle between this table and the class picture grid; the picture's own toggle returns here"
         },
         {
           "t": "link",
@@ -1650,16 +1641,18 @@
         "Notes"
       ],
       "capture": [],
-      "main": "Open the class",
-      "next": "Class picture",
-      "data": "school_class, enrolment, pii.child, child_skill_state counts per child, attendance_mark (last 7 school days)",
+      "main": "Class picture grid",
+      "next": "a child",
+      "data": "school_class, enrolment, pii.child, child_skill_state counts per child, pii.educator_note waiting per child, attendance_mark (last 7 school days)",
       "empty": "No class linked to you: 'The coordinator links you to the classes you teach'; no match: 'No child matches' with Clear",
       "phone": "the table scrolls sideways in its own box",
       "done_when": [
-        "an educator with one class sees no class filter and no class column; with several, both; the coordinator sees every class",
-        "the how-they-are-doing bar's segments sum to the number of skills the child has a state or no state for, with never a red segment",
+        "for a signed-in educator the table lists their own children; a coordinator sees every class, with a class filter",
+        "the class column and the class filter appear only when the person has several classes",
+        "the how-they-are-doing bar's segments are secure, practising and not seen, and sum to the child's skill count; never a red segment",
         "searching a Sr. No. or part of a name narrows the rows and writes itself into the address; a reload keeps it",
-        "the name appears only in the name column, read from pii by child_id"
+        "the attendance column is a dashed placeholder naming the gap",
+        "a row opens the child; the toggle opens the class picture grid and the picture's toggle returns here"
       ]
     },
     {
@@ -1743,6 +1736,12 @@
           "t": "link",
           "label": "capture: Photo",
           "to": "record"
+        },
+        {
+          "t": "link",
+          "label": "Show as a table",
+          "to": "children",
+          "note": "the toggle between the class picture grid and the table of children"
         }
       ],
       "rail": [

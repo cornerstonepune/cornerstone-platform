@@ -43,120 +43,129 @@
           <div class="head">
             <p class="eyebrow"><i class="ic s" data-icon="children"></i>All classes · <span class="num" data-source="enrolment.child_id">117</span> children</p>
             <h1 class="title">Children</h1>
-            <p class="purpose">Your children in one table: how each is doing and who was in. Search, filter, open a child.</p>
+            <p class="purpose">Your children in one table: how each is doing, last seen, notes waiting. Search, filter, open a child.</p>
           </div>
           <div class="filters" data-block="FilterBar">
             <label class="sel"><i class="ic s" data-icon="search"></i><span class="vh">Search</span><input data-el="0" type="search" placeholder="Name or Sr. No." data-source="pii.child.first_name pii.child.last_name enrolment.roll_no"></label>
             <label class="sel"><i class="ic s" data-icon="filter"></i>Class <select data-el="1" data-source="school_class.section"><option>All</option><option>K2 Red</option><option>K2 Blue</option></select></label>
-            <label class="sel">Doing <select data-el="2" data-source="child_skill_state.state"><option>All</option><option>Needs a look</option><option>Mostly secure</option></select></label>
-            <label class="sel">Seen <select data-el="3" data-source="child_skill_state.last_seen"><option>This fortnight</option><option>This week</option><option>Not seen</option></select></label>
-            <button class="btn press" data-el="4" type="button" aria-label="Remove the filter: Seen this fortnight"><i class="ic" data-icon="clear"></i>Seen: this fortnight</button>
-            <button class="btn press" data-el="5" type="button">Clear</button>
-            <a class="btn btn-main press" data-el="8" href="#picture"><i class="ic" data-icon="child"></i>Open the class</a>
+            <label class="sel">Show <select data-el="2" data-source="child_skill_state.state"><option>Needs attention</option><option>All</option></select></label>
+            <button class="btn press" data-el="3" type="button" aria-label="Remove the filter: Needs attention"><i class="ic" data-icon="clear"></i>Needs attention</button>
+            <button class="btn press" data-el="4" type="button">Clear</button>
+            <a class="btn btn-main press" data-el="7" href="#picture"><i class="ic" data-icon="child"></i>Class picture grid</a>
           </div>
           <div class="table-box" data-block="DataTable">
             <table class="table">
-              <thead><tr><th>Sr. No.</th><th>Name</th><th>Class</th><th>How they are doing</th><th data-gap="attendance is not on any target table: no attendance_mark or presence column exists">Last 7 school days</th><th>Last seen</th></tr></thead>
+              <thead><tr><th>Sr. No.</th><th>Name</th><th>Class</th><th>How they are doing</th><th>Last seen</th><th class="st" data-gap="notes waiting per child: a note names children only in pii.note_claim.read_as text, with no child_id">Notes waiting</th><th class="st" data-gap="attendance for the last 7 school days: no target table holds it (attendance_mark)">Attendance, last 7 days</th></tr></thead>
               <tbody>
           <tr>
-            <td class="num" data-source="enrolment.roll_no">01</td>
-            <td><a data-el="6" href="#child"><span data-el="7" data-source="pii.child.first_name pii.child.last_name">Alba Ant</span></a></td>
+            <td class="num" data-source="enrolment.roll_no">06</td>
+            <td><a data-el="5" href="#child"><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Finn Fox</span></a></td>
             <td data-source="school_class.section grade.name">K2 Red</td>
-            <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="9 secure, 4 practising, 3 not seen yet"><i data-state="ok" style="--n: 9"></i><i data-state="wait" style="--n: 4"></i><i data-state="unseen" style="--n: 3"></i></div><span class="muted">9 secure · 4 practising · 3 not seen</span></td>
-            <td><div class="sbar" role="img" aria-label="Present 6 of the last 7 school days"><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="quiet" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i></div><span class="muted">6 of 7 days</span></td>
-            <td data-source="child_skill_state.last_seen">today</td>
-          </tr>
-          <tr>
-            <td class="num" data-source="enrolment.roll_no">02</td>
-            <td><a data-el="6" href="#child"><span data-el="7" data-source="pii.child.first_name pii.child.last_name">Bea Badger</span></a></td>
-            <td data-source="school_class.section grade.name">K2 Red</td>
-            <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="11 secure, 3 practising, 2 not seen yet"><i data-state="ok" style="--n: 11"></i><i data-state="wait" style="--n: 3"></i><i data-state="unseen" style="--n: 2"></i></div><span class="muted">11 secure · 3 practising · 2 not seen</span></td>
-            <td><div class="sbar" role="img" aria-label="Present 7 of the last 7 school days"><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i></div><span class="muted">7 of 7 days</span></td>
-            <td data-source="child_skill_state.last_seen">today</td>
-          </tr>
-          <tr>
-            <td class="num" data-source="enrolment.roll_no">03</td>
-            <td><a data-el="6" href="#child"><span data-el="7" data-source="pii.child.first_name pii.child.last_name">Cal Crow</span></a></td>
-            <td data-source="school_class.section grade.name">K2 Red</td>
-            <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="4 secure, 7 practising, 5 not seen yet"><i data-state="ok" style="--n: 4"></i><i data-state="wait" style="--n: 7"></i><i data-state="unseen" style="--n: 5"></i></div><span class="muted">4 secure · 7 practising · 5 not seen</span></td>
-            <td><div class="sbar" role="img" aria-label="Present 5 of the last 7 school days"><i data-state="ok" style="--n: 1"></i><i data-state="quiet" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="quiet" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i></div><span class="muted">5 of 7 days</span></td>
-            <td data-source="child_skill_state.last_seen">Tue</td>
-          </tr>
-          <tr>
-            <td class="num" data-source="enrolment.roll_no">04</td>
-            <td><a data-el="6" href="#child"><span data-el="7" data-source="pii.child.first_name pii.child.last_name">Dot Deer</span></a></td>
-            <td data-source="school_class.section grade.name">K2 Red</td>
-            <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="8 secure, 5 practising, 3 not seen yet"><i data-state="ok" style="--n: 8"></i><i data-state="wait" style="--n: 5"></i><i data-state="unseen" style="--n: 3"></i></div><span class="muted">8 secure · 5 practising · 3 not seen</span></td>
-            <td><div class="sbar" role="img" aria-label="Present 6 of the last 7 school days"><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="quiet" style="--n: 1"></i></div><span class="muted">6 of 7 days</span></td>
-            <td data-source="child_skill_state.last_seen">today</td>
+            <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="0 secure, 2 practising, 14 not seen yet"><i data-state="ok" style="--n: 0"></i><i data-state="wait" style="--n: 2"></i><i data-state="unseen" style="--n: 14"></i></div><span class="muted">0 secure · 2 practising · 14 not seen</span></td>
+            <td data-source="child_skill_state.last_seen">3 weeks ago</td>
+            <td class="st" data-source="pii.educator_note.status"><span class="muted">none</span></td>
+            <td class="st"><span class="muted">not available yet</span></td>
           </tr>
           <tr>
             <td class="num" data-source="enrolment.roll_no">05</td>
-            <td><a data-el="6" href="#child"><span data-el="7" data-source="pii.child.first_name pii.child.last_name">Eli Eel</span></a></td>
+            <td><a data-el="5" href="#child"><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Eli Eel</span></a></td>
             <td data-source="school_class.section grade.name">K2 Red</td>
             <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="3 secure, 6 practising, 7 not seen yet"><i data-state="ok" style="--n: 3"></i><i data-state="wait" style="--n: 6"></i><i data-state="unseen" style="--n: 7"></i></div><span class="muted">3 secure · 6 practising · 7 not seen</span></td>
-            <td><div class="sbar" role="img" aria-label="Present 4 of the last 7 school days"><i data-state="quiet" style="--n: 1"></i><i data-state="quiet" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="quiet" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i></div><span class="muted">4 of 7 days</span></td>
             <td data-source="child_skill_state.last_seen">Mon</td>
-          </tr>
-          <tr>
-            <td class="num" data-source="enrolment.roll_no">06</td>
-            <td><a data-el="6" href="#child"><span data-el="7" data-source="pii.child.first_name pii.child.last_name">Finn Fox</span></a></td>
-            <td data-source="school_class.section grade.name">K2 Red</td>
-            <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="0 secure, 2 practising, 14 not seen yet"><i data-state="ok" style="--n: 0"></i><i data-state="wait" style="--n: 2"></i><i data-state="unseen" style="--n: 14"></i></div><span class="muted">0 secure · 2 practising · 14 not seen</span></td>
-            <td><div class="sbar" role="img" aria-label="Present 5 of the last 7 school days"><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="quiet" style="--n: 1"></i><i data-state="quiet" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i></div><span class="muted">5 of 7 days</span></td>
-            <td data-source="child_skill_state.last_seen">3 weeks ago</td>
-          </tr>
-          <tr>
-            <td class="num" data-source="enrolment.roll_no">07</td>
-            <td><a data-el="6" href="#child"><span data-el="7" data-source="pii.child.first_name pii.child.last_name">Gus Goat</span></a></td>
-            <td data-source="school_class.section grade.name">K2 Blue</td>
-            <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="10 secure, 4 practising, 2 not seen yet"><i data-state="ok" style="--n: 10"></i><i data-state="wait" style="--n: 4"></i><i data-state="unseen" style="--n: 2"></i></div><span class="muted">10 secure · 4 practising · 2 not seen</span></td>
-            <td><div class="sbar" role="img" aria-label="Present 7 of the last 7 school days"><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i></div><span class="muted">7 of 7 days</span></td>
-            <td data-source="child_skill_state.last_seen">today</td>
-          </tr>
-          <tr>
-            <td class="num" data-source="enrolment.roll_no">08</td>
-            <td><a data-el="6" href="#child"><span data-el="7" data-source="pii.child.first_name pii.child.last_name">Hazel Hare</span></a></td>
-            <td data-source="school_class.section grade.name">K2 Blue</td>
-            <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="6 secure, 6 practising, 4 not seen yet"><i data-state="ok" style="--n: 6"></i><i data-state="wait" style="--n: 6"></i><i data-state="unseen" style="--n: 4"></i></div><span class="muted">6 secure · 6 practising · 4 not seen</span></td>
-            <td><div class="sbar" role="img" aria-label="Present 6 of the last 7 school days"><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="quiet" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i></div><span class="muted">6 of 7 days</span></td>
-            <td data-source="child_skill_state.last_seen">Wed</td>
+            <td class="st" data-source="pii.educator_note.status"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>1 to confirm</span></td>
+            <td class="st"><span class="muted">not available yet</span></td>
           </tr>
           <tr>
             <td class="num" data-source="enrolment.roll_no">09</td>
-            <td><a data-el="6" href="#child"><span data-el="7" data-source="pii.child.first_name pii.child.last_name">Ivy Ibis</span></a></td>
+            <td><a data-el="5" href="#child"><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Ivy Ibis</span></a></td>
             <td data-source="school_class.section grade.name">K2 Blue</td>
             <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="2 secure, 5 practising, 9 not seen yet"><i data-state="ok" style="--n: 2"></i><i data-state="wait" style="--n: 5"></i><i data-state="unseen" style="--n: 9"></i></div><span class="muted">2 secure · 5 practising · 9 not seen</span></td>
-            <td><div class="sbar" role="img" aria-label="Present 5 of the last 7 school days"><i data-state="ok" style="--n: 1"></i><i data-state="quiet" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="quiet" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i></div><span class="muted">5 of 7 days</span></td>
             <td data-source="child_skill_state.last_seen">Tue</td>
+            <td class="st" data-source="pii.educator_note.status"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>2 to confirm</span></td>
+            <td class="st"><span class="muted">not available yet</span></td>
           </tr>
           <tr>
-            <td class="num" data-source="enrolment.roll_no">10</td>
-            <td><a data-el="6" href="#child"><span data-el="7" data-source="pii.child.first_name pii.child.last_name">Jo Jay</span></a></td>
+            <td class="num" data-source="enrolment.roll_no">03</td>
+            <td><a data-el="5" href="#child"><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Cal Crow</span></a></td>
+            <td data-source="school_class.section grade.name">K2 Red</td>
+            <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="4 secure, 7 practising, 5 not seen yet"><i data-state="ok" style="--n: 4"></i><i data-state="wait" style="--n: 7"></i><i data-state="unseen" style="--n: 5"></i></div><span class="muted">4 secure · 7 practising · 5 not seen</span></td>
+            <td data-source="child_skill_state.last_seen">Tue</td>
+            <td class="st" data-source="pii.educator_note.status"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>1 to confirm</span></td>
+            <td class="st"><span class="muted">not available yet</span></td>
+          </tr>
+          <tr>
+            <td class="num" data-source="enrolment.roll_no">12</td>
+            <td><a data-el="5" href="#child"><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Lou Lynx</span></a></td>
             <td data-source="school_class.section grade.name">K2 Blue</td>
-            <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="7 secure, 5 practising, 4 not seen yet"><i data-state="ok" style="--n: 7"></i><i data-state="wait" style="--n: 5"></i><i data-state="unseen" style="--n: 4"></i></div><span class="muted">7 secure · 5 practising · 4 not seen</span></td>
-            <td><div class="sbar" role="img" aria-label="Present 6 of the last 7 school days"><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="quiet" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i></div><span class="muted">6 of 7 days</span></td>
-            <td data-source="child_skill_state.last_seen">today</td>
+            <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="3 secure, 4 practising, 10 not seen yet"><i data-state="ok" style="--n: 3"></i><i data-state="wait" style="--n: 4"></i><i data-state="unseen" style="--n: 10"></i></div><span class="muted">3 secure · 4 practising · 10 not seen</span></td>
+            <td data-source="child_skill_state.last_seen">Wed</td>
+            <td class="st" data-source="pii.educator_note.status"><span class="muted">none</span></td>
+            <td class="st"><span class="muted">not available yet</span></td>
+          </tr>
+          <tr>
+            <td class="num" data-source="enrolment.roll_no">15</td>
+            <td><a data-el="5" href="#child"><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Otto Owl</span></a></td>
+            <td data-source="school_class.section grade.name">K2 Blue</td>
+            <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="1 secure, 3 practising, 12 not seen yet"><i data-state="ok" style="--n: 1"></i><i data-state="wait" style="--n: 3"></i><i data-state="unseen" style="--n: 12"></i></div><span class="muted">1 secure · 3 practising · 12 not seen</span></td>
+            <td data-source="child_skill_state.last_seen">2 weeks ago</td>
+            <td class="st" data-source="pii.educator_note.status"><span class="muted">none</span></td>
+            <td class="st"><span class="muted">not available yet</span></td>
+          </tr>
+          <tr>
+            <td class="num" data-source="enrolment.roll_no">18</td>
+            <td><a data-el="5" href="#child"><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Rex Rook</span></a></td>
+            <td data-source="school_class.section grade.name">K2 Red</td>
+            <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="4 secure, 5 practising, 8 not seen yet"><i data-state="ok" style="--n: 4"></i><i data-state="wait" style="--n: 5"></i><i data-state="unseen" style="--n: 8"></i></div><span class="muted">4 secure · 5 practising · 8 not seen</span></td>
+            <td data-source="child_skill_state.last_seen">Wed</td>
+            <td class="st" data-source="pii.educator_note.status"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>1 to confirm</span></td>
+            <td class="st"><span class="muted">not available yet</span></td>
+          </tr>
+          <tr>
+            <td class="num" data-source="enrolment.roll_no">21</td>
+            <td><a data-el="5" href="#child"><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Uri Urial</span></a></td>
+            <td data-source="school_class.section grade.name">K2 Red</td>
+            <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="0 secure, 4 practising, 13 not seen yet"><i data-state="ok" style="--n: 0"></i><i data-state="wait" style="--n: 4"></i><i data-state="unseen" style="--n: 13"></i></div><span class="muted">0 secure · 4 practising · 13 not seen</span></td>
+            <td data-source="child_skill_state.last_seen">3 weeks ago</td>
+            <td class="st" data-source="pii.educator_note.status"><span class="muted">none</span></td>
+            <td class="st"><span class="muted">not available yet</span></td>
+          </tr>
+          <tr>
+            <td class="num" data-source="enrolment.roll_no">08</td>
+            <td><a data-el="5" href="#child"><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Hazel Hare</span></a></td>
+            <td data-source="school_class.section grade.name">K2 Blue</td>
+            <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="5 secure, 6 practising, 6 not seen yet"><i data-state="ok" style="--n: 5"></i><i data-state="wait" style="--n: 6"></i><i data-state="unseen" style="--n: 6"></i></div><span class="muted">5 secure · 6 practising · 6 not seen</span></td>
+            <td data-source="child_skill_state.last_seen">Thu</td>
+            <td class="st" data-source="pii.educator_note.status"><span class="muted">none</span></td>
+            <td class="st"><span class="muted">not available yet</span></td>
+          </tr>
+          <tr>
+            <td class="num" data-source="enrolment.roll_no">17</td>
+            <td><a data-el="5" href="#child"><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Quin Quail</span></a></td>
+            <td data-source="school_class.section grade.name">K2 Red</td>
+            <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="2 secure, 6 practising, 8 not seen yet"><i data-state="ok" style="--n: 2"></i><i data-state="wait" style="--n: 6"></i><i data-state="unseen" style="--n: 8"></i></div><span class="muted">2 secure · 6 practising · 8 not seen</span></td>
+            <td data-source="child_skill_state.last_seen">Mon</td>
+            <td class="st" data-source="pii.educator_note.status"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>1 to confirm</span></td>
+            <td class="st"><span class="muted">not available yet</span></td>
           </tr>
               </tbody>
             </table>
           </div>
-          <p><a data-el="11" href="#children?page=2">Later →</a></p>
+          <p><a data-el="10" href="#children?page=2">Later →</a></p>
           <div class="card">
             <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: when no class is linked to you</div>
             <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="not-seen"></i><b>No class linked to you</b><span class="muted">The coordinator links you to the classes you teach.</span></div></div>
           </div>
           <div class="card">
             <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: when no child matches</div>
-            <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="not-seen"></i><b>No child matches</b><span class="muted">Check the spelling, or clear the filters.</span><button class="btn press" data-el="5" type="button">Clear</button></div></div>
+            <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="not-seen"></i><b>No child matches</b><span class="muted">Check the spelling, or clear the filters.</span><button class="btn press" data-el="4" type="button">Clear</button></div></div>
           </div>
         </main>
         <aside class="rail" aria-label="Connected to">
           <section class="rail-box">
             <h2>Connected to</h2>
             <ul class="rlist">
-              <li><a class="ritem" data-el="9" href="#assessments"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><span>Assessments<small>grades 1 to 4</small></span></a></li>
-              <li><a class="ritem" data-el="10" href="#notes"><span class="tile" data-kind="note"><i class="ic" data-icon="note"></i></span><span>Notes<small><span class="num" data-source="pii.educator_note.status">7</span> to confirm</small></span></a></li>
+              <li><a class="ritem" data-el="8" href="#assessments"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><span>Assessments<small>grades 1 to 4</small></span></a></li>
+              <li><a class="ritem" data-el="9" href="#notes"><span class="tile" data-kind="note"><i class="ic" data-icon="note"></i></span><span>Notes<small><span class="num" data-source="pii.educator_note.status">7</span> to confirm</small></span></a></li>
             </ul>
           </section>
         </aside>
@@ -197,120 +206,129 @@
           <div class="head">
             <p class="eyebrow"><i class="ic s" data-icon="children"></i>All classes · <span class="num" data-source="enrolment.child_id">117</span> children</p>
             <h1 class="title">Children</h1>
-            <p class="purpose">Your children in one table: how each is doing and who was in. Search, filter, open a child.</p>
+            <p class="purpose">Your children in one table: how each is doing, last seen, notes waiting. Search, filter, open a child.</p>
           </div>
           <div class="filters" data-block="FilterBar">
             <label class="sel"><i class="ic s" data-icon="search"></i><span class="vh">Search</span><input data-el="0" type="search" placeholder="Name or Sr. No." data-source="pii.child.first_name pii.child.last_name enrolment.roll_no"></label>
             <label class="sel"><i class="ic s" data-icon="filter"></i>Class <select data-el="1" data-source="school_class.section"><option>All</option><option>K2 Red</option><option>K2 Blue</option></select></label>
-            <label class="sel">Doing <select data-el="2" data-source="child_skill_state.state"><option>All</option><option>Needs a look</option><option>Mostly secure</option></select></label>
-            <label class="sel">Seen <select data-el="3" data-source="child_skill_state.last_seen"><option>This fortnight</option><option>This week</option><option>Not seen</option></select></label>
-            <button class="btn press" data-el="4" type="button" aria-label="Remove the filter: Seen this fortnight"><i class="ic" data-icon="clear"></i>Seen: this fortnight</button>
-            <button class="btn press" data-el="5" type="button">Clear</button>
-            <a class="btn btn-main press" data-el="8" href="#picture"><i class="ic" data-icon="child"></i>Open the class</a>
+            <label class="sel">Show <select data-el="2" data-source="child_skill_state.state"><option>Needs attention</option><option>All</option></select></label>
+            <button class="btn press" data-el="3" type="button" aria-label="Remove the filter: Needs attention"><i class="ic" data-icon="clear"></i>Needs attention</button>
+            <button class="btn press" data-el="4" type="button">Clear</button>
+            <a class="btn btn-main press" data-el="7" href="#picture"><i class="ic" data-icon="child"></i>Class picture grid</a>
           </div>
           <div class="table-box" data-block="DataTable">
             <table class="table">
-              <thead><tr><th>Sr. No.</th><th>Name</th><th>Class</th><th>How they are doing</th><th data-gap="attendance is not on any target table: no attendance_mark or presence column exists">Last 7 school days</th><th>Last seen</th></tr></thead>
+              <thead><tr><th>Sr. No.</th><th>Name</th><th>Class</th><th>How they are doing</th><th>Last seen</th><th class="st" data-gap="notes waiting per child: a note names children only in pii.note_claim.read_as text, with no child_id">Notes waiting</th><th class="st" data-gap="attendance for the last 7 school days: no target table holds it (attendance_mark)">Attendance, last 7 days</th></tr></thead>
               <tbody>
           <tr>
-            <td class="num" data-source="enrolment.roll_no">01</td>
-            <td><a data-el="6" href="#child"><span data-el="7" data-source="pii.child.first_name pii.child.last_name">Alba Ant</span></a></td>
+            <td class="num" data-source="enrolment.roll_no">06</td>
+            <td><a data-el="5" href="#child"><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Finn Fox</span></a></td>
             <td data-source="school_class.section grade.name">K2 Red</td>
-            <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="9 secure, 4 practising, 3 not seen yet"><i data-state="ok" style="--n: 9"></i><i data-state="wait" style="--n: 4"></i><i data-state="unseen" style="--n: 3"></i></div><span class="muted">9 secure · 4 practising · 3 not seen</span></td>
-            <td><div class="sbar" role="img" aria-label="Present 6 of the last 7 school days"><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="quiet" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i></div><span class="muted">6 of 7 days</span></td>
-            <td data-source="child_skill_state.last_seen">today</td>
-          </tr>
-          <tr>
-            <td class="num" data-source="enrolment.roll_no">02</td>
-            <td><a data-el="6" href="#child"><span data-el="7" data-source="pii.child.first_name pii.child.last_name">Bea Badger</span></a></td>
-            <td data-source="school_class.section grade.name">K2 Red</td>
-            <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="11 secure, 3 practising, 2 not seen yet"><i data-state="ok" style="--n: 11"></i><i data-state="wait" style="--n: 3"></i><i data-state="unseen" style="--n: 2"></i></div><span class="muted">11 secure · 3 practising · 2 not seen</span></td>
-            <td><div class="sbar" role="img" aria-label="Present 7 of the last 7 school days"><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i></div><span class="muted">7 of 7 days</span></td>
-            <td data-source="child_skill_state.last_seen">today</td>
-          </tr>
-          <tr>
-            <td class="num" data-source="enrolment.roll_no">03</td>
-            <td><a data-el="6" href="#child"><span data-el="7" data-source="pii.child.first_name pii.child.last_name">Cal Crow</span></a></td>
-            <td data-source="school_class.section grade.name">K2 Red</td>
-            <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="4 secure, 7 practising, 5 not seen yet"><i data-state="ok" style="--n: 4"></i><i data-state="wait" style="--n: 7"></i><i data-state="unseen" style="--n: 5"></i></div><span class="muted">4 secure · 7 practising · 5 not seen</span></td>
-            <td><div class="sbar" role="img" aria-label="Present 5 of the last 7 school days"><i data-state="ok" style="--n: 1"></i><i data-state="quiet" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="quiet" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i></div><span class="muted">5 of 7 days</span></td>
-            <td data-source="child_skill_state.last_seen">Tue</td>
-          </tr>
-          <tr>
-            <td class="num" data-source="enrolment.roll_no">04</td>
-            <td><a data-el="6" href="#child"><span data-el="7" data-source="pii.child.first_name pii.child.last_name">Dot Deer</span></a></td>
-            <td data-source="school_class.section grade.name">K2 Red</td>
-            <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="8 secure, 5 practising, 3 not seen yet"><i data-state="ok" style="--n: 8"></i><i data-state="wait" style="--n: 5"></i><i data-state="unseen" style="--n: 3"></i></div><span class="muted">8 secure · 5 practising · 3 not seen</span></td>
-            <td><div class="sbar" role="img" aria-label="Present 6 of the last 7 school days"><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="quiet" style="--n: 1"></i></div><span class="muted">6 of 7 days</span></td>
-            <td data-source="child_skill_state.last_seen">today</td>
+            <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="0 secure, 2 practising, 14 not seen yet"><i data-state="ok" style="--n: 0"></i><i data-state="wait" style="--n: 2"></i><i data-state="unseen" style="--n: 14"></i></div><span class="muted">0 secure · 2 practising · 14 not seen</span></td>
+            <td data-source="child_skill_state.last_seen">3 weeks ago</td>
+            <td class="st" data-source="pii.educator_note.status"><span class="muted">none</span></td>
+            <td class="st"><span class="muted">not available yet</span></td>
           </tr>
           <tr>
             <td class="num" data-source="enrolment.roll_no">05</td>
-            <td><a data-el="6" href="#child"><span data-el="7" data-source="pii.child.first_name pii.child.last_name">Eli Eel</span></a></td>
+            <td><a data-el="5" href="#child"><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Eli Eel</span></a></td>
             <td data-source="school_class.section grade.name">K2 Red</td>
             <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="3 secure, 6 practising, 7 not seen yet"><i data-state="ok" style="--n: 3"></i><i data-state="wait" style="--n: 6"></i><i data-state="unseen" style="--n: 7"></i></div><span class="muted">3 secure · 6 practising · 7 not seen</span></td>
-            <td><div class="sbar" role="img" aria-label="Present 4 of the last 7 school days"><i data-state="quiet" style="--n: 1"></i><i data-state="quiet" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="quiet" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i></div><span class="muted">4 of 7 days</span></td>
             <td data-source="child_skill_state.last_seen">Mon</td>
-          </tr>
-          <tr>
-            <td class="num" data-source="enrolment.roll_no">06</td>
-            <td><a data-el="6" href="#child"><span data-el="7" data-source="pii.child.first_name pii.child.last_name">Finn Fox</span></a></td>
-            <td data-source="school_class.section grade.name">K2 Red</td>
-            <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="0 secure, 2 practising, 14 not seen yet"><i data-state="ok" style="--n: 0"></i><i data-state="wait" style="--n: 2"></i><i data-state="unseen" style="--n: 14"></i></div><span class="muted">0 secure · 2 practising · 14 not seen</span></td>
-            <td><div class="sbar" role="img" aria-label="Present 5 of the last 7 school days"><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="quiet" style="--n: 1"></i><i data-state="quiet" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i></div><span class="muted">5 of 7 days</span></td>
-            <td data-source="child_skill_state.last_seen">3 weeks ago</td>
-          </tr>
-          <tr>
-            <td class="num" data-source="enrolment.roll_no">07</td>
-            <td><a data-el="6" href="#child"><span data-el="7" data-source="pii.child.first_name pii.child.last_name">Gus Goat</span></a></td>
-            <td data-source="school_class.section grade.name">K2 Blue</td>
-            <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="10 secure, 4 practising, 2 not seen yet"><i data-state="ok" style="--n: 10"></i><i data-state="wait" style="--n: 4"></i><i data-state="unseen" style="--n: 2"></i></div><span class="muted">10 secure · 4 practising · 2 not seen</span></td>
-            <td><div class="sbar" role="img" aria-label="Present 7 of the last 7 school days"><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i></div><span class="muted">7 of 7 days</span></td>
-            <td data-source="child_skill_state.last_seen">today</td>
-          </tr>
-          <tr>
-            <td class="num" data-source="enrolment.roll_no">08</td>
-            <td><a data-el="6" href="#child"><span data-el="7" data-source="pii.child.first_name pii.child.last_name">Hazel Hare</span></a></td>
-            <td data-source="school_class.section grade.name">K2 Blue</td>
-            <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="6 secure, 6 practising, 4 not seen yet"><i data-state="ok" style="--n: 6"></i><i data-state="wait" style="--n: 6"></i><i data-state="unseen" style="--n: 4"></i></div><span class="muted">6 secure · 6 practising · 4 not seen</span></td>
-            <td><div class="sbar" role="img" aria-label="Present 6 of the last 7 school days"><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="quiet" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i></div><span class="muted">6 of 7 days</span></td>
-            <td data-source="child_skill_state.last_seen">Wed</td>
+            <td class="st" data-source="pii.educator_note.status"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>1 to confirm</span></td>
+            <td class="st"><span class="muted">not available yet</span></td>
           </tr>
           <tr>
             <td class="num" data-source="enrolment.roll_no">09</td>
-            <td><a data-el="6" href="#child"><span data-el="7" data-source="pii.child.first_name pii.child.last_name">Ivy Ibis</span></a></td>
+            <td><a data-el="5" href="#child"><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Ivy Ibis</span></a></td>
             <td data-source="school_class.section grade.name">K2 Blue</td>
             <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="2 secure, 5 practising, 9 not seen yet"><i data-state="ok" style="--n: 2"></i><i data-state="wait" style="--n: 5"></i><i data-state="unseen" style="--n: 9"></i></div><span class="muted">2 secure · 5 practising · 9 not seen</span></td>
-            <td><div class="sbar" role="img" aria-label="Present 5 of the last 7 school days"><i data-state="ok" style="--n: 1"></i><i data-state="quiet" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="quiet" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i></div><span class="muted">5 of 7 days</span></td>
             <td data-source="child_skill_state.last_seen">Tue</td>
+            <td class="st" data-source="pii.educator_note.status"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>2 to confirm</span></td>
+            <td class="st"><span class="muted">not available yet</span></td>
           </tr>
           <tr>
-            <td class="num" data-source="enrolment.roll_no">10</td>
-            <td><a data-el="6" href="#child"><span data-el="7" data-source="pii.child.first_name pii.child.last_name">Jo Jay</span></a></td>
+            <td class="num" data-source="enrolment.roll_no">03</td>
+            <td><a data-el="5" href="#child"><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Cal Crow</span></a></td>
+            <td data-source="school_class.section grade.name">K2 Red</td>
+            <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="4 secure, 7 practising, 5 not seen yet"><i data-state="ok" style="--n: 4"></i><i data-state="wait" style="--n: 7"></i><i data-state="unseen" style="--n: 5"></i></div><span class="muted">4 secure · 7 practising · 5 not seen</span></td>
+            <td data-source="child_skill_state.last_seen">Tue</td>
+            <td class="st" data-source="pii.educator_note.status"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>1 to confirm</span></td>
+            <td class="st"><span class="muted">not available yet</span></td>
+          </tr>
+          <tr>
+            <td class="num" data-source="enrolment.roll_no">12</td>
+            <td><a data-el="5" href="#child"><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Lou Lynx</span></a></td>
             <td data-source="school_class.section grade.name">K2 Blue</td>
-            <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="7 secure, 5 practising, 4 not seen yet"><i data-state="ok" style="--n: 7"></i><i data-state="wait" style="--n: 5"></i><i data-state="unseen" style="--n: 4"></i></div><span class="muted">7 secure · 5 practising · 4 not seen</span></td>
-            <td><div class="sbar" role="img" aria-label="Present 6 of the last 7 school days"><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i><i data-state="quiet" style="--n: 1"></i><i data-state="ok" style="--n: 1"></i></div><span class="muted">6 of 7 days</span></td>
-            <td data-source="child_skill_state.last_seen">today</td>
+            <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="3 secure, 4 practising, 10 not seen yet"><i data-state="ok" style="--n: 3"></i><i data-state="wait" style="--n: 4"></i><i data-state="unseen" style="--n: 10"></i></div><span class="muted">3 secure · 4 practising · 10 not seen</span></td>
+            <td data-source="child_skill_state.last_seen">Wed</td>
+            <td class="st" data-source="pii.educator_note.status"><span class="muted">none</span></td>
+            <td class="st"><span class="muted">not available yet</span></td>
+          </tr>
+          <tr>
+            <td class="num" data-source="enrolment.roll_no">15</td>
+            <td><a data-el="5" href="#child"><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Otto Owl</span></a></td>
+            <td data-source="school_class.section grade.name">K2 Blue</td>
+            <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="1 secure, 3 practising, 12 not seen yet"><i data-state="ok" style="--n: 1"></i><i data-state="wait" style="--n: 3"></i><i data-state="unseen" style="--n: 12"></i></div><span class="muted">1 secure · 3 practising · 12 not seen</span></td>
+            <td data-source="child_skill_state.last_seen">2 weeks ago</td>
+            <td class="st" data-source="pii.educator_note.status"><span class="muted">none</span></td>
+            <td class="st"><span class="muted">not available yet</span></td>
+          </tr>
+          <tr>
+            <td class="num" data-source="enrolment.roll_no">18</td>
+            <td><a data-el="5" href="#child"><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Rex Rook</span></a></td>
+            <td data-source="school_class.section grade.name">K2 Red</td>
+            <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="4 secure, 5 practising, 8 not seen yet"><i data-state="ok" style="--n: 4"></i><i data-state="wait" style="--n: 5"></i><i data-state="unseen" style="--n: 8"></i></div><span class="muted">4 secure · 5 practising · 8 not seen</span></td>
+            <td data-source="child_skill_state.last_seen">Wed</td>
+            <td class="st" data-source="pii.educator_note.status"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>1 to confirm</span></td>
+            <td class="st"><span class="muted">not available yet</span></td>
+          </tr>
+          <tr>
+            <td class="num" data-source="enrolment.roll_no">21</td>
+            <td><a data-el="5" href="#child"><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Uri Urial</span></a></td>
+            <td data-source="school_class.section grade.name">K2 Red</td>
+            <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="0 secure, 4 practising, 13 not seen yet"><i data-state="ok" style="--n: 0"></i><i data-state="wait" style="--n: 4"></i><i data-state="unseen" style="--n: 13"></i></div><span class="muted">0 secure · 4 practising · 13 not seen</span></td>
+            <td data-source="child_skill_state.last_seen">3 weeks ago</td>
+            <td class="st" data-source="pii.educator_note.status"><span class="muted">none</span></td>
+            <td class="st"><span class="muted">not available yet</span></td>
+          </tr>
+          <tr>
+            <td class="num" data-source="enrolment.roll_no">08</td>
+            <td><a data-el="5" href="#child"><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Hazel Hare</span></a></td>
+            <td data-source="school_class.section grade.name">K2 Blue</td>
+            <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="5 secure, 6 practising, 6 not seen yet"><i data-state="ok" style="--n: 5"></i><i data-state="wait" style="--n: 6"></i><i data-state="unseen" style="--n: 6"></i></div><span class="muted">5 secure · 6 practising · 6 not seen</span></td>
+            <td data-source="child_skill_state.last_seen">Thu</td>
+            <td class="st" data-source="pii.educator_note.status"><span class="muted">none</span></td>
+            <td class="st"><span class="muted">not available yet</span></td>
+          </tr>
+          <tr>
+            <td class="num" data-source="enrolment.roll_no">17</td>
+            <td><a data-el="5" href="#child"><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Quin Quail</span></a></td>
+            <td data-source="school_class.section grade.name">K2 Red</td>
+            <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="2 secure, 6 practising, 8 not seen yet"><i data-state="ok" style="--n: 2"></i><i data-state="wait" style="--n: 6"></i><i data-state="unseen" style="--n: 8"></i></div><span class="muted">2 secure · 6 practising · 8 not seen</span></td>
+            <td data-source="child_skill_state.last_seen">Mon</td>
+            <td class="st" data-source="pii.educator_note.status"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>1 to confirm</span></td>
+            <td class="st"><span class="muted">not available yet</span></td>
           </tr>
               </tbody>
             </table>
           </div>
-          <p><a data-el="11" href="#children?page=2">Later →</a></p>
+          <p><a data-el="10" href="#children?page=2">Later →</a></p>
           <div class="card">
             <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: when no class is linked to you</div>
             <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="not-seen"></i><b>No class linked to you</b><span class="muted">The coordinator links you to the classes you teach.</span></div></div>
           </div>
           <div class="card">
             <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: when no child matches</div>
-            <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="not-seen"></i><b>No child matches</b><span class="muted">Check the spelling, or clear the filters.</span><button class="btn press" data-el="5" type="button">Clear</button></div></div>
+            <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="not-seen"></i><b>No child matches</b><span class="muted">Check the spelling, or clear the filters.</span><button class="btn press" data-el="4" type="button">Clear</button></div></div>
           </div>
         </main>
         <aside class="rail" aria-label="Connected to">
           <section class="rail-box">
             <h2>Connected to</h2>
             <ul class="rlist">
-              <li><a class="ritem" data-el="9" href="#assessments"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><span>Assessments<small>grades 1 to 4</small></span></a></li>
-              <li><a class="ritem" data-el="10" href="#notes"><span class="tile" data-kind="note"><i class="ic" data-icon="note"></i></span><span>Notes<small><span class="num" data-source="pii.educator_note.status">7</span> to confirm</small></span></a></li>
+              <li><a class="ritem" data-el="8" href="#assessments"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><span>Assessments<small>grades 1 to 4</small></span></a></li>
+              <li><a class="ritem" data-el="9" href="#notes"><span class="tile" data-kind="note"><i class="ic" data-icon="note"></i></span><span>Notes<small><span class="num" data-source="pii.educator_note.status">7</span> to confirm</small></span></a></li>
             </ul>
           </section>
         </aside>
