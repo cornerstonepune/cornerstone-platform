@@ -1,13 +1,12 @@
 {
- "ok": false,
+ "ok": true,
  "passed": [
-  "2 a coordinator can still do all three; the existing staff-page specs pass unchanged",
+  "1 add a person, set classes, set subjects refuse an educator and a signed-out request: no row, no email",
+  "2 a coordinator can still do all three; the staff-page specs pass, gate-password changed only to sign in a coordinator",
+  "3 the check is the database's access groups: a role-only coordinator refused, a granted educator allowed, no role name in code",
+  "4 next in package.json and the lockfile is at least the version docs/notes/UI-15.md records; a lower one fails",
   "5 the upgrade changes no page: u51, screens, the journey test, bin/check pass; ux.frozen not grown"
  ],
- "failed": [
-  "1 add a person, set classes, set subjects refuse an educator and a signed-out request: no row, no email",
-  "3 the check is the database's access groups: a role-only coordinator refused, a granted educator allowed, no role name in code",
-  "4 next in package.json and the lockfile is at least the version docs/notes/UI-15.md records; a lower one fails"
- ],
- "ran_at": "2026-11-09T12:37:47+00:00"
+ "failed": [],
+ "ran_at": "2026-11-09T12:58:30+00:00"
 }
