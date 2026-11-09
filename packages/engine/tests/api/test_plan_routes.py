@@ -74,6 +74,8 @@ def test_every_route_needs_the_key_and_a_staff_sign_in(world):
         ("/fortnight/state", {"fortnight_id": w["fortnight"]}),
         ("/fortnight/move", {"fortnight_id": w["fortnight"], "to_state": "frozen"}),
         ("/timetable/generate", {"grade": "K2", "section": "A", "year": "2033-34", "fortnight": 1}),
+        ("/timetable/link", {}),
+        ("/timetable/unmatched", {}),
     ):
         assert _post(client, path, {"actor": w["email"], **body}, key=None).status_code == 401
         r = _post(client, path, {"actor": "nobody@cornerstone.test", **body})
