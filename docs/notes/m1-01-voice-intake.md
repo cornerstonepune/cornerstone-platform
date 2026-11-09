@@ -39,8 +39,8 @@ reads, each line beside its words, a person confirms.
   later; the curriculum version named by the existing trigger), `pii.educator_note` (audio key, transcript,
   `received_at` set by the server and never moved, status), `pii.note_claim` (each line, its words and her decision;
   written once). Five vocabulary tables (`observation_outcome`, `observation_entry_mode`, `observation_route`,
-  `note_status`, `claim_decision`) and two config rows (`voice.confirm_within_hours` 48; `voice.audio_retention_days`
-  null, O-14), also in `supabase/seed/config.json`.
+  `note_status`, `claim_decision`) and a config row (`voice.confirm_within_hours` 48; the second, `voice.audio_retention_days`
+  null for O-14, was retired by CP-10), also in `supabase/seed/config.json`.
 - Not touched: `evidence_event`, `activity`, `enrolment`, `staff`, any M0-05 table, any existing row. No DELETE for
   either service on any new table; the website reads the observations and the words, and never a note or a claim.
 - `cd packages/engine && uv run pytest -q tests/test_voice_tables.py` → 9 passed (after the orchestrator's review: a correction is of the same school, child and activity, once, never itself; a confirmed note keeps its words and class and no note goes back); with `test_roles`,
@@ -53,8 +53,8 @@ reads, each line beside its words, a person confirms.
 ## Step 4a, the engine — `20261227090000_k2_voice_evidence.sql` (additive) and `w3_read/voice_*`
 
 - A recording is kept on the engine box's disk under `data/voice/<year>/<note id>.<ext>` (gitignored, as scans are);
-  only its key is in the row. Retention is O-14: `bin/engine read voice retention` deletes nothing while
-  `voice.audio_retention_days` is null.
+  only its key is in the row. Retention was O-14; CP-10 settled it: the recording and the transcript are deleted
+  `voice.confirm_within_hours` (48) after the note was received, by `bin/engine read voice cleanup` (n8n's F5, hourly).
 - Transcribed through `adapters/speech.py` after the upload answers, only when `SARVAM_API_KEY` is set; otherwise the
   note waits as received. Read by `voice_note.read`; the activity's spoken number found by `activity.sheet_no` in the
   class's grade; every number in the class's enrolment open that day. A stranger or an unknown activity is a problem.
@@ -110,18 +110,16 @@ reads, each line beside its words, a person confirms.
 
 The engine runs on the box as the container `deploy-engine-1`. The deploy runs its commands as
 `sudo docker exec deploy-engine-1 engine …` (`.github/workflows/deploy-engine.yml`), so the timer does the same. On the box,
-`sudo crontab -e`, then add these two lines exactly (the box's clock is UTC):
+`sudo crontab -e`, then add this line exactly (the box's clock is UTC). **The second line this note used to give, `retention`, is gone (CP-10):
+recordings and transcripts are deleted by `engine read voice cleanup`, which n8n's F5 calls hourly; see `docs/notes/CP-10.md`.**
 
     17 * * * * docker exec deploy-engine-1 engine read voice expire >> /var/log/voice-expire.log 2>&1
-    43 21 * * * docker exec deploy-engine-1 engine read voice retention >> /var/log/voice-retention.log 2>&1
 
 - **The first line, hourly:** a note past `voice.confirm_within_hours` (48) is left unconfirmed and never becomes
   evidence. Confirm already refuses a late note by itself, so this keeps the queue and the coordinator's count honest.
   It is safe to run at any time and changes nothing the second time.
-- **The second line, daily at 03:13 in Pune:** it deletes nothing while `voice.audio_retention_days` is null (O-14,
-  open). It prints "kept: … nothing deleted" until Nimish sets a number. It is safe to add now.
-- Both print counts only, never a transcript, a name or which note. `tests/test_cli_voice.py` holds these two lines to
-  commands the engine has.
+- It prints counts only, never a transcript, a name or which note. `tests/test_cli_voice.py` holds this line to a
+  command the engine has.
 
 ## Step 4a extras, what any front end needs from the engine (branch m1-01-voice-engine-extras)
 

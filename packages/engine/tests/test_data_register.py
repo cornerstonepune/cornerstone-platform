@@ -63,7 +63,10 @@ def test_every_table_that_holds_a_childs_data_is_in_the_register(conn):
 
 # What a parent reads for each column a migration added to a table of names (pii): a column added there with no words
 # here fails, so the register is told before a parent's data is kept in a new way.
-PII_COLUMN_WORDS = {"pii.child.birthday": "date of birth"}
+PII_COLUMN_WORDS = {
+    "pii.child.birthday": "date of birth",
+    "pii.educator_note.sentence": "the one sentence she confirms from each",
+}
 
 
 def test_every_column_a_migration_adds_beside_a_childs_name_is_said_in_the_register():
