@@ -154,15 +154,13 @@ def test_the_coordinator_sees_only_what_needs_a_decision_red_first_and_counts_no
         "state",
     }
     assert set(got["counts"]) == {
-        "late", "unplanned", "unplanned_why", "children_without_notes", "class_days_without_notes",
+        "late", "unplanned", "children_without_notes", "class_days_without_notes",
     }  # fmt: skip
     assert all(
         isinstance(got["counts"][c], int)
-        for c in ("late", "children_without_notes", "class_days_without_notes")
+        for c in ("late", "unplanned", "children_without_notes", "class_days_without_notes")
     )
-    assert got["counts"]["unplanned"] is None and got["counts"]["unplanned_why"], (
-        "no plan yet: said, not invented"
-    )
+    assert got["counts"]["unplanned"] == 0, "no session happened here: zero, not empty"
     assert got["counts"]["children_without_notes"] >= 5, "this class's five children have no observation yet"
 
 

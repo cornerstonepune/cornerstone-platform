@@ -113,13 +113,22 @@ def asks_(
 @app.command("graph")
 def graph_(
     child_id: str = typer.Option("", "--child", help="One child id; default every child with evidence"),
+    nightly: bool = typer.Option(False, "--nightly", help="The scheduled rebuild, logged"),
+    hand_check: tuple[str, str, str, str] = typer.Option(
+        ("", "", "", ""),
+        "--hand-check",
+        help="Record a hand calculation for --child: SKILL GRADE EXPECTED BY",
+    ),
     changes: bool = typer.Option(
         False, "--changes", help="Only list, by grade, the states a rebuild would change"
     ),
 ) -> None:
     """Rebuild Ring B — child_skill_state, and each question's item_stat — from confirmed evidence."""
     from engine.w1_bank import learn
+    from engine.w3_read import cli_nightly
 
+    if nightly or any(hand_check):
+        return cli_nightly.run(nightly, child_id, hand_check)
     if changes:  # a list, counts only: nothing is rebuilt or written
         with db.connect() as conn:
             rows = graph.state_changes(conn, child_id or None)

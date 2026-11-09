@@ -7,12 +7,15 @@ one from the body alone, as every other route does, cannot tell "the same event 
 "a new event with an identical body" apart, and guessing at that here would be worse than not
 guessing."""
 
+import datetime as dt
+
 from fastapi import APIRouter, Depends, Header
 
 from engine.api.deps import get_conn, get_tenant_id, require_engine_key
 from engine.api.idempotency import derive_key, run_idempotent
 from engine.api.models import GraphRebuildRequest, GraphRebuildResponse
 from engine.assess import graph as skill_graph  # avoids shadowing this route module's own name
+from engine.w3_read import nightly
 
 router = APIRouter(dependencies=[Depends(require_engine_key)])
 
@@ -33,4 +36,24 @@ def rebuild(
         body.model_dump(),
         lambda: {"states": skill_graph.rebuild(conn, body.child_id)},
     )
+    return {**result, "already": already}
+
+
+@router.post("/graph/nightly")
+def nightly_rebuild(
+    idempotency_key: str | None = Header(None, alias="Idempotency-Key"),
+    conn=Depends(get_conn, scope="function"),
+    tenant_id: str = Depends(get_tenant_id),
+):
+    """The scheduled rebuild (CP-9). The flow sends the date as its key, so a retry the same night does nothing twice;
+    the call takes no clock of its own."""
+    key = idempotency_key or f"nightly-{dt.date.today().isoformat()}"
+    try:
+        result, already = run_idempotent(
+            conn, tenant_id, "graph_nightly", key, {}, lambda: nightly.nightly(conn)
+        )
+    except Exception as e:
+        nightly.failed(conn, e)  # run_idempotent has rolled back; the failure is the ledger's to keep
+        conn.commit()
+        raise
     return {**result, "already": already}
