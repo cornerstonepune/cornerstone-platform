@@ -1,0 +1,163 @@
+# Cornerstone School OS: the design language
+
+One file that a wireframer and a builder both follow. It restates nothing that has a home elsewhere: values live in
+`tokens.json`, rules in `SPEC.md` §2–§5, screens in `screens.json`. Where this file and those disagree, those win and
+this file is wrong. The look is "B rich" (`docs/decisions/2026-11-09-the-look-rich.md`).
+
+## 1. Tokens: by name, never by value
+
+Every colour, size, radius, shadow and motion is a token in `docs/frontend/tokens.json`. Code and wireframes name the
+token (`var(--state-ok)`); nobody types a hex. `wireframes/kit.mjs` writes them as CSS custom properties into
+`wireframes/kit.css`, light and dark; the site's build copies the same file to `apps/web/design-system/tokens.json`.
+
+| Family | Tokens | Meaning |
+|---|---|---|
+| Neutrals | `ground` `surface` `panel` `ink` `ink-muted` `line` `line-control` `link` `focus` `highlight` | the page, a sunken box, a card, text, hairlines, a control's edge, links (always underlined) |
+| Main action | `action` `action-ink` | the one filled button on a page; the "now" outline; today's column |
+| Brand | `brand-clay` (+ materials) | the mark and the lit door's underline only; never a state, never on a child |
+| Work states | `state-ok` `state-wait` `state-late` `state-quiet`, each with `-bg` | green, amber, red, grey; always with icon and word |
+| Kinds | `kind-period` `-child` `-activity` `-objective` `-skill` `-assessment` `-note`, each with `-bg` | which kind of thing a tile, card header or rail link is |
+| Subjects | `subject-numeracy` `-language` `-arts` (+ `-arts-ink`) `-fixed`, each with `-bg` | the top edge, icon and word of a period or cell |
+
+**Type** (`--type-<name>`, used as `font: var(--type-body)`): `title-page` 32 serif (the one h1), `title-section` 24,
+`title-small` 20, `lead` 18 (the purpose line), `body` 16, `label` 14, `eyebrow` 14 caps with `--type-eyebrow-ls`,
+`caption` 12 (timestamps and sources only, never a status or action). Source Serif 4 for titles, Source Sans 3 for the
+rest, loaded by next/font on the site; wireframes fall back to Georgia and the system sans (no font host, ever).
+Tabular figures (`.num`) in every column of numbers.
+
+**Spacing** `--space-1`…`--space-7` = 4 / 8 / 16 / 24 / 32 / 48 / 64; `--tap` 44 (least size of anything tappable).
+**Radii** `--radius-card` 14 (cards, rows, cells, squares, the rail box), `--radius-control` 10 (buttons, inputs, tiles),
+`--radius-pill` (chips, the badge). **Shadow** `--shadow-card`, the one elevation, replacing a card's border; never on a
+chip, text, a tinted square or the logo. **Motion** `.press`: scale `--press-scale` in `--press-transition` on `:active`;
+nothing else moves; removed under reduced motion.
+
+## 2. The frame (AppFrame)
+
+```
+┌ bar ──────────────────────────────────────────────────────────────────────────┐
+│ [logo] Today(7) Timetable Children Setup        [search]  Acting as  ?  Sign out │
+├───────────────────────────────────────────────────────────────────────────────┤
+│ Children › K2 Red                                       (trail: door › thing)   │
+│ EYEBROW · FACTS                                         ┌ rail ─────────────┐  │
+│ Title (h1)                                              │ CONNECTED TO       │  │
+│ Purpose line, ≤140 characters                           │ [tile] link        │  │
+│ blocks…                                                 │ CAPTURE HERE       │  │
+│                                                         └────────────────────┘  │
+└───────────────────────────────────────────────────────────────────────────────┘
+phone (≤700 px wide): mark alone, icon buttons; one column, rail below; the four doors are a bottom tab bar
+```
+
+- **Bar**: the BrandMark links to Today; four doors with their icons, the lit door underlined in `brand-clay`
+  (`aria-current="page"`); the one count badge on Today; search; acting-as (coordinator); help; sign out. Its eight items
+  are `screens.json` `bar`, in that order.
+- **Trail**: the door, then the thing (two levels) plus the browser's Back.
+- **Rail**: "Connected to" (edges not already linked in the main column, each a KindTile + words) and, where a lesson or a
+  child is in view, "Capture here" (Voice note, Photo), in `surface` boxes.
+- **Phone**: the doors become a bottom tab bar (icon over word, the chosen icon in `brand-clay`). The switch is a container
+  query on `.frame`, so one markup serves both widths.
+
+## 3. The state rule
+
+A state is **an icon, a word and a colour, never one alone** (`.chip`, `.sq`, `.att`, `.step` with `data-state=`).
+
+| `data-state` | Colour | Words (examples) |
+|---|---|---|
+| `late` | red | do now, late, clash, for you to judge |
+| `wait` | amber | to confirm, this week, moved, practising, wrong |
+| `ok` | green | done, secure, right, results in |
+| `quiet` | grey | to do, emerging, blank, absent |
+| `unseen` | grey on panel, dashed edge | not seen yet |
+
+**Red is for work, never for a child.** A child below, not willing, not seen or at level 0 is grey or amber. If two
+things on a screen are red, one is wrong. A chip on a tinted cell gets `.on-tint` (panel fill, 1 px ring), because the
+amber and Arts tints, and the red and Language tints, sit close.
+
+## 4. Kinds, subjects, icons
+
+| Kind (`data-kind`) | Colour | Icon concept |
+|---|---|---|
+| `period` (and fortnight, timetable) | slate | `period` |
+| `child` | teal | `child` |
+| `activity` | indigo | `activity` |
+| `objective` | violet | `objective` |
+| `skill` | orchid | `skill` |
+| `assessment` (and a child's paper) | sky | `assessment` |
+| `note` (and materials) | stone | `note` |
+
+Subjects (`data-subject`): `numeracy` blue (icon `numeracy`), `language` brown (`language`), `arts` gold (`arts`, its icon
+and word in `subject-arts-ink`), `fixed` sand (settling, fruit, lunch, going home). A subject is always icon + word +
+colour, like a state.
+
+**Icons**: Lucide only, stroke 1.9, 16 / 20 / 24 px (`.ic.s`, `.ic`, `.ic.l`). A wireframe writes
+`<i class="ic" data-icon="<concept>">`; the site writes `<Icon name="<concept>">` from `apps/web/lib/icons.tsx`. The
+concept names are that file's `ICONS` keys plus `ADDED_ICONS` in `wireframes/kit.mjs` (period, assessment, photo,
+setup, timetable, children, not-seen, numeracy, language, arts, materials, details, upload, help, sign-out, acting-as,
+open, trail, moved, clash). A builder who first needs one of those moves it into `ICONS` and deletes it from
+`ADDED_ICONS` in the same commit. No screen names a Lucide icon directly.
+
+## 5. One main action, one purpose
+
+Each page: one eyebrow (kind icon + two or three facts), one h1 equal to the screen's `title`, one purpose line of at most
+140 characters, **exactly one main action** (`.btn-main`, filled with `action`; on a screen whose main action is a tap,
+such as the class grid, there is no filled button), one next step. Nothing is ticked for an educator: no button over
+every row; an approval is the row's own action.
+
+## 6. Names
+
+The repository is public. **No real child's or staff member's name is ever in git**: not in a wireframe, a fixture, a
+test or a screenshot. Every name drawn comes from `wireframes/fake-names.json` (alliterative animals for children,
+spice surnames for staff); `check.mjs` fails on any other. A child's name is shown only on screens whose `elements` list
+a `child_name`, read from `pii.child` by `child_id` at render time; it never goes into a URL, a log or a state word.
+UI-1 generates `apps/web/tests/fake-names.ts` from the same JSON, so the site has one list.
+
+## 7. How to make a wireframe
+
+1. Read the screen's entry in `screens.json`: route, who, blocks, `elements`, rail, capture, main, empty, phone, data,
+   `done_when`.
+2. Copy `wireframes/picture.html` to `wireframes/<screen-id>.html`. Keep the two frames: `<section class="wf"
+   data-viewport="1440">` and `data-viewport="400"`, with **the same markup in both** (the phone layout comes from
+   kit.css).
+3. Set the lit door, trail, eyebrow, h1 (= `title`), purpose. Draw as the role that sees most (a coordinator for `both`).
+4. Build the main column and rail **only from blocks in `blocks.html`**: copy a block's markup, change the content. No
+   new class, no `<style>`, no `<script>`; `style=""` may only set a `--custom-property` (a bar's length, a grid's
+   columns). A block that is missing is added to `components.css` and `blocks.html` first, in its own commit.
+5. Mark every control: `data-el="<i>"`, `i` = its 0-based index in that screen's `elements`. A control repeated (each
+   square, each skill link) carries the same index. A `child_name` element is text, not a control. Bar items carry
+   `data-bar="<i>"` (index in `screens.json` `bar`); trail links carry `data-trail`. Nothing else may be clickable.
+6. Bind every shown datum: `data-source="<table>.<column>"` (several separated by spaces; `pii.<table>.<column>` for
+   pii), using **the target tables** in `specs/CP-27/target-tables.md` and the columns in `supabase/migrations`. A
+   computed figure names what it counts (`enrolment.child_id` for "24 children").
+7. Anything the target tables cannot give gets `data-gap="<what is missing>"`: kit.css draws it with a dashed amber
+   outline and the words. Add a row to `wireframes/DATA-GAPS.md`.
+8. Sample data from `fake-names.json`, the school's words (educator, exchange / regroup, Easy / Medium / Hard /
+   Advance, secure / practising / emerging / not seen), and the empty state from `screens.json` `empty`.
+9. Run `node docs/frontend/wireframes/check.mjs <screen-id>.html` until it says PASS; open the file in a browser, both
+   themes (`data-theme="dark"` on `<html>`). Nimish approves the picture; only then is it built.
+
+## 8. How to turn an approved wireframe into a page
+
+1. The route is the screen's `route`; a server component by default.
+2. Each `data-block` region becomes the component of that name in `apps/web/components/`; port its markup and class
+   names from `blocks.html` once, then reuse. kit.css's block rules become that component's styles, still naming
+   only tokens.
+3. Each `data-source` becomes a field of the page's one query; each `data-gap` is a backend question that must be
+   closed (DATA-GAPS.md) before the slice starts, never a hard-coded value.
+4. Each `data-el` becomes the control the inventory test (`tests/u70-inventory.spec.ts`) drives by that index; each
+   `data-bar` is AppFrame's. Keep the same element types (a link stays an `<a>`, a filter a `<select>`).
+5. The page passes the screen's `done_when`, the generic checks of SPEC §7, a screenshot per theme, and looks like the
+   approved wireframe at 1440 and 400. A difference from the wireframe is a change to the wireframe first, approved
+   again, never a quiet change in code.
+
+## 9. Files
+
+| File | What it is |
+|---|---|
+| `wireframes/kit.mjs` | writes `kit.css` from `tokens.json`, the icon map and `components.css` |
+| `wireframes/components.css` | the blocks' rules, tokens only (the source; edit this, then run kit.mjs) |
+| `wireframes/kit.css` | generated; the one stylesheet every wireframe links |
+| `wireframes/schema.mjs` | replays `supabase/migrations` to know every table's columns today |
+| `wireframes/blocks.html` | the 26 blocks, drawn once each |
+| `wireframes/<screen-id>.html` | one wireframe per screen (the pilot: `picture.html`) |
+| `wireframes/check.mjs` | holds every wireframe to the rules above; `--gaps` holds DATA-GAPS.md to screens.json |
+| `wireframes/fake-names.json` | the only names allowed |
+| `wireframes/DATA-GAPS.md` | what the screens need that the target tables do not have |
