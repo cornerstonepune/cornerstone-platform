@@ -1,5 +1,5 @@
 {
-  "digest": "433fc5e706030f81d3f05d89556aab5b369f64b2a7810fddf0474c10067c59f4",
+  "digest": "ba2ade063e0380f45bbf7cb5ea410dc1dddd738ab4d5506290054da8b1e9692e",
   "files": [
     "spec.md",
     "checks.sh",
@@ -11,7 +11,7 @@
     "proofs/test_fortnight_plan.py",
     "proofs/test_gate.py"
   ],
-  "locked_at": "2026-11-08T17:13:16+00:00",
-  "criteria": 10,
+  "locked_at": "2026-11-09T04:17:40+00:00",
+  "criteria": 9,
   "athena": "2.14.0"
 }

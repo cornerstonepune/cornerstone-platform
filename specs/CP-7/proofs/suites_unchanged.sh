@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# CP-7 item 9: the existing timetable and approval-list tests and the timetable pages pass unchanged.
+# CP-7 item 8: the existing timetable and approval-list tests and the timetable pages pass unchanged.
 # The suites are the ones the design names ("Proofs"): engine test_k2_timetable.py, test_k2_timetable_load.py,
 # test_timetable_run_command.py, test_k2_day.py, test_approval_list.py; website journeys m1-09-activity,
 # m1-09-calendar, m1-09-materials, m1-14a-timetable-rules.

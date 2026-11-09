@@ -1,4 +1,4 @@
-"""CP-7 item 10 (LIVE, box only, read-only): the two settings rows exist for every school and the new tables exist.
+"""CP-7 item 9 (LIVE, box only, read-only): the two settings rows exist for every school and the new tables exist.
 
 In one read-only transaction on the live database: `to_regclass` is not null for `public.fortnight_plan` and
 `public.fortnight_plan_line`, and no school (`tenant`) lacks either `fortnight.no_roll_forward` or

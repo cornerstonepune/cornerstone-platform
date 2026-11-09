@@ -1,4 +1,4 @@
-"""Shared fixtures for CP-7's database proofs (a class's fortnight timetable: draft, approve what changed, roll forward).
+"""Shared fixtures for CP-7's database proofs (a class's fortnight timetable: draft, one approval per fortnight, roll forward).
 
 Everything is made here inside one transaction that is rolled back: a fake school of its own (a new tenant, so every
 per-school row the migration seeds for "every school, present and future" is exercised), academic year 2031-32, two K2
@@ -15,7 +15,8 @@ Each acts as the website does: as `app_web`, with `set_config('app.staff_id', <s
 sign-in entry (config `app.staff`) is given the same uuid as the person's `staff.id`, so the identity resolves to the
 same person whether it is read through CP-3's sign-in resolution or as a staff id directly.
 
-Names are the design's contract (specs/CP-7/design.md, "Data", "The rules", "Refusals").
+Names are the design's contract (specs/CP-7/design.md, "Data", "Rules", "Refusals"). The approval is the
+`settled_by` / `settled_at` stamp on `fortnight_plan`; the shared `approval` ledger gets no row (design, "Data").
 """
 
 import datetime as dt
@@ -33,7 +34,7 @@ YEAR = "2031-32"
 FN = {9: "2031-09-01", 10: "2031-09-15", 11: "2031-09-29", 12: "2031-10-13"}  # each a Monday
 WEEKS, DAYS, ORDS = ("A", "B"), (1, 2, 3, 4, 5), (1, 2, 3)
 LINES = len(WEEKS) * len(DAYS) * len(ORDS)  # 30 lines in a class's fortnight
-NOT_APPROVER = "only the approving group decides a fortnight's line"
+NOT_APPROVER = "only the approving group approves a fortnight"
 
 
 @pytest.fixture
@@ -156,26 +157,23 @@ class World:
         for n in ns:
             self.move(n, "frozen")
 
-    # ---- the three functions, called as their callers call them ----
+    # ---- the two functions, called as their callers call them ----
 
     def draft(self, klass, n):
         """`engine timetable draft` calls this as app_engine, with app.changed_by set."""
         with acting(self.c, "app_engine"):
             return self.c.execute("select public.fortnight_draft(%s, %s) as id", (klass, self.fn[n])).fetchone()["id"]
 
-    def decide(self, line, decision="approved", reason=None, who="approver"):
+    def approve(self, plan, who="approver"):
+        """The website calls this as app_web, with the signed-in person's app.staff_id."""
         with acting(self.c, "app_web", self.staff.get(who, who)):
-            self.c.execute("select public.fortnight_line_decide(%s, %s, %s)", (line, decision, reason))
-
-    def approve_open(self, plan, who="approver"):
-        with acting(self.c, "app_web", self.staff.get(who, who)):
-            return self.c.execute("select public.fortnight_approve_open(%s) as n", (plan,)).fetchone()["n"]
+            self.c.execute("select public.fortnight_approve(%s)", (plan,))
 
     def settle(self, klass, n):
-        """Draft and approve every open line: the class's fortnight is settled."""
+        """Draft, and approve when it waits: the class's fortnight is settled."""
         plan = self.draft(klass, n)
         if self.plan(plan)["state"] == "draft":
-            self.approve_open(plan)
+            self.approve(plan)
         assert self.plan(plan)["state"] in ("approved", "rolled_forward")
         return plan
 
@@ -192,13 +190,9 @@ class World:
         return db.one(self.c, "select * from fortnight_plan_line where fortnight_plan_id = %s and week_code = %s"
                               " and weekday = %s and period_id = %s", (plan_id, week, day, self.period[o]))
 
-    def approvals(self, target=None, decision=None):
-        """Rows of the approval ledger of kind timetable_line in this school, optionally for one line."""
-        return self.c.execute(
-            "select * from approval where tenant_id = %s and kind = 'timetable_line'"
-            " and (%s::text is null or target = %s::text) and (%s::text is null or decision = %s::text)"
-            " order by created_at, id",
-            (self.t, target and str(target), target and str(target), decision, decision)).fetchall()
+    def approvals(self):
+        """Rows of the shared approval ledger in this school (the design writes none: the stamp is on the plan)."""
+        return _val(self.c, "select count(*) from approval where tenant_id = %s", (self.t,))
 
     def counts(self):
         return db.one(self.c, "select (select count(*) from fortnight_plan where tenant_id = %(t)s) as plans,"
