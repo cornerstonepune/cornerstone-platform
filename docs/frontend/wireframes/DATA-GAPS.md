@@ -52,3 +52,15 @@ migrations, and fails if a row here does not name both the screen and the missin
   §5). `picture.done_when`, `picture.phone` and `skill.phone` in `screens.json` now say so.
 - `skill.name` vs `registry_skill.domain`: the pilot's domain filter reads `registry_skill.domain` through
   `skill.registry_codes`; whether K2 domains (Number, Language, Arts) are that column or `subject.name` is for the backend.
+
+## Found while drawing batch 1 (period, record, confirm, notes, children)
+
+| Screen | What is missing | Why | Backend must answer |
+|---|---|---|---|
+| `record`, `confirm`, `notes` | which period or activity a note belongs to | `pii.educator_note` has no `session_id` (columns today: staff_id, class_id, audio_key, transcript, received_at, status, ...); only `activity_observation` carries `session_id`, and only after confirm | Add `session_id` to `pii.educator_note` (CP-10 Done-when says Send writes "this session's id"). |
+| `confirm` | the reader's flagged problems | `pii.note_claim` has no column for a child it could not match or a line with no mark | Where does a flag live: a column on `pii.note_claim`, or a row in `flow_run.result`? |
+| `confirm` | each child's drafted mark before Confirm | `pii.note_claim` holds `read_as` and `words` as text; `activity_observation` is written only at Confirm | Is the draft per-child mark parsed from `read_as`, or held in a new column? |
+| `notes` | "by voice / form" of a waiting note | `route` exists only on `activity_observation`, written at confirm | A `route` column on `pii.educator_note`. |
+| `period`, `confirm` | the words above / as expected / below / not willing / absent | `observation_outcome` is not a target table | Do the outcome words become a `config` word list? |
+| `children` | attendance for the last 7 school days (a dashed placeholder column) | no target table holds attendance (`attendance_mark` in screens.json `data`) | A table or a column for daily presence, or drop the strip. |
+| `children` | notes waiting per child | a note names children only in `pii.note_claim.read_as` text; no `child_id` | Are children parsed into a child column on `pii.note_claim`, or is the count dropped? |
