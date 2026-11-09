@@ -16,8 +16,7 @@ category: verification
 - Do not end the turn while checks run. Wait for the background task, read its result, then report.
 - Failures are fixed at the cause (CLAUDE.md rule 11). "bin/check failed: code drifted from workflows.json" means fix the map or the code against `packages/engine/tests/test_layout.py`; never raise a limit or loosen a rule.
 - Runtime files are not yours to commit: plugin writes under `.claude/autoharness/` and `*.ledger.jsonl` / `*.sidecar.json` show as changed to the gate. Leave them out of commits and say so in one line.
-- `athena done` rewrites `specs/<ID>/RUN.json` with a new `ran_at`, so the tree is dirty again right after a pass. When the repository's rules say run records are not committed, leave that file out, say so in one line, and do not re-run the checks to clear the stop gate.
-- Permission rewrites: if the classifier denies a call with "a hook changed this call's input", do not resubmit the text the hook printed; the rewritten text was denied every time in the trace. Retype the command as written, checking the next hook output: `{}` means the hook left it alone, and that form ran. If that is denied too, report it to Nimish and stop retrying.
+- Permission rewrites: if the classifier denies a call because a hook rewrote its input, reissue that exact input once; if denied again, report it to Nimish and stop retrying.
 - Say "passes" only when the output you read shows it.
 - A number a builder or subagent reports ("17 of 20 passed") is theirs. Attribute it ("the builder reports ...") or read the run yourself before repeating it as a result. Re-run any command that failed earlier before claiming a check passes.
 - If the done-gate fires again after you answered "no check applies", the trigger is still in the tree. Delete the scratch files it names when they sit outside the repository, or run the named check. Restating "no check applies" does not clear the gate and loops every stop.
