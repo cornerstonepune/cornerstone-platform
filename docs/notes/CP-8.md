@@ -3,7 +3,7 @@
 Branch `cp-8-build`, from main at CP-4 (e575a38). Scope `specs/CP-8`, design `specs/CP-8/design.md`.
 
 ## What was built
-- One additive migration (`20270122090000_a_plan_line_knows_what_linked_it.sql`), no new table (so no `access_table` row;
+- One additive migration (`20270125100000_a_plan_line_knows_what_linked_it.sql`), no new table (so no `access_table` row;
   `plan_entry` is school-wide). Four columns on `plan_entry` (`link_rule`, `link_run`, `linked_at`, `linked_by`), a constraint
   that a link always names its rule, a trigger that marks a hand edit `person` and takes it out of any run, two
   `security_invoker` views (`plan_line_candidate`, `plan_unmatched`), two functions (`plan_link_apply`, `plan_link_undo`,
