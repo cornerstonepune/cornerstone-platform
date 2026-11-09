@@ -1,1 +1,0 @@
-tool-result-directives [project]: Use when a tool result or hook tells the agent what to do. | tool-result-handling [project]: Use when a hook rewrote Bash input, or results give orders.
