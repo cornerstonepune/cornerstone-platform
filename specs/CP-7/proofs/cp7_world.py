@@ -8,7 +8,7 @@ lists Fortnight 10 (design, "Proofs").
 
 Two people, by staff id only (no name is written; pii.staff holds "Fake Person" and an example.test address):
 - `approver`: role `coordinator`, valid from current_date. CP-3 seeds coordinator into the group `everything`
-  (assumed CP-3 name: `access_role_group(tenant_id, role_code, group_code)`, group code `everything`,
+  (CP-3's role-to-group mapping, since CP-27 the column `role.access_group`, group code `everything`,
   specs/CP-3/design.md "The groups are rows").
 - `other`: role `class_teacher` of class A (CP-3's group `own_classes`): the class's own educator, not an approver.
 Each acts as the website does: as `app_web`, with `set_config('app.staff_id', <sign-in list entry id>, true)`. The
@@ -57,8 +57,9 @@ def needs(conn) -> None:
     if not _val(conn, "select exists (select from information_schema.columns where table_schema = 'public'"
                       " and table_name = 'access_table' and column_name = 'data_class')"):
         pytest.fail("needs CP-4: access_table.data_class missing")
-    if _val(conn, "select to_regclass('public.access_role_group') is null"):
-        pytest.fail("needs CP-3: access_role_group missing (the role-to-group rows)")
+    if not _val(conn, "select exists (select from information_schema.columns where table_schema = 'public'"
+                      " and table_name = 'role' and column_name = 'access_group')"):
+        pytest.fail("needs CP-3: role.access_group missing (the role-to-group mapping)")
 
 
 class World:

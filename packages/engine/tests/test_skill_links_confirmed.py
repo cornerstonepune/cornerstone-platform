@@ -35,7 +35,7 @@ def conn():
         c.rollback()
 
 
-# ---- Done when 1: the table, and its words as rows ------------------------------------------------------------------
+# ---- Done when 1: the table, and its words (a rule on each column since CP-27) ------------------------------------------------------------------
 
 
 def test_a_link_between_two_broad_skills_holds_its_strength_reason_source_and_status(conn):
@@ -62,42 +62,20 @@ def test_a_link_between_two_broad_skills_holds_its_strength_reason_source_and_st
     assert _refused(conn, ADD, (t, c, a, "firm", "r", "s")), "strength is hard or soft"
 
 
-def test_strength_and_status_are_rows_not_lists_in_a_check(conn):
-    """The repo keeps a vocabulary as rows. No check on either table spells a word out."""
-    for table in ("link_strength", "link_status"):
-        assert conn.execute(f"select count(*) as n from {table}").fetchone()["n"] >= 2
-    spelled = conn.execute(
-        "select c.conrelid::regclass::text as tbl, pg_get_constraintdef(c.oid) as rule from pg_constraint c"
-        " where c.contype = 'c' and c.conrelid in ('skill_link'::regclass, 'skill_prerequisite'::regclass)"
-        " and pg_get_constraintdef(c.oid) ~ '''(hard|soft|proposed|confirmed)'''"
-    ).fetchall()
-    assert not spelled, spelled
+def test_a_link_is_proposed_or_confirmed_and_nothing_else(conn):
+    """Strength and status are rules on each table's column (CP-27, docs/data-model.md: a short fixed list is a check)."""
     t = tenant(conn)
     a, b = _skills(conn, 2)
-    assert not _refused(
-        conn, "insert into link_strength (tenant_id, code, ord, words) values (%s,'maybe',9,'maybe')", (t,)
+    who = _staff(conn, t)
+    add = (
+        "insert into skill_link (tenant_id, skill_code, before_code, strength, reason, source, status, confirmed_by)"
+        " values (%s, %s, %s, 'hard', 'r', 's', %s, %s)"
     )
-    assert not _refused(conn, ADD, (t, b, a, "maybe", "r", "s")), "a new word is an insert, no migration"
-
-
-def test_a_new_school_has_the_seed_rows_for_strength_and_status_from_the_moment_it_exists(conn):
-    seed = settings.seed("vocabulary.json", "link_strengths"), settings.seed("vocabulary.json", "link_states")
-    school = conn.execute(
-        "insert into tenant (slug, name) values ('m115-new', 'New') returning id"
-    ).fetchone()["id"]
-    got = [
-        [
-            dict(r)
-            for r in conn.execute(
-                f"select code, words{extra} from {tb} where tenant_id = %s order by ord", (school,)
-            )
-        ]
-        for tb, extra in (("link_strength", ""), ("link_status", ", confirmed"))
-    ]
-    assert got[0] == [{"code": s["code"], "words": s["words"]} for s in seed[0]]
-    assert got[1] == [{"code": s["code"], "words": s["words"], "confirmed": s["confirmed"]} for s in seed[1]]
-    assert [s["code"] for s in seed[0]] == ["hard", "soft"]
-    assert [(s["code"], s["confirmed"]) for s in seed[1]] == [("proposed", False), ("confirmed", True)]
+    assert _refused(conn, add, (t, b, a, "maybe", None)), "a status is proposed or confirmed"
+    row = conn.execute("select id from skill_prerequisite limit 1").fetchone()["id"]
+    assert _refused(conn, "update skill_prerequisite set strength = 'firm' where id = %s", (row,))
+    assert _refused(conn, "update skill_prerequisite set status = 'maybe' where id = %s", (row,))
+    assert not _refused(conn, add, (t, b, a, "confirmed", who))
 
 
 def test_confirmed_needs_a_person_and_a_time_and_proposed_has_neither(conn):
@@ -118,11 +96,10 @@ def test_confirmed_needs_a_person_and_a_time_and_proposed_has_neither(conn):
 
 
 def test_a_link_can_never_be_deleted_by_the_engine_or_the_site(conn):
-    for table in ("skill_link", "link_strength", "link_status"):
-        for role in ("app_engine", "app_web"):
-            assert not conn.execute(
-                "select has_table_privilege(%s, %s, 'DELETE') as ok", (role, table)
-            ).fetchone()["ok"], f"{role} may delete from {table}"
+    for role in ("app_engine", "app_web"):
+        assert not conn.execute(
+            "select has_table_privilege(%s, 'skill_link', 'DELETE') as ok", (role,)
+        ).fetchone()["ok"], f"{role} may delete from skill_link"
 
 
 # ---- Done when 2: skill_prerequisite gains the same words; the 282 are proposed, never confirmed --------------------

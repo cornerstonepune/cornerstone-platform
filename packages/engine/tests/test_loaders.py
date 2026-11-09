@@ -82,7 +82,6 @@ def _seeded(name):
 
 EXPECTED = {
     "tenant": 1,
-    "domain": 14,
     "registry_skill": 244,  # the whole map, all 14 domains — not the maths slice
     "milestone": 849,
     "learning_objective": 1750,
@@ -147,6 +146,16 @@ def test_the_vocabulary_holds_every_seeded_mistake_and_may_hold_more(loaded):
         have = {(r["code"], r["op"]) for r in conn.execute("select code, op from misconception").fetchall()}
     assert want <= have, f"the seed's own mistakes are missing: {sorted(want - have)}"
     assert loaded["misconception"] >= len(want)
+
+
+def test_every_registry_skill_carries_its_domains_name(loaded):
+    """A screen or a matcher says a skill's domain by its name ("Numeracy & Logic"), never its code: the name is on
+    the skill (CP-27: it was the table `domain`)."""
+    names = {d["code"]: d["name"] for d in json.loads((SEED / "registry.json").read_text())["domains"]}
+    with db.connect() as conn:
+        rows = conn.execute("select domain, domain_name from registry_skill").fetchall()
+    assert rows and all(r["domain_name"] == names[r["domain"]] for r in rows)
+    assert {r["domain"] for r in rows} == set(names), "every domain has a skill that carries its name"
 
 
 def test_milestones_load_for_the_registry_skills(loaded):

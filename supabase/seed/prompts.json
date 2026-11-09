@@ -57,7 +57,7 @@
       "purpose": "read_page",
       "version": 1,
       "model": "claude-haiku-4-5",
-      "active": true,
+      "active": false,
       "text_file": "prompts/read_page.v1.txt",
       "json_schema": {
         "type": "object",

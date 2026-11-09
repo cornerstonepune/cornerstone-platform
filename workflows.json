@@ -133,7 +133,7 @@
       "who": "code; a model for one sentence; the teacher confirms",
       "built": "partly",
       "takes": ["child_skill_state"],
-      "gives": ["class_card", "home_sheet", "parent_note"],
+      "gives": ["class_card", "parent_note"],
       "files": ["engine/w4_close/card.py", "engine/w4_close/cli_card.py"],
       "commands": ["engine card build", "engine card confirm"],
       "screens": ["/home"],
@@ -213,7 +213,7 @@
     "covers": ["engine/", "apps/web/"],
     "frozen": {
       "engine/adapters/ocr.py": 999,
-      "engine/w3_read/legacy.py": 639,
+      "engine/w3_read/legacy.py": 630,
       "engine/assess/items.py": 439
     }
   },
@@ -267,8 +267,8 @@
         "C901": 11
       },
       "engine/w3_read/legacy.py::import_scan": {
-        "C901": 13,
-        "PLR0915": 57
+        "C901": 12,
+        "PLR0915": 54
       },
       "engine/w3_read/marking.py::mark": {
         "C901": 13
