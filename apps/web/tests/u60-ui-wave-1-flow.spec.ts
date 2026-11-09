@@ -85,9 +85,9 @@ async function asEducator(browser: import("@playwright/test").Browser) {
 
 const DOORS = ["Today", "Timetable", "Children", "Setup"];
 
-/** The frame (UI-13): the school's mark, the doors on one bar (Setup for the coordinator group only), and no sidebar. */
+/** The frame (UI-13): the school's mark, the doors on one bar (Setup shown while `mayUse(me, "setup")`), and no sidebar. */
 async function theBar(page: Page, doors: string[]) {
-  await expect(page.locator("header img[data-brand-mark]"), "the school's logo").toBeVisible();
+  await expect(page.locator("header picture[data-brand-mark] img"), "the school's logo").toBeVisible();
   expect(await page.locator("aside:not([data-rail])").count(), "no left sidebar").toBe(0);
   const groups = page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" });
   expect((await groups.getByRole("link").allInnerTexts()).map((n) => n.replace(/\s*\d[\d,]*$/, "").trim())).toEqual(doors);
@@ -100,7 +100,7 @@ async function theBar(page: Page, doors: string[]) {
 test("an educator with one class and one subject: the bar, only hers, no Class or Subject boxes, no approve-all", async ({ browser }) => {
   const { context, page } = await asEducator(browser);
   await open(page, "/today", /What needs doing/);
-  await theBar(page, DOORS.slice(0, 3));
+  await theBar(page, DOORS);
   await expect(page.locator("#bar-subject, #bar-class, [data-viewing]"), "no universal Class or Subject selector").toHaveCount(0);
   // the bar carries sign out; the door's row of pages has the rest
   await expect(page.locator("[data-bar]").first().getByRole("button", { name: "Sign out" })).toBeVisible();

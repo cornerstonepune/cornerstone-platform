@@ -47,8 +47,8 @@ are in `apps/web/lib/voice-words.ts` and every icon in `apps/web/lib/icons.tsx`,
    grey for a state with nothing to do. Red is rare. A state is added to `STATES` before a page uses it.
 11. **The bar is for getting around.** One bar across the whole screen, 64 px high, and no sidebar (the rail beside a page
    holds what is connected to it, never the menu): the school's logo (BrandMark, a link to Today), the four doors (Today,
-   Timetable, Children, Setup, each with its icon; Setup for the coordinator group only), the search, acting as (the
-   coordinator's), help and sign out. Under the bar sit the pages of the lit door. The one count in the site is on Today.
+   Timetable, Children, Setup, each with its icon; Setup is every member of staff's while `mayUse(me, "setup")` says so, and
+   the coordinator group's alone once the roles split), the search, acting as (the coordinator's), help and sign out. Under the bar sit the pages of the lit door. The one count in the site is on Today.
    The search is a typeahead of at most five suggestions with no results page; what is typed travels in a POST body, never
    in an address or a log. Everything in the bar is at least 44 px tall. Nothing in a shared block or the bar names a
    subject. The door lit is the door the walk started from. Above a page's title is its trail: the door, then the thing,
@@ -82,7 +82,7 @@ a row under the bar:
 | Today | What needs doing (a short list of kinds of work, one line each with its count; the address `/today`; carries the one count); Your day |
 | Timetable | This week, Materials, Timetable rules |
 | Children | Children (the class pictures), Assessments, Papers to approve, Upload papers, Check answers, Class results, Parent reports, Across classes |
-| Setup (coordinator only) | Curriculum, Skills to approve, Question bank, Staff, School, How it works |
+| Setup | Curriculum, Skills to approve, Question bank, Staff, School, How it works |
 
 Help, the Guide, Report a problem and the password sit outside the bar: the "?" and the person in the bar, and a link at the foot.
 The lit door and page are marked, no word of the menu names a subject. Held by `apps/web/tests/u53-the-menu.spec.ts`.

@@ -78,7 +78,8 @@ export const GROUPS: readonly Door[] = [
 const reach = (path: string, m: string) => (m === "/" ? (path === "/" ? 1 : -1) : path === m || path.startsWith(`${m}/`) || (m === "/worksheets/CS" && path.startsWith(m)) ? m.length : -1);
 
 /** The page and door a path belongs to: the longest matching prefix, so /papers/approve is its own page of Children. */
-export function locate(path: string): { door: Door; page: MenuPage } | undefined {
+export function locate(address: string): { door: Door; page: MenuPage } | undefined {
+  const path = address.split(/[?#]/)[0];
   let best: { door: Door; page: MenuPage; at: number } | undefined;
   for (const door of GROUPS)
     for (const page of door.pages) {

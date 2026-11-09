@@ -3,6 +3,7 @@ import Link from "@/components/link";
 import { BrandMark } from "./brand-mark";
 import { BottomDoors, DoorPages, HelpLink, TopDoors } from "./frame/doors";
 import { ActingAsSwitch, AccountLink, Person } from "./frame/person";
+import { MapLink, ReportLink } from "./frame/foot-links";
 import { SearchBox } from "./frame/search-box";
 import { WalkProvider, type FrameDoor } from "./frame/walk";
 import { Body, PageHeader } from "./parts";
@@ -21,8 +22,9 @@ import { actingAsEducator } from "@/lib/acting-view";
 
 /** A door opens its screen once that screen is built (lib/built.ts), and the first page of the door until then. */
 function doorsFor(me: Session, acting: boolean, waiting: number): FrameDoor[] {
-  const coordinator = mayUse(me, "setup") && !acting;
-  return GROUPS.filter((d) => !d.setup || coordinator).map((d) => ({
+  // Setup is every member of staff's today (lib/access.ts, ux9c-one-role); acting as an educator is a view that puts it away
+  const setup = mayUse(me, "setup") && !acting;
+  return GROUPS.filter((d) => !d.setup || setup).map((d) => ({
     key: d.key,
     label: d.label,
     icon: d.icon,
@@ -47,7 +49,7 @@ export async function AppFrame({ me, waiting, children }: { me: Session; waiting
               <SearchBox />
               <Person name={me.name}>
                 <AccountLink name={me.name} />
-                {mayUse(me, "setup") ? <ActingAsSwitch on={acting} /> : null}
+                {me.role === "coordinator" ? <ActingAsSwitch on={acting} /> : null}
                 <HelpLink />
                 {me.devBypass ? (
                   <span className="rounded-[var(--radius-pill)] bg-[var(--state-wait-bg)] px-[var(--space-2)] text-[var(--ink)]">dev bypass</span>
@@ -66,9 +68,10 @@ export async function AppFrame({ me, waiting, children }: { me: Session; waiting
         </header>
         <main className="mx-auto flex w-full min-w-0 max-w-[1560px] flex-1 flex-col">{children}</main>
         <footer className="mx-auto w-full max-w-[1560px] px-[var(--space-3)] py-[var(--space-3)] text-[length:var(--text-label)] md:px-[var(--space-4)] print:hidden">
-          <Link href="/feedback" aria-label="Report a problem or suggest something" className="inline-flex min-h-[var(--tap)] items-center text-[var(--link)] underline">
-            Report a problem or suggest something
-          </Link>
+          <span className="flex flex-wrap gap-x-[var(--space-4)]">
+            <ReportLink />
+            {mayUse(me, "the_map") ? <MapLink /> : null}
+          </span>
         </footer>
         <BottomDoors />
       </div>

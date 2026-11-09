@@ -1,6 +1,6 @@
 import Link from "@/components/link";
 import { Screen } from "@/components/app-frame";
-import { Notice } from "@/components/parts";
+import { Notice, classesSaid } from "@/components/parts";
 import { requireStaff } from "@/lib/auth";
 import { sql } from "@/lib/db";
 import { changeMyPassword } from "@/lib/password-actions";
@@ -29,6 +29,9 @@ export default async function MyPasswordPage({ searchParams }: Props) {
       }
       next={{ href: "/today", label: "What needs doing" }}
     >
+      <p className="mb-4 text-[var(--ink-muted)]" data-testid="who">
+        {me.name} · {classesSaid(me)}
+      </p>
       {q.saved ? <Notice tone="neem">Your password is changed. Any other browser you left signed in is signed out.</Notice> : null}
       {q.error === "current" ? <Notice tone="terracotta">That is not your current password.</Notice> : null}
       {q.error === "match" ? <Notice tone="terracotta">The two new passwords are not the same.</Notice> : null}

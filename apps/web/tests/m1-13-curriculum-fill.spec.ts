@@ -65,16 +65,15 @@ test("open to head with the switch off (to look, or to review), and to staff onc
   }
 });
 
-test("the pages sit in the school's shell: its menu, a breadcrumb, a strip of counts, a tab bar on a phone", async ({ page }) => {
+test("the pages sit in the frame: the door's row of pages, a trail, a strip of counts, the doors at the foot of a phone", async ({ page }) => {
   await page.goto("/curriculum/fill");
-  const side = page.locator('[data-educator-nav="side"]');
-  await expect(side.locator("[data-nav=browse], [data-nav=fill], [data-nav=offers]")).toHaveCount(3);
-  await expect(side.locator('[data-nav="fill-walk"]')).toBeVisible();
+  const row = page.getByRole("navigation", { name: "Pages in this section" });
+  for (const label of ["Browse the curriculum", "What is filled", "Skills offered", "Check the drafted parts"]) await expect(row.getByRole("link", { name: label })).toBeVisible();
   await expect(page.getByRole("navigation", { name: "Where you are" })).toContainText("What is filled");
   await expect(page.locator("[data-summary] a").first()).toBeVisible();
   await page.setViewportSize(PHONE);
-  await expect(page.locator('[data-educator-nav="tabs"] [data-tab]')).toHaveCount(3);
-  await expect(side).toBeHidden();
+  await expect(page.locator("nav[data-bar=doors]").getByRole("link")).toHaveCount(4);
+  await expect(row.first()).toBeVisible();
   await page.setViewportSize(DESKTOP);
 });
 

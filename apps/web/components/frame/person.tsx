@@ -34,7 +34,9 @@ export function Person({ name, children }: { name: string; children: ReactNode }
 export function AccountLink({ name }: { name: string }) {
   return (
     <Link href="/account/password" title="Your account: change your password" className="inline-flex min-h-[var(--tap)] max-w-[160px] items-center gap-[var(--space-1)] whitespace-nowrap truncate text-[var(--ink)] no-underline">
-      <span className="min-[701px]:hidden max-[700px]:inline"><Icon name="educator" size={20} /></span>
+      <span className="min-[1400px]:hidden max-[700px]:hidden">
+        <Icon name="educator" size={20} />
+      </span>
       <span className="max-[1399px]:sr-only max-[700px]:not-sr-only">{name}</span>
     </Link>
   );

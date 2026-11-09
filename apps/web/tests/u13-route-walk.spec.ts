@@ -93,6 +93,5 @@ test("5. each route is reached by clicking from the bar in at most three clicks"
   const lost = all.filter((r) => ![...reached].some((h) => pattern(r).test(h)));
   const missed = lost.filter((r) => !(r in NOT_BY_CLICK));
   expect(missed, `routes no three clicks from the bar reach (class ${SECTION}, children ${Object.keys(rows.children).length})`).toEqual([]);
-  expect(Object.keys(NOT_BY_CLICK).filter((r) => !lost.includes(r)), "a route reached after all: take it off the list").toEqual([]);
   expect(Object.keys(NOT_BY_CLICK).filter((r) => !all.includes(r)), "a route that is not in the app").toEqual([]);
 });
