@@ -1,0 +1,23 @@
+CORNERSTONE GURUKUL - LOGO FILES
+
+Which file to use
+- lockup-colour          Mark + "Cornerstone गुरुकुल" in dark ink. For white or light backgrounds.
+- lockup-for-dark-backgrounds   Same lockup with the mark on a white tile and light text. For dark or photo backgrounds.
+- mark                   The courtyard mark alone (small spaces, social profile, stamp).
+- mark-on-white-tile     The mark on a rounded white tile (app icon, dark backgrounds).
+
+Formats
+- SVG / PDF: vector, any size, never blurry. Use these for print, standees, signage, flex boards. Text is already converted to shapes, so no fonts are needed.
+- PNG: transparent background, 3x size (lockup 4500 px wide). Use for Word, PowerPoint, WhatsApp, web.
+
+Colours (fixed)
+- Courtyard walls: terracotta #B8562F
+- Dot and dark text: basalt #26241F
+- Hindi on dark: clay #F3C9B3
+
+Rules
+- Never recolour the mark. No maroon, no black-only, no white-only version.
+- On a dark ground the mark always sits on the white tile (use the dark-background file).
+- Keep clear space around it equal to the height of the dot-to-wall square (about a quarter of the mark's height).
+- Do not stretch, rotate, add shadows, or put it on a busy photo without the white tile.
+- Fonts: Young Serif (Cornerstone), Eczar Bold (गुरुकुल).
