@@ -1,5 +1,6 @@
 """What the educator sees of the generated timetable (M1-06 part 2): her day, her week, one period with its activity.
-Reads only: the rows `k2_timetable_load` wrote. Every answer is for a class she holds an open grant on, in a role the
+Reads only: the rows `k2_timetable_load` wrote, and for a fortnight that went live (CP-22, `tt_live`) its dated rows,
+which win over the frame's for that date. Every answer is for a class she holds an open grant on, in a role the
 `educator.timetable_roles` row names, and carries no child and no name. One query gives all the days asked for."""
 
 import datetime as dt
@@ -66,6 +67,9 @@ left join timetable_slot ts on ts.school_class_id = %(cls)s and d.kind <> 'holid
   and ts.weekday = extract(isodow from d.on_date)
   and ts.week_code = w.week
   and ts.valid_from <= d.on_date and (ts.valid_to is null or ts.valid_to >= d.on_date)
+  and (ts.fortnight_id is not null or not exists (select 1 from timetable_slot live
+    where live.school_class_id = ts.school_class_id and live.period_id = ts.period_id
+    and live.valid_from = d.on_date and live.fortnight_id is not null))
 left join period p on p.id = ts.period_id
 left join session s on s.school_class_id = ts.school_class_id and s.school_day_id = d.id and s.period_id = ts.period_id
 left join plan_entry pe on pe.id = s.plan_entry_id
