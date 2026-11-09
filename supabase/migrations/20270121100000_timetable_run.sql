@@ -1,6 +1,6 @@
 -- CP-11: a draft timetable made by FET for one class and one fortnight, kept with FET's exact input and output.
 -- Nothing here touches timetable_slot, session or plan_entry: putting a draft live is a separate step (CP-21).
--- Holds no child's id or answers, so it is school-wide data (no access_table row).
+-- Holds no child's id or answers: school-wide data, listed in access_table as CP-4 requires.
 
 create table if not exists timetable_run (
   id              uuid primary key default gen_random_uuid(),
@@ -52,5 +52,10 @@ create trigger timetable_run_settings after insert on tenant
   for each row execute function internal.timetable_run_settings_on_new_school();
 
 select internal.timetable_run_settings(id) from tenant;
+
+insert into access_table (schema_name, table_name, kind_code, key_column, key_type, data_class, reason) values
+  ('public', 'timetable_run', null, null, null, 'school_wide',
+   'plan and timetable: a draft timetable for a class and fortnight made by FET, by class id; no child')
+on conflict do nothing;
 
 select internal.apply_conventions();
