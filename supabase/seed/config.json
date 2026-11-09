@@ -1,0 +1,817 @@
+{
+  "config": [
+    {
+      "key": "assessment.philosophy",
+      "description": "School-wide lines every generation prompt receives. Neha and Achal own the wording.",
+      "value": [
+        "Say 'exchange' or 'regroup', never 'borrow'.",
+        "Each item tests exactly one idea. No tricks and no trap wording.",
+        "Word problems use things a child in Pune knows: mangoes, rupees, cricket runs, school steps, the mela, the bus.",
+        "One short plain sentence for a word problem, with both numbers in it and one question at the end.",
+        "A child who has the skill should finish any item in under a minute."
+      ]
+    },
+    {
+      "key": "app.staff",
+      "description": "Who may sign in to the app: email, name, role, password hash and the classes they teach, held in the database alone and put there by `engine staff add` (goals/ui4a-staff-and-search.yaml); `engine staff classes` changes the classes (ADR 0073). Empty here, so no one's email is in the public repository. Roles: coordinator, educator, specialist.",
+      "value": [],
+      "seed_once": true
+    },
+    {
+      "key": "people.decides",
+      "description": "Who decides each kind of thing that waits on a person, by the staff list's roles (app.staff), as the workflow agreed with the school gives it (docs/sources/assessment-workflow-v1.md): the teacher confirms the answers the engine was unsure of and signs off what was read (N9), approves the class papers that print (N7), confirms the home papers (N11) and says what is taught — \"everything approved by the teacher\"; Aseem ratifies the skills (N1), the coordinator. Nimish, 2026-10-11: \"Achal is a teacher, so he's the one who will be responsible for doing all of this.\" Today shows each kind to the people whose role is here first. Checked on the server before any decision writes (goals/f1c-who-decides-what.yaml, ADR 0073); the coordinator may take any decision. Educators draft a skill (skill_drafts) and the coordinator approves it (skills), as N1 agreed; an educator writes and approves a parent report (reports) — N12 names the coordinator, Nimish 2026-10-11 named the teacher — corrects a question (questions) and declares the week (week).",
+      "value": {
+        "answers": [
+          "educator"
+        ],
+        "papers": [
+          "educator"
+        ],
+        "home_papers": [
+          "educator"
+        ],
+        "class_papers": [
+          "educator"
+        ],
+        "skills": [
+          "coordinator"
+        ],
+        "topics": [
+          "educator"
+        ],
+        "skill_drafts": [
+          "educator"
+        ],
+        "reports": [
+          "educator"
+        ],
+        "questions": [
+          "educator"
+        ],
+        "week": [
+          "educator"
+        ]
+      }
+    },
+    {
+      "key": "prescribe.band_default",
+      "description": "The difficulty a child starts at when their own evidence is not enough yet, per band. The teacher's declaration chooses the skill set; this chooses how hard it is.",
+      "value": {
+        "G1": "Easy",
+        "G2": "Medium",
+        "G3": "Medium",
+        "G4": "Hard"
+      }
+    },
+    {
+      "key": "level.usual",
+      "description": "The level a paper is at when nothing says otherwise: a child with no level yet, a grade with no starting level, a topic's default assessment, a skill chosen on the maker.",
+      "value": "Medium"
+    },
+    {
+      "key": "assemble.items_per_sheet",
+      "description": "Questions on one worksheet. Twelve fills two sides for Grade 2 and 3.",
+      "value": 12
+    },
+    {
+      "key": "assemble.spares_per_difficulty",
+      "description": "Unnamed extra copies printed at each difficulty, for a child who spoils a page or arrives late.",
+      "value": 2
+    },
+    {
+      "key": "render.layouts",
+      "description": "Every layout the renderer has printed, oldest first; the last is today's. A copy of a library worksheet is read in the one its page matches (goals/s18-read-as-printed.yaml), so a row is never edited or removed once a paper has printed in it — a change is a new row. boxes: 'cells' gives an answer the room its question set, 'digits' as many boxes as the right answer has digits (L3). work_mm: the working space's height for one to four lines of working; paired_work_mm: for questions printed side by side. qr_error: the QR's error correction. long_rows: a long multiplication prints a row for each digit of its multiplier (goals/md2a-straight-multiplication.yaml); a layout without it prints none; exchanges: short division writes each exchange small, in a box of its own (goals/md3d-division-methods.yaml); a layout without it prints none.",
+      "value": [
+        {
+          "name": "2026-09-21",
+          "boxes": "cells",
+          "work_mm": [
+            11,
+            15,
+            20,
+            26
+          ],
+          "paired_work_mm": 9,
+          "qr_error": "m"
+        },
+        {
+          "name": "2026-09-23-L3",
+          "boxes": "digits",
+          "work_mm": [
+            14,
+            20,
+            26,
+            34
+          ],
+          "paired_work_mm": 12,
+          "qr_error": "m"
+        },
+        {
+          "name": "2026-09-24",
+          "boxes": "digits",
+          "work_mm": [
+            14,
+            20,
+            26,
+            34
+          ],
+          "paired_work_mm": 12,
+          "qr_error": "h"
+        },
+        {
+          "name": "2026-10-09",
+          "boxes": "digits",
+          "work_mm": [
+            14,
+            20,
+            26,
+            34
+          ],
+          "paired_work_mm": 12,
+          "qr_error": "h",
+          "long_rows": true
+        },
+        {
+          "name": "2026-10-10",
+          "boxes": "digits",
+          "work_mm": [
+            14,
+            20,
+            26,
+            34
+          ],
+          "paired_work_mm": 12,
+          "qr_error": "h",
+          "long_rows": true,
+          "exchanges": true
+        }
+      ]
+    },
+    {
+      "key": "llm.campaigns",
+      "description": "A piece of work with its own money (M1-11, Nimish 4 Nov: up to 25 US dollars for the whole drafting run; 6 Nov: \"okay to spend up to 25 dollars, go ahead and finish the thing\", so the margin is 0.5; 8 Nov, Nimish said yes to finishing the last pages (about 1.3 more) after the stop at 24.5 was reached, then (same day) \"don't worry about usage; important that you do quality work and conclude\", so the cap is 40 and the stop is 39.5, enough for the last pages and the linking run; dev_eval is 5.2 (3.78 was spent before the kept-draft run), held_out 4.8, Sonnet-class models, Haiku for simple steps). The adapter adds up what these purposes have cost (flow_run.cost_inr) and refuses a call before making it once the total reaches cap less margin; the margin covers calls in flight. inr_per_usd is the rate llm.prices was written at. The stages go in the order of `order`: one may not start until the one before it has made a call. A stage (dev_eval 5.2, held_out 4.8 dollars; draft has only the campaign's cap) is tagged on each call as flow_run.trigger 'engine:<stage>'. A call left 'running' longer than stale_minutes counts its spend as unknown and stops the campaign. Raise a cap here, by a pull request, never in code.",
+      "value": {
+        "m1-11": {
+          "purposes": ["curriculum_map_propose", "curriculum_map_validate", "k2_page_draft", "k2_page_validate", "k2_page_check", "k2_page_check_b", "k2_materials_split"],
+          "cap_usd": 40,
+          "margin_usd": 0.5,
+          "stages": {"dev_eval": 5.2, "held_out": 4.8, "draft": null},
+          "order": ["dev_eval", "held_out", "draft"],
+          "stage_margin_usd": 0.25,
+          "stale_minutes": 10,
+          "inr_per_usd": 88
+        },
+        "m1-16": {
+          "purposes": ["materials_read"],
+          "cap_usd": 2,
+          "margin_usd": 0.25,
+          "window": "month",
+          "stale_minutes": 10,
+          "inr_per_usd": 88
+        }
+      }
+    },
+    {
+      "key": "k2.drafting",
+      "description": "How the K2 drafting run is cut and forecast (M1-11): pages per drafting or checking call, materials texts per call, how many more times a page still bad is asked for, how many replies in a row may break their schema before the run stops, how many pages the dev stage reads (`--dev`), and the tokens per page ASSUMED for the forecast (not measured; replace with the measured mean after the dev eval). Operational tuning, so a config row, not a threshold (a threshold is a rule the school reads about itself).",
+      "value": {
+        "batch_pages": 4,
+        "batch_materials": 10,
+        "batch_rounds": 2,
+        "stop_after_bad_replies": 3,
+        "dev_pages": 60,
+        "tranche_pages": 250,
+        "est_draft_in": 450,
+        "est_draft_out": 800,
+        "est_check_in": 700,
+        "est_check_out": 120,
+        "est_revise_share": 0.25,
+        "report_usd_per_page_limit": 0.03,
+        "measured_min_calls": 5,
+        "measured_min_pages": 20,
+        "est_split_in": 400,
+        "est_split_out": 300
+      }
+    },
+    {
+      "key": "k2.draft_rules",
+      "description": "What drafted K2 text may never say, applied by code to the drafted parts only (the school's own words are never read): `gendered` are words that name a child as a boy or a girl (a draft says \"the child\"), `compare` are patterns (regular expressions, case ignored) for setting children against each other in body, name or ability. A page that breaks either is asked for again and, if it still does, left for a person with the word or phrase named. A list catches the shapes it names, not every comparison (M1-11f).",
+      "value": {
+        "gendered": ["she", "her", "hers", "herself", "he", "him", "his", "himself", "boy", "boys", "girl", "girls"],
+        "compare": [
+          "\\bside by side\\b",
+          "\\bwho (is|has|are|have)( the)? (taller|tallest|shorter|shortest|bigger|biggest|smaller|smallest|faster|fastest|stronger|strongest|better|best|heavier|heaviest|older|oldest|younger|youngest|longest)\\b",
+          "\\bcompar\\w* (the |two |both )*(children|child|kids|friends|classmates)\\b",
+          "\\b(children|child|kids|friends|classmates)(\u2019s|'s)? (height|heights|weight|size|sizes|body|bodies|hair|skin)\\b",
+          "\\b(taller|shorter|bigger|smaller|faster|stronger|heavier) than (the |an? )?(other )?(child|children|friend|classmate)\\b",
+          "\\b(tallest|shortest|biggest|smallest|fastest|strongest|best) (child|children|friend|classmate|one in the class)\\b"
+        ]
+      }
+    },
+    {
+      "key": "llm.structured",
+      "description": "The prompt versions whose reply the vendor holds to the schema (Anthropic's output_config.format), so no field outside it can come back: {purpose: [versions]}. Only a version whose schema the vendor can hold belongs here: every object closed with its fields named (a free-form map is forced empty), no recursion. The local check against the full schema still runs (M1-11e).",
+      "value": {
+        "curriculum_map_propose": [
+          3
+        ]
+      }
+    },
+    {
+      "key": "llm.fallback_models",
+      "description": "Tried in order after the prompt row's own model. Haiku is the cheap Anthropic fallback; the Gemini free tier is the last resort (20 requests per model per day).",
+      "value": [
+        "claude-haiku-4-5",
+        "gemini-3.5-flash",
+        "gemini-3.6-flash",
+        "gemini-3.7-flash"
+      ]
+    },
+    {
+      "key": "llm.prices",
+      "description": "INR per million tokens, in and out, at roughly ₹88/USD. The Claude rows are Anthropic's list prices, checked 2026-09-29: Haiku 4.5 $1/$5, Sonnet 5 and Sonnet 5.5 $2/$10, Opus 5 $5/$25, Opus 5.5 $4/$20 per million tokens. Gemini's free-tier flash models cost nothing until the daily quota is exhausted, so 0/0 here is the pilot's honest number, not a placeholder. Jev is TypeSafe's rate (ADR 0036). A model missing from this table prices at 0 — the adapter still runs it, budget tracking just can't see it, which is why every model actually in use belongs here.",
+      "value": {
+        "claude-opus-5": {
+          "in": 440,
+          "out": 2200
+        },
+        "claude-sonnet-5": {
+          "in": 176,
+          "out": 880
+        },
+        "claude-haiku-4-5": {
+          "in": 88,
+          "out": 440
+        },
+        "gemini-3.5-flash": {
+          "in": 0,
+          "out": 0
+        },
+        "gemini-3.6-flash": {
+          "in": 0,
+          "out": 0
+        },
+        "gemini-3.7-flash": {
+          "in": 0,
+          "out": 0
+        },
+        "jev-latest": {
+          "in": 3.7,
+          "out": 0
+        },
+        "claude-sonnet-5-5": {
+          "in": 176,
+          "out": 880
+        },
+        "claude-opus-5-5": {
+          "in": 352,
+          "out": 1760
+        }
+      }
+    },
+    {
+      "key": "bank.class_size",
+      "value": 16,
+      "description": "Children in one class. A unit must hold a paper for each of them plus the spares, drawn without replacement, or two children share a question (ADR 0016)."
+    },
+    {
+      "key": "bank.choice_answer_max_share",
+      "description": "A level's questions answered by ticking fail `engine audit` when more than this share of their right answers sit in one place (the middle option, or yes). Judged only once a level holds at least min_questions of them: forty fair coin tosses land three-quarters one way less than once in a thousand, so a generator that places the answer fairly almost never trips it.",
+      "value": {
+        "share": 0.75,
+        "min_questions": 40
+      }
+    },
+    {
+      "key": "focus",
+      "description": "A child's home paper chosen from their graph: one area, never a mix — the weakest skill they lag in, worked on in a skill set at most `reach` rungs from where the child showed it, Easy below the threshold next_sheet.demote_below and Medium above. A child who lags nowhere is stretched: their strongest skill at the level `stretch` names for its state, or the hardest level below it the skill defines (Nimish, 2026-09-23).",
+      "value": {
+        "reach": 2,
+        "stretch": {
+          "secure": "Hard",
+          "stretch_ready": "Advance"
+        }
+      }
+    },
+    {
+      "key": "skills.by_operation",
+      "value": {
+        "+": "NUM.OPS.01",
+        "-": "NUM.OPS.02",
+        "×": "NUM.OPS.03",
+        "÷": "NUM.OPS.04"
+      },
+      "description": "The registry skill each operation is. A question uses the skill of every operation a child carries out on it (ADR 0023)."
+    },
+    {
+      "key": "skills.by_kind",
+      "value": {
+        "missing_number": [
+          "NUM.OPS.05"
+        ],
+        "balance_scale": [
+          "NUM.OPS.05"
+        ],
+        "number_wall": [
+          "NUM.OPS.05"
+        ],
+        "number_line_jumps": [
+          "NUM.OPS.05"
+        ],
+        "efficient_method": [
+          "NUM.OPS.05",
+          "NUM.PRB.03"
+        ],
+        "estimate_then_calc": [
+          "NUM.PV.03"
+        ],
+        "word_1step": [
+          "NUM.PRB.02"
+        ],
+        "word_2step": [
+          "NUM.PRB.02"
+        ],
+        "find_mistake": [
+          "NUM.PRB.03"
+        ],
+        "explain_claim": [
+          "NUM.PRB.03"
+        ],
+        "equation": [
+          "NUM.OPS.05"
+        ],
+        "fact_family": [
+          "NUM.OPS.05"
+        ],
+        "inverse_check": [
+          "NUM.PRB.03"
+        ],
+        "choose_estimate": [
+          "NUM.PV.03"
+        ],
+        "possible_answer": [
+          "NUM.PV.03"
+        ],
+        "odd_even": [
+          "NUM.PRB.03"
+        ],
+        "break_apart": [
+          "NUM.OPS.05"
+        ],
+        "missing_digit": [
+          "NUM.PRB.03"
+        ],
+        "tally": [
+          "NUM.DATA.01"
+        ],
+        "equal_groups": {
+          "×": [
+            "NUM.OPS.03",
+            "NUM.OPS.01"
+          ],
+          "÷": []
+        },
+        "skip_counting": [
+          "NUM.PAT.02"
+        ],
+        "multiples": [
+          "NUM.CNT.08"
+        ]
+      },
+      "description": "The skills a kind of question uses beyond its operations: a missing number is also a missing-number equation, a story is also a word problem, an estimate is also rounding (ADR 0023). A kind whose skills differ by its operation gives a list for each: equal groups that multiply are groups added again, and use addition too; equal groups that divide do not (ADR 0062)."
+    },
+    {
+      "key": "skills.by_symbol",
+      "value": {
+        "₹": "NUM.MEAS.04"
+      },
+      "description": "A skill a question uses when its sentence carries this symbol: a story about rupees is also about money (ADR 0023)."
+    },
+    {
+      "key": "skills.charges_by_kind",
+      "value": {
+        "word_1step": {
+          "M_WRONG_OP": "NUM.PRB.02"
+        },
+        "word_2step": {
+          "M_WRONG_OP": "NUM.PRB.02"
+        },
+        "equation": {
+          "M_WRONG_OP": "NUM.OPS.05"
+        },
+        "fact_family": {
+          "M_WRONG_OP": "NUM.OPS.05"
+        }
+      },
+      "description": "Where a mistake charges a different skill on this kind of question than its own row says: choosing the wrong operation in a story is a word-problem slip, not an arithmetic one (ADR 0023, step 8b); in a missing-number equation or a fact family it is a slip reading the equation, the kind's own skill (A11, ADR 0072). Every other mistake counts against the operation it happens in. Drafted by the engine; approved once by Nimish or Aseem."
+    },
+    {
+      "key": "skills.by_method",
+      "value": {
+        "PARTITIONING": [
+          "NUM.OPS.01"
+        ],
+        "GRID": [
+          "NUM.OPS.01"
+        ],
+        "EXPANDED": [
+          "NUM.OPS.01"
+        ],
+        "LATTICE": [
+          "NUM.OPS.01"
+        ],
+        "LONG_MULTIPLICATION": [
+          "NUM.OPS.01"
+        ],
+        "CHUNKING": [
+          "NUM.OPS.03",
+          "NUM.OPS.02"
+        ],
+        "LONG_DIVISION": [
+          "NUM.OPS.03",
+          "NUM.OPS.02"
+        ]
+      },
+      "description": "The written methods that carry out another operation inside their own, and so use it: those that add their steps use addition, and a slip adding them counts against addition, not multiplication (assumption A11, ADR 0055); long division and chunking multiply and take away, so their slips count against multiplication and subtraction. Partitioning a number divided, and chunking's lots, put tens and ones together, which never regroups: no addition is carried out (ADR 0063)."
+    },
+    {
+      "key": "skills.charges_by_kind.approved",
+      "seed_once": true,
+      "value": {},
+      "description": "Who approved the table of what a mistake charges on each kind of question, and the table they approved. A changed table is not approved until someone approves it again."
+    },
+    {
+      "key": "taxonomy.across_levels",
+      "value": {
+        "sections": [
+          "5.1",
+          "5.2"
+        ]
+      },
+      "description": "Taxonomy sections whose cases are patterns read across levels — how regrouping and exchanges fall (§5) — rather than cases one level holds. `engine bank taxonomy` counts them as placed by being the rule the levels climb, and says so."
+    },
+    {
+      "key": "story_shape.told_by_words",
+      "description": "Story cases the taxonomy tells apart by a word, which the story reader settles by reading it (goals/md4d2b5-story-told-apart.yaml): a grouping story told with \"each\" or \"every\" is B24, \"each\" that means ÷ — the word that has a child multiply (M_KEYWORD_OVERGENERALISED); the same story without it is grouping, B03. The engine's own stories of each case are worded so (word_templates.json).",
+      "value": {
+        "GROUPING_BY_EACH": {
+          "instead_of": "GROUPING",
+          "words": [
+            "each",
+            "every"
+          ]
+        }
+      }
+    },
+    {
+      "key": "school.time_zone",
+      "description": "The school's own clock: its day and its week, which a published curriculum takes effect from (C3). The migration 20261206090000 writes the same for every school.",
+      "value": "Asia/Kolkata"
+    },
+    {
+      "key": "people.class_teacher_rule",
+      "description": "D-039: from this grade up, someone who teaches a core subject is not a class teacher, and the other way round, unless the grant gives a reason (people.staff_role_grant). Core subjects are subject codes; science and Hindi are added when they are subjects of the school. Before this grade (pre-primary) one educator is the class's class teacher.",
+      "value": {
+        "from_grade": "G1",
+        "core_subjects": [
+          "NUM",
+          "ENG"
+        ]
+      },
+      "seed_once": true
+    },
+    {
+      "key": "voice.confirm_within_hours",
+      "description": "A K2 voice note not confirmed within this many hours leaves the educator's queue, is kept as unconfirmed, and never becomes evidence (observation model, section 4). The migration 20261226090000 writes the same for every school.",
+      "value": 48,
+      "seed_once": true
+    },
+    {
+      "key": "k2.reads",
+      "description": "What the K2 screens' read calls (engine/w3_read/k2_reads.py) take from the school: which roles may ask for the coordinator's list, which grades the voice notes are for, how many days back a list shows a note, and where a week starts (0 is Monday).",
+      "value": {"coordinator_roles": ["coordinator", "deputy_coordinator", "head"], "grades": ["K2"], "row_days": 14, "week_starts_on": 0}
+    },
+    {
+      "key": "k2.child_page",
+      "description": "What a K2 child's page takes from the school: how many months a skill must have been seen in before its growth shows a trend (fewer reads 'too few'), and which skill states count as done when working out what is ready next. Only 'secure' is done; 'secure, to re-check' is not (orchestrator, 5 Nov).",
+      "value": {"growth_min_months": 2, "done_states": ["secure"]}
+    },
+    {
+      "key": "voice.audio_retention_days",
+      "description": "How many days a voice note's audio is kept. Not decided (O-14): null keeps it. Nothing deletes audio until this is a number and a deletion is built.",
+      "value": null,
+      "seed_once": true
+    },
+    {
+      "key": "voice.outcome_moves_level",
+      "description": "How each outcome of a K2 voice note moves the level the educator expected, before the level gives its mark. Unverified for every activity. The migration 20261227090000 writes the same for every school.",
+      "value": {"above": 1, "as_expected": 0, "below": -1},
+      "seed_once": true
+    },
+    {
+      "key": "voice.level_mark",
+      "description": "The mark on the seen scale for each activity level a child reached. Unverified for every activity.",
+      "value": {"0": "not_yet", "1": "not_yet", "2": "sometimes", "3": "yes"},
+      "seed_once": true
+    },
+    {
+      "key": "voice.roles_that_record",
+      "description": "The roles whose open grant on a class lets a person record, confirm and correct that class's K2 voice notes and form. A campus-wide role (coordinator, head) is not here: it does not record unless added.",
+      "value": ["class_teacher", "cover_educator"],
+      "seed_once": true
+    },
+    {
+      "key": "voice.screens_enabled",
+      "description": "Whether the K2 educator sees Record and Confirm. Off until she is trained; Nimish turns it on. A page or route asked for while it is off refuses.",
+      "value": false,
+      "seed_once": true
+    },
+    {
+      "key": "timetable.vocabulary",
+      "description": "How the K2 timetable generator reads the school's sheets (goals/m1-06-plan-today.yaml): which phrases in a period name its subject, which subject draws its lines from which Monthly Planner heading, which planner headings open a section, which sections head the week rather than fill a period, and which one-word lines join the line after them. A new wording in the school's sheet is an edit to this row, never to code.",
+      "value": {
+        "fixed_rows": [
+          "settling",
+          "circle time",
+          "fruit break",
+          "lunch",
+          "reflection",
+          "dispersal",
+          "boarding the bus"
+        ],
+        "specialist": [
+          "pe",
+          "music_guest"
+        ],
+        "subject_phrases": [
+          [
+            "physical education",
+            "pe"
+          ],
+          [
+            "music - guest",
+            "music_guest"
+          ],
+          [
+            "music",
+            "music"
+          ],
+          [
+            "phonics",
+            "phonics"
+          ],
+          [
+            "hindi",
+            "hindi"
+          ],
+          [
+            "english",
+            "english"
+          ],
+          [
+            "math",
+            "math"
+          ],
+          [
+            "reading time",
+            "reading"
+          ],
+          [
+            "general awareness",
+            "general_awareness"
+          ],
+          [
+            "me time",
+            "me_time"
+          ],
+          [
+            "rhymes and dance",
+            "rhymes_dance"
+          ],
+          [
+            "rhymes",
+            "rhymes"
+          ],
+          [
+            "story",
+            "story"
+          ],
+          [
+            "clay",
+            "clay"
+          ],
+          [
+            "routine of the month",
+            "routine"
+          ],
+          [
+            "art",
+            "art"
+          ],
+          [
+            "memory drawing",
+            "memory_drawing"
+          ],
+          [
+            "practical life",
+            "practical_life"
+          ],
+          [
+            "fine motor",
+            "fine_motor"
+          ],
+          [
+            "class routine",
+            "cleanup"
+          ],
+          [
+            "play based projects",
+            "projects"
+          ]
+        ],
+        "plan_key_of_subject": {
+          "phonics": "english",
+          "english": "english",
+          "hindi": "hindi",
+          "math": "math",
+          "story": "stories",
+          "rhymes": "rhymes",
+          "rhymes_dance": "rhymes",
+          "general_awareness": "general_awareness",
+          "art": "art",
+          "clay": "clay",
+          "music": "music",
+          "pe": "pe",
+          "fine_motor": "fine_motor",
+          "practical_life": "practical_life",
+          "routine": "routines"
+        },
+        "plan_headings": {
+          "english": "english",
+          "hindi": "hindi",
+          "stories": "stories",
+          "rhymes": "rhymes",
+          "math": "math",
+          "block room": "block_room",
+          "brave day task": "brave_day",
+          "general awareness": "general_awareness",
+          "art and craft": "art",
+          "clay": "clay",
+          "music": "music",
+          "circle time": "circle_time",
+          "good deed": "good_deed",
+          "word of the week": "word_of_the_week",
+          "prayer": "prayer",
+          "gross motor skills": "gross_motor",
+          "fine motor skills": "fine_motor",
+          "practical life skills": "practical_life",
+          "physical education": "pe",
+          "routine": "routines",
+          "routines": "routines",
+          "music and dance": "music",
+          "events": "events",
+          "value education": "value_education"
+        },
+        "header_keys": [
+          "circle_time",
+          "good_deed",
+          "word_of_the_week",
+          "prayer",
+          "brave_day"
+        ],
+        "glue_words": [
+          "writing",
+          "reading",
+          "phonics"
+        ],
+        "planner_row": "^Fortnight\\s+(\\d+)$",
+        "planner_block": "^K2_\\s*(\\w+?)\\s*_\\s*Planner",
+        "fortnight_label": "^F\\.N\\s*(\\d+)",
+        "other_grade_marks": [
+          "(PG - N)",
+          "(PG-N)"
+        ],
+        "plan_heading_prefixes": {
+          "routine -": "routines"
+        },
+        "headless_columns": {
+          "events/special days": "Events",
+          "value education": "Value Education"
+        },
+        "planner_header_cell": "expression",
+        "calendar_date_format": "%A, %B %d, %Y",
+        "afternoon_before_hour": 7
+      }
+    },
+    {
+      "key": "curriculum.screens_grade",
+      "description": "The grade whose activities the curriculum screens (browser, fill view, offered skills) list: the code of a row of `grade`. K2 first.",
+      "value": "K2",
+      "seed_once": true
+    },
+    {
+      "key": "curriculum.review_roles",
+      "description": "The roles whose holders may review the curriculum (keep, edit or send back a drafted part, answer an offered skill) even while the educator switch is off: the review fills the content before educators see anything. A list of role codes; a missing row names nobody. Anyone else needs `educator.timetable_enabled` on.",
+      "value": ["head", "coordinator"],
+      "seed_once": true
+    },
+    {
+      "key": "curriculum.fill_green",
+      "description": "The share of a section's page parts and skills that must be filled for the curriculum browser to show it green (1 = every one).",
+      "value": 1,
+      "seed_once": true
+    },
+    {
+      "key": "curriculum.fill_amber",
+      "description": "The share filled from which the curriculum browser shows a section amber rather than red.",
+      "value": 0.5,
+      "seed_once": true
+    },
+    {
+      "key": "voice.recording_enabled",
+      "description": "Whether the K2 educator may record a spoken note (and hear it back), on top of voice.screens_enabled. Off until Sarvam confirms 'No retention' in writing (D-065); with it off she uses the form, and no recording is kept or sent anywhere. A missing row is off.",
+      "value": false,
+      "seed_once": true
+    },
+    {
+      "key": "educator.timetable_enabled",
+      "description": "Whether the K2 educator sees her generated timetable (her day, her week, a period). Off until the coordinator has marked the first fortnight; Nimish turns it on. While it is off the three timetable calls refuse.",
+      "value": false,
+      "seed_once": true
+    },
+    {
+      "key": "educator.preview_roles",
+      "description": "The staff preview of the K2 educator's screens (D-076): a member of staff whose open grant is in one of these roles sees the timetable and materials screens while educator.timetable_enabled is still off; with no class of their own they see every class that has a timetable. Reminders still wait for the switch.",
+      "value": ["head", "coordinator"],
+      "seed_once": true
+    },
+    {
+      "key": "educator.timetable_roles",
+      "description": "The roles whose open grant on a class lets a person see that class's generated timetable. A campus-wide role is not here: the timetable answers for a class she holds.",
+      "value": [
+        "class_teacher",
+        "cover_educator"
+      ]
+    },
+    {
+      "key": "materials.whatsapp_to",
+      "description": "The number the educator's one-tap link opens a chat with (digits, with country code). Empty until Nimish names it: then the link opens WhatsApp with nobody chosen (D-071).",
+      "value": "",
+      "seed_once": true
+    },
+    {
+      "key": "materials.reminder_weeks",
+      "description": "How many weeks before the first day a material is needed the educator and the materials team are reminded (D-070: 2 and 1). A date that is not a working day moves to the last working day before it; one already past goes today (D-072).",
+      "value": [2, 1],
+      "seed_once": true
+    },
+    {
+      "key": "materials.inventory_whatsapp_to",
+      "description": "The number the consolidated list's one-tap link opens a chat with: the one inventory person (digits, with country code). Empty until named; then the link opens WhatsApp with nobody chosen (D-071, M1-16).",
+      "value": "",
+      "seed_once": true
+    },
+    {
+      "key": "materials.consolidate_roles",
+      "description": "The roles whose open grant lets a person build the school's consolidated materials list, read it and send it to the inventory person (M1-16). A role is added here by a pull request.",
+      "value": ["coordinator", "head"],
+      "seed_once": true
+    },
+    {
+      "key": "materials.photo_max_side",
+      "description": "The longest side, in pixels, a photographed materials note is made before a model reads it (M1-16). The picture is a plain JPEG read in memory and never stored.",
+      "value": 1600,
+      "seed_once": true
+    },
+    {
+      "key": "k2.checkers",
+      "description": "Other checkers shown the same first drafts as the one that drives the revision (M1-12a): each is a prompt purpose, its verdict kept in the ledger beside the driver's and labelled by its model, and never deciding whether a page is revised. Empty: only the driver checks. Used to compare a cheaper checker with the stronger one before choosing. 6 Nov: on 55 pages Sonnet (k2_page_check_b) missed 9 faults Opus found, so Opus keeps checking and the shadow is off ($0.0036 a page saved); to compare again, name k2_page_check_b here.",
+      "value": {"shadow": []}
+    },
+    {
+      "key": "k2.format",
+      "description": "The shape a drafted page must have (M1-12a): at most this many steps, each at most this many words; 1 to 4 slips, each a keyword of 2 to 4 words and one short sentence on how to spot it; and the words a step may use without any materials list naming them. function_words are the words of the language that trail a listed material (\"as needed\", \"for the\") or mark a piece of the list as a clause, so are never taken for a prop; not_props are generic or describing words (thing, piece, small) that are never the noun a step names; prop_min_pages is on how many pages of the band a listed noun must appear to count as a prop that a step may not name unless its page lists it. Read by code, which refuses a draft that breaks it before the checker is paid for, except the rules named in advisory_rules (Nimish, 7 Nov: pages are editable by teachers): a page that breaks only those is kept with a note, never held back or sent for a revision. Empty or malformed parts, he or she, and comparing children still hold a page back.",
+      "value": {
+        "steps_max": 8, "step_words": 14, "slips_min": 1, "slips_max": 4, "keyword_words_min": 2, "keyword_words_max": 4,
+        "spot_words": 20, "idea_words": 25,
+        "always_there": ["child", "children", "educator", "educators", "floor", "room", "class", "classroom", "hand", "hands", "table", "tables", "chair", "chairs", "wall", "board", "circle", "line", "space", "mat", "mats", "group", "groups", "partner", "partners"],
+        "prop_min_pages": 3,
+        "advisory_rules": ["step_word_unlisted", "uses_unlisted", "keyword_length", "spot_length", "step_too_long", "steps_too_many", "idea_too_long"],
+        "function_words": ["the", "a", "an", "of", "to", "in", "on", "at", "for", "with", "by", "from", "or", "as", "per", "each", "into", "onto", "out", "up", "off", "over", "under", "needed", "available", "optional", "etc", "other", "others", "any", "some", "all", "more", "your", "their", "its", "this", "that", "it", "and"],
+        "not_props": ["thing", "things", "item", "items", "object", "objects", "piece", "pieces", "set", "sets", "number", "numbers", "small", "big", "large", "little", "medium", "tiny", "long", "short", "tall", "same", "different"]
+      }
+    },
+    {
+      "key": "materials.photo_max_bytes",
+      "description": "The largest picture, in bytes, the engine accepts for a photographed materials note (M1-16). The site's own upload limit (about 4.5 MB through Vercel) is lower.",
+      "value": 10000000,
+      "seed_once": true
+    },
+    {
+      "key": "materials.month_build_max_days",
+      "description": "The longest range, in days, one month build (engine materials month, the coordinator's Build) accepts: a mistyped date cannot start a build of years (M1-16).",
+      "value": 62,
+      "seed_once": true
+    }
+  ]
+}

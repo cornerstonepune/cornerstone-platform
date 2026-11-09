@@ -1,0 +1,12 @@
+{
+  "digest": "dc5af65d7d463a2a5d5fe2a5920c1edcc572a055d60dcf7302dd6ac13280aa31",
+  "files": [
+    "spec.md",
+    "checks.sh",
+    "proofs/ci_workflow.py",
+    "proofs/preflight.py"
+  ],
+  "locked_at": "2026-11-08T16:07:41+00:00",
+  "criteria": 4,
+  "athena": "2.14.0"
+}

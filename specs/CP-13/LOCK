@@ -1,0 +1,18 @@
+{
+  "digest": "76a45873d210121db838c050c9284b44472853c1b4f62dc68f2cc86f6be48ee7",
+  "files": [
+    "spec.md",
+    "checks.sh",
+    "proofs/FIRST_RUN.md",
+    "proofs/conftest.py",
+    "proofs/test_changes.py",
+    "proofs/test_grade_min.py",
+    "proofs/test_one_adult.py",
+    "proofs/test_rebuild.py",
+    "proofs/test_repeating.py",
+    "proofs/test_three_signals.py"
+  ],
+  "locked_at": "2026-11-08T12:11:11+00:00",
+  "criteria": 6,
+  "athena": "2.13.0"
+}

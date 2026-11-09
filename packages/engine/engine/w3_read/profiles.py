@@ -1,0 +1,353 @@
+"""ADR 0032 — a notebook per child, rebuilt by code from every check a person makes, and read before
+every read of that child.
+
+Ring B: `child_reading_profile` is a pure function of `item_result` and `read_correction`, truncatable
+at any time; nothing in it is a model's guess (rule 1). What it holds: how often the reader was right
+for this child, by kind of question and by confidence; the child's own confidence floor; the kinds
+routed to a person whatever the confidence; the digits the reader confuses in this child's hand; and
+confirmed handwriting samples for the second reader. `apply` is the other half — the next read of the
+child, changed by it (`correction_must_change_a_later_read`).
+"""
+
+import json
+import re
+from collections import Counter
+
+FLOORS = (70, 80, 90)
+NO_FLOOR = 95  # no level at which this child's readings were 95% right: every reading goes to a person
+MIN_CHECKS = 10  # checks before a child's floor is her own rather than the default
+MIN_STOOD = 6  # readings of one kind the reader stood behind before its overturn rate counts
+CONFUSED = 2  # a digit read for another this many times is doubted from then on
+SAMPLES = 8
+KIND_WORDS = {
+    "legacy_bare": "sum",
+    "legacy_missing": "missing-number",
+    "legacy_word": "word-problem",
+    "legacy_text": "written",
+}
+
+
+def _norm(s):
+    return re.sub(r"[\s,]", "", s or "").casefold()
+
+
+def doubted(why):
+    """A reading the reader did NOT stand behind. ADR 0029's hold ("read as a wrong answer; a person
+    checks every…") is policy, not doubt: the reader read a value and stands behind it."""
+    return bool(why) and not why.startswith("read as")
+
+
+def never_read(why):
+    """A reading the reader never attempted: its answer is not a number (`boxes.FOR_A_PERSON`, `ocr.answers_for`), so a
+    person reads it — no measure of the reader, and nothing the second reader is shown or asked about. A stored answer's
+    is `answer_checked.never_read`, the same test, which the website reads."""
+    return "not a number" in why
+
+
+def build(rows, route_above=0.25):
+    """The notebook, from every answer of one child a person has settled (`checked_rows`, oldest first)."""
+    # a tick, a sentence or a sign the reader was never handed is not its reading, nor this child's handwriting
+    rows = [r for r in rows if not never_read(r.get("why") or "")]
+    notes = {
+        "checked": len(rows),
+        "right": 0,
+        "by_kind": {},
+        "by_confidence": {},
+        "gave_up": {"n": 0, "guess_right": 0},
+        "floor": FLOORS[0],
+        "box_floor": FLOORS[0],
+        "route": [],
+        "confusions": {},
+        "samples": [],
+    }
+    # readings the reader stood behind at or above each level, n and right, for each reader: found in a region (Textract)
+    # or read in the boxes of a paper this system printed (the digit reader, ADR 0035), whose confidences are its own
+    at = {boxed: {level: [0, 0] for level in FLOORS} for boxed in (False, True)}
+    conf, confusions = Counter(), Counter()
+    for r in rows:
+        truth = _norm(r["human_read"])
+        right = _norm(r["model_read"]) == truth
+        k = notes["by_kind"].setdefault(
+            r["fmt"], {"checked": 0, "right": 0, "stood_behind": 0, "overturned": 0}
+        )
+        k["checked"] += 1
+        if doubted(r.get("why") or ""):
+            notes["gave_up"]["n"] += 1
+            notes["gave_up"]["guess_right"] += bool(truth) and _norm(r.get("guess")) == truth
+            continue
+        notes["right"] += right
+        k["right"] += right
+        k["stood_behind"] += 1
+        k["overturned"] += not right
+        if r["answer_state"] != "written":
+            continue
+        c = float(r.get("confidence") or 0)
+        bucket = "90+" if c >= 90 else "80-89" if c >= 80 else "70-79" if c >= 70 else "<70"
+        conf[(bucket, "n")] += 1
+        conf[(bucket, "right")] += right
+        for level in FLOORS:
+            if c >= level:
+                at[bool(r.get("in_boxes"))][level][0] += 1
+                at[bool(r.get("in_boxes"))][level][1] += right
+        if not right:
+            m, h = r["model_read"] or "", r["human_read"] or ""
+            if m.isdigit() and h.isdigit() and len(m) == len(h):
+                diff = [i for i in range(len(m)) if m[i] != h[i]]
+                if len(diff) == 1:
+                    confusions[f"{m[diff[0]]}>{h[diff[0]]}"] += 1
+    notes["by_confidence"] = {
+        b: {"n": conf[(b, "n")], "right": conf[(b, "right")]} for b in ("90+", "80-89", "70-79", "<70")
+    }
+    notes["floor"], notes["box_floor"] = _floor(at[False]), _floor(at[True])
+    notes["route"] = sorted(
+        fmt
+        for fmt, k in notes["by_kind"].items()
+        if k["stood_behind"] >= MIN_STOOD and k["overturned"] / k["stood_behind"] > route_above
+    )
+    notes["confusions"] = dict(confusions)
+    # The last few distinct things this child wrote, with the crop each was read from — what the child
+    # wrote by a person's word, so a reading the reader got wrong is the most useful sample of all.
+    seen, samples = set(), []
+    for r in reversed(rows):
+        text = (r["human_read"] or "").strip()
+        if not text or not r.get("box") or text in seen:
+            continue
+        seen.add(text)
+        # the page of the copy's file its photograph is, which `second_reader.examples` crops
+        page = r.get("file_page") or r["page"]
+        samples.append({"capture_id": str(r["capture_id"]), "page": page, "box": r["box"], "text": text})
+        if len(samples) == SAMPLES:
+            break
+    notes["samples"] = samples[::-1]
+    return notes
+
+
+def _floor(at):
+    """The lowest level at which this child's readings were right 95% of the time over at least ten checks."""
+    if at[FLOORS[0]][0] < MIN_CHECKS:
+        return FLOORS[0]
+    return next((lv for lv in FLOORS if at[lv][0] >= MIN_CHECKS and at[lv][1] / at[lv][0] >= 0.95), NO_FLOOR)
+
+
+def apply(readings, notes, fmt_of):
+    """The next read of this child, with the notebook open: a reading of a routed kind, or holding a
+    digit this child has had confused twice, is flagged with the reading offered as the guess. A
+    doubt the reader already had, and a blank, are left exactly as they are; nothing is overwritten."""
+    if not notes:
+        return readings
+    route = set(notes.get("route") or [])
+    confused = {
+        k.split(">")[0]: k.split(">")[1] for k, n in (notes.get("confusions") or {}).items() if n >= CONFUSED
+    }
+    out = {}
+    for slot, r in readings.items():
+        text = r.get("child_answer") or ""
+        if r.get("answer_state") != "written" or (r.get("why") or "") or not text:
+            out[slot] = r
+            continue
+        fmt = fmt_of(slot)
+        why = ""
+        if fmt in route:
+            k = notes["by_kind"][fmt]
+            why = f"this child's {KIND_WORDS.get(fmt, fmt)} answers were read wrong {k['overturned']} times in {k['stood_behind']}; a person checks them"
+        elif d := next((d for d in text if d in confused), None):
+            why = f"this child's {d} has been read for a {confused[d]} before"
+        out[slot] = (
+            {**r, "child_answer": "", "answer_state": "illegible", "why": why, "guess": text} if why else r
+        )
+    return out
+
+
+# ---------------------------------------------------------------- the rows, and the table
+
+
+def checked_rows(conn, child_id=None):
+    """Every answer a person has settled, oldest first: typed (the latest reading a person gave) or
+    signed off without a change (the reader's reading, confirmed). A judgement is not a reading, so
+    an answer settled by Right/Wrong alone is not here. The view `answer_checked` is the one definition
+    (goals/s19-validation-teaches.yaml); Marking counts from it too."""
+    return conn.execute(
+        "select child_id, fmt, capture_id, path, file_pages, read_on as batch, page, file_page, item_key, paper,"
+        " item_result_id, never_read, in_boxes,"
+        " reading as model_read, label as human_read, confidence, why, answer_state, guess, box, crop,"
+        " how = 'typed' as corrected"
+        " from answer_checked where (%s::uuid is null or child_id = %s::uuid) order by read_at, item_key",
+        (child_id, child_id),
+    ).fetchall()
+
+
+def kind_trust(conn):
+    """Each kind of question's standing against `marking.agreement_gate` (ADR 0032): of its newest
+    `marking.agreement_window` checks the reader stood behind, how many were what the person said, whether that is
+    trust, and the right checks still needed (`to_trust`). The database's one rule (`kind_trust`, migration
+    20261103090000), which the website shows too, so the two never disagree."""
+    return {
+        r["fmt"]: {
+            "n": r["n"],
+            "right": r["right"],
+            "trusted": r["trusted"],
+            "to_trust": r["checks_to_trust"],
+        }
+        for r in conn.execute('select fmt, n, "right", trusted, checks_to_trust from kind_trust').fetchall()
+    }
+
+
+def window(conn):
+    """How many checks a kind's trust is measured over (`marking.agreement_window`)."""
+    row = conn.execute("select value from threshold where key = 'marking.agreement_window'").fetchone()
+    return int(row["value"]) if row else 50
+
+
+def report(conn):
+    """How the reader is doing, from every check people have made — the numbers `engine read report`
+    prints and Capture & Mark shows (ADR 0032): the total, each kind's standing against the gate, each
+    batch's flag rate, and one line per child. An answer the reader was never handed is not counted (`never_read`)."""
+    rows = [r for r in checked_rows(conn) if not never_read(r["why"] or "")]
+    total = {
+        "checked": len(rows),
+        "stood_behind": 0,
+        "right": 0,
+        "silently_wrong": 0,
+        "gave_up": 0,
+        "guess_right": 0,
+    }
+    kinds, batches = {}, {}
+    for r in rows:
+        k = kinds.setdefault(r["fmt"], {"checked": 0, "right": 0, "silently_wrong": 0, "gave_up": 0})
+        b = batches.setdefault(
+            r["batch"],
+            {"batch": r["batch"], "read": 0, "flagged": 0, "checked": 0, "stood_behind": 0, "right": 0},
+        )
+        k["checked"] += 1
+        b["checked"] += 1
+        truth = _norm(r["human_read"])
+        if doubted(r["why"]):
+            k["gave_up"] += 1
+            total["gave_up"] += 1
+            total["guess_right"] += bool(truth) and _norm(r["guess"]) == truth
+            continue
+        right = _norm(r["model_read"]) == truth
+        k["right"] += right
+        k["silently_wrong"] += not right
+        total["stood_behind"] += 1
+        total["right"] += right
+        total["silently_wrong"] += not right
+        b["stood_behind"] += 1
+        b["right"] += right
+    # each kind's standing is the one rule's; a kind the reader stood behind no reading of has the whole window to go
+    standing, size = kind_trust(conn), window(conn)
+    for fmt, k in kinds.items():
+        s = standing.get(fmt, {"n": 0, "right": 0, "trusted": False, "to_trust": size})
+        k |= {
+            "window_n": s["n"],
+            "window_right": s["right"],
+            "trusted": s["trusted"],
+            "to_trust": s["to_trust"],
+        }
+    for b in conn.execute(
+        "select c.created_at::date as batch, count(*) as read,"
+        " count(*) filter (where coalesce(r.raw_read::jsonb ->> 'answer_state', '') not in ('written', 'blank')"
+        "   or (coalesce(r.raw_read::jsonb ->> 'why', '') <> '' and r.raw_read::jsonb ->> 'why' not like 'read as%%')) as flagged"
+        " from item_result r join capture c on c.id = r.capture_id where c.superseded_by is null"
+        "   and coalesce(r.raw_read::jsonb ->> 'why', '') not like '%%not a number%%'"  # `never_read`, as the view
+        " group by 1 order by 1"
+    ).fetchall():
+        batches.setdefault(
+            b["batch"],
+            {"batch": b["batch"], "read": 0, "flagged": 0, "checked": 0, "stood_behind": 0, "right": 0},
+        )
+        batches[b["batch"]].update(read=b["read"], flagged=b["flagged"])
+    return {
+        "total": total,
+        "kinds": kinds,
+        "window": size,
+        "batches": [batches[k] for k in sorted(batches)],
+        "children": lines(conn),
+    }
+
+
+def signed_off(conn):
+    """The answers people confirmed without changing, in the shape `read_eval.gold_sheets` reads."""
+    return [r for r in checked_rows(conn) if not r["corrected"] and r["answer_state"] in ("written", "blank")]
+
+
+def rebuild(conn, child_ids=None):
+    """Every checked child's notebook, written; returns how many. The caller commits."""
+    row = conn.execute("select value from threshold where key = 'read.route_above_overturn'").fetchone()
+    route_above = float(row["value"]) if row else 0.25
+    by_child = {}
+    rows = [r for c in child_ids for r in checked_rows(conn, c)] if child_ids else checked_rows(conn)
+    for r in rows:
+        by_child.setdefault(str(r["child_id"]), []).append(r)
+    wanted = {str(c) for c in child_ids} if child_ids else set(by_child)
+    for child, rows in by_child.items():
+        if child not in wanted:
+            continue
+        conn.execute(
+            "insert into child_reading_profile (tenant_id, child_id, notes)"
+            " select tenant_id, id, %s from child where id = %s"
+            " on conflict (tenant_id, child_id) do update set notes = excluded.notes, updated_at = now()",
+            (json.dumps(build(rows, route_above)), child),
+        )
+    return len(wanted & set(by_child))
+
+
+def refresh(conn):
+    """The notebook of every child a person has checked something of since it was written, rebuilt; returns how many.
+    Run after every check (`/capture/correct`, and `/capture/trusted` after a sign-off), so the notebook is the child's
+    as of the last check, not of the last paper read. The caller commits."""
+    stale = conn.execute(
+        "select distinct si.child_id from item_result r join capture c on c.id = r.capture_id"
+        " join sheet_instance si on si.id = c.sheet_instance_id"
+        " left join read_correction rc on rc.item_result_id = r.id"
+        " left join child_reading_profile p on p.child_id = si.child_id"
+        " where c.superseded_by is null and (r.state = 'confirmed' or rc.id is not null)"
+        "   and (p.id is null or p.updated_at < greatest(r.confirmed_at, rc.created_at))"
+    ).fetchall()
+    ids = [str(r["child_id"]) for r in stale]
+    return rebuild(conn, ids) if ids else 0
+
+
+def current(conn, child_id):
+    """The child's notebook from every check made up to this moment, written back. Every read of a
+    child goes through this, so a correction or a sign-off reaches that child's next paper without
+    anyone running `engine read profile` (the loop takes care of itself, BUILD-ORDER standing
+    direction 2)."""
+    rebuild(conn, [child_id])
+    return for_child(conn, child_id)
+
+
+def for_child(conn, child_id):
+    row = conn.execute("select notes from child_reading_profile where child_id = %s", (child_id,)).fetchone()
+    return (json.loads(row["notes"]) if isinstance(row["notes"], str) else row["notes"]) if row else {}
+
+
+def lines(conn, child_ids=None, actor="engine-cli"):
+    """One line per notebook, for a person: the child by name (read through pii, logged), and what it holds."""
+    rows = conn.execute(
+        "select p.first_name, c.section, cp.notes from child_reading_profile cp join child c on c.id = cp.child_id,"
+        " lateral pii.read_child(c.id, %s) p where (%s::uuid[] is null or cp.child_id = any(%s::uuid[]))"
+        " order by c.section, p.first_name",
+        (actor, child_ids, child_ids),
+    ).fetchall()
+    out = []
+    for r in rows:
+        n = json.loads(r["notes"]) if isinstance(r["notes"], str) else r["notes"]
+        stood = sum(k["stood_behind"] for k in n["by_kind"].values())
+        bits = [
+            f"{n['checked']} checked",
+            f"reader right {n['right']} of {stood} it stood behind",
+            f"floor {n['floor']}",
+        ]
+        if n["route"]:
+            bits.append("routes: " + ", ".join(KIND_WORDS.get(f, f) for f in map(str, n["route"])))
+        if n["confusions"]:
+            bits.append(
+                "confuses "
+                + ", ".join(
+                    f"{k} ×{v}" for k, v in sorted(n["confusions"].items(), key=lambda kv: -kv[1])[:3]
+                )
+            )
+        bits.append(f"{len(n['samples'])} samples")
+        out.append(f"{r['first_name']} ({r['section']}): " + " · ".join(bits))
+    return out
