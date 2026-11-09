@@ -23,7 +23,7 @@ One navigation and one source of colour, type and space for the whole site. toke
 6. `@axe-core/playwright` is a dependency of `apps/web` and the journey test runs axe on every step it visits.
 7. The inventory test accepts a filter, `SLICE=UI-3` (or `SCREEN=<id>`), and then opens only the screens that slice builds (screens.json `slices[].screens`); with no filter it runs every screen. A pull request runs its own slice's filter; the full inventory runs nightly and on the last slice (a CI job reads the slice id from the branch name). Tests run for criticality, not as a blanket.
 8. `lib/menu.ts` GROUPS are exactly Today, Timetable, Children, Setup; `u53-the-menu.spec.ts` passes against them; `components/educator/shell-nav.tsx` and `lib/educator/menu.ts` are deleted; every K2 page renders inside AppFrame.
-9. `tests/u70-inventory.spec.ts` exists, reads `docs/frontend/screens.json`, and runs the ten generic checks for every screen whose `exists` is not `no`, as educator and as coordinator, at 1440 and 400; dynamic routes take a concrete address from `tests/inventory-fixtures.ts`, built from the test's own rows; screens with `exists: "no"` are `test.fixme` and counted in the report.
+9. `tests/u70-inventory.spec.ts` exists, reads `docs/frontend/screens.json`, and runs the ten generic checks and drives every control for every screen of a slice listed in the top-level `merged_slices` (a full run) or named by the SLICE filter (a pull request run), as educator and as coordinator, at 1440 and 400; dynamic routes take a concrete address from `tests/inventory-fixtures.ts`, built from the test's own rows; every other screen is `test.fixme` and counted in the report. (`exists` only describes the old page that is there today; it never decides what the test runs.)
 10. The computed font-family first names across every page are within {Source Serif 4, Source Sans 3} (the R4 check adapted); both load from Google Fonts with `display=swap`.
 11. `bin/check`, `test_ux_rules.py`, `u51` and `screens.spec.ts` pass; `ux.frozen` in workflows.json has not grown.
 
@@ -64,7 +64,7 @@ Period, record, confirm, notes, children, class picture, child, activity, object
 
 ### Done when
 
-1. Every screen of this slice passes the ten generic checks in `u70-inventory.spec.ts` (its `exists` set to `yes` in screens.json) and every element in its list behaves as its kind says.
+1. Every screen of this slice passes the ten generic checks in `u70-inventory.spec.ts` (run with `SLICE=UI-3`) and every element in its list behaves as its kind says; the slice's last commit adds `UI-3` to `merged_slices` in screens.json.
 2. Every old route listed under `folds` for these screens answers 308 to the new address (test).
 3. The journey `e2e/an-educators-tuesday.spec.ts` passes: Today → the lit period → Type the marks → a note written with one activity_observation per named child and none for a child not mentioned → Confirm → Class picture shows the change → the child → the skill → trail back to Today; axe at each step; at 1440 and 400.
 4. A correction from Notes writes a superseding activity_observation row and never updates the old one (database assertion).
@@ -271,21 +271,76 @@ The class's materials list for a fortnight, the school's list, the notes the sys
 
 Inventory valuation.
 
+## UI-11: Setup content pages: curriculum, skills to approve, question bank, a question
+
+Tier 2. Waits for: UI-2. Specification: docs/frontend/SPEC.md; inventory: docs/frontend/screens.json; wireframes: (see docs/notes/frontend-landscape.md).
+
+### What
+
+The four existing Setup pages that carry content rather than people, rebuilt on the frame and the blocks: Curriculum (activities and skills under one filter row, with drafts and offers), Skills to approve, the Question bank and one question as it prints. Their queries and their one-row-at-a-time approvals are unchanged; the old routes fold in.
+
+### Done when
+
+1. Every screen of this slice passes the ten generic checks under `SLICE=UI-11` and every element in its list behaves as its kind says; the slice's last commit adds `UI-11` to `merged_slices`.
+2. Every old route listed under `folds` for these screens answers 308 to the new address.
+3. No approve-all control exists on any of these screens (Skills to approve and the offers act on one row each).
+4. The skills-to-approve count is shown here and on no other page's badge.
+5. Every one of the 32 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
+6. Curriculum: one list carries activities (K2) and skills (grades 1–4) under one filter row
+7. Curriculum: the skills-to-approve count appears here and not on Today
+8. Curriculum: Yes / No act on one offer each; no control acts on all offers
+9. Skills to approve: approval is per row; no control approves more than one
+10. Skills to approve: the eyebrow count equals the rows across all pages
+11. Question bank: statistics and taxonomy sit behind the details link, not on the first view (rule 8)
+12. Question bank: the table shows ten rows then pages
+13. the question as it prints: a correction keeps the old key in item_key_change and the old version readable
+14. the question as it prints: Remove retires, never deletes (row count unchanged)
+
+### Out of scope
+
+Making questions; changing what a level asks; the curriculum upload.
+
+## UI-12: The screens outside the bar: sign in, help, report a problem
+
+Tier 1. Waits for: UI-1. Specification: docs/frontend/SPEC.md; inventory: docs/frontend/screens.json; wireframes: (see docs/notes/frontend-landscape.md).
+
+### What
+
+Sign in (with forgot and new password), the help pages and the feedback form, rebuilt on the tokens and the blocks; help is generated from screens.json so a new screen gets its section without a hand edit; the feedback form keeps names out of the public GitHub issue.
+
+### Done when
+
+1. Every screen of this slice passes the ten generic checks under `SLICE=UI-12` (sign in is tested signed out) and every element in its list behaves as its kind says; the slice's last commit adds `UI-12` to `merged_slices`.
+2. Every old route listed under `folds` for these screens answers 308 to the new address.
+3. The help page has one section per screen in screens.json, generated from it by a script, and every page's ? opens its own section (test over all screens).
+4. A used password link is refused the second time, and no development bypass exists in a production build (the existing gate tests kept).
+5. Every one of the 11 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
+6. Sign in: lands on Today for the person's group
+7. Sign in: no development bypass in production
+8. Sign in: a used password link is refused the second time
+9. Start here: every page's ? opens its own section
+10. Start here: the sections are generated from screens.json so a new screen gets its help without a hand edit
+11. Report a problem or suggest something: Send writes one staff_note and one issue; the issue body carries no child's name: the page warns not to type one, and a screenshot is kept on the private side, linked by id, never attached to the public GitHub issue (names now appear on some screens and the repository is public)
+
+### Out of scope
+
+A parent login; a new way to sign in.
+
 ## UI-10: The as-built milestone document
 
 Tier 1. Waits for: UI-1 (it can be built early and re-run after every slice). Specification: docs/frontend/SPEC.md; inventory: docs/frontend/screens.json; wireframes: (see docs/notes/frontend-landscape.md).
 
 ### What
 
-A script that generates docs/frontend/AS-BUILT.md from screens.json plus the last inventory-test run: the milestone document Nimish asked for, so he can see exactly what exists, what each screen's controls are, and what the checks reported. Every slice sets its screens' `exists` to `yes` in screens.json when its proofs pass, so the document is always true.
+A script that generates docs/frontend/AS-BUILT.md from screens.json plus the last inventory-test run: the milestone document Nimish asked for, so he can see exactly what exists, what each screen's controls are, and what the checks reported. Every slice adds its id to `merged_slices` in screens.json when its proofs pass, so the document is always true.
 
 ### Done when
 
 1. `node docs/frontend/as-built.mjs` reads `docs/frontend/screens.json` and the inventory test's machine-readable report (`apps/web/test-results/inventory.json`, written by `u70-inventory.spec.ts`) and writes `docs/frontend/AS-BUILT.md`; it never edits screens.json.
-2. AS-BUILT.md lists every screen: its address, its group, who sees it, every control, whether it exists (yes, part, no), the slice that built it, and what each of the ten generic checks reported (passed, failed with the reason, or not run because the screen does not exist yet).
+2. AS-BUILT.md lists every screen: its address, its group, who sees it, every control, whether it is built (its slice is in `merged_slices`) and what old page exists today, the slice that built it, and what each of the ten generic checks reported (passed, failed with the reason, or not run because its slice is not merged yet).
 3. AS-BUILT.md opens with counts: screens built of 33, controls built of the total, generic checks passed of those run, and the slices merged; a screen absent from the test report is shown as 'not run', never as passed.
 4. A test feeds the script a screens.json and a report with known results and asserts the exact numbers and lines in the output, including a failed check and a screen that does not exist.
-5. Every slice's scope includes the line 'the screens this slice builds have `exists: "yes"` in screens.json and AS-BUILT.md is regenerated in the same pull request'; the inventory test fails if a screen it can open is still marked `no`.
+5. Every slice's scope includes the line 'this slice's id is in `merged_slices` in screens.json and AS-BUILT.md is regenerated in the same pull request'; a test fails if a slice listed in `merged_slices` has a screen the inventory test could not open.
 
 ### Out of scope
 

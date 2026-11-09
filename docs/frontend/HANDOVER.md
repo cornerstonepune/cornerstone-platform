@@ -16,7 +16,7 @@ Nothing here is open for re-design. Where you find a conflict or a gap, stop and
 2. `docs/frontend/screens.json`: the same inventory as data. It is the oracle: the inventory test reads it, the help page
    is generated from it, and `node docs/frontend/build-spec.mjs` regenerates SPEC.md, scopes.md and the wireframes from
    it. Change the JSON, run the script; never edit the generated files by hand.
-3. `docs/frontend/scopes.md`: the slices UI-1 to UI-10 as paste-ready GitHub issues in the Scope form.
+3. `docs/frontend/scopes.md`: the slices UI-1 to UI-12 as paste-ready GitHub issues in the Scope form.
 4. `docs/frontend/tokens.json`: every colour, font, size and space. Copy it to `apps/web/design-system/tokens.json` and
    generate `tokens.css` from it (UI-1). The design system that mirrors it, with the brand book, the icon map and the first
    blocks' previews: https://claude.ai/code/artifact/caaa43e4-681b-4ac0-82c9-ffb866116514 (`read` its `project/README.md`).
@@ -40,19 +40,20 @@ Nothing here is open for re-design. Where you find a conflict or a gap, stop and
 **How to proceed**
 
 1. For each slice in `scopes.md`, in order UI-1 → UI-2 → UI-3 and UI-4 (either order) → UI-5 → UI-6 (when its backend has
-   merged) → UI-7 → UI-8 → UI-9, with UI-10 (the as-built document) right after UI-1: open a GitHub issue titled `UI-n: <title>` with the section's text verbatim; Nimish adds
+   merged) → UI-7 → UI-8 → UI-9, UI-11 and UI-12 any time after UI-2 and UI-1, with UI-10 (the as-built document) right after UI-1: open a GitHub issue titled `UI-n: <title>` with the section's text verbatim; Nimish adds
    `scope-locked`; run the `athena-scope` skill (the proof-writer turns every Done-when line into a check, including the
    ten generic checks for each screen the slice builds, read from `screens.json`); build with `athena-build` test-first;
    verify with `athena-verify`; ship with `athena-ship`. One slice at a time; merge under the merge rule.
 2. UI-1's inventory test, `apps/web/tests/u70-inventory.spec.ts`, is the spine. It reads `screens.json`; for every screen
-   whose `exists` is not `no` it signs in as educator and as coordinator, opens the screen at 1440 and 400 (dynamic
+   of a slice in `merged_slices` (or named by `SLICE=UI-n`) it signs in as educator and as coordinator, opens the screen at 1440 and 400 (dynamic
    routes take a concrete address from `tests/inventory-fixtures.ts`, built from the suite's own rows), runs the ten
    generic checks of SPEC §7, and then drives every control in the screen's `elements` list by its kind
    (`element_kinds`): clicks every link and row and asserts it lands on the target's h1 and that Back returns; opens and
    closes every fold; applies and clears every filter and checks the address; fills every field and submits every button
    and asserts its stated effect; and asserts that controls marked for one role are absent and refused for the other.
    Its completeness check counts the interactive controls on the page and fails if the count differs from the inventory.
-   A screen marked `exists: "no"` is `test.fixme` until its slice lands. Every later slice flips its screens to `yes`.
+   A screen whose slice is not merged is `test.fixme`. Every slice's last commit adds its id to `merged_slices`.
+   (`exists` only describes the old page; every screen belongs to exactly one slice, UI-1 to UI-12.)
 3. Build nothing that is not in the inventory. A new screen or control goes into `screens.json` first, the script is
    run, and the test fails until the screen exists. That is how there is no rework.
 4. Every block gets a preview on `/setup/blocks` and a screenshot in both themes (UI-2); every slice gets its journey test

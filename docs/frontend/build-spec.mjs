@@ -25,7 +25,11 @@ for (const s of data.screens) {
 }
 const sliced = new Set(data.slices.flatMap((x) => x.screens));
 for (const x of data.slices) for (const id of x.screens) if (!byId[id]) problems.push(`${x.id}: unknown screen ${id}`);
-for (const s of data.screens) if (!sliced.has(s.id) && !/^yes/.test(s.exists)) problems.push(`${s.id}: exists "${s.exists}" but in no slice`);
+for (const s of data.screens) {
+  const n = data.slices.filter((x) => x.screens.includes(s.id)).length;
+  if (n !== 1) problems.push(`${s.id}: in ${n} slices (every screen belongs to exactly one)`);
+}
+for (const id of data.merged_slices ?? []) if (!data.slices.some((x) => x.id === id)) problems.push(`merged_slices names unknown slice ${id}`);
 if (problems.length) {
   console.error("screens.json problems:\n  " + problems.join("\n  "));
   process.exit(1);
@@ -47,7 +51,7 @@ const slicesTable = ["| Slice | What | Screens | Waits for |", "|---|---|---|---
 const screenSection = (s) =>
   [
     `#### ${s.title} \`${s.route}\``,
-    `Who: ${s.who} · Phase: ${s.phase} · Backend: ${list(s.backend)} · Exists today: ${s.exists} · Slice: ${data.slices.find((x) => x.screens.includes(s.id))?.id ?? "none (exists)"}`,
+    `Who: ${s.who} · Phase: ${s.phase} · Backend: ${list(s.backend)} · Old page today: ${s.exists} · Slice: ${data.slices.find((x) => x.screens.includes(s.id))?.id}`,
     `Eyebrow: ${s.eyebrow}`,
     `Purpose: ${s.purpose}`,
     "Blocks, in order:",

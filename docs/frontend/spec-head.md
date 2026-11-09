@@ -110,11 +110,13 @@ Folding: the catalogue marks which old pages fold into each new screen. A folded
 one term, then goes. Nothing is deleted before its new screen's proofs pass.
 
 **The inventory is the test oracle.** `screens.json` is read by one Playwright test, `tests/u70-inventory.spec.ts` (built in
-UI-1), which opens every screen whose `exists` is not `no` at a concrete address (dynamic routes get theirs from a fixture
-map the test's own rows provide), runs the generic checks of section 7, and drives every control in the screen's
-`elements` list by its kind. A screen marked `exists: "no"` is a `test.fixme` until its slice lands, so the count of
-screens still to build is always visible in the test report. Adding a screen means adding it to the inventory first; the
-test fails until the screen exists.
+UI-1), which opens every screen of a slice listed in the top-level `merged_slices` (a full run) or named by `SLICE=UI-n`
+(a pull request run) at a concrete address (dynamic routes get theirs from a fixture map the test's own rows provide),
+runs the generic checks of section 7, and drives every control in the screen's `elements` list by its kind. Every other
+screen is a `test.fixme`, so the count of screens still to build is always visible in the test report. `exists` only
+describes the old page that is there today; it never decides what the test runs. Every screen belongs to exactly one
+slice (the script refuses a screen in no slice); a slice's last commit adds its id to `merged_slices`. Adding a screen
+means adding it to the inventory and a slice first; the test fails until the screen is built.
 
 ## 7. Slices and their goal points
 

@@ -110,11 +110,13 @@ Folding: the catalogue marks which old pages fold into each new screen. A folded
 one term, then goes. Nothing is deleted before its new screen's proofs pass.
 
 **The inventory is the test oracle.** `screens.json` is read by one Playwright test, `tests/u70-inventory.spec.ts` (built in
-UI-1), which opens every screen whose `exists` is not `no` at a concrete address (dynamic routes get theirs from a fixture
-map the test's own rows provide), runs the generic checks of section 7, and drives every control in the screen's
-`elements` list by its kind. A screen marked `exists: "no"` is a `test.fixme` until its slice lands, so the count of
-screens still to build is always visible in the test report. Adding a screen means adding it to the inventory first; the
-test fails until the screen exists.
+UI-1), which opens every screen of a slice listed in the top-level `merged_slices` (a full run) or named by `SLICE=UI-n`
+(a pull request run) at a concrete address (dynamic routes get theirs from a fixture map the test's own rows provide),
+runs the generic checks of section 7, and drives every control in the screen's `elements` list by its kind. Every other
+screen is a `test.fixme`, so the count of screens still to build is always visible in the test report. `exists` only
+describes the old page that is there today; it never decides what the test runs. Every screen belongs to exactly one
+slice (the script refuses a screen in no slice); a slice's last commit adds its id to `merged_slices`. Adding a screen
+means adding it to the inventory and a slice first; the test fails until the screen is built.
 
 ## 7. Slices and their goal points
 
@@ -160,7 +162,9 @@ What the test does with each kind of control:
 | UI-7 Today, both kinds | The educator's Today (the day, the attention strip, notes to confirm, the class) and the coordinator's Today (what waits, last week's heat grid, next week), composed from the blocks over the queries that exist; What needs doing folds in and its count moves to Setup where it belongs. | Today, Today, the school | UI-3 and UI-5; UI-6 for the coordinator's clash and draft rows (rows for a backend not yet merged simply do not appear) |
 | UI-8 Reports | Each child's report, line by line, in the educator's words: two approvals per line, consent on file, then sent. The parent's copy says educator, Easy / Medium / Hard / Advance, no rung and no code. | Reports | CP-19 merged (Next) |
 | UI-9 Materials | The class's materials list for a fortnight, the school's list, the notes the system could not read, and the educator's approval of her own class's list. | Materials, this fortnight | CP-17 and CP-18 merged (Later) |
-| UI-10 The as-built milestone document | A script that generates docs/frontend/AS-BUILT.md from screens.json plus the last inventory-test run: the milestone document Nimish asked for, so he can see exactly what exists, what each screen's controls are, and what the checks reported. Every slice sets its screens' `exists` to `yes` in screens.json when its proofs pass, so the document is always true. | the frame and the blocks | UI-1 (it can be built early and re-run after every slice) |
+| UI-11 Setup content pages: curriculum, skills to approve, question bank, a question | The four existing Setup pages that carry content rather than people, rebuilt on the frame and the blocks: Curriculum (activities and skills under one filter row, with drafts and offers), Skills to approve, the Question bank and one question as it prints. Their queries and their one-row-at-a-time approvals are unchanged; the old routes fold in. | Curriculum, Skills to approve, Question bank, the question as it prints | UI-2 |
+| UI-12 The screens outside the bar: sign in, help, report a problem | Sign in (with forgot and new password), the help pages and the feedback form, rebuilt on the tokens and the blocks; help is generated from screens.json so a new screen gets its section without a hand edit; the feedback form keeps names out of the public GitHub issue. | Sign in, Start here, Report a problem or suggest something | UI-1 |
+| UI-10 The as-built milestone document | A script that generates docs/frontend/AS-BUILT.md from screens.json plus the last inventory-test run: the milestone document Nimish asked for, so he can see exactly what exists, what each screen's controls are, and what the checks reported. Every slice adds its id to `merged_slices` in screens.json when its proofs pass, so the document is always true. | the frame and the blocks | UI-1 (it can be built early and re-run after every slice) |
 
 ## 5. The blocks
 
@@ -201,7 +205,7 @@ done. Wireframes of all of them: (see docs/notes/frontend-landscape.md).
 ### Today
 
 #### Today `/today`
-Who: educator · Phase: Core · Backend: CP-8 · CP-10 · Exists today: part · Slice: UI-7
+Who: educator · Phase: Core · Backend: CP-8 · CP-10 · Old page today: part · Slice: UI-7
 Eyebrow: Tuesday 18-Nov · K2 Red · Fortnight 9, week A
 Purpose: Your periods in order. Tap one for what to teach, how, and what to lay out. After it, record a note.
 Blocks, in order:
@@ -231,7 +235,7 @@ Done when (on top of the ten generic checks):
 
 
 #### Today, the school `/today`
-Who: coordinator · Phase: Core · Backend: CP-6 · CP-12 · CP-22 · CP-10 · Exists today: no · Slice: UI-7
+Who: coordinator · Phase: Core · Backend: CP-6 · CP-12 · CP-22 · CP-10 · Old page today: no · Slice: UI-7
 Eyebrow: Tuesday 18-Nov · every class
 Purpose: What waits on you, each with its own button. Then the week ahead.
 Blocks, in order:
@@ -265,7 +269,7 @@ Done when (on top of the ten generic checks):
 
 
 #### the session's name `/period/[id]`
-Who: educator · Phase: Core · Backend: CP-8 · Exists today: yes (/educator/period) · Slice: UI-3
+Who: educator · Phase: Core · Backend: CP-8 · Old page today: yes (/educator/period) · Slice: UI-3
 Eyebrow: Period · 09:15 · K2 Red · Numeracy
 Purpose: the activity's objective in one line
 Blocks, in order:
@@ -298,7 +302,7 @@ Done when (on top of the ten generic checks):
 
 
 #### Record a note `/period/[id]/record`
-Who: educator · Phase: Core · Backend: CP-10 · Exists today: yes (/voice/record) · Slice: UI-3
+Who: educator · Phase: Core · Backend: CP-10 · Old page today: yes (/voice/record) · Slice: UI-3
 Eyebrow: K2 Red · the session's name
 Purpose: Say what happened and who, by Sr. number. The reader turns it into marks; you confirm them, one note at a time.
 Blocks, in order:
@@ -324,7 +328,7 @@ Done when (on top of the ten generic checks):
 
 
 #### Confirm what the reader heard `/notes/[id]`
-Who: educator · Phase: Core · Backend: CP-9 · CP-10 · Exists today: yes (/voice/notes/[id]) · Slice: UI-3
+Who: educator · Phase: Core · Backend: CP-9 · CP-10 · Old page today: yes (/voice/notes/[id]) · Slice: UI-3
 Eyebrow: K2 Red · note of 09:15 · Counting to 20
 Purpose: Left, your words line by line. Right, the class already marked from them. Nothing is ticked for you; 'the rest did as expected' is one switch. Confirm is for this note only.
 Blocks, in order:
@@ -355,7 +359,7 @@ Done when (on top of the ten generic checks):
 ### Timetable
 
 #### Timetable `/timetable`
-Who: both · Phase: Core · Backend: CP-22 · Exists today: part (/educator/week) · Slice: UI-5
+Who: both · Phase: Core · Backend: CP-22 · Old page today: part (/educator/week) · Slice: UI-5
 Eyebrow: K2 Red
 Purpose: The fortnight is the unit. Week A and week B, each period a block; a moved period is marked, a clash is red until the coordinator accepts it.
 Blocks, in order:
@@ -386,7 +390,7 @@ Done when (on top of the ten generic checks):
 
 
 #### Fortnight 9 `/timetable/fortnight/[n]`
-Who: both · Phase: Core · Backend: CP-6 · CP-22 · Exists today: no · Slice: UI-6
+Who: both · Phase: Core · Backend: CP-6 · CP-22 · Old page today: no · Slice: UI-6
 Eyebrow: 17-Nov to 28-Nov
 Purpose: Its state, its plan lines, and what changed when the draft went live. Frozen once it starts; a move after that is a hand move, kept with who made it.
 Blocks, in order:
@@ -414,7 +418,7 @@ Done when (on top of the ten generic checks):
 
 
 #### Draft from the rules `/timetable/draft`
-Who: coordinator · Phase: Core · Backend: CP-11 · Exists today: no · Slice: UI-6
+Who: coordinator · Phase: Core · Backend: CP-11 · Old page today: no · Slice: UI-6
 Eyebrow: Fortnight 10 · from the rules
 Purpose: One command makes a draft from the period times, blocked days, fixed slots and limits. Rules it could not meet are listed in words.
 Blocks, in order:
@@ -443,7 +447,7 @@ Done when (on top of the ten generic checks):
 
 
 #### Moves by hand `/timetable/moves`
-Who: coordinator · Phase: Core · Backend: CP-12 · Exists today: no · Slice: UI-6
+Who: coordinator · Phase: Core · Backend: CP-12 · Old page today: no · Slice: UI-6
 Eyebrow: Fortnight 10 · draft
 Purpose: Move a period; the clash it makes shows at once; only the coordinator accepts one, with a reason.
 Blocks, in order:
@@ -469,7 +473,7 @@ Done when (on top of the ten generic checks):
 
 
 #### Timetable rules `/timetable/rules`
-Who: coordinator · Phase: Core · Backend: CP-11 · Exists today: yes · Slice: UI-5
+Who: coordinator · Phase: Core · Backend: CP-11 · Old page today: yes · Slice: UI-5
 Eyebrow: Every grade
 Purpose: Period times, blocked days, fixed slots and subject limits, kept as rows with who changed them.
 Blocks, in order:
@@ -494,7 +498,7 @@ Done when (on top of the ten generic checks):
 
 
 #### Materials, this fortnight `/timetable/materials`
-Who: both · Phase: Later · Backend: CP-17 · CP-18 · Exists today: yes (/educator/materials) · Slice: UI-9
+Who: both · Phase: Later · Backend: CP-17 · CP-18 · Old page today: yes (/educator/materials) · Slice: UI-9
 Eyebrow: K2 Red · Fortnight 9
 Purpose: Built from the activities in the plan. Each line knows which activity needs it. Set a quantity, remove a line, add from the catalogue.
 Blocks, in order:
@@ -524,7 +528,7 @@ Done when (on top of the ten generic checks):
 ### Children
 
 #### Notes `/notes`
-Who: both · Phase: Core · Backend: CP-9 · CP-10 · Exists today: no · Slice: UI-3
+Who: both · Phase: Core · Backend: CP-9 · CP-10 · Old page today: no · Slice: UI-3
 Eyebrow: K2 Red · this fortnight
 Purpose: Every note of your classes: waiting, confirmed, left unconfirmed. Open one to confirm it or to correct a confirmed one.
 Blocks, in order:
@@ -556,7 +560,7 @@ Done when (on top of the ten generic checks):
 
 
 #### Children `/children`
-Who: both · Phase: Core · Backend: CP-13 · Exists today: part (/k2) · Slice: UI-3
+Who: both · Phase: Core · Backend: CP-13 · Old page today: part (/k2) · Slice: UI-3
 Eyebrow: Your classes
 Purpose: Where each child stands, two ways in: the class picture from notes (nursery to K2) and the papers (grades 1 to 4). Both feed the same child.
 Blocks, in order:
@@ -579,7 +583,7 @@ Done when (on top of the ten generic checks):
 
 
 #### Class picture `/children/[class]`
-Who: both · Phase: Core · Backend: CP-13 · CP-9 · Exists today: yes (/k2/[class]) · Slice: UI-3
+Who: both · Phase: Core · Backend: CP-13 · CP-9 · Old page today: yes (/k2/[class]) · Slice: UI-3
 Eyebrow: K2 Red · 24 children
 Purpose: Each square a child by Sr. No., shown on one skill at a time. Tap a child. Change the skill from the rail.
 Blocks, in order:
@@ -611,7 +615,7 @@ Done when (on top of the ten generic checks):
 
 
 #### Where this child is `/children/[class]/[roll]`
-Who: both · Phase: Core · Backend: CP-13 · CP-14 · Exists today: part (/k2/[class]/[roll], /growth/[id]) · Slice: UI-3
+Who: both · Phase: Core · Backend: CP-13 · CP-14 · Old page today: part (/k2/[class]/[roll], /growth/[id]) · Slice: UI-3
 Eyebrow: K2 Red · Sr. No. 12 · the child's name
 Purpose: The left is the shape: each skill seen, coloured by state, sized by how often. The right is every observation behind it, the educator's own words beside the mark.
 Blocks, in order:
@@ -647,7 +651,7 @@ Done when (on top of the ten generic checks):
 
 
 #### Assessments `/children/assessments`
-Who: both · Phase: Core · Backend: none · Exists today: yes (/papers, /capture) · Slice: UI-4
+Who: both · Phase: Core · Backend: none · Old page today: yes (/papers, /capture) · Slice: UI-4
 Eyebrow: Grades 1 to 4 · your classes
 Purpose: Each one goes through seven steps. Its row shows the step it waits at and the one thing to do next.
 Blocks, in order:
@@ -688,7 +692,7 @@ Done when (on top of the ten generic checks):
 
 
 #### the built name `/children/assessments/[key]`
-Who: both · Phase: Core · Backend: none · Exists today: part (/papers/approve, /papers/card) · Slice: UI-4
+Who: both · Phase: Core · Backend: none · Old page today: part (/papers/approve, /papers/card) · Slice: UI-4
 Eyebrow: Grade 1 · 22 papers
 Purpose: Where this assessment stands, and each child's copy. A copy is its own row with its own action; there is no button over all of them.
 Blocks, in order:
@@ -725,7 +729,7 @@ Done when (on top of the ten generic checks):
 
 
 #### Check the answers `/children/assessments/[key]/[roll]`
-Who: both · Phase: Core · Backend: none · Exists today: yes (/capture/check, /capture/[id]) · Slice: UI-4
+Who: both · Phase: Core · Backend: none · Old page today: yes (/capture/check, /capture/[id]) · Slice: UI-4
 Eyebrow: Grade 1 · Sr. No. 7 · Easy
 Purpose: The page as photographed on the left; each answer as the engine read it on the right. Say what the child wrote where it was not sure; the engine marks it. Right, wrong and blank are kept apart, always.
 Blocks, in order:
@@ -755,7 +759,7 @@ Done when (on top of the ten generic checks):
 
 
 #### Reports `/children/reports`
-Who: both · Phase: Next · Backend: CP-19 · Exists today: part (/growth/reports) · Slice: UI-8
+Who: both · Phase: Next · Backend: CP-19 · Old page today: part (/growth/reports) · Slice: UI-8
 Eyebrow: Grade 1 · this term
 Purpose: Each child's report, line by line, in the educator's words. Two approvals per line, consent on file, then sent. Nothing goes out otherwise.
 Blocks, in order:
@@ -786,7 +790,7 @@ Done when (on top of the ten generic checks):
 ### Setup
 
 #### the activity's name `/setup/activities/[code]`
-Who: both · Phase: Core · Backend: CP-8 · CP-15 · Exists today: yes (/educator/activity/[code], /curriculum/fill/[code]) · Slice: UI-3
+Who: both · Phase: Core · Backend: CP-8 · CP-15 · Old page today: yes (/educator/activity/[code], /curriculum/fill/[code]) · Slice: UI-3
 Eyebrow: Activity 112 · Numeracy
 Purpose: the objective
 Blocks, in order:
@@ -820,7 +824,7 @@ Done when (on top of the ten generic checks):
 
 
 #### the objective's title `/setup/objectives/[code]`
-Who: both · Phase: Core · Backend: none · Exists today: no · Slice: UI-3
+Who: both · Phase: Core · Backend: none · Old page today: no · Slice: UI-3
 Eyebrow: Learning objective · K2 · Numeracy
 Purpose: An objective names the skills it builds. The system reads a child's state on those skills; it never scores the objective itself.
 Blocks, in order:
@@ -840,7 +844,7 @@ Done when (on top of the ten generic checks):
 
 
 #### the skill's name `/setup/skills/[code]`
-Who: both · Phase: Core · Backend: CP-13 · CP-14 · Exists today: part (/skill-sets/[code]) · Slice: UI-3
+Who: both · Phase: Core · Backend: CP-13 · CP-14 · Old page today: part (/skill-sets/[code]) · Slice: UI-3
 Eyebrow: Skill · Numeracy
 Purpose: Where the class stands on this skill, from confirmed notes and papers. A child not seen on it is not seen, nothing more.
 Blocks, in order:
@@ -874,7 +878,7 @@ Done when (on top of the ten generic checks):
 
 
 #### Curriculum `/setup/curriculum`
-Who: both · Phase: Core · Backend: CP-15 · Exists today: yes (/, /curriculum/browse, /curriculum/fill) · Slice: none (exists)
+Who: both · Phase: Core · Backend: CP-15 · Old page today: yes (/, /curriculum/browse, /curriculum/fill) · Slice: UI-11
 Eyebrow: Every grade
 Purpose: Every activity and skill of every grade, with its levels and how much of each page is filled in. Open one to read it.
 Blocks, in order:
@@ -905,7 +909,7 @@ Done when (on top of the ten generic checks):
 
 
 #### Skills to approve `/setup/skills/approve`
-Who: coordinator · Phase: Core · Backend: none · Exists today: yes · Slice: none (exists)
+Who: coordinator · Phase: Core · Backend: none · Old page today: yes · Slice: UI-11
 Eyebrow: 109 waiting
 Purpose: Read each skill's levels and approve them one at a time. What a wrong answer counts against is shown beside it.
 Blocks, in order:
@@ -931,7 +935,7 @@ Done when (on top of the ten generic checks):
 
 
 #### Question bank `/setup/question-bank`
-Who: both · Phase: Core · Backend: none · Exists today: yes (/library) · Slice: none (exists)
+Who: both · Phase: Core · Backend: none · Old page today: yes (/library) · Slice: UI-11
 Eyebrow: Grades 1 to 4
 Purpose: What is in the bank for the skills taught in your classes, by level. Open a question to read it as it prints.
 Blocks, in order:
@@ -957,7 +961,7 @@ Done when (on top of the ten generic checks):
 
 
 #### the question as it prints `/setup/question-bank/[key]`
-Who: both · Phase: Core · Backend: none · Exists today: yes (/library/[key]) · Slice: none (exists)
+Who: both · Phase: Core · Backend: none · Old page today: yes (/library/[key]) · Slice: UI-11
 Eyebrow: Numeracy · Easy
 Purpose: The question, its answer, the wrong answers it catches, and where it came from. Correct the wording or remove it.
 Blocks, in order:
@@ -982,7 +986,7 @@ Done when (on top of the ten generic checks):
 
 
 #### Staff and classes `/setup/staff`
-Who: coordinator · Phase: Core · Backend: CP-1 · CP-3 · Exists today: yes · Slice: UI-5
+Who: coordinator · Phase: Core · Backend: CP-1 · CP-3 · Old page today: yes · Slice: UI-5
 Eyebrow: This fortnight
 Purpose: Who teaches which class, and three numbers the database can stand behind per class. No ranking: the school decides what they mean.
 Blocks, in order:
@@ -1007,7 +1011,7 @@ Done when (on top of the ten generic checks):
 
 
 #### Classes and children `/setup/classes`
-Who: coordinator · Phase: Core · Backend: CP-1 · Exists today: part (/school) · Slice: UI-5
+Who: coordinator · Phase: Core · Backend: CP-1 · Old page today: part (/school) · Slice: UI-5
 Eyebrow: The school
 Purpose: Each class, its grade, its children by Sr. No., and who teaches it. Move a child to another class; every change is kept with who made it.
 Blocks, in order:
@@ -1035,7 +1039,7 @@ Done when (on top of the ten generic checks):
 
 
 #### Setup `/setup`
-Who: both · Phase: Core · Backend: none · Exists today: part · Slice: UI-5
+Who: both · Phase: Core · Backend: none · Old page today: part · Slice: UI-5
 Eyebrow: Changed rarely
 Purpose: The curriculum, the skills, the question bank, staff, classes and the school. Statistics and old scans sit behind details links.
 Blocks, in order:
@@ -1059,7 +1063,7 @@ Done when (on top of the ten generic checks):
 ### Outside the bar
 
 #### Search `/search`
-Who: both · Phase: Core · Backend: none · Exists today: part (top bar search) · Slice: UI-5
+Who: both · Phase: Core · Backend: none · Old page today: part (top bar search) · Slice: UI-5
 Eyebrow: Search
 Purpose: A child by name or Sr. No. in your classes, an activity, a skill, an assessment by its built name.
 Blocks, in order:
@@ -1082,7 +1086,7 @@ Done when (on top of the ten generic checks):
 
 
 #### Sign in `/login`
-Who: both · Phase: Core · Backend: CP-2 · Exists today: yes · Slice: none (exists)
+Who: both · Phase: Core · Backend: CP-2 · Old page today: yes · Slice: UI-12
 Eyebrow: Staff only
 Purpose: School email and password. Forgot it: a link by email, set by its owner.
 Blocks, in order:
@@ -1104,7 +1108,7 @@ Done when (on top of the ten generic checks):
 
 
 #### Start here `/guide`
-Who: both · Phase: Core · Backend: none · Exists today: yes · Slice: none (exists)
+Who: both · Phase: Core · Backend: none · Old page today: yes · Slice: UI-12
 Eyebrow: Start here
 Purpose: What each page is for, the usual jobs, and what each button does; the school's steps in four stages. Reached from the ? on every page.
 Blocks, in order:
@@ -1125,7 +1129,7 @@ Done when (on top of the ten generic checks):
 
 
 #### Report a problem or suggest something `/feedback`
-Who: both · Phase: Core · Backend: none · Exists today: yes · Slice: none (exists)
+Who: both · Phase: Core · Backend: none · Old page today: yes · Slice: UI-12
 Eyebrow: To the team
 Purpose: Tell us what is broken, what you would like, or ask a question. It reaches the team, who decide what is built.
 Blocks, in order:
