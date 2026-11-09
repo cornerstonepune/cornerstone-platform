@@ -78,6 +78,20 @@
           <tr><td><a data-el="6" href="#skill" data-source="skill.name">Mixing colours</a></td><td class="st" data-source="child_skill_state.state child_state.words"><span class="chip" data-state="quiet"><i class="ic s" data-icon="emerging"></i>Emerging</span></td><td class="n num" data-source="child_skill_state.n_events">2</td></tr>
               </tbody></table></div>
           </div>
+          <div class="cards" data-block="Cards">
+            <article class="card" data-kind="child"><div class="card-h"><span class="tile"><i class="ic" data-icon="child"></i></span>Counts by state</div><div class="card-b stack" data-block="StackBar">
+              <div class="sbar" role="img" aria-label="2 secure, 2 practising, 2 emerging"><i data-state="ok" style="--n: 2"></i><i data-state="wait" style="--n: 2"></i><i data-state="quiet" style="--n: 2"></i></div>
+              <div class="keyrow" data-source="child_skill_state.state child_state.words"><span class="chip" data-state="ok"><i class="ic s" data-icon="secure"></i>2 secure</span><span class="chip" data-state="wait"><i class="ic s" data-icon="practising"></i>2 practising</span><span class="chip" data-state="quiet"><i class="ic s" data-icon="emerging"></i>2 emerging</span></div>
+              <span class="muted">6 skills seen in all</span>
+              <span class="muted" data-source="enrolment.roll_no enrolment.class_id">Sr. No. 12 of 24 in <span data-source="grade.name school_class.section">K2 Red</span>, since <span data-source="enrolment.from_date">4-Jun</span></span>
+            </div></article>
+            <article class="card" data-kind="child"><div class="card-h"><span class="tile"><i class="ic" data-icon="history"></i></span>Last seen, by skill</div><div class="card-b"><dl class="kv" data-source="skill.name child_skill_state.last_seen">
+              <dt>Counting in tens</dt><dd>18-Nov</dd><dt>Retelling a story</dt><dd>17-Nov</dd><dt>Sorting by size</dt><dd>16-Nov</dd><dt>Rhyming words</dt><dd>12-Nov</dd><dt>Comparing groups</dt><dd>9-Nov</dd><dt>Mixing colours</dt><dd>6-Nov</dd>
+            </dl></div></article>
+            <article class="card" data-kind="child"><div class="card-h"><span class="tile"><i class="ic" data-icon="note"></i></span>Notes and papers</div><div class="card-b"><dl class="kv">
+              <dt>Notes confirmed</dt><dd class="num" data-source="activity_observation.child_id activity_observation.confirmed_by">12</dd><dt>Papers read</dt><dd class="num" data-source="item_result.state item_result.confirmed_at">3</dd><dt>Corrections</dt><dd class="num" data-source="activity_observation.supersedes">1</dd><dt>Newest entry</dt><dd data-source="activity_observation.observed_at">18-Nov</dd>
+            </dl></div></article>
+          </div>
           <div class="filters" data-block="FilterBar">
             <label class="sel"><i class="ic s" data-icon="skill"></i>Trend for <select data-el="2" data-source="skill.name"><option>Counting in tens</option><option>Comparing groups</option><option>Sorting by size</option><option>Retelling a story</option><option>Rhyming words</option><option>Mixing colours</option></select></label>
           </div>
@@ -99,16 +113,16 @@
             <li class="tli" data-source="activity_observation.outcome activity_observation.supersedes"><span class="tile" data-kind="note"><i class="ic" data-icon="fix-this"></i></span><div><b>Correction: replaces the 11-Nov entry</b><p>Counted on from 30 in tens with bundles, no prompt. The 11-Nov entry named the wrong child.</p><p><a data-el="4" href="#activity" data-source="activity.name">Counting in tens with bundles</a></p>
               <details class="details"><summary data-el="3"><i class="ic s" data-icon="details"></i>Details</summary><div><dl class="kv"><dt>Observed by</dt><dd data-source="activity_observation.observed_by">an educator</dd><dt>Confirmed by</dt><dd data-source="activity_observation.confirmed_by pii.staff.name">Asha Almond</dd><dt>Observed</dt><dd data-source="activity_observation.observed_at activity_observation.stored_at">18-Nov 09:50 · stored 18-Nov 09:50, evening</dd><dt>Route</dt><dd data-source="activity_observation.route">voice</dd><dt>Counts toward secure</dt><dd data-source="evidence_event.confirmed_by">yes</dd><dt>Replaces</dt><dd data-source="activity_observation.supersedes">the 11-Nov entry</dd><dt>Why</dt><dd data-source="activity_observation.reason">named the wrong child</dd></dl></div></details></div><span class="caption">18-Nov · voice</span></li>
           </ol>
-          <h2 class="title-small" data-gap="named days: child_skill_state keeps n_events and last_seen but not the count of distinct days (child_observed_state.named_days is not a target table)">Skill by skill</h2>
+          <h2 class="title-small">Skill by skill</h2>
           <div class="table-box" data-block="DataTable"><table class="table">
             <thead><tr><th>Skill</th><th class="n">Named days</th><th>Last seen</th><th>Ready next</th></tr></thead>
             <tbody>
-          <tr><td><a data-el="6" href="#skill" data-source="skill.name">Comparing groups</a></td><td class="n num">4</td><td data-source="child_skill_state.last_seen">9-Nov</td><td data-source="skill_prerequisite.skill_code skill_prerequisite.before_code skill_prerequisite.status">Counting in tens</td></tr>
-          <tr><td><a data-el="6" href="#skill" data-source="skill.name">Counting in tens</a></td><td class="n num">3</td><td data-source="child_skill_state.last_seen">18-Nov</td><td data-source="skill_prerequisite.skill_code skill_prerequisite.before_code skill_prerequisite.status">—</td></tr>
-          <tr><td><a data-el="6" href="#skill" data-source="skill.name">Sorting by size</a></td><td class="n num">4</td><td data-source="child_skill_state.last_seen">16-Nov</td><td data-source="skill_prerequisite.skill_code skill_prerequisite.before_code skill_prerequisite.status">—</td></tr>
-          <tr><td><a data-el="6" href="#skill" data-source="skill.name">Retelling a story</a></td><td class="n num">5</td><td data-source="child_skill_state.last_seen">17-Nov</td><td data-source="skill_prerequisite.skill_code skill_prerequisite.before_code skill_prerequisite.status">Predicting what happens next</td></tr>
-          <tr><td><a data-el="6" href="#skill" data-source="skill.name">Rhyming words</a></td><td class="n num">3</td><td data-source="child_skill_state.last_seen">12-Nov</td><td data-source="skill_prerequisite.skill_code skill_prerequisite.before_code skill_prerequisite.status">—</td></tr>
-          <tr><td><a data-el="6" href="#skill" data-source="skill.name">Mixing colours</a></td><td class="n num">2</td><td data-source="child_skill_state.last_seen">6-Nov</td><td data-source="skill_prerequisite.skill_code skill_prerequisite.before_code skill_prerequisite.status">—</td></tr>
+          <tr><td><a data-el="6" href="#skill" data-source="skill.name">Comparing groups</a></td><td class="n num" data-source="child_skill_state.named_days">4</td><td data-source="child_skill_state.last_seen">9-Nov</td><td data-source="activity_skill.skill_code approval.decision approval.target">Counting in tens</td></tr>
+          <tr><td><a data-el="6" href="#skill" data-source="skill.name">Counting in tens</a></td><td class="n num" data-source="child_skill_state.named_days">3</td><td data-source="child_skill_state.last_seen">18-Nov</td><td data-source="activity_skill.skill_code approval.decision approval.target">—</td></tr>
+          <tr><td><a data-el="6" href="#skill" data-source="skill.name">Sorting by size</a></td><td class="n num" data-source="child_skill_state.named_days">4</td><td data-source="child_skill_state.last_seen">16-Nov</td><td data-source="activity_skill.skill_code approval.decision approval.target">—</td></tr>
+          <tr><td><a data-el="6" href="#skill" data-source="skill.name">Retelling a story</a></td><td class="n num" data-source="child_skill_state.named_days">5</td><td data-source="child_skill_state.last_seen">17-Nov</td><td data-source="activity_skill.skill_code approval.decision approval.target">Predicting what happens next</td></tr>
+          <tr><td><a data-el="6" href="#skill" data-source="skill.name">Rhyming words</a></td><td class="n num" data-source="child_skill_state.named_days">3</td><td data-source="child_skill_state.last_seen">12-Nov</td><td data-source="activity_skill.skill_code approval.decision approval.target">—</td></tr>
+          <tr><td><a data-el="6" href="#skill" data-source="skill.name">Mixing colours</a></td><td class="n num" data-source="child_skill_state.named_days">2</td><td data-source="child_skill_state.last_seen">6-Nov</td><td data-source="activity_skill.skill_code approval.decision approval.target">—</td></tr>
             </tbody></table></div>
           <p class="caption">Ready next shows only links a person confirmed.</p>
           <div class="card">
@@ -214,6 +228,20 @@
           <tr><td><a data-el="6" href="#skill" data-source="skill.name">Mixing colours</a></td><td class="st" data-source="child_skill_state.state child_state.words"><span class="chip" data-state="quiet"><i class="ic s" data-icon="emerging"></i>Emerging</span></td><td class="n num" data-source="child_skill_state.n_events">2</td></tr>
               </tbody></table></div>
           </div>
+          <div class="cards" data-block="Cards">
+            <article class="card" data-kind="child"><div class="card-h"><span class="tile"><i class="ic" data-icon="child"></i></span>Counts by state</div><div class="card-b stack" data-block="StackBar">
+              <div class="sbar" role="img" aria-label="2 secure, 2 practising, 2 emerging"><i data-state="ok" style="--n: 2"></i><i data-state="wait" style="--n: 2"></i><i data-state="quiet" style="--n: 2"></i></div>
+              <div class="keyrow" data-source="child_skill_state.state child_state.words"><span class="chip" data-state="ok"><i class="ic s" data-icon="secure"></i>2 secure</span><span class="chip" data-state="wait"><i class="ic s" data-icon="practising"></i>2 practising</span><span class="chip" data-state="quiet"><i class="ic s" data-icon="emerging"></i>2 emerging</span></div>
+              <span class="muted">6 skills seen in all</span>
+              <span class="muted" data-source="enrolment.roll_no enrolment.class_id">Sr. No. 12 of 24 in <span data-source="grade.name school_class.section">K2 Red</span>, since <span data-source="enrolment.from_date">4-Jun</span></span>
+            </div></article>
+            <article class="card" data-kind="child"><div class="card-h"><span class="tile"><i class="ic" data-icon="history"></i></span>Last seen, by skill</div><div class="card-b"><dl class="kv" data-source="skill.name child_skill_state.last_seen">
+              <dt>Counting in tens</dt><dd>18-Nov</dd><dt>Retelling a story</dt><dd>17-Nov</dd><dt>Sorting by size</dt><dd>16-Nov</dd><dt>Rhyming words</dt><dd>12-Nov</dd><dt>Comparing groups</dt><dd>9-Nov</dd><dt>Mixing colours</dt><dd>6-Nov</dd>
+            </dl></div></article>
+            <article class="card" data-kind="child"><div class="card-h"><span class="tile"><i class="ic" data-icon="note"></i></span>Notes and papers</div><div class="card-b"><dl class="kv">
+              <dt>Notes confirmed</dt><dd class="num" data-source="activity_observation.child_id activity_observation.confirmed_by">12</dd><dt>Papers read</dt><dd class="num" data-source="item_result.state item_result.confirmed_at">3</dd><dt>Corrections</dt><dd class="num" data-source="activity_observation.supersedes">1</dd><dt>Newest entry</dt><dd data-source="activity_observation.observed_at">18-Nov</dd>
+            </dl></div></article>
+          </div>
           <div class="filters" data-block="FilterBar">
             <label class="sel"><i class="ic s" data-icon="skill"></i>Trend for <select data-el="2" data-source="skill.name"><option>Counting in tens</option><option>Comparing groups</option><option>Sorting by size</option><option>Retelling a story</option><option>Rhyming words</option><option>Mixing colours</option></select></label>
           </div>
@@ -235,16 +263,16 @@
             <li class="tli" data-source="activity_observation.outcome activity_observation.supersedes"><span class="tile" data-kind="note"><i class="ic" data-icon="fix-this"></i></span><div><b>Correction: replaces the 11-Nov entry</b><p>Counted on from 30 in tens with bundles, no prompt. The 11-Nov entry named the wrong child.</p><p><a data-el="4" href="#activity" data-source="activity.name">Counting in tens with bundles</a></p>
               <details class="details"><summary data-el="3"><i class="ic s" data-icon="details"></i>Details</summary><div><dl class="kv"><dt>Observed by</dt><dd data-source="activity_observation.observed_by">an educator</dd><dt>Confirmed by</dt><dd data-source="activity_observation.confirmed_by pii.staff.name">Asha Almond</dd><dt>Observed</dt><dd data-source="activity_observation.observed_at activity_observation.stored_at">18-Nov 09:50 · stored 18-Nov 09:50, evening</dd><dt>Route</dt><dd data-source="activity_observation.route">voice</dd><dt>Counts toward secure</dt><dd data-source="evidence_event.confirmed_by">yes</dd><dt>Replaces</dt><dd data-source="activity_observation.supersedes">the 11-Nov entry</dd><dt>Why</dt><dd data-source="activity_observation.reason">named the wrong child</dd></dl></div></details></div><span class="caption">18-Nov · voice</span></li>
           </ol>
-          <h2 class="title-small" data-gap="named days: child_skill_state keeps n_events and last_seen but not the count of distinct days (child_observed_state.named_days is not a target table)">Skill by skill</h2>
+          <h2 class="title-small">Skill by skill</h2>
           <div class="table-box" data-block="DataTable"><table class="table">
             <thead><tr><th>Skill</th><th class="n">Named days</th><th>Last seen</th><th>Ready next</th></tr></thead>
             <tbody>
-          <tr><td><a data-el="6" href="#skill" data-source="skill.name">Comparing groups</a></td><td class="n num">4</td><td data-source="child_skill_state.last_seen">9-Nov</td><td data-source="skill_prerequisite.skill_code skill_prerequisite.before_code skill_prerequisite.status">Counting in tens</td></tr>
-          <tr><td><a data-el="6" href="#skill" data-source="skill.name">Counting in tens</a></td><td class="n num">3</td><td data-source="child_skill_state.last_seen">18-Nov</td><td data-source="skill_prerequisite.skill_code skill_prerequisite.before_code skill_prerequisite.status">—</td></tr>
-          <tr><td><a data-el="6" href="#skill" data-source="skill.name">Sorting by size</a></td><td class="n num">4</td><td data-source="child_skill_state.last_seen">16-Nov</td><td data-source="skill_prerequisite.skill_code skill_prerequisite.before_code skill_prerequisite.status">—</td></tr>
-          <tr><td><a data-el="6" href="#skill" data-source="skill.name">Retelling a story</a></td><td class="n num">5</td><td data-source="child_skill_state.last_seen">17-Nov</td><td data-source="skill_prerequisite.skill_code skill_prerequisite.before_code skill_prerequisite.status">Predicting what happens next</td></tr>
-          <tr><td><a data-el="6" href="#skill" data-source="skill.name">Rhyming words</a></td><td class="n num">3</td><td data-source="child_skill_state.last_seen">12-Nov</td><td data-source="skill_prerequisite.skill_code skill_prerequisite.before_code skill_prerequisite.status">—</td></tr>
-          <tr><td><a data-el="6" href="#skill" data-source="skill.name">Mixing colours</a></td><td class="n num">2</td><td data-source="child_skill_state.last_seen">6-Nov</td><td data-source="skill_prerequisite.skill_code skill_prerequisite.before_code skill_prerequisite.status">—</td></tr>
+          <tr><td><a data-el="6" href="#skill" data-source="skill.name">Comparing groups</a></td><td class="n num" data-source="child_skill_state.named_days">4</td><td data-source="child_skill_state.last_seen">9-Nov</td><td data-source="activity_skill.skill_code approval.decision approval.target">Counting in tens</td></tr>
+          <tr><td><a data-el="6" href="#skill" data-source="skill.name">Counting in tens</a></td><td class="n num" data-source="child_skill_state.named_days">3</td><td data-source="child_skill_state.last_seen">18-Nov</td><td data-source="activity_skill.skill_code approval.decision approval.target">—</td></tr>
+          <tr><td><a data-el="6" href="#skill" data-source="skill.name">Sorting by size</a></td><td class="n num" data-source="child_skill_state.named_days">4</td><td data-source="child_skill_state.last_seen">16-Nov</td><td data-source="activity_skill.skill_code approval.decision approval.target">—</td></tr>
+          <tr><td><a data-el="6" href="#skill" data-source="skill.name">Retelling a story</a></td><td class="n num" data-source="child_skill_state.named_days">5</td><td data-source="child_skill_state.last_seen">17-Nov</td><td data-source="activity_skill.skill_code approval.decision approval.target">Predicting what happens next</td></tr>
+          <tr><td><a data-el="6" href="#skill" data-source="skill.name">Rhyming words</a></td><td class="n num" data-source="child_skill_state.named_days">3</td><td data-source="child_skill_state.last_seen">12-Nov</td><td data-source="activity_skill.skill_code approval.decision approval.target">—</td></tr>
+          <tr><td><a data-el="6" href="#skill" data-source="skill.name">Mixing colours</a></td><td class="n num" data-source="child_skill_state.named_days">2</td><td data-source="child_skill_state.last_seen">6-Nov</td><td data-source="activity_skill.skill_code approval.decision approval.target">—</td></tr>
             </tbody></table></div>
           <p class="caption">Ready next shows only links a person confirmed.</p>
           <div class="card">
