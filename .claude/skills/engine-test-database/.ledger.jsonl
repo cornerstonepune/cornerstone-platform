@@ -1,1 +1,0 @@
-{"action": "create", "reason": "Running engine pytest, `athena done` proofs or a sharded suite against local Postgres needs a fresh migrated database and explicit environment each time; this episode got real numbers only after setting that up by hand. A class-level skill lets later builds reuse it.", "evidence": "references/evidence-3494b12c.md"}

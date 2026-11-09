@@ -1,1 +1,0 @@
-{"action": "create", "reason": "A stop-hook checker rejected a final message that named test and data files by bare name and claimed results the workspace did not show. A rule to verify each named file and result before reporting closes that gap.", "evidence": "references/evidence-293e7bc0.md"}
