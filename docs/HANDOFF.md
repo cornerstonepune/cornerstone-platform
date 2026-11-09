@@ -3,27 +3,28 @@ Under 50 lines. Written by orchestrator 4, 9 Nov 2026 (~9 AM IST). Verify every 
 What remains: docs/backend-plan.md is the one list of what remains. Core = the working backend; Next and Later wait. Stay inside Core.
 
 ## Merged on main
-CP-0 plan, CP-1 people, CP-2 who-is-asking, CP-5 hygiene, CP-13 min adults, CP-20 test DB in CI, CP-3 role rules (#477, 750ec6f, 8 Nov).
-CP-3 rules are inert until the site connects as the restricted login (Nimish's step, later; checklist in docs/notes/CP-4.md).
+CP-0 plan, CP-1 people, CP-2 who-is-asking, CP-5 hygiene, CP-13 min adults, CP-20 test DB in CI, CP-3 role rules (#477), CP-4 every table (#499, e575a38, 9 Nov).
+CP-3/CP-4 rules are inert until the site connects as the restricted login (Nimish's step, later; checklist in docs/notes/CP-4.md).
 
-## In flight
-- CP-4 #499 (build session_01KEBF293mzWweq8uTdBQShv): 3 verifier rounds, last = PASS (3b5e48f), VERIFY.md pushed (5b47f4c). Full CI was running.
-  Merge when proofs + browser + engine shards are green. Then tell CP-9 session_01KEBF28jjY9zjqqD8bexQeL "CP-4 merged".
-- CP-9 #478 draft: parked for CP-4 (its proof needs access_table.data_class). Then merge main, list its 2 tables, athena done, ready, verifier.
-- CP-11 build (session_01KEBF293dZrcXGU59zwEjvh, branch cp-11-build): Nimish approved the one-line FET install in .claude/athena/setup.sh.
-  Same line must later go into the central Athena setup. Orchestrator then runs the athena-verifier.
-- CP-10 voice SCOPE (session_01KEBF29kft7fbJa78ZhXLYP): drafting What/Done when/Out of scope; orchestrator creates the issue, Nimish adds scope-locked.
+## In flight (3 builds at once)
+- CP-9 #478 (session_01KEBF28jjY9zjqqD8bexQeL): told "CP-4 merged"; merge main, list its 2 tables, athena done, ready, then orchestrator runs the verifier.
+- CP-11 build (session_01KEBF293dZrcXGU59zwEjvh, branch cp-11-build): Nimish approved the one-line FET install in .claude/athena/setup.sh; it is a
+  platform-only edit that survives Athena updates (the installer copies setup.sh only when missing), so no central change is needed.
+- CP-8 build (session_01KEBF27jJiVZsJPQHgvFbNU, branch cp-8-build): scope brought from claude/bold-carson-f72yjv; may need another UNLOCK CP-8.
+- CP-10 voice SCOPE (session_01KEBF29kft7fbJa78ZhXLYP): issue #502 created; Nimish decides A/B/C in it and adds scope-locked. Build waits for CP-9.
 
-## Next builds (up to 3 in parallel, merge one at a time), after CP-4 merges
-CP-9, CP-6 (session_01KEBF2ATKNsoYRi1UU1QL8b), CP-8 (session_01KEBF27vass2Hk5iXWoehr3); then CP-7, CP-21, CP-12; CP-10 after CP-9.
+## Next builds (up to 3 in parallel, merge one at a time)
+CP-6 (session_01KEBF2ATKNsoYRi1UU1QL8b, waits for Nimish's lean decision), then CP-7, CP-21, CP-12; CP-10 after CP-9.
 Locked scopes live on PRs: CP-7 #488, CP-11 #486, CP-12 #485, CP-17 #492, CP-18 #490, CP-19 #489, CP-21 #495; CP-6/CP-8 scopes on branch
 claude/bold-carson-f72yjv (never a PR; bring a scope over with `git checkout origin/<branch> -- specs/CP-N` in the build branch).
 CP-18's proofs guess CP-17's materials_approval.approve and CP-6's fortnight_cycle.step/state: build those exact names.
 
 ## Open problems
-- CP-14: scope locked in session_01KEBF28EPCNCPen2s3LvKjT but the guard refuses git add/commit of specs/CP-14 (5 times, even from a worktree).
-  Asked the Athena coordinator (session_01KEBF27Vu5BSQK2Xrmx3XY4) to find why. Do not work around the guard.
-- Lean drafts requested from the CP-6, CP-7, CP-12/21 scope sessions; a reduced scope replaces the long one only after Nimish types UNLOCK <ID>.
+- CP-14: scope locked in session_01KEBF28EPCNCPen2s3LvKjT but the guard refused git add/commit of specs/CP-14 (5 times). The Athena coordinator read it:
+  the guard refuses a command that names a locked spec path AND has a mutator word (cp, mv, rm, checkout, redirect...); "locked" = a LOCK file on disk in
+  the main checkout, so a worktree does not escape it. Try add, commit, push as separate single commands. Real fix is an athena-ops change (Nimish's scope).
+- Lean drafts are in: CP-6 (engine, not database triggers), CP-7 (one approval per fortnight), CP-12 (command check; keep materials links), CP-21
+  (changed-since flag). A reduced scope replaces the long one only after Nimish types UNLOCK <ID> in that session.
 - Latent: CP-0's locked proof 2 expects exactly CP-1..CP-19 in the plan table, but the table also has CP-21 (since #494): CP-0 fails when re-run.
   Needs Nimish's UNLOCK CP-0 to change the expected list. CP-0 proof 4 (this file points to the plan) is fixed by line 3 above.
 
