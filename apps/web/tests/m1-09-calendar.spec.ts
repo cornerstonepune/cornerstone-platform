@@ -153,12 +153,13 @@ test("in the week grid today's column is grey and no future cell carries a chip"
   }
 });
 
-test("the school's tokens load inside the shell only: a page outside it keeps the site's own look", async ({ page }) => {
+// UI-14 (#526): one source of colour and type for the whole site, so a page outside the shell has the tokens too.
+test("the school's tokens load on every page: a page outside the shell has them and reads in Source Sans 3", async ({ page }) => {
   await page.goto("/papers");
   const outside = await page.evaluate(() => ({
-    token: getComputedStyle(document.documentElement).getPropertyValue("--chip-done-fg").trim(),
+    token: getComputedStyle(document.documentElement).getPropertyValue("--state-ok").trim(),
     font: getComputedStyle(document.body).fontFamily,
   }));
-  expect(outside.token).toBe("");
-  expect(outside.font).toMatch(/Source Serif/);
+  expect(outside.token).not.toBe("");
+  expect(outside.font).toMatch(/^"?Source Sans 3/);
 });
