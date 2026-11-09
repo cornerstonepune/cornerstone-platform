@@ -1,0 +1,15 @@
+{
+ "ok": false,
+ "passed": [],
+ "failed": [
+  "1 a lesson moves or swaps; each move kept with who, when, from, to, why; history cannot change",
+  "2 a move changes only its own fortnight, a 15-day one too; neighbours and the frame unchanged",
+  "3 the day shows the moved lesson with plan and materials lines; fixed, past, holiday, marked refused with why",
+  "4 clashes listed per kind with fortnight, week and lessons; moving back removes the clash",
+  "5 a clash accepted with reason, who, when; reopened when its lesson moves or its limit changes",
+  "6 an open clash blocks approval and a clash-making move in an approved fortnight; a setting, on by default",
+  "7 a frozen fortnight refuses a move without a reason and keeps one with a reason",
+  "8 move history and clash acceptance have role rules on; existing tests unchanged"
+ ],
+ "ran_at": "2026-11-08T17:35:44+00:00"
+}
