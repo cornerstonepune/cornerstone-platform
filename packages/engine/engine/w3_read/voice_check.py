@@ -41,6 +41,9 @@ class Score:
     whole: int = 0  # notes read right in every field
     unread: int = 0  # notes the reader could not read (a problem it raised)
     missing: list[str] = field(default_factory=list)  # note ids in the file with no drafted note
+    cleaned: list[str] = field(
+        default_factory=list
+    )  # note ids whose words were cleared after 48 hours (CP-10)
     agreed: dict[str, int] = field(default_factory=lambda: dict.fromkeys(FIELDS, 0))
     wrong: dict[str, list[str]] = field(default_factory=dict)  # note id → the fields read wrong
 
@@ -50,6 +53,7 @@ class Score:
         out.append(f"notes the reader could not read: {self.unread}")
         out += [f"  {note}: {', '.join(fields)}" for note, fields in self.wrong.items()]
         out += [f"not a drafted note: {note}" for note in self.missing]
+        out += [f"words cleared after 48 hours, not scored: {note}" for note in self.cleaned]
         return out
 
 
@@ -57,10 +61,12 @@ def score(conn: db.Conn, expected: list[dict]) -> Score:
     out = Score()
     for entry in expected:
         note = conn.execute(
-            "select * from pii.educator_note where id = %s and transcript is not null",
-            (voice_intake.valid_id(str(entry["note_id"])),),
+            "select * from pii.educator_note where id = %s", (voice_intake.valid_id(str(entry["note_id"])),)
         ).fetchone()
-        if note is None:
+        if note is not None and note["transcript"] is None and note["transcript_cleared_at"] is not None:
+            out.cleaned.append(str(entry["note_id"]))  # drafted once; its words went with the recording
+            continue
+        if note is None or note["transcript"] is None:
             out.missing.append(str(entry["note_id"]))
             continue
         found = voice_intake.resolve(conn, note)
