@@ -88,7 +88,7 @@ Scanned every school-wide table for json, jsonb, array and free-text columns (al
 - `flow_run` (request, result, error): holds the child and the scan inside json (a copy per child in `result.copies`, a
   paper per absent child from `given.py`, the posted body of the capture routes). Now child data, key
   `id` (key type `run`, the website's own `seesRun`): seen by whoever put the file in, by whoever sees a paper read from it
-  (a copy of the run's result names the scan), and by `everything`; machine runs by `everything` only. A first version
+  (a copy of the run's result names the scan), and by `everything`; a run with neither an uploader nor a copy (the "papers given" and absence runs of `w2_print/given.py`, entered by educators) by `everything` only. A first version
   by uploader alone broke `u68-who-sees-answers` (a file's line on the Scans page for the educator whose child's copy it holds), which
   is how the second clause was found.
 - `approval` (target, reason): the sent-back reason of a parent report is words about one child's report. Now child data,
@@ -105,6 +105,11 @@ Scanned every school-wide table for json, jsonb, array and free-text columns (al
 
 ## Before the site is switched to the restricted login (checklist; Nimish, 9 Nov: "access rules are not a gate anymore")
 The rules are inert until the site and the engine connect as `app_web` / `app_engine`. Clear these before that switch:
+- [ ] Absences and "papers given" runs (`w2_print/given.py`) have no uploader and no copies, so after the switch an
+      educator's class card (`apps/web/lib/queries-card.ts:66-77`, `queries-across.ts:69-77`) loses who was away and when papers
+      were given. A missing view, not a leak. Fix before the switch (give those runs a key, or read them through a function).
+- [ ] School-wide tables that may hold a child's words: `staff_note`, `curriculum_proposal`, and `learned_mistake.rule` /
+      `bank_proposal.evidence` (only partly read).
 - [ ] CP-3's switch-on gate: every sign-in entry resolves to one active staff row with the right grants; open enrolments per class.
 - [ ] Free text that could name a child, no key to protect it by: `staff_note` (doing, happened; also goes to GitHub),
       `week_declaration.note`, `session.text`, `plan_entry.text`, `materials_*` text, `item_feedback.note`, `item_review.note`,
