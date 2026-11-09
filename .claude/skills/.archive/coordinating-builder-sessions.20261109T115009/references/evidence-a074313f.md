@@ -1,1 +1,0 @@
-From orchestrator 4: the independent verifier returned FAIL on CP-7 at b01827b. Four real fixes, all small: 1. Identity (the serious one). `internal.fortnight_is_approver` joins `s.id = public.current_staff()`. Since CP-3, current_staff() is the SIGN-IN entry id, mapped to a staff row through staff.signin_id / internal.resolve_staff()
