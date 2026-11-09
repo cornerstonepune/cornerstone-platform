@@ -1,0 +1,18 @@
+{
+  "status": "built",
+  "created_at": "2026-11-08T08:31:26+00:00",
+  "updated_at": "2026-11-08T10:11:47+00:00",
+  "locked_at": "2026-11-08T09:11:23+00:00",
+  "built_at": "2026-11-08T10:11:47+00:00",
+  "box_pending": [
+    "1 staff count equals sign-in list and every staff row has an open grant",
+    "4 K2-A 2026-27 open enrolment rolls are exactly 1 to 22"
+  ],
+  "files": [
+    ".claude/autoharness/",
+    "docs/notes/",
+    "packages/engine/.claude/autoharness/",
+    "packages/engine/tests/",
+    "supabase/migrations/"
+  ]
+}

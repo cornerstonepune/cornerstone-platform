@@ -1,0 +1,1 @@
+Send the orchestrator the head SHA and your numbers. The orchestrator runs the independent verifier; do not mark it ready. ... Extract the files from origin/cp-21-scope into specs/CP-22 with `git show origin/cp-21-scope:specs/CP-21/<file> > ...` ... Never name a locked spec path in the same command as cp/mv/rm/checkout.
