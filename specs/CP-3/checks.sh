@@ -28,7 +28,8 @@ check "5 everything group sees every row" \
 check "6 staff private details only for the everything group and the person" \
   run "$T::test_6_staff_details_only_for_everything_and_self"
 check "7 browser and speed tests unchanged; test rows shaped as live (staff, grant per class, open enrolment)" \
-  run "$B::test_7_existing_browser_and_speed_tests_unchanged" "$B::test_7_test_rows_have_the_shape_live_has" \
+  run "$B::test_7_existing_browser_and_speed_tests_unchanged" "$B::test_7_unchanged_check_applies_to_cp3s_own_change_only" \
+  "$B::test_7_test_rows_have_the_shape_live_has" \
   "$B::test_7_the_suites_user_is_in_the_everything_group"
 check_box "8 live: no rule on the four kinds allows everyone; the site connects as app_web, not the owner" \
   $PY specs/CP-3/proofs/live_rules.py
