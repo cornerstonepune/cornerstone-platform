@@ -812,6 +812,18 @@
       "description": "The longest range, in days, one month build (engine materials month, the coordinator's Build) accepts: a mistyped date cannot start a build of years (M1-16).",
       "value": 62,
       "seed_once": true
+    },
+    {
+      "key": "timetable.solve_seconds",
+      "description": "How many seconds FET may search for one class and fortnight before the draft reports \"no timetable found in time\".",
+      "value": 120,
+      "seed_once": true
+    },
+    {
+      "key": "timetable.seed",
+      "description": "The fixed random seed given to FET, so the same rules give the same draft. Kept in every run.",
+      "value": 20261109,
+      "seed_once": true
     }
   ]
 }
