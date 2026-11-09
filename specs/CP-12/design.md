@@ -114,7 +114,9 @@ build follows that scope and this file is corrected before the proofs are writte
    `pg_advisory_xact_lock` on (tenant, class) first, so a move cannot slip in between an approval's count and its commit,
    and two moves cannot copy the same grid twice.
 6. **Approval waits for clashes, as a setting.** Seed row `timetable.open_clash_blocks_approval` = `true` in
-   `supabase/seed/config.json`, read with `settings.config`. When true, CP-6's approve command refuses the step into
+   `supabase/seed/config.json`, read with `settings.config`. When true, the approve command (CP-12 adds `engine fortnight approve --year --fortnight --by`, decided 9 Nov by orchestrator 4:
+   CP-6 gives only the cycle state and step, and CP-7 only a per-class database function; the command runs this clash check,
+   then moves the cycle through CP-6's step, which CP-7's gate may refuse until every class is settled) refuses the step into
    `approved` while the fortnight has an unaccepted clash, naming the count by kind. Lean version (Nimish, 9 Nov: cut 1
    only): the check sits in the engine's approve command, not in a database trigger, so a direct update of the fortnight's
    state skips it; any later screen must go through the command. The count runs in a `security definer` function over the
@@ -124,7 +126,7 @@ build follows that scope and this file is corrected before the proofs are writte
 7. **Hand moves are not wiped by a new draft.** CP-21's guard does it: putting a draft live over a fortnight whose rows
    changed since it last went live is refused unless discarded knowingly, recorded with who. CP-12 adds nothing for it.
 8. **Who.** Every write takes the person as a staff id resolved from their email through the existing `voice_intake.staff_of`.
-   CLI: `engine timetable move`, `engine timetable accept` take a required `--by EMAIL` (as `cli_map.py`);
+   CLI: `engine timetable move`, `engine timetable accept` and `engine fortnight approve` take a required `--by EMAIL` (as `cli_map.py`);
    `engine timetable clashes --fortnight N` prints one group per fortnight headed `FN<n>` (or its dates), each clash on one
    line with kind, week and detail, never a name. The commands go in `cli_timetable.py` and on N4's
    `commands` in `workflows.json`; any new engine file also goes on N4's `files`. No API route (no screen in scope).
@@ -152,8 +154,10 @@ it: a `timetable_limit` row with `span = 'week'`, and a cell's week A/B worked o
 ## Implementation list (files)
 - `supabase/migrations/<next, after CP-4 and CP-6>_a_lesson_moved_by_hand_is_kept.sql`: `timetable_move`, `timetable_clash_accept`, the view, the functions (`revoke ... from public`, grants as CP-4
   sets), `access_table` rows, `select internal.apply_conventions();`.
-- `supabase/seed/config.json`: the setting. CP-6's step function: the clash check.
-- `packages/engine/engine/w2_print/cli_timetable.py`: three commands. `workflows.json`: N4.
+- `supabase/seed/config.json`: the setting.
+- `packages/engine/engine/w2_print/cli_timetable.py`: the three timetable commands. A new `cli_fortnight.py` in the same
+  folder holds `engine fortnight approve` (clash check, then CP-6's step), mounted as its own group. `workflows.json`: both
+  on N4 (`files` and `commands`).
 - Tests: `test_timetable_move.py` (dated rows made once, swap, move into empty, sessions follow, every refusal, history append-only, frozen
   with and without reason, lock); `test_timetable_clash.py` (one per kind, accept, reopen after a second
   move, after a limit change, approval refused and allowed, approved-fortnight move).
