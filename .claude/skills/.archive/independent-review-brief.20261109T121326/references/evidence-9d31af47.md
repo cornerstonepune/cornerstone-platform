@@ -1,1 +1,0 @@
-independent-review-brief [project]: Use when briefing an independent reviewer or audit agent. | coordinating-builder-sessions [project]: Use when briefing, checking, messaging or archiving parallel builder sessions, or when an independent verifier returns FAIL on a builder's work.
