@@ -202,7 +202,7 @@ function checkBlocks(errs) {
 
 // The gap list: every name in a screen's `data` that is a table or view today (or snake_case) and is not a target table.
 export function gaps() {
-  const cols = new Set([...TARGET].flatMap((t) => [...(SCHEMA.tables.get(t) || [])]));
+  const cols = new Set([...TARGET].flatMap((t) => [...(SCHEMA.tables.get(t) || [])]).concat(Object.values(PROVISIONAL).flat()));
   const out = [];
   for (const s of SCREENS.screens) {
     const found = new Set();

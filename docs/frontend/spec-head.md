@@ -97,11 +97,20 @@ Nimish: Source Sans 3 has no Devanagari and nothing in Devanagari is rendered to
 is added. The fonts and every colour are in `docs/frontend/tokens.json`, which the build copies to
 `apps/web/design-system/tokens.json`.
 
-**Space and shape**: 4 / 8 / 16 / 24 / 32 / 48 / 64 px; 44 px tap. Three shapes, each with a meaning: a card (14 px corners:
+**Space and shape**: 4 / 6 / 12 / 20 / 32 / 48 / 64 / 96 px, the more generous scale of wireframe revision 1 (Nimish, 9 Nov
+2026, issue 546; `docs/frontend/spacing.json`, which the site adopts into `tokens.json` when it is built); 44 px tap. Three shapes, each with a meaning: a card (14 px corners:
 cards, period rows, timetable cells, a child's square, the rail box), a control (10 px: buttons, inputs, tabs, icon tiles),
 a pill (a state chip, the count badge, a name chip). One elevation, `shadow-card`, a faint ring and a soft shadow under a
 card, a period row and the chosen tab; it replaces the card's border. No other shadow, no gradient; hairlines separate rows
 inside a card, a surface box groups the rail.
+
+**Revision 1** (Nimish, 9 Nov 2026, issue 546, applied to every wireframe, `DESIGN.md` §7 and §10): a page has no empty-looking
+region (a second block of real data); what moves through stages is also a **KanbanBoard** beside its table (assessments,
+the educator's what-waits-on-me, notes); wherever children are listed they can be **grouped** (by state, by skill and level,
+by class, with a count; computed, not stored); the skill and class pictures show **clusters** of children who share a place
+on a topic (computed by code from `child_skill_state` and `evidence_event`); and tapping a child anywhere opens
+**ChildPeek**, that child's recent history newest first with who and when, whose "Open the child" is the one way from a
+list to the child page. The school has no attendance register: the children list shows **absences noted**.
 
 **The logo** (the school's logo pack, `docs/brand/cornerstone-logo/`, sent by Nimish on 9 Nov 2026: "that needs to be
 incorporated everywhere"): "Cornerstone" with "गुरुकुल", the terracotta courtyard mark with its basalt dot. Four files, used

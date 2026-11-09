@@ -48,7 +48,7 @@
             <p class="eyebrow"><i class="ic s" data-icon="skill"></i>Skill · <span data-source="subject.name">Numeracy</span></p>
             <h1 class="title" data-source="skill.name">Counting in tens</h1>
             <p class="purpose">Where the class stands on this skill, from confirmed notes and papers. A child not seen on it is not seen, nothing more.</p>
-            <p class="caption">Rebuilt <span data-source="flow_run.finished_at">last night, 21:04</span>, from confirmed notes and papers</p>
+            <p class="caption">Rebuilt <span data-source="flow_run.flow flow_run.finished_at">last night, 21:04</span>, from confirmed notes and papers</p>
           </div>
           <div class="filters" data-block="FilterBar">
             <label class="sel"><i class="ic s" data-icon="class"></i>Class <select data-el="0" data-source="school_class.section"><option>K2 Red</option><option>K2 Blue</option><option>K2 Green</option></select></label>
@@ -62,140 +62,168 @@
                 <span class="chip" data-state="ok"><i class="ic s" data-icon="secure"></i>10 secure</span><span class="chip" data-state="wait"><i class="ic s" data-icon="practising"></i>7 practising</span><span class="chip" data-state="quiet"><i class="ic s" data-icon="emerging"></i>4 emerging</span><span class="chip" data-state="unseen"><i class="ic s" data-icon="not-seen"></i>3 not seen yet</span>
               </div>
             </div></article>
-            <article class="card" data-kind="skill" data-block="Spark" data-gap="secure count per fortnight: child_skill_state keeps only today's state, no history to draw six fortnights from"><div class="card-h"><span class="tile"><i class="ic" data-icon="fortnight"></i></span>Secure, fortnight by fortnight</div><div class="card-b">
-              <svg class="spark" viewBox="0 0 300 64" role="img" aria-label="Secure: 2, 3, 5, 6, 8, 10 over six fortnights"><polyline points="10,54 66,50 122,42 178,38 234,28 290,18"></polyline><circle cx="290" cy="18" r="4"></circle><text x="250" y="12">10 now</text></svg>
+            <article class="card" data-kind="skill" data-block="Spark"><div class="card-h"><span class="tile"><i class="ic" data-icon="fortnight"></i></span>Secure, fortnight by fortnight</div><div class="card-b">
+              <svg class="spark" viewBox="0 0 300 64" role="img" aria-label="Secure: 2, 3, 5, 6, 8, 10 over six fortnights" data-source="flow_run.result flow_run.finished_at"><polyline points="10,54 66,50 122,42 178,38 234,28 290,18"></polyline><circle cx="290" cy="18" r="4"></circle><text x="250" y="12">10 now</text></svg>
             </div></article>
           </div>
-          <ol class="cgrid" data-block="ClassGrid" aria-label="The class on Counting in tens, by Sr. No.">
-            <li><a class="sq press" data-state="ok" data-el="1" href="#child">
-              <span class="top"><span class="no num" data-source="enrolment.roll_no">01</span><span class="disc" aria-hidden="true">AA</span></span>
-              <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Alba Ant</span>
-              <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="secure"></i>Secure</span>
-            </a></li>
-            <li><a class="sq press" data-state="ok" data-el="1" href="#child">
-              <span class="top"><span class="no num" data-source="enrolment.roll_no">02</span><span class="disc" aria-hidden="true">BB</span></span>
-              <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Bea Badger</span>
-              <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="secure"></i>Secure</span>
-            </a></li>
-            <li><a class="sq press" data-state="wait" data-el="1" href="#child">
-              <span class="top"><span class="no num" data-source="enrolment.roll_no">03</span><span class="disc" aria-hidden="true">CC</span></span>
-              <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Cal Crow</span>
-              <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="practising"></i>Practising</span>
-            </a></li>
-            <li><a class="sq press" data-state="ok" data-el="1" href="#child">
-              <span class="top"><span class="no num" data-source="enrolment.roll_no">04</span><span class="disc" aria-hidden="true">DD</span></span>
-              <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Dot Deer</span>
-              <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="secure"></i>Secure</span>
-            </a></li>
-            <li><a class="sq press" data-state="quiet" data-el="1" href="#child">
-              <span class="top"><span class="no num" data-source="enrolment.roll_no">05</span><span class="disc" aria-hidden="true">EE</span></span>
-              <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Eli Eel</span>
-              <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="emerging"></i>Emerging</span>
-            </a></li>
-            <li><a class="sq press" data-state="unseen" data-el="1" href="#child" title="not seen yet">
-              <span class="top"><span class="no num" data-source="enrolment.roll_no">06</span><span class="disc" aria-hidden="true">FF</span></span>
-              <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Finn Fox</span>
-              <span class="st"><i class="ic s" data-icon="not-seen"></i>Not seen yet</span>
-            </a></li>
-            <li><a class="sq press" data-state="ok" data-el="1" href="#child">
-              <span class="top"><span class="no num" data-source="enrolment.roll_no">07</span><span class="disc" aria-hidden="true">GG</span></span>
-              <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Gus Goat</span>
-              <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="secure"></i>Secure</span>
-            </a></li>
-            <li><a class="sq press" data-state="wait" data-el="1" href="#child">
-              <span class="top"><span class="no num" data-source="enrolment.roll_no">08</span><span class="disc" aria-hidden="true">HH</span></span>
-              <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Hazel Hare</span>
-              <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="practising"></i>Practising</span>
-            </a></li>
-            <li><a class="sq press" data-state="ok" data-el="1" href="#child">
-              <span class="top"><span class="no num" data-source="enrolment.roll_no">09</span><span class="disc" aria-hidden="true">II</span></span>
-              <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Ivy Ibis</span>
-              <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="secure"></i>Secure</span>
-            </a></li>
-            <li><a class="sq press" data-state="wait" data-el="1" href="#child">
-              <span class="top"><span class="no num" data-source="enrolment.roll_no">10</span><span class="disc" aria-hidden="true">JJ</span></span>
-              <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Jo Jay</span>
-              <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="practising"></i>Practising</span>
-            </a></li>
-            <li><a class="sq press" data-state="ok" data-el="1" href="#child">
-              <span class="top"><span class="no num" data-source="enrolment.roll_no">11</span><span class="disc" aria-hidden="true">KK</span></span>
-              <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Kit Koala</span>
-              <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="secure"></i>Secure</span>
-            </a></li>
-            <li><a class="sq press" data-state="quiet" data-el="1" href="#child">
-              <span class="top"><span class="no num" data-source="enrolment.roll_no">12</span><span class="disc" aria-hidden="true">LL</span></span>
-              <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Lou Lynx</span>
-              <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="emerging"></i>Emerging</span>
-            </a></li>
-            <li><a class="sq press" data-state="wait" data-el="1" href="#child">
-              <span class="top"><span class="no num" data-source="enrolment.roll_no">13</span><span class="disc" aria-hidden="true">MM</span></span>
-              <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Mina Mouse</span>
-              <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="practising"></i>Practising</span>
-            </a></li>
-            <li><a class="sq press" data-state="ok" data-el="1" href="#child">
-              <span class="top"><span class="no num" data-source="enrolment.roll_no">14</span><span class="disc" aria-hidden="true">NN</span></span>
-              <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Nat Newt</span>
-              <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="secure"></i>Secure</span>
-            </a></li>
-            <li><a class="sq press" data-state="unseen" data-el="1" href="#child" title="not seen yet">
-              <span class="top"><span class="no num" data-source="enrolment.roll_no">15</span><span class="disc" aria-hidden="true">OO</span></span>
-              <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Otto Owl</span>
-              <span class="st"><i class="ic s" data-icon="not-seen"></i>Not seen yet</span>
-            </a></li>
-            <li><a class="sq press" data-state="ok" data-el="1" href="#child">
-              <span class="top"><span class="no num" data-source="enrolment.roll_no">16</span><span class="disc" aria-hidden="true">PP</span></span>
-              <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Pia Panda</span>
-              <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="secure"></i>Secure</span>
-            </a></li>
-            <li><a class="sq press" data-state="wait" data-el="1" href="#child">
-              <span class="top"><span class="no num" data-source="enrolment.roll_no">17</span><span class="disc" aria-hidden="true">QQ</span></span>
-              <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Quin Quail</span>
-              <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="practising"></i>Practising</span>
-            </a></li>
-            <li><a class="sq press" data-state="quiet" data-el="1" href="#child">
-              <span class="top"><span class="no num" data-source="enrolment.roll_no">18</span><span class="disc" aria-hidden="true">RR</span></span>
-              <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Rex Rook</span>
-              <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="emerging"></i>Emerging</span>
-            </a></li>
-            <li><a class="sq press" data-state="ok" data-el="1" href="#child">
-              <span class="top"><span class="no num" data-source="enrolment.roll_no">19</span><span class="disc" aria-hidden="true">SS</span></span>
-              <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Sam Seal</span>
-              <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="secure"></i>Secure</span>
-            </a></li>
-            <li><a class="sq press" data-state="wait" data-el="1" href="#child">
-              <span class="top"><span class="no num" data-source="enrolment.roll_no">20</span><span class="disc" aria-hidden="true">TT</span></span>
-              <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Tia Toad</span>
-              <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="practising"></i>Practising</span>
-            </a></li>
-            <li><a class="sq press" data-state="unseen" data-el="1" href="#child" title="not seen yet">
-              <span class="top"><span class="no num" data-source="enrolment.roll_no">21</span><span class="disc" aria-hidden="true">UU</span></span>
-              <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Uri Urial</span>
-              <span class="st"><i class="ic s" data-icon="not-seen"></i>Not seen yet</span>
-            </a></li>
-            <li><a class="sq press" data-state="ok" data-el="1" href="#child">
-              <span class="top"><span class="no num" data-source="enrolment.roll_no">22</span><span class="disc" aria-hidden="true">VV</span></span>
-              <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Vik Vole</span>
-              <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="secure"></i>Secure</span>
-            </a></li>
-            <li><a class="sq press" data-state="wait" data-el="1" href="#child">
-              <span class="top"><span class="no num" data-source="enrolment.roll_no">23</span><span class="disc" aria-hidden="true">WW</span></span>
-              <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Wren Wolf</span>
-              <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="practising"></i>Practising</span>
-            </a></li>
-            <li><a class="sq press" data-state="quiet" data-el="1" href="#child">
-              <span class="top"><span class="no num" data-source="enrolment.roll_no">24</span><span class="disc" aria-hidden="true">XX</span></span>
-              <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Xan Xerus</span>
-              <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="emerging"></i>Emerging</span>
-            </a></li>
-          </ol>
+          <div class="cards" data-block="Cards">
+            <article class="card" data-kind="skill" data-gap="clusters of children who share a place on a topic: code must compute them from child_skill_state and evidence_event; no function exists yet"><div class="card-h"><span class="tile"><i class="ic" data-icon="cluster"></i></span>Secure here, ready for the next skill<span class="count num">6</span></div><div class="card-b" data-source="child_skill_state.state child_skill_state.skill_code activity_skill.skill_code approval.decision"><ul class="nchips"><li><button class="nchip press" data-el="1" type="button"><span class="no num">01</span>Alba Ant</button></li><li><button class="nchip press" data-el="1" type="button"><span class="no num">04</span>Dot Deer</button></li><li><button class="nchip press" data-el="1" type="button"><span class="no num">09</span>Ivy Ibis</button></li><li><button class="nchip press" data-el="1" type="button"><span class="no num">14</span>Nat Newt</button></li><li><button class="nchip press" data-el="1" type="button"><span class="no num">19</span>Sam Seal</button></li><li><button class="nchip press" data-el="1" type="button"><span class="no num">22</span>Vik Vole</button></li></ul><span class="caption">Worked out by code from each child's state and the confirmed next skill</span></div></article>
+            <article class="card" data-kind="skill" data-gap="clusters of children who share a place on a topic: code must compute them from child_skill_state and evidence_event; no function exists yet"><div class="card-h"><span class="tile"><i class="ic" data-icon="cluster"></i></span>Practising, one step from secure<span class="count num">3</span></div><div class="card-b" data-source="child_skill_state.state child_skill_state.n_events evidence_event.observed_at"><ul class="nchips"><li><button class="nchip press" data-el="1" type="button"><span class="no num">03</span>Cal Crow</button></li><li><button class="nchip press" data-el="1" type="button"><span class="no num">10</span>Jo Jay</button></li><li><button class="nchip press" data-el="1" type="button"><span class="no num">17</span>Quin Quail</button></li></ul><span class="caption">Worked out by code from each child's state and the days seen</span></div></article>
+            <article class="card" data-kind="skill" data-gap="clusters of children who share a place on a topic: code must compute them from child_skill_state and evidence_event; no function exists yet"><div class="card-h"><span class="tile"><i class="ic" data-icon="cluster"></i></span>Not seen yet, but secure on the skill before it<span class="count num">2</span></div><div class="card-b" data-source="child_skill_state.state activity_skill.skill_code approval.decision"><ul class="nchips"><li><button class="nchip press" data-el="1" type="button"><span class="no num">06</span>Finn Fox</button></li><li><button class="nchip press" data-el="1" type="button"><span class="no num">21</span>Uri Urial</button></li></ul><span class="caption">Worked out by code from the confirmed link to the skill before</span></div></article>
+          </div>
+          <div class="toolbar">
+            <label class="sel"><i class="ic s" data-icon="group"></i>Group by <select data-el="13" data-source="child_skill_state.state school_class.section"><option>State on this skill</option><option>Class</option></select></label>
+          </div>
+          <div class="groups">
+            <section class="grp" data-state="ok" aria-label="Secure, 10 children">
+              <h3 class="grp-h"><i class="ic s" data-icon="secure"></i>Secure <span class="count num">10</span></h3>
+              <ol class="cgrid" data-block="ClassGrid" aria-label="Secure on Counting in tens, by Sr. No.">
+                <li><button class="sq press" type="button" data-state="ok" data-el="1">
+                  <span class="top"><span class="no num" data-source="enrolment.roll_no">01</span><span class="disc" aria-hidden="true">AA</span></span>
+                  <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Alba Ant</span>
+                  <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="secure"></i>Secure</span>
+                </button></li>
+                <li><button class="sq press" type="button" data-state="ok" data-el="1">
+                  <span class="top"><span class="no num" data-source="enrolment.roll_no">02</span><span class="disc" aria-hidden="true">BB</span></span>
+                  <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Bea Badger</span>
+                  <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="secure"></i>Secure</span>
+                </button></li>
+                <li><button class="sq press" type="button" data-state="ok" data-el="1">
+                  <span class="top"><span class="no num" data-source="enrolment.roll_no">04</span><span class="disc" aria-hidden="true">DD</span></span>
+                  <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Dot Deer</span>
+                  <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="secure"></i>Secure</span>
+                </button></li>
+                <li><button class="sq press" type="button" data-state="ok" data-el="1">
+                  <span class="top"><span class="no num" data-source="enrolment.roll_no">07</span><span class="disc" aria-hidden="true">GG</span></span>
+                  <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Gus Goat</span>
+                  <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="secure"></i>Secure</span>
+                </button></li>
+                <li><button class="sq press" type="button" data-state="ok" data-el="1">
+                  <span class="top"><span class="no num" data-source="enrolment.roll_no">09</span><span class="disc" aria-hidden="true">II</span></span>
+                  <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Ivy Ibis</span>
+                  <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="secure"></i>Secure</span>
+                </button></li>
+                <li><button class="sq press" type="button" data-state="ok" data-el="1">
+                  <span class="top"><span class="no num" data-source="enrolment.roll_no">11</span><span class="disc" aria-hidden="true">KK</span></span>
+                  <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Kit Koala</span>
+                  <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="secure"></i>Secure</span>
+                </button></li>
+                <li><button class="sq press" type="button" data-state="ok" data-el="1">
+                  <span class="top"><span class="no num" data-source="enrolment.roll_no">14</span><span class="disc" aria-hidden="true">NN</span></span>
+                  <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Nat Newt</span>
+                  <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="secure"></i>Secure</span>
+                </button></li>
+                <li><button class="sq press" type="button" data-state="ok" data-el="1">
+                  <span class="top"><span class="no num" data-source="enrolment.roll_no">16</span><span class="disc" aria-hidden="true">PP</span></span>
+                  <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Pia Panda</span>
+                  <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="secure"></i>Secure</span>
+                </button></li>
+                <li><button class="sq press" type="button" data-state="ok" data-el="1">
+                  <span class="top"><span class="no num" data-source="enrolment.roll_no">19</span><span class="disc" aria-hidden="true">SS</span></span>
+                  <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Sam Seal</span>
+                  <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="secure"></i>Secure</span>
+                </button></li>
+                <li><button class="sq press" type="button" data-state="ok" data-el="1">
+                  <span class="top"><span class="no num" data-source="enrolment.roll_no">22</span><span class="disc" aria-hidden="true">VV</span></span>
+                  <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Vik Vole</span>
+                  <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="secure"></i>Secure</span>
+                </button></li>
+              </ol>
+            </section>
+            <section class="grp" data-state="wait" aria-label="Practising, 7 children">
+              <h3 class="grp-h"><i class="ic s" data-icon="practising"></i>Practising <span class="count num">7</span></h3>
+              <ol class="cgrid" data-block="ClassGrid" aria-label="Practising on Counting in tens, by Sr. No.">
+                <li><button class="sq press" type="button" data-state="wait" data-el="1">
+                  <span class="top"><span class="no num" data-source="enrolment.roll_no">03</span><span class="disc" aria-hidden="true">CC</span></span>
+                  <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Cal Crow</span>
+                  <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="practising"></i>Practising</span>
+                </button></li>
+                <li><button class="sq press" type="button" data-state="wait" data-el="1">
+                  <span class="top"><span class="no num" data-source="enrolment.roll_no">08</span><span class="disc" aria-hidden="true">HH</span></span>
+                  <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Hazel Hare</span>
+                  <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="practising"></i>Practising</span>
+                </button></li>
+                <li><button class="sq press" type="button" data-state="wait" data-el="1">
+                  <span class="top"><span class="no num" data-source="enrolment.roll_no">10</span><span class="disc" aria-hidden="true">JJ</span></span>
+                  <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Jo Jay</span>
+                  <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="practising"></i>Practising</span>
+                </button></li>
+                <li><button class="sq press" type="button" data-state="wait" data-el="1">
+                  <span class="top"><span class="no num" data-source="enrolment.roll_no">13</span><span class="disc" aria-hidden="true">MM</span></span>
+                  <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Mina Mouse</span>
+                  <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="practising"></i>Practising</span>
+                </button></li>
+                <li><button class="sq press" type="button" data-state="wait" data-el="1">
+                  <span class="top"><span class="no num" data-source="enrolment.roll_no">17</span><span class="disc" aria-hidden="true">QQ</span></span>
+                  <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Quin Quail</span>
+                  <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="practising"></i>Practising</span>
+                </button></li>
+                <li><button class="sq press" type="button" data-state="wait" data-el="1">
+                  <span class="top"><span class="no num" data-source="enrolment.roll_no">20</span><span class="disc" aria-hidden="true">TT</span></span>
+                  <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Tia Toad</span>
+                  <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="practising"></i>Practising</span>
+                </button></li>
+                <li><button class="sq press" type="button" data-state="wait" data-el="1">
+                  <span class="top"><span class="no num" data-source="enrolment.roll_no">23</span><span class="disc" aria-hidden="true">WW</span></span>
+                  <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Wren Wolf</span>
+                  <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="practising"></i>Practising</span>
+                </button></li>
+              </ol>
+            </section>
+            <section class="grp" data-state="quiet" aria-label="Emerging, 4 children">
+              <h3 class="grp-h"><i class="ic s" data-icon="emerging"></i>Emerging <span class="count num">4</span></h3>
+              <ol class="cgrid" data-block="ClassGrid" aria-label="Emerging on Counting in tens, by Sr. No.">
+                <li><button class="sq press" type="button" data-state="quiet" data-el="1">
+                  <span class="top"><span class="no num" data-source="enrolment.roll_no">05</span><span class="disc" aria-hidden="true">EE</span></span>
+                  <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Eli Eel</span>
+                  <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="emerging"></i>Emerging</span>
+                </button></li>
+                <li><button class="sq press" type="button" data-state="quiet" data-el="1">
+                  <span class="top"><span class="no num" data-source="enrolment.roll_no">12</span><span class="disc" aria-hidden="true">LL</span></span>
+                  <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Lou Lynx</span>
+                  <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="emerging"></i>Emerging</span>
+                </button></li>
+                <li><button class="sq press" type="button" data-state="quiet" data-el="1">
+                  <span class="top"><span class="no num" data-source="enrolment.roll_no">18</span><span class="disc" aria-hidden="true">RR</span></span>
+                  <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Rex Rook</span>
+                  <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="emerging"></i>Emerging</span>
+                </button></li>
+                <li><button class="sq press" type="button" data-state="quiet" data-el="1">
+                  <span class="top"><span class="no num" data-source="enrolment.roll_no">24</span><span class="disc" aria-hidden="true">XX</span></span>
+                  <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Xan Xerus</span>
+                  <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="emerging"></i>Emerging</span>
+                </button></li>
+              </ol>
+            </section>
+            <section class="grp" data-state="unseen" aria-label="Not seen yet, 3 children">
+              <h3 class="grp-h"><i class="ic s" data-icon="not-seen"></i>Not seen yet <span class="count num">3</span></h3>
+              <ol class="cgrid" data-block="ClassGrid" aria-label="Not seen yet on Counting in tens, by Sr. No.">
+                <li><button class="sq press" type="button" data-state="unseen" data-el="1" title="not seen yet">
+                  <span class="top"><span class="no num" data-source="enrolment.roll_no">06</span><span class="disc" aria-hidden="true">FF</span></span>
+                  <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Finn Fox</span>
+                  <span class="st"><i class="ic s" data-icon="not-seen"></i>Not seen yet</span>
+                </button></li>
+                <li><button class="sq press" type="button" data-state="unseen" data-el="1" title="not seen yet">
+                  <span class="top"><span class="no num" data-source="enrolment.roll_no">15</span><span class="disc" aria-hidden="true">OO</span></span>
+                  <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Otto Owl</span>
+                  <span class="st"><i class="ic s" data-icon="not-seen"></i>Not seen yet</span>
+                </button></li>
+                <li><button class="sq press" type="button" data-state="unseen" data-el="1" title="not seen yet">
+                  <span class="top"><span class="no num" data-source="enrolment.roll_no">21</span><span class="disc" aria-hidden="true">UU</span></span>
+                  <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Uri Urial</span>
+                  <span class="st"><i class="ic s" data-icon="not-seen"></i>Not seen yet</span>
+                </button></li>
+              </ol>
+            </section>
+          </div>
           <div class="cards" data-block="Cards">
             <article class="card" data-kind="skill"><div class="card-h"><span class="tile"><i class="ic" data-icon="previous"></i></span>Comes after</div><div class="card-b"><span class="muted">This skill builds on these.</span>
-              <a data-el="3" href="#skill" data-source="skill_prerequisite.before_code skill_prerequisite.status">Counting by ones</a>
-              <a data-el="3" href="#skill" data-source="skill_prerequisite.before_code skill_prerequisite.status">Grouping in tens</a>
+              <a data-el="3" href="#skill" data-source="skill_prerequisite.before_code approval.decision">Counting by ones</a>
+              <a data-el="3" href="#skill" data-source="skill_prerequisite.before_code approval.decision">Grouping in tens</a>
             </div></article>
             <article class="card" data-kind="skill"><div class="card-h"><span class="tile"><i class="ic" data-icon="following"></i></span>Ready next</div><div class="card-b"><span class="muted">A child secure here can try these.</span>
-              <a data-el="4" href="#skill" data-source="skill_prerequisite.skill_code skill_prerequisite.status">Adding tens</a>
-              <a data-el="4" href="#skill" data-source="skill_prerequisite.skill_code skill_prerequisite.status">Reading big numbers</a>
+              <a data-el="4" href="#skill" data-source="activity_skill.skill_code approval.decision">Adding tens</a>
+              <a data-el="4" href="#skill" data-source="activity_skill.skill_code approval.decision">Reading big numbers</a>
             </div></article>
           </div>
           <p class="caption">Only links a person confirmed are read.</p>
@@ -216,8 +244,23 @@
             <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: nobody seen on this skill yet</div>
             <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="not-seen"></i><b>Nobody seen on this skill yet</b><span class="muted">Record a note in a period that teaches it and the squares fill in.</span></div></div>
           </div>
-        </main>
         <aside class="rail" aria-label="Connected to">
+          <aside class="peek" data-block="ChildPeek" aria-label="Recent history of Alba Ant">
+            <div class="peek-h">
+              <span class="disc" aria-hidden="true">AA</span>
+              <span class="who"><b data-source="pii.child.first_name pii.child.last_name">Alba Ant</b><span class="muted"><span class="num" data-source="enrolment.roll_no">01</span> · <span data-source="grade.name">K2</span> <span data-source="school_class.section">Red</span></span></span>
+              <button class="barbtn press" data-el="14" type="button" aria-label="Close"><i class="ic" data-icon="close"></i></button>
+            </div>
+            <div class="keyrow" data-source="child_skill_state.state"><span class="chip" data-state="ok"><i class="ic s" data-icon="secure"></i>6 secure</span><span class="chip" data-state="wait"><i class="ic s" data-icon="practising"></i>3 practising</span><span class="chip" data-state="unseen"><i class="ic s" data-icon="not-seen"></i>2 not seen yet</span></div>
+            <ol class="timeline">
+              <li class="tli"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><div><b>Counting in tens: now secure</b><p>The state changed after a third day seen · Asha Almond's note</p></div><span class="caption num" data-source="evidence_event.observed_at">20-Nov</span></li>
+              <li class="tli"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><div><b>Paper, sheet 3</b><p data-source="item_result.state item_result.confirmed_by pii.staff.name">4 right, 1 wrong with working, 1 blank · signed off by Bina Basil</p></div><span class="caption num" data-source="item_result.confirmed_at">20-Nov</span></li>
+              <li class="tli"><span class="tile" data-kind="note"><i class="ic" data-icon="note"></i></span><div><b data-source="pii.educator_note.body">Counts on from 30 in tens, with bundles</b><p data-source="pii.educator_note.route activity_observation.confirmed_by pii.staff.name">Voice note · confirmed by Asha Almond</p></div><span class="caption num" data-source="pii.educator_note.received_at">18-Nov</span></li>
+              <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><b>Counting in tens with bundles: as expected</b><p data-source="activity_observation.outcome activity_observation.observed_by pii.staff.name">Observed in the period · Asha Almond</p></div><span class="caption num" data-source="activity_observation.observed_at">18-Nov</span></li>
+              <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="history"></i></span><div><b>A mark corrected: below became as expected</b><p data-source="change_log.by pii.staff.name">A new entry that replaces the first · Asha Almond</p></div><span class="caption num" data-source="change_log.at">18-Nov</span></li>
+            </ol>
+            <a class="btn press" data-el="15" href="#child">Open Alba</a>
+          </aside>
           <section class="rail-box">
             <h2>Connected to</h2>
             <ul class="rlist">
@@ -273,7 +316,7 @@
             <p class="eyebrow"><i class="ic s" data-icon="skill"></i>Skill · <span data-source="subject.name">Numeracy</span></p>
             <h1 class="title" data-source="skill.name">Counting in tens</h1>
             <p class="purpose">Where the class stands on this skill, from confirmed notes and papers. A child not seen on it is not seen, nothing more.</p>
-            <p class="caption">Rebuilt <span data-source="flow_run.finished_at">last night, 21:04</span>, from confirmed notes and papers</p>
+            <p class="caption">Rebuilt <span data-source="flow_run.flow flow_run.finished_at">last night, 21:04</span>, from confirmed notes and papers</p>
           </div>
           <div class="filters" data-block="FilterBar">
             <label class="sel"><i class="ic s" data-icon="class"></i>Class <select data-el="0" data-source="school_class.section"><option>K2 Red</option><option>K2 Blue</option><option>K2 Green</option></select></label>
@@ -287,140 +330,168 @@
                 <span class="chip" data-state="ok"><i class="ic s" data-icon="secure"></i>10 secure</span><span class="chip" data-state="wait"><i class="ic s" data-icon="practising"></i>7 practising</span><span class="chip" data-state="quiet"><i class="ic s" data-icon="emerging"></i>4 emerging</span><span class="chip" data-state="unseen"><i class="ic s" data-icon="not-seen"></i>3 not seen yet</span>
               </div>
             </div></article>
-            <article class="card" data-kind="skill" data-block="Spark" data-gap="secure count per fortnight: child_skill_state keeps only today's state, no history to draw six fortnights from"><div class="card-h"><span class="tile"><i class="ic" data-icon="fortnight"></i></span>Secure, fortnight by fortnight</div><div class="card-b">
-              <svg class="spark" viewBox="0 0 300 64" role="img" aria-label="Secure: 2, 3, 5, 6, 8, 10 over six fortnights"><polyline points="10,54 66,50 122,42 178,38 234,28 290,18"></polyline><circle cx="290" cy="18" r="4"></circle><text x="250" y="12">10 now</text></svg>
+            <article class="card" data-kind="skill" data-block="Spark"><div class="card-h"><span class="tile"><i class="ic" data-icon="fortnight"></i></span>Secure, fortnight by fortnight</div><div class="card-b">
+              <svg class="spark" viewBox="0 0 300 64" role="img" aria-label="Secure: 2, 3, 5, 6, 8, 10 over six fortnights" data-source="flow_run.result flow_run.finished_at"><polyline points="10,54 66,50 122,42 178,38 234,28 290,18"></polyline><circle cx="290" cy="18" r="4"></circle><text x="250" y="12">10 now</text></svg>
             </div></article>
           </div>
-          <ol class="cgrid" data-block="ClassGrid" aria-label="The class on Counting in tens, by Sr. No.">
-            <li><a class="sq press" data-state="ok" data-el="1" href="#child">
-              <span class="top"><span class="no num" data-source="enrolment.roll_no">01</span><span class="disc" aria-hidden="true">AA</span></span>
-              <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Alba Ant</span>
-              <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="secure"></i>Secure</span>
-            </a></li>
-            <li><a class="sq press" data-state="ok" data-el="1" href="#child">
-              <span class="top"><span class="no num" data-source="enrolment.roll_no">02</span><span class="disc" aria-hidden="true">BB</span></span>
-              <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Bea Badger</span>
-              <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="secure"></i>Secure</span>
-            </a></li>
-            <li><a class="sq press" data-state="wait" data-el="1" href="#child">
-              <span class="top"><span class="no num" data-source="enrolment.roll_no">03</span><span class="disc" aria-hidden="true">CC</span></span>
-              <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Cal Crow</span>
-              <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="practising"></i>Practising</span>
-            </a></li>
-            <li><a class="sq press" data-state="ok" data-el="1" href="#child">
-              <span class="top"><span class="no num" data-source="enrolment.roll_no">04</span><span class="disc" aria-hidden="true">DD</span></span>
-              <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Dot Deer</span>
-              <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="secure"></i>Secure</span>
-            </a></li>
-            <li><a class="sq press" data-state="quiet" data-el="1" href="#child">
-              <span class="top"><span class="no num" data-source="enrolment.roll_no">05</span><span class="disc" aria-hidden="true">EE</span></span>
-              <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Eli Eel</span>
-              <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="emerging"></i>Emerging</span>
-            </a></li>
-            <li><a class="sq press" data-state="unseen" data-el="1" href="#child" title="not seen yet">
-              <span class="top"><span class="no num" data-source="enrolment.roll_no">06</span><span class="disc" aria-hidden="true">FF</span></span>
-              <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Finn Fox</span>
-              <span class="st"><i class="ic s" data-icon="not-seen"></i>Not seen yet</span>
-            </a></li>
-            <li><a class="sq press" data-state="ok" data-el="1" href="#child">
-              <span class="top"><span class="no num" data-source="enrolment.roll_no">07</span><span class="disc" aria-hidden="true">GG</span></span>
-              <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Gus Goat</span>
-              <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="secure"></i>Secure</span>
-            </a></li>
-            <li><a class="sq press" data-state="wait" data-el="1" href="#child">
-              <span class="top"><span class="no num" data-source="enrolment.roll_no">08</span><span class="disc" aria-hidden="true">HH</span></span>
-              <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Hazel Hare</span>
-              <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="practising"></i>Practising</span>
-            </a></li>
-            <li><a class="sq press" data-state="ok" data-el="1" href="#child">
-              <span class="top"><span class="no num" data-source="enrolment.roll_no">09</span><span class="disc" aria-hidden="true">II</span></span>
-              <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Ivy Ibis</span>
-              <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="secure"></i>Secure</span>
-            </a></li>
-            <li><a class="sq press" data-state="wait" data-el="1" href="#child">
-              <span class="top"><span class="no num" data-source="enrolment.roll_no">10</span><span class="disc" aria-hidden="true">JJ</span></span>
-              <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Jo Jay</span>
-              <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="practising"></i>Practising</span>
-            </a></li>
-            <li><a class="sq press" data-state="ok" data-el="1" href="#child">
-              <span class="top"><span class="no num" data-source="enrolment.roll_no">11</span><span class="disc" aria-hidden="true">KK</span></span>
-              <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Kit Koala</span>
-              <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="secure"></i>Secure</span>
-            </a></li>
-            <li><a class="sq press" data-state="quiet" data-el="1" href="#child">
-              <span class="top"><span class="no num" data-source="enrolment.roll_no">12</span><span class="disc" aria-hidden="true">LL</span></span>
-              <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Lou Lynx</span>
-              <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="emerging"></i>Emerging</span>
-            </a></li>
-            <li><a class="sq press" data-state="wait" data-el="1" href="#child">
-              <span class="top"><span class="no num" data-source="enrolment.roll_no">13</span><span class="disc" aria-hidden="true">MM</span></span>
-              <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Mina Mouse</span>
-              <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="practising"></i>Practising</span>
-            </a></li>
-            <li><a class="sq press" data-state="ok" data-el="1" href="#child">
-              <span class="top"><span class="no num" data-source="enrolment.roll_no">14</span><span class="disc" aria-hidden="true">NN</span></span>
-              <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Nat Newt</span>
-              <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="secure"></i>Secure</span>
-            </a></li>
-            <li><a class="sq press" data-state="unseen" data-el="1" href="#child" title="not seen yet">
-              <span class="top"><span class="no num" data-source="enrolment.roll_no">15</span><span class="disc" aria-hidden="true">OO</span></span>
-              <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Otto Owl</span>
-              <span class="st"><i class="ic s" data-icon="not-seen"></i>Not seen yet</span>
-            </a></li>
-            <li><a class="sq press" data-state="ok" data-el="1" href="#child">
-              <span class="top"><span class="no num" data-source="enrolment.roll_no">16</span><span class="disc" aria-hidden="true">PP</span></span>
-              <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Pia Panda</span>
-              <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="secure"></i>Secure</span>
-            </a></li>
-            <li><a class="sq press" data-state="wait" data-el="1" href="#child">
-              <span class="top"><span class="no num" data-source="enrolment.roll_no">17</span><span class="disc" aria-hidden="true">QQ</span></span>
-              <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Quin Quail</span>
-              <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="practising"></i>Practising</span>
-            </a></li>
-            <li><a class="sq press" data-state="quiet" data-el="1" href="#child">
-              <span class="top"><span class="no num" data-source="enrolment.roll_no">18</span><span class="disc" aria-hidden="true">RR</span></span>
-              <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Rex Rook</span>
-              <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="emerging"></i>Emerging</span>
-            </a></li>
-            <li><a class="sq press" data-state="ok" data-el="1" href="#child">
-              <span class="top"><span class="no num" data-source="enrolment.roll_no">19</span><span class="disc" aria-hidden="true">SS</span></span>
-              <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Sam Seal</span>
-              <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="secure"></i>Secure</span>
-            </a></li>
-            <li><a class="sq press" data-state="wait" data-el="1" href="#child">
-              <span class="top"><span class="no num" data-source="enrolment.roll_no">20</span><span class="disc" aria-hidden="true">TT</span></span>
-              <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Tia Toad</span>
-              <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="practising"></i>Practising</span>
-            </a></li>
-            <li><a class="sq press" data-state="unseen" data-el="1" href="#child" title="not seen yet">
-              <span class="top"><span class="no num" data-source="enrolment.roll_no">21</span><span class="disc" aria-hidden="true">UU</span></span>
-              <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Uri Urial</span>
-              <span class="st"><i class="ic s" data-icon="not-seen"></i>Not seen yet</span>
-            </a></li>
-            <li><a class="sq press" data-state="ok" data-el="1" href="#child">
-              <span class="top"><span class="no num" data-source="enrolment.roll_no">22</span><span class="disc" aria-hidden="true">VV</span></span>
-              <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Vik Vole</span>
-              <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="secure"></i>Secure</span>
-            </a></li>
-            <li><a class="sq press" data-state="wait" data-el="1" href="#child">
-              <span class="top"><span class="no num" data-source="enrolment.roll_no">23</span><span class="disc" aria-hidden="true">WW</span></span>
-              <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Wren Wolf</span>
-              <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="practising"></i>Practising</span>
-            </a></li>
-            <li><a class="sq press" data-state="quiet" data-el="1" href="#child">
-              <span class="top"><span class="no num" data-source="enrolment.roll_no">24</span><span class="disc" aria-hidden="true">XX</span></span>
-              <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Xan Xerus</span>
-              <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="emerging"></i>Emerging</span>
-            </a></li>
-          </ol>
+          <div class="cards" data-block="Cards">
+            <article class="card" data-kind="skill" data-gap="clusters of children who share a place on a topic: code must compute them from child_skill_state and evidence_event; no function exists yet"><div class="card-h"><span class="tile"><i class="ic" data-icon="cluster"></i></span>Secure here, ready for the next skill<span class="count num">6</span></div><div class="card-b" data-source="child_skill_state.state child_skill_state.skill_code activity_skill.skill_code approval.decision"><ul class="nchips"><li><button class="nchip press" data-el="1" type="button"><span class="no num">01</span>Alba Ant</button></li><li><button class="nchip press" data-el="1" type="button"><span class="no num">04</span>Dot Deer</button></li><li><button class="nchip press" data-el="1" type="button"><span class="no num">09</span>Ivy Ibis</button></li><li><button class="nchip press" data-el="1" type="button"><span class="no num">14</span>Nat Newt</button></li><li><button class="nchip press" data-el="1" type="button"><span class="no num">19</span>Sam Seal</button></li><li><button class="nchip press" data-el="1" type="button"><span class="no num">22</span>Vik Vole</button></li></ul><span class="caption">Worked out by code from each child's state and the confirmed next skill</span></div></article>
+            <article class="card" data-kind="skill" data-gap="clusters of children who share a place on a topic: code must compute them from child_skill_state and evidence_event; no function exists yet"><div class="card-h"><span class="tile"><i class="ic" data-icon="cluster"></i></span>Practising, one step from secure<span class="count num">3</span></div><div class="card-b" data-source="child_skill_state.state child_skill_state.n_events evidence_event.observed_at"><ul class="nchips"><li><button class="nchip press" data-el="1" type="button"><span class="no num">03</span>Cal Crow</button></li><li><button class="nchip press" data-el="1" type="button"><span class="no num">10</span>Jo Jay</button></li><li><button class="nchip press" data-el="1" type="button"><span class="no num">17</span>Quin Quail</button></li></ul><span class="caption">Worked out by code from each child's state and the days seen</span></div></article>
+            <article class="card" data-kind="skill" data-gap="clusters of children who share a place on a topic: code must compute them from child_skill_state and evidence_event; no function exists yet"><div class="card-h"><span class="tile"><i class="ic" data-icon="cluster"></i></span>Not seen yet, but secure on the skill before it<span class="count num">2</span></div><div class="card-b" data-source="child_skill_state.state activity_skill.skill_code approval.decision"><ul class="nchips"><li><button class="nchip press" data-el="1" type="button"><span class="no num">06</span>Finn Fox</button></li><li><button class="nchip press" data-el="1" type="button"><span class="no num">21</span>Uri Urial</button></li></ul><span class="caption">Worked out by code from the confirmed link to the skill before</span></div></article>
+          </div>
+          <div class="toolbar">
+            <label class="sel"><i class="ic s" data-icon="group"></i>Group by <select data-el="13" data-source="child_skill_state.state school_class.section"><option>State on this skill</option><option>Class</option></select></label>
+          </div>
+          <div class="groups">
+            <section class="grp" data-state="ok" aria-label="Secure, 10 children">
+              <h3 class="grp-h"><i class="ic s" data-icon="secure"></i>Secure <span class="count num">10</span></h3>
+              <ol class="cgrid" data-block="ClassGrid" aria-label="Secure on Counting in tens, by Sr. No.">
+                <li><button class="sq press" type="button" data-state="ok" data-el="1">
+                  <span class="top"><span class="no num" data-source="enrolment.roll_no">01</span><span class="disc" aria-hidden="true">AA</span></span>
+                  <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Alba Ant</span>
+                  <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="secure"></i>Secure</span>
+                </button></li>
+                <li><button class="sq press" type="button" data-state="ok" data-el="1">
+                  <span class="top"><span class="no num" data-source="enrolment.roll_no">02</span><span class="disc" aria-hidden="true">BB</span></span>
+                  <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Bea Badger</span>
+                  <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="secure"></i>Secure</span>
+                </button></li>
+                <li><button class="sq press" type="button" data-state="ok" data-el="1">
+                  <span class="top"><span class="no num" data-source="enrolment.roll_no">04</span><span class="disc" aria-hidden="true">DD</span></span>
+                  <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Dot Deer</span>
+                  <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="secure"></i>Secure</span>
+                </button></li>
+                <li><button class="sq press" type="button" data-state="ok" data-el="1">
+                  <span class="top"><span class="no num" data-source="enrolment.roll_no">07</span><span class="disc" aria-hidden="true">GG</span></span>
+                  <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Gus Goat</span>
+                  <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="secure"></i>Secure</span>
+                </button></li>
+                <li><button class="sq press" type="button" data-state="ok" data-el="1">
+                  <span class="top"><span class="no num" data-source="enrolment.roll_no">09</span><span class="disc" aria-hidden="true">II</span></span>
+                  <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Ivy Ibis</span>
+                  <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="secure"></i>Secure</span>
+                </button></li>
+                <li><button class="sq press" type="button" data-state="ok" data-el="1">
+                  <span class="top"><span class="no num" data-source="enrolment.roll_no">11</span><span class="disc" aria-hidden="true">KK</span></span>
+                  <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Kit Koala</span>
+                  <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="secure"></i>Secure</span>
+                </button></li>
+                <li><button class="sq press" type="button" data-state="ok" data-el="1">
+                  <span class="top"><span class="no num" data-source="enrolment.roll_no">14</span><span class="disc" aria-hidden="true">NN</span></span>
+                  <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Nat Newt</span>
+                  <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="secure"></i>Secure</span>
+                </button></li>
+                <li><button class="sq press" type="button" data-state="ok" data-el="1">
+                  <span class="top"><span class="no num" data-source="enrolment.roll_no">16</span><span class="disc" aria-hidden="true">PP</span></span>
+                  <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Pia Panda</span>
+                  <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="secure"></i>Secure</span>
+                </button></li>
+                <li><button class="sq press" type="button" data-state="ok" data-el="1">
+                  <span class="top"><span class="no num" data-source="enrolment.roll_no">19</span><span class="disc" aria-hidden="true">SS</span></span>
+                  <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Sam Seal</span>
+                  <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="secure"></i>Secure</span>
+                </button></li>
+                <li><button class="sq press" type="button" data-state="ok" data-el="1">
+                  <span class="top"><span class="no num" data-source="enrolment.roll_no">22</span><span class="disc" aria-hidden="true">VV</span></span>
+                  <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Vik Vole</span>
+                  <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="secure"></i>Secure</span>
+                </button></li>
+              </ol>
+            </section>
+            <section class="grp" data-state="wait" aria-label="Practising, 7 children">
+              <h3 class="grp-h"><i class="ic s" data-icon="practising"></i>Practising <span class="count num">7</span></h3>
+              <ol class="cgrid" data-block="ClassGrid" aria-label="Practising on Counting in tens, by Sr. No.">
+                <li><button class="sq press" type="button" data-state="wait" data-el="1">
+                  <span class="top"><span class="no num" data-source="enrolment.roll_no">03</span><span class="disc" aria-hidden="true">CC</span></span>
+                  <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Cal Crow</span>
+                  <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="practising"></i>Practising</span>
+                </button></li>
+                <li><button class="sq press" type="button" data-state="wait" data-el="1">
+                  <span class="top"><span class="no num" data-source="enrolment.roll_no">08</span><span class="disc" aria-hidden="true">HH</span></span>
+                  <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Hazel Hare</span>
+                  <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="practising"></i>Practising</span>
+                </button></li>
+                <li><button class="sq press" type="button" data-state="wait" data-el="1">
+                  <span class="top"><span class="no num" data-source="enrolment.roll_no">10</span><span class="disc" aria-hidden="true">JJ</span></span>
+                  <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Jo Jay</span>
+                  <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="practising"></i>Practising</span>
+                </button></li>
+                <li><button class="sq press" type="button" data-state="wait" data-el="1">
+                  <span class="top"><span class="no num" data-source="enrolment.roll_no">13</span><span class="disc" aria-hidden="true">MM</span></span>
+                  <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Mina Mouse</span>
+                  <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="practising"></i>Practising</span>
+                </button></li>
+                <li><button class="sq press" type="button" data-state="wait" data-el="1">
+                  <span class="top"><span class="no num" data-source="enrolment.roll_no">17</span><span class="disc" aria-hidden="true">QQ</span></span>
+                  <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Quin Quail</span>
+                  <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="practising"></i>Practising</span>
+                </button></li>
+                <li><button class="sq press" type="button" data-state="wait" data-el="1">
+                  <span class="top"><span class="no num" data-source="enrolment.roll_no">20</span><span class="disc" aria-hidden="true">TT</span></span>
+                  <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Tia Toad</span>
+                  <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="practising"></i>Practising</span>
+                </button></li>
+                <li><button class="sq press" type="button" data-state="wait" data-el="1">
+                  <span class="top"><span class="no num" data-source="enrolment.roll_no">23</span><span class="disc" aria-hidden="true">WW</span></span>
+                  <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Wren Wolf</span>
+                  <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="practising"></i>Practising</span>
+                </button></li>
+              </ol>
+            </section>
+            <section class="grp" data-state="quiet" aria-label="Emerging, 4 children">
+              <h3 class="grp-h"><i class="ic s" data-icon="emerging"></i>Emerging <span class="count num">4</span></h3>
+              <ol class="cgrid" data-block="ClassGrid" aria-label="Emerging on Counting in tens, by Sr. No.">
+                <li><button class="sq press" type="button" data-state="quiet" data-el="1">
+                  <span class="top"><span class="no num" data-source="enrolment.roll_no">05</span><span class="disc" aria-hidden="true">EE</span></span>
+                  <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Eli Eel</span>
+                  <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="emerging"></i>Emerging</span>
+                </button></li>
+                <li><button class="sq press" type="button" data-state="quiet" data-el="1">
+                  <span class="top"><span class="no num" data-source="enrolment.roll_no">12</span><span class="disc" aria-hidden="true">LL</span></span>
+                  <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Lou Lynx</span>
+                  <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="emerging"></i>Emerging</span>
+                </button></li>
+                <li><button class="sq press" type="button" data-state="quiet" data-el="1">
+                  <span class="top"><span class="no num" data-source="enrolment.roll_no">18</span><span class="disc" aria-hidden="true">RR</span></span>
+                  <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Rex Rook</span>
+                  <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="emerging"></i>Emerging</span>
+                </button></li>
+                <li><button class="sq press" type="button" data-state="quiet" data-el="1">
+                  <span class="top"><span class="no num" data-source="enrolment.roll_no">24</span><span class="disc" aria-hidden="true">XX</span></span>
+                  <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Xan Xerus</span>
+                  <span class="st" data-source="child_skill_state.state child_state.words"><i class="ic s" data-icon="emerging"></i>Emerging</span>
+                </button></li>
+              </ol>
+            </section>
+            <section class="grp" data-state="unseen" aria-label="Not seen yet, 3 children">
+              <h3 class="grp-h"><i class="ic s" data-icon="not-seen"></i>Not seen yet <span class="count num">3</span></h3>
+              <ol class="cgrid" data-block="ClassGrid" aria-label="Not seen yet on Counting in tens, by Sr. No.">
+                <li><button class="sq press" type="button" data-state="unseen" data-el="1" title="not seen yet">
+                  <span class="top"><span class="no num" data-source="enrolment.roll_no">06</span><span class="disc" aria-hidden="true">FF</span></span>
+                  <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Finn Fox</span>
+                  <span class="st"><i class="ic s" data-icon="not-seen"></i>Not seen yet</span>
+                </button></li>
+                <li><button class="sq press" type="button" data-state="unseen" data-el="1" title="not seen yet">
+                  <span class="top"><span class="no num" data-source="enrolment.roll_no">15</span><span class="disc" aria-hidden="true">OO</span></span>
+                  <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Otto Owl</span>
+                  <span class="st"><i class="ic s" data-icon="not-seen"></i>Not seen yet</span>
+                </button></li>
+                <li><button class="sq press" type="button" data-state="unseen" data-el="1" title="not seen yet">
+                  <span class="top"><span class="no num" data-source="enrolment.roll_no">21</span><span class="disc" aria-hidden="true">UU</span></span>
+                  <span class="nm" data-el="2" data-source="pii.child.first_name pii.child.last_name">Uri Urial</span>
+                  <span class="st"><i class="ic s" data-icon="not-seen"></i>Not seen yet</span>
+                </button></li>
+              </ol>
+            </section>
+          </div>
           <div class="cards" data-block="Cards">
             <article class="card" data-kind="skill"><div class="card-h"><span class="tile"><i class="ic" data-icon="previous"></i></span>Comes after</div><div class="card-b"><span class="muted">This skill builds on these.</span>
-              <a data-el="3" href="#skill" data-source="skill_prerequisite.before_code skill_prerequisite.status">Counting by ones</a>
-              <a data-el="3" href="#skill" data-source="skill_prerequisite.before_code skill_prerequisite.status">Grouping in tens</a>
+              <a data-el="3" href="#skill" data-source="skill_prerequisite.before_code approval.decision">Counting by ones</a>
+              <a data-el="3" href="#skill" data-source="skill_prerequisite.before_code approval.decision">Grouping in tens</a>
             </div></article>
             <article class="card" data-kind="skill"><div class="card-h"><span class="tile"><i class="ic" data-icon="following"></i></span>Ready next</div><div class="card-b"><span class="muted">A child secure here can try these.</span>
-              <a data-el="4" href="#skill" data-source="skill_prerequisite.skill_code skill_prerequisite.status">Adding tens</a>
-              <a data-el="4" href="#skill" data-source="skill_prerequisite.skill_code skill_prerequisite.status">Reading big numbers</a>
+              <a data-el="4" href="#skill" data-source="activity_skill.skill_code approval.decision">Adding tens</a>
+              <a data-el="4" href="#skill" data-source="activity_skill.skill_code approval.decision">Reading big numbers</a>
             </div></article>
           </div>
           <p class="caption">Only links a person confirmed are read.</p>
@@ -441,8 +512,23 @@
             <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: nobody seen on this skill yet</div>
             <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="not-seen"></i><b>Nobody seen on this skill yet</b><span class="muted">Record a note in a period that teaches it and the squares fill in.</span></div></div>
           </div>
-        </main>
         <aside class="rail" aria-label="Connected to">
+          <aside class="peek" data-block="ChildPeek" aria-label="Recent history of Alba Ant">
+            <div class="peek-h">
+              <span class="disc" aria-hidden="true">AA</span>
+              <span class="who"><b data-source="pii.child.first_name pii.child.last_name">Alba Ant</b><span class="muted"><span class="num" data-source="enrolment.roll_no">01</span> · <span data-source="grade.name">K2</span> <span data-source="school_class.section">Red</span></span></span>
+              <button class="barbtn press" data-el="14" type="button" aria-label="Close"><i class="ic" data-icon="close"></i></button>
+            </div>
+            <div class="keyrow" data-source="child_skill_state.state"><span class="chip" data-state="ok"><i class="ic s" data-icon="secure"></i>6 secure</span><span class="chip" data-state="wait"><i class="ic s" data-icon="practising"></i>3 practising</span><span class="chip" data-state="unseen"><i class="ic s" data-icon="not-seen"></i>2 not seen yet</span></div>
+            <ol class="timeline">
+              <li class="tli"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><div><b>Counting in tens: now secure</b><p>The state changed after a third day seen · Asha Almond's note</p></div><span class="caption num" data-source="evidence_event.observed_at">20-Nov</span></li>
+              <li class="tli"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><div><b>Paper, sheet 3</b><p data-source="item_result.state item_result.confirmed_by pii.staff.name">4 right, 1 wrong with working, 1 blank · signed off by Bina Basil</p></div><span class="caption num" data-source="item_result.confirmed_at">20-Nov</span></li>
+              <li class="tli"><span class="tile" data-kind="note"><i class="ic" data-icon="note"></i></span><div><b data-source="pii.educator_note.body">Counts on from 30 in tens, with bundles</b><p data-source="pii.educator_note.route activity_observation.confirmed_by pii.staff.name">Voice note · confirmed by Asha Almond</p></div><span class="caption num" data-source="pii.educator_note.received_at">18-Nov</span></li>
+              <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><b>Counting in tens with bundles: as expected</b><p data-source="activity_observation.outcome activity_observation.observed_by pii.staff.name">Observed in the period · Asha Almond</p></div><span class="caption num" data-source="activity_observation.observed_at">18-Nov</span></li>
+              <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="history"></i></span><div><b>A mark corrected: below became as expected</b><p data-source="change_log.by pii.staff.name">A new entry that replaces the first · Asha Almond</p></div><span class="caption num" data-source="change_log.at">18-Nov</span></li>
+            </ol>
+            <a class="btn press" data-el="15" href="#child">Open Alba</a>
+          </aside>
           <section class="rail-box">
             <h2>Connected to</h2>
             <ul class="rlist">

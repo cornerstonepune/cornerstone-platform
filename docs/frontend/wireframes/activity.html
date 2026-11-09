@@ -64,6 +64,24 @@
               <div class="lbar"><span>Level 3</span><i style="--n: 13"></i><span class="num">3</span></div>
             </div></div>
           </div>
+          <div class="card">
+            <div class="card-h"><i class="ic s" data-icon="history"></i>Taught so far</div>
+            <div class="card-b">
+              <dl class="kv cells" aria-label="When it was taught">
+                <div><dt>Last taught</dt><dd><span data-source="activity_observation.observed_at">Tue 3 Nov</span></dd></div>
+                <div><dt>Children seen on it</dt><dd class="num" data-source="activity_observation.child_id">24</dd></div>
+                <div><dt>Times taught</dt><dd class="num" data-source="activity_observation.session_id">5</dd></div>
+              </dl>
+              <p class="caption">What the educator saw, by outcome, across every time it was taught</p>
+              <div class="keyrow" data-source="activity_observation.outcome">
+                <span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Above <span class="num">3</span></span>
+                <span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>As expected <span class="num">12</span></span>
+                <span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>Below <span class="num">6</span></span>
+                <span class="chip" data-state="quiet"><i class="ic s" data-icon="not-seen"></i>Not willing <span class="num">1</span></span>
+                <span class="chip" data-state="quiet"><i class="ic s" data-icon="absent"></i>Absent <span class="num">2</span></span>
+              </div>
+            </div>
+          </div>
           <details class="details" data-block="Details" open><summary data-el="0"><i class="ic s" data-icon="details"></i>Steps</summary><div><ol data-source="activity.steps_list">
             <li>Give each pair a handful of sticks and some rubber bands.</li>
             <li>Bundle ten sticks. Say "one ten".</li>
@@ -80,7 +98,7 @@
               <a data-el="3" href="#objective" data-source="learning_objective.title activity_objective.lo_code">Counts objects to 100</a>
               <a data-el="3" href="#objective" data-source="learning_objective.title activity_objective.lo_code">Says how many without recounting</a>
             </div></article>
-            <article class="card" data-kind="activity" data-gap="which source each part came from (school, drafted, person): no column holds it; activity_skill, activity_objective and activity_material carry a source, but the steps, thinking and level text do not"><div class="card-h"><span class="tile"><i class="ic" data-icon="activity"></i></span>Where each part came from</div><div class="card-b">
+            <article class="card" data-kind="activity" data-source="change_log.origin curriculum_proposal.status"><div class="card-h"><span class="tile"><i class="ic" data-icon="activity"></i></span>Where each part came from</div><div class="card-b">
               <dl class="kv">
                 <dt>Steps</dt><dd><span class="chip" data-state="ok"><i class="ic s" data-icon="from-school"></i>From the school</span></dd>
                 <dt>How to think about it</dt><dd><span class="chip" data-state="wait"><i class="ic s" data-icon="from-draft"></i>Drafted</span></dd>
@@ -112,6 +130,13 @@
 <li><a class="ritem" data-el="11" href="#period"><span class="tile" data-kind="period"><i class="ic" data-icon="period"></i></span><span><span>Next taught</span><small><span data-source="school_day.on_date">Thu 19-Nov</span>, <span class="num" data-source="period.starts_at">08:45</span> · <span data-source="grade.name">K2</span> <span data-source="school_class.section">Red</span></small></span></a></li>
 <li><a class="ritem" data-el="12" href="#fortnight"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span><span><span>The fortnights it is in</span><small>fortnights <span class="num" data-source="fortnight.number">6</span> and <span class="num" data-source="fortnight.number">9</span></small></span></a></li>
             </ul>
+          </section>
+          <section class="rail-box">
+            <h2>Fortnights it is in</h2>
+            <dl class="kv">
+              <dt>Fortnight <span class="num" data-source="fortnight.number">6</span></dt><dd><span class="chip" data-state="ok" data-source="fortnight.state"><i class="ic s" data-icon="done"></i>Taught</span></dd>
+              <dt>Fortnight <span class="num" data-source="fortnight.number">9</span></dt><dd><span class="chip" data-state="wait" data-source="fortnight.state"><i class="ic s" data-icon="period"></i>Coming up</span></dd>
+            </dl>
           </section>
           <section class="rail-box" data-block="CaptureBar">
             <h2>Capture here</h2>
@@ -178,6 +203,24 @@
               <div class="lbar"><span>Level 3</span><i style="--n: 13"></i><span class="num">3</span></div>
             </div></div>
           </div>
+          <div class="card">
+            <div class="card-h"><i class="ic s" data-icon="history"></i>Taught so far</div>
+            <div class="card-b">
+              <dl class="kv cells" aria-label="When it was taught">
+                <div><dt>Last taught</dt><dd><span data-source="activity_observation.observed_at">Tue 3 Nov</span></dd></div>
+                <div><dt>Children seen on it</dt><dd class="num" data-source="activity_observation.child_id">24</dd></div>
+                <div><dt>Times taught</dt><dd class="num" data-source="activity_observation.session_id">5</dd></div>
+              </dl>
+              <p class="caption">What the educator saw, by outcome, across every time it was taught</p>
+              <div class="keyrow" data-source="activity_observation.outcome">
+                <span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Above <span class="num">3</span></span>
+                <span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>As expected <span class="num">12</span></span>
+                <span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>Below <span class="num">6</span></span>
+                <span class="chip" data-state="quiet"><i class="ic s" data-icon="not-seen"></i>Not willing <span class="num">1</span></span>
+                <span class="chip" data-state="quiet"><i class="ic s" data-icon="absent"></i>Absent <span class="num">2</span></span>
+              </div>
+            </div>
+          </div>
           <details class="details" data-block="Details" open><summary data-el="0"><i class="ic s" data-icon="details"></i>Steps</summary><div><ol data-source="activity.steps_list">
             <li>Give each pair a handful of sticks and some rubber bands.</li>
             <li>Bundle ten sticks. Say "one ten".</li>
@@ -194,7 +237,7 @@
               <a data-el="3" href="#objective" data-source="learning_objective.title activity_objective.lo_code">Counts objects to 100</a>
               <a data-el="3" href="#objective" data-source="learning_objective.title activity_objective.lo_code">Says how many without recounting</a>
             </div></article>
-            <article class="card" data-kind="activity" data-gap="which source each part came from (school, drafted, person): no column holds it; activity_skill, activity_objective and activity_material carry a source, but the steps, thinking and level text do not"><div class="card-h"><span class="tile"><i class="ic" data-icon="activity"></i></span>Where each part came from</div><div class="card-b">
+            <article class="card" data-kind="activity" data-source="change_log.origin curriculum_proposal.status"><div class="card-h"><span class="tile"><i class="ic" data-icon="activity"></i></span>Where each part came from</div><div class="card-b">
               <dl class="kv">
                 <dt>Steps</dt><dd><span class="chip" data-state="ok"><i class="ic s" data-icon="from-school"></i>From the school</span></dd>
                 <dt>How to think about it</dt><dd><span class="chip" data-state="wait"><i class="ic s" data-icon="from-draft"></i>Drafted</span></dd>
@@ -226,6 +269,13 @@
 <li><a class="ritem" data-el="11" href="#period"><span class="tile" data-kind="period"><i class="ic" data-icon="period"></i></span><span><span>Next taught</span><small><span data-source="school_day.on_date">Thu 19-Nov</span>, <span class="num" data-source="period.starts_at">08:45</span> · <span data-source="grade.name">K2</span> <span data-source="school_class.section">Red</span></small></span></a></li>
 <li><a class="ritem" data-el="12" href="#fortnight"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span><span><span>The fortnights it is in</span><small>fortnights <span class="num" data-source="fortnight.number">6</span> and <span class="num" data-source="fortnight.number">9</span></small></span></a></li>
             </ul>
+          </section>
+          <section class="rail-box">
+            <h2>Fortnights it is in</h2>
+            <dl class="kv">
+              <dt>Fortnight <span class="num" data-source="fortnight.number">6</span></dt><dd><span class="chip" data-state="ok" data-source="fortnight.state"><i class="ic s" data-icon="done"></i>Taught</span></dd>
+              <dt>Fortnight <span class="num" data-source="fortnight.number">9</span></dt><dd><span class="chip" data-state="wait" data-source="fortnight.state"><i class="ic s" data-icon="period"></i>Coming up</span></dd>
+            </dl>
           </section>
           <section class="rail-box" data-block="CaptureBar">
             <h2>Capture here</h2>
