@@ -27,7 +27,10 @@ def conn():
 
 
 def test_every_listed_table_has_a_tenant_column_and_its_key_column(conn):
-    for r in conn.execute("select schema_name, table_name, key_column from access_table").fetchall():
+    # child data names a key column; a school-wide row (CP-4) names none
+    for r in conn.execute(
+        "select schema_name, table_name, key_column from access_table where data_class = 'child_data'"
+    ).fetchall():
         cols = {
             c["column_name"]
             for c in conn.execute(

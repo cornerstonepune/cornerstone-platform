@@ -1,14 +1,13 @@
 {
- "ok": false,
+ "ok": true,
  "passed": [
+  "1 a note confirmed on day D is in the picture after the next morning's nightly run, logged once, scheduled in n8n",
   "2 a correction through the engine is a new row superseding the old; the old row never changes; refused twice",
   "3 unplanned counts done sessions with no plan line, is a number, and is not empty when such sessions exist",
   "4 the picture reads only confirmed evidence; a drafted voice note's evidence is refused",
   "5 blank, wrong and wrong-with-working stay three distinct signals through the nightly run",
   "6 two nightly runs leave every evidence record and child state unchanged (throwaway database)"
  ],
- "failed": [
-  "1 a note confirmed on day D is in the picture after the next morning's nightly run, logged once, scheduled in n8n"
- ],
- "ran_at": "2026-11-08T19:55:01+00:00"
+ "failed": [],
+ "ran_at": "2026-11-09T03:45:09+00:00"
 }

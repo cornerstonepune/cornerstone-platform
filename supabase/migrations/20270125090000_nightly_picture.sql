@@ -129,4 +129,13 @@ do $$ begin
   end if;
 end $$;
 
+-- Every table is listed (CP-4): the ledger of runs names no child; a hand calculation is about one child's skill.
+insert into access_table (schema_name, table_name, kind_code, key_column, key_type, data_class, reason) values
+  ('public', 'graph_run', null, null, null, 'school_wide',
+   'the nightly rebuild''s ledger: counts, times and digests of the picture; no child'),
+  ('public', 'hand_check', 'learning', 'child_id', 'child', 'child_data', null)
+on conflict (schema_name, table_name) do update set kind_code = excluded.kind_code,
+  key_column = excluded.key_column, key_type = excluded.key_type, data_class = excluded.data_class,
+  reason = excluded.reason;
+
 select internal.apply_conventions();
