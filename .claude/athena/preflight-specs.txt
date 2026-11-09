@@ -1,0 +1,4 @@
+# The browser specs the preflight runs before a push, relative to apps/web. One page per test, so a page's seconds can be
+# held to the limit. gate: the sign-in wall and the restricted login; screens: every screen at a laptop and at a phone.
+tests/gate.spec.ts
+tests/screens.spec.ts

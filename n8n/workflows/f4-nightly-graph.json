@@ -1,0 +1,65 @@
+{
+  "name": "F4 — rebuild the picture every night",
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Kolkata"
+  },
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "days",
+              "daysInterval": 1,
+              "triggerAtHour": 2,
+              "triggerAtMinute": 30
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [-400, 0],
+      "id": "every-night",
+      "name": "Every night at 02:30"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://engine:8000/graph/nightly",
+        "sendHeaders": true,
+        "specifyHeaders": "keypair",
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Idempotency-Key",
+              "value": "={{ 'nightly-' + $now.setZone('Asia/Kolkata').toFormat('yyyy-MM-dd') }}"
+            }
+          ]
+        },
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpCustomAuth",
+        "options": {
+          "timeout": 300000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-180, 0],
+      "id": "rebuild-the-picture",
+      "name": "Rebuild the picture",
+      "credentials": {
+        "httpCustomAuth": {
+          "id": "ENGINE_KEY",
+          "name": "engine key"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Every night at 02:30": {
+      "main": [[{ "node": "Rebuild the picture", "type": "main", "index": 0 }]]
+    }
+  }
+}

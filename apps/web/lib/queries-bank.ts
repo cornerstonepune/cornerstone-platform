@@ -1,0 +1,285 @@
+// The question bank and the papers drawn from it: what the bank holds, one question as every
+// screen reads it, and a printed paper with the facts of how it was made.
+import { sql } from "./db";
+import type { Difficulty } from "./queries";
+import { EVERY_CLASS, type Scope } from "./scope";
+import { skillTaughtFor } from "./taught";
+
+// A question's own numbers, by kind: `a op b` for most, `addends` for a long column, `base` for a
+// number wall, `left`/`right` for a balance (null is the box the child fills), `planted` for the
+// mistake a find-the-mistake question shows.
+export type ItemSpec = {
+  a?: number | string; // a missing-digit question keeps its boxed digits: "4□"
+  b?: number | string;
+  c?: string;
+  op?: string;
+  addends?: number[];
+  text?: string;
+  question?: string;
+  base?: number[];
+  left?: (number | null)[];
+  right?: (number | null)[];
+  planted?: string;
+  shape?: string;
+  facts?: string[];
+  options?: number[];
+  table?: [string, number][]; // a story whose numbers sit in a table: [["Monday", 944], ["Tuesday", 533]]
+  count?: number; // a tally read as a number, of `thing`; two tallies are `a` and `b`, of `things`
+  thing?: string;
+  things?: string[];
+  rows?: number[]; // a part of the multiplication square: its rows and columns; `a` and `b` are the cell asked
+  cols?: number[];
+  method?: string; // how it is worked or drawn: a division's equal groups are SHARING, GROUPING or ARRAY
+  printed?: Printed; // an English sample, as its paper prints it (`english_sample`)
+};
+
+/** What an English question prints under its ask: the passage it is about, its sentence (a gap is ___), and its options:
+ *  words to choose, order or sort, or two columns to match. */
+export type Printed = {
+  passage: { title: string; text: string } | null;
+  text: string | null;
+  options: string[] | { left: string[]; right: string[] } | null;
+};
+
+// One thing the child writes. `answer` is null where a person reads it (an explanation) and
+// `rubric` says how; `misconceptions` maps each named mistake to the wrong answer it produces.
+export type ItemResponse = {
+  rid: string;
+  label?: string;
+  answer: string | null;
+  rubric?: string | null;
+  tolerance?: number | null;
+  misconceptions: Record<string, number>;
+};
+
+export type ItemRow = {
+  id: string;
+  item_key: string;
+  fmt: string;
+  stem: string;
+  spec: ItemSpec;
+  responses: ItemResponse[];
+  status: string;
+  times_used: number;
+  skill_set_code: string | null;
+  skill_set_name: string | null;
+  difficulty: string | null;
+};
+
+/** `scope`: the classes whose taught topics the bank shows (goals/f1f-taught-per-class.yaml); every class unless said.
+ *  `grades`: only questions at a level of one of these grades (its row's grade, `skill_level.grade`);
+ *  none is every grade (goals/ux6-curriculum-for-the-educator.yaml). */
+export type ItemFilter = { set?: string; difficulty?: string; fmt?: string; status?: string; find?: string; scope?: Scope; grades?: string[] };
+
+// A question of a skill taught in any class of the scope. The taught skills are found once, not once per question: per
+// question, every question asked every child's class (29,000 × the roll), and the bank's page passed its 8 s (CI,
+// 2026-10-23: 9.7 s at 60 children, nothing taught; 0.07 s so).
+const ofTaughtSkill = (scope: Scope = EVERY_CLASS) => sql`
+  (i.tenant_id, i.skill_set_code) in (select ts.tenant_id, ts.code from skill ts
+                                      where ${skillTaughtFor(scope, sql`ts.tenant_id`, sql`ts.code`)})`;
+
+// What a person typed, looked for as it is: LIKE's own % and _ (and its escape, \) are escaped, never wildcards.
+const containing = (words: string) => `%${words.replace(/[\\%_]/g, (c) => `\\${c}`)}%`;
+
+// The columns every question is read with, the skill set's name included — a fragment, so the bank
+// and a printed paper can never read a question two different ways.
+export const itemColumns = () => sql`
+  i.id, i.item_key, i.fmt, i.stem, i.spec, i.responses, i.status, i.times_used, i.skill_set_code, i.difficulty,
+  (select s.name from skill s where s.tenant_id = i.tenant_id and s.code = i.skill_set_code) as skill_set_name`;
+
+// What the bank may print: generated questions of a taught skill, the live ones unless the removed ones are asked for.
+const inBank = (f: ItemFilter) => sql`
+  i.source = 'generated' and i.status = ${f.status === "retired" ? "retired" : "active"}
+  and ${ofTaughtSkill(f.scope)}
+  ${f.set ? sql`and i.skill_set_code = ${f.set}` : sql``}
+  ${f.difficulty ? sql`and i.difficulty = ${f.difficulty}` : sql``}
+  ${f.fmt ? sql`and i.fmt = ${f.fmt}` : sql``}
+  ${f.grades?.length ? sql`and exists (select 1 from skill_level gl where gl.tenant_id = i.tenant_id and gl.skill_code = i.skill_set_code
+                                      and gl.difficulty = i.difficulty and gl.grade = any(${f.grades}))` : sql``}
+  ${f.find ? sql`and (i.stem ilike ${containing(f.find)} or i.spec ->> 'text' ilike ${containing(f.find)})` : sql``}`;
+
+// Each with the library worksheets it is on, in use (ADR 0026) — the bank's list shows the tie.
+export async function items(f: ItemFilter, limit: number, offset: number): Promise<(ItemRow & { worksheets: string[] })[]> {
+  return sql<(ItemRow & { worksheets: string[] })[]>`
+    select ${itemColumns()},
+           coalesce((select array_agg(t.code order by t.code) from sheet_template t
+                     where t.source = 'library' and t.retired_at is null and i.id = any(t.item_ids)), '{}') as worksheets
+    from item i where ${inBank(f)}
+    order by i.created_at desc, i.item_key
+    limit ${limit} offset ${offset}`;
+}
+
+export async function itemCount(f: ItemFilter): Promise<number> {
+  const [{ n }] = await sql<{ n: number }[]>`select count(*)::int as n from item i where ${inBank(f)}`;
+  return n;
+}
+
+export type BankRow = {
+  code: string;
+  name: string;
+  band: string;
+  /** The grade each level belongs to (`skill_level.grade`, read by `gradeOf`). */
+  level_grade: Partial<Record<Difficulty, string>>;
+  fmts: string[];
+  counts: Partial<Record<Difficulty, number>>;
+};
+
+// The whole bank at a glance: every skill set in ladder order, the kinds of question it holds, and
+// how many are ready to print at each level — exactly the pools a paper is drawn from.
+export async function bankGrid(scope: Scope = EVERY_CLASS): Promise<BankRow[]> {
+  return sql<BankRow[]>`
+    with b as (
+      select skill_set_code, difficulty, fmt, count(*)::int as n from item
+      where source = 'generated' and status = 'active' group by 1, 2, 3
+    )
+    select s.code, s.name, s.grade as band,
+           coalesce((select jsonb_object_agg(l.difficulty, l.grade) from skill_level l
+                     where l.tenant_id = s.tenant_id and l.skill_code = s.code), '{}'::jsonb) as level_grade,
+           coalesce((select array_agg(distinct b.fmt order by b.fmt) from b where b.skill_set_code = s.code), '{}') as fmts,
+           coalesce((select json_object_agg(d.difficulty, d.n)
+                     from (select b.difficulty, sum(b.n)::int as n from b where b.skill_set_code = s.code
+                           group by b.difficulty) d), '{}'::json) as counts
+    from skill s
+    where ${skillTaughtFor(scope, sql`s.tenant_id`, sql`s.code`)}
+    order by s.ladder_order nulls last, s.code`;
+}
+
+/** The bank: the questions the engine can draw — made by it, active, of a skill at one of that skill's levels — the one
+ *  count every page names "the bank" (goals/ux2-one-count-one-thing.yaml); `active`, the part of it of skills taught in
+ *  a class of the scope, which this page shows; `retired`, that part's removed questions. */
+export async function bankTotals(scope: Scope = EVERY_CLASS): Promise<{ active: number; bank: number; retired: number }> {
+  const [t] = await sql<{ active: number; bank: number; retired: number }[]>`
+    select count(*) filter (where i.status = 'active' and ${ofTaughtSkill(scope)})::int as active,
+           count(*) filter (where i.status = 'active')::int as bank,
+           count(*) filter (where i.status = 'retired' and ${ofTaughtSkill(scope)})::int as retired
+    from item i
+    where i.source = 'generated'
+      and exists (select 1 from skill_level bl where bl.tenant_id = i.tenant_id and bl.skill_code = i.skill_set_code
+                  and bl.difficulty = i.difficulty)`;
+  return t;
+}
+
+export type PrintedPaper = {
+  qr_code: string;
+  print_status: string;
+  approved_by: string | null;
+  rendered: boolean;
+  pages: number;
+  week: string;
+  difficulty: Difficulty | null; // none on a paper chosen from a child's own work: each area has its own
+  skill_set_name: string;
+  source: string; // 'library', 'generated', or 'focus' — drawn for one child (step 11, and the maker)
+  /** How a 'focus' paper's questions were chosen, in the engine's words, and the areas it works on with their levels;
+   *  null on a paper printed before the engine kept them (2026-10-01). */
+  how: string | null;
+  areas: { name: string; level: string }[] | null;
+  n_items: number;
+  roll_no: string | null;
+  section: string | null;
+  kind: string | null;
+  rule_fired: string | null;
+  override_reason: string | null;
+  pool: number;
+  window_days: number;
+  worksheet: string | null; // the library worksheet it is, when it came from the library
+  worksheets: number; // how many worksheets the library holds at its level
+  replaced_by: string | null; // the newer home assessment made in its place the same week, if one was
+};
+
+// One printed paper — a library worksheet handed to a child, or one generated before step 7 — and the facts of how it was made: who it is for (roll number only — the
+// name is printed on the page itself, never read into a row here), the pool it was drawn from, and
+// the exposure window `assemble` honoured. A spare has no child and no prescription.
+export async function printedPaper(qr: string): Promise<PrintedPaper | undefined> {
+  const rows = await sql<PrintedPaper[]>`
+    select si.qr_code, si.print_status, si.approved_by, si.pdf_path is not null as rendered,
+           coalesce((si.key ->> 'pages')::int, (st.key ->> 'pages')::int, 1) as pages,
+           coalesce(si.week, st.week) as week, st.difficulty, st.source, si.key ->> 'how' as how, si.key -> 'areas' as areas,
+           coalesce(s.name, (select string_agg(distinct s2.name, ' · ') from item i2
+              join skill s2 on s2.tenant_id = i2.tenant_id and s2.code = i2.skill_set_code
+              where i2.id = any(st.item_ids))) as skill_set_name,
+           coalesce(array_length(st.item_ids, 1), 0) as n_items, c.roll_no, coalesce(si.section, c.section) as section,
+           coalesce(p.kind, si.kind) as kind, p.rule_fired, p.override_reason, st.code as worksheet,
+           (select count(*)::int from sheet_template w where w.source = 'library' and w.retired_at is null
+              and w.skill_set_code = st.skill_set_code and w.difficulty = st.difficulty) as worksheets,
+           (select count(*)::int from item i where i.status = 'active' and i.source = 'generated'
+              and i.skill_set_code = st.skill_set_code and i.difficulty = st.difficulty) as pool,
+           (select t.value::int from threshold t where t.key = 'exposure.days') as window_days,
+           (select n.qr_code from sheet_instance n where si.kind = 'focus' and n.kind = 'focus' and n.child_id = si.child_id
+              and n.week = si.week and n.created_at > si.created_at and n.print_status <> 'void'
+            order by n.created_at desc limit 1) as replaced_by
+    from sheet_instance si
+    join sheet_template st on st.id = si.sheet_template_id
+    left join skill s on s.tenant_id = st.tenant_id and s.code = st.skill_set_code
+    left join child c on c.id = coalesce(si.child_id, st.child_id)
+    left join prescription p on p.sheet_instance_id = si.id
+    where si.qr_code = ${qr} and st.source in ('generated', 'library', 'focus')`;
+  return rows[0];
+}
+
+// The paper's questions in the order they are printed.
+export async function paperItems(qr: string): Promise<ItemRow[]> {
+  return sql<ItemRow[]>`
+    select ${itemColumns()}
+    from sheet_instance si
+    join sheet_template st on st.id = si.sheet_template_id
+    cross join lateral unnest(st.item_ids) with ordinality as u(id, n)
+    join item i on i.id = u.id
+    where si.qr_code = ${qr}
+    order by u.n`;
+}
+
+export type Mistake = { name: string; description: string | null };
+
+// A mistake's name can depend on the operation it is made in — M_WRONG_OP is "added instead of
+// subtracting" in a subtraction and "subtracted instead of adding" in an addition. Keyed `code@op`
+// for every row, and plain `code` only where the name is the same whatever the operation, so a
+// question that does not record its operation is never given another operation's name. Each comes
+// with the sentence that shows what the mistake looks like on paper — which, on the plain key, is
+// kept only where it too is the same for every operation ("one less than the correct difference:
+// 62 − 27 written as 34" is no description of a mistake in an addition).
+export async function mistakeBook(): Promise<Record<string, Mistake>> {
+  const rows = await sql<{ key: string; name: string; description: string | null }[]>`
+    select code || '@' || op as key, name, description from misconception
+    union all
+    select code, min(name), case when count(distinct description) = 1 then min(description) end
+    from misconception group by code having count(distinct name) = 1`;
+  return Object.fromEntries(rows.map((r) => [r.key, { name: r.name, description: r.description }]));
+}
+
+export type QuestionPage = ItemRow & {
+  band: string;
+  level_words: string | null;
+  generator: string | null;
+  skill_set_version: number | null;
+  created_at: string;
+  children: number;
+  corrected_from_key: string | null;
+  replaced_by_key: string | null;
+  removed_by: string | null;
+  removed_note: string | null;
+  // The library worksheets it is on, in use (ADR 0026).
+  worksheets: string[];
+};
+
+// Everything about one question for its own page: the level's rule it was made to, where it came
+// from, how many children have had it — and, for one that was removed or reworded, who did it, why,
+// and which question took its place.
+export async function questionPage(key: string): Promise<QuestionPage | undefined> {
+  const rows = await sql<QuestionPage[]>`
+    select ${itemColumns()}, r.grade as band, l.looks_like as level_words,
+           i.generator, i.skill_set_version, i.created_at,
+           (select count(distinct x.child_id)::int from item_exposure x where x.item_id = i.id) as children,
+           (select o.item_key from item o where o.id = i.corrected_from) as corrected_from_key,
+           (select n.item_key from item n where n.corrected_from = i.id order by n.created_at desc limit 1)
+             as replaced_by_key,
+           f.actor as removed_by, f.note as removed_note,
+           coalesce((select array_agg(t.code order by t.code) from sheet_template t
+                     where t.source = 'library' and t.retired_at is null and i.id = any(t.item_ids)), '{}') as worksheets
+    from item i
+    join skill r on r.tenant_id = i.tenant_id and r.rung_code = i.rung_code
+    left join skill_level l on l.tenant_id = i.tenant_id and l.skill_code = i.skill_set_code and l.difficulty = i.difficulty
+    left join lateral (select actor, note from item_feedback
+                       where item_id = i.id and verdict = 'retire' order by created_at desc limit 1) f on true
+    where i.item_key = current_item_key(${key}) and i.source = 'generated'`; // a key it had before leads to it (ADR 0053)
+  return rows[0];
+}

@@ -1,0 +1,353 @@
+"""The team's taxonomy, case by case (step 8e onward).
+
+A case is a combination of tags. These tests hold the three things that make the count trustworthy: the
+tags measure what the document means (402 − 185 crosses one zero, 1000 − 476 two); every case accepts the
+document's own example; and cases the document keeps apart — in columns or in a line, a carry from the
+ones or from the tens, the box first or second — are kept apart here too.
+"""
+
+import json
+import os
+import pathlib
+
+import pytest
+
+from engine.assess import tags, taxonomy
+from engine.assess.items import Item
+from engine.core import db
+from engine.w1_bank import cases
+
+SEED = json.loads(
+    (pathlib.Path(__file__).resolve().parents[3] / "supabase/seed/taxonomy_cases.json").read_text()
+)
+CASES = {c["code"]: c for c in SEED["taxonomy_cases"]}
+
+
+def measure(fmt, spec, rung="R9"):
+    return tags.derive(Item("x", "x", rung, [], "P", fmt, False, "", spec, []))
+
+
+def two(op, a, b, layout="column"):
+    return measure(
+        "column_grid" if layout == "column" else "bare_sum", {"a": a, "b": b, "op": op, "layout": layout}
+    )
+
+
+@pytest.mark.parametrize(
+    "op,a,b,key,want",
+    [
+        ("-", 402, 185, "exchange_zeros", 1),
+        ("-", 1000, 476, "exchange_zeros", 2),
+        ("-", 342, 7, "exchange_zeros", 0),
+        ("+", 208, 96, "carry_into_zero", "YES"),
+        ("+", 247, 315, "carry_into_zero", "NO"),
+        ("-", 1000, 999, "answer_digit_change", "-MULTIPLE"),
+        ("-", 44, 44, "answer_digit_change", "ZERO"),
+        ("-", 13, 7, "answer_digit_change", "-1"),
+        ("+", 96, 8, "answer_digit_change", "+1"),
+        ("+", 495, 505, "answer_zeros", "TRAILING"),
+        ("-", 705, 201, "answer_zeros", "INTERNAL"),
+        ("-", 342, 148, "knock_on", "YES"),
+        ("-", 742, 318, "knock_on", "NO"),
+        ("+", 608, 715, "regroup_at", "ONES+HUNDREDS"),
+        ("+", 61, 42, "regroup_at", "TENS"),
+        ("+", 456, 0, "zero_operand", "SECOND"),
+        ("+", 405, 302, "zeros_in", "BOTH"),
+        ("+", 347, 100, "round_operand", "POWER_OF_TEN"),
+        ("-", 503, 498, "difference_small", "YES"),
+        ("+", 7, 342, "operand_order", "SHORTER_FIRST"),
+        # §5.1: a carry cascades when it lands on a column whose own digits make 9, so that column carries
+        # only because of it. 99 + 28 carries twice but the tens would carry anyway; 609 + 715 carries apart.
+        ("+", 399, 4, "regroup_pattern", "CASCADING"),
+        ("+", 1999, 6, "regroup_pattern", "CASCADING"),
+        ("+", 391, 9, "regroup_pattern", "CASCADING"),
+        ("+", 4, 399, "regroup_pattern", "CASCADING"),
+        ("+", 99, 28, "regroup_pattern", "CONSECUTIVE"),
+        ("+", 678, 457, "regroup_pattern", "CONSECUTIVE"),
+        ("+", 609, 715, "regroup_pattern", "NON_ADJACENT"),
+        # §5.2: an exchange crosses a zero when the place it exchanges from shows 0 in the top number.
+        # 530 − 47 exchanges from 3 and from 5; the 0 it starts on is not crossed.
+        ("-", 402, 185, "regroup_pattern", "ACROSS_ZERO"),
+        ("-", 1000, 476, "regroup_pattern", "ACROSS_ZERO"),
+        ("-", 530, 47, "regroup_pattern", "CONSECUTIVE"),
+        ("-", 352, 178, "regroup_pattern", "CONSECUTIVE"),
+        # §5.2 highest-place reduction: the leading digit lends (105 − 97 = 8), not merely a small difference
+        ("-", 105, 97, "highest_place_reduced", "YES"),
+        ("-", 1000, 476, "highest_place_reduced", "YES"),
+        ("-", 76, 73, "highest_place_reduced", "NO"),
+        ("-", 1043, 1039, "highest_place_reduced", "NO"),
+    ],
+)
+def test_tags_measure_what_the_document_means(op, a, b, key, want):
+    assert two(op, a, b)[key] == want
+
+
+def test_tags_three_or_more_numbers_carry_the_largest_column_carry_and_their_lengths():
+    t = measure("column_grid", {"addends": [9, 8, 7, 6], "op": "+", "layout": "column"})
+    assert (t["carry_max"], t["num_operands"], t["digits_max"]) == (3, 4, 1)
+    line = measure("bare_sum", {"addends": [345, 27, 6], "op": "+", "layout": "horizontal"})
+    assert (line["presentation"], line["operand_order"], line["alignment_required"]) == (
+        "HORIZONTAL",
+        "MIXED",
+        "YES",
+    )
+
+
+def test_tags_a_missing_number_says_which_number_the_box_hides():
+    first = measure("missing_number", {"text": "□ + 5 = 12", "a": 7, "b": 5, "op": "+", "missing": "a"})
+    assert (first["unknown_position"], first["unknown_digits"]) == ("FIRST_OPERAND", 1)
+    read = measure("missing_number", {"text": "□ − 275 = 418"})
+    assert (read["operation"], read["unknown_position"], read["unknown_digits"]) == (
+        "SUB",
+        "FIRST_OPERAND",
+        3,
+    )
+
+
+def test_tags_a_missing_digit_says_where_the_box_is_and_what_the_numbers_do():
+    t = measure("missing_digit", {"a": "□7", "b": "25", "c": "62", "op": "+", "solved": {"a": 37, "b": 25}})
+    assert (t["missing_count"], t["missing_place"], t["missing_in"], t["regrouping"]) == (
+        1,
+        "TENS",
+        "FIRST",
+        "SINGLE",
+    )
+
+
+@pytest.mark.parametrize("code", sorted(CASES))
+def test_every_case_accepts_the_documents_own_example(code):
+    c = CASES[code]
+    ex = c["example"]
+    assert taxonomy.matches(c["match"], ex["fmt"], measure(ex["fmt"], ex["spec"])), c["example_text"]
+
+
+@pytest.mark.parametrize(
+    "one,other",
+    [
+        ("A01", "A03"),  # in columns, in a line
+        ("A19", "A21"),  # a carry from the ones, from the tens
+        ("A25", "A27"),  # the longer number first, the shorter first
+        ("A33", "A35"),  # a ripple that stays 3 digits, one that makes a new digit
+        ("A63", "A65"),  # a hundreds carry alone, the ones and tens
+        ("S20", "S21"),  # an exchange from the tens, across a zero
+        ("S42", "S43"),  # across one zero, across several
+        ("S13", "S14"),  # the answer 1 digit, the answer zero
+        ("M01", "M02"),  # the box second, the box first
+        ("M22", "M23"),  # the number taken away missing, the first number missing
+        ("W01", "W03"),  # the result unknown, the start unknown
+        ("X03", "X04"),  # a forgotten carry, a carry in the wrong column
+    ],
+)
+def test_twin_cases_the_document_keeps_apart_are_kept_apart(one, other):
+    for a, b in ((one, other), (other, one)):
+        ex = CASES[a]["example"]
+        assert not taxonomy.matches(CASES[b]["match"], ex["fmt"], measure(ex["fmt"], ex["spec"])), (
+            f"{a}'s example is also {b}"
+        )
+
+
+def test_matches_reads_lists_ranges_and_alternatives():
+    t = {"operation": "ADD", "digits_max": 4}
+    assert taxonomy.matches({"operation": ["ADD", "SUB"], "digits_max": {"gte": 4}}, "bare_sum", t)
+    assert not taxonomy.matches({"digits_max": {"lte": 3}}, "bare_sum", t)
+    assert taxonomy.matches([{"fmt": "column_grid"}, {"fmt": "bare_sum"}], "bare_sum", t)
+    assert not taxonomy.matches({"regroup_at": "ONES"}, "bare_sum", t)  # a tag it does not carry fails
+
+
+def test_a_case_narrowing_a_list_its_skill_allows_keeps_the_values_both_allow():
+    """DR10's ÷ 10, 100 or 1000 inside DIV.TENS's six kinds of place value is ÷ 10, 100 or 1000 (goals/md3a): two lists
+    keep the values both allow, and refuse only when they share none."""
+    kinds = ["X10", "X100", "X1000", "MULTIPLE_OF_TEN_ONE", "MULTIPLE_OF_HUNDRED_ONE", "MULTIPLE_OF_TEN_BOTH"]
+    got = taxonomy.within({"place_value_factor": ["X10", "X100", "X1000"]}, {"place_value_factor": kinds})
+    assert got["place_value_factor"] == ["X10", "X100", "X1000"]
+    assert taxonomy.within({"remainder": ["SOME", "LARGEST"]}, {"remainder": ["NONE", "SOME"]})[
+        "remainder"
+    ] == ["SOME"]
+    with pytest.raises(ValueError):
+        taxonomy.within({"remainder": ["SOME", "LARGEST"]}, {"remainder": ["NONE"]})
+
+
+def test_a_case_within_a_skills_shape_holds_only_questions_of_that_shape():
+    """A skill is one operation and one digit shape (goals/s13-levels-by-taxonomy.yaml): a case that does not
+    fix the digits — a story, a forgotten carry — is that case *on this skill's numbers* inside the skill."""
+    shape = {"operation": "ADD", "num_operands": 2, "operand_1_digits": 2, "operand_2_digits": 2}
+    story = {"fmt": "word_1step", "structure": "JOIN_RESULT"}
+    inside = taxonomy.within(story, shape)
+    two = {
+        "operation": "ADD",
+        "num_operands": 2,
+        "operand_1_digits": 2,
+        "operand_2_digits": 2,
+        "structure": "JOIN_RESULT",
+    }
+    three = dict(two, operand_1_digits=3)
+    assert taxonomy.matches(inside, "word_1step", two)
+    assert not taxonomy.matches(inside, "word_1step", three)
+    assert taxonomy.within([story, {"fmt": "bare_sum"}], shape)[1]["operand_2_digits"] == 2
+    assert taxonomy.within(story, None) == story
+    # a case that fixes a digit the shape contradicts can never be on this skill: said, not silently dropped
+    with pytest.raises(ValueError, match="operand_1_digits"):
+        taxonomy.within({"operand_1_digits": 3}, shape)
+    with pytest.raises(ValueError, match="operand_1_digits"):
+        taxonomy.within({"operand_1_digits": {"gte": 3}}, shape)
+    # the narrower condition wins where it satisfies the other: 4 digits inside "4 or more", 3 numbers in "3 or more"
+    assert taxonomy.within({"digits_max": {"gte": 4}}, {"digits_max": 4})["digits_max"] == 4
+    assert taxonomy.within({"num_operands": 3}, {"num_operands": {"gte": 3}})["num_operands"] == 3
+    assert taxonomy.within({"num_operands": {"gte": 4}}, {"num_operands": {"gte": 3}})["num_operands"] == {
+        "gte": 4
+    }
+    with pytest.raises(ValueError):
+        taxonomy.within({"digits_max": {"lte": 2}}, {"digits_max": {"gte": 3}})
+
+
+def test_a_level_with_a_shape_refuses_a_question_of_another_shape_even_when_it_is_one_of_its_cases():
+    from engine.assess import verify
+
+    check = {"within": {"operation": "ADD", "operand_1_digits": 2, "operand_2_digits": 2}, "cases": ["W01"]}
+    matches = {"W01": {"fmt": "word_1step", "structure": "JOIN_RESULT"}}
+    ok = {"operation": "ADD", "operand_1_digits": 2, "operand_2_digits": 2, "structure": "JOIN_RESULT"}
+    assert verify.dimension_problems(ok, check, "word_1step", matches) == []
+    assert verify.dimension_problems(dict(ok, operand_1_digits=3), check, "word_1step", matches) != []
+
+
+@pytest.fixture
+def conn():
+    # CI has no database: the tests that need one skip there, the pure ones above still run
+    if not os.getenv("DATABASE_URL"):
+        pytest.skip("needs DATABASE_URL (see .env.example)")
+    with db.connect() as c:
+        yield c
+        c.rollback()
+
+
+def test_count_reports_every_case_with_its_state(conn):
+    rows = cases.count(conn)
+    assert len(rows) == len(CASES)
+    assert {r["state"] for r in rows} <= {"covered", "thin", "missing"}
+    assert all(r["n"] >= r["min_items"] for r in rows if r["state"] == "covered")
+
+
+# ---------------------------------------------------------------- 8f: a level made of cases
+
+
+def test_level_draws_the_same_number_from_each_case_and_every_question_is_its_case():
+    import random
+
+    from engine.assess import draw
+
+    check = {"cases": ["A19", "A21", "S20", "S21"]}
+    got = draw.level(random.Random(3), check, {c: CASES[c]["match"] for c in check["cases"]}, "R9", 40)
+    assert len(got) == 40
+    per = {c: [it for code, it in got if code == c] for c in check["cases"]}
+    assert {c: len(v) for c, v in per.items()} == {c: 10 for c in check["cases"]}
+    for code, it in got:
+        assert taxonomy.matches(CASES[code]["match"], it.fmt, tags.derive(it)), (code, it.spec)
+
+
+def test_level_a_case_that_does_not_fix_the_layout_prints_half_in_columns_half_in_a_line():
+    import random
+
+    from engine.assess import draw
+
+    got = draw.level(random.Random(5), {"cases": ["P02"]}, {"P02": CASES["P02"]["match"]}, "R9", 20)
+    layouts = [it.fmt for _, it in got]
+    assert layouts.count("column_grid") == layouts.count("bare_sum") == 10
+
+
+def test_level_keeps_inside_its_bounds_and_away_from_round_numbers_unless_the_case_is_about_zeros():
+    import random
+
+    from engine.assess import draw
+
+    got = draw.level(
+        random.Random(9),
+        {"cases": ["A01", "A03"], "max_total": 5},
+        {c: CASES[c]["match"] for c in ("A01", "A03")},
+        "R1",
+        12,
+    )
+    assert got and all(it.spec["a"] + it.spec["b"] <= 5 for _, it in got)
+    tens = draw.level(random.Random(9), {"cases": ["A19"]}, {"A19": CASES["A19"]["match"]}, "R5", 60)
+    assert all(it.spec["a"] % 10 and it.spec["b"] % 10 for _, it in tens)
+    zeros = draw.level(random.Random(9), {"cases": ["SZ6"]}, {"SZ6": CASES["SZ6"]["match"]}, "R10", 12)
+    assert len(zeros) == 12  # 1000 − 476 needs a round top number, and the case is about zeros
+
+
+def test_level_with_quotas_draws_each_case_its_own_shortfall_and_spills_only_what_the_level_needs():
+    import random
+
+    from engine.assess import draw
+
+    matches = {c: CASES[c]["match"] for c in ("S01", "S03")}
+    # 7 − 7 has only so many; the level already holds its target, so nothing spills onto S01
+    full = draw.level(
+        random.Random(4), {"cases": ["S01", "S03"]}, matches, "R2", 0, quotas={"S01": 0, "S03": 30}
+    )
+    assert full and {code for code, _ in full} == {"S03"} and len(full) < 30
+    # the level is 10 short: S01 gets its 5, S03 all it has, and nothing is thrown away to make 10
+    short = draw.level(
+        random.Random(4), {"cases": ["S01", "S03"]}, matches, "R2", 10, quotas={"S01": 5, "S03": 30}
+    )
+    per = {c: sum(code == c for code, _ in short) for c in ("S01", "S03")}
+    assert per == {"S01": 5, "S03": len(full)}
+
+
+def test_top_up_a_second_time_adds_nothing_when_a_case_has_run_out(conn):
+    from engine.w1_bank import refill
+
+    before = conn.execute("select difficulty from skill where code = 'SUB.3D3D'").fetchone()["difficulty"]
+    # 507 − 8 has hundreds of numbers left; 7 − 7 has nine, all already in the bank
+    level = {"words": before["Easy"]["words"], "check": {"cases": ["S20", "S03"]}}
+    conn.execute(
+        "update skill set difficulty = %s where code = 'SUB.3D3D'",
+        (json.dumps(dict(before, Easy=level)),),
+    )
+    total = conn.execute(
+        "select count(*) as n from item where status = 'active' and skill_set_code = 'SUB.3D3D'"
+        " and difficulty = 'Easy'"
+    ).fetchone()["n"]
+    first = refill.top_up(conn, "SUB.3D3D", "Easy", total + 40)
+    assert first >= 40
+    assert refill.top_up(conn, "SUB.3D3D", "Easy", total + 40) == 0
+
+
+def test_fill_cases_fills_a_level_evenly_and_says_which_case_made_each_question(conn):
+    from engine.w1_bank import refill
+
+    before = conn.execute("select difficulty from skill where code = 'ADD.2D2D'").fetchone()["difficulty"]
+    level = dict(before["Easy"], check={"cases": ["A10", "A11", "A12", "A13"]})
+    conn.execute(
+        "update skill set difficulty = %s where code = 'ADD.2D2D'",
+        (json.dumps(dict(before, Easy=level)),),
+    )
+    counts, per_case, items = refill.fill_cases(conn, "ADD.2D2D", "Easy", 20)
+    assert counts["accepted"] == 20 and per_case == {"A10": 5, "A11": 5, "A12": 5, "A13": 5}
+    stored = conn.execute(
+        "select generator, fmt, tags, skill_codes from item where item_key = any(%s)",
+        ([it.item_id for it in items],),
+    ).fetchall()
+    assert len(stored) == 20
+    for r in stored:
+        assert taxonomy.matches(CASES[r["generator"][5:]]["match"], r["fmt"], r["tags"])
+        assert list(r["skill_codes"]) == ["NUM.OPS.01"]
+
+
+def test_every_question_names_the_taxonomy_cases_it_is_and_the_count_agrees(conn):
+    from engine.w1_bank import labels
+
+    labels.relabel(conn)
+    assert [m for m in labels.mislabelled(conn) if "taxonomy cases" in m] == []
+    stored = {
+        r["code"]: r["n"]
+        for r in conn.execute(
+            "select x as code, count(*) as n from item, unnest(case_codes) x"
+            " where status = 'active' and skill_set_code is not null group by x"
+        )
+    }
+    assert {r["code"]: r["n"] for r in cases.count(conn)} == {c: stored.get(c, 0) for c in CASES}
+
+
+def test_a_question_is_every_case_its_tags_satisfy():
+    t = two("+", 399, 4)
+    got = cases.of("column_grid", t, {c: CASES[c]["match"] for c in ("P06", "A33", "A34", "S20")})
+    assert got == ["A33", "P06"]

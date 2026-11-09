@@ -1,0 +1,12 @@
+{
+ "ok": false,
+ "passed": [],
+ "failed": [
+  "1 every table listed as child data or school-wide, school-wide with a one-line reason, list covers the database",
+  "3 per group on every child-data table: own class only, everything sees all, no identity sees none",
+  "4 a new table with no access_table row fails: apply_conventions() raises naming it, coverage flags it",
+  "5 browser and speed tests not deleted, skipped or weakened; the CI test user is in the everything group",
+  "6 engine unaffected: engine_all on every table, engine privileges unchanged, no app_all, views invoker, engine tests not weakened"
+ ],
+ "ran_at": "2026-11-08T11:15:33+00:00"
+}
