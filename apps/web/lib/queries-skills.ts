@@ -49,16 +49,16 @@ export type WaysRow = {
 export async function skillWays(code: string): Promise<WaysRow[]> {
   return sql<WaysRow[]>`
     select q.code, q.words, array_agg(l.difficulty order by d.ord) as levels,
-           'open_response' = any(q.marked) as open, a.approved_by as by, a.approved_at as at,
+           'open_response' = any(q.marked) as open, a.first_by as by, a.first_at as at,
            coalesce(array_agg(l.difficulty order by d.ord) filter (where k.stopped), '{}') as stopped
     from skill_level_question_type l
     join question_type q on q.tenant_id = l.tenant_id and q.code = l.question_type
     join difficulty d on d.tenant_id = l.tenant_id and d.code = l.difficulty
-    left join question_type_approval a on a.tenant_id = q.tenant_id and a.question_type = q.code
+    left join approval_list a on a.tenant_id = q.tenant_id and a.kind = 'question_type' and a.target = q.code
     left join kind_stopped k on k.tenant_id = l.tenant_id and k.skill_code = l.skill_code
       and k.difficulty = l.difficulty and k.question_type = l.question_type
     where l.skill_code = ${code}
-    group by q.code, q.words, q.marked, a.approved_by, a.approved_at
+    group by q.code, q.words, q.marked, a.first_by, a.first_at
     order by min(d.ord), q.code`;
 }
 

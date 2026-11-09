@@ -78,7 +78,8 @@ def test_every_row_of_the_seed_that_a_table_can_hold_is_loaded_and_loading_twice
         == 115
     )
     assert one(
-        conn, "select count(*) from question_type_approval where question_type like 'ENG.%'"
+        conn,
+        "select count(*) from approval_list where kind = 'question_type' and target like 'ENG.%' and first_by is not null",
     ) == 0 or os.getenv("ENG_APPROVED_ON_COPY")
 
 

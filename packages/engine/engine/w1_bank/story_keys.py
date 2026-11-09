@@ -73,7 +73,8 @@ def rekey(conn) -> dict[str, Any]:
             )
             if taken and r["status"] == "active":
                 conn.execute(
-                    "insert into item_feedback (tenant_id, item_id, actor, verdict, note) values (%s,%s,%s,'retire',%s)",
+                    "insert into approval (tenant_id, kind, target, decision, by, reason)"
+                    " values (%s, 'item', %s::text, 'retire', %s, %s)",
                     (
                         r["tenant_id"],
                         r["id"],

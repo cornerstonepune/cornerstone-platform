@@ -170,9 +170,9 @@ def flag(conn, item_key, actor, note, verdict="retire"):
     ).fetchone()
     if not row:
         raise ValueError(f"no item {item_key!r}")
-    conn.execute(
-        "insert into item_feedback (tenant_id, item_id, actor, verdict, note) values (%s,%s,%s,%s,%s)",
-        (row["tenant_id"], row["id"], actor, verdict, note),
+    conn.execute(  # a flag is an approval row of the question (CP-27); the database retires it on `retire`
+        "insert into approval (tenant_id, kind, target, decision, by, reason) values (%s, 'item', %s::text, %s, %s, %s)",
+        (row["tenant_id"], row["id"], verdict, actor, note if note.strip() else None),
     )
     return conn.execute("select status from item where id = %s", (row["id"],)).fetchone()["status"]
 

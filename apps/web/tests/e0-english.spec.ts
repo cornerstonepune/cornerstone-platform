@@ -115,7 +115,8 @@ test("an educator reads an English skill's levels, kinds and mistakes and approv
   await ways.locator(`tr[data-way="${way.code}"]`).getByRole("button", { name: `Approve “${way.words}”` }).click();
   await expect(page.getByText(`Approved “${way.words}”, in your name.`)).toBeVisible();
   await expect(ways.locator(`tr[data-way="${way.code}"]`)).toContainText(`Approved · ${EDUCATOR.name}`);
-  const [a] = await sql<{ by: string; at: Date }[]>`select approved_by as by, approved_at as at from question_type_approval where question_type = ${way.code}`;
+  const [a] = await sql<{ by: string; at: Date }[]>`
+    select first_by as by, first_at as at from approval_list where kind = 'question_type' and target = ${way.code}`;
   expect(a.by).toBe(EDUCATOR.name);
   expect(Date.now() - a.at.getTime()).toBeLessThan(10 * 60_000);
   await shot(page, "3-approved");

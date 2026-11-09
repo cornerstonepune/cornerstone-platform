@@ -278,8 +278,9 @@ export async function questionPage(key: string): Promise<QuestionPage | undefine
     from item i
     join skill r on r.tenant_id = i.tenant_id and r.rung_code = i.rung_code
     left join skill_level l on l.tenant_id = i.tenant_id and l.skill_code = i.skill_set_code and l.difficulty = i.difficulty
-    left join lateral (select actor, note from item_feedback
-                       where item_id = i.id and verdict = 'retire' order by created_at desc limit 1) f on true
+    left join lateral (select by as actor, coalesce(reason, '') as note from approval
+                       where tenant_id = i.tenant_id and kind = 'item' and target = i.id::text and decision = 'retire'
+                       order by created_at desc, seq desc limit 1) f on true
     where i.item_key = current_item_key(${key}) and i.source = 'generated'`; // a key it had before leads to it (ADR 0053)
   return rows[0];
 }

@@ -32,8 +32,8 @@ def follow(conn, tenant, paper, ids, keys):
         except psycopg.errors.ForeignKeyViolation:
             pass
         conn.execute(
-            "insert into item_feedback (tenant_id, item_id, actor, verdict, note)"
-            " select %s, %s, %s, 'retire', %s where exists (select 1 from item where id = %s and status = 'active')",
+            "insert into approval (tenant_id, kind, target, decision, by, reason)"
+            " select %s, 'item', %s::text, 'retire', %s, %s where exists (select 1 from item where id = %s and status = 'active')",
             (tenant, r["id"], ACTOR, f"no longer a question of {paper['code']} as its file says", r["id"]),
         )
         home = rungs.get(re.sub(r"\D+$", "", r["item_key"][len(prefix) :]), set())

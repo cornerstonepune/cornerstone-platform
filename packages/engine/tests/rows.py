@@ -118,8 +118,21 @@ def data_steps(migration):
     naming it names today's `skill`); what those tests prove — running the migration's rows again changes nothing — is
     these steps, in their order."""
     step = r"^do \$\$.*?^end \$\$;|^(?:update|insert into|delete from)\b.*?;[ \t]*$"
-    steps = "\n".join(m.group(0) for m in re.finditer(step, migration.read_text(), re.S | re.M))
+    steps = "\n".join(
+        m.group(0)
+        for m in re.finditer(step, migration.read_text(), re.S | re.M)
+        if not _grants_only(m.group(0))
+    )
     return re.sub(r"\bskill_set\b", "skill", steps)
+
+
+def _grants_only(block):
+    """A `do` block that only grants or revokes (when a role exists) moves no row, so it is no data step; it can also name
+    a table a later migration retired (CP-27 moved `question_type_approval` into `approval`)."""
+    inner = re.sub(r"^do \$\$\s*begin|end \$\$;$", "", block.strip(), flags=re.S)
+    guard = r"^(?:if exists \(select from pg_roles where rolname = '\w+'\) then|end if)\s*"
+    said = [re.sub(guard, "", x.strip()) for x in inner.split(";") if x.strip()]
+    return all(not x or re.match(r"(?:grant|revoke)\b", x) for x in said)
 
 
 def forget_paper(conn, paper):
@@ -162,24 +175,24 @@ def forget_paper(conn, paper):
 
 
 # Approvals as a test needs them (CP-27 group 3): the one place that knows where a question type's approval and a
-# question's retirement are kept, so a later step that moves them changes these and no test.
+# question's retirement are kept, so a later step that moves them changes these and no test. Both are rows of the one
+# approval list (`approval`, never edited): a type taken back is a `withdrawn` row, rolled back with the test.
 
 
 def a_waiting_type(conn, code):
     """The question type `code` as a new one is: not approved. Rolled back with the test."""
-    conn.execute("delete from question_type_approval where question_type = %s", (code,))
-
-
-def no_type_approved(conn):
-    """No question type approved, as a school's database is before its first approval. Rolled back with the test."""
-    conn.execute("delete from question_type_approval")
+    conn.execute(
+        "insert into approval (tenant_id, kind, target, decision, by) select tenant_id, kind, target, 'withdrawn',"
+        " 'a test' from approval_list where kind = 'question_type' and target = %s and first_by is not null",
+        (code,),
+    )
 
 
 def an_approved_type(conn, code, by):
     """The question type `code` approved by `by`, unless it already is."""
     conn.execute(
-        "insert into question_type_approval (tenant_id, question_type, approved_by) select tenant_id, code, %s"
-        " from question_type where code = %s on conflict do nothing",
+        "insert into approval (tenant_id, kind, target, decision, by) select tenant_id, kind, target, 'approved', %s"
+        " from approval_list where kind = 'question_type' and target = %s and first_by is null",
         (by, code),
     )
 
@@ -187,9 +200,34 @@ def an_approved_type(conn, code, by):
 def a_retired_question(conn, item, by, note=""):
     """The question `item` flagged to retire by `by`, with `note`: the database retires it, as a person's flag does."""
     conn.execute(
-        "insert into item_feedback (tenant_id, item_id, actor, verdict, note)"
-        " select tenant_id, id, %s, 'retire', %s from item where id = %s",
+        "insert into approval (tenant_id, kind, target, decision, by, reason)"
+        " select tenant_id, 'item', id::text, 'retire', %s, nullif(btrim(%s), '') from item where id = %s",
         (by, note, item),
+    )
+
+
+def approvals_so_far(conn):
+    """Where the one approval list stands: pass it to `forget_approvals` to take back what a committed test added."""
+    return conn.execute("select coalesce(max(seq), 0) as n from approval").fetchone()["n"]
+
+
+def forget_approvals(conn, since):
+    """Take out the approval rows written since `approvals_so_far` gave `since`, for a test that had to commit a level's
+    or a report's approval and then cleared it (each writes a row of the list, which is never edited, so its rule is off
+    for this transaction, as `forget_paper` does). The caller commits."""
+    conn.execute("set local session_replication_role = replica")
+    conn.execute("delete from approval where seq > %s", (since,))
+    conn.execute("set local session_replication_role = origin")
+
+
+def a_level_looked_at(conn, skill, level, scope_kind, scope, assessed, secure, by):
+    """ "I've looked at this" on a level suggested for review, for a grade or a class, on the counts it was looked at
+    on: as the website records it (`recordLookedAt`), a row of the one approval list."""
+    conn.execute(
+        "insert into approval (tenant_id, kind, target, decision, by, detail)"
+        " values (%s, 'calibration', concat_ws(' ', %s::text, %s::text, %s::text, %s::text), 'looked_at', %s,"
+        " (select to_jsonb(c) from (select %s::int as assessed, %s::int as secure) c))",
+        (tenant(conn), skill, level, scope_kind, scope, by, assessed, secure),
     )
 
 

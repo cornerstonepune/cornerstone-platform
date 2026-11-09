@@ -2884,7 +2884,7 @@
       "capture": [],
       "main": "Read and approve the first",
       "next": "Curriculum",
-      "data": "skill.level_approved, skill_level, calibration_review",
+      "data": "skill.level_approved, skill_level, approval (kind calibration)",
       "empty": "Nothing to approve",
       "phone": "the table scrolls sideways in its own box",
       "folds": [
