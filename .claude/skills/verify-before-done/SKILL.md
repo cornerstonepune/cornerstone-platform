@@ -17,6 +17,9 @@ description: Use before saying done, or checking a task's done-when.
 - Runtime files (`.claude/autoharness/`, `*.ledger.jsonl`, `*.sidecar.json`) are not yours to commit. Say so in one line.
 - A check a builder or subagent reports is their claim. Write "the builder reports PASS; I have not run it", or run the check yourself. Never write "checks pass" on someone else's word.
 - If the RTK hook rewrote a Bash input and the classifier denies it, reissue that exact input once. If denied again, report it and stop.
+- A fix you describe is a claim until the working tree shows it. Before reporting a fix, grep or read the exact changed line, and check each behaviour you name (exit codes, error paths, what is committed) against code or a run. A green proof run does not cover a behaviour no proof checks: a verifier found a named command that still exited 0 after the fix was reported.
+- Tests gated on `DATABASE_URL` skip silently when it is unset. Export it (a local Postgres) and read the pass count, not just the exit status, before reporting tests run.
+- A formatter run (`ruff format`, `ruff check --fix`) or any command that reports "modified a file you previously read" invalidates your last read. Read the file again before the next edit, or the old text will not match.
 
 ## Checking a roadmap task against its done-when
 - Copy the done-when verbatim, split it into numbered clauses, and give each clause one verdict: MET, PARTLY, NOT MET or CANNOT VERIFY HERE, citing file:line, a migration name, or a commit sha with its PR number.
