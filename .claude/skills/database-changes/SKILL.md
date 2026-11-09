@@ -13,7 +13,6 @@ Make each schema change one additive numbered migration in `supabase/migrations/
 - Every new base table needs `created_at` and `updated_at`. `internal.apply_conventions()` sets `updated_at` on every public table, so an UPDATE on a table without it errors.
 - Default privileges already give `app_engine` select, insert, update and delete, and `app_web` select, on new public tables. To withhold a privilege, add an explicit `revoke` inside the `if exists (select from pg_roles ...)` guard the neighbouring migration uses. A grant line alone adds nothing.
 - A new constraint means regenerating `packages/engine/engine/checks/rules.json` with `engine live rules --write`, or `tests/test_rules.py` fails.
-- Changing a seeded default (a value a migration inserts into `config` or another seed table): first grep `specs/*/proofs` for the old value. A locked proof that asserts it cannot be changed without unlocking the spec; a value no proof asserts can change. Then the migration header and the seed description cite the decision that set the new value (for example `D-072`) and drop the word "placeholder".
 - A new command group lives in `packages/engine/engine/w2_print/cli_*.py` as a Typer app that `cli.py` mounts with `add_typer`, and its commands are listed in N4's `commands` in `workflows.json`. `cli.py` sits near its 400-line ceiling; do not grow it.
 
 ## Access and row-level security
