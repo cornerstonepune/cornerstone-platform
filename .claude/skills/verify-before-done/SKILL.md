@@ -1,7 +1,7 @@
 ---
 name: verify-before-done
 category: verification
-description: Use when calling work done, a fast-checks gate blocks finishing, or checking a roadmap task against its done-when.
+description: Use when calling work done, a fast-checks or done-gate block stops finishing, or a roadmap task is checked against its done-when.
 ---
 
 # Verify before calling work done
@@ -13,7 +13,7 @@ description: Use when calling work done, a fast-checks gate blocks finishing, or
 - Run `.claude/athena/fast-checks.sh` after your last edit, including edits that only touch `specs/`; the gate counts any edit. Wait for it; do not end the turn while it runs.
 - Long runs: write output to a file, use `set -o pipefail`, and read the file. Piping into `tail` shows nothing until the process exits.
 - A failure is fixed at its cause (CLAUDE.md rule 11). Layout drift from `workflows.json` means fixing the map or the code against `packages/engine/tests/test_layout.py`; never raise a limit or loosen a rule.
-- A Bash call a hook rewrote and then denied: follow the hook section of the `tool-result-handling` skill.
+- A Bash call a hook rewrote and then denied: follow the section on those calls in the `tool-result-directives` skill.
 - Setup steps and runtime-file noise are in `references/gate-details.md`.
 - Say "passes" only when the output you read shows it.
 
