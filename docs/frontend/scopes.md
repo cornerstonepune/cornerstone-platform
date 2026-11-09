@@ -11,18 +11,21 @@ Tier 2. Waits for: nothing (type and colours decided 9 Nov). Specification: docs
 
 ### What
 
-One navigation and one source of colour, type and space for the whole site. tokens.css generated from tokens.json; shadcn/ui primitives restyled by the tokens; AppFrame (top bar, trail, rail) replacing PageShell, TopBar and the K2 side menu; and the inventory test that reads screens.json and drives every screen like a person.
+One navigation and one source of colour, type and space for the whole site. tokens.css generated from tokens.json; shadcn/ui initialised (it is not yet: `components/ui/` does not exist) and styled by the tokens; the journey-test harness the Athena loop demands; AppFrame (top bar, trail, rail) replacing PageShell, TopBar and the K2 side menu; and the inventory test that reads screens.json and drives every screen like a person.
 
 ### Done when
 
 1. `apps/web/design-system/tokens.json` is byte-identical to `docs/frontend/tokens.json`, and `apps/web/design-system/tokens.css` is produced from it by `apps/web/scripts/tokens.mjs`; a test regenerates and diffs, so the two cannot drift.
 2. No hex colour literal remains in `apps/web/app`, `apps/web/components` or `apps/web/lib` outside `tokens.css` (a grep test; the count today is the baseline and must be 0 at the end of this slice).
 3. Every text-on-fill and border-on-ground pair named in tokens.json's usage notes measures at least 4.5:1 (text) or 3:1 (borders, icons) in both themes by the WCAG formula; the script lives in the suite and its table is committed as `docs/design-tokens-contrast.md`.
-4. shadcn/ui is initialised at the pinned version into `components/ui/` with Button, Badge, Table, Tabs, Collapsible, Dialog, Sheet, Select, Tooltip, Progress and Command; each file references `var(--` and no hex; the stock look is gone (screenshot baseline).
-5. `lib/menu.ts` GROUPS are exactly Today, Timetable, Children, Setup; `u53-the-menu.spec.ts` passes against them; `components/educator/shell-nav.tsx` and `lib/educator/menu.ts` are deleted; every K2 page renders inside AppFrame.
-6. `tests/u70-inventory.spec.ts` exists, reads `docs/frontend/screens.json`, and runs the ten generic checks for every screen whose `exists` is not `no`, as educator and as coordinator, at 1440 and 400; dynamic routes take a concrete address from `tests/inventory-fixtures.ts`, built from the test's own rows; screens with `exists: "no"` are `test.fixme` and counted in the report.
-7. The computed font-family first names across every page are within {Source Serif 4, Source Sans 3} (the R4 check adapted); both load from Google Fonts with `display=swap`.
-8. `bin/check`, `test_ux_rules.py`, `u51` and `screens.spec.ts` pass; `ux.frozen` in workflows.json has not grown.
+4. shadcn/ui is initialised (`npx shadcn@4.23.0 init`; `components/ui/` does not exist today) with Button, Badge, Table, Tabs, Collapsible, Dialog, Sheet, Select, Tooltip, Progress and Command; each file references `var(--` and no hex; the stock look is gone (screenshot baseline).
+5. `apps/web/e2e/athena-journey.ts` exists and at least one journey spec imports it (so `athena ui-ready` passes for the slice).
+6. `@axe-core/playwright` is a dependency of `apps/web` and the journey test runs axe on every step it visits.
+7. The inventory test accepts a filter, `SLICE=UI-3` (or `SCREEN=<id>`), and then opens only the screens that slice builds (screens.json `slices[].screens`); with no filter it runs every screen. A pull request runs its own slice's filter; the full inventory runs nightly and on the last slice (a CI job reads the slice id from the branch name). Tests run for criticality, not as a blanket.
+8. `lib/menu.ts` GROUPS are exactly Today, Timetable, Children, Setup; `u53-the-menu.spec.ts` passes against them; `components/educator/shell-nav.tsx` and `lib/educator/menu.ts` are deleted; every K2 page renders inside AppFrame.
+9. `tests/u70-inventory.spec.ts` exists, reads `docs/frontend/screens.json`, and runs the ten generic checks for every screen whose `exists` is not `no`, as educator and as coordinator, at 1440 and 400; dynamic routes take a concrete address from `tests/inventory-fixtures.ts`, built from the test's own rows; screens with `exists: "no"` are `test.fixme` and counted in the report.
+10. The computed font-family first names across every page are within {Source Serif 4, Source Sans 3} (the R4 check adapted); both load from Google Fonts with `display=swap`.
+11. `bin/check`, `test_ux_rules.py`, `u51` and `screens.spec.ts` pass; `ux.frozen` in workflows.json has not grown.
 
 ### Out of scope
 
@@ -65,36 +68,37 @@ Period, record, confirm, notes, children, class picture, child, activity, object
 2. Every old route listed under `folds` for these screens answers 308 to the new address (test).
 3. The journey `e2e/an-educators-tuesday.spec.ts` passes: Today → the lit period → Type the marks → a note written with one activity_observation per named child and none for a child not mentioned → Confirm → Class picture shows the change → the child → the skill → trail back to Today; axe at each step; at 1440 and 400.
 4. A correction from Notes writes a superseding activity_observation row and never updates the old one (database assertion).
-5. Every one of the 101 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
-6. the session's name: a period with no activity shows no capture controls and the words 'Nothing to record here'
-7. the session's name: the last-time bar's segments sum to the number of children named in the last session's observations
-8. the session's name: the steps fold is open on load and the others closed
-9. Record a note: Send writes exactly one educator_note with this session's id and nothing in activity_observation
-10. Record a note: at 400 px the Start button is the full width and at least 56 px tall
-11. Record a note: a denied microphone shows the typed path as the main action instead of an error
-12. Confirm what the reader heard: Confirm writes one activity_observation per marked child, none for an unmarked child, all with one confirmation_id
-13. Confirm what the reader heard: a changed or removed claim is kept as changed/removed in note_claim (reader accuracy)
-14. Confirm what the reader heard: no control confirms more than one note
-15. Confirm what the reader heard: a child's square is never red, whatever the mark
-16. Notes: a correction writes a superseding row with a reason and never updates the old one
-17. Notes: the coordinator sees every class, an educator their own (access fixture)
-18. Notes: a note left unconfirmed past 48 hours carries the red 'late' chip and sorts first
-19. Children: an educator with one class is taken straight to its picture; with several, picks; the coordinator picks from every class
-20. Class picture: an empty square's title reads 'not seen yet', never 'not secure'
-21. Class picture: no name or photo on any square (DOM scan)
-22. Class picture: the stack bar's counts equal the squares by state
-23. Class picture: the squares are in Sr. No. order, 10 per row at 1440, 8 at 400
-24. Where this child is: a paper's result and a voice note appear on one timeline in date order
-25. Where this child is: a correction shows as a new entry that names the entry it replaces
-26. Where this child is: no name on the page: Sr. No. only (DOM scan)
-27. Where this child is: the graph's node count equals the skills the child was seen on, and each node's state equals the table's
-28. the activity's name: a drafted part carries the 'drafted' badge until Keep, Edit or Send back; an educator sees the badge but not the three buttons
-29. the activity's name: every edit writes a curriculum_edit row with who
-30. the activity's name: a photo attaches to the activity, never to a child
-31. the objective's title: no number, percentage or state is shown for the objective itself (DOM scan)
-32. the skill's name: a prerequisite or next skill is shown only when its link is confirmed (a proposed link in the fixture does not appear)
-33. the skill's name: the spark's last value equals the grid's secure count
-34. the skill's name: the grid's squares equal the class's enrolment in Sr. No. order
+5. The period → note link: a note confirmed from a period carries that session's id, and the period page lists its notes. This line waits for CP-25 (to be scoped: `activity_observation.session_id` is free today); the slice starts and merges without it, and the line is proved when CP-25 lands.
+6. Every one of the 101 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
+7. the session's name: a period with no activity shows no capture controls and the words 'Nothing to record here'
+8. the session's name: the last-time bar's segments sum to the number of children named in the last session's observations
+9. the session's name: the steps fold is open on load and the others closed
+10. Record a note: Send writes exactly one educator_note with this session's id and nothing in activity_observation
+11. Record a note: at 400 px the Start button is the full width and at least 56 px tall
+12. Record a note: a denied microphone shows the typed path as the main action instead of an error
+13. Confirm what the reader heard: Confirm writes one activity_observation per marked child, none for an unmarked child, all with one confirmation_id
+14. Confirm what the reader heard: a changed or removed claim is kept as changed/removed in note_claim (reader accuracy)
+15. Confirm what the reader heard: no control confirms more than one note
+16. Confirm what the reader heard: a child's square is never red, whatever the mark
+17. Notes: a correction writes a superseding row with a reason and never updates the old one
+18. Notes: the coordinator sees every class, an educator their own (access fixture)
+19. Notes: a note left unconfirmed past 48 hours carries the red 'late' chip and sorts first
+20. Children: an educator with one class is taken straight to its picture; with several, picks; the coordinator picks from every class
+21. Class picture: an empty square's title reads 'not seen yet', never 'not secure'
+22. Class picture: no name or photo on any square (DOM scan)
+23. Class picture: the stack bar's counts equal the squares by state
+24. Class picture: the squares are in Sr. No. order, 10 per row at 1440, 8 at 400
+25. Where this child is: a paper's result and a voice note appear on one timeline in date order
+26. Where this child is: a correction shows as a new entry that names the entry it replaces
+27. Where this child is: no name on the page: Sr. No. only (DOM scan)
+28. Where this child is: the graph's node count equals the skills the child was seen on, and each node's state equals the table's
+29. the activity's name: a drafted part carries the 'drafted' badge until Keep, Edit or Send back; an educator sees the badge but not the three buttons
+30. the activity's name: every edit writes a curriculum_edit row with who
+31. the activity's name: a photo attaches to the activity, never to a child
+32. the objective's title: no number, percentage or state is shown for the objective itself (DOM scan)
+33. the skill's name: a prerequisite or next skill is shown only when its link is confirmed (a proposed link in the fixture does not appear)
+34. the skill's name: the spark's last value equals the grid's secure count
+35. the skill's name: the grid's squares equal the class's enrolment in Sr. No. order
 
 ### Out of scope
 
@@ -169,7 +173,7 @@ Approve, go live, draft, moves (UI-6). Materials (UI-9).
 
 ## UI-6: The fortnight's actions: fortnight, draft, moves
 
-Tier 2. Waits for: CP-6, CP-11, CP-12 and CP-21 merged. Specification: docs/frontend/SPEC.md; inventory: docs/frontend/screens.json; wireframes: (see docs/notes/frontend-landscape.md).
+Tier 2. Waits for: CP-6, CP-11, CP-12 and CP-22 merged. Specification: docs/frontend/SPEC.md; inventory: docs/frontend/screens.json; wireframes: (see docs/notes/frontend-landscape.md).
 
 ### What
 
@@ -264,3 +268,23 @@ The class's materials list for a fortnight, the school's list, the notes the sys
 ### Out of scope
 
 Inventory valuation.
+
+## UI-10: The as-built milestone document
+
+Tier 1. Waits for: UI-1 (it can be built early and re-run after every slice). Specification: docs/frontend/SPEC.md; inventory: docs/frontend/screens.json; wireframes: (see docs/notes/frontend-landscape.md).
+
+### What
+
+A script that generates docs/frontend/AS-BUILT.md from screens.json plus the last inventory-test run: the milestone document Nimish asked for, so he can see exactly what exists, what each screen's controls are, and what the checks reported. Every slice sets its screens' `exists` to `yes` in screens.json when its proofs pass, so the document is always true.
+
+### Done when
+
+1. `node docs/frontend/as-built.mjs` reads `docs/frontend/screens.json` and the inventory test's machine-readable report (`apps/web/test-results/inventory.json`, written by `u70-inventory.spec.ts`) and writes `docs/frontend/AS-BUILT.md`; it never edits screens.json.
+2. AS-BUILT.md lists every screen: its address, its group, who sees it, every control, whether it exists (yes, part, no), the slice that built it, and what each of the ten generic checks reported (passed, failed with the reason, or not run because the screen does not exist yet).
+3. AS-BUILT.md opens with counts: screens built of 33, controls built of the total, generic checks passed of those run, and the slices merged; a screen absent from the test report is shown as 'not run', never as passed.
+4. A test feeds the script a screens.json and a report with known results and asserts the exact numbers and lines in the output, including a failed check and a screen that does not exist.
+5. Every slice's scope includes the line 'the screens this slice builds have `exists: "yes"` in screens.json and AS-BUILT.md is regenerated in the same pull request'; the inventory test fails if a screen it can open is still marked `no`.
+
+### Out of scope
+
+Any screen or app code.

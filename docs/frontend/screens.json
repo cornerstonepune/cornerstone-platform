@@ -56,13 +56,16 @@
 
   "slices": [
     { "id": "UI-1", "title": "Tokens, frame and the inventory test", "tier": 2, "waits_for": "nothing (type and colours decided 9 Nov)",
-      "what": "One navigation and one source of colour, type and space for the whole site. tokens.css generated from tokens.json; shadcn/ui primitives restyled by the tokens; AppFrame (top bar, trail, rail) replacing PageShell, TopBar and the K2 side menu; and the inventory test that reads screens.json and drives every screen like a person.",
+      "what": "One navigation and one source of colour, type and space for the whole site. tokens.css generated from tokens.json; shadcn/ui initialised (it is not yet: `components/ui/` does not exist) and styled by the tokens; the journey-test harness the Athena loop demands; AppFrame (top bar, trail, rail) replacing PageShell, TopBar and the K2 side menu; and the inventory test that reads screens.json and drives every screen like a person.",
       "screens": [],
       "done_when": [
         "`apps/web/design-system/tokens.json` is byte-identical to `docs/frontend/tokens.json`, and `apps/web/design-system/tokens.css` is produced from it by `apps/web/scripts/tokens.mjs`; a test regenerates and diffs, so the two cannot drift.",
         "No hex colour literal remains in `apps/web/app`, `apps/web/components` or `apps/web/lib` outside `tokens.css` (a grep test; the count today is the baseline and must be 0 at the end of this slice).",
         "Every text-on-fill and border-on-ground pair named in tokens.json's usage notes measures at least 4.5:1 (text) or 3:1 (borders, icons) in both themes by the WCAG formula; the script lives in the suite and its table is committed as `docs/design-tokens-contrast.md`.",
-        "shadcn/ui is initialised at the pinned version into `components/ui/` with Button, Badge, Table, Tabs, Collapsible, Dialog, Sheet, Select, Tooltip, Progress and Command; each file references `var(--` and no hex; the stock look is gone (screenshot baseline).",
+        "shadcn/ui is initialised (`npx shadcn@4.23.0 init`; `components/ui/` does not exist today) with Button, Badge, Table, Tabs, Collapsible, Dialog, Sheet, Select, Tooltip, Progress and Command; each file references `var(--` and no hex; the stock look is gone (screenshot baseline).",
+        "`apps/web/e2e/athena-journey.ts` exists and at least one journey spec imports it (so `athena ui-ready` passes for the slice).",
+        "`@axe-core/playwright` is a dependency of `apps/web` and the journey test runs axe on every step it visits.",
+        "The inventory test accepts a filter, `SLICE=UI-3` (or `SCREEN=<id>`), and then opens only the screens that slice builds (screens.json `slices[].screens`); with no filter it runs every screen. A pull request runs its own slice's filter; the full inventory runs nightly and on the last slice (a CI job reads the slice id from the branch name). Tests run for criticality, not as a blanket.",
         "`lib/menu.ts` GROUPS are exactly Today, Timetable, Children, Setup; `u53-the-menu.spec.ts` passes against them; `components/educator/shell-nav.tsx` and `lib/educator/menu.ts` are deleted; every K2 page renders inside AppFrame.",
         "`tests/u70-inventory.spec.ts` exists, reads `docs/frontend/screens.json`, and runs the ten generic checks for every screen whose `exists` is not `no`, as educator and as coordinator, at 1440 and 400; dynamic routes take a concrete address from `tests/inventory-fixtures.ts`, built from the test's own rows; screens with `exists: \"no\"` are `test.fixme` and counted in the report.",
         "The computed font-family first names across every page are within {Source Serif 4, Source Sans 3} (the R4 check adapted); both load from Google Fonts with `display=swap`.",
@@ -90,7 +93,8 @@
         "Every screen of this slice passes the ten generic checks in `u70-inventory.spec.ts` (its `exists` set to `yes` in screens.json) and every element in its list behaves as its kind says.",
         "Every old route listed under `folds` for these screens answers 308 to the new address (test).",
         "The journey `e2e/an-educators-tuesday.spec.ts` passes: Today → the lit period → Type the marks → a note written with one activity_observation per named child and none for a child not mentioned → Confirm → Class picture shows the change → the child → the skill → trail back to Today; axe at each step; at 1440 and 400.",
-        "A correction from Notes writes a superseding activity_observation row and never updates the old one (database assertion)."
+        "A correction from Notes writes a superseding activity_observation row and never updates the old one (database assertion).",
+        "The period → note link: a note confirmed from a period carries that session's id, and the period page lists its notes. This line waits for CP-25 (to be scoped: `activity_observation.session_id` is free today); the slice starts and merges without it, and the line is proved when CP-25 lands."
       ],
       "out_of_scope": "Today (UI-7). Assessments (UI-4). The coordinator's actions (UI-6)." },
     { "id": "UI-4", "title": "Node pages: assessments", "tier": 2, "waits_for": "UI-2",
@@ -115,7 +119,7 @@
         "Search never returns on a name: the fixture's child names typed return 'Nothing found'; a Sr. No. in scope returns that child."
       ],
       "out_of_scope": "Approve, go live, draft, moves (UI-6). Materials (UI-9)." },
-    { "id": "UI-6", "title": "The fortnight's actions: fortnight, draft, moves", "tier": 2, "waits_for": "CP-6, CP-11, CP-12 and CP-21 merged",
+    { "id": "UI-6", "title": "The fortnight's actions: fortnight, draft, moves", "tier": 2, "waits_for": "CP-6, CP-11, CP-12 and CP-22 merged",
       "what": "The fortnight node with Approve and Go live, the draft from the rules with its unmet rules, and moves by hand with clashes accepted by the coordinator only.",
       "screens": ["fortnight", "draft", "moves"],
       "done_when": [
@@ -152,7 +156,18 @@
         "The screen passes the ten generic checks and every element behaves as its kind says.",
         "A line with no quantity shows the amber 'to confirm' chip; approval is possible only for the signed-in educator's own class (the other class's Approve is absent and refused)."
       ],
-      "out_of_scope": "Inventory valuation." }
+      "out_of_scope": "Inventory valuation." },
+    { "id": "UI-10", "title": "The as-built milestone document", "tier": 1, "waits_for": "UI-1 (it can be built early and re-run after every slice)",
+      "what": "A script that generates docs/frontend/AS-BUILT.md from screens.json plus the last inventory-test run: the milestone document Nimish asked for, so he can see exactly what exists, what each screen's controls are, and what the checks reported. Every slice sets its screens' `exists` to `yes` in screens.json when its proofs pass, so the document is always true.",
+      "screens": [],
+      "done_when": [
+        "`node docs/frontend/as-built.mjs` reads `docs/frontend/screens.json` and the inventory test's machine-readable report (`apps/web/test-results/inventory.json`, written by `u70-inventory.spec.ts`) and writes `docs/frontend/AS-BUILT.md`; it never edits screens.json.",
+        "AS-BUILT.md lists every screen: its address, its group, who sees it, every control, whether it exists (yes, part, no), the slice that built it, and what each of the ten generic checks reported (passed, failed with the reason, or not run because the screen does not exist yet).",
+        "AS-BUILT.md opens with counts: screens built of 33, controls built of the total, generic checks passed of those run, and the slices merged; a screen absent from the test report is shown as 'not run', never as passed.",
+        "A test feeds the script a screens.json and a report with known results and asserts the exact numbers and lines in the output, including a failed check and a screen that does not exist.",
+        "Every slice's scope includes the line 'the screens this slice builds have `exists: \"yes\"` in screens.json and AS-BUILT.md is regenerated in the same pull request'; the inventory test fails if a screen it can open is still marked `no`."
+      ],
+      "out_of_scope": "Any screen or app code." }
   ],
 
   "screens": [
@@ -178,7 +193,7 @@
       "folds": ["/today (What needs doing)", "/educator (K2 Today)"],
       "done_when": ["an educator sees only sessions of classes their grant names (the access fixture's second educator sees a different list)", "each tile's number equals the count of rows the tile opens", "the lit row is the session whose period contains the current time; before 08:30 none is lit"] },
 
-    { "id": "today-coordinator", "route": "/today", "group": "Today", "who": "coordinator", "phase": "Core", "backend": ["CP-6", "CP-12", "CP-21", "CP-10"], "exists": "no",
+    { "id": "today-coordinator", "route": "/today", "group": "Today", "who": "coordinator", "phase": "Core", "backend": ["CP-6", "CP-12", "CP-22", "CP-10"], "exists": "no",
       "eyebrow": "Tuesday 18-Nov · every class", "title": "Today, the school",
       "purpose": "What waits on you, each with its own button. Then the week ahead.",
       "blocks": [["AttentionStrip", "do now = clashes not accepted + notes unconfirmed past 48 h across classes; this week = drafts to approve, materials lines without quantity; done = sessions done of planned last week"], ["HeatGrid", "last week, class × day"], ["DataTable", "the waiting rows: clash, draft, late notes, sessions not done, materials; each row's own button"], ["Cards", "Next week (events from school_day and fortnight) · New activities next week (plan_entry not taught before) · Does the system have what it needs (activities with steps/levels, materials with quantities, consent on file)"]],
@@ -287,7 +302,7 @@
       "data": "pii.educator_note joined to activity_observation counts; note_status rows", "empty": "No notes yet this fortnight: link to Record", "phone": "cards",
       "done_when": ["a correction writes a superseding row with a reason and never updates the old one", "the coordinator sees every class, an educator their own (access fixture)", "a note left unconfirmed past 48 hours carries the red 'late' chip and sorts first"] },
 
-    { "id": "timetable", "route": "/timetable", "group": "Timetable", "who": "both", "phase": "Core", "backend": ["CP-21"], "exists": "part (/educator/week)",
+    { "id": "timetable", "route": "/timetable", "group": "Timetable", "who": "both", "phase": "Core", "backend": ["CP-22"], "exists": "part (/educator/week)",
       "eyebrow": "K2 Red", "title": "Timetable",
       "purpose": "The fortnight is the unit. Week A and week B, each period a block; a moved period is marked, a clash is red until the coordinator accepts it.",
       "blocks": [["FilterBar", "class (coordinator only) · Day / Week / Fortnight view · this / next fortnight"], ["FortnightGrid", "from timetable_slot in force + session overrides; subject colours; moved/clash outlines; a cell is the period's link"], ["Cards", "Fortnight 9: state · Materials for this fortnight"]],
@@ -310,7 +325,7 @@
       "folds": ["/educator (day)", "/educator/week"],
       "done_when": ["a hand move shows an amber outline and its details name who and why", "an educator never sees an accept-clash control; a clash cell is red for both roles", "the grid's cells equal the session rows for the day shown (count and names)"] },
 
-    { "id": "fortnight", "route": "/timetable/fortnight/[n]", "group": "Timetable", "who": "both", "phase": "Core", "backend": ["CP-6", "CP-21"], "exists": "no",
+    { "id": "fortnight", "route": "/timetable/fortnight/[n]", "group": "Timetable", "who": "both", "phase": "Core", "backend": ["CP-6", "CP-22"], "exists": "no",
       "eyebrow": "17-Nov to 28-Nov", "title": "Fortnight 9",
       "purpose": "Its state, its plan lines, and what changed when the draft went live. Frozen once it starts; a move after that is a hand move, kept with who made it.",
       "blocks": [["Stepper", "drafted · approved · live · frozen"], ["Cards", "State (chip + who/when) · Plan lines (plan_entry, each an activity link) · Hand moves (who, why, when)"], ["DataTable", "coordinator: what changed at go-live, session by session"], ["Form", "coordinator: Approve · Go live (main, one at a time)"]],
@@ -325,7 +340,7 @@
         { "t": "link", "label": "rail: Draft", "to": "draft", "roles": ["coordinator"] }
       ],
       "rail": ["The grid", "every activity in the plan", "Materials", "Draft (coordinator)"], "capture": [], "main": "Approve / Go live (coordinator) · Open the grid (educator)", "next": "Timetable",
-      "data": "fortnight + fortnight_cycle state (CP-6); plan_entry; session diffs at go-live (CP-21); approval ledger",
+      "data": "fortnight + fortnight_cycle state (CP-6); plan_entry; session diffs at go-live (CP-22); approval ledger",
       "empty": "No plan lines yet: link to the planner upload", "phone": "stepper wraps to two rows",
       "done_when": ["Approve and Go live exist for the 'everything' group only and their requests are refused for others", "a frozen fortnight shows no Approve, Go live or edit control", "the what-changed table lists every session the go-live updated, and nothing else"] },
 

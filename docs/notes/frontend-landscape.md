@@ -32,7 +32,7 @@ A new kind of thing is a new query and a new rail list, not a new layout. That i
 4. **Node pages, assessments:** Assessment (the stepper, the papers bar, each copy's row), Paper (the page, each answer
    right / wrong / blank / for you to judge). Today's four assessment pages fold into these two plus Today's rows.
 5. **Node pages, the coordinator:** Fortnight (approve, go live, what changed), Staff (sessions done, notes late, reader
-   accuracy; no ranking). Calls CP-6, CP-7, CP-11, CP-12, CP-21 as they merge.
+   accuracy; no ranking). Calls CP-6, CP-7, CP-11, CP-12, CP-22 as they merge.
 6. **Today**, both kinds, last, from the blocks and the queries that already exist.
 7. **Reports and the parent's page** when CP-19 is built (Next).
 
@@ -56,7 +56,7 @@ Steps 1 and 2 can start now; 3 can start now against the switched-on K2 pages; 5
 2. **Subject colours from the brand's materials** (Numeracy monsoon, Language bark, Arts haldi, fixed sand). Same file.
 3. **The assessment loop is rebuilt, not kept.** Recorded so no slice "preserves" the old pages.
 
-The build order above is superseded by the slices UI-1 to UI-9 in `docs/frontend/scopes.md`; the handover for the session
+The build order above is superseded by the slices UI-1 to UI-10 in `docs/frontend/scopes.md`; the handover for the session
 that builds is `docs/frontend/HANDOVER.md`.
 
 ## What was checked and what was not
