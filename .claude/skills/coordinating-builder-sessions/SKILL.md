@@ -16,7 +16,6 @@ Every brief repeats the process decisions the user has already made, in the brie
 - Tell builders to test with ids that differ. A fixture that gives two identifiers the same value hides a mismatch, and all tests pass while the feature is broken.
 - A message that returns "not found" means the session is gone or was never reachable. Check it with get-session; if it is gone, recreate it with the full brief and tell the user which one was replaced.
 - Commands that name a locked spec path together with a copy, move or remove word are refused by the guard. Brief builders to copy a locked spec with a single git show per file.
-- Before dispatching a proof-writer or builder, record the commit SHA of the scope text it will read, and put that SHA in the brief. If the source moves mid-run, do not restart on every push: ask the source's owner for a freeze, let the writer finish or stop it once, and restart only from a SHA the owner has confirmed as final.
 
 ## Checking the result
 - A builder's "all checks pass locally" is a claim to verify. Read the pushed branch and its check runs yourself before reporting.
