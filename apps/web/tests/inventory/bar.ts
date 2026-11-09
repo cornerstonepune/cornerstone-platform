@@ -1,6 +1,6 @@
 // The bar (`bar` in screens.json) is driven once per run, as the coordinator at 1440: each door opens its first screen from here and is
 // lit, search is a typeahead, acting as is a spoken switch, help opens the guide, sign out ends the session and lands on Sign in.
-import type { Browser } from "@playwright/test";
+import { expect, type Browser } from "@playwright/test";
 import { signedInAs } from "../inventory-fixtures";
 import type { Inventory } from "./load";
 
@@ -14,10 +14,11 @@ export async function driveBar(browser: Browser, inv: Inventory): Promise<string
     if (e.t === "link" && ["Today", "Timetable", "Children", "Setup"].includes(e.label)) {
       await bar.getByRole("navigation", { name: "Sections" }).getByRole("link", { name: new RegExp(`^${e.label}`) }).click();
       await page.locator("h1").first().waitFor();
-      if (!(await bar.locator(`[data-door][aria-current=page]`).filter({ hasText: e.label }).count())) out.push(`bar: after “${e.label}” the door is not lit`);
+      // the lit door follows the walk a moment after the page changes
+      await expect(bar.locator("[data-door][aria-current=page]").filter({ hasText: e.label }), `bar: after “${e.label}” the door is not lit`).toHaveCount(1).catch((x: Error) => out.push(x.message.split("\n")[0]));
     } else if (e.t === "link" && e.label === "?") {
       await bar.getByRole("link", { name: "Help" }).click();
-      if (!new URL(page.url()).pathname.startsWith("/guide")) out.push(`bar: “?” opened ${page.url()}, not the guide`);
+      await page.waitForURL(/\/guide/, { timeout: 15_000 }).catch(() => out.push(`bar: “?” opened ${page.url()}, not the guide`));
     } else if (e.t === "field") {
       const box = bar.getByRole("combobox");
       if (!(await box.count())) out.push("bar: no search field");
