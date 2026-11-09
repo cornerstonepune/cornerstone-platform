@@ -53,7 +53,7 @@ export async function across(actor: string, me: Who): Promise<Across> {
     sql<Overdue[]>`
       select coalesce(si.section, ch.section) as section, class_band(si.tenant_id, coalesce(si.section, ch.section)) as band,
              count(*)::int as answers, count(distinct k.id)::int as papers,
-             to_char(min(k.created_at) at time zone 'Asia/Kolkata', 'YYYY-MM-DD') as oldest
+             to_char(min(k.created_at) at time zone (select value #>> '{}' from config where key = 'school.time_zone'), 'YYYY-MM-DD') as oldest
       from item_result r join capture k on k.id = r.capture_id and k.superseded_by is null
       join sheet_instance si on si.id = k.sheet_instance_id left join child ch on ch.id = si.child_id
       where r.status in ('unreadable', 'needs_teacher') and coalesce(si.section, ch.section) is not null

@@ -85,7 +85,8 @@ def hand_check(
     conn: db.Conn, child_id: str, skill: str, grade: str, expected: str, by: str, on: dt.date | None = None
 ) -> dict:
     """One hand calculation against the system's state at this moment, stored with whether they matched so a later
-    change of the system cannot make an honest old row wrong (CP-9 item 7). Append-only; the caller commits."""
+    change of the system cannot make an honest old row wrong (CP-9 item 7). Append-only; the caller commits. With no
+    `on`, the table dates it by the school's clock (trigger `hand_check_school_day`, CP-24)."""
     row = conn.execute(
         "select state from child_observed_state where child_id = %s and skill_code = %s and grade_code = %s",
         (child_id, skill, grade),
@@ -93,7 +94,7 @@ def hand_check(
     system = row["state"] if row else None
     conn.execute(
         "insert into hand_check (tenant_id, child_id, skill_code, grade_code, expected_state, system_state, matches,"
-        " checked_by, checked_on) values (%s, %s, %s, %s, %s, %s, %s, %s, coalesce(%s, current_date))",
+        " checked_by, checked_on) values (%s, %s, %s, %s, %s, %s, %s, %s, %s)",
         (_tenant(conn), child_id, skill, grade, expected, system, system == expected, by, on),
     )
     return {"system_state": system, "matches": system == expected}

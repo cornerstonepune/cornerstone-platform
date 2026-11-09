@@ -49,7 +49,7 @@ def _mark(conn: db.Conn, reached: int) -> str:
 def _observed_at(conn: db.Conn, day: dt.date, received: dt.datetime) -> dt.datetime:
     """When it was taught: the note's own time on its own day, else the start of the day she said; never later than
     now, so a phone clock ahead of the database's is never refused for it."""
-    zone = ZoneInfo(settings.config(conn, "school.time_zone", "Asia/Kolkata"))
+    zone = ZoneInfo(settings.time_zone(conn))
     at = received if received.astimezone(zone).date() == day else dt.datetime.combine(day, dt.time(), zone)
     return min(at, db.one(conn, "select now() as n")["n"])
 

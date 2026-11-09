@@ -89,7 +89,7 @@ def _allowed(conn: db.Conn, email: str, class_id: str) -> dict:
     staff = voice_intake.staff_of(conn, email)
     class_id = voice_intake.valid_id(class_id)
     got = conn.execute(
-        "select c.grade_code, c.section, coalesce(z.value #>> '{}', 'Asia/Kolkata') as zone,"
+        "select c.grade_code, c.section,"
         " (select k.value from config k where k.key = 'k2.child_page') as child_page,"
         " exists (select 1 from staff_role_grant g where g.staff_id = %(staff)s and g.school_class_id = c.id"
         "   and g.valid_from <= current_date and (g.valid_to is null or g.valid_to >= current_date)) as on_class,"
@@ -99,14 +99,14 @@ def _allowed(conn: db.Conn, email: str, class_id: str) -> dict:
         "   and g.school_class_id is null and s.campus_id = c.campus_id"
         "   and g.role_code in (select jsonb_array_elements_text(k.value -> 'coordinator_roles')"
         "                       from config k where k.key = 'k2.reads')) as coordinator"
-        " from school_class c left join config z on z.key = 'school.time_zone' where c.id = %(class)s",
+        " from school_class c where c.id = %(class)s",
         {"staff": staff, "class": class_id},
     ).fetchone()
     if got is None:
         raise Refused("Not found.", 404)
     if not (got["on_class"] or got["coordinator"]):
         raise Refused("This class is not one of yours.", 403)
-    return {**got, "class": class_id, "staff": staff}
+    return {**got, "class": class_id, "staff": staff, "zone": settings.time_zone(conn)}
 
 
 def _today(where: dict) -> dt.date:
@@ -125,7 +125,7 @@ def classes(conn: db.Conn, staff, also: list[dict]) -> list[dict]:
     every class whose timetable is in force today: the timetable's own rule), each once. Only the grades the K2 reads are for
     (config `k2.reads`)."""
     grades = list((settings.config(conn, "k2.reads", {}) or {}).get("grades", []))
-    today = dt.datetime.now(ZoneInfo(settings.config(conn, "school.time_zone", "Asia/Kolkata"))).date()
+    today = settings.school_today(conn)
     held = conn.execute(
         "select distinct c.id::text as id, c.grade_code as grade, c.section from staff_role_grant g"
         " join school_class c on c.id = g.school_class_id where g.staff_id = %s and g.valid_from <= %s"

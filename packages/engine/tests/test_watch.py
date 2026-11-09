@@ -100,6 +100,45 @@ def test_no_problem_names_a_child_an_id_or_an_address(conn):
     assert not re.search(r"\b\d{1,3}(\.\d{1,3}){3}\b", text)
 
 
+def _nightly(conn, tenant, hours_ago: float, ok: bool = True):
+    conn.execute(
+        "insert into graph_run (tenant_id, started_at, ran_at, ok, error) values"
+        " (%s, now() - make_interval(mins => %s), now() - make_interval(mins => %s), %s, %s)",
+        (tenant, int(hours_ago * 60), int(hours_ago * 60), ok, None if ok else "Error: test"),
+    )
+
+
+def test_a_nightly_rebuild_that_stopped_is_a_problem(conn):
+    """CP-24 (audit F1): the newest ok run on `graph_run` older than `graph.nightly_stale_hours` (26), or none at all,
+    is one line; a failed run since does not count as a run. The school's own ledger is read through `problems`; the
+    ages are tried on a school of the test's own, so the copy's real runs do not decide the answer."""
+    school = db.one(
+        conn,
+        "insert into tenant (slug, name) values (%s, 'watch test') returning id",
+        (f"w-{uuid.uuid4().hex[:6]}",),
+    )["id"]
+    conn.execute(
+        "insert into config (tenant_id, key, value, description) select %s, key, value, description from config"
+        " where key = 'graph.nightly_stale_hours' and tenant_id = %s on conflict (tenant_id, key) do update"
+        " set value = excluded.value",
+        (school, _tenant(conn)),
+    )
+    assert watch.nightly_stale(conn, school) == (
+        "the nightly rebuild has never run ok (nothing on graph_run; the limit is 26 hours)"
+    )
+    _nightly(conn, school, 30)
+    _nightly(conn, school, 1, ok=False)
+    assert (
+        watch.nightly_stale(conn, school)
+        == "the nightly rebuild last ran ok 30 hours ago, more than 26 hours"
+    )
+    _nightly(conn, school, 2)
+    assert watch.nightly_stale(conn, school) is None
+    # the watch itself asks about the configured school, and says so in the same words
+    _nightly(conn, _tenant(conn), 1)
+    assert _mine(watch.problems(conn, PLENTY), "nightly") == []
+
+
 def test_jevs_key_missing_on_the_engine_is_a_problem(conn, monkeypatch):
     """Found 2026-10-12: live's engine had no Jev key, so every judgement Jev makes went to a person, and nothing said so
     until an eval asked Jev and could not."""

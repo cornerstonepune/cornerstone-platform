@@ -118,6 +118,38 @@ def fortnights_touched(
     ]
 
 
+def _step_days(conn: db.Conn, tenant_id: Any) -> dict[str, int]:
+    """The school's four `fortnight.<step>` settings as days before the fortnight starts, each well-formed, in the
+    order of the steps: freeze > align > approve > list_sent, or `CycleError` (audit F9: a later step dated before an
+    earlier one would be silently out of order)."""
+    rows = conn.execute(
+        "select key, value from config where tenant_id = %s and key = any(%s)",
+        (tenant_id, [f"fortnight.{s}" for s in STEPS]),
+    ).fetchall()
+    found = {r["key"].removeprefix("fortnight."): r["value"] for r in rows}
+    days: dict[str, int] = {}
+    for step in STEPS:
+        if step not in found:
+            raise CycleError(f"This school has no fortnight.{step} setting.")
+        value = found[step]
+        n = (
+            value.get("days_before_start")
+            if isinstance(value, dict) and set(value) == {"days_before_start"}
+            else None
+        )
+        if not isinstance(n, int) or isinstance(n, bool) or n < 0:
+            raise CycleError(f'fortnight.{step} must be {{"days_before_start": a whole number, 0 or more}}.')
+        days[step] = n
+    if not all(days[a] > days[b] for a, b in zip(STEPS, STEPS[1:], strict=False)):
+        raise CycleError(
+            "The step settings are out of order: fortnight.freeze must fall before align, align before approve,"
+            " approve before list_sent ("
+            + ", ".join(f"{s}={days[s]}" for s in STEPS)
+            + " days before the start)."
+        )
+    return days
+
+
 def step_date(conn: db.Conn, fortnight_id: Any, step: str) -> dt.date:
     """When a step falls: the school's `fortnight.<step>` days before the fortnight starts, moved to the working day
     before while it is a Saturday, a Sunday or a holiday on any campus of the school."""
@@ -128,20 +160,7 @@ def step_date(conn: db.Conn, fortnight_id: Any, step: str) -> dt.date:
     ).fetchone()
     if fortnight is None:
         raise CycleError("That fortnight is not there.")
-    setting = conn.execute(
-        "select value from config where tenant_id = %s and key = %s",
-        (fortnight["tenant_id"], f"fortnight.{step}"),
-    ).fetchone()
-    if setting is None:
-        raise CycleError(f"This school has no fortnight.{step} setting.")
-    value = setting["value"]
-    days = (
-        value.get("days_before_start")
-        if isinstance(value, dict) and set(value) == {"days_before_start"}
-        else None
-    )
-    if not isinstance(days, int) or isinstance(days, bool) or days < 0:
-        raise CycleError(f'fortnight.{step} must be {{"days_before_start": a whole number, 0 or more}}.')
+    days = _step_days(conn, fortnight["tenant_id"])[step]
     day = fortnight["starts_on"] - dt.timedelta(days=days)
     holidays = {
         r["on_date"]

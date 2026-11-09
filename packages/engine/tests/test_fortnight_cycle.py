@@ -81,12 +81,9 @@ def test_a_frozen_fortnight_needs_a_reason_and_keeps_it(world):
 
 def test_a_step_date_moves_back_past_a_weekend_and_a_holiday(world):
     c, t, year = world
-    fid = a_fortnight(c, t, year, "2033-07-11")  # a Monday
-    c.execute(
-        "insert into config (tenant_id, key, value, description) values (%s, 'fortnight.freeze', %s::jsonb, 'test')"
-        " on conflict (tenant_id, key) do update set value = excluded.value",
-        (t, json.dumps({"days_before_start": 1})),
-    )
+    fid = a_fortnight(c, t, year, "2033-07-13")  # a Wednesday
+    for step, days in zip(fc.STEPS, (3, 2, 1, 0), strict=True):  # freeze on Sunday 10 July
+        _setting(c, t, step, days)
     assert fc.step_date(c, fid, "freeze") == dt.date(2033, 7, 8)  # Sunday to Friday
     campus = db.one(c, "select id from campus where tenant_id = %s limit 1", (t,))["id"]
     c.execute(
@@ -97,3 +94,28 @@ def test_a_step_date_moves_back_past_a_weekend_and_a_holiday(world):
     assert fc.step_date(c, fid, "freeze") == dt.date(2033, 7, 7)
     with pytest.raises(fc.CycleError):
         fc.step_date(c, fid, "publish")
+
+
+def _setting(c, t, step, days):
+    c.execute(
+        "insert into config (tenant_id, key, value, description) values (%s, %s, %s::jsonb, 'test')"
+        " on conflict (tenant_id, key) do update set value = excluded.value",
+        (t, f"fortnight.{step}", json.dumps({"days_before_start": days})),
+    )
+
+
+def test_step_settings_out_of_order_are_refused(world):
+    """CP-24 (audit F9): freeze falls before align, align before approve, approve before list_sent, or no date is
+    given at all; the error names every step's days."""
+    c, t, year = world
+    fid = a_fortnight(c, t, year, "2033-07-11")
+    for step, days in zip(fc.STEPS, (19, 12, 5, 2), strict=True):
+        _setting(c, t, step, days)
+    assert fc.step_date(c, fid, "list_sent") == dt.date(2033, 7, 8)  # Saturday 9 July moves back to Friday
+    _setting(c, t, "align", 19)  # the same day as freeze: not before it
+    with pytest.raises(fc.CycleError, match="out of order.*freeze=19, align=19"):
+        fc.step_date(c, fid, "freeze")
+    _setting(c, t, "align", 12)
+    _setting(c, t, "list_sent", 6)  # after approve
+    with pytest.raises(fc.CycleError, match="out of order"):
+        fc.step_date(c, fid, "approve")

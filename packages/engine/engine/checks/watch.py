@@ -10,7 +10,26 @@ limits are threshold rows.
 import os
 
 from engine.checks import rules
-from engine.core import db
+from engine.core import db, settings
+
+
+def nightly_stale(conn: db.Conn, tenant_id: db.Id) -> str | None:
+    """The line when the nightly rebuild has stopped (CP-24, audit F1): the newest ok run on the `graph_run` ledger is
+    older than the `graph.nightly_stale_hours` setting, or there has never been one. None while it runs."""
+    hours = settings.config(conn, "graph.nightly_stale_hours")
+    if hours is None:
+        return "the graph.nightly_stale_hours setting is missing, so the nightly rebuild is not watched"
+    age = db.one(
+        conn,
+        "select extract(epoch from now() - max(ran_at)) / 3600 as hours from graph_run"
+        " where tenant_id = %s and ok",
+        (tenant_id,),
+    )["hours"]
+    if age is None:
+        return f"the nightly rebuild has never run ok (nothing on graph_run; the limit is {int(hours)} hours)"
+    if age > int(hours):
+        return f"the nightly rebuild last ran ok {int(age)} hours ago, more than {int(hours)} hours"
+    return None
 
 
 def problems(conn: db.Conn, free_bytes: int) -> list[str]:
@@ -90,6 +109,9 @@ def problems(conn: db.Conn, free_bytes: int) -> list[str]:
         out.append(
             f"GitHub refused {unsent['failed']} notes from staff: they are kept and sent again on the next try"
         )
+    tenant = db.one(conn, "select id from tenant where slug = %s", (db.tenant_slug(),))["id"]
+    if stale := nightly_stale(conn, tenant):
+        out.append(stale)
     if not os.environ.get("TYPESAFE_API_KEY"):  # the engine's own environment: the watch runs inside it
         out.append("Jev's key is missing on the engine: every judgement Jev makes goes to a person")
     return out

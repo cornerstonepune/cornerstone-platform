@@ -1,7 +1,9 @@
 import { notFound } from "next/navigation";
 import type { Session } from "./auth";
 import { myVoice, voiceOn } from "./voice";
-import { classWords, SCHOOL_ZONE, type MyVoice, type VoiceClass } from "./voice-types";
+import { classWords, type MyVoice, type VoiceClass } from "./voice-types";
+
+export { schoolToday } from "./school-clock";
 
 // What every K2 page asks after it has checked who is asking (`requireStaff`, in the page itself: test_web_gate.py):
 // voice notes switched on, and a K2 class or a note of hers. Anything else is not found, a typed address as much as a
@@ -19,6 +21,3 @@ export function chosenClass(my: MyVoice, id: string | undefined): (VoiceClass & 
   if (id && !c) notFound();
   return c ? { ...c, words: classWords(c) } : null;
 }
-
-/** Today on the school's clock, as a date input reads it. */
-export const schoolToday = () => new Date().toLocaleDateString("en-CA", { timeZone: SCHOOL_ZONE });

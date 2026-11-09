@@ -14,6 +14,7 @@ import { isoWeek, weekWords } from "./week";
 import { mayUse } from "./access";
 import { choices } from "./choices";
 import { myVoice } from "./voice";
+import { schoolZone } from "./school-clock";
 
 type PaperRef = { id: string; section: string | null; code: string; topic: string | null; topic_name: string | null; subject: string | null };
 
@@ -111,6 +112,7 @@ export const tasksFor = cache(async (me: Session): Promise<Task[]> => {
     asks: asks.filter((a) => mayUse(me, "any_ask") || a.for_role === me.role).reduce((n, a) => n + a.n, 0),
     empty: empty[0]?.n ?? 0,
     voice: await voice,
+    zone: await schoolZone(),
   };
   const label = new Map(offered.subjects.map((x) => [x.code, x.label]));
   return buildTasks(src, (c) => (c ? (label.get(c) ?? c) : ""));

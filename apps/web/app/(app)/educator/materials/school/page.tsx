@@ -41,7 +41,7 @@ export default async function SchoolListPage({ searchParams }: { searchParams: P
   const me = await requireStaff();
   await openTo(me);
   const q = await searchParams;
-  const month = /^\d{4}-\d{2}$/.test(q.month ?? "") ? q.month! : schoolToday().slice(0, 7);
+  const month = /^\d{4}-\d{2}$/.test(q.month ?? "") ? q.month! : (await schoolToday()).slice(0, 7);
   const from = `${month}-01`;
   const to = new Date(Date.UTC(Number(month.slice(0, 4)), Number(month.slice(5, 7)), 0)).toISOString().slice(0, 10);
   const list = await schoolListOf(me, from, to);

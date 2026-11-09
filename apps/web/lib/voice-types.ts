@@ -7,6 +7,3 @@ export type MyVoice = { classes: VoiceClass[]; notes: QueuedNote[]; recording: b
 
 /** "K2 A": a class as she reads it. */
 export const classWords = (c: Pick<VoiceClass, "grade" | "section">) => (c.section.startsWith(c.grade) ? c.section : `${c.grade} ${c.section}`);
-
-/** The school's clock, as the other pages read it (config `school.time_zone` on the engine's side). */
-export const SCHOOL_ZONE = "Asia/Kolkata";
