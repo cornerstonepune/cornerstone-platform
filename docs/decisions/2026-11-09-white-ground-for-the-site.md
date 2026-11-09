@@ -19,8 +19,8 @@ Everything else in D-073 stands: the five chips (D-062), the spacing scale, the 
 1. R5's contrast table in `docs/design-tokens.md` was measured against paper-warm. It must be re-run against white before
    any screen is built on the new ground; a chip that passed on paper-warm may fail on white.
 2. The font question in `docs/design-tokens.md` ("Decisions this needs", item 1: Source Serif 4 against Jost and Cormorant
-   Garamond) is **not** decided here. The walkthrough sketch used Source Sans 3 and Source Serif 4 only because they were
-   already on the site; that is not a choice.
+   Garamond) was not decided here. **Superseded the same day** by `docs/decisions/2026-11-09-site-type-and-subject-colours.md`:
+   Source Serif 4 for titles, Source Sans 3 for everything else.
 3. The clickable sketch that showed the white ground: https://claude.ai/code/artifact/43bfce16-b41c-42fe-8b20-1ec11960ea74
    (private). The first screen built on white is F1 (one menu), in `docs/notes/frontend-vision.md`.
 

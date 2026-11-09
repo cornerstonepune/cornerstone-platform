@@ -1,14 +1,16 @@
 # Cornerstone School OS: the frontend specification
 
-Version 1, 9 Nov 2026. One file for the session that builds the site. It holds everything agreed in the four frontend-vision
-passes with Nimish: the rules, the system, every screen as a wireframe with what it shows, what it calls and when it is done,
-and the order to build in. `screens.json` beside it is the same inventory as data; `build-spec.mjs` regenerates the screen
-catalogue below and the wireframes page from it. Change the JSON, run the script, never edit the catalogue by hand.
+Version 2, 9 Nov 2026 (v1 plus the fresh-reviewer design review). One file for the session that builds the site. It holds
+everything agreed in the frontend-vision passes with Nimish: the rules, the system, every screen as a wireframe with what it
+shows, what it calls and when it is done, and the order to build in. `screens.json` beside it is the same inventory as data;
+`build-spec.mjs` regenerates the screen catalogue below and the wireframes page from it. Change the JSON, run the script,
+never edit the catalogue by hand.
 
 Companions: the design system "Cornerstone School OS" (tokens, brand book, icon map, first blocks):
 https://claude.ai/code/artifact/caaa43e4-681b-4ac0-82c9-ffb866116514 · the clickable sketch:
 https://claude.ai/code/artifact/43bfce16-b41c-42fe-8b20-1ec11960ea74 · the wireframes of every screen:
 (see docs/notes/frontend-landscape.md) · the notes `docs/notes/frontend-*.md` · the decision `docs/decisions/2026-11-09-white-ground-for-the-site.md`.
+(The artifact links are private to Nimish; the repository copy of `tokens.json` is the master from now on.)
 
 ## 1. What is being built, in one paragraph
 
@@ -21,6 +23,9 @@ on the same parts; its queries and its seven steps stay. Nimish, 9 Nov 2026: "We
 assessment." Decided the same day: the ground is white; no ranking of educators; no graph database (one Postgres; the walk
 on screen is the graph).
 
+Where this specification and `docs/ux-rules.md` disagree, this specification wins from the day UI-13 merges; UI-13 rewrites
+`ux-rules.md` (its rules 3, 7, 11 and 12 and its menu table) and the tests that hold it.
+
 ## 2. Rules that never bend (tests hold most of them)
 
 1. A state is an icon, a word and a colour; never one alone. Every state comes from the `STATES` rows and `state_colour`.
@@ -31,36 +36,52 @@ on screen is the graph).
    practising / emerging / not seen; no rung, taxonomy code or kind on an educator's screen. Numbers are computed by code.
 5. Nothing is ticked for her: an approval is a row's own action; no button over every row; a note is confirmed one at a
    time; a correction is a new row, never an edit.
-6. One purpose, one main action, one next step per page; the purpose line at most 140 characters; one count on the site
-   (Today's), computed once.
-7. A list is a table with its filter row at six rows or more; ten rows shown, then grouped or paged; a class is a grid of
-   squares, never a table.
+6. One purpose, one main action, one next step per page; the purpose line at most 140 characters; one count badge on the
+   site: the one on the bar's Today door, computed once, the sum of two numbers that never overlap (do now: notes
+   unconfirmed past 48 h; this week: notes waiting to confirm that are younger). A tile or an eyebrow that says how many
+   rows its own page lists is a statement about that page, not a second count.
+7. A list is a table; DataTable carries its filter row by itself at six rows or more; ten rows shown, then grouped or
+   paged. "Never a table" is for marking: a class being marked or read by child is a grid of squares (ClassGrid); a list
+   of children to administer (Classes) or of assessments is a table.
 8. A person sees their own: what their staff grant names; the coordinator group sees every class. A view, never a
-   permission: the database's rules (CP-3, CP-4) are the permission.
-9. Names (decided by Nimish, 9 Nov 2026: it is his school): a signed-in staff member sees a child's name where they need
-   it: the class grid squares, the child page header, the confirm screen, notes and reports (what a parent's copy shows is
-   the school's decision with CP-19). Names are read from the `pii` schema at render time and joined by `child_id`; the
-   application tables keep carrying `child_id` only (CLAUDE.md rule 6 stays true); no name is ever typed into a screen, a
-   state word, a log, a URL or an analytics call. One constraint stays, because the repository is public: no real child's
-   name in git, tests, fixtures, screenshots or committed baselines; every fixture uses obviously fake names. Photos of
-   children are not decided: none on any screen except the child's own page as photographed (PageImage).
-10. Desktop first at 1440 px; a phone must not break; only recording and confirming a note are designed for the phone.
+   permission: the database's rules (CP-3, CP-4) are the permission. The UI lane tests that a control is absent for the
+   wrong group; the refusal of the write behind it is tested once per write route, where the rule lives, not once per
+   screen.
+9. Names (decided by Nimish, 9 Nov 2026: it is his school): a signed-in staff member sees a child's name wherever a screen's
+   element list in `screens.json` has a `child_name` element (the class grid squares, the child page header, the confirm
+   screen, notes, reports, Classes, search results, a skill's grid), and on no other screen. Names are read from the `pii`
+   schema at render time and joined by `child_id`; the application tables keep carrying `child_id` only (CLAUDE.md rule 6
+   stays true); no name is ever typed into a screen, a state word, a log or a URL. What a parent's copy shows is the school's
+   decision with CP-19. One constraint stays, because the repository is public: no real child's name in git, tests,
+   fixtures, screenshots or committed baselines; every fixture uses obviously fake names, and the inventory test fails on any
+   rendered name that is not in `tests/fake-names.ts`, the one list of names. No page loads a script or a font from a host
+   other than the site's own, so no name or search term can reach a third party. Photos of children are not decided: none on
+   any screen except the child's own page as photographed (PageImage).
+10. Desktop first at 1440 px. Every screen is smoke-tested at 400 px (it renders, no console error, no sideways scroll of the
+    page). The screens designed for a phone are Record, Confirm, Period, Today (educator) and Sign in; only they carry the
+    full 400 px gate (`phone_gate` in `screens.json`: 44 px targets, keyboard, empty states). A table scrolls sideways in its
+    own box and is not redrawn as cards. A phone class grid has six columns of 44 px squares.
 
 ## 3. The system
 
-**Tokens** (`tokens.json` in the design system; `tokens.css` generated from it, nothing retyped): ground white `#ffffff`;
-surface `#f7f7f5`; ink `#1c1b19`; ink-muted `#5e5a52`; line `#e4e3df`; line-control `#8a8984`; link clay-700 `#9c4626`;
-brand clay `#b8562f` (the mark, the active group, the one main action; never on a child); olive `#4a5435` ok; bamboo
-`#9a7a3a` wait; haldi `#e2a43f` an outline on a part that needs a person; monsoon `#3f4d55`; bark `#8a6a45`; sand
-`#ede3d3`. States: ok / wait / late / quiet with `-bg` fills. Subjects from the materials: Numeracy monsoon, Language bark,
-Arts haldi, fixed sand. Dark follows the system; every pair has a dark value in `tokens.json`. The contrast table in
-`docs/design-tokens.md` was measured on paper-warm and must be re-run on white before step 1 ships.
+**Tokens** (`tokens.json`; `tokens.css` generated from it, nothing retyped): ground white `#ffffff`; surface `#f7f7f5`; ink
+`#1c1b19`; ink-muted `#5e5a52`; line `#e4e3df`; line-control `#8a8984`; brand clay `#b8562f` (the mark, the active group's
+underline, the trail's accent; never on a child, never a state); basalt `#26241f` (the one main action: a filled button with
+white text); monsoon `#3f4d55` (links, always underlined, and Numeracy); olive `#4a5435` ok; bamboo `#9a7a3a` wait; bark
+`#8a6a45`; haldi `#e2a43f` (the source of the Arts hue only: about 2.2:1 on white, so never a border or text; a part that
+needs a person is outlined in the wait amber); sand `#ede3d3`. States: ok / wait / late / quiet with `-bg` fills. Subjects
+from the materials: Numeracy monsoon, Language bark, Arts haldi (darkened for text), fixed sand. Three hues are therefore
+never confused: links are blue-grey and underlined; work states are red, amber, green and grey with their words; the main
+action is the one dark button. Dark follows the system; every pair has a dark value in `tokens.json`. The contrast table in
+`docs/design-tokens.md` was measured on paper-warm; UI-1 re-measures every pair on white and commits the new table.
 
-**Type** (decided by Nimish, 9 Nov 2026: `docs/decisions/2026-11-09-site-type-and-subject-colours.md`): Source Serif 4
-for titles (32/24/20) and Source Sans 3 for everything else (18/16/14/12); weights 400/500/600; nothing under 14 px carries
-a status, label or action; tabular figures in columns. The subject colours from the brand's materials are decided in the
-same file. Nothing in the system is still open; the fonts and every colour are in `docs/frontend/tokens.json`, which the
-build copies to `apps/web/design-system/tokens.json`.
+**Type** (decided by Nimish, 9 Nov 2026: `docs/decisions/2026-11-09-site-type-and-subject-colours.md`): Source Serif 4 for
+titles (32/24/20) and Source Sans 3 for everything else (18/16/14/12); weights 400/500/600; nothing under 14 px carries a
+status, label or action (so the eyebrow, which carries facts, is 14 px; 12 px is for a timestamp or a source only); tabular
+figures in columns. Both fonts are loaded by next/font from the build, never from a font host. One thing is open, for
+Nimish: Source Sans 3 has no Devanagari and nothing in Devanagari is rendered today; if the school wants it, a fallback font
+is added. The fonts and every colour are in `docs/frontend/tokens.json`, which the build copies to
+`apps/web/design-system/tokens.json`.
 
 **Space and shape**: 4 / 8 / 16 / 24 / 32 / 48 / 64 px; 44 px tap; square corners everywhere except the pill of a work-state
 chip and a count badge; no shadows, no gradients; hairlines separate, a one-step surface groups.
@@ -68,103 +89,51 @@ chip and a count badge; no shadows, no gradients; hairlines separate, a one-step
 **Icons**: Lucide only, stroke 1.9, 16 / 20 / 24 px, one icon per concept in `lib/icons.tsx`; the map is in the design
 system's README. A screen never imports an icon by its Lucide name.
 
-**Layers**: 0 tokens → 1 primitives from shadcn/ui (`npx shadcn@4.23.0 init` into `components/ui/`: Button, Badge, Table,
-Tabs, Collapsible, Dialog, Sheet, Select, Tooltip, Progress, Command) → 2 the school's blocks (below) → 3 node pages
-(one page shape per kind of thing) → Today composed last.
+**Layers**: 0 tokens → 1 primitives from shadcn/ui (`npx shadcn@4.23.0 init` into `components/ui/`, adding a primitive only
+when the first slice that uses it needs it: Button and Tabs first; DataTable, StatusChip, FilterBar and the native
+`<details>` stay the school's own, so Table, Badge, Select and Collapsible are not installed) → 2 the school's blocks
+(section 5) → 3 node pages (one page shape per kind of thing) → Today composed last.
 
-**Blocks** (`components/`): the list and one-line contract of each is in section 5. Existing blocks (`PageShell`+`TopBar` →
-AppFrame, `DataTable`, `StatusChip`, `FilterBar`, `EmptyState`, `Count`, `voice/board` → ClassGrid, `voice/record` →
-CaptureBar) move onto the tokens; the new ones are built once with a preview and a screenshot in both themes.
+**Blocks** (`components/`): the list and one-line contract of each is in section 5. The blocks that exist today (`StatusChip`,
+`DataTable`, `FilterBar`, `EmptyState`, `Count`) move onto the tokens in UI-1; `PageShell`, `TopBar` and the K2 side menu
+become AppFrame in UI-13; `voice/board` becomes ClassGrid and `voice/record` CaptureBar when their screens are built; the
+new blocks are built once with a preview and a screenshot in both themes (UI-2).
 
 **Node contract**: a node page = AppFrame + eyebrow (the kind's icon and two or three facts) + title + purpose + its blocks +
-its rail of edges (Connected to) + Capture here where a lesson or a child is in view. A new kind of thing is a new query
-and a new rail list, not a new layout.
+its rail of edges (Connected to) + Capture here where a lesson or a child is in view. The rail lists only edges that are not
+already links in the main column, and is defined once per kind of node (a hub such as Children or Setup has none). The trail
+is two fixed levels, the door and then the thing, plus the browser's Back; the door lit on the bar is the door the walk
+started from (an Activity opened from Today lights Today). A new kind of thing is a new query and a new rail list, not a new
+layout. A control whose target screen is not yet built is not drawn (`merged_slices`); a screen that needs no rail, or the
+bare frame of Sign in, says so in `screens.json`.
 
 ## 4. How to build it: order, tests, done
 
-Order (each line one scoped change, tier 2 unless it changes a table):
-
-1. Tokens and frame: `tokens.css` from the system; AppFrame replaces `PageShell`, `TopBar` and the K2 side menu; the four
-   groups; every existing page reachable from the bar. The menu test (`u53`) and the UX-rule tests (`test_ux_rules.py`,
-   `u51`) updated to the new frame. The font decision is taken (below).
-2. Blocks: the new blocks of section 5, each with its preview page and one screenshot per theme in the suite; the existing
-   blocks moved onto the tokens.
-3. Node pages, the K2 walk: period, record, confirm, notes, picture, child, activity, objective, skill.
-4. Node pages, assessments: assessments, assessment, paper (the four old pages and `/growth` fold in; queries reused).
-5. Node pages, the coordinator: fortnight, draft, moves, rules, staff, classes (as CP-6, CP-11, CP-12, CP-22 merge).
-6. Today, both kinds, from the blocks over the queries that exist.
-7. Reports (CP-19, Next); materials approval (CP-17/18, Later).
-
-UI-10 (the as-built document, `docs/frontend/AS-BUILT.md`, regenerated by every slice) can be built right after UI-1.
-
-Steps 1 to 4 can start now (3 against the switched-on K2 pages); 5 waits for its backend scopes.
+The order is the slice table in section 7, the only list of what is built when and what each waits for: tokens (UI-1), the
+frame and the inventory test (UI-13), the new blocks (UI-2), then the node pages and views (UI-3 to UI-6 and UI-11), Today
+(UI-7), reports and materials (UI-8, UI-9), the screens outside the bar (UI-12), and the as-built document (UI-10, any time
+after UI-13). The slices that wait for a backend scope (UI-6, UI-8, UI-9) wait for it; the others do not.
 
 Tests that hold it: `packages/engine/tests/test_ux_rules.py` and `apps/web/tests/u51-ux-rules.spec.ts` (frame, table, chip,
-filter row, 140 characters), `u53-the-menu.spec.ts` (four groups, tabs), one screenshot per block per theme, one journey
-test per story (an educator's Tuesday; the coordinator's fortnight; what a parent receives) with `@axe-core/playwright` on
-each, and the existing `screens.spec.ts` at laptop and phone. Every screen's `done_when` in section 6 is written as a proof
-before its slice is built (the Athena loop). Server components by default; client code only for the class grid's tap, the
-recorder and the details folds.
+filter row, 140 characters), `u53-the-menu.spec.ts` (four doors, tabs), one screenshot per block per theme, one journey test
+per story (an educator's Tuesday; the coordinator's fortnight; what a parent receives) with `@axe-core/playwright` on each,
+and the existing `screens.spec.ts` at laptop and phone. Every screen's `done_when` in section 6 is written as a proof before
+its slice is built (the Athena loop). Server components by default; client code only for the class grid's tap, the recorder
+and the details folds.
 
-Folding: the catalogue marks which old pages fold into each new screen. A folded page keeps its address as a redirect for
-one term, then goes. Nothing is deleted before its new screen's proofs pass.
+Folding: the catalogue marks which old pages fold into each new screen. A folded page keeps its address as a redirect for one
+term, then goes. Nothing is deleted before its new screen's proofs pass.
 
 **The inventory is the test oracle.** `screens.json` is read by one Playwright test, `tests/u70-inventory.spec.ts` (built in
-UI-1), which opens every screen of a slice listed in the top-level `merged_slices` (a full run) or named by `SLICE=UI-n`
-(a pull request run) at a concrete address (dynamic routes get theirs from a fixture map the test's own rows provide),
-runs the generic checks of section 7, and drives every control in the screen's `elements` list by its kind. Every other
-screen is a `test.fixme`, so the count of screens still to build is always visible in the test report. `exists` only
-describes the old page that is there today; it never decides what the test runs. Every screen belongs to exactly one
-slice (the script refuses a screen in no slice); a slice's last commit adds its id to `merged_slices`. Adding a screen
-means adding it to the inventory and a slice first; the test fails until the screen is built.
-
-## 7. Slices and their goal points
-
-Each slice below is one scoped change in the Athena loop: pasted as a GitHub issue in the Scope form (`scopes.md` holds the
-paste-ready text), locked by Nimish, proofs written first, built, verified, shipped. Every Done-when line is observable by a
-test or a script named in it. The generic checks apply to every screen a slice builds, on top of the screen's own lines:
-
-1. Renders at 1440 and 400 px: the eyebrow, one h1 equal to the title, a purpose line of at most 140 characters, exactly one main action, the trail, the rail; no console error; no sideways scroll.
-2. Completeness: the set of interactive controls in the main column and the rail (a, button, [role=button], summary, input, select) equals this screen's element list for the signed-in role: nothing extra, nothing missing. A control that does nothing on click (no address change, no DOM change, no request) fails.
-3. Navigation: every link and row lands on its target screen (h1 check) and Back returns to this screen with the same address; each earlier step of the trail returns to that screen; the four doors on the bar open their first screen from here.
-4. Roles: an element marked for one group is absent for the others; the address or request behind it is refused for the others (redirect to /refused or 403), never silently ignored.
-5. Keyboard: Tab reaches every control in reading order; Enter or Space activates it; the focused control shows a visible ring (outline at least 2 px); Escape closes an open Sheet or Dialog.
-6. Touch: at 400 px every control is at least 44 × 44 px with at least 8 px to its neighbour.
-7. Words: every state shown is a word from the STATES rows beside its icon, never colour alone; a child's name appears only on screens whose element list marks a `child_name` element, read from pii by child_id, and on no other screen; the page text and every URL carry no name where the spec says none; every fixture, test, screenshot and committed baseline uses obviously fake names (the repository is public; a test scans them against a list of real names kept off the repository); 'educator' never 'teacher'.
-8. Accessibility: axe reports no serious or critical violation at either width, in light and in dark.
-9. Empty: with the fixture's empty class or empty filter, the screen shows exactly its stated empty text and its next-step link, and no table head over no rows, no zero columns, no dash columns.
-10. Themes: a screenshot in light and in dark at 1440 is committed as a baseline; sampled text nodes measure at least 4.5:1 against what is behind them in both.
-
-What the test does with each kind of control:
-
-| Kind | What the test does with it |
-|---|---|
-| link | click lands on the target screen: its h1 equals the target's title (or matches its pattern); Back returns |
-| row | a table row or list row that is one link: as link |
-| cell | a square of the ClassGrid: as link (a child) or as button (a mark, on the confirm screen) |
-| tab | changes the view in place; the address carries the tab; the h1 does not change |
-| button | click produces the stated effect: a row written, a state chip changed, a redirect; the test asserts the effect in the database or the DOM |
-| fold | a Details: closed by default unless stated; click opens it and its content is visible; click again closes; the main action is never inside it |
-| filter | changes the rows and writes itself into the address; × clears one; Clear clears all; a reload keeps them |
-| field | a form field with a label; empty when required shows the stated message and submits nothing |
-| switch | a two-state control; the state is spoken (aria-checked) and shown as a word, never colour alone |
-| child_name | not a control: text. The child's name, read from the pii schema at render time and joined by child_id, shown only where an element of this kind is listed. The test asserts the name is present and, on every other screen, absent; it is never in a URL, a log line, a state word or an analytics call |
-| upload | accepts the stated file kinds; a wrong kind shows a message; a right one shows the file's name before anything is sent |
-
-| Slice | What | Screens | Waits for |
-|---|---|---|---|
-| UI-1 Tokens, frame and the inventory test | One navigation and one source of colour, type and space for the whole site. tokens.css generated from tokens.json; shadcn/ui initialised (it is not yet: `components/ui/` does not exist) and styled by the tokens; the journey-test harness the Athena loop demands; AppFrame (top bar, trail, rail) replacing PageShell, TopBar and the K2 side menu; and the inventory test that reads screens.json and drives every screen like a person. | the frame and the blocks | nothing (type and colours decided 9 Nov) |
-| UI-2 The blocks | The school's blocks of SPEC §5 built once, each with sample data on a staff-only gallery page and screenshots in both themes; the blocks that exist today moved onto the tokens; every chart drawn to scale from its data. | the frame and the blocks | UI-1 |
-| UI-3 Node pages: the K2 walk | Period, record, confirm, notes, children, class picture, child, activity, objective and skill as node pages on the blocks, each walking to its neighbours through the rail and back through the trail; the old routes redirect. | the session's name, Record a note, Confirm what the reader heard, Notes, Children, Class picture, Where this child is, the activity's name, the objective's title, the skill's name | UI-2; the K2 switch (a config row) on for the pages behind it |
-| UI-4 Node pages: assessments | Assessments, one assessment and one child's paper as node pages on the blocks; the seven old assessment pages and Class results fold in; the queries and the seven steps are unchanged. | Assessments, the built name, Check the answers | UI-2 |
-| UI-5 The coordinator's views: timetable, rules, staff, classes, setup, search | The timetable's day, week and fortnight views for everyone; rules, staff and grants, classes and children, the Setup home and search; the small writes that exist today (a rule edit, a grant, a child move) through their own rows. | Timetable, Timetable rules, Staff and classes, Classes and children, Setup, Search | UI-2 for the views; CP-1 merged for moving a child |
-| UI-6 The fortnight's actions: fortnight, draft, moves | The fortnight node with Approve and Go live, the draft from the rules with its unmet rules, and moves by hand with clashes accepted by the coordinator only. | Fortnight 9, Draft from the rules, Moves by hand | CP-6, CP-11, CP-12 and CP-22 merged |
-| UI-7 Today, both kinds | The educator's Today (the day, the attention strip, notes to confirm, the class) and the coordinator's Today (what waits, last week's heat grid, next week), composed from the blocks over the queries that exist; What needs doing folds in and its count moves to Setup where it belongs. | Today, Today, the school | UI-3 and UI-5; UI-6 for the coordinator's clash and draft rows (rows for a backend not yet merged simply do not appear) |
-| UI-8 Reports | Each child's report, line by line, in the educator's words: two approvals per line, consent on file, then sent. The parent's copy says educator, Easy / Medium / Hard / Advance, no rung and no code. | Reports | CP-19 merged (Next) |
-| UI-9 Materials | The class's materials list for a fortnight, the school's list, the notes the system could not read, and the educator's approval of her own class's list. | Materials, this fortnight | CP-17 and CP-18 merged (Later) |
-| UI-11 Setup content pages: curriculum, skills to approve, question bank, a question | The four existing Setup pages that carry content rather than people, rebuilt on the frame and the blocks: Curriculum (activities and skills under one filter row, with drafts and offers), Skills to approve, the Question bank and one question as it prints. Their queries and their one-row-at-a-time approvals are unchanged; the old routes fold in. | Curriculum, Skills to approve, Question bank, the question as it prints | UI-2 |
-| UI-12 The screens outside the bar: sign in, help, report a problem | Sign in (with forgot and new password), the help pages and the feedback form, rebuilt on the tokens and the blocks; help is generated from screens.json so a new screen gets its section without a hand edit; the feedback form keeps names out of the public GitHub issue. | Sign in, Start here, Report a problem or suggest something | UI-1 |
-| UI-10 The as-built milestone document | A script that generates docs/frontend/AS-BUILT.md from screens.json plus the last inventory-test run: the milestone document Nimish asked for, so he can see exactly what exists, what each screen's controls are, and what the checks reported. Every slice adds its id to `merged_slices` in screens.json when its proofs pass, so the document is always true. | the frame and the blocks | UI-1 (it can be built early and re-run after every slice) |
+UI-13 and proved there on a small inventory of pages that exist), which opens every screen of a slice listed in the top-level
+`merged_slices` (a full run) or named by `SLICE=UI-n` (a pull request run) at a concrete address (dynamic routes get theirs
+from a fixture map the test's own rows provide), runs the generic checks of section 7, and drives every control in the
+screen's `elements` list by its kind. The bar (`bar` in the JSON) is driven once per run. Every other screen is a
+`test.fixme`, so the count of screens still to build is always visible in the test report; a control whose target is not yet
+built is not drawn and its test is a `fixme`. `exists` only describes the old page that is there today; it never decides
+what the test runs. Every screen belongs to exactly one slice (the script refuses otherwise); a slice's last commit adds its
+id to `merged_slices`. Adding a screen means adding it to the inventory and a slice first; the test fails until the screen is
+built.
 
 ## 5. The blocks
 
@@ -206,27 +175,25 @@ done. Wireframes of all of them: (see docs/notes/frontend-landscape.md).
 
 #### Today `/today`
 Who: educator · Phase: Core · Backend: CP-8 · CP-10 · Old page today: part · Slice: UI-7
-Eyebrow: Tuesday 18-Nov · K2 Red · Fortnight 9, week A
+Eyebrow: Wednesday 18-Nov · K2 Red · Fortnight 9, week A
 Purpose: Your periods in order. Tap one for what to teach, how, and what to lay out. After it, record a note.
 Blocks, in order:
-- **AttentionStrip**: do now = notes unconfirmed past 48 h; this week = notes to confirm; done = periods finished of planned, children seen this fortnight
+- **AttentionStrip**: do now = notes unconfirmed past 48 h; this week = notes waiting to confirm that are younger than 48 h (the two never overlap); done = periods finished of planned, children seen this fortnight
 - **PeriodRow**: one per session of the day, from `session` for my class; fixed parts of the day included, greyed
 - **Cards**: Notes to confirm (count, oldest) · Your class (children not seen this fortnight on the skill being taught)
-Rail (Connected to): Now: the current period · This fortnight · Class picture · Materials
+Rail (Connected to): This fortnight · Materials
 Main action: the current period · Next step: Timetable
 Data: session × plan_entry × activity for my class on this school_day; pii.educator_note status counts; child_observed_state gaps
 Empty: No sessions today (a holiday or no timetable live): say which, link to the fortnight · Phone: same order; the strip stacks; the record button is one tap from the period
 Folds in: /today (What needs doing), /educator (K2 Today)
-Every control on the screen (10), and what the test does with each:
+Every control on the screen (8), and what the test does with each:
 - **link** do now tile → Confirm what the reader heard (`/notes/[id]`) (the oldest unconfirmed note; absent (grey 0) when none)
 - **link** this week tile → Notes (`/notes`)
 - **link** done today tile → Class picture (`/children/[class]`)
 - **row** each period row → the session's name (`/period/[id]`) (a fixed part of the day opens its period page with 'Nothing to record here')
 - **link** Confirm the first → Confirm what the reader heard (`/notes/[id]`)
 - **link** Class picture → Class picture (`/children/[class]`)
-- **link** rail: Now: the current period → the session's name (`/period/[id]`)
 - **link** rail: This fortnight → Timetable (`/timetable`)
-- **link** rail: Class picture → Class picture (`/children/[class]`)
 - **link** rail: Materials → Materials, this fortnight (`/timetable/materials`)
 Done when (on top of the ten generic checks):
 - an educator sees only sessions of classes their grant names (the access fixture's second educator sees a different list)
@@ -236,7 +203,7 @@ Done when (on top of the ten generic checks):
 
 #### Today, the school `/today`
 Who: coordinator · Phase: Core · Backend: CP-6 · CP-12 · CP-22 · CP-10 · Old page today: no · Slice: UI-7
-Eyebrow: Tuesday 18-Nov · every class
+Eyebrow: Wednesday 18-Nov · every class
 Purpose: What waits on you, each with its own button. Then the week ahead.
 Blocks, in order:
 - **AttentionStrip**: do now = clashes not accepted + notes unconfirmed past 48 h across classes; this week = drafts to approve, materials lines without quantity; done = sessions done of planned last week
@@ -276,13 +243,13 @@ Blocks, in order:
 - **Cards**: actions: Record a note (main) · Type the marks · Open the activity
 - **StackBar**: last time this activity ran: above / as expected / below / not willing / absent, with the children below or not willing named by Sr. No.
 - **Details**: The steps, short (open) · Lay out (materials with quantities) · Watch for (the thinking)
-Rail (Connected to): The activity · its learning objectives · Materials · Its place in the fortnight · The class · Capture here: voice, photo
+Rail (Connected to): The activity · its learning objectives · Materials · Its place in the fortnight · The class
 Main action: Record a note · Next step: the next period
 Data: session → plan_entry → activity (+activity_material, activity_objective); activity_observation of this activity for this class, last session
 Empty: A fixed part of the day: 'Nothing to record here' · Phone: actions first, then the fold; the record button fills the width
-Every control on the screen (14), and what the test does with each:
-- **link** Record a note → Record a note (`/period/[id]/record`)
-- **link** Type the marks instead → Confirm what the reader heard (`/notes/[id]`) (opens the form path of the confirm screen)
+Every control on the screen (12), and what the test does with each:
+- **link** Record a note → Record a note (`/record`) (opens Record with this period's session preselected)
+- **link** Type the marks instead → Record a note (`/record`) (opens Record on its typing path, session preselected)
 - **link** Open the activity → the activity's name (`/setup/activities/[code]`)
 - **link** each Sr. No. named under the last-time bar → Where this child is (`/children/[class]/[roll]`)
 - **fold** The steps, short (open by default)
@@ -293,32 +260,32 @@ Every control on the screen (14), and what the test does with each:
 - **link** rail: Materials → Materials, this fortnight (`/timetable/materials`)
 - **link** rail: Its place in the fortnight → Timetable (`/timetable`)
 - **link** rail: The class → Class picture (`/children/[class]`)
-- **link** capture: Voice note → Record a note (`/period/[id]/record`)
-- **link** capture: Photo → Record a note (`/period/[id]/record`) (opens record with the photo path)
 Done when (on top of the ten generic checks):
 - a period with no activity shows no capture controls and the words 'Nothing to record here'
 - the last-time bar's segments sum to the number of children named in the last session's observations
 - the steps fold is open on load and the others closed
 
 
-#### Record a note `/period/[id]/record`
+#### Record a note `/record`
 Who: educator · Phase: Core · Backend: CP-10 · Old page today: yes (/voice/record) · Slice: UI-3
 Eyebrow: K2 Red · the session's name
 Purpose: Say what happened and who, by Sr. number. The reader turns it into marks; you confirm them, one note at a time.
 Blocks, in order:
 - **CaptureBar**: Start recording (main) · Add a photo · Type the marks; while recording: Stop, Send; after: 'sent, the reader is listening'
 - **KeyValue**: activity · class · time; audio and transcript kept 48 h on the private side, then deleted
-Rail (Connected to): The period · The activity · The class · Capture here: voice, photo
+Rail (Connected to): The period (when a session is chosen) · The activity · The class · Capture here: voice, photo
 Main action: Start recording · Next step: Notes to confirm
 Data: the session; pii.educator_note insert via the engine; config: note retention
 Empty: none · Phone: this is the phone screen: one button, the activity already known
-Every control on the screen (8), and what the test does with each:
+Folds in: /voice/record
+Every control on the screen (9), and what the test does with each:
+- **field** Which period (preselected when opened from a period, a class or a child; otherwise today's periods for the person's classes; required before Start recording or Type the marks)
 - **button** Start recording: microphone permission asked; the button becomes Stop; a timer counts
 - **button** Stop: recording ends; Send and Record again appear
 - **button** Send: one pii.educator_note row with the session id, status received; the page says 'sent, the reader is listening' and links to Notes
 - **upload** Add a photo: jpg/png/heic accepted; the photo attaches to the session, never to a child
-- **link** Type the marks → Confirm what the reader heard (`/notes/[id]`)
-- **link** rail: The period → the session's name (`/period/[id]`)
+- **button** Type the marks: creates the empty note for the chosen session and class in this step and opens it on the confirm screen
+- **link** rail: The period → the session's name (`/period/[id]`) (drawn only when a session is chosen)
 - **link** rail: The activity → the activity's name (`/setup/activities/[code]`)
 - **link** rail: The class → Class picture (`/children/[class]`)
 Done when (on top of the ten generic checks):
@@ -335,7 +302,7 @@ Blocks, in order:
 - **Cards**: You said: each claim line with its words → Sr. No.s and the mark as a chip; problems the reader flagged pinned on top in red
 - **ClassGrid**: the class marked from the note; corner marks ▲ ▼ ✋ ○; tap a square to change a mark
 - **Form**: 'the rest did as expected' switch · Confirm this note (main)
-Rail (Connected to): The period · The activity · The class · Correct a confirmed note
+Rail (Connected to): The period · The activity · The class
 Main action: Confirm this note · Next step: the next note waiting
 Data: pii.educator_note + draft claims from the engine; activity_observation written at confirm, one row per child, confirmation_id
 Empty: No note waiting: link to Record · Phone: the grid first, then her words; Confirm fixed at the bottom
@@ -344,10 +311,10 @@ Every control on the screen (9), and what the test does with each:
 - **cell** each square: opens the mark picker: above / as expected / below / not willing / absent / clear; the square's corner mark changes; the claim it came from is marked changed
 - **switch** the rest did as expected: every unmarked present child gets as-expected with entry mode group; off removes them
 - **button** Confirm this note: one activity_observation per marked child with one confirmation_id; the note's status becomes confirmed; lands on the next waiting note or Notes
+- **button** Correct this note: a confirmed note only: writes a superseding note row; the old row is never edited (absent on a waiting note)
 - **link** rail: The period → the session's name (`/period/[id]`)
 - **link** rail: The activity → the activity's name (`/setup/activities/[code]`)
 - **link** rail: The class → Class picture (`/children/[class]`)
-- **link** rail: Correct a confirmed note → Notes (`/notes`)
 - **child_name** each square and each claim line (the name beside the Sr. No., so she can check the right child is marked)
 Done when (on top of the ten generic checks):
 - Confirm writes one activity_observation per marked child, none for an unmarked child, all with one confirmation_id
@@ -359,7 +326,7 @@ Done when (on top of the ten generic checks):
 ### Timetable
 
 #### Timetable `/timetable`
-Who: both · Phase: Core · Backend: CP-22 · Old page today: part (/educator/week) · Slice: UI-5
+Who: both · Phase: Core · Backend: CP-22 · Old page today: part (/educator/week) · Slice: UI-6
 Eyebrow: K2 Red
 Purpose: The fortnight is the unit. Week A and week B, each period a block; a moved period is marked, a clash is red until the coordinator accepts it.
 Blocks, in order:
@@ -376,7 +343,7 @@ Every control on the screen (11), and what the test does with each:
 - **tab** Day / Week / Fortnight (Day by default at 400 px)
 - **filter** this / next fortnight
 - **cell** each grid cell → the session's name (`/period/[id]`)
-- **fold** a moved cell's details (who, why, when) (hover shows it at 1440; tap at 400)
+- **fold** a moved cell's details (who, why, when) (opens on click, tap or Enter; never by hover alone)
 - **link** Fortnight 9 card → Fortnight 9 (`/timetable/fortnight/[n]`)
 - **link** Materials card → Materials, this fortnight (`/timetable/materials`)
 - **link** rail: Fortnight 9 → Fortnight 9 (`/timetable/fortnight/[n]`)
@@ -391,7 +358,7 @@ Done when (on top of the ten generic checks):
 
 #### Fortnight 9 `/timetable/fortnight/[n]`
 Who: both · Phase: Core · Backend: CP-6 · CP-22 · Old page today: no · Slice: UI-6
-Eyebrow: 17-Nov to 28-Nov
+Eyebrow: 16-Nov to 27-Nov
 Purpose: Its state, its plan lines, and what changed when the draft went live. Frozen once it starts; a move after that is a hand move, kept with who made it.
 Blocks, in order:
 - **Stepper**: drafted · approved · live · frozen
@@ -473,7 +440,7 @@ Done when (on top of the ten generic checks):
 
 
 #### Timetable rules `/timetable/rules`
-Who: coordinator · Phase: Core · Backend: CP-11 · Old page today: yes · Slice: UI-5
+Who: coordinator · Phase: Core · Backend: CP-11 · Old page today: yes · Slice: UI-6
 Eyebrow: Every grade
 Purpose: Period times, blocked days, fixed slots and subject limits, kept as rows with who changed them.
 Blocks, in order:
@@ -483,7 +450,7 @@ Blocks, in order:
 Rail (Connected to): Draft from the rules · Timetable
 Main action: Add a rule · Next step: Draft
 Data: period, timetable_block, timetable_limit, timetable_rule_edit
-Empty: No rules yet: 'Add the period times first' · Phone: cards
+Empty: No rules yet: 'Add the period times first' · Phone: the table scrolls sideways in its own box
 Every control on the screen (7), and what the test does with each:
 - **filter** grade
 - **filter** kind
@@ -505,18 +472,18 @@ Blocks, in order:
 - **FilterBar**: day · week · fortnight
 - **DataTable**: item · quantity (editable) · for which activity (link) · source
 - **Cards**: School list (coordinator) · Notes to read (notes the system could not match to an item)
-Rail (Connected to): every activity in the plan · Fortnight 9 · School list · Capture here: photo
-Main action: Fill the quantities · Next step: School list
+Rail (Connected to): every activity in the plan · Fortnight 9 · Capture here: photo
+Main action: Fill the quantities · Next step: Fortnight 9
 Data: materials_list, materials_line, activity_material, material_item
-Empty: No plan lines with materials · Phone: cards
+Empty: No plan lines with materials · Phone: the table scrolls sideways in its own box
 Every control on the screen (10), and what the test does with each:
 - **filter** day / week / fortnight
 - **field** quantity (each line): a number; saving writes materials_line_edit with who; the amber 'to confirm' chip clears
 - **button** Remove (each line): the line is marked removed with who, never deleted
 - **button** Add from the catalogue: a picker of material_item; never free text
 - **link** each line's activity → the activity's name (`/setup/activities/[code]`)
-- **link** School list → Materials, this fortnight (`/timetable/materials`) [coordinator only; absent and refused for others] (the school-wide view of this screen)
-- **link** Notes to read → Materials, this fortnight (`/timetable/materials`) (the review list)
+- **tab** My class / School list [coordinator only; absent and refused for others] (the school-wide view of this screen; the address carries the tab)
+- **filter** Notes to read (shows only the lines the system could not read)
 - **link** rail: each activity in the plan → the activity's name (`/setup/activities/[code]`)
 - **link** rail: Fortnight 9 → Fortnight 9 (`/timetable/fortnight/[n]`)
 - **upload** capture: Photo: a photo attaches to the list, never to a child
@@ -537,8 +504,8 @@ Blocks, in order:
 Rail (Connected to): Record a note · Class picture · Today · Capture here: voice
 Main action: Confirm the oldest · Next step: Class picture
 Data: pii.educator_note joined to activity_observation counts; note_status rows
-Empty: No notes yet this fortnight: link to Record · Phone: cards
-Every control on the screen (14), and what the test does with each:
+Empty: No notes yet this fortnight: link to Record · Phone: the table scrolls sideways in its own box
+Every control on the screen (13), and what the test does with each:
 - **filter** class [coordinator only; absent and refused for others] (an educator with one class has no class filter)
 - **filter** state
 - **filter** week
@@ -546,13 +513,12 @@ Every control on the screen (14), and what the test does with each:
 - **button** × on a filter chip: removes that filter from the address
 - **button** Clear: removes every filter
 - **row** Confirm (a waiting note) → Confirm what the reader heard (`/notes/[id]`)
-- **row** Open (a confirmed note) → Confirm what the reader heard (`/notes/[id]`) (read-only view of a confirmed note)
-- **button** Correct (a confirmed note): opens the confirm screen in correction mode; on Confirm a superseding activity_observation row is written with a reason; the old row is unchanged
+- **row** Open (a confirmed note) → Confirm what the reader heard (`/notes/[id]`) (the confirmed note on the confirm screen, where Correct this note lives)
 - **link** page: Later → → Notes (`/notes`) (the next ten rows; the address carries the page)
-- **link** rail: Record a note → Record a note (`/period/[id]/record`)
+- **link** rail: Record a note → Record a note (`/record`)
 - **link** rail: Class picture → Class picture (`/children/[class]`)
 - **link** rail: Today → Today (`/today`)
-- **link** capture: Voice note → Record a note (`/period/[id]/record`)
+- **link** capture: Voice note → Record a note (`/record`)
 Done when (on top of the ten generic checks):
 - a correction writes a superseding row with a reason and never updates the old one
 - the coordinator sees every class, an educator their own (access fixture)
@@ -566,18 +532,15 @@ Purpose: Where each child stands, two ways in: the class picture from notes (nur
 Blocks, in order:
 - **Cards**: Class picture: my class, count, from confirmed notes · Assessments: grades, live count, answers to check · Notes
 - **DataTable**: coordinator: every class with children count, seen this fortnight, not seen
-Rail (Connected to): Class picture · Assessments · Notes
+Rail (Connected to): none
 Main action: Open the class · Next step: Class picture
 Data: school_class, enrolment counts, child_observed_state coverage
-Empty: No class linked to you: 'The coordinator links you to the classes you teach' · Phone: cards
-Every control on the screen (7), and what the test does with each:
+Empty: No class linked to you: 'The coordinator links you to the classes you teach' · Phone: the table scrolls sideways in its own box
+Every control on the screen (4), and what the test does with each:
 - **link** Open the class → Class picture (`/children/[class]`)
 - **link** Open the assessments → Assessments (`/children/assessments`)
 - **link** Open the notes → Notes (`/notes`)
 - **row** each class row → Class picture (`/children/[class]`) [coordinator only; absent and refused for others]
-- **link** rail: Class picture → Class picture (`/children/[class]`)
-- **link** rail: Assessments → Assessments (`/children/assessments`)
-- **link** rail: Notes → Notes (`/notes`)
 Done when (on top of the ten generic checks):
 - an educator with one class is taken straight to its picture; with several, picks; the coordinator picks from every class
 
@@ -594,7 +557,7 @@ Blocks, in order:
 Rail (Connected to): Show: each skill seen · a child · Record a note · Assessments (grades 1–4: Class results folds here) · Capture here: voice, photo
 Main action: a child · Next step: the skill
 Data: child_observed_state (K2) or child_skill_state (grades 1–4) for the class by skill; graph_run date
-Empty: No child seen yet: the grid of dashed squares with 'not seen yet, nothing more' · Phone: 8 columns
+Empty: No child seen yet: the grid of dashed squares with 'not seen yet, nothing more' · Phone: 6 columns of 44 px squares
 Folds in: /growth (Class results), /growth/class/[section]
 Every control on the screen (10), and what the test does with each:
 - **filter** skill
@@ -603,10 +566,10 @@ Every control on the screen (10), and what the test does with each:
 - **child_name** each square (the name beside the Sr. No.)
 - **link** rail: Show: each skill seen → Class picture (`/children/[class]`) (same screen, the skill filter changes)
 - **link** rail: a child → Where this child is (`/children/[class]/[roll]`)
-- **link** rail: Record a note → Record a note (`/period/[id]/record`)
+- **link** rail: Record a note → Record a note (`/record`)
 - **link** rail: Assessments → Assessments (`/children/assessments`)
-- **link** capture: Voice note → Record a note (`/period/[id]/record`)
-- **link** capture: Photo → Record a note (`/period/[id]/record`)
+- **link** capture: Voice note → Record a note (`/record`)
+- **link** capture: Photo → Record a note (`/record`)
 Done when (on top of the ten generic checks):
 - an empty square's title reads 'not seen yet', never 'not secure'
 - each square shows the Sr. No. and the child's name read from pii by child_id, and no photo (DOM scan)
@@ -639,10 +602,10 @@ Every control on the screen (14), and what the test does with each:
 - **link** page: more entries → Where this child is (`/children/[class]/[roll]`) (older entries, ten at a time)
 - **link** rail: each skill → the skill's name (`/setup/skills/[code]`)
 - **link** rail: Back to the class → Class picture (`/children/[class]`)
-- **link** rail: Add a note about this child → Record a note (`/period/[id]/record`)
+- **link** rail: Add a note about this child → Record a note (`/record`)
 - **link** rail: Reports → Reports (`/children/reports`)
-- **link** capture: Voice note → Record a note (`/period/[id]/record`)
-- **link** capture: Photo → Record a note (`/period/[id]/record`)
+- **link** capture: Voice note → Record a note (`/record`)
+- **link** capture: Photo → Record a note (`/record`)
 Done when (on top of the ten generic checks):
 - a paper's result and a voice note appear on one timeline in date order
 - a correction shows as a new entry that names the entry it replaces
@@ -662,16 +625,16 @@ Blocks, in order:
 Rail (Connected to): Answers to check · Pack to approve · A child with results in · The skills tested · Question bank · Capture here: photo
 Main action: Check answers · Next step: an assessment
 Data: existing queries-papers (assessmentList, paperList), STEP_WORDS, STATUS_WORDS
-Empty: No assessments yet: Make one · Phone: cards; the drop zone becomes 'take photos'
+Empty: No assessments yet: Make one · Phone: the table scrolls sideways in its own box; the drop zone becomes 'take photos'
 Folds in: /papers, /papers/make, /capture, /capture/[id]
 Every control on the screen (19), and what the test does with each:
 - **link** do now tile → Check the answers (`/children/assessments/[key]/[roll]`) (the first paper with answers to judge)
 - **link** this week tile → the built name (`/children/assessments/[key]`) (the first pack to approve)
 - **link** results in tile → the built name (`/children/assessments/[key]`)
-- **link** Make: For a class → the built name (`/children/assessments/[key]`) (a new assessment created at step Created)
-- **link** Make: For each child → the built name (`/children/assessments/[key]`)
-- **link** Make: For one child → the built name (`/children/assessments/[key]`)
-- **link** Make: A ready-made worksheet → the built name (`/children/assessments/[key]`)
+- **button** Make: For a class → the built name (`/children/assessments/[key]`): creates the assessment at step Created, then opens it
+- **button** Make: For each child → the built name (`/children/assessments/[key]`): creates the assessment at step Created, then opens it
+- **button** Make: For one child → the built name (`/children/assessments/[key]`): creates the assessment at step Created, then opens it
+- **button** Make: A ready-made worksheet → the built name (`/children/assessments/[key]`): creates the assessment at step Created, then opens it
 - **upload** Read: choose scans or drop them: pdf/jpg/png/heic; the QR names the sheet; a paper appears at Uploaded; a file with no QR shows 'could not find the QR' and nothing is written
 - **field** a Google Drive link (a non-Drive address shows a message)
 - **button** Read it: the Drive file is fetched and read as above
@@ -703,14 +666,13 @@ Blocks, in order:
 Rail (Connected to): a child's paper · the skills · the class picture · all assessments · the printed pack · Capture here: photo
 Main action: the step's action · Next step: Assessments
 Data: sheet/paper rows, counts per step (Counts), prescriptions and reasons, approval ledger
-Empty: No copies yet · Phone: stepper wraps; table becomes cards
+Empty: No copies yet · Phone: stepper wraps; the table scrolls sideways in its own box
 Folds in: /papers/approve, /papers/card, /papers/review/[qr]
-Every control on the screen (15), and what the test does with each:
+Every control on the screen (14), and what the test does with each:
 - **link** Open the skill → the skill's name (`/setup/skills/[code]`)
 - **field** Change the level (a row, before print): Easy / Medium / Hard / Advance; the row's reason updates; kept as an override with who
 - **button** Approve the pack: approval row for this pack only; the stepper moves to Approved; Print appears; the rows' Change the level disappears
 - **button** Print: the pack PDF opens in a new tab; the stepper moves to Printed
-- **button** Rename: the educator's own name for the assessment is kept (assessment_name); the built name stays as the subtitle
 - **row** Check this paper → Check the answers (`/children/assessments/[key]/[roll]`)
 - **button** Sign it off (a row): the paper's results are confirmed; its chip becomes results in
 - **row** The child → Where this child is (`/children/[class]/[roll]`)
@@ -741,8 +703,7 @@ Main action: Say what the child wrote · Next step: the next paper
 Data: capture_page, item_result with status and confidence, key, misconception tags
 Empty: Nothing left to judge on this paper: Sign it off · Phone: image above, answers below
 Folds in: /capture/check, /capture/[id]
-Every control on the screen (10), and what the test does with each:
-- **button** zoom in / zoom out / fit: the page image scales; the answer in focus stays outlined
+Every control on the screen (9), and what the test does with each:
 - **row** each answer row: the page scrolls to that answer and outlines it
 - **field** what the child wrote (for the answer in focus; required when judging)
 - **button** Say what the child wrote: a read_correction row; the engine marks it right / wrong / blank; the chip updates; the next judge answer comes into focus
@@ -769,7 +730,7 @@ Blocks, in order:
 Rail (Connected to): the child · the class picture · Consent (Setup)
 Main action: Approve my lines · Next step: the coordinator's list
 Data: report_item, approval (two kinds), consent
-Empty: No report lines drafted yet · Phone: cards
+Empty: No report lines drafted yet · Phone: the table scrolls sideways in its own box
 Every control on the screen (11), and what the test does with each:
 - **filter** class · state
 - **child_name** each report row (the child's name beside the Sr. No.; what a parent's copy shows is the school's decision with CP-19)
@@ -778,7 +739,7 @@ Every control on the screen (11), and what the test does with each:
 - **button** Approve (educator, a line): educator approval row; the line's chip moves to 'to approve (coordinator)'
 - **button** Approve (coordinator, a line): coordinator approval row [coordinator only; absent and refused for others]
 - **button** Send (a child): only with both approvals on every line and consent on file; otherwise absent and refused [coordinator only; absent and refused for others]
-- **link** Preview the parent's copy → Reports (`/children/reports`) (a PDF in a new tab)
+- **button** Preview the parent's copy: opens the parent's copy as a PDF in a new tab (a PDF in a new tab)
 - **link** rail: the child → Where this child is (`/children/[class]/[roll]`)
 - **link** rail: the class picture → Class picture (`/children/[class]`)
 - **link** rail: Consent → Classes and children (`/setup/classes`)
@@ -833,7 +794,7 @@ Blocks, in order:
 Rail (Connected to): each skill · each activity
 Main action: a skill · Next step: an activity
 Data: learning_objective, learning_objective_skill, activity_objective
-Empty: No skill linked yet: shown, no invention · Phone: cards
+Empty: No skill linked yet: shown, no invention · Phone: the table scrolls sideways in its own box
 Every control on the screen (4), and what the test does with each:
 - **link** Open the skill (each card) → the skill's name (`/setup/skills/[code]`)
 - **row** each activity row → the activity's name (`/setup/activities/[code]`)
@@ -855,7 +816,7 @@ Blocks, in order:
 Rail (Connected to): the class picture on this skill · its objectives · after / next skills · Question bank for this skill
 Main action: a child · Next step: the next skill
 Data: child_observed_state / child_skill_state by skill; skill_link_confirmed; skill_level; misconception
-Empty: nobody seen on it yet · Phone: grid 8 columns
+Empty: nobody seen on it yet · Phone: grid 6 columns of 44 px squares
 Folds in: /skill-sets/[code], /skill-sets/[code]/edit
 Every control on the screen (13), and what the test does with each:
 - **filter** class [coordinator only; absent and refused for others]
@@ -888,7 +849,7 @@ Blocks, in order:
 Rail (Connected to): Skills to approve · Question bank · Drafts to check · Offers
 Main action: Check the drafted parts · Next step: an activity
 Data: activity, skill, skill_level, activity_part_source, curriculum_proposal
-Empty: none · Phone: cards
+Empty: none · Phone: the table scrolls sideways in its own box
 Folds in: /, /curriculum/browse, /curriculum/fill, /curriculum/offers, /asks
 Every control on the screen (11), and what the test does with each:
 - **filter** grade · subject · topic · status
@@ -904,7 +865,7 @@ Every control on the screen (11), and what the test does with each:
 - **link** rail: Drafts to check → the activity's name (`/setup/activities/[code]`)
 Done when (on top of the ten generic checks):
 - one list carries activities (K2) and skills (grades 1–4) under one filter row
-- the skills-to-approve count appears here and not on Today
+- Curriculum shows no count of skills to approve; that number is the eyebrow of Skills to approve and appears nowhere else
 - Yes / No act on one offer each; no control acts on all offers
 
 
@@ -916,22 +877,22 @@ Blocks, in order:
 - **FilterBar**: grade · subject
 - **DataTable**: skill · grade · levels · its own Approve
 - **Details**: What a wrong answer counts against
-Rail (Connected to): Curriculum · Levels to review
+Rail (Connected to): Curriculum
 Main action: Read and approve the first · Next step: Curriculum
 Data: skill.level_approved, skill_level, calibration_review
-Empty: Nothing to approve · Phone: cards
+Empty: Nothing to approve · Phone: the table scrolls sideways in its own box
 Folds in: /skill-sets/approve, /skill-sets/levels
 Every control on the screen (7), and what the test does with each:
 - **filter** grade · subject
+- **tab** Skills / Levels to review (the second list is the levels most children are secure at; the address carries the tab)
 - **link** a skill's name → the skill's name (`/setup/skills/[code]`)
 - **button** Approve (a row): level_approved set for that skill with who; the row leaves the list; the eyebrow's count drops by one
 - **fold** What a wrong answer counts against
 - **link** page: Later → → Skills to approve (`/setup/skills/approve`)
 - **link** rail: Curriculum → Curriculum (`/setup/curriculum`)
-- **link** rail: Levels to review → Skills to approve (`/setup/skills/approve`) (the review list of levels most children are secure at)
 Done when (on top of the ten generic checks):
 - approval is per row; no control approves more than one
-- the eyebrow count equals the rows across all pages
+- the eyebrow count equals the rows across all pages, and it is the only place the number is shown
 
 
 #### Question bank `/setup/question-bank`
@@ -942,10 +903,10 @@ Blocks, in order:
 - **Cards**: What the bank is · What is in the bank (ready / removed counts)
 - **FilterBar**: grade · skill · difficulty · search
 - **DataTable**: question · skill · level · kind · status
-Rail (Connected to): a skill · Worksheets by taxonomy (details)
+Rail (Connected to): a skill
 Main action: Open a question · Next step: Curriculum
 Data: item, item_stat, bank_proposal/decision
-Empty: No questions for this skill yet · Phone: cards
+Empty: No questions for this skill yet · Phone: the table scrolls sideways in its own box
 Folds in: /library, /worksheets, /worksheets/taxonomy
 Every control on the screen (7), and what the test does with each:
 - **fold** What the bank is
@@ -953,7 +914,7 @@ Every control on the screen (7), and what the test does with each:
 - **filter** search
 - **row** each question row → the question as it prints (`/setup/question-bank/[key]`)
 - **link** page: Later → → Question bank (`/setup/question-bank`)
-- **link** details: statistics → Question bank (`/setup/question-bank`) (the counts and worksheets by taxonomy, behind a details link)
+- **fold** Statistics (counts and worksheets by taxonomy)
 - **link** rail: a skill → the skill's name (`/setup/skills/[code]`)
 Done when (on top of the ten generic checks):
 - statistics and taxonomy sit behind the details link, not on the first view (rule 8)
@@ -995,7 +956,7 @@ Blocks, in order:
 Rail (Connected to): Fortnight 9 · Timetable · Classes and children
 Main action: Add a grant · Next step: Classes and children
 Data: staff, staff_role_grant, role; session states; educator_note statuses; note_claim decisions
-Empty: none · Phone: cards
+Empty: none · Phone: the table scrolls sideways in its own box
 Every control on the screen (7), and what the test does with each:
 - **row** each staff row: opens that person's grants fold
 - **fold** a person's grants
@@ -1021,7 +982,7 @@ Blocks, in order:
 Rail (Connected to): Staff · Class picture · the fortnight
 Main action: Move a child · Next step: Staff
 Data: school_class, enrolment, child_move, names read from pii by child_id at render, never stored in these tables
-Empty: none · Phone: cards
+Empty: none · Phone: the table scrolls sideways in its own box
 Folds in: /school
 Every control on the screen (8), and what the test does with each:
 - **row** each class row: opens that class's children table below
@@ -1044,7 +1005,7 @@ Eyebrow: Changed rarely
 Purpose: The curriculum, the skills, the question bank, staff, classes and the school. Statistics and old scans sit behind details links.
 Blocks, in order:
 - **Cards**: Curriculum · Skills to approve (count) · Question bank · Staff · Classes and children · School (campus, academic year, fortnights)
-Rail (Connected to): each card
+Rail (Connected to): none
 Main action: Curriculum · Next step: none
 Data: counts
 Empty: none · Phone: one column
@@ -1054,10 +1015,28 @@ Every control on the screen (6), and what the test does with each:
 - **link** Question bank → Question bank (`/setup/question-bank`)
 - **link** Staff → Staff and classes (`/setup/staff`) [coordinator only; absent and refused for others]
 - **link** Classes and children → Classes and children (`/setup/classes`) [coordinator only; absent and refused for others]
-- **link** details: the blocks gallery → Setup (`/setup`) (/setup/blocks, staff only)
+- **link** details: the blocks gallery → The blocks (`/setup/blocks`) (/setup/blocks, staff only)
 Done when (on top of the ten generic checks):
 - every setup page is reachable in two clicks from the bar
 - an educator sees only the cards their group may open
+
+
+#### The blocks `/setup/blocks`
+Who: coordinator · Phase: Core · Backend: none · Old page today: no · Slice: UI-2
+Eyebrow: Setup · for the people who build the site
+Purpose: Every part the site is built from, with sample data and its words. Open one to see how it behaves.
+Blocks, in order:
+- **Details**: one fold per block in screens.json `blocks`: the live component on sample data, its states, the words it uses
+Rail (Connected to): none
+Main action: Open the first block · Next step: Setup
+Data: screens.json `blocks`; sample data lives in the page, never a database row
+Empty: never empty: the list is the block list · Phone: one column
+Folds in: 
+Every control on the screen (1), and what the test does with each:
+- **fold** each block's sample (closed by default; opening shows the component, never a screenshot)
+Done when (on top of the ten generic checks):
+- there is one fold per entry of `blocks`, and a block with no sample fails the test
+- the page is absent for an educator and linked only from Setup's details link
 
 
 ### Outside the bar
@@ -1100,7 +1079,7 @@ Every control on the screen (4), and what the test does with each:
 - **field** School email (required; a non-email shows a message)
 - **field** Password (required)
 - **button** Sign in: lands on Today for the person's group; a wrong password shows one message and counts a sign_in_failure; after the limit the form says to wait
-- **link** Forgot your password? → Sign in (`/login`) (the forgot form; sends one email; the link sets a new password once)
+- **tab** Sign in / Forgot your password? (the forgot form on the same page; sends one email; its link sets a new password once)
 Done when (on top of the ten generic checks):
 - lands on Today for the person's group
 - no development bypass in production
@@ -1120,7 +1099,7 @@ Data: static, generated from screens.json
 Empty: none · Phone: stacked
 Folds in: /guide/[slug], /guide/workflows, /workflows
 Every control on the screen (3), and what the test does with each:
-- **link** each job → Today (`/today`) (lands on the page that does the job)
+- **link** each job → Today (`/today`) (the jobs are generated from screens.json: each names its own screen, and the test follows every one)
 - **fold** each page's section
 - **link** ? on any page → Start here (`/guide`) (opens this page at that page's section)
 Done when (on top of the ten generic checks):
@@ -1146,3 +1125,63 @@ Every control on the screen (4), and what the test does with each:
 Done when (on top of the ten generic checks):
 - Send writes one staff_note and one issue; the issue body carries no child's name: the page warns not to type one, and a screenshot is kept on the private side, linked by id, never attached to the public GitHub issue (names now appear on some screens and the repository is public)
 
+
+## 7. Slices and their goal points
+
+Each slice below is one scoped change in the Athena loop: pasted as a GitHub issue in the Scope form (`scopes.md` holds the
+paste-ready text), locked by Nimish, proofs written first, built, verified, shipped. Every Done-when line is observable by a
+test or a script named in it. The generic checks apply to every screen a slice builds, on top of the screen's own lines:
+
+1. Renders at 1440: the eyebrow (14 px or larger), one h1 equal to the title, a purpose line of at most 140 characters, exactly one main action, the trail, and the rail where the screen lists one; a screen marked `frame: bare` (sign in) shows the bare frame, its h1 and its main action only. At 400 px every screen passes a smoke test (it renders, one h1, no console error, no sideways scroll of the page); screens marked `phone_gate` also pass checks 2, 5, 6 and 9 at 400.
+2. Completeness: the set of interactive controls in the main column and the rail (a, button, [role=button], summary, input, select) equals this screen's element list for the signed-in role: nothing extra, nothing missing. A control that does nothing on click (no address change, no DOM change, no request) fails. The bar's own controls are not part of any screen's count; they are driven once per run against the `bar` list in screens.json.
+3. Navigation: every link and row lands on its target screen (h1 check) and Back returns to this screen with the same address; a link whose target is its own screen (paging, a tab) changes the address and Back restores it; each earlier step of the trail returns to that screen; the four doors on the bar open their first screen from here. A control whose target screen's slice is not in `merged_slices` is not drawn (it is not a dead link), and its test is `test.fixme` until that slice merges.
+4. Roles: a control marked for one group is absent from the page for the other (the UI lane's test). The refusal of the write behind it is tested once per write route, in the lane that owns it (the database rules CP-3 and CP-4, or the route's own group check), not once per screen.
+5. Keyboard: Tab reaches every control in reading order; Enter or Space activates it; the focused control shows a visible ring (outline at least 2 px); Escape closes an open Sheet or Dialog. Nothing is shown by hover alone.
+6. Touch: on a `phone_gate` screen at 400 px every control is at least 44 × 44 px with at least 8 px to its neighbour.
+7. Words: every state shown is a word from the STATES rows beside its icon, never colour alone; a child's name appears only on screens whose element list marks a `child_name` element, read from pii by child_id, and on no other screen; every name the test finds on a page is in `tests/fake-names.ts`, the one list of names in the repository (the repository is public: a real name fails the run, and no fixture, test or baseline holds any other); no name is in any address; 'educator' never 'teacher'; no page loads a script or font from a host other than the site's own.
+8. Accessibility: axe reports no serious or critical violation at either width, in light and in dark.
+9. Empty: with the fixture's empty class or empty filter, the screen shows exactly its stated empty text and its next-step link, and no table head over no rows, no zero columns, no dash columns.
+10. Themes: a screenshot in light and in dark at 1440 is committed as a baseline; sampled text nodes measure at least 4.5:1 against what is behind them in both.
+
+The bar is on every signed-in screen and is driven once per run, not once per screen (its controls are outside each screen's count):
+
+- **link** Today → Today (`/today`) (a coordinator lands on Today, the school)
+- **link** Timetable → Timetable (`/timetable`)
+- **link** Children → Children (`/children`)
+- **link** Setup → Setup (`/setup`) (shown to the coordinator group only)
+- **field** Search (Sr. No. or name; Enter submits by POST; typeahead offers at most five)
+- **switch** Acting as (coordinator only: shows the site as an educator would see it; a view, never a permission)
+- **link** ? → Start here (`/guide`) (opens the guide at this page's section)
+- **button** Sign out: ends the session and lands on Sign in
+
+What the test does with each kind of control:
+
+| Kind | What the test does with it |
+|---|---|
+| link | click lands on the target screen: its h1 equals the target's title (or matches its pattern); Back returns |
+| row | a table row or list row that is one link: as link |
+| cell | a square of the ClassGrid: as link (a child) or as button (a mark, on the confirm screen) |
+| tab | changes the view in place; the address carries the tab; the h1 does not change |
+| button | click produces the stated effect: a row written, a state chip changed, a redirect; the test asserts the effect in the database or the DOM |
+| fold | a Details: closed by default unless stated; click opens it and its content is visible; click again closes; the main action is never inside it |
+| filter | changes the rows and writes itself into the address; × clears one; Clear clears all; a reload keeps them |
+| field | a form field with a label; empty when required shows the stated message and submits nothing |
+| switch | a two-state control; the state is spoken (aria-checked) and shown as a word, never colour alone |
+| child_name | not a control: text. The child's name, read from the pii schema at render time and joined by child_id, shown only where an element of this kind is listed. The test asserts the name is present and, on every other screen, absent; it is never in a URL, a log line, a state word or an analytics call |
+| upload | accepts the stated file kinds; a wrong kind shows a message; a right one shows the file's name before anything is sent |
+
+| Slice | What | Screens | Waits for |
+|---|---|---|---|
+| UI-1 Tokens and the existing parts on them | One source of colour, type and space for the whole site. tokens.css is generated from tokens.json; every colour literal in the app is replaced by a token, including in the blocks that exist today (StatusChip, DataTable, FilterBar, EmptyState, Count); shadcn/ui is initialised with the two primitives used first; the fonts are self-hosted; the journey-test harness the Athena loop demands exists. No page changes shape in this slice. | none (infrastructure) | nothing (type and colours decided 9 Nov) |
+| UI-13 The frame and the inventory test | One navigation for the whole site: the top bar with its four doors, search, acting-as, help and sign out, the trail and the rail (AppFrame), replacing the four shells and the K2 side menu; every existing page reachable from the bar; docs/ux-rules.md brought in line; and the inventory test that reads screens.json and drives every screen like a person, proved here on a small inventory of pages that already exist. | none (infrastructure) | UI-1 |
+| UI-2 The blocks | The school's new blocks of SPEC §5, built once, each with sample data on a staff-only gallery screen (`blocks`) and screenshots in both themes; every chart drawn to scale from its data. AppFrame is built in UI-13 and the existing blocks moved onto the tokens in UI-1. | The blocks | UI-13 |
+| UI-3 Node pages: the K2 walk | Period, record, confirm, notes, children, class picture, child, activity, objective and skill as node pages on the blocks, each walking to its neighbours through the rail and back through the trail; the old routes redirect. | the session's name, Record a note, Confirm what the reader heard, Notes, Children, Class picture, Where this child is, the activity's name, the objective's title, the skill's name | UI-2; the K2 switch (a config row) on for the pages behind it |
+| UI-4 Node pages: assessments | Assessments, one assessment and one child's paper as node pages on the blocks; the seven old assessment pages and Class results fold in; the queries and the seven steps are unchanged. | Assessments, the built name, Check the answers | UI-2 |
+| UI-5 The coordinator's views: staff, classes, setup and search | Staff and grants, classes and children, the Setup home and search; the small writes that exist today (a grant, a child move) through their own rows. | Staff and classes, Classes and children, Setup, Search | UI-2 for the views; CP-1 merged for moving a child |
+| UI-6 Timetable, rules and the fortnight's actions | The timetable's day, week and fortnight views and the timetable rules, the fortnight node with Approve and Go live, the draft from the rules with its unmet rules, and moves by hand with clashes accepted by the coordinator only. Until this merges the bar's Timetable door opens the page that exists today. | Timetable, Timetable rules, Fortnight 9, Draft from the rules, Moves by hand | CP-6, CP-11, CP-12 and CP-22 merged |
+| UI-7 Today, both kinds | The educator's Today (the day, the attention strip, notes to confirm, the class) and the coordinator's Today (what waits, last week's heat grid, next week), composed from the blocks over the queries that exist; What needs doing folds in and its count moves to Setup where it belongs. | Today, Today, the school | UI-3 and UI-5; UI-6 for the coordinator's clash and draft rows (rows for a backend not yet merged simply do not appear) |
+| UI-8 Reports | Each child's report, line by line, in the educator's words: two approvals per line, consent on file, then sent. The parent's copy says educator, Easy / Medium / Hard / Advance, no rung and no code. | Reports | CP-19 merged (Next) |
+| UI-9 Materials | The class's materials list for a fortnight, the school's list, the notes the system could not read, and the educator's approval of her own class's list. | Materials, this fortnight | CP-17 and CP-18 merged (Later) |
+| UI-11 Setup content pages: curriculum, skills to approve, question bank, a question | The four existing Setup pages that carry content rather than people, rebuilt on the frame and the blocks: Curriculum (activities and skills under one filter row, with drafts and offers), Skills to approve, the Question bank and one question as it prints. Their queries and their one-row-at-a-time approvals are unchanged; the old routes fold in. | Curriculum, Skills to approve, Question bank, the question as it prints | UI-2 |
+| UI-12 The screens outside the bar: sign in, help, report a problem | Sign in (with forgot and new password), the help pages and the feedback form, rebuilt on the tokens and the blocks; help is generated from screens.json so a new screen gets its section without a hand edit; the feedback form keeps names out of the public GitHub issue. | Sign in, Start here, Report a problem or suggest something | UI-1 and UI-13 (lands on Today once UI-7 is merged) |
+| UI-10 The as-built milestone document | A script that generates docs/frontend/AS-BUILT.md from screens.json plus the last inventory-test run: the milestone document Nimish asked for, so he can see exactly what exists, what each screen's controls are, and what the checks reported. Every slice adds its id to `merged_slices` in screens.json when its proofs pass, so the document is always true. | none (infrastructure) | UI-13 (it can be built early and re-run after every slice) |

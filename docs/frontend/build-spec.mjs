@@ -30,6 +30,7 @@ for (const s of data.screens) {
   if (n !== 1) problems.push(`${s.id}: in ${n} slices (every screen belongs to exactly one)`);
 }
 for (const id of data.merged_slices ?? []) if (!data.slices.some((x) => x.id === id)) problems.push(`merged_slices names unknown slice ${id}`);
+for (const e of data.bar ?? []) if (e.to && !byId[e.to]) problems.push(`bar: "${e.label}" points at unknown screen "${e.to}"`);
 if (problems.length) {
   console.error("screens.json problems:\n  " + problems.join("\n  "));
   process.exit(1);
@@ -46,8 +47,9 @@ const elementLine = (e) => {
 // ---- SPEC.md
 const blocksTable = ["| Block | What it is |", "|---|---|", ...Object.entries(data.blocks).map(([k, v]) => `| ${k} | ${v} |`)].join("\n");
 const kindsTable = ["| Kind | What the test does with it |", "|---|---|", ...Object.entries(data.element_kinds).map(([k, v]) => `| ${k} | ${v} |`)].join("\n");
+const barList = (data.bar ?? []).map(elementLine).join("\n");
 const genericChecks = data.generic_checks.map((c, i) => `${i + 1}. ${c}`).join("\n");
-const slicesTable = ["| Slice | What | Screens | Waits for |", "|---|---|---|---|", ...data.slices.map((x) => `| ${x.id} ${x.title} | ${x.what} | ${x.screens.length ? x.screens.map(title).join(", ") : "the frame and the blocks"} | ${x.waits_for} |`)].join("\n");
+const slicesTable = ["| Slice | What | Screens | Waits for |", "|---|---|---|---|", ...data.slices.map((x) => `| ${x.id} ${x.title} | ${x.what} | ${x.screens.length ? x.screens.map(title).join(", ") : "none (infrastructure)"} | ${x.waits_for} |`)].join("\n");
 const screenSection = (s) =>
   [
     `#### ${s.title} \`${s.route}\``,
@@ -74,7 +76,7 @@ writeFileSync(
   join(here, "SPEC.md"),
   head
     .replace("BLOCKS_TABLE", blocksTable)
-    .replace("GENERIC_CHECKS", genericChecks + "\n\nWhat the test does with each kind of control:\n\n" + kindsTable)
+    .replace("GENERIC_CHECKS", genericChecks + "\n\nThe bar is on every signed-in screen and is driven once per run, not once per screen (its controls are outside each screen's count):\n\n" + barList + "\n\nWhat the test does with each kind of control:\n\n" + kindsTable)
     .replace("SLICES_TABLE", slicesTable)
     .replace("SCREENS", screens)
     .replaceAll("WIREFRAMES_URL", url),
@@ -92,6 +94,7 @@ const scope = (x) => {
     "",
     `Tier ${x.tier}. Waits for: ${x.waits_for}. Specification: docs/frontend/SPEC.md; inventory: docs/frontend/screens.json; wireframes: ${url}.`,
     "",
+    ...(x.plain ? ["### In plain English", "", x.plain, ""] : []),
     "### What",
     "",
     x.what,
@@ -112,7 +115,7 @@ writeFileSync(
     "# The frontend slices as scopes",
     "",
     "Generated from `screens.json` by `build-spec.mjs`; never edit by hand. Each section below is one GitHub issue in the Scope form,",
-    "titled with its id (for example `UI-1: Tokens, frame and the inventory test`). Nimish adds `scope-locked`; the proof-writer turns",
+    "titled with its id (for example `UI-13: The frame and the inventory test`). Nimish adds `scope-locked`; the proof-writer turns",
     "every Done-when line into an executable check in `specs/<ID>/`; then the build starts. Lines that name a screen come from that",
     "screen's own `done_when`; the generic checks of SPEC §7 apply to every screen a slice builds, and are what the inventory test runs.",
     "",
