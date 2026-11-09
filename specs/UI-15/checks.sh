@@ -2,7 +2,7 @@
 # Acceptance proofs for UI-15. Written BEFORE the product code, by a different agent.
 # After `athena lock UI-15` this file, spec.md and proofs/ cannot be edited.
 # One `check` per "Done when" line, same numbering. Each check must be a real command.
-source "$ATHENA_ROOT/.claude/athena/bin/checklib.sh"
+source "$ATHENA_ROOT/bin/checklib.sh"
 cd "$ATHENA_ROOT"
 
 # The browser proofs (1-3, 5) run the site as its own suite does (apps/web/playwright.config.ts: a production build, the
