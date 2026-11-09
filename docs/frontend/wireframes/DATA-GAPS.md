@@ -48,8 +48,7 @@ migrations, and fails if a row here does not name both the screen and the missin
 
 ## Other things the frontend noticed (not table gaps)
 
-- `screens.json` `picture.done_when` says "10 per row at 1440, 8 at 400"; `picture.phone` says "6 columns"; SPEC §2 rule 10
-  and §5 ClassGrid say 8 at 1440 and 3 on a phone. Three numbers for one grid. The pilot draws 8 / 3 (the rule that
-  never bends); the done_when line needs correcting before UI-3 writes its test.
+- Decided 9 Nov 2026 (frontend orchestrator): the class grid is 8 columns at 1440 and 3 on a phone (SPEC §2 rule 10,
+  §5). `picture.done_when`, `picture.phone` and `skill.phone` in `screens.json` now say so.
 - `skill.name` vs `registry_skill.domain`: the pilot's domain filter reads `registry_skill.domain` through
   `skill.registry_codes`; whether K2 domains (Number, Language, Arts) are that column or `subject.name` is for the backend.

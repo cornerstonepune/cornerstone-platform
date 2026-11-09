@@ -14,6 +14,7 @@
 - Live: nothing; docs and tools only (no app, migration or engine change).
 - Next: one wireframe per screen in screens.json, each through check.mjs and Nimish's approval (DESIGN.md §7).
 - For the backend: DATA-GAPS.md (25 rows + 2 from the pilot).
-- Open: `picture.done_when` (10 / 8 columns) disagrees with SPEC §2 rule 10 and §5 (8 / 3) and `picture.phone` (6); the
-  pilot draws 8 / 3. Needs a decision before UI-3's test is written.
+- Decided: the class grid is 8 / 3 columns. `screens.json` picture (done_when, phone) and skill (phone) are fixed, and
+  SPEC.md and scopes.md are regenerated with build-spec.mjs.
+- The kit stays, as the reference UI-2 ports into components (the orchestrator, 9 Nov). The cut commit was reverted.
 - Regenerating icons needs lucide-react at the site's version: `LUCIDE_DIR=<unpacked lucide-react@1.59.0>`.

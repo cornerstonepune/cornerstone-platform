@@ -112,6 +112,12 @@ UI-1 generates `apps/web/tests/fake-names.ts` from the same JSON, so the site ha
 
 ## 7. How to make a wireframe
 
+The order of work (Nimish, 9 Nov 2026): UI-14 builds the tokens, UI-13 the frame and UI-2 the 26 blocks in the app,
+porting `blocks.html` and `components.css` into components. Until then, a wireframe is drawn in this kit, as below.
+Afterwards, a wireframe is a page assembled from those real components, with fixture rows shaped exactly like the
+target tables. It follows the same rules: the same `data-el`, `data-bar`, `data-source` and `data-gap` tags, the
+same names, and the same two widths.
+
 1. Read the screen's entry in `screens.json`: route, who, blocks, `elements`, rail, capture, main, empty, phone, data,
    `done_when`.
 2. Copy `wireframes/picture.html` to `wireframes/<screen-id>.html`. Keep the two frames: `<section class="wf"
