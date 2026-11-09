@@ -187,6 +187,7 @@ declare
   cur fortnight_plan%rowtype;
   sig text;
   new_state text := 'draft';
+  unchanged boolean;
   new_id uuid;
 begin
   select * into f from fortnight where id = p_fortnight;
@@ -225,8 +226,11 @@ begin
 
   select * into cur from fortnight_plan
   where school_class_id = p_class and fortnight_id = p_fortnight order by version desc limit 1;
-  if found and cur.baseline_id is not distinct from base.id and internal.fortnight_signature_of_plan(cur.id) = sig
-     and cur.state = case when new_state = 'rolled_forward' then 'rolled_forward' else cur.state end then
+  -- the same baseline and the same lines give the same answer: the plan already there (a plan that was approved after
+  -- it waited is still the answer for a rerun, so only a rolled-forward verdict must match its state)
+  unchanged := found and cur.baseline_id is not distinct from base.id
+               and internal.fortnight_signature_of_plan(cur.id) = sig;
+  if unchanged and (new_state <> 'rolled_forward' or cur.state = 'rolled_forward') then
     return cur.id;
   end if;
 
