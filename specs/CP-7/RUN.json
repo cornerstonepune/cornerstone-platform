@@ -1,0 +1,15 @@
+{
+ "ok": false,
+ "passed": [],
+ "failed": [
+  "1 a draft records one line per period of each day of weeks A and B on its real date, with who and when",
+  "2 a fortnight matching the last settled one rolls forward with no approval; any difference waits for approval",
+  "3 approving records exactly one approval with who and when and counts as approved; rolled forward has none",
+  "4 drafting a fortnight again with nothing changed writes nothing new",
+  "5 in an exception fortnight of its school year nothing rolls forward; default 2026-27 Fortnights 10 and 11",
+  "6 the coordinator or Everything group approves; anyone else is refused by the function or direct writes",
+  "7 the fortnight cannot be marked approved while a class's fortnight is unsettled or stale",
+  "8 the existing timetable and approval-list suites and the timetable pages are unchanged and pass"
+ ],
+ "ran_at": "2026-11-09T04:16:38+00:00"
+}
