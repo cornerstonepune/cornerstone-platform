@@ -562,6 +562,18 @@
       "seed_once": true
     },
     {
+      "key": "fortnight.no_roll_forward",
+      "description": "Fortnights of a school year that always need a yes, even when nothing in the timetable changed: {\"<school year>\": [fortnight numbers]}. Default: Fortnights 10 and 11 of 2026-27.",
+      "value": {"2026-27": [10, 11]},
+      "seed_once": true
+    },
+    {
+      "key": "fortnight.approver_groups",
+      "description": "The access groups (CP-3) whose members may approve a class's fortnight timetable. Default: the Everything group.",
+      "value": ["everything"],
+      "seed_once": true
+    },
+    {
       "key": "timetable.vocabulary",
       "description": "How the K2 timetable generator reads the school's sheets (goals/m1-06-plan-today.yaml): which phrases in a period name its subject, which subject draws its lines from which Monthly Planner heading, which planner headings open a section, which sections head the week rather than fill a period, and which one-word lines join the line after them. A new wording in the school's sheet is an edit to this row, never to code.",
       "value": {

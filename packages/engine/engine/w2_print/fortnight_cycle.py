@@ -118,6 +118,32 @@ def fortnights_touched(
     ]
 
 
+def draft_classes(conn: db.Conn, year: str, number: int, by: str) -> list[dict]:
+    """Draft the fortnight's timetable of every class that has one (CP-7). The database decides, class by class, whether
+    it rolls forward or waits for a yes, and who drafted it is `by`. Returns grade, section and the plan's state."""
+    fortnight = conn.execute(
+        "select f.id, f.starts_on, f.ends_on, f.academic_year_id from fortnight f"
+        " join academic_year y on y.id = f.academic_year_id join tenant t on t.id = f.tenant_id"
+        " where t.slug = %s and y.label = %s and f.number = %s and f.kind = 'teaching'",
+        (db.tenant_slug(), year, number),
+    ).fetchone()
+    if fortnight is None:
+        raise CycleError(f"There is no teaching fortnight {number} in {year}.")
+    conn.execute("select set_config('app.changed_by', %s, true)", (_actor(by),))
+    classes = conn.execute(
+        "select distinct c.id, c.grade_code, c.section from school_class c join timetable_slot s"
+        " on s.school_class_id = c.id where c.academic_year_id = %s and s.valid_from <= %s"
+        " and (s.valid_to is null or s.valid_to >= %s) order by c.grade_code, c.section",
+        (fortnight["academic_year_id"], fortnight["ends_on"], fortnight["starts_on"]),
+    ).fetchall()
+    out = []
+    for c in classes:
+        plan = db.one(conn, "select public.fortnight_draft(%s, %s) as id", (c["id"], fortnight["id"]))["id"]
+        state = db.one(conn, "select state from fortnight_plan where id = %s", (plan,))["state"]
+        out.append({"grade": c["grade_code"], "section": c["section"], "state": state})
+    return out
+
+
 def step_date(conn: db.Conn, fortnight_id: Any, step: str) -> dt.date:
     """When a step falls: the school's `fortnight.<step>` days before the fortnight starts, moved to the working day
     before while it is a Saturday, a Sunday or a holiday on any campus of the school."""
