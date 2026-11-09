@@ -46,6 +46,14 @@ CP-9. A schedule at 02:30 IST, then one `POST /graph/nightly` keyed `nightly-<da
 picture from confirmed evidence and writes one row to the `graph_run` ledger. **Not live until someone imports it into
 n8n on the box and attaches the engine key credential.** CP-9's live proof (`1b`) fails until a run is logged.
 
+## F5 — delete old voice recordings and transcripts (`workflows/f5-voice-cleanup.json`)
+
+CP-10. A schedule every hour, then one `POST /voice/cleanup` keyed `voice-cleanup-<UTC date-hour>`. The engine deletes the
+recording and the transcript of every voice note older than `voice.confirm_within_hours` (48), keeps what the educator
+confirmed, and writes one `flow_run` row (counts only). A failed run is retried by the next call, even in the same hour.
+It runs whether or not the voice switches are on. **Not live until someone imports it into n8n on the box and attaches
+the engine key credential**; until then nothing deletes a recording. `engine read voice status` shows the last run.
+
 ## Before it can run
 
 Two credentials must be created by hand in n8n — this repo never holds them:

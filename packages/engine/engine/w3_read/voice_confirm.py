@@ -54,11 +54,16 @@ def _observed_at(conn: db.Conn, day: dt.date, received: dt.datetime) -> dt.datet
     return min(at, db.one(conn, "select now() as n")["n"])
 
 
+def _today(conn: db.Conn) -> dt.date:
+    """Today by the school's clock, never the server's (UTC is still yesterday in Pune until 05:30)."""
+    return voice_intake.school_day(conn, db.one(conn, "select now() as n")["n"])
+
+
 def _children(
     conn: db.Conn, class_id: str, day: dt.date | None, final: Confirmed
 ) -> dict[str, tuple[str, str]]:
     """child id → (outcome, entry mode), every roll number found in the class's enrolment that day."""
-    enrolled = voice_intake.enrolled(conn, class_id, day or dt.date.today())
+    enrolled = voice_intake.enrolled(conn, class_id, day or _today(conn))
     outcome = {s: voice_note.template().outcomes[s] or s for s in voice_intake.LISTS}
     out: dict[str, tuple[str, str]] = {}
     for section, rolls in final.lists.items():
@@ -130,9 +135,9 @@ def _claims(conn: db.Conn, note: dict, found: voice_intake.Resolved, final: Conf
         same = read_as == kept[line.section]
         decision = "accepted" if same else ("removed" if not kept[line.section] else "changed")
         conn.execute(
-            "insert into pii.note_claim (tenant_id, note_id, section, read_as, words, span_start, span_end, decision,"
-            " kept_as, decided_by) values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
-            (note["tenant_id"], note["id"], line.section, ", ".join(read_as), line.words, max(start, 0),
+            "insert into pii.note_claim (tenant_id, note_id, section, read_as, span_start, span_end, decision,"
+            " kept_as, decided_by) values (%s, %s, %s, %s, %s, %s, %s, %s, %s)",
+            (note["tenant_id"], note["id"], line.section, ", ".join(read_as), max(start, 0),
              max(start, 0) + len(line.words), decision, ", ".join(kept[line.section]) if decision == "changed" else None,
              staff),
         )  # fmt: skip
@@ -148,7 +153,7 @@ def confirm_note(conn: db.Conn, note_id: str, email: str, final: Confirmed) -> u
         raise Refused(f"This note is {note['status'].replace('_', ' ')}, not waiting to be confirmed.", 409)
     hours = settings.config(conn, "voice.confirm_within_hours", 48)
     if db.one(
-        conn, "select %s < now() - make_interval(hours => %s) as late", (note["received_at"], int(hours))
+        conn, "select %s <= now() - make_interval(hours => %s) as late", (note["received_at"], int(hours))
     )["late"]:
         raise Refused(
             f"This note waited more than {hours} hours; it is kept as unconfirmed, never evidence.", 409
@@ -162,7 +167,10 @@ def confirm_note(conn: db.Conn, note_id: str, email: str, final: Confirmed) -> u
     at = _observed_at(conn, final.day, note["received_at"])
     # confirmed first, in the same transaction: the database refuses evidence from a note that is not
     # (`internal.evidence_of_a_confirmed_note`), and a refusal below undoes the confirmation with everything else
-    conn.execute("update pii.educator_note set status = 'confirmed' where id = %s", (note["id"],))
+    conn.execute(
+        "update pii.educator_note set status = 'confirmed', sentence = %s where id = %s",
+        (voice_note.sentence(note["transcript"] or ""), note["id"]),
+    )  # her free sentence is kept; the transcript it came from is cleared after the hours a note is kept
     confirmation = _write(
         conn,
         class_id=note["class_id"],
@@ -181,7 +189,7 @@ def save_form(conn: db.Conn, email: str, class_id: str, final: Confirmed) -> uui
     staff = voice_intake.staff_of(conn, email)
     class_id = voice_intake.valid_id(class_id)
     voice_intake.may_record(conn, staff, class_id)
-    final.day = final.day or dt.date.today()
+    final.day = final.day or _today(conn)
     now = db.one(conn, "select now() as n")["n"]
     return _write(
         conn, class_id=class_id, staff=staff, final=final, route="form", note_id=None,
