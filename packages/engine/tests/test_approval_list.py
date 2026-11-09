@@ -16,7 +16,6 @@ from tests.rows import a_child, tenant
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
 
-MIGRATION = db.REPO_ROOT / "supabase/migrations/20261208090000_one_approval_list.sql"
 SEED = json.loads((db.REPO_ROOT / "supabase/seed/vocabulary.json").read_text())
 
 
@@ -59,13 +58,13 @@ def _note(conn):
     )["id"]
 
 
-def test_what_is_approved_and_where_it_stands_are_rows(conn):
+def test_what_is_approved_is_rows_and_where_it_stands_one_of_four_words(conn):
     kinds = conn.execute("select code, words, reaches_parent from approval_kind order by ord").fetchall()
     assert [tuple(k.values()) for k in kinds] == [
         (k["code"], k["words"], k["reaches_parent"]) for k in SEED["approval_kinds"]
     ]
-    states = conn.execute("select code, words from approval_state order by ord").fetchall()
-    assert [tuple(s.values()) for s in states] == [(s["code"], s["words"]) for s in SEED["approval_states"]]
+    states = {r["state"] for r in conn.execute("select distinct state from approval_list")}
+    assert states <= {"draft", "sent_back", "waiting_second", "approved"}, states
 
 
 def test_draft_beside_approved_in_one_list(conn):
@@ -137,7 +136,7 @@ def test_a_second_approval_before_anything_reaches_a_parent(conn):
 
 
 def test_the_existing_approvals_are_unchanged(conn):
-    """Every level and way of asking approved before is approved in the list, by the same person, and the migration
+    """Every level and way of asking approved before is approved in the list, by the same person, and a school's setup
     run again moves none of them; a decision is never edited."""
     before = (
         conn.execute(
@@ -159,7 +158,7 @@ def test_the_existing_approvals_are_unchanged(conn):
             conn, "select count(*) as n from approval_list where kind = 'skill_level' and state = 'approved'"
         )["n"]
     )
-    conn.execute(MIGRATION.read_text())
+    conn.execute("select internal.approval_begins(id) from tenant")
     after = (
         conn.execute(
             "select md5(string_agg(code || level_approved::text, ',' order by code)) as s from skill"

@@ -310,7 +310,7 @@ test("a screen with no data says what it will show and the real count today", as
   // The list is what is still a placeholder, and it shrinks as screens get built: `/capture` is
   // the approval screen now and `/growth` is a child's ladder. This assertion had not actually run
   // since either was built — the serial run always failed earlier and skipped it.
-  for (const [route, table] of [["/home", "home sheets"]]) {
+  for (const [route, table] of [["/home", "parent notes"]]) {
     await page.goto(route);
     await expect(page.getByText("What this screen will show")).toBeVisible();
     await expect(page.getByText("In the database today")).toBeVisible();

@@ -1,9 +1,10 @@
-"""The school's words as rows (ADR 0084): its grades, the four levels, the states of a child's map and the kinds of
-evidence with the scale each is marked on (C2), from
+"""The school's words as rows (ADR 0084): its grades, the four levels and the states of a child's map, from
 supabase/seed/vocabulary.json, each list in its order. A topic's subject, a question's level and a child's state are
-keys into these tables, so a word is a row before anything may use it, and adding one is an insert.
+keys into these tables, so a word is a row before anything may use it, and adding one is an insert. A short fixed list
+nobody edits (a kind of evidence, a colour, a link's strength) is a check on its column instead (CP-27,
+docs/data-model.md); a colour's words are the setting `state.colours`.
 
-The seed is their source: a load upserts every row, so a word or a colour changed in the file is changed on the next
+The seed is their source: a load upserts every row, so a word changed in the file is changed on the next
 load. The migration that made the tables inserts the same rows for every school, there now or added later
 (tests/test_vocabulary.py keeps the two equal)."""
 
@@ -25,13 +26,6 @@ def load(conn: db.Conn, tenant: db.Id, seed: Callable[[str, str], Any]) -> None:
             "insert into difficulty (tenant_id, code, ord, letter) values (%s,%s,%s,%s)"
             " on conflict (tenant_id, code) do update set ord=excluded.ord, letter=excluded.letter, updated_at=now()",
             (tenant, d["code"], i, d["letter"]),
-        )
-    for i, c in enumerate(seed("vocabulary.json", "state_colours")):
-        conn.execute(
-            "insert into state_colour (tenant_id, code, ord, words, count_words) values (%s,%s,%s,%s,%s)"
-            " on conflict (tenant_id, code) do update set ord=excluded.ord, words=excluded.words,"
-            " count_words=excluded.count_words, updated_at=now()",
-            (tenant, c["code"], i, c["words"], c["count_words"]),
         )
     for i, s in enumerate(seed("vocabulary.json", "child_states")):
         conn.execute(
@@ -60,21 +54,8 @@ def load(conn: db.Conn, tenant: db.Id, seed: Callable[[str, str], Any]) -> None:
 
 
 def _records(conn: db.Conn, tenant: db.Id, seed: Callable[[str, str], Any]) -> None:
-    """The words of what is recorded about the school's work (C2, C4, C5): the kinds of evidence and the scale each is
-    marked on, the approval list's kinds and states, and the stages a kind of question passes through."""
-    for sc in seed("vocabulary.json", "evidence_scales"):
-        conn.execute(
-            "insert into evidence_scale (tenant_id, code, words) values (%s,%s,%s)"
-            " on conflict (tenant_id, code) do update set words=excluded.words, updated_at=now()",
-            (tenant, sc["code"], sc["words"]),
-        )
-        for i, m in enumerate(sc["marks"]):
-            conn.execute(
-                "insert into evidence_mark (tenant_id, scale, code, ord, words, correct) values (%s,%s,%s,%s,%s,%s)"
-                " on conflict (tenant_id, scale, code) do update set ord=excluded.ord, words=excluded.words,"
-                " correct=excluded.correct, updated_at=now()",
-                (tenant, sc["code"], m["code"], i, m["words"], m["correct"]),
-            )
+    """The words of what is recorded about the school's work (C4, C5): the approval list's kinds and the stages a kind of
+    question passes through."""
     for i, a in enumerate(seed("vocabulary.json", "approval_kinds")):
         conn.execute(
             "insert into approval_kind (tenant_id, code, ord, words, reaches_parent) values (%s,%s,%s,%s,%s)"
@@ -82,38 +63,12 @@ def _records(conn: db.Conn, tenant: db.Id, seed: Callable[[str, str], Any]) -> N
             " reaches_parent=excluded.reaches_parent, updated_at=now()",
             (tenant, a["code"], i, a["words"], a["reaches_parent"]),
         )
-    for i, a in enumerate(seed("vocabulary.json", "approval_states")):
-        conn.execute(
-            "insert into approval_state (tenant_id, code, ord, words) values (%s,%s,%s,%s)"
-            " on conflict (tenant_id, code) do update set ord=excluded.ord, words=excluded.words, updated_at=now()",
-            (tenant, a["code"], i, a["words"]),
-        )
     for i, v in enumerate(seed("vocabulary.json", "validation_stages")):
         conn.execute(
             "insert into validation_stage (tenant_id, code, ord, words, every_answer_to_person) values (%s,%s,%s,%s,%s)"
             " on conflict (tenant_id, code) do update set ord=excluded.ord, words=excluded.words,"
             " every_answer_to_person=excluded.every_answer_to_person, updated_at=now()",
             (tenant, v["code"], i, v["words"], v["every_answer_to_person"]),
-        )
-    for i, w in enumerate(seed("vocabulary.json", "link_strengths")):
-        conn.execute(
-            "insert into link_strength (tenant_id, code, ord, words) values (%s,%s,%s,%s)"
-            " on conflict (tenant_id, code) do update set ord=excluded.ord, words=excluded.words, updated_at=now()",
-            (tenant, w["code"], i, w["words"]),
-        )
-    for i, w in enumerate(seed("vocabulary.json", "link_states")):
-        conn.execute(
-            "insert into link_status (tenant_id, code, ord, words, confirmed) values (%s,%s,%s,%s,%s)"
-            " on conflict (tenant_id, code) do update set ord=excluded.ord, words=excluded.words,"
-            " confirmed=excluded.confirmed, updated_at=now()",
-            (tenant, w["code"], i, w["words"], w["confirmed"]),
-        )
-    for i, k in enumerate(seed("vocabulary.json", "evidence_kinds")):
-        conn.execute(
-            "insert into evidence_kind (tenant_id, code, ord, words, scale) values (%s,%s,%s,%s,%s)"
-            " on conflict (tenant_id, code) do update set ord=excluded.ord, words=excluded.words,"
-            " scale=excluded.scale, updated_at=now()",
-            (tenant, k["code"], i, k["words"], k["scale"]),
         )
 
 

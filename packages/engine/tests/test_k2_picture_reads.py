@@ -174,10 +174,7 @@ def test_a_cell_nobody_filled_is_empty_and_never_a_failure_and_the_colours_are_t
     assert {c["state"] for c in got["5"].values()} == {"not_enough_yet"}
     assert all(c["level"] is None for c in got["5"].values()), "'the rest did as expected' shows no level"
     assert set(got["1"]) == set(k["live"]) and "unobserved" not in json.dumps(got)
-    other = conn.execute(
-        "select code from state_colour where tenant_id = %s and code <> 'green' order by code limit 1",
-        (k["tenant"],),
-    ).fetchone()["code"]
+    other = "amber"  # any colour but secure's own
     conn.execute(
         "update child_state set colour = %s where code = 'secure' and tenant_id = %s", (other, k["tenant"])
     )

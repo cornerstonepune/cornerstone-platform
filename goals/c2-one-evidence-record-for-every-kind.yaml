@@ -12,7 +12,7 @@ goal: >
 # record.
 says:
   - words: "one evidence record for every kind (written, observed, voice, project, performance)"
-    proved_by: "packages/engine/tests/test_evidence_every_kind.py::test_every_kind_is_a_row_with_its_scale"
+    proved_by: "packages/engine/tests/test_evidence_every_kind.py::test_every_kind_takes_the_marks_of_its_scale_and_no_other"
   - words: "who saw it, where, which registry skill, its scale (right/wrong/blank or yes/sometimes/not yet) and its source"
     proved_by: "packages/engine/tests/test_evidence_every_kind.py::test_a_record_of_every_kind_says_who_where_which_skill_its_mark_and_source"
   - words: "who saw it, where, which registry skill, its scale (right/wrong/blank or yes/sometimes/not yet) and its source"
@@ -24,7 +24,7 @@ says:
   - words: "the observation engine (the next build, which C2 prepares)"
     proved_by: "packages/engine/tests/test_evidence_every_kind.py::test_the_maths_graph_reads_written_answers_alone"
   - words: "past rows untouched (rule 4)"
-    proved_by: "packages/engine/tests/test_evidence_every_kind.py::test_past_rows_are_untouched"
+    proved_by: "packages/engine/tests/test_evidence_every_kind.py::test_a_record_is_never_edited"
 manual:
   - "Actions → rehearse update-live, on this branch: the migration runs on a copy of live after live's rows arrive; `engine past` prints the same evidence, states and scored answers (count and checksum) before and after, and the copy comes back clean."
 scenarios: []

@@ -1,5 +1,6 @@
 import { cache } from "react";
 import { sql } from "./db";
+import { colourWords } from "./states";
 import { GROUPS, type MenuPage } from "./menu";
 import { slugOf } from "./guide-path";
 import start from "@/guide/start.json";
@@ -63,7 +64,7 @@ export const guideFacts = cache(async (): Promise<Facts> => {
     sql<{ code: string }[]>`select code from difficulty order by ord`,
     sql<{ code: string; name: string }[]>`select code, name from grade order by ord`,
     sql<{ code: string; words: string }[]>`select code, words from child_state order by ord`,
-    sql<{ code: string; count_words: string }[]>`select code, count_words from state_colour order by ord`,
+    colourWords(),
   ]);
   return {
     t: Object.fromEntries(t.map((r) => [r.key, r.value])),

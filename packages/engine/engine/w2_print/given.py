@@ -12,6 +12,8 @@ email only, never a name (rule 6).
 import json
 from datetime import date
 
+from engine.core import settings
+
 GIVEN, ABSENT = "given", "absent"
 
 
@@ -45,7 +47,7 @@ def given(conn, tenant, qrs: list[str], on: date, by: str) -> dict:
     if not by:
         raise ValueError("say who gave the papers")
     # the school's own day, not the server's: just after midnight in Pune, a server on UTC is still on yesterday
-    if on > conn.execute("select (now() at time zone 'Asia/Kolkata')::date as d").fetchone()["d"]:
+    if on > conn.execute(f"select (now() at time zone {settings.ZONE_SQL})::date as d").fetchone()["d"]:
         raise ValueError(f"{on.isoformat()} is still to come: say the day the papers were given")
     papers = _papers(conn, qrs)
     if not papers:

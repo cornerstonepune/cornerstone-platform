@@ -21,7 +21,6 @@ export default async function HomePage() {
           ]}
           when="Arrives with W4, close the loop, after Thursday's practice and Friday's assessment have both been read."
           facts={[
-            ["home sheets", c.home_sheet],
             ["parent notes", c.parent_note],
           ]}
         />

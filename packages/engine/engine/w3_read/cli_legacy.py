@@ -42,9 +42,6 @@ def legacy_import(
     section: str = typer.Option(..., "--section", help="G2, G3 …"),
     pages: str = typer.Option("", "--pages", help="Only these pages of the file, e.g. 1,2"),
     mask: str = typer.Option("", "--mask", help="Name-band fraction per page, e.g. 1=0.16,2=0"),
-    narrative: bool = typer.Option(
-        False, "--narrative", help="Also ask for the whole-page reading (Channel B)"
-    ),
     again: bool = typer.Option(
         False,
         "--again",
@@ -58,7 +55,7 @@ def legacy_import(
     with db.connect() as conn:
         cid = roster.find(conn, section, child, actor)
         try:
-            summary = legacy.import_scan(conn, path, paper, cid, actor, page_list, masks, narrative, again)
+            summary = legacy.import_scan(conn, path, paper, cid, actor, page_list, masks, again)
         except LLMError as e:
             conn.commit()
             typer.echo(f"  could not read: {e}", err=True)

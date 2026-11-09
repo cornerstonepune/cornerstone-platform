@@ -63,8 +63,8 @@ def in_group(
     ).fetchone()
     group = row["g"] if row else "everything"
     held = conn.execute(
-        "select 1 from staff_role_grant g join access_role_group rg on rg.tenant_id = g.tenant_id"
-        " and rg.role_code = g.role_code where g.tenant_id = %s and g.staff_id = %s and rg.group_code = %s"
+        "select 1 from staff_role_grant g join role r on r.tenant_id = g.tenant_id"
+        " and r.code = g.role_code where g.tenant_id = %s and g.staff_id = %s and r.access_group = %s"
         " and g.valid_from <= %s and (g.valid_to is null or g.valid_to > %s)",
         (tenant, who, group, today, today),
     ).fetchone()

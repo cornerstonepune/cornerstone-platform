@@ -175,7 +175,6 @@ export async function tableCounts(): Promise<Record<string, number>> {
     union all select 'evidence_event', count(*)::int from evidence_event
     union all select 'child', count(*)::int from child
     union all select 'child_skill_state', count(*)::int from child_skill_state
-    union all select 'home_sheet', count(*)::int from home_sheet
     union all select 'parent_note', count(*)::int from parent_note`;
   return Object.fromEntries(rows.map((r) => [r.t, r.n]));
 }
@@ -348,12 +347,11 @@ export async function childEvidence(id: string): Promise<Evidence[]> {
     order by t.key ->> 'date', i.item_key`;
 }
 
-export type Paper = { id: string; sheet: string; title: string; date: string | null; pages: number; status: string; narrative: string | null; n_results: number; n_confirmed: number };
+export type Paper = { id: string; sheet: string; title: string; date: string | null; pages: number; status: string; n_results: number; n_confirmed: number };
 
 export async function childPapers(id: string, me: Who): Promise<Paper[]> {
   return sql<Paper[]>`
     select c.id, si.id as sheet, coalesce(t.key ->> 'title', t.code) as title, t.key ->> 'date' as date, c.pages, c.status,
-           (select text from narrative_observation n where n.capture_id = c.id order by n.created_at desc limit 1) as narrative,
            (select count(*)::int from item_result r where r.capture_id = c.id) as n_results,
            (select count(*)::int from item_result r where r.capture_id = c.id and r.state = 'confirmed') as n_confirmed
     from capture c

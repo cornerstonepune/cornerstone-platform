@@ -46,6 +46,7 @@ export const PAIRS = [
     [`subject-${s}`, "ground", EDGE, `the ${s} top edge`],
   ]),
   ["subject-arts", "ground", EDGE, "the Arts top edge"],
+  ["subject-arts", "subject-arts-bg", EDGE, "the Arts top edge on its own fill"],
   ["subject-arts-ink", "subject-arts-bg", TEXT, "the Arts word and icon on its fill"],
   ["subject-fixed", "subject-fixed-bg", TEXT, "the fixed parts of the day"],
   ...["numeracy", "language", "arts", "fixed"].map((s) => ["ink", `subject-${s}-bg`, TEXT, `text in a ${s} cell`]),

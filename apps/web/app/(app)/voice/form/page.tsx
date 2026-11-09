@@ -18,7 +18,7 @@ export default async function TheForm({ searchParams }: { searchParams: Promise<
   const my = await herVoice(me);
   const q = await searchParams;
   const c = chosenClass(my, q.class);
-  const today = schoolToday();
+  const today = await schoolToday();
   const record = { href: c ? `/voice/record?class=${c.id}` : "/voice/record", label: W.form.recordInstead };
   return (
     <Screen

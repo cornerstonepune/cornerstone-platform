@@ -31,12 +31,13 @@ def counts(s, who, queries):
 
 def test_1_groups_are_rows_as_the_scope_lists_them(school):
     c, t = school.c, school.t
-    rows = dict(c.execute("select role_code, group_code from access_role_group where tenant_id = %s", (t,)).fetchall())
+    # each role's row names its group (CP-27: the column role.access_group, where it was a table of its own)
+    rows = dict(c.execute("select code, access_group from role where tenant_id = %s", (t,)).fetchall())
     assert {r for r, g in rows.items() if g == "everything"} >= EVERYTHING, "the everything group's roles are not rows"
     assert {r for r, g in rows.items() if g == "own_classes"} >= OWN_CLASSES, "the own-classes group's roles are not rows"
     reach = dict(c.execute("select kind_code, reach from access_reach where tenant_id = %s and group_code = 'everything'",
                            (t,)).fetchall())
-    assert set(one(c, "select array_agg(code) from access_kind where tenant_id = %s", (t,))) >= KINDS
+    assert set(one(c, "select array_agg(distinct kind_code) from access_reach where tenant_id = %s", (t,))) >= KINDS
     assert {k: reach.get(k) for k in KINDS} == {k: "all" for k in KINDS}, "group to kinds is not stored as rows"
 
 
@@ -44,18 +45,16 @@ def test_1_changing_a_roles_group_is_one_update(school):
     s = school
     y_kids = of_class(s, s.y)["public.child"]
     assert s.seen("edx", *y_kids) == 0
-    s.c.execute("update access_role_group set group_code = 'everything' where tenant_id = %s and role_code = 'assistant'",
-                (s.t,))
+    s.c.execute("update role set access_group = 'everything' where tenant_id = %s and code = 'assistant'", (s.t,))
     assert s.seen("edx", *y_kids) == len(s.kids[s.y]), "moving the role to everything did not change what its holder sees"
 
 
-def test_1_adding_a_role_to_a_group_is_one_insert(school):
+def test_1_adding_a_role_to_a_group_is_one_update(school):
     s = school
     x_kids = of_class(s, s.x)["public.child"]
-    s.c.execute("delete from access_role_group where tenant_id = %s and role_code = 'assistant'", (s.t,))
+    s.c.execute("update role set access_group = null where tenant_id = %s and code = 'assistant'", (s.t,))
     assert s.seen("edx", *x_kids) == 0, "a role in no group still sees its class"
-    s.c.execute("insert into access_role_group (tenant_id, role_code, group_code) values (%s, 'assistant', 'own_classes')",
-                (s.t,))
+    s.c.execute("update role set access_group = 'own_classes' where tenant_id = %s and code = 'assistant'", (s.t,))
     assert s.seen("edx", *x_kids) == len(s.kids[s.x]), "adding the role to own_classes did not let its holder see the class"
 
 
@@ -75,10 +74,7 @@ def test_2_every_role_belongs_to_exactly_one_group(school):
     # school: a tenant made just now, so the seeding of a new school is covered as well as every existing one
     c = school.c
     assert one(c, "select count(*) from role where tenant_id = %s", (school.t,)) > 0
-    bad = one(c, """select count(*) from role r
-                    where (select count(*) from access_role_group g join access_group a
-                             on a.tenant_id = g.tenant_id and a.code = g.group_code
-                           where g.tenant_id = r.tenant_id and g.role_code = r.code) <> 1""")
+    bad = one(c, "select count(*) from role where tenant_id = %s and access_group is null", (school.t,))
     assert bad == 0, f"{bad} role code(s) are in no group or in more than one"
 
 

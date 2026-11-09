@@ -58,9 +58,11 @@ export type EngineRoutes = {
   "POST /curriculum/page/gate": { actor: string };
   "POST /curriculum/page/read": { actor: string; code: string };
   "POST /curriculum/page/revert": { actor: string; code: string; part: string };
+  "POST /fortnight/move": { actor: string; fortnight_id: string; to_state: string };
+  "POST /fortnight/state": { actor: string; fortnight_id: string };
   "POST /graph/nightly": null;
   "POST /graph/rebuild": { child_id?: string | null };
-  "POST /ingest": { path: string; paper_code: string; child_id: string; actor: string; pages?: number[] | null; masks?: Record<string, number> | null; narrative?: boolean };
+  "POST /ingest": { path: string; paper_code: string; child_id: string; actor: string; pages?: number[] | null; masks?: Record<string, number> | null };
   "POST /k2/child": { actor: string; class_id: string; roll_no: string };
   "POST /k2/classes": { actor: string };
   "POST /k2/coordinator": { actor: string };
@@ -109,11 +111,14 @@ export type EngineRoutes = {
   "POST /skill/{code}/sample/remove": { level: string; kind: string; by: string; ord: number };
   "POST /timetable/clash/accept": { actor: string; key: string; reason: string };
   "POST /timetable/day": { actor: string; class_id?: string | null; day?: string | null; week_of?: string | null; period_id?: string | null };
+  "POST /timetable/generate": { actor: string; grade: string; section: string; year: string; fortnight: number };
+  "POST /timetable/link": { actor: string; fortnight?: number | null; band?: string | null; apply?: boolean };
   "POST /timetable/move": { actor: string; grade: string; section: string; year: string; from_date: string; from_period: number; to_date: string; to_period: number; reason?: string | null };
   "POST /timetable/open": { actor: string; class_id?: string | null; day?: string | null; week_of?: string | null; period_id?: string | null };
   "POST /timetable/period": { actor: string; class_id?: string | null; day?: string | null; week_of?: string | null; period_id?: string | null };
   "POST /timetable/rules/change": { actor: string; class_id?: string | null; rule: string; action: string; id?: string | null; period_id?: string | null; starts_at?: string | null; ends_at?: string | null; label?: string | null; on_date?: string | null; weekday?: number | null; week_code?: string | null; reason?: string | null; subject_code?: string | null; span?: string | null; fewest?: number | null; most?: number | null; text?: string | null; frozen_reason?: string | null };
   "POST /timetable/rules/read": { actor: string; class_id?: string | null };
+  "POST /timetable/unmatched": { actor: string; fortnight?: number | null; band?: string | null };
   "POST /timetable/week": { actor: string; class_id?: string | null; day?: string | null; week_of?: string | null; period_id?: string | null };
   "POST /voice/class": { actor: string; class_id: string; day?: string | null };
   "POST /voice/cleanup": null;

@@ -22,8 +22,9 @@ export default async function PeriodPage({ params, searchParams }: { params: Pro
   const me = await requireStaff();
   const [{ id }, q] = await Promise.all([params, searchParams]);
   if (q.day !== undefined && !isDay(q.day)) notFound();
-  const p = await periodOf(me, { class_id: q.class, day: q.day ?? schoolToday(), period_id: id });
-  const chip = chipOf(p, { now: nowAtSchool(), day: whenIs(p.day) });
+  const [schoolDay, now] = await Promise.all([schoolToday(), nowAtSchool()]);
+  const p = await periodOf(me, { class_id: q.class, day: q.day ?? schoolDay, period_id: id });
+  const chip = chipOf(p, { now, day: whenIs(p.day, schoolDay) });
   const time = timeOf(p);
   const today = `/educator?class=${p.class.id}&day=${p.day}`;
   const name = p.name;

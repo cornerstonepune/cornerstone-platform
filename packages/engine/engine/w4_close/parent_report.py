@@ -11,10 +11,9 @@ broke; one that fails twice is never kept. A kept draft waits for an educator to
 
 import json
 import threading
-from datetime import date
 
 from engine.adapters import llm
-from engine.core import db
+from engine.core import db, settings
 from engine.w4_close import parent_review
 from engine.w4_close.parent_check import (  # noqa: F401 — the words held to the facts
     check,
@@ -117,7 +116,7 @@ def keep(conn, child_id, got):
     """A draft that holds to its facts, kept for an educator to approve; the week is today's."""
     if got["problems"]:
         raise ValueError("a draft that breaks its facts is never kept: " + "; ".join(got["problems"]))
-    y, w, _ = date.today().isocalendar()
+    y, w, _ = settings.school_today(conn).isocalendar()
     return conn.execute(
         "insert into parent_note (tenant_id, child_id, week, body, prompt_version)"
         " select t.id, %s, %s, %s, (select version from prompt where id = %s) from tenant t where t.slug = %s"

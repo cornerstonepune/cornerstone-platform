@@ -12,6 +12,7 @@ import { classWords } from "@/lib/needs-you";
 import { grades } from "@/lib/queries";
 import { assessmentCard, CARD_STAGES, type Card, type CardCopy, type CardKey, standing } from "@/lib/queries-card";
 import { KIND_WORDS, STAGE_WORDS } from "@/lib/queries-papers";
+import { schoolToday } from "@/lib/school-clock";
 import type { Column } from "@/lib/ux-rules";
 import { dateWords, weekWords } from "@/lib/week";
 import { UploadScans } from "../../capture/upload-scans";
@@ -36,7 +37,7 @@ export default async function CardPage({ searchParams }: Props) {
   const band = card.copies[0]?.band ?? card.spares[0]?.band;
   const s = standing(card);
   // the school's day, as the engine checks it: "2026-10-22" in Pune, whatever the server's clock
-  const today = new Date().toLocaleDateString("en-CA", { timeZone: "Asia/Kolkata" });
+  const today = await schoolToday();
   return (
     <Screen
       stage="Assessments · its card"

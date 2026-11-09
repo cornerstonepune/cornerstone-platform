@@ -18,8 +18,7 @@ def switched_on(conn: db.Conn) -> bool:
 
 
 def school_today(conn: db.Conn) -> dt.date:
-    zone = settings.config(conn, "school.time_zone", "Asia/Kolkata")
-    return db.one(conn, "select (now() at time zone %s)::date as d", (zone,))["d"]
+    return db.one(conn, "select (now() at time zone %s)::date as d", (settings.time_zone(conn),))["d"]
 
 
 def holds(conn: db.Conn, staff: Any, key: str) -> bool:

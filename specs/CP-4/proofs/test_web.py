@@ -71,6 +71,6 @@ def test_5_ci_test_user_is_in_the_everything_group(conn):
     # a new fake school, so its groups are the ones every school is given (rolled back with the transaction)
     tenant = conn.execute("insert into tenant (slug, name) values ('cp4-proof-web', 'CP-4 proof school') "
                           "returning id").fetchone()[0]
-    group = conn.execute("select group_code from public.access_role_group where tenant_id = %s and role_code = %s",
+    group = conn.execute("select access_group from public.role where tenant_id = %s and code = %s",
                          (tenant, role)).fetchall()
     assert group == [("everything",)], f"the test user's role {role!r} is in {group}, not the everything group"

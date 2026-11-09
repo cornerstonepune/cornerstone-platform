@@ -65,7 +65,7 @@ def pairs(path: str | Path) -> list[dict[str, str]]:
     return [row for _, row in _rows(path)]
 
 
-def _line_problem(row: dict[str, str], skills: set[str], strengths: set[str]) -> str | None:
+def _line_problem(row: dict[str, str], skills: set[str]) -> str | None:
     """What is wrong with one pair, in words, or None."""
     for end in ("before_code", "after_code"):
         if row[end] not in skills:
@@ -75,8 +75,6 @@ def _line_problem(row: dict[str, str], skills: set[str], strengths: set[str]) ->
     for name in ("reason", "source"):
         if not row[name]:
             return f"the {name} is empty"
-    if row.get("strength") and row["strength"] not in strengths:
-        return f"strength {row['strength']} is not one of {', '.join(sorted(strengths))}"
     return None
 
 
@@ -90,11 +88,8 @@ def load(conn: db.Conn, path: str | Path) -> Loaded:
     skills = {
         r["code"] for r in conn.execute("select code from registry_skill where tenant_id = %s", (school,))
     }
-    strengths = {
-        r["code"] for r in conn.execute("select code from link_strength where tenant_id = %s", (school,))
-    }
     for line, row in rows:
-        problem = _line_problem(row, skills, strengths)
+        problem = _line_problem(row, skills)
         if problem:
             raise Refused(f"line {line}: {problem}.")
     added = there = 0
@@ -119,6 +114,8 @@ def load(conn: db.Conn, path: str | Path) -> Loaded:
                     f"line {line}: {row['before_code']} before {row['after_code']} would make a ring "
                     "(a skill would come before itself)."
                 ) from None
+            if e.diag.constraint_name == "skill_link_strength_check":
+                raise Refused(f"line {line}: strength {row['strength']} is not hard or soft.") from None
             raise Refused(
                 f"line {line}: the database refuses it ({e.diag.constraint_name or 'a rule'})."
             ) from None
@@ -144,6 +141,4 @@ def confirm(conn: db.Conn, link_id: str, by: str) -> str:
         raise Refused("That member of staff is no longer active.")
     if word == "no link":
         raise Refused("There is no link with that id.")
-    if word == "no confirming state":
-        raise Refused("The school's link states hold none that means confirmed.")
     return word

@@ -1,0 +1,19 @@
+{
+  "digest": "aef50e40b9ba76210f1a093203db04e628532cfee4b66b701058e1f829a6e697",
+  "files": [
+    "spec.md",
+    "checks.sh",
+    "proofs/db/conftest.py",
+    "proofs/db/test_nightly_watch.py",
+    "proofs/db/test_school_day.py",
+    "proofs/db/test_step_order.py",
+    "proofs/live_nightly.py",
+    "proofs/pytest.sh",
+    "proofs/test_docs.py",
+    "proofs/test_one_clock.py",
+    "proofs/test_routes.py"
+  ],
+  "locked_at": "2026-11-09T07:53:02+00:00",
+  "criteria": 7,
+  "athena": "2.15.0"
+}

@@ -6,7 +6,8 @@ import { deadline } from "@/lib/deadline";
 import { grades } from "@/lib/queries";
 import { homeByClass } from "@/lib/queries-make";
 import { classPacksWaiting } from "@/lib/queries-today";
-import { isoWeek, weekWords } from "@/lib/week";
+import { schoolWeek } from "@/lib/school-clock";
+import { weekWords } from "@/lib/week";
 import { requireStaff } from "@/lib/auth";
 import { workScope } from "@/lib/reach";
 import { classState, ClassesTable, PacksTable, type ClassLine } from "./classes-table";
@@ -69,7 +70,7 @@ export default async function MakePapers({ searchParams }: Props) {
         ]}
       />
       <section aria-label="Home assessments this week" className="mb-6">
-        <h2 className="label mb-2">Home assessments · {weekWords(isoWeek())}</h2>
+        <h2 className="label mb-2">Home assessments · {weekWords(await schoolWeek())}</h2>
         <p className="note mb-3">
           One skill per child, never a mix: the weakest they are working on, at a level where their mistake can show; a child with
           nothing red or amber is stretched one level up on their strongest skill. Open a class to approve, or to choose a different
