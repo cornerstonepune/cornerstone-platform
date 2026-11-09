@@ -112,6 +112,40 @@ def load(
         )
 
 
+DRAFT_WORDS = {"rolled_forward": "rolled forward", "draft": "waiting for approval", "approved": "approved"}
+
+
+@timetable_app.command("draft")
+def draft(
+    fortnight: int = typer.Option(..., "--fortnight", help="the fortnight number, as in the Monthly Planner"),
+    year: str = typer.Option("2026-27"),
+    by: str = typer.Option(..., "--by", help="who is drafting: a staff id, kept with the draft"),
+    apply: bool = typer.Option(False, "--apply", help="write to this database (otherwise a dry run)"),
+) -> None:
+    """Draft each class's fortnight timetable: one that matches its last approved fortnight rolls forward, the rest wait
+    for one yes. Dry run unless --apply. Prints a line per class, never a name."""
+    with ExitStack() as stack:
+        conn = _connect(stack)
+        if conn is None:
+            typer.echo("There is no database to draft on here: nothing was written.")
+            raise typer.Exit(1)
+        try:
+            rows = fc.draft_classes(conn, year, fortnight, by)
+        except (fc.CycleError, psycopg.Error) as no:
+            conn.rollback()
+            why = no.diag.message_primary if isinstance(no, psycopg.Error) else str(no)
+            typer.echo(f"  {why}. Nothing was written.")
+            raise typer.Exit(1) from no
+        typer.echo(f"fortnight {fortnight} of {year}")
+        for r in rows:
+            typer.echo(f"  {r['grade']} {r['section']}: {DRAFT_WORDS[r['state']]}")
+        if apply:
+            conn.commit()
+        else:
+            conn.rollback()
+            typer.echo("  dry run: nothing was written (add --apply)")
+
+
 @timetable_app.command("generate")
 def generate(
     grade: str = typer.Option(..., help="the grade code of the class, as in the grade table"),
