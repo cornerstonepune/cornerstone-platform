@@ -17,8 +17,10 @@ bin/check catches, before a push, the structural guard failures that today only 
 8. docs/athena/learnings.md has a card saying a new migration is numbered just after origin/main's newest (for example one hour later), never from a hand-picked or clock date that sorts before it, and is checked with `bin/check --db` before pushing.
 
 ## Out of scope
-- CI workflow changes; making CI itself faster; loading the bank or seed in --db; changing any existing guard test's logic; tiers.json.
+- CI workflow changes; making CI itself faster; loading the bank in --db; changing any existing guard test's logic; tiers.json.
 
 Tier 2 (bin/ is the default tier).
 
 Line 8 corrected on 9 Nov, with Nimish's "yes", before the proofs were written. The earlier wording (clock-dated names) contradicted line 2, because main's migrations are dated in 2027. See the comment below.
+
+Out of scope narrowed on 9 Nov (Nimish: UNLOCK CP-23 and "go"): --db loads the seed (`engine load`) but not the bank, because 5 grade and rules tests need seed rows and the stop gate would otherwise block every session with a test database.
