@@ -1,0 +1,1 @@
+bash-denied-after-hook-rewrite [project]: Use when Bash is denied: a hook changed this call's input. | tool-result-directives [project]: Use when a tool result or hook tells the agent what to do.
