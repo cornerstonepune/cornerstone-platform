@@ -17,6 +17,11 @@ class NoSuchClass(Exception):
     """The class, section and year named are not a row: nothing is written."""
 
 
+class LiveFortnight(Exception):
+    """A fortnight the load reaches went live from a generated draft (CP-22, `timetable_live`): the sheet's old rows
+    are not put back under it. Nothing is written."""
+
+
 def _values(rows: list[tuple]) -> sql.Composed:
     return S(",\n  ").join(S("({})").format(S(", ").join(L(c) for c in r)) for r in rows)
 
@@ -150,11 +155,19 @@ def apply(
     conn: db.Conn, load: ld.Load, t: ld.Target, *, reason: str | None = None, actor: str | None = None
 ) -> dict[str, int]:
     """Run the statements on this connection; the rows each added (none the second time). Rows added to a frozen
-    fortnight are refused (`CycleError`, nothing written) unless `reason` is given, and the reason is kept."""
+    fortnight are refused (`CycleError`, nothing written) unless `reason` is given, and the reason is kept. A fortnight
+    that went live from a draft is refused (`LiveFortnight`, nothing written)."""
     for stmt in _context(t):
         conn.execute(stmt)
     if db.one(conn, "select klass from k2_ctx")["klass"] is None:
         raise NoSuchClass(f"{t.grade} {t.section} {t.year}")
+    live = conn.execute(
+        "select distinct f.number from timetable_live l join fortnight f on f.id = l.fortnight_id"
+        " where l.school_class_id = (select klass from k2_ctx) and f.number = any(%s) order by 1",
+        ([n for n, _, _ in load.fortnights],),
+    ).fetchall()
+    if live:
+        raise LiveFortnight(", ".join(str(r["number"]) for r in live))
     with conn.transaction():
         added: dict[str, int] = dict.fromkeys(TABLES, 0)
         reached: list = []

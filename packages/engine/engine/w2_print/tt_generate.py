@@ -96,6 +96,17 @@ def _setting(conn: db.Conn, key: str) -> int:
     return int(value)
 
 
+def input_text(i: need.Inputs, fet_version: str) -> str | None:
+    """FET's input for the fortnight as its rules stand now, byte for byte as `generate` would keep it; None when the
+    checks would refuse it or it needs no lesson. CP-22 compares it with a kept run's to see whether the rules changed."""
+    n = need.needs(i)
+    failing, _ = need.checks(i, n)
+    if failing or not n.total():
+        return None
+    plan, _ = _plan(i, n)
+    return fet.build_input(plan, fet_version)
+
+
 def generate(conn: db.Conn, grade: str, section: str, year: str, number: int) -> Run:
     """Work out the fortnight, and run FET unless the checks already show it cannot be met. Writes nothing."""
     i = need.load(conn, grade, section, year, number)
