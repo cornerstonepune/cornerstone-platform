@@ -2,18 +2,17 @@
 
 ## Verified
 
-- `node docs/frontend/wireframes/check.mjs` → `blocks.html: 26/26 blocks drawn once`; `PASS picture.html: 1440: 10/10
-  elements, 8/8 bar, 48 controls; 400: 10/10 elements, 8/8 bar, 48 controls; 172 data-sources, 2 gaps`; `all clear`.
-- `node docs/frontend/wireframes/check.mjs --gaps` → `25 gaps on 16 screens`; `all clear` (every gap has a row in DATA-GAPS.md).
-- The checker fails on purpose when a control is removed, a hex is typed, a column is wrong, a removed table is named or a
-  real-looking name is drawn (tried by hand on a copy of picture.html: 12 problems reported, exit 1).
-- `schema.mjs` replays the migrations to 170 tables, the count CP-27 cites for today.
+- Scope cut on 9 Nov 2026 (Nimish, via the frontend orchestrator): the real blocks are built in the app first, and
+  wireframes are assembled from them. This branch now carries only `docs/frontend/DESIGN.md`,
+  `docs/frontend/wireframes/DATA-GAPS.md` and `docs/frontend/wireframes/fake-names.json`. The generated kit, the
+  checker and the pilot are in this branch's history (commit "Wireframe kit: design language, blocks, data binding,
+  checker").
+- DATA-GAPS.md: 25 gaps on 16 screens. Each screens.json `data` name was compared with specs/CP-27/target-tables.md
+  after replaying supabase/migrations in order. The replay gave 170 tables, the count CP-27 cites.
 
 ## Handoff
 
-- Live: nothing; docs and tools only (no app, migration or engine change).
-- Next: one wireframe per screen in screens.json, each through check.mjs and Nimish's approval (DESIGN.md §7).
-- For the backend: DATA-GAPS.md (25 rows + 2 from the pilot).
-- Open: `picture.done_when` (10 / 8 columns) disagrees with SPEC §2 rule 10 and §5 (8 / 3) and `picture.phone` (6); the
-  pilot draws 8 / 3. Needs a decision before UI-3's test is written.
-- Regenerating icons needs lucide-react at the site's version: `LUCIDE_DIR=<unpacked lucide-react@1.59.0>`.
+- Live: nothing; docs only.
+- Next: UI-14, UI-13 and UI-2 build the tokens, the frame and the blocks. Wireframes then follow DESIGN.md §7.
+- For the backend: DATA-GAPS.md.
+- Open: `picture.done_when` (10 / 8 columns) disagrees with SPEC §2 rule 10 and §5 (8 / 3) and with `picture.phone` (6).
