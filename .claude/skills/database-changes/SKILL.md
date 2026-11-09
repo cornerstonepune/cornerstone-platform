@@ -17,17 +17,11 @@ Make each schema change one additive numbered migration in `supabase/migrations/
 - Migration filenames: the next number comes from the highest number on main AND in every open pull request's `supabase/migrations/`, not only main's newest. Two branches on one number break whichever merges second. When several builders run at once, the coordinator assigns each its slot up front; a rename is checked against the open list before pushing. If a locked proof names the old filename, stop and report instead of renaming.
 - Never take a migration number from the clock (`date -u`): main's files are dated 2027, so a clock timestamp sorts before them and `supabase db push` refuses it. Number it just above the highest on origin/main, for example one hour later.
 - Before pushing a migration, run `TEST_DATABASE_URL=postgresql://postgres@127.0.0.1:55432/postgres bin/check --db` against a local Postgres. It builds every migration with the seed and fails on an ownerless table, a stale `rules.json`, or failing grade and rule tests. Without it, CP-6, CP-8 and CP-11 each lost a CI round on 9 Nov.
-- A test teardown error "left committed rows" is a failing test even when a rerun passes: the rerun passes only because the first run already committed the rows. Fix the fixture's rollback (or the command's cleanup) before counting it green.
-
-- After merging main, if main brought a migration, regenerate `rules.json` on a database built from migrations only (`engine live rules --write --url <db>`) and read the diff: it should show only the rules the merge brought in.
 
 ## Access and row-level security
 - Prove denied rows are absent and allowed rows present, both through the restricted login with identity set the way the app sets it. Full checklist: `references/access-proof-checklist.md`.
 - Check `pg_class.reloptions` for `security_invoker = true` on every view that exposes restricted data. Never assert either way from memory.
 - Unlisted tables default closed for the restricted role, so classify each new table or a test fails.
-- Before naming which login a browser suite or test uses, read its CI workflow and env file, then grep the tests for that login's name. A suite already on the restricted login goes red on merge unless its test users hold the rows they read.
-- Every member of a closed set a rule classifies (role code, group, kind) must sit in exactly one group; a code left out blanks its holders silently.
-- When two systems name one person (sign-in id and table key), the rule must resolve the id the request actually carries.
 
 ## Engine data rules
 - Derived lists, machine-made links, matching rules and the fortnight rule are in `references/engine-data-rules.md`. Read it before changing any command that links rows or prints a count.
