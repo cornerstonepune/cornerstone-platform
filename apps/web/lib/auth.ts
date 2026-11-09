@@ -120,3 +120,13 @@ export async function requireStaff(): Promise<Session> {
   if (me) return me;
   redirect("/login");
 }
+
+// For an action that changes the staff list: the signed-in person, if the database's access groups (CP-3) give their
+// current grants every staff row; anyone else is sent back to the Staff page and nothing is read or written. The groups
+// are rows, so moving a role between them is an update there, never a change here.
+export async function requireStaffEditor(): Promise<Session> {
+  const me = await requireStaff();
+  const [r] = await sql<{ all: boolean }[]>`select public.my_reach('staff') = 'all' as all`;
+  if (r?.all) return me;
+  redirect("/staff?denied=1");
+}

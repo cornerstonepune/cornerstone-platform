@@ -17,13 +17,13 @@ const sql = postgres(process.env.DATABASE_URL!, { max: 1, idle_timeout: 2 });
 const PASSWORD = "a-long-enough-one-1";
 
 /** A member of staff of this test's own, with a password already set (as `engine set-password` sets one). */
-async function staffMember(password: string | null = PASSWORD): Promise<string> {
+async function staffMember(password: string | null = PASSWORD, role = "educator"): Promise<string> {
   const email = `pw-${randomUUID().slice(0, 8)}@cornerstone.test`;
   const salt = randomBytes(16).toString("hex");
   const person = {
     email,
     name: "Password test",
-    role: "educator",
+    role,
     ...(password ? { password: `scrypt$${salt}$${scryptSync(password, salt, 64).toString("hex")}` } : {}),
   };
   await sql`update config set value = value || ${sql.json([person])} where key = 'app.staff'`;
@@ -255,7 +255,7 @@ test("past the limit on asks for one email the form sends nothing and still says
 });
 
 test("a new member of staff added on the Staff page has no password and is sent a first-time link", async ({ page }) => {
-  const coordinator = await staffMember();
+  const coordinator = await staffMember(PASSWORD, "coordinator"); // only the coordinators may add a member of staff
   const email = `new-${randomUUID().slice(0, 8)}@cornerstone.test`;
   try {
     await signedIn(page, coordinator, PASSWORD);
