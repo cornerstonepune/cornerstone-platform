@@ -1,0 +1,1 @@
+Canny: this command removes $S/test_every.py from the tests. Tests are only removed or skipped when the user asked for it. Fix the code the test covers instead.
