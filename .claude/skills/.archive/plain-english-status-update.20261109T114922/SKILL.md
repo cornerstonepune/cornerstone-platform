@@ -1,7 +1,7 @@
 ---
 name: plain-english-status-update
 category: reporting
-description: Use when reporting progress, status, or a design or scope document to the founder (Nimish), including design.md and scope issues.
+description: Use when reporting progress or status to the founder.
 ---
 
 # Status updates for a non-technical founder: answer first, plain bullets, no codes
