@@ -5,6 +5,7 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 @import "../design-system/tokens.css" layer(tokens);
+@import "../components/blocks.css";
 
 /* Hover changes colour only, and only where there is a real pointer (a mouse or a trackpad), never on a touch screen. */
 @custom-variant hover {

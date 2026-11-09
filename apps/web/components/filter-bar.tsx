@@ -47,7 +47,7 @@ export function FilterBar({
   };
   const control = "min-h-[40px] border border-[var(--line-control)] bg-[var(--panel)] px-3 !text-[15px] text-[var(--ink)]";
   return (
-    <section data-filterbar aria-label="Filters" className="mb-3">
+    <section data-block="FilterBar" data-filterbar aria-label="Filters" className="mb-3">
       <form ref={form} action={action} method="get" role="search" className="flex flex-wrap items-center gap-2">
         {Object.entries(keep).map(([k, v]) => (v ? <input key={k} type="hidden" name={k} value={v} /> : null))}
         {filters.map((f) => (

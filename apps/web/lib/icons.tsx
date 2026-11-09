@@ -52,6 +52,15 @@ import {
   UserX,
   UsersRound,
   X,
+  Camera,
+  CircleDashed,
+  ClipboardCheck,
+  Eye,
+  Hash,
+  MessagesSquare,
+  MoveRight,
+  Palette,
+  Upload,
 } from "lucide-react";
 
 // Every icon the site's K2 screens and its status chip draw, behind this one lookup (task M1-04). One open-source set,
@@ -122,8 +131,23 @@ export const ICONS = {
   break: Coffee,
   frozen: Lock,
   time: CalendarClock,
+  // the blocks (UI-2): a period, an assessment, a photo, a child not yet seen, the subjects, a fold, a file, a lesson moved
+  period: CalendarClock,
+  assessment: ClipboardCheck,
+  photo: Camera,
+  "not-seen": CircleDashed,
+  numeracy: Hash,
+  language: MessagesSquare,
+  arts: Palette,
+  details: Eye,
+  upload: Upload,
+  moved: MoveRight,
+  clash: TriangleAlert,
 } satisfies Record<string, LucideIcon>;
 export type IconName = keyof typeof ICONS;
+
+/** The actions the site offers, each drawn in the legend on the gallery page with its icon (UI-2). */
+export const ACTIONS = ["record", "stop", "send", "play", "confirm", "correct", "search", "filter", "next", "clear", "form", "send-back", "no"] as const satisfies readonly IconName[];
 
 /** The sizes the design names: 16 in a table, 20 in a row or a button, 24 in a heading. */
 export const ICON_SIZE = { table: 16, row: 20, heading: 24 } as const;
