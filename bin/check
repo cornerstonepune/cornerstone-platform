@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 # The checks that hold the code to its map and every promise to a command (ADR 0033): the engine's layout
 # against workflows.json, every goal line a command or one of Nimish's sentences with its test, no baseline loosened
 # since the last commit, the type checker's verdict, the website's list of the engine's routes, and lint.
@@ -6,6 +6,7 @@
 #   before every commit            .githooks/pre-commit
 #   before Claude Code ends a turn .claude/settings.json (Stop hook) — `--claude` makes a failure block it
 # `bin/check --db` adds the checks that need a database (TEST_DATABASE_URL); the stop gate adds them whenever it is set.
+# `bin/check --local-url URL` says whether URL is a database on this machine (exit 0) or not; tests/test_check_db_url.py.
 here=$(cd "$(dirname "$0")/.." && pwd)
 engine="$here/packages/engine"
 if [ ! -x "$engine/.venv/bin/python" ]; then
@@ -16,6 +17,7 @@ run() {
   cd "$engine" &&
     DATABASE_URL= TEST_DATABASE_URL= .venv/bin/python -m pytest tests/test_layout.py tests/test_promises.py tests/test_ratchet.py \
       tests/test_types.py tests/test_contract.py tests/test_migration_order.py tests/test_grades.py tests/test_school_words.py \
+      tests/test_check_db_url.py \
       -q -p no:cacheprovider -o addopts= &&
     .venv/bin/ruff check engine tests -q &&
     .venv/bin/ruff format --check engine tests -q
@@ -23,12 +25,18 @@ run() {
 # --db, and the stop gate whenever TEST_DATABASE_URL is set: what needs a database, on a database of its own beside the
 # local one (never the copy itself), built from every migration with the seed and no bank (bin/testdb schema). A table
 # with no owner, rules.json behind the migrations, and the grade and rule tests that skip without a database.
+# One exact shape, matched whole in bash (not a glob, not line by line: `?host=`, a second @, a comma list, a path trick or a
+# line break must not send libpq to another server while the rest looks local; CP-21's lesson, docs/athena/learnings.md).
+local_url() {
+  local shape='^postgres(ql)?://[A-Za-z0-9_]+(:[A-Za-z0-9_.~-]*)?@(127\.0\.0\.1|localhost)(:[0-9]+)?/[A-Za-z0-9_]+$'
+  [[ $1 =~ $shape ]]
+}
 db() (
   url=${TEST_DATABASE_URL:?"bin/check --db needs TEST_DATABASE_URL, a local Postgres"}
-  case "$url" in
-    *@127.0.0.1:* | *@127.0.0.1/* | *@localhost:* | *@localhost/*) ;;
-    *) echo "bin/check --db: TEST_DATABASE_URL must be on this machine (127.0.0.1 or localhost)" >&2 && exit 1 ;;
-  esac
+  local_url "$url" || {
+    echo "bin/check --db: TEST_DATABASE_URL must look like postgresql://postgres@127.0.0.1:5432/postgres (a user, this machine, a plain database name, no query)" >&2
+    exit 1
+  }
   name="cs_check_$$"
   scratch=$(python3 -c 'import sys, urllib.parse as u; p = u.urlsplit(sys.argv[1]); print(u.urlunsplit(p._replace(path="/" + sys.argv[2])))' "$url" "$name")
   trap 'psql "$url" -qc "drop database if exists $name with (force)" >/dev/null 2>&1' EXIT
@@ -42,15 +50,21 @@ db() (
     DATABASE_URL= TEST_DATABASE_URL="$scratch" .venv/bin/python -m pytest tests/test_grades.py tests/test_rules.py \
       -q -p no:cacheprovider -o addopts=
 )
+if [ "${1:-}" = "--local-url" ]; then
+  local_url "${2:-}"
+  exit
+fi
 if [ "${1:-}" = "--db" ]; then
   run && db
   exit
 fi
 if [ "${1:-}" = "--claude" ]; then
+  [ -n "${TEST_DATABASE_URL:-}" ] || echo "bin/check: TEST_DATABASE_URL is not set, so the database checks were skipped (bin/check --db runs them)." >&2
   out=$( (run && if [ -n "${TEST_DATABASE_URL:-}" ]; then db; fi) 2>&1) && exit 0
-  echo "bin/check failed — the code drifted from workflows.json, a promise has no command, or lint failed." >&2
+  echo "bin/check failed — the code drifted from workflows.json, a promise has no command, lint failed, or (with TEST_DATABASE_URL set) a database check failed." >&2
   echo "Fix the cause before finishing (CLAUDE.md rule 11); do not raise a limit or loosen a rule." >&2
-  printf '%s\n' "$out" | grep -E "Error|FAIL|assert|would reformat|E   " | head -20 >&2
+  # any case: pytest's "E   " and FAILED, ruff's would reformat, and the database's own words (psql's "ERROR:", a refused connection, rules.json)
+  printf '%s\n' "$out" | grep -iE "error|fail|assert|would reformat|E   |refused|could not|rules" | head -20 >&2
   exit 2
 fi
 run
