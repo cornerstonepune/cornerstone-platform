@@ -1,0 +1,248 @@
+"""The loader must be idempotent.
+
+Everything downstream joins to these codes. If a second run moved a single row, the registry
+could not be trusted as the thing a child's result attaches to — and the damage would only
+surface much later, as a skill state that quietly disagrees with the evidence behind it.
+
+These tests hit the real Supabase project, so they skip when no DATABASE_URL is configured.
+"""
+
+import json
+import os
+import pathlib
+
+import pytest
+
+from engine.core import db, english, loaders, references, settings
+
+pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
+
+
+def test_load_does_not_overwrite_a_skill_set_edited_in_the_app():
+    """Neha edits a set in the app; the next `engine load` must leave her words alone. An upsert here
+    silently discarded her work, and she would have had no way to know.
+
+    Everything happens on one connection and is rolled back. The earlier version committed the edit
+    so that `load_all()`'s own connection could see it — which made this the only test that wrote to
+    a live spec row, and it showed: two suite runs at once left `SUB.2D2D` edited and unratified,
+    and three "flaky" failures elsewhere in the suite were that state, not their own code. The loader
+    for this one table is called directly instead, which needs no commit and proves the same clause.
+    """
+    with db.connect() as conn:
+        tenant = loaders._tenant(conn)
+        before = conn.execute("select difficulty from skill where code = 'SUB.2D2D'").fetchone()["difficulty"]
+        edited = {**before, "Easy": {"words": "edited in the app", "check": before["Easy"]["check"]}}
+        conn.execute("update skill set difficulty = %s where code = 'SUB.2D2D'", (json.dumps(edited),))
+
+        loaders._skill_sets(conn, tenant)  # what `engine load` does for this table, same transaction
+
+        after = conn.execute("select difficulty, status from skill where code = 'SUB.2D2D'").fetchone()
+        assert after["difficulty"]["Easy"]["words"] == "edited in the app", (
+            "the seed overwrote a person's words"
+        )
+        conn.rollback()
+        live = conn.execute("select difficulty from skill where code = 'SUB.2D2D'").fetchone()
+        assert live["difficulty"]["Easy"]["words"] == before["Easy"]["words"], "and nothing was left behind"
+
+
+def test_load_config_keeps_a_password_set_in_the_app():
+    """`engine set-password` writes a hash into `app.staff`; the seed's copy of the list has none. The
+    loader upserted every config row, so the next `engine load` silently took every password away and
+    no one could sign in. A row the app owns is seeded once and then left alone (`seed_once`)."""
+    with db.connect() as conn:
+        tenant = loaders._tenant(conn)
+        staff = conn.execute("select value from config where key = 'app.staff'").fetchone()["value"]
+        # the seed's list is empty (goals/ui4a-staff-and-search.yaml): someone `engine staff add` put on it
+        staff.append(
+            {
+                "email": "kept@cornerstone.test",
+                "name": "Kept",
+                "role": "educator",
+                "password": "scrypt$test$hash",
+            }
+        )
+        conn.execute("update config set value = %s where key = 'app.staff'", (json.dumps(staff),))
+
+        settings.load_config(conn, tenant)
+
+        after = conn.execute("select value from config where key = 'app.staff'").fetchone()["value"]
+        # each person is given an id as they are put on the list (goals/own_who_sees_answers.yaml); nothing else changes
+        assert all(p.get("id") for p in after)
+        no_id = lambda people: [{k: v for k, v in p.items() if k != "id"} for p in people]  # noqa: E731
+        assert no_id(after) == no_id(staff), "loading the seed took someone, or a password, away"
+        conn.rollback()
+
+
+SEED = pathlib.Path(__file__).resolve().parents[3] / "supabase" / "seed"
+
+
+def _seeded(name):
+    return len(json.loads((SEED / f"{name}.json").read_text())[name])
+
+
+EXPECTED = {
+    "tenant": 1,
+    "domain": 14,
+    "registry_skill": 244,  # the whole map, all 14 domains — not the maths slice
+    "milestone": 849,
+    "learning_objective": 1750,
+    "learning_objective_skill": 2012,
+    "activity": 2216,
+    "activity_skill": 3711,
+    "report_item": 885,
+    "trait": 56,
+    # R7, R8, R11, R13, R14, R16–R18, X1, X2, R19–R33 (ADR 0034), R34–R35 (Grade 1), R36–R40 (M2a), R41 (M2d1), R42–R45
+    # (M3a), R46 (M3c), R47 (M4a), R48 (M4b1), R49 (M4b2), R50 (M4c), R51 (M4d1), R52–R54 (SF1: sequences, multiples in
+    # the tables, three numbers multiplied)
+    "level_rule": 12,
+    "misconception": 39,
+    # every tag a case of either document reads, with its values (goals/md1-taxonomy-rows.yaml); `from_table` (M3a)
+    "case_dimension": 69,
+    # both of the team's taxonomies, one row per case: 270 + and −, 252 × and ÷ (M1, M2a; D15 a 3-digit division in a
+    # line, M3d)
+    "taxonomy_case": 522,
+    # prompts, thresholds and config are settings a PR adds to: counted from their seed files, never typed here
+    # (2026-09-29: the typed 20, 26 and 16 had fallen to 37, 31 and 17 without anyone noticing)
+    "prompt": _seeded("prompts"),
+    "threshold": _seeded("thresholds"),
+    "config": _seeded("config"),
+    "skill": 155,  # 46 of maths and the 109 of English Grades 3 and 4 (E0): the maths  # fifteen + and − calculation skills (ADR 0034), eleven others, tally, equal groups, five × (M2a),
+    # multiplication's models (M2d1), four ÷ (M3a), division's models (M3c), mental multiplication and division (M4a),
+    # estimating products and quotients (M4b1), equations with × and ÷ (M4b2), multiples and factors (M4c),
+    # stories with × and ÷ (M4d1), and Achal's three Grade 2 skills made of kinds that are rows (SF1)
+    # one row per skill and level (goals/b1-levels-are-rows.yaml), kept equal to the blob by its trigger (ADR 0087)
+    "skill_level": 614,  # 178 of maths, 436 of English (E0)
+    "subject": 2,  # maths and English
+}
+
+
+@pytest.fixture(scope="module")
+def loaded():
+    return loaders.load_all()
+
+
+# The vocabulary is the one table the seed does not own outright: `engine bank misconceptions --apply`
+# adds what a prompt found, and `engine bank unclassified` will add what children write. An exact
+# count here would fail every time the engine legitimately learned a mistake, so the seed's rows are
+# a floor and each one must be present.
+GROWS = {"misconception", "activity", "learning_objective"}  # the last two grow by the K2 upload (M0-02)
+
+
+def test_every_table_has_the_expected_number_of_rows(loaded):
+    fixed = {k: v for k, v in EXPECTED.items() if k not in GROWS}
+    assert {k: loaded[k] for k in fixed} == fixed
+    # the curriculum is the database's after the upload: the seed's rows are a floor, never an exact count (M0-02)
+    assert (
+        loaded["activity"] >= EXPECTED["activity"]
+        and loaded["learning_objective"] >= EXPECTED["learning_objective"]
+    )
+
+
+def test_the_vocabulary_holds_every_seeded_mistake_and_may_hold_more(loaded):
+    seed = json.loads(
+        (pathlib.Path(__file__).resolve().parents[3] / "supabase/seed/misconceptions.json").read_text()
+    )
+    want = {(m["code"], m["op"]) for m in seed["misconceptions"]}
+    with db.connect() as conn:
+        have = {(r["code"], r["op"]) for r in conn.execute("select code, op from misconception").fetchall()}
+    assert want <= have, f"the seed's own mistakes are missing: {sorted(want - have)}"
+    assert loaded["misconception"] >= len(want)
+
+
+def test_milestones_load_for_the_registry_skills(loaded):
+    assert loaded["milestone"] > 100
+
+
+def test_a_second_run_changes_nothing(loaded):
+    assert loaders.load_all() == loaded
+
+
+def test_no_two_bands_of_one_skill_set_declare_the_same_region(loaded):
+    """Two bands with one rule draw from one pool and starve each other — R1's Medium and Hard
+    did exactly this until Hard was pinned to a story (BUILD-ORDER gate 4, amended)."""
+    assert references.orphans()["skill_set bands sharing one region"] == []
+
+
+def test_no_code_refers_to_something_that_does_not_exist(loaded):
+    assert {k: v for k, v in references.orphans().items() if v} == {}
+
+
+def test_only_one_prompt_version_is_active_per_purpose(loaded):
+    with db.connect() as conn:
+        rows = conn.execute(
+            "select purpose, count(*) as n from prompt where active group by purpose having count(*) > 1"
+        ).fetchall()
+    assert rows == []
+
+
+def test_every_rung_band_is_a_band_the_levels_know_about(loaded):
+    with db.connect() as conn:
+        rows = conn.execute(
+            "select distinct s.grade from skill s"
+            " where s.grade not like '%+%'"
+            " and not exists (select 1 from level_rule l where l.band = s.grade)"
+        ).fetchall()
+    assert rows == [], f"rung bands with no level rule: {rows}"
+
+
+def test_a_deploy_loads_the_rows_the_engine_reads_as_settings_and_no_others(monkeypatch):
+    """`engine load --settings`, run by every deploy (deploy-engine.yml): a merged setting — a layout, a
+    threshold, a prompt — is live with the code that reads it, and nobody runs `bin/update-live` for it. The
+    rows people own or the bank's own steps build (skill sets, levels, the registry) are not touched. The English
+    samples are loaded too: rows no person edits or approves (goals/smp_skill_shows_its_samples.yaml)."""
+    touched = []
+    for step in ("_registry", "_levels", "_misconceptions", "_dimensions", "_taxonomy_cases",
+                 "_skill_sets", "_subjects"):  # fmt: skip
+        monkeypatch.setattr(loaders, step, lambda *a, s=step: touched.append(s))
+    monkeypatch.setattr(loaders.topics, "load", lambda *a: touched.append("topics"))
+
+    assert (
+        set(loaders.load_settings()) == {"prompt", "threshold", "config", *english.SAMPLE_TABLES}
+        and touched == []
+    )
+    with db.connect() as conn:
+        layouts = conn.execute("select value from config where key = 'render.layouts'").fetchone()["value"]
+        assert [x["name"] for x in layouts] == [
+            "2026-09-21",
+            "2026-09-23-L3",
+            "2026-09-24",
+            "2026-10-09",
+            "2026-10-10",
+        ]
+        assert conn.execute("select 1 from prompt where purpose = 'mistake_guess' and active").fetchone()
+
+
+def test_a_prompt_row_keeps_the_effort_its_seed_names():
+    """Nimish, 2026-09-29: "yes, go ahead with all three". A row names how hard its model thinks (migration
+    20261016090000); the loader carries it, and a row that names none keeps the model's own default."""
+    with db.connect() as conn:
+        settings.load_prompts(conn, loaders._tenant(conn))
+        rows = conn.execute(
+            "select version, effort from prompt where purpose = 'parent_review' and version in (3, 4, 5)"
+        ).fetchall()
+        got = {r["version"]: r["effort"] for r in rows}
+        conn.rollback()
+    assert got == {3: None, 4: "low", 5: "low"}
+
+
+def test_a_seed_edit_does_not_overwrite_an_activity_the_database_has_and_an_activity_it_lacks_is_added(
+    tmp_path, monkeypatch
+):
+    """M0-02 / D-050: the database is the master of the curriculum. An edit to registry.json no longer reaches an
+    activity that exists (the K2 upload and every person's edit would be undone on the next deploy), and an activity
+    the database does not have is still added."""
+    reg = json.loads((loaders.SEED / "registry.json").read_text())
+    first = next(a for a in reg["activities"] if a["code"] == "ACT-K2-0001")
+    first["level_1"] = "A level the seed now says"
+    reg["activities"].append({**first, "code": "ACT-K2-9999", "name": "An activity only the seed has"})
+    (tmp_path / "registry.json").write_text(json.dumps(reg))
+    monkeypatch.setattr(loaders, "SEED", tmp_path)
+    with db.connect() as conn:
+        t = db.one(conn, "select id from tenant where slug = %s", (db.tenant_slug(),))["id"]
+        before = db.one(conn, "select level_1 from activity where code = 'ACT-K2-0001'")["level_1"]
+        loaders._registry(conn, t)
+        after = db.one(conn, "select level_1 from activity where code = 'ACT-K2-0001'")["level_1"]
+        added = conn.execute("select name from activity where code = 'ACT-K2-9999'").fetchone()
+        conn.rollback()
+    assert after == before != "A level the seed now says"
+    assert added is not None and added["name"] == "An activity only the seed has"

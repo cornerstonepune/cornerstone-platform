@@ -1,0 +1,245 @@
+"""W2's HTTP surface: the three calls F2 makes, against the real schema in a rolled-back
+transaction. What is checked here is the wiring — that a route forwards to the function the CLI
+uses and shapes what n8n needs — not the week logic, which `test_week.py` and the W2 scenarios own.
+"""
+
+import os
+
+import pytest
+from fastapi.testclient import TestClient
+
+from engine.api import deps
+from engine.api.app import app
+from engine.core import db
+
+pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
+
+SECTION, WEEK, SET = "APISEC", "api-week", "SUB.2D2D"
+KEY = "test-engine-key"
+
+
+@pytest.fixture
+def conn():
+    with db.connect() as c:
+        yield c
+        c.rollback()
+
+
+@pytest.fixture
+def client(conn, monkeypatch):
+    monkeypatch.setenv("ENGINE_KEY", KEY)
+    app.dependency_overrides[deps.get_conn] = lambda: (yield conn)
+    app.dependency_overrides[deps.get_tenant_id] = lambda: conn.execute(
+        "select id from tenant where slug = %s", (db.tenant_slug(),)
+    ).fetchone()["id"]
+    with TestClient(app, headers={"X-Engine-Key": KEY}) as c:
+        yield c
+    app.dependency_overrides.clear()
+
+
+@pytest.fixture
+def children(conn):
+    tenant = conn.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()["id"]
+    conn.execute("delete from child where section = %s", (SECTION,))
+    for i in (1, 2):
+        row = conn.execute(
+            "insert into child (tenant_id, roll_no, section, band) values (%s,%s,%s,'G2') returning id",
+            (tenant, str(i), SECTION),
+        ).fetchone()
+        conn.execute(
+            "insert into pii.child (tenant_id, child_id, first_name) values (%s,%s,%s)",
+            (tenant, row["id"], f"Api {i}"),
+        )
+    return None  # no commit: the route shares this connection and the fixture rolls it back
+
+
+def test_prescribe_then_assemble_over_http(client, children):
+    r = client.post("/week/prescribe", json={"section": SECTION, "week": WEEK, "skill_set": SET})
+    assert r.status_code == 200, r.text
+    body = r.json()
+    assert body["prescribed"] == 2 and sum(body["by_rule"].values()) == 2
+
+    r = client.post("/week/assemble", json={"section": SECTION, "week": WEEK})
+    assert r.status_code == 200, r.text
+    built = r.json()
+    assert built["sheets"] == 2 and built["spares"] >= 1
+    assert len(built["qr_codes"]) == built["sheets"] + built["spares"]
+    assert len(set(built["qr_codes"])) == len(built["qr_codes"])
+    assert built["short"] == []
+
+
+def test_assembling_the_same_week_twice_is_one_week(client, children):
+    client.post("/week/prescribe", json={"section": SECTION, "week": WEEK, "skill_set": SET})
+    first = client.post("/week/assemble", json={"section": SECTION, "week": WEEK}).json()
+    again = client.post("/week/assemble", json={"section": SECTION, "week": WEEK}).json()
+    assert again["already"] is True, "the same week assembled twice must not print a second set"
+    assert again["qr_codes"] == first["qr_codes"]
+
+
+def test_a_sheet_cannot_be_printed_without_someone_approving_it(client, children, conn):
+    """The gate is the database's, not the application's: mark a sheet printed with no approver and
+    the constraint refuses it. Before this, `print_status` was a label any code could set."""
+    import psycopg
+    import pytest as _pytest
+
+    client.post("/week/prescribe", json={"section": SECTION, "week": WEEK, "skill_set": SET})
+    built = client.post("/week/assemble", json={"section": SECTION, "week": WEEK}).json()
+    qr = built["qr_codes"][0]
+    with _pytest.raises(psycopg.errors.CheckViolation):
+        conn.execute(
+            "update sheet_instance set print_status = 'printed', printed_at = now() where qr_code = %s",
+            (qr,),
+        )
+    conn.rollback()
+
+
+def test_approving_the_week_names_the_person_on_every_sheet(client, children, conn):
+    client.post("/week/prescribe", json={"section": SECTION, "week": WEEK, "skill_set": SET})
+    built = client.post("/week/assemble", json={"section": SECTION, "week": WEEK}).json()
+    r = client.post("/week/approve", json={"section": SECTION, "week": WEEK, "by": "neha@example.org"})
+    assert r.status_code == 200, r.text
+    body = r.json()
+    assert body["sheets"] == built["sheets"] + built["spares"]
+    assert body["named"] == built["sheets"] and body["spares"] == built["spares"]
+    rows = conn.execute(
+        "select print_status, approved_by from sheet_instance where qr_code = any(%s)",
+        (built["qr_codes"],),
+    ).fetchall()
+    assert {(x["print_status"], x["approved_by"]) for x in rows} == {("printed", "neha@example.org")}
+
+    again = client.post(
+        "/week/approve", json={"section": SECTION, "week": WEEK, "by": "someone@else.org"}
+    ).json()
+    assert again["already"] is True or again["sheets"] == 0, "a second approval approves nothing further"
+
+
+def test_a_pack_remade_after_an_approval_is_approved_again_by_the_same_person(client, children, conn):
+    """The same teacher approving the same class and week twice is two approvals, not a replay of the first."""
+    body = {"section": SECTION, "week": WEEK, "by": "neha@example.org"}
+    client.post("/week/prescribe", json={"section": SECTION, "week": WEEK, "skill_set": SET})
+    client.post("/week/assemble", json={"section": SECTION, "week": WEEK})
+    assert client.post("/week/approve", json=body).json()["sheets"] > 0
+    conn.execute(
+        "update sheet_instance set print_status = 'new', approved_by = null, approved_at = null, printed_at = null"
+        " where section = %s and week = %s",
+        (SECTION, WEEK),
+    )
+    again = client.post("/week/approve", json=body).json()
+    assert again["already"] is False and again["sheets"] > 0
+
+
+def test_a_papers_page_is_served_as_printed(client, children, conn, tmp_path):
+    """The paper view shows the page itself — QR and all — from the PDF the render wrote, never a
+    second drawing of it."""
+    import pymupdf
+
+    client.post("/week/prescribe", json={"section": SECTION, "week": WEEK, "skill_set": SET})
+    qr = client.post("/week/assemble", json={"section": SECTION, "week": WEEK}).json()["qr_codes"][0]
+    pdf = tmp_path / f"{qr}.pdf"
+    with pymupdf.open() as doc:
+        doc.new_page().insert_text((72, 72), qr)
+        doc.save(pdf)
+    conn.execute("update sheet_instance set pdf_path = %s where qr_code = %s", (str(pdf), qr))
+
+    r = client.get(f"/sheet/{qr}/page/1.jpg")
+    assert r.status_code == 200, r.text
+    assert r.headers["content-type"] == "image/jpeg" and r.content[:2] == b"\xff\xd8"
+
+
+def test_a_paper_never_rendered_or_unknown_is_not_found(client, children):
+    client.post("/week/prescribe", json={"section": SECTION, "week": WEEK, "skill_set": SET})
+    qr = client.post("/week/assemble", json={"section": SECTION, "week": WEEK}).json()["qr_codes"][0]
+    assert client.get(f"/sheet/{qr}/page/1.jpg").status_code == 404
+    assert client.get("/sheet/CS000000/page/1.jpg").status_code == 404
+
+
+def test_a_child_who_cannot_be_given_a_worksheet_is_named_in_the_answer(client, children, conn):
+    """A short child's row carries the child's id, and the result is stored for replay as JSON: the
+    id has to arrive as text, or the whole assembly fails and nobody is told why (step 7)."""
+    client.post("/week/prescribe", json={"section": SECTION, "week": WEEK, "skill_set": SET})
+    conn.execute(
+        "update sheet_template set retired_at = now() where source = 'library' and skill_set_code = %s",
+        (SET,),
+    )
+    r = client.post("/week/assemble", json={"section": SECTION, "week": WEEK})
+    assert r.status_code == 200, r.text
+    short = r.json()["short"]
+    assert short and all(s["why"] and isinstance(s["child_id"], str) for s in short)
+
+
+def test_the_pack_pdf_is_refused_until_approved_and_then_served_whole(client, children, conn, tmp_path):
+    """The Papers page hands on the week's pack; the engine will not give it out before a teacher approves."""
+    import pymupdf
+
+    client.post("/week/prescribe", json={"section": SECTION, "week": WEEK, "skill_set": SET})
+    qrs = client.post("/week/assemble", json={"section": SECTION, "week": WEEK}).json()["qr_codes"]
+    for qr in qrs:
+        with pymupdf.open() as doc:
+            doc.new_page().insert_text((72, 72), qr)
+            doc.save(tmp_path / f"{qr}.pdf")
+        conn.execute(
+            "update sheet_instance set pdf_path = %s where qr_code = %s", (str(tmp_path / f"{qr}.pdf"), qr)
+        )
+
+    r = client.get(f"/week/{SECTION}/{WEEK}/practice/pack.pdf")
+    assert r.status_code == 409 and "wait for a teacher" in r.json()["detail"]
+    client.post("/week/approve", json={"section": SECTION, "week": WEEK, "by": "neha@example.org"})
+    r = client.get(f"/week/{SECTION}/{WEEK}/practice/pack.pdf")
+    assert r.status_code == 200 and r.headers["content-type"] == "application/pdf"
+    with pymupdf.open(stream=r.content, filetype="pdf") as doc:
+        assert doc.page_count == len(qrs)
+    assert client.get(f"/week/{SECTION}/NO-SUCH-WEEK/practice/pack.pdf").status_code == 404
+
+
+def test_rendering_a_week_draws_the_papers_already_made_and_makes_no_second_set(
+    client, children, conn, tmp_path
+):
+    """The print flow assembles, then renders: the render must draw those papers, not hand every child another."""
+    client.post("/week/prescribe", json={"section": SECTION, "week": WEEK, "skill_set": SET})
+    made = client.post("/week/assemble", json={"section": SECTION, "week": WEEK}).json()["qr_codes"]
+    r = client.post("/week/render", json={"section": SECTION, "week": WEEK, "out": str(tmp_path / "pack")})
+    assert r.status_code == 200, r.text
+    rows = conn.execute(
+        "select qr_code, pdf_path from sheet_instance where section = %s and week = %s", (SECTION, WEEK)
+    ).fetchall()
+    assert sorted(x["qr_code"] for x in rows) == sorted(made)
+    assert all(x["pdf_path"] for x in rows)
+
+
+def test_a_weeks_declaration_is_proposed_confirmed_and_read_back_over_http(client, conn, monkeypatch):
+    """N4 over HTTP (goals/n4-week-declaration.yaml): the note proposes, the educator confirms, the week reads it back;
+    another grade's skill set is refused with the reason."""
+    import uuid
+
+    from engine.w2_print import week_note
+
+    tenant = conn.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()["id"]
+    section = f"T{uuid.uuid4().hex[:5]}"
+    conn.execute(
+        "insert into child (tenant_id, roll_no, section, band) values (%s,'1',%s,'G2')", (tenant, section)
+    )
+    monkeypatch.setattr(
+        week_note.jev,
+        "decide_yes_no",
+        lambda conn, p, s, asks: {"yes": {c: 0.9 if c == "SUB.2D2D" else 0.1 for c in asks}},
+    )
+
+    got = client.post("/week/declaration/propose", json={"section": section, "note": "subtraction"})
+    assert got.status_code == 200 and [r["code"] for r in got.json()["skill_sets"] if r["ticked"]] == [
+        "SUB.2D2D"
+    ]
+    body = {
+        "section": section,
+        "week": "2026-W40",
+        "note": "subtraction",
+        "skill_sets": ["SUB.2D2D"],
+        "by": "neha",
+    }
+    assert client.post("/week/declaration", json=body).status_code == 200
+    back = client.get(f"/week/{section}/2026-W40/declaration").json()
+    assert back["skill_sets"] == ["SUB.2D2D"] and back["by"] == "neha"
+    refused = client.post("/week/declaration", json={**body, "skill_sets": ["ADD.3D3D"]})
+    assert refused.status_code == 409 and "not skill sets of G2" in refused.json()["detail"]
+    assert (
+        client.post("/week/declaration/propose", json={"section": "NOSUCH", "note": "x"}).status_code == 404
+    )

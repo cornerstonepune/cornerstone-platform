@@ -1,0 +1,33 @@
+name: ux1-who-sees-what
+goal: >
+  Since 2026-10-22 (goals/ux9c-one-role.yaml), an educator is shown what the coordinator is: every decision ("Approve" on
+  a skill and on Approve the skills, "Skills to approve" on Today), every question the engine drafted, every class's
+  children on a worksheet's print list, one tap from their own. Today and the menu count the same lines, so what the badge says waits is what
+  the person can do.
+# Written 2026-10-15, before the code: slice UX1 of BUILD-ORDER "topics are operations, and every page is the
+# educator's own". Measured first, on a fresh copy signed in as the G2-C educator (scratchpad audit, 172 screenshots):
+# 48 "Approve…" buttons on Approve the skills and one on every skill page, each landing on "Nothing was changed"; Today
+# listing "46 Skills to approve" and every role's drafted questions, so its badge read 126 where about 50 were theirs; a
+# worksheet's "Print for children" listing 49 children from 6 classes. The cause of the last: `childrenOnRoll` reads
+# the whole roll through `pii.read_child` for anyone, and `childHeader` reads it all to find one child.
+# Superseded on 2026-10-22 by Nimish: "Just keep all the features available for both educators and coordinators for
+# now" (goals/ux9c-one-role.yaml). His 2026-10-15 sentence, "It should be teacher-specific", holds again the day the
+# roles split, in `apps/web/lib/access.ts`.
+says:
+  - words: "Just keep all the features available for both educators and coordinators for now."
+    proved_by: "apps/web/tests/u32-who-sees-what.spec.ts::an educator's Today lists every decision the coordinator's does, and the menu counts the same"
+  - words: "Just keep all the features available for both educators and coordinators for now."
+    proved_by: "apps/web/tests/u32-who-sees-what.spec.ts::an educator is offered the approval of a skill"
+  - words: "Just keep all the features available for both educators and coordinators for now."
+    proved_by: "apps/web/tests/u32-who-sees-what.spec.ts::a worksheet's print list is the educator's own children, and every class's is the coordinator's"
+  - words: "Just keep all the features available for both educators and coordinators for now."
+    proved_by: "apps/web/tests/u32-who-sees-what.spec.ts::the coordinator is shown every decision and every class"
+manual: []
+scenarios: []
+criteria:
+  - name: who decides what, and the menu and Today, still hold
+    run: cd apps/web && npx playwright test tests/u32-who-sees-what.spec.ts tests/u27-who-decides-what.spec.ts tests/u15-menu-and-today.spec.ts tests/u26-my-classes-first.spec.ts --reporter=line --workers=1
+    expect: "passed"
+  - name: the code sits where the map says; every promise has its command; lint
+    run: bin/check
+    expect: "passed"

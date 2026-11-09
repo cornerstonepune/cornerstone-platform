@@ -1,0 +1,346 @@
+"""The only module that talks to a text model.
+
+One call is: the active prompt row for a purpose → placeholders filled → the row's model, then
+each model in the config fallback list → the reply checked against the row's json_schema → a
+flow_run row either way. A `claude-*` model goes through the Anthropic SDK; anything else is
+Gemini's generateContent with retry on the free tier's transient codes. Callers never see a
+model id, an HTTP code, or an unvalidated reply.
+"""
+
+import base64
+import json
+import re
+import ssl
+import time
+import urllib.error
+import urllib.request
+from typing import Literal, get_args
+
+import anthropic
+import certifi
+import jsonschema
+from anthropic.types import ImageBlockParam, MessageParam, OutputConfigParam, TextBlockParam
+from psycopg.types.json import Json
+
+from engine.adapters import llm_budget
+from engine.core import db
+
+WAITS = (
+    5,
+    10,
+    20,
+    40,
+    60,
+)  # seconds between attempts on one model; a fill is a background job, patience is free
+RETRIES = len(WAITS)
+TRANSIENT = (404, 429, 503)  # 404 is returned spuriously by this API under load (STATE.md)
+TIMEOUT_S = 180
+MAX_TOKENS = 16000  # a thinking model needs room to think and then still answer
+# how hard a model thinks (Anthropic's output_config.effort), named per prompt row; none is the model's own default
+Effort = Literal["low", "medium", "high", "xhigh", "max"]
+EFFORTS: tuple[Effort, ...] = get_args(Effort)
+RATE_LIMIT_WAIT_S = 60  # a 429 without Retry-After: the free tier's limits are per minute
+ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
+
+
+class LLMError(RuntimeError):
+    pass
+
+
+class LLMBudgetError(LLMError):
+    """The money for this work is spent, or cannot be counted: a run ends cleanly, keeping what is good."""
+
+
+class LLMSchemaError(LLMError):
+    """The model answered, but not in the form its row's json_schema asks for."""
+
+
+def active_prompt(conn, purpose, subject=None, version=None):
+    """The prompt row that answers `purpose`: a row scoped to `subject` wins over the shared row
+    (subject is null), so a second subject carries its own master prompt (ADR 0009). `version` names
+    one row whether or not it is active — only an eval asks for it (rule 7: a version is scored
+    before it is made active)."""
+    row = conn.execute(
+        "select id, version, text, model, json_schema, effort from prompt"
+        " where purpose = %s and (subject = %s or subject is null)"
+        " and (active and %s::int is null or version = %s::int)"
+        " order by (subject is not null) desc limit 1",
+        (purpose, subject, version, version),
+    ).fetchone()
+    if not row:
+        what = f"version {version} of" if version else "an active prompt for"
+        raise LLMError(f"no {what} {purpose!r}" + (f" (subject {subject!r})" if subject else ""))
+    return row
+
+
+def generate(
+    conn, purpose, variables, images=(), subject=None, meta=None, version=None, stage=None, about=None
+):
+    """Refuses before spending anything once the tenant's spend today reaches the
+    `llm.daily_budget_inr` threshold row — no flow_run is written for a refusal, because no call
+    was made. `meta`, if a dict is passed, is filled with prompt_id, model and flow_run_id so a
+    caller can write provenance without a second lookup (gate 4: every item says what made it). `about`, the
+    activity or page asked about, is kept on the row so a stored run can be read back item by item."""
+    camps = llm_budget.campaigns(conn)  # read once: the carve-out below and the campaign's check both use it
+    own_money = llm_budget.purposes(
+        camps
+    )  # a campaign's purposes have their own cap, outside the day's total
+    budget = (
+        None
+        if purpose in own_money
+        else conn.execute("select value from threshold where key = 'llm.daily_budget_inr'").fetchone()
+    )
+    if budget:
+        spent = conn.execute(
+            "select coalesce(sum(f.cost_inr), 0) as n from flow_run f join tenant t on t.id = f.tenant_id"
+            " where t.slug = %s and f.started_at::date = current_date and not (f.flow = any(%s))",
+            (db.tenant_slug(), own_money),
+        ).fetchone()["n"]
+        if spent >= budget["value"]:
+            raise LLMError(
+                f"today's spend ₹{spent} has reached the ₹{budget['value']} "
+                "daily budget (threshold llm.daily_budget_inr)"
+            )
+
+    try:
+        llm_budget.check(conn, db.tenant_slug(), purpose, stage, camps)
+    except llm_budget.Refused as e:
+        raise LLMBudgetError(str(e)) from e
+    row = active_prompt(conn, purpose, subject, version)
+    cfg = conn.execute("select value from config where key = 'llm.fallback_models'").fetchone()
+    models = [row["model"]] + list(cfg["value"] if cfg else [])
+    held = conn.execute("select value from config where key = 'llm.structured'").fetchone()
+    structured = row.get("version") in ((held["value"] if held else None) or {}).get(purpose, [])
+    run = conn.execute(
+        "insert into flow_run (tenant_id, flow, trigger, request) select id, %s, %s, %s from tenant"
+        " where slug = %s returning id",
+        (
+            purpose,
+            llm_budget.trigger_for(stage),
+            Json(
+                {
+                    "purpose": purpose,
+                    "version": row.get("version"),
+                    "prompt_id": str(row["id"]),
+                    **({"about": about} if about else {}),
+                }
+            ),
+            db.tenant_slug(),
+        ),
+    ).fetchone()["id"]
+
+    text = _fill(row["text"], variables)
+    answered = (
+        None  # (model, tokens, tokens in, tokens out) once a model has answered: a paid call, right or not
+    )
+    out = None  # what it said, kept on the row whether it is accepted or refused (a paid reply is never lost)
+    try:
+        out, model, tokens, tokens_in, tokens_out = _dispatch(
+            models, text, images, row["json_schema"], row.get("effort"), structured
+        )
+        answered = (model, tokens, tokens_in, tokens_out)
+        try:
+            jsonschema.validate(out, row["json_schema"])
+        except jsonschema.ValidationError as e:
+            raise LLMSchemaError(f"{purpose} output failed its schema: {e.message}") from e
+    except LLMError as e:
+        paid = (
+            (*answered, _cost_inr(conn, answered[0], answered[2], answered[3])) if answered else (None,) * 5
+        )
+        conn.execute(
+            "update flow_run set finished_at = clock_timestamp(), status = %s, error = %s, model = %s,"
+            " tokens = %s, tokens_in = %s, tokens_out = %s, cost_inr = %s, result = %s where id = %s",
+            (
+                "error",
+                str(e),
+                *paid,
+                Json({"reply": out, "outcome": "refused", "reason": str(e)} if answered else {}),
+                run,
+            ),
+        )
+        raise
+    cost = _cost_inr(conn, model, tokens_in, tokens_out)
+    # clock_timestamp(), not now(): now() is the transaction's start, which would make every run 0 s
+    conn.execute(
+        "update flow_run set finished_at = clock_timestamp(), status = %s, model = %s,"
+        " tokens = %s, tokens_in = %s, tokens_out = %s, cost_inr = %s, result = %s where id = %s",
+        ("ok", model, tokens, tokens_in, tokens_out, cost, Json({"reply": out, "outcome": "accepted"}), run),
+    )
+    if meta is not None:
+        meta.update(prompt_id=row["id"], model=model, flow_run_id=run, cost_inr=cost)
+    return out
+
+
+def _cost_inr(conn, model, tokens_in, tokens_out):
+    """None when the vendor didn't say — never guessed at, never silently zero for a real spend."""
+    if tokens_in is None or tokens_out is None:
+        return None
+    prices = conn.execute("select value from config where key = 'llm.prices'").fetchone()
+    rate = (prices["value"] if prices else {}).get(model, {})
+    return round((tokens_in * rate.get("in", 0) + tokens_out * rate.get("out", 0)) / 1_000_000, 4)
+
+
+def _dispatch(models, text, images, schema, effort=None, structured=False):
+    """Walk the model list in order, each vendor by its own transport. A model that cannot serve
+    — quota gone, no key, no credit, transient errors exhausted — hands on to the next, and the
+    final error names every model's reason, so a malformed request still reads as one. Returns
+    (output, model that answered, total tokens, input tokens or None, output tokens or None). The row's `effort` is
+    its own model's: a fallback is another model, and Haiku 4.5 refuses one."""
+    errors = []
+    # Both vendors see the schema in the prompt: asked only for "JSON", a model may return a bare
+    # list where an object was wanted, and the validation after this would refuse the whole page.
+    with_schema = f"{text}\n\nThe JSON schema to match exactly:\n{json.dumps(schema)}"
+    for model in models:
+        try:
+            if model.startswith("claude-"):
+                # Held by the vendor, the schema is not also pasted into the prompt: a model shown it in words copied
+                # its keywords into the reply as fields ('additionalProperties', 'confidence_note', 2026-11-04).
+                out, tin, tout = _call_anthropic(
+                    model,
+                    text if structured else with_schema,
+                    images,
+                    schema,
+                    effort if model == models[0] else None,
+                    structured,
+                )
+                return out, model, tin + tout, tin, tout
+            parts = [{"text": with_schema}]
+            parts += [
+                {"inline_data": {"mime_type": "image/jpeg", "data": base64.b64encode(img).decode()}}
+                for img in images
+            ]
+            body = json.dumps(
+                {
+                    "contents": [{"parts": parts}],
+                    "generationConfig": {"response_mime_type": "application/json"},
+                }
+            ).encode()
+            raw = _call([model], body, db.env("GEMINI_API_KEY"))
+            usage = raw.get("usageMetadata", {})
+            tokens = usage.get("totalTokenCount")
+            out = json.loads(raw["candidates"][0]["content"]["parts"][0]["text"])
+            return out, model, tokens, usage.get("promptTokenCount"), usage.get("candidatesTokenCount")
+        except LLMError as e:
+            errors.append(str(e).split("; ", 1)[-1])  # _call's own summary line is repeated here
+        except RuntimeError as e:  # a missing key for this vendor: skip it, say so
+            errors.append(f"{model}: {e}")
+    raise LLMError(f"all models unavailable: {', '.join(models)}; " + " | ".join(errors))
+
+
+def _output_config(effort: Effort | None, schema: dict, structured: bool) -> OutputConfigParam:
+    out: OutputConfigParam = {"effort": effort} if effort else {}
+    if structured:
+        out["format"] = {"type": "json_schema", "schema": anthropic.transform_schema(schema)}
+    return out
+
+
+def _call_anthropic(model, text, images, schema, effort: Effort | None = None, structured=False):
+    """One Messages call → (output, input tokens, output tokens). The reply is validated by the
+    caller; the SDK already retries 429s and 5xx. `structured` has the vendor hold the reply to the schema
+    (`output_config.format`, the SDK's own `transform_schema` taking out the keywords the vendor does not accept:
+    bounds and lengths; the caller's check still holds those). `effort` bounds how long the model thinks first: at its default,
+    claude-sonnet-5 read 21 parent reports for over thirty minutes (2026-09-28)."""
+    key = db.env("ANTHROPIC_API_KEY")
+    client = anthropic.Anthropic(api_key=key, max_retries=3, timeout=TIMEOUT_S)
+    content: list[ImageBlockParam | TextBlockParam] = [
+        {
+            "type": "image",
+            "source": {
+                "type": "base64",
+                "media_type": "image/jpeg",
+                "data": base64.standard_b64encode(img).decode(),
+            },
+        }
+        for img in images
+    ]
+    content.append({"type": "text", "text": text})
+    messages: list[MessageParam] = [{"role": "user", "content": content}]
+    try:
+        r = client.messages.create(
+            model=model,
+            max_tokens=MAX_TOKENS,
+            messages=messages,
+            output_config=_output_config(effort, schema, structured) or anthropic.omit,
+        )
+    except anthropic.RateLimitError as e:
+        raise LLMError(f"{model} rate limited: {e.message}") from e
+    except anthropic.APIStatusError as e:
+        kind = "returned HTTP" if e.status_code < 500 and e.status_code != 429 else "server error HTTP"
+        raise LLMError(f"{model} {kind} {e.status_code}: {e.message}") from e
+    except anthropic.APIConnectionError as e:
+        raise LLMError(f"{model} connection error: {e}") from e
+    if r.stop_reason == "refusal":
+        raise LLMError(f"{model} refused the request")
+    reply = next((b.text for b in r.content if b.type == "text"), "")
+    if not reply:
+        # A thinking model can spend the whole budget before it writes anything: claude-sonnet-5
+        # returned one thinking block and no text at 8000. Say that, rather than "did not return
+        # JSON: ''", which sent one session hunting for a malformed request.
+        raise LLMError(
+            f"{model} returned no text (stop_reason {r.stop_reason}, "
+            f"{r.usage.output_tokens} output tokens, blocks "
+            f"{[b.type for b in r.content] or 'none'})"
+        )
+    reply = reply.strip().removeprefix("```json").removeprefix("```").removesuffix("```").strip()
+    try:
+        out = json.loads(reply)
+    except ValueError as e:
+        raise LLMError(f"{model} did not return JSON: {reply[:120]!r}") from e
+    return out, r.usage.input_tokens, r.usage.output_tokens
+
+
+def _quota(body):
+    """Google's 429 says which limit was hit. Returns (daily_limit_hit, seconds_to_wait_or_None).
+    The free tier's binding limit is requests per day per model (20 at the time of writing)."""
+    try:
+        details = json.loads(body)["error"].get("details", [])
+    except (ValueError, KeyError, TypeError):
+        return False, None
+    daily = any("PerDay" in v.get("quotaId", "") for d in details for v in d.get("violations", []))
+    retry = next((d["retryDelay"] for d in details if "retryDelay" in d), "")
+    seconds = int(retry.rstrip("s")) if retry.rstrip("s").isdigit() else None
+    return daily, seconds
+
+
+def _fill(text, variables):
+    """Each {{name}} in the prompt's own text becomes its variable, in one pass: a value that itself contains
+    {{another}} is left as typed, never filled in a second time."""
+
+    def one(m):
+        v = variables.get(m.group(1))
+        if v is None:
+            return m.group(0)
+        return v if isinstance(v, str) else json.dumps(v, ensure_ascii=False, indent=2)
+
+    return re.sub(r"\{\{(\w+)\}\}", one, text)
+
+
+def _call(models, body, key):
+    ctx = ssl.create_default_context(cafile=certifi.where())
+    errors = {}  # model -> its last error, so the message shows one line per model
+    for model in models:
+        for wait in WAITS:
+            req = urllib.request.Request(
+                ENDPOINT.format(model=model),
+                data=body,
+                headers={"Content-Type": "application/json", "x-goog-api-key": key},
+            )
+            try:
+                with urllib.request.urlopen(req, context=ctx, timeout=TIMEOUT_S) as r:
+                    return json.load(r)
+            except urllib.error.HTTPError as e:
+                reply = e.read().decode(errors="replace")
+                detail = " ".join(reply.split())[:160]
+                if e.code not in TRANSIENT:
+                    raise LLMError(f"{model} returned HTTP {e.code}: {detail}") from e
+                errors[model] = f"{model} HTTP {e.code}: {detail}"
+                if e.code == 429:
+                    daily, retry_s = _quota(reply)
+                    if daily:
+                        errors[model] = f"{model} daily free-tier quota used up"
+                        break  # no wait brings it back today; the next model might serve
+                    wait = retry_s or max(wait, RATE_LIMIT_WAIT_S)
+            except (TimeoutError, urllib.error.URLError) as e:
+                errors[model] = f"{model} {type(e).__name__}"
+            time.sleep(wait)
+    raise LLMError(f"all models unavailable: {', '.join(models)}; " + " | ".join(errors.values()))

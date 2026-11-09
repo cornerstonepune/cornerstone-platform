@@ -1,0 +1,384 @@
+"""The bank against the real schema, inside one transaction that is rolled back.
+
+The model is replaced by a fake that returns candidates built from the deterministic sampler,
+so these tests prove the rows, the verifier's gate, the trigger and the renderer — not Gemini.
+"""
+
+import json
+import os
+import random
+
+import pytest
+
+from engine.assess import bands, verify
+from engine.assess import items as I
+from engine.assess import misconceptions as M
+from engine.core import db
+from engine.w1_bank import bank, inventory, spec
+
+pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
+
+SET, DIFF = "TEST.MODEL.PATH", "Hard"  # 3-digit minus 2-digit, one exchange
+# The model's path is for a level with a plain rule (op, digits, regroups). Since step 8h every real
+# addition and subtraction level is made of taxonomy cases and filled by `refill`, so these tests give
+# the model's path a skill set of its own — 3-digit minus 2-digit with one exchange, on SUB.3D2D's rung —
+# inside each test's transaction, where no stored question can disagree with it; rolled back after.
+RULE = {"op": "-", "digits": [3, 2], "regroups": [1]}
+
+
+@pytest.fixture
+def conn():
+    with db.connect() as c:
+        # a rung of its own, as every skill set has (ADR 0048): SUB.3D2D's grade and description, off the ladder
+        c.execute(
+            "insert into skill (tenant_id, code, rung_code, name, learning_objective, formats, misconception_codes,"
+            " difficulty, status, grade, descriptor, registry_codes) select tenant_id, %s, 'TEST.R',"
+            " 'the model path, under test', learning_objective,"
+            " array['column_grid','bare_sum','missing_number','word_1step'], misconception_codes, %s, 'ratified',"
+            " grade, descriptor, registry_codes from skill where code = 'SUB.3D2D'",
+            (
+                SET,
+                json.dumps(
+                    {
+                        d: {"words": "a test level", "check": RULE}
+                        for d in ("Easy", "Medium", "Hard", "Advance")
+                    }
+                ),
+            ),
+        )
+        yield c
+        c.rollback()
+
+
+def candidates(k, seed=3, conn=None):
+    """`k` subtractions as the model returns them. With `conn`, none the bank already holds: a database's bank is drawn
+    afresh each time it is built (`bank refill`, unseeded), so a fixed sum was sometimes there already, was not stored
+    again, and a fill meant to keep three kept two (CI on main, 2026-10-10)."""
+    rng = random.Random(seed)
+    out = []
+    while len(out) < k:
+        a, b = I.sample_sub(rng, 3, 2, {1})
+        fmt = ["column_grid", "bare_sum", "word_1step"][len(out) % 3]
+        stem = f"A shop had {a} mangoes and sold {b}. How many are left?" if fmt == "word_1step" else ""
+        out.append(
+            {
+                "format": fmt,
+                "op": "-",
+                "a": a,
+                "b": b,
+                "answer": a - b,
+                "stem": stem,
+                "missing": None,
+                "misconceptions": [{"code": c, "wrong_answer": v} for c, v in M.predict("-", a, b).items()],
+            }
+        )
+        if conn is not None and _stored(conn, out[-1]):
+            out.pop()
+    return out
+
+
+def _stored(conn, c):
+    """Whether the bank holds this question already, by the key it would be stored under."""
+    key = verify.to_item(verify.normalise(dict(c)), "TEST.R").item_id
+    return conn.execute("select 1 from item where item_key = %s", (key,)).fetchone() is not None
+
+
+def fake_model(batch):
+    def generate(conn, purpose, variables, images=(), subject=None, meta=None):
+        assert purpose == "item_generate" and "spec" in variables
+        if meta is not None:
+            meta.update(prompt_id=None, model="fake-model")
+        return {"items": batch}
+
+    return generate
+
+
+def test_spec_is_built_only_from_rows(conn):
+    prompt_input, s, check = spec.read(conn, SET, DIFF)
+    assert check == {"op": "-", "digits": [3, 2], "regroups": [1]}
+    assert prompt_input["difficulty"].startswith("Hard:")
+    assert any("exchange" in line.lower() for line in prompt_input["philosophy"])
+    assert {m["code"] for m in prompt_input["misconceptions"]} >= {"M_SMALL_FROM_LARGE", "M_NO_DECREMENT"}
+    assert s["rung_code"] == "TEST.R"  # the fixture's own rung, a copy of SUB.3D2D's
+
+
+def test_fill_stores_verified_items_and_gates_the_rest(conn, monkeypatch):
+    good = candidates(3, conn=conn)
+    bad = dict(
+        good[0], a=good[0]["a"], answer=good[0]["answer"] + 1, format="bare_sum"
+    )  # wrong key, same numbers
+    dup = dict(good[1])
+    monkeypatch.setattr(bank.llm, "generate", fake_model(good + [bad, dup]))
+    counts, reasons, accepted = bank.fill(conn, SET, DIFF, 3)
+    assert counts["accepted"] == 3 and counts["duplicate"] >= 1
+    assert counts["rejected"] == 1 and "answer" in reasons
+    row = conn.execute(
+        "select status, source, skill_set_code, difficulty, tags, rung_code from item where item_key = %s",
+        (accepted[0].item_id,),
+    ).fetchone()
+    assert (row["status"], row["source"], row["skill_set_code"], row["difficulty"], row["rung_code"]) == (
+        "active",
+        "generated",
+        SET,
+        DIFF,
+        "TEST.R",
+    )
+    assert row["tags"]["operation"] == "SUB" and row["tags"]["regrouping"] == "SINGLE"
+
+
+def test_fill_accepts_the_typographic_minus_the_model_actually_writes(conn, monkeypatch):
+    batch = [dict(c, op="−") for c in candidates(2, seed=11, conn=conn)]
+    monkeypatch.setattr(bank.llm, "generate", fake_model(batch))
+    counts, _, accepted = bank.fill(conn, SET, DIFF, 2)
+    assert counts["accepted"] == 2 and accepted[0].spec["op"] == "-"
+
+
+def test_filling_again_with_the_same_numbers_adds_nothing(conn, monkeypatch):
+    monkeypatch.setattr(bank.llm, "generate", fake_model(candidates(3, conn=conn)))
+    bank.fill(conn, SET, DIFF, 3)
+    before = conn.execute("select count(*) as n from item").fetchone()["n"]
+    counts, _, _ = bank.fill(conn, SET, DIFF, 3)
+    assert counts["accepted"] == 0 and counts["already_in_bank"] > 0
+    assert conn.execute("select count(*) as n from item").fetchone()["n"] == before
+
+
+def test_recheck_agrees_with_what_the_verifier_let_through(conn, monkeypatch):
+    monkeypatch.setattr(bank.llm, "generate", fake_model(candidates(4, conn=conn)))
+    bank.fill(conn, SET, DIFF, 4)
+    assert inventory.recheck(conn) == []
+
+
+def test_recheck_catches_an_answer_edited_behind_the_engines_back(conn, monkeypatch):
+    """The audit exists for the case nobody plans for: a row changed by hand."""
+    monkeypatch.setattr(bank.llm, "generate", fake_model(candidates(2, conn=conn)))
+    _, _, accepted = bank.fill(conn, SET, DIFF, 2)
+    key = accepted[0].item_id
+    conn.execute(
+        "update item set responses = jsonb_set(responses::jsonb, '{0,answer}', '\"999\"')::json"
+        " where item_key = %s",
+        (key,),
+    )
+    assert key in inventory.recheck(conn)
+
+
+def test_recheck_passes_the_missing_number_items_the_samplers_make(conn):
+    """A missing-number question's answer is the hidden number, and its distractors are about
+    that number — not about the whole equation. The audit must use the same rule."""
+    counts, _, accepted = bank.fill(conn, SET, DIFF, 8, offline=True)
+    assert counts["accepted"] == 8
+    assert any(i.fmt == "missing_number" for i in accepted), "the sampler should make some"
+    assert inventory.recheck(conn) == []
+
+
+def test_a_flag_retires_the_item_by_trigger(conn, monkeypatch):
+    monkeypatch.setattr(bank.llm, "generate", fake_model(candidates(2, conn=conn)))
+    _, _, accepted = bank.fill(conn, SET, DIFF, 2)
+    assert inventory.flag(conn, accepted[0].item_id, "nimish", "odd wording") == "retired"
+    assert (
+        conn.execute("select verdict from item_feedback where note = 'odd wording'").fetchone()["verdict"]
+        == "retire"
+    )
+
+
+def test_sampled_with_an_op_list_produces_both_operations():
+    # R4 (2-digit +/- without regrouping) is one skill_set covering both operations.
+    check = {"op": ["+", "-"], "digits": [2, 2], "regroups": [0]}
+    cands = bank._sampled(check, ["bare_sum"], 20, seed=1)
+    assert len(cands) == 20
+    assert {c["op"] for c in cands} == {"+", "-"}
+    for c in cands:
+        assert c["answer"] == M.compute(c["op"], c["a"], c["b"])
+
+
+def test_sampled_refuses_a_skill_set_with_no_sampler_format():
+    # R11/X2 declare only a native-generator format (estimate_then_calc, find_mistake) that the
+    # sampler cannot render; it must refuse, not silently fall back to plain column arithmetic.
+    check = {"op": "+", "digits": [2, 2], "regroups": [1]}
+    with pytest.raises(ValueError, match="sampler"):
+        bank._sampled(check, ["estimate_then_calc"], 5, seed=1)
+
+
+def test_coverage_lists_every_skill_set_by_difficulty_with_real_counts(conn, monkeypatch):
+    monkeypatch.setattr(bank.llm, "generate", fake_model(candidates(3, conn=conn)))
+    bank.fill(conn, SET, DIFF, 3)
+    table = inventory.coverage(conn)
+    # Every skill_set x every difficulty band, zeros included. Derived, not hardcoded: adding a
+    # skill set is a row (W1 gate 3 added multiplication that way), and this must not need an edit.
+    # every level of every skill in use; a retired skill set builds nothing and is not counted (s13)
+    defined = {
+        r["code"]: set(r["levels"])
+        for r in conn.execute(
+            "select code, array(select e.key from jsonb_each(difficulty) e where e.value ? 'check') as levels"
+            " from skill"  # the levels a bank draws from: English's (E0) have no check
+        )
+        if r["levels"]
+    }
+    assert len(table) == sum(len(v) for v in defined.values())
+    row = next(r for r in table if r["code"] == SET and r["difficulty"] == DIFF)
+    assert row["n"] >= 3
+    # Every skill set must report every level it defines, zeros included — the point of the grid is
+    # that an empty unit is a visible 0, not a missing row. (No cell is empty any more, so this is
+    # asserted on the shape rather than on any one unit staying at zero.)
+    by_code = {}
+    for r in table:
+        by_code.setdefault(r["code"], []).append(r["difficulty"])
+    assert by_code == {
+        c: sorted(v, key=["Easy", "Medium", "Hard", "Advance"].index) for c, v in defined.items()
+    }
+    assert all(isinstance(r["n"], int) and r["n"] >= 0 for r in table)
+
+
+def test_coverage_targets_what_a_class_needs_and_a_units_own_ceiling_when_it_has_one(conn):
+    """The target is `(class_size + spares) x items_per_sheet` — what one week of one class draws
+    without replacement (ADR 0016) — except where a band recorded its whole number range."""
+    need = inventory._class_need(conn)
+    assert need == 216, "16 children at 12 questions with 2 spares"
+    rows = {(r["code"], r["difficulty"]): r for r in inventory.coverage(conn)}
+    assert rows[("SUB.2D2D", "Hard")]["target"] == need
+    small = rows[("ADD.1D1D", "Easy")]
+    assert small["target"] < need, "a level whose numbers run out keeps its measured ceiling"
+    assert (
+        small["target"]
+        == conn.execute(
+            "select (difficulty -> 'Easy' ->> 'min_items')::int as n from skill where code = 'ADD.1D1D'"
+        ).fetchone()["n"]
+    )
+
+
+NATIVE_UNITS = [
+    ("MENTAL.BRIDGE_EQ", "Easy"),
+    ("MENTAL.BRIDGE_EQ", "Medium"),
+    # MENTAL.BRIDGE_EQ Hard (balance_scale, hi=100) is not here: the real bank already holds 48
+    # of its true ceiling (STATE.md, "W1 gate 2, chunk B") — a fresh 5-more request has almost no
+    # room left, the same class of shortfall as R1/R2, not a dispatch bug this test should catch.
+    ("MENTAL.BRIDGE_EQ", "Advance"),
+    ("ESTIMATE.ROUND10", "Easy"),
+    ("ESTIMATE.ROUND10", "Medium"),
+    ("ESTIMATE.ROUND10", "Hard"),
+    ("ESTIMATE.ROUND10", "Advance"),
+    ("WORD.BUDGET", "Easy"),
+    ("WORD.BUDGET", "Medium"),
+    ("WORD.BUDGET", "Hard"),
+    ("WORD.BUDGET", "Advance"),
+    # The calculation skills, WORD.1_2STEP, STRATEGY.EFFICIENT and REASON.FIND_MISTAKE are made of taxonomy
+    # cases and filled by `refill` — `tests/test_taxonomy.py`, `tests/test_new_kinds.py`, `tests/test_rehome.py`.
+    # REASON.EXPLAIN (X1) is deliberately not here — see NATIVE_GENERATORS' comment in bank.py.
+]
+
+
+@pytest.mark.parametrize("code,difficulty", NATIVE_UNITS)
+def test_fill_native_produces_items_for_every_native_unit(conn, code, difficulty):
+    """Five new questions, or nothing because the unit is already at its measured ceiling.
+
+    Both are correct and the difference is a row: once a band records `min_items` — its whole number
+    range (ADR 0011/0016) — a further fill *must* accept nothing. `MENTAL.BRIDGE_EQ Easy` holds 145
+    and the numbers are spent. Asserting five unconditionally made a full bank look like a bug.
+    """
+    band = conn.execute("select difficulty from skill where code = %s", (code,)).fetchone()["difficulty"][
+        difficulty
+    ]
+    counts, accepted = bank.fill_native(conn, code, difficulty, 5)
+    assert counts["accepted"] == len(accepted)
+    if counts["accepted"] < 5:
+        assert band.get("min_items"), (
+            f"{code} {difficulty} produced {counts['accepted']} of 5 and claims no ceiling —"
+            " either the generator is broken or the band never recorded its universe"
+        )
+
+
+def test_fill_native_refuses_a_hi_below_any_possible_jump_rather_than_crashing_obscurely():
+    # hi=20 is now supported (the bridge jump); a range with no room for any ten-crossing at all
+    # must still fail with a sentence, not a raw randrange error from deep inside the generator.
+    with pytest.raises(RuntimeError, match="hi"):
+        bands.native_item("number_line_jumps", {"op": "+", "hi": 6}, random.Random(3), "R2", "Conceptual")
+
+
+def test_fill_native_dry_run_inserts_nothing(conn):
+    before = conn.execute("select count(*) as n from item").fetchone()["n"]
+    counts, accepted = bank.fill_native(conn, "WORD.BUDGET", "Easy", 5, dry_run=True)
+    assert counts["accepted"] == 5 and len(accepted) == 5
+    assert conn.execute("select count(*) as n from item").fetchone()["n"] == before
+
+
+def test_fill_honours_a_kind_list_across_the_shortcut_families(conn):
+    # STRATEGY.EFFICIENT Advance's rule names all three kinds; a real spread should show up among its
+    # quickest-method questions. Seeded and dry, so what the bank already holds cannot decide it.
+    from engine.w1_bank import refill
+
+    _, _, accepted = refill.fill_cases(
+        conn, "STRATEGY.EFFICIENT", "Advance", 45, dry_run=True, rng=random.Random(5)
+    )
+    ops = {it.spec["op"] for it in accepted if it.fmt == "efficient_method"}
+    assert ops == {"+", "-"}, "near100/near1000 give +, same_tens gives -"
+
+
+def test_fill_native_produces_no_flow_run_row(conn):
+    before = conn.execute("select count(*) as n from flow_run").fetchone()["n"]
+    bank.fill_native(conn, "MENTAL.BRIDGE_EQ", "Hard", 5)
+    assert conn.execute("select count(*) as n from flow_run").fetchone()["n"] == before
+
+
+def test_sheet_renders_only_active_items_of_that_set(conn, monkeypatch, tmp_path):
+    monkeypatch.setattr(bank.llm, "generate", fake_model(candidates(13, conn=conn)))
+    _, _, accepted = bank.fill(conn, SET, DIFF, 13)
+    # the bank never holds one sum twice: a candidate the refilled bank already has is not kept, so the sheet is
+    # sized from what this fill kept, not from what it was offered (it hung on which sums the refill had drawn)
+    inventory.flag(conn, accepted[0].item_id, "nimish", "retired on purpose")
+    key = inventory.sheet(conn, SET, DIFF, len(accepted) - 1, tmp_path)
+    assert (tmp_path / f"{key['sheet_id']}.pdf").exists() and key["pages"] >= 1
+    assert accepted[0].item_id not in {i["item_id"] for i in key["items"]}
+    have = conn.execute(
+        "select count(*) as n from item where status = 'active' and skill_set_code = %s and difficulty = %s",
+        (SET, DIFF),
+    ).fetchone()["n"]  # the real bank plus this test's
+    with pytest.raises(ValueError, match=f"only {have}"):
+        inventory.sheet(conn, SET, DIFF, have + 1, tmp_path)
+
+
+def _printed(pdf):
+    """What page 1 of a printed PDF says, as one line of plain text (ligatures unfolded)."""
+    import unicodedata
+
+    import pymupdf
+
+    with pymupdf.open(pdf) as doc:
+        return " ".join(unicodedata.normalize("NFKC", doc[0].get_text()).split())
+
+
+def test_every_sample_sheet_is_titled_with_its_own_skill_set(conn, tmp_path):
+    """Every paper was once titled "Addition and subtraction" — multiplication and reasoning papers
+    included — and the reasoning sets' band "G2+" crashed the sample sheet outright. One sheet for
+    every skill set x difficulty the bank can fill, its title read back from the printed PDF."""
+    from playwright.sync_api import sync_playwright
+
+    units = conn.execute(
+        "select i.skill_set_code as code, i.difficulty, s.name from item i"
+        " join skill s on s.tenant_id = i.tenant_id and s.code = i.skill_set_code"
+        " where i.status = 'active' and i.source = 'generated'"
+        " group by 1, 2, 3 having count(*) >= 8 order by 1, 2"
+    ).fetchall()
+    assert len(units) >= 60
+    with sync_playwright() as pw:
+        for u in units:
+            out = tmp_path / f"{u['code']}-{u['difficulty']}"
+            key = inventory.sheet(conn, u["code"], u["difficulty"], 8, out, pw=pw)
+            page1 = _printed(out / f"{key['sheet_id']}.pdf")
+            assert f" · {u['name']}" in page1, (u["code"], u["difficulty"], page1[:120])
+            if "addition and subtraction" not in u["name"].lower():
+                assert "Addition and subtraction" not in page1, (u["code"], u["difficulty"])
+
+
+def test_recheck_names_a_sum_with_no_answer_box_rather_than_stop(conn):
+    """A generated sum whose answer is not `ans` stopped the recheck with StopIteration, and with it `engine audit`
+    and every row after it; it is named instead (2026-09-30, rows a website test had left)."""
+    t = conn.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()["id"]
+    conn.execute(
+        "insert into item (tenant_id, item_key, template, rung_code, skill_codes, signal, fmt, spec, responses)"
+        " values (%s, 'recheck/no-ans', 'recheck', 'R24', '{NUM.OPS.02}', 'Procedural', 'column_grid', %s, %s)",
+        (
+            t,
+            json.dumps({"op": "-", "a": 62, "b": 27, "layout": "column"}),
+            json.dumps([{"rid": "a", "answer": 35}]),
+        ),
+    )
+    assert "recheck/no-ans" in list(inventory.recheck(conn))

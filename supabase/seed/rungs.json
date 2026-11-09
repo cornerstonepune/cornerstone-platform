@@ -1,0 +1,433 @@
+{
+  "rungs": [
+    {
+      "code": "R7",
+      "band": "G2",
+      "ladder_order": 7,
+      "descriptor": "Mental strategies: bridging, friendly numbers, missing numbers, equality",
+      "skill_codes": [
+        "NUM.OPS.05"
+      ]
+    },
+    {
+      "code": "R8",
+      "band": "G2",
+      "ladder_order": 8,
+      "descriptor": "One- and two-step word problems in ₹ / objects",
+      "skill_codes": [
+        "NUM.PRB.02",
+        "NUM.MEAS.04"
+      ]
+    },
+    {
+      "code": "R11",
+      "band": "G3",
+      "ladder_order": 11,
+      "descriptor": "Estimate first (round to 10), judge reasonableness",
+      "skill_codes": [
+        "NUM.PV.03",
+        "NUM.PRB.03"
+      ]
+    },
+    {
+      "code": "R13",
+      "band": "G4",
+      "ladder_order": 13,
+      "descriptor": "Chooses an efficient strategy; place-value reasoning under constraint",
+      "skill_codes": [
+        "NUM.OPS.05",
+        "NUM.PRB.03"
+      ]
+    },
+    {
+      "code": "R14",
+      "band": "G4",
+      "ladder_order": 14,
+      "descriptor": "Multi-step ₹ problems under a budget constraint",
+      "skill_codes": [
+        "NUM.PRB.02",
+        "NUM.MEAS.04"
+      ]
+    },
+    {
+      "code": "X1",
+      "band": "G2",
+      "ladder_order": null,
+      "descriptor": "Explains the procedure / judges a claim",
+      "skill_codes": [
+        "NUM.PRB.03"
+      ]
+    },
+    {
+      "code": "X2",
+      "band": "G2",
+      "ladder_order": null,
+      "descriptor": "Finds the mistake in a worked example",
+      "skill_codes": [
+        "NUM.PRB.03"
+      ]
+    },
+    {
+      "code": "R16",
+      "band": "G2",
+      "ladder_order": null,
+      "descriptor": "Equality and inverse: missing signs, balances, fact families, checking with the other operation",
+      "skill_codes": [
+        "NUM.OPS.05",
+        "NUM.PRB.03"
+      ]
+    },
+    {
+      "code": "R17",
+      "band": "G3",
+      "ladder_order": null,
+      "descriptor": "Missing digits across a regrouping or an exchange (Olympiad-style)",
+      "skill_codes": [
+        "NUM.PRB.03",
+        "NUM.OPS.01",
+        "NUM.OPS.02"
+      ]
+    },
+    {
+      "code": "R18",
+      "band": "G3",
+      "ladder_order": null,
+      "descriptor": "Estimates to the nearest hundred; judges an answer by its size, odd and even",
+      "skill_codes": [
+        "NUM.PV.03",
+        "NUM.PRB.03"
+      ]
+    },
+    {
+      "code": "R19",
+      "band": "G1",
+      "ladder_order": 21,
+      "descriptor": "1-digit + 1-digit",
+      "skill_codes": [
+        "NUM.OPS.01"
+      ]
+    },
+    {
+      "code": "R20",
+      "band": "G1",
+      "ladder_order": 22,
+      "descriptor": "1-digit − 1-digit",
+      "skill_codes": [
+        "NUM.OPS.02"
+      ]
+    },
+    {
+      "code": "R21",
+      "band": "G2",
+      "ladder_order": 23,
+      "descriptor": "2-digit + 1-digit",
+      "skill_codes": [
+        "NUM.OPS.01"
+      ]
+    },
+    {
+      "code": "R22",
+      "band": "G2",
+      "ladder_order": 24,
+      "descriptor": "2-digit + 2-digit",
+      "skill_codes": [
+        "NUM.OPS.01"
+      ]
+    },
+    {
+      "code": "R23",
+      "band": "G2",
+      "ladder_order": 25,
+      "descriptor": "2-digit − 1-digit",
+      "skill_codes": [
+        "NUM.OPS.02"
+      ]
+    },
+    {
+      "code": "R24",
+      "band": "G2",
+      "ladder_order": 26,
+      "descriptor": "2-digit − 2-digit",
+      "skill_codes": [
+        "NUM.OPS.02"
+      ]
+    },
+    {
+      "code": "R25",
+      "band": "G3",
+      "ladder_order": 27,
+      "descriptor": "3-digit + 1-digit",
+      "skill_codes": [
+        "NUM.OPS.01"
+      ]
+    },
+    {
+      "code": "R26",
+      "band": "G3",
+      "ladder_order": 28,
+      "descriptor": "3-digit + 2-digit",
+      "skill_codes": [
+        "NUM.OPS.01"
+      ]
+    },
+    {
+      "code": "R27",
+      "band": "G3",
+      "ladder_order": 29,
+      "descriptor": "3-digit + 3-digit",
+      "skill_codes": [
+        "NUM.OPS.01"
+      ]
+    },
+    {
+      "code": "R28",
+      "band": "G3",
+      "ladder_order": 30,
+      "descriptor": "Adding three or more numbers",
+      "skill_codes": [
+        "NUM.OPS.01"
+      ]
+    },
+    {
+      "code": "R29",
+      "band": "G3",
+      "ladder_order": 31,
+      "descriptor": "3-digit − 1-digit",
+      "skill_codes": [
+        "NUM.OPS.02"
+      ]
+    },
+    {
+      "code": "R30",
+      "band": "G3",
+      "ladder_order": 32,
+      "descriptor": "3-digit − 2-digit",
+      "skill_codes": [
+        "NUM.OPS.02"
+      ]
+    },
+    {
+      "code": "R31",
+      "band": "G3",
+      "ladder_order": 33,
+      "descriptor": "3-digit − 3-digit",
+      "skill_codes": [
+        "NUM.OPS.02"
+      ]
+    },
+    {
+      "code": "R32",
+      "band": "G4",
+      "ladder_order": 34,
+      "descriptor": "4-digit addition",
+      "skill_codes": [
+        "NUM.OPS.01"
+      ]
+    },
+    {
+      "code": "R33",
+      "band": "G4",
+      "ladder_order": 35,
+      "descriptor": "4-digit subtraction",
+      "skill_codes": [
+        "NUM.OPS.02"
+      ]
+    },
+    {
+      "code": "R34",
+      "band": "G1",
+      "ladder_order": null,
+      "descriptor": "Reads tally marks, each bundle as five",
+      "skill_codes": [
+        "NUM.DATA.01"
+      ]
+    },
+    {
+      "code": "R35",
+      "band": "G1",
+      "ladder_order": null,
+      "descriptor": "Equal groups added again: multiplication begun as repeated addition",
+      "skill_codes": [
+        "NUM.OPS.03",
+        "NUM.OPS.01"
+      ]
+    },
+    {
+      "code": "R36",
+      "band": "G2",
+      "ladder_order": null,
+      "descriptor": "Recalls the multiplication tables",
+      "skill_codes": [
+        "NUM.OPS.03"
+      ]
+    },
+    {
+      "code": "R37",
+      "band": "G3",
+      "ladder_order": null,
+      "descriptor": "Multiplies by 10, 100, 1000 and multiples of ten",
+      "skill_codes": [
+        "NUM.OPS.03"
+      ]
+    },
+    {
+      "code": "R38",
+      "band": "G2",
+      "ladder_order": null,
+      "descriptor": "2-digit × 1-digit",
+      "skill_codes": [
+        "NUM.OPS.03"
+      ]
+    },
+    {
+      "code": "R39",
+      "band": "G4",
+      "ladder_order": null,
+      "descriptor": "3-digit × 1-digit",
+      "skill_codes": [
+        "NUM.OPS.03"
+      ]
+    },
+    {
+      "code": "R40",
+      "band": "G4",
+      "ladder_order": null,
+      "descriptor": "2-digit × 2-digit",
+      "skill_codes": [
+        "NUM.OPS.03"
+      ]
+    },
+    {
+      "code": "R41",
+      "band": "G2",
+      "ladder_order": null,
+      "descriptor": "Multiplication as models: skip counting, arrays, jumps on a number line, the multiplication square",
+      "skill_codes": [
+        "NUM.OPS.03"
+      ]
+    },
+    {
+      "code": "R42",
+      "band": "G2",
+      "ladder_order": null,
+      "descriptor": "Recalls division facts: the multiplication tables read backwards",
+      "skill_codes": [
+        "NUM.OPS.04"
+      ]
+    },
+    {
+      "code": "R43",
+      "band": "G4",
+      "ladder_order": null,
+      "descriptor": "Divides by 10, 100, 1000 and multiples of ten",
+      "skill_codes": [
+        "NUM.OPS.04"
+      ]
+    },
+    {
+      "code": "R44",
+      "band": "G2",
+      "ladder_order": null,
+      "descriptor": "2-digit ÷ 1-digit",
+      "skill_codes": [
+        "NUM.OPS.04"
+      ]
+    },
+    {
+      "code": "R45",
+      "band": "G4",
+      "ladder_order": null,
+      "descriptor": "3-digit ÷ 1-digit",
+      "skill_codes": [
+        "NUM.OPS.04"
+      ]
+    },
+    {
+      "code": "R46",
+      "band": "G2",
+      "ladder_order": null,
+      "descriptor": "Division as models: sharing and grouping, taking away again and again, an array's rows, jumps back on a number line",
+      "skill_codes": [
+        "NUM.OPS.04"
+      ]
+    },
+    {
+      "code": "R47",
+      "band": "G2",
+      "ladder_order": null,
+      "descriptor": "Mental multiplication and division: doubling and halving, then × 5, × 8, × 9, × 11 and × 25 by a known way, facts from facts and ÷ 5 as ÷ 10 then doubled",
+      "skill_codes": [
+        "NUM.OPS.05"
+      ]
+    },
+    {
+      "code": "R48",
+      "band": "G4",
+      "ladder_order": null,
+      "descriptor": "Estimating products and quotients: odd or even and the last digit without working, an estimate rounded to the ten or the hundred, how many digits an answer has, the closest of three estimates, and whether an answer can be right",
+      "skill_codes": [
+        "NUM.PV.03",
+        "NUM.PRB.03"
+      ]
+    },
+    {
+      "code": "R49",
+      "band": "G3",
+      "ladder_order": null,
+      "descriptor": "Equations with × and ÷: a product turned round, × 0, × 1 and ÷ 1, a number ÷ itself and 0 ÷ a number, true or false beside its other, three numbers grouped either way, a factor doubled or partitioned, a balance against − or ÷, the missing sign, comparing without working, and a division checked by multiplying back",
+      "skill_codes": [
+        "NUM.OPS.05",
+        "NUM.PRB.03"
+      ]
+    },
+    {
+      "code": "R50",
+      "band": "G3",
+      "ladder_order": null,
+      "descriptor": "Multiples, factors and divisibility: the multiples of a number up to a limit, whether a number is a multiple of another, divisibility by 2, 5 and 10 and by 3, all the factors and the factor pairs of a number, and the common multiples of two numbers below a limit",
+      "skill_codes": [
+        "NUM.CNT.08",
+        "NUM.OPS.03"
+      ]
+    },
+    {
+      "code": "R51",
+      "band": "G2",
+      "ladder_order": null,
+      "descriptor": "Stories with × and ÷: equal groups, sharing and grouping, arrays, prices, twice, half and times as many, a remainder used as the story needs, combinations and area, the two-step stories and a bar model, a number the story does not need, and a price list",
+      "skill_codes": [
+        "NUM.OPS.03",
+        "NUM.OPS.04"
+      ]
+    },
+    {
+      "code": "R52",
+      "band": "G2",
+      "ladder_order": null,
+      "descriptor": "Number sequences: counting on and back in equal steps",
+      "skill_codes": [
+        "NUM.PAT.02",
+        "NUM.CNT.06"
+      ]
+    },
+    {
+      "code": "R53",
+      "band": "G2",
+      "ladder_order": null,
+      "descriptor": "Multiples in the tables: the nth multiple and the first multiples",
+      "skill_codes": [
+        "NUM.CNT.08",
+        "NUM.OPS.03"
+      ]
+    },
+    {
+      "code": "R54",
+      "band": "G2",
+      "ladder_order": null,
+      "descriptor": "Three one-digit numbers multiplied, two at a time",
+      "skill_codes": [
+        "NUM.OPS.03"
+      ]
+    }
+  ]
+}

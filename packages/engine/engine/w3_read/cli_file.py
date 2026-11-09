@@ -1,0 +1,133 @@
+"""`engine read file` — one scanned file of many papers: what is in it, and with `--names`, each library
+worksheet copy read and marked for the child named on it (`copies`). Its own module so `cli_read.py` stays
+under the ceiling."""
+
+import typer
+
+from engine.core import db
+from engine.w3_read import copies, copy_scores, inbox, sorting
+
+
+def read_file(
+    path: str,
+    names: str = typer.Option(
+        "",
+        "--names",
+        help="One per copy printed bare (no child's code), in file order: a first name, a roll number, or ?",
+    ),
+    section: str = typer.Option("", "--section", help="G2, G3 … — whose class list the names are in"),
+    read: bool = typer.Option(False, "--read", help="Read and mark every copy whose code names its child"),
+    actor: str = typer.Option("engine-cli", "--actor"),
+) -> None:
+    """One scanned file of many papers, sorted by the QR on each page: which pages are whose paper, and which
+    pages carry no code this system printed. Without --names it reads only — no answer is read and nothing is
+    written. With --read every copy printed for a child is read and marked for that child; --names says whose
+    each copy printed bare is. Every answer waits on Marking for a person to sign off."""
+    if names and not section:
+        raise typer.BadParameter("say whose class list the names are in with --section")
+    if names or read:
+        return _read_copies(path, [n for n in names.split(",") if names], section, actor)
+    with db.connect() as conn:
+        papers = sorting.sort_file(conn, path)
+        conn.rollback()
+    for p in papers:
+        pages = sorting.pages_said(p["pages"])
+        s, w = p["sheet"], p["worksheet"]
+        if w:
+            short = (
+                f", {len(p['pages'])} of its {p['length']} pages" if len(p["pages"]) != p["length"] else ""
+            )
+            what = f"{p['qr']}  worksheet · {w['skill']} · {w['level']} · {w['questions']} questions{short}"
+        elif s:
+            who = f"{s['section']} roll {s['roll_no']}" if s["roll_no"] else "no child"
+            seen = f", already read {s['captures']}×" if s["captures"] else ""
+            what = f"{p['qr']}  {who} · {s['kind']} · {s['paper'] or s['source']} · {s['questions']} questions{seen}"
+        elif p["qr"]:
+            what = f"{p['qr']}  " + (
+                "not in sheet_instance" if p["ours"] else "not a code this system prints"
+            )
+        else:
+            what = "no QR read"
+        flag = f"  (no QR on p{', p'.join(map(str, p['unread']))})" if p["qr"] and p["unread"] else ""
+        typer.echo(f"  {pages:<9}{what}{flag}")
+    found = sum(1 for p in papers if p["sheet"])
+    typer.echo(
+        f"  {sum(len(p['pages']) for p in papers)} pages · {len(papers)} papers · {found} found in sheet_instance"
+    )
+
+
+def _read_copies(path, names, section, actor):
+    """Each copy's line names the child by roll number, never by name (rule 6)."""
+    with db.connect() as conn:
+        try:
+            done = copies.read(conn, path, section, names, actor)
+        except (ValueError, LookupError) as refused:
+            typer.echo(f"  nothing read: {refused}", err=True)
+            raise typer.Exit(1)
+        rolls = {
+            str(r["id"]): r["roll_no"]
+            for r in conn.execute(
+                "select id, roll_no from child where id = any(%s)",
+                ([c["child_id"] for c in done if c["child_id"]],),
+            )
+        }
+        waiting = 0
+        for c in done:
+            pages = sorting.pages_said(c["pages"])
+            if c.get("skipped"):
+                typer.echo(
+                    f"  copy {c['copy']:>2}  {pages:<8}{c['code']:<8}  not read: {c.get('why', 'no child named')}"
+                )
+                continue
+            t = copy_scores.tally(conn, c["capture_id"])
+            waiting += t["waiting"]
+            again = "  (read before: nothing new)" if c["already"] else ""
+            how = "by its code" if c["by_code"] else "by name"
+            unread = (
+                f", questions {', '.join(map(str, c['unread']))} for a person to mark" if c["unread"] else ""
+            )
+            typer.echo(
+                f"  copy {c['copy']:>2}  {pages:<8}{c['code']:<8}  roll {rolls[str(c['child_id'])]:<3} ({how})"
+                f" {c['answers']} answers: {t['right'] + t['right_waiting']} read right, {t['wrong']} wrong,"
+                f" {t['blank']} blank{unread}{again}"
+            )
+            for said in c.get("lacks", []):
+                typer.echo(f"            {said}")
+        conn.commit()
+    typer.echo(
+        f"  {waiting} answers wait on Marking for a person; none counts on a child's skills until signed off"
+    )
+
+
+def file_again(
+    name: str = typer.Argument(help="the file's name in the engine's inbox, as Marking lists it"),
+    actor: str = typer.Option("engine-cli", "--actor"),
+) -> None:
+    """A file already sent to be read, read afresh (goals/ck2-photograph-is-its-page.yaml): each copy no person has
+    worked on read anew, its old reading superseded; a person's checks stay. The run is the file's newest."""
+    with db.connect() as conn:
+        run = conn.execute(
+            "select id from flow_run where flow = %s and coalesce(result ->> 'file', substr(trigger,"
+            " strpos(trigger, ': ') + 2)) = %s order by started_at desc limit 1",
+            (inbox.FLOW, name),
+        ).fetchone()
+        if not run:
+            raise typer.BadParameter(f"no scan named {name} was sent to be read")
+        try:
+            path, tenant = inbox.again(conn, str(run["id"]))
+        except inbox.Refused as no:
+            raise typer.BadParameter(str(no)) from no
+    try:
+        new = inbox.start(tenant, path, actor, of_run=str(run["id"]))
+    except inbox.Refused as no:
+        raise typer.BadParameter(str(no)) from no
+    for c in inbox.read(new, path, actor, again=True):
+        typer.echo(
+            f"  copy {c['copy']}: {c.get('answers', 0)} answers" + (f" — {c['why']}" if c.get("why") else "")
+        )
+    typer.echo(f"  run {new}")
+
+
+def register(read_app: typer.Typer) -> None:
+    read_app.command("file")(read_file)
+    read_app.command("file-again")(file_again)
