@@ -9,7 +9,7 @@ import { levels } from "@/lib/levels";
 import { grades, skillSets } from "@/lib/queries";
 import { classRoll } from "@/lib/queries-children";
 import { homeByClass, homeLength } from "@/lib/queries-make";
-import { isoWeek } from "@/lib/week";
+import { schoolWeek } from "@/lib/school-clock";
 import { MakerLines } from "../../make/lines";
 import { Made, ThePapers } from "./parts";
 
@@ -38,7 +38,7 @@ export default async function Maker({ searchParams }: Props) {
   const me = await requireStaff();
   const q = await searchParams;
   const get = (k: string) => all(q[k]);
-  const week = isoWeek();
+  const week = await schoolWeek();
   const [classes, homeN, g, { usual }] = await deadline(Promise.all([homeByClass(week, await workScope(me)), homeLength(), grades(), levels()]));
   const cls = classes.find((c) => c.section === get("class")[0]);
   // every skill, each saying whether this class was taught it: an educator may choose any (ADR 0081); the engine's

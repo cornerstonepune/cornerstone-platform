@@ -13,7 +13,8 @@ import { readDraw } from "@/lib/next-paper";
 import { CHANGED } from "@/components/questions";
 import { classHome } from "@/lib/queries-make";
 import { classPacksWaiting } from "@/lib/queries-today";
-import { isoWeek, weekWords } from "@/lib/week";
+import { schoolWeek } from "@/lib/school-clock";
+import { weekWords } from "@/lib/week";
 import { byNeed, HomeTable, type HomeRow } from "./home-table";
 
 type Props = { params: Promise<{ section: string }>; searchParams: Promise<Record<string, string | string[] | undefined>> };
@@ -31,7 +32,7 @@ export default async function ClassHomePapers({ params, searchParams }: Props) {
   const section = decodeURIComponent(raw);
   const scope = await workScope(me);
   if (!isMine(await reachOf(me), section)) return <NotYours what={section} />;
-  const week = isoWeek();
+  const week = await schoolWeek();
   const draws: Record<string, number> = {};
   for (const d of [q.draw ?? []].flat()) {
     const [child, n] = d.split("~");

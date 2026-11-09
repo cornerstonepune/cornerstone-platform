@@ -16,7 +16,7 @@ from pydantic import BaseModel, Field
 from engine.adapters import speech
 from engine.api.deps import get_conn, get_tenant_id, require_engine_key, require_upload_token
 from engine.api.idempotency import run_idempotent
-from engine.core import db
+from engine.core import db, settings
 from engine.w3_read import voice_confirm, voice_intake, voice_note, voice_store
 
 Section = Literal["above", "below", "not_willing", "absent"]
@@ -116,7 +116,7 @@ def queue(body: Who, conn=Depends(get_conn, scope="function")):
         raise _refused(no) from no
     return {
         "notes": [{k: str(v) for k, v in n.items()} for n in voice_intake.queue(conn, str(staff))],
-        "classes": voice_intake.classes_of(conn, str(staff), dt.date.today()),
+        "classes": voice_intake.classes_of(conn, str(staff), settings.school_today(conn)),
         "recording": voice_intake.recording_enabled(conn),
     }
 
@@ -174,7 +174,7 @@ def audio(body: NoteRef, conn=Depends(get_conn, scope="function")):
 def class_roll(body: ClassDay, conn=Depends(get_conn, scope="function")):
     """The class's roll numbers enrolled that day, for the grid she picks a child from."""
     _on(conn)
-    day = body.day or dt.date.today()
+    day = body.day or settings.school_today(conn)
     return {"rolls": sorted(voice_intake.enrolled(conn, body.class_id, day), key=lambda r: (len(r), r))}
 
 

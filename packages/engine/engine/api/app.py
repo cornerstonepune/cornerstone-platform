@@ -29,6 +29,7 @@ from engine.api.routes import (
     page,
     paper_edit,
     parent,
+    plan,
     runs,
     samples,
     timetable,
@@ -71,6 +72,7 @@ app.include_router(upload.router)
 app.include_router(samples.router)
 app.include_router(timetable.keyed)
 app.include_router(timetable_rules.keyed)
+app.include_router(plan.keyed)
 app.include_router(timetable_hand.keyed)
 app.include_router(k2.router)
 app.include_router(gold.router)

@@ -53,7 +53,7 @@ export async function across(actor: string, me: Who): Promise<Across> {
     sql<Overdue[]>`
       select coalesce(si.section, ch.section) as section, class_band(si.tenant_id, coalesce(si.section, ch.section)) as band,
              count(*)::int as answers, count(distinct k.id)::int as papers,
-             to_char(min(k.created_at) at time zone 'Asia/Kolkata', 'YYYY-MM-DD') as oldest
+             to_char(min(k.created_at) at time zone (select value #>> '{}' from config where key = 'school.time_zone'), 'YYYY-MM-DD') as oldest
       from item_result r join capture k on k.id = r.capture_id and k.superseded_by is null
       join sheet_instance si on si.id = k.sheet_instance_id left join child ch on ch.id = si.child_id
       where r.status in ('unreadable', 'needs_teacher') and coalesce(si.section, ch.section) is not null
@@ -78,8 +78,8 @@ export async function across(actor: string, me: Who): Promise<Across> {
                         and a.request ->> 'qr' = si.qr_code order by a.started_at desc, a.id desc limit 1), false) = false
       )
       select section, class_band(tenant_id, section) as band, roll_no, qr, title, since::text as since,
-             (current_date - since)::int as days
-      from out where since < current_date - (select value from threshold where key = 'across.papers_missing_days')::int
+             ((now() at time zone (select value #>> '{}' from config where key = 'school.time_zone'))::date - since)::int as days
+      from out where since < (now() at time zone (select value #>> '{}' from config where key = 'school.time_zone'))::date - (select value from threshold where key = 'across.papers_missing_days')::int
       order by grade_ord(tenant_id, class_band(tenant_id, section)), section, roll_order(roll_no), roll_no, since`,
     // a child who needs help (a red state with enough answers) in two or more subjects; names read through
     // pii.read_child, which logs who asked
