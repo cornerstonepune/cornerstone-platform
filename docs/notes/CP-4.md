@@ -3,17 +3,15 @@
 Branch `cp-4-build`, from main at CP-3 (750ec6f). Scope `specs/CP-4`, design `specs/CP-4/design.md`, ADR 0101 amended.
 
 ## Verified (local, on databases built by `bin/testdb fresh` plus this migration)
-- `specs/CP-4/proofs`: 19 passed, 2 failed: `test_6_engine_privileges_unchanged_by_the_cp4_migration` and
-  `test_3_own_classes_group_sees_its_class_and_not_another`. Neither can pass as written; both need one proof line changed
-  (see "The two proof changes proposed"), which only Nimish's UNLOCK allows. The rule itself was checked by hand on a synthetic school (below);
-  the two edited proofs have not been run, because the guard stops any copy of the locked proofs.
+- `specs/CP-4/proofs`: 21 passed, 0 failed, after Nimish's UNLOCK CP-4 (9 Nov) and the two lines below were applied
+  and the spec locked again. The live check (item 2) runs on the box only.
 - Engine suite (4,140 tests, 3 local shards on separate databases): all pass but `test_spine_provenance` (2, downloads
   NCERT PDFs; this sandbox lacks the certificate) and `test_curriculum_versions` (deselected, fails before 9 Nov).
   Two engine tests changed (below). `bin/check`: 34 passed. `engine load --check`: unchanged on a second run.
 - Browser suite, 3 shards in CI order, each on its own fresh database, the site as `app_web`: 194 + 194 + 194 passed, 0
   flaky, 0 skipped. Before the fix of `worksheets/[qr]` one test failed (see "What the rules broke").
 
-## The two proof changes proposed (one `UNLOCK CP-4` covers both)
+## The two proof changes (applied after Nimish's `UNLOCK CP-4`)
 `public.sheet_template` has a nullable `child_id` (migration 20260918100000: a focus paper is made for one child), so
 it is child data keyed by `child_id`; a spare blueprint with no child is open to everyone who reaches `papers`
 (key type `child_open`). The first draft called it school-wide, which let any website login read which child got which

@@ -206,7 +206,9 @@ def test_3_own_classes_group_sees_its_class_and_not_another(school):
                 if other:
                     problems.append(f"educator of {who} sees {other} rows of other people")
             return "; ".join(problems) or None
-        z = _count(school, "Z", s, t)
+        # a spare paper blueprint (child_open key, no child named) is read by all; the rest of the table is not
+        spare = sql.SQL("{} is not null").format(sql.Identifier(key_column)) if key_type == "child_open" else sql.SQL("true")
+        z = _count(school, "Z", s, t, spare)
         if z:
             problems.append(f"educator of class Z (which holds nothing) sees {z} rows")
         ids = seeded.get(f"{s}.{t}")

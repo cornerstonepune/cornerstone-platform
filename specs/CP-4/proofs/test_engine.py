@@ -72,7 +72,9 @@ def test_6_engine_privileges_unchanged_by_the_cp4_migration(server):
         psql_file(url, cp4)
         post = _engine_privileges(url)
     existed = {t for t, _, _ in pre}
-    post = {x for x in post if x[0] in existed}  # a table CP-4 itself creates has no "before"
+    had = {(t, c) for t, c, _ in pre if c}
+    # a table or a column CP-4 itself adds has no "before"; every privilege that had one is compared exactly
+    post = {x for x in post if x[0] in existed and (not x[1] or (x[0], x[1]) in had)}
     assert pre, "the engine login holds no privilege before CP-4: the snapshot is wrong"
     assert post == pre, f"gained: {sorted(post - pre)[:20]}; lost: {sorted(pre - post)[:20]}"
 

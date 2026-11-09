@@ -1,5 +1,5 @@
 {
-  "digest": "21cc2dd3c147e49ab16e21fad855735f6100e36eead9e5471eb6a7531b286570",
+  "digest": "b498dcc2849103a2aef78ac09a7dbcc69f4343c4cb3d35d9c09c4e111337c090",
   "files": [
     "spec.md",
     "checks.sh",
@@ -11,7 +11,7 @@
     "proofs/test_unlisted_table.py",
     "proofs/test_web.py"
   ],
-  "locked_at": "2026-11-08T11:17:26+00:00",
+  "locked_at": "2026-11-09T02:20:35+00:00",
   "criteria": 6,
-  "athena": "2.13.0"
+  "athena": "2.14.0"
 }
