@@ -39,8 +39,7 @@ One per Done-when line, same numbers.
 4. A deploy keeps a setting the school changed, and still adds a new one.
 5. The system reports a late night rebuild or a late voice clean-up; one page lists the server steps for both jobs.
 6. The engine-logs workflow prints counts only, and its comment is true for a public repository.
-7. Engine-made worksheets and print packs carry the school logo as the brand rules say. Parent reports: see Open
-   Question 1.
+7. Engine-made worksheets and print packs carry the school logo as the brand rules say (line 7 as narrowed, 9 Nov).
 
 ## Non-Goals
 
@@ -54,7 +53,10 @@ One per Done-when line, same numbers.
 
 ## Open Questions
 
-1. **Logo on parent reports (Nimish decides before the lock).** The engine makes no parent-report document: it writes
+None open. **Decided 9 Nov 2026: option A**, by the orchestrator under Nimish's blanket authority; issue #530's line 7
+and Out of scope were edited before the lock. The question, for the record:
+
+1. **Logo on parent reports.** The engine makes no parent-report document: it writes
    a text draft that the website shows, so there is nothing for the engine to put a logo on.
    * **(A, recommended)** Nimish edits Done-when 7 in the issue to "worksheets and print packs made by the engine carry
      the school logo as the pack's rules say; a parent-report document gets it when one is built". Reason: the logo

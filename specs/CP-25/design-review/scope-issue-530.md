@@ -9,14 +9,15 @@
 4. A setting the school has changed keeps its value when the engine's settings are loaded again; a setting that is not yet there is still added. (Test.)
 5. `engine live watch` reports when the nightly rebuild, or the 48-hour voice clean-up, has not run in time. `docs/runbooks/scheduled-jobs.md` lists the exact steps to put both jobs on the server. (Test; LIVE: box-only read.)
 6. The "engine logs" workflow prints counts only, never raw log lines, and its comment says what is true for a public repository. (Test: fails if the workflow prints raw log lines.)
-7. After the brand pack (#528) is on main: worksheets, print packs and parent reports made by the engine carry the school logo as the pack's rules say. (Test.)
+7. After the brand pack (#528) is on main: worksheets and print packs made by the engine carry the school logo as the pack's rules say. A parent-report document gets it when one is built (the engine makes only a text draft today). (Test.)
 
 **Out of scope:**
 - the restricted-login switch and what must be cleared before it (CP-4's checklist);
 - consent and the data register's wording;
 - simplifying the parallel mechanisms (settings, approvals, who-did-it);
 - the new-year rollover and database indexes;
+- a parent-report document;
 - the website's own items (UI-15) and library upgrades;
 - the backup numbers (CP-24).
 
-Tier 3 (migrations, `.github/`).
+Tier 3 (migrations, `.github/`). Line 7 narrowed on 9 Nov 2026 by the orchestrator under Nimish's blanket authority, because the engine builds no parent-report document.
