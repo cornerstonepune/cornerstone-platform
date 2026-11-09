@@ -6,6 +6,7 @@ so run twice the second adds nothing and the file stays small. Values are quoted
 from psycopg import sql
 
 from engine.core import db
+from engine.w2_print import fortnight_cycle as fc
 from engine.w2_print import k2_timetable_load as ld
 
 TABLES = ("fortnight", "school_day", "period", "timetable_slot", "plan_entry", "session")
@@ -37,9 +38,13 @@ def tables(load: ld.Load, t: ld.Target) -> list[tuple[str, sql.Composed]]:
     g, out = L(t.grade), []
     if load.fortnights:
         out.append(("fortnight", S(
+            "with new_fortnight as (\n"
             "insert into fortnight (tenant_id, academic_year_id, number, kind, starts_on, ends_on)\n"
             "select x.tenant, x.year, v.n::int, 'teaching', v.s::date, v.e::date from k2_ctx x cross join (values\n  {rows}\n"
-            ") as v(n, s, e)\non conflict do nothing"
+            ") as v(n, s, e)\non conflict do nothing returning id, tenant_id)\n"
+            # a fortnight made here starts at planning (CP-6), or the freeze would silently not apply to it
+            "insert into fortnight_cycle (tenant_id, fortnight_id) select tenant_id, id from new_fortnight"
+            " on conflict do nothing"
         ).format(rows=_values(load.fortnights))))  # fmt: skip
     if load.school_days:
         out.append(("school_day", S(
@@ -110,13 +115,57 @@ def statements(load: ld.Load, t: ld.Target) -> list[str]:
     return [p.as_string() for p in [*_context(t), _guard(t), *(q for _, q in tables(load, t))]]
 
 
-def apply(conn: db.Conn, load: ld.Load, t: ld.Target) -> dict[str, int]:
-    """Run the statements on this connection; the rows each added (none the second time)."""
+def _frozen_gate(
+    conn: db.Conn,
+    load: ld.Load,
+    added: dict[str, int],
+    reached: list,
+    reason: str | None,
+    actor: str | None,
+) -> None:
+    """Rows added to a fortnight past planning need a reason (CP-6). Plan lines reach only the fortnights that received
+    a new line (`reached`); slots with no end reach every fortnight from their first day on. A rerun that adds nothing
+    asks for nothing."""
+    who = (
+        actor
+        or db.one(
+            conn, "select coalesce(nullif(current_setting('app.changed_by', true), ''), session_user) as who"
+        )["who"]
+    )
+    ctx = db.one(conn, "select year, klass::text as klass from k2_ctx")
+    touched = {
+        "plan_entry": reached,
+        "timetable_slot": fc.fortnights_touched(
+            conn, ctx["year"], from_day=min((f[1] for f in load.fortnights), default=None)
+        ),
+    }
+    for table, ids in touched.items():
+        if added[table]:
+            fc.ensure_editable(
+                conn, ids, reason=reason, table=table, record_id=ctx["klass"], op="insert", actor=who
+            )
+
+
+def apply(
+    conn: db.Conn, load: ld.Load, t: ld.Target, *, reason: str | None = None, actor: str | None = None
+) -> dict[str, int]:
+    """Run the statements on this connection; the rows each added (none the second time). Rows added to a frozen
+    fortnight are refused (`CycleError`, nothing written) unless `reason` is given, and the reason is kept."""
     for stmt in _context(t):
         conn.execute(stmt)
     if db.one(conn, "select klass from k2_ctx")["klass"] is None:
         raise NoSuchClass(f"{t.grade} {t.section} {t.year}")
-    return dict.fromkeys(TABLES, 0) | {name: conn.execute(q).rowcount for name, q in tables(load, t)}
+    with conn.transaction():
+        added: dict[str, int] = dict.fromkeys(TABLES, 0)
+        reached: list = []
+        for name, q in tables(load, t):
+            if name == "plan_entry":  # which fortnights got a new line, so only they are checked
+                rows = conn.execute(q + S(" returning fortnight_id")).fetchall()
+                added[name], reached = len(rows), list({r["fortnight_id"] for r in rows})
+            else:
+                added[name] = conn.execute(q).rowcount
+        _frozen_gate(conn, load, added, reached, reason, actor)
+    return added
 
 
 def linked(conn: db.Conn) -> int:
