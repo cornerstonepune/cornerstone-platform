@@ -89,7 +89,7 @@ def _allowed(conn: db.Conn, email: str, class_id: str) -> dict:
     staff = voice_intake.staff_of(conn, email)
     class_id = voice_intake.valid_id(class_id)
     got = conn.execute(
-        "select c.grade_code, c.section,"
+        "select c.grade_code, c.section, (select z.value #>> '{}' from config z where z.key = 'school.time_zone') as zone,"
         " (select k.value from config k where k.key = 'k2.child_page') as child_page,"
         " exists (select 1 from staff_role_grant g where g.staff_id = %(staff)s and g.school_class_id = c.id"
         "   and g.valid_from <= current_date and (g.valid_to is null or g.valid_to >= current_date)) as on_class,"
@@ -106,7 +106,11 @@ def _allowed(conn: db.Conn, email: str, class_id: str) -> dict:
         raise Refused("Not found.", 404)
     if not (got["on_class"] or got["coordinator"]):
         raise Refused("This class is not one of yours.", 403)
-    return {**got, "class": class_id, "staff": staff, "zone": settings.time_zone(conn)}
+    if not got["zone"]:
+        raise settings.MissingSetting(
+            "this database has no school.time_zone setting: run the migrations and `engine load`"
+        )
+    return {**got, "class": class_id, "staff": staff}
 
 
 def _today(where: dict) -> dt.date:

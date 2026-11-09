@@ -8,6 +8,7 @@ from pydantic import BaseModel
 
 from engine.api.deps import get_conn, require_engine_key
 from engine.core import db, settings
+from engine.w2_print import cli_plan_link as links
 from engine.w2_print import fortnight_cycle as fc
 from engine.w2_print import tt_generate, tt_need
 from engine.w3_read import voice_intake, voice_store
@@ -30,6 +31,19 @@ class Draft(BaseModel):
     section: str
     year: str
     fortnight: int
+
+
+class Link(BaseModel):
+    actor: str
+    fortnight: int | None = None
+    band: str | None = None
+    apply: bool = False
+
+
+class Unmatched(BaseModel):
+    actor: str
+    fortnight: int | None = None
+    band: str | None = None
 
 
 def _staff(conn, email: str):
@@ -96,4 +110,52 @@ def generate(body: Draft, conn=Depends(get_conn, scope="function")):
         "report": run.report,
         "draft": run.draft,
         "lines": tt_generate.lines(run),
+    }
+
+
+def _band(conn, given: str | None) -> str:
+    band = given or settings.config(conn, "timetable.link_band")
+    if not band:
+        raise HTTPException(
+            status_code=409, detail="No band given and no timetable.link_band setting: run `engine load`."
+        )
+    return band
+
+
+@keyed.post("/timetable/link")
+def link(body: Link, conn=Depends(get_conn, scope="function")):
+    """Link the plan lines that name exactly one activity, as `engine timetable link` does (CP-8): counts per
+    fortnight, and with `apply` one run that `plan_link_undo` can undo as a whole. A dry run writes nothing."""
+    _staff(conn, body.actor)
+    tenant, band = db.tenant_slug(), _band(conn, body.band)
+    run = None
+    if body.apply:
+        run = db.one(
+            conn,
+            "select plan_link_apply(t.id, %s, %s, %s) as run from tenant t where t.slug = %s",
+            (band, links.BY, body.fortnight, tenant),
+        )["run"]
+    rows = links._lines(conn, tenant, band, body.fortnight)
+    return {
+        "run": str(run) if run else None,
+        "summary": links._count_line(rows),
+        "fortnights": {
+            str(n): links._count_line([r for r in rows if r["fortnight"] == n])
+            for n in sorted({r["fortnight"] for r in rows})
+        },
+    }
+
+
+@keyed.post("/timetable/unmatched")
+def unmatched(body: Unmatched, conn=Depends(get_conn, scope="function")):
+    """The plan lines with no activity, each with its fortnight, week and reason (no_match, several_matches,
+    ready_to_link): none is silently unlinked."""
+    _staff(conn, body.actor)
+    rows = links._lines(conn, db.tenant_slug(), _band(conn, body.band), body.fortnight)
+    return {
+        "lines": [
+            {k: r[k] for k in ("fortnight", "week", "section", "plan_key", "text", "reason")}
+            for r in rows
+            if not r["linked"]
+        ]
     }

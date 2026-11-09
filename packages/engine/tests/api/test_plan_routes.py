@@ -143,3 +143,26 @@ def test_a_class_or_fortnight_not_there_is_not_found(world):
     )
     assert r.status_code == 404, r.json()
     assert dt.date.today()  # the route takes no clock of its own; nothing else to check here
+
+
+def test_plan_lines_are_counted_linked_and_listed_when_unmatched(world):
+    """CP-8 beside its command: a dry run writes nothing, `apply` makes one run, and a line with no activity is listed
+    with its fortnight and reason."""
+    client, conn, w = world
+    conn.execute(
+        "insert into plan_entry (tenant_id, school_class_id, fortnight_id, week_code, plan_key, text, ord, source)"
+        " select %s, id, %s, 'A', 'k', 'Nothing matches this', 1, 'CP-24 test' from school_class where id = %s",
+        (w["t"], w["fortnight"], w["class"]),
+    )
+    conn.execute("update school_class set grade_code = 'K2' where id = %s", (w["class"],))
+    body = {"actor": w["email"], "band": "K2", "fortnight": None}
+    unmatched = _post(client, "/timetable/unmatched", body)
+    assert unmatched.status_code == 200, unmatched.json()
+    mine = [x for x in unmatched.json()["lines"] if x["text"] == "Nothing matches this"]
+    assert mine and mine[0]["reason"] == "no_match" and mine[0]["fortnight"] is not None
+    dry = _post(client, "/timetable/link", {**body, "apply": False})
+    assert dry.status_code == 200 and dry.json()["run"] is None and dry.json()["fortnights"]
+    done = _post(client, "/timetable/link", {**body, "apply": True})
+    assert done.status_code == 200 and done.json()["run"]
+    nobody = _post(client, "/timetable/link", {**body, "actor": "nobody@cornerstone.test"})
+    assert nobody.status_code == 403
