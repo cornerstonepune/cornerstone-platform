@@ -16,6 +16,7 @@ import pytest
 
 from engine.core import db
 from engine.w1_bank import inventory, refill
+from tests.rows import a_retired_question
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
 LEVEL = ("REASON.EXPLAIN", "Easy")
@@ -114,11 +115,7 @@ def test_a_question_retired_for_a_reason_stays_retired(conn):
     """One a person or a rule retired, its reason recorded, is not brought back to fill a level."""
     ids = _two(conn)
     for i in ids:
-        conn.execute(
-            "insert into item_feedback (tenant_id, item_id, actor, verdict, note)"
-            " select tenant_id, id, 'a person', 'retire', 'not a question for this level' from item where id = %s",
-            (i,),
-        )
+        a_retired_question(conn, i, "a person", "not a question for this level")
     held = conn.execute(
         "select count(*) as n from item where status = 'active' and skill_set_code = %s and difficulty = %s",
         SMALL,

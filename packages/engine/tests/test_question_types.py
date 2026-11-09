@@ -19,7 +19,7 @@ from engine.checks import past
 from engine.core import db
 from engine.w1_bank import question_types
 from engine.w2_print import focus_paper, handout, library
-from tests.rows import data_steps
+from tests.rows import a_waiting_type, data_steps, no_type_approved
 
 NUMBERS = re.compile(r"^(ADD|SUB|MUL|DIV)\.(\dD\dD(\.REG\w*)?|MULTI\d*)$")
 CARD_KINDS = {"MUL3.SUM", "MUL3.STORY", "SEQ.ON", "SEQ.BACK", "MULT.NTH", "MULT.FIRST5"}
@@ -52,7 +52,7 @@ def _bank(conn):
 
 def _waits(conn, code):
     """`code` as a new type is: no approval. Rolled back with the test."""
-    conn.execute("delete from question_type_approval where question_type = %s", (code,))
+    a_waiting_type(conn, code)
 
 
 def _drawable(conn, code):
@@ -392,7 +392,7 @@ def test_every_type_already_in_use_starts_approved(conn):
         " values (%s, 'UNUSED.TYPE', 'equation', 'make both sides equal', 'printed', '{computable}')",
         (tenant,),
     )
-    conn.execute("delete from question_type_approval")
+    no_type_approved(conn)
     conn.execute("select internal.question_types_start_approved()")
     held = {t for ts in _bank(conn).values() for t in ts}
     approved = {

@@ -242,11 +242,7 @@ def test_a_move_withdraws_what_was_not_yet_made_and_leaves_every_paper_made_as_i
         " returning id",
         (t, child, FUTURE),
     ).fetchone()["id"]
-    printed = conn.execute(
-        "insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, print_status, approved_by)"
-        " values (%s, %s, %s, %s, 'printed', 'someone') returning id",
-        (t, "CS" + uuid.uuid4().hex.upper(), tpl, child),
-    ).fetchone()["id"]
+    printed = rows.an_approved_paper(conn, tpl, child, "someone")
     past, unmade, made, by_hand = (
         plan(PAST),
         plan(FUTURE),

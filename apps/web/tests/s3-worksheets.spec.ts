@@ -8,6 +8,7 @@
 import { expect, test } from "@playwright/test";
 import postgres from "postgres";
 import { libraryOf, restoreLibrary } from "./library-state";
+import { forgetFlags } from "./rows";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -114,7 +115,7 @@ test("removing a question from its page retires the worksheet it was on and a ne
   } finally {
     // Back exactly as it was: the question in the bank, its worksheets as they were, the new one gone.
     await restoreLibrary(sql, "ADD.3D3D", "Medium", worksheets);
-    await sql`delete from item_feedback where item_id = ${q.id} and note like 'end-to-end test%'`;
+    await forgetFlags(sql, "end-to-end test%", q.id);
     await sql`update item set status = 'active' where id = ${q.id}`;
   }
 });

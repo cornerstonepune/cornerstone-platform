@@ -8,6 +8,7 @@
 import { expect, type Page, test } from "@playwright/test";
 import postgres from "postgres";
 import { libraryOf, restoreLibrary } from "./library-state";
+import { forgetFlags } from "./rows";
 import { existsSync } from "node:fs";
 import path from "node:path";
 
@@ -47,7 +48,7 @@ test.afterAll(async () => {
   await sql`delete from item where corrected_from in (select item_id from item_feedback where note like ${marked})`;
   await sql`update item set status = 'active' where id in (
     select item_id from item_feedback where note like ${marked})`;
-  await sql`delete from item_feedback where note like ${marked}`;
+  await forgetFlags(sql, marked);
   const [{ leaked }] = await sql<{ leaked: number }[]>`
     select count(*)::int as leaked from item_feedback where note like ${marked}`;
   const [{ retired }] = await sql<{ retired: number }[]>`
@@ -269,7 +270,7 @@ test("correcting a question's wording saves a new question and retires the old o
     await sql`delete from item_exposure where item_id in (select id from item where corrected_from = ${q.id})`;
     await sql`delete from item where corrected_from = ${q.id}`;
     await sql`update item set status = 'active' where id = ${q.id}`;
-    await sql`delete from item_feedback where item_id = ${q.id} and note like ${`%${MARK}%`}`;
+    await forgetFlags(sql, `%${MARK}%`, q.id);
   }
 });
 
@@ -301,7 +302,7 @@ test("removing a question retires it in the database and it stops being offered"
     for (const [i, d] of levels.entries()) await restoreLibrary(sql, "SUB.2D2D", d, worksheets[i]);
     await sql`update item set status = 'active' where id in (
       select item_id from item_feedback where note = ${MARK})`;
-    await sql`delete from item_feedback where note = ${MARK}`;
+    await forgetFlags(sql, MARK); // no wildcard in it: the flags whose note is the mark
   }
 });
 

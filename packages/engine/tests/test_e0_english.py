@@ -13,6 +13,7 @@ import pytest
 
 from engine.core import db, english, loaders
 from engine.w1_bank import question_types
+from tests.rows import a_waiting_type
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs the local copy (bin/testdb)")
 
@@ -98,7 +99,7 @@ def test_the_levels_say_what_the_seed_says_and_the_open_kinds_say_a_person_reads
 def test_an_unapproved_english_kind_or_level_is_never_drawn(conn):
     skill, level, kind = "EN3.SPELL.VERBEND", "Easy", "ENG.WRITE_WORD"
     tenant = one(conn, "select id from tenant limit 1")
-    conn.execute("delete from question_type_approval where question_type = %s", (kind,))
+    a_waiting_type(conn, kind)
     conn.execute(
         "update skill_level set confirmed_by = null, confirmed_at = null where skill_code = %s", (skill,)
     )
@@ -123,13 +124,13 @@ def test_an_unapproved_english_kind_or_level_is_never_drawn(conn):
         (level, skill),
     )
     assert drawn() == 1, "approved kind and approved level: now it may be drawn"
-    conn.execute("delete from question_type_approval where question_type = %s", (kind,))
+    a_waiting_type(conn, kind)
     assert drawn() == 0, "a kind withdrawn is not drawn"
 
 
 def test_an_approval_of_a_kind_records_the_name_and_the_date(conn):
     kind = "ENG.CHOOSE"
-    conn.execute("delete from question_type_approval where question_type = %s", (kind,))
+    a_waiting_type(conn, kind)
     assert question_types.state(conn, kind)["approved"] is False
     got = question_types.approve(conn, kind, "Ayush Test")
     assert got["approved"] and got["by"] == "Ayush Test" and got["at"] is not None

@@ -38,10 +38,20 @@ fresh() {
   schema "$1"
   local url="$1"
   # As live is (rehearsal 39560151627, B2): every level confirmed and every question type approved, so a paper is made
-  # here as it is there; a test withdraws what it needs withdrawn, and rolls it back.
-  psql "$url" -q -v ON_ERROR_STOP=1 \
-    -c "update skill set level_approved = (select jsonb_object_agg(k, jsonb_build_object('by', 'bin/testdb, as live', 'at', now())) from jsonb_object_keys(difficulty) k) where topic_code not in (select code from topic where subject_code = 'ENG')" \
-    -c "insert into question_type_approval (tenant_id, question_type, approved_by) select tenant_id, code, 'bin/testdb, as live' from question_type q where not exists (select 1 from skill_level_question_type l join skill s on s.tenant_id = l.tenant_id and s.code = l.skill_code join topic t on t.tenant_id = s.tenant_id and t.code = s.topic_code where l.question_type = q.code and t.subject_code = 'ENG') on conflict do nothing"
+  # here as it is there; a test withdraws what it needs withdrawn, and rolls it back. Each approval is written where
+  # the schema keeps it: the stamp and the table while they exist, the one approval list once CP-27 has moved them.
+  psql "$url" -q -v ON_ERROR_STOP=1 -c "do \$\$ begin
+    if exists (select from information_schema.columns where table_schema = 'public' and table_name = 'skill' and column_name = 'level_approved') then
+      update skill set level_approved = (select jsonb_object_agg(k, jsonb_build_object('by', 'bin/testdb, as live', 'at', now())) from jsonb_object_keys(difficulty) k) where topic_code not in (select code from topic where subject_code = 'ENG');
+    else
+      insert into approval (tenant_id, kind, target, decision, \"by\") select l.tenant_id, 'skill_level', l.skill_code || ' ' || l.difficulty, 'approved', 'bin/testdb, as live' from skill_level l join skill s on s.tenant_id = l.tenant_id and s.code = l.skill_code where s.topic_code not in (select code from topic where subject_code = 'ENG');
+    end if;
+    if to_regclass('public.question_type_approval') is not null then
+      insert into question_type_approval (tenant_id, question_type, approved_by) select tenant_id, code, 'bin/testdb, as live' from question_type q where not exists (select 1 from skill_level_question_type l join skill s on s.tenant_id = l.tenant_id and s.code = l.skill_code join topic t on t.tenant_id = s.tenant_id and t.code = s.topic_code where l.question_type = q.code and t.subject_code = 'ENG') on conflict do nothing;
+    else
+      insert into approval (tenant_id, kind, target, decision, \"by\") select tenant_id, 'question_type', code, 'approved', 'bin/testdb, as live' from question_type q where not exists (select 1 from skill_level_question_type l join skill s on s.tenant_id = l.tenant_id and s.code = l.skill_code join topic t on t.tenant_id = s.tenant_id and t.code = s.topic_code where l.question_type = q.code and t.subject_code = 'ENG');
+    end if;
+  end \$\$;"
   "$REPO/bin/engine" bank refill | tail -1
   "$REPO/bin/engine" library build | tail -1
   # Settled as live is: the tests start seconds after some 28,000 rows were written, before autovacuum has read them
