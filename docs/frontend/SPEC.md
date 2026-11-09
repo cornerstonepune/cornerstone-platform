@@ -155,7 +155,7 @@ What the test does with each kind of control:
 | UI-2 The blocks | The school's blocks of SPEC §5 built once, each with sample data on a staff-only gallery page and screenshots in both themes; the blocks that exist today moved onto the tokens; every chart drawn to scale from its data. | the frame and the blocks | UI-1 |
 | UI-3 Node pages: the K2 walk | Period, record, confirm, notes, children, class picture, child, activity, objective and skill as node pages on the blocks, each walking to its neighbours through the rail and back through the trail; the old routes redirect. | the session's name, Record a note, Confirm what the reader heard, Notes, Children, Class picture, Where this child is, the activity's name, the objective's title, the skill's name | UI-2; the K2 switch (a config row) on for the pages behind it |
 | UI-4 Node pages: assessments | Assessments, one assessment and one child's paper as node pages on the blocks; the seven old assessment pages and Class results fold in; the queries and the seven steps are unchanged. | Assessments, the built name, Check the answers | UI-2 |
-| UI-5 The coordinator's views: timetable, rules, staff, classes, setup, search | The timetable's day, week and fortnight views for everyone; rules, staff and grants, classes and children, the Setup home and search; the small writes that exist today (a rule edit, a grant, a child move) through their own rows. | Timetable, Timetable rules, Staff and classes, Classes and children, Setup, '12' or 'counting' | UI-2 for the views; CP-1 merged for moving a child |
+| UI-5 The coordinator's views: timetable, rules, staff, classes, setup, search | The timetable's day, week and fortnight views for everyone; rules, staff and grants, classes and children, the Setup home and search; the small writes that exist today (a rule edit, a grant, a child move) through their own rows. | Timetable, Timetable rules, Staff and classes, Classes and children, Setup, Search | UI-2 for the views; CP-1 merged for moving a child |
 | UI-6 The fortnight's actions: fortnight, draft, moves | The fortnight node with Approve and Go live, the draft from the rules with its unmet rules, and moves by hand with clashes accepted by the coordinator only. | Fortnight 9, Draft from the rules, Moves by hand | CP-6, CP-11, CP-12 and CP-22 merged |
 | UI-7 Today, both kinds | The educator's Today (the day, the attention strip, notes to confirm, the class) and the coordinator's Today (what waits, last week's heat grid, next week), composed from the blocks over the queries that exist; What needs doing folds in and its count moves to Setup where it belongs. | Today, Today, the school | UI-3 and UI-5; UI-6 for the coordinator's clash and draft rows (rows for a backend not yet merged simply do not appear) |
 | UI-8 Reports | Each child's report, line by line, in the educator's words: two approvals per line, consent on file, then sent. The parent's copy says educator, Easy / Medium / Hard / Advance, no rung and no code. | Reports | CP-19 merged (Next) |
@@ -1016,11 +1016,12 @@ Blocks, in order:
 - **Details**: change log (child_move, enrolment)
 Rail (Connected to): Staff · Class picture · the fortnight
 Main action: Move a child · Next step: Staff
-Data: school_class, enrolment, child_move, pii stays on the private side (names never on this page)
+Data: school_class, enrolment, child_move, names read from pii by child_id at render, never stored in these tables
 Empty: none · Phone: cards
 Folds in: /school
-Every control on the screen (7), and what the test does with each:
+Every control on the screen (8), and what the test does with each:
 - **row** each class row: opens that class's children table below
+- **child_name** each child row (the name beside the Sr. No., so a person moving a child knows who it is)
 - **button** Move (a child row): a picker of classes and a date; Save writes child_move and a new enrolment; the child appears in the new class
 - **fold** change log
 - **link** a class's picture → Class picture (`/children/[class]`)
@@ -1029,7 +1030,7 @@ Every control on the screen (7), and what the test does with each:
 - **link** rail: the fortnight → Fortnight 9 (`/timetable/fortnight/[n]`)
 Done when (on top of the ten generic checks):
 - a move writes child_move and a new enrolment and deletes nothing
-- no child's name on the page; Sr. No. only (DOM scan)
+- each child row shows the name beside the Sr. No., read from pii by child_id; the address and the change log's stored text carry no name (DOM scan)
 - the change log lists the move with who and when
 
 
@@ -1057,24 +1058,27 @@ Done when (on top of the ten generic checks):
 
 ### Outside the bar
 
-#### '12' or 'counting' `/search?q=`
+#### Search `/search`
 Who: both · Phase: Core · Backend: none · Exists today: part (top bar search) · Slice: UI-5
 Eyebrow: Search
-Purpose: A child by Sr. No. in your classes, an activity, a skill, an assessment by its built name.
+Purpose: A child by name or Sr. No. in your classes, an activity, a skill, an assessment by its built name.
 Blocks, in order:
 - **DataTable**: kind icon · what · where · open
 Rail (Connected to): none
 Main action: the first result · Next step: none
-Data: enrolment roll_no in scope; activity, skill names; assessment names
-Empty: Nothing found: suggest the Sr. No. form · Phone: full screen
-Every control on the screen (5), and what the test does with each:
-- **field** the search field (in the bar) (Enter searches; typing offers up to five)
-- **row** a child result → Where this child is (`/children/[class]/[roll]`)
+Data: enrolment roll_no and pii names in the person's scope (matched on the server, joined by child_id); activity, skill names; assessment names
+Empty: Nothing found: try a Sr. No. or part of a name · Phone: full screen
+Every control on the screen (6), and what the test does with each:
+- **field** the search field (in the bar) (Enter submits by POST; the term never appears in the address, a log line or an analytics call; typing offers up to five, from signed-in screens only)
+- **row** a child result → Where this child is (`/children/[class]/[roll]`) (found by name or Sr. No., within the person's classes)
+- **child_name** each child result (the name beside the Sr. No.)
 - **row** an activity result → the activity's name (`/setup/activities/[code]`)
 - **row** a skill result → the skill's name (`/setup/skills/[code]`)
 - **row** an assessment result → the built name (`/children/assessments/[key]`)
 Done when (on top of the ten generic checks):
-- a child's name typed returns nothing; a Sr. No. in scope returns that child; a Sr. No. outside scope returns nothing
+- a name or Sr. No. of a child in the person's classes returns that child; one outside their classes returns nothing
+- the search term never appears in the address, the server log or an analytics call (the test submits a name and inspects all three)
+- search is available from signed-in screens only; signed out, the request is refused
 
 
 #### Sign in `/login`

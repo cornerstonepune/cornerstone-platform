@@ -84,7 +84,7 @@
         "Each chart block (StackBar, LevelBars, Spark, Trend, HeatGrid) is fed known data by a test and every text label in its SVG is a value or a date from that data; colours come from tokens only; a chart with no data renders its empty words, never an empty axis.",
         "Details is a native `<details>`; a main action inside a closed Details fails the inventory test.",
         "No file outside `lib/icons.tsx` imports from `lucide-react` (grep test).",
-        "AppFrame's search field: typing a Sr. No. that is in the person's classes offers that child; a Sr. No. outside them offers nothing; a child's name typed returns nothing (test)."
+        "AppFrame's search field: typing a Sr. No. that is in the person's classes offers that child; a Sr. No. outside them offers nothing; a child's name typed (a fake fixture name) offers that child within their classes and nothing outside them; the typed term is not in the address (test)."
       ],
       "out_of_scope": "Pages and their data." },
     { "id": "UI-3", "title": "Node pages: the K2 walk", "tier": 2, "waits_for": "UI-2; the K2 switch (a config row) on for the pages behind it",
@@ -117,7 +117,7 @@
         "Every old route listed under `folds` answers 308 to the new address.",
         "`/setup/staff` has no column, sort or text that ranks people: the table cannot be sorted by the three numbers and no ordinal appears (test asserts absence).",
         "A child move writes a child_move row and a new enrolment and deletes nothing; the class picture of both classes reflects it on the next render (database and DOM assertion).",
-        "Search never returns on a name: the fixture's child names typed return 'Nothing found'; a Sr. No. in scope returns that child."
+        "Search finds a child by a fake fixture name or by Sr. No. within the person's classes and never outside them; the term is not in the address, the log or an analytics call."
       ],
       "out_of_scope": "Approve, go live, draft, moves (UI-6). Materials (UI-9)." },
     { "id": "UI-6", "title": "The fortnight's actions: fortnight, draft, moves", "tier": 2, "waits_for": "CP-6, CP-11, CP-12 and CP-22 merged",
@@ -741,6 +741,7 @@
       "blocks": [["DataTable", "class · grade · children · educators; open a class"], ["DataTable", "a class: Sr. No. · since · moved from; Move (its own action)"], ["Details", "change log (child_move, enrolment)"]],
       "elements": [
         { "t": "row", "label": "each class row", "effect": "opens that class's children table below" },
+        { "t": "child_name", "label": "each child row", "note": "the name beside the Sr. No., so a person moving a child knows who it is" },
         { "t": "button", "label": "Move (a child row)", "effect": "a picker of classes and a date; Save writes child_move and a new enrolment; the child appears in the new class" },
         { "t": "fold", "label": "change log" },
         { "t": "link", "label": "a class's picture", "to": "picture" },
@@ -749,9 +750,9 @@
         { "t": "link", "label": "rail: the fortnight", "to": "fortnight" }
       ],
       "rail": ["Staff", "Class picture", "the fortnight"], "capture": [], "main": "Move a child", "next": "Staff",
-      "data": "school_class, enrolment, child_move, pii stays on the private side (names never on this page)", "empty": "none", "phone": "cards",
+      "data": "school_class, enrolment, child_move, names read from pii by child_id at render, never stored in these tables", "empty": "none", "phone": "cards",
       "folds": ["/school"],
-      "done_when": ["a move writes child_move and a new enrolment and deletes nothing", "no child's name on the page; Sr. No. only (DOM scan)", "the change log lists the move with who and when"] },
+      "done_when": ["a move writes child_move and a new enrolment and deletes nothing", "each child row shows the name beside the Sr. No., read from pii by child_id; the address and the change log's stored text carry no name (DOM scan)", "the change log lists the move with who and when"] },
 
     { "id": "setup", "route": "/setup", "group": "Setup", "who": "both", "phase": "Core", "backend": [], "exists": "part",
       "eyebrow": "Changed rarely", "title": "Setup",
@@ -769,20 +770,21 @@
       "data": "counts", "empty": "none", "phone": "one column",
       "done_when": ["every setup page is reachable in two clicks from the bar", "an educator sees only the cards their group may open"] },
 
-    { "id": "search", "route": "/search?q=", "group": "Outside the bar", "who": "both", "phase": "Core", "backend": [], "exists": "part (top bar search)",
-      "eyebrow": "Search", "title": "'12' or 'counting'",
-      "purpose": "A child by Sr. No. in your classes, an activity, a skill, an assessment by its built name.",
+    { "id": "search", "route": "/search", "group": "Outside the bar", "who": "both", "phase": "Core", "backend": [], "exists": "part (top bar search)",
+      "eyebrow": "Search", "title": "Search",
+      "purpose": "A child by name or Sr. No. in your classes, an activity, a skill, an assessment by its built name.",
       "blocks": [["DataTable", "kind icon · what · where · open"]],
       "elements": [
-        { "t": "field", "label": "the search field (in the bar)", "note": "Enter searches; typing offers up to five" },
-        { "t": "row", "label": "a child result", "to": "child" },
+        { "t": "field", "label": "the search field (in the bar)", "note": "Enter submits by POST; the term never appears in the address, a log line or an analytics call; typing offers up to five, from signed-in screens only" },
+        { "t": "row", "label": "a child result", "to": "child", "note": "found by name or Sr. No., within the person's classes" },
+        { "t": "child_name", "label": "each child result", "note": "the name beside the Sr. No." },
         { "t": "row", "label": "an activity result", "to": "activity" },
         { "t": "row", "label": "a skill result", "to": "skill" },
         { "t": "row", "label": "an assessment result", "to": "assessment" }
       ],
       "rail": [], "capture": [], "main": "the first result", "next": "none",
-      "data": "enrolment roll_no in scope; activity, skill names; assessment names", "empty": "Nothing found: suggest the Sr. No. form", "phone": "full screen",
-      "done_when": ["a child's name typed returns nothing; a Sr. No. in scope returns that child; a Sr. No. outside scope returns nothing"] },
+      "data": "enrolment roll_no and pii names in the person's scope (matched on the server, joined by child_id); activity, skill names; assessment names", "empty": "Nothing found: try a Sr. No. or part of a name", "phone": "full screen",
+      "done_when": ["a name or Sr. No. of a child in the person's classes returns that child; one outside their classes returns nothing", "the search term never appears in the address, the server log or an analytics call (the test submits a name and inspects all three)", "search is available from signed-in screens only; signed out, the request is refused"] },
 
     { "id": "login", "route": "/login", "group": "Outside the bar", "who": "both", "phase": "Core", "backend": ["CP-2"], "exists": "yes",
       "eyebrow": "Staff only", "title": "Sign in",

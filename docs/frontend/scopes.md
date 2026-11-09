@@ -48,7 +48,7 @@ The school's blocks of SPEC §5 built once, each with sample data on a staff-onl
 5. Each chart block (StackBar, LevelBars, Spark, Trend, HeatGrid) is fed known data by a test and every text label in its SVG is a value or a date from that data; colours come from tokens only; a chart with no data renders its empty words, never an empty axis.
 6. Details is a native `<details>`; a main action inside a closed Details fails the inventory test.
 7. No file outside `lib/icons.tsx` imports from `lucide-react` (grep test).
-8. AppFrame's search field: typing a Sr. No. that is in the person's classes offers that child; a Sr. No. outside them offers nothing; a child's name typed returns nothing (test).
+8. AppFrame's search field: typing a Sr. No. that is in the person's classes offers that child; a Sr. No. outside them offers nothing; a child's name typed (a fake fixture name) offers that child within their classes and nothing outside them; the typed term is not in the address (test).
 
 ### Out of scope
 
@@ -150,8 +150,8 @@ The timetable's day, week and fortnight views for everyone; rules, staff and gra
 2. Every old route listed under `folds` answers 308 to the new address.
 3. `/setup/staff` has no column, sort or text that ranks people: the table cannot be sorted by the three numbers and no ordinal appears (test asserts absence).
 4. A child move writes a child_move row and a new enrolment and deletes nothing; the class picture of both classes reflects it on the next render (database and DOM assertion).
-5. Search never returns on a name: the fixture's child names typed return 'Nothing found'; a Sr. No. in scope returns that child.
-6. Every one of the 43 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
+5. Search finds a child by a fake fixture name or by Sr. No. within the person's classes and never outside them; the term is not in the address, the log or an analytics call.
+6. Every one of the 45 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
 7. Timetable: a hand move shows an amber outline and its details name who and why
 8. Timetable: an educator never sees an accept-clash control; a clash cell is red for both roles
 9. Timetable: the grid's cells equal the session rows for the day shown (count and names)
@@ -161,11 +161,13 @@ The timetable's day, week and fortnight views for everyone; rules, staff and gra
 13. Staff and classes: a grant edit is a new row or a valid_to, never a delete (row count never drops)
 14. Staff and classes: no staff name appears unless the viewer is in the everything group (names are pii)
 15. Classes and children: a move writes child_move and a new enrolment and deletes nothing
-16. Classes and children: no child's name on the page; Sr. No. only (DOM scan)
+16. Classes and children: each child row shows the name beside the Sr. No., read from pii by child_id; the address and the change log's stored text carry no name (DOM scan)
 17. Classes and children: the change log lists the move with who and when
 18. Setup: every setup page is reachable in two clicks from the bar
 19. Setup: an educator sees only the cards their group may open
-20. '12' or 'counting': a child's name typed returns nothing; a Sr. No. in scope returns that child; a Sr. No. outside scope returns nothing
+20. Search: a name or Sr. No. of a child in the person's classes returns that child; one outside their classes returns nothing
+21. Search: the search term never appears in the address, the server log or an analytics call (the test submits a name and inspects all three)
+22. Search: search is available from signed-in screens only; signed out, the request is refused
 
 ### Out of scope
 
