@@ -1,0 +1,1 @@
+local-postgres-for-proofs [project]: Use when a proof needs local Postgres or TEST_DATABASE_URL. | postgres-schema-and-access [project]: Use when changing Postgres schema, grants, or RLS rules.

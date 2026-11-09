@@ -1,0 +1,1 @@
+verify-before-done [project]: Use before saying done, or checking a task's done-when. | done-verification [project]: Use when checking done-when or fast checks block finishing. ("Delete the scratch files it names when they sit outside the repository, or run the named check. Restating "no check applies" does not clear the gate and loops every stop.")
