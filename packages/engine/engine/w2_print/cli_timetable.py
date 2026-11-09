@@ -12,12 +12,11 @@ import psycopg
 import typer
 
 from engine.core import db, settings
-from engine.w2_print import cli_plan_link
+from engine.w2_print import cli_plan_link, tt_need
 from engine.w2_print import k2_timetable as tt
 from engine.w2_print import k2_timetable_load as ld
 from engine.w2_print import k2_timetable_sql as sq
 from engine.w2_print import tt_generate as gen
-from engine.w2_print import tt_need
 
 timetable_app = typer.Typer(help="W2 — the K2 timetable from the school's tabs", no_args_is_help=True)
 VOCABULARY = "timetable.vocabulary"
