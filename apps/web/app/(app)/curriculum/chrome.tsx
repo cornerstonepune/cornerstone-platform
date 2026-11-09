@@ -4,23 +4,11 @@ import { Icon, type IconName } from "@/lib/icons";
 import { requireStaff } from "@/lib/auth";
 import { gap, mustBeOn, readOffers, waiting, type State } from "@/lib/curriculum-screens";
 
-// The breadcrumb and the strip of counts every curriculum screen carries (D-075), inside the page's Screen; the menu
-// down the left is the layout's (lib/curriculum-menu.ts).
-const AREA = {
-  "/curriculum/browse": "Curriculum",
-  "/curriculum/fill": "What is filled",
-  "/curriculum/offers": "Skills offered",
-} as const;
+// The strip of counts every curriculum screen carries (D-075), inside the page's Screen; where she is, is the frame's trail.
+type Here = "/curriculum/browse" | "/curriculum/fill" | "/curriculum/offers";
 
-/** Curriculum › where she is › the page: the browser is the area's own page, so it is named once. */
-function trail(here: keyof typeof AREA, crumb?: string) {
-  const area = { label: AREA[here], href: crumb ? here : undefined };
-  const top = { label: "Curriculum", href: here === "/curriculum/browse" && !crumb ? undefined : "/curriculum/browse" };
-  if (here === "/curriculum/browse") return crumb ? [top, { label: crumb }] : [{ label: "Curriculum" }];
-  return [top, area, ...(crumb ? [{ label: crumb }] : [])];
-}
-
-export async function Chrome({ here, crumb, children }: { here: keyof typeof AREA; crumb?: string; children: React.ReactNode }) {
+// `here` and `crumb` name the page for its callers; the frame's trail (two levels, from the page's title) says where she is now.
+export async function Chrome({ children }: { here: Here; crumb?: string; children: React.ReactNode }) {
   const me = await requireStaff();
   const { reviews } = await mustBeOn(me.email);
   const [drafted, gaps, offered] = await Promise.all([waiting(), gap(), readOffers(me.email).catch(() => null)]);
