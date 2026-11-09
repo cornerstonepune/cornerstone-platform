@@ -28,7 +28,7 @@ export function hashPassword(password: string, n: number, salt = randomBytes(16)
 /** How hard a password set now is hashed: `password.scrypt_n`, a row, so raising it needs no deploy. */
 export async function scryptCost(): Promise<number> {
   const [row] = await sql<{ n: number }[]>`
-    select (select value from threshold where key = 'password.scrypt_n')::int as n`;
+    select (select value::numeric from config where key = 'password.scrypt_n')::int as n`;
   return row?.n ?? NODE_DEFAULT_N;
 }
 
@@ -61,8 +61,8 @@ export async function endSession(): Promise<void> {
 export async function signInRefused(email: string): Promise<boolean> {
   const [row] = await sql<{ refused: boolean | null }[]>`
     select (select count(*) from sign_in_failure where email = ${email} and created_at > now()
-              - make_interval(mins => (select value from threshold where key = 'sign_in.window_minutes')::int))
-           >= (select value from threshold where key = 'sign_in.max_failures') as refused`;
+              - make_interval(mins => (select value::numeric from config where key = 'sign_in.window_minutes')::int))
+           >= (select value::numeric from config where key = 'sign_in.max_failures') as refused`;
   return Boolean(row?.refused);
 }
 

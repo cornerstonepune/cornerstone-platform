@@ -22,7 +22,7 @@ import pytest
 
 from engine.adapters import ocr
 from engine.assess import focus, graph
-from engine.core import db, mistake_names
+from engine.core import db, mistake_names, settings
 from engine.w2_print import focus_paper, handout
 from engine.w3_read import boxes, copies, marking, second_reader
 from engine.w4_close import card, parent_facts
@@ -141,13 +141,8 @@ def _planted_to_repeat(conn, ids, slots, after=None):
     random: one holds four questions that show a mistake at a level, another none (measured on four fresh builds,
     docs/notes/m0-04b-loop-test-bank.md). So, given `after` = (skill set, level, grade), a mistake is a fair choice only
     if the bank holds a question outside `ids` that shows it, for the skill it is counted on (`_bank_shows_again`)."""
-    value = {
-        r["key"]: int(r["value"])
-        for r in conn.execute(
-            "select key, value from threshold where key in ('state.window_answers', 'state.repeat_min')"
-        )
-    }
-    window, repeat_min = value.get("state.window_answers", 10), value.get("state.repeat_min", 2)
+    window = int(settings.threshold(conn, "state.window_answers", 10))
+    repeat_min = int(settings.threshold(conn, "state.repeat_min", 2))
     items = {
         r["id"]: r
         for r in conn.execute(
@@ -342,7 +337,7 @@ def test_the_loop_holds_when_the_graph_reads_fewer_answers_than_a_paper_has(
     planted mistake lands on, so a build that drew a few more questions, or a graph that reads a few fewer answers,
     pushed the mistake planted on the early boxes out of the window ("graph []"). A window of 6 is that case here, on
     any build: the mistake planted must be one the graph can still see, and every later stage must follow."""
-    conn.execute("update threshold set value = 6 where key = 'state.window_answers'")
+    settings.put(conn, "state.window_answers", 6)
     _round_the_loop(conn, tmp_path, monkeypatch, code, level)
 
 

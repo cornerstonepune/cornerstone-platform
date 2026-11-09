@@ -15,7 +15,7 @@ import pytest
 from typer.testing import CliRunner
 
 from engine import cli
-from engine.core import db
+from engine.core import db, history, settings
 from engine.w1_bank import cli_map, map_ledger
 from engine.w1_bank.map_agents import Rules, propose, propose_lo_skills, read_band, recorded_ask
 from tests.rows import tenant
@@ -24,6 +24,11 @@ pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DAT
 
 BAND = "KX"
 RULES = Rules(min_confidence=0.8, audit_share=0.0, examples=3)
+
+
+def _link(change) -> tuple[str, str]:
+    """A kept change of a link to a skill as (the skill before, the skill after), "" for none."""
+    return ((change["before"] or {}).get("skill_code", ""), (change["after"] or {}).get("skill_code", ""))
 
 
 @pytest.fixture
@@ -226,13 +231,9 @@ def test_applying_marks_every_link_as_the_machines_keeps_it_in_the_history_and_a
         ).fetchone()["n"]
         == 0
     ), "an invented code is never applied"
-    kept = conn.execute(
-        "select before, after, changed_by from curriculum_edit where tenant_id = %s and record = 'activity_skill'"
-        " and code = 'ACT-KX-0101'",
-        (t,),
-    ).fetchall()
-    assert [(k["before"], k["after"]) for k in kept] == [("", "NUM.CNT.01")]
-    assert kept[0]["changed_by"].startswith("machine:") and kept[0]["changed_by"].endswith(f"staff:{lead}")
+    kept = history.of(conn, "activity_skill", "ACT-KX-0101", t)
+    assert [_link(k) for k in kept] == [("", "NUM.CNT.01")]
+    assert kept[0]["origin"].startswith("machine:") and kept[0]["origin"].endswith(f"staff:{lead}")
     assert map_ledger.apply(conn, t, lead, write=True) == [], "applying twice changes nothing"
 
     print(map_ledger.revert(conn, t, link["proposal_id"], lead, "wrong skill"))
@@ -243,27 +244,19 @@ def test_applying_marks_every_link_as_the_machines_keeps_it_in_the_history_and_a
         ).fetchone()["n"]
         == 0
     )
-    assert [
-        (k["before"], k["after"])
-        for k in conn.execute(
-            "select before, after from curriculum_edit where tenant_id = %s and record = 'activity_skill'"
-            " and code = 'ACT-KX-0101' order by created_at",
-            (t,),
-        ).fetchall()
-    ] == [("", "NUM.CNT.01"), ("NUM.CNT.01", "")]
+    assert [_link(k) for k in history.of(conn, "activity_skill", "ACT-KX-0101", t)] == [
+        ("", "NUM.CNT.01"),
+        ("NUM.CNT.01", ""),
+    ]
     assert [r["now"] for r in map_ledger.standing(conn, t) if r["id"] == link["proposal_id"]] == ["reverted"]
 
 
 def test_a_link_a_person_removes_is_kept_in_the_history_too(conn):
     t = _band(conn)
-    conn.execute("select set_config('app.changed_by', 'A test educator', true)")
+    history.by(conn, "A test educator")
     conn.execute("delete from activity_skill where tenant_id = %s and activity_code = 'ACT-KX-0001'", (t,))
-    row = conn.execute(
-        "select before, after, changed_by from curriculum_edit where tenant_id = %s and record = 'activity_skill'"
-        " and code = 'ACT-KX-0001' and after = ''",
-        (t,),
-    ).fetchone()
-    assert row == {"before": "NUM.CNT.01", "after": "", "changed_by": "A test educator"}
+    removed = [k for k in history.of(conn, "activity_skill", "ACT-KX-0001", t) if k["op"] == "delete"]
+    assert [(_link(k), k["origin"]) for k in removed] == [(("NUM.CNT.01", ""), "A test educator")]
 
 
 def test_the_commands_write_nothing_without_apply_and_by(monkeypatch):
@@ -286,15 +279,9 @@ def test_a_recorded_gold_run_is_held_to_the_bars_before_anything_applies(conn, t
     """The held-out share of the activities people mapped, mapped blind: a run that names the people's own skills
     passes every bar; one that names the wrong skills fails, and the command says so."""
     t = _band(conn)
-    conn.execute(
-        "update threshold set value = 2 where key = 'map.dev_count'"
-    )  # 2 of the 4 for tuning, 2 held out
-    conn.execute(
-        "update threshold set value = 0 where key = 'map.require_examples'"
-    )  # the rules as first written:
-    conn.execute(
-        "update threshold set value = 1 where key = 'map.use_checker'"
-    )  # the validator's verdict decides
+    settings.put(conn, "map.dev_count", 2)  # 2 of the 4 for tuning, 2 held out
+    settings.put(conn, "map.require_examples", 0)  # the rules as first written:
+    settings.put(conn, "map.use_checker", 1)  # the validator's verdict decides
     b = read_band(conn, t, BAND)
     gold = {c: s for c, s in b.person_skills.items() if b.objectives.get(c)}
     monkeypatch.setattr(cli_map, "_tenant", lambda c: t)
@@ -396,7 +383,7 @@ def test_a_held_out_activity_is_never_an_example_the_proposer_sees(conn, tmp_pat
     """The final score is kept clean (P-08): the activities scored are mapped blind, and the proposer's examples are
     the dev set's only."""
     t = _band(conn)
-    conn.execute("update threshold set value = 2 where key = 'map.dev_count'")
+    settings.put(conn, "map.dev_count", 2)
     monkeypatch.setattr(cli_map, "_tenant", lambda c: t)
     monkeypatch.setattr(
         cli_map, "read_band", lambda c, tn, band, hide=frozenset(): read_band(c, tn, BAND, hide)

@@ -8,6 +8,7 @@ import os
 
 import pytest
 
+from engine.core import settings
 from engine.w3_read import profiles
 from tests.rows import a_read_paper
 
@@ -275,7 +276,7 @@ def test_a_kinds_standing_is_one_rule_the_engine_and_the_site_read(conn):
     the database's one rule (`kind_trust`): the engine marks by it and the website shows it, so the two never disagree.
     How many checks is a row (`marking.agreement_window`), set to three here. Recomputed from the checked answers
     themselves: the newest first, by when the paper was read and then by the question, a doubt never counted."""
-    conn.execute("update threshold set value = 3 where key = 'marking.agreement_window'")
+    settings.put(conn, "marking.agreement_window", 3)
     first = a_read_paper(
         conn,
         [

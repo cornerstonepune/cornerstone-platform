@@ -6,7 +6,7 @@ import { sql, TENANT_SLUG } from "./db";
 //
 // What is kept is a sha-256 of the token, never the token: the rows are no use to anyone who reads them, and 32 random
 // bytes need no slow hash. A link is open while it is neither used nor closed and its time is not up; asking for a new
-// one, using one, or changing a password closes every other link that person has. Every limit is a threshold row.
+// one, using one, or changing a password closes every other link that person has. Every limit is a setting (a `config` row).
 
 /** The token that travels in the email, and the hash the row holds. 32 bytes, from the system's own randomness. */
 export function newToken(): { token: string; hash: string } {
@@ -43,8 +43,8 @@ export async function makeLink(email: string, purpose: Purpose): Promise<string>
     insert into password_link (tenant_id, email, token_hash, purpose, expires_at)
     select t.id, ${email}, ${hash}, ${purpose},
            now() + case when ${purpose} = 'first'
-             then make_interval(days => (select value from threshold where key = 'password_link.first_days')::int)
-             else make_interval(mins => (select value from threshold where key = 'password_link.reset_minutes')::int)
+             then make_interval(days => (select value::numeric from config where key = 'password_link.first_days')::int)
+             else make_interval(mins => (select value::numeric from config where key = 'password_link.reset_minutes')::int)
            end
     from tenant t where t.slug = ${TENANT_SLUG}`;
   return token;
@@ -87,14 +87,14 @@ export async function spend(token: string): Promise<void> {
 export async function askedTooOften(email: string, address: string): Promise<boolean> {
   const [row] = await sql<{ refused: boolean | null }[]>`
     with window_start as (
-      select now() - make_interval(mins => (select value from threshold where key = 'password_ask.window_minutes')::int) as t
+      select now() - make_interval(mins => (select value::numeric from config where key = 'password_ask.window_minutes')::int) as t
     )
     select (select count(*) from password_ask, window_start
              where email = ${email} and created_at > window_start.t)
-           >= (select value from threshold where key = 'password_ask.max_per_email')
+           >= (select value::numeric from config where key = 'password_ask.max_per_email')
         or (select count(*) from password_ask, window_start
              where ip = ${addressMark(address)} and created_at > window_start.t)
-           >= (select value from threshold where key = 'password_ask.max_per_ip') as refused`;
+           >= (select value::numeric from config where key = 'password_ask.max_per_ip') as refused`;
   return Boolean(row?.refused);
 }
 

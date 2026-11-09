@@ -15,7 +15,7 @@ export default async function NewPasswordPage({ searchParams }: Props) {
   const token = (await cookies()).get(LINK_COOKIE)?.value ?? "";
   const email = q.error === "gone" ? null : await emailFor(token);
   const [row] = await sql<{ least: number }[]>`
-    select (select value from threshold where key = 'password.min_length')::int as least`;
+    select (select value::numeric from config where key = 'password.min_length')::int as least`;
 
   return (
     <main className="mx-auto flex min-h-dvh max-w-[420px] flex-col justify-center px-5 py-10">

@@ -21,6 +21,7 @@ import re
 from engine.adapters import jev, llm
 from engine.assess import divide_stories as DS
 from engine.assess import words as W
+from engine.core import settings
 from engine.w1_bank import story_cases as SC
 
 PURPOSE = "story_shape"
@@ -40,8 +41,7 @@ PRINTED = re.compile(r"\{(a|b|c|d|extra)\}")
 
 
 def _bar(conn):
-    row = conn.execute("select value from threshold where key = %s", (BAR[0],)).fetchone()
-    return float(row["value"]) if row else BAR[1]
+    return settings.threshold(conn, *BAR)
 
 
 def taxonomies(row):

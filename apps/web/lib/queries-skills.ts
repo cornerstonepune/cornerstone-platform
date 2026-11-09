@@ -126,7 +126,7 @@ export async function skillSamples(code: string): Promise<SampleRow[]> {
 /** What an educator picks from when changing a skill's samples (goals/edt_edit_samples_and_kinds.yaml): the passages
  *  of its grade, the rubrics it may be read against, its mistakes, and the approved kinds a level may ask. */
 export type SampleChoices = {
-  /** samples a level keeps of each kind it asks (the `samples.per_kind` threshold row) */
+  /** samples a level keeps of each kind it asks (the `samples.per_kind` setting) */
   few: number;
   /** the most questions asked for at once from one sample (the `generate.max_per_request` row) */
   most: number;
@@ -139,8 +139,8 @@ export type SampleChoices = {
 export async function sampleChoices(code: string): Promise<SampleChoices> {
   const [[few], passages, rubrics, mistakes, kinds] = await Promise.all([
     sql<{ n: number; most: number }[]>`
-      select coalesce((select value::int from threshold where key = 'samples.per_kind'), 3) as n,
-             coalesce((select value::int from threshold where key = 'generate.max_per_request'), 20) as most`,
+      select coalesce((select value::int from config where key = 'samples.per_kind'), 3) as n,
+             coalesce((select value::int from config where key = 'generate.max_per_request'), 20) as most`,
     sql<{ code: string; title: string }[]>`
       select p.code, p.title from passage p join skill s on s.tenant_id = p.tenant_id and s.grade = p.grade
       where s.code = ${code} order by p.title, p.code`,

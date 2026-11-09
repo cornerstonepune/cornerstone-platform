@@ -11,7 +11,7 @@ import json
 from collections.abc import Sequence
 from typing import Any
 
-from engine.core import db
+from engine.core import db, settings
 
 # node's own scrypt cost, and what a hash with no `n` in it was made with.
 NODE_DEFAULT_N = 16384
@@ -28,16 +28,14 @@ def staff_hash(password: str, salt: str, n: int = NODE_DEFAULT_N) -> str:
 
 
 def staff(conn: db.Conn) -> list[dict[str, Any]]:
-    row = conn.execute("select value from config where key = 'app.staff'").fetchone()
-    people: list[dict[str, Any]] = row["value"] if row else []
+    people: list[dict[str, Any]] = settings.config(conn, "app.staff", [])
     return people
 
 
 def roles(conn: db.Conn) -> set[str]:
     """The roles a person may hold: those the school's decisions name (`people.decides`), and any someone on the list
     already holds. A row, not a list in code."""
-    row = conn.execute("select value from config where key = 'people.decides'").fetchone()
-    decides: dict[str, list[str]] = row["value"] if row else {}
+    decides: dict[str, list[str]] = settings.config(conn, "people.decides", {})
     named = {r for who in decides.values() for r in who}
     return named | {str(s["role"]) for s in staff(conn)}
 

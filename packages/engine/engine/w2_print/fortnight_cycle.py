@@ -10,7 +10,7 @@ from typing import Any
 
 from psycopg import sql
 
-from engine.core import db
+from engine.core import db, settings
 
 STATES = ("planning", "frozen", "aligned", "approved", "list_sent")
 STEPS = ("freeze", "align", "approve", "list_sent")  # the `fortnight.<step>` settings
@@ -154,13 +154,9 @@ def step_date(conn: db.Conn, fortnight_id: Any, step: str) -> dt.date:
     ).fetchone()
     if fortnight is None:
         raise CycleError("That fortnight is not there.")
-    setting = conn.execute(
-        "select value from config where tenant_id = %s and key = %s",
-        (fortnight["tenant_id"], f"fortnight.{step}"),
-    ).fetchone()
-    if setting is None:
+    value = settings.config(conn, f"fortnight.{step}", tenant=fortnight["tenant_id"])
+    if value is None:
         raise CycleError(f"This school has no fortnight.{step} setting.")
-    value = setting["value"]
     days = (
         value.get("days_before_start")
         if isinstance(value, dict) and set(value) == {"days_before_start"}

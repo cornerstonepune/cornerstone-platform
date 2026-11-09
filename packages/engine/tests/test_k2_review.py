@@ -9,6 +9,7 @@ import os
 
 import pytest
 
+from engine.core import history, settings
 from engine.w1_bank import k2_review as review
 from engine.w1_bank import map_ledger
 from tests import test_k2_draft as base
@@ -62,13 +63,12 @@ def test_changing_a_draft_writes_the_new_words_as_the_persons_and_the_history_sa
     )
     assert _text(page, "steps") == "Sit in a circle; show the blocks one at a time."
     assert _marks(page, "KX-1")["steps"] == ("person", False)
-    seen = page.execute(
-        "select before, after, changed_by from curriculum_edit where code = 'KX-1' and field = 'steps' order by created_at"
-    ).fetchall()
-    assert (seen[-1]["before"], seen[-1]["changed_by"]) == ("\u2022 s", f"staff:{page.staff}"), (
+    seen = [c for c in history.of(page, "activity", "KX-1") if "steps" in (c["after"] or {})]
+    assert (seen[-1]["before"]["steps"], seen[-1]["origin"]) == ("\u2022 s", f"staff:{page.staff}"), (
         "ids, never a name"
     )
-    assert seen[-1]["after"].startswith("Sit in a circle")
+    assert str(seen[-1]["staff_id"]) == str(page.staff), "the person is a member of staff, by id"
+    assert seen[-1]["after"]["steps"].startswith("Sit in a circle")
 
 
 def test_changing_a_draft_to_nothing_is_refused_use_reject_for_that(page):
@@ -114,7 +114,7 @@ def test_reverting_the_draft_afterwards_leaves_the_persons_part_alone(page):
 
 
 def test_the_review_list_loses_a_page_once_every_doubt_on_it_is_cleared(page):
-    page.execute("update threshold set value = 0 where key = 'map.audit_share'")
+    settings.put(page, "map.audit_share", 0)
     assert [r["code"] for r in review.review_list(page, page.t)] == ["KX-1"]
     for part in ("thinking", "steps", "level_0", "level_1", "level_2", "level_3"):
         review.keep(page, page.t, page.staff, "KX-1", part)

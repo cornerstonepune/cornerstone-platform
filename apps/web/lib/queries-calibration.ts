@@ -4,7 +4,7 @@ import type { Scope } from "./scope";
 // Levels to review (goals/cal_levels_to_review.yaml): for each skill and level, for a grade and for one class, how many
 // children were assessed, how many are secure, and what that says. The counting is the database's (`level_calibration`,
 // ring B: a pure function of the confirmed evidence, using the graph's own rule); the 80 percent and the 8 children are
-// rows of `threshold`. This file only reads, and says the counts in words. Nothing here changes a level.
+// settings (`config` rows). This file only reads, and says the counts in words. Nothing here changes a level.
 
 export type Verdict = "too_few" | "review" | "fine";
 

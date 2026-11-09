@@ -5,7 +5,7 @@ gained its model's effort and the loader stood at its frozen ceiling.
 """
 
 import json
-from typing import Any
+from typing import Any, LiteralString
 
 from engine.core import db
 
@@ -40,14 +40,14 @@ def load_prompts(conn: db.Conn, t: db.Id) -> None:
 
 
 def load_thresholds(conn: db.Conn, t: db.Id) -> None:
+    """The numbers (`thresholds.json`): config rows whose value is a number (CP-27: once the table `threshold`). A
+    file row's `unit` is for its reader; nothing reads it from the database."""
     for r in seed("thresholds.json", "thresholds"):
-        key, value, unit, note = r["key"], r["value"], r["unit"], r["description"]
         conn.execute(
-            "insert into threshold (tenant_id, key, value, unit, description)"
-            " values (%s,%s,%s,%s,%s)"
-            " on conflict (tenant_id, key) do update set value=excluded.value,"
-            " unit=excluded.unit, description=excluded.description, updated_at=now()",
-            (t, key, value, unit, note),
+            "insert into config (tenant_id, key, value, description) values (%s,%s,%s,%s)"
+            " on conflict (tenant_id, key) do update set value=excluded.value, description=excluded.description,"
+            " updated_at=now()",
+            (t, r["key"], json.dumps(r["value"]), r["description"]),
         )
 
 
@@ -72,20 +72,89 @@ def load(conn: db.Conn, t: db.Id) -> None:
         step(conn, t)
 
 
-def config(conn: db.Conn, key: str, default: Any = None) -> Any:
-    """A config row's value, or `default` when there is no such row. The one reader every workflow uses."""
-    row = conn.execute("select value from config where key = %s", (key,)).fetchone()
-    return row["value"] if row else default
+# The school a reader without a school means: the engine's own (`db.tenant_slug()`), else the first there is. A new
+# school copies every setting (internal.school_settings_on_new_school), so a key is often a row of several schools.
+_OURS: LiteralString = (
+    " from config c join tenant t on t.id = c.tenant_id"
+    " where (%(tenant)s::uuid is null or c.tenant_id = %(tenant)s::uuid) and {where}"
+    " order by t.slug = %(slug)s desc, t.created_at, t.id"
+)
 
 
-def threshold(conn: db.Conn, key: str, default: float) -> float:
-    """A threshold row's value, or `default` when there is no such row."""
-    row = conn.execute("select value from threshold where key = %s", (key,)).fetchone()
-    return float(row["value"]) if row else default
+def _rows(conn: db.Conn, where: LiteralString, tenant: db.Id | None, **params: Any) -> list[Any]:
+    return conn.execute(
+        "select c.key, c.value" + _OURS.format(where=where),
+        {"tenant": tenant, "slug": db.tenant_slug(), **params},
+    ).fetchall()
+
+
+def config(conn: db.Conn, key: str, default: Any = None, tenant: db.Id | None = None) -> Any:
+    """A setting's value, or `default` when there is no such row: the school's own when `tenant` is named, else the
+    engine's school's. The one reader of `config` (CP-27, Done when 11)."""
+    rows = _rows(conn, "c.key = %(key)s", tenant, key=key)
+    return rows[0]["value"] if rows else default
+
+
+def threshold(conn: db.Conn, key: str, default: float, tenant: db.Id | None = None) -> float:
+    """A number setting's value, or `default` when there is no such row."""
+    value = config(conn, key, None, tenant)
+    return default if value is None else float(value)
+
+
+def numbers(conn: db.Conn, prefix: str, tenant: db.Id | None = None) -> dict[str, float]:
+    """Every number setting whose key starts with `prefix`, by the rest of its key: `numbers(conn, "watch.")`."""
+    out: dict[str, float] = {}
+    for r in _rows(
+        conn, "starts_with(c.key, %(prefix)s) and jsonb_typeof(c.value) = 'number'", tenant, prefix=prefix
+    ):
+        out.setdefault(r["key"].removeprefix(prefix), float(r["value"]))
+    return out
+
+
+def many(conn: db.Conn, keys: list[str], tenant: db.Id | None = None) -> dict[str, Any]:
+    """Several settings in one read, {key: value}; a key with no row is left out."""
+    out: dict[str, Any] = {}
+    for r in _rows(conn, "c.key = any(%(keys)s)", tenant, keys=keys):
+        out.setdefault(r["key"], r["value"])
+    return out
+
+
+def every(conn: db.Conn, prefix: str, tenant: db.Id | None = None) -> dict[str, Any]:
+    """Every setting whose key starts with `prefix`, by its whole key: `every(conn, "skills.")`."""
+    out: dict[str, Any] = {}
+    for r in _rows(conn, "starts_with(c.key, %(prefix)s)", tenant, prefix=prefix):
+        out.setdefault(r["key"], r["value"])
+    return out
+
+
+def put(
+    conn: db.Conn, key: str, value: Any, tenant: db.Id | None = None, description: str | None = None
+) -> None:
+    """A setting set to `value` for one school (the engine's own when none is named), made if it is not there. The
+    caller commits."""
+    conn.execute(
+        "insert into config (tenant_id, key, value, description)"
+        " select t.id, %(key)s, %(value)s::jsonb, coalesce(%(note)s, '') from tenant t"
+        " where t.id = coalesce(%(tenant)s::uuid, (select id from tenant where slug = %(slug)s))"
+        " on conflict (tenant_id, key) do update set value = excluded.value,"
+        " description = coalesce(%(note)s, config.description), updated_at = now()",
+        {
+            "key": key,
+            "value": json.dumps(value),
+            "note": description,
+            "tenant": tenant,
+            "slug": db.tenant_slug(),
+        },
+    )
+
+
+def lock(conn: db.Conn, key: str) -> None:
+    """The setting's rows held for this transaction, so two writers of it take turns."""
+    conn.execute("select 1 from config where key = %s for update", (key,))
 
 
 def exposure_days(conn: db.Conn) -> int:
-    """How long a question a child was given is held back from them: the `exposure.days` threshold row (SPEC: across
+    """How long a question a child was given is held back from them: the `exposure.days` setting (SPEC: across
     weeks, no question a child saw in the last 21 days). The week's assembly and every paper drawn for a child read it
     here, so the window has one owner (goals/l5-seen-means-the-last-21-days.yaml)."""
     return int(threshold(conn, "exposure.days", 21))

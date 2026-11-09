@@ -31,13 +31,13 @@ export type ColourRules = {
 
 export async function colourRules(): Promise<ColourRules> {
   const [[r], { order }] = await Promise.all([sql<{ min_events: number; min_days: number; window: number; repeat_min: number; recheck: number; promote: number; demote: number; levels: Record<string, string> }[]>`
-    select (select value from threshold where key = 'state.min_events')::float as min_events,
-           (select value from threshold where key = 'state.min_days')::float as min_days,
-           (select value from threshold where key = 'state.window_answers')::float as window,
-           (select value from threshold where key = 'state.repeat_min')::float as repeat_min,
-           (select value from threshold where key = 'state.recheck_days')::float as recheck,
-           (select value from threshold where key = 'next_sheet.promote_at')::float as promote,
-           (select value from threshold where key = 'next_sheet.demote_below')::float as demote,
+    select (select value::numeric from config where key = 'state.min_events')::float as min_events,
+           (select value::numeric from config where key = 'state.min_days')::float as min_days,
+           (select value::numeric from config where key = 'state.window_answers')::float as window,
+           (select value::numeric from config where key = 'state.repeat_min')::float as repeat_min,
+           (select value::numeric from config where key = 'state.recheck_days')::float as recheck,
+           (select value::numeric from config where key = 'next_sheet.promote_at')::float as promote,
+           (select value::numeric from config where key = 'next_sheet.demote_below')::float as demote,
            coalesce((select value from config where key = 'prescribe.band_default'), '{}'::jsonb) as levels`, levels()]);
   // the fewest answers in which the green share can show: 1 wrong in 5 is 80%; rounded before the ceiling, as 1/(1−0.8)
   // is 5.000000000000001 in floating point

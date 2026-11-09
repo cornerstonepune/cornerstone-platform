@@ -7,7 +7,7 @@ import { seesClass, seesSheet, type Who } from "./reach";
 // children struggling in two or more subjects". Every number is counted here from the rows the other pages read: a
 // paper's stage is the Assessments list's own (`papersCte`); a child's standing is the Children page's
 // (child_skill_state, coloured by child_state); a skill's subject is its topic's. How long is "overdue" and "missing"
-// is a row each (threshold `across.*`), never a number here.
+// is a row each (the settings `across.*`), never a number here.
 
 /** A class's newest assessment in one subject, and how many of its copies stand at each stage. */
 export type ClassStage = { section: string; band: string; subject: string; title: string; week: string | null; by: Partial<Record<Stage, number>> };
@@ -20,8 +20,8 @@ export type Across = { stages: ClassStage[]; overdue: Overdue[]; missing: Missin
 export async function across(actor: string, me: Who): Promise<Across> {
   const [[limits], stages, overdue, missing, struggling, [{ subjects }]] = await Promise.all([
     sql<{ days: number; hours: number }[]>`
-      select (select value from threshold where key = 'across.papers_missing_days')::int as days,
-             (select value from threshold where key = 'across.check_overdue_hours')::int as hours`,
+      select (select value::numeric from config where key = 'across.papers_missing_days')::int as days,
+             (select value::numeric from config where key = 'across.check_overdue_hours')::int as hours`,
     // each class and subject: its newest assessment (by the day its newest copy was made), its copies by stage
     sql<{ section: string; band: string; subject: string; title: string; week: string | null; by: Partial<Record<Stage, number>> }[]>`
       with ${papersCte()},
@@ -58,7 +58,7 @@ export async function across(actor: string, me: Who): Promise<Across> {
       join sheet_instance si on si.id = k.sheet_instance_id left join child ch on ch.id = si.child_id
       where r.status in ('unreadable', 'needs_teacher') and coalesce(si.section, ch.section) is not null
         and ${seesSheet(me, sql`si.id`)}
-        and k.created_at < now() - make_interval(hours => (select value from threshold where key = 'across.check_overdue_hours')::int)
+        and k.created_at < now() - make_interval(hours => (select value::numeric from config where key = 'across.check_overdue_hours')::int)
       group by 1, 2 order by min(k.created_at)`,
     // a child's paper given (or printed, where no one said the day) longer ago than the threshold and not back; a child
     // said to be away is carried, not missing (w2_print/given.py)
@@ -79,7 +79,7 @@ export async function across(actor: string, me: Who): Promise<Across> {
       )
       select section, class_band(tenant_id, section) as band, roll_no, qr, title, since::text as since,
              (current_date - since)::int as days
-      from out where since < current_date - (select value from threshold where key = 'across.papers_missing_days')::int
+      from out where since < current_date - (select value::numeric from config where key = 'across.papers_missing_days')::int
       order by grade_ord(tenant_id, class_band(tenant_id, section)), section, roll_order(roll_no), roll_no, since`,
     // a child who needs help (a red state with enough answers) in two or more subjects; names read through
     // pii.read_child, which logs who asked

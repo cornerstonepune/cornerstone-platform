@@ -18,9 +18,9 @@ export type Limits = { perHour: number; maxChars: number; perTry: number };
 
 export async function limits(): Promise<Limits> {
   const [row] = await sql<{ per_hour: number; max_chars: number; per_try: number }[]>`
-    select (select value from threshold where key = 'feedback.max_per_hour')::int as per_hour,
-           (select value from threshold where key = 'feedback.max_chars')::int as max_chars,
-           (select value from threshold where key = 'feedback.send_per_try')::int as per_try`;
+    select (select value::numeric from config where key = 'feedback.max_per_hour')::int as per_hour,
+           (select value::numeric from config where key = 'feedback.max_chars')::int as max_chars,
+           (select value::numeric from config where key = 'feedback.send_per_try')::int as per_try`;
   return { perHour: row?.per_hour ?? 5, maxChars: row?.max_chars ?? 2000, perTry: row?.per_try ?? 5 };
 }
 

@@ -23,7 +23,7 @@ from anthropic.types import ImageBlockParam, MessageParam, OutputConfigParam, Te
 from psycopg.types.json import Json
 
 from engine.adapters import llm_budget
-from engine.core import db
+from engine.core import db, settings
 
 WAITS = (
     5,
@@ -85,21 +85,16 @@ def generate(
     own_money = llm_budget.purposes(
         camps
     )  # a campaign's purposes have their own cap, outside the day's total
-    budget = (
-        None
-        if purpose in own_money
-        else conn.execute("select value from threshold where key = 'llm.daily_budget_inr'").fetchone()
-    )
-    if budget:
+    budget = None if purpose in own_money else settings.config(conn, "llm.daily_budget_inr")
+    if budget is not None:
         spent = conn.execute(
             "select coalesce(sum(f.cost_inr), 0) as n from flow_run f join tenant t on t.id = f.tenant_id"
             " where t.slug = %s and f.started_at::date = current_date and not (f.flow = any(%s))",
             (db.tenant_slug(), own_money),
         ).fetchone()["n"]
-        if spent >= budget["value"]:
+        if spent >= budget:
             raise LLMError(
-                f"today's spend ₹{spent} has reached the ₹{budget['value']} "
-                "daily budget (threshold llm.daily_budget_inr)"
+                f"today's spend ₹{spent} has reached the ₹{budget} daily budget (setting llm.daily_budget_inr)"
             )
 
     try:
@@ -107,10 +102,8 @@ def generate(
     except llm_budget.Refused as e:
         raise LLMBudgetError(str(e)) from e
     row = active_prompt(conn, purpose, subject, version)
-    cfg = conn.execute("select value from config where key = 'llm.fallback_models'").fetchone()
-    models = [row["model"]] + list(cfg["value"] if cfg else [])
-    held = conn.execute("select value from config where key = 'llm.structured'").fetchone()
-    structured = row.get("version") in ((held["value"] if held else None) or {}).get(purpose, [])
+    models = [row["model"]] + list(settings.config(conn, "llm.fallback_models") or [])
+    structured = row.get("version") in (settings.config(conn, "llm.structured") or {}).get(purpose, [])
     run = conn.execute(
         "insert into flow_run (tenant_id, flow, trigger, request) select id, %s, %s, %s from tenant"
         " where slug = %s returning id",
@@ -175,8 +168,7 @@ def _cost_inr(conn, model, tokens_in, tokens_out):
     """None when the vendor didn't say — never guessed at, never silently zero for a real spend."""
     if tokens_in is None or tokens_out is None:
         return None
-    prices = conn.execute("select value from config where key = 'llm.prices'").fetchone()
-    rate = (prices["value"] if prices else {}).get(model, {})
+    rate = (settings.config(conn, "llm.prices") or {}).get(model, {})
     return round((tokens_in * rate.get("in", 0) + tokens_out * rate.get("out", 0)) / 1_000_000, 4)
 
 

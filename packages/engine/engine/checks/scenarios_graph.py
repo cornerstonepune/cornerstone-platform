@@ -12,7 +12,7 @@ import datetime
 import json
 import uuid
 
-from engine.core import db
+from engine.core import db, settings
 
 SECTION = "GR1-GOAL"
 DAY0 = datetime.date(2026, 9, 1)
@@ -29,9 +29,11 @@ def _paper(conn, t, child, skill, line):
     tag = uuid.uuid4().hex[:8].upper()
     at = db.one(
         conn,
-        "select (%s::timestamp + interval '10 hours') at time zone"
-        " (select value #>> '{}' from config where tenant_id = %s and key = 'school.time_zone') as at",
-        (DAY0 + datetime.timedelta(days=int(line["day"])), t),
+        "select (%s::timestamp + interval '10 hours') at time zone %s as at",
+        (
+            DAY0 + datetime.timedelta(days=int(line["day"])),
+            settings.config(conn, "school.time_zone", tenant=t),
+        ),
     )["at"]
     tpl = conn.execute(
         "insert into sheet_template (tenant_id, band, child_id, week, key, batch_id) values (%s, 'G2', %s, %s, %s, %s)"

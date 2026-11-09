@@ -49,7 +49,7 @@ export const MENU_GUIDE: { group: string; page: MenuPage; slug: string; guide: M
   g.pages.map((page) => ({ group: g.label, page, slug: slugOf(page.label), guide: PAGES.find((p) => p.menu === page.href)! })),
 );
 
-/** What the tokens of the guide's text are filled from: the threshold rows, and the school's grades, levels and states. */
+/** What the tokens of the guide's text are filled from: the number settings, and the school's grades, levels and states. */
 export type Facts = {
   t: Record<string, number>;
   levels: string[];
@@ -60,7 +60,7 @@ export type Facts = {
 
 export const guideFacts = cache(async (): Promise<Facts> => {
   const [t, levels, grades, states, colours] = await Promise.all([
-    sql<{ key: string; value: number }[]>`select key, value::float as value from threshold`,
+    sql<{ key: string; value: number }[]>`select key, value::float as value from config where jsonb_typeof(value) = 'number'`,
     sql<{ code: string }[]>`select code from difficulty order by ord`,
     sql<{ code: string; name: string }[]>`select code, name from grade order by ord`,
     sql<{ code: string; words: string }[]>`select code, words from child_state order by ord`,
@@ -77,7 +77,7 @@ export const guideFacts = cache(async (): Promise<Facts> => {
 
 const and = (xs: string[]) => (xs.length < 2 ? xs.join("") : `${xs.slice(0, -1).join(", ")} and ${xs.at(-1)}`);
 
-/** One token's words. `{t:key}` a threshold row (`|pct` as a share, `|hours`, `|days`… nothing else is added), `{levels}`,
+/** One token's words. `{t:key}` a number setting (`|pct` as a share, `|hours`, `|days`… nothing else is added), `{levels}`,
  *  `{level:i}` (`-1` the hardest), `{grades}` (first to last), `{state:code}`, `{colour:code}`. An unknown one throws, so a
  *  row renamed or removed fails the page and its test rather than printing a gap. */
 export function token(raw: string, f: Facts): string {

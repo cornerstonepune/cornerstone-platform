@@ -14,6 +14,7 @@ import pymupdf
 
 from engine.adapters import digits, ocr
 from engine.assess import geometry
+from engine.core import settings
 from engine.w2_print import handout
 from engine.w3_read import boxes, copies, copy_scores, ink_line, render_pdf, second_reader
 from tests import rows, test_copies
@@ -52,10 +53,11 @@ def test_a_digit_in_faint_pencil_is_ink_at_a_fainter_line_and_an_empty_box_at_no
 def test_the_reader_reads_at_the_line_its_row_holds_and_says_which(paper, conn, tmp_path):  # noqa: F811
     """L12b (goals/l12b-the-ink-line-is-a-row.yaml): the line is `read.ink_line`, measured on live; the box reader reads
     at the line its settings carry, and each reading says the line it was read at."""
-    row = conn.execute("select value from threshold where key = 'read.ink_line'").fetchone()
-    assert row and digits.settings(conn)["ink_line"] == float(row["value"]) == 0.76, (
-        "measured on live, 2026-10-16"
-    )
+    line = settings.config(conn, "read.ink_line")
+    assert (
+        line is not None
+        and digits.settings(settings.numbers(conn, "read."))["ink_line"] == float(line) == 0.76
+    ), "measured on live, 2026-10-16"
     pdf, key = paper
     img = render_pdf.render(pdf, dpi=boxes.PPM * 25.4)[0]
     runs, _ = _cells(key)

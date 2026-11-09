@@ -10,13 +10,12 @@ limits are threshold rows.
 import os
 
 from engine.checks import rules
-from engine.core import db
+from engine.core import db, settings
 
 
 def problems(conn: db.Conn, free_bytes: int) -> list[str]:
     """Every problem live has now. `free_bytes` is what the server's disk has free."""
-    rows = conn.execute("select key, value from threshold where key like 'watch.%'").fetchall()
-    limit = {r["key"]: float(r["value"]) for r in rows}
+    limit = {f"watch.{k}": v for k, v in settings.numbers(conn, "watch.").items()}
     stuck, window, floor = (
         int(limit["watch.stuck_minutes"]),
         int(limit["watch.window_minutes"]),
