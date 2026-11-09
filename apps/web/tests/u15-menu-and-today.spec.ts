@@ -9,14 +9,13 @@
 import { expect, type Page, test } from "@playwright/test";
 import { createHmac } from "node:crypto";
 import postgres from "postgres";
-import { weekWords } from "../lib/week";
-import { THIS_WEEK } from "./this-week";
+import { isoWeek, weekWords } from "../lib/week";
 import { ENGINE_PORT } from "../playwright.config";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 const SECTION = "UI1-TEST";
-const WEEK = THIS_WEEK;
+const WEEK = isoWeek();
 const EDUCATOR = { email: "ui1-educator@cornerstone.test", name: "UI1 educator", role: "educator" };
 const GROUPS = ["What needs doing", "Assessments", "Results", "Setup"];
 

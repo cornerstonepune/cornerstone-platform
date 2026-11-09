@@ -22,7 +22,6 @@ const SRC: Sources = {
   empty: 1,
   // K2 voice notes (task M1-04): a class she records for and a note waiting (placeholder ids)
   voice: { classes: [{ id: "c1", grade: "K2", section: "A" }], notes: [{ id: "n1", class_id: "c1", status: "drafted", received_at: "2026-11-03T05:00:00Z" }], recording: true },
-  zone: "Asia/Kolkata",
 };
 const tasks = buildTasks(SRC, (c) => c ?? "");
 

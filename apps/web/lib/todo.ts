@@ -61,7 +61,7 @@ export type Sources = {
   /** her K2 classes and her notes waiting (lib/voice.ts), none while voice notes are switched off */
   voice?: MyVoice | null;
   /** the school's clock (config `school.time_zone`, lib/school-clock.ts): when a note was heard is said in it */
-  zone: string;
+  zone?: string;
 };
 
 export const count = (n: number, one: string, more = `${one}s`) => `${n.toLocaleString("en-IN")} ${n === 1 ? one : more}`;
@@ -113,7 +113,7 @@ export function buildTasks(src: Sources, subjectLabel: (code: string | null) => 
 const none: Ref = { subject: null, topic: null, topicName: null };
 
 /** When a note reached us, as she reads it: "10:42" today, else "3 Nov 10:42" (the school's clock). */
-function heardAt(iso: string, zone: string): string {
+function heardAt(iso: string, zone?: string): string {
   const at = new Date(iso);
   const day = (d: Date) => d.toLocaleDateString("en-IN", { timeZone: zone, day: "numeric", month: "short" });
   const time = at.toLocaleTimeString("en-IN", { timeZone: zone, hour: "2-digit", minute: "2-digit", hour12: false });

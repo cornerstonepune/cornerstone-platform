@@ -39,7 +39,6 @@ const SRC: Sources = {
   reports: [{ section: "2B", gradeWords: "Grade 2", n: 7 }],
   asks: 2,
   empty: 0,
-  zone: "Asia/Kolkata",
 };
 const label = (c: string | null) => SUBJECTS.find((s) => s.code === c)?.label ?? "";
 

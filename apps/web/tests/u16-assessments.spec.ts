@@ -10,13 +10,12 @@
 import { expect, test } from "@playwright/test";
 import postgres from "postgres";
 import { aClass, aReadPaper, aWorksheet } from "./rows";
-import { weekWords } from "../lib/week";
-import { THIS_WEEK } from "./this-week";
+import { isoWeek, weekWords } from "../lib/week";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 const SECTION = "U16-TEST";
-const WEEK = THIS_WEEK;
+const WEEK = isoWeek();
 const HELD = "the reader could not settle what was written";
 let kids: Record<string, string> = {};
 

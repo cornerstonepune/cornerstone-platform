@@ -14,13 +14,12 @@ import { scryptSync } from "node:crypto";
 import { expect, test, type Browser, type Page } from "@playwright/test";
 import postgres from "postgres";
 import { aClass, aReadPaper } from "./rows";
-import { weekWords } from "../lib/week";
-import { THIS_WEEK } from "./this-week";
+import { isoWeek, weekWords } from "../lib/week";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 const SECTION = "U37-CLASS";
-const THIS = THIS_WEEK;
+const THIS = isoWeek();
 const OLD = "2026-W30";
 const QR = { asha: "CS370A01", bina: "CS370B02", chetan: "CS370C03", spare: "CS3705A1", old: "CS3700D1" };
 const WHY = "has sat every worksheet at Hard (4)";

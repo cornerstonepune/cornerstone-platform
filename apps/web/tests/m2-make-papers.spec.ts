@@ -9,7 +9,7 @@
  */
 import { expect, test } from "@playwright/test";
 import postgres from "postgres";
-import { THIS_WEEK } from "./this-week";
+import { isoWeek } from "../lib/week";
 import { TEST_STAFF } from "./global-setup";
 import { aLine, daysAgo } from "./rows";
 
@@ -105,7 +105,7 @@ test("each class's home papers are proposed from each child's own map, one skill
   await expect(bina.locator("[data-status=done]")).toBeVisible();
   const made = await sql<{ approved_by: string; kind: string }[]>`
     select si.approved_by, si.kind from sheet_instance si join child c on c.id = si.child_id
-    where c.section = ${SECTION} and si.week = ${THIS_WEEK}`;
+    where c.section = ${SECTION} and si.week = ${isoWeek()}`;
   expect(made).toHaveLength(2);
   expect(new Set(made.map((m) => `${m.kind} ${m.approved_by}`))).toEqual(new Set([`focus ${TEST_STAFF.email}`]));
   // approved, a child stays in the table with a green status and who approved it, after the children still waiting
