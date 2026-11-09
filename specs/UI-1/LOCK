@@ -1,12 +1,12 @@
 {
-  "digest": "0ebfcabd5bbd4a84c0fa35501ee61f64413555d5fbfd4c94a2beca55dd90a24c",
+  "digest": "63752bbb11b6265b4bc4140554542f148a6b3660c625cfe3f1b1a21636aa1b46",
   "files": [
     "spec.md",
     "checks.sh",
     "proofs/harness.py",
     "proofs/watch.cjs"
   ],
-  "locked_at": "2026-11-09T09:56:12+00:00",
+  "locked_at": "2026-11-09T10:32:08+00:00",
   "criteria": 4,
   "athena": "2.15.0"
 }

@@ -7,7 +7,8 @@ const Module = require("module");
 const fs = require("fs");
 
 const LOG = process.env.UI1_WATCH_LOG;
-const inWorker = process.env.TEST_WORKER_INDEX !== undefined;
+// Read per call: Playwright sets TEST_WORKER_INDEX in the worker only after this file has loaded.
+const inWorker = () => process.env.TEST_WORKER_INDEX !== undefined;
 let current = "";
 const log = (kind, url) => fs.appendFileSync(LOG, JSON.stringify({ kind, file: current, url }) + "\n");
 
@@ -15,7 +16,7 @@ const wrapped = new Map();
 const load = Module._load;
 Module._load = function (request, parent, isMain) {
   const m = load.apply(this, arguments);
-  if (!LOG || !inWorker) return m;
+  if (!LOG || !inWorker()) return m;
   if (request === "@axe-core/playwright") {
     const B = m && (m.AxeBuilder || m.default || m);
     if (B && B.prototype && B.prototype.analyze && !B.prototype.__ui1) {

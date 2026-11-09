@@ -1,8 +1,9 @@
 {
-  "status": "blocked",
+  "status": "locked",
   "created_at": "2026-11-09T09:34:47+00:00",
-  "updated_at": "2026-11-09T10:16:59+00:00",
-  "locked_at": "2026-11-09T09:56:12+00:00",
+  "updated_at": "2026-11-09T10:32:08+00:00",
+  "locked_at": "2026-11-09T10:32:08+00:00",
   "blocked_at": "2026-11-09T10:16:59+00:00",
-  "blocked_reason": "specs/UI-1/proofs/watch.cjs reads process.env.TEST_WORKER_INDEX once when it loads (const inWorker), but Playwright 1.63 sets it in the worker only after --require modules have loaded (seen: load idx=undefined, later @playwright/test requested with idx=0). So inWorker is always false, the watcher re"
+  "blocked_reason": "specs/UI-1/proofs/watch.cjs reads process.env.TEST_WORKER_INDEX once when it loads (const inWorker), but Playwright 1.63 sets it in the worker only after --require modules have loaded (seen: load idx=undefined, later @playwright/test requested with idx=0). So inWorker is always false, the watcher re",
+  "unlocked_at": "2026-11-09T10:30:44+00:00"
 }
