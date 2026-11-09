@@ -25,6 +25,13 @@ body:
     validations:
       required: true
   - type: textarea
+    id: new-tables
+    attributes:
+      label: New tables
+      description: For each new table, why it cannot be a column, a row in a shared table (see docs/data-model.md), a rule on a column, or a view. Write "none" if there are none.
+    validations:
+      required: true
+  - type: textarea
     id: out-of-scope
     attributes:
       label: Out of scope
