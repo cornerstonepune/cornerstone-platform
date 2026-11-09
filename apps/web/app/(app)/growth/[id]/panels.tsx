@@ -1,7 +1,7 @@
 // What a child's page holds beside the graph (goals/u2-children.yaml): the mistakes that repeat, and every paper
 // made for or read from the child — its purpose, who approved it, what was read.
 import Link from "@/components/link";
-import { Panel, Pill } from "@/components/shell";
+import { Panel, Pill } from "@/components/parts";
 import { PURPOSE, type ChildSheet, type Repeated } from "@/lib/queries-children";
 import type { Paper } from "@/lib/queries";
 import { fmtDate } from "./answers";

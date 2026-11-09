@@ -1,6 +1,6 @@
 import { many } from "@/lib/needs-you";
 import Link from "@/components/link";
-import { Body, PageHeader, Panel, Pill, Tile } from "@/components/shell";
+import { Body, PageHeader, Panel, Pill, Tile } from "@/components/parts";
 import { requireStaff } from "@/lib/auth";
 import { deadline } from "@/lib/deadline";
 import { type Held, type TaxonomyCase, standing, taxonomyMap, worksheetsOutsideTaxonomy } from "@/lib/queries-taxonomy";

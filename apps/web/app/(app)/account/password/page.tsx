@@ -1,6 +1,6 @@
 import Link from "@/components/link";
-import { PageShell } from "@/components/page-shell";
-import { Notice } from "@/components/shell";
+import { Screen } from "@/components/app-frame";
+import { Notice } from "@/components/parts";
 import { requireStaff } from "@/lib/auth";
 import { sql } from "@/lib/db";
 import { changeMyPassword } from "@/lib/password-actions";
@@ -18,7 +18,7 @@ export default async function MyPasswordPage({ searchParams }: Props) {
   const least = row?.least ?? 10;
 
   return (
-    <PageShell
+    <Screen
       stage="Account"
       title="Change password"
       purpose={`Your own password for ${me.email}. At least ${least} characters, and not your email address.`}
@@ -54,6 +54,6 @@ export default async function MyPasswordPage({ searchParams }: Props) {
           Save the new password
         </button>
       </form>
-    </PageShell>
+    </Screen>
   );
 }

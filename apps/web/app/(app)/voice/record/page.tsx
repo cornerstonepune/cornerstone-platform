@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "@/components/link";
-import { PageShell } from "@/components/page-shell";
+import { Screen } from "@/components/app-frame";
 import { requireStaff } from "@/lib/auth";
 import { Icon } from "@/lib/icons";
 import { chosenClass, herVoice } from "@/lib/voice-page";
@@ -20,7 +20,7 @@ export default async function RecordANote({ searchParams }: { searchParams: Prom
   const activity = q.activity && /^[0-9]{1,4}$/.test(q.activity) ? q.activity : undefined;
   const form = c ? `/voice/form?class=${c.id}` : "/voice/form";
   return (
-    <PageShell
+    <Screen
       stage={W.back}
       title={c ? `${W.record.title} · ${c.words}` : W.record.title}
       purpose={W.record.purpose}
@@ -33,6 +33,6 @@ export default async function RecordANote({ searchParams }: { searchParams: Prom
       next={{ href: "/today?open=notes", label: W.groups.notes }}
     >
       {c ? <Recorder classId={c.id} say={activity ? W.record.sayActivity(activity) : W.record.say} form={form} /> : <ClassChoice my={my} href={(id) => `/voice/record?class=${id}`} />}
-    </PageShell>
+    </Screen>
   );
 }

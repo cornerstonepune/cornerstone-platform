@@ -1,5 +1,5 @@
 import Link from "@/components/link";
-import { Panel } from "@/components/shell";
+import { Panel } from "@/components/parts";
 import { Question } from "@/components/question";
 import type { ItemRow } from "@/lib/queries-bank";
 import { approvePaper, changePaper } from "./actions";

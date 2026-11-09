@@ -1,5 +1,5 @@
 import Link from "@/components/link";
-import { Body, Notice, PageHeader, Panel } from "@/components/shell";
+import { Body, Notice, PageHeader, Panel } from "@/components/parts";
 import { requireStaff } from "@/lib/auth";
 import { NotYours } from "@/components/not-yours";
 import { isMine } from "@/lib/scope";

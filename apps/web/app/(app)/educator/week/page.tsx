@@ -1,7 +1,6 @@
 import Link from "@/components/link";
-import { PageShell } from "@/components/page-shell";
+import { Screen } from "@/components/app-frame";
 import { PeriodBlock } from "@/components/educator/block";
-import { Crumbs } from "@/components/educator/crumbs";
 import { ClassPick, DayHead } from "@/components/educator/day-head";
 import { Summary } from "@/components/educator/summary";
 import { Legend } from "@/components/educator/tags";
@@ -26,14 +25,13 @@ export default async function WeekPage({ searchParams }: { searchParams: Promise
   const w = await weekOf(me, { class_id: q.class, week_of: monday });
   const at = (day: string) => `/educator/week?class=${w.class.id}&day=${day}`;
   return (
-    <PageShell
+    <Screen
       stage={E.area}
       title={w.week_of === mondayOf(today) ? E.week.title : `Week of ${shortDate(w.week_of)}`}
       purpose={E.week.purpose}
       action={<DayHead back={at(mondayOf(w.week_of, -1))} now={at(today)} on={at(mondayOf(w.week_of, 1))} words={E.weekNav} where={w} />}
       next={{ href: `/educator?class=${w.class.id}&day=${w.week_of}`, label: E.today.title }}
     >
-      <Crumbs trail={[{ label: E.area }, { label: E.week.title, href: at(today) }, { label: `Week of ${shortDate(w.week_of)}` }]} />
       <ClassPick classes={w.classes} on={w.class.id} href={(id) => `/educator/week?class=${id}&day=${w.week_of}`} />
       <Summary
         items={[
@@ -47,7 +45,7 @@ export default async function WeekPage({ searchParams }: { searchParams: Promise
       <div className="mt-[var(--space-4)]">
         <Legend />
       </div>
-    </PageShell>
+    </Screen>
   );
 }
 

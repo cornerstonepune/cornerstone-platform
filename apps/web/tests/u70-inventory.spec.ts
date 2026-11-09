@@ -1,0 +1,51 @@
+/**
+ * U70 (UI-13) — the inventory test. docs/frontend/screens.json (or the file named by INVENTORY=) is the oracle: for every screen
+ * of a slice in `merged_slices` (a full run), or named by SLICE=UI-n / SCREEN=<id> (a pull request run), it signs in as the
+ * educator and as the coordinator, opens the screen at a concrete address from tests/inventory-fixtures.ts, runs the generic
+ * checks at 1440 and 400 and drives every control by its kind. The bar is driven once per run. Every other screen is a
+ * test.fixme, so the screens still to build are counted in the report. Proved on tests/fixtures/mini-inventory.json by
+ * u70-inventory-proof.spec.ts.
+ */
+import { expect, test } from "@playwright/test";
+import postgres from "postgres";
+import { FAKE_FIRST_NAMES, FAKE_NAMES } from "./fake-names";
+import { inventoryRows, type Rows } from "./inventory-fixtures";
+import { covered, loadInventory } from "./inventory/load";
+import { auditScreen } from "./inventory/run";
+import { driveBar } from "./inventory/bar";
+
+const inv = loadInventory();
+const run = covered(inv);
+const sql = postgres(process.env.DATABASE_URL!, { max: 1 });
+let rows: Rows;
+let names: string[] = [];
+test.beforeAll(async () => {
+  rows = await inventoryRows(sql);
+  names = (await sql<{ first_name: string }[]>`select distinct first_name from pii.child where length(first_name) > 2`).map((r) => r.first_name);
+});
+test.afterAll(async () => {
+  await sql.end();
+});
+
+const rolesOf = (who: string) => (who === "educator" ? ["educator", "coordinator"] : who === "coordinator" ? ["coordinator"] : ["educator", "coordinator"]) as ("educator" | "coordinator")[];
+
+for (const s of inv.screens) {
+  if (!run.has(s.id)) {
+    test.fixme(`${s.id} (${s.route}) — its slice is not in merged_slices`, async () => {});
+    continue;
+  }
+  for (const role of rolesOf(s.who))
+    for (const width of [1440, 400])
+      test(`${s.id} · ${role} · ${width}`, async ({ browser }) => {
+        test.setTimeout(180_000);
+        const problems = await auditScreen(browser, s, role, width, { inv, rows, allow: [...FAKE_NAMES, ...FAKE_FIRST_NAMES], names });
+        expect(problems, problems.join("\n")).toEqual([]);
+      });
+}
+
+if (inv.bar.length)
+  test("the bar, driven once", async ({ browser }) => {
+    test.setTimeout(180_000);
+    const problems = await driveBar(browser, inv);
+    expect(problems, problems.join("\n")).toEqual([]);
+  });

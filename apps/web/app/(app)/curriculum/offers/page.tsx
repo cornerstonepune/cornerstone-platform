@@ -2,7 +2,7 @@ import { requireStaff } from "@/lib/auth";
 import { mustBeOn, linked, PAGE_SIZE, readOffers } from "@/lib/curriculum-screens";
 import { Icon } from "@/lib/icons";
 import { answerOffer } from "../actions";
-import { PageShell } from "@/components/page-shell";
+import { Screen } from "@/components/app-frame";
 import Link from "@/components/link";
 import { Chrome, Empty, Pager } from "../chrome";
 
@@ -18,7 +18,7 @@ export default async function Offers({ searchParams }: { searchParams: Promise<R
   const shown = all.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
   const had = await linked([...new Set(shown.map((o) => o.activity.code))]);
   return (
-    <PageShell
+    <Screen
       stage="Curriculum"
       title="Skills offered, waiting for you"
       purpose={`${all.length} offered. Yes adds the skill to the activity; No closes the offer and adds nothing.`}
@@ -56,6 +56,6 @@ export default async function Offers({ searchParams }: { searchParams: Promise<R
       )}
       <Pager page={page} last={last} href={(p) => `/curriculum/offers?page=${p}`} />
       </Chrome>
-    </PageShell>
+    </Screen>
   );
 }

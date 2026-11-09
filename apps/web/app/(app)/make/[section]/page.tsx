@@ -1,7 +1,7 @@
 import Link from "@/components/link";
 import { FilterBar } from "@/components/filter-bar";
-import { Notice } from "@/components/shell";
-import { PageShell } from "@/components/page-shell";
+import { Notice } from "@/components/parts";
+import { Screen } from "@/components/app-frame";
 import type { State } from "@/components/status-chip";
 import { reachOf, workScope } from "@/lib/reach";
 import { requireStaff } from "@/lib/auth";
@@ -66,7 +66,7 @@ export default async function ClassHomePapers({ params, searchParams }: Props) {
   const packsHere = packs.filter((p) => p.section === section);
 
   return (
-    <PageShell
+    <Screen
       stage="Assessments · make"
       title={`${section} · home assessments`}
       purpose={`This week, ${weekWords(week)}. Each child's home assessment works on one skill from their own map; its questions are on its line.`}
@@ -112,7 +112,7 @@ export default async function ClassHomePapers({ params, searchParams }: Props) {
         <HomeTable rows={shown} week={week} section={section} draws={draws} differentFor={differentFor} page={page} pageHref={pageHref} each={each} />
         {shown.length === 0 ? <p className="note mt-2">{children.length ? "Nothing matches these filters." : "No children on this class's list."}</p> : null}
       </section>
-    </PageShell>
+    </Screen>
   );
 }
 

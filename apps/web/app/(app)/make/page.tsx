@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import Link from "@/components/link";
 import { FilterBar } from "@/components/filter-bar";
-import { PageShell } from "@/components/page-shell";
+import { Screen } from "@/components/app-frame";
 import { deadline } from "@/lib/deadline";
 import { grades } from "@/lib/queries";
 import { homeByClass } from "@/lib/queries-make";
@@ -43,7 +43,7 @@ export default async function MakePapers({ searchParams }: Props) {
   const page = Math.max(1, Math.floor(Number(q.page)) || 1);
   const pageHref = (n: number) => `/make?${new URLSearchParams({ ...Object.fromEntries(Object.entries(f).filter(([, v]) => v)), page: String(n) })}`;
   return (
-    <PageShell
+    <Screen
       stage="Assessments · home assessments"
       title="Home assessments"
       purpose="Each child's home assessment for the week, from their own map, and the class papers waiting for you. Nothing prints until you approve it."
@@ -85,6 +85,6 @@ export default async function MakePapers({ searchParams }: Props) {
           <Link href="/worksheets">Every class&rsquo;s papers, week by week →</Link>
         </p>
       </section>
-    </PageShell>
+    </Screen>
   );
 }

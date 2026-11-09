@@ -1,7 +1,6 @@
-import { PageShell } from "@/components/page-shell";
+import { Screen } from "@/components/app-frame";
 import { EmptyState } from "@/components/empty-state";
 import { PeriodBlock } from "@/components/educator/block";
-import { Crumbs } from "@/components/educator/crumbs";
 import { ClassPick, DayHead } from "@/components/educator/day-head";
 import { Summary } from "@/components/educator/summary";
 import { ChipTag, Legend, Pill } from "@/components/educator/tags";
@@ -26,17 +25,16 @@ export default async function TodayPage({ searchParams }: { searchParams: Promis
   const d = await dayOf(me, { class_id: q.class, day: asked });
   const at = (day: string) => `/educator?class=${d.class.id}&day=${day}`;
   return (
-    <PageShell
+    <Screen
       stage={E.area}
       title={d.day === today ? E.today.title : longDate(d.day)}
       purpose={E.today.purpose}
       action={<DayHead back={at(schoolDay(d.day, -1))} now={at(today)} on={at(schoolDay(d.day, 1))} words={E.day} where={d} />}
       next={{ href: `/educator/week?class=${d.class.id}&day=${d.day}`, label: E.week.title }}
     >
-      <Crumbs trail={[{ label: E.area }, { label: E.today.title, href: at(today) }, { label: longDate(d.day) }]} />
       <ClassPick classes={d.classes} on={d.class.id} href={(id) => `/educator?class=${id}&day=${d.day}`} />
       <DayCalendar d={d} />
-    </PageShell>
+    </Screen>
   );
 }
 

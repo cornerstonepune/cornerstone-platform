@@ -1,7 +1,7 @@
 import { FilterBar } from "@/components/filter-bar";
 import Link from "@/components/link";
-import { PageShell } from "@/components/page-shell";
-import { Notice } from "@/components/shell";
+import { Screen } from "@/components/app-frame";
+import { Notice } from "@/components/parts";
 import { requireStaff } from "@/lib/auth";
 import { choices } from "@/lib/choices";
 import { classLines, people, rolesHeld } from "@/lib/queries-staff";
@@ -34,7 +34,7 @@ export default async function StaffPage({ searchParams }: Props) {
   const roles = [...new Set(all.map((p) => p.role))].sort();
   const page = Math.max(1, Number(q.page) || 1);
   return (
-    <PageShell
+    <Screen
       stage="School"
       title="Staff"
       purpose="Who teaches which class. Open a person's classes, tick the ones they teach and save: their pages open on those classes."
@@ -96,6 +96,6 @@ export default async function StaffPage({ searchParams }: Props) {
       {shown.length === 0 ? (
         <p className="note mt-2">Nobody matches these filters.</p>
       ) : null}
-    </PageShell>
+    </Screen>
   );
 }

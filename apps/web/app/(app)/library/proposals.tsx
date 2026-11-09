@@ -1,5 +1,5 @@
 import Link from "@/components/link";
-import { Panel } from "@/components/shell";
+import { Panel } from "@/components/parts";
 import { engineGet } from "@/lib/engine";
 import { decideProposal } from "./actions";
 

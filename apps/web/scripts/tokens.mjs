@@ -1,6 +1,8 @@
 // The one source of the site's look (UI-14): docs/frontend/tokens.json, copied byte for byte to design-system/tokens.json,
 // becomes design-system/tokens.css; the school's four logo files are copied byte for byte to public/brand/ and the
 // browser tab's icon to app/icon.svg. Nothing here holds a colour: every value is read from tokens.json.
+// It also writes design-system/built.json (UI-13): which screens of docs/frontend/screens.json are built, that is, belong to a
+// slice in its `merged_slices`, with each screen's route, so lib/built.ts needs no file outside apps/web at run time.
 //   node apps/web/scripts/tokens.mjs           write the files
 //   node apps/web/scripts/tokens.mjs --check   write nothing; exit 1 naming each file that differs from what it would write
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
@@ -62,6 +64,16 @@ export function css(tokens) {
   ].join("\n");
 }
 
+/** screens.json → what the site needs to know of it at run time: the merged slices, and each screen's route and whether it is built. */
+export function built(screens) {
+  const merged = screens.merged_slices ?? [];
+  const live = new Set(screens.slices.filter((s) => merged.includes(s.id)).flatMap((s) => s.screens));
+  return {
+    merged_slices: merged,
+    screens: Object.fromEntries(screens.screens.map((s) => [s.id, { route: s.route, built: live.has(s.id) }])),
+  };
+}
+
 /** Every file this script owns: target path → the bytes it should hold. */
 export function outputs() {
   const json = readFileSync(path.join(repo, "docs/frontend/tokens.json"));
@@ -69,6 +81,8 @@ export function outputs() {
     [path.join(web, "design-system/tokens.json"), json],
     [path.join(web, "design-system/tokens.css"), Buffer.from(css(JSON.parse(json.toString("utf8"))))],
   ]);
+  const screens = JSON.parse(readFileSync(path.join(repo, "docs/frontend/screens.json"), "utf8"));
+  out.set(path.join(web, "design-system/built.json"), Buffer.from(`${JSON.stringify(built(screens), null, 2)}\n`));
   for (const f of LOGO_FILES) out.set(path.join(web, "public/brand", f), readFileSync(path.join(LOGOS, f)));
   out.set(path.join(web, "app/icon.svg"), readFileSync(path.join(LOGOS, "Cornerstone-logo-mark-on-white-tile.svg")));
   return out;

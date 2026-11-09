@@ -1,0 +1,137 @@
+{
+  "merged_slices": [],
+  "screens": {
+    "today-educator": {
+      "route": "/today",
+      "built": false
+    },
+    "today-coordinator": {
+      "route": "/today",
+      "built": false
+    },
+    "period": {
+      "route": "/period/[id]",
+      "built": false
+    },
+    "record": {
+      "route": "/record",
+      "built": false
+    },
+    "confirm": {
+      "route": "/notes/[id]",
+      "built": false
+    },
+    "notes": {
+      "route": "/notes",
+      "built": false
+    },
+    "timetable": {
+      "route": "/timetable",
+      "built": false
+    },
+    "fortnight": {
+      "route": "/timetable/fortnight/[n]",
+      "built": false
+    },
+    "draft": {
+      "route": "/timetable/draft",
+      "built": false
+    },
+    "moves": {
+      "route": "/timetable/moves",
+      "built": false
+    },
+    "rules": {
+      "route": "/timetable/rules",
+      "built": false
+    },
+    "materials": {
+      "route": "/timetable/materials",
+      "built": false
+    },
+    "children": {
+      "route": "/children",
+      "built": false
+    },
+    "picture": {
+      "route": "/children/[class]",
+      "built": false
+    },
+    "child": {
+      "route": "/children/[class]/[roll]",
+      "built": false
+    },
+    "assessments": {
+      "route": "/children/assessments",
+      "built": false
+    },
+    "assessment": {
+      "route": "/children/assessments/[key]",
+      "built": false
+    },
+    "paper": {
+      "route": "/children/assessments/[key]/[roll]",
+      "built": false
+    },
+    "reports": {
+      "route": "/children/reports",
+      "built": false
+    },
+    "activity": {
+      "route": "/setup/activities/[code]",
+      "built": false
+    },
+    "objective": {
+      "route": "/setup/objectives/[code]",
+      "built": false
+    },
+    "skill": {
+      "route": "/setup/skills/[code]",
+      "built": false
+    },
+    "curriculum": {
+      "route": "/setup/curriculum",
+      "built": false
+    },
+    "skills-approve": {
+      "route": "/setup/skills/approve",
+      "built": false
+    },
+    "bank": {
+      "route": "/setup/question-bank",
+      "built": false
+    },
+    "question": {
+      "route": "/setup/question-bank/[key]",
+      "built": false
+    },
+    "staff": {
+      "route": "/setup/staff",
+      "built": false
+    },
+    "classes": {
+      "route": "/setup/classes",
+      "built": false
+    },
+    "setup": {
+      "route": "/setup",
+      "built": false
+    },
+    "login": {
+      "route": "/login",
+      "built": false
+    },
+    "help": {
+      "route": "/guide",
+      "built": false
+    },
+    "feedback": {
+      "route": "/feedback",
+      "built": false
+    },
+    "blocks": {
+      "route": "/setup/blocks",
+      "built": false
+    }
+  }
+}

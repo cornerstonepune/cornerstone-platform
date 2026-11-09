@@ -3,18 +3,19 @@
 Approved by Nimish, 2026-10-22. Held by tests (below); the pages that still break them are listed in `workflows.json`
 under `ux.frozen`, and the list only shrinks.
 
-## Desktop first (Nimish, 2026-10-22, night orders)
+## Desktop first, and the phone gate (UI-13, 9 Nov 2026)
 
-Educators use the site on a desktop. Every screen is designed, tested and screenshotted at 1440 px. A phone must not
-break (no error, no lost action) but no screen is held for it, and rule 7's phone line is no longer a gate. The one
-exception is KG observation (S9), which is done on a phone.
+Educators use the site on a desktop, so every screen is designed, tested and screenshotted at **1440 px** (not 1280, which
+was the K2 screens' width until UI-13). A phone (400 px) must not break: every screen passes a smoke test there (it
+renders, one h1, no console error, no sideways scroll of the page). The screens marked `phone_gate` in
+`docs/frontend/screens.json` are held to more at 400 px: the same order, controls of at least 44 × 44 px with 8 px between,
+the keyboard, and the words. KG observation (S9) is done on a phone and is such a screen.
 
-**K2 voice notes (task M1-04, the design agreed 3 Nov 2026).** Desktop first at 1280 px; the same screen folds to one
-column on a phone (both are screenshotted). Colour first, words second, never colour alone. Work is a round chip with
-its icon (red fix this, amber to confirm, green done, grey to do or late); a child is a square cell, and a child is
-never red: not seen is grey. A mark is an icon first (above ▲, below ▼, not willing a hand, absent a dashed ring).
-Nothing is ticked for her, "the rest did as expected" is a single switch, and Confirm is per note. The words are in
-`apps/web/lib/voice-words.ts` and every icon in `apps/web/lib/icons.tsx`.
+**Four work states, not five chips.** Work is one of green (done), amber (to confirm, waiting on someone), red (do now,
+late, a fix) or a quiet grey (to do), each an icon, a word and a colour (rule 10), taken from the STATES rows in
+`apps/web/components/status-chip.tsx`. A child is a square cell and is never red: not seen is a dashed, untinted square. A
+mark is an icon first (above ▲, below ▼, not willing a hand, absent a dashed ring). Nothing is ticked for her. The words
+are in `apps/web/lib/voice-words.ts` and every icon in `apps/web/lib/icons.tsx`, the one icon file.
 
 ## The eight rules, and three more for the desktop
 
@@ -23,15 +24,18 @@ Nothing is ticked for her, "the rest did as expected" is a single switch, and Co
 2. **One table style.** The same columns, date and number formats, status chips and words everywhere.
 3. **No long tables.** At most 10 rows shown (`TABLE_ROW_LIMIT`). More are grouped by week or class, or paged, with
    what needs the educator first.
-   *Not a table:* a K2 class's tap grid (each child a square cell by Sr. No., `app/(app)/voice/board.tsx`) shows the
-   whole class at once and is never a `<table>`. She marks children by tapping them, and a class paged ten at a time
-   hides the child she needs; a grid of 40 cells fits a phone's screen where 40 rows would not (task M1-04, the agreed
-   K2 design, 3 Nov 2026). The class picture (M1-03) will be the same.
+   *Not a table:* a class's grid (the ClassGrid block: each child a square cell by Sr. No., today
+   `app/(app)/voice/board.tsx`) shows the whole class at once and is never a `<table>`: eight columns at 1440 px, three on a
+   phone. She marks children by tapping them, and a class paged ten at a time hides the child she needs (task M1-04, the
+   agreed K2 design, 3 Nov 2026).
 4. **No empty noise.** No column of zeros or dashes, no empty chip, no line under the title over 140 characters
    (`PURPOSE_MAX`).
 5. **One count, one meaning.** Computed once, the same on every page and in the menu. Only What needs doing (once Today) has a count.
 6. **The school's words.** Educator, regroup, Easy/Medium/Hard/Advance. No taxonomy, rung or kind on an educator's screen.
-7. **Phone and desktop.** Desktop first (above). A table becomes a list on a phone; it must not break there.
+7. **Phone and desktop.** Desktop first at 1440 px (above). On a phone the four doors are a tab bar at the foot (icon above
+   word, 44 px or taller, the chosen door's icon in brand clay and its word in ink), the bar keeps the mark, the search and
+   the person, and a table scrolls sideways in its own box or becomes a list; it must not break there. A screen marked
+   `phone_gate` also passes the phone gate list above.
 8. **Setup out of the way.** Statistics, question counts, old scans and reader statistics sit behind a "details" link.
 9. **A list is a table, and a table has its filter row.** Rows and aligned columns: subject, class, grade, status and the
    like are columns, never tags floating in a line. Text is left, numbers right, a status centred, each column the same
@@ -41,13 +45,18 @@ Nothing is ticked for her, "the rest did as expected" is a single switch, and Co
 10. **A status is an icon, a word and a colour.** Never colour alone. One chip (`StatusChip`), one map of the school's
    states to green (done, right), amber (waiting on someone or something) and red (needs the educator now), and a quiet
    grey for a state with nothing to do. Red is rare. A state is added to `STATES` before a page uses it.
-11. **The top bar is for using.** One slim bar across the whole screen, no sidebar: the Cornerstone mark, the four groups, the
-   search, and a three-line menu button. The button is at least 40 px tall. The student search is a compact field of about
-   240 px with a search icon, growing when focused. Nothing in a shared block or the menu names a subject. No Class, Subject or
-   "Viewing" control sits in the bar (Nimish, 26 Oct 2026): a filter that does not stay the same across pages is confusing.
+11. **The bar is for getting around.** One bar across the whole screen, 64 px high, and no sidebar (the rail beside a page
+   holds what is connected to it, never the menu): the school's logo (BrandMark, a link to Today), the four doors (Today,
+   Timetable, Children, Setup, each with its icon; Setup for the coordinator group only), the search, acting as (the
+   coordinator's), help and sign out. Under the bar sit the pages of the lit door. The one count in the site is on Today.
+   The search is a typeahead of at most five suggestions with no results page; what is typed travels in a POST body, never
+   in an address or a log. Everything in the bar is at least 44 px tall. Nothing in a shared block or the bar names a
+   subject. The door lit is the door the walk started from. Above a page's title is its trail: the door, then the thing,
+   and the browser's Back for the rest. A control whose target screen is not built is not drawn (`lib/built.ts`).
 12. **A person sees their own.** What a person sees is what their staff row names: its classes and subjects, every class when
    none is named. Each page carries its own filters (`FilterBar`) for what only it needs, starting at that scope. A view,
-   never a permission (`lib/viewing.ts`, `lib/access.ts`).
+   never a permission (`lib/viewing.ts`, `lib/access.ts`). **Acting as** replaces the old "Viewing" control: a coordinator
+   can look at the site as an educator sees it (the switch in the bar); it changes what is shown, never what is allowed.
 13. **No approve-all.** An approval is a row's own action on its own item. No page offers one button over every row
    (`apps/web/tests/u62-scope-and-todo-logic.spec.ts`; the pages that still do are `ux.approveAll` in `workflows.json`).
 
@@ -64,48 +73,51 @@ Nothing is ticked for her, "the rest did as expected" is a single switch, and Co
 | Monday | read the class | Class results (and a child) |
 | Setup, apart | | Curriculum; Question bank |
 
-The menu is four groups on the top bar (`apps/web/lib/menu.ts`), and the table above is how the week runs through them:
+The menu is four doors on the bar (`apps/web/lib/menu.ts`; the old side menus are gone), and the table above is how the week
+runs through them. A page's door is the `group` of the screen that replaces it in `docs/frontend/screens.json`; its pages are
+a row under the bar:
 
-| Group | Its pages (tabs under the bar, and in the menu button's panel) |
+| Door | Its pages (the row under the bar) |
 |---|---|
-| What needs doing | one page: a short list of kinds of work (skills, topics to mark taught, papers, answers, reports ...), one line each with its count, red/amber/green and next action, in the order the week runs; each folded into its own table. It keeps the address `/today`. Carries the one count |
-| Assessments | Assessments, Papers to approve, Upload papers, Check answers |
-| Results | Class results, Parent reports, Across classes |
-| Setup | Curriculum, Skills to approve, Question bank, Staff, School |
+| Today | What needs doing (a short list of kinds of work, one line each with its count; the address `/today`; carries the one count); Your day |
+| Timetable | This week, Materials, Timetable rules |
+| Children | Children (the class pictures), Assessments, Papers to approve, Upload papers, Check answers, Class results, Parent reports, Across classes |
+| Setup (coordinator only) | Curriculum, Skills to approve, Question bank, Staff, School, How it works |
 
-The current group and page are marked, no word of the menu names a subject. Held by `apps/web/tests/u53-the-menu.spec.ts`.
+Help, the Guide, Report a problem and the password sit outside the bar: the "?" and the person in the bar, and a link at the foot.
+The lit door and page are marked, no word of the menu names a subject. Held by `apps/web/tests/u53-the-menu.spec.ts`.
 
 ## The blocks (`apps/web/components/`)
 
 | Block | Use it for |
 |---|---|
-| `PageShell` | Every page. Props: `stage`, `title`, `purpose` (one line, 140 characters at most), `action` (the one main action), `next` (the next-step link), `details` (optional link to setup and numbers). `action` and `next` are required, so a page cannot leave them out. |
+| `Screen` (`components/app-frame.tsx`, inside AppFrame) | Every page. Props: `stage`, `title`, `purpose` (one line, 140 characters at most), `action` (the one main action), `next` (the next-step link), `details` (optional link to setup and numbers), `rail` (optional: what the page is connected to, and Capture here). `action` and `next` are required, so a page cannot leave them out. |
 | `DataTable` | Every table. Props: `columns` (with a `value` for each cell, which is what empty-column hiding reads), `rows` (needs-you first), `rowKey`, and `more`: either `{ by, href? }` to group, or `{ page, href }` to page. `more` is required, so a table that can pass 10 rows always has a way to the rest. A column says how it aligns (`num` right, `status` centred, else left) and may fix its `width`. `extras` adds a row's data attributes and a full-width row under it (an assessment opened to its copies). On a phone it is a list of labelled cards. |
 | `StatusChip` | A state in a row or a heading: icon, word, green, amber or red. The states, words and tones are in `STATES`; add one there first. |
 | `FilterBar` | The filter row over a table: `filters` (a dropdown each: name, label, value, "all" words, options), `search`, `keep` (what the page holds while filtering). A GET form: the filters are in the address. |
-| `EmptyState` | Nothing to show. On a `PageShell` page the shell supplies the next step. |
-| `Count` | A number of things waiting. Give it the same `of` and value wherever it appears; the menu's badge carries the same `data-count`. |
+| `EmptyState` | Nothing to show. On a `Screen` page the shell supplies the next step. |
+| `Count` | A number of things waiting. Give it the same `of` and value wherever it appears; the bar's badge carries the same `data-count`. |
 
-Rules and constants: `apps/web/lib/ux-rules.ts`; the menu: `apps/web/lib/menu.ts`. The first page on the blocks is `/capture/check`; copy it.
+Rules and constants: `apps/web/lib/ux-rules.ts`; the menu: `apps/web/lib/menu.ts`. The frame (bar, trail, rail, bottom doors) is `AppFrame`; the inventory test that drives every screen is `apps/web/tests/u70-inventory.spec.ts`. The first page on the blocks is `/capture/check`; copy it.
 
 ## How the build holds the rules
 
 - `packages/engine/tests/test_ux_rules.py` (in `bin/check`, no database): a page not on the list must be built on
-  `PageShell`, have no hand-built `<table>`, and no `sub=`/`purpose=` over 140 characters; a page on the list must
+  `Screen`, have no hand-built `<table>`, and no `sub=`/`purpose=` over 140 characters; a page on the list must
   still break exactly what it lists.
 - The same test holds rules 9 to 11: a page with a hand-drawn `chip` is a tag list (`taglist`), a table with no `FilterBar`
   has `filter`, a `<Pill>` or `<MarkPill>` drawn by hand is a status with no icon (`status`); `StatusChip` cannot draw a
-  state without its icon; the top bar's sizes are read from `lib/ux-rules.ts` (`TOP_BAR_MIN_PX`, `TOP_BAR_TEXT_PX`,
+  state without its icon; the bar's sizes are read from `lib/ux-rules.ts` (`BAR_HEIGHT_PX`, `TOP_BAR_MIN_PX`,
   `SEARCH_PX`). A rule written down for the first time lists the pages that break it once (`ux.rules`); after that it
   ratchets like the others.
 - `engine ratchet` (CI): nothing joins `ux.frozen`, no rule comes back to a page that kept it.
 - `apps/web/tests/u51-ux-rules.spec.ts` (browser): each page as it renders: a table over 10 rows, a column of zeros or
   dashes, a count that differs from the menu's, no main action or next step, a line over 140 characters, a table of six rows with
-  no filter row, a status with no icon; and the top bar's sizes. A page not on the list must keep all of them.
+  no filter row, a status with no icon; and the bar's sizes. A page not on the list must keep all of them.
 
 ## Taking a page off the list
 
-1. Build the page on `PageShell`, and its tables on `DataTable`.
+1. Build the page on `Screen`, and its tables on `DataTable`.
 2. Delete its entry from `ux.frozen` in `workflows.json` (the test fails until you do, and fails if you do not).
 3. Run `bin/check` and `cd apps/web && npx playwright test tests/u51-ux-rules.spec.ts`.
 4. Note it in the branch's `docs/notes/<goal>.md`.

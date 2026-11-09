@@ -1,4 +1,4 @@
-import { Notice } from "@/components/shell";
+import { Notice } from "@/components/parts";
 import { readScan } from "../capture/actions";
 import { UploadScans } from "../capture/upload-scans";
 

@@ -2,7 +2,7 @@
 // papers, and how the reader is doing. The counts are the engine's (answer_standing); nothing here decides one.
 import Link from "@/components/link";
 import { DataTable } from "@/components/data-table";
-import { Panel } from "@/components/shell";
+import { Panel } from "@/components/parts";
 import { StatusChip, type State } from "@/components/status-chip";
 import type { Column } from "@/lib/ux-rules";
 import { many } from "@/lib/needs-you";

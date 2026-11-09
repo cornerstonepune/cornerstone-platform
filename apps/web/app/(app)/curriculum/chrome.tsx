@@ -1,11 +1,10 @@
 import Link from "@/components/link";
-import { Crumbs } from "@/components/educator/crumbs";
 import { Summary } from "@/components/educator/summary";
 import { Icon, type IconName } from "@/lib/icons";
 import { requireStaff } from "@/lib/auth";
 import { gap, mustBeOn, readOffers, waiting, type State } from "@/lib/curriculum-screens";
 
-// The breadcrumb and the strip of counts every curriculum screen carries (D-075), inside the page's PageShell; the menu
+// The breadcrumb and the strip of counts every curriculum screen carries (D-075), inside the page's Screen; the menu
 // down the left is the layout's (lib/curriculum-menu.ts).
 const AREA = {
   "/curriculum/browse": "Curriculum",
@@ -28,7 +27,6 @@ export async function Chrome({ here, crumb, children }: { here: keyof typeof ARE
   const empty = gaps.reduce((n, g) => n + g.empty, 0);
   return (
     <>
-      <Crumbs trail={trail(here, crumb)} />
       {!reviews ? <p data-preview className="mb-[var(--space-3)] text-[length:var(--text-label)] text-[var(--ink-muted)]">Preview: you can look, and change nothing, until the educator screens are switched on.</p> : null}
       <Summary
         items={[

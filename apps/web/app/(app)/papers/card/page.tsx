@@ -2,8 +2,8 @@ import Link from "@/components/link";
 import { DataTable } from "@/components/data-table";
 import { FilterBar } from "@/components/filter-bar";
 import { StatusChip } from "@/components/status-chip";
-import { PageShell } from "@/components/page-shell";
-import { Notice, Panel } from "@/components/shell";
+import { Screen } from "@/components/app-frame";
+import { Notice, Panel } from "@/components/parts";
 import { requireStaff } from "@/lib/auth";
 import { sees } from "@/lib/reach";
 import { NotYours } from "@/components/not-yours";
@@ -38,7 +38,7 @@ export default async function CardPage({ searchParams }: Props) {
   // the school's day, as the engine checks it: "2026-10-22" in Pune, whatever the server's clock
   const today = new Date().toLocaleDateString("en-CA", { timeZone: "Asia/Kolkata" });
   return (
-    <PageShell
+    <Screen
       stage="Assessments · its card"
       title={key.kind === "focus" ? "Home assessments" : title}
       purpose={`${KIND_WORDS[key.kind] ?? key.kind} · ${band ? classWords(g, band, key.class) : key.class} · ${weekWords(key.week || null)}`}
@@ -63,7 +63,7 @@ export default async function CardPage({ searchParams }: Props) {
           <Copies card={card} page={Number(q.page) || 1} where={q.where} />
         </div>
       )}
-    </PageShell>
+    </Screen>
   );
 }
 

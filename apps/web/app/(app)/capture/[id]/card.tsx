@@ -2,7 +2,7 @@
 // answer as the engine stores it, and what a person is asked — what the child wrote, and, if the stored right answer is
 // wrong, what it is for every child (goals/s26-the-right-answer-shown-and-corrected.yaml).
 import { mistakeName } from "@/lib/mistake-name";
-import { MarkPill, Pill } from "@/components/shell";
+import { MarkPill, Pill } from "@/components/parts";
 import { held, type CaptureAnswer } from "@/lib/queries-read";
 import { changeKey, correctRead, judgeRead, nameMistake } from "../actions";
 

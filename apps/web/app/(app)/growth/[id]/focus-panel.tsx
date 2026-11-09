@@ -6,7 +6,7 @@
 // any lock"), the newest is the week's: shown with who approved it, the earlier ones named as replaced in one line, and
 // a new one is offered.
 import Link from "@/components/link";
-import { Panel, Pill } from "@/components/shell";
+import { Panel, Pill } from "@/components/parts";
 import { sql } from "@/lib/db";
 import { EngineDown, engineGet } from "@/lib/engine";
 import { isoWeek } from "@/lib/week";

@@ -1,5 +1,5 @@
 import Link from "@/components/link";
-import { Body, Notice, PageHeader, Panel } from "@/components/shell";
+import { Body, Notice, PageHeader, Panel } from "@/components/parts";
 import { requireStaff } from "@/lib/auth";
 import { deadline } from "@/lib/deadline";
 import { type Ask, asks, ROLE_WORDS } from "@/lib/queries-people";

@@ -2,7 +2,7 @@ import Link from "@/components/link";
 import { notFound } from "next/navigation";
 import { Answers, kindWords, mistakeOf } from "@/components/question";
 import { questionKinds } from "@/lib/question-types";
-import { Body, Notice, PageHeader, Panel } from "@/components/shell";
+import { Body, Notice, PageHeader, Panel } from "@/components/parts";
 import { mistakeBook, questionPage, type QuestionPage } from "@/lib/queries-bank";
 import { correctItem, flagItem } from "../actions";
 import { deadline } from "@/lib/deadline";
