@@ -1,1 +1,0 @@
-database-changes [project]: Use when writing Postgres migrations, grants, RLS or views. | local-postgres-for-proofs [project]: Use when a proof needs local Postgres or TEST_DATABASE_URL.
