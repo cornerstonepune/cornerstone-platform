@@ -1,5 +1,5 @@
 {
-  "digest": "391521b7264db82c7a9f3b0a552d41aac848c532c4d9f5469c8f8ea79e376c61",
+  "digest": "690bd2700a6d6420d71b466eb78489c6e1262204c5e39533cf613bc283637ee4",
   "files": [
     "spec.md",
     "checks.sh",
@@ -15,7 +15,7 @@
     "proofs/test_8_role_rules.py",
     "proofs/tests_unchanged.sh"
   ],
-  "locked_at": "2026-11-09T02:18:15+00:00",
+  "locked_at": "2026-11-09T04:06:11+00:00",
   "criteria": 8,
   "athena": "2.14.0"
 }

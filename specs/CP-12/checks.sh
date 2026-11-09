@@ -25,7 +25,7 @@ check "4 clashes listed per kind with fortnight, week and lessons; moving back r
   $T $P/test_4_clashes.py
 check "5 a clash accepted with reason, who, when; reopened when its lesson moves or its limit changes" \
   $T $P/test_5_accept.py
-check "6 an open clash blocks approval and a clash-making move in an approved fortnight; a setting, on by default" \
+check "6 the approve command refuses an open clash; the move command refuses one in an approved fortnight; a setting, on by default" \
   $T $P/test_6_approval.py
 check "7 a frozen fortnight refuses a move without a reason and keeps one with a reason" \
   $T $P/test_7_frozen.py

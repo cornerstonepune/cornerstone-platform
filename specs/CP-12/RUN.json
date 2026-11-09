@@ -7,9 +7,9 @@
   "3 the day shows the moved lesson with plan and materials lines; fixed, past, holiday, marked refused with why",
   "4 clashes listed per kind with fortnight, week and lessons; moving back removes the clash",
   "5 a clash accepted with reason, who, when; reopened when its lesson moves or its limit changes",
-  "6 an open clash blocks approval and a clash-making move in an approved fortnight; a setting, on by default",
+  "6 the approve command refuses an open clash; the move command refuses one in an approved fortnight; a setting, on by default",
   "7 a frozen fortnight refuses a move without a reason and keeps one with a reason",
   "8 move history and clash acceptance have role rules on; existing tests unchanged"
  ],
- "ran_at": "2026-11-08T17:35:44+00:00"
+ "ran_at": "2026-11-09T04:05:38+00:00"
 }

@@ -114,9 +114,11 @@ build follows that scope and this file is corrected before the proofs are writte
    `pg_advisory_xact_lock` on (tenant, class) first, so a move cannot slip in between an approval's count and its commit,
    and two moves cannot copy the same grid twice.
 6. **Approval waits for clashes, as a setting.** Seed row `timetable.open_clash_blocks_approval` = `true` in
-   `supabase/seed/config.json`, read with `settings.config`. When true, CP-6's step into `approved` is refused while the
-   fortnight has an unaccepted clash, naming the count by kind. The count runs in a `security definer` function over the whole
-   school, so an approver who sees only some classes cannot miss a cross-class clash. A move in a fortnight already approved (or
+   `supabase/seed/config.json`, read with `settings.config`. When true, CP-6's approve command refuses the step into
+   `approved` while the fortnight has an unaccepted clash, naming the count by kind. Lean version (Nimish, 9 Nov: cut 1
+   only): the check sits in the engine's approve command, not in a database trigger, so a direct update of the fortnight's
+   state skips it; any later screen must go through the command. The count runs in a `security definer` function over the
+   whole school, so an approver who sees only some classes cannot miss a cross-class clash. A move in a fortnight already approved (or
    later) is refused if it would leave an unaccepted clash in that fortnight; one that leaves none is allowed (with CP-6's
    reason).
 7. **Hand moves are not wiped by a new draft.** CP-21's guard does it: putting a draft live over a fortnight whose rows

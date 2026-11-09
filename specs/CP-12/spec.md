@@ -16,7 +16,7 @@ Once a fortnight's timetable is live, a person can move a lesson by hand or swap
 3. After a move, the educator's day shows the lesson in its new place with its plan line and its materials lines. A fixed lesson, a move to or from a day already past or a holiday, or a lesson already marked done or not done cannot be moved, and the refusal says why and writes nothing. (Test.)
 4. Each fortnight's clashes are listed with their kind, fortnight number, week and the lessons involved, for each kind: a lesson on a blocked day or period, a subject above its most or below its fewest in a week or the fortnight. Moving a lesson back removes its clash from the list. (Test, one per kind.)
 5. A person can accept a clash with a reason; who and when are kept. An acceptance covers only that clash: if a lesson in it moves again, or its limit changes, the clash is listed as not accepted. (Test.)
-6. A fortnight with a clash nobody accepted cannot be approved, and in an approved fortnight a move that would leave a clash nobody accepted is refused. This is a setting per school, on by default. (Test.)
+6. The approve command refuses a fortnight with a clash nobody accepted, and in an approved fortnight the move command refuses a move that would leave a clash nobody accepted. This is a setting per school, on by default. (Test.)
 7. In a frozen fortnight, a move without a reason is refused and a move with a reason is kept. (Test.)
 8. LIVE: the move history and clash acceptance exist with role rules on; the clash count per fortnight is printed (read-only, counts only, no names). The existing website pages and engine tests pass unchanged.
 

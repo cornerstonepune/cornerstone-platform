@@ -19,7 +19,8 @@ Names used are the contract of specs/CP-12/design.md:
 - table `timetable_move (school_class_id, fortnight_id, from_date, from_period, to_date, to_period, reason, who, at)`;
   view `timetable_clash (fortnight_id, fortnight_number, week_code, kind, clash_key, places, detail, accepted)` with
   kinds `blocked`, `over_limit`, `under_limit`; table `timetable_clash_accept (fortnight_id, clash_key, kind, reason,
-  who, at)`; setting `timetable.open_clash_blocks_approval` (on by default).
+  who, at)`; setting `timetable.open_clash_blocks_approval` (on by default), checked by the approve command
+  `engine fortnight approve --year --fortnight N --by EMAIL` (decision 6; its name is `APPROVE` below).
 What the proofs need from scopes not yet on main, each named where it is used:
 - CP-6 (issue #454): `fortnight_cycle (tenant_id, fortnight_id, state)`, states planning, frozen, aligned, approved,
   moved one step at a time by updating `state`; `fortnight_edit` keeps a frozen change's reason.
@@ -372,6 +373,19 @@ def move(engine, w, frm: dt.date, fp: str, to: dt.date, tp: str, *, by=None, rea
 
 def accept(engine, w, key: str, *, by=None, reason=REASON):
     return engine("timetable", "accept", "--key", key, "--by", by or w["coordinator"]["email"], "--reason", reason)
+
+
+APPROVE = ("fortnight", "approve")  # the approve command's name: the one place to point at CP-6's real name
+
+
+def approve(engine, w, number=2, *, by=None):
+    """The step into `approved`, through the engine's approve command (design decision 6), never a direct update."""
+    code, out = engine(*APPROVE, "--year", YEAR, "--fortnight", number, "--by", by or w["coordinator"]["email"])
+    if code == 2 and "No such command" in out:
+        pytest.fail(f"this proof needs the approve command `engine {' '.join(APPROVE)}` (CP-6's approve step as an"
+                    f" engine command, issue #454; CP-6's design leaves the command to CP-7), which is not in the"
+                    f" engine yet:\n{out}")
+    return code, out
 
 
 def clashes(c, w, number=2) -> list[dict]:
