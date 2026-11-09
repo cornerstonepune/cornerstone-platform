@@ -1,7 +1,6 @@
 {
- "ok": false,
- "passed": [],
- "failed": [
+ "ok": true,
+ "passed": [
   "1 a fortnight has one state from the list, who and when recorded for every step, tables listed school-wide",
   "2 step dates are per-school settings, a holiday or weekend moves to the working day before",
   "3 a frozen fortnight's timetable or plan lines change through the engine only with a reason, which is recorded",
@@ -9,5 +8,6 @@
   "5 each fortnight state change writes one edit-history row with who and when",
   "6 no hard-coded frozen in engine or website; day, week and period read it from the fortnight's state"
  ],
- "ran_at": "2026-11-09T04:16:53+00:00"
+ "failed": [],
+ "ran_at": "2026-11-09T05:04:11+00:00"
 }
