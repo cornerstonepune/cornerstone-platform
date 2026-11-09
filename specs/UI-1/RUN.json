@@ -1,0 +1,12 @@
+{
+ "ok": false,
+ "passed": [
+  "4 bin/check, test_ux_rules.py, u51 and screens.spec.ts pass; ux.frozen has not grown since main"
+ ],
+ "failed": [
+  "1 @axe-core/playwright is an apps/web dependency and the journey runs axe on every page it visits",
+  "2 e2e/athena-journey.ts exists; a journey spec imports it, signs in, opens an existing page and passes; ui-ready UI-1",
+  "3 shadcn/ui initialised (components.json); components/ui holds only the stock Button and Tabs"
+ ],
+ "ran_at": "2026-11-09T09:55:36+00:00"
+}
