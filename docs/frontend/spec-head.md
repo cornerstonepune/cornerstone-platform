@@ -50,9 +50,11 @@ brand clay `#b8562f` (the mark, the active group, the one main action; never on 
 Arts haldi, fixed sand. Dark follows the system; every pair has a dark value in `tokens.json`. The contrast table in
 `docs/design-tokens.md` was measured on paper-warm and must be re-run on white before step 1 ships.
 
-**Type**: proposed Source Serif 4 for titles (32/24/20) and Source Sans 3 for everything else (18/16/14/12); weights
-400/500/600; nothing under 14 px carries a status, label or action; tabular figures in columns. Nimish decides between
-this, one serif for all (brand book) and Jost + Cormorant (D-073); one line in `tokens.json` changes it.
+**Type** (decided by Nimish, 9 Nov 2026: `docs/decisions/2026-11-09-site-type-and-subject-colours.md`): Source Serif 4
+for titles (32/24/20) and Source Sans 3 for everything else (18/16/14/12); weights 400/500/600; nothing under 14 px carries
+a status, label or action; tabular figures in columns. The subject colours from the brand's materials are decided in the
+same file. Nothing in the system is still open; the fonts and every colour are in `docs/frontend/tokens.json`, which the
+build copies to `apps/web/design-system/tokens.json`.
 
 **Space and shape**: 4 / 8 / 16 / 24 / 32 / 48 / 64 px; 44 px tap; square corners everywhere except the pill of a work-state
 chip and a count badge; no shadows, no gradients; hairlines separate, a one-step surface groups.
@@ -78,7 +80,7 @@ Order (each line one scoped change, tier 2 unless it changes a table):
 
 1. Tokens and frame: `tokens.css` from the system; AppFrame replaces `PageShell`, `TopBar` and the K2 side menu; the four
    groups; every existing page reachable from the bar. The menu test (`u53`) and the UX-rule tests (`test_ux_rules.py`,
-   `u51`) updated to the new frame. Needs Nimish's font decision first.
+   `u51`) updated to the new frame. The font decision is taken (below).
 2. Blocks: the new blocks of section 5, each with its preview page and one screenshot per theme in the suite; the existing
    blocks moved onto the tokens.
 3. Node pages, the K2 walk: period, record, confirm, notes, picture, child, activity, objective, skill.
@@ -98,6 +100,23 @@ recorder and the details folds.
 
 Folding: the catalogue marks which old pages fold into each new screen. A folded page keeps its address as a redirect for
 one term, then goes. Nothing is deleted before its new screen's proofs pass.
+
+**The inventory is the test oracle.** `screens.json` is read by one Playwright test, `tests/u70-inventory.spec.ts` (built in
+UI-1), which opens every screen whose `exists` is not `no` at a concrete address (dynamic routes get theirs from a fixture
+map the test's own rows provide), runs the generic checks of section 7, and drives every control in the screen's
+`elements` list by its kind. A screen marked `exists: "no"` is a `test.fixme` until its slice lands, so the count of
+screens still to build is always visible in the test report. Adding a screen means adding it to the inventory first; the
+test fails until the screen exists.
+
+## 7. Slices and their goal points
+
+Each slice below is one scoped change in the Athena loop: pasted as a GitHub issue in the Scope form (`scopes.md` holds the
+paste-ready text), locked by Nimish, proofs written first, built, verified, shipped. Every Done-when line is observable by a
+test or a script named in it. The generic checks apply to every screen a slice builds, on top of the screen's own lines:
+
+GENERIC_CHECKS
+
+SLICES_TABLE
 
 ## 5. The blocks
 

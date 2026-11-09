@@ -49,13 +49,15 @@ Steps 1 and 2 can start now; 3 can start now against the switched-on K2 pages; 5
   recorder and the details folds.
 - Words stay rows (`STATES`, `state_colour`, `voice-words.ts`); a change of wording is a row, not a release.
 
-## Decisions for Nimish
+## Decisions (all taken by Nimish on 9 Nov 2026)
 
-1. **Fonts.** Proposed: Source Serif 4 for titles, Source Sans 3 for everything else. Alternatives on record: one serif
-   for all (brand book, 21 Sep) or Jost + Cormorant Garamond (D-073). One line in `tokens.json` changes it.
-2. **Subject colours from the brand's materials** (Numeracy monsoon, Language bark, Arts haldi, fixed sand) rather than a
-   chart palette. Mechanical; recorded here unless he objects.
-3. **The assessment loop is rebuilt, not kept.** Said by Nimish on 9 Nov; recorded so no slice "preserves" the old pages.
+1. **Fonts.** Source Serif 4 for titles, Source Sans 3 for everything else. Alternatives rejected: one serif for all (brand
+   book, 21 Sep), Jost + Cormorant Garamond (D-073). Recorded in `docs/decisions/2026-11-09-site-type-and-subject-colours.md`.
+2. **Subject colours from the brand's materials** (Numeracy monsoon, Language bark, Arts haldi, fixed sand). Same file.
+3. **The assessment loop is rebuilt, not kept.** Recorded so no slice "preserves" the old pages.
+
+The build order above is superseded by the slices UI-1 to UI-9 in `docs/frontend/scopes.md`; the handover for the session
+that builds is `docs/frontend/HANDOVER.md`.
 
 ## What was checked and what was not
 
