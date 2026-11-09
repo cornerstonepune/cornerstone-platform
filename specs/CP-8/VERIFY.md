@@ -1,0 +1,3 @@
+VERDICT: PASS
+
+Independent verifier on 614d7fe: items 2, 4, 5, 6 met by reading; items 1, 3 and the live part of 2 can only be proven on the box after a link --apply (item 3 would fail if any FN10 lesson period has no plan line; the build must stop and ask in that case). Locked spec/proofs byte-identical across the branch. One migration after main's newest, no SECURITY DEFINER, no child data, unit is the fortnight, the loader fix is minimal. Noted, not failing: the test_plan_link.py promised in the design is absent (adding it would change packages/engine/tests, which proof 6 forbids); plan_link_undo leaves no record that an undo happened and its p_by argument is unused.

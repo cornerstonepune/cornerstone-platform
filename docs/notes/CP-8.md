@@ -21,5 +21,9 @@ Not hard-coded. The proof reads an optional `Target: N%` line in `docs/decisions
 default is "no line with a match is left unlinked". Only `exact_name` exists as a rule: a further rule needs the box dry
 run's numbers first (design decision 3), so the share on live may stay near 40 of 375 until CP-15 writes activities.
 
+## Follow-ups (noted by the verifier, not failing; CP-15 or later)
+- `test_plan_link.py` from the design is absent: adding it changes `packages/engine/tests`, which proof 6 forbids.
+- `plan_link_undo` leaves no record that an undo happened, and its `p_by` argument is unused.
+
 ## Verified
 See the pull request for the numbers.
