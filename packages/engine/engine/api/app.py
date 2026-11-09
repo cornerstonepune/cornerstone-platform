@@ -32,6 +32,7 @@ from engine.api.routes import (
     runs,
     samples,
     timetable,
+    timetable_hand,
     timetable_rules,
     upload,
     voice,
@@ -70,6 +71,7 @@ app.include_router(upload.router)
 app.include_router(samples.router)
 app.include_router(timetable.keyed)
 app.include_router(timetable_rules.keyed)
+app.include_router(timetable_hand.keyed)
 app.include_router(k2.router)
 app.include_router(gold.router)
 app.include_router(offers.router)

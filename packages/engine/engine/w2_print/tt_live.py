@@ -53,9 +53,13 @@ class Report:
 # ---- the checks ------------------------------------------------------------------------------------------------------
 
 
-def _in_group(conn: db.Conn, tenant: str, who: Any, today: dt.date) -> None:
+def in_group(
+    conn: db.Conn, tenant: str, who: Any, today: dt.date, key: str = GROUP, what: str = "put a draft live"
+) -> None:
+    """Refuse unless `who` holds a current grant in the access group the school's setting `key` names (CP-12 asks it
+    of `timetable.accept_clash_group`)."""
     row = conn.execute(
-        "select value #>> '{}' as g from config where tenant_id = %s and key = %s", (tenant, GROUP)
+        "select value #>> '{}' as g from config where tenant_id = %s and key = %s", (tenant, key)
     ).fetchone()
     group = row["g"] if row else "everything"
     held = conn.execute(
@@ -65,7 +69,7 @@ def _in_group(conn: db.Conn, tenant: str, who: Any, today: dt.date) -> None:
         (tenant, who, group, today, today),
     ).fetchone()
     if held is None:
-        raise Refused(f"only the '{group}' group may put a draft live ({GROUP}); this person is not in it.")
+        raise Refused(f"only the '{group}' group may {what} ({key}); this person is not in it.")
 
 
 def _run(conn: db.Conn, i: need.Inputs, run_id: Any) -> dict:
@@ -224,7 +228,7 @@ def go_live(
     i = need.load(conn, grade, section, year, number)
     conn.execute("select pg_advisory_xact_lock(hashtext(%s), hashtext(%s))", (i.tenant_id, i.class_id))
     today = gate.school_today(conn)
-    _in_group(conn, i.tenant_id, who, today)
+    in_group(conn, i.tenant_id, who, today)
     fn = db.one(conn, "select starts_on, ends_on from fortnight where id = %s", (i.fortnight_id,))
     run = _run(conn, i, run_id)
     if fn["starts_on"] <= today:
