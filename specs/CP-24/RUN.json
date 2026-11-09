@@ -1,0 +1,19 @@
+{
+ "ok": false,
+ "passed": [],
+ "failed": [
+  "1a one clock: no current_date in a new migration, no hard-coded Asia/Kolkata in engine or website code",
+  "1b one clock: move_child and hand_check.checked_on date by internal.school_day in the database",
+  "2 a child moved at 01:00 IST is enrolled from that IST day, not the day before",
+  "3a POST /fortnight/state is a keyed engine route in the website's route list",
+  "3b POST /fortnight/move is a keyed engine route in the website's route list",
+  "3c POST /timetable/generate is a keyed engine route in the website's route list",
+  "3d POST /timetable/link is a keyed engine route in the website's route list",
+  "3e POST /timetable/unmatched is a keyed engine route in the website's route list",
+  "4 step_date refuses step settings not in the order freeze > align > approve > list_sent",
+  "5 the live watch reports a nightly run older than graph.nightly_stale_hours",
+  "6 docs/backup.md states Supabase's setting, Lightsail's retention, a dated restore drill and the 48-hour promise",
+  "7 docs/backend-plan.md has the rule: a Core scope a screen calls ships one keyed route"
+ ],
+ "ran_at": "2026-11-09T06:56:00+00:00"
+}
