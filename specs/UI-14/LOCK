@@ -1,0 +1,12 @@
+{
+  "digest": "6f6996543bc0ac78ca7347a7876deaf5212b023b069b596e80c63863995f5407",
+  "files": [
+    "spec.md",
+    "checks.sh",
+    "proofs/browser.mjs",
+    "proofs/harness.py"
+  ],
+  "locked_at": "2026-11-09T12:21:08+00:00",
+  "criteria": 9,
+  "athena": "2.15.0"
+}

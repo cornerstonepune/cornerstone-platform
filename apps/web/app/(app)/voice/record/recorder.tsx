@@ -106,7 +106,7 @@ export function Recorder({ classId, say, form }: { classId: string; say: string;
         )}
         {stage === "recording" ? (
           <span className="inline-flex items-center gap-2 text-[14px] text-terracotta" role="status">
-            <span className="h-2.5 w-2.5 animate-pulse rounded-full bg-terracotta" />
+            <span className="h-2.5 w-2.5 rounded-full bg-terracotta" />
             {W.record.recording}
           </span>
         ) : null}

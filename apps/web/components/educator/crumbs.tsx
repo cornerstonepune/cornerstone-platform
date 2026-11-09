@@ -5,7 +5,7 @@ import { Icon } from "@/lib/icons";
 export function Crumbs({ trail }: { trail: { label: string; href?: string }[] }) {
   return (
     <nav aria-label="Where you are" className="mb-[var(--space-3)]">
-      <ol className="flex flex-wrap items-center gap-[var(--space-1)] text-[length:var(--text-label)] text-[var(--text-muted)]">
+      <ol className="flex flex-wrap items-center gap-[var(--space-1)] text-[length:var(--text-label)] text-[var(--ink-muted)]">
         {trail.map((t, i) => (
           <li key={t.label} className="inline-flex items-center gap-[var(--space-1)]">
             {i > 0 ? <Icon name="following" size={16} /> : null}
@@ -14,7 +14,7 @@ export function Crumbs({ trail }: { trail: { label: string; href?: string }[] })
                 {t.label}
               </Link>
             ) : (
-              <span aria-current="page" className="font-medium text-[var(--text)]">
+              <span aria-current="page" className="font-medium text-[var(--ink)]">
                 {t.label}
               </span>
             )}

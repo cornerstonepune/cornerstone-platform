@@ -7,8 +7,8 @@ import { E } from "@/lib/educator/words";
 // Keep it, Send it back, or Edit it in place (the steps one a line; how to think as an idea and slips). Any member of
 // staff may answer, as M1-12b's routes allow; the school's own words never get these.
 const W = E.page;
-const BTN = "inline-flex min-h-[var(--tap)] items-center gap-[var(--space-1)] rounded-[var(--radius-m)] border border-[var(--border-control)] bg-[var(--surface)] px-[var(--space-3)] text-[length:var(--text-label)] font-medium text-[var(--text)]";
-const FIELD = "w-full rounded-[var(--radius-m)] border border-[var(--border-control)] bg-[var(--surface)] p-[var(--space-2)] text-[length:var(--text-body)]";
+const BTN = "inline-flex min-h-[var(--tap)] items-center gap-[var(--space-1)] rounded-[var(--radius-control)] border border-[var(--line-control)] bg-[var(--panel)] px-[var(--space-3)] text-[length:var(--text-label)] font-medium text-[var(--ink)]";
+const FIELD = "w-full rounded-[var(--radius-control)] border border-[var(--line-control)] bg-[var(--panel)] p-[var(--space-2)] text-[length:var(--text-body)]";
 
 export function Answers({ code, p }: { code: string; p: PagePart }) {
   const hidden = (
@@ -45,17 +45,17 @@ export function Answers({ code, p }: { code: string; p: PagePart }) {
           {hidden}
           {p.kind === "bullets" ? (
             <label className="grid gap-[var(--space-1)]">
-              <span className="text-[length:var(--text-label)] text-[var(--text-muted)]">{W.itemsHint}</span>
+              <span className="text-[length:var(--text-label)] text-[var(--ink-muted)]">{W.itemsHint}</span>
               <textarea name="items" rows={Math.max(4, p.items.length + 1)} defaultValue={p.items.join("\n")} className={FIELD} />
             </label>
           ) : p.kind === "thinking" ? (
             <>
               <label className="grid gap-[var(--space-1)]">
-                <span className="text-[length:var(--text-label)] text-[var(--text-muted)]">{W.idea}</span>
+                <span className="text-[length:var(--text-label)] text-[var(--ink-muted)]">{W.idea}</span>
                 <input name="idea" defaultValue={p.idea ?? ""} className={FIELD} />
               </label>
               <label className="grid gap-[var(--space-1)]">
-                <span className="text-[length:var(--text-label)] text-[var(--text-muted)]">{W.slipsHint}</span>
+                <span className="text-[length:var(--text-label)] text-[var(--ink-muted)]">{W.slipsHint}</span>
                 <textarea name="slips" rows={4} defaultValue={p.slips.map((s) => `${s.keyword}: ${s.spot}`).join("\n")} className={FIELD} />
               </label>
             </>

@@ -13,7 +13,7 @@ export function PeriodBlock({ p, href, chip, compact = false }: { p: Period; hre
   const time = timeOf(p);
   if (p.kind === "empty")
     return (
-      <div id={`p-${p.period_id}`} data-period={p.period_id} data-kind="empty" className="grid min-h-[var(--tap)] content-center rounded-[var(--radius-m)] border border-dashed border-[var(--border)] px-[var(--space-2)] text-[length:var(--text-label)] text-[var(--text-muted)]">
+      <div id={`p-${p.period_id}`} data-period={p.period_id} data-kind="empty" className="grid min-h-[var(--tap)] content-center rounded-[var(--radius-control)] border border-dashed border-[var(--line)] px-[var(--space-2)] text-[length:var(--text-label)] text-[var(--ink-muted)]">
         <span className="tabular-nums">{time}</span>
         <span>{E.free}</span>
       </div>
@@ -28,18 +28,18 @@ export function PeriodBlock({ p, href, chip, compact = false }: { p: Period; hre
       data-period={p.period_id}
       data-kind={p.kind}
       data-state={chip ?? "none"}
-      className="group grid min-h-[var(--tap)] gap-[var(--space-1)] rounded-[var(--radius-m)] border border-[var(--border)] border-l-[length:var(--space-1)] bg-[var(--surface)] px-[var(--space-2)] py-[var(--space-2)] text-[var(--text)] no-underline hover:border-[var(--border-control)]"
-      style={{ borderLeftColor: chip ? CHIP[chip].bd : "var(--border)" }}
+      className="group grid min-h-[var(--tap)] gap-[var(--space-1)] rounded-[var(--radius-control)] border border-[var(--line)] border-l-[length:var(--space-1)] bg-[var(--panel)] px-[var(--space-2)] py-[var(--space-2)] text-[var(--ink)] no-underline hover:border-[var(--line-control)]"
+      style={{ borderLeftColor: chip ? CHIP[chip].bd : "var(--line)" }}
     >
       <span className="flex flex-wrap items-center justify-between gap-[var(--space-2)]">
-        <span className="inline-flex items-center gap-[var(--space-1)] text-[length:var(--text-label)] text-[var(--text-muted)] tabular-nums">
+        <span className="inline-flex items-center gap-[var(--space-1)] text-[length:var(--text-label)] text-[var(--ink-muted)] tabular-nums">
           {fixed ? <Icon name="break" size={16} /> : null}
           {time}
         </span>
         {chip && !compact ? <ChipTag chip={chip} /> : null}
       </span>
-      <span className={`${compact ? "text-[length:var(--text-label)]" : "text-[length:var(--text-body)]"} ${fixed ? "text-[var(--text-muted)]" : "font-medium"}`}>{title}</span>
-      {what && !compact ? <span className="text-[length:var(--text-label)] text-[var(--text-muted)]">{what}</span> : null}
+      <span className={`${compact ? "text-[length:var(--text-label)]" : "text-[length:var(--text-body)]"} ${fixed ? "text-[var(--ink-muted)]" : "font-medium"}`}>{title}</span>
+      {what && !compact ? <span className="text-[length:var(--text-label)] text-[var(--ink-muted)]">{what}</span> : null}
       {chip && compact ? <ChipTag chip={chip} /> : null}
     </Link>
   );

@@ -65,7 +65,7 @@ function columns(p: ClassPicture, classId: string): Column<Row>[] {
   const seen = seenCounts(p);
   const to = (r: Row) => `/k2/${classId}/${encodeURIComponent(r.roll_no)}`;
   return [
-    { key: "roll", label: "Sr. No.", keep: true, value: (r) => r.roll_no, cell: (r) => <Link href={to(r)} className="text-[var(--text)] underline">{r.roll_no}</Link> },
+    { key: "roll", label: "Sr. No.", keep: true, value: (r) => r.roll_no, cell: (r) => <Link href={to(r)} className="text-[var(--ink)] underline">{r.roll_no}</Link> },
     ...p.skills.map((s): Column<Row> => ({
       key: s.code,
       label: `${s.name} · ${seen[s.code]} seen`,
@@ -74,7 +74,7 @@ function columns(p: ClassPicture, classId: string): Column<Row>[] {
       cell: (r) => {
         const c = r.cells[s.code];
         return c ? (
-          <Link href={to(r)} className="text-[var(--text)]" aria-label={`Sr. No. ${r.roll_no}, ${s.name}: ${c.words}${c.level === null ? "" : `, level ${c.level}`}`}>
+          <Link href={to(r)} className="text-[var(--ink)]" aria-label={`Sr. No. ${r.roll_no}, ${s.name}: ${c.words}${c.level === null ? "" : `, level ${c.level}`}`}>
             <ChildStateChip state={c.state} words={c.words} colour={c.colour} level={c.level} compact />
           </Link>
         ) : (

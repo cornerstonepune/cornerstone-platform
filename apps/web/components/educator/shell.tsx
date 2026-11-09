@@ -7,7 +7,7 @@ import { type MenuItem, ShellNav } from "./shell-nav";
 // moves in with one change: its layout renders <SchoolShell items={its menu} label={its name}>.
 export function SchoolShell({ items, label, children }: { items: MenuItem[]; label: string; children: React.ReactNode }) {
   return (
-    <div data-educator className="grid flex-1 grid-cols-12 gap-x-[var(--space-4)] bg-[var(--surface)] text-[length:var(--text-body)] text-[var(--text)] max-md:pb-[var(--space-7)] md:px-[var(--space-4)] md:pt-[var(--space-4)]">
+    <div data-educator className="grid flex-1 grid-cols-12 gap-x-[var(--space-4)] bg-[var(--panel)] text-[length:var(--text-body)] text-[var(--ink)] max-md:pb-[var(--space-7)] md:px-[var(--space-4)] md:pt-[var(--space-4)]">
       <aside className="col-span-2 max-md:hidden">
         <Suspense>
           <ShellNav as="side" items={items} label={label} />
