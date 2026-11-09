@@ -113,6 +113,19 @@ def test_a_cleanup_deletes_the_recording_and_transcript_of_notes_past_the_hours_
     )  # rows stay, words go
 
 
+def test_a_note_whose_words_were_cleared_is_counted_as_cleared_not_as_missing(conn):
+    k = a_k2_class(conn)
+    note = a_note(conn, k, "Activity 12. Above 3.", hours_ago=60)
+    conn.execute("update pii.educator_note set status = 'left_unconfirmed' where id = %s", (note["id"],))
+    conn.execute(
+        "update pii.educator_note set transcript = null, transcript_cleared_at = now() where id = %s",
+        (note["id"],),
+    )
+    s = voice_check.score(conn, [{"note_id": str(note["id"]), "activity": k["activity"], "above": ["3"]}])
+    assert s.cleaned == [str(note["id"])] and s.missing == [] and s.notes == 0
+    assert any(line.startswith("words cleared after 48 hours") for line in s.lines())
+
+
 def test_the_expected_file_is_plain_json_a_person_can_write():
     entry = {"note_id": "x", "activity": "ACT-K2-0002", "above": ["3"], "rest": True}
     assert json.loads(json.dumps([entry]))[0]["above"] == ["3"]

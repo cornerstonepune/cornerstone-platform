@@ -54,11 +54,16 @@ def _observed_at(conn: db.Conn, day: dt.date, received: dt.datetime) -> dt.datet
     return min(at, db.one(conn, "select now() as n")["n"])
 
 
+def _today(conn: db.Conn) -> dt.date:
+    """Today by the school's clock, never the server's (UTC is still yesterday in Pune until 05:30)."""
+    return voice_intake.school_day(conn, db.one(conn, "select now() as n")["n"])
+
+
 def _children(
     conn: db.Conn, class_id: str, day: dt.date | None, final: Confirmed
 ) -> dict[str, tuple[str, str]]:
     """child id → (outcome, entry mode), every roll number found in the class's enrolment that day."""
-    enrolled = voice_intake.enrolled(conn, class_id, day or dt.date.today())
+    enrolled = voice_intake.enrolled(conn, class_id, day or _today(conn))
     outcome = {s: voice_note.template().outcomes[s] or s for s in voice_intake.LISTS}
     out: dict[str, tuple[str, str]] = {}
     for section, rolls in final.lists.items():
@@ -148,7 +153,7 @@ def confirm_note(conn: db.Conn, note_id: str, email: str, final: Confirmed) -> u
         raise Refused(f"This note is {note['status'].replace('_', ' ')}, not waiting to be confirmed.", 409)
     hours = settings.config(conn, "voice.confirm_within_hours", 48)
     if db.one(
-        conn, "select %s < now() - make_interval(hours => %s) as late", (note["received_at"], int(hours))
+        conn, "select %s <= now() - make_interval(hours => %s) as late", (note["received_at"], int(hours))
     )["late"]:
         raise Refused(
             f"This note waited more than {hours} hours; it is kept as unconfirmed, never evidence.", 409
@@ -184,7 +189,7 @@ def save_form(conn: db.Conn, email: str, class_id: str, final: Confirmed) -> uui
     staff = voice_intake.staff_of(conn, email)
     class_id = voice_intake.valid_id(class_id)
     voice_intake.may_record(conn, staff, class_id)
-    final.day = final.day or dt.date.today()
+    final.day = final.day or _today(conn)
     now = db.one(conn, "select now() as n")["n"]
     return _write(
         conn, class_id=class_id, staff=staff, final=final, route="form", note_id=None,

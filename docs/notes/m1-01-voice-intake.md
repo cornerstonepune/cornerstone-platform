@@ -39,8 +39,8 @@ reads, each line beside its words, a person confirms.
   later; the curriculum version named by the existing trigger), `pii.educator_note` (audio key, transcript,
   `received_at` set by the server and never moved, status), `pii.note_claim` (each line, its words and her decision;
   written once). Five vocabulary tables (`observation_outcome`, `observation_entry_mode`, `observation_route`,
-  `note_status`, `claim_decision`) and two config rows (`voice.confirm_within_hours` 48; `voice.audio_retention_days`
-  null, O-14), also in `supabase/seed/config.json`.
+  `note_status`, `claim_decision`) and a config row (`voice.confirm_within_hours` 48; the second, `voice.audio_retention_days`
+  null for O-14, was retired by CP-10), also in `supabase/seed/config.json`.
 - Not touched: `evidence_event`, `activity`, `enrolment`, `staff`, any M0-05 table, any existing row. No DELETE for
   either service on any new table; the website reads the observations and the words, and never a note or a claim.
 - `cd packages/engine && uv run pytest -q tests/test_voice_tables.py` → 9 passed (after the orchestrator's review: a correction is of the same school, child and activity, once, never itself; a confirmed note keeps its words and class and no note goes back); with `test_roles`,
@@ -53,8 +53,8 @@ reads, each line beside its words, a person confirms.
 ## Step 4a, the engine — `20261227090000_k2_voice_evidence.sql` (additive) and `w3_read/voice_*`
 
 - A recording is kept on the engine box's disk under `data/voice/<year>/<note id>.<ext>` (gitignored, as scans are);
-  only its key is in the row. Retention is O-14: `bin/engine read voice retention` deletes nothing while
-  `voice.audio_retention_days` is null.
+  only its key is in the row. Retention was O-14; CP-10 settled it: the recording and the transcript are deleted
+  `voice.confirm_within_hours` (48) after the note was received, by `bin/engine read voice cleanup` (n8n's F5, hourly).
 - Transcribed through `adapters/speech.py` after the upload answers, only when `SARVAM_API_KEY` is set; otherwise the
   note waits as received. Read by `voice_note.read`; the activity's spoken number found by `activity.sheet_no` in the
   class's grade; every number in the class's enrolment open that day. A stranger or an unknown activity is a problem.
