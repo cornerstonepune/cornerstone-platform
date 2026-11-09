@@ -15,6 +15,8 @@ Make each schema change one additive numbered migration in `supabase/migrations/
 - A new constraint means regenerating `packages/engine/engine/checks/rules.json` with `engine live rules --write`, or `tests/test_rules.py` fails.
 - A new command group lives in `packages/engine/engine/w2_print/cli_*.py` as a Typer app that `cli.py` mounts with `add_typer`, and its commands are listed in N4's `commands` in `workflows.json`. `cli.py` sits near its 400-line ceiling; do not grow it.
 - Migration filenames: the next number comes from the highest number on main AND in every open pull request's `supabase/migrations/`, not only main's newest. Two branches on one number break whichever merges second. When several builders run at once, the coordinator assigns each its slot up front; a rename is checked against the open list before pushing. If a locked proof names the old filename, stop and report instead of renaming.
+- Never take a migration number from the clock (`date -u`): main's files are dated 2027, so a clock timestamp sorts before them and `supabase db push` refuses it. Number it just above the highest on origin/main, for example one hour later.
+- Before pushing a migration, run `TEST_DATABASE_URL=postgresql://postgres@127.0.0.1:55432/postgres bin/check --db` against a local Postgres. It builds every migration with the seed and fails on an ownerless table, a stale `rules.json`, or failing grade and rule tests. Without it, CP-6, CP-8 and CP-11 each lost a CI round on 9 Nov.
 
 ## Access and row-level security
 - Prove denied rows are absent and allowed rows present, both through the restricted login with identity set the way the app sets it. Full checklist: `references/access-proof-checklist.md`.
