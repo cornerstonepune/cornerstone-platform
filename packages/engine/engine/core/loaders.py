@@ -14,7 +14,6 @@ SEED = settings.SEED
 
 FILLED_TABLES = (
     "tenant",
-    "domain",
     "registry_skill",
     "milestone",
     "learning_objective",
@@ -86,16 +85,11 @@ def _registry(conn: db.Conn, t: db.Id) -> None:
         if rows:
             conn.cursor().executemany(sql, rows)
 
+    domain_names = {d["code"]: d["name"] for d in reg["domains"]}
     many(
-        "insert into domain (tenant_id, code, name) values (%s,%s,%s)"
-        " on conflict (tenant_id, code) do update set name=excluded.name, updated_at=now()",
-        [(t, d["code"], d["name"]) for d in reg["domains"]],
-    )
-
-    many(
-        "insert into registry_skill (tenant_id, code, domain, strand, name, description, source,"
-        " skill_type, pillar, ncf, cg, authored_by) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-        " on conflict (tenant_id, code) do update set domain=excluded.domain,"
+        "insert into registry_skill (tenant_id, code, domain, domain_name, strand, name, description, source,"
+        " skill_type, pillar, ncf, cg, authored_by) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+        " on conflict (tenant_id, code) do update set domain=excluded.domain, domain_name=excluded.domain_name,"
         " strand=excluded.strand, name=excluded.name, description=excluded.description,"
         " source=excluded.source, skill_type=excluded.skill_type, pillar=excluded.pillar,"
         " ncf=excluded.ncf, cg=excluded.cg, authored_by=excluded.authored_by, updated_at=now()",
@@ -104,6 +98,7 @@ def _registry(conn: db.Conn, t: db.Id) -> None:
                 t,
                 code,
                 code.split(".")[0],
+                domain_names.get(code.split(".")[0]),
                 ".".join(code.split(".")[:2]),
                 k["name"],
                 k.get("desc", ""),

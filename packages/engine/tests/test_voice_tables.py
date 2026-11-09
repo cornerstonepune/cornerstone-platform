@@ -122,7 +122,7 @@ def test_the_rest_did_as_expected_is_only_ever_as_expected_and_a_voice_row_names
         _observe(conn, s, entry_mode="group_as_expected", outcome="above")
     with pytest.raises(psycopg.errors.CheckViolation), conn.transaction():
         _observe(conn, s, route="voice")  # no note
-    with pytest.raises(psycopg.errors.ForeignKeyViolation), conn.transaction():
+    with pytest.raises(psycopg.errors.CheckViolation), conn.transaction():
         _observe(conn, s, outcome="secure")  # not a word of the school's
     assert (
         _observe(conn, s, entry_mode="group_as_expected", outcome="as_expected")["entry_mode"]
@@ -148,7 +148,7 @@ def test_a_note_keeps_when_it_reached_us_and_its_status_is_a_word_of_the_school(
     )
     _refused(
         conn,
-        psycopg.errors.ForeignKeyViolation,
+        psycopg.errors.CheckViolation,
         "update pii.educator_note set status = 'lost' where id = %s",
         note["id"],
     )
@@ -188,13 +188,7 @@ def test_the_engine_writes_and_never_deletes_and_the_website_never_sees_a_note(c
         conn.execute("select count(*) n from pii.educator_note where id = %s", (note["id"],)).fetchone()["n"]
         == 1
     )
-    for table in (
-        "activity_observation",
-        "pii.educator_note",
-        "pii.note_claim",
-        "observation_outcome",
-        "note_status",
-    ):
+    for table in ("activity_observation", "pii.educator_note", "pii.note_claim"):
         _refused(conn, psycopg.errors.InsufficientPrivilege, f"delete from {table}")
     conn.rollback()
     s = _school(conn)
@@ -206,7 +200,6 @@ def test_the_engine_writes_and_never_deletes_and_the_website_never_sees_a_note(c
     ).fetchone()["p"]
     # nobody is signed in here, so the access rule (CP-4) shows the website none of a child's observation
     assert conn.execute("select count(*) n from activity_observation").fetchone()["n"] == 0
-    assert conn.execute("select count(*) n from observation_outcome").fetchone()["n"] >= 5
     for sql in (
         "select * from pii.educator_note",
         "select * from pii.note_claim",
@@ -216,17 +209,34 @@ def test_the_engine_writes_and_never_deletes_and_the_website_never_sees_a_note(c
         _refused(conn, psycopg.errors.InsufficientPrivilege, sql)  # fmt: skip
 
 
-def test_the_words_and_the_waiting_time_are_rows(conn):
-    t = tenant(conn)
-    words = lambda table: [  # noqa: E731
-        r["code"]
-        for r in conn.execute(f"select code from {table} where tenant_id = %s order by ord", (t,)).fetchall()
-    ]
-    assert words("observation_outcome") == ["above", "as_expected", "below", "not_willing", "absent"]
-    assert words("observation_entry_mode") == ["individual", "group_as_expected"]
-    assert words("observation_route") == ["voice", "form"]
-    assert words("note_status") == ["received", "drafted", "confirmed", "left_unconfirmed"]
-    assert words("claim_decision") == ["accepted", "changed", "removed"]
+def test_the_words_are_the_columns_rules_and_the_waiting_time_is_a_row(conn):
+    """Each outcome, way of naming a child, route, note status and claim decision is taken, and any other word is
+    refused (CP-27: a rule on each column, where they were word-list tables)."""
+    s = _school(conn)
+    t = s["tenant"]
+    for outcome in ("above", "as_expected", "below", "not_willing", "absent"):
+        _observe(conn, s, outcome=outcome)
+    _observe(conn, s, entry_mode="group_as_expected", outcome="as_expected")
+    note = _note(conn, s)
+    _observe(conn, s, note=note)
+    for bad in ({"outcome": "brilliant"}, {"entry_mode": "whole_class"}, {"route": "email"}):
+        with pytest.raises(psycopg.errors.CheckViolation), conn.transaction():
+            _observe(conn, s, **bad)
+    claim = (
+        "insert into pii.note_claim (tenant_id, note_id, section, read_as, words, span_start, span_end, decision,"
+        " decided_by) values (%s, %s, 'above', '7', 'Above 7', 12, 19, %s, %s)"
+    )
+    for decision in ("accepted", "removed"):
+        conn.execute(claim, (t, note["id"], decision, s["staff"]))
+    _refused(conn, psycopg.errors.CheckViolation, claim, t, note["id"], "ignored", s["staff"])
+    for status in ("drafted", "confirmed"):
+        conn.execute("update pii.educator_note set status = %s where id = %s", (status, note["id"]))
+    other = _note(conn, s)
+    to = "update pii.educator_note set status = %s where id = %s"
+    _refused(conn, psycopg.errors.CheckViolation, to, "lost", other["id"])
+    conn.execute(to, ("drafted", other["id"]))
+    with pytest.raises(psycopg.errors.CheckViolation, match="does not go back"), conn.transaction():
+        conn.execute(to, ("received", other["id"]))
     config = {
         r["key"]: r["value"]
         for r in conn.execute(

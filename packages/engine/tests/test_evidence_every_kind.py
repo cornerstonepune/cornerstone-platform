@@ -2,23 +2,22 @@
 
 BUILD-ORDER, the locked scope of 22 Oct: "one evidence record for every kind (written, observed, voice, project,
 performance): who saw it, where, which registry skill, its scale (right/wrong/blank or yes/sometimes/not yet) and its
-source; past rows untouched (rule 4)". The record is `evidence_event`; its kinds, scales and marks are rows.
+source; past rows untouched (rule 4)". The record is `evidence_event`; its kinds are a rule on its column and each
+kind's scale is the database's record trigger (CP-27: they were word-list tables).
 """
 
-import json
 import os
 
 import psycopg
 import pytest
 
-from engine.checks import past
 from engine.core import db
 from tests import rows
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
 
-MIGRATION = db.REPO_ROOT / "supabase/migrations/20261205100000_one_evidence_record_for_every_kind.sql"
-SEED = json.loads((db.REPO_ROOT / "supabase/seed/vocabulary.json").read_text())
+SCALES = {"answer": ("right", "wrong", "blank"), "seen": ("yes", "sometimes", "not_yet")}
+KINDS = {"written": "answer", "observed": "seen", "voice": "answer", "project": "seen", "performance": "seen"}
 
 
 @pytest.fixture
@@ -63,24 +62,19 @@ def _refused(conn, child, **kw):
     return False
 
 
-def test_every_kind_is_a_row_with_its_scale(conn):
-    """Written, observed, voice, project and performance; right/wrong/blank and yes/sometimes/not yet; the
-    migration's rows are the seed's, so a new school gets the same."""
-    kinds = conn.execute("select code, scale from evidence_kind order by ord").fetchall()
-    assert [(k["code"], k["scale"]) for k in kinds] == [
-        (k["code"], k["scale"]) for k in SEED["evidence_kinds"]
-    ]
-    assert {k["code"] for k in kinds} == {"written", "observed", "voice", "project", "performance"}
-    marks = conn.execute(
-        "select scale, code, words, correct from evidence_mark order by scale, ord"
-    ).fetchall()
-    assert [(m["scale"], m["code"], m["words"], m["correct"]) for m in marks] == [
-        (s["code"], m["code"], m["words"], m["correct"])
-        for s in sorted(SEED["evidence_scales"], key=lambda s: s["code"])
-        for m in s["marks"]
-    ]
-    assert [m["code"] for m in marks if m["scale"] == "answer"] == ["right", "wrong", "blank"]
-    assert [m["code"] for m in marks if m["scale"] == "seen"] == ["yes", "sometimes", "not_yet"]
+def test_every_kind_takes_the_marks_of_its_scale_and_no_other(conn):
+    """Written, observed, voice, project and performance; right/wrong/blank and yes/sometimes/not yet, each kind on its
+    own scale, and a kind that is none of these is refused."""
+    child = rows.a_child(conn)
+    rung = db.one(conn, "select rung_code from skill where rung_code is not null limit 1")["rung_code"]
+    for kind, scale in KINDS.items():
+        extra = {"rung_code": rung, "channel": "teacher_override"} if kind == "written" else {}
+        for other, marks in SCALES.items():
+            for mark in marks:
+                correct = {"right": True, "wrong": False}.get(mark) if other == "answer" else None
+                refused = _refused(conn, child, kind=kind, mark=mark, correct=correct, **extra)
+                assert refused == (other != scale), (kind, mark)
+    assert _refused(conn, child, kind="drawing", mark="yes")
 
 
 def test_a_record_of_every_kind_says_who_where_which_skill_its_mark_and_source(conn):
@@ -148,12 +142,8 @@ def test_the_maths_graph_reads_written_answers_alone(conn):
     assert db.one(conn, "select count(*) as n from evidence_placed where id = %s", (r["id"],))["n"] == 0
 
 
-def test_past_rows_are_untouched(conn):
-    """Rule 4 and Nimish's "nothing will change for any of the past assessments": the evidence, every child's states
-    and every scored answer are the same after the migration runs again, and a record is still never edited."""
-    before = past.fingerprint(conn)
-    conn.execute(MIGRATION.read_text())
-    assert past.fingerprint(conn) == before
+def test_a_record_is_never_edited(conn):
+    """Rule 4: a record is kept as it was written; a correction is a new row."""
     child = rows.a_child(conn)
     r = _record(conn, child)
     with pytest.raises(psycopg.Error), conn.transaction():

@@ -31,7 +31,6 @@ class IngestRequest(BaseModel):
     actor: str
     pages: list[int] | None = None
     masks: dict[int, float] | None = None
-    narrative: bool = False
 
 
 class IngestResponse(BaseModel):
