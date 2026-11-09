@@ -7,6 +7,7 @@
 // the engine directly.
 import { createHmac } from "node:crypto";
 import type { EngineRoutes } from "./engine-routes";
+import tokens from "@/design-system/tokens.json";
 
 // Read at call time, not at module load: the repo-root .env is loaded by `lib/db`, and which of
 // these two modules a request touches first is not ours to decide.
@@ -96,10 +97,15 @@ export async function engineImage(path: GetPath): Promise<Response> {
  *  only — the route has already checked who is asking. */
 function said(headline: string, detail = ""): Response {
   const esc = (s: string) => s.replace(/[<>&"]/g, (c) => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;", '"': "&quot;" })[c] ?? c);
+  // An image file cannot read the page's CSS, so its colours are read from tokens.json (light: an image has no theme).
+  const c = (name: string) => {
+    const v = tokens.color.tokens.find((t) => t.name === name)?.value;
+    return typeof v === "string" ? v : (v?.light ?? "currentColor");
+  };
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="640" height="120" viewBox="0 0 640 120">
-  <rect width="640" height="120" fill="#f4f1ea" stroke="#c9c2b4"/>
-  <text x="20" y="48" font-family="Georgia, serif" font-size="20" fill="#2a2622">${esc(headline)}</text>
-  <text x="20" y="80" font-family="system-ui, sans-serif" font-size="13" fill="#6b645a">${esc(detail.slice(0, 90))}</text>
+  <rect width="640" height="120" fill="${c("surface")}" stroke="${c("line-control")}"/>
+  <text x="20" y="48" font-family="Georgia, serif" font-size="20" fill="${c("ink")}">${esc(headline)}</text>
+  <text x="20" y="80" font-family="system-ui, sans-serif" font-size="13" fill="${c("ink-muted")}">${esc(detail.slice(0, 90))}</text>
 </svg>`;
   return new Response(svg, { status: 200, headers: { "content-type": "image/svg+xml", "cache-control": "no-store" } });
 }

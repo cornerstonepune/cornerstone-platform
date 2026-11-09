@@ -129,7 +129,7 @@ export function Letter({
   return (
     <article
       data-testid="parent-report"
-      className="relative mx-auto max-w-[800px] bg-chalk px-6 py-8 text-[15px] leading-[1.65] shadow-sm [-webkit-print-color-adjust:exact] [print-color-adjust:exact] md:px-12 md:py-10 print:max-w-none print:bg-transparent print:p-0 print:shadow-none"
+      className="relative mx-auto max-w-[800px] bg-chalk px-6 py-8 text-[15px] leading-[1.65] shadow-[var(--shadow-card)] [-webkit-print-color-adjust:exact] [print-color-adjust:exact] md:px-12 md:py-10 print:max-w-none print:bg-transparent print:p-0 print:shadow-none"
     >
       {note.approved_by ? null : (
         <p

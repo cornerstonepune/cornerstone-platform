@@ -56,7 +56,7 @@ export default async function QuestionScreen({ params, searchParams }: Props) {
               <img
                 src={`/api/question/${it.item_key}`}
                 alt="The question as it prints on a paper"
-                className="w-full max-w-[760px] border border-basalt/14 bg-white"
+                className="w-full max-w-[760px] border border-basalt/14 bg-chalk"
               />
             </Panel>
 

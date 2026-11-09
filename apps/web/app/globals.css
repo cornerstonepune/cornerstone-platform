@@ -1,62 +1,59 @@
-/* The layers, lowest first. `tokens` is the school's design tokens (D-073, design-system/tokens.css), imported only by
-   the school's own screens' shell (components/educator/shell.tsx): the other pages keep their look. */
-@layer tokens, theme, base, components, utilities;
+/* The layers, lowest first. `tokens` is design-system/tokens.css, generated from tokens.json by scripts/tokens.mjs
+   (UI-14): every colour, font, size, shape, shadow and the press on every page comes from it. */
+@layer theme, tokens, base, components, utilities;
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
+@import "../design-system/tokens.css" layer(tokens);
 
-@custom-variant dark (&:is(.dark *));
+/* Hover changes colour only, and only where there is a real pointer (a mouse or a trackpad), never on a touch screen. */
+@custom-variant hover {
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      @slot;
+    }
+  }
+}
 
-/* The material library — Cornerstone Brand Book, Edition 02 (design-system/PRINCIPLES.md).
-   Lime wash 70 % · basalt 20 % · everything else 10 %. */
+/* The old material names the screens' classes still use (text-basalt/55, bg-chalk…), each on the token of its role,
+   until each screen is rebuilt on the tokens' own names. No colour is written here: tokens.css holds them all. */
 :root {
-  color-scheme: light;
-  --lime: #f3eee4;
-  --basalt: #26241f;
-  --terracotta: #b8562f;
-  --neem: #5f6b45;
-  --bamboo: #c9a96a;
-  --mud: #7a5a3e;
-  --monsoon: #6f7f8c;
-  --chalk: #fffdf8;
-  --ink-62: rgba(38, 36, 31, 0.62);
-  --ink-55: rgba(38, 36, 31, 0.55);
-  --ink-30: rgba(38, 36, 31, 0.3);
-  --ink-16: rgba(38, 36, 31, 0.16);
-  --ink-14: rgba(38, 36, 31, 0.14);
-  --ink-12: rgba(38, 36, 31, 0.12);
-  --ink-09: rgba(38, 36, 31, 0.09);
-  --ink-03: rgba(38, 36, 31, 0.03);
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --lime: var(--ground);
+  --basalt: var(--ink);
+  --terracotta: var(--state-late);
+  --neem: var(--state-ok);
+  --bamboo: var(--state-wait);
+  --mud: var(--kind-note);
+  --monsoon: var(--state-quiet);
+  --chalk: var(--panel);
+  --ink-62: color-mix(in srgb, var(--ink) 62%, transparent);
+  --ink-55: color-mix(in srgb, var(--ink) 55%, transparent);
+  --ink-30: color-mix(in srgb, var(--ink) 30%, transparent);
+  --ink-16: color-mix(in srgb, var(--ink) 16%, transparent);
+  --ink-14: color-mix(in srgb, var(--ink) 14%, transparent);
+  --ink-12: color-mix(in srgb, var(--ink) 12%, transparent);
+  --ink-09: color-mix(in srgb, var(--ink) 9%, transparent);
+  --ink-03: color-mix(in srgb, var(--ink) 3%, transparent);
+  --focus-ring: 2px solid var(--focus);
+  /* shadcn/ui's theme names (components/ui), each on the token of its role: the stock look is gone (UI-14). */
+  --background: var(--ground);
+  --foreground: var(--ink);
+  --card: var(--panel);
+  --card-foreground: var(--ink);
+  --popover: var(--panel);
+  --popover-foreground: var(--ink);
+  --primary: var(--action);
+  --primary-foreground: var(--action-ink);
+  --secondary: var(--surface);
+  --secondary-foreground: var(--ink);
+  --muted: var(--surface);
+  --muted-foreground: var(--ink-muted);
+  --accent: var(--highlight);
+  --accent-foreground: var(--ink);
+  --destructive: var(--state-late);
+  --border: var(--line);
+  --input: var(--line-control);
+  --ring: var(--focus);
 }
 
 @theme inline {
@@ -68,22 +65,9 @@
   --color-mud: var(--mud);
   --color-monsoon: var(--monsoon);
   --color-chalk: var(--chalk);
-  --font-body: var(--font-source-serif), "Source Serif 4", Georgia, serif;
-  --font-heading: var(--font-body);
+  --font-body: var(--font-sans);
+  --font-heading: var(--font-serif);
   --radius: 0;
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
@@ -105,22 +89,22 @@
 }
 
 html {
-  background: var(--lime);
+  background: var(--ground);
 }
 
+/* Source Sans 3 for everything a person reads; Source Serif 4 for titles (tokens.json, type). */
 body {
-  background: var(--lime);
-  color: var(--basalt);
-  font-family: var(--font-body);
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--font-sans);
   font-size: 15px;
   line-height: 1.55;
 }
 
-/* Headings: the same serif, a weight heavier; never all-caps. */
 h1,
 h2,
 h3 {
-  font-family: var(--font-heading);
+  font-family: var(--font-serif);
   font-weight: 600;
   margin: 0;
 }
@@ -129,10 +113,48 @@ h3 {
    sidebar's `hover:text-chalk` and turned a menu item basalt on basalt — it vanished on hover. */
 @layer base {
   a {
-    color: var(--terracotta);
+    color: var(--link);
   }
-  a:hover {
-    color: var(--basalt);
+  @media (hover: hover) and (pointer: fine) {
+    a:hover {
+      color: var(--ink);
+    }
+  }
+
+  /* Press, the only motion (tokens.json, motion): anything pressable gives way on :active. Nothing else moves. */
+  button,
+  a,
+  summary,
+  [role="button"],
+  [role="tab"],
+  [data-press] {
+    transition: var(--press-transition);
+  }
+  button:active,
+  a:active,
+  summary:active,
+  [role="button"]:active,
+  [role="tab"]:active,
+  [data-press]:active {
+    transform: var(--press-transform);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    button,
+    a,
+    summary,
+    [role="button"],
+    [role="tab"],
+    [data-press] {
+      transition: none;
+    }
+    button:active,
+    a:active,
+    summary:active,
+    [role="button"]:active,
+    [role="tab"]:active,
+    [data-press]:active {
+      transform: none;
+    }
   }
 }
 
@@ -273,8 +295,10 @@ table.grid.steady thead th {
   z-index: 2;
   background: linear-gradient(var(--ink-03), var(--ink-03)), var(--chalk);
 }
-table.grid.steady tbody tr:not(.under):hover td {
-  background: var(--ink-03);
+@media (hover: hover) and (pointer: fine) {
+  table.grid.steady tbody tr:not(.under):hover td {
+    background: var(--highlight);
+  }
 }
 table.grid.steady tr.under td {
   background: var(--ink-03);
@@ -291,24 +315,24 @@ table.grid.steady tr.under td {
   white-space: nowrap;
 }
 .pill-neem {
-  background: rgba(95, 107, 69, 0.14);
-  color: var(--neem);
-  border-color: rgba(95, 107, 69, 0.3);
+  background: var(--state-ok-bg);
+  color: var(--state-ok);
+  border-color: var(--state-ok);
 }
 .pill-bamboo {
-  background: rgba(201, 169, 106, 0.22);
-  color: var(--mud);
-  border-color: rgba(201, 169, 106, 0.45);
+  background: var(--state-wait-bg);
+  color: var(--state-wait);
+  border-color: var(--state-wait);
 }
 .pill-terracotta {
-  background: rgba(184, 86, 47, 0.13);
-  color: var(--terracotta);
-  border-color: rgba(184, 86, 47, 0.3);
+  background: var(--state-late-bg);
+  color: var(--state-late);
+  border-color: var(--state-late);
 }
 .pill-monsoon {
-  background: rgba(111, 127, 140, 0.15);
-  color: var(--monsoon);
-  border-color: rgba(111, 127, 140, 0.35);
+  background: var(--state-quiet-bg);
+  color: var(--state-quiet);
+  border-color: var(--state-quiet);
 }
 
 .chip {
@@ -320,14 +344,16 @@ table.grid.steady tr.under td {
   color: var(--basalt);
   text-decoration: none;
 }
-.chip:hover {
-  color: var(--basalt);
-  border-color: var(--basalt);
+@media (hover: hover) and (pointer: fine) {
+  .chip:hover {
+    color: var(--ink);
+    border-color: var(--ink);
+  }
 }
 .chip.on {
-  background: var(--basalt);
-  color: var(--lime);
-  border-color: var(--basalt);
+  background: var(--action);
+  color: var(--action-ink);
+  border-color: var(--action);
 }
 
 /* The one loud colour: one primary action per screen. */
@@ -336,26 +362,30 @@ table.grid.steady tr.under td {
   align-items: center;
   gap: 8px;
   padding: 10px 18px;
-  background: var(--terracotta);
-  color: var(--chalk);
-  font-family: var(--font-body);
+  background: var(--action);
+  color: var(--action-ink);
+  font-family: var(--font-sans);
   font-size: 13.5px;
   font-weight: 700;
   border: none;
   cursor: pointer;
 }
-.btn:hover {
-  background: var(--basalt);
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover {
+    background: color-mix(in srgb, var(--action) 85%, var(--ground));
+  }
 }
 .btn.secondary {
   background: transparent;
-  color: var(--basalt);
+  color: var(--ink);
   border: 1px solid var(--ink-30);
   font-weight: 400;
 }
-.btn.secondary:hover {
-  border-color: var(--basalt);
-  background: transparent;
+@media (hover: hover) and (pointer: fine) {
+  .btn.secondary:hover {
+    border-color: var(--ink);
+    background: transparent;
+  }
 }
 .btn:disabled {
   opacity: 0.45;
@@ -391,9 +421,9 @@ table.grid.steady tr.under td {
   padding: 9px 12px;
   border: 1px solid var(--ink-30);
   background: var(--chalk);
-  font-family: var(--font-body);
+  font-family: var(--font-sans);
   font-size: 13.5px;
-  color: var(--basalt);
+  color: var(--ink);
   width: 100%;
 }
 .textarea {
@@ -403,7 +433,7 @@ table.grid.steady tr.under td {
 .input:focus,
 .select:focus,
 .textarea:focus {
-  outline: 2px solid var(--terracotta);
+  outline: 2px solid var(--focus);
   outline-offset: 1px;
 }
 
@@ -479,37 +509,4 @@ table.grid.steady tr.under td {
   min-width: 0;
   max-width: 100%;
   overflow-x: auto;
-}
-
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
 }

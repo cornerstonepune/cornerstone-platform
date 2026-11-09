@@ -34,7 +34,7 @@ function Child({ p }: { p: ChildPage }) {
       <section className="lg:col-span-7" aria-labelledby="plan" data-k2="plan">
         <h2 id="plan" className="mb-2 text-[18px]">Where the child is</h2>
         {p.skills.length === 0 ? <Notice>Not seen on any skill yet. A confirmed note or form puts the first one here.</Notice> : (
-          <ul className="divide-y divide-[var(--border)] border-y border-[var(--border)]">
+          <ul className="divide-y divide-[var(--line)] border-y border-[var(--line)]">
             {p.skills.map((s) => (
               <li key={s.code} className="flex flex-col gap-1 py-3">
                 <div className="flex flex-wrap items-center gap-2"><span className="font-medium">{s.name}</span><ChildStateChip state={s.state} words={s.words} colour={s.colour} level={s.level} /></div>
@@ -49,7 +49,7 @@ function Child({ p }: { p: ChildPage }) {
         <section aria-labelledby="next" data-k2="ready-next">
           <h2 id="next" className="mb-2 text-[18px]">Ready next</h2>
           {p.ready_next.length === 0 ? <Notice>Nothing is suggested yet. This list uses only links between skills that a member of staff has confirmed. A skill with no confirmed link is left out, not judged.</Notice> : (
-            <ul className="divide-y divide-[var(--border)] border-y border-[var(--border)]">
+            <ul className="divide-y divide-[var(--line)] border-y border-[var(--line)]">
               {p.ready_next.map((r) => (
                 <li key={r.skill.code} className="py-3">
                   <div className="font-medium">{r.skill.name}</div>
@@ -62,13 +62,13 @@ function Child({ p }: { p: ChildPage }) {
         <section aria-labelledby="growth" data-k2="growth">
           <h2 id="growth" className="mb-2 text-[18px]">How the child has moved</h2>
           {p.growth.length === 0 ? <Notice>No level has been named yet, so there is nothing to compare. Months with no note are left blank, not counted as low.</Notice> : (
-            <ul className="divide-y divide-[var(--border)] border-y border-[var(--border)]">
+            <ul className="divide-y divide-[var(--line)] border-y border-[var(--line)]">
               {p.growth.map((g) => (
                 <li key={g.skill.code} className="py-3" data-trend={g.trend}>
                   <div className="flex flex-wrap items-center gap-2"><span className="font-medium">{g.skill.name}</span><span className="inline-flex items-center gap-1 text-[13px]"><Icon name={TRENDS[g.trend].icon} size={16} />{TRENDS[g.trend].words}</span></div>
                   <div className="text-[13px]">first seen {dayWords(g.first_seen)} · last seen {dayWords(g.last_seen)}</div>
                   <ol className="mt-1 flex flex-wrap gap-2 text-[13px]">
-                    {g.by_month.map((m) => <li key={m.month} className="border border-[var(--border)] px-[var(--space-2)] py-[var(--space-1)]">{monthWords(m.month)}: {levelWords(m.level)}, {m.days} {m.days === 1 ? "day" : "days"}</li>)}
+                    {g.by_month.map((m) => <li key={m.month} className="border border-[var(--line)] px-[var(--space-2)] py-[var(--space-1)]">{monthWords(m.month)}: {levelWords(m.level)}, {m.days} {m.days === 1 ? "day" : "days"}</li>)}
                   </ol>
                 </li>
               ))}

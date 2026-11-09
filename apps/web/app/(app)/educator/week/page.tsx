@@ -68,7 +68,7 @@ function WeekGrid({ w, today, now }: { w: Week; today: string; now: string }) {
         const when = whenIs(d.day, today);
         return [
           when === "today" ? (
-            <div key={`${d.day}-today`} data-today-column aria-hidden style={cell(`1 / span ${starts.length + 1}`)} className={`rounded-[var(--radius-m)] bg-[var(--border)]/45 max-md:hidden ${PLACE}`} />
+            <div key={`${d.day}-today`} data-today-column aria-hidden style={cell(`1 / span ${starts.length + 1}`)} className={`rounded-[var(--radius-control)] bg-[var(--line)]/45 max-md:hidden ${PLACE}`} />
           ) : null,
           <Link
             key={`${d.day}-head`}
@@ -76,12 +76,12 @@ function WeekGrid({ w, today, now }: { w: Week; today: string; now: string }) {
             href={`/educator?class=${w.class.id}&day=${d.day}`}
             data-day-head={d.day}
             style={cell(1)}
-            className={`flex min-h-[var(--tap)] items-center justify-between border-b border-[var(--border)] px-[var(--space-2)] font-semibold text-[var(--text)] no-underline max-md:mt-[var(--space-3)] ${PLACE}`}
+            className={`flex min-h-[var(--tap)] items-center justify-between border-b border-[var(--line)] px-[var(--space-2)] font-semibold text-[var(--ink)] no-underline max-md:mt-[var(--space-3)] ${PLACE}`}
           >
             {shortDate(d.day)}
           </Link>,
           isBlank(d) ? (
-            <div key={`${d.day}-none`} data-day={d.day} data-day-kind={d.kind} style={cell(`2 / span ${Math.max(starts.length, 1)}`)} className={`grid min-h-[var(--tap)] place-content-center rounded-[var(--radius-m)] border border-dashed border-[var(--border)] p-[var(--space-3)] text-center text-[var(--text-muted)] ${PLACE}`}>
+            <div key={`${d.day}-none`} data-day={d.day} data-day-kind={d.kind} style={cell(`2 / span ${Math.max(starts.length, 1)}`)} className={`grid min-h-[var(--tap)] place-content-center rounded-[var(--radius-control)] border border-dashed border-[var(--line)] p-[var(--space-3)] text-center text-[var(--ink-muted)] ${PLACE}`}>
               {blankWords(d)}
             </div>
           ) : (

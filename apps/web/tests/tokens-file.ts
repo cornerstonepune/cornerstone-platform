@@ -1,23 +1,21 @@
 import { readFileSync } from "node:fs";
 import path from "node:path";
 
-// The tokens test's reader of apps/web/design-system/tokens.css (D-073), the one file the K2 educator's screens take
+// The tokens test's reader of apps/web/design-system/tokens.css (D-073; generated from tokens.json since UI-14), the one file the K2 educator's screens take
 // every value from: a component writes a token's name, never a value. TEXT_PAIRS is each text colour those screens draw
 // on its background, held to 4.5:1.
 export const TEXT_PAIRS = [
-  ["--text", "--bg"],
-  ["--text-muted", "--bg"],
-  ["--text", "--surface"],
-  ["--text-muted", "--surface"],
-  ["--link", "--bg"],
-  ["--chip-donow-fg", "--chip-donow-bg"],
-  ["--chip-confirm-fg", "--chip-confirm-bg"],
-  ["--chip-soon-fg", "--chip-soon-bg"],
-  ["--chip-done-fg", "--chip-done-bg"],
-  ["--chip-late-fg", "--chip-late-bg"],
-  ["--origin-school-fg", "--origin-school-bg"],
-  ["--origin-drafted-fg", "--origin-drafted-bg"],
-  ["--origin-edited-fg", "--origin-edited-bg"],
+  ["--ink", "--ground"],
+  ["--ink-muted", "--ground"],
+  ["--ink", "--panel"],
+  ["--ink-muted", "--panel"],
+  ["--link", "--ground"],
+  ["--action-ink", "--action"],
+  ["--state-wait", "--state-wait-bg"],
+  ["--state-quiet", "--state-quiet-bg"],
+  ["--state-ok", "--state-ok-bg"],
+  ["--state-late", "--state-late-bg"],
+  ["--kind-note", "--kind-note-bg"],
 ] as const;
 
 /** The light-mode `:root` of tokens.css as name → value, var() chains resolved (for the test; never at run time). */

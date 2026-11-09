@@ -124,7 +124,7 @@ export async function LibraryWorksheetPage({ code }: { code: string }) {
                     <ul aria-label="Taxonomy cases on this worksheet" className="grid gap-1">
                       {cases.map((c) => (
                         <li key={c.code}>
-                          <Link href={`/worksheets/taxonomy?ch=${c.section.split(".")[0]}`} className="font-mono">
+                          <Link href={`/worksheets/taxonomy?ch=${c.section.split(".")[0]}`} className="tabular-nums">
                             {c.code}
                           </Link>{" "}
                           {c.label} <span className="text-basalt/62">· {c.n} of the questions</span>

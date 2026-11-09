@@ -3,7 +3,7 @@
 // page arrived — on the live site that was five minutes, and it read as a dead link.
 export default function Loading() {
   return (
-    <div role="status" aria-label="Loading this page" className="animate-pulse">
+    <div role="status" aria-label="Loading this page" className="">
       <header className="border-b border-basalt/12 px-5 pt-6 pb-[18px] md:px-9">
         <div className="mb-3 h-3 w-24 bg-basalt/10" />
         <div className="h-7 w-72 max-w-full bg-basalt/12" />

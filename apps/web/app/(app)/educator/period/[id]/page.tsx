@@ -16,8 +16,8 @@ import { schoolToday } from "@/lib/voice-page";
 
 // One period (M1-09), opened from any block of Today or This week: its time, the school's words for it, the planner's
 // lines for its subject this fortnight, and its activity. From M1-06's /timetable/period.
-const CARD = "grid content-start gap-[var(--space-2)] rounded-[var(--radius-m)] border border-[var(--border)] bg-[var(--surface)] p-[var(--space-3)]";
-const HEAD = "flex items-center gap-[var(--space-2)] text-[length:var(--text-h3)] font-semibold";
+const CARD = "grid content-start gap-[var(--space-2)] rounded-[var(--radius-control)] border border-[var(--line)] bg-[var(--panel)] p-[var(--space-3)]";
+const HEAD = "flex items-center gap-[var(--space-2)] text-[length:var(--text-title-small)] font-semibold";
 
 export default async function PeriodPage({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ class?: string; day?: string }> }) {
   const me = await requireStaff();
@@ -60,7 +60,7 @@ export default async function PeriodPage({ params, searchParams }: { params: Pro
             {E.schoolWords}
           </h2>
           <p>{p.text || p.label}</p>
-          {p.line ? <p className="text-[var(--text-muted)]">{p.line}</p> : null}
+          {p.line ? <p className="text-[var(--ink-muted)]">{p.line}</p> : null}
         </section>
         <section className={`${CARD} col-span-12 lg:col-span-6`} id="activity" data-part="activity">
           <h2 className={HEAD}>
@@ -70,13 +70,13 @@ export default async function PeriodPage({ params, searchParams }: { params: Pro
           {p.activity ? (
             <>
               <p className="font-medium">{p.activity.name}</p>
-              <Link href={`/educator/activity/${encodeURIComponent(p.activity.code)}?back=${encodeURIComponent(today)}`} data-open-activity className="inline-flex min-h-[var(--tap)] w-fit items-center gap-[var(--space-1)] rounded-[var(--radius-m)] border border-[var(--border-control)] px-[var(--space-3)] font-medium text-[var(--text)] no-underline">
+              <Link href={`/educator/activity/${encodeURIComponent(p.activity.code)}?back=${encodeURIComponent(today)}`} data-open-activity className="inline-flex min-h-[var(--tap)] w-fit items-center gap-[var(--space-1)] rounded-[var(--radius-control)] border border-[var(--line-control)] px-[var(--space-3)] font-medium text-[var(--ink)] no-underline">
                 <Icon name="next" size={16} />
                 {E.page.open}
               </Link>
             </>
           ) : (
-            <p className="text-[var(--text-muted)]">{E.noActivity}</p>
+            <p className="text-[var(--ink-muted)]">{E.noActivity}</p>
           )}
         </section>
         <section className={`${CARD} col-span-12`} id="planner" data-part="planner">
@@ -91,7 +91,7 @@ export default async function PeriodPage({ params, searchParams }: { params: Pro
               ))}
             </ul>
           ) : (
-            <p className="text-[var(--text-muted)]">{E.noPlanner}</p>
+            <p className="text-[var(--ink-muted)]">{E.noPlanner}</p>
           )}
         </section>
       </div>

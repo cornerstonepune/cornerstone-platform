@@ -5,7 +5,6 @@ import { EngineDown } from "@/lib/engine";
 import { schoolZone } from "@/lib/school-clock";
 import { type Block, type Edit, type Fixed, type Limit, type Rules, blockWhen, day, DAYS, rulesOf, standing } from "@/lib/timetable-rules";
 import { changeRule } from "./actions";
-import "@/design-system/tokens.css";
 import "../timetable.css";
 
 type Props = { searchParams: Promise<Record<string, string | undefined>> };

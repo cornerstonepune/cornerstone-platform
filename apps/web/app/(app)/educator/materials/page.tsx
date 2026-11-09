@@ -39,7 +39,7 @@ export default async function MaterialsPage({ searchParams }: { searchParams: Pr
       action={
         <nav aria-label={W.title} className="flex flex-wrap gap-[var(--space-2)]">
           {SPANS.map((s) => (
-            <Link key={s} href={here(s)} aria-current={s === span ? "page" : undefined} className={`${BTN} no-underline ${s === span ? "border-[var(--chip-donow-bd)] bg-[var(--chip-donow-bg)] text-[var(--chip-donow-fg)]" : ""}`}>
+            <Link key={s} href={here(s)} aria-current={s === span ? "page" : undefined} className={`${BTN} no-underline ${s === span ? "border-[var(--action)] bg-[var(--action)] text-[var(--action-ink)]" : ""}`}>
               {W.span[s]}
             </Link>
           ))}

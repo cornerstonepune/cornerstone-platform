@@ -24,10 +24,10 @@ const FILL: Record<Rag | "none", string> = {
   none: "var(--chalk)",
 };
 const INK: Record<Rag | "none", string> = {
-  green: "#fff",
-  amber: "var(--basalt)",
-  red: "#fff",
-  grey: "#fff",
+  green: "var(--panel)",
+  amber: "var(--panel)",
+  red: "var(--panel)",
+  grey: "var(--panel)",
   none: "var(--basalt)",
 };
 
@@ -65,7 +65,7 @@ function Signals({
   ] as const;
   return (
     <g>
-      <rect x={x} y={y} width={w} height={6} fill="#fff" opacity={0.85} />
+      <rect x={x} y={y} width={w} height={6} fill="var(--panel)" opacity={0.85} />
       {parts.map(([k, fill], i) => {
         const width = (k / total) * w;
         const r = (

@@ -31,7 +31,7 @@ says:
   - words: "All parts should just function like a well-oiled machine, right?"
     proved_by: "apps/web/tests/m1-09-tokens.spec.ts::the educator's screens write no colour, size or font of their own: only the tokens"
   - words: "All parts should just function like a well-oiled machine, right?"
-    proved_by: "apps/web/tests/m1-09-calendar.spec.ts::the school's tokens load inside the shell only: a page outside it keeps the site's own look"
+    proved_by: "apps/web/tests/m1-09-calendar.spec.ts::the school's tokens load on every page: a page outside the shell has them and reads in Source Sans 3"
   - words: "All parts should just function like a well-oiled machine, right?"
     proved_by: "apps/web/tests/m1-09-calendar.spec.ts::a day in the address that is not a date is not found, never an error"
   - words: "All parts should just function like a well-oiled machine, right?"
