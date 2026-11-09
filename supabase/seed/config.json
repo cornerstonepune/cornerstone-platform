@@ -539,6 +539,11 @@
       "seed_once": true
     },
     {
+      "key": "timetable.link_band",
+      "description": "The grade whose plan lines `engine timetable link` and `unmatched` work on when no --band is given (CP-8). Today only K2 has a Monthly Planner.",
+      "value": "K2"
+    },
+    {
       "key": "fortnight.freeze",
       "description": "Days before a fortnight starts when its plan and timetable freeze (D-072, converted to days before the fortnight starts).",
       "value": {"days_before_start": 19},
