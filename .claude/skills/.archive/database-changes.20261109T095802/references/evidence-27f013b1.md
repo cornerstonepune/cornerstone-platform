@@ -1,2 +1,0 @@
-Swap method: a swap takes the two lessons out and puts them back at the same ids, because the session key is immediate. The design's in-place update could not work.
-Scope note in docs/notes/CP-12.md: "a swap takes the two lessons out together and puts them back, as CP-22's `tt_live._write` does, since the session key is immediate"
