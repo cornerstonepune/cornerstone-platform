@@ -20,8 +20,9 @@ Nimish is a non-technical founder. He decides scope and reads plain-English summ
    independent tasks). One test per *Done when* line, in `packages/engine/tests` or `apps/web/tests`, testing
    behaviour through engine functions, routes or views, not table names.
 4. **Ship.** A branch named after the spec, a pull request whose body says `Closes #<issue>`, lists each *Done when*
-   line with the test that proves it, and gives a plain-English summary. Claude merges its own pull request when every
-   CI check is green; never with a red or missing check, never by loosening a check. Never push to `main`, never
+   line with the test that proves it, and gives a plain-English summary. A draft runs only CI's quick checks
+   (`bin/ci-plan`); mark it ready and wait for the full suite on that head before merging. Claude merges its own pull
+   request when every CI check is green; never with a red or missing check, never by loosening a check. Never push to `main`, never
    force-push, never `--no-verify`.
 5. **One database change at a time.** Schema changes never run in parallel branches.
 
