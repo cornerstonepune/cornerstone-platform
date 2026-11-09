@@ -13,5 +13,5 @@
  "failed": [
   "7 each components/ui file uses var(-- and no hex; shadcn theme on tokens; Button/Tabs baseline committed"
  ],
- "ran_at": "2026-11-09T12:15:51+00:00"
+ "ran_at": "2026-11-09T12:36:03+00:00"
 }
