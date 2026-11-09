@@ -379,7 +379,7 @@
         ],
         [
           "KanbanBoard",
-          "what waits on me, by Table | Board toggle: Do now (notes past 48 h) · This week (notes waiting, periods to record) · Done (periods taught and confirmed today); the List is the periods below"
+          "what waits on me, by Table | Board toggle: Do now (notes past 48 h) · This week (notes waiting, younger than 48 h) · Done (periods taught and confirmed today); the List is the periods below"
         ],
         [
           "PeriodRow",
@@ -983,7 +983,7 @@
         ],
         [
           "KanbanBoard",
-          "the notes as lanes by Table | Board toggle: To confirm (late ones first, red) · Confirmed; each card a note"
+          "the notes as lanes by Table | Board toggle: To confirm (late ones first, red; a note still being read or left unconfirmed sits here too) · Confirmed; each card a note"
         ],
         [
           "DataTable",
