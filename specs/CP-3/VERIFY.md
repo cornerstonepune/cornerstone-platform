@@ -1,4 +1,15 @@
 VERDICT: PASS
+# CP-3 amendment: proof 7 applies only to CP-3's own change (PR #531, a569d468 against main e7b0c2e1)
+Read-only review through git refs plus proofs run in a throwaway clone. Not run: proof 8 (box only), the real GitHub Actions run (merge-ref layout simulated), the browser and speed suites.
+Integrity: spec.md and every other proof and test are byte-identical to main; only test_browser_suite.py (test_7 became check_existing_tests_unchanged(root), one new self-check test) and checks.sh (check 7 also runs the new test) changed; the LOCK digest was recomputed with athena's method and equals specs/CP-3/LOCK (01f8440c...435dfe).
+Rule: 'CP-3's own change' = the migration 20270120100000_access_groups_and_rules.sql or any file under specs/CP-3/ except VERIFY.md, RUN.json and status.json (the CP-5 precedent, plus status.json as a record). When it is CP-3's own change the OLD rule applies word for word (any existing file under apps/web/tests or playwright.config.ts modified/deleted/renamed/retyped fails, except global-setup.ts); otherwise the check passes with one line. Simulated CI layouts: an unrelated web PR editing a spec passes; the same plus a file added under specs/CP-3 fails naming the file; a PR editing the CP-3 migration plus a test fails; records-only plus a test edit passes; a push to main (merge-base equals HEAD) passes.
+Self-check: 10 deliberate breakages were tried; the 8 that touch the 'does it apply' logic were all caught; 2 only touch the old rule (removing playwright.config.ts from the checked paths; narrowing the diff filter to MD), which had no self-test before. Not blocking.
+Limits noted, not blocking: a PR that renames the CP-3 migration file and also edits a test would pass because default rename detection lists only the new name (renaming an applied numbered migration is not a realistic change); a follow-up unlock could add --no-renames at test_browser_suite.py:53 and a self-check case for playwright.config.ts.
+Unasked, small: merge_base() now tries origin/main, then main, then master (needed for the self-check's scratch repos); one docstring sentence; the notes paragraph. status.json reads 'locked' as athena wrote it (athena finish is refused repo-wide by the ATH-20 web-readiness gate).
+VERDICT: PASS
+
+## Earlier verification of CP-3 (kept from main, unchanged)
+VERDICT: PASS
 
 PASS. Items 1 to 7 are met. Item 8 holds when I read it against the migration, but it can only actually pass on the box after Nimish switches the site to the restricted login.
 
