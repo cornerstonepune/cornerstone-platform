@@ -124,7 +124,7 @@ def generate(
             conn.execute("set transaction read only")
         try:
             run = gen.generate(conn, grade, section, year, fortnight)
-        except tt_need.NoSuchFortnight as no:
+        except (tt_need.NoSuchFortnight, gen.MissingSetting) as no:
             typer.echo(str(no))
             raise typer.Exit(1) from no
         if dry:

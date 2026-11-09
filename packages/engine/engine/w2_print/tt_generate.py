@@ -85,11 +85,22 @@ def _touching(i: need.Inputs, subjects: set[str]) -> list[dict]:
     ]
 
 
+class MissingSetting(Exception):
+    """A setting row the school's database should hold (`engine load` or the migration puts it there) is not there."""
+
+
+def _setting(conn: db.Conn, key: str) -> int:
+    value = settings.config(conn, key)
+    if value is None:
+        raise MissingSetting(f"this database has no {key} setting: run the migrations and `engine load`")
+    return int(value)
+
+
 def generate(conn: db.Conn, grade: str, section: str, year: str, number: int) -> Run:
     """Work out the fortnight, and run FET unless the checks already show it cannot be met. Writes nothing."""
     i = need.load(conn, grade, section, year, number)
     n = need.needs(i)
-    seconds, seed = int(settings.config(conn, SOLVE_SECONDS, 120)), int(settings.config(conn, SEED, 20261109))
+    seconds, seed = _setting(conn, SOLVE_SECONDS), _setting(conn, SEED)
     run = Run(
         "placed", n.total(), 0, {"free_periods": need.free_by_week(i)}, seed=seed, solve_seconds=seconds
     )

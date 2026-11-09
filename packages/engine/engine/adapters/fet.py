@@ -151,11 +151,16 @@ def run(input_text: str, solve_seconds: int, seed: int) -> Result:
     with tempfile.TemporaryDirectory() as tmp:
         src = Path(tmp) / f"{NAME}.fet"
         src.write_text(input_text, encoding="utf-8")
-        out = subprocess.run(
-            ["fet-cl", f"--inputfile={src}", f"--outputdir={tmp}/out", f"--timelimitseconds={solve_seconds}",
-             *[f"--randomseeds{k}={seed}" for k in SEEDS]],
-            capture_output=True, text=True, timeout=solve_seconds + 120,
-        )  # fmt: skip
+        try:
+            out = subprocess.run(
+                ["fet-cl", f"--inputfile={src}", f"--outputdir={tmp}/out", f"--timelimitseconds={solve_seconds}",
+                 *[f"--randomseeds{k}={seed}" for k in SEEDS]],
+                capture_output=True, text=True, timeout=solve_seconds + 120,
+            )  # fmt: skip
+        except (
+            subprocess.TimeoutExpired
+        ):  # FET did not stop at its own limit: the same answer as running out of time
+            return Result(found, None, {}, True, None)
         acts = Path(tmp) / "out" / "timetables" / NAME / f"{NAME}_activities.xml"
         log = out.stdout + out.stderr
         if not acts.exists():
