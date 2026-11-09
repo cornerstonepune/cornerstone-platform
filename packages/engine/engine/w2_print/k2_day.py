@@ -7,6 +7,7 @@ from typing import Any
 
 from engine.core import db, settings
 from engine.w2_print import educator_gate as gate
+from engine.w2_print import fortnight_cycle as fc
 
 SWITCH = gate.SWITCH
 
@@ -125,20 +126,25 @@ def _ends(periods: list[dict]) -> None:
             p["ends_at"] = after["starts_at"]
 
 
-def _who(klass: dict, classes: list[dict]) -> dict:
-    # `frozen` is the month lock (M1-12): false until that exists, so a screen reads it and never guesses
-    return {"classes": [_public(c) for c in classes], "class": _public(klass), "frozen": False}
+def _who(conn: db.Conn, klass: dict, classes: list[dict], on: dt.date) -> dict:
+    # `frozen` is the state of the fortnight holding the day (CP-6), read from `fortnight_cycle`
+    tenant = db.one(conn, "select tenant_id from school_class where id = %s", (klass["id"],))["tenant_id"]
+    return {
+        "classes": [_public(c) for c in classes],
+        "class": _public(klass),
+        "frozen": fc.is_frozen(conn, tenant, on),
+    }
 
 
 def day(conn: db.Conn, klass: dict, classes: list[dict], on: dt.date) -> dict:
-    return {**_who(klass, classes), **days(conn, klass, [on])[0]}
+    return {**_who(conn, klass, classes, on), **days(conn, klass, [on])[0]}
 
 
 def week(conn: db.Conn, klass: dict, classes: list[dict], any_day: dt.date) -> dict:
     monday = any_day - dt.timedelta(days=any_day.weekday())
     five = days(conn, klass, [monday + dt.timedelta(d) for d in range(5)])
     return {
-        **_who(klass, classes), "week_of": monday.isoformat(), "week": next((d["week"] for d in five if d["week"]), None),
+        **_who(conn, klass, classes, monday), "week_of": monday.isoformat(), "week": next((d["week"] for d in five if d["week"]), None),
         "fortnight": next((d["fortnight"] for d in five if d["fortnight"]), None), "days": five,
     }  # fmt: skip
 
@@ -167,4 +173,9 @@ def period(conn: db.Conn, klass: dict, classes: list[dict], on: dt.date, period_
     if one is None:
         raise Refused("That period is not on this day.", 404)
     head = {k: v for k, v in today.items() if k not in ("periods", "weekday")}
-    return {**_who(klass, classes), **head, **one, "plan_lines": _plan_lines(conn, one["plan_entry_id"])}
+    return {
+        **_who(conn, klass, classes, on),
+        **head,
+        **one,
+        "plan_lines": _plan_lines(conn, one["plan_entry_id"]),
+    }
