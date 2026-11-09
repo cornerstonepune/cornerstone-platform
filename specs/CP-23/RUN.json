@@ -1,16 +1,15 @@
 {
- "ok": false,
+ "ok": true,
  "passed": [
   "1 no database: bin/check fails on a grade code K2 in a .py outside assess/ and on a screen saying borrow",
   "2 bin/check fails on a branch migration numbered at or before origin/main's newest and on a shared version",
-  "7 bin/check without --db opens no database, passes on a clean tree, and finishes in under 60 s"
- ],
- "failed": [
   "3 bin/check --db builds the schema from the migrations and fails on a table with no owner",
   "4 bin/check --db fails on a stale rules.json and prints run `engine live rules --write`",
   "5 bin/check --db runs test_grades.py and test_rules.py with no skips, and passes on an unplanted tree",
   "6 bin/check --claude runs the --db checks when TEST_DATABASE_URL is set (fails on an ownerless table)",
+  "7 bin/check without --db opens no database, passes on a clean tree, and finishes in under 60 s",
   "8 learnings.md has a card: number a migration just after origin/main's newest, check with bin/check --db"
  ],
- "ran_at": "2026-11-09T06:35:44+00:00"
+ "failed": [],
+ "ran_at": "2026-11-09T07:14:53+00:00"
 }

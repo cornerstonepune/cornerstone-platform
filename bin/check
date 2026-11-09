@@ -5,6 +5,7 @@
 # Fast and with no database, so it runs every time rather than when someone remembers:
 #   before every commit            .githooks/pre-commit
 #   before Claude Code ends a turn .claude/settings.json (Stop hook) — `--claude` makes a failure block it
+# `bin/check --db` adds the checks that need a database (TEST_DATABASE_URL); the stop gate adds them whenever it is set.
 here=$(cd "$(dirname "$0")/.." && pwd)
 engine="$here/packages/engine"
 if [ ! -x "$engine/.venv/bin/python" ]; then
@@ -19,8 +20,34 @@ run() {
     .venv/bin/ruff check engine tests -q &&
     .venv/bin/ruff format --check engine tests -q
 }
+# --db, and the stop gate whenever TEST_DATABASE_URL is set: what needs a database, on a database of its own beside the
+# local one (never the copy itself), built from every migration with the seed and no bank (bin/testdb schema). A table
+# with no owner, rules.json behind the migrations, and the grade and rule tests that skip without a database.
+db() (
+  url=${TEST_DATABASE_URL:?"bin/check --db needs TEST_DATABASE_URL, a local Postgres"}
+  case "$url" in
+    *@127.0.0.1:* | *@127.0.0.1/* | *@localhost:* | *@localhost/*) ;;
+    *) echo "bin/check --db: TEST_DATABASE_URL must be on this machine (127.0.0.1 or localhost)" >&2 && exit 1 ;;
+  esac
+  name="cs_check_$$"
+  scratch=$(python3 -c 'import sys, urllib.parse as u; p = u.urlsplit(sys.argv[1]); print(u.urlunsplit(p._replace(path="/" + sys.argv[2])))' "$url" "$name")
+  trap 'psql "$url" -qc "drop database if exists $name with (force)" >/dev/null 2>&1' EXIT
+  psql "$url" -q -v ON_ERROR_STOP=1 -c "create database $name" || exit 1
+  "$here/bin/testdb" schema "$scratch" >/dev/null || exit 1
+  if ! "$here/bin/engine" live rules --url "$scratch"; then
+    echo "rules.json is not the rules the migrations make: run \`engine live rules --write\` on a database built from them" >&2
+    exit 1
+  fi
+  cd "$engine" &&
+    DATABASE_URL= TEST_DATABASE_URL="$scratch" .venv/bin/python -m pytest tests/test_grades.py tests/test_rules.py \
+      -q -p no:cacheprovider -o addopts=
+)
+if [ "${1:-}" = "--db" ]; then
+  run && db
+  exit
+fi
 if [ "${1:-}" = "--claude" ]; then
-  out=$(run 2>&1) && exit 0
+  out=$( (run && if [ -n "${TEST_DATABASE_URL:-}" ]; then db; fi) 2>&1) && exit 0
   echo "bin/check failed — the code drifted from workflows.json, a promise has no command, or lint failed." >&2
   echo "Fix the cause before finishing (CLAUDE.md rule 11); do not raise a limit or loosen a rule." >&2
   printf '%s\n' "$out" | grep -E "Error|FAIL|assert|would reformat|E   " | head -20 >&2
