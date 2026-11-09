@@ -16,7 +16,6 @@ from engine.w3_read import voice_intake
 from engine.w3_read.voice_store import Refused
 
 GROUPS = ("to_confirm", "fix_this", "left_unconfirmed", "being_read")  # a note is in exactly one
-UNPLANNED_WHY = "There is no plan of activities to compare with yet."
 
 
 def _cfg(conn: db.Conn) -> dict:
@@ -109,7 +108,7 @@ def todo(conn: db.Conn, email: str) -> dict:
 def coordinator(conn: db.Conn, email: str) -> dict:
     """Only what needs a decision, red first: notes with a problem, then notes left unconfirmed, as rows; and as counts
     the confirmations made on a later day than the activity, the children and the class-days with nothing observed
-    this week. 'Unplanned' is null until a plan exists to compare with: said, not invented."""
+    this week; and the sessions that happened this week with no plan line, or marked unplanned."""
     cfg = _cfg(conn)
     staff = voice_intake.staff_of(conn, email)
     me = db.one(
@@ -147,11 +146,12 @@ def _counts(conn: db.Conn, cfg: dict, campus: str) -> dict:
         "   and o.stored_at >= start.at)) as children_without_notes,"
         " (select count(*) from k cross join generate_series(%(week)s::date, %(today)s::date, '1 day') d"
         "  where extract(isodow from d) < 6 and not exists (select 1 from pii.educator_note n where n.class_id = k.id"
-        "   and (n.received_at at time zone %(zone)s)::date = d::date)) as class_days_without_notes",
+        "   and (n.received_at at time zone %(zone)s)::date = d::date)) as class_days_without_notes,"
+        " public.unplanned_sessions(%(campus)s::uuid, %(week)s::date, %(today)s::date) as unplanned",
         {"campus": campus, "grades": cfg["grades"], "week": week, "today": today, "zone": cfg["zone"]},
     )
     return {
-        "late": got["late"], "unplanned": None, "unplanned_why": UNPLANNED_WHY,
+        "late": got["late"], "unplanned": got["unplanned"],
         "children_without_notes": got["children_without_notes"],
         "class_days_without_notes": got["class_days_without_notes"],
     }  # fmt: skip
