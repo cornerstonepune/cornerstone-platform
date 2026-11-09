@@ -31,10 +31,19 @@ export type States = {
   say: (code: string | null | undefined) => string;
 };
 
+/** Each colour's words, weakest first: the school's setting `state.colours` (the colours themselves are fixed, a rule on
+ *  `child_state.colour`). */
+export function colourWords() {
+  return sql<(ColourWords & { code: Rag })[]>`
+    select e ->> 'code' as code, e ->> 'words' as words, e ->> 'count_words' as count_words
+    from config c cross join lateral jsonb_array_elements(c.value) with ordinality as x (e, n)
+    where c.key = 'state.colours' order by x.n`;
+}
+
 export async function childStates(): Promise<States> {
   const [list, colours] = await Promise.all([
     sql<ChildState[]>`select code, words, colour, needs_work, enough, move_up, nearly, severity from child_state order by ord`,
-    sql<(ColourWords & { code: Rag })[]>`select code, words, count_words from state_colour order by ord`,
+    colourWords(),
   ]);
   const by = new Map(list.map((s) => [s.code, s]));
   const fewest = list.find((s) => !s.enough)!;

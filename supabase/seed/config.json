@@ -886,13 +886,23 @@
     },
     {
       "key": "timetable.accept_clash_group",
-      "description": "The access group (access_group.code) whose members may accept a timetable clash with a reason; the coordinator's group by default (CP-12).",
+      "description": "The access group (role.access_group) whose members may accept a timetable clash with a reason; the coordinator's group by default (CP-12).",
       "value": "everything",
       "seed_once": true
     },
     {
+      "key": "state.colours",
+      "description": "The words each colour of a child's map is said in, weakest first: `words` in a key or a legend, `count_words` in a count (\"3 secure\"). The four colours are fixed (a check on child_state.colour); their words are the school's (CP-27: they were the table state_colour).",
+      "value": [
+        {"code": "red", "words": "needs help", "count_words": "needs help"},
+        {"code": "amber", "words": "practising", "count_words": "practising"},
+        {"code": "green", "words": "got it", "count_words": "secure"},
+        {"code": "grey", "words": "not enough yet", "count_words": "too few answers"}
+      ]
+    },
+    {
       "key": "timetable.go_live_group",
-      "description": "The access group (access_group.code) whose members may put a draft timetable live; the coordinator's group by default.",
+      "description": "The access group (role.access_group) whose members may put a draft timetable live; the coordinator's group by default.",
       "value": "everything",
       "seed_once": true
     }

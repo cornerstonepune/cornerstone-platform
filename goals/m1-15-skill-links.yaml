@@ -17,10 +17,8 @@ says:
     proved_by: "packages/engine/tests/test_skill_links_confirmed.py::test_a_link_between_two_broad_skills_holds_its_strength_reason_source_and_status"
   - words: "its reason and who confirmed it"
     proved_by: "packages/engine/tests/test_skill_links_confirmed.py::test_confirmed_needs_a_person_and_a_time_and_proposed_has_neither"
-  - words: "Strength and status are vocabulary ROWS (tables), not CHECK lists in code"
-    proved_by: "packages/engine/tests/test_skill_links_confirmed.py::test_strength_and_status_are_rows_not_lists_in_a_check"
-  - words: "Strength and status are vocabulary ROWS (tables), not CHECK lists in code"
-    proved_by: "packages/engine/tests/test_skill_links_confirmed.py::test_a_new_school_has_the_seed_rows_for_strength_and_status_from_the_moment_it_exists"
+  # CP-27 (#534, approved 9 Nov 2026; docs/data-model.md: a short fixed list is a rule on its column) made strength and
+  # status checks on each link table's column; test_a_link_is_proposed_or_confirmed_and_nothing_else proves them.
   - words: "DELETE must be revoked explicitly on new tables"
     proved_by: "packages/engine/tests/test_skill_links_confirmed.py::test_a_link_can_never_be_deleted_by_the_engine_or_the_site"
   - words: "THE 282 EXISTING ROWS ARE MARKED status='proposed', source='seed rule'. Do NOT mark them confirmed."

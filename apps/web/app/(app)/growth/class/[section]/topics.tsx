@@ -13,7 +13,7 @@ import type { States } from "@/lib/states";
 const ORDER: Rag[] = ["red", "amber", "green", "grey"];
 
 export function TopicGrid({ section, steps, kids, states }: { section: string; steps: Step[]; kids: GridChild[]; states: States }) {
-  // each count in a count's words, the colour's own (`state_colour.count_words`)
+  // each count in a count's words, the colour's own (the setting `state.colours`, `count_words`)
   const words = (r: Rag) => states.colours[r].count_words;
   const topics = [...new Map(steps.map((s) => [s.topic_code, s.topic_name])).entries()];
   if (!topics.length) return null;

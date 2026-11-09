@@ -15,14 +15,10 @@ goal: >
 says:
   - words: "every question names its skills in the registry (one or several)"
     proved_by: "packages/engine/tests/test_question_registry_skills.py::test_every_question_names_a_registry_skill"
-  - words: "every question names its skills in the registry (one or several)"
-    proved_by: "packages/engine/tests/test_question_registry_skills.py::test_a_new_question_names_its_skill_by_itself"
-  - words: "every question names its skills in the registry (one or several)"
-    proved_by: "packages/engine/tests/test_question_registry_skills.py::test_a_question_with_no_skill_is_refused"
-  - words: "a mixed question says which step tests which skill"
-    proved_by: "packages/engine/tests/test_question_registry_skills.py::test_a_mixed_question_says_which_step_tests_which_skill"
-  - words: "nothing will change for any of the past assessments, scoring etc. right?"
-    proved_by: "packages/engine/tests/test_question_registry_skills.py::test_past_results_are_the_same_before_and_after"
+  # CP-27 (#534, approved 9 Nov 2026) retired `item_registry_skill`: it only ever held each question's own skill (no
+  # question on live named a step), so "a mixed question says which step tests which skill" and the rows' own checks
+  # went with it. A question's skill is still a registry skill (the test above); past results are checked by CP-27's
+  # rehearsal (`engine past` before and after).
   - words: "do not leave for anything later; whenever you find an issue — don't apply a band aid; solve the root cause."
     proved_by: "packages/engine/tests/test_question_registry_skills.py::test_writing_a_question_type_keeps_a_levels_declared_kinds"
   - words: "we need proper tables"

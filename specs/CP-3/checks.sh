@@ -15,7 +15,7 @@ run() { $PY -m pytest -q -p no:cacheprovider "$@"; }
 
 check "1 groups are rows; a role's group or a group's kinds change by one insert or update" \
   run "$T::test_1_groups_are_rows_as_the_scope_lists_them" "$T::test_1_changing_a_roles_group_is_one_update" \
-  "$T::test_1_adding_a_role_to_a_group_is_one_insert" "$T::test_1_changing_what_a_group_sees_is_one_update"
+  "$T::test_1_adding_a_role_to_a_group_is_one_update" "$T::test_1_changing_what_a_group_sees_is_one_update"
 check "2 every role code is in exactly one group" \
   run "$T::test_2_every_role_belongs_to_exactly_one_group"
 check "3 educator of X gets 0 rows of class Y's children, enrolment and notes" \

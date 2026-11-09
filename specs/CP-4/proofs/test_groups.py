@@ -6,7 +6,7 @@ How it runs, on the throwaway database (never a live one), in one transaction th
   the own-classes group holding a current grant on each, a person of the everything group, and in X and in Y one chain
   child -> pii.child -> enrolment -> paper (sheet_instance) -> scan (capture) -> answer (item_result) -> evidence
   (evidence_event) -> observation (activity_observation) -> note (pii.educator_note, pii.note_claim). The role codes
-  come from access_role_group, one per group, never a list here. Foreign keys are not what is tested, so the chain is
+  come from each role's group (role.access_group), one per group, never a list here. Foreign keys are not what is tested, so the chain is
   written with session_replication_role = replica (fake ids where a parent is not part of the chain). No real names.
 - as a throwaway login that is a member of app_web (with a test-only select grant where app_web holds none), each
   identity set the way the website sets it: select set_config('app.staff_id', '<sign-in entry id>', true).
@@ -50,8 +50,7 @@ def ins(c, table: str, **vals) -> uuid.UUID:
 
 def _role_of(c, tenant, group: str, scope: str) -> str:
     row = c.execute(
-        "select g.role_code from public.access_role_group g join role r on r.tenant_id = g.tenant_id "
-        "and r.code = g.role_code where g.tenant_id = %s and g.group_code = %s and r.scope = %s "
+        "select r.code from role r where r.tenant_id = %s and r.access_group = %s and r.scope = %s "
         "order by r.ord, r.code limit 1", (tenant, group, scope)).fetchone()
     assert row, f"no {scope}-scoped role is in the {group} group"
     return row[0]
@@ -71,12 +70,13 @@ def _chain(c, tenant, cls, section, staff_id, template, seeded):
                 child_id=child, section=section)
     capture = put("public.capture", path=f"cp4/{section}.pdf", sheet_instance_id=sheet)
     result = put("public.item_result", capture_id=capture, item_id=uuid.uuid4(), rid="q1", status="blank")
+    # the words are rules on their columns (CP-27), so a placeholder must be one of them
     observation = put("public.activity_observation", child_id=child, class_id=cls["id"], observed_by=staff_id,
-                      confirmed_by=staff_id)
+                      confirmed_by=staff_id, outcome="above", entry_mode="individual", route="form")
     put("public.evidence_event", child_id=child, skill_code="NUM.OPS.01", rung_code="R1", channel="item",
         observed_at=sql.SQL("now()"), item_result_id=result, observation_id=observation)
     note = put("pii.educator_note", staff_id=staff_id, class_id=cls["id"], audio_key=f"cp4/{section}")
-    put("pii.note_claim", note_id=note, decided_by=staff_id)
+    put("pii.note_claim", note_id=note, decided_by=staff_id, decision="accepted")
 
 
 @pytest.fixture(scope="module")

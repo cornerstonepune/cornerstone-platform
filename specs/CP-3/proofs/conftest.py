@@ -165,8 +165,7 @@ class School:
         for e in one(c, "select value from config where tenant_id = %s and key = 'app.staff'", (self.t,)):
             self.entry[e["email"].split(".")[0]] = e["id"]
 
-        decision = one(c, "select code from claim_decision where tenant_id = %s and code <> 'changed' "
-                          "order by code limit 1", (self.t,))
+        decision = "accepted"  # a claim kept as read: no kept_as needed
         self.note = {}
         for k, author in ((self.x, "edx"), (self.y, "edy")):
             nid = one(c, "insert into pii.educator_note (tenant_id, staff_id, class_id, audio_key) "

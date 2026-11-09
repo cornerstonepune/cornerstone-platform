@@ -27,6 +27,9 @@ SEED = db.REPO_ROOT / "supabase" / "seed"
 MAP = json.loads((db.REPO_ROOT / "workflows.json").read_text())
 THRESHOLDS = {r["key"]: r["value"] for r in json.loads((SEED / "thresholds.json").read_text())["thresholds"]}
 VOCAB = json.loads((SEED / "vocabulary.json").read_text())
+# each colour's words: the setting state.colours (CP-27: they were the vocabulary's state_colours)
+CONFIG = {c["key"]: c["value"] for c in json.loads((SEED / "config.json").read_text())["config"]}
+COLOURS = CONFIG["state.colours"]
 SUBJECTS = json.loads((SEED / "subjects.json").read_text())["subjects"]
 
 WHO = {"educator", "coordinator", "the engine"}
@@ -193,9 +196,7 @@ def token_problem(raw):
             else f"{{{raw}}}: no child state is {arg!r}"
         )
     if kind == "colour":
-        return (
-            None if arg in {c["code"] for c in VOCAB["state_colours"]} else f"{{{raw}}}: no colour is {arg!r}"
-        )
+        return None if arg in {c["code"] for c in COLOURS} else f"{{{raw}}}: no colour is {arg!r}"
     return f"{{{raw}}}: not a kind of token"
 
 
@@ -219,7 +220,7 @@ def typed_vocabulary(text):
         if not g["name"][-1].isdigit() and re.search(rf"\b{g['name']}\b", words)
     ]
     said = {s["words"] for s in VOCAB["child_states"]} | {
-        c[k] for c in VOCAB["state_colours"] for k in ("words", "count_words")
+        c[k] for c in COLOURS for k in ("words", "count_words")
     }
     found += [w for w in sorted(said) if re.search(rf"\b{re.escape(w)}\b", words, re.I)]
     found += [s["label"] for s in SUBJECTS if re.search(rf"\b{s['label']}\b", words, re.I)]

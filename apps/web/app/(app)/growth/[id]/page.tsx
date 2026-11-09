@@ -242,7 +242,7 @@ export default async function ChildPage({ params, searchParams }: Props) {
           <div className="grid content-start gap-[18px] self-start xl:sticky xl:top-6">
             <FocusPanel childId={id} name={child.first_name} staff={staffNames} draw={readDraw(q.draw)} />
 
-            <TheirPapers childId={id} sheets={sheets} read={read} failed={papers.length - read.length} staff={staffNames} />
+            <TheirPapers childId={id} sheets={sheets} failed={papers.length - read.length} staff={staffNames} />
 
             <GradeClassPanel me={me} child={child} q={q} staff={staffNames} />
 

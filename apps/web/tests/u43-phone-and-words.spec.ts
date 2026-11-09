@@ -224,8 +224,8 @@ test("a grade is one word on every page", async () => {
 });
 
 test("a child's standing is one word on every page", async () => {
-  // a colour's row holds two words, for a key and for a count; a page says it with one, the same in both
-  const colours = await sql<{ words: string; count_words: string }[]>`select words, count_words from state_colour where words <> count_words`;
+  // a colour's setting holds two words, for a key and for a count; a page says it with one, the same in both
+  const colours = await sql<{ words: string; count_words: string }[]>`select e ->> 'words' as words, e ->> 'count_words' as count_words from config c, jsonb_array_elements(c.value) e where c.key = 'state.colours' and e ->> 'words' <> e ->> 'count_words'`;
   expect(found(/\bsecure\b/i).length).toBeGreaterThan(0);
   for (const c of colours) {
     expect(found(new RegExp(`\\b${c.words}\\b`, "i")), `"${c.words}" where every other page says "${c.count_words}"`).toEqual([]);
