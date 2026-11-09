@@ -592,7 +592,7 @@ Blocks, in order:
 Rail (Connected to): Show: each skill seen · a child · Record a note · Assessments (grades 1–4: Class results folds here) · Capture here: voice, photo
 Main action: a child · Next step: the skill
 Data: child_observed_state (K2) or child_skill_state (grades 1–4) for the class by skill; graph_run date
-Empty: No child seen yet: the grid of dashed squares with 'not seen yet, nothing more' · Phone: 6 columns of 44 px squares
+Empty: No child seen yet: the grid of dashed squares with 'not seen yet, nothing more' · Phone: 3 columns of squares (a name and a state word do not fit a 44 px square; SPEC §2 rule 10)
 Folds in: /growth (Class results), /growth/class/[section]
 Every control on the screen (10), and what the test does with each:
 - **filter** skill
@@ -609,7 +609,7 @@ Done when (on top of the ten generic checks):
 - an empty square's title reads 'not seen yet', never 'not secure'
 - each square shows the Sr. No. and the child's name read from pii by child_id, and no photo (DOM scan)
 - the stack bar's counts equal the squares by state
-- the squares are in Sr. No. order, 10 per row at 1440, 8 at 400
+- the squares are in Sr. No. order, 8 per row at 1440, 3 at 400
 
 
 #### Where this child is `/children/[class]/[roll]`
@@ -854,7 +854,7 @@ Blocks, in order:
 Rail (Connected to): the class picture on this skill · its objectives · after / next skills · Question bank for this skill
 Main action: a child · Next step: the next skill
 Data: child_observed_state / child_skill_state by skill; skill_link_confirmed; skill_level; misconception
-Empty: nobody seen on it yet · Phone: grid 6 columns of 44 px squares
+Empty: nobody seen on it yet · Phone: grid of 3 columns of squares (SPEC §2 rule 10)
 Folds in: /skill-sets/[code], /skill-sets/[code]/edit
 Every control on the screen (13), and what the test does with each:
 - **filter** class [coordinator only; absent and refused for others]
