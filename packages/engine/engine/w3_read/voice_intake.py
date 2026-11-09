@@ -223,8 +223,10 @@ def cleanup(conn: db.Conn) -> dict[str, int]:
     recording, then, only once that is gone, the transcript (CP-10). What she confirmed stays: the observation, its
     evidence, her decision on each line, and her free sentence (kept here when it was not yet; the child's page reads
     it from the note). Each note's row keeps when its recording was deleted and its transcript cleared. Counts only.
-    A recording that cannot be deleted fails the run, and its note is tried again at the next one. A recordings folder
-    that cannot be read fails it before anything is cleared, so an unmounted disk never reads as "all deleted"."""
+    A recording that cannot be deleted is counted in `stuck`: its note keeps its words and is tried again at the next
+    run, and the notes that could be cleaned stay cleaned (the caller marks the run failed after keeping them). A
+    recordings folder that cannot be read fails the run before anything is cleared, so an unmounted disk never reads
+    as "all deleted"."""
     hours = int(settings.config(conn, "voice.confirm_within_hours", 48))
     folder = voice_store.ROOT / "voice"
     if not (folder.is_dir() and os.access(folder, os.R_OK | os.X_OK)):
@@ -256,16 +258,20 @@ def cleanup(conn: db.Conn) -> dict[str, int]:
     cutoff = time.time() - hours * 3600
     orphans = 0
     for f in folder.rglob("*"):  # a recording whose note was never written (a save whose commit failed)
-        if (
-            f.is_file()
-            and f.stat().st_mtime < cutoff
-            and f.relative_to(voice_store.ROOT).as_posix() not in kept
-        ):
-            try:
+        try:
+            if (
+                f.is_file()
+                and f.stat().st_mtime < cutoff
+                and f.relative_to(voice_store.ROOT).as_posix() not in kept
+            ):
                 f.unlink()
                 orphans += 1
-            except OSError:
-                stuck += 1
-    if stuck:
-        raise CleanupFailed(f"{stuck} recordings could not be deleted")
-    return {"notes": len(notes), "recordings": gone, "no_note": orphans, "left_unconfirmed": left}
+        except OSError:
+            stuck += 1
+    return {
+        "notes": len(notes),
+        "recordings": gone,
+        "no_note": orphans,
+        "left_unconfirmed": left,
+        "stuck": stuck,
+    }

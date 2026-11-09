@@ -1,6 +1,39 @@
 {
-  "status": "locked",
+  "status": "built",
   "created_at": "2026-11-09T03:27:18+00:00",
-  "updated_at": "2026-11-09T04:50:05+00:00",
-  "locked_at": "2026-11-09T04:50:05+00:00"
+  "updated_at": "2026-11-09T05:58:31+00:00",
+  "locked_at": "2026-11-09T04:50:05+00:00",
+  "started_at": "2026-11-09T04:58:53+00:00",
+  "built_at": "2026-11-09T05:58:31+00:00",
+  "box_pending": [
+    "3 live: no note older than 51 hours keeps its transcript and no recording file is older than 51 hours"
+  ],
+  "files": [
+    ".claude/athena/",
+    ".claude/autoharness/",
+    ".claude/skills/.archive/reconcile-done-when.20261109T054448/",
+    ".claude/skills/.archive/reconcile-done-when.20261109T054448/references/",
+    ".claude/skills/tool-results-and-hooks/",
+    ".claude/skills/tool-results-and-hooks/references/",
+    ".claude/skills/verify-before-done/",
+    ".claude/skills/verify-before-done/references/",
+    "apps/web/lib/",
+    "docs/notes/",
+    "goals/",
+    "n8n/",
+    "n8n/workflows/",
+    "packages/engine/",
+    "packages/engine/.claude/autoharness/",
+    "packages/engine/engine/.claude/autoharness/",
+    "packages/engine/engine/adapters/",
+    "packages/engine/engine/api/routes/",
+    "packages/engine/engine/checks/",
+    "packages/engine/engine/w2_print/",
+    "packages/engine/engine/w3_read/",
+    "packages/engine/engine/w3_read/.claude/autoharness/",
+    "packages/engine/tests/",
+    "supabase/migrations/",
+    "supabase/seed/",
+    "workflows.json"
+  ]
 }

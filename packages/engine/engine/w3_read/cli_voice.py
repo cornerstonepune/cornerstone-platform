@@ -35,10 +35,11 @@ def cleanup() -> None:
             conn.rollback()
             typer.echo(str(e), err=True)
             raise typer.Exit(1) from e
-        conn.commit()
-    typer.echo(
-        f"recordings deleted: {got['recordings']}; notes cleaned: {got['notes']}; files with no note: {got['no_note']}"
-    )
+        conn.commit()  # what was cleaned stays cleaned, even when some recording could not be deleted
+    typer.echo(f"notes cleaned: {got['recordings']}; files with no note deleted: {got['no_note']}")
+    if got["stuck"]:
+        typer.echo(f"{got['stuck']} recordings could not be deleted; they are tried again", err=True)
+        raise typer.Exit(1)
 
 
 @voice_app.command("status")

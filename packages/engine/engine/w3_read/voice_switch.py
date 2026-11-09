@@ -48,16 +48,16 @@ def status(conn: db.Conn) -> list[str]:
     anything but recordings."""
     on = lambda key: "on" if settings.config(conn, key, False) is True else "off"  # noqa: E731
     last = conn.execute(
-        "select status, finished_at, result from flow_run where flow = 'voice_cleanup' order by started_at desc limit 1"
+        "select status, started_at, finished_at, result from flow_run where flow = 'voice_cleanup' order by started_at desc limit 1"
     ).fetchone()
     done = (
         "none yet"
         if last is None
-        else f"{last['finished_at']:%Y-%m-%d %H:%M}: {last['status']}, "
+        else f"{last['finished_at'] or last['started_at']:%Y-%m-%d %H:%M}: {last['status']}, "
         + (
             f"{(last['result'] or {}).get('recordings', 0)} recordings deleted"
             if last["status"] == "ok"
-            else "failed"
+            else "not finished"
         )
     )
     sarvam = "confirmed" if settings.config(conn, KEYS["sarvam"], False) is True else "not confirmed"

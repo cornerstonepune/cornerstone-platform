@@ -229,4 +229,15 @@ def cleanup(
     result, already = run_idempotent(
         conn, tenant_id, "voice_cleanup", key, {}, lambda: voice_intake.cleanup(conn)
     )
+    if result.get("stuck"):
+        # the notes that could be cleaned stay cleaned; the run is on record as failed, so the next call runs again
+        conn.execute(
+            "update flow_run set status = 'error', error = %s, finished_at = clock_timestamp()"
+            " where tenant_id = %s and flow = 'voice_cleanup' and idempotency_key = %s",
+            (f"{result['stuck']} recordings could not be deleted", tenant_id, key),
+        )
+        conn.commit()
+        raise HTTPException(
+            status_code=500, detail="Some recordings could not be deleted; they are tried again."
+        )
     return {**result, "already": already}

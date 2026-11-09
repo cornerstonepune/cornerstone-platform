@@ -66,6 +66,31 @@ def test_a_typed_transcript_is_read_against_the_class_and_writes_nothing(conn):
     assert conn.execute("select count(*) n from pii.educator_note").fetchone()["n"] == before
 
 
+def test_one_recording_that_cannot_be_deleted_does_not_undo_the_notes_that_were_cleaned(conn, tmp_path):
+    k = a_k2_class(conn)
+    stuck = a_note(conn, k, "Activity 12. Above 3.", hours_ago=60)
+    fine = a_note(conn, k, "Activity 12. Above 4.", hours_ago=60)
+    for n in (stuck, fine):
+        voice_store.save(n["audio_key"], b"placeholder-audio")
+    (tmp_path / stuck["audio_key"]).unlink()
+    (tmp_path / stuck["audio_key"]).mkdir()  # a path no unlink can remove
+    ((tmp_path / stuck["audio_key"]) / "held").write_bytes(b"x")
+    got = voice_intake.cleanup(conn)
+    assert got["stuck"] >= 1
+    assert got["recordings"] >= 1  # the note that could be cleaned was counted
+    row = {
+        r["id"]: r
+        for r in conn.execute(
+            "select id, transcript, audio_deleted_at, transcript_cleared_at from pii.educator_note where id = any(%s)",
+            ([stuck["id"], fine["id"]],),
+        ).fetchall()
+    }
+    assert row[fine["id"]]["transcript"] is None and row[fine["id"]]["audio_deleted_at"] is not None
+    assert (
+        row[stuck["id"]]["transcript"] and row[stuck["id"]]["audio_deleted_at"] is None
+    )  # words stay with the file
+
+
 def test_a_cleanup_deletes_the_recording_and_transcript_of_notes_past_the_hours_a_note_waits(conn, tmp_path):
     k = a_k2_class(conn)
     old = a_note(conn, k, "Activity 12. Above 3.", hours_ago=60)
