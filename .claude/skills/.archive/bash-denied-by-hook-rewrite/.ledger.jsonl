@@ -1,0 +1,1 @@
+{"action": "create", "reason": "Recurring tool-usage class across sessions: a Bash call is denied because a PreToolUse hook (here the RTK rewrite) changed its input after auto mode reviewed it. The agent needs one rule for this, plus care with multi-step git state while calls are blocked.", "evidence": "references/evidence-df513f20.md"}
