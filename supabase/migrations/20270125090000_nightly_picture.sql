@@ -88,7 +88,7 @@ language sql stable set search_path = public as $$
 $$;
 
 create or replace function internal.nightly_settings(p_tenant uuid) returns void
-language plpgsql security definer set search_path = public as $$
+language plpgsql security definer set search_path = public, pg_temp as $$
 begin
   insert into config (tenant_id, key, value, description)
   values
@@ -100,7 +100,7 @@ begin
 end $$;
 
 create or replace function internal.nightly_settings_on_new_school() returns trigger
-language plpgsql security definer set search_path = public as $$
+language plpgsql security definer set search_path = public, pg_temp as $$
 begin
   perform internal.nightly_settings(new.id);
   return new;

@@ -10,7 +10,7 @@ Branch `cp-9-build`. Scope and design: `specs/CP-9/`. Migration `20270125090000_
 - `public.unplanned_sessions()`; `k2_reads._counts` returns it as a number; `unplanned_why` is gone from code and model.
 - Settings rows: `graph.nightly_stale_hours` (26), `cp9.real_notes_from` (empty until go-live).
 
-## New tables (CP-4's "every table listed" check does not exist yet; list these in `access_table` when it does)
+## New tables (both listed in `access_table`)
 - `graph_run`: school-wide, append-only.
 - `hand_check`: child data, append-only.
 
@@ -22,10 +22,11 @@ Branch `cp-9-build`. Scope and design: `specs/CP-9/`. Migration `20270125090000_
   children by hand and the results are entered with `engine graph --hand-check`. Live proof 7 cannot pass before then.
 - Live proofs 1b, 6b, 7 are box-only and read-only; they have not been run.
 
-## Open
-- Locked proof `test_1_graph_run_and_hand_check_are_listed_in_access_table` reads `public.access_table`, which CP-4 creates
-  and which is not on main. It fails until CP-4 merges; the migration does not create the table (that would collide
-  with CP-4). After CP-4 lands, the migration must insert both rows before `apply_conventions()` (design decision 2).
+## Notes
+- `access_table` exists (CP-3 made it, CP-4 added `data_class` and `reason`). The migration lists `graph_run`
+  (school_wide, with a reason) and `hand_check` (child_data, kind `learning`, key `child_id`) before `apply_conventions()`.
+- `hand_check.checked_by` should be an email or a role, never a person's name (the table is child data and the engine
+  does not check what is typed).
 - A skipped night (a run already going) stores `{"skipped": true}` under that night's key, so a retry the same night does
   not re-run; the next night has a new key.
 - Through the route, a failed run is recorded by the route after the idempotency wrapper rolls back; through the CLI by the
