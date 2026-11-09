@@ -23,7 +23,7 @@ from anthropic.types import ImageBlockParam, MessageParam, OutputConfigParam, Te
 from psycopg.types.json import Json
 
 from engine.adapters import llm_budget
-from engine.core import db
+from engine.core import db, settings
 
 WAITS = (
     5,
@@ -93,7 +93,8 @@ def generate(
     if budget:
         spent = conn.execute(
             "select coalesce(sum(f.cost_inr), 0) as n from flow_run f join tenant t on t.id = f.tenant_id"
-            " where t.slug = %s and f.started_at::date = current_date and not (f.flow = any(%s))",
+            f" where t.slug = %s and (f.started_at at time zone {settings.ZONE_SQL})::date"
+            f" = (now() at time zone {settings.ZONE_SQL})::date and not (f.flow = any(%s))",
             (db.tenant_slug(), own_money),
         ).fetchone()["n"]
         if spent >= budget["value"]:

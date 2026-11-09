@@ -148,7 +148,6 @@ GRADE_COLUMNS = [
     ("skill", "grade"),
     ("child", "band"),
     ("sheet_template", "band"),
-    ("blueprint", "band"),
     ("level_rule", "band"),
     ("milestone", "band"),
     ("learning_objective", "band"),

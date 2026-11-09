@@ -11,7 +11,7 @@ import datetime as dt
 from collections import defaultdict
 from zoneinfo import ZoneInfo
 
-from engine.core import db
+from engine.core import db, settings
 from engine.w3_read import voice_intake
 from engine.w3_read.voice_store import Refused
 
@@ -111,12 +111,13 @@ def coordinator(conn: db.Conn, email: str) -> dict:
     this week; and the sessions that happened this week with no plan line, or marked unplanned."""
     cfg = _cfg(conn)
     staff = voice_intake.staff_of(conn, email)
+    today = settings.school_today(conn)
     me = db.one(
         conn,
         "select s.campus_id, exists (select 1 from staff_role_grant g where g.staff_id = s.id"
-        " and g.role_code = any(%s) and g.valid_from <= current_date and (g.valid_to is null or g.valid_to >= current_date))"
+        " and g.role_code = any(%s) and g.valid_from <= %s and (g.valid_to is null or g.valid_to >= %s))"
         " as ok from staff s where s.id = %s",
-        (cfg["coordinator_roles"], staff),
+        (cfg["coordinator_roles"], today, today, staff),
     )
     if not me["ok"]:
         raise Refused("This page is for the coordinators.", 403)

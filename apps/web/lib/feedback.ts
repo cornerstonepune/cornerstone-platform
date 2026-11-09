@@ -2,6 +2,7 @@ import { createHmac } from "node:crypto";
 import { sql, TENANT_SLUG } from "./db";
 import { createIssue, FROM_THE_TOOL, toolIssues } from "./github";
 import { issueBody, issueTitle, KINDS, seenAs, type Note, type NoteKind, type HowOften, type Seen } from "./feedback-words";
+import { schoolZone } from "./school-clock";
 
 // A note from staff, kept first and then sent to GitHub as one issue (goals/feed_report_from_the_tool.yaml). Kept
 // first, so a note is never lost: GitHub not connected leaves it `saved`, GitHub refusing leaves it `failed`, and each
@@ -62,7 +63,7 @@ async function send(id: string): Promise<void> {
     returning id, kind, doing, happened, how_often, route, role, classes, browser, created_at`;
   if (!n) return;
   const note: Note = { ...n, howOften: n.how_often, at: new Date(n.created_at) };
-  const made = await createIssue(issueTitle(note), issueBody(note), [FROM_THE_TOOL, KINDS[n.kind].label]);
+  const made = await createIssue(issueTitle(note), issueBody(note, await schoolZone()), [FROM_THE_TOOL, KINDS[n.kind].label]);
   if (typeof made === "object") {
     await sql`update staff_note set status = 'sent', issue_number = ${made.number} where id = ${id}`;
   } else if (made === "failed") {

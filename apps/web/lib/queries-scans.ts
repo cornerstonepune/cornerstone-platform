@@ -78,7 +78,7 @@ export async function lastScans(me: Session, n = 5): Promise<Scan[]> {
   const scope = await reachOf(me);
   const runs = await sql<Run[]>`
     select id, coalesce(result ->> 'file', substr(trigger, strpos(trigger, ': ') + 2)) as file,
-           to_char(started_at at time zone 'Asia/Kolkata', 'DD-Mon-YYYY HH24:MI') as when, status, error,
+           to_char(started_at at time zone (select value #>> '{}' from config where key = 'school.time_zone'), 'DD-Mon-YYYY HH24:MI') as when, status, error,
            coalesce(result -> 'copies', '[]'::jsonb) as copies, (result ->> 'pages')::int as pages,
            coalesce(result -> 'given', '[]'::jsonb) as given, ${seesUploader(me, sql`r.uploaded_by`)} as mine
     from flow_run r where flow = 'read-scan' and ${seesRun(me, sql`r`)} order by started_at desc limit ${5 * n}`;

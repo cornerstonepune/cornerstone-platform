@@ -9,8 +9,8 @@ import { E } from "@/lib/educator/words";
 // for (a link to its page), how many (a dash when the plan gives none, never
 // guessed; she sets it in place), where it is kept, remove. `look` (the staff preview): the lines only, nothing to change.
 const W = E.materials;
-export const BTN = "inline-flex min-h-[var(--tap)] min-w-[var(--tap)] items-center justify-center gap-[var(--space-1)] rounded-[var(--radius-m)] border border-[var(--border-control)] bg-[var(--surface)] px-[var(--space-2)] text-[length:var(--text-label)] font-medium text-[var(--text)]";
-export const FIELD = "min-h-[var(--tap)] rounded-[var(--radius-m)] border border-[var(--border-control)] bg-[var(--surface)] px-[var(--space-2)]";
+export const BTN = "inline-flex min-h-[var(--tap)] min-w-[var(--tap)] items-center justify-center gap-[var(--space-1)] rounded-[var(--radius-control)] border border-[var(--line-control)] bg-[var(--panel)] px-[var(--space-2)] text-[length:var(--text-label)] font-medium text-[var(--ink)]";
+export const FIELD = "min-h-[var(--tap)] rounded-[var(--radius-control)] border border-[var(--line-control)] bg-[var(--panel)] px-[var(--space-2)]";
 
 export type DayLine = MaterialLine & { day: string };
 const kept = (l: MaterialLine) => (!l.tracked || !l.home ? "none" : l.home);
@@ -25,7 +25,7 @@ export function materialColumns(look: boolean): Column<DayLine>[] {
       value: (l) => l.activity?.name,
       cell: (l) =>
         l.activity ? (
-          <Link href={`/educator/activity/${encodeURIComponent(l.activity.code)}?back=/educator/materials`} className="inline-flex min-h-[var(--tap)] items-center text-[var(--text)] underline underline-offset-4">
+          <Link href={`/educator/activity/${encodeURIComponent(l.activity.code)}?back=/educator/materials`} className="inline-flex min-h-[var(--tap)] items-center text-[var(--ink)] underline underline-offset-4">
             {l.activity.name}
           </Link>
         ) : null,
@@ -42,7 +42,7 @@ export function materialColumns(look: boolean): Column<DayLine>[] {
           <form action={setQuantity} className="flex items-center gap-[var(--space-1)]">
             <input type="hidden" name="line" value={l.line_id} />
             <input name="quantity" type="number" min={0} step="any" defaultValue={l.quantity ?? ""} placeholder={W.noQty} aria-label={`${W.cols.quantity}: ${l.item}`} className={`${FIELD} w-[var(--space-7)] tabular-nums`} />
-            <span className="text-[length:var(--text-label)] text-[var(--text-muted)]">{l.unit}</span>
+            <span className="text-[length:var(--text-label)] text-[var(--ink-muted)]">{l.unit}</span>
             <button type="submit" className={BTN}>
               {W.save}
             </button>

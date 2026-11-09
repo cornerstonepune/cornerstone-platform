@@ -16,6 +16,16 @@ def orphans() -> dict[str, list[str]]:
                     " where not exists (select 1 from registry_skill k where k.code = s)"
                 ).fetchall()
             ],
+            # the skill a question's results count (its own, else its skill's first): a registry skill. The rows that
+            # kept it as a key (`item_registry_skill`) were a copy of this, retired by CP-27.
+            "question skills missing from the registry": [
+                r["s"]
+                for r in conn.execute(
+                    "select distinct coalesce(i.spec ->> 'skill', i.skill_codes[1]) as s from item i"
+                    " where not exists (select 1 from registry_skill k where k.tenant_id = i.tenant_id"
+                    " and k.code = coalesce(i.spec ->> 'skill', i.skill_codes[1]))"
+                ).fetchall()
+            ],
             "level_rule rungs missing from the ladder": [
                 r["s"]
                 for r in conn.execute(

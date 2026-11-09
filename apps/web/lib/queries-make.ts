@@ -1,7 +1,7 @@
 import { sql } from "./db";
 import { EVERY_CLASS, inScope, type Scope } from "./scope";
 import { engineGet } from "./engine";
-import { isoWeek } from "./week";
+import { schoolWeek } from "./school-clock";
 
 // Make papers (goals/m1-make-papers.yaml): each child's own paper. The engine proposes each home paper from the
 // child's map (`w2_print/focus_paper.py`) and makes any paper a teacher asks for; this reads what it proposes.
@@ -15,7 +15,8 @@ export async function homeLength(): Promise<number | null> {
 
 export type ClassHome = { section: string; band: string; children: number; proposed: number; approved: number };
 
-export async function homeByClass(week = isoWeek(), scope: Scope = EVERY_CLASS): Promise<ClassHome[]> {
+export async function homeByClass(week?: string, scope: Scope = EVERY_CLASS): Promise<ClassHome[]> {
+  week ??= await schoolWeek();
   return sql<ClassHome[]>`
     -- a class's grade is the database's one rule (class_band), as on every page (goals/ux2-one-count-one-thing.yaml)
     select c.section, class_band(c.tenant_id, c.section) as band, count(*)::int as children,
@@ -37,7 +38,7 @@ export async function homeByClass(week = isoWeek(), scope: Scope = EVERY_CLASS):
 
 /** How many children the engine proposes a home paper for this week, in the classes a person sees — as Today counts
  *  them. */
-export async function proposedHomePapers(week = isoWeek(), scope: Scope = EVERY_CLASS): Promise<number> {
+export async function proposedHomePapers(week?: string, scope: Scope = EVERY_CLASS): Promise<number> {
   return (await homeByClass(week, scope)).reduce((n, c) => n + c.proposed, 0);
 }
 
@@ -52,7 +53,8 @@ export type ClassChild = { id: string; roll_no: string; first_name: string; prop
 
 /** A class's children with the home paper the engine proposes for each — in the draw asked for (`draws`, by child:
  *  "Different questions") — or the one already approved. Names come through pii.read_child, which logs who asked. */
-export async function classHome(section: string, actor: string, week = isoWeek(), draws: Record<string, number> = {}): Promise<ClassChild[]> {
+export async function classHome(section: string, actor: string, week?: string, draws: Record<string, number> = {}): Promise<ClassChild[]> {
+  week ??= await schoolWeek();
   const children = await sql<{ id: string; roll_no: string; first_name: string }[]>`
     select c.id, c.roll_no, p.first_name from child c, lateral pii.read_child(c.id, ${actor}) p
     where c.active and c.section = ${section}

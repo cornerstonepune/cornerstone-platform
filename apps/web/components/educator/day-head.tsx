@@ -6,7 +6,7 @@ import { E } from "@/lib/educator/words";
 import { Pill } from "./tags";
 
 // What sits above a calendar: step back, back to now, step on; the fortnight and week; her classes; the month's lock.
-const STEP = "inline-flex min-h-[var(--tap)] min-w-[var(--tap)] items-center justify-center gap-[var(--space-1)] rounded-[var(--radius-m)] border border-[var(--border-control)] bg-[var(--surface)] px-[var(--space-2)] text-[length:var(--text-label)] font-medium text-[var(--text)] no-underline";
+const STEP = "inline-flex min-h-[var(--tap)] min-w-[var(--tap)] items-center justify-center gap-[var(--space-1)] rounded-[var(--radius-control)] border border-[var(--line-control)] bg-[var(--panel)] px-[var(--space-2)] text-[length:var(--text-label)] font-medium text-[var(--ink)] no-underline";
 
 export function Steps({ back, now, on, words }: { back: string; now: string; on: string; words: { previous: string; next: string; now: string } }) {
   const step = (href: string, label: string, icon?: IconName) => (
@@ -35,7 +35,7 @@ export function DayHead({ back, now, on, words, where }: Parameters<typeof Steps
 
 export function Where({ fortnight, week, frozen }: { fortnight: Fortnight | null; week: "A" | "B" | null; frozen: boolean }) {
   return (
-    <div className="flex flex-wrap items-center gap-[var(--space-2)] text-[length:var(--text-label)] text-[var(--text-muted)]">
+    <div className="flex flex-wrap items-center gap-[var(--space-2)] text-[length:var(--text-label)] text-[var(--ink-muted)]">
       {fortnight ? <Pill>{E.fortnight(fortnight.number, week)}</Pill> : null}
       {frozen ? (
         <span data-frozen title={E.frozenNote} className="inline-flex items-center gap-[var(--space-1)]">
@@ -53,7 +53,7 @@ export function ClassPick({ classes, on, href }: { classes: ClassRef[]; on: stri
   return (
     <nav aria-label={E.pickClass} className="mb-[var(--space-3)] flex flex-wrap gap-[var(--space-2)]">
       {classes.map((c) => (
-        <Link key={c.id} href={href(c.id)} aria-current={c.id === on ? "page" : undefined} className={`${STEP} ${c.id === on ? "border-[var(--chip-donow-bd)] bg-[var(--chip-donow-bg)] text-[var(--chip-donow-fg)]" : ""}`}>
+        <Link key={c.id} href={href(c.id)} aria-current={c.id === on ? "page" : undefined} className={`${STEP} ${c.id === on ? "border-[var(--action)] bg-[var(--action)] text-[var(--action-ink)]" : ""}`}>
           {classWords(c)}
         </Link>
       ))}

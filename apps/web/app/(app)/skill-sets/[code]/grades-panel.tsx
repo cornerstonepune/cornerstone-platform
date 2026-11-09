@@ -17,7 +17,7 @@ export function GradesPanel({ s, grades, saved }: { s: SkillSet; grades: Grades;
           {levelsOf(s).map((d) => (
             <label key={d} className="grid gap-1 text-[13px]">
               <span className="label">{d}</span>
-              <select name={`grade:${d}`} defaultValue={gradeOf(s, d)} className="border border-basalt/20 bg-white px-2 py-1">
+              <select name={`grade:${d}`} defaultValue={gradeOf(s, d)} className="border border-basalt/20 bg-chalk px-2 py-1">
                 {grades.list.map((x) => (
                   <option key={x.code} value={x.code}>
                     {x.name}

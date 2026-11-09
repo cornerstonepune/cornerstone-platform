@@ -24,7 +24,7 @@ export default async function MaterialsPage({ searchParams }: { searchParams: Pr
   const me = await requireStaff();
   const q = await searchParams;
   if (q.day !== undefined && !isDay(q.day)) notFound();
-  const day = q.day ?? schoolToday();
+  const day = q.day ?? (await schoolToday());
   const span: Span = SPANS.includes(q.span as Span) ? (q.span as Span) : "week";
   const d = await dayOf(me, { class_id: q.class, day }); // not found when her screens are closed to her
   const [list, catalogue, { previewing }] = await Promise.all([materialsOf(me, d.class.id, day, span), catalogueOf(me), openTo(me)]);
@@ -39,7 +39,7 @@ export default async function MaterialsPage({ searchParams }: { searchParams: Pr
       action={
         <nav aria-label={W.title} className="flex flex-wrap gap-[var(--space-2)]">
           {SPANS.map((s) => (
-            <Link key={s} href={here(s)} aria-current={s === span ? "page" : undefined} className={`${BTN} no-underline ${s === span ? "border-[var(--chip-donow-bd)] bg-[var(--chip-donow-bg)] text-[var(--chip-donow-fg)]" : ""}`}>
+            <Link key={s} href={here(s)} aria-current={s === span ? "page" : undefined} className={`${BTN} no-underline ${s === span ? "border-[var(--action)] bg-[var(--action)] text-[var(--action-ink)]" : ""}`}>
               {W.span[s]}
             </Link>
           ))}

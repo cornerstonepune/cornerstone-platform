@@ -20,7 +20,7 @@ import { schoolToday } from "@/lib/voice-page";
 export default async function TodayPage({ searchParams }: { searchParams: Promise<{ class?: string; day?: string; go?: string }> }) {
   const me = await requireStaff();
   const q = await searchParams;
-  const today = schoolToday();
+  const [today, now] = await Promise.all([schoolToday(), nowAtSchool()]);
   if (q.day !== undefined && !isDay(q.day)) notFound();
   const asked = q.go === "tomorrow" ? schoolDay(q.day ?? today, 1) : (q.day ?? today);
   const d = await dayOf(me, { class_id: q.class, day: asked });
@@ -35,15 +35,14 @@ export default async function TodayPage({ searchParams }: { searchParams: Promis
     >
       <Crumbs trail={[{ label: E.area }, { label: E.today.title, href: at(today) }, { label: longDate(d.day) }]} />
       <ClassPick classes={d.classes} on={d.class.id} href={(id) => `/educator?class=${id}&day=${d.day}`} />
-      <DayCalendar d={d} />
+      <DayCalendar d={d} today={today} now={now} />
     </PageShell>
   );
 }
 
-function DayCalendar({ d }: { d: Day }) {
+function DayCalendar({ d, today, now }: { d: Day; today: string; now: string }) {
   if (isBlank(d)) return <EmptyState>{blankWords(d)}</EmptyState>;
-  const when = whenIs(d.day);
-  const now = nowAtSchool();
+  const when = whenIs(d.day, today);
   const periods = d.periods;
   const work = periods.map((p) => ({ p, chip: chipOf(p, { now, day: when }) }));
   const lessons = d.periods.filter(isLesson);
@@ -66,7 +65,7 @@ function DayCalendar({ d }: { d: Day }) {
         />
       </div>
       <ol data-day={d.day} data-day-kind={d.kind} aria-label={longDate(d.day)} className="col-span-12 grid gap-[var(--space-2)] lg:col-span-8">
-        {d.note?.startsWith("undecided:") ? <li className="text-[length:var(--text-label)] text-[var(--text-muted)]">{E.dayKind.undecided}</li> : null}
+        {d.note?.startsWith("undecided:") ? <li className="text-[length:var(--text-label)] text-[var(--ink-muted)]">{E.dayKind.undecided}</li> : null}
         {work.map(({ p, chip }, i) => (
           <li key={p.period_id} className="grid gap-[var(--space-2)]">
             {line === i ? <NowLine now={now} /> : null}
@@ -80,11 +79,11 @@ function DayCalendar({ d }: { d: Day }) {
         ) : null}
       </ol>
       <aside aria-label={E.glance} className="col-span-12 grid content-start gap-[var(--space-3)] max-lg:order-[-1] lg:col-span-4">
-        <section className="grid gap-[var(--space-2)] rounded-[var(--radius-m)] border border-[var(--border)] p-[var(--space-3)]" data-next>
-          <h2 className="text-[length:var(--text-h3)] font-semibold">{E.nextUp}</h2>
+        <section className="grid gap-[var(--space-2)] rounded-[var(--radius-control)] border border-[var(--line)] p-[var(--space-3)]" data-next>
+          <h2 className="text-[length:var(--text-title-small)] font-semibold">{E.nextUp}</h2>
           {next ? (
             <>
-              <span className="text-[length:var(--text-label)] text-[var(--text-muted)] tabular-nums">{timeOf(next.p)}</span>
+              <span className="text-[length:var(--text-label)] text-[var(--ink-muted)] tabular-nums">{timeOf(next.p)}</span>
               <span className="font-medium">{next.p.activity?.name ?? next.p.line ?? next.p.label}</span>
               {next.chip ? <ChipTag chip={next.chip} /> : null}
               {next.chip !== "doNow" && when === "today" ? <Pill tone="comingUp" fill={false} data-countdown>
@@ -92,11 +91,11 @@ function DayCalendar({ d }: { d: Day }) {
                 </Pill> : null}
             </>
           ) : (
-            <p className="text-[var(--text-muted)]">{when === "past" ? E.dayOver : E.nothingLeft}</p>
+            <p className="text-[var(--ink-muted)]">{when === "past" ? E.dayOver : E.nothingLeft}</p>
           )}
         </section>
         <section className="grid gap-[var(--space-2)]">
-          <h2 className="text-[length:var(--text-label)] font-medium text-[var(--text-muted)]">{E.legend}</h2>
+          <h2 className="text-[length:var(--text-label)] font-medium text-[var(--ink-muted)]">{E.legend}</h2>
           <Legend />
         </section>
       </aside>
@@ -106,11 +105,11 @@ function DayCalendar({ d }: { d: Day }) {
 
 function NowLine({ now }: { now: string }) {
   return (
-    <div data-now role="separator" aria-label={`${E.now} ${now}`} className="flex items-center gap-[var(--space-2)] text-[length:var(--text-label)] font-semibold text-[var(--chip-donow-bg)]">
+    <div data-now role="separator" aria-label={`${E.now} ${now}`} className="flex items-center gap-[var(--space-2)] text-[length:var(--text-label)] font-semibold text-[var(--action)]">
       <span className="tabular-nums">
         {E.now} {now}
       </span>
-      <span className="h-[var(--space-1)] flex-1 rounded-[var(--radius-pill)] bg-[var(--chip-donow-bg)]" />
+      <span className="h-[var(--space-1)] flex-1 rounded-[var(--radius-pill)] bg-[var(--action)]" />
     </div>
   );
 }

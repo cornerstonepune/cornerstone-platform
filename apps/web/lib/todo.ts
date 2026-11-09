@@ -1,5 +1,5 @@
 import type { State } from "@/components/status-chip";
-import { classWords, type MyVoice, SCHOOL_ZONE } from "./voice-types";
+import { classWords, type MyVoice } from "./voice-types";
 import { W } from "./voice-words";
 
 // What needs doing, as one list of tasks (goals/nav_teacher_scope_and_todo.yaml). Nimish, 24 Oct 2026: "Key things that need
@@ -60,6 +60,8 @@ export type Sources = {
   empty: number;
   /** her K2 classes and her notes waiting (lib/voice.ts), none while voice notes are switched off */
   voice?: MyVoice | null;
+  /** the school's clock (config `school.time_zone`, lib/school-clock.ts): when a note was heard is said in it */
+  zone?: string;
 };
 
 export const count = (n: number, one: string, more = `${one}s`) => `${n.toLocaleString("en-IN")} ${n === 1 ? one : more}`;
@@ -101,7 +103,7 @@ export function buildTasks(src: Sources, subjectLabel: (code: string | null) => 
     add("record", c.id, none, [klass.get(c.id)!], "", recording ? `/voice/record?class=${c.id}` : `/voice/form?class=${c.id}`, recording ? W.record.start : W.fillForm, klass.get(c.id)!, [klass.get(c.id)!]);
   for (const n of src.voice?.notes ?? []) {
     const where = klass.get(n.class_id) ?? "";
-    add("note", n.id, none, [where, heardAt(n.received_at)], "1 note", `/voice/notes/${n.id}`, n.status === "received" ? W.confirm.reading : W.confirm.button, where, where ? [where] : []);
+    add("note", n.id, none, [where, heardAt(n.received_at, src.zone)], "1 note", `/voice/notes/${n.id}`, n.status === "received" ? W.confirm.reading : W.confirm.button, where, where ? [where] : []);
     if (n.status === "received") out[out.length - 1].state = "reading";
   }
   if (src.asks) add("ask", "drafted", none, [], count(src.asks, "question"), "/asks", "Open the questions", "Questions to answer");
@@ -111,10 +113,10 @@ export function buildTasks(src: Sources, subjectLabel: (code: string | null) => 
 const none: Ref = { subject: null, topic: null, topicName: null };
 
 /** When a note reached us, as she reads it: "10:42" today, else "3 Nov 10:42" (the school's clock). */
-function heardAt(iso: string): string {
+function heardAt(iso: string, zone?: string): string {
   const at = new Date(iso);
-  const day = (d: Date) => d.toLocaleDateString("en-IN", { timeZone: SCHOOL_ZONE, day: "numeric", month: "short" });
-  const time = at.toLocaleTimeString("en-IN", { timeZone: SCHOOL_ZONE, hour: "2-digit", minute: "2-digit", hour12: false });
+  const day = (d: Date) => d.toLocaleDateString("en-IN", { timeZone: zone, day: "numeric", month: "short" });
+  const time = at.toLocaleTimeString("en-IN", { timeZone: zone, hour: "2-digit", minute: "2-digit", hour12: false });
   return day(at) === day(new Date()) ? time : `${day(at)} ${time}`;
 }
 

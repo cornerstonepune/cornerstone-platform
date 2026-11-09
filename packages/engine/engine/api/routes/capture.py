@@ -64,7 +64,6 @@ def ingest(
             body.actor,
             pages=body.pages,
             masks=body.masks,
-            narrative=body.narrative,
         )
         return {
             "capture_id": str(summary["capture_id"]),

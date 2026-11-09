@@ -7,9 +7,8 @@ against live (`LIVE_READONLY_DATABASE_URL`) without changing a row.
 """
 
 import os
-from datetime import date
 
-from engine.core import db
+from engine.core import db, settings
 
 MIGRATIONS = db.REPO_ROOT / "supabase" / "migrations"
 
@@ -138,9 +137,9 @@ def check(address: str | None = None):
     return ok, lines
 
 
-def week_now() -> str:
-    """This ISO week as the website names it (`apps/web/lib/week.ts`): "2026-W39"."""
-    y, w, _ = date.today().isocalendar()
+def week_now(conn: db.Conn) -> str:
+    """This ISO week by the school's clock, as the website names it (`apps/web/lib/week.ts`): "2026-W39"."""
+    y, w, _ = settings.school_today(conn).isocalendar()
     return f"{y}-W{w:02d}"
 
 
@@ -149,10 +148,10 @@ def homes(address: str | None = None, week: str | None = None):
     questions — or the paper already approved, or why there is none. Read only; names never printed."""
     from engine.w2_print import focus_paper
 
-    week = week or week_now()
     out = []
     with db.connect(address or url()) as conn:
         conn.read_only = True
+        week = week or week_now(conn)
         kids = conn.execute(
             "select c.id, c.section, c.roll_no, (select count(*) from answer_placed a"
             "  where a.child_id = c.id and a.confirmed_by is not null) as answers"

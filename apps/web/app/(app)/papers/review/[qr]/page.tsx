@@ -145,7 +145,7 @@ export default async function ReviewPage({ params, searchParams }: Props) {
           <Panel title="The page as it prints">
             {Array.from({ length: r.pages }, (_, i) => (
               // eslint-disable-next-line @next/next/no-img-element
-              <img key={i} src={`/api/paper/${r.qr}/${i + 1}`} alt={`Page ${i + 1} of paper ${r.qr}`} className="mb-3 w-full border border-basalt/14 bg-white" loading="lazy" />
+              <img key={i} src={`/api/paper/${r.qr}/${i + 1}`} alt={`Page ${i + 1} of paper ${r.qr}`} className="mb-3 w-full border border-basalt/14 bg-chalk" loading="lazy" />
             ))}
           </Panel>
         </details>

@@ -14,8 +14,7 @@ AUDIENCES = ("educator", "team")
 
 
 def school_today(conn: db.Conn) -> dt.date:
-    zone = settings.config(conn, "school.time_zone", "Asia/Kolkata")
-    return db.one(conn, "select (now() at time zone %s)::date as d", (zone,))["d"]
+    return db.one(conn, "select (now() at time zone %s)::date as d", (settings.time_zone(conn),))["d"]
 
 
 def _holidays(conn: db.Conn, tenant: UUID, campus: UUID, lo: dt.date, hi: dt.date) -> set[dt.date]:

@@ -4,12 +4,21 @@ that code; `loaders.load_all` loads them with everything else. Split from `loade
 gained its model's effort and the loader stood at its frozen ceiling.
 """
 
+import datetime as dt
 import json
 from typing import Any
+from zoneinfo import ZoneInfo
 
 from engine.core import db
 
 SEED = db.REPO_ROOT / "supabase" / "seed"
+# The school's clock inside SQL: `now() at time zone <this>` (CP-24: one clock, never the server's)
+ZONE_SQL = "(select value #>> '{}' from config where key = 'school.time_zone')"
+TODAY_SQL = f"(now() at time zone {ZONE_SQL})::date"  # the school's date inside a query that has no second lookup to spare
+
+
+class MissingSetting(Exception):
+    """A setting row the school's database should hold (`engine load` or a migration puts it there) is not there."""
 
 
 def seed(name: str, key: str) -> Any:
@@ -76,6 +85,27 @@ def config(conn: db.Conn, key: str, default: Any = None) -> Any:
     """A config row's value, or `default` when there is no such row. The one reader every workflow uses."""
     row = conn.execute("select value from config where key = %s", (key,)).fetchone()
     return row["value"] if row else default
+
+
+def time_zone(conn: db.Conn) -> str:
+    """The school's clock, the `school.time_zone` row. No default: a database without it is an error, never the
+    server's clock (CP-24, audit F5)."""
+    zone = config(conn, "school.time_zone")
+    if not zone:
+        raise MissingSetting(
+            "this database has no school.time_zone setting: run the migrations and `engine load`"
+        )
+    return zone
+
+
+def school_day(conn: db.Conn, at: dt.datetime) -> dt.date:
+    """The day a moment falls on by the school's clock: a note heard at 03:54 in Pune is about that morning, though it
+    is still the night before in UTC."""
+    return at.astimezone(ZoneInfo(time_zone(conn))).date()
+
+
+def school_today(conn: db.Conn) -> dt.date:
+    return school_day(conn, dt.datetime.now(dt.UTC))
 
 
 def threshold(conn: db.Conn, key: str, default: float) -> float:

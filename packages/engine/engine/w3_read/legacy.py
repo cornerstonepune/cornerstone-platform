@@ -423,11 +423,9 @@ def _page_resolution(summary, page_no, out):
     return f"{res['status']}: {res['saw']}{tail}"
 
 
-def import_scan(
-    conn, path, paper_code, child_id, actor, pages=None, masks=None, narrative=False, again=False, rows=None
-):
-    """One scan of one child's paper → capture, item_result rows (candidate), and optionally a
-    narrative_observation. Returns a summary a person can read before confirming.
+def import_scan(conn, path, paper_code, child_id, actor, pages=None, masks=None, again=False, rows=None):
+    """One scan of one child's paper → capture and item_result rows (candidate). Returns a summary a
+    person can read before confirming.
 
     Idempotent on the file's content: reading the same scan for the same child again returns the
     existing capture rather than a second one — the September batch's double count (HANDOFF.md)
@@ -514,7 +512,7 @@ def import_scan(
             "file_pages": pages,  # which page of the file each image is, for reading it at its own pixels
         }
         for pg in reading.read_pages(conn, scan, cli, child_id):
-            page_no, jpeg, readings = pg["page_no"], pg["jpeg"], pg["readings"]
+            page_no, readings = pg["page_no"], pg["readings"]
             summary["notes"].append(pg["note"])
             if readings is None:
                 continue
@@ -548,13 +546,6 @@ def import_scan(
                         "codes": codes,
                         "working": working,
                     }
-                )
-            if narrative:
-                obs = llm.generate(conn, "read_page", {}, images=[jpeg])
-                conn.execute(
-                    "insert into narrative_observation (tenant_id, capture_id, text, signals, prompt_version)"
-                    " values (%s,%s,%s,%s,(select version from prompt where purpose = 'read_page' and active))",
-                    (tenant, capture, obs["narrative"], json.dumps(obs["signals"])),
                 )
         conn.execute("update capture set status = 'processed' where id = %s", (capture,))
     except llm.LLMError as e:

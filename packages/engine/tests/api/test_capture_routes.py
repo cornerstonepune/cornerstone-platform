@@ -46,8 +46,8 @@ def test_ingest_calls_import_scan_with_the_requests_own_values(client, monkeypat
     monkeypatch.setattr(
         legacy,
         "import_scan",
-        lambda conn, path, paper, child, actor, pages=None, masks=None, narrative=False: (
-            seen.append((path, paper, child, actor, pages, masks, narrative))
+        lambda conn, path, paper, child, actor, pages=None, masks=None: (
+            seen.append((path, paper, child, actor, pages, masks))
             or {"capture_id": "cap-1", "pages": 2, "results": [1, 2], "unmatched": [], "notes": []}
         ),
     )
@@ -61,7 +61,6 @@ def test_ingest_calls_import_scan_with_the_requests_own_values(client, monkeypat
             "actor": "aseem",
             "pages": [1, 2],
             "masks": {"1": 0.2},
-            "narrative": True,
         },
     )
     assert r.status_code == 200
@@ -74,7 +73,7 @@ def test_ingest_calls_import_scan_with_the_requests_own_values(client, monkeypat
         "n_notes": 0,
         "already": False,
     }
-    assert seen == [("/scans/a.pdf", "P1", "c1", "aseem", [1, 2], {1: 0.2}, True)]
+    assert seen == [("/scans/a.pdf", "P1", "c1", "aseem", [1, 2], {1: 0.2})]
 
 
 def test_ingest_with_the_same_idempotency_key_does_not_call_import_scan_again(client, monkeypatch):

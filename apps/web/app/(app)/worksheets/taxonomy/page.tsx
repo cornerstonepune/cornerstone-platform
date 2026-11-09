@@ -160,7 +160,7 @@ function HeldAt({ h }: { h: Held }) {
         — {many(h.questions, "question")} on {many(h.worksheets, "worksheet")}:
       </span>{" "}
       {h.codes.map((code) => (
-        <Link key={code} href={`/worksheets/${code}`} className="mr-1 inline-block font-mono whitespace-nowrap">
+        <Link key={code} href={`/worksheets/${code}`} className="mr-1 inline-block tabular-nums whitespace-nowrap">
           {code}
         </Link>
       ))}

@@ -20,7 +20,7 @@ import { schoolToday } from "@/lib/voice-page";
 export default async function WeekPage({ searchParams }: { searchParams: Promise<{ class?: string; day?: string; go?: string }> }) {
   const me = await requireStaff();
   const q = await searchParams;
-  const today = schoolToday();
+  const [today, now] = await Promise.all([schoolToday(), nowAtSchool()]);
   if (q.day !== undefined && !isDay(q.day)) notFound();
   const monday = mondayOf(q.day ?? today, q.go === "next" ? 1 : 0);
   const w = await weekOf(me, { class_id: q.class, week_of: monday });
@@ -43,7 +43,7 @@ export default async function WeekPage({ searchParams }: { searchParams: Promise
           { label: E.counts.activities, n: w.days.flatMap((d) => d.periods).filter((p) => p.activity).length },
         ]}
       />
-      <WeekGrid w={w} />
+      <WeekGrid w={w} today={today} now={now} />
       <div className="mt-[var(--space-4)]">
         <Legend />
       </div>
@@ -56,11 +56,9 @@ const firstDay = (w: Week, is: (d: Week["days"][number]) => boolean) => {
   return d ? `#day-${d.day}` : undefined;
 };
 
-function WeekGrid({ w }: { w: Week }) {
+function WeekGrid({ w, today, now }: { w: Week; today: string; now: string }) {
   const starts = [...new Set(w.days.flatMap((d) => d.periods.map((p) => p.starts_at)))].sort();
   const row = (start: string) => starts.indexOf(start) + 2; // row 1 holds the days' names
-  const now = nowAtSchool();
-  const today = schoolToday();
   // A cell's place on the grid from md up; on a phone the cells stack in order.
   const PLACE = "md:[grid-column:var(--c)] md:[grid-row:var(--r)]";
   return (
@@ -70,7 +68,7 @@ function WeekGrid({ w }: { w: Week }) {
         const when = whenIs(d.day, today);
         return [
           when === "today" ? (
-            <div key={`${d.day}-today`} data-today-column aria-hidden style={cell(`1 / span ${starts.length + 1}`)} className={`rounded-[var(--radius-m)] bg-[var(--border)]/45 max-md:hidden ${PLACE}`} />
+            <div key={`${d.day}-today`} data-today-column aria-hidden style={cell(`1 / span ${starts.length + 1}`)} className={`rounded-[var(--radius-control)] bg-[var(--line)]/45 max-md:hidden ${PLACE}`} />
           ) : null,
           <Link
             key={`${d.day}-head`}
@@ -78,12 +76,12 @@ function WeekGrid({ w }: { w: Week }) {
             href={`/educator?class=${w.class.id}&day=${d.day}`}
             data-day-head={d.day}
             style={cell(1)}
-            className={`flex min-h-[var(--tap)] items-center justify-between border-b border-[var(--border)] px-[var(--space-2)] font-semibold text-[var(--text)] no-underline max-md:mt-[var(--space-3)] ${PLACE}`}
+            className={`flex min-h-[var(--tap)] items-center justify-between border-b border-[var(--line)] px-[var(--space-2)] font-semibold text-[var(--ink)] no-underline max-md:mt-[var(--space-3)] ${PLACE}`}
           >
             {shortDate(d.day)}
           </Link>,
           isBlank(d) ? (
-            <div key={`${d.day}-none`} data-day={d.day} data-day-kind={d.kind} style={cell(`2 / span ${Math.max(starts.length, 1)}`)} className={`grid min-h-[var(--tap)] place-content-center rounded-[var(--radius-m)] border border-dashed border-[var(--border)] p-[var(--space-3)] text-center text-[var(--text-muted)] ${PLACE}`}>
+            <div key={`${d.day}-none`} data-day={d.day} data-day-kind={d.kind} style={cell(`2 / span ${Math.max(starts.length, 1)}`)} className={`grid min-h-[var(--tap)] place-content-center rounded-[var(--radius-control)] border border-dashed border-[var(--line)] p-[var(--space-3)] text-center text-[var(--ink-muted)] ${PLACE}`}>
               {blankWords(d)}
             </div>
           ) : (

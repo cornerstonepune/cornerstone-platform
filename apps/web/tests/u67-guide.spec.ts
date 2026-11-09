@@ -111,7 +111,7 @@ test("the glossary and why did it say that", async ({ page }) => {
     await expect(page.getByRole("heading", { level: 2, name: q })).toBeVisible();
   }
   // the states and the levels are the rows' own words
-  const [grey] = await sql<{ count_words: string }[]>`select count_words from state_colour where code = 'grey'`;
+  const [grey] = await sql<{ count_words: string }[]>`select e ->> 'count_words' as count_words from config c, jsonb_array_elements(c.value) e where c.key = 'state.colours' and e ->> 'code' = 'grey'`;
   await expect(page.locator("#why-too-few h2")).toContainText(grey.count_words);
   const levels = await sql<{ code: string }[]>`select code from difficulty order by ord`;
   for (const l of levels) await expect(page.locator("#level")).toContainText(l.code);
