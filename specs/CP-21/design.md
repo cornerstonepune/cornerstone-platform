@@ -35,7 +35,7 @@ kept with who, when and which draft, and it cannot silently overwrite a person's
   class) before `select internal.apply_conventions();`; `engine/checks/rules.json` is regenerated.
 - **CP-12 (by hand) waits for this.** It relies on: a live fortnight is a layer of dated rows (`fortnight_id` set), one per
   date and period; `timetable_fortnight_layer` to make that layer from the frame for a fortnight that never went live; the
-  lock on (tenant, class); the snapshot guard in decision 6 (a hand move changes the layer, so a later go-live sees it).
+  lock on (tenant, class); the changed-since guard in decision 6 (a hand move changes the layer, so a later go-live sees it).
 
 ## Mechanical decisions (recorded, with reasons)
 1. **A live fortnight is a layer of dated rows on top of the standing frame; the frame is never touched.** Going live writes,
@@ -85,13 +85,14 @@ kept with who, when and which draft, and it cannot silently overwrite a person's
    person). CP-6 lets a fortnight be frozen before it starts (its freeze date is days before the first day), so this refusal
    is testable.
 6. **A person's later changes are never silently overwritten.** Table `timetable_live (id, tenant_id, school_class_id,
-   fortnight_id, run_id references timetable_run, snapshot jsonb, discarded_changes int, reason, who uuid not null references
-   staff, at timestamptz default clock_timestamp())`, append-only through `internal.forbid_change()`. `snapshot` is the
-   fortnight's layer rows (date, period, kind, subject, text) and its sessions (id, date, period, plan line, state, text),
-   sorted by date and period, taken right after going live. A later go-live for the same class and fortnight compares the
-   current state with the last snapshot; if any entry differs (a hand move, an edited session), it is refused with the
-   number of changed entries unless `--discard-changes` is given, and that number is recorded. Pins and blocks change the
-   frame, not the layer, so they are not counted here (decision 2).
+   fortnight_id, run_id references timetable_run, state_hash text, discarded boolean, reason, who uuid not null references
+   staff, at timestamptz default clock_timestamp())`, append-only through `internal.forbid_change()`. Lean version (Nimish,
+   9 Nov): `state_hash` is one hash of the fortnight's layer rows (date, period, kind, subject, text) and its sessions (id,
+   date, period, plan line, state, text), sorted by date and period, taken right after going live. A later go-live for the
+   same class and fortnight recomputes it; if it differs (a hand move, an edited session), the step is refused with "this
+   fortnight was changed since it went live" unless `--discard-changes` is given, and the go-live record then shows
+   `discarded = true` with who and when. There is no saved copy of what was discarded and no count of changes. Pins and
+   blocks change the frame, not the layer, so they do not count here (decision 2).
 7. **One lock per class.** The step takes `pg_advisory_xact_lock` on (tenant, class) first; CP-12 takes the same lock.
 8. **The loader stays off a live fortnight.** `engine timetable load` refuses a fortnight that has a `timetable_live` row and
    lists it, so the school's sheet cannot put old sessions back under a generated timetable.

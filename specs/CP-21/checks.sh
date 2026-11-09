@@ -25,7 +25,7 @@ check "4 stale rules, unplaced draft, started fortnight, date with no school day
   $T $P/test_4_refusals.py
 check "5 only the go-live group (a setting) goes live; the record keeps who, when, which draft and cannot change" \
   $T $P/test_5_who.py
-check "6 a fortnight changed by hand since going live is refused unless discarded; the discard keeps who" \
+check "6 a fortnight changed by hand since going live is refused unless discarded; the record shows discarded, who and when" \
   $T $P/test_6_changed_since.py
 check "7 a frozen fortnight goes live only with a reason, and the reason is kept" \
   $T $P/test_7_frozen.py

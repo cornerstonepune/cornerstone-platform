@@ -7,9 +7,9 @@
   "3 planned lessons keep plan and materials lines, dates follow; pinned lessons stay; stop cases list and write nothing",
   "4 stale rules, unplaced draft, started fortnight, date with no school day refused with reason; other drafts stay current",
   "5 only the go-live group (a setting) goes live; the record keeps who, when, which draft and cannot change",
-  "6 a fortnight changed by hand since going live is refused unless discarded; the discard keeps who",
+  "6 a fortnight changed by hand since going live is refused unless discarded; the record shows discarded, who and when",
   "7 a frozen fortnight goes live only with a reason, and the reason is kept",
   "8 trial run shows each date and writes nothing; the loader refuses a live fortnight; existing tests unchanged"
  ],
- "ran_at": "2026-11-08T17:22:23+00:00"
+ "ran_at": "2026-11-09T04:23:35+00:00"
 }

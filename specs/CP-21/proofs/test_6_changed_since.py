@@ -1,7 +1,10 @@
 """CP-21 item 6: putting a draft live over a fortnight whose timetable a person changed since it last went live is
-refused, unless the person says to discard those changes; the discard is recorded with who."""
+refused, unless the person says to discard those changes; the go-live record then shows that changes were discarded,
+with who and when."""
 
 from conftest import generated, go_live, moving, run_with, snapshot, swapped, world
+
+LIVE = "select * from timetable_live where school_class_id = %s order by at"
 
 
 def _live_twice(conn, engine, monkeypatch):
@@ -17,9 +20,12 @@ def test_a_fortnight_nobody_changed_goes_live_again_without_a_discard(conn, engi
     w, second = _live_twice(conn, engine, monkeypatch)
     code, out = go_live(engine, w, second)
     assert code == 0, out
+    rows = conn.execute(LIVE, (w["class"],)).fetchall()
+    assert len(rows) == 2 and rows[-1]["run_id"] == second
+    assert rows[-1]["discarded"] is False, "an unchanged fortnight was recorded as having changes discarded"
 
 
-def test_a_hand_change_since_going_live_is_refused_unless_discarded_and_the_discard_keeps_who(
+def test_a_hand_change_since_going_live_is_refused_unless_discarded_and_the_record_shows_who_and_when(
         conn, engine, monkeypatch):
     w, second = _live_twice(conn, engine, monkeypatch)
     changed = conn.execute(
@@ -31,11 +37,13 @@ def test_a_hand_change_since_going_live_is_refused_unless_discarded_and_the_disc
 
     code, out = go_live(engine, w, second)
     assert code != 0, f"a person's change was overwritten without being asked:\n{out}"
+    assert "changed since it went live" in out.lower(), f"the refusal does not say why:\n{out}"
     assert snapshot(conn, w) == was, "something was written"
 
     code, out = go_live(engine, w, second, extra=("--discard-changes",))
     assert code == 0, out
-    last = conn.execute("select * from timetable_live where school_class_id = %s order by at desc limit 1",
-                        (w["class"],)).fetchone()
-    assert last["run_id"] == second and last["who"] == w["coordinator"]["id"]
-    assert last["discarded_changes"] and last["discarded_changes"] >= 1, "the discard is not recorded"
+    first, last = conn.execute(LIVE, (w["class"],)).fetchall()
+    assert last["run_id"] == second
+    assert last["discarded"] is True, "the go-live record does not show that changes were discarded"
+    assert last["who"] == w["coordinator"]["id"], "the discard does not record who"
+    assert last["at"] is not None and last["at"] > first["at"], "the discard does not record when"

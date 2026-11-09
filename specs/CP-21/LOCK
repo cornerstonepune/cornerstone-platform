@@ -1,5 +1,5 @@
 {
-  "digest": "fef4a8bb239ecd522dad349f3959732c1ce756105a8fbdbba0e8b15e8d7be1e8",
+  "digest": "2b35a11f7db28f9e04525744eae459c08e9f73d8d4ecd34facf4dee4ebdccd68",
   "files": [
     "spec.md",
     "checks.sh",
@@ -15,7 +15,7 @@
     "proofs/test_8_trial_and_loader.py",
     "proofs/tests_unchanged.sh"
   ],
-  "locked_at": "2026-11-08T17:22:55+00:00",
+  "locked_at": "2026-11-09T04:24:03+00:00",
   "criteria": 8,
   "athena": "2.14.0"
 }
