@@ -1,1 +1,0 @@
-{"action": "create", "reason": "Umbrella for Postgres work in this repo: schema changes, grants, row-level security proofs and engine data rules are one class (database changes), not five separate skills. Absorbs database-access-rules and engine-schema-change; their detail is carried as references.", "evidence": "references/evidence-d5c72ede.md"}
