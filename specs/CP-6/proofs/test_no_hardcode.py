@@ -1,13 +1,15 @@
-"""CP-6 item 6 (unchanged by the fortnight reading): no hard-coded "frozen" remains in the engine or the website.
+"""CP-6 item 6: no hard-coded "frozen" remains in the engine or the website.
 
 Search: every tracked source file of `packages/engine/engine` and `apps/web` (tests, e2e and fixtures excluded; git's
 list, so no node_modules) holds no literal frozen-is-false (`"frozen": False`, `frozen=False`, `frozen: false`, ...).
 Behaviour: `/timetable/day`, `week` and `period` say `frozen: true` for a date in a frozen fortnight and `false` for a
-date in no fortnight, read from the database (`fortnight_is_frozen`). Reuses `world` and `call` from test_k2_day.py.
+date in no fortnight, read from the fortnight's state (`fortnight_cycle.is_frozen`; the fortnight is frozen with
+`fortnight_cycle.move`). Reuses `world` and `call` from test_k2_day.py (the school's own Fortnight 10 text).
 """
 
 import re
 import subprocess
+import uuid
 from pathlib import Path
 
 from engine.core import db
@@ -47,7 +49,9 @@ def _freeze_fortnight_of(conn, klass, day: str) -> None:
         " on conflict (fortnight_id) do nothing",
         (f["tenant_id"], f["id"]),
     )
-    conn.execute("update fortnight_cycle set state = 'frozen' where fortnight_id = %s and state = 'planning'", (f["id"],))
+    from engine.w2_print import fortnight_cycle
+
+    fortnight_cycle.move(conn, f["id"], "frozen", f"staff:{uuid.uuid4()}")
 
 
 def test_6_day_week_and_period_say_frozen_from_the_database(world):

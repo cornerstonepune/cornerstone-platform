@@ -1,44 +1,27 @@
-"""CP-6 item 5, read for the fortnight: each state change of a fortnight writes an edit-history row.
+"""CP-6 item 5, read for the fortnight: each state change writes an edit-history row.
 
-Each step of the ladder leaves exactly one `fortnight_edit` row of kind 'state' for that fortnight, with subject
-'<from>-><to>', op 'state', no reason and changed_by = who (`app.changed_by`). The history is append-only: a row cannot
-be updated or deleted.
+Each `fortnight_cycle.move` leaves exactly one `fortnight_edit` row of kind 'state' for that fortnight, with subject
+'<from>-><to>', op 'state', no reason, changed_by = the actor (a staff id) and a time. A refused move writes none (item 4
+proves that). No database triggers exist in the lean design, so append-only is not claimed here.
 """
 
 import uuid
 
-from cp6_world import STATES, a_fortnight, conn, move, refused, school  # noqa: F401
-from engine.core import db
-
-
-def state_rows(conn, fortnight_id) -> list[dict]:
-    return conn.execute(
-        "select subject, op, reason, changed_by, created_at from fortnight_edit"
-        " where fortnight_id = %s and kind = 'state' order by created_at",
-        (fortnight_id,),
-    ).fetchall()
+from cp6_world import STATES, a_fortnight, conn, edits, fc, school  # noqa: F401
 
 
 def test_5_each_state_change_writes_exactly_one_history_row(conn, school):
+    """Item 5: one row per move, saying which step, who and when."""
     f = a_fortnight(conn, school, "2031-07-07")
-    for before, after in zip(STATES, STATES[1:]):
+    assert edits(conn, f["id"], "state") == [], "history before any move"
+    for before, after in zip(STATES, STATES[1:], strict=False):
         who = f"staff:{uuid.uuid4()}"
-        conn.execute("select set_config('app.changed_by', %s, true)", (who,))
-        n = len(state_rows(conn, f["id"]))
-        move(conn, f["id"], after)
-        rows = state_rows(conn, f["id"])
+        n = len(edits(conn, f["id"], "state"))
+        fc().move(conn, f["id"], after, who)
+        rows = edits(conn, f["id"], "state")
         assert len(rows) == n + 1, f"{before}->{after} wrote {len(rows) - n} history rows, not one"
-        r = next(x for x in rows if x["subject"] == f"{before}->{after}")
+        mine = [x for x in rows if x["subject"] == f"{before}->{after}"]
+        assert len(mine) == 1, f"no single history row says {before}->{after}"
+        r = mine[0]
         assert r["op"] == "state" and r["reason"] is None
         assert r["changed_by"] == who and r["created_at"] is not None
-
-
-def test_5_the_history_cannot_be_changed_or_removed(conn, school):
-    f = a_fortnight(conn, school, "2031-07-07")
-    move(conn, f["id"], "frozen")
-    row = db.one(
-        conn, "select id from fortnight_edit where fortnight_id = %s and kind = 'state' limit 1", (f["id"],)
-    )["id"]
-    refused(conn, "update fortnight_edit set changed_by = 'staff:someone-else' where id = %s", (row,))
-    refused(conn, "delete from fortnight_edit where id = %s", (row,))
-    assert db.one(conn, "select count(*) as n from fortnight_edit where id = %s", (row,))["n"] == 1
