@@ -68,7 +68,7 @@ export async function across(actor: string, me: Who): Promise<Across> {
                coalesce(ss.name || coalesce(' · ' || t.difficulty, ''), t.key ->> 'title', t.code) as title,
                coalesce((select max((g.request ->> 'on')::date) from flow_run g
                          where g.flow = 'given' and g.request -> 'qrs' ? si.qr_code),
-                        coalesce(si.printed_at, si.approved_at)::date) as since
+                        (coalesce(si.printed_at, si.approved_at) at time zone (select value #>> '{}' from config where key = 'school.time_zone'))::date) as since
         from sheet_instance si join child ch on ch.id = si.child_id and ch.active
         join sheet_template t on t.id = si.sheet_template_id
         left join skill ss on ss.tenant_id = t.tenant_id and ss.code = t.skill_set_code
