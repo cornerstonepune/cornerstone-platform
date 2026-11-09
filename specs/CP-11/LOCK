@@ -1,0 +1,19 @@
+{
+  "digest": "7db54c5011c31605a71a0fb0b9bd80e8e83b68d833dd09f0e80f6183f08f0656",
+  "files": [
+    "spec.md",
+    "checks.sh",
+    "proofs/box_fet_version.sh",
+    "proofs/conftest.py",
+    "proofs/cp11_world.py",
+    "proofs/live_dry_run.py",
+    "proofs/pytest.sh",
+    "proofs/test_generate.py",
+    "proofs/test_long_fortnight.py",
+    "proofs/test_same_twice.py",
+    "proofs/test_unmeetable.py"
+  ],
+  "locked_at": "2026-11-08T17:18:40+00:00",
+  "criteria": 6,
+  "athena": "2.14.0"
+}
