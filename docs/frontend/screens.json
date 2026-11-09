@@ -1564,51 +1564,102 @@
       "exists": "part (/k2)",
       "eyebrow": "Your classes",
       "title": "Children",
-      "purpose": "Where each child stands, two ways in: the class picture from notes (nursery to K2) and the papers (grades 1 to 4). Both feed the same child.",
+      "purpose": "Your children in one table: how each is doing and who was in. Search, filter, open a child.",
       "blocks": [
         [
-          "Cards",
-          "Class picture: my class, count, from confirmed notes · Assessments: grades, live count, answers to check · Notes"
+          "FilterBar",
+          "search by name or Sr. No. · class (coordinator) · how they are doing · seen"
         ],
         [
           "DataTable",
-          "coordinator: every class with children count, seen this fortnight, not seen"
+          "Sr. No. · name · class (coordinator) · how they are doing (secure / practising / not seen) · last 7 school days present · last seen"
+        ],
+        [
+          "StackBar",
+          "per child, from child_skill_state"
         ]
       ],
       "elements": [
         {
-          "t": "link",
-          "label": "Open the class",
-          "to": "picture"
+          "t": "filter",
+          "label": "search by name or Sr. No."
+        },
+        {
+          "t": "filter",
+          "label": "class",
+          "roles": [
+            "coordinator"
+          ],
+          "note": "an educator with one class has no class filter"
+        },
+        {
+          "t": "filter",
+          "label": "how they are doing",
+          "note": "all / needs a look / mostly secure"
+        },
+        {
+          "t": "filter",
+          "label": "seen",
+          "note": "this week / this fortnight / not seen"
+        },
+        {
+          "t": "button",
+          "label": "× on a filter chip",
+          "effect": "removes that filter from the address"
+        },
+        {
+          "t": "button",
+          "label": "Clear",
+          "effect": "removes every filter and the search"
+        },
+        {
+          "t": "row",
+          "label": "each child",
+          "to": "child"
+        },
+        {
+          "t": "child_name",
+          "label": "the name column",
+          "note": "the name beside the Sr. No."
         },
         {
           "t": "link",
-          "label": "Open the assessments",
+          "label": "Open the class",
+          "to": "picture",
+          "note": "the class picture of the first class, or the one filtered"
+        },
+        {
+          "t": "link",
+          "label": "rail: Assessments",
           "to": "assessments"
         },
         {
           "t": "link",
-          "label": "Open the notes",
+          "label": "rail: Notes",
           "to": "notes"
         },
         {
-          "t": "row",
-          "label": "each class row",
-          "to": "picture",
-          "roles": [
-            "coordinator"
-          ]
+          "t": "link",
+          "label": "page: Later →",
+          "to": "children",
+          "note": "the next ten rows; the address carries the page"
         }
       ],
-      "rail": [],
+      "rail": [
+        "Assessments",
+        "Notes"
+      ],
       "capture": [],
       "main": "Open the class",
       "next": "Class picture",
-      "data": "school_class, enrolment counts, child_observed_state coverage",
-      "empty": "No class linked to you: 'The coordinator links you to the classes you teach'",
+      "data": "school_class, enrolment, pii.child, child_skill_state counts per child, attendance_mark (last 7 school days)",
+      "empty": "No class linked to you: 'The coordinator links you to the classes you teach'; no match: 'No child matches' with Clear",
       "phone": "the table scrolls sideways in its own box",
       "done_when": [
-        "an educator with one class is taken straight to its picture; with several, picks; the coordinator picks from every class"
+        "an educator with one class sees no class filter and no class column; with several, both; the coordinator sees every class",
+        "the how-they-are-doing bar's segments sum to the number of skills the child has a state or no state for, with never a red segment",
+        "searching a Sr. No. or part of a name narrows the rows and writes itself into the address; a reload keeps it",
+        "the name appears only in the name column, read from pii by child_id"
       ]
     },
     {

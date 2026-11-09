@@ -62,4 +62,4 @@ migrations, and fails if a row here does not name both the screen and the missin
 | `confirm` | each child's drafted mark before Confirm | `pii.note_claim` holds `read_as` and `words` as text; `activity_observation` is written only at Confirm | Is the draft per-child mark parsed from `read_as`, or held in a new column? |
 | `notes` | "by voice / form" of a waiting note | `route` exists only on `activity_observation`, written at confirm | A `route` column on `pii.educator_note`. |
 | `period`, `confirm` | the words above / as expected / below / not willing / absent | `observation_outcome` is not a target table | Do the outcome words become a `config` word list? |
-| `children` | live sittings and answers to check (Assessments card) | no target table says an answer is waiting for a check | Which table and state give these two counts? |
+| `children` | the last 7 school days present (a presence strip per child) | no target table holds attendance (`attendance_mark` in screens.json `data`) | A table or a column for daily presence, or drop the strip. |
