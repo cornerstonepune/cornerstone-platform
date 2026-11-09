@@ -14,7 +14,7 @@ Nimish is a non-technical founder. He decides scope and reads plain-English summ
 1. **Spec.** A GitHub issue titled `CP-<n>: …` with three parts: *What*, *Done when* (numbered, each one a test can
    check) and *Out of scope*. Draft it with `to-spec` (and `grill-with-docs` when the ask is fuzzy); Nimish approves it
    in the issue. Copy it to `specs/CP-<n>/spec.md`.
-2. **Before any new table:** read `docs/data-model.md` (once CP-27 writes it). A new table needs one line in the spec
+2. **Before any new table:** read `docs/data-model.md`. A new table needs one line in the spec
    saying why it cannot be a column, a row in a shared table, a rule on a column, or a view. Reuse beats adding.
 3. **Plan** with `writing-plans`; **build** test-first with `tdd` (`subagent-driven-development` only for three or more
    independent tasks). One test per *Done when* line, in `packages/engine/tests` or `apps/web/tests`, testing
