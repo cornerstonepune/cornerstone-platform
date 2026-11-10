@@ -62,6 +62,10 @@ export const GROUPS: readonly Door[] = [
     setup: true,
     pages: [
       { href: "/", label: "Curriculum", match: ["/", "/curriculum", "/skill-sets", "/worksheets", "/asks", "/educator/activity", "/setup"] },
+      // the new screens (UI-11), beside the old pages until those are retired one at a time (UI-11b); then these take the old names
+      { label: "Curriculum, one list", href: "/setup/curriculum", match: ["/setup/curriculum"], guide: false },
+      { label: "Skills to approve, one list", href: "/setup/skills/approve", match: ["/setup/skills"], guide: false },
+      { label: "Question bank, new", href: "/setup/question-bank", match: ["/setup/question-bank"], guide: false },
       { label: "Browse the curriculum", href: "/curriculum/browse", match: ["/curriculum/browse"], guide: false },
       { label: "What is filled", href: "/curriculum/fill", match: ["/curriculum/fill"], guide: false },
       { label: "Check the drafted parts", href: "/curriculum/fill/walk", match: ["/curriculum/fill/walk"], guide: false },
