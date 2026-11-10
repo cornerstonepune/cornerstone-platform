@@ -100,3 +100,36 @@ def test_a_change_sent_without_a_length_is_as_long_as_a_home_paper(client, kids,
     plan = client.post("/papers/plan", headers=HEADERS, json=sent)
     assert plan.status_code == 200, plan.text
     assert [p["n"] for p in plan.json()["papers"]] == [5]
+
+
+def test_papers_made_without_approving_wait_for_the_existing_approval_and_only_then_print(client, kids, conn):
+    """The Assessments screen's Make creates the papers; approving is a later step (issue: gap 2 of UI-4). Without
+    `approve` the route behaves as before."""
+    from engine.w2_print import edit_paper
+
+    plan = client.post("/papers/plan", headers=HEADERS, json=_batch(kids))
+    sent = _batch(kids, by="educator@school.test", once="form-wait", seen=plan.json()["seen"], approve=False)
+    made = client.post("/papers/make", headers=HEADERS, json=sent)
+    assert made.status_code == 200, made.text
+    assert made.json()["papers"] == 2 and made.json()["approved"] is False
+    qrs = made.json()["qrs"]
+    rows = conn.execute(
+        "select print_status, approved_by from sheet_instance where qr_code = any(%s)", (qrs,)
+    ).fetchall()
+    assert {(r["print_status"], r["approved_by"]) for r in rows} == {("new", None)}
+    assert client.get("/papers/pack.pdf", headers=HEADERS, params={"qr": qrs}).status_code == 409
+
+    for qr in qrs:
+        edit_paper.approve(conn, qr, "educator@school.test")
+    assert client.get("/papers/pack.pdf", headers=HEADERS, params={"qr": qrs}).status_code == 200
+
+
+def test_papers_made_as_before_are_approved_in_the_same_call(client, kids, conn):
+    plan = client.post("/papers/plan", headers=HEADERS, json=_batch(kids))
+    sent = _batch(kids, by="educator@school.test", once="form-now", seen=plan.json()["seen"])
+    made = client.post("/papers/make", headers=HEADERS, json=sent)
+    assert made.json()["approved"] is True
+    rows = conn.execute(
+        "select print_status, approved_by from sheet_instance where qr_code = any(%s)", (made.json()["qrs"],)
+    ).fetchall()
+    assert {(r["print_status"], r["approved_by"]) for r in rows} == {("printed", "educator@school.test")}

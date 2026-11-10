@@ -3,6 +3,7 @@
 // controls, its focus. Nothing here knows a particular screen.
 import type { Page } from "@playwright/test";
 import { PURPOSE_MAX } from "../../lib/ux-rules";
+import { drive as driven } from "./drivers";
 import { builtScreens, titleMatches, type Element, type Inventory, type Screen, type When } from "./load";
 
 export type Ctx = { inv: Inventory; role: "educator" | "coordinator"; width: number; allow: readonly string[]; names: readonly string[]; address: string };
@@ -175,6 +176,7 @@ export async function words(page: Page, s: Screen, c: Ctx, hosts: Set<string>): 
 async function effect(page: Page, s: Screen, e: Element): Promise<Problems> {
   const out: Problems = [];
   const say = e.effect ?? "";
+  if (e.drive) return driven(page, s, e, needle(e));
   if (/closes ChildPeek/i.test(say)) {
     const peek = page.locator("[data-block=ChildPeek]").first();
     await peek.getByRole("button", { name: /^close$/i }).click();
@@ -278,7 +280,7 @@ export async function drive(page: Page, s: Screen, e: Element, c: Ctx, byId: Map
     }
   } else if (e.t === "button") {
     // a button is driven by its stated effect; with none stated there is nothing to assert but that it exists (check 2)
-    if (e.effect) out.push(...(await effect(page, s, e)));
+    if (e.effect || e.drive) out.push(...(await effect(page, s, e)));
   } else if (e.t === "fold") {
     const sum = page.locator("main summary").filter({ hasText: e.text ?? e.label }).first();
     const d = sum.locator("xpath=..");
