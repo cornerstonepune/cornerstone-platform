@@ -18,6 +18,7 @@ import {
 import { requireStaff } from "@/lib/auth";
 import { scopeOf } from "@/lib/scope";
 import { mayDecide } from "@/lib/decides";
+import { mayUse } from "@/lib/access";
 
 type Props = { searchParams: Promise<Record<string, string | undefined>> };
 
@@ -123,6 +124,12 @@ export default async function CurriculumPage({ searchParams }: Props) {
             <Link href="/worksheets/taxonomy">
               Every case, with its worksheets
             </Link>
+            {mayUse(me, "blocks") ? (
+              <>
+                {" · "}
+                <Link href="/setup/blocks">The blocks gallery</Link>
+              </>
+            ) : null}
           </p>
           <CurriculumCounts
             rows={rows}

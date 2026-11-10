@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState, useTransition } from "react";
+import { ClassGrid, type GridCell, type Look } from "@/components/class-grid";
 import { StatusChip } from "@/components/status-chip";
 import { ICON_SIZE, Icon, MARK_ICON } from "@/lib/icons";
 import { activityWords, countLine, findActivities, listsOf, moveTo, paint, problemsOf, type Activity, type Draft, type Problem, type Work } from "@/lib/voice-check";
@@ -13,13 +14,7 @@ import { MARKS, type MarkKey, W } from "@/lib/voice-words";
 
 export type Sent = { activity: string; level: number; day: string; rest: boolean; lists: Record<MarkKey, string[]> };
 
-const MARK_TONE: Record<MarkKey | "as_expected", string> = {
-  above: "border-neem bg-neem/15 text-neem",
-  below: "border-bamboo bg-bamboo/25 text-mud",
-  not_willing: "border-monsoon bg-monsoon/15 text-monsoon",
-  absent: "border-monsoon border-dashed bg-chalk text-monsoon",
-  as_expected: "border-neem/40 bg-neem/6 text-neem",
-};
+const MARK_LOOK: Record<MarkKey | "as_expected", Look> = { above: "ok", below: "wait", not_willing: "quiet", absent: "quiet", as_expected: "ok" };
 
 export function Board({
   start,
@@ -96,11 +91,7 @@ export function Board({
           ))}
         </div>
         {fixing ? <p className="text-[14px] font-medium text-terracotta">{W.problems.stranger_fix(fixing)}</p> : null}
-        <div className="grid grid-cols-[repeat(auto-fill,minmax(3.25rem,1fr))] gap-2" role="group" aria-label={`${klass}, by Sr. No.`} data-grid>
-          {enrolled.map((roll) => (
-            <Cell key={roll} roll={roll} marks={w.marks[roll]} rest={w.rest} onTap={() => tap(roll)} />
-          ))}
-        </div>
+        <ClassGrid label={`${klass}, by Sr. No.`} showName={false} onTap={tap} cells={enrolled.map((roll) => cellOf(roll, w.marks[roll], w.rest))} />
         <div className="flex flex-wrap items-center gap-3">
           <button type="button" role="switch" aria-checked={w.rest} onClick={() => setW({ ...w, rest: !w.rest })} className={`chip ${w.rest ? "on" : ""}`} data-rest={w.rest}>
             <span className="inline-flex items-center gap-1.5">
@@ -127,16 +118,11 @@ export function Board({
   );
 }
 
-function Cell({ roll, marks, rest, onTap }: { roll: string; marks?: MarkKey[]; rest: boolean; onTap: () => void }) {
+// A child is a square of the class grid: her Sr. No., and her mark's icon and word on the mark's tint; never red.
+function cellOf(roll: string, marks: MarkKey[] | undefined, rest: boolean): GridCell {
   const m: MarkKey | "as_expected" | null = marks?.length ? marks[0] : rest ? "as_expected" : null;
-  const tone = m ? MARK_TONE[m] : "border-basalt/30 border-dashed bg-chalk text-basalt/70";
   const words = m ? W.marks[m] : W.notSeen;
-  return (
-    <button type="button" onClick={onTap} data-roll={roll} data-cell-mark={m ?? "none"} aria-label={`#${roll}: ${words}`} className={`flex min-h-12 flex-col items-center justify-center gap-0.5 border-2 text-[15px] font-semibold tabular-nums ${tone}`}>
-      #{roll}
-      {m ? <Icon name={MARK_ICON[m]} size={ICON_SIZE.table} /> : <span className="h-4" />}
-    </button>
-  );
+  return { key: roll, no: `#${roll}`, initials: "", name: "", look: m ? MARK_LOOK[m] : "unseen", icon: m ? MARK_ICON[m] : "not-seen", words, label: `#${roll}: ${words}`, attrs: { "data-roll": roll, "data-cell-mark": m ?? "none" } };
 }
 
 function ProblemRow({ p, w, setW, fixing, setFixing }: { p: Problem; w: Work; setW: (w: Work) => void; fixing: string | null; setFixing: (r: string | null) => void }) {

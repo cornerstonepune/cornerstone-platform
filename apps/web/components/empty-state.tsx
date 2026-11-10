@@ -4,7 +4,7 @@ import Link from "@/components/link";
 // (a panel with no rows) names where to go with `next` (rule 1: no dead ends).
 export function EmptyState({ children, next }: { children: React.ReactNode; next?: { href: string; label: string } }) {
   return (
-    <div className="mb-4 border border-[var(--state-ok)] bg-[var(--state-ok-bg)] p-3 text-[13.5px]" role="status" data-ux="empty">
+    <div className="mb-4 border border-[var(--state-ok)] bg-[var(--state-ok-bg)] p-3 text-[13.5px]" role="status" data-ux="empty" data-block="EmptyState">
       <p>{children}</p>
       {next ? (
         <p className="mt-2">
