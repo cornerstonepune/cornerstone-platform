@@ -34,8 +34,8 @@ frontend (from #551): do not build a control that needs a table not named here; 
 | `activity`, `curriculum` | `activity_part_source` | table | **derive** | A view over `change_log` (origin: upload = school, proposal = drafted, person = person) and `curriculum_proposal` (the `check_me` flag). Rows in `change_log` already tell school text from drafted text. | 2 and 6 |
 | `skills-approve` | `calibration_review` | table | **rows** | `approval` rows, kind `calibration` (not `eval_case`). | 3 |
 | `bank` | `bank_proposal` | table | **rows** | `curriculum_proposal`, and the decision as an `approval` row. | 3 |
-| `question` | `key_correction`, `item_key_change` | table | **column** | `item.key` holds the current key; the history is in `change_log`. | 3 |
-| `question` | `item_review` | table | **column** | `item.review` (the reviewer model's latest verdict) plus `change_log`. It is a review queue, not gold. | 3 |
+| `question` | `key_correction`, `item_key_change` | table | **rows** | No new column (revised in #551 after the group 3 code map): `item.item_key` already is the current key; old keys are `change_log` rows. | 3 |
+| `question` | `item_review` | table | **rows** | Rows in `eval_case` (revised in #551 after the group 3 code map: it also holds verdicts on whole levels, not only questions). It is a review queue, not gold. | 3 |
 | `bank` | `item_stat` | table | **derive** | A view over `item_result`. The "mislevelled" flag is computed from `level_rule`, not stored. Kept as a view only if it returns the same numbers as the table on live-shaped rows. | 6 |
 
 ## Decided in issue #551: found while drawing the wireframes
@@ -82,6 +82,19 @@ New asks for the backend. None needs a new table, and none is built; the wirefra
 | `assessments`, `assessment` | **An assessment's step** (Created, Approved, Printed, Uploaded, Read, Checked, Results in) and its counts per step. | Not a gap in tables: the step is derived (`apps/web/lib/assessment-steps.ts`) from `sheet_instance.approved_at`, `printed_at`, `capture.status`, `item_result.status`, `confirmed_at`. Noted so a builder does not look for a column. | none |
 | `assessment` | **Two packs of one assessment** (a first pack, and later copies for absent or new children) each approved on its own. | `approval` rows (kind, target) can carry it; the wireframe assumes one `approval` row per pack, target = the pack's copies. | Confirm the `approval.target` shape for a pack. |
 | `paper` | The wireframe uses `item_result.read_confidence` and `read_correction.human_read` for "the engine was 61% sure" and "your answer, beside the engine's read". | Both exist today. | none |
+
+## Added by wireframe batch 4 (the 17 remaining screens, 10 Nov 2026)
+
+New asks for the backend. None needs a new table; the wireframes mark each with `data-gap`.
+
+| Screen | What the screens ask | Why it is a gap | Backend must answer |
+|---|---|---|---|
+| `reports` | **One child's report lines**: the educator's words for each line and the line's stage (drafted, educator approved, coordinator approved). | `report_item` is the catalogue of possible lines (skill, band, title, section), not one child's line; `approval` rows can carry the two yeses (target = child and line) but nothing holds the words. | Where a child's line and its words live: a row in a kept table (for example `report_item` with `child_id`, or `approval.detail`), and the `approval.target` shape. |
+| `reports` | **When a child's report was sent.** | No column holds a report's sent time (`parent_note.sent_at` is the weekly note, not the term report). | A column or an `approval` row (kind `report_sent`). |
+| `moves` | **Which rows a hand move changes on a drafted fortnight.** | The data model says a hand move changes `session` rows and the clash view reads sessions, but Moves works on a fortnight still in draft (`timetable_run.draft`). | Whether a drafted fortnight's lessons are already `session` rows, or a move edits `timetable_run.draft` until Go live. |
+| `materials` | **A photo of the materials list** (capture: Photo, attached to the list, never to a child). | `capture` holds scanned sheets only, and `materials_list` has no column for a photo. | A column on `materials_list` or a `capture` row with a kind. |
+| `feedback` | **Where a feedback screenshot is kept** (the private side, linked by id, never on the public GitHub issue). | `staff_note` has no column for it; `capture` holds scanned sheets only. | A column on `staff_note` (a private storage key) or a `capture` row with a kind. Same answer as the materials photo, ideally. |
+| `materials` | "Notes to read" (lines the system could not match to an item). | Not a gap: `curriculum_proposal` rows of kind `materials_note` (CP-27 group 6). Noted so a builder does not look for a table. | none |
 
 ## Other things the frontend noticed (not table gaps)
 
