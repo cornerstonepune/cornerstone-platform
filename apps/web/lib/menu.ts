@@ -32,18 +32,18 @@ export const GROUPS: readonly Door[] = [
     screen: "timetable",
     pages: [
       { label: "This week", href: "/educator/week", match: ["/educator/week"], guide: false },
-      { label: "Materials", href: "/educator/materials", match: ["/educator/materials"], guide: false },
+      { label: "Materials", href: "/educator/materials", match: ["/educator/materials", "/timetable/materials"], guide: false },
       { href: "/timetable/rules", label: "Timetable rules", match: ["/timetable"] },
     ],
   },
   {
     key: "children",
     label: "Children",
-    href: "/k2",
+    href: "/children",
     icon: "child",
     screen: "children",
     pages: [
-      { label: "Children", href: "/k2", match: ["/k2"], guide: false },
+      { label: "Children", href: "/children", match: ["/children", "/k2"], guide: false },
       { href: "/papers", label: "Assessments", match: ["/papers", "/children/assessments", "/make", "/home", "/worksheets/CS"] },
       { href: "/papers/approve", label: "Papers to approve", match: ["/papers/approve"] },
       { href: "/capture", label: "Upload papers", match: ["/capture"] },
