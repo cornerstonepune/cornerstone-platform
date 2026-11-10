@@ -13,7 +13,7 @@ import { schoolToday } from "@/lib/school-clock";
 import type { Column } from "@/lib/ux-rules";
 import { MoveButton } from "./move-button";
 
-// A class is read whole, like the class grid (docs/ux-rules.md rule 3): the coordinator finds the child to move by Sr. No. without paging.
+// A school's classes, and a class's children, are read whole (docs/ux-rules.md rule 3, as for the class grid): the coordinator finds the class or the child to move without paging.
 const CLASS_ROWS = 40;
 
 type Props = { searchParams: Promise<Record<string, string | undefined>> };
@@ -68,7 +68,7 @@ export default async function ClassesPage({ searchParams }: Props) {
         filters={[{ name: "grade", label: "Grade", value: q.grade, all: "Every grade", options: grades }]}
         search={{ name: "q", value: q.q, placeholder: "Find a class or an educator" }}
       />
-      <DataTable label="Classes" columns={columns} rows={shown} rowKey={(c) => c.id} more={{ page: 1, href: () => "/setup/classes" }} />
+      <DataTable label="Classes" columns={columns} rows={shown} rowKey={(c) => c.id} limit={CLASS_ROWS} more={{ page: 1, href: () => "/setup/classes" }} />
       {open ? (
         <section aria-label={`${open.label}: its children`} className="mt-6">
           <h2 className="mb-2 text-[16px]">
