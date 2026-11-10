@@ -11,6 +11,7 @@ from engine.core import db
 
 ROOT = db.REPO_ROOT / "data"
 KINDS = {".m4a", ".mp3", ".wav", ".ogg", ".opus", ".webm", ".aac", ".mp4", ".flac"}
+PHOTO_KINDS = {".jpg", ".jpeg", ".png", ".webp", ".heic"}
 MOST = 10 * 2**20  # a note is under a minute; ten megabytes holds several at a phone's quality
 KEY = re.compile(r"^voice/\d{4}/[0-9a-f-]{36}\.[a-z0-9]{2,4}$")
 
@@ -30,6 +31,24 @@ def key_for(note_id: uuid.UUID, filename: str, year: int) -> str:
     return f"voice/{year}/{note_id}{ext}"
 
 
+def looks_like_image(data: bytes) -> bool:
+    """A JPEG, PNG, WebP or HEIC by its first bytes: a file named .jpg that is something else is refused."""
+    return (
+        data[:3] == b"\xff\xd8\xff"
+        or data[:8] == b"\x89PNG\r\n\x1a\n"
+        or (data[:4] == b"RIFF" and data[8:12] == b"WEBP")
+        or data[4:8] == b"ftyp"
+    )
+
+
+def photo_key(photo_id: uuid.UUID, filename: str, year: int) -> str:
+    """`voice/<year>/<photo id>.<ext>`: the same private folder as a recording, a name of its own."""
+    ext = Path(filename or "").suffix.lower()
+    if ext not in PHOTO_KINDS:
+        raise Refused("Not sent. That is not a photo this page can keep.", 415)
+    return f"voice/{year}/{photo_id}{ext if ext != '.jpeg' else '.jpg'}"
+
+
 def path(key: str) -> Path:
     """The file a key names; a key that is not one of ours names nothing (no path outside `data/voice`)."""
     if not KEY.fullmatch(key):
@@ -45,6 +64,12 @@ def save(key: str, data: bytes) -> None:
     p = path(key)
     p.parent.mkdir(parents=True, exist_ok=True)
     p.write_bytes(data)
+
+
+def save_photo(key: str, data: bytes) -> None:
+    if not data or not looks_like_image(data):
+        raise Refused("Not sent. That file is not a photo.", 415)
+    save(key, data)
 
 
 def read(key: str) -> bytes:

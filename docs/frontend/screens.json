@@ -1734,12 +1734,16 @@
         {
           "t": "button",
           "label": "× on a filter chip",
-          "effect": "removes that filter from the address"
+          "effect": "removes that filter from the address",
+          "text": "Remove filter",
+          "when": "filtered",
+          "data": "data-chip"
         },
         {
           "t": "button",
           "label": "Clear",
-          "effect": "removes every filter and the search"
+          "effect": "removes every filter and the search",
+          "when": "filtered"
         },
         {
           "t": "peek",
@@ -1771,7 +1775,8 @@
           "t": "link",
           "label": "page: Later →",
           "to": "children",
-          "note": "the next ten rows; the address carries the page"
+          "note": "the next ten rows; the address carries the page",
+          "when": "paged"
         },
         {
           "t": "filter",
@@ -1781,13 +1786,15 @@
         {
           "t": "button",
           "label": "peek: Close",
-          "effect": "closes ChildPeek; focus returns to the child that opened it"
+          "effect": "closes ChildPeek; focus returns to the child that opened it",
+          "when": "peek"
         },
         {
           "t": "link",
           "label": "peek: Open the child",
           "to": "child",
-          "note": "the one way from a list to the child's own page"
+          "note": "the one way from a list to the child's own page",
+          "when": "peek"
         }
       ],
       "rail": [
@@ -1874,7 +1881,8 @@
           "t": "link",
           "label": "rail: Show: each skill seen",
           "to": "picture",
-          "note": "same screen, the skill filter changes"
+          "note": "same screen, the skill filter changes",
+          "data": "data-show"
         },
         {
           "t": "link",
@@ -1915,13 +1923,15 @@
         {
           "t": "button",
           "label": "peek: Close",
-          "effect": "closes ChildPeek; focus returns to the child that opened it"
+          "effect": "closes ChildPeek; focus returns to the child that opened it",
+          "when": "peek"
         },
         {
           "t": "link",
           "label": "peek: Open the child",
           "to": "child",
-          "note": "the one way from a list to the child's own page"
+          "note": "the one way from a list to the child's own page",
+          "when": "peek"
         }
       ],
       "rail": [
@@ -1994,16 +2004,19 @@
         {
           "t": "link",
           "label": "each graph node",
-          "to": "skill"
+          "to": "skill",
+          "data": "data-node"
         },
         {
           "t": "filter",
           "label": "skill for the trend",
-          "note": "the trend redraws; the address carries it"
+          "note": "the trend redraws; the address carries it",
+          "text": "Skill"
         },
         {
           "t": "fold",
-          "label": "details on each timeline entry"
+          "label": "details on each timeline entry",
+          "text": "What it said"
         },
         {
           "t": "link",
@@ -2018,13 +2031,16 @@
         {
           "t": "link",
           "label": "each skill row",
-          "to": "skill"
+          "to": "skill",
+          "data": "data-skill-row"
         },
         {
           "t": "link",
           "label": "page: more entries",
           "to": "child",
-          "note": "older entries, ten at a time"
+          "note": "older entries, ten at a time",
+          "text": "Older entries",
+          "when": "paged"
         },
         {
           "t": "link",
@@ -2124,72 +2140,122 @@
           "t": "link",
           "label": "do now tile",
           "to": "paper",
-          "note": "the first paper with answers to judge"
+          "note": "the first paper with answers to judge",
+          "text": "Do now"
         },
         {
           "t": "link",
           "label": "this week tile",
           "to": "assessment",
-          "note": "the first pack to approve"
+          "note": "the first pack to approve",
+          "text": "This week"
         },
         {
           "t": "link",
           "label": "results in tile",
-          "to": "assessment"
+          "to": "assessment",
+          "text": "Done"
         },
         {
           "t": "button",
           "label": "Make: For a class",
           "to": "assessment",
-          "effect": "creates the assessment at step Created, then opens it"
+          "effect": "creates the assessment at step Created, then opens it",
+          "text": "For a class",
+          "drive": {
+            "click": "For a class",
+            "expect": {
+              "url": "make="
+            }
+          }
         },
         {
           "t": "button",
           "label": "Make: For each child",
           "to": "assessment",
-          "effect": "creates the assessment at step Created, then opens it"
+          "effect": "creates the assessment at step Created, then opens it",
+          "text": "For each child",
+          "drive": {
+            "click": "For each child",
+            "expect": {
+              "url": "make="
+            }
+          }
         },
         {
           "t": "button",
           "label": "Make: For one child",
           "to": "assessment",
-          "effect": "creates the assessment at step Created, then opens it"
+          "effect": "creates the assessment at step Created, then opens it",
+          "text": "For one child",
+          "drive": {
+            "click": "For one child",
+            "expect": {
+              "url": "make="
+            }
+          }
         },
         {
           "t": "button",
           "label": "Make: A ready-made worksheet",
           "to": "assessment",
-          "effect": "creates the assessment at step Created, then opens it"
+          "effect": "creates the assessment at step Created, then opens it",
+          "text": "A ready-made worksheet",
+          "drive": {
+            "click": "A ready-made worksheet",
+            "expect": {
+              "url": "make="
+            }
+          }
         },
         {
           "t": "upload",
           "label": "Read: choose scans or drop them",
-          "effect": "pdf/jpg/png/heic; the QR names the sheet; a paper appears at Uploaded; a file with no QR shows 'could not find the QR' and nothing is written"
+          "effect": "pdf/jpg/png/heic; the QR names the sheet; a paper appears at Uploaded; a file with no QR shows 'could not find the QR' and nothing is written",
+          "text": "Choose scans"
         },
         {
           "t": "field",
           "label": "a Google Drive link",
-          "note": "a non-Drive address shows a message"
+          "note": "a non-Drive address shows a message",
+          "text": "Link to the scan on Google Drive"
         },
         {
           "t": "button",
           "label": "Read it",
-          "effect": "the Drive file is fetched and read as above"
+          "effect": "the Drive file is fetched and read as above",
+          "text": "Read it",
+          "drive": {
+            "fill": {
+              "Link to the scan on Google Drive": "https://example.com/not-drive"
+            },
+            "expect": {
+              "text": [
+                "Paste the link to the scan on Google Drive"
+              ]
+            }
+          }
         },
         {
           "t": "filter",
-          "label": "class · topic · subject · kind · week · stage"
+          "label": "class · topic · subject · kind · week · stage",
+          "text": "Class",
+          "data": "data-filter"
         },
         {
           "t": "row",
           "label": "each assessment row",
-          "to": "assessment"
+          "to": "assessment",
+          "data": "data-assessment-row",
+          "when": "?view=table"
         },
         {
           "t": "link",
           "label": "each row's next action",
           "to": "assessment",
-          "note": "lands on the step's action"
+          "note": "lands on the step's action",
+          "data": "data-assessment-next",
+          "when": "?view=table"
         },
         {
           "t": "link",
@@ -2224,17 +2290,29 @@
         {
           "t": "tab",
           "label": "Board",
-          "note": "the assessments as lanes; the address carries the tab"
+          "note": "the assessments as lanes; the address carries the tab",
+          "text": "Board"
         },
         {
           "t": "tab",
           "label": "Table",
-          "note": "the assessments as rows"
+          "note": "the assessments as rows",
+          "text": "Table"
         },
         {
           "t": "row",
           "label": "each card on the board",
-          "to": "assessment"
+          "to": "assessment",
+          "data": "data-kcard",
+          "when": "?view=board"
+        },
+        {
+          "t": "link",
+          "label": "page: Later →",
+          "to": "assessments",
+          "text": "Later",
+          "when": "?view=table",
+          "note": "the next ten assessments"
         }
       ],
       "rail": [
@@ -2264,7 +2342,11 @@
         "no approve-all control anywhere",
         "each tile's number equals the rows behind it",
         "each board lane's card count equals the table rows at the lane's steps"
-      ]
+      ],
+      "rest": {
+        "fixture": "assessments-rest",
+        "after": "assessments-gone"
+      }
     },
     {
       "id": "assessment",
@@ -2275,7 +2357,7 @@
       "backend": [],
       "exists": "part (/papers/approve, /papers/card)",
       "eyebrow": "Grade 1 · 22 papers",
-      "title": "the built name",
+      "title": "{the built name}",
       "purpose": "Where this assessment stands, and each child's copy. A copy is its own row with its own action; there is no button over all of them.",
       "blocks": [
         [
@@ -2304,38 +2386,72 @@
         {
           "t": "field",
           "label": "Change the level (a row, before print)",
-          "effect": "Easy / Medium / Hard / Advance; the row's reason updates; kept as an override with who"
+          "effect": "Easy / Medium / Hard / Advance; the row's reason updates; kept as an override with who",
+          "text": "Level for Sr. No.",
+          "data": "data-level"
         },
         {
           "t": "button",
           "label": "Approve the pack",
-          "effect": "approval row for this pack only; the stepper moves to Approved; Print appears; the rows' Change the level disappears"
+          "effect": "approval row for this pack only; the stepper moves to Approved; Print appears; the rows' Change the level disappears",
+          "drive": {
+            "fixture": "pack-unapproved",
+            "expect": {
+              "gone": [
+                "Approve the pack"
+              ],
+              "check": "pack-approved"
+            },
+            "after": "pack-unapproved"
+          }
         },
         {
           "t": "button",
           "label": "Print",
-          "effect": "the pack PDF opens in a new tab; the stepper moves to Printed"
+          "effect": "the pack PDF opens in a new tab; the stepper moves to Printed",
+          "drive": {
+            "fixture": "pack-approved",
+            "expect": {
+              "popup": true
+            },
+            "after": "pack-unapproved"
+          }
         },
         {
           "t": "row",
           "label": "Check this paper",
-          "to": "paper"
+          "to": "paper",
+          "text": "Check this paper",
+          "data": "data-check-paper"
         },
         {
           "t": "button",
           "label": "Sign it off (a row)",
-          "effect": "the paper's results are confirmed; its chip becomes results in"
+          "effect": "the paper's results are confirmed; its chip becomes results in",
+          "text": "Sign it off",
+          "data": "data-signoff",
+          "drive": {
+            "fixture": "note-checked",
+            "expect": {
+              "check": "a-copy-signed-off"
+            },
+            "after": "checked-again"
+          }
         },
         {
           "t": "row",
           "label": "The child",
-          "to": "child"
+          "to": "child",
+          "text": "The child",
+          "data": "data-child-link"
         },
         {
           "t": "link",
           "label": "page: Later →",
           "to": "assessment",
-          "note": "the next ten copies, grouped by state"
+          "note": "the next ten copies, grouped by state",
+          "text": "Later",
+          "when": "paged"
         },
         {
           "t": "link",
@@ -2358,10 +2474,17 @@
           "to": "assessments"
         },
         {
-          "t": "link",
+          "t": "button",
           "label": "rail: the printed pack",
           "to": "assessment",
-          "note": "the PDF in a new tab"
+          "note": "the PDF in a new tab",
+          "text": "The printed pack",
+          "drive": {
+            "click": "The printed pack",
+            "expect": {
+              "popup": true
+            }
+          }
         },
         {
           "t": "upload",
@@ -2394,7 +2517,11 @@
         "the stepper's amber step equals the status word in the list",
         "a replaced copy shows 'replaced by a newer one' and no action",
         "the papers bar's three counts sum to the number of copies"
-      ]
+      ],
+      "rest": {
+        "fixture": "assessments-rest",
+        "after": "assessments-gone"
+      }
     },
     {
       "id": "paper",
@@ -2425,27 +2552,58 @@
         {
           "t": "row",
           "label": "each answer row",
-          "effect": "the page scrolls to that answer and outlines it"
+          "effect": "the page scrolls to that answer and outlines it",
+          "data": "data-answer"
         },
         {
           "t": "field",
           "label": "what the child wrote",
-          "note": "for the answer in focus; required when judging"
+          "note": "for the answer in focus; required when judging",
+          "text": "What the child wrote for question"
         },
         {
           "t": "button",
           "label": "Say what the child wrote",
-          "effect": "a read_correction row; the engine marks it right / wrong / blank; the chip updates; the next judge answer comes into focus"
+          "effect": "a read_correction row; the engine marks it right / wrong / blank; the chip updates; the next judge answer comes into focus",
+          "text": "Say what the child wrote",
+          "drive": {
+            "fixture": "answer-to-judge",
+            "fill": {
+              "What the child wrote for question": "6"
+            },
+            "expect": {
+              "check": "answer-corrected"
+            },
+            "after": "answer-to-judge"
+          }
         },
         {
           "t": "button",
           "label": "Blank (the child wrote nothing)",
-          "effect": "the answer is marked blank, never wrong"
+          "effect": "the answer is marked blank, never wrong",
+          "text": "Blank",
+          "drive": {
+            "fixture": "answer-to-judge",
+            "click": "Blank",
+            "expect": {
+              "check": "answer-blank"
+            },
+            "after": "answer-to-judge"
+          }
         },
         {
           "t": "button",
           "label": "Sign this paper off",
-          "effect": "appears only when nothing is left to judge; confirms the results; lands on the assessment"
+          "effect": "appears only when nothing is left to judge; confirms the results; lands on the assessment",
+          "when": "@settled",
+          "text": "Sign this paper off",
+          "drive": {
+            "click": "Sign this paper off",
+            "expect": {
+              "url": "/children/assessments/"
+            },
+            "after": "checked-again"
+          }
         },
         {
           "t": "link",
@@ -2488,7 +2646,11 @@
         "right, wrong and blank are three different chips and three counts; a wrong-with-working reason is shown with its wrong chip",
         "a person's answer writes a read_correction row and never overwrites the engine's read",
         "Sign off is absent while any answer is 'for you to judge', and acts on one paper"
-      ]
+      ],
+      "rest": {
+        "fixture": "assessments-rest",
+        "after": "assessments-gone"
+      }
     },
     {
       "id": "reports",

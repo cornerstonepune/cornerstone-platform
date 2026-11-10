@@ -25,6 +25,14 @@ import { assessmentKey } from "../../../papers/assessments-table";
 import { approveThisPack, signOffPaper } from "./actions";
 import { LevelSelect } from "./level-select";
 
+const safeDecode = (v: string) => {
+  try {
+    return decodeURIComponent(v);
+  } catch {
+    return v;
+  }
+};
+
 type Props = { params: Promise<{ key: string }>; searchParams: Promise<Record<string, string | undefined>> };
 
 /** Where one copy stands, in the order an educator needs them: answers to judge first. */
@@ -54,9 +62,12 @@ const PAGE = 10;
 // its own action. There is no button over all of the copies.
 export default async function AssessmentPage({ params, searchParams }: Props) {
   const me = await requireStaff();
-  const { key } = await params;
+  // the address arrives as it was written, percent-encoded where the key holds a character an address cannot
+  const key = safeDecode((await params).key);
   const q = await searchParams;
-  const [kind, section, week, set] = key.split("~");
+  // the set can hold a "~" of its own (a paper made from chosen areas), so it is the rest of the key
+  const [kind, section, week, ...rest] = key.split("~");
+  const set = rest.join("~");
   if (!kind || key.split("~").length < 4) notFound();
   const filter = { kind, class: section || undefined, week: week || undefined, set: set || undefined };
   const [{ rows: found }, copiesAll, g, order, topicNames, chosen] = await deadline(
@@ -121,16 +132,16 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
       cell: (p) => {
         const main = mainId === p.id ? "action" : undefined;
         if (grp === "judge" || grp === "check")
-          return <Link href={paperHref(key, p.roll_no ?? "")} className={`btn ${main ? "" : "secondary"}`} data-ux={main}>Check this paper</Link>;
+          return <Link href={paperHref(key, p.roll_no ?? "")} className={`btn ${main ? "" : "secondary"}`} data-check-paper="" data-ux={main}>Check this paper</Link>;
         if (grp === "signoff")
           return (
             <form action={signOffPaper}>
               <input type="hidden" name="key" value={key} />
               <input type="hidden" name="paper_id" value={p.id} />
-              <button type="submit" className={`btn ${main ? "" : "secondary"}`} data-ux={main}>Sign it off</button>
+              <button type="submit" data-signoff="" className={`btn ${main ? "" : "secondary"}`} data-ux={main}>Sign it off</button>
             </form>
           );
-        if (grp === "results") return <Link href={p.child_id ? `/growth/${p.child_id}` : "/growth"} className="btn secondary">The child</Link>;
+        if (grp === "results") return <Link href={p.child_id ? `/growth/${p.child_id}` : "/growth"} className="btn secondary" data-child-link="">The child</Link>;
         if (grp === "made") return <span className="b-muted">Change the level before print</span>;
         if (grp === "replaced") return <span className="b-muted">Replaced by a newer one</span>;
         return <span className="b-muted">{grp === "read" ? "The engine is reading it" : "With the children"}</span>;
@@ -146,9 +157,11 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
       rail={
         <Rail
           edges={[
-            { screen: "assessments", label: "All assessments", icon: "assessment" },
+            { screen: "assessments", href: "/children/assessments", label: "All assessments", icon: "assessment" },
+            ...(qrs.length ? [{ screen: "assessment", href: `/api/papers/print?${qrs.map((x) => `qr=${x}`).join("&")}`, label: "The printed pack", icon: "assessment" as const, newTab: true }] : []),
             { screen: "skill", params: { code: a.set ?? "" }, label: "The skills", icon: "skill" },
             { screen: "picture", params: { class: a.section ?? "" }, label: "The class picture", icon: "class" },
+            ...(shown.find((x) => x.p.roll_no && x.grp.key !== "replaced") ? [{ screen: "paper", href: paperHref(key, shown.find((x) => x.p.roll_no && x.grp.key !== "replaced")!.p.roll_no!), label: "A child's paper", icon: "correct" as const }] : []),
           ]}
         />
       }
@@ -179,7 +192,7 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
               </form>
             ) : null}
             {toApprove ? (
-              <button type="button" className="btn secondary" disabled>Print</button>
+              <button type="button" className="btn secondary" aria-disabled="true" title="Print appears once the pack is approved">Print</button>
             ) : qrs.length ? (
               <a href={`/api/papers/print?${qrs.map((x) => `qr=${x}`).join("&")}`} target="_blank" rel="noreferrer" className="btn secondary" data-ux={mainId === "print" ? "action" : undefined}>
                 Print
@@ -225,8 +238,12 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
           })}
           <p className="b-caption">
             Copies {(page - 1) * PAGE + 1} to {Math.min(page * PAGE, ordered.length)} of {ordered.length}, grouped by where each stands.
-            {later ? <> <Link href={`${assessmentHref(key)}?page=${page + 1}`}>Later →</Link></> : null}
           </p>
+          {later ? (
+            <nav aria-label="Copies pages">
+              <Link href={`${assessmentHref(key)}?page=${page + 1}`} className="chip">Later →</Link>
+            </nav>
+          ) : null}
         </div>
       )}
     </Screen>

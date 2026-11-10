@@ -58,7 +58,7 @@ test("a child's name that is not in tests/fake-names.ts fails, naming the name",
 
 // ---- UI-1b: the checker drives real screens. The pages below are served by the test itself (no app code), small enough to show each rule.
 import type { Page } from "@playwright/test";
-import { completeness, drive } from "./inventory/checks";
+import { completeness, drive, keyboard } from "./inventory/checks";
 import type { Element, Screen } from "./inventory/load";
 
 const ORIGIN = "http://localhost:3100";
@@ -176,4 +176,54 @@ test("a control with a declared drive is pressed, and what a person sees after i
   expect((await audit(browser, inv, "feedback")).join("\n")).toContain("names the fixture “nothing-of-the-kind”");
   button.drive = { fill: { "No such field": "x" }, expect: {} };
   expect((await audit(browser, inv, "feedback")).join("\n")).toContain("no field “No such field”");
+});
+
+// ---- UI-5b: the keyboard check. It must still fail a control Tab cannot reach and a page that traps focus, however long the page is;
+// and it must pass a long page whose controls look alike. The limit on Tab presses (60 + the number of controls) only ends a loop: a
+// control counts as reached when Tab has focused it, and no number of extra presses can focus a control that Tab skips.
+const longPage = (n: number, extra = "") =>
+  `<!doctype html><html><body style="margin:0"><main><h1>Proof</h1><div data-ux="action"><a href="/__proof/other" style="outline:2px solid #000">Main action</a></div>
+   ${Array.from({ length: n }, (_, i) => `<p style="margin:0 0 30px"><button type="button" style="outline:2px solid #000">Move</button> row ${i + 1}</p>`).join("")}${extra}</main></body></html>`;
+
+test("a long page of like controls (twelve identical Move buttons and sixty more) is reached by Tab in full", async ({ page }) => {
+  await serve(page, longPage(70));
+  expect(await keyboard(page, screen([]))).toEqual([]);
+});
+
+test("a control Tab cannot reach still fails the keyboard check, on a short page and on a long one, saying how many were reached", async ({ page }) => {
+  for (const n of [5, 70]) {
+    await serve(page, longPage(n, `<button type="button" tabindex="-1" style="outline:2px solid #000">Hidden from the keyboard</button>`));
+    const problems = (await keyboard(page, screen([]))).join("\n");
+    expect(problems, `${n} controls and one Tab skips`).toContain(`Tab reached ${n + 1} of ${n + 2} controls in the main column`);
+  }
+});
+
+test("a page that traps focus in three controls fails the keyboard check however many controls follow", async ({ page }) => {
+  const trap = `<script>const t=[...document.querySelectorAll("button")].slice(0,3);document.addEventListener("keydown",(e)=>{if(e.key!=="Tab")return;e.preventDefault();const i=t.indexOf(document.activeElement);t[(i+1)%3].focus();});</script>`;
+  await serve(page, longPage(70, trap));
+  const problems = (await keyboard(page, screen([]))).join("\n");
+  expect(problems).toMatch(/Tab reached \d+ of 71 controls in the main column/);
+});
+
+// ---- UI-5b: a link to the page one is on (the first class row can be the class already open) changes no address and is not waited on;
+// a link that points elsewhere and goes nowhere is still a dead link.
+test("a row link that points at the page already open is driven without waiting for an address that cannot change", async ({ page }) => {
+  const inv = mini();
+  const body = `<!doctype html><html><body><main><h1>Proof</h1><div data-ux="action"><a href="/__proof/other">Main action</a></div>
+    <a data-row href="/__proof/page?class=1">Class one (open)</a><a data-row href="/__proof/page?class=2">Class two</a></main></body></html>`;
+  await page.route("**/__proof/**", (r) => r.fulfill({ contentType: "text/html", body }));
+  await page.goto(`${ORIGIN}/__proof/page?class=1`);
+  const s = screen([{ t: "row", label: "each class row", data: "data-row" }]);
+  expect(await drive(page, s, s.elements[0], { ...ctx(inv), address: "/__proof/page?class=1" }, new Map())).toEqual([]);
+});
+
+test("a link that points elsewhere and leads nowhere still fails, by never changing the address", async ({ page }) => {
+  test.setTimeout(90_000);
+  const inv = mini();
+  const body = `<!doctype html><html><body><main><h1>Proof</h1><div data-ux="action"><a href="/__proof/other">Main action</a></div>
+    <a data-row href="/__proof/elsewhere" onclick="event.preventDefault()">Goes nowhere</a></main></body></html>`;
+  await page.route("**/__proof/**", (r) => r.fulfill({ contentType: "text/html", body }));
+  await page.goto(`${ORIGIN}/__proof/page`);
+  const s = screen([{ t: "row", label: "each class row", data: "data-row" }]);
+  await expect(drive(page, s, s.elements[0], ctx(inv), new Map())).rejects.toThrow(/waitForURL|Timeout/i);
 });
