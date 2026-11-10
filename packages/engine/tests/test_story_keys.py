@@ -17,7 +17,7 @@ import pytest
 from engine.assess import draw, items, tags, taxonomy, verify
 from engine.assess import misconceptions as M
 from engine.assess import words as W
-from engine.core import db
+from engine.core import db, history
 from engine.w1_bank import bank, inventory, labels, question, story_keys
 from tests.rows import (
     a_bank_proposal,
@@ -310,18 +310,31 @@ def test_bank_recheck_still_rebuilds_a_story_and_names_one_changed_by_hand(conn)
     assert it.item_id in inventory.recheck(conn)
 
 
-def test_a_question_whose_key_never_changed_can_be_deleted_and_one_whose_key_did_cannot(conn):
-    """The key-change ledger is append-only, and must not make every question undeletable: a cascade from a deleted
-    question into it is a DELETE the ledger refuses even with no row to remove, and the browser tests' clean-up failed
-    on it (CI on 2cd814c). A question whose key changed stays, as the ledger that names it does."""
+def test_a_key_change_is_a_row_of_the_one_history_log_and_leads_an_old_key_to_its_question(conn):
+    """A question keyed again keeps how its key changed in the one history log (CP-27 3C), from what to what and why, and
+    every key it had leads to it (`inventory.current_key`): through a chain of re-keys, oldest key first. Deleting a
+    question no longer meets a key into its history (the log names it by id), and its history stays."""
     rng = random.Random(21)
     make = lambda: W.word_1step(rng, RUNG, "Application", 2, structure="PPW_WHOLE")  # noqa: E731
-    _, was = _fresh(conn, make)
+    now, was = _fresh(conn, make)
     keyed_again = _stored(conn, was)
     never, _ = _fresh(conn, make)
     plain = _stored(conn, never)
     story_keys.rekey(conn)
-    assert conn.execute("select 1 from item_key_change where item_id = %s", (keyed_again,)).fetchone()
+    kept = history.of(conn, "item", str(keyed_again))
+    assert [(h["op"], h["before"], h["after"], h["origin"]) for h in kept] == [
+        ("rekey", {"item_key": was.item_id}, {"item_key": now.item_id}, story_keys.ACTOR)
+    ]
+    assert kept[0]["reason"] == "a story is its numbers, its shape and its operations"
+    assert history.of(conn, "item", str(plain)) == []
+    # a chain: the key it has now is keyed again by hand, and both keys it had lead to the last
+    last = f"{now.item_id}-AGAIN"
+    conn.execute("update item set item_key = %s where id = %s", (last, keyed_again))
+    story_keys.kept(conn, tenant(conn), keyed_again, now.item_id, last, "a test")
+    assert {inventory.current_key(conn, k) for k in (was.item_id, now.item_id, last)} == {last}
+    assert inventory.current_key(conn, never.item_id) == never.item_id, "a key that never changed is itself"
+    with pytest.raises(psycopg.errors.UniqueViolation), conn.transaction():
+        story_keys.kept(conn, tenant(conn), plain, was.item_id, "elsewhere", "a key is left once")
     conn.execute("delete from item where id = %s", (plain,))
-    with pytest.raises(psycopg.errors.ForeignKeyViolation), conn.transaction():
-        conn.execute("delete from item where id = %s", (keyed_again,))
+    conn.execute("delete from item where id = %s", (keyed_again,))
+    assert len(history.of(conn, "item", str(keyed_again))) == 2

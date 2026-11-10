@@ -1,7 +1,8 @@
 """W3/N9 — a paper question's right answer (goals/s26-the-right-answer-shown-and-corrected.yaml, ADR 0045).
 - Shown as the engine stores it on every answer a person checks (`shown`).
 - Changed by an educator for every child at once (`change`), once code has checked it (`check`).
-- Kept as a row of its own that every entry of the paper puts back over its file (`reapply`).
+- Stored on the question, and its change kept in the one history log (CP-27 3C), which every entry of the paper puts
+  back over its file (`reapply`): the file still says the old key.
 - Every answer to the question is marked again by it (`again`).
 Nimish, 2026-09-30: "the key can be changed by an educator, not an issue. also in any correction, the system should
 show what the right answer is as stored in the system"."""
@@ -11,12 +12,16 @@ import re
 
 from engine.assess import misconceptions as M
 from engine.assess import operations as O
+from engine.core import history
 from engine.w3_read import again, marking, naming
 
 JUDGED = "a person judges this one"
+# A paper's question is named by its key (`legacy/<paper>/<question>`): an entry of the paper again keeps it, its id
+# not always, so a correction is the question's by key.
 LATEST = (
-    "left join lateral (select was, by, created_at, answer from key_correction where tenant_id = i.tenant_id"
-    " and item_key = i.item_key order by created_at desc limit 1) k on true"
+    "left join lateral (select c.before ->> 'answer' as was, c.origin as by, c.at as created_at,"
+    " c.after ->> 'answer' as answer from change_log c where c.tenant_id = i.tenant_id and c.table_name = 'item'"
+    " and c.row_id = i.item_key and c.op = 'correct_key' order by c.at desc, c.id desc limit 1) k on true"
 )
 
 
@@ -97,7 +102,7 @@ def _store(conn, item, answer):
 
 def change(conn, item_id, answer, by):
     """An educator's new right answer for one printed question, for every child → {was, now, changed, left, unseen}:
-    checked (`check`), kept as a `key_correction` row, stored on the item, and every answer to it marked again
+    checked (`check`), stored on the item, kept in the history log, and every answer to it marked again
     (`again`): each change as (key, the mark it had, the mark it has), and each answer that keeps its mark though the new
     right answer disagrees, a person's call or a signed-off mark that makes no evidence, as (key, its mark, why). A
     library question's answer is code's; its wording is corrected in the Library instead."""
@@ -107,9 +112,13 @@ def change(conn, item_id, answer, by):
     if not item or item["source"] != "legacy":
         raise ValueError("only a paper's own question has a right answer to change here")
     new, key = check(item, answer), _key(item)
-    conn.execute(
-        "insert into key_correction (tenant_id, item_key, was, answer, by) values (%s, %s, %s, %s, %s)",
-        (item["tenant_id"], item["item_key"], None if key is None else str(key), new, by),
+    history.keep(
+        conn,
+        item["tenant_id"],
+        ("item", item["item_key"], "correct_key"),
+        {"answer": None if key is None else str(key)},
+        {"answer": new},
+        by,
     )
     _store(conn, item, new)
     typed, typed_left = again.mark_again(conn, by, item["id"])

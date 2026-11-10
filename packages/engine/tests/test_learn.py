@@ -11,7 +11,7 @@ import pytest
 
 from engine.assess import items
 from engine.core import db
-from engine.w1_bank import learn
+from engine.w1_bank import learn, story_keys
 from tests.rows import a_member_of_staff
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
@@ -141,9 +141,6 @@ def test_a_proposal_made_under_a_questions_old_key_is_not_made_again_after_a_rek
     item = conn.execute("select id from item where item_key = %s", (key,)).fetchone()["id"]
     new_key = key + "-NEW"
     conn.execute("update item set item_key = %s where id = %s", (new_key, item))
-    conn.execute(
-        "insert into item_key_change (tenant_id, item_id, old_key, new_key, why) values (%s, %s, %s, %s, 'a test')",
-        (tenant, item, key, new_key),
-    )
+    story_keys.kept(conn, tenant, item, key, new_key, "a test")
     subjects = [p["subject"] for p in learn.refresh(conn)]
     assert new_key not in subjects and subjects.count(key) == 1

@@ -8,7 +8,7 @@ import re
 
 import pytest
 
-from engine.core import db
+from engine.core import db, history
 from engine.w3_read import again, keys, legacy, marking
 from tests import test_legacy as legacy_tests
 from tests.rows import a_child_in
@@ -114,12 +114,12 @@ def test_code_refuses_a_right_answer_the_question_itself_contradicts(conn, tmp_p
             keys.change(conn, _item(conn, key)["id"], answer, "neha@school")
     with pytest.raises(ValueError, match="already"):
         keys.change(conn, _item(conn, "4b")["id"], "80", "neha@school")
-    assert (
-        conn.execute(
-            "select count(*) as n from key_correction where item_key like 'legacy/TEST-KEYS/%'"
-        ).fetchone()["n"]
-        == 0
-    ), "a refused change writes nothing"
+    assert [
+        h
+        for key in [*refused, "4b"]
+        for h in history.of(conn, "item", _item(conn, key)["item_key"])
+        if h["op"] == "correct_key"
+    ] == [], "a refused change writes nothing"
 
 
 @legacy_tests.pytestmark_db
@@ -160,10 +160,10 @@ def test_an_educator_changes_a_right_answer_and_every_childs_answer_is_marked_ag
         "select correct from evidence_placed where item_result_id = %s", (box_a("4b")["id"],)
     ).fetchall()
     assert [p["correct"] for p in placed] == [True], "the graph reads the new batch"
-    row = conn.execute(
-        "select was, answer, by from key_correction where item_key = 'legacy/TEST-KEYS/4b'"
-    ).fetchone()
-    assert dict(row) == {"was": "80", "answer": "78", "by": "neha@school"}
+    kept = history.of(conn, "item", "legacy/TEST-KEYS/4b")
+    assert [(h["op"], h["before"], h["after"], h["origin"]) for h in kept] == [
+        ("correct_key", {"answer": "80"}, {"answer": "78"}, "neha@school")
+    ]
 
 
 @legacy_tests.pytestmark_db
@@ -183,6 +183,13 @@ def test_a_changed_right_answer_survives_the_paper_being_entered_again(
     assert _item(conn, "4b")["responses"][0]["answer"] == "78"
     assert marks("4b") == {"4b": "correct"}
     assert again.mark_again(conn, "the marking rule", _item(conn, "4b")["id"]) == ([], [])
+    # changed twice: the entry after puts back the latest, and the history keeps both
+    keys.change(conn, _item(conn, "4b")["id"], "79", "neha@school")
+    legacy.load_paper(conn, path)
+    assert keys.reapply(conn, "TEST-KEYS") == 1
+    assert _item(conn, "4b")["responses"][0]["answer"] == "79"
+    kept = history.of(conn, "item", "legacy/TEST-KEYS/4b")
+    assert [h["after"] for h in kept] == [{"answer": "78"}, {"answer": "79"}]
 
 
 @legacy_tests.pytestmark_db
