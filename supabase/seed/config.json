@@ -481,6 +481,12 @@
       "seed_once": true
     },
     {
+      "key": "children.attention_days",
+      "description": "How many days a child may go without a confirmed note before the children screen marks that child as needing attention. The screen reads it (issue 565, frontend request, 14 days to start); the engine does not use it.",
+      "value": 14,
+      "seed_once": true
+    },
+    {
       "key": "k2.reads",
       "description": "What the K2 screens' read calls (engine/w3_read/k2_reads.py) take from the school: which roles may ask for the coordinator's list, which grades the voice notes are for, how many days back a list shows a note, and where a week starts (0 is Monday).",
       "value": {"coordinator_roles": ["coordinator", "deputy_coordinator", "head"], "grades": ["K2"], "row_days": 14, "week_starts_on": 0}
