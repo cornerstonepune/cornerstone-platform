@@ -1,4 +1,5 @@
 import { sql, TENANT_SLUG } from "./db";
+import { enginePost } from "./engine";
 import { staffList } from "./queries";
 
 // What the coordinator's pages read (UI-5: Staff and classes, Classes and children). Names are read here and only here, and
@@ -38,16 +39,31 @@ export type StaffLine = {
   classes: string[] | null;
   done: number;
   planned: number;
-  /** Not yet readable by the website (pii.educator_note, pii.note_claim); the table hides a column with no value. */
+  /** Whole counts the engine gives for the person's notes (`POST /reports/counts`); null when it gave none (the person has no note, or the
+   *  engine did not answer), so the table hides a column nobody has a value in. Never a percentage, a score or a rank. */
+  notesConfirmed: number | null;
   notesLate: number | null;
-  readerAccuracy: number | null;
+  lines: { accepted: number; changed: number; removed: number } | null;
 };
+
+type EducatorCounts = { staff: string; notes_confirmed: number; notes_late: number; lines_accepted: number; lines_changed: number; lines_removed: number };
+
+/** What the engine counts per educator, by staff id: whole numbers, never a score or a rank (CP-19). Empty when the engine does not answer:
+ *  the counts are extra to the page, so a page without them is still the page. */
+export async function educatorCounts(actor: string): Promise<{ counts: Map<string, EducatorCounts>; answered: boolean }> {
+  try {
+    const got = (await enginePost("/reports/counts", { actor })) as { educators?: EducatorCounts[] };
+    return { counts: new Map((got.educators ?? []).map((e) => [e.staff, e])), answered: true };
+  } catch {
+    return { counts: new Map(), answered: false };
+  }
+}
 
 /** Every member of staff with their role, the classes they hold today and the count of this fortnight's lessons they hold
  *  (`done` of `planned`): the lessons of a class they hold a grant for, in the grant's subject when it names one. Ordered by
  *  the role's own order then name, never by a number. */
-export async function staffLines(): Promise<StaffLine[]> {
-  const [people, held, counts] = await Promise.all([
+export async function staffLines(actor: string): Promise<{ lines: StaffLine[]; answered: boolean }> {
+  const [people, held, counts, notes] = await Promise.all([
     staffList(),
     sql<{ staff_id: string; role_label: string; role_ord: number; scope: string; class: string | null; subject: string | null }[]>`
       select g.staff_id::text, r.label as role_label, r.ord as role_ord, r.scope, sc.label as class, coalesce(sj.label, sj.name) as subject
@@ -67,11 +83,12 @@ export async function staffLines(): Promise<StaffLine[]> {
         where g.tenant_id = ${school()} and g.valid_from <= ${today()} and (g.valid_to is null or g.valid_to > ${today()})
           and s.state <> 'moved')
       select staff_id::text, count(*) filter (where state = 'done')::int as done, count(*)::int as planned from mine group by staff_id`,
+    educatorCounts(actor),
   ]);
   const by = new Map<string, { staff_id: string; role_label: string; role_ord: number; scope: string; class: string | null; subject: string | null }[]>();
   for (const h of held) by.set(h.staff_id, [...(by.get(h.staff_id) ?? []), h]);
   const n = new Map(counts.map((c) => [c.staff_id, c]));
-  return people
+  const lines = people
     .map((p) => {
       const mine = by.get(p.id ?? "") ?? [];
       const first = mine.slice().sort((a, b) => a.role_ord - b.role_ord)[0];
@@ -86,11 +103,15 @@ export async function staffLines(): Promise<StaffLine[]> {
         classes: campus || !mine.length ? null : [...new Set(mine.map((m) => m.class).filter((x): x is string => Boolean(x)))].sort(),
         done: n.get(p.id ?? "")?.done ?? 0,
         planned: n.get(p.id ?? "")?.planned ?? 0,
-        notesLate: null,
-        readerAccuracy: null,
+        notesConfirmed: notes.counts.get(p.id ?? "")?.notes_confirmed ?? null,
+        notesLate: notes.counts.get(p.id ?? "")?.notes_late ?? null,
+        lines: notes.counts.has(p.id ?? "")
+          ? { accepted: notes.counts.get(p.id ?? "")!.lines_accepted, changed: notes.counts.get(p.id ?? "")!.lines_changed, removed: notes.counts.get(p.id ?? "")!.lines_removed }
+          : null,
       };
     })
     .sort((a, b) => a.roleOrd - b.roleOrd || a.name.localeCompare(b.name));
+  return { lines, answered: notes.answered };
 }
 
 /** One person's grants, the newest first: what they hold, from when to when, and who gave it. A grant is read, never edited. */
