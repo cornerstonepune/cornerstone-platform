@@ -40,16 +40,13 @@ export async function draftGrid(d: Draft, fn: Fn, href: (day: string, periodId: 
   const periods = await sql<{ id: string; label: string; starts_at: string }[]>`
     select id, label, to_char(starts_at, 'HH24:MI') as starts_at from period where grade_code = ${d.grade} and not fixed order by starts_at`;
   const names = new Map((await sql<{ code: string; name: string }[]>`select code, coalesce(label, name) as name from subject`).map((s) => [s.code, s.name]));
-  const days = [...new Set(d.entries.map((e) => e.date))].sort();
   const all = Array.from({ length: 14 }, (_, i) => new Date(Date.parse(`${fn.starts_on}T00:00:00Z`) + i * 86_400_000).toISOString().slice(0, 10)).filter((x) => ![0, 6].includes(new Date(`${x}T00:00:00Z`).getUTCDay()));
-  const shown = all;
   const rows: FRow[] = periods.map((p) => ({
     time: `${p.starts_at} ${p.label}`,
-    cells: shown.map((day): FCell | null => {
+    cells: all.map((day): FCell | null => {
       const e = d.entries.find((x) => x.date === day && x.period_id === p.id);
       return e ? { subject: subjectLook(e.subject_code), activity: names.get(e.subject_code) ?? e.subject_code, href: href(day, p.id) } : null;
     }),
   }));
-  void days;
-  return { days: shown, labels: shown.map(shortDate), rows, cells: d.entries.length };
+  return { days: all, labels: all.map(shortDate), rows, cells: d.entries.length };
 }

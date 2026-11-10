@@ -2,6 +2,7 @@
 // clash. One form post each. The engine's plan routes only check that the actor is on the staff list, so `coordinatorOnly`
 // checks the coordinator group first and answers 403 to anyone else without calling the engine. Nothing is decided here:
 // the engine's own refusal comes back in the address, in its own words.
+import { currentStaff } from "@/lib/auth";
 import { sql } from "@/lib/db";
 import { EngineDown, engineSend } from "@/lib/engine";
 import { backTo, coordinatorOnly } from "@/lib/timetable-guard";
@@ -15,7 +16,7 @@ const num = (f: FormData, k: string) => Number(text(f, k));
 
 export async function POST(request: Request, { params }: { params: Promise<{ action: string }> }) {
   const { action } = await params;
-  const who = await coordinatorOnly();
+  const who = await coordinatorOnly(await currentStaff());
   if ("refused" in who) return who.refused;
   const f = await request.formData();
   const back = text(f, "back") || "/timetable";

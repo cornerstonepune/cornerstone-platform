@@ -13,7 +13,7 @@ import { isDay } from "@/lib/educator/period";
 import { dateWords } from "@/lib/week";
 import { stateWords } from "@/lib/fortnight-words";
 import { gridOf, moveInto } from "@/lib/timetable-grid";
-import { clashesOf, fortnightAfter, fortnightAt, isCoordinator, movesOf } from "@/lib/timetable-ui";
+import { clashesOf, fortnightAfter, fortnightAt, fortnightNumber, isCoordinator, movesOf } from "@/lib/timetable-ui";
 import { schoolToday } from "@/lib/voice-page";
 import "./timetable.css";
 
@@ -33,11 +33,12 @@ export default async function TimetablePage({ searchParams }: Props) {
   const today = await schoolToday();
   if (q.day !== undefined && !isDay(q.day)) notFound();
   const here = await fortnightAt(today);
-  const fn = q.when === "next" && here ? await fortnightAfter(here) : here;
+  const asked = /^\d+$/.test(q.fn ?? "") ? await fortnightNumber(Number(q.fn)) : null;
+  const fn = asked ?? (q.when === "next" && here ? await fortnightAfter(here) : here);
   const view: View = (VIEWS as readonly string[]).includes(q.view ?? "") ? (q.view as View) : "fortnight";
   const keep = (extra: Record<string, string | undefined> = {}) => {
     const p = new URLSearchParams();
-    for (const [k, v] of Object.entries({ class: q.class, when: q.when, view, ...extra })) if (v) p.set(k, v);
+    for (const [k, v] of Object.entries({ class: q.class, when: q.when, fn: q.fn, view, ...extra })) if (v) p.set(k, v);
     return `${HERE}?${p}`;
   };
 
@@ -66,7 +67,7 @@ export default async function TimetablePage({ searchParams }: Props) {
     <Screen
       stage={`${klass.grade} ${klass.section}`}
       title="Timetable"
-      purpose="The fortnight is the unit. Week A and week B, each period a block; a moved period is marked, a clash is red until the coordinator accepts it."
+      purpose="The fortnight is the unit: week A and week B, each period a block. A moved period is marked; a clash is red until it is accepted."
       action={<a className="btn" href={`/educator?class=${klass.id}&day=${today}`} data-ux="action">Open today</a>}
       next={{ href: `/timetable/fortnight/${fn.number}`, label: `Fortnight ${fn.number}` }}
       rail={
@@ -82,7 +83,7 @@ export default async function TimetablePage({ searchParams }: Props) {
     >
       <FilterBar
         action={HERE}
-        keep={{ view, day: q.day }}
+        keep={{ view, day: q.day, fn: q.fn }}
         filters={[
           ...(coordinator ? [{ name: "class", label: "Class", value: klass.id, required: true, all: "", options: weeks[0].classes.map((c) => [c.id, `${c.grade} ${c.section}`] as const) }] : []),
           { name: "when", label: "Fortnight", value: q.when === "next" ? "next" : "this", required: true, all: "", options: [["this", "This fortnight"], ["next", "Next fortnight"]] as const },
