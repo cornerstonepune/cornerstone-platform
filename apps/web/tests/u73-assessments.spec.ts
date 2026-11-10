@@ -10,7 +10,7 @@ import { expect, test } from "@playwright/test";
 import postgres from "postgres";
 import { STEP_WORDS, STEPS } from "../lib/assessment-steps";
 import { assessmentHref, paperHref } from "../lib/assessment-ui";
-import { aClass, aReadPaper } from "./rows";
+import { aClass, aLine, aReadPaper } from "./rows";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -65,6 +65,8 @@ test.beforeAll(async () => {
   checked = { sheet: paper.sheet };
 });
 test.afterAll(async () => {
+  // this spec's papers are put away as a paper made in error is, so no later spec finds a pack waiting for approval or more assessments on a page
+  await sql`update sheet_instance set print_status = 'void' where section in (${SECTION}, 'U73-OTHER', 'U73-MAKE') and print_status <> 'void'`;
   await sql.end();
 });
 
@@ -139,11 +141,35 @@ test("a paper shows right, wrong, blank and for you to judge as separate chips, 
 
 test("a person's answer is a new read_correction row and the engine's read stays (16)", async ({ page }) => {
   await page.goto(paperHref(KEY(), "1"));
-  const before = await sql<{ raw: string }[]>`select raw_read as raw from item_result where id = any(${paper.results}::uuid[]) order by id`;
+  // the answer a person corrects is the one whose read must stay: the engine marks the answers again, and may say more about others
+  const judged = paper.results[3];
+  const before = await sql<{ raw: string }[]>`select raw_read as raw from item_result where id = ${judged}::uuid`;
   await page.getByLabel(/What the child wrote for question/).fill("6");
   await page.getByRole("button", { name: "Say what the child wrote" }).click();
   await expect.poll(async () => (await sql`select 1 from read_correction where item_result_id = any(${paper.results}::uuid[]) and human_read = '6'`).length).toBeGreaterThan(0);
-  const after = await sql<{ raw: string }[]>`select raw_read as raw from item_result where id = any(${paper.results}::uuid[]) order by id`;
+  const after = await sql<{ raw: string }[]>`select raw_read as raw from item_result where id = ${judged}::uuid`;
   expect(after.map((r) => r.raw)).toEqual(before.map((r) => r.raw));
   void checked;
+});
+
+test("Make from the Assessments screen makes the papers at Created, approved by no one, and opens the assessment", async ({ page }) => {
+  const MAKE = "U73-MAKE";
+  await aClass(sql, MAKE, "G2", ["Eli", "Finn"]);
+  await sql`delete from sheet_instance where section = ${MAKE}`;
+  await page.goto("/children/assessments");
+  await page.getByRole("button", { name: "For a class" }).click();
+  await expect(page).toHaveURL(/make=class/);
+  const form = page.getByRole("form", { name: "Choose the papers" });
+  await form.getByLabel("Class").selectOption(MAKE);
+  await form.getByRole("button", { name: "Show the class" }).click();
+  await form.getByRole("radio", { name: /Class assessment/ }).check();
+  await form.getByRole("radio", { name: /One paper for all/ }).check();
+  await aLine(form, 1, "ADDSUB", "SUB.2D2D", "Easy", "5");
+  await form.getByRole("button", { name: "See the papers" }).click();
+  await page.getByRole("region", { name: "The papers" }).getByRole("button", { name: "Make 2 class assessment papers" }).click();
+  await expect(page).toHaveURL(/\/children\/assessments\/assessment~U73-MAKE~/);
+  const made = await sql<{ approved_by: string | null; print_status: string }[]>`select approved_by, print_status from sheet_instance where section = ${MAKE}`;
+  expect(made).toHaveLength(2);
+  for (const m of made) expect(m).toEqual({ approved_by: null, print_status: "new" });
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("Class assessment · Grade 2 · U73-MAKE");
 });

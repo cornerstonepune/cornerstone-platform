@@ -3,6 +3,7 @@
 // controls, its focus. Nothing here knows a particular screen.
 import type { Page } from "@playwright/test";
 import { PURPOSE_MAX } from "../../lib/ux-rules";
+import { ADDRESSES } from "../inventory-fixtures";
 import { drive as driven } from "./drivers";
 import { builtScreens, titleMatches, type Element, type Inventory, type Screen, type When } from "./load";
 
@@ -63,6 +64,20 @@ function buildable(e: Element, c: Ctx) {
 
 /** Brings the page into a state in which a conditional control exists: a child chosen, a filter on. [] when it did; the reason when it could not. */
 export async function reveal(page: Page, when: When): Promise<string | null> {
+  if (when.startsWith("@")) {
+    const at = ADDRESSES[when.slice(1)];
+    if (!at) return `no address called “${when.slice(1)}” in tests/inventory-fixtures.ts ADDRESSES`;
+    await page.goto(await at(), { waitUntil: "networkidle" });
+    return null;
+  }
+  // a state the address holds ("?view=table"): the same screen with those parameters set, as a person's own click on a tab would leave it
+  if (when.startsWith("?")) {
+    const u = new URL(page.url());
+    for (const [k, v] of new URLSearchParams(when)) u.searchParams.set(k, v);
+    // the page streams: its rows arrive after the load event, so the state is reached when the network has gone quiet
+    await page.goto(u.pathname + u.search, { waitUntil: "networkidle" });
+    return null;
+  }
   if (when === "peek") {
     const opener = page.locator("main [data-peek-open]").first();
     await opener.waitFor({ timeout: 10_000 }).catch(() => undefined); // the page streams: the rows may arrive after the load event
@@ -262,6 +277,7 @@ export async function drive(page: Page, s: Screen, e: Element, c: Ctx, byId: Map
   }
   if (e.t === "filter") return filter(page, s, e);
   if (["link", "row", "cell"].includes(e.t)) {
+    await find().waitFor({ timeout: 10_000 }).catch(() => undefined); // rows stream in after the shell
     if (!(await find().count())) return [`${s.id}: cannot drive “${e.label}”: no such link`];
     const same = e.href === new URL(here).pathname + new URL(here).search;
     await find().click();
