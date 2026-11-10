@@ -152,7 +152,7 @@ export async function classChildren(classId: string, actor: string): Promise<Chi
     join child c on c.id = e.child_id and c.active
     cross join lateral pii.read_child(c.id, ${actor}) p
     where e.class_id = ${classId}::uuid and e.to_date is null
-    order by (case when e.roll_no ~ '^[0-9]+$' then lpad(e.roll_no, 8, '0') else e.roll_no end)`;
+    order by roll_order(e.roll_no), e.roll_no`;
   return rows.map((r) => ({
     id: r.id,
     roll: r.roll_no,
