@@ -19,8 +19,10 @@ export async function seedTeaching(sql: Sql, classId: string, educatorEmail: str
     await sql`insert into learning_objective_skill (tenant_id, lo_code, skill_code) values (${tenant}, ${objective}, ${s.code}) on conflict do nothing`;
     await sql`insert into activity_skill (tenant_id, activity_code, skill_code) values (${tenant}, ${activity}, ${s.code}) on conflict do nothing`;
   }
-  await sql`insert into skill_prerequisite (tenant_id, registry_code, before_registry_code, reason, source, status, confirmed_at)
-    select ${tenant}, ${skills[1].code}, ${skills[0].code}, 'u70', 'u70 fixture', 'confirmed', now() where not exists (select 1 from skill_prerequisite where registry_code = ${skills[1].code} and before_registry_code = ${skills[0].code})`;
+  // a confirmed link names who confirmed it (the schema refuses one that does not)
+  const [{ staff }] = await sql<{ staff: string }[]>`select staff_id::text as staff from pii.staff where email = ${educatorEmail}`;
+  await sql`insert into skill_prerequisite (tenant_id, registry_code, before_registry_code, reason, source, status, confirmed_by, confirmed_at)
+    select ${tenant}, ${skills[1].code}, ${skills[0].code}, 'u70', 'u70 fixture', 'confirmed', ${staff}, now() where not exists (select 1 from skill_prerequisite where registry_code = ${skills[1].code} and before_registry_code = ${skills[0].code})`;
   // the thinking part is a draft waiting for a person: the coordinator's Keep, Edit and Send back exist only for one
   const [marked] = await sql`select 1 from activity_part_source where activity_code = ${activity} and source = 'drafted'`;
   if (!marked)
@@ -28,7 +30,6 @@ export async function seedTeaching(sql: Sql, classId: string, educatorEmail: str
       values (${tenant}, 'activity', ${activity}, 'part_source', ${sql.json({ part: "thinking", source: "drafted", proposal_id: null, staff_id: null, check_me: true })}, 'u70 fixture', 'u70 fixture')`;
   const [{ n }] = await sql<{ n: number }[]>`select count(*)::int as n from activity_observation where class_id = ${classId} and activity_code = ${activity}`;
   if (n === 0) {
-    const [{ staff }] = await sql<{ staff: string }[]>`select staff_id::text as staff from pii.staff where email = ${educatorEmail}`;
     await sql`update school_class set grade_code = 'K2' where id = ${classId}`;
     for (const [roll, level, daysAgo] of [["1", 3, 20], ["1", 3, 9], ["2", 2, 3], ["3", 1, 3]] as const) {
       const [c] = await sql<{ id: string }[]>`select id from child_now where class_id = ${classId} and roll_no = ${roll}`;
