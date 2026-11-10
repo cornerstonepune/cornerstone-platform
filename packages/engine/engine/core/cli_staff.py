@@ -13,7 +13,7 @@ import typer
 
 from engine.core import db, settings, staff_load, staff_remove
 from engine.core.cli_people import enrol_app, staff_import
-from engine.core.staff import NODE_DEFAULT_N, add, classes, save, set_classes, staff, staff_hash
+from engine.core.staff import NODE_DEFAULT_N, add, classes, hold, put, set_classes, staff, staff_hash
 
 staff_app = typer.Typer(help="Who signs in to the website", no_args_is_help=True)
 
@@ -112,17 +112,18 @@ def remove_(
 
     It refuses an email that is not on the list, the same email named twice,
     and a removal that would leave no coordinator who can sign in. If any is
-    refused, nothing is removed. An email need not look like an address.
+    refused, nothing is removed.
 
-    Removing a person signs them out at their next request. It never deletes
-    evidence or decisions: their past sign-offs stay as they were, and the
-    site then shows their email where it showed their name. It does not reset
-    a password or change anyone's classes.
+    Removing a person signs them out at their next request: they stay on the
+    staff tables, inactive and with no password, never deleted. It never
+    deletes evidence or decisions: their past sign-offs stay as they were, and
+    the site then shows their email where it showed their name. It does not
+    change anyone else's password or classes.
     """
     with db.connect() as conn:
         # --apply holds the list while it is read and written, so the website cannot be overwritten between
         if apply_:
-            settings.lock(conn, "app.staff")
+            hold(conn)
         lines = staff_remove.plan(conn, emails)
         refused = sum(ln.action == "refused" for ln in lines)
         if refused or not apply_:  # an applied removal says what it did, not what it would do
@@ -184,7 +185,7 @@ def load_(
         if (
             apply_
         ):  # the list is held while it is read and written, so the website cannot be overwritten between
-            settings.lock(conn, "app.staff")
+            hold(conn)
         lines = staff_load.plan(conn, rows, change_roles)
         refused = _show(lines, sum(s["email"].lower() not in {ln.email for ln in lines} for s in staff(conn)))
         if not apply_:
@@ -276,6 +277,6 @@ def register(app: typer.Typer) -> None:
                     f"{email} is not on the staff list — nothing changed (engine staff add puts them on)"
                 )
             me["password"] = _password(int(settings.threshold(conn, "password.scrypt_n", NODE_DEFAULT_N)))
-            save(conn, people)
+            put(conn, me)
             conn.commit()
         typer.echo(f"  password set for {me['name']} ({me['role']}) — sign in with {me['email']}")

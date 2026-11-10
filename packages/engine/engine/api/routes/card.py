@@ -1,5 +1,5 @@
-"""W4 over HTTP: Friday's class card (N11), built from the graph and kept as the week's rows, and its confirmation;
-a child's report (N12)."""
+"""W4 over HTTP: Friday's class card (N11), built from the graph whenever it is asked for, and its confirmation; a
+child's report (N12)."""
 
 from fastapi import APIRouter, Depends, HTTPException
 
@@ -12,12 +12,11 @@ router = APIRouter(dependencies=[Depends(require_engine_key)])
 
 @router.get("/card/{section}/{week}")
 def weeks_card(section: str, week: str, conn=Depends(get_conn, scope="function")):
-    """The card as the graph stands now, kept as the week's rows, with who confirmed it last, if anyone."""
+    """The card as the graph stands now, with who confirmed it last, if anyone."""
     try:
         got = card.build(conn, section)
     except ValueError as e:
         raise HTTPException(404, str(e))
-    card.store(conn, section, week, got)
     last = card.confirmed(conn, section, week)
     return {
         **got,

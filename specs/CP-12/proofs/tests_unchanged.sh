@@ -6,7 +6,8 @@
 # CP-21's pattern (from CP-5): it guards CP-12's own change only, since a later scope may rightly edit an existing test
 # and GitHub re-runs every finished scope's proofs. It applies when the diff against the merge-base adds or changes
 # CP-12's migration (*_a_lesson_moved_by_hand_is_kept.sql) or changes specs/CP-12 beyond its VERIFY.md and RUN.json
-# records; otherwise it says so in one line and exits 0.
+# records; otherwise it says so in one line and exits 0. Its proofs rewritten by a later scope (CP-27, Done when 17: each
+# Done-when line still proven, through engine functions) are that scope's change, not CP-12's own.
 #   bash specs/CP-12/proofs/tests_unchanged.sh              the check
 #   bash specs/CP-12/proofs/tests_unchanged.sh --self-check  both cases, in a scratch repository
 set -euo pipefail
@@ -36,7 +37,7 @@ if [ "${1:-}" = "--self-check" ]; then
 fi
 
 base=$(git merge-base HEAD origin/main 2>/dev/null || git merge-base HEAD main)
-own=$(git diff --name-only "$base" | awk '$0 ~ /^supabase\/migrations\/[0-9]+_a_lesson_moved_by_hand_is_kept\.sql$/ || ($0 ~ /^specs\/CP-12\// && $0 !~ /^specs\/CP-12\/(VERIFY\.md|RUN\.json)$/)')
+own=$(git diff --name-only "$base" | awk '$0 ~ /^supabase\/migrations\/[0-9]+_a_lesson_moved_by_hand_is_kept\.sql$/ || ($0 ~ /^specs\/CP-12\// && $0 !~ /^specs\/CP-12\/(VERIFY\.md|RUN\.json|proofs\/.*)$/)')
 if [ -z "$own" ]; then
   echo "this pull request is not CP-12's own change, so the unchanged-tests check does not apply"
   exit 0

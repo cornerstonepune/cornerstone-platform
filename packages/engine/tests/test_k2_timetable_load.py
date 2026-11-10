@@ -235,7 +235,7 @@ def test_loading_twice_adds_nothing_the_second_time_and_counts_are_printed(conn)
     ).fetchone()["n"]
     first = sq.apply(conn, loaded(), target)
     assert first == {
-        "fortnight": 1, "school_day": 10 - had, "period": first["period"], "timetable_slot": 150,
+        "fortnight": 1, "school_day": 10 - had, "period": first["period"], "timetable_rule": 150,
         "plan_entry": first["plan_entry"], "session": len(loaded().sessions),
     }  # fmt: skip
     assert sq.apply(conn, loaded(), target) == {t: 0 for t in first}
@@ -374,7 +374,7 @@ def test_the_counts_after_a_load_are_what_the_class_holds_and_a_second_load_leav
     k, target = a_target(conn)
     first = sq.apply(conn, loaded(), target)
     after = sq.counts(conn)
-    assert after["session"] == first["session"] == len(loaded().sessions) and after["timetable_slot"] == 150
+    assert after["session"] == first["session"] == len(loaded().sessions) and after["timetable_rule"] == 150
     assert sq.apply(conn, loaded(), target) == dict.fromkeys(first, 0) and sq.counts(conn) == after
 
 
@@ -396,13 +396,17 @@ def test_a_fortnight_the_loader_makes_starts_at_planning_so_the_freeze_applies_t
     """CP-6: a fortnight made by the load has its cycle row, or freezing it later would silently do nothing."""
     k, target = a_target(conn)
     sq.apply(conn, loaded(), target)
-    bare = conn.execute(
-        "select count(*) n from fortnight f left join fortnight_cycle c on c.fortnight_id = f.id"
-        " where f.kind = 'teaching' and c.fortnight_id is null and f.academic_year_id ="
-        " (select academic_year_id from school_class where id = %s)",
-        (k["class"],),
-    ).fetchone()["n"]
-    assert bare == 0
+    from engine.w2_print import (
+        fortnight_cycle as fc,
+    )  # since CP-27 the state is a column of the fortnight itself
+
+    made = conn.execute(
+        "select id from fortnight where kind = 'teaching' and academic_year_id = (select academic_year_id"
+        " from school_class where id = %s)", (k["class"],)
+    ).fetchall()  # fmt: skip
+    assert made and all(fc.standing(conn, f["id"])["state"] == "planning" for f in made)
+    fc.move(conn, made[0]["id"], "frozen", "staff:cp6-test")
+    assert fc.standing(conn, made[0]["id"])["state"] == "frozen"
 
 
 @needs_db
@@ -425,14 +429,13 @@ def test_only_a_fortnight_that_gets_a_new_line_is_asked_about_its_freeze(conn):
         " values (%s, %s, 99, 'teaching', '2031-09-01', '2031-09-14') returning id",
         (held["tenant_id"], held["academic_year_id"]),
     )["id"]
-    conn.execute(
-        "insert into fortnight_cycle (tenant_id, fortnight_id) values (%s, %s)", (held["tenant_id"], later)
-    )
+    assert later is not None  # fortnight 99, at planning: a line added to it asks for no reason
     again = ld.PlanEntry(fortnight=held["number"], key=held["plan_key"], ord=held["ord"], text=held["text"])
     new = ld.PlanEntry(fortnight=99, key="math", ord=1, text="CP-6 test line")
     added = sq.apply(conn, ld.Load(plan_entries=[again, new]), target)
     assert added["plan_entry"] == 1
-    assert (
-        conn.execute("select count(*) n from fortnight_edit where kind = 'frozen_change'").fetchone()["n"]
-        == 0
-    )
+    from engine.core import history
+
+    assert [
+        r for r in history.of(conn, "plan_entry", str(k["class"])) if (r["after"] or {}).get("frozen")
+    ] == []

@@ -66,7 +66,8 @@ test("Ayush edits a Hard sample's wrong answer, is told in words why the first t
   await expect(form).toBeVisible();
 
   const edits = async () =>
-    (await sql<{ n: number }[]>`select count(*)::int as n from english_sample_edit where skill_code = ${slot.code}`)[0].n;
+    (await sql<{ n: number }[]>`select count(*)::int as n from change_log
+      where table_name = 'english_sample' and split_part(row_id, ' ', 1) = ${slot.code}`)[0].n;
   const before = await edits();
   // first try: a "wrong" answer that is the right one — refused, in words, beside the field, and what was typed stays
   await form.getByLabel("Wrong answer 1").fill(slot.answer);
@@ -100,12 +101,13 @@ test("an approval does not land on a sample changed after the page was opened", 
   const hard = page.getByRole("region", { name: "Hard", exact: true });
   await expect(hard.getByRole("button", { name: "Approve Hard" })).toBeVisible();
   // someone else saves the sample again while the page is open
+  // (a save is the sample changed in place and a row of the one history log, CP-27 group 6: the log row is what tells)
   await sql`
-    insert into english_sample_edit (tenant_id, skill_code, difficulty, question_type, ord, sample, replaced, edited_by)
-    select e.tenant_id, e.skill_code, e.difficulty, e.question_type, e.ord,
+    insert into change_log (tenant_id, table_name, row_id, op, before, after, origin)
+    select e.tenant_id, 'english_sample', concat_ws(' ', e.skill_code, e.difficulty, e.question_type, e.ord), 'edit', null,
            jsonb_build_object('ask', e.ask, 'passage_code', e.passage_code, 'text', e.text, 'options', e.options,
                               'answer', e.answer, 'accept', e.accept, 'rubric_code', e.rubric_code,
-                              'key_points', e.key_points, 'not_words', e.not_words, 'wrong', e.wrong), null, 'U55, meanwhile'
+                              'key_points', e.key_points, 'not_words', e.not_words, 'wrong', e.wrong), 'U55, meanwhile'
     from english_sample_now e
     where e.skill_code = ${slot.code} and e.difficulty = 'Hard' and e.question_type = 'ENG.CHOOSE' and e.ord = ${slot.ord}`;
   await hard.getByRole("button", { name: "Approve Hard" }).click();

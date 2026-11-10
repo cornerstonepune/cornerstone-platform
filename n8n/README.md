@@ -43,7 +43,7 @@ Nothing in this flow retires an item. A reviewer's verdict is advice; it lands i
 ## F4 — rebuild the picture every night (`workflows/f4-nightly-graph.json`)
 
 CP-9. A schedule at 02:30 IST, then one `POST /graph/nightly` keyed `nightly-<date>`. The engine rebuilds every child's
-picture from confirmed evidence and writes one row to the `graph_run` ledger. **Not live until someone imports it into
+picture from confirmed evidence and writes one row to the run list (`flow_run`, flow `graph_nightly`). **Not live until someone imports it into
 n8n on the box and attaches the engine key credential.** CP-9's live proof (`1b`) fails until a run is logged.
 
 ## F5 — delete old voice recordings and transcripts (`workflows/f5-voice-cleanup.json`)

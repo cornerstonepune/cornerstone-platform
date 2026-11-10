@@ -1,11 +1,11 @@
 """CP-6 item 3, read for the fortnight: changing a frozen fortnight's timetable or activities without a reason is refused
 by the engine; with a reason it succeeds and the reason is recorded.
 
-"Timetable or activities" = `timetable_slot` and `plan_entry` (design, decision 2). A fortnight is frozen when its
-`fortnight_cycle` row is past planning. The engine's one gate is `fortnight_cycle.ensure_editable(conn, fortnight_ids,
-*, reason, table, record_id, op, actor)`: no reason, empty or whitespace in a frozen fortnight raises `CycleError`
-asking for a reason; with a reason it writes one `fortnight_edit` row (kind 'frozen_change', subject = table, record_id,
-op, reason, changed_by = actor). Planning fortnights pass and write nothing. The engine's writers call it: the
+"Timetable or activities" = `timetable_rule` (since CP-27; `timetable_slot` before) and `plan_entry` (design, decision
+2). A fortnight is frozen when its state (`fortnight.state`) is past planning. The engine's one gate is
+`fortnight_cycle.ensure_editable(conn, fortnight_ids, *, reason, table, record_id, op, actor)`: no reason, empty or
+whitespace in a frozen fortnight raises `CycleError` asking for a reason; with a reason it writes one row of the one
+history log (`change_log`: the table, record id, op, reason, who, and the fortnight it froze). Planning fortnights pass and write nothing. The engine's writers call it: the
 timetable rules' fixed-slot change (`tt_rules.change`) and the loader's `k2_timetable_sql.apply`, each with an optional
 `reason` keyword argument.
 
@@ -37,9 +37,9 @@ def frozen(conn, school):
     )["id"]
     # the class's timetable before any fortnight (so the rules page knows the class)
     conn.execute(
-        "insert into timetable_slot (tenant_id, school_class_id, period_id, week_code, weekday, kind, subject_code,"
-        " text, valid_from, valid_to) values (%s, %s, %s, 'A', 1, 'subject', 'math', 'CP-6 proof slot', '2031-06-02',"
-        " '2031-06-27')",
+        "insert into timetable_rule (tenant_id, school_class_id, kind, period_id, week_code, weekday, cell, subject_code,"
+        " text, valid_from, valid_to) values (%s, %s, 'frame', %s, 'A', 1, 'subject', 'math', 'CP-6 proof slot',"
+        " '2031-06-02', '2031-06-27')",
         (school["t"], school["class"], school["period"]),
     )
     advance_to(conn, a["id"], "frozen")
@@ -99,11 +99,7 @@ def _fixed(conn, w, **kw):
 
 
 def _fixed_slots(conn, w) -> int:
-    return db.one(
-        conn,
-        "select count(*) as n from timetable_slot where school_class_id = %s and kind = 'fixed'",
-        (w["class"],),
-    )["n"]
+    return len(tt_rules.read(conn, str(w["class"]))["fixed"])
 
 
 def test_3_a_fixed_slot_over_a_frozen_fortnight_is_refused_without_a_reason(conn, frozen):
@@ -123,7 +119,7 @@ def test_3_a_fixed_slot_over_a_frozen_fortnight_goes_through_with_a_reason(conn,
     assert _fixed_slots(conn, frozen) == 1
     rows = edits(conn, frozen["a"]["id"], "frozen_change")
     assert rows, "no frozen_change row for the fixed slot"
-    assert all(r["subject"] == "timetable_slot" and r["reason"] == REASON for r in rows), rows
+    assert all(r["subject"] == "timetable_rule" and r["reason"] == REASON for r in rows), rows
     assert str(frozen["staff"]) in {r["changed_by"] for r in rows}, "who made the change is not the staff id"
 
 

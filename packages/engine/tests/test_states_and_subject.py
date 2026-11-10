@@ -199,7 +199,7 @@ def test_a_prescription_takes_its_subject_from_the_skills_topic(conn, child):
     want = conn.execute("select subject_code from topic where code = %s", (s["topic_code"],)).fetchone()[
         "subject_code"
     ]
-    prescribe.for_class(conn, "B0DSEC", "B0D-W1", s["code"])
+    prescribe.for_class(conn, "B0DSEC", "2091-W09", s["code"])
     got = conn.execute("select strand from prescription where child_id = %s", (child,)).fetchone()["strand"]
     assert got == want
     conn.execute(
@@ -211,9 +211,9 @@ def test_a_prescription_takes_its_subject_from_the_skills_topic(conn, child):
         (s["tenant_id"],),
     )
     conn.execute("update skill set topic_code = 'B0D.T' where code = %s", (s["code"],))
-    prescribe.for_class(conn, "B0DSEC", "B0D-W2", s["code"])
+    prescribe.for_class(conn, "B0DSEC", "2091-W10", s["code"])
     got = conn.execute(
-        "select strand from prescription where child_id = %s and week = 'B0D-W2'", (child,)
+        "select strand from prescription where child_id = %s and week = '2091-03-05'", (child,)
     ).fetchone()
     assert got["strand"] == "B0DSUBJ"
 

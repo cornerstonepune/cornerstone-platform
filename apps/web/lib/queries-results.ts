@@ -26,8 +26,8 @@ const classSkills = (section: string) => sql`
   from skill ss
   where ${skillTaughtIn(sql`ss.tenant_id`, sql`ss.code`, section)}
     and (ss.grade = class_band(ss.tenant_id, ${section})
-         or exists (select 1 from child_skill_state s join child c on c.id = s.child_id
-                    where c.section = ${section} and c.active and s.rung_code = ss.rung_code
+         or exists (select 1 from child_skill_state s join child_now c on c.id = s.child_id
+                    where s.kind = 'written' and c.section = ${section} and c.active and s.rung_code = ss.rung_code
                       and s.skill_code = any(ss.registry_codes) and s.n_events > 0))`;
 
 /** A severity's colour: the states of one severity share it (as `childTable` reads it). */
@@ -69,13 +69,13 @@ export type TopicLine = {
 export async function classTopics(section: string, me: Who): Promise<TopicLine[]> {
   return sql<TopicLine[]>`
     with sk as (${classSkills(section)}),
-    kids as (select id from child where active and section = ${section}),
+    kids as (select id from child_now where active and section = ${section}),
     per as (
       select s.child_id, sk.topic_code, min(cs.severity) as sev
       from child_skill_state s join kids k on k.id = s.child_id
       join sk on sk.tenant_id = s.tenant_id and sk.rung_code = s.rung_code and s.skill_code = any(sk.registry_codes)
       join child_state cs on cs.tenant_id = s.tenant_id and cs.code = s.state
-      where s.n_events > 0 group by 1, 2),
+      where s.kind = 'written' and s.n_events > 0 group by 1, 2),
     sv as (${severityColour()}),
     spread as (
       select per.topic_code, sv.colour, count(*)::int as n from per join sv on sv.severity = per.sev group by 1, 2),
@@ -115,13 +115,13 @@ export type SkillLine = {
 export async function topicSkills(section: string, topic: string): Promise<SkillLine[]> {
   const rows = await sql<(SkillLine & { spread: Partial<Spread> })[]>`
     with sk as (select * from (${classSkills(section)}) x where x.topic_code = ${topic}),
-    kids as (select id from child where active and section = ${section}),
+    kids as (select id from child_now where active and section = ${section}),
     per as (
       select s.child_id, sk.code, min(cs.severity) as sev
       from child_skill_state s join kids k on k.id = s.child_id
       join sk on sk.tenant_id = s.tenant_id and sk.rung_code = s.rung_code and s.skill_code = any(sk.registry_codes)
       join child_state cs on cs.tenant_id = s.tenant_id and cs.code = s.state
-      where s.n_events > 0 group by 1, 2),
+      where s.kind = 'written' and s.n_events > 0 group by 1, 2),
     sv as (${severityColour()}),
     spread as (select per.code, sv.colour, count(*)::int as n from per join sv on sv.severity = per.sev group by 1, 2),
     a as (select a.*, sk.code from (${answers(sql`a.child_id = any(array(select id from kids))`)}) a join sk on sk.rung_code = a.placed_rung),
@@ -160,9 +160,9 @@ export async function skillChildren(section: string, skill: string, me: Who & { 
       select s.child_id, (array_agg(s.state order by cs.severity, cs.ord))[1] as state, min(cs.severity) as sev
       from child_skill_state s join ss on ss.tenant_id = s.tenant_id and ss.rung_code = s.rung_code and s.skill_code = any(ss.registry_codes)
       join child_state cs on cs.tenant_id = s.tenant_id and cs.code = s.state
-      join child c on c.id = s.child_id and c.section = ${section} and c.active
+      join child_now c on c.id = s.child_id and c.section = ${section} and c.active and s.kind = 'written'
       where s.n_events > 0 group by 1),
-    a as (select a.* from (${answers(sql`a.child_id = any(array(select id from child where active and section = ${section}))`)}) a
+    a as (select a.* from (${answers(sql`a.child_id = any(array(select id from child_now where active and section = ${section}))`)}) a
           join ss on ss.rung_code = a.placed_rung),
     sig as (select a.child_id, ${signals()}, max(a.observed_at)::date::text as last,
                    (array_agg(a.difficulty order by a.observed_at desc, a.level_ord desc nulls last)
@@ -173,7 +173,7 @@ export async function skillChildren(section: string, skill: string, me: Who & { 
              coalesce(sig.right, 0) as right, coalesce(sig.wrong, 0) as wrong,
              coalesce(sig.wrong_working, 0) as wrong_working, coalesce(sig.blank, 0) as blank,
              count(*) over ()::int as total, coalesce(st.sev, 99) as sev
-      from child c left join st on st.child_id = c.id left join sig on sig.child_id = c.id
+      from child_now c left join st on st.child_id = c.id left join sig on sig.child_id = c.id
       where c.active and c.section = ${section}
       order by coalesce(st.sev, 99), roll_order(c.roll_no), c.roll_no
       limit ${size} offset ${(Math.max(1, page) - 1) * size})
@@ -196,7 +196,7 @@ export async function topicPapers(section: string, topic: string, me: Who): Prom
     with sk as (select * from (${classSkills(section)}) x where x.topic_code = ${topic}),
     p as (
       select distinct si.id, si.kind, si.sheet_template_id, si.child_id, a.observed_at
-      from (${answers(sql`a.child_id = any(array(select id from child where active and section = ${section}))`)}) a
+      from (${answers(sql`a.child_id = any(array(select id from child_now where active and section = ${section}))`)}) a
       join sk on sk.rung_code = a.placed_rung
       join capture c on c.id = a.capture_id join sheet_instance si on si.id = c.sheet_instance_id
       where ${seesSheet(me, sql`si.id`)}),

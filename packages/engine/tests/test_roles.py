@@ -12,6 +12,7 @@ import psycopg
 import pytest
 
 from engine.core import db, roster
+from tests import rows
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
 
@@ -41,8 +42,6 @@ WEB_WRITES = {
     # a person's approval of a way of asking, and "I've looked at this" on a level suggested for review: rows of the one
     # approval list, added and never changed (goals/e0-english-in-the-system.yaml, goals/cal_levels_to_review.yaml, CP-27)
     "public.approval": {"INSERT"},
-    # the name an educator gives an assessment, added and never changed (goals/asm_assessments_page.yaml)
-    "public.assessment_name": {"INSERT"},
     # a class's word on a skill is said through `say_taught` (goals/t1-topics-are-operations.yaml), never written
 }
 # Every function of ours the website calls: signing a paper off, settling one answer, a roll in its order, a name, a
@@ -68,6 +67,9 @@ WEB_CALLS = {
     "skill_taught_in",  # whether a class has been taught a skill: the one rule (goals/t1-topics-are-operations.yaml)
     "move_child",  # a coordinator's change of a child's grade or class, and its history row (goals/mov_move_a_child.yaml)
     "say_taught",  # a person's word that a class has (or has not) been taught a topic or one skill of it
+    "staff_list",  # the staff list as sign-in reads it, before anyone is known to be asking (CP-27 group 4)
+    "staff_set_password",  # a person's new password and when it was set: their open sessions end (CP-27 group 4)
+    "staff_add",  # a coordinator puts a person on the staff list, with no password yet (CP-27 group 4)
     "checks_to_trust",
     "skill_levels",  # a skill's levels as one object, built from their rows (goals/b1-levels-are-rows.yaml)
     "graph_state_of",  # the graph's one rule for a state, which the `child_level_state` view calls as the website (goals/cal_levels_to_review.yaml)
@@ -208,11 +210,7 @@ def test_finding_a_child_by_name_is_logged_like_any_read(conn):
     `pii.find_child`, which writes the lookup to `access_log` as a read."""
     tenant = db.one(conn, "select id from tenant where slug = %s", (db.tenant_slug(),))["id"]
     section, actor = f"ROLES-{uuid.uuid4().hex[:6]}", f"test-{uuid.uuid4().hex[:6]}"
-    kid = db.one(
-        conn,
-        "insert into child (tenant_id, roll_no, section, band) values (%s, '1', %s, 'G2') returning id",
-        (tenant, section),
-    )["id"]
+    kid = rows.a_child_in(conn, section, "G2", "1", tenant)
     conn.execute(
         "insert into pii.child (tenant_id, child_id, first_name) values (%s, %s, 'Zoya')", (tenant, kid)
     )

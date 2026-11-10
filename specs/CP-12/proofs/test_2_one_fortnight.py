@@ -4,7 +4,9 @@ stays where it was. This holds in a 15-day fortnight too."""
 import datetime as dt
 
 import pytest
-from conftest import REASON, START, day_view, move, sessions, shown, snapshot, world
+from conftest import REASON, START, YEAR, day_view, move, sessions, shown, snapshot, world
+
+from engine.w2_print import tt_need as need
 
 
 def _all_days(conn, w, number):
@@ -19,8 +21,7 @@ def test_a_move_changes_only_its_own_fortnight(conn, engine, monkeypatch, days):
     lessons_before = {n: sessions(conn, w, n) for n in (1, 3)}
     same_day = [d for d in w["fortnights"][2]["dates"] if d.isoweekday() == on.isoweekday() and d != on]
     same_before = day_view(conn, w, same_day)
-    frame_before = conn.execute("select * from timetable_slot where school_class_id = %s and valid_to is null"
-                                " order by id", (w["class"],)).fetchall()
+    frame_before = need.load(conn, "K2", w["section"], YEAR, 2).frame
 
     code, out = move(engine, w, on, "s1", on, "s2", reason=REASON)
     assert code == 0, out
@@ -30,8 +31,7 @@ def test_a_move_changes_only_its_own_fortnight(conn, engine, monkeypatch, days):
     for n in (1, 3):
         assert _all_days(conn, w, n) == before[n], f"fortnight {n} changed"
         assert sessions(conn, w, n) == lessons_before[n], f"a lesson of fortnight {n} changed"
-    assert conn.execute("select * from timetable_slot where school_class_id = %s and valid_to is null"
-                        " order by id", (w["class"],)).fetchall() == frame_before, "the standing frame was edited"
+    assert need.load(conn, "K2", w["section"], YEAR, 2).frame == frame_before, "the standing frame was edited"
 
 
 def test_a_move_into_another_fortnight_is_refused_and_writes_nothing(conn, engine, monkeypatch):

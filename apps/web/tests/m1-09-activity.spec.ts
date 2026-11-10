@@ -28,8 +28,9 @@ test.beforeEach(async () => {
            ${sql.json(STEPS)}, ${sql.json(THINKING)}
     from activity where code = 'ACT-K2-0348'`;
   await sql`
-    insert into activity_part_source (tenant_id, activity_code, part, source, check_me)
-    select tenant_id, ${CODE}, p, 'drafted', true from activity, unnest(array['steps', 'thinking']) p where code = ${CODE}`;
+    insert into change_log (tenant_id, table_name, row_id, op, after, origin)
+    select tenant_id, 'activity', ${CODE}, 'part_source', jsonb_build_object('part', p, 'source', 'drafted', 'check_me', true), 'a test'
+    from activity, unnest(array['steps', 'thinking']) p where code = ${CODE}`;
 });
 test.afterAll(async () => {
   await sql`delete from activity where code = ${CODE}`;
@@ -81,7 +82,10 @@ test("Keep makes a draft a person's, Edit puts her words in its place, and Send 
   await expect(thinking).toContainText("Placeholder idea, in her words.");
   await expect(thinking.locator(".pp-origin")).toHaveText("Kept by a person");
 
-  await sql`update activity_part_source set source = 'drafted', check_me = true where activity_code = ${CODE} and part = 'steps'`;
+  await sql`
+    insert into change_log (tenant_id, table_name, row_id, op, after, origin)
+    select tenant_id, 'activity', ${CODE}, 'part_source', '{"part": "steps", "source": "drafted", "check_me": true}', 'a test'
+    from activity where code = ${CODE}`;
   await page.reload();
   await steps.getByRole("button", { name: "Send back" }).click();
   await expect(steps).toContainText("Nothing written yet.");

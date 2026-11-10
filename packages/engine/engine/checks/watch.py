@@ -15,19 +15,20 @@ from engine.w2_print import fortnight_cycle
 
 
 def nightly_stale(conn: db.Conn, tenant_id: db.Id) -> str | None:
-    """The line when the nightly rebuild has stopped (CP-24, audit F1): the newest ok run on the `graph_run` ledger is
-    older than the `graph.nightly_stale_hours` setting, or there has never been one. None while it runs."""
+    """The line when the nightly rebuild has stopped (CP-24, audit F1): the newest ok nightly run (`flow_run`, flow
+    `graph_nightly`) is older than the `graph.nightly_stale_hours` setting, or there has never been one. None while it
+    runs."""
     hours = settings.config(conn, "graph.nightly_stale_hours")
     if hours is None:
         return "the graph.nightly_stale_hours setting is missing, so the nightly rebuild is not watched"
     age = db.one(
         conn,
-        "select extract(epoch from now() - max(ran_at)) / 3600 as hours from graph_run"
-        " where tenant_id = %s and ok",
+        "select extract(epoch from now() - max(finished_at)) / 3600 as hours from flow_run"
+        " where tenant_id = %s and flow = 'graph_nightly' and status = 'ok'",
         (tenant_id,),
     )["hours"]
     if age is None:
-        return f"the nightly rebuild has never run ok (nothing on graph_run; the limit is {int(hours)} hours)"
+        return f"the nightly rebuild has never run ok (no graph_nightly run; the limit is {int(hours)} hours)"
     if age > int(hours):
         return f"the nightly rebuild last ran ok {int(age)} hours ago, more than {int(hours)} hours"
     return None

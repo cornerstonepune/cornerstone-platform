@@ -11,11 +11,9 @@ card_app = typer.Typer(help="W4 — Friday's class card", no_args_is_help=True)
 
 @card_app.command("build")
 def card_build(section: str, week: str) -> None:
-    """Build the section's card from its children's graphs and keep it as the week's rows."""
+    """Build the section's card from its children's graphs, as it stands now (`week` names the week it is for)."""
     with db.connect() as conn:
         got = card.build(conn, section)
-        card.store(conn, section, week, got)
-        conn.commit()
     for s in got["skills"]:
         g = s["groups"]
         # the groups are in the card's order (`card.groups`)

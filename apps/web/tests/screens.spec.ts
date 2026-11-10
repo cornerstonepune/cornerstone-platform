@@ -33,7 +33,7 @@ test.beforeAll(async () => {
     await sql`
       insert into evidence_event (tenant_id, child_id, skill_code, rung_code, correct, misconception_codes, channel,
                                   observed_at, confirmed_by)
-      select tenant_id, id, 'NUM.OPS.01', 'R22', true, '{}', 'item', now(), 'e2e' from child where id = ${kavya}`;
+      select tenant_id, id, 'NUM.OPS.01', 'R22', true, '{}', 'item', now(), 'e2e' from child_now where id = ${kavya}`;
   }
   await sql`select rebuild_child_skill_state(${kavya}::uuid)`;
   const w = await aWorksheet(sql, {

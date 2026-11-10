@@ -12,6 +12,7 @@ from fastapi.testclient import TestClient
 from engine.api import deps
 from engine.api.app import app
 from engine.core import db
+from engine.w2_print import materials_remind as rem
 from tests import materials_rows as m
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
@@ -174,10 +175,7 @@ def test_removing_the_first_line_moves_the_reminders_to_the_next_day_a_material_
     body = _build(client, s).json()
 
     def due():
-        return {
-            r["due_on"]
-            for r in conn.execute("select due_on from reminder where list_id = %s", (body["list_id"],))
-        }
+        return {r["due_on"] for r in rem.reminders(conn, body["list_id"], dt.date(2000, 1, 3))}
 
     before = due()
     line = next(ln for g in body["groups"] for ln in g["lines"] if ln["material_code"] == first)

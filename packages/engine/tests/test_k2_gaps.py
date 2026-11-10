@@ -15,6 +15,7 @@ import pytest
 
 from engine.core import db, history
 from engine.w1_bank import k2_gaps as gaps
+from engine.w1_bank import k2_part_source
 from engine.w1_bank import k2_upload as up
 
 needs_db = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
@@ -163,15 +164,16 @@ def test_a_part_has_one_source_and_it_is_the_schools_a_drafts_or_a_persons(conn)
         "code"
     ]
     for part, source in (("thinking", "drafted"), ("steps", "school"), ("level_2", "person")):
-        conn.execute(
-            "insert into activity_part_source (tenant_id, activity_code, part, source) values (%s,%s,%s,%s)",
-            (t, code, part, source),
+        k2_part_source.mark(conn, t, code, part, "a test", None, source=source)
+    with pytest.raises(ValueError):
+        k2_part_source.mark(conn, t, code, "objective", "a test", None, source="agent")
+    got = {
+        r["part"]: r["source"]
+        for r in conn.execute(
+            "select part, source from activity_part_source where activity_code = %s", (code,)
         )
-    with pytest.raises(psycopg.errors.CheckViolation):
-        conn.execute(
-            "insert into activity_part_source (tenant_id, activity_code, part, source) values (%s,%s,'objective','agent')",
-            (t, code),
-        )
+    }
+    assert got == {"thinking": "drafted", "steps": "school", "level_2": "person"}
     conn.rollback()
 
 
@@ -183,14 +185,8 @@ def test_a_drafted_part_made_the_schools_by_a_later_upload_is_marked_the_schools
     code = conn.execute("select code from activity where band = 'K2' order by code limit 1").fetchone()[
         "code"
     ]
-    conn.execute(
-        "insert into activity_part_source (tenant_id, activity_code, part, source) values (%s,%s,'steps','drafted')",
-        (t, code),
-    )
-    conn.execute(
-        "insert into activity_part_source (tenant_id, activity_code, part, source) values (%s,%s,'level_1','person')",
-        (t, code),
-    )
+    k2_part_source.mark(conn, t, code, "steps", "a test", None, source="drafted")
+    k2_part_source.mark(conn, t, code, "level_1", "a test", None, source="person")
     up.mark_school(conn, t, code, ["steps", "level_1"])
     got = {
         r["part"]: r["source"]

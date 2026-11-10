@@ -28,7 +28,7 @@ export async function paperFacts(
            coalesce(tk.topics, '{}'::text[]) as topics, coalesce(tk.skill_names, '{}'::text[]) as skills
     from sheet_instance si
     join sheet_template t on t.id = si.sheet_template_id
-    join child ch on ch.id = si.child_id
+    join child_now ch on ch.id = si.child_id
     cross join lateral (
       select array_agg(distinct s.topic_code) filter (where s.topic_code is not null) as topics, array_agg(distinct s.name) as skill_names
       from skill s

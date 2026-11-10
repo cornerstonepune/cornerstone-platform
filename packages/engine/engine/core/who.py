@@ -1,7 +1,7 @@
 """Who did something, as the member of staff's id (CP-27 group 4): the one place a "who" becomes a `staff.id`.
 
-A caller holds a person in whatever form reached it: a staff id, the id the website signs a person in as (an entry of
-the sign-in list, matched through `staff.signin_id`), the `staff:<id>` a database session names in `app.changed_by`, an
+A caller holds a person in whatever form reached it: a staff id (the id the website signs a person in as, since CP-27
+group 4), the `staff:<id>` a database session names in `app.changed_by`, an
 email (looked up through `public.staff_of_email`, which writes the look-up to the access log), a name, or "Name (role)"
 as some stamps were written. Each is one member of staff, or nobody: an email or a name two people share is nobody,
 never a guess. What is no member of staff (the loader, n8n, a test's own label, a person no longer known) comes back as
@@ -39,10 +39,7 @@ def _by_id(conn: db.Conn, text: str) -> UUID | None:
         held = UUID(text.removeprefix("staff:"))
     except ValueError:
         return None
-    row = conn.execute(
-        "select id from staff where id = %s or signin_id = %s order by (id = %s) desc limit 1",
-        (held, held, held),
-    ).fetchone()
+    row = conn.execute("select id from staff where id = %s", (held,)).fetchone()
     return row["id"] if row else None
 
 

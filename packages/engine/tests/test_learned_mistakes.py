@@ -14,6 +14,7 @@ from engine.assess import misconceptions as M
 from engine.core import db, english, loaders
 from engine.w1_bank import learn, learned
 from engine.w3_read import marking
+from tests import rows
 from tests.rows import a_member_of_staff
 from tests.test_learn import _question, _tenant
 
@@ -43,12 +44,10 @@ def _sum(conn, tenant, a, b, op="+"):
 def _written(conn, tenant, key, wrote, state="confirmed"):
     """One child's answer `wrote` to `key`, read and — `state` confirmed — checked by a person. → the result's id."""
     item = conn.execute("select id from item where item_key = %s", (key,)).fetchone()["id"]
-    child = conn.execute(
-        "insert into child (tenant_id, roll_no, section, band) values (%s,%s,'TLEARN','G2') returning id",
-        (tenant, uuid.uuid4().hex[:6]),
-    ).fetchone()["id"]
+    child = rows.a_child_in(conn, "TLEARN", "G2", uuid.uuid4().hex[:6], tenant)
     t = conn.execute(
-        "insert into sheet_template (tenant_id, band, week) values (%s, 'G2', 'W1') returning id", (tenant,)
+        "insert into sheet_template (tenant_id, band, week) values (%s, 'G2', '2026-09-28') returning id",
+        (tenant,),
     ).fetchone()["id"]
     si = conn.execute(
         "insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id) values (%s,%s,%s,%s) returning id",

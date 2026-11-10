@@ -9,7 +9,7 @@ import { expect, test, type Page } from "@playwright/test";
 import { createHmac, randomUUID } from "node:crypto";
 import postgres from "postgres";
 import { mailFor } from "../../../apps/web/tests/mail-server";
-import { aClass } from "../../../apps/web/tests/rows";
+import { aClass, aPerson, personAsStored } from "../../../apps/web/tests/rows";
 
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 const CLASS = "UI15-CLASS";
@@ -24,7 +24,11 @@ const GRANTED = { email: "ui15-granted@cornerstone.test", name: "Ui Fifteen Gran
 type Action = "addPerson" | "setClasses" | "setSubjects";
 type Who = "educator" | "signed out" | "role only" | "granted" | "coordinator";
 
-const staffList = async () => (await sql<{ v: unknown }[]>`select value as v from config where key = 'app.staff'`)[0].v;
+// the staff list as it stands (since CP-27 group 4, the staff tables), each person as the sign-in keeps them
+const staffList = async () =>
+  sql<{ email: string; classes: string[]; subjects: string[] }[]>`
+    select p.email, s.role_code, s.classes, s.subjects, p.password_hash from staff s join pii.staff p on p.staff_id = s.id
+    where s.active order by s.created_at, s.id`;
 const staffIdOf = async (email: string) =>
   (await sql<{ id: string }[]>`select staff_id as id from pii.staff where email = ${email}`)[0]?.id;
 
@@ -44,7 +48,7 @@ test.use({ viewport: { width: 1440, height: 900 } });
 test.beforeAll(async () => {
   await aClass(sql, CLASS, "G3", ["Ana", "Ben"]);
   for (const p of [TARGET, EDUCATOR, ROLE_ONLY, GRANTED]) {
-    await sql`update config set value = value || ${sql.json([p])} where key = 'app.staff' and not value @> ${sql.json([{ email: p.email }])}`;
+    if (!(await personAsStored(sql, p.email))) await aPerson(sql, p);
   }
   const id = await staffIdOf(GRANTED.email);
   await sql`
@@ -59,8 +63,8 @@ test.afterAll(async () => {
 
 // each test starts with the target teaching nothing
 test.beforeEach(async () => {
-  await sql`update config set value = (select jsonb_agg(case when p ->> 'email' = ${TARGET.email}
-    then p || ${sql.json({ classes: [], subjects: [] })} else p end) from jsonb_array_elements(value) p) where key = 'app.staff'`;
+  await sql`update staff set classes = '{}', subjects = '{}'
+    where id in (select staff_id from pii.staff where email = ${TARGET.email})`;
 });
 
 /** Opens the form as the coordinator, fills it, swaps the session for `who`, sends it; returns the new person's email. */

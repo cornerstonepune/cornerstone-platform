@@ -8,14 +8,19 @@ import uuid
 
 import pytest
 
-from engine.core import db
+from engine.core import db, history
 from engine.w2_print import fortnight_cycle as fc
-from engine.w2_print import tt_clash, tt_move
+from engine.w2_print import materials_list, tt_clash, tt_move, tt_need
 from tests import tt_hand_world as tw
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
 
-MON, TUE, THU = tw.START, tw.START + dt.timedelta(1), tw.START + dt.timedelta(3)
+MON, TUE, WED, THU = (
+    tw.START,
+    tw.START + dt.timedelta(1),
+    tw.START + dt.timedelta(2),
+    tw.START + dt.timedelta(3),
+)
 REASON = "Test reason: the school agreed"
 
 
@@ -37,42 +42,47 @@ def _move(c, w, frm, fp, to, tp, *, reason=None, who=None):
 def _snapshot(c, w):
     own = [
         c.execute(f"select * from {t} where school_class_id = %s order by id", (w["class"],)).fetchall()  # noqa: S608
-        for t in ("timetable_slot", "session", "timetable_move")
+        for t in ("timetable_rule", "session")
     ]
     return [
         *own,
+        tw.moves(c, w),
         c.execute("select * from materials_line_source order by line_id, session_id").fetchall(),
         c.execute("select * from materials_line order by id").fetchall(),
     ]
 
 
-def test_a_move_into_an_empty_place_lays_the_fortnight_down_once_and_moves_the_lesson_with_its_id(world):
+def _lessons(c, w):
+    return c.execute(
+        "select count(*) as n from session where school_class_id = %s", (w["class"],)
+    ).fetchone()["n"]
+
+
+def test_a_move_into_an_empty_place_moves_the_lesson_with_its_id_and_leaves_the_frame(world):
     c, w = world
-    maths = tw.session_at(c, w, MON, "p1")
+    maths, before = tw.session_at(c, w, MON, "p1"), _lessons(c, w)
     done = _move(c, w, MON, "p1", TUE, "p3", reason=REASON)
     assert (done["moved"], done["swapped_with"]) == ("math", None)
-    layer = c.execute(
-        "select count(*) as n from timetable_slot where school_class_id = %s and fortnight_id = %s",
-        (w["class"], w["fortnight"]),
-    ).fetchone()["n"]
-    assert layer == 9 * 4, "one dated row per teaching day and period (the holiday has none)"
     assert tw.cell(c, w, TUE, "p3")["subject"] == "math" and tw.cell(c, w, MON, "p1")["subject"] is None
     assert tw.session_at(c, w, TUE, "p3")["id"] == maths["id"] and tw.session_at(c, w, MON, "p1") is None
-    assert (
-        c.execute(
-            "select count(*) as n from timetable_slot where school_class_id = %s and valid_to is null",
-            (w["class"],),
-        ).fetchone()["n"]
-        == 40
-    ), "the standing frame is untouched"
+    frame = tt_need.load(c, "K2", w["section"], "2033-34", w["number"]).frame
+    assert len(frame) == 40 and frame[("A", 1, str(w["period"]["p1"]))] == ("subject", "math"), (
+        "the standing frame is untouched"
+    )
     _move(c, w, TUE, "p3", THU, "p3", reason=REASON)
-    assert (
-        layer
-        == c.execute(
-            "select count(*) as n from timetable_slot where school_class_id = %s and fortnight_id = %s",
-            (w["class"], w["fortnight"]),
-        ).fetchone()["n"]
-    ), "the second move did not lay the fortnight down again"
+    assert _lessons(c, w) == before, "a move makes no lesson and loses none"
+
+
+def test_a_fortnight_with_no_lessons_gets_them_from_its_frame_on_its_first_move(world):
+    c, w = world
+    c.execute("delete from session where school_class_id = %s", (w["class"],))
+    _move(c, w, MON, "p1", TUE, "p3", reason=REASON)
+    assert _lessons(c, w) == 9 * 3 + 2, (
+        "every teaching day's fixed, subject and specialist lessons, made once"
+    )
+    assert tw.cell(c, w, TUE, "p3")["subject"] == "math" and tw.cell(c, w, WED, "p3")["kind"] == "specialist"
+    _move(c, w, TUE, "p3", THU, "p3", reason=REASON)
+    assert _lessons(c, w) == 9 * 3 + 2, "the second move did not make the fortnight's lessons again"
 
 
 def test_two_lessons_swap_and_each_keeps_its_plan_line_and_id_and_the_move_is_kept(world):
@@ -83,14 +93,19 @@ def test_two_lessons_swap_and_each_keeps_its_plan_line_and_id_and_the_move_is_ke
     assert tw.session_at(c, w, THU, "p2")["id"] == maths["id"]
     assert tw.session_at(c, w, MON, "p1")["id"] == english["id"]
     assert (tw.cell(c, w, THU, "p2")["subject"], tw.cell(c, w, MON, "p1")["subject"]) == ("math", "english")
-    (kept,) = c.execute("select * from timetable_move where school_class_id = %s", (w["class"],)).fetchall()
-    assert (kept["from_date"], kept["to_date"], kept["moved_subject"], kept["reason"]) == (
-        MON,
-        THU,
+    (kept,) = tw.moves(c, w)
+    assert (
+        kept["before"]["on_date"],
+        kept["after"]["on_date"],
+        kept["after"]["subject_code"],
+        kept["reason"],
+    ) == (
+        str(MON),
+        str(THU),
         "math",
         REASON,
     )
-    assert kept["who"] == w["staff"]["coordinator"]["id"] and kept["fortnight_id"] == w["fortnight"]
+    assert kept["staff_id"] == w["staff"]["coordinator"]["id"]
     assert "Test Person" not in str(kept)
 
 
@@ -142,22 +157,15 @@ def test_a_frozen_fortnight_needs_a_reason_and_keeps_it(world):
     with pytest.raises(fc.CycleError, match="reason"):
         _move(c, w, MON, "p1", THU, "p2")
     _move(c, w, MON, "p1", THU, "p2", reason=REASON)
-    kept = c.execute(
-        "select reason from fortnight_edit where fortnight_id = %s and kind = 'frozen_change'",
-        (w["fortnight"],),
-    ).fetchall()
-    assert [r["reason"] for r in kept] == [REASON]
+    kept = [r for r in history.of(c, "session", str(w["class"])) if (r["after"] or {}).get("frozen")]
+    assert [(r["reason"], r["after"]["fortnight_id"]) for r in kept] == [(REASON, str(w["fortnight"]))]
 
 
 def test_in_an_approved_fortnight_a_move_that_leaves_an_open_clash_is_refused_unless_the_setting_is_off(
     world,
 ):
     c, w = world
-    c.execute(
-        "insert into timetable_block (tenant_id, school_class_id, on_date, period_id, reason)"
-        " values (%s, %s, %s, %s, 'Test block')",
-        (w["tenant"], w["class"], TUE, w["period"]["p3"]),
-    )
+    tw.rule(c, w, rule="block", on_date=TUE, period="p3", reason="Test block")
     tw.set_state(c, w, "approved")
     with pytest.raises(tt_move.Refused, match="clash"):
         _move(c, w, MON, "p1", TUE, "p3", reason=REASON)
@@ -194,11 +202,7 @@ def _line(c, w, sessions, *, state="draft", from_on=MON, to_on=tw.START + dt.tim
         (w["tenant"], lst, code, MON),
     )["id"]
     for sid in sessions:
-        c.execute(
-            "insert into materials_line_source (line_id, session_id, activity_code, on_date, quantity)"
-            " values (%s, %s, 'ACT-TEST', %s, 1)",
-            (line, sid, MON),
-        )
+        c.execute(materials_list.ADD_SOURCE, (line, sid, "ACT-TEST", MON, 1))
     return line
 
 
@@ -251,11 +255,7 @@ def test_a_lesson_whose_materials_list_is_sent_or_does_not_cover_the_new_date_is
 
 def test_in_an_approved_fortnight_swapping_two_lessons_of_an_accepted_limit_clash_is_refused(world):
     c, w = world
-    c.execute(
-        "insert into timetable_limit (tenant_id, school_class_id, subject_code, span, most)"
-        " values (%s, %s, 'math', 'fortnight', 8)",
-        (w["tenant"], w["class"]),
-    )
+    tw.rule(c, w, rule="limit", subject_code="math", span="fortnight", most=8)
     (clash,) = c.execute(
         "select clash_key from timetable_clash where fortnight_id = %s", (w["fortnight"],)
     ).fetchall()

@@ -25,7 +25,7 @@ from pathlib import Path
 from engine.assess import focus
 from engine.assess.pick import Sheet
 from engine.assess.render import render_sheet
-from engine.core import db, mistake_names, roster, settings, vocabulary
+from engine.core import db, mistake_names, roster, settings, vocabulary, weeks
 from engine.w1_bank import question_types
 from engine.w1_bank.inventory import item_from_row
 from engine.w2_print import seen as shown
@@ -126,7 +126,7 @@ def _short(k, name, level, earlier=False) -> str:
 def _states(conn, child_id):
     return conn.execute(
         "select skill_code, rung_code, state, n_events, n_correct, repeating_misconception"
-        " from child_skill_state where child_id = %s",
+        " from child_skill_state where kind = 'written' and child_id = %s",
         (child_id,),
     ).fetchall()
 
@@ -200,7 +200,7 @@ def home_area(conn, child_id: str, states: list | None = None) -> list:
     none. What `plan` draws a home paper from, and what Friday's class card names for each child."""
     if states is None:
         states = _states(conn, child_id)
-    child = conn.execute("select band, section from child where id = %s", (child_id,)).fetchone()
+    child = conn.execute("select band, section from child_now where id = %s", (child_id,)).fetchone()
     levels = _levels(conn, child["band"])
     taught = catalog(conn, child["section"])
     return [_where_it_shows(conn, a, levels) for a in focus.home(states, taught, rule(conn), levels)]
@@ -292,7 +292,7 @@ def approved(conn, child_id: str, week: str) -> dict | None:
         # an edit's earlier copy is void (`edit_paper`): the edit replaced it, not a new paper
         " where child_id = %s and week = %s and kind = 'focus' and print_status <> 'void'"
         " order by created_at desc, id desc",
-        (child_id, week),
+        (child_id, weeks.or_none(week)),  # a label that is no week has no paper
     ).fetchall()
     return {**rows[0], "replaced": [r["qr"] for r in rows[1:]]} if rows else None
 
@@ -328,11 +328,13 @@ def print_paper(conn, child_id, week, actor, kind, p, how, pw=None, ids=None, wa
     kind, class and week, its questions recorded as seen, and the page rendered, saying `how` it was chosen. An edited
     paper (`edit_paper`) passes its questions in order (`ids`) and `waiting`: made by `actor`, approved by no one yet."""
     ids = ids or [q["id"] for a in p["areas"] for q in a["questions"]]
-    child = conn.execute("select tenant_id, band, section from child where id = %s", (child_id,)).fetchone()
+    child = conn.execute(
+        "select tenant_id, band, section from child_now where id = %s", (child_id,)
+    ).fetchone()
     template = conn.execute(
         "insert into sheet_template (tenant_id, band, week, item_ids, source, child_id)"
         " values (%s,%s,%s,%s::uuid[],'focus',%s) returning id",
-        (child["tenant_id"], child["band"], week, ids, child_id),
+        (child["tenant_id"], child["band"], weeks.day(week), ids, child_id),
     ).fetchone()["id"]
     qr = _qr(template, child_id, week, kind)
     instance = conn.execute(
@@ -340,7 +342,7 @@ def print_paper(conn, child_id, week, actor, kind, p, how, pw=None, ids=None, wa
         "insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, week, section, kind,"
         " print_status, printed_at, approved_by, approved_at, created_at)"
         " values (%s,%s,%s,%s,%s,%s,%s,'printed',now(),%s,now(),clock_timestamp()) returning id",
-        (child["tenant_id"], qr, template, child_id, week, child["section"], kind, actor),
+        (child["tenant_id"], qr, template, child_id, weeks.day(week), child["section"], kind, actor),
     ).fetchone()["id"]
     if waiting:  # made again by an edit (`edit_paper`): approved by no one yet, given to no one yet
         conn.execute(

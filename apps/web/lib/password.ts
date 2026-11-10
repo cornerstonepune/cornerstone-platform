@@ -1,6 +1,6 @@
 import common from "../../../supabase/seed/common_passwords.json";
 import { hashPassword, scryptCost } from "./auth";
-import { sql } from "./db";
+import { sql, TENANT_SLUG } from "./db";
 import { closeLinks } from "./password-links";
 
 // What makes a new password good enough (goals/auth-email-password.yaml). The length is a setting and the list of
@@ -21,17 +21,12 @@ export async function passwordProblem(password: string, email: string): Promise<
   return null;
 }
 
-/** Gives this person their new password and ends every session of theirs that is already open: the staff row carries
- *  the hash `lib/auth.ts` checks and the moment it was set, which no cookie made before it survives (`currentStaff`).
- *  One statement, so a password written while a coordinator saves someone's classes cannot undo either (lib/db.ts).
- *  Their open links are closed too, used or not. */
+/** Gives this person their new password and ends every session of theirs that is already open: their `pii.staff` row
+ *  carries the hash `lib/auth.ts` checks and the moment it was set (this server's clock, which its cookies carry), which
+ *  no cookie made before it survives (`currentStaff`). One statement, through the one function the website may write
+ *  it with (`staff_set_password`); it touches nothing else of the person. Their open links are closed too, used or not. */
 export async function setPassword(email: string, password: string): Promise<void> {
-  const now = new Date();
-  const mine = { password: hashPassword(password, await scryptCost()), password_set_at: now.toISOString() };
-  await sql`
-    update config set value = (
-      select coalesce(jsonb_agg(case when lower(p->>'email') = ${email.toLowerCase()} then p || ${sql.json(mine)} else p end), '[]'::jsonb)
-      from jsonb_array_elements(value) p)
-    where key = 'app.staff'`;
+  const hash = hashPassword(password, await scryptCost());
+  await sql`select public.staff_set_password(${TENANT_SLUG}, ${email.toLowerCase()}, ${hash}, ${new Date().toISOString()}::timestamptz)`;
   await closeLinks(email);
 }

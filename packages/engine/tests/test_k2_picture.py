@@ -9,6 +9,7 @@ mentioned is not observed and has no row. Each observation and its evidence row 
 
 import datetime as dt
 import os
+import re
 import uuid
 
 import pytest
@@ -87,7 +88,8 @@ def seen(conn, s, child, day, outcome, mode="individual", expected=2, supersedes
 def picture(conn, child):
     graph.rebuild(conn, child)
     return conn.execute(
-        "select skill_code, grade_code, state from child_observed_state where child_id = %s", (child,)
+        "select skill_code, grade_code, state from child_skill_state where kind = 'observed' and child_id = %s",
+        (child,),
     ).fetchall()
 
 
@@ -208,9 +210,9 @@ def test_written_evidence_is_read_exactly_as_before(conn, k2):
     seen(conn, k2, child, 14, "above")
     graph.rebuild(conn, child)
     assert (
-        conn.execute("select count(*) as n from child_skill_state where child_id = %s", (child,)).fetchone()[
-            "n"
-        ]
+        conn.execute(  # the written ones (CP-27 group 6: an observed state is a row of the same table, kind observed)
+            "select count(*) as n from child_skill_state where kind = 'written' and child_id = %s", (child,)
+        ).fetchone()["n"]
         == 0
     )
     assert (
@@ -289,3 +291,22 @@ def test_secure_reads_the_level_reached_and_never_moves_with_the_level_to_mark_s
             conn, k["email"], k["class"], vc.Confirmed(k["activity"], 3, {"below": ["3"]}, False, day)
         )
     assert {r["state"] for r in picture(conn, named)} == {"practising"}
+
+
+def test_every_reader_of_the_states_says_which_kind_it_reads():
+    """A child's written and observed states are rows of one table (CP-27 group 6: `child_observed_state` was the
+    second): every statement of the engine or the website that reads `child_skill_state` names the kind it means, so an
+    observed row never reaches a written reader (a report, a card, a paper, the past's fingerprint)."""
+    root = db.REPO_ROOT
+    files = [*(root / "packages/engine/engine").rglob("*.py"), *(root / "apps/web/lib").rglob("*.ts")]
+    files += [*(root / "apps/web/app").rglob("*.ts"), *(root / "apps/web/app").rglob("*.tsx")]
+    reads = re.compile(r"(?:from|join)\s+child_skill_state\b")
+    unsaid = []
+    for f in files:
+        text = f.read_text(encoding="utf-8", errors="ignore")
+        for m in reads.finditer(text):
+            # the statement around the read: to the string's end, a few lines on either side
+            around = text[max(0, m.start() - 600) : m.end() + 600]
+            if not re.search(r"kind\s*=\s*'(?:written|observed)'", around):
+                unsaid.append(f"{f.relative_to(root)}:{text.count(chr(10), 0, m.start()) + 1}")
+    assert unsaid == []

@@ -15,10 +15,24 @@ def _voice(w, on: bool):
     )
 
 
+AROUND_TODAY = (
+    "select current_date + n as d from generate_series(-1, 1) n"  # today, whatever the school's clock
+)
+
+
 def _in_force_today(w):
-    """The loaded fortnight starts later; the preview lists classes whose timetable is in force today."""
+    """The loaded fortnight starts later; the preview lists classes with lessons today: one lesson a day around it."""
     w["conn"].execute(
-        "update timetable_slot set valid_from = current_date - 1, valid_to = null where school_class_id = %s",
+        "insert into school_day (tenant_id, campus_id, on_date, kind) select c.tenant_id, c.campus_id, x.d, 'teaching'"
+        f" from school_class c, ({AROUND_TODAY}) x where c.id = %s on conflict (tenant_id, campus_id, on_date) do nothing",
+        (w["k"]["class"],),
+    )
+    w["conn"].execute(
+        "insert into session (tenant_id, school_class_id, school_day_id, period_id, kind, text)"
+        " select c.tenant_id, c.id, d.id, (select p.id from period p where p.tenant_id = c.tenant_id"
+        " and p.grade_code = c.grade_code order by p.starts_at limit 1), 'fixed', 'Test lesson'"
+        f" from school_class c join school_day d on d.campus_id = c.campus_id and d.on_date in ({AROUND_TODAY})"
+        " where c.id = %s on conflict do nothing",
         (w["k"]["class"],),
     )
 
@@ -73,9 +87,9 @@ def test_a_class_whose_timetable_has_ended_is_not_offered_to_the_preview(world):
     _voice(world, False)
     _in_force_today(world)
     assert world["k"]["class"] in _ids(world["client"].post("/k2/classes", json={"actor": _head(world)}))
-    world["conn"].execute(
-        "update timetable_slot set valid_to = current_date - 1, valid_from = least(valid_from, current_date - 2)"
-        " where school_class_id = %s",
+    world["conn"].execute(  # its lessons around today are gone: it has no timetable today
+        "delete from session s using school_day d where d.id = s.school_day_id and s.school_class_id = %s"
+        f" and d.on_date in ({AROUND_TODAY})",
         (world["k"]["class"],),
     )
     assert world["k"]["class"] not in _ids(world["client"].post("/k2/classes", json={"actor": _head(world)}))

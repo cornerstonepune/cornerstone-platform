@@ -30,7 +30,7 @@ check "4 the live watch reports step settings not in the order freeze > align > 
   bash $P/pytest.sh $P/db/test_step_order.py
 check "5 the live watch reports a nightly run older than graph.nightly_stale_hours" \
   bash $P/pytest.sh $P/db/test_nightly_watch.py
-check_box "5 LIVE: the watch's nightly line agrees with the live graph_run ledger (read-only, no ids)" \
+check_box "5 LIVE: the watch's nightly line agrees with the live nightly runs (flow_run graph_nightly; read-only, no ids)" \
   $PY $P/live_nightly.py
 check "6 docs/backup.md states Supabase's setting, Lightsail's retention, a dated restore drill and the 48-hour promise" \
   bash $P/pytest.sh --no-db $P/test_docs.py -k test_6_

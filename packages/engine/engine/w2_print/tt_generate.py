@@ -1,6 +1,6 @@
 """CP-11: one class and one fortnight → a draft timetable made by FET and kept with FET's exact input and output
 (design.md §2–§4). Code works out what is needed and checks it (`tt_need`); FET only places. Nothing here writes to
-`timetable_slot`, `session` or `plan_entry`: the run is the only row made, and `dry` makes none."""
+`timetable_rule`, `session` or `plan_entry`: the run is the only row made, and `dry` makes none."""
 
 import json
 from dataclasses import dataclass, field

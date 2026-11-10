@@ -6,7 +6,7 @@ fired, because a teacher who disagrees needs something to disagree with.
 """
 
 from engine.assess import graph
-from engine.core import db, settings, vocabulary
+from engine.core import db, settings, vocabulary, weeks
 
 RULES = {
     "band_default": "not enough of their own work yet, so this is the starting level for their grade",
@@ -20,7 +20,7 @@ def for_class(conn, section: str, week: str, skill_set: str, kind: str = "practi
     week and kind updates the rows rather than adding a second set."""
     tenant = conn.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()["id"]
     children = conn.execute(
-        "select id, roll_no, band from child where section = %s and active order by"
+        "select id, roll_no, band from child_now where section = %s and active order by"
         " roll_order(roll_no), roll_no",
         (section,),
     ).fetchall()
@@ -48,14 +48,14 @@ def for_class(conn, section: str, week: str, skill_set: str, kind: str = "practi
             " updated_at = now()"
             " where prescription.override_by is null"  # a teacher's override is never overwritten
             " returning id, difficulty, rule_fired",
-            (tenant, c["id"], week, kind, skill_set, difficulty, rule, targets, skill_set),
+            (tenant, c["id"], weeks.day(week), kind, skill_set, difficulty, rule, targets, skill_set),
         ).fetchone()
         kept = (
             row
             or conn.execute(
                 "select id, difficulty, rule_fired from prescription where child_id = %s and week = %s"
                 " and kind = %s",
-                (c["id"], week, kind),
+                (c["id"], weeks.day(week), kind),
             ).fetchone()
         )
         out.append(

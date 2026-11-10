@@ -173,8 +173,8 @@ export async function tableCounts(): Promise<Record<string, number>> {
     union all select 'capture', count(*)::int from capture
     union all select 'item_result', count(*)::int from item_result
     union all select 'evidence_event', count(*)::int from evidence_event
-    union all select 'child', count(*)::int from child
-    union all select 'child_skill_state', count(*)::int from child_skill_state
+    union all select 'child', count(*)::int from child_now
+    union all select 'child_skill_state', count(*)::int from child_skill_state where kind = 'written'
     union all select 'parent_note', count(*)::int from parent_note`;
   return Object.fromEntries(rows.map((r) => [r.t, r.n]));
 }
@@ -192,9 +192,16 @@ export const RULE_WORDS: Record<string, string> = {
 export type Staff = { id?: string; email: string; name: string; role: string; password?: string; password_set_at?: string; classes?: string[]; subjects?: string[] };
 
 export async function staffList(): Promise<Staff[]> {
-  // Anonymous on purpose: this is how we learn who is asking, so asking "who" through `sql` would wait on itself.
-  const row = await rawSql<{ value: Staff[] }[]>`select value from config where key = 'app.staff'`;
-  return row[0]?.value ?? [];
+  // Anonymous on purpose: this is how we learn who is asking, so asking "who" through `sql` would wait on itself. The
+  // list is `staff` + `pii.staff` (CP-27 group 4), read through the one function the website may call for it; `id` is
+  // the member of staff's id, what every request then asks as. `password_set_at` as the ISO text the cookie check reads.
+  const rows = await rawSql<(Omit<Staff, "password_set_at"> & { password_set_at: Date | null })[]>`
+    select id, email, name, role, password, password_set_at, classes, subjects from public.staff_list(${TENANT_SLUG})`;
+  return rows.map((r) => ({
+    ...r,
+    password: r.password ?? undefined,
+    password_set_at: r.password_set_at ? r.password_set_at.toISOString() : undefined,
+  }));
 }
 
 // ---- Child Growth: what confirmed evidence says about one child, and what still waits for a person.
@@ -224,7 +231,7 @@ async function childRows(actor: string, where: ReturnType<typeof inScope>): Prom
              where si.child_id = c.id and r.state = 'candidate' and k.superseded_by is null) as n_pending,
            (select count(*)::int from capture k join sheet_instance si on si.id = k.sheet_instance_id
              where si.child_id = c.id and k.superseded_by is null) as n_papers
-    from (select * from child c where c.active and ${where}) c, lateral pii.read_child(c.id, ${actor}) p
+    from (select * from child_now c where c.active and ${where}) c, lateral pii.read_child(c.id, ${actor}) p
     order by c.section, roll_order(c.roll_no), c.roll_no`;
 }
 
@@ -245,7 +252,7 @@ export async function childNext(id: string): Promise<NextStep[]> {
   return sql<NextStep[]>`
     select s.code, s.name, s.rung_code, n.difficulty, n.rule, coalesce(n.targets, '{}') as targets
     from skill s, lateral next_difficulty(${id}::uuid, s.code) n
-    where ${skillTaughtIn(sql`s.tenant_id`, sql`s.code`, sql`(select section from child where id = ${id}::uuid)`)}
+    where ${skillTaughtIn(sql`s.tenant_id`, sql`s.code`, sql`(select section from child_now where id = ${id}::uuid)`)}
     order by s.code`;
 }
 

@@ -39,7 +39,7 @@ def _class(conn, section: str, children: list) -> list:
     if not children:
         raise ValueError("pick at least one child")
     rows = conn.execute(
-        f"select c.id, c.roll_no, c.section from child c where c.id = any(%s::uuid[]) and c.active order by {ROLL}",
+        f"select c.id, c.roll_no, c.section from child_now c where c.id = any(%s::uuid[]) and c.active order by {ROLL}",
         (list(children),),
     ).fetchall()
     if len(rows) != len(set(map(str, children))):
@@ -132,7 +132,7 @@ def pdf(conn, qrs: list) -> bytes:
     approved for print, or not rendered on this machine: a batch with a hole in it is not the batch."""
     rows = conn.execute(
         "select si.qr_code, si.print_status, si.pdf_path from sheet_instance si"
-        f" left join child c on c.id = si.child_id where si.qr_code = any(%s) order by si.section, {ROLL}",
+        f" left join child_now c on c.id = si.child_id where si.qr_code = any(%s) order by si.section, {ROLL}",
         (list(qrs),),
     ).fetchall()
     if not qrs or len(rows) != len(set(qrs)):

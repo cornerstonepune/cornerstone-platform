@@ -2,9 +2,8 @@
 
 Nimish found a placeholder entry on the live list, the text `your-email` with a coordinator's password and every class,
 and nothing could remove it. `plan` says, for every email named, what removal would do and writes nothing; `apply` writes
-it in the caller's transaction. Unlike the loader, an email is not checked for its shape: the entry that started this is
-not shaped like one. Only the `app.staff` row changes. What the removed person signed stays as it was (rule 4): those
-rows hold their email or name as plain text, never a key to this list.
+it in the caller's transaction. A person taken off is inactive with no password (CP-27 group 4: never deleted, so
+whatever names them by id still does); no one else changes. What the removed person signed stays as it was (rule 4).
 """
 
 from collections import Counter
@@ -13,7 +12,7 @@ from dataclasses import dataclass
 from typing import Any
 
 from engine.core import db
-from engine.core.staff import save, staff
+from engine.core.staff import staff, take_off
 
 
 @dataclass
@@ -58,7 +57,7 @@ def apply(conn: db.Conn, lines: Sequence[Line]) -> list[dict[str, Any]]:
     if any(ln.action != "remove" for ln in lines):
         raise ValueError("a refused email is in the plan, so nothing is removed")
     going = {ln.email for ln in lines}
-    people = staff(conn)
-    gone = [s for s in people if s["email"].lower() in going]
-    save(conn, [s for s in people if s["email"].lower() not in going])
+    gone = [s for s in staff(conn) if s["email"].lower() in going]
+    for s in gone:
+        take_off(conn, s["email"])
     return gone

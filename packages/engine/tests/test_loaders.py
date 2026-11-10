@@ -76,13 +76,11 @@ def _seeded(name):
 EXPECTED = {
     "tenant": 1,
     "registry_skill": 244,  # the whole map, all 14 domains — not the maths slice
-    "milestone": 849,
     "learning_objective": 1750,
     "learning_objective_skill": 2012,
     "activity": 2216,
     "activity_skill": 3711,
     "report_item": 885,
-    "trait": 56,
     # R7, R8, R11, R13, R14, R16–R18, X1, X2, R19–R33 (ADR 0034), R34–R35 (Grade 1), R36–R40 (M2a), R41 (M2d1), R42–R45
     # (M3a), R46 (M3c), R47 (M4a), R48 (M4b1), R49 (M4b2), R50 (M4c), R51 (M4d1), R52–R54 (SF1: sequences, multiples in
     # the tables, three numbers multiplied)
@@ -151,8 +149,17 @@ def test_every_registry_skill_carries_its_domains_name(loaded):
     assert {r["domain"] for r in rows} == set(names), "every domain has a skill that carries its name"
 
 
-def test_milestones_load_for_the_registry_skills(loaded):
-    assert loaded["milestone"] > 100
+def test_milestones_and_traits_load_onto_their_homes(loaded):
+    """A registry skill's milestones are on its row, by band, and the traits are the setting `report.traits` (CP-27
+    group 6: once the tables `milestone` and `trait`): every one of the seed's."""
+    with db.connect() as conn:
+        ms = conn.execute(
+            "select count(*) as n from registry_skill r, jsonb_object_keys(r.milestones) b"
+        ).fetchone()["n"]
+        traits = conn.execute(
+            "select jsonb_array_length(value) as n from config where key = 'report.traits'"
+        ).fetchone()
+    assert ms == 849 and traits["n"] == 56
 
 
 def test_a_second_run_changes_nothing(loaded):

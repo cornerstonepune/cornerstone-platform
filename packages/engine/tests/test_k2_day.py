@@ -258,8 +258,8 @@ def test_a_period_with_no_end_lasts_until_the_next_one_starts_and_the_days_last_
     """The frame gives some periods no end (the bus). The engine says when each ends, once, for every screen: a period
     with no end lasts until the next starts; the day's last keeps none. The day and the period itself agree."""
     conn.execute(
-        "update period set ends_at = null where id = (select ts.period_id from timetable_slot ts join period p on"
-        " p.id = ts.period_id where ts.school_class_id = %s and p.starts_at = '10:20' limit 1)",
+        "update period set ends_at = null where id = (select s.period_id from session s join period p on"
+        " p.id = s.period_id where s.school_class_id = %s and p.starts_at = '10:20' limit 1)",
         (world["k"]["class"],),
     )
     periods = call(world, "day", day="2026-11-23").json()["periods"]

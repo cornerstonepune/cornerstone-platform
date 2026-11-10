@@ -3,8 +3,9 @@
 skill, where the nature or the description of the skill can be changed."
 
 Every save is checked by code first (english_check.py) and refused in words when it fails, with nothing stored. One
-that passes is a new row of `english_sample_edit`, which keeps the sample it replaced and is never changed; the page
-reads the newest (`english_sample_now`). Each change withdraws that level's approval, and no other, so the approver
+that passes changes the sample on its own row (`english_sample`; a removal marks it removed), and what it replaced is a
+row of the one history log, never changed (CP-27 group 6: once the table `english_sample_edit`); the page reads the
+samples as they stand (`english_sample_now`). Each change withdraws that level's approval, and no other, so the approver
 reads it again. A level keeps three samples of every kind it asks and at least one kind; a kind is added only once it
 is approved and has three samples that pass. A skill whose questions code makes from its levels' rules has no samples here.
 """
@@ -18,6 +19,7 @@ from engine.core import db, english, history, settings
 from engine.w1_bank import english_check, english_form, english_words
 
 NUMBER_WORDS = ("none", "one", "two", "three", "four", "five", "six")
+TEXTS = ("ask", "passage_code", "text", "rubric_code")  # the columns that are words; the rest are json
 COLUMNS = (
     "ask",
     "passage_code",
@@ -153,18 +155,56 @@ def _checked(
     return s, faults
 
 
-def _snapshot(row: dict[str, Any] | None) -> str | None:
-    return json.dumps({k: row[k] for k in (*COLUMNS, "wrong")}) if row else None
+def _snapshot(row: dict[str, Any] | None) -> dict | None:
+    return {k: row[k] for k in (*COLUMNS, "wrong")} if row else None
 
 
 def _ledger(
-    conn: db.Conn, t: db.Id, slot: tuple[str, str, str, int], by: str, sample: dict | None, was: dict | None
+    conn: db.Conn,
+    t: db.Id,
+    slot: tuple[str, str, str, int],
+    by: str,
+    sample: dict | None,
+    was: dict | None,
+    made: tuple[int, db.Id | None] | None = None,
 ) -> None:
-    """One version of one sample: the sample as saved, or none for a removal; what it replaced; who."""
-    conn.execute(
-        "insert into english_sample_edit (tenant_id, skill_code, difficulty, question_type, ord, removed, sample,"
-        " replaced, edited_by) values (%s, %s, %s, %s, %s, %s, %s, %s, %s)",
-        (t, *slot, sample is None, json.dumps(sample) if sample else None, _snapshot(was), by),
+    """One version of one sample, on its own row: the sample as saved (a new number: a new row; `made`, the sample it
+    was made from and the model's run), or removed. What it replaced, and who, a row of the history log."""
+    if sample is None:
+        conn.execute(
+            "update english_sample set removed_at = clock_timestamp() where tenant_id = %s and skill_code = %s"
+            " and difficulty = %s and question_type = %s and ord = %s",
+            (t, *slot),
+        )
+    else:
+        values = [
+            sample.get(k)
+            if k in TEXTS or (sample.get(k) is None and k != "answer")
+            else json.dumps(sample.get(k))
+            for k in (*COLUMNS, "wrong")
+        ]
+        conn.execute(
+            "insert into english_sample (tenant_id, skill_code, difficulty, question_type, ord, ask, passage_code, text,"
+            " options, answer, accept, rubric_code, key_points, not_words, wrong, made_from)"
+            " values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, coalesce(%s::jsonb, '[]'), %s, %s, %s,"
+            " coalesce(%s::jsonb, '[]'), %s)"
+            " on conflict (tenant_id, skill_code, difficulty, question_type, ord) do update set ask = excluded.ask,"
+            " passage_code = excluded.passage_code, text = excluded.text, options = excluded.options,"
+            " answer = excluded.answer, accept = excluded.accept, rubric_code = excluded.rubric_code,"
+            " key_points = excluded.key_points, not_words = excluded.not_words, wrong = excluded.wrong,"
+            " made_from = excluded.made_from, must_contain = null, worked_out = null, removed_at = null",
+            (t, *slot, *values, made[0] if made else None),
+        )
+    op = "remove" if sample is None else "make" if made else "edit" if was else "add"
+    history.keep(
+        conn,
+        t,
+        ("english_sample", " ".join(map(str, slot)), op),
+        _snapshot(was),
+        None
+        if sample is None
+        else sample | ({"made_from": made[0], "flow_run_id": made[1] and str(made[1])} if made else {}),
+        by,
     )
 
 
@@ -186,10 +226,9 @@ def _store(
 def _next_ord(conn: db.Conn, code: str, level: str, kind: str) -> int:
     return db.one(
         conn,
-        "select coalesce(max(ord), 0) + 1 as n from (select ord from english_sample where skill_code = %s and"
-        " difficulty = %s and question_type = %s union all select ord from english_sample_edit where skill_code = %s"
-        " and difficulty = %s and question_type = %s) o",
-        (code, level, kind, code, level, kind),
+        "select coalesce(max(ord), 0) + 1 as n from english_sample where skill_code = %s and difficulty = %s"
+        " and question_type = %s",
+        (code, level, kind),
     )["n"]
 
 
@@ -340,20 +379,14 @@ def made(
     _hold(conn, code, level, kind)
     t, first = _tenant(conn), _next_ord(conn, code, level, kind)
     for i, s in enumerate(samples):
-        conn.execute(
-            "insert into english_sample_edit (tenant_id, skill_code, difficulty, question_type, ord, sample, edited_by,"
-            " made_from, flow_run_id) values (%s, %s, %s, %s, %s, %s, %s, %s, %s)",
-            (
-                t,
-                code,
-                level,
-                kind,
-                first + i,
-                json.dumps({k: s.get(k) for k in (*COLUMNS, "wrong")}),
-                by,
-                ord,
-                run,
-            ),
+        _ledger(
+            conn,
+            t,
+            (code, level, kind, first + i),
+            by,
+            {k: s.get(k) for k in (*COLUMNS, "wrong")},
+            None,
+            (ord, run),
         )
     if samples:
         withdraw(conn, code, level)

@@ -29,8 +29,8 @@ def _set(conn, key, value):
 
 def _link(conn, k, skill, before, status, strength="hard"):
     conn.execute(
-        "insert into skill_link (tenant_id, skill_code, before_code, strength, reason, source, status, confirmed_by,"
-        " confirmed_at) values (%s, %s, %s, %s, 'a test reason', 'test', %s, %s, %s)",
+        "insert into skill_prerequisite (tenant_id, registry_code, before_registry_code, strength, reason, source, status,"
+        " confirmed_by, confirmed_at) values (%s, %s, %s, %s, 'a test reason', 'test', %s, %s, %s)",
         (k["tenant"], skill, before, strength, status,
          k["staff"] if status == "confirmed" else None, TODAY if status == "confirmed" else None),
     )  # fmt: skip

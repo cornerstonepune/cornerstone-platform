@@ -3,7 +3,6 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { deciding, mustBeMine } from "@/lib/decides";
-import { sql, TENANT_SLUG } from "@/lib/db";
 import { EngineDown, engineSend } from "@/lib/engine";
 import { requireStaff } from "@/lib/auth";
 
@@ -22,19 +21,25 @@ const back = (f: FormData, said?: string) => {
   return s ? `/papers?${s}` : "/papers";
 };
 
-/** A new row for the assessment's name; the older names stay (rule 4). An empty name changes nothing. */
+/** The assessment's name, given through the engine (a row of the one history log); the older names stay (rule 4). An
+ *  empty name changes nothing. */
 export async function renameAssessment(f: FormData): Promise<void> {
   const me = await requireStaff();
   const key = String(f.get("key") ?? "");
   const name = String(f.get("name") ?? "").trim().slice(0, 120);
   if (!KEY.test(key)) redirect(back(f));
+  let said: string | undefined;
   if (name) {
-    await sql`
-      insert into assessment_name (tenant_id, key, name, named_by)
-      select id, ${key}, ${name}, ${me.email} from tenant where slug = ${TENANT_SLUG}`;
+    try {
+      const res = await engineSend("/assessment/name", { key, name, by: me.email });
+      if (!res.ok) said = `The engine refused that (${res.status}). The name was not changed.`;
+    } catch (e) {
+      if (!(e instanceof EngineDown)) throw e;
+      said = "The engine is not answering; the name was not changed.";
+    }
   }
   revalidatePath("/papers");
-  redirect(back(f));
+  redirect(back(f, said));
 }
 
 /** One row's approval: the engine approves that class's home assessments for that week in the educator's name, the one

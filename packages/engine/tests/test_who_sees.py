@@ -6,6 +6,7 @@ website asks of everything it shows; these hold the rule itself, the staff ids i
 new upload records.
 """
 
+import contextlib
 import os
 import uuid
 from pathlib import Path
@@ -16,7 +17,10 @@ from engine.core import db
 from engine.w3_read import inbox
 from tests.rows import a_person, a_read_paper, forget_paper, forget_person, teaches, tenant
 
-pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
+pytestmark = [
+    pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)"),
+    pytest.mark.usefixtures("forgets_what_it_commits"),
+]
 
 ME = str(uuid.uuid4())
 SOMEONE = str(uuid.uuid4())
@@ -66,18 +70,18 @@ def person():
 
 def test_every_member_of_staff_has_an_id_that_a_rewrite_of_the_list_keeps(person):
     with db.connect() as conn:
-        first = conn.execute("select staff_id(%s) as id", (person.upper(),)).fetchone()["id"]
+        first = conn.execute("select staff_of_email(%s) as id", (person.upper(),)).fetchone()["id"]
         assert first is not None
         # the website writes the whole list back when a class is changed: the id stays
         teaches(conn, person, ["2A"])
-        assert conn.execute("select staff_id(%s) as id", (person,)).fetchone()["id"] == first
-        assert conn.execute("select staff_id('nobody@cornerstone.test') as id").fetchone()["id"] is None
+        assert conn.execute("select staff_of_email(%s) as id", (person,)).fetchone()["id"] == first
+        assert conn.execute("select staff_of_email('nobody@cornerstone.test') as id").fetchone()["id"] is None
 
 
 def test_a_paper_is_seen_by_its_class_and_by_whoever_put_it_in():
     with db.connect() as conn:
         paper = a_read_paper(conn, [{"status": "correct", "read": "35"}])
-        section = conn.execute("select section from child where id = %s", (paper["child"],)).fetchone()[
+        section = conn.execute("select section from child_now where id = %s", (paper["child"],)).fetchone()[
             "section"
         ]
         sheet = conn.execute(
@@ -93,8 +97,9 @@ def test_a_paper_is_seen_by_its_class_and_by_whoever_put_it_in():
 
         assert sees([section]) == {"s": True, "c": True}
         assert sees(["SOME-OTHER-CLASS"]) == {"s": False, "c": False}
-        conn.execute("update capture set uploaded_by = %s where id = %s", (ME, paper["capture"]))
-        assert sees(["SOME-OTHER-CLASS"]) == {"s": True, "c": True}
+        me = a_person(conn, f"who-sees-{uuid.uuid4().hex[:6]}@cornerstone.test", "Who Sees")["ask_as"]
+        conn.execute("update capture set uploaded_by = %s where id = %s", (me, paper["capture"]))
+        assert sees(["SOME-OTHER-CLASS"], me) == {"s": True, "c": True}
         assert sees(["SOME-OTHER-CLASS"], SOMEONE) == {"s": False, "c": False}
         conn.rollback()
 
@@ -120,7 +125,7 @@ def test_an_upload_records_who_put_it_in_and_a_reading_again_keeps_it(person, mo
         strange = inbox.start(t, tmp_path / f"x-{name}", "nobody@cornerstone.test", pages=1)
         runs.append(strange)
         with db.connect() as conn:
-            me = conn.execute("select staff_id(%s) as id", (person,)).fetchone()["id"]
+            me = conn.execute("select staff_of_email(%s) as id", (person,)).fetchone()["id"]
             by = {
                 r["id"]: r["uploaded_by"]
                 for r in conn.execute(
@@ -136,4 +141,30 @@ def test_an_upload_records_who_put_it_in_and_a_reading_again_keeps_it(person, mo
         with db.connect() as conn:
             conn.execute("delete from flow_run where id = any(%s::uuid[])", (runs,))
             forget_paper(conn, paper)  # it was committed above so that a second connection could read it
+            conn.commit()
+
+
+def test_an_upload_records_who_put_it_in_when_the_engine_asks_as_its_own_role(person, monkeypatch, tmp_path):
+    """Live, the engine reaches the database as `app_engine`, which may not read `pii.staff` (CI, 10 Nov 2026: every
+    upload failed "permission denied for table staff" while the owner's tests passed)."""
+    with db.connect() as conn:
+        t = str(tenant(conn))
+        me = conn.execute("select staff_of_email(%s) as id", (person,)).fetchone()["id"]
+    plain = db.connect
+
+    @contextlib.contextmanager
+    def as_engine(*a, **k):
+        with plain(*a, **k) as conn:
+            conn.execute("set role app_engine")
+            yield conn
+
+    monkeypatch.setattr(inbox.db, "connect", as_engine)
+    run = inbox.start(t, tmp_path / f"who-sees-{uuid.uuid4().hex[:6]}.pdf", person, pages=1)
+    monkeypatch.setattr(inbox.db, "connect", plain)
+    with db.connect() as conn:
+        try:
+            got = conn.execute("select uploaded_by from flow_run where id = %s", (run,)).fetchone()
+            assert got["uploaded_by"] == me
+        finally:
+            conn.execute("delete from flow_run where id = %s", (run,))
             conn.commit()

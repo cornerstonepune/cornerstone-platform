@@ -14,7 +14,7 @@ from engine import cli
 from engine.adapters import llm
 from engine.core import db, history, settings
 from engine.w1_bank import k2_draft as draft
-from engine.w1_bank import k2_review, map_ledger
+from engine.w1_bank import k2_part_source, k2_review, map_ledger
 from engine.w1_bank.k2_gaps import PAGE_PARTS
 from tests.rows import tenant
 
@@ -677,11 +677,7 @@ def _old_draft(conn, code, proposer):
 
 def test_a_part_a_machine_drafted_earlier_is_not_the_schools_words_and_is_drafted_again(conn):
     _act(conn, "KX-1", "A", objective="the school's own", steps="an older machine draft")
-    conn.execute(
-        "insert into activity_part_source (tenant_id, activity_code, part, source, check_me)"
-        " values (%s, 'KX-1', 'steps', 'drafted', true)",
-        (conn.t,),
-    )
+    k2_part_source.mark(conn, conn.t, "KX-1", "steps", "a test", None, source="drafted", check_me=True)
     _old_draft(conn, "KX-1", "k2_page_draft v3")
     want, rows = draft.wanted(conn, conn.t, BAND)
     assert "steps" in want["KX-1"] and "objective" not in want["KX-1"]

@@ -38,7 +38,7 @@ const sheet: Record<string, { id: string; title: string }> = {};
 
 test.beforeAll(async () => {
   kids = await aClass(sql, SECTION, "G2", ["Asha", "Bina", "Chetan", "Dev"]);
-  const [{ tenant }] = await sql<{ tenant: string }[]>`select tenant_id as tenant from child where id = ${kids.Asha}`;
+  const [{ tenant }] = await sql<{ tenant: string }[]>`select tenant_id as tenant from child_now where id = ${kids.Asha}`;
   // each child's checked work, once: evidence is append-only
   for (const [who, answers] of Object.entries(EVIDENCE)) {
     const [{ n }] = await sql<{ n: number }[]>`select count(*)::int as n from evidence_event where child_id = ${kids[who]}`;
@@ -80,16 +80,16 @@ test.beforeAll(async () => {
     sheet[who] = { id, title: ws[i].title };
   }
   // Dev's home assessment this week, approved by the educator
-  await sql`delete from sheet_instance where child_id in ${sql(Object.values(kids))} and kind = 'focus' and week = ${THIS}`;
+  await sql`delete from sheet_instance where child_id in ${sql(Object.values(kids))} and kind = 'focus' and week = to_date(${THIS}, 'IYYY-"W"IW')`;
   await sql`
     insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, week, kind, print_status, approved_by,
                                 approved_at)
-    values (${tenant}, ${QR.home}, ${ws[0].id}, ${kids.Dev}, ${THIS}, 'focus', 'new', ${EDUCATOR.email}, now())
+    values (${tenant}, ${QR.home}, ${ws[0].id}, ${kids.Dev}, to_date(${THIS}, 'IYYY-"W"IW'), 'focus', 'new', ${EDUCATOR.email}, now())
     on conflict (tenant_id, qr_code) do update set week = excluded.week`;
   await aPerson(sql, { ...EDUCATOR, password: PASSWORD });
 });
 test.afterAll(async () => {
-  await sql`delete from sheet_instance where child_id in ${sql(Object.values(kids))} and kind = 'focus' and week = ${THIS}`;
+  await sql`delete from sheet_instance where child_id in ${sql(Object.values(kids))} and kind = 'focus' and week = to_date(${THIS}, 'IYYY-"W"IW')`;
   await forgetPerson(sql, EDUCATOR.email);
   await sql.end();
 });

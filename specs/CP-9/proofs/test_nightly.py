@@ -3,10 +3,10 @@
 With a clock (design decision 3, `engine.w3_read.nightly.nightly(conn, now=None)`), on a throwaway database, as the
 engine's login (`app_engine`):
 - evidence made on day D (its `created_at` set) is absent from the picture until the nightly run of D+1 02:30;
-  that run creates the picture row and exactly one `graph_run`, ok, stamped with the run's clock;
+  that run creates the picture row and exactly one nightly run (`flow_run`, flow `graph_nightly`), ok, stamped with the run's clock;
 - evidence created after a run's clock is not in that run's digest and is in the next run's;
-- two calls at once write one `graph_run`: the second returns {"skipped": true};
-- `graph_run` and the hand checks are listed in `access_table` (school-wide and child data; a hand check is a case of
+- two calls at once write one run: the second returns {"skipped": true};
+- the run list and the hand checks are listed in `access_table` (both child data; a hand check is a case of
   the one eval set, `eval_case`, since CP-27);
 - the n8n flow `n8n/workflows/f4-nightly-graph.json` is a daily schedule between 00:00 and 05:00 IST with one HTTP node
   to `/graph/nightly`, carrying an Idempotency-Key and the engine key, and no Code node.
@@ -24,7 +24,7 @@ NEXT_MORNING = dt.datetime(2026, 6, 2, 2, 30, tzinfo=IST)
 
 
 def _picture(conn, child):
-    return conn.execute("select skill_code, state from child_observed_state where child_id = %s",
+    return conn.execute("select skill_code, state from child_skill_state where kind = 'observed' and child_id = %s",
                         (child,)).fetchall()
 
 
@@ -34,7 +34,7 @@ def test_1_a_note_confirmed_on_day_d_is_in_the_picture_after_the_next_mornings_r
     observed(conn, k, child, D, created_at=D)
     conn.commit()
     assert _picture(conn, child) == [], "the picture already holds the note before any run"
-    assert conn.execute("select count(*) as n from graph_run").fetchone()["n"] == 0
+    assert conn.execute("select count(*) as n from flow_run where flow = 'graph_nightly'").fetchone()["n"] == 0
 
     conn.execute("set role app_engine")  # the nightly job runs as the engine's login
     run_nightly(conn, now=NEXT_MORNING)
@@ -82,7 +82,7 @@ def test_1_two_calls_at_once_write_one_run(db_url, conn):
     conn.commit()
 
     blocker = connect(db_url)  # holds a table the rebuild needs, so the first call is still running when the second comes
-    blocker.execute("lock table child_observed_state in access exclusive mode")
+    blocker.execute("lock table child_skill_state in access exclusive mode")
     results, errors = {}, []
 
     def call(name):
@@ -116,14 +116,16 @@ def test_1_two_calls_at_once_write_one_run(db_url, conn):
     assert not errors, errors
     assert not second_alive, "the second call waited for the first instead of returning skipped"
     assert results.get("second", {}).get("skipped") is True, results
-    assert conn.execute("select count(*) as n from graph_run").fetchone()["n"] == 1
+    assert conn.execute("select count(*) as n from flow_run where flow = 'graph_nightly'").fetchone()["n"] == 1
 
 
-def test_1_graph_run_and_hand_check_are_listed_in_access_table(conn):
+def test_1_the_run_list_and_hand_check_are_listed_in_access_table(conn):
+    """A nightly run is a row of the run list (`flow_run`, CP-27 group 6), which is listed as child data like the hand
+    checks: its rows name no child, and only the engine reads the nightly ones."""
     rows = {r["table_name"]: r["data_class"] for r in conn.execute(
         "select table_name, data_class from public.access_table where schema_name = 'public'"
-        " and table_name in ('graph_run', 'eval_case')")}
-    assert rows == {"graph_run": "school_wide", "eval_case": "child_data"}, rows
+        " and table_name in ('flow_run', 'eval_case')")}
+    assert rows == {"flow_run": "child_data", "eval_case": "child_data"}, rows
 
 
 FLOW = ROOT / "n8n" / "workflows" / "f4-nightly-graph.json"

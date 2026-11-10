@@ -40,6 +40,31 @@ def orphans() -> dict[str, list[str]]:
                     " where not exists (select 1 from misconception m where m.code = s)"
                 ).fetchall()
             ],
+            # CP-27 group 6: these were keys of their own tables (`english_sample_wrong`, `milestone`) before they were
+            # values on the row they belong to; a sample's wrong answer names a mistake, a milestone a grade
+            "sample wrong answers naming no mistake": [
+                f"{r['skill_code']} {r['difficulty']} {r['code']}"
+                for r in conn.execute(
+                    "select distinct e.skill_code, e.difficulty, w ->> 'mistake_code' as code from english_sample e,"
+                    " jsonb_array_elements(e.wrong) w where not exists (select 1 from misconception m"
+                    " where m.tenant_id = e.tenant_id and m.code = w ->> 'mistake_code' and m.op = 'any')"
+                ).fetchall()
+            ],
+            "sample wrong answers given twice": [
+                f"{r['skill_code']} {r['difficulty']} {r['question_type']} {r['ord']}"
+                for r in conn.execute(
+                    "select e.skill_code, e.difficulty, e.question_type, e.ord from english_sample e"
+                    " where (select count(distinct w ->> 'answer') from jsonb_array_elements(e.wrong) w)"
+                    " <> jsonb_array_length(e.wrong)"
+                ).fetchall()
+            ],
+            "milestone bands that are no grade": [
+                f"{r['code']} {r['band']}"
+                for r in conn.execute(
+                    "select r.code, b as band from registry_skill r, jsonb_object_keys(r.milestones) b"
+                    " where not exists (select 1 from grade g where g.tenant_id = r.tenant_id and g.code = b)"
+                ).fetchall()
+            ],
             # Two bands with one region compete for one pool of items and starve each other
             # (BUILD-ORDER gate 4, amended). A band's region is its `check`; equal checks fail. A level with no check
             # draws from no pool (English's are not drawn from a bank), so it has no region to share.

@@ -33,7 +33,7 @@ const KINDS = [
 ];
 
 test.afterAll(async () => {
-  await sql`delete from class_skill where section = ${CLASS}`;
+  await sql`update school_class set taught = '{}' where label = ${CLASS}`;
   await sql.end();
 });
 
@@ -60,10 +60,10 @@ test("curriculum lists the six topics, and a class is taught a topic from its ro
     await expect(page.getByRole("main")).toContainText(`Multiplication is taught in ${CLASS} now`);
     expect((await said("MUL.2D1D"))[0].t, "every skill of the topic, the columns too").toBe(true);
     const [who] = await sql<{ taught_by: string }[]>`
-      select taught_by from class_skill where section = ${CLASS} and skill_set_code = 'MUL.2D1D'`;
+      select taught_by from (select sc.tenant_id, sc.label as section, w.key as skill_set_code, (w.value ->> 'taught')::boolean as taught, w.value ->> 'by' as taught_by from school_class sc cross join jsonb_each(sc.taught) w) class_skill where section = ${CLASS} and skill_set_code = 'MUL.2D1D'`;
     expect(who.taught_by, "in the name of who said it").toBe(TEST_STAFF.name);
   } finally {
-    await sql`delete from class_skill where section = ${CLASS}`;
+    await sql`update school_class set taught = '{}' where label = ${CLASS}`;
   }
 });
 
@@ -81,7 +81,7 @@ test("no chip names a kind of question, or a topic with nothing taught at the cl
     const shown = await sql<{ name: string }[]>`
       select distinct t.name from topic t
       join skill s on s.tenant_id = t.tenant_id and s.topic_code = t.code
-      join (select distinct section, band from child where active) k on skill_taught_in(s.tenant_id, s.code, k.section)
+      join (select distinct section, band from child_now where active) k on skill_taught_in(s.tenant_id, s.code, k.section)
       where exists (select 1 from jsonb_object_keys(s.difficulty) lvl
                     where left(coalesce(s.level_band ->> lvl, s.grade), 2) <= left(k.band, 2))`;
     expect([...names].sort(), at).toEqual(shown.map((t) => t.name).sort());

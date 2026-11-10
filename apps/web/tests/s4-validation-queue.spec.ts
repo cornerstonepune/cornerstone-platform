@@ -267,7 +267,7 @@ test("a child's papers open from their page, and each steps to the child's next 
 test("Capture & Mark lists students by class; a student lists their papers; a paper leads back to them", async ({ page }) => {
   const [c] = await sql<{ child: string; section: string; sheets: number }[]>`
     select si.child_id::text as child, min(ch.section) as section, count(distinct si.id)::int as sheets
-    from sheet_instance si join child ch on ch.id = si.child_id
+    from sheet_instance si join child_now ch on ch.id = si.child_id
     where exists (select 1 ${LIVE} and c.sheet_instance_id = si.id)
     group by si.child_id order by si.child_id::text limit 1`;
   // a class opened by name is a table of its children, paged (goals/uxn8-marking.yaml)

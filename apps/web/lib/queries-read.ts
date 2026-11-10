@@ -9,7 +9,7 @@
 import { sql } from "./db";
 import { ownBox } from "./own-box";
 import { seesSheet, type Who } from "./reach";
-import { paperName, setKeySql } from "./queries-papers";
+import { paperName, setKeySql, weekSql } from "./queries-papers";
 
 // ---- the approval queue. One row per paper a child sat, and every answer on it.
 //
@@ -73,7 +73,7 @@ const paperRows = (where: ReturnType<typeof sql>, actor: string) => sql<PaperRow
          coalesce(t.code, t.batch_id, t.key ->> 'title', si.qr_code) as worksheet
   from sheet_instance si
   join sheet_template t on t.id = si.sheet_template_id
-  join child ch on ch.id = si.child_id, lateral pii.read_child(si.child_id, ${actor}) p
+  join child_now ch on ch.id = si.child_id, lateral pii.read_child(si.child_id, ${actor}) p
   where ${where}
   order by t.key ->> 'date' desc nulls last, p.first_name`;
 
@@ -333,19 +333,19 @@ export async function checkQueue(me: Who): Promise<QueueEntry[]> {
       where s.state = 'candidate' and not exists (select 1 from read_correction rc where rc.item_result_id = s.id)
     )
     select q.id, q.spot, si.id as paper_id, regexp_replace(l.path, '/[^/]*$', '') as scan, ch.roll_no, si.qr_code as code,
-           (select concat_ws('~', coalesce(si.kind, 'earlier'), coalesce(si.section, ch.section, ''), coalesce(si.week, t.week, ''),
+           (select concat_ws('~', coalesce(si.kind, 'earlier'), coalesce(si.section, ch.section, ''), coalesce(${weekSql("si", "t")}, ''),
                              coalesce(${setKeySql("si", "t")}, ''))) as assessment,
            l.captured::text as captured from q
     join live l on l.id = q.id
     join item i on i.id = l.item_id
     join sheet_instance si on si.id = l.sheet_instance_id
     join sheet_template t on t.id = si.sheet_template_id
-    join child ch on ch.id = si.child_id
+    join child_now ch on ch.id = si.child_id
     where ${seesSheet(me, sql`si.id`)}
     -- one assessment at a time, the one waiting longest first, its papers in roll order (Nimish, 26 Oct 2026: "everyone
     -- checks the assessment by the last upload that they do")
-    order by min(l.captured) over (partition by coalesce(si.kind, 'earlier'), coalesce(si.section, ch.section), coalesce(si.week, t.week), ${setKeySql("si", "t")}),
-             coalesce(si.kind, 'earlier'), coalesce(si.section, ch.section), coalesce(si.week, t.week), ${setKeySql("si", "t")},
+    order by min(l.captured) over (partition by coalesce(si.kind, 'earlier'), coalesce(si.section, ch.section), ${weekSql("si", "t")}, ${setKeySql("si", "t")}),
+             coalesce(si.kind, 'earlier'), coalesce(si.section, ch.section), ${weekSql("si", "t")}, ${setKeySql("si", "t")},
              roll_order(ch.roll_no), ch.roll_no, si.id, coalesce((l.raw_read::jsonb ->> 'page')::int, (i.spec ->> 'page')::int, 1),
              nullif(regexp_replace(result_slot(i.item_key, l.raw_read::jsonb), '[^0-9]', '', 'g'), '')::int, i.item_key,
              result_order(i.responses, l.rid)`;

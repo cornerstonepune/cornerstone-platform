@@ -6,7 +6,7 @@ import json
 
 import pytest
 
-from conftest import ROOT, generated, go_live, refused, run_with, snapshot, swapped, world
+from conftest import ROOT, generated, go_live, live_rows, refused, run_with, snapshot, swapped, world
 
 SETTING = "timetable.go_live_group"
 
@@ -32,11 +32,11 @@ def test_the_coordinator_goes_live_and_the_record_keeps_who_when_and_which_draft
     run = run_with(conn, generated(conn, engine, w), swapped(w))
     code, out = go_live(engine, w, run)
     assert code == 0, out
-    rows = conn.execute("select * from timetable_live where school_class_id = %s", (w["class"],)).fetchall()
+    rows = live_rows(conn, w["class"])
     assert len(rows) == 1
     row = rows[0]
     assert row["who"] == w["coordinator"]["id"] and row["run_id"] == run and row["at"] is not None
     assert row["fortnight_id"] == w["fortnights"][2]["id"]
-    refused(conn, "update timetable_live set reason = 'changed' where id = %s", (row["id"],))
-    refused(conn, "delete from timetable_live where id = %s", (row["id"],))
-    assert conn.execute("select * from timetable_live where id = %s", (row["id"],)).fetchone() == row
+    refused(conn, "update approval set reason = 'changed' where id = %s", (row["id"],))
+    refused(conn, "delete from approval where id = %s", (row["id"],))
+    assert live_rows(conn, w["class"]) == [row]

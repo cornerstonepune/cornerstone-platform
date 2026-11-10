@@ -60,7 +60,7 @@ def test_rewording_keeps_every_number_answer_and_mistake_and_retires_the_old_wor
     old = _row(conn, "word_1step")
     child = a_child(conn)
     conn.execute(
-        "insert into item_exposure (tenant_id, child_id, item_id, week) values (%s, %s, %s, 'test-week')",
+        "insert into item_exposure (tenant_id, child_id, item_id, week) values (%s, %s, %s, '2026-09-28')",
         (tenant(conn), child, old["id"]),
     )
     reworded = "Read carefully. " + old["stem"]
@@ -80,7 +80,9 @@ def test_rewording_keeps_every_number_answer_and_mistake_and_retires_the_old_wor
     seen = conn.execute(
         "select week from item_exposure where item_id = %s and child_id = %s", (new["id"], child)
     ).fetchone()
-    assert seen and seen["week"] == "test-week", "a child who saw the old wording has seen this question"
+    assert seen and str(seen["week"]) == "2026-09-28", (
+        "a child who saw the old wording has seen this question"
+    )
 
 
 @pytest.mark.parametrize(

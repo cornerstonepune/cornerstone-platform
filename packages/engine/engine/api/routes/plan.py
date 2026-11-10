@@ -1,5 +1,5 @@
 """The coordinator's planning actions a screen will call (CP-24, audit F6): one thin keyed route beside each command.
-Only wiring: the fortnight's state and its steps are `fortnight_cycle`'s (CP-6), a timetable draft is `tt_generate`'s
+Only wiring: the fortnight's state and its steps are `fortnight_cycle.py`'s (CP-6), a timetable draft is `tt_generate`'s
 (CP-11). From the site with the engine's key and the person's email as `actor`; a sign-in not on the staff list is
 refused (403) and nothing is written. No name is read or returned: `actor` becomes a staff id."""
 
@@ -69,7 +69,7 @@ def state(body: Fortnight, conn=Depends(get_conn, scope="function")):
     """The fortnight's state, who took each step and when, and the day each step falls on."""
     _staff(conn, body.actor)
     fid = _fortnight(body.fortnight_id)
-    row = conn.execute("select * from fortnight_cycle where fortnight_id = %s", (fid,)).fetchone()
+    row = fc.standing(conn, fid)
     if row is None:
         raise HTTPException(status_code=404, detail="That is not a teaching fortnight with a cycle.")
     try:
@@ -88,7 +88,7 @@ def move(body: Move, conn=Depends(get_conn, scope="function")):
         fc.move(conn, fid, body.to_state, str(staff))
     except fc.CycleError as no:
         raise _refused(no) from no
-    return db.one(conn, "select state from fortnight_cycle where fortnight_id = %s", (fid,))
+    return db.one(conn, "select state from fortnight where id = %s", (fid,))
 
 
 @keyed.post("/timetable/generate")

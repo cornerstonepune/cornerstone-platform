@@ -20,6 +20,14 @@ pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DAT
 ROOT = db.REPO_ROOT
 
 
+# the links between broad skills, as `skill_link` held them: rows of `skill_prerequisite` naming registry skills
+# (CP-27 group 6)
+LINKS = (
+    "(select id, registry_code as skill_code, before_registry_code as before_code, strength, reason, source, status,"
+    " confirmed_by, confirmed_at, updated_at from skill_prerequisite where registry_code is not null) l"
+)
+
+
 @pytest.fixture
 def conn():
     with db.connect() as c:
@@ -41,7 +49,7 @@ def test_the_loader_adds_a_persons_pairs_as_proposed_links_and_a_second_run_chan
     first = skill_links.load(conn, f)
     assert (first.added, first.there) == (2, 0)
     rows = conn.execute(
-        "select skill_code, before_code, strength, status, source, reason from skill_link"
+        f"select skill_code, before_code, strength, status, source, reason from {LINKS}"  # noqa: S608
         " where skill_code = any(%s) order by skill_code",
         ([b, c],),
     ).fetchall()
@@ -50,10 +58,10 @@ def test_the_loader_adds_a_persons_pairs_as_proposed_links_and_a_second_run_chan
         (c, b, "proposed", "hard"),
     ]
     assert rows[0]["reason"] == "Counting comes before adding" and rows[0]["source"] == "Grade 1 list"
-    before = conn.execute("select id, updated_at from skill_link order by id").fetchall()
+    before = conn.execute(f"select id, updated_at from {LINKS} order by id").fetchall()  # noqa: S608
     second = skill_links.load(conn, f)
     assert (second.added, second.there) == (0, 2)
-    assert conn.execute("select id, updated_at from skill_link order by id").fetchall() == before
+    assert conn.execute(f"select id, updated_at from {LINKS} order by id").fetchall() == before  # noqa: S608
     assert t  # the school the links belong to is the school the engine runs for
 
 
@@ -71,7 +79,7 @@ def test_a_file_that_is_wrong_anywhere_writes_nothing_and_names_the_line(conn, t
             with conn.transaction():
                 skill_links.load(conn, _csv(tmp_path, good, bad))
         assert "line 3" in str(e.value) and why in str(e.value), str(e.value)
-    assert conn.execute("select count(*) as n from skill_link").fetchone()["n"] == 0, (
+    assert conn.execute(f"select count(*) as n from {LINKS}").fetchone()["n"] == 0, (  # noqa: S608
         "nothing is half-written"
     )
 
@@ -95,7 +103,8 @@ def test_the_loader_never_unconfirms_or_rewrites_a_link_that_is_there(conn, tmp_
     result = skill_links.load(conn, _csv(tmp_path, f"{a},{b},a different reason,another list"))
     assert (result.added, result.there) == (0, 1)
     row = conn.execute(
-        "select reason, status, confirmed_by from skill_link where id = %s", (link,)
+        f"select reason, status, confirmed_by from {LINKS} where id = %s",
+        (link,),  # noqa: S608
     ).fetchone()
     assert (row["reason"], row["status"], row["confirmed_by"]) == ("the first reason", "confirmed", who)
 
@@ -105,7 +114,7 @@ def test_a_strength_column_is_optional_and_soft_can_be_loaded(conn, tmp_path):
     f = _csv(tmp_path, f"{a},{b},Helps,list,soft", header="before_code,after_code,reason,source,strength")
     skill_links.load(conn, f)
     assert (
-        conn.execute("select strength from skill_link where skill_code = %s", (b,)).fetchone()["strength"]
+        conn.execute(f"select strength from {LINKS} where skill_code = %s", (b,)).fetchone()["strength"]  # noqa: S608
         == "soft"
     )
 
@@ -127,19 +136,21 @@ def test_confirming_names_a_member_of_staff_and_refuses_nobody_and_nothing(conn)
             skill_links.confirm(conn, str(link_id), email)
         assert why in str(e.value), str(e.value)
     assert (
-        conn.execute("select status from skill_link where id = %s", (link,)).fetchone()["status"]
+        conn.execute(f"select status from {LINKS} where id = %s", (link,)).fetchone()["status"]  # noqa: S608
         == "proposed"
     )
     assert skill_links.confirm(conn, str(link), "  Checker@School.invalid ") == "confirmed"
     row = conn.execute(
-        "select status, confirmed_by, confirmed_at from skill_link where id = %s", (link,)
+        f"select status, confirmed_by, confirmed_at from {LINKS} where id = %s",
+        (link,),  # noqa: S608
     ).fetchone()
     assert (row["status"], row["confirmed_by"]) == ("confirmed", who) and row["confirmed_at"] is not None
     stamp = row["confirmed_at"]
     _staff(conn, t, "second@school.invalid")
     assert skill_links.confirm(conn, str(link), "second@school.invalid") == "already"
     after = conn.execute(
-        "select confirmed_by, confirmed_at from skill_link where id = %s", (link,)
+        f"select confirmed_by, confirmed_at from {LINKS} where id = %s",
+        (link,),  # noqa: S608
     ).fetchone()
     assert (after["confirmed_by"], after["confirmed_at"]) == (who, stamp), "the first person's word stands"
 
@@ -185,7 +196,7 @@ def test_a_reason_in_quotes_may_run_over_two_lines_and_the_next_line_is_counted_
         skill_links.load(conn, f)
     assert "line 4" in str(e.value) and "reason" in str(e.value), "the empty reason is on line 4 of the file"
     skill_links.load(conn, _csv(tmp_path, f'{a},{b},"first line\nsecond line",list'))
-    row = conn.execute("select reason from skill_link where skill_code = %s", (b,)).fetchone()
+    row = conn.execute(f"select reason from {LINKS} where skill_code = %s", (b,)).fetchone()  # noqa: S608
     assert row["reason"] == "first line\nsecond line"
 
 
@@ -195,7 +206,7 @@ def test_every_line_is_read_before_any_is_written(conn, tmp_path):
     f = _csv(tmp_path, f"{a},{b},r,list", f"{b},NOT.A.SKILL,r,list")
     with pytest.raises(skill_links.Refused):
         skill_links.load(conn, f)
-    assert conn.execute("select count(*) as n from skill_link").fetchone()["n"] == 0
+    assert conn.execute(f"select count(*) as n from {LINKS}").fetchone()["n"] == 0  # noqa: S608
 
 
 def test_the_words_the_seeders_give_a_draft_are_the_words_the_migration_gave_the_rows_already_there():

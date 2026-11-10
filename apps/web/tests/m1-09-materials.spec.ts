@@ -33,7 +33,7 @@ test.beforeEach(async () => {
   await sql`
     update materials_line l set
       removed_at = case when l.source = 'educator' then coalesce(l.removed_at, now()) else null end,
-      quantity = case when l.source = 'school' then (select sum(s.quantity) from materials_line_source s where s.line_id = l.id) else l.quantity end
+      quantity = case when l.source = 'school' then (select sum((s ->> 'quantity')::numeric) from jsonb_array_elements(l.sources) s) else l.quantity end
     where l.list_id in (select id from materials_list where school_class_id = ${klass})`;
 });
 
@@ -91,7 +91,10 @@ test("the school's list and the notes to read are the coordinator's: anyone else
   await sql`insert into staff_role_grant (tenant_id, staff_id, role_code, valid_from, granted_by) values (${tenant}, ${staff}, 'coordinator', current_date - 1, 'm1-09m test')`;
   await open(page);
   const [{ id: list }] = await sql<{ id: string }[]>`select id from materials_list where school_class_id = ${klass} order by created_at desc limit 1`;
-  await sql`insert into materials_note_review (tenant_id, list_id, text, reason, who) values (${tenant}, ${list}, 'Placeholder note: two dozen lolly sticks', 'Placeholder: lolly sticks are not in the catalogue', ${staff})`;
+  // a note waiting for a person is a row of the one proposal list (CP-27 group 6)
+  await sql`insert into curriculum_proposal (tenant_id, run_id, kind, subject_code, proposal, status, reason, staff_id, machine)
+    values (${tenant}, gen_random_uuid(), 'materials_note', ${list}, ${sql.json({ text: "Placeholder note: two dozen lolly sticks" })},
+            'needs_person', 'Placeholder: lolly sticks are not in the catalogue', ${staff}, 'materials_read')`;
   await page.goto("/educator/materials/school?month=2026-12");
   await expect(page.locator("[data-school-list] tr[data-line]").first()).toBeVisible();
   await shoot(page, "6-school-list");
@@ -111,7 +114,7 @@ test("while switched off a previewer sees her class's real list and the school's
   const rows = await sql<{ key: string; value: unknown }[]>`select key, value from config where key in ('educator.preview_roles', 'materials.consolidate_roles')`;
   await sql`update config set value = value || '["class_teacher"]'::jsonb where key in ('educator.preview_roles', 'materials.consolidate_roles')`;
   try {
-    const kept = async () => (await sql<{ n: number }[]>`select (select count(*) from materials_list) + (select count(*) from materials_line) + (select count(*) from materials_consolidated) as n`)[0].n;
+    const kept = async () => (await sql<{ n: number }[]>`select (select count(*) from materials_list) + (select count(*) from materials_line) + (select count(*) from flow_run where flow = 'materials_consolidate') as n`)[0].n;
     const before = await kept();
     await open(page);
     await expect(line(page, "Craft paper")).toContainText("2 sheet");

@@ -1,9 +1,11 @@
 """The school's consolidated materials list for a month (task M1-16; D-074: "the system collates requirements from all the
 teachers"). Built by code, never a model, from every class's list (M1-10): each catalogue item summed over the classes,
 every line keeping which classes and activities it comes from. A class that gives no quantity makes the total unknown
-("to confirm"), never a smaller number. Each build is kept, so the next one shows what changed."""
+("to confirm"), never a smaller number. The latest build is kept, so the next one shows what changed."""
 
 import datetime as dt
+import json
+from decimal import Decimal
 from typing import Any
 from uuid import UUID
 
@@ -72,94 +74,83 @@ def _gather(
     return out, skipped
 
 
+FLOW = "materials_consolidate"  # the school's list of a range: one row of the run list, its latest build in `result`
+
+
+def _q(q: Any) -> Any:
+    return None if q is None else num(Decimal(str(q)))
+
+
+def _stored(items: dict[str, dict[str, Any]]) -> list[dict[str, Any]]:
+    """A build's lines as the run row keeps them: each item, its total and where it comes from, class by class."""
+    return [
+        {
+            "material_code": code,
+            "unit": item["unit"],
+            "quantity": _q(item["quantity"]),
+            "to_confirm": item["quantity"] is None,
+            "from": [
+                {
+                    "class_id": str(c),
+                    "quantity": _q(f["quantity"]),
+                    "activity_codes": list(f["activity_codes"]),
+                }
+                for c, f in sorted(item["from"].items(), key=lambda kv: str(kv[0]))
+            ],
+        }
+        for code, item in sorted(items.items())
+    ]
+
+
 def build(conn: db.Conn, tenant: UUID, lo: dt.date, hi: dt.date) -> UUID:
-    """Make a new build of the school's list for `lo`..`hi` (one per call) and note what moved since the one before."""
+    """Make a new build of the school's list for `lo`..`hi` and note what moved since the one before. The list of a
+    range is one row of the run list (`flow_run`, flow `materials_consolidate`, keyed by its range; CP-27 group 6: once
+    the tables `materials_consolidated`, `_line`, `_source` and `_change`), which keeps its latest build and what that
+    build changed: its id names the list for every build."""
     if hi < lo:
         raise ValueError("The last day is before the first day.")
-    cons = db.one(
+    key = f"{lo}..{hi}"
+    run = db.one(
         conn,
-        "insert into materials_consolidated (tenant_id, from_on, to_on) values (%s, %s, %s)"
-        " on conflict (tenant_id, from_on, to_on) do update set updated_at = now() returning id, latest_build, skipped_lists",
-        (tenant, lo, hi),
+        "insert into flow_run (tenant_id, flow, trigger, status, idempotency_key, request, result)"
+        " values (%s, %s, 'school list', 'ok', %s, %s, jsonb_build_object('build', 0))"
+        " on conflict (tenant_id, flow, idempotency_key) where idempotency_key is not null"
+        " do update set updated_at = now() returning id, result",
+        (tenant, FLOW, key, json.dumps({"from": str(lo), "to": str(hi)})),
     )
-    cid, before, now = cons["id"], cons["latest_build"], cons["latest_build"] + 1
+    cid, before = run["id"], run["result"]
     items, skipped = _gather(conn, tenant, lo, hi)
-    if (
-        before
-        and _shape(items) == _stored_shape(conn, cid, before)
-        and skipped == list(cons["skipped_lists"])
-    ):
-        return cid  # nothing moved: no new build, so no rows and no empty "what changed"
-    for code, item in items.items():
-        conn.execute(
-            "insert into materials_consolidated_line (tenant_id, consolidated_id, build, material_code, unit, quantity,"
-            " to_confirm) values (%s, %s, %s, %s, %s, %s, %s)",
-            (tenant, cid, now, code, item["unit"], item["quantity"], item["quantity"] is None),
-        )
-        for klass, f in item["from"].items():
-            conn.execute(
-                "insert into materials_consolidated_source (consolidated_id, build, material_code, class_id, quantity,"
-                " activity_codes) values (%s, %s, %s, %s, %s, %s)",
-                (cid, now, code, klass, f["quantity"], f["activity_codes"]),
-            )
-    if before:
-        _note_changes(conn, tenant, cid, before, now)
+    lines = _stored(items)
+    if before["build"] and lines == before["lines"] and [str(x) for x in skipped] == before["skipped_lists"]:
+        return cid  # nothing moved: no new build, so no empty "what changed"
     conn.execute(
-        "update materials_consolidated set latest_build = %s, built_at = now(), skipped_lists = %s where id = %s",
-        (now, skipped, cid),
+        "update flow_run set finished_at = clock_timestamp(), result = %s where id = %s",
+        (
+            json.dumps(
+                {
+                    "build": before["build"] + 1,
+                    "lines": lines,
+                    "changes": _changes(before.get("lines") or [], lines) if before["build"] else [],
+                    "skipped_lists": [str(x) for x in skipped],
+                }
+            ),
+            cid,
+        ),
     )
     return cid
 
 
-def _shape(items: dict[str, dict[str, Any]]) -> dict[str, Any]:
-    """What a build says, in a form two builds can be compared in."""
-    return {
-        code: (
-            item["unit"],
-            item["quantity"],
-            {c: (f["quantity"], tuple(f["activity_codes"])) for c, f in item["from"].items()},
-        )
-        for code, item in items.items()
+def _changes(old_lines: list[dict[str, Any]], new_lines: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """What moved between two builds: an item added or removed, or its total changed, and the classes whose part moved."""
+    old = {
+        x["material_code"]: (x["quantity"], {f["class_id"]: f["quantity"] for f in x["from"]})
+        for x in old_lines
     }
-
-
-def _stored_shape(conn: db.Conn, cid: UUID, build_: int) -> dict[str, Any]:
-    out: dict[str, Any] = {
-        r["material_code"]: (r["unit"], r["quantity"], {})
-        for r in conn.execute(
-            "select material_code, unit, quantity from materials_consolidated_line"
-            " where consolidated_id = %s and build = %s",
-            (cid, build_),
-        )
+    new = {
+        x["material_code"]: (x["quantity"], {f["class_id"]: f["quantity"] for f in x["from"]})
+        for x in new_lines
     }
-    for r in conn.execute(
-        "select material_code, class_id, quantity, activity_codes from materials_consolidated_source"
-        " where consolidated_id = %s and build = %s",
-        (cid, build_),
-    ):
-        out[r["material_code"]][2][r["class_id"]] = (r["quantity"], tuple(r["activity_codes"]))
-    return out
-
-
-def _totals(conn: db.Conn, cid: UUID, build_: int) -> dict[str, tuple[Any, dict[UUID, Any]]]:
-    totals = {
-        r["material_code"]: (r["quantity"], {})
-        for r in conn.execute(
-            "select material_code, quantity from materials_consolidated_line where consolidated_id = %s and build = %s",
-            (cid, build_),
-        )
-    }
-    for r in conn.execute(
-        "select material_code, class_id, quantity from materials_consolidated_source"
-        " where consolidated_id = %s and build = %s",
-        (cid, build_),
-    ):
-        totals[r["material_code"]][1][r["class_id"]] = r["quantity"]
-    return totals
-
-
-def _note_changes(conn: db.Conn, tenant: UUID, cid: UUID, before: int, now: int) -> None:
-    old, new = _totals(conn, cid, before), _totals(conn, cid, now)
+    out = []
     for code in sorted(set(old) | set(new)):
         if code not in old:
             kind, was, is_ = "added", None, new[code][0]
@@ -171,72 +162,64 @@ def _note_changes(conn: db.Conn, tenant: UUID, cid: UUID, before: int, now: int)
             continue
         was_by, now_by = old.get(code, (None, {}))[1], new.get(code, (None, {}))[1]
         classes = sorted(c for c in was_by.keys() | now_by.keys() if was_by.get(c) != now_by.get(c))
-        conn.execute(
-            "insert into materials_consolidated_change (tenant_id, consolidated_id, build, material_code, kind, before,"
-            " after, class_ids) values (%s, %s, %s, %s, %s, %s, %s, %s)",
-            (tenant, cid, now, code, kind, was, is_, classes),
-        )
+        out.append({"kind": kind, "material_code": code, "before": was, "after": is_, "class_ids": classes})
+    return out
+
+
+def tenant_of(conn: db.Conn, cid: UUID) -> UUID | None:
+    """The school whose list `cid` is, or None for no such list."""
+    row = conn.execute("select tenant_id from flow_run where id = %s and flow = %s", (cid, FLOW)).fetchone()
+    return row["tenant_id"] if row else None
 
 
 def read(conn: db.Conn, cid: UUID) -> dict[str, Any]:
-    cons = db.one(conn, "select * from materials_consolidated where id = %s", (cid,))
-    build_ = cons["latest_build"]
-    names = coverage.class_names(conn, cons["tenant_id"])
-    sources: dict[str, list[dict[str, Any]]] = {}
-    for r in conn.execute(
-        "select material_code, class_id, quantity, activity_codes from materials_consolidated_source"
-        " where consolidated_id = %s and build = %s order by class_id",
-        (cid, build_),
-    ):
-        sources.setdefault(r["material_code"], []).append(
-            {
-                "class_id": r["class_id"],
-                "class": names.get(r["class_id"], ""),
-                "quantity": num(r["quantity"]),
-                "activity_codes": list(r["activity_codes"]),
-            }
-        )
+    run = db.one(
+        conn,
+        "select tenant_id, request, result, finished_at from flow_run where id = %s and flow = %s",
+        (cid, FLOW),
+    )
+    got, tenant = run["result"], run["tenant_id"]
+    names = coverage.class_names(conn, tenant)
+    items = {
+        r["code"]: r["name"]
+        for r in conn.execute("select code, name from material_item where tenant_id = %s", (tenant,))
+    }
     lines = [
         {
-            "material_code": r["material_code"],
-            "item": r["name"],
-            "quantity": num(r["quantity"]),
-            "unit": r["unit"],
-            "to_confirm": r["to_confirm"],
-            "from": sources.get(r["material_code"], []),
+            "material_code": x["material_code"],
+            "item": items.get(x["material_code"], ""),
+            "quantity": x["quantity"],
+            "unit": x["unit"],
+            "to_confirm": x["to_confirm"],
+            "from": [
+                {
+                    "class_id": UUID(f["class_id"]),
+                    "class": names.get(UUID(f["class_id"]), ""),
+                    "quantity": f["quantity"],
+                    "activity_codes": f["activity_codes"],
+                }
+                for f in x["from"]
+            ],
         }
-        for r in conn.execute(
-            "select l.material_code, i.name, l.quantity, l.unit, l.to_confirm from materials_consolidated_line l"
-            " join material_item i on i.tenant_id = l.tenant_id and i.code = l.material_code"
-            " where l.consolidated_id = %s and l.build = %s order by i.name",
-            (cid, build_),
-        )
+        for x in got.get("lines") or []
     ]
     changes = [
         {
-            "kind": r["kind"],
-            "material_code": r["material_code"],
-            "item": r["name"],
-            "before": num(r["before"]),
-            "after": num(r["after"]),
-            "class_ids": list(r["class_ids"]),
-            "at": r["at"],
+            **{k: c[k] for k in ("kind", "material_code", "before", "after")},
+            "item": items.get(c["material_code"], ""),
+            "class_ids": [UUID(x) for x in c["class_ids"]],
+            "at": run["finished_at"],
         }
-        for r in conn.execute(
-            "select c.*, i.name from materials_consolidated_change c join material_item i"
-            " on i.tenant_id = c.tenant_id and i.code = c.material_code where c.consolidated_id = %s and c.build = %s"
-            " order by i.name",
-            (cid, build_),
-        )
+        for c in got.get("changes") or []
     ]
     return {
         "id": cid,
-        "from": cons["from_on"],
-        "to": cons["to_on"],
-        "build": build_,
-        "lines": lines,
-        "changes": changes,
-        "skipped_lists": list(cons["skipped_lists"]),
+        "from": dt.date.fromisoformat(run["request"]["from"]),
+        "to": dt.date.fromisoformat(run["request"]["to"]),
+        "build": got["build"],
+        "lines": sorted(lines, key=lambda x: x["item"]),
+        "changes": sorted(changes, key=lambda x: x["item"]),
+        "skipped_lists": [UUID(x) for x in got.get("skipped_lists") or []],
     }
 
 

@@ -175,14 +175,10 @@ def test_building_again_with_nothing_changed_adds_no_build_and_no_rows(conn):
     s = m.school(conn)
     _two_classes_needing_clay(conn, s)
     cid = mc.build(conn, s["tenant"], LO, HI)
-    counts = lambda: [  # noqa: E731
-        conn.execute(f"select count(*) as n from {t} where consolidated_id = %s", (cid,)).fetchone()["n"]
-        for t in (
-            "materials_consolidated_line",
-            "materials_consolidated_source",
-            "materials_consolidated_change",
-        )
-    ]
+    counts = lambda: conn.execute(  # noqa: E731 (the school's list is one row of the run list, CP-27 group 6)
+        "select count(*) as n, max(finished_at) as built, result from flow_run where flow = 'materials_consolidate'"
+        " group by result"
+    ).fetchall()
     before = counts()
     assert mc.build(conn, s["tenant"], LO, HI) == cid
     assert mc.read(conn, cid)["build"] == 1 and counts() == before

@@ -89,7 +89,7 @@ def check(conn, actor="engine-cli") -> list[dict]:
                  where e.child_id = g.child_id and e.skill_code = g.skill_code
                    and e.confirmed_by is not null and (c2.id is null or c2.superseded_by is null)) as in_graph,
                coalesce((select array_agg(distinct s.repeating_misconception) from child_skill_state s
-                          where s.child_id = g.child_id and s.skill_code = g.skill_code
+                          where s.kind = 'written' and s.child_id = g.child_id and s.skill_code = g.skill_code
                             and s.repeating_misconception is not null), '{}') as patterns
         from (select child_id, verdict, skill_code, ref as item_key, detail ->> 'expect_mark' as expect_mark,
                      detail ->> 'child_answer' as child_answer, detail ->> 'misconception_code' as misconception_code,

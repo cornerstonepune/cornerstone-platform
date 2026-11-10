@@ -2,18 +2,18 @@
   period  the times and name of a period of the class's grade (the existing `period` row);
   block   a day, or a weekday of a week, or one period of either, on which nothing may be placed;
   limit   the fewest and most periods of a subject in a week or a fortnight;
-  fixed   a `timetable_slot` of kind `fixed`: the school pinned this period, this weekday, this week.
-Every change is checked here, written, and recorded in `timetable_rule_edit` with who made it and the row before and
-after (append-only). Nothing here places a lesson or runs the generator: that is part b. No model, no name."""
+  fixed   a `frame` rule of cell `fixed`: the school pinned this period, this weekday, this week.
+Blocks, limits and the frame are rows of `timetable_rule` (CP-27), told apart by `kind`. Every change is checked here
+and written; the database keeps it in `change_log` (the one trigger) with who made it and the row before and after.
+Nothing here places a lesson or runs the generator: that is part b. No model, no name."""
 
 import datetime as dt
-import json
 from dataclasses import dataclass
 from typing import Any
 
 import psycopg
 
-from engine.core import db
+from engine.core import db, history
 from engine.w2_print import fortnight_cycle as fc
 
 
@@ -62,7 +62,8 @@ def classes(conn: db.Conn) -> list[dict]:
     """The classes that have a timetable at all (a class with timetable rows), grade then section."""
     return conn.execute(
         "select c.id::text as id, c.grade_code as grade, c.section from school_class c"
-        " where exists (select 1 from timetable_slot s where s.school_class_id = c.id) order by c.grade_code, c.section"
+        " where exists (select 1 from timetable_rule r where r.school_class_id = c.id and r.kind = 'frame')"
+        " order by c.grade_code, c.section"
     ).fetchall()
 
 
@@ -93,8 +94,8 @@ def _fixed(conn: db.Conn, class_id: str) -> list[dict]:
         {"id": r["id"], "period_id": r["period_id"], "label": r["label"], "weekday": r["weekday"], "week": r["week_code"], "text": r["text"]}
         for r in conn.execute(
             "select s.id::text as id, s.period_id::text as period_id, p.label, s.weekday, s.week_code, s.text"
-            " from timetable_slot s join period p on p.id = s.period_id"
-            " where s.school_class_id = %s and s.kind = 'fixed' and s.valid_to is null"
+            " from timetable_rule s join period p on p.id = s.period_id"
+            " where s.school_class_id = %s and s.kind = 'frame' and s.cell = 'fixed' and s.valid_to is null"
             " order by s.week_code, s.weekday, p.starts_at",
             (class_id,),
         ).fetchall()
@@ -105,8 +106,8 @@ def _subjects(conn: db.Conn, class_id: str) -> tuple[list[dict], dict]:
     """The subjects the class has periods for, and how many sit in week A and week B now."""
     placed: dict[str, dict[str, int]] = {}
     for r in conn.execute(
-        "select subject_code, week_code, count(*) as n from timetable_slot where school_class_id = %s"
-        " and valid_to is null and kind in ('subject', 'specialist') and subject_code is not null"
+        "select subject_code, week_code, count(*) as n from timetable_rule where school_class_id = %s and kind = 'frame'"
+        " and valid_to is null and cell in ('subject', 'specialist') and subject_code is not null"
         " group by subject_code, week_code",
         (class_id,),
     ).fetchall():
@@ -120,7 +121,8 @@ def _blocks(conn: db.Conn, class_id: str) -> list[dict]:
          "period_id": r["period_id"], "period": r["label"], "reason": r["reason"]}
         for r in conn.execute(
             "select b.id::text as id, b.on_date, b.weekday, b.week_code, b.period_id::text as period_id, p.label, b.reason"
-            " from timetable_block b left join period p on p.id = b.period_id where b.school_class_id = %s"
+            " from timetable_rule b left join period p on p.id = b.period_id where b.school_class_id = %s"
+            " and b.kind = 'block'"
             " order by b.on_date nulls last, b.weekday, b.week_code nulls first, p.starts_at nulls first",
             (class_id,),
         ).fetchall()
@@ -131,23 +133,44 @@ def _limits(conn: db.Conn, class_id: str) -> list[dict]:
     return [
         dict(r)
         for r in conn.execute(
-            "select id::text as id, subject_code, span, fewest, most from timetable_limit where school_class_id = %s"
-            " order by subject_code, span",
+            "select id::text as id, subject_code, span, fewest, most from timetable_rule where school_class_id = %s"
+            " and kind = 'limit' order by subject_code, span",
             (class_id,),
         ).fetchall()
     ]
 
 
+RULE = {"frame": "fixed", "block": "block", "limit": "limit"}  # a rule's kind as the page names it
+LEFT_OUT = ("school_class_id", "kind")
+
+
+def _shape(row_id: str, row: dict | None) -> dict | None:
+    """A kept row as the page shows it: its id and the rule's own fields the change touched."""
+    if row is None:
+        return None
+    return {"id": row_id.split(" ")[-1], **{k: v for k, v in row.items() if k not in LEFT_OUT}}
+
+
 def _history(conn: db.Conn, class_id: str, me: Any, limit: int = 30) -> list[dict]:
-    """The last changes. Who made one is the staff row kept with it; a name is never read (it stays in pii), so the
-    page says "You" for the asker's own and "A colleague" for anyone else's."""
+    """The last changes of the class's rules and of its grade's periods, from the one history log. Who made one is the
+    staff row kept with it; a name is never read (it stays in pii), so the page says "You" for the asker's own and "A
+    colleague" for anyone else's."""
+    rows = conn.execute(
+        "select l.id::text as id, l.table_name, l.row_id, l.op, l.staff_id, l.at, l.before, l.after,"
+        " coalesce(l.after ->> 'kind', l.before ->> 'kind', r.kind) as kind from change_log l"
+        " left join timetable_rule r on l.table_name = 'timetable_rule' and r.id::text = split_part(l.row_id, ' ', 2)"
+        " where (l.table_name = 'timetable_rule' and l.row_id like %s)"
+        " or (l.table_name = 'period' and l.row_id in (select p.id::text from period p join school_class c"
+        "     on c.tenant_id = p.tenant_id and c.grade_code = p.grade_code where c.id = %s))"
+        " order by l.at desc, l.id limit %s",
+        (f"{class_id} %", class_id, limit),
+    ).fetchall()
     return [
-        {"id": r["id"], "rule": r["rule"], "action": r["action"], "who": "You" if r["who"] == me else "A colleague", "at": r["at"].isoformat(), "before": r["before"], "after": r["after"]}
-        for r in conn.execute(
-            "select id::text as id, rule, action, who, at, before, after from timetable_rule_edit"
-            " where school_class_id = %s order by at desc, id limit %s",
-            (class_id, limit),
-        ).fetchall()
+        {"id": r["id"], "rule": "period" if r["table_name"] == "period" else RULE.get(r["kind"] or "", r["kind"]),
+         "action": "remove" if r["op"] == "delete" else "set", "who": "You" if r["staff_id"] == me else "A colleague",
+         "at": r["at"].isoformat(), "before": _shape(r["row_id"], r["before"]),
+         "after": _shape(r["row_id"], r["after"])}
+        for r in rows
     ]  # fmt: skip
 
 
@@ -160,16 +183,6 @@ def read(conn: db.Conn, class_id: str | None, me: Any = None) -> dict:
         "blocks": _blocks(conn, k["id"]), "limits": _limits(conn, k["id"]), "subjects": subjects, "placed": placed,
         "history": _history(conn, k["id"], me),
     }  # fmt: skip
-
-
-def _kept(
-    conn: db.Conn, k: dict, staff: Any, rule: str, action: str, before: dict | None, after: dict | None
-) -> None:
-    conn.execute(
-        "insert into timetable_rule_edit (tenant_id, school_class_id, rule, action, who, before, after)"
-        " select tenant_id, id, %s, %s, %s, %s::jsonb, %s::jsonb from school_class where id = %s",
-        (rule, action, staff, json.dumps(before) if before is not None else None, json.dumps(after) if after is not None else None, k["id"]),
-    )  # fmt: skip
 
 
 def _own_period(conn: db.Conn, k: dict, period_id: str | None) -> dict:
@@ -220,12 +233,12 @@ def _block(conn: db.Conn, k: dict, c: Change) -> tuple[dict | None, dict | None]
     cols = "id::text as id, on_date, weekday, week_code, period_id::text as period_id, reason"
     if c.action == "remove":
         old = conn.execute(
-            f"select {cols} from timetable_block where id::text = %s and school_class_id = %s",
+            f"select {cols} from timetable_rule where id::text = %s and school_class_id = %s and kind = 'block'",
             (c.id, k["id"]),
         ).fetchone()  # noqa: S608
         if old is None:
             raise Refused("That block is not there.", 404)
-        conn.execute("delete from timetable_block where id::text = %s", (c.id,))
+        conn.execute("delete from timetable_rule where id::text = %s", (c.id,))
         return _json(old), None
     if (c.on_date is None) == (c.weekday is None):
         raise Refused("Block either one date or a weekday, not both and not neither.")
@@ -241,8 +254,8 @@ def _block(conn: db.Conn, k: dict, c: Change) -> tuple[dict | None, dict | None]
         _own_period(conn, k, c.period_id)
     try:
         new = conn.execute(
-            "insert into timetable_block (tenant_id, school_class_id, on_date, weekday, week_code, period_id, reason)"
-            f" select tenant_id, id, %s, %s, %s, %s, %s from school_class where id = %s returning {cols}",  # noqa: S608
+            "insert into timetable_rule (tenant_id, school_class_id, kind, on_date, weekday, week_code, period_id, reason)"
+            f" select tenant_id, id, 'block', %s, %s, %s, %s, %s from school_class where id = %s returning {cols}",  # noqa: S608
             (c.on_date, c.weekday, c.week_code, c.period_id, (c.reason or "").strip(), k["id"]),
         ).fetchone()
     except psycopg.errors.UniqueViolation as no:
@@ -254,12 +267,12 @@ def _limit(conn: db.Conn, k: dict, c: Change) -> tuple[dict | None, dict | None]
     cols = "id::text as id, subject_code, span, fewest, most"
     if c.action == "remove":
         old = conn.execute(
-            f"select {cols} from timetable_limit where id::text = %s and school_class_id = %s",
+            f"select {cols} from timetable_rule where id::text = %s and school_class_id = %s and kind = 'limit'",
             (c.id, k["id"]),
         ).fetchone()  # noqa: S608
         if old is None:
             raise Refused("That limit is not there.", 404)
-        conn.execute("delete from timetable_limit where id::text = %s", (c.id,))
+        conn.execute("delete from timetable_rule where id::text = %s", (c.id,))
         return dict(old), None
     if c.span not in ("week", "fortnight"):
         raise Refused("A limit is for a week or for a fortnight.")
@@ -272,13 +285,15 @@ def _limit(conn: db.Conn, k: dict, c: Change) -> tuple[dict | None, dict | None]
     if c.fewest is not None and c.most is not None and c.fewest > c.most:
         raise Refused("The fewest cannot be more than the most.")
     old = conn.execute(
-        f"select {cols} from timetable_limit where school_class_id = %s and subject_code = %s and span = %s",
+        f"select {cols} from timetable_rule where school_class_id = %s and kind = 'limit' and subject_code = %s"
+        " and span = %s",
         (k["id"], c.subject_code, c.span),
     ).fetchone()  # noqa: S608
     new = conn.execute(
-        "insert into timetable_limit (tenant_id, school_class_id, subject_code, span, fewest, most)"
-        " select tenant_id, id, %s, %s, %s, %s from school_class where id = %s"
-        " on conflict (school_class_id, subject_code, span) do update set fewest = excluded.fewest, most = excluded.most"
+        "insert into timetable_rule (tenant_id, school_class_id, kind, subject_code, span, fewest, most)"
+        " select tenant_id, id, 'limit', %s, %s, %s, %s from school_class where id = %s"
+        " on conflict (school_class_id, subject_code, span) where kind = 'limit'"
+        " do update set fewest = excluded.fewest, most = excluded.most"
         f" returning {cols}",  # noqa: S608
         (c.subject_code, c.span, c.fewest, c.most, k["id"]),
     ).fetchone()
@@ -288,22 +303,22 @@ def _limit(conn: db.Conn, k: dict, c: Change) -> tuple[dict | None, dict | None]
 def _fixed_slot(row: dict | None) -> dict | None:
     if row is None:
         return None
-    return {"id": row["id"], "period_id": row["period_id"], "weekday": row["weekday"], "week": row["week_code"], "kind": row["kind"],
+    return {"id": row["id"], "period_id": row["period_id"], "weekday": row["weekday"], "week": row["week_code"], "kind": row["cell"],
             "text": row["text"], "valid_from": row["valid_from"].isoformat()}  # fmt: skip
 
 
 _SLOT = (
-    "id::text as id, period_id::text as period_id, weekday, week_code, kind, text, valid_from, subject_code"
+    "id::text as id, period_id::text as period_id, weekday, week_code, cell, text, valid_from, subject_code"
 )
 
 
 def _end(conn: db.Conn, slot: dict, today: dt.date) -> None:
     """A slot stops being open: yesterday is its last day, or it never started and goes."""
     if slot["valid_from"] >= today:
-        conn.execute("delete from timetable_slot where id::text = %s", (slot["id"],))
+        conn.execute("delete from timetable_rule where id::text = %s", (slot["id"],))
     else:
         conn.execute(
-            "update timetable_slot set valid_to = %s where id::text = %s",
+            "update timetable_rule set valid_to = %s where id::text = %s",
             (today - dt.timedelta(days=1), slot["id"]),
         )
 
@@ -311,7 +326,8 @@ def _end(conn: db.Conn, slot: dict, today: dt.date) -> None:
 def _fixed_rule(conn: db.Conn, k: dict, c: Change, today: dt.date) -> tuple[dict | None, dict | None]:
     if c.action == "remove":
         old = conn.execute(
-            f"select {_SLOT} from timetable_slot where id::text = %s and school_class_id = %s and kind = 'fixed' and valid_to is null",
+            f"select {_SLOT} from timetable_rule where id::text = %s and school_class_id = %s and kind = 'frame'"
+            " and cell = 'fixed' and valid_to is null",
             (c.id, k["id"]),
         ).fetchone()  # noqa: S608
         if old is None:
@@ -324,15 +340,15 @@ def _fixed_rule(conn: db.Conn, k: dict, c: Change, today: dt.date) -> tuple[dict
     if not (c.text or "").strip():
         raise Refused("Say what is fixed there.")
     old = conn.execute(
-        f"select {_SLOT} from timetable_slot where school_class_id = %s and period_id::text = %s and week_code = %s"  # noqa: S608
+        f"select {_SLOT} from timetable_rule where school_class_id = %s and kind = 'frame' and period_id::text = %s and week_code = %s"  # noqa: S608
         " and weekday = %s and valid_to is null",
         (k["id"], c.period_id, c.week_code, c.weekday),
     ).fetchone()
     if old:
         _end(conn, old, today)
     new = conn.execute(
-        "insert into timetable_slot (tenant_id, school_class_id, period_id, week_code, weekday, kind, text, valid_from)"
-        f" select tenant_id, id, %s, %s, %s, 'fixed', %s, %s from school_class where id = %s returning {_SLOT}",  # noqa: S608
+        "insert into timetable_rule (tenant_id, school_class_id, kind, period_id, week_code, weekday, cell, text, valid_from)"
+        f" select tenant_id, id, 'frame', %s, %s, %s, 'fixed', %s, %s from school_class where id = %s returning {_SLOT}",  # noqa: S608
         (c.period_id, c.week_code, c.weekday, (c.text or "").strip(), today, k["id"]),
     ).fetchone()
     return _fixed_slot(old), _fixed_slot(new)
@@ -348,7 +364,7 @@ def _frozen_gate(conn: db.Conn, k: dict, c: Change, staff: Any, today: dt.date, 
             conn,
             fc.fortnights_touched(conn, year, from_day=today),
             reason=reason,
-            table="timetable_slot",
+            table="timetable_rule",
             record_id=c.id or f"{c.period_id}/{c.week_code}/{c.weekday}",
             op="delete" if c.action == "remove" else "insert",
             actor=staff,
@@ -366,17 +382,15 @@ def change(
     if c.rule not in ("period", "block", "limit", "fixed") or c.action not in ("set", "remove"):
         raise Refused("That is not a rule I know.")
     with conn.transaction():
+        history.by(conn, f"staff:{staff}")  # the one trigger keeps each change with who made it
         if c.rule == "fixed":
             _frozen_gate(conn, k, c, staff, today, reason)
         if c.rule == "period":
-            before, after = _period(conn, k, c)
+            _period(conn, k, c)
         elif c.rule == "block":
-            before, after = _block(conn, k, c)
+            _block(conn, k, c)
         elif c.rule == "limit":
-            before, after = _limit(conn, k, c)
+            _limit(conn, k, c)
         else:
-            before, after = _fixed_rule(conn, k, c, today)
-        # a period is the grade's, so every class of the grade it changes for keeps the change in its own history
-        for each in [x for x in classes(conn) if x["grade"] == k["grade"]] if c.rule == "period" else [k]:
-            _kept(conn, each, staff, c.rule, c.action, before, after)
+            _fixed_rule(conn, k, c, today)
     return read(conn, k["id"], staff)

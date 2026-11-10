@@ -1,6 +1,7 @@
 """CP-24 item 5 (LIVE, box only, read-only): the live watch agrees with the live ledger of the nightly rebuild.
 
-In one read-only connection to the live database: is the newest ok `graph_run` row of the configured school older than
+In one read-only connection to the live database: is the newest ok nightly run (`flow_run`, flow `graph_nightly`; CP-27 group 6: once the ledger
+`graph_run`) of the configured school older than
 `graph.nightly_stale_hours` (or is there none)? `watch.problems` must carry a line about the nightly rebuild exactly
 then. Prints yes or no and hours only, never a row, an id or a name.
 """
@@ -22,8 +23,8 @@ def main() -> int:
         r = conn.execute(
             "select (select (value #>> '{}')::numeric from config c where c.tenant_id = t.id"
             "          and c.key = 'graph.nightly_stale_hours') as limit_h,"
-            "       (select extract(epoch from now() - max(g.ran_at)) / 3600 from graph_run g"
-            "          where g.tenant_id = t.id and g.ok) as age_h"
+            "       (select extract(epoch from now() - max(g.finished_at)) / 3600 from flow_run g"
+            "          where g.tenant_id = t.id and g.flow = 'graph_nightly' and g.status = 'ok') as age_h"
             " from tenant t where t.slug = %s",
             (db.tenant_slug(),),
         ).fetchone()

@@ -19,7 +19,7 @@ from playwright.sync_api import sync_playwright
 
 from engine.assess.pick import Sheet
 from engine.assess.render import render_sheet
-from engine.core import db, roster, settings
+from engine.core import db, roster, settings, weeks
 from engine.w1_bank import question_types
 from engine.w1_bank.inventory import item_from_row
 from engine.w2_print import pack
@@ -93,10 +93,10 @@ def for_week(conn, section: str, week: str, kind: str = "practice") -> dict:
 
     rx = conn.execute(
         "select p.id, p.child_id, p.skill_set_code, p.difficulty, p.rule_fired, c.roll_no, c.band"
-        " from prescription p join child c on c.id = p.child_id"
+        " from prescription p join child_now c on c.id = p.child_id"
         " where c.section = %s and p.week = %s and p.kind = %s"
         " order by roll_order(c.roll_no), c.roll_no",
-        (section, week, kind),
+        (section, weeks.day(week), kind),
     ).fetchall()
     if not rx:
         raise ValueError(f"no prescriptions for {section} {week} {kind} — run prescribe first")
@@ -169,7 +169,7 @@ def _hand_out(conn, tenant, into, p, w):
     instance = conn.execute(
         "insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, week, section, kind)"
         " values (%s,%s,%s,%s,%s,%s,%s) returning id, qr_code",
-        (tenant, qr, w["id"], p["child_id"], into["week"], into["section"], into["kind"]),
+        (tenant, qr, w["id"], p["child_id"], weeks.day(into["week"]), into["section"], into["kind"]),
     ).fetchone()
     if p["id"]:
         conn.execute(
@@ -186,7 +186,7 @@ def _hand_out(conn, tenant, into, p, w):
             "insert into item_exposure (tenant_id, child_id, item_id, week)"
             " select %s, %s, id, %s from unnest(%s::uuid[]) as id order by id"
             " on conflict (tenant_id, child_id, item_id) do nothing",
-            (tenant, p["child_id"], into["week"], list(w["item_ids"])),
+            (tenant, p["child_id"], weeks.day(into["week"]), list(w["item_ids"])),
         )
     # `item.times_used` is NOT written here. It is a derived number — how often a question has been
     # handed out, which `item_exposure` already records row by row — and writing it from the hot path

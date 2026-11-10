@@ -67,11 +67,7 @@ def _mine(conn, body: Who, tenant_id: str, consolidated_id: UUID | None = None, 
     if not mc.may_consolidate(conn, staff, rem.school_today(conn)):
         raise HTTPException(status_code=403, detail="This is for the coordinator.")
     if consolidated_id is not None:
-        found = conn.execute(
-            "select 1 from materials_consolidated where id = %s and tenant_id = %s",
-            (consolidated_id, tenant_id),
-        ).fetchone()
-        if found is None:
+        if str(mc.tenant_of(conn, consolidated_id)) != str(tenant_id):
             raise HTTPException(status_code=404, detail="No such list.")
     return staff
 
@@ -142,7 +138,6 @@ def review_resolve(
         ) from no
     except ValueError as no:
         raise HTTPException(status_code=422, detail=str(no)) from no
-    rem.sync(conn, the_list, rem.school_today(conn))
     return {"list_id": str(the_list)}
 
 

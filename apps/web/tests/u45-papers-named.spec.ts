@@ -26,7 +26,7 @@ let code: string;
 
 test.beforeAll(async () => {
   kids = await aClass(sql, SECTION, "G2", ["Asha", "Bina"]);
-  const [{ tenant }] = await sql<{ tenant: string }[]>`select tenant_id as tenant from child where id = ${kids.Asha}`;
+  const [{ tenant }] = await sql<{ tenant: string }[]>`select tenant_id as tenant from child_now where id = ${kids.Asha}`;
   const [ws] = await sql<{ id: string; item_ids: string[]; code: string }[]>`
     select id, item_ids, code from sheet_template
     where source = 'library' and retired_at is null and skill_set_code = 'ADD.2D2D' and difficulty = 'Medium' order by code limit 1`;
@@ -38,18 +38,18 @@ test.beforeAll(async () => {
     items: ws.item_ids.slice(0, 2),
     reads: [{ status: "correct", read: "1" }, { status: "needs_teacher", read: "7" }],
   }));
-  await sql`delete from prescription where child_id = ${kids.Asha} and week = ${THIS} and kind = 'practice'`;
+  await sql`delete from prescription where child_id = ${kids.Asha} and week = to_date(${THIS}, 'IYYY-"W"IW') and kind = 'practice'`;
   await sql`delete from sheet_instance where qr_code = ${QR.practice}`;
   const [{ id: practice }] = await sql<{ id: string }[]>`
     insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, section, week, kind, print_status)
-    values (${tenant}, ${QR.practice}, ${ws.id}, ${kids.Asha}, ${SECTION}, ${THIS}, 'practice', 'new') returning id`;
+    values (${tenant}, ${QR.practice}, ${ws.id}, ${kids.Asha}, ${SECTION}, to_date(${THIS}, 'IYYY-"W"IW'), 'practice', 'new') returning id`;
   await sql`
     insert into prescription (tenant_id, child_id, week, kind, rule_fired, skill_set_code, difficulty, sheet_instance_id)
-    values (${tenant}, ${kids.Asha}, ${THIS}, 'practice', 'band_default', 'ADD.2D2D', 'Medium', ${practice})`;
+    values (${tenant}, ${kids.Asha}, to_date(${THIS}, 'IYYY-"W"IW'), 'practice', 'band_default', 'ADD.2D2D', 'Medium', ${practice})`;
   await aPerson(sql, { ...EDUCATOR, password: PASSWORD });
 });
 test.afterAll(async () => {
-  await sql`delete from prescription where child_id = ${kids.Asha} and week = ${THIS} and kind = 'practice'`;
+  await sql`delete from prescription where child_id = ${kids.Asha} and week = to_date(${THIS}, 'IYYY-"W"IW') and kind = 'practice'`;
   await sql`delete from sheet_instance where qr_code = ${QR.practice}`;
   await forgetPerson(sql, EDUCATOR.email);
   await sql.end();

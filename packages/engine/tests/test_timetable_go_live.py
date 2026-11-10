@@ -108,7 +108,7 @@ def go(conn, w, run, **kw):
 
 def shown(conn, w, day):
     klass = conn.execute(
-        "select id::text as id, academic_year_id, campus_id from school_class where id = %s",
+        "select id::text as id, academic_year_id, campus_id, grade_code as grade from school_class where id = %s",
         (w["k"]["class"],),
     ).fetchone()
     return {
@@ -118,8 +118,13 @@ def shown(conn, w, day):
     }
 
 
+def went_live(conn):
+    """Every draft put live, as the one approval list keeps it (kind `timetable_live`), oldest first."""
+    return conn.execute("select * from approval where kind = 'timetable_live' order by seq").fetchall()
+
+
 def lives(conn):
-    return conn.execute("select count(*) n from timetable_live").fetchone()["n"]
+    return len(went_live(conn))
 
 
 def test_a_draft_goes_live_the_day_shows_it_and_the_planned_lessons_keep_their_plan_lines(conn, world):
@@ -136,8 +141,12 @@ def test_a_draft_goes_live_the_day_shows_it_and_the_planned_lessons_keep_their_p
         r["id"]: r["plan_entry_id"] for r in conn.execute("select id, plan_entry_id from session").fetchall()
     }
     assert after == before, "a session was lost or lost its plan line"
-    row = conn.execute("select * from timetable_live").fetchone()
-    assert row["who"] == world["boss"] and row["run_id"] == run and row["discarded"] is False
+    (row,) = went_live(conn)
+    assert row["by"] == str(world["boss"]) and row["detail"]["run_id"] == str(run)
+    assert (
+        row["detail"]["discarded"] is False
+        and row["target"] == f"{world['i'].class_id} {world['i'].fortnight_id}"
+    )
 
 
 def test_a_trial_run_writes_nothing(conn, world):
@@ -162,19 +171,17 @@ def test_each_refusal_writes_nothing(conn, world, monkeypatch, what):
     if what == "started":
         monkeypatch.setattr(gate, "school_today", lambda c: dt.date(2027, 1, 1))
     if what == "frozen":
-        conn.execute("update fortnight_cycle set state = 'frozen' where fortnight_id = %s", (i.fortnight_id,))
+        conn.execute("update fortnight set state = 'frozen' where id = %s", (i.fortnight_id,))
     with pytest.raises(live.Refused):
         go(conn, world, run, **kw)
     assert lives(conn) == 0
 
 
 def test_a_frozen_fortnight_goes_live_with_a_reason(conn, world):
-    conn.execute(
-        "update fortnight_cycle set state = 'frozen' where fortnight_id = %s", (world["i"].fortnight_id,)
-    )
+    conn.execute("update fortnight set state = 'frozen' where id = %s", (world["i"].fortnight_id,))
     draft, _, _ = swapped_draft(conn, world["i"])
     go(conn, world, a_run(conn, world["i"], draft), reason="the school agreed")
-    assert conn.execute("select reason from timetable_live").fetchone()["reason"] == "the school agreed"
+    assert [r["reason"] for r in went_live(conn)] == ["the school agreed"]
 
 
 def test_a_change_by_hand_is_refused_until_discarded_and_the_loader_keeps_off_a_live_fortnight(conn, world):
@@ -183,16 +190,16 @@ def test_a_change_by_hand_is_refused_until_discarded_and_the_loader_keeps_off_a_
     run = a_run(conn, i, draft)
     go(conn, world, run)
     go(conn, world, run)  # nobody changed it: it goes live again
-    conn.execute(
-        "update timetable_slot set text = 'by hand' where fortnight_id = %s and kind = 'subject'",
-        (i.fortnight_id,),
+    conn.execute(  # a lesson's words changed by hand
+        "update session set text = 'by hand' where id = (select id from session where school_class_id = %s"
+        " and kind = 'subject' limit 1)",
+        (i.class_id,),
     )
     with pytest.raises(live.Refused, match="changed since it went live"):
         go(conn, world, run)
     go(conn, world, run, discard=True)
-    kept = conn.execute("select discarded from timetable_live order by at").fetchall()
-    assert [r["discarded"] for r in kept] == [False, False, True]
+    assert [r["detail"]["discarded"] for r in went_live(conn)] == [False, False, True]
     with pytest.raises(sq.LiveFortnight):
         sq.apply(conn, the_load(), ld.Target("K2", world["section"], "2031-32", db.tenant_slug()))
     with pytest.raises(Exception, match="append-only"):
-        conn.execute("delete from timetable_live")
+        conn.execute("delete from approval where kind = 'timetable_live'")

@@ -40,8 +40,8 @@ def _config(key):
 
 
 def _roles():
-    """The staff list's own roles, as its row names them."""
-    words = re.search(r"Roles: ([a-z, ]+)\.", _config("app.staff")["description"])
+    """The staff list's own roles, as the row of who decides what names them."""
+    words = re.search(r"Roles on the staff list: ([a-z, ]+)\.", _config("people.decides")["description"])
     assert words, "the staff list names its roles"
     return {r.strip() for r in words[1].split(",")}
 

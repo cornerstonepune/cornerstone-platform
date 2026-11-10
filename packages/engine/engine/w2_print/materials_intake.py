@@ -7,6 +7,7 @@ whether a person is in it, and a "yes" or a missing answer sends the whole note 
 
 import datetime as dt
 import io
+import json
 import re
 from dataclasses import dataclass
 from decimal import Decimal
@@ -93,8 +94,7 @@ def catalogue(conn: db.Conn, tenant: UUID) -> list[dict[str, Any]]:
     return [
         dict(r)
         for r in conn.execute(
-            "select i.code, i.name, i.unit, coalesce((select array_agg(a.alias order by a.alias) from material_alias a"
-            " where a.tenant_id = i.tenant_id and a.material_code = i.code), '{}') as aliases"
+            "select i.code, i.name, i.unit, array(select a from unnest(i.aliases) a order by a) as aliases"
             " from material_item i where i.tenant_id = %s order by i.code",
             (tenant,),
         )
@@ -102,22 +102,26 @@ def catalogue(conn: db.Conn, tenant: UUID) -> list[dict[str, Any]]:
 
 
 def conversions(conn: db.Conn, tenant: UUID) -> dict[tuple[str, str], float]:
-    """The latest approved factor for each (item, unit)."""
+    """The approved factor for each (item, unit): the item's own (`material_item.conversions`, the latest a person
+    approved; each approval a row of the one history log)."""
     return {
         (r["material_code"], r["from_unit"]): float(r["factor"])
         for r in conn.execute(
-            "select distinct on (material_code, from_unit) material_code, from_unit, factor"
-            " from material_unit_conversion where tenant_id = %s"
-            " order by material_code, from_unit, approved_at desc, id",
+            "select i.code as material_code, c.key as from_unit, c.value as factor"
+            " from material_item i cross join jsonb_each(i.conversions) c where i.tenant_id = %s",
             (tenant,),
         )
     }
 
 
 def _review(conn: db.Conn, tenant: UUID, list_id: UUID, who: UUID, got: Checked) -> None:
+    """A reading that waits for a person: a row of the one proposal list (kind `materials_note`, the list's id, the
+    note's words and why; CP-27 group 6: once the table `materials_note_review`), the educator who wrote the note its
+    staff."""
     conn.execute(
-        "insert into materials_note_review (tenant_id, list_id, text, reason, who) values (%s, %s, %s, %s, %s)",
-        (tenant, list_id, got.text, got.reason, who),
+        "insert into curriculum_proposal (tenant_id, run_id, kind, subject_code, proposal, status, reason, staff_id,"
+        " machine) values (%s, gen_random_uuid(), 'materials_note', %s, %s, 'needs_person', %s, %s, %s)",
+        (tenant, str(list_id), json.dumps({"text": got.text}), got.reason, who, PURPOSE),
     )
 
 

@@ -1,7 +1,8 @@
 """What the educator sees of the generated timetable (M1-06 part 2): her day, her week, one period with its activity.
-Reads only: the rows `k2_timetable_load` wrote, and for a fortnight that went live (CP-22, `tt_live`) its dated rows,
-which win over the frame's for that date. Every answer is for a class she holds an open grant on, in a role the
-`educator.timetable_roles` row names, and carries no child and no name. One query gives all the days asked for."""
+Reads only: a date's lessons (`session`; CP-27: the timetable of a date is its sessions), every period of the grade on
+a day that has any, a period with no lesson shown empty; a lesson's name is the frame's words for it. Every answer is for
+a class she holds an open grant on, in a role the `educator.timetable_roles` row names, and carries no child and no name.
+One query gives all the days asked for."""
 
 import datetime as dt
 from typing import Any
@@ -24,8 +25,8 @@ def enabled(conn: db.Conn) -> bool:
 
 
 def my_classes(conn: db.Conn, staff_id: Any, day: dt.date) -> list[dict]:
-    """The classes she holds that day; while switched off, the staff preview (D-076) also gets every class whose
-    timetable is in force that day."""
+    """The classes she holds that day; while switched off, the staff preview (D-076) also gets every class with lessons
+    that day."""
     roles = list(settings.config(conn, "educator.timetable_roles", []))
     held = conn.execute(
         "select distinct c.id::text as id, c.grade_code as grade, c.section, c.academic_year_id, c.campus_id"
@@ -58,20 +59,22 @@ def _public(c: dict) -> dict:
 _ROWS = """
 select d.on_date, d.kind as day_kind, d.note, f.number, f.starts_on, f.ends_on,
   w.week,
-  p.id::text as period_id, p.starts_at, p.ends_at, p.label, p.fixed, ts.kind, ts.subject_code,
-  coalesce(s.text, ts.text) as text, ts.text as slot_text, s.state, pe.text as line, pe.id::text as entry_id, a.id::text as activity_id, a.code, a.name
+  p.id::text as period_id, p.starts_at, p.ends_at, p.label, p.fixed, coalesce(s.kind, 'empty') as kind, s.subject_code,
+  coalesce(s.text, '') as text, fr.text as slot_text, s.state, pe.text as line, pe.id::text as entry_id, a.id::text as activity_id, a.code, a.name
 from school_day d
 left join fortnight f on f.academic_year_id = %(year)s and d.on_date between f.starts_on and f.ends_on
 left join lateral (select case when f.id is null then null when d.on_date - f.starts_on < 7 then 'A' else 'B' end as week) w on true
-left join timetable_slot ts on ts.school_class_id = %(cls)s and d.kind <> 'holiday'
-  and ts.weekday = extract(isodow from d.on_date)
-  and ts.week_code = w.week
-  and ts.valid_from <= d.on_date and (ts.valid_to is null or ts.valid_to >= d.on_date)
-  and (ts.fortnight_id is not null or not exists (select 1 from timetable_slot live
-    where live.school_class_id = ts.school_class_id and live.period_id = ts.period_id
-    and live.valid_from = d.on_date and live.fortnight_id is not null))
-left join period p on p.id = ts.period_id
-left join session s on s.school_class_id = ts.school_class_id and s.school_day_id = d.id and s.period_id = ts.period_id
+left join period p on d.kind <> 'holiday' and p.tenant_id = d.tenant_id and p.grade_code = %(grade)s
+  and exists (select 1 from session x where x.school_class_id = %(cls)s and x.school_day_id = d.id)
+left join session s on s.school_class_id = %(cls)s and s.school_day_id = d.id and s.period_id = p.id
+left join lateral (
+  select r.text from timetable_rule r
+  where s.id is not null and r.kind = 'frame' and r.school_class_id = %(cls)s and r.cell = s.kind
+    and r.subject_code is not distinct from s.subject_code
+    and r.valid_from <= d.on_date and (r.valid_to is null or r.valid_to >= d.on_date)
+  order by (r.period_id = p.id and r.weekday = extract(isodow from d.on_date) and r.week_code = w.week) desc,
+    r.week_code, r.weekday, r.period_id
+  limit 1) fr on true
 left join plan_entry pe on pe.id = s.plan_entry_id
 left join activity a on a.id = pe.activity_id
 where d.campus_id = %(campus)s and d.on_date = any(%(days)s)
@@ -107,6 +110,7 @@ def days(conn: db.Conn, klass: dict, dates: list[dt.date]) -> list[dict]:
         "year": klass["academic_year_id"],
         "cls": klass["id"],
         "campus": klass["campus_id"],
+        "grade": klass["grade"],
         "days": dates,
     }
     for r in conn.execute(_ROWS, query).fetchall():
@@ -131,7 +135,7 @@ def _ends(periods: list[dict]) -> None:
 
 
 def _who(conn: db.Conn, klass: dict, classes: list[dict], on: dt.date) -> dict:
-    # `frozen` is the state of the fortnight holding the day (CP-6), read from `fortnight_cycle`
+    # `frozen` is the state of the fortnight holding the day (CP-6), `fortnight.state`
     tenant = db.one(conn, "select tenant_id from school_class where id = %s", (klass["id"],))["tenant_id"]
     return {
         "classes": [_public(c) for c in classes],

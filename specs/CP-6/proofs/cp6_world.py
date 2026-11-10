@@ -1,4 +1,5 @@
-"""Shared fixtures for CP-6's database proofs (the fortnight cycle, lean design: the engine enforces, no triggers).
+"""Shared fixtures for CP-6's database proofs (the fortnight cycle, lean design: the engine enforces). Since CP-27 the
+state is `fortnight.state`, each step taken an approval row, and the history the one `change_log`.
 
 Everything is made here, in 2031, inside one transaction that is rolled back: a K2 class of the configured school, a
 staff row (no name), a period, and teaching fortnights with generated numbers. "Who" is a staff id, never a name. Names
@@ -60,9 +61,8 @@ def school(conn):
             "staff": staff}  # fmt: skip
 
 
-def a_fortnight(conn, school, starts_on: str, *, days: int = 14, kind: str = "teaching", cycle: bool = True):
-    """A fortnight of `school` from `starts_on`; a teaching one gets its `planning` cycle row (as the migration's
-    backfill gives every teaching fortnight) unless `cycle` is False."""
+def a_fortnight(conn, school, starts_on: str, *, days: int = 14, kind: str = "teaching"):
+    """A fortnight of `school` from `starts_on`; a teaching one starts at planning (`fortnight.state`, CP-27)."""
     start = dt.date.fromisoformat(starts_on)
     number = 100000 + uuid.uuid4().int % 800000 if kind == "teaching" else None
     fid = db.one(
@@ -71,12 +71,6 @@ def a_fortnight(conn, school, starts_on: str, *, days: int = 14, kind: str = "te
         " values (%s, %s, %s, %s, %s, %s) returning id",
         (school["t"], school["year"], number, kind, start, start + dt.timedelta(days=days - 1)),
     )["id"]
-    if cycle and kind == "teaching":
-        conn.execute(
-            "insert into fortnight_cycle (tenant_id, fortnight_id, state) values (%s, %s, 'planning')"
-            " on conflict (fortnight_id) do nothing",
-            (school["t"], fid),
-        )
     return {"id": fid, "number": number, "starts_on": start, "ends_on": start + dt.timedelta(days=days - 1)}
 
 
@@ -87,15 +81,25 @@ def advance_to(conn, fortnight_id, state: str, actor: str = WHO) -> None:
 
 
 def cycle_row(conn, fortnight_id) -> dict:
-    return db.one(conn, "select * from fortnight_cycle where fortnight_id = %s", (fortnight_id,))
+    """The fortnight's state and each step's who and when, as the engine reads them (`fortnight_cycle.standing`)."""
+    return fc().standing(conn, fortnight_id)
 
 
 def edits(conn, fortnight_id, kind: str) -> list[dict]:
-    return conn.execute(
-        "select subject, record_id, op, reason, changed_by, created_at from fortnight_edit"
-        " where fortnight_id = %s and kind = %s order by created_at",
-        (fortnight_id, kind),
-    ).fetchall()
+    """The fortnight's history in the one log (CP-27): its state changes ('state', subject '<from>-><to>'), or the
+    changes made after it froze ('frozen_change', subject the table), each with its record, reason, who and when."""
+    if kind == "state":
+        sql = (
+            "select (before ->> 'state') || '->' || (after ->> 'state') as subject, row_id as record_id,"
+            " 'state' as op, reason, origin as changed_by, at as created_at from change_log"
+            " where table_name = 'fortnight' and row_id = %s and op = 'update' order by at, id"
+        )
+    else:
+        sql = (
+            "select table_name as subject, row_id as record_id, op, reason, origin as changed_by, at as created_at"
+            " from change_log where after ->> 'fortnight_id' = %s and (after ->> 'frozen')::boolean order by at, id"
+        )
+    return conn.execute(sql, (str(fortnight_id),)).fetchall()
 
 
 def refused_sql(conn, sql: str, params=()) -> str:

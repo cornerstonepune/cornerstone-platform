@@ -16,7 +16,7 @@ from tests.rows import a_child_in
 
 PAPER = db.REPO_ROOT / "supabase" / "seed" / "papers" / "G3-QUIZ20.json"
 PERSON = "Aseem's paper"
-WEEK = "2026-W42-1518"
+WEEK = "2091-W07"  # a week of its own (weeks are dates since CP-27)
 
 
 @pytest.fixture

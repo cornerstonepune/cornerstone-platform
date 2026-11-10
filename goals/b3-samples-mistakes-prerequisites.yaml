@@ -33,7 +33,7 @@ goal: >
 #   mental strategies (R7) before Grade 1 addition (R19).
 says:
   - words: "we need proper tables"
-    proved_by: "packages/engine/tests/test_skill_links.py::test_every_card_example_and_level_example_is_a_sample_row"
+    proved_by: "packages/engine/tests/test_skill_links.py::test_every_card_example_and_level_example_is_a_sample_worked_out_from_its_source"
   - words: "we need proper tables"
     proved_by: "packages/engine/tests/test_skill_links.py::test_a_levels_samples_are_its_words_own_examples_in_order"
   - words: "we need proper tables"

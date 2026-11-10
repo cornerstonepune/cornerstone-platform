@@ -1,8 +1,9 @@
 """The class list.
 
 A child's name is the one piece of this system that is genuinely sensitive, so it lives in the
-`pii` schema and nowhere else: `child` carries a roll number, a band and a section, and every
-other table joins to that. The roster file itself stays outside the repository — it has names in
+`pii` schema and nowhere else: `child` carries a band, its open `enrolment` the class (a `school_class` and its
+label, the section pages show) and the roll number (CP-27 group 4; `child_now` reads them together), and every other
+table joins to that. The roster file itself stays outside the repository — it has names in
 it — and is read by path.
 """
 
@@ -12,7 +13,8 @@ from pathlib import Path
 from typing import Any, TypedDict
 from uuid import UUID
 
-from engine.core import db
+from engine.core import db, settings
+from engine.core.people import year_label
 
 Loaded = TypedDict(
     "Loaded",
@@ -45,19 +47,21 @@ def load(path: Path) -> Loaded:
         for c in children:
             key = (tenant, c["section"], str(c["roll_no"]))
             was = conn.execute(
-                "select id, band from child where tenant_id = %s and section = %s and roll_no = %s", key
+                "select id, band from child_now where tenant_id = %s and section = %s and roll_no = %s", key
             ).fetchone()
             if told := _changed_on_the_site(conn, tenant, c, was):
                 kept.append(told)
                 continue
-            row = db.one(
-                conn,
-                "insert into child (tenant_id, roll_no, section, band) values (%s,%s,%s,%s)"
-                " on conflict (tenant_id, section, roll_no) do update set band = excluded.band,"
-                " updated_at = now() returning id, (xmax = 0) as inserted",
-                (tenant, str(c["roll_no"]), c["section"], c["band"]),
-            )
-            added, updated = (added + 1, updated) if row["inserted"] else (added, updated + 1)
+            if was:
+                conn.execute("update child set band = %s where id = %s", (c["band"], was["id"]))
+                row, updated = was, updated + 1
+            else:
+                row = {
+                    "id": a_child(
+                        conn, tenant, c["section"], c["band"], str(c["roll_no"]), "engine roster load"
+                    )
+                }
+                added += 1
             if was and was["band"] != c["band"]:
                 changed.append(f"{c['section']} roll {c['roll_no']}: {was['band']} → {c['band']}")
             conn.execute(
@@ -83,27 +87,69 @@ def _changed_on_the_site(
     """Why a list's row must not be applied, if a coordinator's change on the site stands against it: it names the place a
     child was moved away from (and nobody sits there now), or it names a grade other than the one set on the site."""
     section, roll = row["section"], str(row["roll_no"])
+    moves = "select before, after, at from change_log where tenant_id = %s and table_name = 'child' and op = 'move'"
     if here is None:
         m = conn.execute(
-            "select to_section, to_roll_no, to_band, moved_at from child_move where tenant_id = %s"
-            " and from_section = %s and from_roll_no = %s order by moved_at desc limit 1",
+            f"{moves} and before ->> 'section' = %s and before ->> 'roll_no' = %s order by at desc limit 1",
             (tenant, section, roll),
         ).fetchone()
         if m:
-            return f"{section} roll {roll}: moved to {m['to_section']} roll {m['to_roll_no']} ({m['to_band']}) on {m['moved_at']:%Y-%m-%d}; the file still lists them here"
+            to = m["after"]
+            return f"{section} roll {roll}: moved to {to['section']} roll {to['roll_no']} ({to['band']}) on {m['at']:%Y-%m-%d}; the file still lists them here"
         return None
     m = conn.execute(
-        "select to_section, to_roll_no, to_band, moved_at from child_move where child_id = %s"
-        " order by moved_at desc limit 1",
-        (here["id"],),
+        f"{moves} and row_id = %s order by at desc limit 1", (tenant, str(here["id"]))
     ).fetchone()
     if (
         m
-        and (m["to_section"], m["to_roll_no"], m["to_band"]) == (section, roll, here["band"])
+        and (m["after"]["section"], m["after"]["roll_no"], m["after"]["band"])
+        == (section, roll, here["band"])
         and row["band"] != here["band"]
     ):
-        return f"{section} roll {roll}: set to {here['band']} on {m['moved_at']:%Y-%m-%d} on the site; the file says {row['band']}"
+        return f"{section} roll {roll}: set to {here['band']} on {m['at']:%Y-%m-%d} on the site; the file says {row['band']}"
     return None
+
+
+def a_child(conn: db.Conn, tenant: UUID, label: str, band: str, roll: str, by: str) -> UUID:
+    """A new child of grade `band`, enrolled from the school year's start at roll `roll` of the class labelled `label`
+    (made when there is none). → their id. A roll already held in the class is refused (UniqueViolation)."""
+    child = db.one(conn, "insert into child (tenant_id, band) values (%s,%s) returning id", (tenant, band))[
+        "id"
+    ]
+    conn.execute(
+        "insert into enrolment (tenant_id, child_id, class_id, roll_no, from_date, recorded_by)"
+        " select %s, %s, sc.id, %s, y.starts_on, %s from school_class sc"
+        " join academic_year y on y.id = sc.academic_year_id where sc.id = %s",
+        (tenant, child, roll, by, _class(conn, tenant, label, band)),
+    )
+    return child
+
+
+def _class(conn: db.Conn, tenant: UUID, label: str, band: str) -> UUID:
+    """The class labelled `label` in this school year, made (with the year, April to March) when there is none, as
+    `engine enrol k2` makes one: the school's campus, the grade of the first child listed in it, section A."""
+    year = year_label(settings.school_today(conn))
+    found = conn.execute(
+        "select sc.id from school_class sc join academic_year y on y.id = sc.academic_year_id"
+        " where sc.tenant_id = %s and y.label = %s and sc.label = %s",
+        (tenant, year, label),
+    ).fetchone()
+    if found:
+        return found["id"]
+    start = int(year[:4])
+    y = db.one(
+        conn,
+        "insert into academic_year (tenant_id, label, starts_on, ends_on) values (%s, %s, make_date(%s, 4, 1),"
+        " make_date(%s, 3, 31)) on conflict (tenant_id, label) do update set label = excluded.label returning id",
+        (tenant, year, start, start + 1),
+    )["id"]
+    return db.one(
+        conn,
+        "insert into school_class (tenant_id, campus_id, academic_year_id, grade_code, section, label)"
+        " select %s, (select id from campus where tenant_id = %s order by created_at limit 1), %s, %s, 'A', %s"
+        " returning id",
+        (tenant, tenant, y, band, label),
+    )["id"]
 
 
 def class_band(conn: db.Conn, section: str) -> str | None:
@@ -113,7 +159,7 @@ def class_band(conn: db.Conn, section: str) -> str | None:
     wrong grade could move the whole class's week (G3 roll 5 as G4, 2026-09-30). None for a class with no child."""
     row = conn.execute(
         # the rule is the database's (`class_band`), so the engine and every page say one grade for a class
-        "select class_band(tenant_id, section) as band from child where section = %s and active limit 1",
+        "select class_band(tenant_id, section) as band from child_now where section = %s and active limit 1",
         (section,),
     ).fetchone()
     return row["band"] if row else None

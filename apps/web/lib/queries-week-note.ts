@@ -33,7 +33,7 @@ export async function weekNote(scope: Scope, subject: string): Promise<WeekNote>
         select k.id as capture, r.id, r.status
         from capture k
         join sheet_instance si on si.id = k.sheet_instance_id
-        left join child ch on ch.id = si.child_id
+        left join child_now ch on ch.id = si.child_id
         join item_result r on r.capture_id = k.id
         join item i on i.id = r.item_id
         join skill ss on ss.tenant_id = i.tenant_id and ss.code = i.skill_set_code
@@ -46,11 +46,11 @@ export async function weekNote(scope: Scope, subject: string): Promise<WeekNote>
              count(*) filter (where status in ('unreadable', 'needs_teacher'))::int as waiting
       from answers`,
     sql<{ children: number; secure: number; practising: number; help: number; help_twice: number }[]>`
-      with kids as (select id from child where active and ${inScope(scope, sql`section`)}),
+      with kids as (select id from child_now where active and ${inScope(scope, sql`section`)}),
       states as (
         select s.child_id, s.rung_code, cs.colour
         from child_skill_state s join child_state cs on cs.tenant_id = s.tenant_id and cs.code = s.state
-        where s.child_id in (select id from kids) and cs.enough and ${rungIn(subject, sql`s.rung_code`)}
+        where s.kind = 'written' and s.child_id in (select id from kids) and cs.enough and ${rungIn(subject, sql`s.rung_code`)}
       )
       select (select count(*)::int from kids) as children,
              count(distinct child_id) filter (where colour = 'green')::int as secure,
@@ -63,7 +63,7 @@ export async function weekNote(scope: Scope, subject: string): Promise<WeekNote>
       select (select min(m.name) from misconception m where m.tenant_id = e.tenant_id and m.code = c.code) as name,
              count(distinct e.child_id)::int as children, count(*)::int as times
       from evidence_event e cross join lateral unnest(e.misconception_codes) c(code)
-      join child ch on ch.id = e.child_id
+      join child_now ch on ch.id = e.child_id
       where e.confirmed_by is not null and e.observed_at >= date_trunc('week', now()) and ch.active
         and ${inScope(scope, sql`ch.section`)} and ${rungIn(subject, sql`e.rung_code`)}
       group by e.tenant_id, c.code order by count(distinct e.child_id) desc, count(*) desc, c.code limit 1`,

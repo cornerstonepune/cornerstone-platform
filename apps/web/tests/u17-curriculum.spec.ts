@@ -84,10 +84,10 @@ test("a topic is marked taught from its row on What needs doing, in the person's
     if (await row.getByLabel(`Class taught ${topic.name}`).count()) await row.getByLabel(`Class taught ${topic.name}`).selectOption(CLASS);
     await row.getByRole("button", { name: "Mark as taught" }).click();
     await expect(page.getByRole("main")).toContainText(`${topic.name} is taught in ${CLASS} now`);
-    const [now] = await sql<{ taught: boolean }[]>`select bool_and(taught) as taught from class_skill where section = ${CLASS} and skill_set_code in (select code from skill where topic_code = 'DIV')`;
+    const [now] = await sql<{ taught: boolean }[]>`select bool_and(taught) as taught from (select sc.tenant_id, sc.label as section, w.key as skill_set_code, (w.value ->> 'taught')::boolean as taught, w.value ->> 'by' as taught_by from school_class sc cross join jsonb_each(sc.taught) w) class_skill where section = ${CLASS} and skill_set_code in (select code from skill where topic_code = 'DIV')`;
     expect(now.taught).toBe(true);
   } finally {
-    await sql`delete from class_skill where section = ${CLASS}`;
+    await sql`update school_class set taught = '{}' where label = ${CLASS}`;
   }
 });
 

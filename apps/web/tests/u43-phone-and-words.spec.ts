@@ -30,7 +30,7 @@ const seen: Record<"educator" | "coordinator", Seen[]> = { educator: [], coordin
 test.beforeAll(async ({ browser }) => {
   test.setTimeout(600_000);
   const kids = await aClass(sql, SECTION, "G2", ["Asha", "Bina"]);
-  const [{ tenant }] = await sql<{ tenant: string }[]>`select tenant_id as tenant from child where id = ${kids.Asha}`;
+  const [{ tenant }] = await sql<{ tenant: string }[]>`select tenant_id as tenant from child_now where id = ${kids.Asha}`;
   const [skill] = await sql<{ code: string; rung: string; set: string }[]>`
     select ss.registry_codes[1] as code, ss.rung_code as rung, ss.code as set from skill ss
     where ss.grade = 'G2' and cardinality(ss.registry_codes) > 0 order by ss.ladder_order, ss.code limit 1`;
@@ -62,16 +62,16 @@ test.beforeAll(async ({ browser }) => {
   // not read: the parent page is read for Bina, who has none)
   const [{ n: notes }] = await sql<{ n: number }[]>`select count(*)::int as n from parent_note where child_id = ${kids.Asha}`;
   if (!notes) {
-    await sql`insert into parent_note (tenant_id, child_id, week, body) values (${tenant}, ${kids.Asha}, ${THIS}, '{"facts": {}, "draft": {}}')`;
+    await sql`insert into parent_note (tenant_id, child_id, week, body) values (${tenant}, ${kids.Asha}, to_date(${THIS}, 'IYYY-"W"IW'), '{"facts": {}, "draft": {}}')`;
   }
   // Asha's home assessment and the class's practice paper, this week
   await sql`delete from sheet_instance where qr_code in ${sql([QR.home, QR.spare])}`;
   await sql`
     insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, week, kind, print_status)
-    values (${tenant}, ${QR.home}, ${ws.id}, ${kids.Asha}, ${THIS}, 'focus', 'new')`;
+    values (${tenant}, ${QR.home}, ${ws.id}, ${kids.Asha}, to_date(${THIS}, 'IYYY-"W"IW'), 'focus', 'new')`;
   await sql`
     insert into sheet_instance (tenant_id, qr_code, sheet_template_id, section, week, kind, print_status)
-    values (${tenant}, ${QR.spare}, ${ws.id}, ${SECTION}, ${THIS}, 'practice', 'new')`;
+    values (${tenant}, ${QR.spare}, ${ws.id}, ${SECTION}, to_date(${THIS}, 'IYYY-"W"IW'), 'practice', 'new')`;
   await aPerson(sql, { ...EDUCATOR, password: PASSWORD });
   const [read] = await sql<{ id: string }[]>`select id from sheet_instance where qr_code = ${QR.asha}`;
   const [item] = await sql<{ item_key: string }[]>`select item_key from item where id = ${ws.item_ids[0]}`;

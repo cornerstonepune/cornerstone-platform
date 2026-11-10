@@ -5,7 +5,7 @@ import { createHmac } from "node:crypto";
 import type { Browser, BrowserContext } from "@playwright/test";
 import type { Sql } from "postgres";
 import { SIGNED_IN } from "../playwright.config";
-import { aClass } from "./rows";
+import { aClass, aPerson, personAsStored } from "./rows";
 import { FAKE_CHILDREN } from "./fake-names";
 
 export const SECTION = "U70A";
@@ -16,12 +16,10 @@ export type Rows = { section: string; classId: string; children: Record<string, 
 
 /** The educator (one class, one subject) and a class of fake children with Sr. Nos 1..n. Made once; a second run finds them. */
 export async function inventoryRows(sql: Sql): Promise<Rows> {
-  await sql`
-    update config set value = value || ${sql.json([EDUCATOR])}
-    where key = 'app.staff' and not value @> ${sql.json([{ email: EDUCATOR.email }])}`;
+  if (!(await personAsStored(sql, EDUCATOR.email))) await aPerson(sql, EDUCATOR);
   const names = FAKE_CHILDREN.slice(0, 6);
   const children = await aClass(sql, SECTION, "K2", [...names]);
-  const [cls] = await sql<{ id: string }[]>`select id from school_class where section = ${SECTION} order by created_at limit 1`;
+  const [cls] = await sql<{ id: string }[]>`select id from school_class where label = ${SECTION} order by created_at limit 1`;
   const rolls = Object.fromEntries(names.map((n, i) => [n, String(i + 1)]));
   // a class the educator does not hold, with Sr. Nos 7 and 8 that the educator's class has no child for
   const otherNames = FAKE_CHILDREN.slice(10, 18) as unknown as string[];

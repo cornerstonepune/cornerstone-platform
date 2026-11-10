@@ -3,7 +3,7 @@ Each move is kept with who, when, from, to and the reason given; the history can
 
 import datetime as dt
 
-from conftest import REASON, START, refused, shown, world
+from conftest import REASON, START, moves, refused, shown, world
 
 MON, TUE, THU = START, START + dt.timedelta(1), START + dt.timedelta(3)
 
@@ -33,18 +33,19 @@ def test_each_move_is_kept_with_who_when_from_to_and_why_and_cannot_be_changed(c
                        "--from", MON.isoformat(), "--from-period", 2, "--to", THU.isoformat(), "--to-period", 3,
                        "--by", w["coordinator"]["email"], "--reason", REASON)
     assert code == 0, out
-    rows = conn.execute("select * from timetable_move where school_class_id = %s", (w["class"],)).fetchall()
+    rows = moves(conn, w)
     assert len(rows) == 1, f"{len(rows)} history rows for one move"
     r = rows[0]
     assert r["who"] == w["coordinator"]["id"] and r["at"] is not None
     assert (r["from_date"], str(r["from_period"])) == (MON, w["period"]["s1"])
     assert (r["to_date"], str(r["to_period"])) == (THU, w["period"]["s2"])
-    assert r["reason"] == REASON and r["fortnight_id"] == w["fortnights"][2]["id"]
+    assert r["reason"] == REASON and r["fortnight_id"] == str(w["fortnights"][2]["id"])
     assert "Proof Person" not in str(r), "a name is stored in the history"
 
-    refused(conn, "update timetable_move set reason = 'changed' where id = %s", (r["id"],))
-    refused(conn, "delete from timetable_move where id = %s", (r["id"],))
-    assert conn.execute("select * from timetable_move where id = %s", (r["id"],)).fetchone() == r
+    kept = f"{w['class']} {w['fortnights'][2]['id']}"
+    refused(conn, "update change_log set reason = 'changed' where table_name = 'session' and row_id = %s", (kept,))
+    refused(conn, "delete from change_log where table_name = 'session' and row_id = %s", (kept,))
+    assert moves(conn, w) == [r]
 
 
 def test_someone_not_on_the_staff_list_cannot_move(conn, engine, monkeypatch):

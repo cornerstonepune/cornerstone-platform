@@ -66,7 +66,7 @@ def worksheet(conn, tmp_path, monkeypatch):
     code = f"R8-H9{uuid.uuid4().int % 100:02d}"  # a code as the library writes one
     conn.execute(
         "insert into sheet_template (tenant_id, band, week, variant, source, code, skill_set_code, difficulty,"
-        " item_ids) values (%s, 'G2', 'library', 99, 'library', %s, 'WORD.1_2STEP', 'Hard', %s)",
+        " item_ids) values (%s, 'G2', null, 99, 'library', %s, 'WORD.1_2STEP', 'Hard', %s)",
         (tenant["id"], code, ids),
     )
     monkeypatch.setattr(library, "PDF_DIR", tmp_path / "worksheets")

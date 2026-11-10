@@ -10,12 +10,13 @@ from fastapi.testclient import TestClient
 
 from engine.api import deps
 from engine.api.app import app
-from engine.core import db
+from engine.core import db, weeks
+from tests import rows
 from tests.rows import a_child_in
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
 
-SECTION, WEEK, SET = "APISEC", "api-week", "SUB.2D2D"
+SECTION, WEEK, SET = "APISEC", "2091-W16", "SUB.2D2D"  # weeks are dates since CP-27
 KEY = "test-engine-key"
 
 
@@ -41,12 +42,13 @@ def client(conn, monkeypatch):
 @pytest.fixture
 def children(conn):
     tenant = conn.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()["id"]
-    conn.execute("delete from child where section = %s", (SECTION,))
+    conn.execute(  # whoever an earlier run left in the class has left it (a child is never deleted)
+        "update enrolment set to_date = from_date where to_date is null"
+        " and class_id in (select id from school_class where label = %s)",
+        (SECTION,),
+    )
     for i in (1, 2):
-        row = conn.execute(
-            "insert into child (tenant_id, roll_no, section, band) values (%s,%s,%s,'G2') returning id",
-            (tenant, str(i), SECTION),
-        ).fetchone()
+        row = {"id": rows.a_child_in(conn, SECTION, "G2", str(i), tenant)}
         conn.execute(
             "insert into pii.child (tenant_id, child_id, first_name) values (%s,%s,%s)",
             (tenant, row["id"], f"Api {i}"),
@@ -122,7 +124,7 @@ def test_a_pack_remade_after_an_approval_is_approved_again_by_the_same_person(cl
     assert client.post("/week/approve", json=body).json()["sheets"] > 0
     conn.execute(
         "update sheet_instance set print_status = 'new', approved_by = null, approved_at = null, printed_at = null"
-        " where section = %s and week = %s",
+        " where section = %s and to_char(week, 'IYYY-\"W\"IW') = %s",
         (SECTION, WEEK),
     )
     again = client.post("/week/approve", json=body).json()
@@ -201,7 +203,8 @@ def test_rendering_a_week_draws_the_papers_already_made_and_makes_no_second_set(
     r = client.post("/week/render", json={"section": SECTION, "week": WEEK, "out": str(tmp_path / "pack")})
     assert r.status_code == 200, r.text
     rows = conn.execute(
-        "select qr_code, pdf_path from sheet_instance where section = %s and week = %s", (SECTION, WEEK)
+        "select qr_code, pdf_path from sheet_instance where section = %s and week = %s",
+        (SECTION, weeks.day(WEEK)),
     ).fetchall()
     assert sorted(x["qr_code"] for x in rows) == sorted(made)
     assert all(x["pdf_path"] for x in rows)

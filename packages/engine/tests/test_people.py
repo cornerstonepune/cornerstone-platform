@@ -3,7 +3,6 @@
 Every person and child here is a PLACEHOLDER made up for the test ("Placeholder Child 07", ann@example.test); the
 Children List itself is Nimish's, arrives outside git, and is never in a test. Runs only on the local test database."""
 
-import json
 import os
 from datetime import date
 
@@ -69,17 +68,19 @@ def wipe(conn):
     conn.execute(
         "set local session_replication_role = replica"
     )  # a grant is never deleted, except here, in the copy
+    # a child is never deleted (their evidence cannot be); a test's children are set aside, out of every class
+    conn.execute(
+        "update child set active = false where id in (select e.child_id from enrolment e"
+        " join school_class c on c.id = e.class_id where c.label in ('K2', 'SL-THREE'))"
+    )
     conn.execute("delete from staff_role_grant")
     conn.execute("delete from enrolment")
     conn.execute("delete from school_class")
-    conn.execute("delete from academic_year")
+    conn.execute(  # every year but today's: today's is the tests' school's, made once for every module (conftest)
+        "delete from academic_year where not (internal.school_day(tenant_id, now()) between starts_on and ends_on)"
+    )
     conn.execute("delete from pii.staff")
     conn.execute("delete from staff")
-    # a child is never deleted (their evidence cannot be); a test's children are moved off the class and set aside
-    conn.execute(
-        "update child set active = false, section = 'SL-OLD-' || substr(id::text, 1, 8)"
-        " where section in ('K2', 'SL-THREE')"
-    )
 
 
 @pytest.fixture
@@ -122,16 +123,16 @@ def test_the_k2_educator_her_class_and_its_children_with_roll_numbers_are_all_in
     ] == [("Placeholder Ann", "A", "K2", "2026-27", FROM)]
     kids = rows(
         "select e.roll_no, p.first_name, p.last_name from enrolment e join school_class c on c.id = e.class_id"
-        " join child k on k.id = e.child_id join pii.child p on p.child_id = k.id"
+        " join child_now k on k.id = e.child_id join pii.child p on p.child_id = k.id"
         " where c.grade_code = 'K2' and c.section = 'A' and e.to_date is null"
     )
     assert sorted(int(k["roll_no"]) for k in kids) == list(range(1, 23))
     assert all(k["first_name"] == "Placeholder" for k in kids)
     # the child's own row says the same class and roll number the old pages read
     assert (
-        rows("select count(*) n from child where section = 'K2' and band = 'K2' and roll_no ~ '^[0-9]+$'")[0][
-            "n"
-        ]
+        rows(
+            "select count(*) n from child_now where section = 'K2' and band = 'K2' and roll_no ~ '^[0-9]+$'"
+        )[0]["n"]
         == 22
     )
 
@@ -142,14 +143,16 @@ def test_a_child_is_in_a_class_only_through_an_enrolment_and_a_move_closes_one_a
 ):
     assert load_everything(tmp_path).exit_code == 0
     with db.connect() as conn:
-        child = conn.execute("select id from child where section = 'K2' and roll_no = '3'").fetchone()["id"]
+        child = conn.execute("select id from child_now where section = 'K2' and roll_no = '3'").fetchone()[
+            "id"
+        ]
         t = conn.execute("select id from tenant").fetchone()["id"]
         k2 = conn.execute(
             "select id, campus_id, academic_year_id from school_class where grade_code = 'K2'"
         ).fetchone()
         g3 = conn.execute(
-            "insert into school_class (tenant_id, campus_id, academic_year_id, grade_code, section)"
-            " values (%s,%s,%s,'G3','A') returning id",
+            "insert into school_class (tenant_id, campus_id, academic_year_id, grade_code, section, label)"
+            " values (%s,%s,%s,'G3','A','G3') returning id",
             (t, k2["campus_id"], k2["academic_year_id"]),
         ).fetchone()["id"]
         assert conn.execute(
@@ -167,11 +170,11 @@ def test_a_child_is_in_a_class_only_through_an_enrolment_and_a_move_closes_one_a
             (k2["id"], "3", date(2027, 1, 4)),
             (g3, "9", None),
         ]
-        # the child is the same row throughout: nothing that hangs off their id moved
-        assert (
-            conn.execute("select id from child where section = 'K2' and roll_no = '3'").fetchone()["id"]
-            == child
-        )
+        # the child is the same row throughout: nothing that hangs off their id moved; their class is the open one
+        assert conn.execute("select section, roll_no from child_now where id = %s", (child,)).fetchone() == {
+            "section": "G3",
+            "roll_no": "9",
+        }
         # earlier than where they are now is refused, and a second open row cannot be made by hand
         with pytest.raises(psycopg.errors.RaiseException, match="date_before_current"):
             conn.execute("select enrol_child(%s,%s,'3',%s,'t')", (child, k2["id"], date(2026, 12, 1)))
@@ -221,17 +224,18 @@ def test_a_second_class_teacher_warns_and_is_allowed_only_with_a_recorded_reason
 
 
 @needs_db
-def test_staff_import_copies_the_staff_list_leaves_the_config_and_changes_nothing_the_second_time(
-    tmp_path, school
-):
-    def config():
+def test_staff_import_grants_each_persons_campus_role_once_and_leaves_the_list_as_it_is(tmp_path, school):
+    """The staff list is the staff tables (CP-27 group 4): the import adds no one; it gives each person on the list
+    the role they hold for the whole campus, once, signed by the importer's staff id."""
+
+    def listed():
         with db.connect() as conn:
             return signin_list(conn)
 
-    before = config()
+    before = listed()
     dry = run("staff", "import")
-    assert dry.exit_code == 0 and "staff added: 4" in dry.output_plain and "dry run" in dry.output_plain
-    assert rows("select count(*) n from staff")[0]["n"] == 0
+    assert dry.exit_code == 0 and "roles granted: 3" in dry.output_plain and "dry run" in dry.output_plain
+    assert rows("select count(*) n from staff_role_grant")[0]["n"] == 0
     refused = run("staff", "import", "--apply")
     assert refused.exit_code != 0 and "--by" in refused.output_plain
     done = run("staff", "import", "--apply", "--by", SIGNER)
@@ -245,34 +249,19 @@ def test_staff_import_copies_the_staff_list_leaves_the_config_and_changes_nothin
         ("bea@example.test", "educator"),
         ("cy@example.test", "coordinator"),
     ]
-    assert config() == before  # left in place, hashes and all
-    assert "scrypt" not in json.dumps(
-        rows("select to_jsonb(s) from staff s") + rows("select to_jsonb(p) from pii.staff p"), default=str
-    )
+    assert listed() == before  # left in place, hashes and all
     again = run("staff", "import", "--apply", "--by", SIGNER)
     assert (
         again.exit_code == 0
-        and "already there: 4" in again.output_plain
-        and "added" not in again.output_plain
+        and "already there: 3" in again.output_plain
+        and "roles granted" not in again.output_plain
     )
     assert rows("select count(*) n from staff_role_grant")[0]["n"] == 3
-    # an entry whose role is no role is refused in words and nothing is written
-    bad = [
-        *SIGN_IN,
-        {
-            "email": "d@example.test",
-            "name": "Placeholder D",
-            "role": "wizard",
-            "password": "x",
-            "classes": [],
-        },
-    ]
-    with db.connect() as conn:
-        signin_list_is(conn, bad)
-        conn.commit()
-    refused = run("staff", "import", "--apply", "--by", SIGNER)
-    assert refused.exit_code == 1 and "'wizard' is not a role" in refused.output_plain
-    assert rows("select count(*) n from staff")[0]["n"] == 4
+    # a role that is no role cannot be held by anyone on the list: the staff row refuses it
+    with db.connect() as conn, pytest.raises(psycopg.errors.ForeignKeyViolation):
+        conn.execute(
+            "update staff set role_code = 'wizard' where id = (select staff_id from pii.staff limit 1)"
+        )
 
 
 @needs_db
@@ -280,18 +269,18 @@ def test_enrol_k2_is_a_dry_run_until_applied_and_a_second_run_changes_nothing(tm
     path = listing(tmp_path)
     dry = run("enrol", "k2", path, "--from", FROM)
     assert dry.exit_code == 0 and "children added: 22" in dry.output_plain and "dry run" in dry.output_plain
-    assert rows("select count(*) n from child where section = 'K2'")[0]["n"] == 0
+    assert rows("select count(*) n from child_now where section = 'K2'")[0]["n"] == 0
     assert rows("select count(*) n from school_class")[0]["n"] == 0
     assert run("enrol", "k2", path, "--apply").exit_code != 0  # --by is needed
     assert load_everything(tmp_path).exit_code == 0
 
     def state():
         return (
-            rows("select id, updated_at from child where section = 'K2' order by roll_no"),
+            rows("select id, updated_at from child_now where section = 'K2' order by roll_no"),
             rows("select id, updated_at from enrolment order by roll_no"),
             rows("select count(*) n from school_class")[0]["n"],
             rows(
-                "select count(*) n from pii.child p join child c on c.id = p.child_id"
+                "select count(*) n from pii.child p join child_now c on c.id = p.child_id"
                 " where c.section = 'K2' and p.birthday is not null"
             )[0]["n"],
         )
@@ -329,7 +318,7 @@ def test_a_list_with_a_duplicate_or_a_bad_row_is_refused_in_words_and_writes_not
         (10, "no name"),
     ):
         assert f"line {line}:" in text and why in text, text
-    assert rows("select count(*) n from child where section = 'K2'")[0]["n"] == 0
+    assert rows("select count(*) n from child_now where section = 'K2'")[0]["n"] == 0
     assert rows("select count(*) n from school_class")[0]["n"] == 0
     # a missing column is refused whole
     short = run("enrol", "k2", listing(tmp_path, ["number,name", "1,Placeholder X"], name="s.csv"))
@@ -433,7 +422,7 @@ def test_the_twelve_roles_of_d026_are_rows_with_their_scope_and_the_rule_is_a_co
     assert all(r["may_grant"] == ["head", "coordinator"] for r in rows("select may_grant from role"))
     rule = rows("select value from config where key = 'people.class_teacher_rule'")[0]["value"]
     assert rule["from_grade"] == "G1" and set(rule["core_subjects"]) == {"NUM", "ENG"}
-    # a role the sign-in list holds for a class (specialist) is not granted at import; the person is added
+    # a role the staff list holds for a class (specialist) is not granted at import; it is left to be set there
     out = run("staff", "import", "--apply", "--by", SIGNER)
     assert out.exit_code == 0 and "roles left to set: 1" in out.output_plain, out.output_plain
     assert (

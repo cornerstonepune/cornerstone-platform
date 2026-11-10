@@ -47,11 +47,12 @@ def test_6_a_confirmed_voice_note_and_the_typed_form_give_the_same_rows_and_the_
         assert a == b, f"{what}: the voice note and the form differ"
 
     graph.rebuild(conn)
-    for table in ("child_observed_state", "child_skill_state"):
-        sql = f"select * from {table} where child_id = %s"
+    for kind in ("observed", "written"):  # one table of states, told apart by kind (CP-27 group 6)
+        sql = f"select * from child_skill_state where kind = '{kind}' and child_id = %s"
         a, b = _by_roll(conn, school, "A", sql), _by_roll(conn, school, "B", sql)
-        assert a == b, f"{table}: the voice note and the form give a different state"
-    assert any(_by_roll(conn, school, "A", "select * from child_observed_state where child_id = %s").values())
+        assert a == b, f"{kind} states: the voice note and the form give a different state"
+    assert any(_by_roll(conn, school, "A",
+                        "select * from child_skill_state where kind = 'observed' and child_id = %s").values())
 
 
 def test_6_a_note_not_confirmed_in_48_hours_gives_no_observation_and_no_evidence(conn, school, client):
@@ -66,5 +67,5 @@ def test_6_a_note_not_confirmed_in_48_hours_gives_no_observation_and_no_evidence
                         (note["id"], kids)).fetchone()["n"] == 0
     assert conn.execute("select count(*) n from evidence_event where child_id = any(%s::uuid[])",
                         (kids,)).fetchone()["n"] == 0
-    assert conn.execute("select count(*) n from child_observed_state where child_id = any(%s::uuid[])",
-                        (kids,)).fetchone()["n"] == 0
+    assert conn.execute("select count(*) n from child_skill_state where kind = 'observed'"
+                        " and child_id = any(%s::uuid[])", (kids,)).fetchone()["n"] == 0

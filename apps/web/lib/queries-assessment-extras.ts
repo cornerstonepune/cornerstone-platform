@@ -6,13 +6,15 @@ import { matchFiles } from "./assessment-steps";
 
 const CODE = /^CS[0-9A-F]{6}$/i;
 
-/** The newest name an educator gave each assessment, by its key; an assessment never named has none (append-only). */
+/** The newest name an educator gave each assessment, by its key; an assessment never named has none (append-only:
+ *  each a row of the one history log, table `assessment`, op `name`). */
 export async function chosenNames(keys: string[]): Promise<Map<string, string>> {
   if (!keys.length) return new Map();
   const rows = await sql<{ key: string; name: string }[]>`
-    select distinct on (key) key, name from assessment_name
-    where key = any(${keys}) and tenant_id = (select id from tenant where slug = ${TENANT_SLUG})
-    order by key, created_at desc, id desc`;
+    select distinct on (row_id) row_id as key, after ->> 'name' as name from change_log
+    where table_name = 'assessment' and op = 'name' and row_id = any(${keys})
+      and tenant_id = (select id from tenant where slug = ${TENANT_SLUG})
+    order by row_id, at desc, id desc`;
   return new Map(rows.map((r) => [r.key, r.name]));
 }
 

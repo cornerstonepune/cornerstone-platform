@@ -31,7 +31,7 @@ const STATES: [string, string, string, string, number, number][] = [
 
 test.beforeAll(async () => {
   kids = await aClass(sql, SECTION, "G2", ["Asha", "Bina", "Chetan", "Dev", "Ela"]);
-  const [{ tenant_id }] = await sql<{ tenant_id: string }[]>`select tenant_id from child where id = ${kids.Asha}`;
+  const [{ tenant_id }] = await sql<{ tenant_id: string }[]>`select tenant_id from child_now where id = ${kids.Asha}`;
   await sql`delete from child_skill_state where child_id in ${sql(Object.values(kids))}`;
   for (const [who, rung, skill, state, n, right] of STATES) {
     await sql`

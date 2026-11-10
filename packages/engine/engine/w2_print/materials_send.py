@@ -1,8 +1,12 @@
 """Sending the materials list to the materials team (task M1-10; D-071). WhatsApp is the default: one tap opens it with
 the list written out as a checklist, and the engine records exactly what text was sent and who tapped when. It cannot
 know the message was read. Email is the second route; the engine has no mail sender, so it is recorded as 'not
-configured' and the list stays a draft. A list that has been sent has no more reminders."""
+configured' and the list stays a draft. A list that has been sent has no more reminders. A send is a row of the one run
+list (`flow_run`, flow `materials_send`: request {list_id, route}, result {text, status}, `uploaded_by` who; CP-27
+group 6: once the table `materials_send`); the team saying they have it is an `approval` row (kind `materials_ack`,
+target the send)."""
 
+import json
 from typing import Any
 from uuid import UUID
 
@@ -10,6 +14,7 @@ from engine.core import db, settings
 from engine.w2_print import materials_text as text
 
 SENT = ("opened", "sent")  # a send that went out; 'not configured' and 'failed' did not
+FLOW = "materials_send"
 
 
 class NothingToSend(Exception):
@@ -64,23 +69,33 @@ def send(conn: db.Conn, list_id: UUID, route: str, who: UUID) -> dict[str, Any]:
         status = "not configured"
     row = db.one(
         conn,
-        "insert into materials_send (tenant_id, list_id, route, text, status, who) values (%s,%s,%s,%s,%s,%s)"
-        " returning id",
-        (lst["tenant_id"], list_id, route, body, status, who),
+        "insert into flow_run (tenant_id, flow, trigger, started_at, finished_at, status, request, result, uploaded_by)"
+        " values (%s, %s, %s, clock_timestamp(), clock_timestamp(), 'ok', %s, %s, %s) returning id",
+        (
+            lst["tenant_id"],
+            FLOW,
+            route,
+            json.dumps({"list_id": str(list_id), "route": route}),
+            json.dumps({"text": body, "status": status}),
+            who,
+        ),
     )
-    if status == "opened":
+    if status == "opened":  # a list sent has no reminders: they are worked out for a draft only
         conn.execute("update materials_list set state = 'sent', updated_at = now() where id = %s", (list_id,))
-        conn.execute(
-            "update reminder set state = 'cancelled', updated_at = now() where list_id = %s and state = 'pending'",
-            (list_id,),
-        )
     return {"send_id": row["id"], "text": body, "status": status, "wa_link": link}
 
 
 def team_has_it(conn: db.Conn, send_id: UUID, who: UUID) -> None:
-    sent = db.one(conn, "select status from materials_send where id = %s", (send_id,))
+    sent = db.one(
+        conn,
+        "select tenant_id, result ->> 'status' as status from flow_run where id = %s and flow = %s",
+        (send_id, FLOW),
+    )
     if sent["status"] not in SENT:
         raise NotSent(send_id)
-    conn.execute(
-        "insert into materials_send_ack (send_id, who) values (%s, %s) on conflict do nothing", (send_id, who)
+    conn.execute(  # once a person: their second "the team has it" changes nothing
+        "insert into approval (tenant_id, kind, target, decision, by) select %s, 'materials_ack', %s::text, 'approved',"
+        " %s::text where not exists (select 1 from approval where kind = 'materials_ack' and target = %s::text"
+        " and by = %s::text)",
+        (sent["tenant_id"], send_id, who, send_id, who),
     )

@@ -1,7 +1,7 @@
 """The K2 educator's materials list (task M1-10; D-070, D-071). Built by code from the materials of the activities the
 class has planned in a range, one line for each catalogue item with its quantities added up, under the first day it is
 needed and tied to the activity it is first needed for. Never written by a model. The educator adds from the catalogue,
-changes a quantity and removes a line; every change is kept with who made it (`materials_line_edit`), and a rebuild
+changes a quantity and removes a line; every change is kept with who made it (a row of the one history log), and a rebuild
 brings back nothing she removed and changes no quantity she set. A quantity the plan does not give stays empty."""
 
 import datetime as dt
@@ -10,7 +10,7 @@ from decimal import Decimal
 from typing import Any
 from uuid import UUID
 
-from engine.core import db, settings
+from engine.core import db, history, settings
 from engine.w2_print import educator_gate, materials_send, materials_text
 
 
@@ -30,6 +30,42 @@ def num(q: Decimal | None) -> int | float | None:
     if q is None:
         return None
     return int(q) if q == q.to_integral_value() else float(q)
+
+
+def sources(rows: list[dict[str, Any]]) -> str:
+    """The planned lessons a line comes from, as `materials_line.sources` keeps them (CP-27 group 6: once the table
+    `materials_line_source`; the view of that name reads them): [{session_id, activity_code, on_date, quantity}]."""
+    return json.dumps(
+        [
+            {
+                "session_id": str(r["session_id"]),
+                "activity_code": r["activity_code"],
+                "on_date": str(r["on_date"]),
+                "quantity": None if r["quantity"] is None else num(Decimal(str(r["quantity"]))),
+            }
+            for r in rows
+        ]
+    )
+
+
+# one lesson added to a line's sources: (line_id, session_id, activity_code, on_date, quantity), as the table took them
+ADD_SOURCE = (
+    "update materials_line l set sources = l.sources || jsonb_build_array(jsonb_build_object('session_id', s.session_id,"
+    " 'activity_code', s.activity_code, 'on_date', s.on_date, 'quantity', s.quantity))"
+    " from (select %s::uuid as line_id, %s::text as session_id, %s::text as activity_code, %s::date as on_date,"
+    " %s::numeric as quantity) s where l.id = s.line_id"
+)
+
+
+def drop_sources(conn: db.Conn, session_ids: list[Any]) -> None:
+    """These lessons taken out of every line's sources (to be put back where they go)."""
+    conn.execute(
+        "update materials_line l set sources = coalesce((select jsonb_agg(e order by o)"
+        " from jsonb_array_elements(l.sources) with ordinality x(e, o) where (e ->> 'session_id')::uuid <> all(%s)),"
+        " '[]'::jsonb) where exists (select 1 from jsonb_array_elements(l.sources) e"
+        " where (e ->> 'session_id')::uuid = any(%s))",
+        (session_ids, session_ids),
+    )
 
 
 def _source_rows(conn: db.Conn, class_id: UUID, lo: dt.date, hi: dt.date) -> list[dict[str, Any]]:
@@ -65,10 +101,12 @@ def build(conn: db.Conn, class_id: UUID, period: str, lo: dt.date, hi: dt.date) 
     have = {
         r["material_code"]: r for r in conn.execute("select * from materials_line where list_id = %s", (lid,))
     }
-    touched = {
-        r["line_id"]: r["kinds"]
+    touched = {  # what a person did to each line, from the history log
+        UUID(r["line_id"]): r["kinds"]
         for r in conn.execute(
-            "select line_id, array_agg(kind) as kinds from materials_line_edit where list_id = %s group by line_id",
+            "select k.row_id as line_id, array_agg(k.op) as kinds from change_log k join materials_line l"
+            " on k.tenant_id = l.tenant_id and k.row_id = l.id::text where k.table_name = 'materials_line'"
+            " and l.list_id = %s group by k.row_id",
             (lid,),
         )
     }
@@ -94,13 +132,7 @@ def build(conn: db.Conn, class_id: UUID, period: str, lo: dt.date, hi: dt.date) 
                     " needed_on = %s, activity_code = %s, updated_at = now() where id = %s",
                     (first["unit"], keep, qty, first["on_date"], first["activity_code"], line),
                 )
-        conn.execute("delete from materials_line_source where line_id = %s", (line,))
-        for r in rows:
-            conn.execute(
-                "insert into materials_line_source (line_id, session_id, activity_code, on_date, quantity)"
-                " values (%s,%s,%s,%s,%s)",
-                (line, r["session_id"], r["activity_code"], r["on_date"], r["quantity"]),
-            )
+        conn.execute("update materials_line set sources = %s where id = %s", (sources(rows), line))
     for code, ex in have.items():  # the plan no longer needs it, and nobody has touched it
         if code not in wanted and ex["source"] == "school" and ex["id"] not in touched:
             conn.execute("delete from materials_line where id = %s", (ex["id"],))
@@ -170,10 +202,11 @@ def read(conn: db.Conn, list_id: UUID, group_by: str | None = None) -> dict[str,
 def _last_send(conn: db.Conn, list_id: UUID) -> dict[str, Any] | None:
     """The latest send that went out, whether the team has it, and whether the list reads differently now."""
     last = conn.execute(
-        "select s.id as send_id, s.route, s.at, s.text,"
-        " exists (select 1 from materials_send_ack a where a.send_id = s.id) as team_has_it"
-        " from materials_send s where s.list_id = %s and s.status = any(%s) order by s.at desc limit 1",
-        (list_id, list(materials_send.SENT)),
+        "select s.id as send_id, s.request ->> 'route' as route, s.started_at as at, s.result ->> 'text' as text,"
+        " exists (select 1 from approval a where a.kind = 'materials_ack' and a.target = s.id::text) as team_has_it"
+        " from flow_run s where s.flow = %s and s.request ->> 'list_id' = %s::text"
+        " and s.result ->> 'status' = any(%s) order by s.started_at desc limit 1",
+        (materials_send.FLOW, list_id, list(materials_send.SENT)),
     ).fetchone()
     if last is None:
         return None
@@ -182,10 +215,16 @@ def _last_send(conn: db.Conn, list_id: UUID) -> dict[str, Any] | None:
 
 
 def _edit(conn: db.Conn, line: dict[str, Any], kind: str, who: UUID, before: Any, after: Any) -> None:
-    conn.execute(
-        "insert into materials_line_edit (tenant_id, list_id, line_id, kind, who, before, after)"
-        " values (%s, %s, %s, %s, %s, %s, %s)",
-        (line["tenant_id"], line["list_id"], line["id"], kind, who, json.dumps(before), json.dumps(after)),
+    """A person's change to a line, a row of the one history log (table `materials_line`, the line's id, op the kind:
+    quantity, remove or add; CP-27 group 6: once the table `materials_line_edit`)."""
+    history.keep(
+        conn,
+        line["tenant_id"],
+        ("materials_line", str(line["id"]), kind),
+        before,
+        after,
+        f"staff:{who}",
+        staff=who,
     )
 
 

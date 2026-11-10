@@ -28,8 +28,9 @@ test.afterAll(async () => {
   await sql.end();
 });
 
-const row = async (id: string) => (await sql<{ band: string; section: string; roll_no: string }[]>`select band, section, roll_no from child where id = ${id}`)[0];
-const moves = (id: string) => sql<{ to_band: string; reason: string }[]>`select to_band, reason from child_move where child_id = ${id}`;
+const row = async (id: string) => (await sql<{ band: string; section: string; roll_no: string }[]>`select band, section, roll_no from child_now where id = ${id}`)[0];
+const moves = (id: string) => sql<{ to_band: string; reason: string }[]>`select after ->> 'band' as to_band, coalesce(reason, '') as reason from change_log
+  where table_name = 'child' and op = 'move' and row_id = ${id}`;
 
 test("the grades offered are the rows of the grade table, in its order", async ({ page }) => {
   await page.goto(`/growth/${kids.Ann}`);
@@ -72,7 +73,7 @@ test("Cancel writes nothing", async ({ page }) => {
 test("a move to a class that works at another grade asks which grade, keeps the same child, and shows in the history", async ({ page }) => {
   // something that is the child's own, to see it stay with them
   const [tpl] = await sql<{ id: string }[]>`
-    insert into sheet_template (tenant_id, band, child_id, week, key, batch_id) values (${tenant}, 'G3', ${kids.Cai}, ${"MV-" + RUN}, ${sql.json({ code: "MV" })}, ${"MV" + RUN}) returning id`;
+    insert into sheet_template (tenant_id, band, child_id, week, key, batch_id) values (${tenant}, 'G3', ${kids.Cai}, date_trunc('week', now())::date, ${sql.json({ code: "MV" })}, ${"MV" + RUN}) returning id`;
   await sql`insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, print_status) values (${tenant}, ${"CS" + RUN.padEnd(6, "0").slice(-6)}, ${tpl.id}, ${kids.Cai}, 'new')`;
 
   await page.goto(`/growth/${kids.Cai}`);

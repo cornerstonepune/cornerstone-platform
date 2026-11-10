@@ -28,7 +28,7 @@ let educator: Page;
 test.beforeAll(async ({ browser }) => {
   await aClass(sql, MINE, "G2", ["Ira", "Jai"]);
   const other = await aClass(sql, OTHER, "G3", ["Kavi", "Lata"]);
-  EDUCATOR.classes = (await sql<{ section: string }[]>`select distinct section from child where active order by 1`).map((r) => r.section);
+  EDUCATOR.classes = (await sql<{ section: string }[]>`select distinct section from child_now where active order by 1`).map((r) => r.section);
   await aPerson(sql, { ...EDUCATOR, password: PASSWORD });
   const [{ code: draft }] = await sql<{ code: string }[]>`select code from skill order by status = 'ratified', code limit 1`;
   pages = [

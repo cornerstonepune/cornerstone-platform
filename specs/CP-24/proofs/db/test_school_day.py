@@ -33,11 +33,7 @@ def test_1_move_child_says_no_current_date(conn):
 def test_1_a_hand_check_the_engine_writes_is_dated_by_the_school_day(conn, tenant):
     from engine.w3_read import nightly
 
-    child = db.one(
-        conn,
-        "insert into child (tenant_id, roll_no, section, band) values (%s, '1', %s, 'G3') returning id",
-        (tenant, f"CP24-{uuid.uuid4().hex[:6].upper()}"),
-    )["id"]
+    child = db.one(conn, "insert into child (tenant_id, band) values (%s, 'G3') returning id", (tenant,))["id"]
     nightly.hand_check(conn, child, "NUM.OPS.01", "G3", "secure", BY)
     (row,) = nightly.hand_checks(conn, child)
     assert row["checked_on"] == db.one(conn, "select internal.school_day(%s, now()) as d", (tenant,))["d"]
@@ -62,11 +58,7 @@ def _school(conn, tenant):
             " values (%s, %s, %s, 'G3', %s) returning id",
             (tenant, campus, year["id"], section),
         )["id"]
-        child = db.one(
-            conn,
-            "insert into child (tenant_id, roll_no, section, band) values (%s, '1', %s, 'G3') returning id",
-            (tenant, section),
-        )["id"]
+        child = db.one(conn, "insert into child (tenant_id, band) values (%s, 'G3') returning id", (tenant,))["id"]
         conn.execute("select enrol_child(%s, %s, '1', %s, %s)", (child, cid, year["starts_on"], BY))
         out[name] = {"section": section, "class": cid, "child": child}
     return out

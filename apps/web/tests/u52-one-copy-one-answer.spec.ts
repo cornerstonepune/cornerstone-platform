@@ -32,7 +32,7 @@ let ashaCapture = "";
 
 test.beforeAll(async () => {
   kids = await aClass(sql, SECTION, "G2", ["Asha", "Bina", "Chetan", "Dev"]);
-  const [{ tenant }] = await sql<{ tenant: string }[]>`select tenant_id as tenant from child where id = ${kids.Asha}`;
+  const [{ tenant }] = await sql<{ tenant: string }[]>`select tenant_id as tenant from child_now where id = ${kids.Asha}`;
   // a skill whose questions test two registry skills each, with two library worksheets
   const ws = await sql<{ id: string; item_ids: string[]; skill: string }[]>`
     select t.id, t.item_ids, t.skill_set_code as skill from sheet_template t
@@ -43,7 +43,7 @@ test.beforeAll(async () => {
     order by t.code limit 3`;
   [{ name: skill }] = await sql<{ name: string }[]>`select name from skill where code = ${ws[0].skill}`;
   const onThePack = (qr: string) => sql`
-    update sheet_instance set week = ${THIS}, section = ${SECTION}, kind = 'assessment', approved_by = 'u52', approved_at = now()
+    update sheet_instance set week = to_date(${THIS}, 'IYYY-"W"IW'), section = ${SECTION}, kind = 'assessment', approved_by = 'u52', approved_at = now()
     where qr_code = ${qr}`;
   const asha = await aReadPaper(sql, {
     qr: QR.asha,
@@ -67,7 +67,7 @@ test.beforeAll(async () => {
     values (${tenant}, ${kids.Asha}, ${asha.capture}, ${asha.results[1]}, '', '10', 'u52')`;
   await sql`
     insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, week, section, kind, print_status, approved_by, approved_at)
-    select ${tenant}, ${QR.ashaTwin}, ${ws[1].id}, ${kids.Asha}, ${THIS}, ${SECTION}, 'assessment', 'printed', 'u52', now()
+    select ${tenant}, ${QR.ashaTwin}, ${ws[1].id}, ${kids.Asha}, to_date(${THIS}, 'IYYY-"W"IW'), ${SECTION}, 'assessment', 'printed', 'u52', now()
     where not exists (select 1 from sheet_instance where qr_code = ${QR.ashaTwin})`;
   await aReadPaper(sql, {
     qr: QR.bina,
@@ -78,7 +78,7 @@ test.beforeAll(async () => {
   });
   await sql`
     insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, week, section, kind, print_status, approved_by, approved_at)
-    select ${tenant}, ${QR.chetan}, ${ws[2].id}, ${kids.Chetan}, ${THIS}, ${SECTION}, 'assessment', 'printed', 'u52', now()
+    select ${tenant}, ${QR.chetan}, ${ws[2].id}, ${kids.Chetan}, to_date(${THIS}, 'IYYY-"W"IW'), ${SECTION}, 'assessment', 'printed', 'u52', now()
     where not exists (select 1 from sheet_instance where qr_code = ${QR.chetan})`;
   await aReadPaper(sql, {
     qr: QR.dev,

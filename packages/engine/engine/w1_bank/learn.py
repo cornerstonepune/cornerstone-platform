@@ -2,7 +2,8 @@
 goals/s21-real-difficulty.yaml).
 
 A question's real difficulty is the share of children who got it right, counted only from answers a person has
-confirmed (`item_stat`, ring B: rebuilt from nothing each time). A question far easier or far harder than its level
+confirmed (`item_stat`, ring B: a view over the answers, so never stale; CP-27 group 6: once a table rebuilt by
+`engine graph`). A question far easier or far harder than its level
 — above `item.flag_high_p` or below `item.flag_low_p`, over at least `item.min_attempts` answers — becomes a
 proposal. A person removes it from the bank (`question.remove`: its worksheets are rebuilt) or keeps it. The level
 itself is not moved: a level is a rule its questions are measured against (digits, regrouping), and when many of a
@@ -23,33 +24,34 @@ def _bar(conn, row):
 
 
 def item_stats(conn) -> int:
-    """`item_stat` rebuilt from confirmed answers: each question's attempts, share right, and whether it is far off
-    its level. A reading still waiting for a person, or one a later read replaced, is not evidence."""
+    """How many questions have confirmed answers (`item_stat`: each question's attempts and share right, worked out from
+    confirmed answers whenever it is read; a reading still waiting for a person, or one a later read replaced, is not
+    evidence)."""
+    return int(conn.execute("select count(*) as n from item_stat").fetchone()["n"])
+
+
+def _flagged(conn) -> tuple[str, tuple[float, float, float]]:
+    """Whether a question is far off its level, as SQL over `item_stat s`, and its three numbers (settings)."""
     low, high, least = _bar(conn, LOW), _bar(conn, HIGH), _bar(conn, MIN)
-    conn.execute("delete from item_stat")
-    return conn.execute(
-        "insert into item_stat (tenant_id, item_id, n, p_correct, flagged_mislevelled)"
-        " select r.tenant_id, r.item_id, count(*), avg((r.status = 'correct')::int)::numeric(5, 4),"
-        "        count(*) >= %s and (avg((r.status = 'correct')::int) < %s or avg((r.status = 'correct')::int) > %s)"
-        " from item_result r join capture c on c.id = r.capture_id"
-        " where r.state = 'confirmed' and r.status in ('correct', 'wrong', 'blank') and c.superseded_by is null"
-        " group by r.tenant_id, r.item_id",
-        (least, low, high),
-    ).rowcount
+    return "(s.n >= %s and (s.p_correct < %s or s.p_correct > %s))", (least, low, high)
 
 
 def stat(conn, item_key):
+    """A question's attempts, share right and whether it is far off its level (`flagged_mislevelled`)."""
+    flagged, bars = _flagged(conn)
     return conn.execute(
-        "select s.* from item_stat s join item i on i.id = s.item_id where i.item_key = %s", (item_key,)
+        f"select s.*, {flagged} as flagged_mislevelled from item_stat s join item i on i.id = s.item_id"  # noqa: S608
+        " where i.item_key = %s",
+        (*bars, item_key),
     ).fetchone()
 
 
 def refresh(conn) -> list[dict]:
-    """Rebuild the stats, propose each active question now far off its level that was never proposed that way (under
+    """Propose each active question now far off its level that was never proposed that way (under
     the key it has now or one it had then), and → the proposals no one has decided yet, oldest first. A proposal is a
     row of the one proposal list (`curriculum_proposal`, kinds `mislevelled` and `new_mistake`)."""
-    item_stats(conn)
     high, run = _bar(conn, HIGH), uuid.uuid4()
+    flagged, bars = _flagged(conn)
     conn.execute(
         "insert into curriculum_proposal (tenant_id, run_id, kind, subject_code, proposal, status, proposer, machine)"
         " select i.tenant_id, %s, 'mislevelled', i.item_key, jsonb_build_object('direction', d.direction,"
@@ -58,12 +60,12 @@ def refresh(conn) -> list[dict]:
         "        'needs_person', 'code', 'code:mislevelled'"
         " from item_stat s join item i on i.id = s.item_id"
         " cross join lateral (select case when s.p_correct > %s then 'easier' else 'harder' end as direction) d"
-        " where s.flagged_mislevelled and i.status = 'active' and not exists ("
+        f" where {flagged} and i.status = 'active' and not exists ("
         "   select 1 from curriculum_proposal p where p.tenant_id = i.tenant_id and p.kind = 'mislevelled'"
         "   and p.about is null and p.proposal ->> 'direction' = d.direction and (p.subject_code = i.item_key"
         "   or p.subject_code in (select k.before ->> 'item_key' from change_log k where k.tenant_id = i.tenant_id"
         "     and k.table_name = 'item' and k.row_id = i.id::text and k.op = 'rekey')))",  # ADR 0053
-        (run, high),
+        (run, high, *bars),
     )
     learned.propose(
         conn, run

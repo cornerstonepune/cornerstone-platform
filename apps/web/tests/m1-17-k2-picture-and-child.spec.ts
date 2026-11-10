@@ -171,8 +171,8 @@ test("a confirmed link makes a skill ready next; a proposed one does not", async
   // child 1 is secure on `a`; the engine's own fixture proposes one link and confirms the other (no web code names the raw link tables)
   const engine = path.resolve(__dirname, "../../../packages/engine");
   execFileSync(path.join(engine, ".venv/bin/python"), ["tests/k2_link_fixture.py", a.code, c.code, d.code], { cwd: engine, env: process.env, stdio: "pipe" });
-  const [{ state }] = await sql<{ state: string }[]>`select s.state from child_observed_state s join enrolment e on e.child_id = s.child_id
-    where e.class_id = ${klass} and e.roll_no = '1' and s.skill_code = ${a.code}`;
+  const [{ state }] = await sql<{ state: string }[]>`select s.state from child_skill_state s join enrolment e on e.child_id = s.child_id
+    where s.kind = 'observed' and e.class_id = ${klass} and e.roll_no = '1' and s.skill_code = ${a.code}`;
   expect(state).toBe("secure");
   await page.goto(`/k2/${klass}/1`);
   const ready = page.locator("[data-k2=ready-next]");

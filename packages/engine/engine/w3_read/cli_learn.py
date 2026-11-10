@@ -22,7 +22,7 @@ def read_profile(
         [], "--child", help="one child's first name; default every checked child"
     ),
 ) -> None:
-    """Rebuild each checked child's notebook from every check a person has made, and say what it
+    """Build each checked child's notebook from every check a person has made, and say what it
     holds: how often the reader was right, the child's own confidence floor, the kinds routed to a
     person, the digits the reader confuses in this hand, and the samples the second reader sees."""
     with db.connect() as conn:

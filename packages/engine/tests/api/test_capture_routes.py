@@ -241,11 +241,13 @@ def test_a_correction_the_engine_refuses_is_a_409_with_its_reason_not_a_500(clie
     assert r.status_code == 409 and "no answer" in r.json()["detail"]
 
 
-def test_every_check_rebuilds_the_notebooks_it_made_stale_correction_and_sign_off_alike(client, monkeypatch):
-    """ADR 0032: every check rebuilds that child's notebook. The website corrects through /capture/correct and, after a
-    sign-off, asks /capture/trusted; both rebuild every notebook a check has made stale (`profiles.refresh`)."""
+def test_a_correction_and_a_sign_off_both_reach_the_notebook_with_nothing_to_rebuild(client, monkeypatch):
+    """ADR 0032: every check changes that child's next read. The website corrects through /capture/correct and, after a
+    sign-off, asks /capture/trusted. The notebook is built from the checks whenever it is read (CP-27 group 6: it is no
+    longer stored), so neither route has a notebook to rebuild; that a check reaches the child's next read is
+    `test_profiles.test_a_check_changes_the_notebook_of_the_child_checked_and_no_other`."""
     calls = []
-    monkeypatch.setattr(profiles, "refresh", lambda conn: calls.append("refresh") or 1)
+    assert not hasattr(profiles, "refresh")
     monkeypatch.setattr(again, "trusted", lambda conn: calls.append("trusted") or 0)
     monkeypatch.setattr(
         marking,
@@ -255,7 +257,7 @@ def test_every_check_rebuilds_the_notebooks_it_made_stale_correction_and_sign_of
     assert client.post("/capture/trusted", headers=HEADERS).json() == {"marked_again": 0}
     body = {"result_id": "r1", "human_read": "44", "by": "tester@example.org"}
     assert client.post("/capture/correct", headers=HEADERS, json=body).status_code == 200
-    assert calls == ["trusted", "refresh", "trusted", "refresh"]
+    assert calls == ["trusted", "trusted"]
 
 
 # ---- the right answer (goals/s26-the-right-answer-shown-and-corrected.yaml)

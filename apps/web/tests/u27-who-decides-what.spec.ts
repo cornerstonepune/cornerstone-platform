@@ -34,15 +34,15 @@ test.beforeAll(async () => {
     select id from sheet_template where source = 'library' and retired_at is null order by code limit 1`;
   for (const [section, kids] of [[MINE, mine], [OTHER, other]] as const) {
     for (const id of Object.values(kids)) {
-      const [had] = await sql`select 1 from prescription where child_id = ${id} and week = ${WEEK}`;
+      const [had] = await sql`select 1 from prescription where child_id = ${id} and week = to_date(${WEEK}, 'IYYY-"W"IW')`;
       if (had) continue;
       const [{ id: paper }] = await sql<{ id: string }[]>`
         insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, week, section, kind, print_status)
-        values (${tenant}, ${`U27-${id.slice(0, 8)}`}, ${w.id}, ${id}, ${WEEK}, ${section}, 'practice', 'new')
+        values (${tenant}, ${`U27-${id.slice(0, 8)}`}, ${w.id}, ${id}, to_date(${WEEK}, 'IYYY-"W"IW'), ${section}, 'practice', 'new')
         returning id`;
       await sql`
         insert into prescription (tenant_id, child_id, week, rule_fired, skill_set_code, difficulty, kind, sheet_instance_id)
-        values (${tenant}, ${id}, ${WEEK}, 'band_default', 'ADD.2D1D', 'Easy', 'practice', ${paper})`;
+        values (${tenant}, ${id}, to_date(${WEEK}, 'IYYY-"W"IW'), 'band_default', 'ADD.2D1D', 'Easy', 'practice', ${paper})`;
     }
   }
   [{ code: draft }] = await sql<{ code: string }[]>`select code from skill order by code limit 1`;
@@ -94,7 +94,7 @@ test("an educator's approval of another class's pack is refused in words, and no
   } finally {
     await page.context().close();
     await sql`update sheet_instance set print_status = 'new', printed_at = null, approved_by = null, approved_at = null
-              where child_id = any(${Object.values(other)}::uuid[]) and week = ${WEEK}`;
+              where child_id = any(${Object.values(other)}::uuid[]) and week = to_date(${WEEK}, 'IYYY-"W"IW')`;
   }
 });
 

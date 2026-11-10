@@ -102,14 +102,20 @@ def test_no_problem_names_a_child_an_id_or_an_address(conn):
 
 def _nightly(conn, tenant, hours_ago: float, ok: bool = True):
     conn.execute(
-        "insert into graph_run (tenant_id, started_at, ran_at, ok, error) values"
-        " (%s, now() - make_interval(mins => %s), now() - make_interval(mins => %s), %s, %s)",
-        (tenant, int(hours_ago * 60), int(hours_ago * 60), ok, None if ok else "Error: test"),
+        "insert into flow_run (tenant_id, flow, started_at, finished_at, status, error) values"
+        " (%s, 'graph_nightly', now() - make_interval(mins => %s), now() - make_interval(mins => %s), %s, %s)",
+        (
+            tenant,
+            int(hours_ago * 60),
+            int(hours_ago * 60),
+            "ok" if ok else "error",
+            None if ok else "Error: test",
+        ),
     )
 
 
 def test_a_nightly_rebuild_that_stopped_is_a_problem(conn):
-    """CP-24 (audit F1): the newest ok run on `graph_run` older than `graph.nightly_stale_hours` (26), or none at all,
+    """CP-24 (audit F1): the newest ok nightly run (`flow_run`, flow `graph_nightly`) older than `graph.nightly_stale_hours` (26), or none at all,
     is one line; a failed run since does not count as a run. The school's own ledger is read through `problems`; the
     ages are tried on a school of the test's own, so the copy's real runs do not decide the answer."""
     school = db.one(
@@ -124,7 +130,7 @@ def test_a_nightly_rebuild_that_stopped_is_a_problem(conn):
         (school, _tenant(conn)),
     )
     assert watch.nightly_stale(conn, school) == (
-        "the nightly rebuild has never run ok (nothing on graph_run; the limit is 26 hours)"
+        "the nightly rebuild has never run ok (no graph_nightly run; the limit is 26 hours)"
     )
     _nightly(conn, school, 30)
     _nightly(conn, school, 1, ok=False)

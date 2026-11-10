@@ -29,21 +29,16 @@ CHILD = {
     # CP-4: a child's own id
     "public.access_log": ("who_looked", "child_id", "child"),
     "public.activity_observation": ("notes", "child_id", "child"),
-    "public.child_move": ("children", "child_id", "child"),
-    "public.child_observed_state": ("learning", "child_id", "child"),
     "public.child_skill_state": ("learning", "child_id", "child"),
     "public.evidence_event": ("learning", "child_id", "child"),
-    "public.child_reading_profile": ("answers", "child_id", "child"),
     "public.read_correction": ("answers", "child_id", "child"),
     "public.item_exposure": ("papers", "child_id", "child"),
-    "public.paper_edit": ("papers", "child_id", "child"),
     "public.prescription": ("papers", "child_id", "child"),
     "public.parent_note": ("reports", "child_id", "child"),
     "public.consent": ("consent", "child_id", "child"),
     # CP-4: a paper, a scan, an answer (no child column; they hang off the paper)
     "public.sheet_instance": ("papers", "id", "sheet"),
     "public.capture": ("papers", "id", "capture"),
-    "public.capture_page": ("papers", "capture_id", "capture"),
     "public.item_result": ("answers", "capture_id", "capture"),
     # a paper blueprint made for one child (focus papers) carries child_id; a spare one carries none and is open
     "public.sheet_template": ("papers", "child_id", "child_open"),
@@ -55,8 +50,6 @@ CHILD = {
     # an approval of a parent report, a paper or a class card (its card in `detail`) is of that child's report, paper or
     # class, each seen through its own kind; the other kinds (a level, a way of asking, a question, a link) are the school's
     "public.approval": ("reports", "target", "approval_target"),
-    # CP-4: legacy class label (section) with child ids inside
-    "public.class_card": ("learning", "section", "section"),
 }
 
 SCHOOL_WIDE = [
@@ -75,31 +68,27 @@ SCHOOL_WIDE = [
     (
         "skill registry and curriculum: the school's own teaching content, open to every educator; no child",
         "registry_skill skill skill_level skill_level_question_type "
-        "skill_level_sample skill_link skill_mistake skill_prerequisite skill_registry_link "
-        "curriculum_proposal curriculum_version curriculum_version_skill "
-        "learning_objective learning_objective_skill milestone misconception trait rubric level_rule "
-        "question_format question_type",
+        "skill_mistake skill_prerequisite skill_registry_link "
+        "curriculum_proposal curriculum_version "
+        "learning_objective learning_objective_skill misconception rubric level_rule "
+        "question_type",
     ),
     (
         "activities and sample material the school wrote or approved for its curriculum; no child",
-        "activity activity_material activity_objective activity_part_source activity_skill passage report_item "
-        "taxonomy_case english_sample english_sample_edit english_sample_wrong maths_sample",
+        "activity activity_material activity_objective activity_skill passage report_item "
+        "taxonomy_case english_sample",
     ),
     (
         "the question bank: questions, their keys, checks, statistics and reviews; no child",
-        "item item_stat assessment_name",
+        "item",
     ),
     (
         "plan and timetable: what a class is to do and when, by class id; no child (the scope names both school-wide)",
-        "plan_entry session timetable_block timetable_limit timetable_rule_edit timetable_slot week_declaration "
-        "class_skill",
+        "plan_entry session timetable_rule",
     ),
     (
         "materials lists for the activities of a class and their shopping; by class id; no child",
-        "material_alias material_item material_unit_conversion materials_consolidated "
-        "materials_consolidated_change materials_consolidated_line materials_consolidated_send "
-        "materials_consolidated_source materials_line materials_line_edit materials_line_source materials_list "
-        "materials_note_review materials_send materials_send_ack reminder",
+        "material_item materials_line materials_list",
     ),
     (
         "the tool's own records: settings, prompts, errors, staff feedback notes, register text; no child",

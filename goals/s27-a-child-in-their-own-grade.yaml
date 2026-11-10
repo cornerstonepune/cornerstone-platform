@@ -13,7 +13,7 @@ goal: >
 # from whichever child Postgres returned first (`limit 1`), so one child's slip could move the whole class.
 says:
   - words: "G3 roll 5 should be band G3, fix it"
-    proved_by: packages/engine/tests/test_roster.py::test_g3_roll_5_is_band_g3_once_the_migration_has_run
+    proved_by: packages/engine/tests/test_roster.py::test_a_class_works_at_the_grade_most_of_its_children_are_in
 manual:
   - "Correct G3 roll 5's band in the class list file itself. It lives outside the repository, and loading it unchanged puts G4 back; the load now says so."
 scenarios: []
