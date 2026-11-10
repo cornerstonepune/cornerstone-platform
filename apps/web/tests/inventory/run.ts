@@ -14,7 +14,7 @@ export async function auditScreen(browser: Browser, s: Screen, role: "educator" 
   const byId = new Map(a.inv.screens.map((x) => [x.id, x]));
   for (const scheme of width >= 1000 ? (["light", "dark"] as const) : (["light"] as const)) {
     // a screen of the bare frame is the sign-in page: it is met signed out, as the person who needs it is
-    const context = s.frame === "bare" ? await browser.newContext({ baseURL: "http://localhost:3100", viewport: { width, height: 900 }, colorScheme: scheme }) : await signedInAs(browser, role, { width, height: 900 }, scheme);
+    const context = s.frame === "bare" ? await browser.newContext({ baseURL: "http://localhost:3100", viewport: { width, height: 900 }, colorScheme: scheme, storageState: { cookies: [], origins: [] } }) : await signedInAs(browser, role, { width, height: 900 }, scheme);
     const page = await context.newPage();
     const errors: string[] = [];
     const hosts = new Set<string>();

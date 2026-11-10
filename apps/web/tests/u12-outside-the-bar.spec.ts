@@ -56,7 +56,8 @@ test("the ? of every screen names that screen's own section", async () => {
     const owner = INVENTORY.screens.filter((x) => new RegExp(`^${x.route.replace(/\[\w+\]/g, "[^/]+")}$`).test(concrete)).sort((a, b) => fewer(a.route) - fewer(b.route))[0];
     expect(owner.id === first.id || owner.route !== s.route, s.route).toBe(true);
     expect(sectionFor(concrete), s.route).toBe(owner.id);
-    expect(guideFor(concrete), s.route).toBe(`/guide#${owner.id}`);
+    // the help's own pages carry no anchor: the ? there leads to the front
+    expect(guideFor(concrete), s.route).toBe(s.id === "help" ? "/guide" : `/guide#${owner.id}`);
   }
   expect(guideFor("/guide")).toBe("/guide");
   expect(guideFor("/a-page-nobody-listed")).toBe("/guide");

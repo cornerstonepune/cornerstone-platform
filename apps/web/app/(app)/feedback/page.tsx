@@ -41,7 +41,7 @@ export default async function ReportPage({ searchParams }: Props) {
       stage="To the team"
       title="Report a problem or suggest something"
       purpose="Tell us what is broken, what you would like, or ask a question. It reaches the team, who decide what is built."
-      action={<span className="note">One note at a time, in your own words.</span>}
+      action={<span className="b-muted">One note at a time, in your own words.</span>}
       next={{ href: routeOnly(q.from ?? "/today"), label: "Back to the page you came from" }}
     >
       <ReportForm from={routeOnly(q.from ?? "/")} maxChars={maxChars} />
@@ -57,9 +57,9 @@ export default async function ReportPage({ searchParams }: Props) {
             extras={{ attrs: (r) => ({ "data-report": r.seen }) }}
           />
         ) : (
-          <p className="note">Nothing sent yet. What you send shows here, and whether it was taken up or done.</p>
+          <p className="b-muted">Nothing sent yet. What you send shows here, and whether it was taken up or done.</p>
         )}
-        <p className="note mt-2">
+        <p className="b-muted mt-2">
           Taken up means it will be built; done means it is finished.
         </p>
       </section>

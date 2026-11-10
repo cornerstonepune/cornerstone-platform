@@ -1,9 +1,9 @@
 import Link from "@/components/link";
 import { Screen } from "@/components/app-frame";
-import { Details } from "@/components/details";
 import { KeyValue } from "@/components/key-value";
 import { OpenSection } from "@/components/open-section";
 import { Stepper } from "@/components/stepper";
+import { ICON_SIZE, Icon } from "@/lib/icons";
 import { requireStaff } from "@/lib/auth";
 import { isBuilt, screenHref } from "@/lib/built";
 import { sectionFor } from "@/lib/guide-path";
@@ -70,14 +70,20 @@ export default async function Guide({ searchParams }: Props) {
           Each page
         </h2>
         {SECTIONS.map((s) => (
-          <Details key={s.id} id={s.id} summaryData={{ "data-section": "" }} summary={<>{s.title} <span className="b-muted">{s.group}</span></>}>
+          <details key={s.id} id={s.id} data-block="Details" className="b-details">
+            <summary data-section>
+              <Icon name="details" size={ICON_SIZE.table} />
+              {s.title} <span className="b-muted">{s.group}</span>
+            </summary>
+            <div>
             <KeyValue
               rows={[
                 { label: "What it is for", value: s.purpose },
                 { label: "What each control does", value: s.does.map((d) => (d.says ? `${d.label}: ${d.says}` : d.label)).join(" · ") },
               ]}
             />
-          </Details>
+            </div>
+          </details>
         ))}
       </section>
     </Screen>
