@@ -93,13 +93,15 @@ def test_once_switched_on_a_head_sees_only_classes_they_hold_and_a_preview_adds_
     )  # a preview changes nothing
 
 
-def test_a_preview_offers_only_classes_whose_timetable_is_in_force_on_the_day_asked(world):
+def test_a_preview_offers_only_classes_with_lessons_on_the_day_asked(world):
     _switch(world, False)
     head = _head(world)
     world["conn"].execute(
-        "update timetable_slot set valid_to = valid_from where school_class_id = %s", (world["k"]["class"],)
+        "delete from session s using school_day d where d.id = s.school_day_id and s.school_class_id = %s"
+        " and d.on_date = '2026-11-25'",
+        (world["k"]["class"],),
     )
-    r = call(world, "day", actor=head, day="2026-11-25")  # after every slot ended
+    r = call(world, "day", actor=head, day="2026-11-25")  # a day the class has no lesson
     assert r.status_code == 403 or all(c["id"] != world["k"]["class"] for c in r.json()["classes"])
 
 
@@ -122,7 +124,15 @@ def _materials_rows(c) -> dict[str, int]:
             " and table_name like 'materials%%' and table_type = 'BASE TABLE' order by 1"
         ).fetchall()
     ]
-    return {n: c.execute(f"select count(*) as n from {n}").fetchone()["n"] for n in names}  # noqa: S608
+    out = {n: c.execute(f"select count(*) as n from {n}").fetchone()["n"] for n in names}  # noqa: S608
+    # a school list, a send and a note waiting are rows of the run list and the proposal list (CP-27 group 6)
+    out["flow_run"] = c.execute(
+        "select count(*) as n from flow_run where flow like 'materials%%'"
+    ).fetchone()["n"]
+    out["curriculum_proposal"] = c.execute(
+        "select count(*) as n from curriculum_proposal where kind = 'materials_note'"
+    ).fetchone()["n"]
+    return out
 
 
 def _a_material(w):

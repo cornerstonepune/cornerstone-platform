@@ -13,7 +13,7 @@ import json
 import threading
 
 from engine.adapters import llm
-from engine.core import db, settings
+from engine.core import db, settings, weeks
 from engine.w4_close import parent_review
 from engine.w4_close.parent_check import (  # noqa: F401 — the words held to the facts
     check,
@@ -116,14 +116,13 @@ def keep(conn, child_id, got):
     """A draft that holds to its facts, kept for an educator to approve; the week is today's."""
     if got["problems"]:
         raise ValueError("a draft that breaks its facts is never kept: " + "; ".join(got["problems"]))
-    y, w, _ = settings.school_today(conn).isocalendar()
     return conn.execute(
         "insert into parent_note (tenant_id, child_id, week, body, prompt_version)"
         " select t.id, %s, %s, %s, (select version from prompt where id = %s) from tenant t where t.slug = %s"
         " returning id, created_at",
         (
             child_id,
-            f"{y}-W{w:02d}",
+            weeks.day(settings.school_today(conn)),
             json.dumps({"facts": got["facts"], "draft": got["draft"]}),
             got["prompt_id"],
             db.tenant_slug(),
@@ -144,7 +143,7 @@ def latest(conn, child_id):
     now = json.loads(json.dumps(facts(conn, child_id), default=str))
     return {
         "id": str(row["id"]),
-        "week": row["week"],
+        "week": weeks.label(row["week"]),
         "facts": body["facts"],
         "draft": body["draft"],
         "prompt_version": row["prompt_version"],

@@ -29,7 +29,7 @@ const at = (page: Page) => page.getByRole("list", { name: "Where it stands" }).l
 test.beforeAll(async () => {
   kids = await aClass(sql, SECTION, "G2", ["Asha", "Bina", "Chetan"]);
   [{ tenant, week }] = await sql<{ tenant: string; week: string }[]>`
-    select tenant_id as tenant, to_char(now(), 'IYYY-"W"IW') as week from child where id = ${kids.Asha}`;
+    select tenant_id as tenant, to_char(now(), 'IYYY-"W"IW') as week from child_now where id = ${kids.Asha}`;
   [ws] = await sql<{ id: string; item_ids: string[]; set: string; title: string }[]>`
     select t.id, t.item_ids, t.skill_set_code as set, s.name || ' · ' || t.difficulty as title
     from sheet_template t join skill s on s.code = t.skill_set_code
@@ -39,14 +39,14 @@ test.beforeAll(async () => {
   for (const [who, qr] of Object.entries(QR)) {
     await sql`
       insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, section, week, kind, print_status)
-      values (${tenant}, ${qr}, ${ws.id}, ${who === "spare" ? null : kids[who]}, ${SECTION}, ${week}, 'practice', 'new')`;
+      values (${tenant}, ${qr}, ${ws.id}, ${who === "spare" ? null : kids[who]}, ${SECTION}, to_date(${week}, 'IYYY-"W"IW'), 'practice', 'new')`;
   }
   // the class assessment, printed, whose papers come back with no one pressing "Given on"
   for (const [who, n] of [["Asha", "B1"], ["Bina", "B2"]] as const) {
     await sql`
       insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, section, week, kind, print_status,
                                   approved_by, approved_at, printed_at)
-      values (${tenant}, ${code(n)}, ${ws.id}, ${kids[who]}, ${SECTION}, ${week}, 'assessment', 'printed', 'e2e', now(), now())`;
+      values (${tenant}, ${code(n)}, ${ws.id}, ${kids[who]}, ${SECTION}, to_date(${week}, 'IYYY-"W"IW'), 'assessment', 'printed', 'e2e', now(), now())`;
   }
 });
 test.afterAll(async () => {

@@ -18,6 +18,7 @@ import typer
 
 from engine.core import db, history
 from engine.w1_bank import k2_gaps as gaps
+from engine.w1_bank import k2_part_source
 
 SEED = db.REPO_ROOT / "supabase" / "seed" / "k2_sheet.json"
 BULLET = re.compile(r"^\s*(?:[•·●▪◦*–—-]|\d+[.)])\s*")
@@ -230,12 +231,9 @@ def snapshot(conn, tenant) -> tuple[list[dict], set[tuple[str, str]]]:
 def mark_school(conn, tenant, code: str, parts: list[str]) -> None:
     """These parts of this page are the school's words now. A part a person changed stays the person's."""
     for part in parts:
-        conn.execute(
-            "insert into activity_part_source (tenant_id, activity_code, part, source) values (%s,%s,%s,'school')"
-            " on conflict (tenant_id, activity_code, part) do update set source = 'school', proposal_id = null"
-            " where activity_part_source.source = 'drafted'",
-            (tenant, code, part),
-        )
+        was = k2_part_source.now(conn, tenant, code, part)
+        if was is None or was["source"] == "drafted":
+            k2_part_source.mark(conn, tenant, code, part, "k2 upload", was, source="school", proposal_id=None)
 
 
 def apply(conn, tenant, p: Plan, by: str) -> dict[str, int]:

@@ -28,14 +28,17 @@ def keep(
     after: dict[str, Any] | None,
     origin: str,
     reason: str | None = None,
+    staff: db.Id | None = None,
 ) -> None:
     """One change a step of the engine makes itself, `change` = (table, row, op): a question keyed again (`rekey`) or
     its right answer corrected (`correct_key`), a page's choice (`choose_page`), a mistake named (`name_mistake`), a
-    kind added, taken, stopped or started at a level. Its value now is on its own row; this is how it came to be."""
+    kind added, taken, stopped or started at a level; a sample edited, a materials line changed, a part of a page marked.
+    Its value now is on its own row; this is how it came to be. `staff`: the member of staff it was, when the caller
+    knows (else the signed-in one, if any)."""
     table, row_id, op = change
     conn.execute(
         "insert into change_log (tenant_id, table_name, row_id, op, before, after, staff_id, origin, reason)"
-        " values (%s, %s, %s, %s, %s, %s, public.signed_in_staff(), %s, %s)",
+        " values (%s, %s, %s, %s, %s, %s, coalesce(%s::uuid, public.signed_in_staff()), %s, %s)",
         (
             tenant,
             table,
@@ -43,6 +46,7 @@ def keep(
             op,
             None if before is None else json.dumps(before),
             None if after is None else json.dumps(after),
+            staff,
             origin,
             reason,
         ),

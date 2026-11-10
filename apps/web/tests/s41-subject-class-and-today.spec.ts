@@ -27,7 +27,7 @@ test.beforeAll(async () => {
   test.setTimeout(120_000);
   kids = await aClass(sql, SECTION, "G2", ["Asha", "Bina", "Chetan"]);
   await aClass(sql, OTHER, "G3", ["Dev"]);
-  const [{ tenant }] = await sql<{ tenant: string }[]>`select tenant_id as tenant from child where id = ${kids.Asha}`;
+  const [{ tenant }] = await sql<{ tenant: string }[]>`select tenant_id as tenant from child_now where id = ${kids.Asha}`;
   const skills = await sql<{ code: string; rung: string }[]>`
     select ss.registry_codes[1] as code, ss.rung_code as rung from skill ss
     where ss.grade = 'G2' and cardinality(ss.registry_codes) > 0 order by ss.ladder_order, ss.code limit 2`;
@@ -65,7 +65,7 @@ test.beforeAll(async () => {
     items: ws.item_ids.slice(0, 2),
     reads: [{ status: "correct", read: "1" }, { status: "needs_teacher", read: "7" }],
   });
-  await sql`update sheet_instance set section = ${SECTION}, kind = 'practice', week = to_char(now(), 'IYYY-"W"IW') where qr_code = ${QR}`;
+  await sql`update sheet_instance set section = ${SECTION}, kind = 'practice', week = date_trunc('week', now())::date where qr_code = ${QR}`;
 });
 test.afterAll(async () => {
   await sql.end();

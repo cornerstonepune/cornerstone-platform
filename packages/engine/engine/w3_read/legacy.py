@@ -613,7 +613,7 @@ def child_map(conn, child_id):
     states = conn.execute(
         "select s.rung_code, s.skill_code, s.state, s.n_events, s.n_correct, s.repeating_misconception,"
         " k.descriptor, k.ladder_order from child_skill_state s join skill k on k.rung_code = s.rung_code"
-        " where s.child_id = %s order by k.ladder_order nulls last",
+        " where s.kind = 'written' and s.child_id = %s order by k.ladder_order nulls last",
         (child_id,),
     ).fetchall()
     nxt = conn.execute(

@@ -20,9 +20,8 @@ let klass: string;
 test.beforeAll(async () => {
   mkdirSync(SHOTS, { recursive: true });
   ({ klass } = await k2Class(sql));
-  await sql`delete from timetable_block where school_class_id = ${klass}`;
-  await sql`delete from timetable_limit where school_class_id = ${klass}`;
-  const [{ n }] = await sql<{ n: number }[]>`select count(*)::int as n from timetable_slot where school_class_id = ${klass}`;
+  await sql`delete from timetable_rule where school_class_id = ${klass} and kind in ('block', 'limit')`; // CP-27: the rules in one table
+  const [{ n }] = await sql<{ n: number }[]>`select count(*)::int as n from timetable_rule where school_class_id = ${klass} and kind = 'frame'`;
   if (n === 0) {
     execFileSync(
       path.join(REPO, "bin/engine"),

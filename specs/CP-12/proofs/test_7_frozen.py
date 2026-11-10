@@ -1,10 +1,10 @@
 """CP-12 item 7: in a frozen fortnight, a move without a reason is refused and a move with a reason is kept.
-The freeze is CP-6's (issue #454): `fortnight_cycle.state` moved from `planning` to `frozen`; a frozen change's reason
-is kept in `fortnight_edit`."""
+The freeze is CP-6's (issue #454): the fortnight's state (`fortnight.state` since CP-27) moved from `planning` to
+`frozen`; a frozen change's reason is kept in the one history log (`change_log`; `fortnight_edit` before)."""
 
 import datetime as dt
 
-from conftest import REASON, START, move, shown, snapshot, step, world
+from conftest import REASON, START, move, moves, shown, snapshot, step, world
 
 MON, THU = START, START + dt.timedelta(3)
 
@@ -21,8 +21,7 @@ def test_a_frozen_fortnight_needs_a_reason_and_the_reason_is_kept(conn, engine, 
     code, out = move(engine, w, MON, "s1", THU, "s2", reason=REASON)
     assert code == 0, out
     assert shown(conn, w, THU, "s2")["subject"] == "math", "the move with a reason did not happen"
-    kept = conn.execute("select reason from timetable_move where school_class_id = %s", (w["class"],)).fetchall()
-    assert [r["reason"] for r in kept] == [REASON]
-    edits = conn.execute("select count(*) as n from fortnight_edit where fortnight_id = %s and reason = %s",
-                         (w["fortnights"][2]["id"], REASON)).fetchone()["n"]
+    assert [r["reason"] for r in moves(conn, w)] == [REASON]
+    edits = conn.execute("select count(*) as n from change_log where after ->> 'fortnight_id' = %s and reason = %s"
+                         " and (after ->> 'frozen')::boolean", (str(w["fortnights"][2]["id"]), REASON)).fetchone()["n"]
     assert edits > 0, "CP-6's record of the frozen change does not carry the reason"

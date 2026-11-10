@@ -187,11 +187,11 @@ CHECKED = [
 ]
 
 
-def test_rebuild_writes_a_notebook_for_every_checked_child_and_reads_it_back(conn):
+def test_every_checked_child_has_a_notebook_built_from_the_checks(conn):
     child = a_read_paper(conn, CHECKED)["child"]
     n = profiles.rebuild(conn)
-    assert n == conn.execute("select count(*) as n from child_reading_profile").fetchone()["n"] > 0
-    notes = profiles.for_child(conn, child)
+    assert n == len(profiles.notebooks(conn)) > 0
+    notes = profiles.current(conn, child)
     assert notes["checked"] > 0 and notes["floor"] in (70, 80, 90, 95)
     assert set(notes) >= {
         "checked",
@@ -204,9 +204,9 @@ def test_rebuild_writes_a_notebook_for_every_checked_child_and_reads_it_back(con
         "samples",
         "gave_up",
     }
-    # a second rebuild is the same notebook: a pure function of the checks
+    # a second build is the same notebook: a pure function of the checks
     profiles.rebuild(conn)
-    assert profiles.for_child(conn, child) == notes
+    assert profiles.current(conn, child) == notes
 
 
 def test_a_signed_off_answer_counts_as_the_reader_being_right(conn):
@@ -234,25 +234,21 @@ def test_an_answer_signed_off_that_no_person_was_shown_is_not_a_check(conn):
     assert str(shown) in checked_ids and str(alone) not in checked_ids
 
 
-def test_a_check_rebuilds_the_notebook_of_the_child_checked_and_no_other(conn):
-    """ADR 0032: every check rebuilds that child's notebook. On live, 21 Oct, all 16 notebooks were older than their
+def test_a_check_changes_the_notebook_of_the_child_checked_and_no_other(conn):
+    """ADR 0032: every check reaches that child's notebook. On live, 21 Oct, all 16 notebooks were older than their
     child's last check — the 16 Oct papers' 87 typed answers among them — because a notebook was rebuilt only when the
-    child's next paper was read."""
+    child's next paper was read. A notebook is built from the checks whenever it is read (CP-27 group 6), so it is never
+    older than the last check."""
     from engine.w3_read import marking
 
     one = a_read_paper(conn, [{"status": "needs_teacher", "read": "17"}])
     other = a_read_paper(conn, CHECKED)
-    profiles.rebuild(conn, [other["child"]])
-    # the other child's notebook is as of its last check: a refresh leaves it exactly as it is
-    conn.execute(
-        "update child_reading_profile set notes = '{\"left\": true}' where child_id = %s", (other["child"],)
-    )
-    assert profiles.for_child(conn, one["child"]) == {}
+    theirs = profiles.current(conn, other["child"])
+    assert profiles.current(conn, one["child"]) == {}
     marking.correct(conn, one["results"][0], "47", "tester@example.org")
-    assert profiles.refresh(conn) >= 1
-    notes = profiles.for_child(conn, one["child"])
+    notes = profiles.current(conn, one["child"])
     assert notes["checked"] == 1 and notes["confusions"] == {"1>4": 1}
-    assert profiles.for_child(conn, other["child"]) == {"left": True}
+    assert profiles.current(conn, other["child"]) == theirs
 
 
 def test_kind_trust_is_the_last_fifty_checks_of_each_kind_against_the_gate(conn):

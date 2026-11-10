@@ -22,7 +22,7 @@ test.beforeAll(async () => {
   await aPerson(sql, { ...EDUCATOR, password: PASSWORD });
 });
 test.afterEach(async () => {
-  await sql`delete from class_skill where section in (${CLASS}, ${OTHER})`;
+  await sql`update school_class set taught = '{}' where label in (${CLASS}, ${OTHER})`;
 });
 test.afterAll(async () => {
   await forgetPerson(sql, EDUCATOR.email);
@@ -59,7 +59,7 @@ test("a skill not taught yet is said taught from its own row, for one class", as
   await row.getByRole("button", { name: "Say it is taught" }).click();
   await expect(page.getByRole("main")).toContainText(`${name} is taught in ${CLASS} now`);
   const said = await sql<{ section: string; skill: string; taught: boolean }[]>`
-    select section, skill_set_code as skill, taught from class_skill where section in (${CLASS}, ${OTHER})`;
+    select section, skill_set_code as skill, taught from (select sc.tenant_id, sc.label as section, w.key as skill_set_code, (w.value ->> 'taught')::boolean as taught, w.value ->> 'by' as taught_by from school_class sc cross join jsonb_each(sc.taught) w) class_skill where section in (${CLASS}, ${OTHER})`;
   expect(said, "that one skill, for that one class").toEqual([{ section: CLASS, skill: "MUL.THREE", taught: true }]);
 });
 
@@ -71,7 +71,7 @@ test("a topic not taught yet is said taught from its own row, every skill in it"
   await row.getByRole("button", { name: `Say it is taught in ${CLASS}` }).click();
   await expect(page.getByRole("main")).toContainText(`is taught in ${CLASS} now`);
   const said = await sql<{ skill: string }[]>`
-    select skill_set_code as skill from class_skill where section = ${CLASS} and taught order by 1`;
+    select skill_set_code as skill from (select sc.tenant_id, sc.label as section, w.key as skill_set_code, (w.value ->> 'taught')::boolean as taught, w.value ->> 'by' as taught_by from school_class sc cross join jsonb_each(sc.taught) w) class_skill where section = ${CLASS} and taught order by 1`;
   const every = await sql<{ code: string }[]>`select code from skill where topic_code = 'FACTORS' order by 1`;
   expect(said.map((r) => r.skill)).toEqual(every.map((r) => r.code));
   await page.context().close();

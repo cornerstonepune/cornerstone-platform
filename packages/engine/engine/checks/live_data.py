@@ -55,7 +55,7 @@ def hidden(conn):
         r["code"]: r["n"]
         for r in conn.execute(
             "select ss.code, count(*) as n from evidence_placed e"
-            " join child c on c.id = e.child_id"
+            " join child_now c on c.id = e.child_id"
             " join skill ss on ss.tenant_id = e.tenant_id and ss.rung_code = e.placed_rung"
             " where e.confirmed_by is not null and not skill_taught_in(ss.tenant_id, ss.code, c.section)"
             " group by 1 order by 1"
@@ -72,7 +72,8 @@ def _stale_graph(conn):
         "        count(*) filter (where f.child_id is null) as stale,"
         "        count(*) filter (where f.state <> s.state or f.n_events <> s.n_events or f.n_correct <> s.n_correct)"
         "          as differ"
-        " from fresh f full join child_skill_state s using (child_id, skill_code, rung_code)"
+        " from fresh f full join (select * from child_skill_state where kind = 'written') s"
+        " using (child_id, skill_code, rung_code)"
     ).fetchone()
     if not any(r.values()):
         return []
@@ -155,7 +156,7 @@ def homes(address: str | None = None, week: str | None = None):
         kids = conn.execute(
             "select c.id, c.section, c.roll_no, (select count(*) from answer_placed a"
             "  where a.child_id = c.id and a.confirmed_by is not null) as answers"
-            " from child c where c.active order by c.section, roll_order(c.roll_no), c.roll_no"
+            " from child_now c where c.active order by c.section, roll_order(c.roll_no), c.roll_no"
         ).fetchall()
         for c in kids:
             done = focus_paper.approved(conn, str(c["id"]), week)

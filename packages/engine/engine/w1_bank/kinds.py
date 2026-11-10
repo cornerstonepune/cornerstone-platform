@@ -1,4 +1,4 @@
-"""The kinds of question a level draws, read from their rows (`question_format`, ADR 0075) for the card engine
+"""The kinds of question a level draws, read from their skill set's row (`skill.question_kinds`, ADR 0075) for the card engine
 (`assess/cards.py`), which reads no database. A level's rule names its kinds (`check["cards"]`); `resolve` hands the
 drawer the rule with the rows themselves in `check["kinds"]`, never stored."""
 
@@ -9,8 +9,13 @@ from engine.assess import cards
 
 
 def of(conn) -> dict[str, dict[str, Any]]:
-    """{code: kind} for every kind in the database."""
-    return {r["code"]: r["kind"] for r in conn.execute("select code, kind from question_format").fetchall()}
+    """{code: kind} for every kind in the database (each held by its skill set, CP-27: once the table `question_format`)."""
+    return {
+        r["code"]: r["kind"]
+        for r in conn.execute(
+            "select k.key as code, k.value as kind from skill s cross join jsonb_each(s.question_kinds) k"
+        ).fetchall()
+    }
 
 
 def resolve(conn, check: dict[str, Any], held: dict[str, dict[str, Any]] | None = None) -> dict[str, Any]:

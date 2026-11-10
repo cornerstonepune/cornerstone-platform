@@ -49,11 +49,14 @@ def _told(path, page_no: int) -> tuple[str, str | None] | None:
 
 def pages_told(conn, wanted: list[tuple]) -> dict[tuple, tuple[str, str | None]]:
     """{(capture id, file page): (fingerprint, printed code)} for each (capture id, path, file page) wanted: read from
-    `capture_page`, and a page not told yet (a file read before the rows existed) told now and kept. A page's photograph
-    is drawn once in its life, never on a card (docs/notes/perf-slow-site.md: 8 seconds a click)."""
+    the scan's `page_prints` ({file page: {print, code}}; CP-27 group 6: once the table `capture_page`), and a page not
+    told yet (a file read before it was kept) told now and kept. A page once told is never changed (the database refuses
+    it). A page's photograph is drawn once in its life, never on a card (docs/notes/perf-slow-site.md: 8 seconds a click)."""
     ids = list({str(c) for c, _, _ in wanted})
     rows = conn.execute(
-        "select capture_id::text, file_page, print, code from capture_page where capture_id = any(%s::uuid[])",
+        "select c.id::text as capture_id, p.key::int as file_page, p.value ->> 'print' as print,"
+        " p.value ->> 'code' as code from capture c cross join jsonb_each(c.page_prints) p"
+        " where c.id = any(%s::uuid[])",
         (ids,),
     ).fetchall()
     told = {(r["capture_id"], r["file_page"]): (r["print"], r["code"]) for r in rows}
@@ -61,9 +64,9 @@ def pages_told(conn, wanted: list[tuple]) -> dict[tuple, tuple[str, str | None]]
         if (str(c), page) in told or (fact := _told(path, page)) is None:
             continue
         conn.execute(
-            "insert into capture_page (capture_id, file_page, tenant_id, print, code)"
-            " select id, %s, tenant_id, %s, %s from capture where id = %s on conflict do nothing",
-            (page, *fact, c),
+            "update capture set page_prints = page_prints || jsonb_build_object(%s::text,"
+            " jsonb_build_object('print', %s::text, 'code', %s::text)) where id = %s and not page_prints ? %s::text",
+            (page, *fact, c, str(page)),
         )
         told[(str(c), page)] = fact
     return told

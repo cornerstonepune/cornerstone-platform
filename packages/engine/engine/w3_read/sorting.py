@@ -223,14 +223,15 @@ def sort_file(conn, path, pages_of=None, read_text=None) -> list[dict]:
     known = {
         r["qr_code"]: dict(r)
         for r in conn.execute(
-            "select si.qr_code, si.kind, si.week, si.child_id, si.pdf_path, ch.band, ch.section, ch.roll_no, t.source, t.code,"
+            "select si.qr_code, si.kind, to_char(si.week, 'IYYY-\"W\"IW') as week, si.child_id, si.pdf_path, ch.band,"
+            "       ch.section, ch.roll_no, t.source, t.code,"
             "       t.id as template_id,"
             "       coalesce(t.key ->> 'title', t.code, t.batch_id) as paper,"
             "       coalesce(array_length(t.item_ids, 1), 0) as questions,"
             "       (select count(*) from capture c where c.sheet_instance_id = si.id and c.superseded_by is null)"
             "         as captures"
             " from sheet_instance si join sheet_template t on t.id = si.sheet_template_id"
-            " left join child ch on ch.id = si.child_id where si.qr_code = any(%s)",
+            " left join child_now ch on ch.id = si.child_id where si.qr_code = any(%s)",
             (qrs,),
         )
     }

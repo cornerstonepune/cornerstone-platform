@@ -43,7 +43,8 @@ def _answered(conn, tenant, key, statuses, state="confirmed"):
     """`statuses` answers to the question `key`, one child's paper each, as a person left them."""
     item = conn.execute("select id from item where item_key = %s", (key,)).fetchone()["id"]
     t = conn.execute(
-        "insert into sheet_template (tenant_id, band, week) values (%s, 'G2', 'W1') returning id", (tenant,)
+        "insert into sheet_template (tenant_id, band, week) values (%s, 'G2', '2026-09-28') returning id",
+        (tenant,),
     ).fetchone()["id"]
     for status in statuses:
         si = conn.execute(

@@ -94,6 +94,14 @@ const LIMIT = 300;
 /** Which assessment a paper is one of, apart from its kind, class and week (goals/ui5-assessments-readable.yaml): a skill set
  *  or worksheet; none for a class's home assessments and chosen papers, which its class, week and kind already name. One
  *  definition, for the list of assessments and for the queue of answers to check. `si` and `t` are the query's aliases. */
+/** A paper's week as people name it (CP-27: the column holds the week's Monday): its ISO label, "2026-W40", or an old
+ *  paper's own label ("Sep W1"), which stays in its key with no date. */
+export const weekSql = (si: string, t: string) => sql`
+  coalesce(to_char(coalesce(${sql(si)}.week, ${sql(t)}.week), 'IYYY-"W"IW'), ${sql(si)}.key ->> 'week', ${sql(t)}.key ->> 'week')`;
+
+/** A `week` column's ISO label ("2026-W40"), to compare with a week as a page names it. */
+export const weekOf = (alias: string) => sql`to_char(${sql(alias)}.week, 'IYYY-"W"IW')`;
+
 export const setKeySql = (si: string, t: string) => sql`
   case when coalesce(${sql(si)}.kind, 'earlier') in ('focus', 'custom') then null
        when ${sql(t)}.skill_set_code is null and ${sql(si)}.key ? 'areas' then 'areas:' || (${sql(si)}.key -> 'areas')::text
@@ -119,7 +127,7 @@ export const papersCte = () => sql`
            -- a child's copy is at the child's grade, a spare at its class's (class_band, the one rule), and only a paper
            -- given to no class at its worksheet's (goals/ux2-one-count-one-thing.yaml)
            coalesce(si.section, ch.section) as section, coalesce(ch.band, cls.band, t.band) as band, cls.band as class_band,
-           coalesce(si.week, t.week) as week,
+           ${weekSql("si", "t")} as week,
            si.child_id is null and si.section is not null and not a.read as spare,
            coalesce(t.key ->> 'date', si.created_at::date::text) as day, si.created_at,
            coalesce(ss.name || coalesce(' · ' || t.difficulty, ''), t.key ->> 'title', drawn.title, t.code, t.batch_id,
@@ -147,9 +155,9 @@ export const papersCte = () => sql`
            coalesce(tk.topics, '{}'::text[]) as topics, coalesce(tk.skill_names, '{}'::text[]) as skill_names
     from sheet_instance si
     join sheet_template t on t.id = si.sheet_template_id
-    left join child ch on ch.id = si.child_id
+    left join child_now ch on ch.id = si.child_id
     left join (select k.tenant_id, k.section, class_band(k.tenant_id, k.section) as band
-               from (select distinct tenant_id, section from child where active) k) cls
+               from (select distinct tenant_id, section from child_now where active) k) cls
       on cls.tenant_id = si.tenant_id and cls.section = coalesce(si.section, ch.section)
     left join skill ss on ss.tenant_id = t.tenant_id and ss.code = t.skill_set_code
     -- a paper drawn for one child (a home assessment, a paper an educator chose) names no skill set of its own: its
@@ -224,7 +232,7 @@ export async function paperList(
       limit ${LIMIT + 1}
     ),
     names as (
-      select c.id, n.first_name from child c, lateral pii.read_child(c.id, ${actor}) n
+      select c.id, n.first_name from child_now c, lateral pii.read_child(c.id, ${actor}) n
       where c.id in (select child_id from shown where child_id is not null)
     )
     select s.id, s.qr, s.kind, s.title, s.section, s.band, s.child_id, names.first_name as child, s.roll_no, s.level,
@@ -239,11 +247,11 @@ export async function paperFilters(me: Who): Promise<{ options: { classes: strin
   const [classes, weeks] = await Promise.all([
     sql<{ section: string }[]>`
       select distinct coalesce(si.section, c.section) as section from sheet_instance si
-      left join child c on c.id = si.child_id
+      left join child_now c on c.id = si.child_id
       where si.print_status <> 'void' and coalesce(si.section, c.section) is not null
         and ${seesSheet(me, sql`si.id`)} order by 1`,
     sql<{ week: string }[]>`
-      select week from (select distinct coalesce(si.week, t.week) as week from sheet_instance si
+      select week from (select distinct ${weekSql("si", "t")} as week from sheet_instance si
                         join sheet_template t on t.id = si.sheet_template_id where si.print_status <> 'void') w
       where week is not null order by week desc`,
   ]);

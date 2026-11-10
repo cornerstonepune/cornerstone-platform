@@ -30,15 +30,16 @@ test.beforeAll(async () => {
     select s.code, s.name, s.status, s.ratified_by from skill s
     where s.code like 'EN3.%'
       and exists (select 1 from english_sample e where e.skill_code = s.code and e.rubric_code is not null)
-      and exists (select 1 from english_sample e join english_sample_wrong w on w.sample_id = e.id
-                  where e.skill_code = s.code and e.question_type = 'ENG.CHOOSE')
+      and exists (select 1 from english_sample e where e.skill_code = s.code and e.question_type = 'ENG.CHOOSE'
+                  and jsonb_array_length(e.wrong) > 0)
     order by s.code limit 1`;
   skill = s;
   samples = await sql<Sample[]>`
     select e.difficulty, e.question_type as kind, e.ord, 'open_response' = any(q.marked) as open, e.answer,
-           coalesce((select json_agg(json_build_object('answer', w.answer, 'mistake', m.name)) from english_sample_wrong w
-                     join misconception m on m.tenant_id = w.tenant_id and m.code = w.mistake_code and m.op = w.op
-                     where w.sample_id = e.id), '[]') as wrong
+           coalesce((select json_agg(json_build_object('answer', w ->> 'answer', 'mistake', m.name))
+                     from jsonb_array_elements(e.wrong) w
+                     join misconception m on m.tenant_id = e.tenant_id and m.code = w ->> 'mistake_code' and m.op = 'any'),
+                    '[]') as wrong
     from english_sample e join question_type q on q.tenant_id = e.tenant_id and q.code = e.question_type
     where e.skill_code = ${skill.code}`;
   await sql`update skill set status = 'draft', ratified_by = null where code = ${skill.code}`;
@@ -105,7 +106,6 @@ test("a kind a person reads says so, and shows what a person reads the answer ag
 
 test("a skill with no sample questions says so in words", async ({ page }) => {
   const rows = await sql`select * from english_sample where skill_code = ${skill.code}`;
-  const wrong = await sql`select w.* from english_sample_wrong w join english_sample e on e.id = w.sample_id where e.skill_code = ${skill.code}`;
   await sql`delete from english_sample where skill_code = ${skill.code}`;
   try {
     await page.goto(`/skill-sets/${skill.code}`);
@@ -114,6 +114,5 @@ test("a skill with no sample questions says so in words", async ({ page }) => {
     await expect(page.locator("li[data-sample]")).toHaveCount(0);
   } finally {
     await sql`insert into english_sample select * from jsonb_populate_recordset(null::english_sample, ${sql.json(rows)})`;
-    await sql`insert into english_sample_wrong select * from jsonb_populate_recordset(null::english_sample_wrong, ${sql.json(wrong)})`;
   }
 });

@@ -125,7 +125,7 @@ def graph_(
         False, "--changes", help="Only list, by grade, the states a rebuild would change"
     ),
 ) -> None:
-    """Rebuild Ring B — child_skill_state, and each question's item_stat — from confirmed evidence."""
+    """Rebuild Ring B — child_skill_state — from confirmed evidence (each question's item_stat is a view)."""
     from engine.w1_bank import learn
     from engine.w3_read import cli_nightly
 

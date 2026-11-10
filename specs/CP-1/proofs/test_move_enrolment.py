@@ -56,11 +56,7 @@ def _class(conn, t, campus, year, band="G3"):
 
 
 def _child_in(conn, t, section, class_id, roll, since, band="G3"):
-    child = db.one(
-        conn,
-        "insert into child (tenant_id, roll_no, section, band) values (%s, %s, %s, %s) returning id",
-        (t, roll, section, band),
-    )["id"]
+    child = db.one(conn, "insert into child (tenant_id, band) values (%s, %s) returning id", (t, band))["id"]
     conn.execute("select enrol_child(%s, %s, %s, %s, %s)", (child, class_id, roll, since, BY))
     return child
 
@@ -126,11 +122,12 @@ def test_a_child_never_has_two_open_enrolment_rows(conn, school):
 )
 def test_a_refused_move_changes_nothing(conn, school, band, where, roll, why):
     x = school["x"]
-    child_before = db.one(conn, "select band, section, roll_no from child where id = %s", (x,))
+    child_before = db.one(conn, "select band, section, roll_no from child_now where id = %s", (x,))
     enrol_before = _rows(conn, x)
-    moves_before = db.one(conn, "select count(*) as n from child_move where child_id = %s", (x,))["n"]
+    moves = "select count(*) as n from change_log where table_name = 'child' and op = 'move' and row_id = %s"
+    moves_before = db.one(conn, moves, (str(x),))["n"]
     said = _move(conn, x, band, school[where], roll)
     assert said["moved"] is False and said.get("refused") == why, said
-    assert db.one(conn, "select band, section, roll_no from child where id = %s", (x,)) == child_before
+    assert db.one(conn, "select band, section, roll_no from child_now where id = %s", (x,)) == child_before
     assert _rows(conn, x) == enrol_before, "a refused move changed the child's enrolment"
-    assert db.one(conn, "select count(*) as n from child_move where child_id = %s", (x,))["n"] == moves_before
+    assert db.one(conn, moves, (str(x),))["n"] == moves_before

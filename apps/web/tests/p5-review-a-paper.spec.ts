@@ -8,6 +8,7 @@
  *
  * The child is the test's own, made once with checked answers and kept (evidence is append-only); its papers are removed.
  */
+import { aChildIn } from "./rows";
 import { expect, test, type Page } from "@playwright/test";
 import postgres from "postgres";
 import { TEST_STAFF } from "./global-setup";
@@ -17,11 +18,10 @@ const SECTION = "P5-REVIEW";
 const REVIEW = /\/papers\/review\/(CS[0-9A-F]{6})$/;
 
 async function testChild(): Promise<string> {
-  const [had] = await sql<{ id: string }[]>`select id from child where section = ${SECTION} and roll_no = '1'`;
+  const [had] = await sql<{ id: string }[]>`select id from child_now where section = ${SECTION} and roll_no = '1'`;
   if (had) return had.id;
   const [{ tenant_id }] = await sql<{ tenant_id: string }[]>`select id as tenant_id from tenant limit 1`;
-  const [{ id }] = await sql<{ id: string }[]>`
-    insert into child (tenant_id, roll_no, section, band) values (${tenant_id}, '1', ${SECTION}, 'G3') returning id`;
+  const [{ id }] = [{ id: await aChildIn(sql, SECTION, "G3", "1") }];
   await sql`insert into pii.child (tenant_id, child_id, first_name) values (${tenant_id}, ${id}, 'Review')`;
   // 3-digit − 3-digit: 2 of 8, the smaller digit taken from the larger four times — the home paper's one area
   const answers: [string, string, boolean, string[]][] = [
@@ -121,8 +121,10 @@ test("an educator makes a home assessment, removes a question, adds one through 
   await seeIt.getByRole("button", { name: "Add" }).click();
   await expect(page.getByRole("status").first()).toContainText("Added: the paper now holds 12 questions.");
   const third = page.url().split("?")[0].match(REVIEW)![1];
+  // each edit a row of the one history log (CP-27 group 6)
   const edits = await sql<{ qr_before: string; qr_after: string; changed_by: string }[]>`
-    select qr_before, qr_after, changed_by from paper_edit where qr_before in (${first}, ${second}) order by created_at`;
+    select row_id as qr_before, after ->> 'qr' as qr_after, origin as changed_by from change_log
+    where table_name = 'sheet_instance' and op = 'edit_paper' and row_id in (${first}, ${second}) order by at`;
   expect(edits).toEqual([
     { qr_before: first, qr_after: second, changed_by: TEST_STAFF.email },
     { qr_before: second, qr_after: third, changed_by: TEST_STAFF.email },

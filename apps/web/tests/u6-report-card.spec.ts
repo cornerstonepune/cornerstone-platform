@@ -7,6 +7,7 @@
  * three wrong no named mistake explains, so it is amber. Every number the test expects is read from the rows, never
  * from the code it checks. Evidence is append-only, so the child is made once and kept.
  */
+import { aChildIn } from "./rows";
 import { expect, test } from "@playwright/test";
 import postgres from "postgres";
 
@@ -53,18 +54,17 @@ const ON_PAPER: Paper[] = [
 async function ria(): Promise<string> {
   const [had] = await sql<
     { id: string }[]
-  >`select id from child where section = ${SECTION} and roll_no = '1'`;
+  >`select id from child_now where section = ${SECTION} and roll_no = '1'`;
   if (had) return had.id;
   // all or nothing: a run that fails half way leaves no child the next run would take as made
   return (await sql.begin(async (sql) => {
     const [{ tenant_id }] = await sql<
       { tenant_id: string }[]
     >`select id as tenant_id from tenant limit 1`;
-    const [{ id }] = await sql<{ id: string }[]>`
-    insert into child (tenant_id, roll_no, section, band) values (${tenant_id}, '1', ${SECTION}, 'G2') returning id`;
+    const [{ id }] = [{ id: await aChildIn(sql, SECTION, "G2", "1") }];
     await sql`insert into pii.child (tenant_id, child_id, first_name) values (${tenant_id}, ${id}, 'Ria')`;
     const [{ template }] = await sql<{ template: string }[]>`
-    insert into sheet_template (tenant_id, band, child_id, week) values (${tenant_id}, 'G2', ${id}, ${SECTION}) returning id as template`;
+    insert into sheet_template (tenant_id, band, child_id, week) values (${tenant_id}, 'G2', ${id}, date_trunc('week', now())::date) returning id as template`;
     const [{ instance }] = await sql<{ instance: string }[]>`
     insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, print_status)
     values (${tenant_id}, ${`U6-TEST-${id.slice(0, 8)}`}, ${template}, ${id}, 'returned') returning id as instance`;

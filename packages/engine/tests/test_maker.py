@@ -15,11 +15,11 @@ import pymupdf
 import pytest
 
 from engine.assess import graph
-from engine.core import db, settings
+from engine.core import db, settings, weeks
 from engine.w2_print import focus_paper, maker, shelf
 from tests.rows import a_child_in
 
-WEEK = "T3W1-maker-test"
+WEEK = "2091-W04"  # a week of its own (weeks are dates since CP-27)
 SECTION = "MAKERTEST"
 BY = "educator@school.test"
 EASY = [{"skill_set": "SUB.3D3D", "level": "Easy", "n": 4}]
@@ -85,7 +85,7 @@ def _give(conn, child, level, skip=0, limit=None):
     ).fetchall()
     conn.execute(
         "insert into item_exposure (tenant_id, child_id, item_id, week)"
-        " select tenant_id, %s, id, 'earlier' from item where id = any(%s) on conflict do nothing",
+        " select tenant_id, %s, id, '2020-01-06' from item where id = any(%s) on conflict do nothing",
         (child, [r["id"] for r in rows]),
     )
     return {str(r["id"]) for r in rows}
@@ -119,7 +119,7 @@ def test_every_kind_is_made_for_the_children_picked_and_no_one_else(conn, kids):
         ).fetchall()
         assert {str(r["child_id"]) for r in rows} == set(picked)
         assert {(r["kind"], r["section"], r["week"], r["print_status"], r["approved_by"]) for r in rows} == {
-            (kind, SECTION, WEEK, "printed", BY)
+            (kind, SECTION, weeks.day(WEEK), "printed", BY)
         }, "each copy is its kind, its class and week, approved in the educator's name"
         for r in rows:
             assert f"{words}:" in _text(Path(r["pdf_path"]).read_bytes()), "the page says what the paper is"
@@ -131,7 +131,7 @@ def test_every_kind_is_made_for_the_children_picked_and_no_one_else(conn, kids):
 
     others = conn.execute(
         "select count(*) as n from sheet_instance where child_id = any(%s::uuid[]) and week = %s",
-        ([kids["new"], kids["elsewhere"]], WEEK),
+        ([kids["new"], kids["elsewhere"]], weeks.day(WEEK)),
     ).fetchone()["n"]
     assert others == 0, "a child not picked is given nothing"
     with pytest.raises(ValueError, match=f"not in {SECTION}"):
@@ -320,7 +320,7 @@ def test_two_lines_alike_on_one_paper_never_repeat_a_question(conn, kids):
     has been given all but six of the area's questions, so two lines share those six, and a seventh is one it was
     given before (goals/l6-a-paper-is-always-made.yaml) — never one of the six again."""
     conn.execute(
-        "insert into item_exposure (tenant_id, child_id, item_id, week) select i.tenant_id, %s, i.id, 'seen'"
+        "insert into item_exposure (tenant_id, child_id, item_id, week) select i.tenant_id, %s, i.id, '2020-01-06'"
         " from item i where i.status = 'active' and i.skill_set_code = 'SUB.3D3D' and i.difficulty = 'Easy'"
         " order by i.item_key offset 6",
         (kids["new"],),

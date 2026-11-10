@@ -3,13 +3,13 @@ child states unchanged.
 
 A database with evidence of both kinds and both kinds of state already built (as live has 1,838 evidence records and
 283 child states). Two nightly runs: every evidence row byte-identical and the states exactly as they were; each run's
-`graph_run` row says so itself (`evidence_digest_before = _after`, `states_digest_before = _after`, state counts before
+nightly run's row says so itself (`evidence_digest_before = _after`, `states_digest_before = _after`, state counts before
 = after); and the states equal a fresh rebuild from nothing. The live half is `live_unchanged.py`, box only.
 """
 
 import datetime as dt
 
-from conftest import IST, a_k2_class, a_paper, graph_runs, observed, run_nightly, states
+from conftest import IST, OBSERVED, WRITTEN, a_k2_class, a_paper, graph_runs, observed, run_nightly, states
 
 D = dt.datetime(2026, 6, 1, 10, 0, tzinfo=IST)
 
@@ -20,7 +20,7 @@ def _evidence(conn):
 
 
 def _all_states(conn):
-    return states(conn, "child_skill_state"), states(conn, "child_observed_state")
+    return states(conn, WRITTEN), states(conn, OBSERVED)
 
 
 def test_6_two_nightly_runs_change_no_evidence_and_no_state(conn):
@@ -56,6 +56,6 @@ def test_6_two_nightly_runs_change_no_evidence_and_no_state(conn):
     assert runs[0]["evidence_rows"] == runs[1]["evidence_rows"] == evidence["n"]
 
     with conn.transaction(force_rollback=True):  # from nothing: what a full rebuild makes is what the job left
-        conn.execute("delete from child_skill_state; delete from child_observed_state")
+        conn.execute("delete from child_skill_state")
         graph.rebuild(conn)
         assert _all_states(conn) == (skill, seen), "the states the job left are not what a fresh rebuild makes"

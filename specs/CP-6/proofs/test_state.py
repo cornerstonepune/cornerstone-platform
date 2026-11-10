@@ -1,10 +1,10 @@
 """CP-6 items 1 and 4, read for the fortnight (Nimish, 8 Nov 2026), lean design: the engine's `move` enforces the order.
 
 Item 1 ("a fortnight has one state from the list above, with who and when recorded for every step"): a teaching
-fortnight has one `fortnight_cycle` row (pk `fortnight_id`) whose `state` is one of planning, frozen, aligned, approved,
-list_sent; the planning row carries its own `planning_at`/`planning_by`; every `move` stamps `<state>_at` and
-`<state>_by` (the actor's staff id) and keeps the earlier stamps. Both new tables are listed `school_wide` in
-`access_table` (CP-4's `data_class` and `reason`; fails loudly until CP-4 is on main).
+fortnight has one `state` (since CP-27 a column of `fortnight`; the `fortnight_cycle` row before) that is one of
+planning, frozen, aligned, approved, list_sent; planning carries its own `planning_at`/`planning_by` (the fortnight made,
+in the history); every `move` records `<state>_at` and `<state>_by` (the actor's staff id; a row of the approval list)
+and keeps the earlier ones (`fortnight_cycle.standing` reads them). The homes are listed `school_wide` in `access_table`.
 
 Item 4 ("a step cannot be skipped: approving a fortnight that was never frozen is refused"): `move` raises `CycleError`
 for planning to approved, planning to aligned, any other skip, every step back, the same state and a non-teaching
@@ -52,29 +52,26 @@ def test_1_a_state_outside_the_list_is_refused(conn, school):
     f = a_fortnight(conn, school, "2031-07-07")
     with pytest.raises(fc().CycleError):
         fc().move(conn, f["id"], "closed", WHO)
-    refused_sql(conn, "update fortnight_cycle set state = 'closed' where fortnight_id = %s", (f["id"],))
+    refused_sql(conn, "update fortnight set state = 'closed' where id = %s", (f["id"],))
     assert cycle_row(conn, f["id"])["state"] == "planning"
 
 
 def test_1_a_fortnight_has_one_state_row_only(conn, school):
-    """Item 1: one row per fortnight (fortnight_id is the key)."""
+    """Item 1: one state per fortnight: a column of the fortnight itself (CP-27), never empty."""
     f = a_fortnight(conn, school, "2031-07-07")
-    refused_sql(
-        conn,
-        "insert into fortnight_cycle (tenant_id, fortnight_id, state) values (%s, %s, 'planning')",
-        (school["t"], f["id"]),
-    )
+    refused_sql(conn, "update fortnight set state = null where id = %s", (f["id"],))
+    assert cycle_row(conn, f["id"])["state"] == "planning"
 
 
 def test_1_both_new_tables_are_listed_school_wide_with_a_reason(conn):
-    """Item 1 (design, CP-4 dependency): needs CP-4's access_table.data_class; until CP-4 is on main this fails on the
-    missing table or column, by design."""
+    """Item 1 (design, CP-4 dependency): the state's and the history's homes since CP-27, `fortnight` and `change_log`,
+    are listed school-wide with a reason."""
     rows = conn.execute(
         "select table_name, data_class, reason from public.access_table where schema_name = 'public'"
-        " and table_name in ('fortnight_cycle', 'fortnight_edit')"
+        " and table_name in ('fortnight', 'change_log')"
     ).fetchall()
     got = {r["table_name"]: r for r in rows}
-    assert set(got) == {"fortnight_cycle", "fortnight_edit"}, f"listed: {sorted(got)}"
+    assert set(got) == {"fortnight", "change_log"}, f"listed: {sorted(got)}"
     for name, r in got.items():
         assert r["data_class"] == "school_wide", f"{name} is {r['data_class']}"
         assert r["reason"] and r["reason"].strip(), f"{name} has no reason"

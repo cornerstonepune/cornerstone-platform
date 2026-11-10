@@ -12,14 +12,8 @@
       ]
     },
     {
-      "key": "app.staff",
-      "description": "Who may sign in to the app: email, name, role, password hash and the classes they teach, held in the database alone and put there by `engine staff add` (goals/ui4a-staff-and-search.yaml); `engine staff classes` changes the classes (ADR 0073). Empty here, so no one's email is in the public repository. Roles: coordinator, educator, specialist.",
-      "value": [],
-      "seed_once": true
-    },
-    {
       "key": "people.decides",
-      "description": "Who decides each kind of thing that waits on a person, by the staff list's roles (app.staff), as the workflow agreed with the school gives it (docs/sources/assessment-workflow-v1.md): the teacher confirms the answers the engine was unsure of and signs off what was read (N9), approves the class papers that print (N7), confirms the home papers (N11) and says what is taught — \"everything approved by the teacher\"; Aseem ratifies the skills (N1), the coordinator. Nimish, 2026-10-11: \"Achal is a teacher, so he's the one who will be responsible for doing all of this.\" Today shows each kind to the people whose role is here first. Checked on the server before any decision writes (goals/f1c-who-decides-what.yaml, ADR 0073); the coordinator may take any decision. Educators draft a skill (skill_drafts) and the coordinator approves it (skills), as N1 agreed; an educator writes and approves a parent report (reports) — N12 names the coordinator, Nimish 2026-10-11 named the teacher — corrects a question (questions) and declares the week (week).",
+      "description": "Who decides each kind of thing that waits on a person, by the staff list's roles (`staff.role_code`), as the workflow agreed with the school gives it (docs/sources/assessment-workflow-v1.md): the teacher confirms the answers the engine was unsure of and signs off what was read (N9), approves the class papers that print (N7), confirms the home papers (N11) and says what is taught — \"everything approved by the teacher\"; Aseem ratifies the skills (N1), the coordinator. Nimish, 2026-10-11: \"Achal is a teacher, so he's the one who will be responsible for doing all of this.\" Today shows each kind to the people whose role is here first. Checked on the server before any decision writes (goals/f1c-who-decides-what.yaml, ADR 0073); the coordinator may take any decision. Educators draft a skill (skill_drafts) and the coordinator approves it (skills), as N1 agreed; an educator writes and approves a parent report (reports) — N12 names the coordinator, Nimish 2026-10-11 named the teacher — corrects a question (questions) and declares the week (week). Roles on the staff list: coordinator, educator, specialist.",
       "value": {
         "answers": [
           "educator"
@@ -522,7 +516,7 @@
     },
     {
       "key": "graph.nightly_stale_hours",
-      "description": "How many hours the ledger of the nightly rebuild (graph_run) may go without an ok run before the live check says the nightly flow has stopped.",
+      "description": "How many hours the nightly rebuild (its runs in flow_run, flow graph_nightly) may go without an ok run before the live check says the nightly flow has stopped.",
       "value": 26,
       "seed_once": true
     },
@@ -915,6 +909,1122 @@
           {"kind": "observed", "entry_mode": "individual", "opens_secure": true, "rechecks": true, "lowers": true}
         ]
       },
+      "seed_once": true
+    },
+    {
+      "key": "report.traits",
+      "description": "The traits a report may speak of, one per code and band (label, what shows it, what is a concern, an expected and an exceeding example, the registry skills it links to, who drafted it and from what). A school's own list after its first load (CP-27 group 6: once the table `trait`).",
+      "value": [
+        {
+          "code": "COU",
+          "band": "G1",
+          "label": "Courageous",
+          "positive": "Reads the news / speaks in assembly in front of the whole school (News Reading LO: builds confidence) | Attempts the Stretch question rather than skipping it (Diagnostic: Stretch) | Says 'I got it wrong' and redoes it without fuss after evaluation feedback | Tries a new sport skill in PE when it looks hard (rope, high jump) - 'willingness to try' (G1:5:16) | Tells the truth about an incident even when it costs them (Gandhi Jayanti pledge 'I will not lie')",
+          "concern": "Skips any question that looks hard and hands in early, most evaluations | Cries or shuts down when a mistake is pointed out and does not resume that period, repeatedly | Hides the test paper / says 'I lost it' after a low score, repeatedly | Refuses every speaking opportunity (news, quiz answer) across the term",
+          "expected": "Anvi tried the rope climb three times in PE, got halfway, and asked if she could try again tomorrow.",
+          "exceeding": "Aadi has left the last two questions blank in every evaluation this term and handed in first each time.",
+          "linked": [
+            "SEB.RES.01",
+            "SEB.SELF.01",
+            "VAL.HONEST.01",
+            "SEB.ATT.02",
+            "MOT.FIT.03",
+            "LIT.SPK.04"
+          ],
+          "authored_by": "claude_draft",
+          "source": "groupE.md L282 (G1 report overview: 5 primary traits defined /10) ('Rigor & Courage: ability to handle tough tasks and situations'); report_items.csv G1-G3 :5:13-5:16 (Concentration & Focus; Teamwork…"
+        },
+        {
+          "code": "COU",
+          "band": "G2",
+          "label": "Courageous",
+          "positive": "Volunteers for the harder role (news reader, quiz captain, Stretch problem) | Persists through a multi-try task (stitching a seam, a coding bug) without giving up | Speaks up when something is unfair to themselves or another child | Accepts correction, tries again the same day | Owns up to a mistake that no one saw",
+          "concern": "Avoids every visible challenge (stage, quiz, Stretch) across the term | Abandons tasks at the first setback, most tasks | Denies or shifts blame when confronted, repeatedly | Goes silent for the day after a correction, repeatedly",
+          "expected": "Ruhi's running stitch came undone twice; she unpicked it and finished the seam instead of asking me to do it.",
+          "exceeding": "Rohan told me the didi had torn his worksheet; the didi hadn't been in the room, and he stuck with it when I asked again.",
+          "linked": [
+            "SEB.RES.01",
+            "SEB.SELF.01",
+            "VAL.HONEST.01",
+            "SEB.NORM.01",
+            "HSC.STITCH.03",
+            "ICT.CT.03"
+          ],
+          "authored_by": "claude_draft",
+          "source": "groupE.md L282 (G1 report overview: 5 primary traits defined /10); academic_LOs_raw.csv Routines LOs G1-G4 (Home Period, Assembly Participation, News Reading, Daily Journal, Think Outside the Box, Fu…"
+        },
+        {
+          "code": "COU",
+          "band": "G3",
+          "label": "Courageous",
+          "positive": "Takes on a public role (anchoring, debate) despite visible nerves | Keeps working on a hard problem/project across days after early failure | Disagrees respectfully with a teacher or the majority when they have a reason | Reports a mistake or a broken thing before it is discovered | Tries something they were bad at last year (a sport, Hindi reading aloud) and sticks with it",
+          "concern": "Opts out of all public roles across the year | Quits the project after the first setback, repeatedly | Never voices disagreement, goes along even when visibly unhappy, across the term | Covers up mistakes / lets others take blame, repeatedly",
+          "expected": "Pari told me the class had not actually finished the reading log before I collected them, though she had done hers.",
+          "exceeding": "Neel dropped out of the debate the morning of, for the second time this term, saying he felt sick and then playing at break.",
+          "linked": [
+            "SEB.RES.01",
+            "SEB.SELF.01",
+            "VAL.HONEST.01",
+            "SEB.NORM.01",
+            "SEB.CUR.02"
+          ],
+          "authored_by": "claude_draft",
+          "source": "groupE.md L282 (G1 report overview: 5 primary traits defined /10); ref_value_ed.tsv Units 4-5 Honesty"
+        },
+        {
+          "code": "COU",
+          "band": "G4",
+          "label": "Courageous",
+          "positive": "Leads or represents the school (assembly, Olympiad, inter-school event) and handles setbacks on the day | Chooses the harder option in evaluations and projects when offered | Stands up for a peer or a principle against social pressure | Admits an error publicly and corrects it | Returns to a failed attempt with a changed plan",
+          "concern": "Avoids every stretch or representative opportunity across the year | Collapses or withdraws after a public setback and does not return to the activity, repeatedly | Goes along with unfair group behaviour rather than object, repeatedly | Denies errors even with evidence, repeatedly",
+          "expected": "Tanvi's Olympiad mock score dropped; she asked for the paper back, went through every error and sat the next one.",
+          "exceeding": "Zoya stayed silent when her group blamed Ira for the broken model, and later told me it wasn't Ira but wouldn't say so to them.",
+          "linked": [
+            "SEB.RES.01",
+            "SEB.SELF.01",
+            "VAL.HONEST.01",
+            "SEB.NORM.01",
+            "SEB.LEAD.01"
+          ],
+          "authored_by": "claude_draft",
+          "source": "No G4 report form; derived from groupE.md L282 (G1 report overview: 5 primary traits defined /10); academic_LOs_raw.csv LO-G4-1739 Olympiad Mock; groupC.md L247 (Cornerstone values list) ('Passionate…"
+        },
+        {
+          "code": "COU",
+          "band": "K1",
+          "label": "Courageous",
+          "positive": "Resilience: persistence and determination in the face of challenges; confidence; willing to take risks, try new experiences, and learn from failures (K1:12:10) | Owns up to a mistake and says sorry without being made to (Courage T2: be honest, say sorry, own up mistakes) | Keeps going on a hard task (threading, climbing net, tricky word) after several failed tries (Courage T2: try something difficult) | Shares a rhyme / answer in circle or assembly in front of everyone (Courage T1) | Says 'no, I don't like that' / disagrees calmly instead of going along (K1:12:9 assertively)",
+          "concern": "Tears/crumples the sheet and quits after the first mistake, most tasks | Blames a friend or says 'I didn't' when asked what happened, even for small things, repeatedly | Says 'I can't' before attempting anything new, including things done before, most days | Complains about the task instead of starting it, most tasks (Courage T2: 'do not complain')",
+          "expected": "Advik told me himself that he knocked the water on the pattern sheet and asked for a cloth - didn't wait to be asked.",
+          "exceeding": "Pari crumpled her tracing sheet after the first wobbly line and put her head down; she did the same on Monday.",
+          "linked": [
+            "SEB.RES.01",
+            "SEB.SELF.01",
+            "VAL.HONEST.01",
+            "SEB.NORM.01",
+            "LIT.SPK.04",
+            "LIT.SPK.05",
+            "MOT.GMS.07",
+            "MOT.FMS.07"
+          ],
+          "authored_by": "existing_doc",
+          "source": "report_items.csv K1:12:9-12:10; groupB.md L441-450 (One Pager Curriculum_K1: pillars by term; Integrated Daily Routines) (Courage T1/T2 verbatim list); groupC.md L289 (Courage Tree: 'Invite without p…"
+        },
+        {
+          "code": "COU",
+          "band": "K2",
+          "label": "Courageous",
+          "positive": "Resilience: persistence, confidence, willing to take risks, try new experiences, learn from failures (K2:12:10) | Performs/speaks in assembly or the Diwali Mela / Gandhi Jayanti programme in front of parents | Tries the harder version (CCVC words, bigger numbers, monkey bar) when offered | Admits a mistake to a friend and makes it right | Stands up for a friend / says 'that's not fair' to a bigger child",
+          "concern": "Refuses the stage/mic each time even in a group, across the term (record without pressure) | Erases and abandons work at the first correction, most times | Hides the broken/spilled thing and says nothing, repeatedly | Only does the tasks marked easy and walks away from any challenge tray, across a fortnight",
+          "expected": "Rohan chose the CCVC list instead of the CVC one today and kept going through four wrong tries on 'frog'.",
+          "exceeding": "Neel put the broken pink-tower cube back in the box with the cracked side down and said nothing till Myra found it.",
+          "linked": [
+            "SEB.RES.01",
+            "SEB.SELF.01",
+            "VAL.HONEST.01",
+            "SEB.NORM.01",
+            "LIT.SPK.08",
+            "SEB.EMP.01"
+          ],
+          "authored_by": "existing_doc",
+          "source": "report_items.csv K2:12:9-12:10; groupB.md L468 (K2 review: 'Bully situation, unpleasant words, physical reactions'; 'confident story retelling') ('Brave day tasks were not up to the mark - need a cle…"
+        },
+        {
+          "code": "COU",
+          "band": "N",
+          "label": "Courageous",
+          "positive": "Brave Day tasks: says Thank you / Excuse me / Please / Sorry; sets own bag (Nursery One-Pager Courage T1) | Eats a bite of the disliked veggie; plays alone for a while; keeps silence; sleeps without night lamp (Courage T2, home+school) | Tells the truth about what happened when asked ('I dropped it') (Courage T2: truthfulness) | Puts their Brave Day card on the Courage Tree and tells the circle what they did | Tries the climbing net / balance board again after slipping; solves own problems before asking (Courage T2)",
+          "concern": "Says 'I can't' and stops before trying, for a task managed last week, most times | Denies doing something the teacher saw, or points at a friend, when asked calmly, repeatedly | Stops the activity at the first slip and stays out for the rest of the session, most times | Only joins circle sharing if the teacher speaks for them, across the fortnight",
+          "expected": "Zoya put her Brave Day card up and told everyone she ate karela at dinner - made a face but did it.",
+          "exceeding": "When I asked who spilled the water Ira said 'Tanvi did' though I had seen her knock it, and she wouldn't help wipe it.",
+          "linked": [
+            "SEB.RES.01",
+            "SEB.SELF.01",
+            "VAL.HONEST.01",
+            "SEB.NORM.01",
+            "PLS.ROUT.01",
+            "MOT.GMS.02",
+            "NUM.PRB.01"
+          ],
+          "authored_by": "existing_doc",
+          "source": "groupB.md L431-439 (One Pager Curriculum_Nursery: pillars by term; Daily Rhythms) (Courage T1/T2 Brave Day Tasks; Daily Rhythms: Courage tree); groupC.md L289 (Courage Tree: 'Invite without pressure……"
+        },
+        {
+          "code": "COU",
+          "band": "PG",
+          "label": "Courageous",
+          "positive": "Tries the slide/climbing step by themselves with an adult near (MOT.GMS climbing items) | Comes into class after a short goodbye once settled (Dev Goals: separates easily) | Says the affirmation with the group ('I am brave'; 'I will try new things') and tries the thing named - a new food, a new texture (PG Graph: Courage -> Affirmations) | Tries again after a fall or spill instead of stopping | Tastes a new food at fruit break",
+          "concern": "Stops and cries at the first fall/spill and won't return to that activity for the rest of the day, most days | Will not enter the class without the parent well beyond the settling period (note: do not pressure; record only) | Turns away from every new physical challenge (slide, steps, tunnel) for weeks even with hand-holding offered",
+          "expected": "Zoya climbed the three steps to the slide herself today, holding the rail, after a week of asking to be lifted.",
+          "exceeding": "Anaya slipped on the mat, cried and refused to go back to the tunnel for the rest of the session - same on Monday and Tuesday.",
+          "linked": [
+            "SEB.RES.01",
+            "SEB.CUR.01",
+            "SEB.EMP.02",
+            "MOT.GMS.04",
+            "MOT.GMS.07",
+            "SEB.SELF.01"
+          ],
+          "authored_by": "claude_draft",
+          "source": "groupB.md L457 (PG Graph: Courage -> Affirmations); groupD.md L268 (Playgroup Affirmations: 'I am brave', 'will try new things'); ref_nursery_dev_goals.tsv (CDC 2/3/4-yr Social-Emotional column) 3-yr…"
+        },
+        {
+          "code": "CRE",
+          "band": "G1",
+          "label": "Creative",
+          "positive": "Explores the use of new tools in creative work (G1:4:37) | Expresses thoughts through art activities such as memory drawing and vocabulary pictionary (G1:4:38) | Making own stories (G1:1:17) - invents a character or ending | Think Outside the Box: offers an unusual solution or idea (Routines LO) | Block Time: builds something of their own design and explains it (Routines LO)",
+          "concern": "Copies a peer's drawing or story rather than making their own, most sessions | Refuses any task with no model to copy, across a fortnight | Says 'I don't have ideas' and waits to be given one, every open task | Discards own work as 'wrong' when it differs from others', repeatedly",
+          "expected": "Sara made up a story where the thirsty crow builds a pump, and drew a diagram to explain it.",
+          "exceeding": "Neel copied Advik's memory drawing and said he had no ideas of his own - same as the last two Fridays.",
+          "linked": [
+            "ART.VIS.09",
+            "ART.VIS.03",
+            "LIT.WRT.02",
+            "ART.MUS.06",
+            "SEB.SOC.03",
+            "NUM.PRB.01"
+          ],
+          "authored_by": "claude_draft",
+          "source": "report_items.csv G1:4:37, G1:4:38, G1:1:17; academic_LOs_raw.csv Routines LOs G1-G4 (Home Period, Assembly Participation, News Reading, Daily Journal, Think Outside the Box, Fun Riddles, Block Time,…"
+        },
+        {
+          "code": "CRE",
+          "band": "G2",
+          "label": "Creative",
+          "positive": "Explores a new art form (silhouette) (G2:4:43) and tries a variation of their own | Writes own story / poem with an original idea (LIT.WRT.02-03) | Suggests an alternative way to present a project (model, skit, chart) | Improvises in music/dance or the skit when something goes off-plan | Combines materials in an unexpected way in craft or block time",
+          "concern": "Written work retells the given story with no change, most times | Waits for a template for every creative task | Rejects own ideas before trying them ('that's silly'), repeatedly | Copies a peer's project format every time",
+          "expected": "Anvi turned her silhouette into a shadow-puppet and wrote a two-line rhyme for it without being asked.",
+          "exceeding": "Rohan's 'own story' was the Lion and the Mouse retold word for word again; he said he can't think of anything else.",
+          "linked": [
+            "ART.VIS.09",
+            "ART.VIS.08",
+            "LIT.WRT.02",
+            "LIT.WRT.03",
+            "LIT.SPK.08",
+            "SEB.SOC.03"
+          ],
+          "authored_by": "claude_draft",
+          "source": "report_items.csv G2:4:43-4:45, G2:1:11; academic_LOs_raw.csv Routines LOs G1-G4 (Home Period, Assembly Participation, News Reading, Daily Journal, Think Outside the Box, Fun Riddles, Block Time, Spor…"
+        },
+        {
+          "code": "CRE",
+          "band": "G3",
+          "label": "Creative",
+          "positive": "Produces an original piece (poem, artwork, texture study) with a personal idea (G3 Art unit 'Texture in Nature') | Designs a project or experiment approach of their own | Adapts a skit or performance creatively for the audience | Generates several ideas before choosing (brainstorms) | Uses a craft/stitching technique in a new way",
+          "concern": "Original work absent across the term; everything from a model | Single idea only, abandoned if criticised | Refuses to try a new art form/technique when introduced, repeatedly | Mocks peers' unusual ideas",
+          "expected": "Pari made a texture map of the school garden with bark rubbings and wrote a legend for it - her own plan.",
+          "exceeding": "Aadi has not produced anything without a model this term and laughed at Ruhi's 'weird' poem in front of the class.",
+          "linked": [
+            "ART.VIS.09",
+            "ART.VIS.08",
+            "LIT.WRT.03",
+            "HSC.STITCH.03",
+            "LIT.SPK.08"
+          ],
+          "authored_by": "claude_draft",
+          "source": "academic_LOs_raw.csv G3 Art unit 'Texture in Nature'; report_items.csv G3:4:43-4:45; academic_LOs_raw.csv Routines LOs G1-G4 (Home Period, Assembly Participation, News Reading, Daily Journal, Think O…"
+        },
+        {
+          "code": "CRE",
+          "band": "G4",
+          "label": "Creative",
+          "positive": "Doodle & Describe / Dialogue Writing show imagination and a personal voice (G4 Routines LOs) | Proposes and executes an original project (Art exhibition piece, upcycling design) | Finds a novel approach to a maths/Sudoku/coding problem and explains it | Composes or choreographs for an assembly | Iterates on their own idea after feedback rather than dropping it",
+          "concern": "Creative tasks completed minimally from templates all year | Abandons any idea at the first criticism, repeatedly | Avoids all open-ended tasks | Discourages peers' creative attempts",
+          "expected": "Tanvi designed a plastic-bottle drip irrigator for Green Day, tested it on the plants and changed the holes after it flooded.",
+          "exceeding": "Neel's Doodle & Describe pieces are the sample redrawn every week; he dropped his own comic idea after one comment from a friend.",
+          "linked": [
+            "ART.VIS.09",
+            "LIT.WRT.02",
+            "LIT.WRT.04",
+            "ICT.PROG.02",
+            "ART.MUS.06",
+            "NUM.PRB.03"
+          ],
+          "authored_by": "claude_draft",
+          "source": "academic_LOs_raw.csv LO-G4-1727 Think Outside the Box, LO-G4-1747 Doodle & Describe, LO-G4-1750 Dialogue Writing; calendar_tabs_extract.md L675 (Green Day Urban Upcycles); No G4 report form exists"
+        },
+        {
+          "code": "CRE",
+          "band": "K1",
+          "label": "Creative",
+          "positive": "Play Skills: elaborate and extended pretend play with intricate storylines, multiple roles, props and costumes (K1:12:3) | Able to create an art with their peers as a team (K1:10:13); art with respect to the music frequency (K1:10:14) | Uses creative thinking to solve puzzles (K1:12:5) | Clay: makes own figure beyond the demo (Ganapati idol, star/triangle) (K1 One-Pager) | Adds their own idea to process art (string painting, sand art) instead of copying the sample",
+          "concern": "Asks 'is this right?' after every mark and will not continue without approval, most sessions | Reproduces the teacher's sample exactly every time and refuses the open-ended option, across a fortnight | Says 'I can't draw / I'm bad at this' and leaves the paper blank, repeatedly | Uses props only as shown; no own story in pretend play across the term",
+          "expected": "Ruhi turned the string-painting into 'a storm' and told a whole story about the boat while doing it.",
+          "exceeding": "Rohan asked 'is this right?' after every single line in art today and stopped when I said 'you decide'.",
+          "linked": [
+            "ART.VIS.02",
+            "ART.VIS.03",
+            "ART.VIS.09",
+            "ART.CLAY.02",
+            "ART.CRAFT.03",
+            "SEB.SOC.03",
+            "NUM.PRB.01",
+            "ART.MUS.03"
+          ],
+          "authored_by": "existing_doc",
+          "source": "report_items.csv K1:12:3, K1:12:5, K1:10:13-10:14; groupB.md L441-450 (One Pager Curriculum_K1: pillars by term; Integrated Daily Routines) (Creativity: Process Art, Clay, Music, art forms); report_s…"
+        },
+        {
+          "code": "CRE",
+          "band": "K2",
+          "label": "Creative",
+          "positive": "Understands product art vs process art (K2:10:4-10:5) and chooses process when free | Elaborate pretend play with storylines, roles, props (K2:12:3) | Builds new patterns through imagination in the block room (K2 activity level L3) | Manipulates clay to create various shapes of their own (K2:10:6) | Adds a twist to a retold story / skit (new ending, new character)",
+          "concern": "Copies a neighbour's work exactly and erases own attempts, most sessions | Refuses open-ended tasks ('tell me what to make') every time across a fortnight | Destroys own work before showing it, repeatedly | Block-room work only ever reproduces the demo, across the term",
+          "expected": "Myra built a 'bridge for ants' in block room with arches nobody had shown, and explained why each side needed a cube.",
+          "exceeding": "Tara erased her own drawing twice and copied Nia's flower line for line, saying hers was 'wrong'.",
+          "linked": [
+            "ART.VIS.06",
+            "ART.VIS.03",
+            "ART.VIS.08",
+            "ART.CLAY.02",
+            "SEN.GIFT.01",
+            "SEB.SOC.03",
+            "LIT.SPK.08",
+            "ART.MUS.03"
+          ],
+          "authored_by": "existing_doc",
+          "source": "report_items.csv K2:10:1-10:10, K2:12:3; activities_raw.csv ACT-K2-0001 L3 'Builds new patterns through imagination'; groupB.md L456 (K2 Graph: Creativity -> Art and craft, Clay, Music & Movement); r…"
+        },
+        {
+          "code": "CRE",
+          "band": "N",
+          "label": "Creative",
+          "positive": "Able to draw free form with crayons (N:10:2); creates shapes with popsicle sticks (N:10:4) | Dabs and creates an artwork using various mediums (N:10:8); understands colour mixing (N:10:18) | Creates stories and make-believe play imitating people from their immediate environment (N:12:2); is more and more creative with make-believe play (Dev Goals) | Clay: rolling, cutting, roti making - adds their own shapes (Nursery One-Pager Creativity) | Music & rhythm: slow/fast/freeze, animal sounds - invents a movement of their own",
+          "concern": "Avoids process-art sessions (paint, clay) consistently, choosing to sit out, across a fortnight | Tears/crumples own work and says 'I can't' before starting, most sessions | Pretend play stays one repeated action (same car back and forth) with no story, even with a play partner offering, across weeks",
+          "expected": "Zoya mixed blue and yellow, shouted 'green!' and then painted a whole 'jungle' with it - nothing like the demo.",
+          "exceeding": "Anaya crumpled her paper before the first mark and said 'I can't', third art session in a row.",
+          "linked": [
+            "ART.VIS.01",
+            "ART.VIS.05",
+            "ART.VIS.07",
+            "ART.CRAFT.01",
+            "ART.CLAY.01",
+            "ART.DAN.01",
+            "SEB.SOC.03"
+          ],
+          "authored_by": "existing_doc",
+          "source": "report_items.csv N:10:1-10:18, N:12:2; ref_nursery_dev_goals.tsv (CDC 2/3/4-yr Social-Emotional column) 3/4-yr make-believe; groupB.md L431-439 (One Pager Curriculum_Nursery: pillars by term; Daily R…"
+        },
+        {
+          "code": "CRE",
+          "band": "PG",
+          "label": "Creative",
+          "positive": "Scribbles / makes marks freely with crayons, finger paint, foam on the mirror (PG:3, ART.VIS.01) | Explores what the clay/playdough can do (squash, roll, poke) rather than one action (PG:4:7) | Moves to music; joins the slow/fast/freeze game (PG:5 dance item; Music & Movement) | Plays simple make-believe games (Dev Goals 2-yr): feeds the doll, drives the block as a car | Uses a material in a way not shown (stacks the cups as a tower, wears the bowl as a hat)",
+          "concern": "Does not engage with paint/clay/paper when offered, over repeated sessions (record what they do instead) | Holds the crayon but waits for hand-over-hand each time, even after weeks of free drawing | Stands still during music & movement and copies no action, over many sessions",
+          "expected": "Neel turned the paint cups into a train and made 'choo choo' sounds while dabbing - completely his own idea.",
+          "exceeding": "Tanvi held the crayon and looked at me until I moved her hand, same as every drawing session this month.",
+          "linked": [
+            "ART.VIS.01",
+            "ART.VIS.05",
+            "ART.CLAY.01",
+            "ART.DAN.01",
+            "ART.MUS.03",
+            "SEB.SOC.03"
+          ],
+          "authored_by": "existing_doc",
+          "source": "report_items.csv PG:3:1-3:8, PG:4:7, PG:5:19, PG:10 art items; ref_nursery_dev_goals.tsv (CDC 2/3/4-yr Social-Emotional column) 2-yr 'Plays simple make-believe games'; groupB.md L457 (PG Graph: Creat…"
+        },
+        {
+          "code": "CRT",
+          "band": "G1",
+          "label": "Critical Thinker",
+          "positive": "Answering evaluative, extrapolative and value-based questions (G1:1:14) with a reason | Shows working / explains how they got the answer when asked (Diagnostic: 'working shown') | Spots their own mistake when checking and corrects it (Find the Mistake, metacognitive) | Tries a second strategy on a word problem before asking | Asks a question that connects two things ('is that like…?'); Fun Riddles reasoning",
+          "concern": "Writes an answer with no working and cannot say how they got it, most tasks | Erases and asks the teacher at the first difficulty, every time | Copies a neighbour's answer rather than attempting, repeatedly | Answers 'why' questions with a restated fact rather than a reason, most times",
+          "expected": "Sara found her own regrouping mistake while checking and explained to Advik why the tens column changes.",
+          "exceeding": "Ruhi has handed in every word-problem sheet with answers only and says 'I just knew' when I ask how - she copied two from Neel today.",
+          "linked": [
+            "NUM.PRB.02",
+            "NUM.PRB.03",
+            "LIT.COMP.02",
+            "SCI.INQ.01",
+            "ICT.CT.03",
+            "NUM.PRB.01"
+          ],
+          "authored_by": "claude_draft",
+          "source": "report_items.csv G1:1:14, G1:3 numeracy; groupB.md L266-274, L361-364 (Diagnostic Concept Map: Find the Mistake; working shown); groupE.md L282 (G1 report overview: 5 primary traits defined /10) ('Ri…"
+        },
+        {
+          "code": "CRT",
+          "band": "G2",
+          "label": "Critical Thinker",
+          "positive": "Solves a word problem (G2:3:12) and explains the method in maths vocabulary (NUM.PRB.03) | Estimates and checks an answer; identifies a mistake in given working | Debugs an algorithm / Bee-Bot sequence by testing and changing one thing (ICT.CT.03) | Gives evidence from the text for an inference (G2:1:12) | Weighs two options in a discussion and gives a reason for the choice",
+          "concern": "Guesses the operation in word problems without reading, most times | Cannot find a planted mistake even with a hint, repeatedly | Changes everything at random when the program fails, every time | Gives opinions with no reason even when asked 'why', most times",
+          "expected": "Aadi spotted that Neel's Bee-Bot had one extra 'forward' and fixed just that instead of starting over.",
+          "exceeding": "Pari added the numbers in every word problem today whether it said 'left' or 'altogether', and said she 'always adds'.",
+          "linked": [
+            "NUM.PRB.02",
+            "NUM.PRB.03",
+            "LIT.COMP.02",
+            "ICT.CT.03",
+            "SCI.INQ.01"
+          ],
+          "authored_by": "claude_draft",
+          "source": "report_items.csv G2:3:12, G2:1:12; academic_LOs_raw.csv G2 Primary Computing (debugging); groupB.md L279 (G2 diagnostic content)"
+        },
+        {
+          "code": "CRT",
+          "band": "G3",
+          "label": "Critical Thinker",
+          "positive": "Uses a bar model / multi-step reasoning on word problems and explains it | Identifies which method fits and why; catches a wrong method in a peer's work | Draws a conclusion from experiment data and states what would change it | Argues a point with evidence in discussion and changes view when shown better evidence | Asks 'how do we know?' about a claim",
+          "concern": "Multi-step problems abandoned after one step, most times | Copies the method used last time regardless of the question, repeatedly | Conclusion written without reference to the data collected, most records | Refuses to change a view even when shown clear evidence, repeatedly",
+          "expected": "Tanvi drew a bar model for the two-step problem and then told Rohan his answer couldn't be right because it was bigger than the total.",
+          "exceeding": "Zoya wrote 'plants need sun' as the conclusion though her own plant in the dark had grown taller, and wouldn't look at the table.",
+          "linked": [
+            "NUM.PRB.02",
+            "NUM.PRB.03",
+            "LIT.COMP.02",
+            "SCI.INQ.01",
+            "ICT.CT.02",
+            "ICT.CT.03"
+          ],
+          "authored_by": "claude_draft",
+          "source": "report_items.csv G3:3:10; academic_LOs_raw.csv G3 Numeracy (bar models), G3 Science; groupE.md L282 (G1 report overview: 5 primary traits defined /10)"
+        },
+        {
+          "code": "CRT",
+          "band": "G4",
+          "label": "Critical Thinker",
+          "positive": "Solves Sudoku / logic puzzles by deduction and can explain each step (LO-G4-1749) | Uses find-the-mistake and estimation to check own work before handing in | Plans and debugs a Scratch program with loops/events methodically (ICT.PROG.02) | Evaluates a source (news item, advert) and says what is missing or biased | Breaks a big task into steps and sequences them",
+          "concern": "Random trial-and-error on logic puzzles with no explanation, repeatedly | Work handed in unchecked with detectable errors, most weeks | Cannot explain why a program failed even after it is fixed | Accepts any claim at face value in discussion, repeatedly",
+          "expected": "Neel explained his Sudoku row-by-row and pointed out where his first guess had to be wrong.",
+          "exceeding": "Ira's Scratch sprite never moved; she had changed every block at random and couldn't say what the loop was meant to do.",
+          "linked": [
+            "NUM.PRB.03",
+            "NUM.PRB.02",
+            "ICT.PROG.02",
+            "ICT.CT.03",
+            "LIT.COMP.02",
+            "SCI.INQ.01"
+          ],
+          "authored_by": "claude_draft",
+          "source": "academic_LOs_raw.csv LO-G4-1749 Sudoku, LO-G4-1745 Crossword, G4 Primary Computing; groupB.md L286-287 (G4 diagnostic content); No G4 report form exists"
+        },
+        {
+          "code": "CRT",
+          "band": "K1",
+          "label": "Critical Thinker",
+          "positive": "Problem-Solving: uses logic, reasoning and creative thinking to solve puzzles, navigate challenges and find solutions to conflicts (K1:12:5) | Explains why ('it sank because it's heavy') after float/sink, soluble/insoluble experiments (K1:9:14) | Continues a pattern (ABC/ABB), sorts and groups by a rule and can say the rule (K1 One-Pager CT T2) | Notices a mistake in their own pattern/beads and fixes it | Solves own problems (Brave Day): tries a way before asking",
+          "concern": "Copies the neighbour's answer on the sorting/pattern task rather than looking, most tasks | Says 'I don't know' immediately to any 'why' question across weeks | Repeats the same failed approach many times without changing anything, then leaves, most times | Waits for the teacher to solve any peer conflict, never tries a solution themselves, across the term",
+          "expected": "Pari said the sponge floated 'because it has holes with air' and then squeezed it to test if it would sink.",
+          "exceeding": "Neel copied Advik's ABB pattern bead by bead and couldn't say what came next when I covered Advik's tray.",
+          "linked": [
+            "NUM.PRB.01",
+            "NUM.PAT.01",
+            "NUM.PAT.02",
+            "SCI.INQ.01",
+            "SCI.PHYS.03",
+            "SEN.VIS.01",
+            "SEB.RES.01"
+          ],
+          "authored_by": "existing_doc",
+          "source": "report_items.csv K1:12:5, K1:9:14, K1:8 numeracy section; groupB.md L441-450 (One Pager Curriculum_K1: pillars by term; Integrated Daily Routines) (Critical Thinking T1/T2; Courage: 'Solve Own Proble…"
+        },
+        {
+          "code": "CRT",
+          "band": "K2",
+          "label": "Critical Thinker",
+          "positive": "Problem-Solving: logic, reasoning and creative thinking to solve puzzles, challenges and conflicts (K2:12:5) | Explains a prediction and checks it (soluble/insoluble, states of matter) (K2:9:6, 9:15) | Sorts living/non-living with a reason (K2:9:17); finds the odd one out and says why | Proposes a fair solution in a conflict ('we can both have two') | Asks a question that connects two ideas ('is ice also water?')",
+          "concern": "Copies answers from a peer rather than attempting, most tasks | Answers 'why' with a restated fact rather than a reason, most times | Erases and asks the teacher at the first difficulty, every time | Uses only one strategy on a block/puzzle challenge and stops when it fails, repeatedly",
+          "expected": "Rohan said the salt 'went inside the water' but the sand 'stayed because it's a stone' and wanted to try sugar next.",
+          "exceeding": "Myra waited for Tara to answer every 'why' in BOB today and repeated her; when Tara left she said 'don't know'.",
+          "linked": [
+            "NUM.PRB.01",
+            "NUM.PAT.01",
+            "NUM.PAT.02",
+            "SCI.INQ.01",
+            "SCI.PHYS.02",
+            "SCI.LIFE.03",
+            "SEN.GIFT.01",
+            "ICT.SKL.01"
+          ],
+          "authored_by": "existing_doc",
+          "source": "report_items.csv K2:12:5, K2:9:6, K2:9:15, K2:9:17, K2:8 numeracy section; groupB.md L456 (K2 Graph: Critical Thinking -> Block room, Math); report_summary_traits.csv (7 pillars PG-K2, Beginner/Progr…"
+        },
+        {
+          "code": "CRT",
+          "band": "N",
+          "label": "Critical Thinker",
+          "positive": "Problem-Solving: able to find solutions to simple conflicts or puzzles (N:12:6) | Understands patterns & logical sequencing (N:8:13); matching and sorting in Froebel's gift (N:8:15) | Does puzzles with 3 or 4 pieces; tries a second way (turns the piece, moves the block) when the first fails | Tells you what he thinks is going to happen next in a book (Dev Goals 4-yr) | Uses a tool to solve a problem (a stick to reach, a tray to carry many things)",
+          "concern": "Hands the puzzle to the adult after the first piece doesn't fit, every time across weeks | Guesses randomly on sorting/pattern trays without looking at the attribute, even after a demo, most sessions | In a conflict only cries or hits; does not try asking, swapping or getting the teacher, across weeks",
+          "expected": "Reyansh and Zoya both wanted the blue car; Reyansh said 'you first then me' and set the timer sand himself.",
+          "exceeding": "Nia hands me the puzzle the moment a piece doesn't fit and walks off - every time this fortnight.",
+          "linked": [
+            "NUM.PRB.01",
+            "NUM.PAT.01",
+            "NUM.PAT.02",
+            "SEN.GIFT.02",
+            "SEN.VIS.01",
+            "LIT.COMP.03"
+          ],
+          "authored_by": "existing_doc",
+          "source": "report_items.csv N:12:6, N:8:13-8:16; ref_nursery_dev_goals.tsv (CDC 2/3/4-yr Social-Emotional column) 3/4-yr cognitive column; groupB.md L431-439 (One Pager Curriculum_Nursery: pillars by term; Dail…"
+        },
+        {
+          "code": "CRT",
+          "band": "PG",
+          "label": "Critical Thinker",
+          "positive": "Finds things even when hidden under two or three covers (PG:8:6) | Begins to sort shapes and colours (PG:8:7); able to do matching of same objects (PG:8:13) | Able to pattern with two in a sequence (PG:8:12) | Builds towers of 4 or more blocks and tries again when it falls (PG:8:8) | Works out how to get a toy out of reach (pulls the mat, fetches a stool, asks)",
+          "concern": "Puts the same wrong piece in the same hole repeatedly and gives up without trying another, every time across weeks | Cries for the adult the moment something doesn't fit, before any attempt, most times | Loses interest in a hidden-object game immediately and does not look, repeatedly",
+          "expected": "Ira couldn't reach the bunny on the shelf, dragged the small stool over and got it herself.",
+          "exceeding": "Advik pushed the square block at the round hole about ten times and then threw it; he did the same yesterday.",
+          "linked": [
+            "NUM.PRB.01",
+            "NUM.PAT.01",
+            "NUM.PAT.02",
+            "SEN.GIFT.01",
+            "SEN.VIS.03"
+          ],
+          "authored_by": "existing_doc",
+          "source": "report_items.csv PG:8:1-8:13 (Critical Thinking & Problem Solving section); groupB.md L457 (PG Graph: Critical Thinking -> Early numeracy, Puzzles and blocks); report_summary_traits.csv (7 pillars PG…"
+        },
+        {
+          "code": "CUR",
+          "band": "G1",
+          "label": "Curious",
+          "positive": "Actively participating into science activities (G1:4:8); engagement & interest in technology (G1:4:15) | Asks a 'why / what if' question in science or GK that goes beyond the lesson | Predicts before the experiment and wants to check the result (SCI.INQ.01) | Picks up a magazine (RobinAge/Champak) or non-fiction book in reading time and talks about it (Magazine Exposure LOs) | Shows interest in Hindi language - asks what a word means, tries it out (G1:2:10)",
+          "concern": "Completes the record sheet without watching the experiment, most experiments | No questions asked across a whole theme unit even when invited | Says 'boring' and disengages whenever a new topic starts, most topics | Picks the same book every reading time and does not open a new one when offered, across a term",
+          "expected": "Sara asked whether the Bee-Bot would still turn if we put it on the carpet and tested it before I could answer.",
+          "exceeding": "Advik copied the prediction from Anvi and hadn't watched the germination jar all week; said 'don't know' when I asked what changed.",
+          "linked": [
+            "SEB.CUR.01",
+            "SEB.CUR.02",
+            "SEB.ATT.02",
+            "SCI.INQ.01",
+            "SCI.INQ.02",
+            "SCI.GA.02",
+            "ICT.PROG.01"
+          ],
+          "authored_by": "claude_draft",
+          "source": "report_items.csv G1:4:8, G1:4:15, G1:2:10, G1:4:3; academic_LOs_raw.csv Routines LOs G1-G4 (Home Period, Assembly Participation, News Reading, Daily Journal, Think Outside the Box, Fun Riddles, Block…"
+        },
+        {
+          "code": "CUR",
+          "band": "G2",
+          "label": "Curious",
+          "positive": "Brings a question of the week / news fact from home unprompted (Focus wall: Question of the week) | Extends an experiment on their own (changes a variable, tries another material) and reports it | Reads beyond the set pages in the novel / magazine and tells the class something from it | Asks about how something works (a tool in home science, a computer part) outside the lesson | Shows interest in Hindi language (G2:2:10) - picks Hindi magazines, asks meanings",
+          "concern": "Prediction column always left blank or copied, most experiments | No question in a full theme even with 'question of the week' prompts | Leaves the practical (cooking/stitching) as soon as the demo ends, most practicals | Reads only the set pages and cannot say anything beyond them, most weeks",
+          "expected": "Ruhi wanted to know why the ghee separated and asked to heat the butter longer to see what would happen next.",
+          "exceeding": "Aadi's prediction box has been empty in every science record this term and he leaves the table once the demo is over.",
+          "linked": [
+            "SEB.CUR.01",
+            "SEB.CUR.02",
+            "SEB.ATT.02",
+            "SCI.INQ.01",
+            "SCI.INQ.02",
+            "HSC.COOK.01",
+            "ICT.SKL.01"
+          ],
+          "authored_by": "claude_draft",
+          "source": "report_items.csv G2:4:3, G2:4:18, G2:2:10; groupB.md L476 (Focus Wall G1+: Question of the week); academic_LOs_raw.csv Routines LOs G1-G4 (Home Period, Assembly Participation, News Reading, Daily Jou…"
+        },
+        {
+          "code": "CUR",
+          "band": "G3",
+          "label": "Curious",
+          "positive": "Designs a small investigation of their own for the science record (Mini Science Observation LO) | Connects topics across subjects unprompted ('is that like the water cycle?') (Theme-Based Learnings LO) | Uses the library/novel time to follow an interest and reports back | Asks a follow-up question after the answer, wanting more detail | Notices details on a field visit and asks about them",
+          "concern": "Does the science record as copying with no observation of their own, most records | Never chooses a book beyond the assigned one across a term | Follow-up questions absent even in one-to-one discussion, across a term | Disengages from the field visit (stays with the adult, no questions), repeatedly",
+          "expected": "Pari wanted to keep a rain log after the water-cycle lesson and has been recording it every morning on her own.",
+          "exceeding": "Neel's science record is the board copied word for word; when I asked what he saw in the jar he said 'the same as the board'.",
+          "linked": [
+            "SEB.CUR.01",
+            "SEB.CUR.02",
+            "SEB.ATT.02",
+            "SCI.INQ.01",
+            "SCI.INQ.02",
+            "SCI.GA.02"
+          ],
+          "authored_by": "claude_draft",
+          "source": "report_items.csv G3:4:3, G3:4:18, G3:2:12; academic_LOs_raw.csv LO-G3-1322 Mini Science Observation, LO-G3-1310 Theme-Based Learnings (G3 Routines)"
+        },
+        {
+          "code": "CUR",
+          "band": "G4",
+          "label": "Curious",
+          "positive": "Runs a self-chosen mini science observation over days and records it (LO-G4-1748) | Attempts the Stretch question in a diagnostic and asks for more of that type | Reads outside the set list (novel, magazine, news) and brings it into class | Asks questions in Marathi/Hindi about words, idioms, origins | Investigates how a tool or device works before/after using it",
+          "concern": "Mini observation done only as far as the template forces, most times | Skips Stretch items and does not ask about them, across evaluations | Reads nothing beyond assigned pages across a term | No questions across a theme even one-to-one",
+          "expected": "Tanvi started measuring the shadow of the flagpole every hour on her own after the light lesson and brought the table in.",
+          "exceeding": "Rohan has left the Stretch question blank in every evaluation this term and shrugged when I offered to go through one together.",
+          "linked": [
+            "SEB.CUR.01",
+            "SEB.CUR.02",
+            "SEB.ATT.02",
+            "SCI.INQ.01",
+            "SCI.INQ.02",
+            "MAR.LANG.01"
+          ],
+          "authored_by": "claude_draft",
+          "source": "academic_LOs_raw.csv LO-G4-1748 Mini Science Observation, LO-G4-1739 Olympiad Mock; groupB.md L268-273 (Diagnostic Signal taxonomy: Stretch); No G4 report form exists"
+        },
+        {
+          "code": "CUR",
+          "band": "K1",
+          "label": "Curious",
+          "positive": "Predicts before an experiment (float/sink, soluble/insoluble) and wants to see the result (K1:9:6-9:14 experiments) | Asks questions even when scared (K1 One-Pager, Courage T2) | Tests a new idea on their own after the activity (tries other objects on the magnet) | Brings something from home connected to the theme, or reports something noticed on the way to school | Enjoys doing new things: chooses a new tray/centre when invited (Dev Goals 4-yr)",
+          "concern": "Watches the experiment from the back and leaves before the result, most experiments | Answers 'don't know' without looking or trying, on things they were shown, most days | Does not ask a single question in a whole discovery/BOB session across a fortnight, even when invited | Repeats the same tray/activity in every free choice and refuses a new one when invited, across a fortnight",
+          "expected": "Pari tested every object in the room on the magnet after the activity and asked why the coin didn't stick.",
+          "exceeding": "Neel says 'don't know' before I finish the question during BOB time and then looks at the window - most days now.",
+          "linked": [
+            "SEB.CUR.01",
+            "SCI.INQ.01",
+            "SCI.INQ.02",
+            "SCI.PHYS.03",
+            "SCI.PHYS.04",
+            "SCI.LIFE.02",
+            "SCI.GA.02",
+            "SEB.ATT.02"
+          ],
+          "authored_by": "existing_doc",
+          "source": "report_items.csv K1:9:6-9:14; groupB.md L441-450 (One Pager Curriculum_K1: pillars by term; Integrated Daily Routines) (Curiosity T1/T2; Courage T2 'ask questions even when scared'); ref_nursery_dev_…"
+        },
+        {
+          "code": "CUR",
+          "band": "K2",
+          "label": "Curious",
+          "positive": "Asks 'what happens if…' during science & geo / BOB and tries it | Notices and reports a change (the seed sprouted, the ice melted, the compost smells different) (K2:9:6-9:17 topics) | Brings a related object, picture or fact from home unprompted | Wants to know more about the special-day / field-visit topic afterwards and asks the next day | Explores a new Montessori/discovery material fully before asking what it is for",
+          "concern": "Completes the activity sheet without watching the experiment, most experiments | No questions asked across a whole theme, even when invited, across a fortnight | Says 'boring' / turns away whenever a new topic is introduced, most topics | Chooses only the familiar tray in every free choice across a fortnight, and refuses the new one when invited",
+          "expected": "Rohan came in asking whether the compost bin had 'eaten' the banana peel yet and wanted to open it before circle.",
+          "exceeding": "Nia filled in the water-cycle sheet from the board without once looking at the kettle demo, and said 'I know this' when I asked her to predict.",
+          "linked": [
+            "SEB.CUR.01",
+            "SCI.INQ.01",
+            "SCI.INQ.02",
+            "SCI.PHYS.02",
+            "SCI.LIFE.03",
+            "SCI.LIFE.05",
+            "SCI.GA.02",
+            "SEB.ATT.02"
+          ],
+          "authored_by": "claude_draft",
+          "source": "report_items.csv K2:9:6-9:17; groupB.md L456 (K2 Graph: Curiosity -> General Awareness, Field visit); registry_notes.md (SEB.CUR.01 has no K2 rung - gap); report_summary_traits.csv (7 pillars PG-K2,…"
+        },
+        {
+          "code": "CUR",
+          "band": "N",
+          "label": "Curious",
+          "positive": "Enjoys new experiences and new situations (N:12:1); enjoys doing new things (Dev Goals 4-yr) | Asks 'why' / 'what is this' at the discovery centre or on the nature walk | Wants to look closer at the germination cup, ants, rain; goes back to check it later | Talks about what she likes and what she is interested in (Dev Goals 4-yr) | Asks about the city helpers / what they saw on the field visit (N:9:10-9:11)",
+          "concern": "Walks past the discovery table every day without stopping, even when peers call them, across a fortnight | Says 'I don't want' to every new experience (field visit, new tray, new rhyme) for weeks | Goes to the same toy in every free-play slot and turns away when a new material is shown, across a fortnight",
+          "expected": "Ruhi asked me five questions about why the moon is out in the daytime and wanted to check again after lunch.",
+          "exceeding": "Aadi hasn't gone near the discovery den all fortnight; he goes straight to the same car every free-play time.",
+          "linked": [
+            "SEB.CUR.01",
+            "SCI.GA.01",
+            "SCI.GA.02",
+            "SCI.LIFE.02",
+            "SEN.AUD.01",
+            "LIT.SPK.03"
+          ],
+          "authored_by": "existing_doc",
+          "source": "report_items.csv N:12:1, N:9:10-9:11; ref_nursery_dev_goals.tsv (CDC 2/3/4-yr Social-Emotional column) 'Enjoys doing new things; Talks about what she likes'; groupB.md L431-439 (One Pager Curriculum_…"
+        },
+        {
+          "code": "CUR",
+          "band": "PG",
+          "label": "Curious",
+          "positive": "Ready to try new textures (e.g. mud, slurry, slime) (PG:10:7) | Engages with sand play; engages in water play (PG:10:2-10:3) | Participated in special experience days (Pet Day, Mud Day, Beach Day) (PG:10:15) | Reaches for / explores the magic-box object when it comes out; points to things in a book and names items (PG:6, PG:8:9) | Looks closely at something new (a snail, rain) and shows it to an adult",
+          "concern": "Stays at the edge of the sensory tray and does not touch the material even with a peer or adult modelling, across several weeks | Looks away from the magic box / new object rather than reaching for it, most sessions | Cries and asks to leave whenever a new material or special-day set-up is introduced, most times (beyond settling period)",
+          "expected": "Sara went straight into the mud tray today, up to her elbows, and kept asking 'what's this?' about the leaves.",
+          "exceeding": "Advik stood by the wall during water play again and wouldn't put a hand in even when Anvi splashed him gently - every session this month.",
+          "linked": [
+            "SEB.CUR.01",
+            "SEN.AUD.03",
+            "SEN.AUD.02",
+            "SCI.GA.02",
+            "LIT.SPK.03"
+          ],
+          "authored_by": "existing_doc",
+          "source": "report_items.csv PG:10:2, PG:10:3, PG:10:7, PG:10:15, PG:8:9; groupB.md L457 (PG Graph: Curiosity -> Special experiences, Exposures, General Awareness); report_summary_traits.csv (7 pillars PG-K2, Be…"
+        },
+        {
+          "code": "EMP",
+          "band": "G1",
+          "label": "Empathetic & Happy",
+          "positive": "Teamwork: willingness to cooperate and collaborate in team activities (G1:5:14) | Sportsmanship: displaying fairness, respect for rules and others (G1:5:15) | Helps a struggling teammate in a group task or sport without being asked | Notices a classmate alone or upset and does something (tells the teacher, sits with them) | Speaks respectfully to didi/support staff and thanks them; keeps a Gandhi Jayanti pledge ('I will help others')",
+          "concern": "Hits / pushes during sport or an argument (record ABC) | Mocks a peer's mistake or work in front of others, repeatedly | Refuses to pass/share in a team game or leaves the team when losing, most games | Speaks rudely to support staff or younger children, repeatedly",
+          "expected": "Anvi stopped mid-race to help Aadi up when he fell and then ran on; she didn't mention it afterwards.",
+          "exceeding": "Ruhi kicked Neel in the shin after the football went out and said he 'deserved it'; this is the second time in PE this week.",
+          "linked": [
+            "SEB.EMP.01",
+            "SEB.SOC.01",
+            "SEB.NORM.01",
+            "SEB.REG.02",
+            "SEB.LEAD.01",
+            "VAL.PEACE.01",
+            "VAL.BUDDY.01",
+            "VAL.RESPECT.01"
+          ],
+          "authored_by": "claude_draft",
+          "source": "report_items.csv G1-G3 :5:13-5:16 (Concentration & Focus; Teamwork; Sportsmanship; Effort & Participation); groupE.md L282 (G1 report overview: 5 primary traits defined /10) ('Awareness & Mindfulness…"
+        },
+        {
+          "code": "EMP",
+          "band": "G2",
+          "label": "Empathetic & Happy",
+          "positive": "Teamwork and sportsmanship as scored on the sports form (G2:5:14-5:15) | Stands up for a child being teased ('that's not nice, stop') or gets an adult (Buddy or Bully) | Role-plays a solution to a conflict and uses it later in a real one (Peace Day role play) | Looks after a younger child in mixed-group learning / assembly | Apologises and repairs (returns the thing, helps fix it) after hurting someone",
+          "concern": "Physical aggression in a conflict (record ABC) | Joins in when a child is being teased, or spreads it, repeatedly | Blames teammates after a loss, every time | Ignores a younger child's need when paired with them, repeatedly",
+          "expected": "Pari told the G3 boys to stop calling Rohan 'slowcoach' and walked him to the line.",
+          "exceeding": "Advik laughed along and repeated the nickname when Sara was being teased at the water cooler.",
+          "linked": [
+            "SEB.EMP.01",
+            "SEB.SOC.01",
+            "SEB.NORM.01",
+            "SEB.REG.02",
+            "SEB.LEAD.01",
+            "VAL.PEACE.01",
+            "VAL.BUDDY.01",
+            "VAL.RESPECT.01"
+          ],
+          "authored_by": "claude_draft",
+          "source": "report_items.csv G1-G3 :5:13-5:16 (Concentration & Focus; Teamwork; Sportsmanship; Effort & Participation); calendar_tabs_extract.md L680 (Peace Day G2/G3: 'Role play to find the solution of the conf…"
+        },
+        {
+          "code": "EMP",
+          "band": "G3",
+          "label": "Empathetic & Happy",
+          "positive": "Mediates a peer conflict without being asked, fairly | Notices who is left out of a group and rebalances it | Volunteers to help a peer catch up (reading buddy, explaining maths) and follows through | Treats support staff, drivers and younger children with courtesy consistently | Owns the impact of their words and repairs ('I shouldn't have said that')",
+          "concern": "Physical aggression or intimidation (record ABC) | Repeated unkind comments about a peer's looks, family or ability | Excludes a peer from the group over weeks despite adult intervention | Dismisses or mimics support staff, repeatedly",
+          "expected": "Neel sat with Tanvi through reading time for a week to help with the tricky words without anyone asking him.",
+          "exceeding": "Aadi kept the G3 boys' group closed to Ruhi for the third week and told others not to sit with her.",
+          "linked": [
+            "SEB.EMP.01",
+            "SEB.SOC.01",
+            "SEB.NORM.01",
+            "SEB.REG.02",
+            "SEB.LEAD.01",
+            "VAL.PEACE.01",
+            "VAL.BUDDY.01",
+            "VAL.RESPECT.01"
+          ],
+          "authored_by": "claude_draft",
+          "source": "report_items.csv G1-G3 :5:13-5:16 (Concentration & Focus; Teamwork; Sportsmanship; Effort & Participation); groupE.md L282 (G1 report overview: 5 primary traits defined /10); ref_value_ed.tsv Units 1…"
+        },
+        {
+          "code": "EMP",
+          "band": "G4",
+          "label": "Empathetic & Happy",
+          "positive": "Leads a younger group (mixed-group learning, assembly, sports) with care - checks everyone is included | Calls out unfairness respectfully, including toward friends | Reads the room: adjusts behaviour when a peer is upset or a class is grieving | Contributes to community actions (Green Day, fundraisers) with genuine effort | Repairs relationships after a conflict without adult pushing",
+          "concern": "Physical or intimidating behaviour toward peers or younger children (record ABC) | Online/offline exclusion or rumour-spreading about a peer, repeatedly | Uses leadership roles to favour friends and exclude others | Dismissive toward staff or younger children, repeatedly",
+          "expected": "Zoya ran the K1 buddy reading slot and noticed Neel's group had no book, so she swapped hers and read with them.",
+          "exceeding": "Ira picked her friends for every team as captain this month and left the same two children last each time despite my reminder.",
+          "linked": [
+            "SEB.EMP.01",
+            "SEB.SOC.01",
+            "SEB.NORM.01",
+            "SEB.REG.02",
+            "SEB.LEAD.01",
+            "VAL.PEACE.01",
+            "VAL.BUDDY.01",
+            "VAL.RESPECT.01"
+          ],
+          "authored_by": "claude_draft",
+          "source": "No G4 report form; derived from groupE.md L282 (G1 report overview: 5 primary traits defined /10) and VE units; groupC.md L247 (Cornerstone values list)"
+        },
+        {
+          "code": "EMP",
+          "band": "K1",
+          "label": "Empathetic & Happy",
+          "positive": "Empathy and Compassion: demonstrates kindness and empathy towards peers and seeks ways to help and comfort others (K1:12:2) | Social Interaction: cooperative play, group games, and collaborative projects (K1:12:4); creates art with peers as a team (K1:10:13) | Identifies and expresses a wide range of emotions; uses coping strategies for frustration and disappointment (K1:12:6-12:7) | Respects social norms; understands truth, fairness, honesty, cooperation (K1:12:8); resolves conflicts calmly (Courage T1) | Help each other; don't say things that would upset people (circle-time rules); Friendship & Kindness, Respect & Gratitude discussions",
+          "concern": "Hits / kicks / pushes in a conflict rather than telling (record ABC) | Unkind words or names to a peer ('you're stupid', comments on looks), repeatedly | Excludes the same child from play repeatedly across a fortnight | Complains about peers constantly and walks past when a friend needs help, most times",
+          "expected": "Sara noticed Advik had no partner for the art activity and asked him to join her group without me saying anything.",
+          "exceeding": "Aadi called Pari 'stupid' twice during the block game and knocked her tower when she wouldn't give him the arch.",
+          "linked": [
+            "SEB.EMP.01",
+            "SEB.SOC.01",
+            "SEB.REG.01",
+            "SEB.REG.02",
+            "SEB.NORM.01",
+            "PLS.ROUT.04",
+            "VAL.PEACE.01",
+            "VAL.BUDDY.01",
+            "VAL.RESPECT.01",
+            "NUM.PRB.01"
+          ],
+          "authored_by": "existing_doc",
+          "source": "report_items.csv K1:12:2, K1:12:4, K1:12:6-12:8, K1:10:13; groupB.md L441-450 (One Pager Curriculum_K1: pillars by term; Integrated Daily Routines) (Empathy & Happiness: Circle Time topics; Contextua…"
+        },
+        {
+          "code": "EMP",
+          "band": "K2",
+          "label": "Empathetic & Happy",
+          "positive": "Comforts or fetches help for an upset friend without being asked (K2:12:2) | Includes a new or left-out child in the game; understands what is 'Friendship' (K2:9:9; K2:12:4) | Names the feeling and uses a calming strategy (breath, water, quiet corner) before acting (K2:12:6-12:7) | Says what a buddy (not a bully) would do in a scenario and does it in class (VE Unit 2) | Accepts losing a game without blaming; cheers a friend's turn (K2:12:8 norms; sportsmanship)",
+          "concern": "Physical reaction (hit, push, kick) in a conflict (record ABC) - K2 review flagged 'physical reactions' | Unpleasant words to or about a peer, repeated toward the same child (K2 review: 'unpleasant words', 'bully situation') | Takes over a group task and refuses others' turns, most group tasks | Laughs at a peer's mistake in front of others, repeatedly",
+          "expected": "Myra saw Neel alone at the block room door and said 'come, you can be the builder' and made space for him.",
+          "exceeding": "Tara told Rohan 'nobody wants you here' at lunch, second time this week; the didi heard it too.",
+          "linked": [
+            "SEB.EMP.01",
+            "SEB.SOC.01",
+            "SEB.SOC.04",
+            "SEB.REG.01",
+            "SEB.REG.02",
+            "SEB.NORM.01",
+            "VAL.PEACE.01",
+            "VAL.BUDDY.01",
+            "VAL.RESPECT.01",
+            "PLS.ROUT.04"
+          ],
+          "authored_by": "existing_doc",
+          "source": "report_items.csv K2:12:2, K2:12:4, K2:12:6-12:8, K2:9:9; groupB.md L468 (K2 review: 'Bully situation, unpleasant words, physical reactions'; 'confident story retelling'); ref_value_ed.tsv Unit 2 (Bud…"
+        },
+        {
+          "code": "EMP",
+          "band": "N",
+          "label": "Empathetic & Happy",
+          "positive": "Empathy and Compassion: understands and expresses concern for the feelings of others; comforts friends who are upset and demonstrates kindness in their interactions (N:12:5) | Play & Peer-interaction: prefers group play; collaborates with other children taking turns (N:12:2) | Emotional Regulation: able to communicate their feelings and cope with frustration (N:12:3) | Does the Good Deed of the day from the focus wall; uses magic words Please and Sorry (Daily Rhythms) | Kindness towards animals; 'Sharing is Caring' (Nursery One-Pager T1; Kindness Week T2)",
+          "concern": "Hit / pushed a friend when the turn didn't come (record ABC) | Says 'you're not my friend' / 'you can't play' to exclude the same child, repeatedly | Takes the whole set of blocks and refuses to share even after the turn-taking prompt, most sessions | Frustration turns into throwing things or a long scream most days, with no attempt to tell an adult",
+          "expected": "Anaya saw Reyansh crying about his torn drawing and brought him a new sheet and sat with him.",
+          "exceeding": "Rohan pushed Nia off the tricycle when she didn't get off fast enough; he had asked twice and she had said no.",
+          "linked": [
+            "SEB.EMP.01",
+            "SEB.EMP.02",
+            "SEB.SOC.01",
+            "SEB.SOC.02",
+            "SEB.REG.01",
+            "SEB.REG.02",
+            "PLS.ROUT.01",
+            "PLS.ROUT.04",
+            "VAL.PEACE.01"
+          ],
+          "authored_by": "existing_doc",
+          "source": "report_items.csv N:12:2, N:12:3, N:12:5, N:9:2-9:3; groupB.md L431-439 (One Pager Curriculum_Nursery: pillars by term; Daily Rhythms) (Empathy & Happiness T1 Good Manners, Sharing is Caring; T2 Kindn…"
+        },
+        {
+          "code": "EMP",
+          "band": "PG",
+          "label": "Empathetic & Happy",
+          "positive": "Observes emotions of other children and educators (PG:11:10); shows concern for a crying friend (Dev Goals 3-yr) | Is excited and happy to come to school (PG:11:7); gets excited when with other children (PG:11:2) | Able to take turns; understands the word 'sharing' (PG:11:8-11:9) | Greets their educators and friends (PG:9:2); understands what is 'Friends' (PG:9:15) | Shows affection for friends without prompting (Dev Goals 3-yr)",
+          "concern": "Hit / pushed / bit a peer (record what happened before and after - ABC) | Snatches a toy and holds on screaming, most free-play sessions | Cries for a long stretch after drop-off every day beyond the settling period and does not join play | Continues playing or laughs when a friend is crying right next to them, repeatedly",
+          "expected": "Tanvi went and patted Zoya's back when she was crying at drop-off and gave her the bunny.",
+          "exceeding": "Ira bit Sara on the arm during block time when Sara took the red block; Ira had been waiting for it and I had just stepped away.",
+          "linked": [
+            "SEB.EMP.01",
+            "SEB.EMP.02",
+            "SEB.SOC.01",
+            "SEB.SOC.02",
+            "SEB.SOC.04",
+            "SEB.REG.01",
+            "SEB.NORM.01",
+            "PLS.ROUT.01",
+            "PLS.ROUT.02"
+          ],
+          "authored_by": "existing_doc",
+          "source": "report_items.csv PG:11:2, PG:11:7-11:10, PG:9:1-9:2, PG:9:15; ref_nursery_dev_goals.tsv (CDC 2/3/4-yr Social-Emotional column); groupB.md L439 (Manners & Courtesy: magic words, kindness towards anima…"
+        },
+        {
+          "code": "EXP",
+          "band": "G1",
+          "label": "Expressive",
+          "positive": "Reads the news in assembly clearly enough for the back row to hear (News Reading LO: confidence, clear communication) | Writes/draws a journal entry about their own day and reads it aloud when asked (Daily Journal LO) | Is able to discuss the findings with his teammates in their own words (G1:4:3) | Gives an opinion in class discussion with a reason ('I think… because…') | Takes a speaking part in a skit (G1:4:34) or presents the reading project",
+          "concern": "Journal entries are copied from the board rather than own words, most days | Speaks only when directly named and then gives a single word, most discussions | Explains findings by pointing at the sheet and does not put it into a sentence, most experiments | Chooses the non-speaking role every time a skit/presentation is offered across the term",
+          "expected": "Nia read the news item in assembly loud and clear and answered two questions from the G3 children.",
+          "exceeding": "Rohan's journal is the same sentence copied from the board every day; when I asked him to tell me about his weekend he shrugged.",
+          "linked": [
+            "LIT.SPK.06",
+            "LIT.SPK.07",
+            "LIT.SPK.08",
+            "LIT.WRT.01",
+            "LIT.WRT.02",
+            "SCI.INQ.02",
+            "SEB.SELF.01",
+            "ART.VIS.03"
+          ],
+          "authored_by": "claude_draft",
+          "source": "academic_LOs_raw.csv LO-G1-0455 News Reading, LO-G1-0456 Assembly Participation, LO-G1-0465 Reading Project, LO-G1-0466 Daily Journal; report_items.csv G1:1:17, G1:4:3, G1:4:34, G1:4:38; No primary t…"
+        },
+        {
+          "code": "EXP",
+          "band": "G2",
+          "label": "Expressive",
+          "positive": "Able to express their thought on their journal (G2:1:11), including feelings and opinions | Presents the reading project / news to the class or assembly and takes questions | Explains a science finding or a maths method to a partner in full sentences | Puts a disagreement into words in a discussion ('I don't agree because…') instead of going quiet or sulking | Uses new vocabulary (word of the day, theme words) in speech and journal",
+          "concern": "Journal stays at one copied or formulaic line despite modelling, most weeks | Avoids all presenting/news slots across the term even with a partner option | Gives up mid-explanation and says 'you say it' to a peer, most times | Sulks or withdraws rather than saying what is wrong when asked directly, most incidents",
+          "expected": "Anvi wrote in her journal that she was scared of the quiz and then told the class why during reflection.",
+          "exceeding": "Aadi handed his news slot to Neel for the third fortnight in a row and said he didn't want to.",
+          "linked": [
+            "LIT.WRT.01",
+            "LIT.SPK.06",
+            "LIT.SPK.07",
+            "LIT.SPK.08",
+            "SCI.INQ.02",
+            "SEB.SELF.01",
+            "SEB.REG.01"
+          ],
+          "authored_by": "claude_draft",
+          "source": "report_items.csv G2:1:11, G2:4:3, G2:4:40, G2:4:45; academic_LOs_raw.csv Routines LOs G1-G4 (Home Period, Assembly Participation, News Reading, Daily Journal, Think Outside the Box, Fun Riddles, Bloc…"
+        },
+        {
+          "code": "EXP",
+          "band": "G3",
+          "label": "Expressive",
+          "positive": "Writes a recount/story/poem in own words and reads it to the class (LIT.WRT ladder) | Explains reasoning in a debate or class discussion and responds to a counter-view | Presents a project to another class or to parents (mixed-group learning, PTM showcase) | Expresses an emotion or need to the teacher in private when something is wrong | Performs a role in the skit / Peace Day role play with expression, dialogue",
+          "concern": "Written work is mostly copied or a single line even when time and support are given, most weeks | Withdraws from any discussion that involves disagreement, most times | Refuses every presentation slot across the term | Distress shows only as anger or silence; never puts it into words even one-to-one, across the term",
+          "expected": "Ruhi read her kenning poem to G1 and explained how she chose each line.",
+          "exceeding": "Pari refused to present her geography project again and put her head down when I suggested doing it with a partner.",
+          "linked": [
+            "LIT.WRT.01",
+            "LIT.WRT.02",
+            "LIT.WRT.03",
+            "LIT.SPK.07",
+            "LIT.SPK.08",
+            "SEB.SELF.01",
+            "SEB.REG.01"
+          ],
+          "authored_by": "claude_draft",
+          "source": "report_items.csv G3:1:12-1:13, G3:4:3, G3:4:40, G3:4:45; calendar_tabs_extract.md L680 (Peace Day G2/G3 role play); academic_LOs_raw.csv Routines LOs G1-G4 (Home Period, Assembly Participation, News…"
+        },
+        {
+          "code": "EXP",
+          "band": "G4",
+          "label": "Expressive",
+          "positive": "Writes a short essay / dialogue in own voice and reads or performs it (G4 Routines: Short Essay, Dialogue Writing, Doodle & Describe) | Anchors an assembly or leads a news segment for the school | Gives feedback to a peer's work respectfully and specifically | Voices a view in Marathi/Hindi/English as the setting calls for | Names own feelings and needs to an adult before a situation escalates",
+          "concern": "Hands in essays that are copied or a few lines despite time and support, most weeks | Avoids every speaking role across the year even with scaffolds | Peer feedback given only as 'good' / 'bad' with no specifics, most times | Distress surfaces only as outbursts or silence, never in words, across the term",
+          "expected": "Neel anchored the Friday assembly and handled the mic going off without losing the thread.",
+          "exceeding": "Tanvi's dialogue-writing piece was two lines copied from the model, and she said 'I have nothing to say' when I asked for more.",
+          "linked": [
+            "LIT.WRT.01",
+            "LIT.WRT.04",
+            "LIT.SPK.07",
+            "LIT.SPK.08",
+            "MAR.LANG.01",
+            "SEB.SELF.01",
+            "SEB.REG.01"
+          ],
+          "authored_by": "claude_draft",
+          "source": "academic_LOs_raw.csv LO-G4-1744 Expanded Sentences, LO-G4-1746 Short Essay, LO-G4-1747 Doodle & Describe, LO-G4-1750 Dialogue Writing; No G4 report form exists"
+        },
+        {
+          "code": "EXP",
+          "band": "K1",
+          "label": "Expressive",
+          "positive": "Engages in conversations using sentences (K1:7:2); uses words to express feelings & needs (K1:7:3) | Able to give self-introduction (K1:9:1) | Shares a rhyme in circle (K1 One-Pager, Courage T1) | Retells a story with puppets/story map in own words; able to strike conversations with adults and children alike | Expresses their preferences, opinions, and interests confidently and assertively (K1:12:9)",
+          "concern": "Retells a familiar story only with yes/no answers to prompts, no sentences of their own, most retellings | Does not tell the teacher or a friend when upset - walks away or hits instead, most incidents | Speaks freely to friends but goes silent when an adult asks a direct question, over several weeks | Recites/reads only when the teacher says each word first, most sessions",
+          "expected": "Anaya volunteered to share 'The Snail' rhyme in circle and told everyone why the snail is her favourite.",
+          "exceeding": "Reyansh chats a lot with Advik at the block area, but when I ask him about his weekend he looks down and says nothing - third week now.",
+          "linked": [
+            "LIT.SPK.01",
+            "LIT.SPK.02",
+            "LIT.SPK.04",
+            "LIT.SPK.06",
+            "LIT.SPK.07",
+            "LIT.SPK.08",
+            "SEB.SELF.01",
+            "SEB.REG.01"
+          ],
+          "authored_by": "existing_doc",
+          "source": "report_items.csv K1:7:1-7:3, K1:9:1, K1:12:9; groupB.md L441-450 (One Pager Curriculum_K1: pillars by term; Integrated Daily Routines) (Expression; Courage T1 'share a rhyme in circle'); report_summa…"
+        },
+        {
+          "code": "EXP",
+          "band": "K2",
+          "label": "Expressive",
+          "positive": "Retells a story confidently in own words, in Hindi or English (K2 review: 'confident story retelling; Hindi & English as modes') | Displays grasping of vocabulary learnt in lessons (K2:7:3): uses the word of the week in own sentences | Able to give self-introduction (K2:9:1) to a visitor or in assembly | Says how they feel and why ('I'm angry because he took my turn') (K2:9:13 emotions via emoji art; K2:12:6) | Acts out a story / takes a speaking role in the skit or assembly performance",
+          "concern": "Answers in single words when a sentence is asked for, in both languages, most days | Refuses to speak in assembly/skit even in a group line, repeatedly across the term (record without pressure) | Cannot say what the emoji / Today-I-Feel card means for them beyond naming it, most check-ins | Interrupts and talks over others so often that turn-taking in circle breaks down, most circles",
+          "expected": "Tara retold The Lion and the Mouse in Marathi-mixed English with all the parts in order and did the voices.",
+          "exceeding": "Myra gives one-word answers in circle and in Hindi time both, and wouldn't say her self-introduction line in assembly practice.",
+          "linked": [
+            "LIT.SPK.01",
+            "LIT.SPK.04",
+            "LIT.SPK.06",
+            "LIT.SPK.07",
+            "LIT.SPK.08",
+            "SEB.SELF.01",
+            "SEB.REG.01",
+            "HIN.VOC.02"
+          ],
+          "authored_by": "existing_doc",
+          "source": "report_items.csv K2:7:1-7:3, K2:9:1, K2:9:13, K2:12:6, K2:12:9; groupB.md L468 (K2 review: 'Bully situation, unpleasant words, physical reactions'; 'confident story retelling'); calendar_tabs_extract…"
+        },
+        {
+          "code": "EXP",
+          "band": "N",
+          "label": "Expressive",
+          "positive": "Uses words to express feelings & needs (N:7:3) | Engages in conversations using sentences (N:7:2) | Participates during storytelling in class (N:7:10) | Able to give self-introduction (N:9:1) | Responds to 'Today I Feel' chart (N:9:14) | Sings a song or says a poem from memory (N:7:11); shares in 'children time' when asked if anything to tell",
+          "concern": "Passes every time in children time for the whole fortnight, even on a topic they talked about at snack | Answers only with a nod/shake when asked a question they can answer in words, most days | Voice drops to a whisper when speaking to the whole circle and stops mid-sentence, most circles | Points at the emotion chart but does not say the feeling word even with a prompt, most days",
+          "expected": "Zoya told the whole circle about her grandmother's visit in three full sentences and did the Pakshi rhyme actions loudly.",
+          "exceeding": "Ira has passed in sharing time every day this fortnight, and nods or shakes her head when I ask her directly.",
+          "linked": [
+            "LIT.SPK.01",
+            "LIT.SPK.02",
+            "LIT.SPK.04",
+            "LIT.SPK.05",
+            "LIT.SPK.06",
+            "LIT.LIS.02",
+            "SEB.REG.01",
+            "SEB.SELF.01"
+          ],
+          "authored_by": "existing_doc",
+          "source": "report_items.csv N:7:1-7:3, N:7:9-7:11, N:9:1, N:9:14; groupC.md L271 (Circle Time framework: RULES; educator ground rules) ('Children time - ask if anything to tell'); groupB.md L456-457 (Graph pill…"
+        },
+        {
+          "code": "EXP",
+          "band": "PG",
+          "label": "Expressive",
+          "positive": "Uses words to express feelings & needs (PG:6:5) | Engages in conversations using 4 to 6 words (PG:6:3) | Listens and responds when their name is called out (PG:6:1) | Engages in role play activities (PG:6:16) | Attempts to negotiate for personal needs (PG:11:11) | Repeats actions and words in rhymes; joins the goodbye song",
+          "concern": "Cries or pulls the adult's hand for something without trying a word or gesture, in situations where they have used words before, most days | Does not look up or respond when their name is called from close by, most days | Stays outside the rhyme circle and does not copy any action even for favourite rhymes, over several weeks",
+          "expected": "Neel said 'didi water' and pointed at his bottle instead of crying, first time this week.",
+          "exceeding": "Tanvi still pulls my hand and screams when she wants the slide; she doesn't use any words even when I model them.",
+          "linked": [
+            "LIT.SPK.01",
+            "LIT.SPK.02",
+            "LIT.SPK.05",
+            "LIT.LIS.01",
+            "LIT.SPK.08",
+            "SEB.REG.01"
+          ],
+          "authored_by": "existing_doc",
+          "source": "report_items.csv PG:6:1-6:5, PG:6:13, PG:6:16, PG:11:11, PG:11:12; groupB.md L457 (PG Graph: Expression -> Word of the week, Rhyme, Stories); report_summary_traits.csv (7 pillars PG-K2, Beginner/Prog…"
+        },
+        {
+          "code": "IND",
+          "band": "G1",
+          "label": "Independent & Disciplined",
+          "positive": "Comes to Home Period with diary, folder and books ready without being chased (Home Period LO: responsibility, routine awareness, independence) | Starts the morning task from the board on their own after settling time | Completes the reading-project / home-engagement page and shows it without a reminder | Manages own belongings and tiffin through the day; leaves the desk clear at wind-up | Raises hand and waits for their turn to speak in home period",
+          "concern": "Diary/folder missing or unsigned several days in a row and the child cannot say what was set | Sits with the task on the desk and does not begin until the teacher comes over, most days | Leaves desk and materials scattered at the end of the period, most days | Calls out across the room repeatedly after the raise-hand reminder, most periods",
+          "expected": "Sara had her diary signed, folder sorted and was reading the board task before I got to her table.",
+          "exceeding": "Advik's diary hasn't been in his bag all week and he couldn't tell me what the home engagement was.",
+          "linked": [
+            "SEB.IND.01",
+            "SEB.LEAD.01",
+            "SEB.ATT.01",
+            "PLS.ENV.03",
+            "LIT.LIS.01",
+            "SEB.NORM.01"
+          ],
+          "authored_by": "claude_draft",
+          "source": "groupE.md L282 (G1 report overview: 5 primary traits defined /10) 'Independence & Readiness: the preparedness of a child'; academic_LOs_raw.csv LO-G1-0457 Home Period, LO-G1-0466 Daily Journal; group…"
+        },
+        {
+          "code": "IND",
+          "band": "G2",
+          "label": "Independent & Disciplined",
+          "positive": "Prepares for news reading / quiz on the assigned day without a reminder (News Reading, Assembly Participation LOs) | Keeps journal, folder and workbooks in order and knows where each thing is | Starts and finishes the independent practice block (mental maths, spelling) within the time given | Follows the class routine (home period -> academic -> reading) without individual prompts | Tells the teacher before leaving the room or switching activity",
+          "concern": "Assigned news-reading/quiz day forgotten more than once in the term | Work started only after several individual prompts, then left incomplete at the bell, most days | Asks 'what do I do now?' after whole-class instructions were given, most periods | Leaves the group task for others to finish once the teacher moves away, most group tasks",
+          "expected": "Anvi brought her news article, read it in assembly and had already packed her folder for the next period.",
+          "exceeding": "Ruhi asked me four times what to do during mental maths even though the steps were on the board.",
+          "linked": [
+            "SEB.IND.01",
+            "SEB.LEAD.01",
+            "SEB.ATT.01",
+            "LIT.LIS.01",
+            "PLS.ENV.03"
+          ],
+          "authored_by": "claude_draft",
+          "source": "groupE.md L282 (G1 report overview: 5 primary traits defined /10); academic_LOs_raw.csv Routines LOs G1-G4 (Home Period, Assembly Participation, News Reading, Daily Journal, Think Outside the Box, Fu…"
+        },
+        {
+          "code": "IND",
+          "band": "G3",
+          "label": "Independent & Disciplined",
+          "positive": "Manages a multi-day task (project, novel-reading log) with their own plan and finishes on time | Checks own work against the board/model answer before asking the teacher | Takes a classroom job for the week and finishes or hands it over without follow-up | Keeps to agreed rules during unsupervised time (library, common area) | Brings materials for practicals (stitching, cooking) as per the diary note",
+          "concern": "Multi-day project left to the last day with parts missing; child unaware of the deadline | Waits to be told each step of a familiar routine (evaluation set-up, library), most times | Off-task in the common area whenever unsupervised, most days | Materials for the practical not brought despite the diary note, repeatedly",
+          "expected": "Aadi finished his novel-reading log two days early and had the stitching kit ready without a reminder.",
+          "exceeding": "Pari hadn't started the geography project the day before it was due and said she didn't know it was set.",
+          "linked": [
+            "SEB.IND.01",
+            "SEB.LEAD.01",
+            "SEB.ATT.01",
+            "SEB.NORM.01",
+            "PLS.ENV.03"
+          ],
+          "authored_by": "claude_draft",
+          "source": "groupE.md L282 (G1 report overview: 5 primary traits defined /10); academic_LOs_raw.csv Routines LOs G1-G4 (Home Period, Assembly Participation, News Reading, Daily Journal, Think Outside the Box, Fu…"
+        },
+        {
+          "code": "IND",
+          "band": "G4",
+          "label": "Independent & Disciplined",
+          "positive": "Plans own revision for the weekly quiz / spelling bee / Olympiad mock without being told | Takes initiative to set up the class or assembly (moves furniture, hands out sheets) unasked | Self-corrects work using the model answer before asking | Keeps and uses a personal diary/timetable; knows what is due when | Leaves shared spaces (library, home-science room) as found",
+          "concern": "Relies on a peer or the teacher to say what was set, week after week | Work handed in unchecked with the same slips repeated after feedback, most weeks | Starts only when the teacher is standing at the desk, most periods | Leaves shared spaces untidy after use, repeatedly",
+          "expected": "Neel had made his own revision list for the mental-maths quiz and ticked it off during reading time.",
+          "exceeding": "Tanvi asked Anvi what the homework was for the third day running and hadn't opened her diary.",
+          "linked": [
+            "SEB.IND.01",
+            "SEB.LEAD.01",
+            "SEB.ATT.01",
+            "PLS.ENV.03",
+            "SEB.NORM.01"
+          ],
+          "authored_by": "claude_draft",
+          "source": "groupE.md L282 (G1 report overview: 5 primary traits defined /10) (no G4 report form exists - see registry_notes.md); academic_LOs_raw.csv Routines LOs G1-G4 (Home Period, Assembly Participation, New…"
+        },
+        {
+          "code": "IND",
+          "band": "K1",
+          "label": "Independent & Disciplined",
+          "positive": "Increased Independence: able to complete more complex tasks independently, such as dressing themselves, preparing simple snacks, and following multi-step instructions (K1:12:1) | Arrange bag independently; complete tasks on time (K1 One-Pager, Courage T1) | Signs in on the sign-in board on arrival without a reminder (K1 Integrated Daily Routines) | Buttoning, shoes/socks, folding, table setting, bottle open/close done alone (K1 One-Pager, I&D) | Put things where they belong; look after books, pencils, tables, chairs (circle-time rules)",
+          "concern": "Starts a three-step instruction and stops after the first step, waiting to be told again, most tasks | Leaves the worksheet/tray half-done and moves away as soon as the teacher's attention shifts, most days | Needs a reminder every day to sign in / put the bottle away | Talks over the person speaking in circle even after the 'one person talks at a time' reminder, most circles",
+          "expected": "Tara arranged her bag, signed in and started the tracing sheet on her own before I had finished attendance.",
+          "exceeding": "Myra did the first step of the sowing activity and then just sat waiting till I came back to her, same as yesterday.",
+          "linked": [
+            "SEB.IND.01",
+            "PLS.SELF.01",
+            "PLS.SELF.02",
+            "PLS.ENV.03",
+            "PLS.ENV.06",
+            "PLS.ROUT.03",
+            "LIT.LIS.01",
+            "SEB.ATT.01"
+          ],
+          "authored_by": "existing_doc",
+          "source": "report_items.csv K1:12:1; groupB.md L441-450 (One Pager Curriculum_K1: pillars by term; Integrated Daily Routines); groupC.md L271 (Circle Time framework: RULES; educator ground rules); report_summar…"
+        },
+        {
+          "code": "IND",
+          "band": "K2",
+          "label": "Independent & Disciplined",
+          "positive": "Increased Independence: able to complete more complex tasks independently, such as dressing themselves, preparing simple snacks, and following multi-step instructions (K2:12:1) | Takes a classroom job (attendance helper, mat monitor) and finishes it without follow-up (Routines-Children: Classroom jobs) | Manages transitions (wind-up, line-up, washroom) on the song cue without an individual prompt | Follows the rules chart without being reminded (K2 review flagged rules as the weak area) | Starts independent work (worksheet, Montessori tray) on their own and puts materials back",
+          "concern": "Needs an adult beside them to start any independent work, most days | Wind-up done only when the teacher stands next to them | Leaves materials out after Montessori/block work and moves to the next tray, most sessions | Repeatedly breaks a class rule within minutes of it being restated (e.g. running indoors), most days",
+          "expected": "Nia was mat monitor today - she rolled and stacked all the mats and reminded two friends to fold their napkins.",
+          "exceeding": "Rohan needed me next to him to start the pattern sheet, and when I moved away he stopped and started wandering.",
+          "linked": [
+            "SEB.IND.01",
+            "PLS.ENV.03",
+            "PLS.ROUT.03",
+            "LIT.LIS.01",
+            "SEB.ATT.01",
+            "SEB.NORM.01"
+          ],
+          "authored_by": "existing_doc",
+          "source": "report_items.csv K2:12:1; groupB.md L468 (K2 review: 'Bully situation, unpleasant words, physical reactions'; 'confident story retelling'); groupC.md L224 (Routines-Children: Classroom jobs, Sign in…"
+        },
+        {
+          "code": "IND",
+          "band": "N",
+          "label": "Independent & Disciplined",
+          "positive": "Increased Independence: shows increased desire to do things on their own, such as dressing themselves, feeding, and choosing activities (N:12:4) | Keeping bag at its place, keeping bottles in the tray (Daily Rhythms) | Cleaning the place after eating, winding up toys and books (Daily Rhythms) | Washing hands before and after meals, use of napkin for every meal (Daily Rhythms) | Removes and wears socks/shoes; opens and closes own bottle and tiffin (N:6 Practical Life items)",
+          "concern": "Asks didi to open the tiffin/bottle without trying first, most days | Bag and bottle left where they were dropped even after the routine chart is pointed to, most days | Needs the wind-up instruction repeated one-to-one every day | Sits in the circle for under a minute and then wanders off during teacher time, most days",
+          "expected": "Anaya opened her own tiffin and bottle today and wiped her spot with the napkin after lunch.",
+          "exceeding": "Reyansh left his bag in the middle of the floor again and waited for me to open his bottle, third day this week.",
+          "linked": [
+            "SEB.IND.01",
+            "PLS.SELF.01",
+            "PLS.SELF.02",
+            "PLS.SELF.03",
+            "PLS.ENV.02",
+            "PLS.ENV.03",
+            "PLS.ROUT.03",
+            "LIT.LIS.01"
+          ],
+          "authored_by": "existing_doc",
+          "source": "report_items.csv N:12:4, N:6:1-6:34; groupB.md L431-439 (One Pager Curriculum_Nursery: pillars by term; Daily Rhythms); ref_nursery_dev_goals.tsv (CDC 2/3/4-yr Social-Emotional column) 'Dresses and u…"
+        },
+        {
+          "code": "IND",
+          "band": "PG",
+          "label": "Independent & Disciplined",
+          "positive": "Able to choose preferred toys and people (PG:11:5) | Able to put shoes in the rack; able to roll a mat; attempts to fold a napkin (PG:9:5-9:7) | Understands concept of wind up: puts the toy back when the wind-up song plays (PG:9:8) | Understands the concept of a queue and of a circle: stays in the line/circle for a routine (PG:9:3-9:4) | Follows a simple one-step instruction ('bring your bottle') on their own",
+          "concern": "Waits for didi to carry the bag/bottle even after being shown where it goes, most days | Keeps playing through the whole wind-up song and needs hand-over-hand to put the toy back, most days | Leaves the line or circle repeatedly during the same routine | Does not pick any activity unless an adult places one in front of them, across free-play sessions",
+          "expected": "Zoya put her shoes on the rack and rolled her mat after fruit break today without anyone telling her.",
+          "exceeding": "Ira stayed on the slide through the whole wind-up song again today, I had to carry her in - that's most days this week.",
+          "linked": [
+            "SEB.IND.01",
+            "PLS.SELF.01",
+            "PLS.ENV.01",
+            "PLS.ENV.03",
+            "PLS.ROUT.03",
+            "LIT.LIS.01"
+          ],
+          "authored_by": "existing_doc",
+          "source": "report_items.csv PG:11:5, PG:9:3-9:8; groupD.md L284 (PG routines sequence verbatim); groupB.md L456-457 (Graph pillar x strand list, verbatim); report_summary_traits.csv (7 pillars PG-K2, Beginner/P…"
+        }
+      ],
       "seed_once": true
     }
   ]

@@ -29,8 +29,8 @@ def conn():
 
 
 def test_achals_skills_are_grade_2_rows_with_their_kinds(conn):
-    """The three skills are rows: every level Grade 2's, every kind a level names a `question_format` row of that
-    skill, each skill in its topic. The engine's code names none of their kinds — a kind is a row, not code."""
+    """The three skills are rows: every level Grade 2's, every kind a level names one of that skill's own kinds
+    (`skill.question_kinds`; once `question_format` rows), each skill in its topic. The engine's code names none of their kinds — a kind is a row, not code."""
     rows = {
         r["code"]: r
         for r in conn.execute(

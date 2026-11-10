@@ -3,6 +3,7 @@ import type { Session } from "./auth";
 import { seesClass, seesSheet } from "./reach";
 import { grades } from "./queries";
 import { weekWords } from "./week";
+import { weekSql } from "./queries-papers";
 
 // The search in the bar (goals/s1-subject-class-and-today.yaml, docs/frontend/screens.json `bar`): a typeahead, not a page of
 // results. It finds a child, an assessment or a paper code, and offers at most five. What is typed is posted (app/api/search),
@@ -27,14 +28,14 @@ export async function suggest(me: Session, typed: string): Promise<Hit[]> {
     // a child by part of their name, or by Sr. No. (roll number), within the classes the person sees
     sql<{ id: string; name: string; band: string; section: string; roll_no: string }[]>`
       select c.id, n.first_name as name, class_band(c.tenant_id, c.section) as band, c.section, c.roll_no
-      from child c, lateral pii.read_child(c.id, ${me.email}) n
+      from child_now c, lateral pii.read_child(c.id, ${me.email}) n
       where c.active and ${seesClass(me, sql`c.section`)} and (${/^\d+$/.test(q)} and c.roll_no = ${q}
                           or position(lower(${q}) in lower(n.first_name || ' ' || n.last_name)) > 0)
       order by c.section, roll_order(c.roll_no), c.roll_no limit ${MOST_SUGGESTIONS}`,
     // an assessment — a class paper given in a week — by the skill or the title it tests, as Assessments lists it
     sql<{ name: string; kind: string; section: string; band: string; week: string | null; set: string }[]>`
       select coalesce(ss.name, t.key ->> 'title', t.code) as name, si.kind, si.section, class_band(si.tenant_id, si.section) as band,
-             coalesce(si.week, t.week) as week, coalesce(t.skill_set_code, t.id::text) as set
+             ${weekSql("si", "t")} as week, coalesce(t.skill_set_code, t.id::text) as set
       from sheet_instance si join sheet_template t on t.id = si.sheet_template_id
       left join skill ss on ss.tenant_id = t.tenant_id and ss.code = t.skill_set_code
       where si.print_status <> 'void' and si.kind in ('practice', 'assessment') and si.section is not null

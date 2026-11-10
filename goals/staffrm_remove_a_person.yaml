@@ -15,13 +15,13 @@ goal: >
 # on live is Nimish's.
 says:
   - words: "the account should not exist"
-    proved_by: "packages/engine/tests/test_staff_remove.py::test_the_placeholder_with_no_at_sign_is_removed_by_the_command_and_leaves_everyone_else_as_they_were"
+    proved_by: "packages/engine/tests/test_staff_remove.py::test_a_person_taken_off_is_kept_inactive_with_no_password_and_everyone_else_is_as_they_were"
   - words: "Without --apply it changes nothing and says, for each email, would remove NAME (ROLE), or refused, and why"
     proved_by: "packages/engine/tests/test_staff_remove.py::test_a_dry_run_changes_nothing_and_says_what_it_would_do_for_each_email"
   - words: "It refuses, in words: an email not on the list, the same email twice in one call, and a removal that would leave no coordinator who can sign in; case does not matter"
     proved_by: "packages/engine/tests/test_staff_remove.py::test_every_refusal_is_said_in_words_and_one_refusal_stops_the_whole_apply"
   - words: "An email need not look like a real address"
-    proved_by: "packages/engine/tests/test_staff_remove.py::test_the_placeholder_with_no_at_sign_is_removed_by_the_command_and_leaves_everyone_else_as_they_were"
+    proved_by: "packages/engine/tests/test_staff_remove.py::test_a_person_taken_off_is_kept_inactive_with_no_password_and_everyone_else_is_as_they_were"
   - words: "--apply removes the named people in one transaction, holding the staff list the way staff load does"
     proved_by: "packages/engine/tests/test_staff_remove.py::test_apply_holds_the_staff_list_and_removes_in_one_transaction"
   - words: "Evidence and decisions already recorded in a removed person's name stay as they are"

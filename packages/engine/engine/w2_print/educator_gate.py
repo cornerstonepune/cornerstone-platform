@@ -1,7 +1,7 @@
 """Who sees the K2 educator's screens (D-076): everyone they are for once `educator.timetable_enabled` is on; before
 that, only the staff preview, a member of staff whose open grant is in a role `educator.preview_roles` names (a config
-row; head and coordinator; a missing row previews nobody). A previewer who holds no class sees every class whose
-timetable is in force on the day asked: a timetable carries no child. A preview only looks: it changes and sends
+row; head and coordinator; a missing row previews nobody). A previewer who holds no class sees every class with
+lessons on the day asked: a timetable carries no child. A preview only looks: it changes and sends
 nothing. The one rule for the timetable and the materials routes, and the one reading of the switch."""
 
 import datetime as dt
@@ -50,10 +50,10 @@ def previewing(conn: db.Conn, staff: Any) -> bool:
 
 
 def timetabled_classes(conn: db.Conn, day: dt.date) -> list[dict]:
-    """Every class whose timetable is in force on `day`, as `k2_day.my_classes` gives a class."""
+    """Every class with lessons on `day` (the timetable of a date is its sessions), as `k2_day.my_classes` gives a class."""
     return conn.execute(
         "select distinct c.id::text as id, c.grade_code as grade, c.section, c.academic_year_id, c.campus_id"
-        " from school_class c where exists (select 1 from timetable_slot t where t.school_class_id = c.id"
-        " and t.valid_from <= %s and (t.valid_to is null or t.valid_to >= %s)) order by c.grade_code, c.section",
-        (day, day),
+        " from school_class c where exists (select 1 from session s join school_day d on d.id = s.school_day_id"
+        " where s.school_class_id = c.id and d.on_date = %s) order by c.grade_code, c.section",
+        (day,),
     ).fetchall()

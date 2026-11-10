@@ -14,7 +14,7 @@ def due(conn, band=None):
     by band, section and roll. A child with nothing signed off has nothing to report yet, and a report still true of the
     child's answers, approved or not, is left as it is."""
     kids = conn.execute(
-        "select c.id, c.band, c.section, c.roll_no from child c where c.active"
+        "select c.id, c.band, c.section, c.roll_no from child_now c where c.active"
         " and (%(b)s::text is null or c.band = %(b)s)"
         " and exists (select 1 from evidence_event e where e.child_id = c.id and e.confirmed_by is not null)"
         " order by grade_ord(c.tenant_id, c.band), c.section, roll_order(c.roll_no), c.roll_no",

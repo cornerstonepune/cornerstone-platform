@@ -68,7 +68,7 @@ def _chain(c, tenant, cls, section, staff_id, template, seeded):
         seeded.setdefault(table, {"X": set(), "Y": set()})[cls["tag"]].add(rid)
         return rid
 
-    child = put("public.child", roll_no="1", band="G1", section=section, active=True)
+    child = put("public.child", band="G1", active=True)
     put("pii.child", child_id=child, first_name="Proof")
     put("public.enrolment", child_id=child, class_id=cls["id"], roll_no="1",
         from_date=sql.SQL("current_date - 30"), recorded_by="cp4 proof")
@@ -105,7 +105,7 @@ def _build_school(c):
     year = ins(c, "public.academic_year", tenant_id=tenant, label="2026-27",
                starts_on=sql.SQL("current_date - 100"), ends_on=sql.SQL("current_date + 200"))
     classes = {t: {"tag": t, "id": ins(c, "public.school_class", tenant_id=tenant, campus_id=campus,
-                                       academic_year_id=year, grade_code="K9", section=s)}
+                                       academic_year_id=year, grade_code="K9", section=s, label=s)}
                for t, s in (("X", "P"), ("Y", "Q"), ("Z", "R"))}
     people = {}
     for who in ("X", "Y", "Z", "all"):
@@ -122,7 +122,7 @@ def _build_school(c):
     c.execute("insert into config (tenant_id, key, value) values (%s, %s, %s) "
               "on conflict (tenant_id, key) do update set value = excluded.value",
               (tenant, "school.time_zone", psycopg.types.json.Jsonb("Asia/Kolkata")))
-    template = ins(c, "public.sheet_template", tenant_id=tenant, band="G1", source="generated", week="2026-W45")
+    template = ins(c, "public.sheet_template", tenant_id=tenant, band="G1", source="generated", week="2026-11-02")  # a week is a date (CP-27)
     seeded = {}
     for t, s in (("X", "P"), ("Y", "Q")):
         _chain(c, tenant, classes[t], s, people[t]["staff"], template, seeded)

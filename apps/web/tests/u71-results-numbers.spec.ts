@@ -63,7 +63,7 @@ test("a topic's papers by kind: one class assessment for two children; two home 
   expect(kinds.assessment).toMatchObject({ papers: 2, sets: 1, children: 2, most: 1 });
   expect(kinds.focus).toMatchObject({ papers: 2, children: 1, most: 2 });
   // an educator of another class sees none of them: the one rule (`staff_sees`)
-  const [{ id }] = await sql<{ id: string }[]>`select staff_id(${OTHER.email}) as id`;
+  const [{ id }] = await sql<{ id: string }[]>`select staff_of_email(${OTHER.email})::text as id`;
   expect(await topicPapers(A, TOPIC, { role: "educator", classes: OTHER.classes, subjects: [], id })).toEqual([]);
 });
 

@@ -7,7 +7,7 @@ import os
 import psycopg
 import pytest
 
-from engine.core import db
+from engine.core import db, history
 from engine.w2_print import materials_list as ml
 from tests import materials_rows as m
 
@@ -39,6 +39,15 @@ def _lines(conn, lid):
         " and l.list_id = %s and l.removed_at is null order by l.needed_on, i.name",
         (lid,),
     ).fetchall()
+
+
+def _edits(conn, line_id):
+    """A line's changes by a person, oldest first: rows of the one history log (CP-27 group 6: once the table
+    `materials_line_edit`)."""
+    return [
+        {"kind": c["op"], "who": c["staff_id"], "before": c["before"], "after": c["after"]}
+        for c in history.of(conn, "materials_line", str(line_id))
+    ]
 
 
 def test_a_material_needed_twice_is_one_line_with_the_sum_under_the_day_it_is_first_needed(conn, s):
@@ -115,7 +124,7 @@ def test_a_changed_quantity_is_kept_with_who_and_when_and_survives_a_rebuild(con
     lid = _build(conn, s)
     [line] = _lines(conn, lid)
     ml.set_quantity(conn, line["id"], 6, s["staff"])
-    edit = conn.execute("select * from materials_line_edit where line_id = %s", (line["id"],)).fetchone()
+    edit = _edits(conn, line["id"])[0]
     assert (edit["kind"], edit["who"], edit["before"]["quantity"], edit["after"]["quantity"]) == (
         "quantity",
         s["staff"],
@@ -127,7 +136,7 @@ def test_a_changed_quantity_is_kept_with_who_and_when_and_survives_a_rebuild(con
     assert again["id"] == line["id"] and again["quantity"] == 6
 
 
-def test_a_removed_line_is_kept_in_the_edit_table_and_does_not_come_back(conn, s):
+def test_a_removed_line_is_kept_in_the_history_and_does_not_come_back(conn, s):
     a = s["acts"][0]
     tape = m.item(conn, s, "Tape")
     m.needs(conn, s, a, tape, 1)
@@ -136,10 +145,7 @@ def test_a_removed_line_is_kept_in_the_edit_table_and_does_not_come_back(conn, s
     [line] = _lines(conn, lid)
     ml.remove(conn, line["id"], s["staff"])
     assert _lines(conn, lid) == []
-    assert [
-        r["kind"]
-        for r in conn.execute("select kind from materials_line_edit where line_id = %s", (line["id"],))
-    ] == ["remove"]
+    assert [r["kind"] for r in _edits(conn, line["id"])] == ["remove"]
     _build(conn, s)
     assert _lines(conn, lid) == []
 
@@ -166,9 +172,7 @@ def test_an_educator_adds_a_line_only_from_the_catalogue(conn, s):
     line = ml.add(conn, lid, bell, 2, D2, a, s["staff"])
     row = conn.execute("select * from materials_line where id = %s", (line,)).fetchone()
     assert (row["source"], row["quantity"], row["unit"], row["needed_on"]) == ("educator", 2, "piece", D2)
-    assert conn.execute(
-        "select kind, who from materials_line_edit where line_id = %s", (line,)
-    ).fetchone() == {"kind": "add", "who": s["staff"]}
+    assert {k: _edits(conn, line)[0][k] for k in ("kind", "who")} == {"kind": "add", "who": s["staff"]}
     with pytest.raises(ml.NotInCatalogue):
         ml.add(conn, lid, "MAT-NOPE", 1, D2, a, s["staff"])
 
@@ -231,7 +235,7 @@ def test_who_may_edit_is_the_roles_the_school_names_for_the_timetable(conn, s):
     assert ml.may_edit(conn, s["staff"], s["class"], dt.date(2031, 1, 1)) is False
 
 
-def test_the_edit_table_cannot_be_changed(conn, s):
+def test_an_edit_once_kept_cannot_be_changed(conn, s):
     a = s["acts"][0]
     cup = m.item(conn, s, "Cup")
     m.needs(conn, s, a, cup, 1)
@@ -239,7 +243,7 @@ def test_the_edit_table_cannot_be_changed(conn, s):
     [line] = _lines(conn, _build(conn, s))
     ml.set_quantity(conn, line["id"], 2, s["staff"])
     with pytest.raises(psycopg.Error):
-        conn.execute("update materials_line_edit set who = who")
+        conn.execute("update change_log set staff_id = staff_id where table_name = 'materials_line'")
 
 
 def test_building_never_touches_the_catalogue_or_invents_a_rupee_value(conn, s):
@@ -274,10 +278,7 @@ def test_a_quantity_cannot_be_set_on_a_removed_line(conn, s):
     ml.remove(conn, line["id"], s["staff"])
     with pytest.raises(ml.LineRemoved):
         ml.set_quantity(conn, line["id"], 3, s["staff"])
-    assert [
-        r["kind"]
-        for r in conn.execute("select kind from materials_line_edit where line_id = %s", (line["id"],))
-    ] == ["remove"]
+    assert [r["kind"] for r in _edits(conn, line["id"])] == ["remove"]
 
 
 def test_the_read_says_when_the_list_has_changed_since_it_was_sent(conn, s):

@@ -56,10 +56,10 @@ def with_sessions(conn: db.Conn, tenant: UUID, lo: dt.date, hi: dt.date) -> set[
 def classes_in(conn: db.Conn, cid: UUID) -> set[UUID]:
     """The classes that give something to the school list's latest build."""
     return {
-        r["class_id"]
+        UUID(r["class_id"])
         for r in conn.execute(
-            "select distinct class_id from materials_consolidated_source s join materials_consolidated c"
-            " on c.id = s.consolidated_id and c.latest_build = s.build where s.consolidated_id = %s",
+            "select distinct f ->> 'class_id' as class_id from flow_run c, jsonb_array_elements(c.result -> 'lines') l,"
+            " jsonb_array_elements(l -> 'from') f where c.id = %s",
             (cid,),
         )
     }

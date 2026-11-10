@@ -14,7 +14,7 @@
 import { expect, type Page, test } from "@playwright/test";
 import postgres from "postgres";
 import { TEST_STAFF } from "./global-setup";
-import { daysAgo } from "./rows";
+import { aChildIn, daysAgo } from "./rows";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -41,18 +41,17 @@ async function testClass(): Promise<Record<string, string>> {
   const [{ tenant_id }] = await sql<{ tenant_id: string }[]>`select id as tenant_id from tenant limit 1`;
   const ids: Record<string, string> = {};
   for (const c of CHILDREN) {
-    const [had] = await sql<{ id: string }[]>`select id from child where section = ${SECTION} and roll_no = ${c.roll}`;
+    const [had] = await sql<{ id: string }[]>`select id from child_now where section = ${SECTION} and roll_no = ${c.roll}`;
     if (had) {
       ids[c.name] = had.id;
       continue;
     }
-    const [{ id }] = await sql<{ id: string }[]>`
-      insert into child (tenant_id, roll_no, section, band) values (${tenant_id}, ${c.roll}, ${SECTION}, 'G2') returning id`;
+    const [{ id }] = [{ id: await aChildIn(sql, SECTION, "G2", c.roll) }];
     await sql`insert into pii.child (tenant_id, child_id, first_name) values (${tenant_id}, ${id}, ${c.name})`;
     // the reports before the answers they rest on: roll 1's, a draft, goes out of date; roll 10's is approved after
     if (c.roll === "1")
       await sql`insert into parent_note (tenant_id, child_id, week, body, created_at)
-                values (${tenant_id}, ${id}, 'U8', '{"facts": {}, "draft": {}}', now() - interval '2 days')`;
+                values (${tenant_id}, ${id}, to_date('2091-W33', 'IYYY-"W"IW'), '{"facts": {}, "draft": {}}', now() - interval '2 days')`;
     const of = c.answers.map(([skill, rung]) => `${skill}|${rung}`);
     for (const [i, [skill, rung, right, mistakes]] of c.answers.entries()) {
       await sql`
@@ -64,10 +63,10 @@ async function testClass(): Promise<Record<string, string>> {
     await sql`select rebuild_child_skill_state(${id}::uuid)`;
     if (c.roll === "10")
       await sql`insert into parent_note (tenant_id, child_id, week, body, approved_by, created_at)
-                values (${tenant_id}, ${id}, 'U8', '{"facts": {}, "draft": {}}', 'e2e', now() + interval '1 minute')`;
+                values (${tenant_id}, ${id}, to_date('2091-W33', 'IYYY-"W"IW'), '{"facts": {}, "draft": {}}', 'e2e', now() + interval '1 minute')`;
     if (c.roll === "1") {
       const [{ id: tpl }] = await sql<{ id: string }[]>`
-        insert into sheet_template (tenant_id, band, child_id, week) values (${tenant_id}, 'G2', ${id}, 'U8') returning id`;
+        insert into sheet_template (tenant_id, band, child_id, week) values (${tenant_id}, 'G2', ${id}, to_date('2091-W33', 'IYYY-"W"IW')) returning id`;
       const [{ id: inst }] = await sql<{ id: string }[]>`
         insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, print_status)
         values (${tenant_id}, ${"U8-" + id.slice(0, 8)}, ${tpl}, ${id}, 'returned') returning id`;

@@ -35,7 +35,7 @@ def staff(conn, t, email="checker@school.invalid", active=True):
 
 
 ADD = (
-    "insert into skill_link (tenant_id, skill_code, before_code, strength, reason, source)"
+    "insert into skill_prerequisite (tenant_id, registry_code, before_registry_code, strength, reason, source)"
     " values (%s, %s, %s, %s, %s, %s)"
 )
 

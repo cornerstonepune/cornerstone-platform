@@ -13,12 +13,12 @@ import postgres from "postgres";
 import { ENGINE_PORT } from "../playwright.config";
 import { isoWeek } from "../lib/week";
 import { TEST_STAFF } from "./global-setup";
-import { daysAgo } from "./rows";
+import { aChildIn, daysAgo } from "./rows";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 const SECTION = "U2-TEST-B"; // answers on the taxonomy-shaped skills' rungs (ADR 0034)
-const WEEK = "U2-TEST";
+const WEEK = "2091-W36"; // an ISO week of its own: a week is a date since CP-27
 
 // The settled colours (BUILD-ORDER, "the website as the teacher's week"), written here so the test does not
 // read them from the code it checks.
@@ -70,13 +70,12 @@ async function testClass(): Promise<Record<string, string>> {
   const [{ tenant_id }] = await sql<{ tenant_id: string }[]>`select id as tenant_id from tenant limit 1`;
   const ids: Record<string, string> = {};
   for (const c of CHILDREN) {
-    const [had] = await sql<{ id: string }[]>`select id from child where section = ${SECTION} and roll_no = ${c.roll}`;
+    const [had] = await sql<{ id: string }[]>`select id from child_now where section = ${SECTION} and roll_no = ${c.roll}`;
     if (had) {
       ids[c.name] = had.id;
       continue;
     }
-    const [{ id }] = await sql<{ id: string }[]>`
-      insert into child (tenant_id, roll_no, section, band) values (${tenant_id}, ${c.roll}, ${SECTION}, 'G2') returning id`;
+    const [{ id }] = [{ id: await aChildIn(sql, SECTION, "G2", c.roll) }];
     await sql`insert into pii.child (tenant_id, child_id, first_name) values (${tenant_id}, ${id}, ${c.name})`;
     const of = c.answers.map(([skill, rung]) => `${skill}|${rung}`);
     for (const [i, [skill, rung, right, mistakes]] of c.answers.entries()) {
@@ -93,13 +92,13 @@ async function testClass(): Promise<Record<string, string>> {
 }
 
 async function clearUp() {
-  const children = sql`select id from child where section = ${SECTION}`;
+  const children = sql`select id from child_now where section = ${SECTION}`;
   await sql`delete from item_exposure where child_id in (${children})`;
   await sql`delete from prescription where child_id in (${children})`;
   // the children's papers, and the class's spare copies of the week, which name no child
-  await sql`delete from sheet_instance where child_id in (${children}) or week = ${WEEK}`;
+  await sql`delete from sheet_instance where child_id in (${children}) or week = to_date(${WEEK}, 'IYYY-"W"IW')`;
   await sql`delete from sheet_template where child_id in (${children})`;
-  await sql`delete from sheet_template where week = ${WEEK}`;
+  await sql`delete from sheet_template where week = to_date(${WEEK}, 'IYYY-"W"IW')`;
 }
 
 let ids: Record<string, string> = {};
@@ -130,14 +129,14 @@ test("each grade opens on its classes, and a class is its children against every
   // has a checked answer on — never a column nobody answered
   const steps = await sql<{ col: string; topic: string }[]>`
     select distinct s.skill_code || '|' || s.rung_code as col, t.code as topic
-    from child_skill_state s join child c on c.id = s.child_id
+    from child_skill_state s join child_now c on c.id = s.child_id
     join skill ss on ss.rung_code = s.rung_code join topic t on t.code = ss.topic_code and ss.taught
     where c.section = ${SECTION} and s.n_events > 0`;
   const grid = page.getByRole("table", { name: `${SECTION}: each child on each step` });
   // every cell is the colour of the graph's own state for that child and skill, and its score; grey where there is none
   const states = await sql<{ child_id: string; col: string; state: string }[]>`
     select s.child_id, s.skill_code || '|' || s.rung_code as col, s.state
-    from child_skill_state s join child c on c.id = s.child_id where c.section = ${SECTION}`;
+    from child_skill_state s join child_now c on c.id = s.child_id where c.section = ${SECTION}`;
   const shown: string[] = [];
   for (const topic of new Set(steps.map((s) => s.topic))) {
     await page.goto(`/growth/class/${SECTION}?topic=${topic}`);

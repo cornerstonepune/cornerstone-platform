@@ -1,20 +1,27 @@
-"""The fortnight cycle (CP-6): every teaching fortnight has one state, planning, frozen, aligned, approved or
-list_sent, moved one step at a time, with who and when kept for each step. Once a fortnight is past planning, a change to
-its plan lines or timetable needs a reason, which is kept. The engine enforces this, not database triggers
-(specs/CP-6/design.md): the engine's writers call `ensure_editable`; hand-run SQL is not stopped.
+"""The fortnight cycle (CP-6): every teaching fortnight has one state (`fortnight.state`), planning, frozen, aligned,
+approved or list_sent, moved one step at a time. Each step taken is a row of the one approval list (kind `fortnight`, the
+step as its decision, who and when); the state's change is a `change_log` row, written by the one trigger. Once a
+fortnight is past planning, a change to its plan lines or timetable needs a reason, kept as a `change_log` row. The
+engine enforces this (specs/CP-6/design.md): the engine's writers call `ensure_editable`; hand-run SQL is not stopped.
 
 "Who" is a staff id (or the signed-in login's name in the database), never a person's name. No model, no names."""
 
 import datetime as dt
+import re
 from typing import Any
 
-from psycopg import sql
-
-from engine.core import db, settings
+from engine.core import db, history, settings
 
 STATES = ("planning", "frozen", "aligned", "approved", "list_sent")
-STEPS = ("freeze", "align", "approve", "list_sent")  # the `fortnight.<step>` settings
+STEPS = (
+    "freeze",
+    "align",
+    "approve",
+    "list_sent",
+)  # the `fortnight.<step>` settings, and each step's approval row
+STEP_TO: dict[str, str] = dict(zip(STATES[1:], STEPS, strict=True))  # the step that reaches a state
 LOOKBACK = 31  # days back to look for a working day before giving up
+_STAFF_ID = re.compile(r"[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}")
 
 
 class CycleError(Exception):
@@ -30,14 +37,14 @@ def _actor(actor: Any) -> str:
 
 def move(conn: db.Conn, fortnight_id: Any, to_state: str, actor: Any) -> None:
     """Move a teaching fortnight to its next state. Skipping a step, going back, repeating one or an unknown state
-    raises `CycleError` and changes nothing. Stamps the step's time and who, and writes one state row to the history."""
+    raises `CycleError` and changes nothing. The step is an approval row (who and when); the change of state a history
+    row, which the database writes."""
     who = _actor(actor)
     if to_state not in STATES:
         raise CycleError(f"'{to_state}' is not a state: {', '.join(STATES)}.")
     with conn.transaction():
         row = conn.execute(
-            "select c.tenant_id, c.state from fortnight_cycle c join fortnight f on f.id = c.fortnight_id"
-            " where c.fortnight_id = %s and f.kind = 'teaching' for update of c",
+            "select tenant_id, state from fortnight where id = %s and kind = 'teaching' for update",
             (fortnight_id,),
         ).fetchone()
         if row is None:
@@ -46,26 +53,48 @@ def move(conn: db.Conn, fortnight_id: Any, to_state: str, actor: Any) -> None:
         if now + 1 >= len(STATES) or STATES[now + 1] != to_state:
             nxt = STATES[now + 1] if now + 1 < len(STATES) else "nothing: it is done"
             raise CycleError(f"A fortnight at '{row['state']}' goes next to {nxt}, not to '{to_state}'.")
+        # the history row names the staff row when `who` is a staff id
+        history.by(conn, f"staff:{who}" if _STAFF_ID.fullmatch(who) else who)
+        conn.execute("update fortnight set state = %s where id = %s", (to_state, fortnight_id))
         conn.execute(
-            sql.SQL(
-                "update fortnight_cycle set state = %s, {at} = clock_timestamp(), {by} = %s where fortnight_id = %s"
-            ).format(at=sql.Identifier(f"{to_state}_at"), by=sql.Identifier(f"{to_state}_by")),
-            (to_state, who, fortnight_id),
+            "insert into approval (tenant_id, kind, target, decision, by, detail, created_at)"
+            " values (%s, 'fortnight', %s, %s, %s, jsonb_build_object('state', %s::text), clock_timestamp())",
+            (row["tenant_id"], str(fortnight_id), STEP_TO[to_state], who, to_state),
         )
-        conn.execute(
-            "insert into fortnight_edit (tenant_id, fortnight_id, kind, subject, op, changed_by)"
-            " values (%s, %s, 'state', %s, 'state', %s)",
-            (row["tenant_id"], fortnight_id, f"{row['state']}->{to_state}", who),
-        )
+
+
+def standing(conn: db.Conn, fortnight_id: Any) -> dict | None:
+    """A teaching fortnight's state, when it was made (at planning) and by whom, and who took each step and when (the
+    latest of each), as one row; None when it is not a teaching fortnight."""
+    f = conn.execute(
+        "select f.id as fortnight_id, f.tenant_id, f.state, coalesce(l.at, f.created_at) as planning_at,"
+        " l.origin as planning_by from fortnight f left join lateral (select at, origin from change_log"
+        " where table_name = 'fortnight' and row_id = f.id::text and op = 'insert' order by at limit 1) l on true"
+        " where f.id = %s and f.kind = 'teaching'",
+        (fortnight_id,),
+    ).fetchone()
+    if f is None:
+        return None
+    steps = {
+        r["decision"]: r
+        for r in conn.execute(
+            "select decision, by, created_at from approval where kind = 'fortnight' and target = %s order by seq",
+            (str(fortnight_id),),
+        ).fetchall()
+    }
+    out = dict(f)
+    for state, step in STEP_TO.items():
+        took = steps.get(step)
+        out[f"{state}_at"], out[f"{state}_by"] = (took["created_at"], took["by"]) if took else (None, None)
+    return out
 
 
 def is_frozen(conn: db.Conn, tenant_id: Any, on_date: dt.date) -> bool:
     """True when the teaching fortnight holding the date has a cycle row past planning."""
     return db.one(
         conn,
-        "select exists (select 1 from fortnight f join fortnight_cycle c on c.fortnight_id = f.id"
-        " where f.tenant_id = %s and f.kind = 'teaching' and %s between f.starts_on and f.ends_on"
-        " and c.state <> 'planning') as frozen",
+        "select exists (select 1 from fortnight f where f.tenant_id = %s and f.kind = 'teaching'"
+        " and %s between f.starts_on and f.ends_on and f.state <> 'planning') as frozen",
         (tenant_id, on_date),
     )["frozen"]
 
@@ -81,11 +110,11 @@ def ensure_editable(
     actor: Any,
 ) -> None:
     """The one gate a writer of plan lines or timetable slots calls before it writes. Fortnights still at planning:
-    returns, writes nothing. Any past planning: no reason (or only spaces) raises `CycleError`; with one, a
-    `frozen_change` row per such fortnight keeps the table, the record, the change, the reason and who."""
+    returns, writes nothing. Any past planning: no reason (or only spaces) raises `CycleError`; with one, a `change_log`
+    row per such fortnight keeps the table, the record, the change, the fortnight, the reason and who."""
     frozen = conn.execute(
-        "select c.fortnight_id, c.tenant_id, f.number from fortnight_cycle c join fortnight f on f.id = c.fortnight_id"
-        " where c.fortnight_id = any(%s::uuid[]) and c.state <> 'planning' order by f.number",
+        "select f.id as fortnight_id, f.tenant_id, f.number from fortnight f"
+        " where f.id = any(%s::uuid[]) and f.kind = 'teaching' and f.state <> 'planning' order by f.number",
         ([str(i) for i in fortnight_ids],),
     ).fetchall()
     if not frozen:
@@ -97,9 +126,19 @@ def ensure_editable(
     who = _actor(actor)
     for r in frozen:
         conn.execute(
-            "insert into fortnight_edit (tenant_id, fortnight_id, kind, subject, record_id, op, reason, changed_by)"
-            " values (%s, %s, 'frozen_change', %s, %s, %s, %s, %s)",
-            (r["tenant_id"], r["fortnight_id"], table, record_id, op, why, who),
+            "insert into change_log (tenant_id, table_name, row_id, op, after, staff_id, origin, reason)"
+            " values (%s, %s, %s, %s, jsonb_build_object('fortnight_id', %s::text, 'frozen', true),"
+            " (select id from staff where id::text = %s), %s, %s)",
+            (
+                r["tenant_id"],
+                table,
+                str(record_id),
+                op,
+                str(r["fortnight_id"]),
+                who.removeprefix("staff:"),
+                who,
+                why,
+            ),
         )
 
 
@@ -145,9 +184,58 @@ def out_of_order(days: dict[str, int]) -> bool:
     return not all(days[a] > days[b] for a, b in zip(STEPS, STEPS[1:], strict=False))
 
 
+def frame_lessons(conn: db.Conn, class_id: Any, fortnight_id: Any) -> int:
+    """A class's fortnight with no lessons yet gets them from its frame: every period of each school day (no holiday),
+    as the frame's rule of that week (A for the first seven days, B after) and weekday says, an empty cell none. Writes
+    nothing when the fortnight has lessons already. The number of lessons written."""
+    if conn.execute(
+        "select 1 from session s join school_day d on d.id = s.school_day_id join fortnight f on f.id = %s"
+        " where s.school_class_id = %s and d.on_date between f.starts_on and f.ends_on limit 1",
+        (fortnight_id, class_id),
+    ).fetchone():
+        return 0
+    return conn.execute(
+        "insert into session (tenant_id, school_class_id, school_day_id, period_id, subject_code, kind, text)"
+        " select c.tenant_id, c.id, d.id, r.period_id, r.subject_code, r.cell, r.text"
+        " from fortnight f join school_class c on c.id = %s and c.tenant_id = f.tenant_id"
+        " join school_day d on d.campus_id = c.campus_id and d.on_date between f.starts_on and f.ends_on"
+        "  and d.kind <> 'holiday' and extract(isodow from d.on_date) <= 5"
+        " join timetable_rule r on r.kind = 'frame' and r.school_class_id = c.id and r.cell <> 'empty'"
+        "  and r.weekday = extract(isodow from d.on_date)"
+        "  and r.week_code = case when d.on_date - f.starts_on < 7 then 'A' else 'B' end"
+        "  and r.valid_from <= d.on_date and (r.valid_to is null or r.valid_to >= d.on_date)"
+        " where f.id = %s",
+        (class_id, fortnight_id),
+    ).rowcount
+
+
+def draft(conn: db.Conn, class_id: Any, fortnight_id: Any, by: Any) -> str:
+    """Draft one class's fortnight (CP-7), once its plan is frozen: lessons from its frame when it has none yet (who and
+    when kept in the history), then where it stands, as the database decides (`timetable_standing`): rolled forward,
+    waiting for a yes, approved, or empty (no school day for its frame)."""
+    who = _actor(by)
+    f = conn.execute(
+        "select tenant_id, number, state from fortnight where id = %s", (fortnight_id,)
+    ).fetchone()
+    if f is None or f["state"] not in ("frozen", "aligned"):
+        said = f"fortnight {f['number']} is {f['state']}" if f else "no such fortnight"
+        raise CycleError(f"fortnight cannot be drafted: {said}")
+    made = frame_lessons(conn, class_id, fortnight_id)
+    if made:
+        conn.execute(
+            "insert into change_log (tenant_id, table_name, row_id, op, after, staff_id, origin)"
+            " values (%s, 'session', %s, 'insert', jsonb_build_object('lessons', %s::int),"
+            " (select id from staff where id::text = %s), %s)",
+            (f["tenant_id"], f"{class_id} {fortnight_id}", made, who.removeprefix("staff:"), who),
+        )
+    return db.one(conn, "select state from public.timetable_standing(%s, %s)", (class_id, fortnight_id))[
+        "state"
+    ]
+
+
 def draft_classes(conn: db.Conn, year: str, number: int, by: str) -> list[dict]:
-    """Draft the fortnight's timetable of every class that has one (CP-7). The database decides, class by class, whether
-    it rolls forward or waits for a yes, and who drafted it is `by`. Returns grade, section and the plan's state."""
+    """Draft the fortnight of every class that has a frame or lessons in it (`draft`). Returns grade, section and where
+    each class's fortnight stands."""
     fortnight = conn.execute(
         "select f.id, f.starts_on, f.ends_on, f.academic_year_id from fortnight f"
         " join academic_year y on y.id = f.academic_year_id join tenant t on t.id = f.tenant_id"
@@ -156,19 +244,23 @@ def draft_classes(conn: db.Conn, year: str, number: int, by: str) -> list[dict]:
     ).fetchone()
     if fortnight is None:
         raise CycleError(f"There is no teaching fortnight {number} in {year}.")
-    conn.execute("select set_config('app.changed_by', %s, true)", (_actor(by),))
     classes = conn.execute(
-        "select distinct c.id, c.grade_code, c.section from school_class c join timetable_slot s"
-        " on s.school_class_id = c.id where c.academic_year_id = %s and s.valid_from <= %s"
-        " and (s.valid_to is null or s.valid_to >= %s) order by c.grade_code, c.section",
-        (fortnight["academic_year_id"], fortnight["ends_on"], fortnight["starts_on"]),
-    ).fetchall()
-    out = []
-    for c in classes:
-        plan = db.one(conn, "select public.fortnight_draft(%s, %s) as id", (c["id"], fortnight["id"]))["id"]
-        state = db.one(conn, "select state from fortnight_plan where id = %s", (plan,))["state"]
-        out.append({"grade": c["grade_code"], "section": c["section"], "state": state})
-    return out
+        "select c.id, c.grade_code, c.section from school_class c where c.academic_year_id = %s and ("
+        " exists (select 1 from timetable_rule r where r.school_class_id = c.id and r.kind = 'frame'"
+        "  and r.valid_from <= %s and (r.valid_to is null or r.valid_to >= %s))"
+        " or exists (select 1 from session s join school_day d on d.id = s.school_day_id where s.school_class_id = c.id"
+        "  and d.on_date between %s and %s)) order by c.grade_code, c.section",
+        (fortnight["academic_year_id"], fortnight["ends_on"], fortnight["starts_on"], fortnight["starts_on"],
+         fortnight["ends_on"]),
+    ).fetchall()  # fmt: skip
+    return [
+        {
+            "grade": c["grade_code"],
+            "section": c["section"],
+            "state": draft(conn, c["id"], fortnight["id"], by),
+        }
+        for c in classes
+    ]
 
 
 def step_date(conn: db.Conn, fortnight_id: Any, step: str) -> dt.date:

@@ -1,6 +1,7 @@
 """CP-12: the clashes of a fortnight, worked out by the database view `timetable_clash` from the timetable as it stands
 (specs/CP-12/design.md, decisions 3 to 6). Here: the list for the command, the count the approve command and a move in
-an approved fortnight check, and a person's acceptance of one clash with a reason. Code decides; no name is read."""
+an approved fortnight check, and a person's acceptance of one clash with a reason (a row of the one approval list, kind
+`timetable_clash`). Code decides; no name is read."""
 
 import datetime as dt
 from typing import Any
@@ -63,9 +64,8 @@ def _classes(conn: db.Conn, clash: dict) -> list[str]:
     """The classes a clash touches (its lessons' and its rule's), in a fixed order so two locks never cross."""
     found = {p["class"] for p in clash["places"]}
     for r in conn.execute(
-        "select school_class_id::text as k from timetable_limit where id = %s union"
-        " select school_class_id::text from timetable_block where id = %s",
-        (clash["rule_id"], clash["rule_id"]),
+        "select school_class_id::text as k from timetable_rule where id = %s",
+        (clash["rule_id"],),
     ).fetchall():
         found.add(r["k"])
     return sorted(found)
@@ -92,8 +92,10 @@ def accept(conn: db.Conn, key: str, *, who: Any, reason: str | None, today: dt.d
         raise Refused("that clash is accepted already.")
     in_group(conn, clash["tenant_id"], who, today, GROUP, "accept a clash")
     conn.execute(
-        "insert into timetable_clash_accept (tenant_id, fortnight_id, clash_key, kind, reason, who)"
-        " values (%s, %s, %s, %s, %s, %s)",
-        (clash["tenant_id"], clash["fortnight_id"], key, clash["kind"], why, who),
+        # the clock's own time, not the transaction's: a lesson moved later in the same transaction reopens it
+        "insert into approval (tenant_id, kind, target, decision, by, reason, detail, created_at) values (%s,"
+        " 'timetable_clash', %s, 'accept', %s, %s, jsonb_build_object('fortnight_id', %s::text, 'clash', %s::text),"
+        " clock_timestamp())",
+        (clash["tenant_id"], key, str(who), why, str(clash["fortnight_id"]), clash["kind"]),
     )
     return {"fortnight": heading(clash), "kind": clash["kind"], "detail": clash["detail"]}

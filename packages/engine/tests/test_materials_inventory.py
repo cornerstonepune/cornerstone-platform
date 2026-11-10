@@ -53,7 +53,9 @@ def test_the_inventory_person_gets_one_checklist_and_what_was_sent_is_recorded(c
     parts = urlsplit(out["wa_link"])
     assert parts.path == "/919876543210" and parse_qs(parts.query)["text"] == [out["text"]]
     row = conn.execute(
-        "select * from materials_consolidated_send where id = %s", (out["send_id"],)
+        "select result ->> 'text' as text, uploaded_by as who, result ->> 'status' as status, started_at as at"
+        " from flow_run where id = %s and flow = 'materials_school_send'",
+        (out["send_id"],),
     ).fetchone()
     assert (row["text"], row["who"], row["status"]) == (out["text"], s["staff"], "opened")
     assert row["at"] is not None

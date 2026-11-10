@@ -35,7 +35,7 @@ test.beforeAll(async () => {
   await aPerson(sql, EDUCATOR);
 });
 test.afterAll(async () => {
-  await sql`delete from class_skill where section = ${SECTION}`; // what the test marked taught: no other spec finds a topic taught
+  await sql`update school_class set taught = '{}' where label = ${SECTION}`; // what the test marked taught: no other spec finds a topic taught
   await restore?.();
   await sql.end();
 });
@@ -190,7 +190,7 @@ test("What needs doing opens in under a second, as the other pages do", async ({
   console.log("load time ms", JSON.stringify(times));
   // On the seeded copy, one second (Nimish: nothing slow). Once the other specs have filled the copy with test classes every
   // page pays the menu's count alike (the layout's one query set), so there the page is held to being no slower than the rest.
-  const [{ classes }] = await sql<{ classes: number }[]>`select count(distinct section)::int as classes from child where active`;
+  const [{ classes }] = await sql<{ classes: number }[]>`select count(distinct section)::int as classes from child_now where active`;
   const others = Math.max(...Object.entries(times).filter(([u]) => u !== "/today").map(([, ms]) => ms));
   if (classes < 30) expect(times["/today"], "a seeded copy").toBeLessThan(1000);
   expect(times["/today"], "no slower than the slowest other page").toBeLessThanOrEqual(others * 1.25);

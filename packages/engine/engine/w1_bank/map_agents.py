@@ -162,8 +162,8 @@ def read_band(conn: db.Conn, tenant: db.Id, band: str, hide: frozenset[str] = fr
             objectives[r["activity_code"]].add(r["lo_code"])
     hidden_los = {r["lo_code"] for r in objs if r["activity_code"] in hide}
     reg = conn.execute(
-        "select r.code, r.domain, r.name from registry_skill r where r.tenant_id = %s and (exists (select 1 from"
-        " milestone m where m.tenant_id = r.tenant_id and m.skill_code = r.code and m.band = %s) or r.code = any(%s))",
+        "select r.code, r.domain, r.name from registry_skill r where r.tenant_id = %s and (r.milestones ? %s"
+        " or r.code = any(%s))",
         (tenant, band, sorted({r["skill_code"] for r in links if r["source"] == "person"})),
     ).fetchall()
     los = conn.execute(

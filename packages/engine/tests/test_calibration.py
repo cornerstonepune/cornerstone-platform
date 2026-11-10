@@ -17,6 +17,7 @@ import psycopg
 import pytest
 
 from engine.core import db, settings
+from tests import rows
 from tests.rows import a_level_looked_at, a_registry_skill, tenant
 
 REPO = Path(__file__).resolve().parents[3]
@@ -44,7 +45,7 @@ def _a_paper(c, child, skill, level, marks, section, confirmed=True, day=0):
     tpl = c.execute(
         "insert into sheet_template (tenant_id, band, child_id, week, key, batch_id) values (%s, %s, %s, %s, %s, %s)"
         " returning id",
-        (t, GRADE, child, f"CAL-{tag}", json.dumps({"code": tag}), tag),
+        (t, GRADE, child, "2026-09-28", json.dumps({"code": tag}), tag),  # a week is a date (CP-27)
     ).fetchone()["id"]
     inst = c.execute(
         "insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, print_status)"
@@ -100,12 +101,9 @@ def _a_child_in(c, section):
     """The next child on the roll of `section`, in grade GRADE, as every child is: `child` and its `pii` row."""
     t = tenant(c)
     roll = db.one(
-        c, "select count(*) + 1 as n from child where tenant_id = %s and section = %s", (t, section)
+        c, "select count(*) + 1 as n from child_now where tenant_id = %s and section = %s", (t, section)
     )["n"]
-    child = c.execute(
-        "insert into child (tenant_id, roll_no, section, band) values (%s, %s, %s, %s) returning id",
-        (t, str(roll), section, GRADE),
-    ).fetchone()["id"]
+    child = rows.a_child_in(c, section, GRADE, str(roll), t)
     c.execute(
         "insert into pii.child (tenant_id, child_id, first_name) values (%s, %s, 'Caltest')", (t, child)
     )

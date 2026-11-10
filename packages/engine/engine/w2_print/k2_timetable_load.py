@@ -1,7 +1,7 @@
 """Loading the school's own tabs into the six timetable tables (M1-06 part 2).
 
 Reading is pure: the Time table tab, the Monthly Planner tab and the Pre-Primary calendar tab, each as the CSV a person
-exports from it, become a `Load` (the rows of `fortnight`, `school_day`, `period`, `timetable_slot`, `plan_entry` and
+exports from it, become a `Load` (the rows of `fortnight`, `school_day`, `period`, `timetable_rule`, `plan_entry` and
 `session` for Fortnight N to M). The rows come from `k2_timetable.generate`; nothing here writes a line the school did
 not. Writing is one list of INSERT statements, all `on conflict do nothing`, so it is the same whether `apply` runs it
 on a copy or `sql_file` hands it to a person to run on live; run twice, the second adds nothing.
@@ -296,5 +296,5 @@ def build(
 def summary(load: Load) -> dict[str, int]:
     return {
         "fortnight": len(load.fortnights), "school_day": len(load.school_days), "period": len(load.periods),
-        "timetable_slot": len(load.slots), "plan_entry": len(load.plan_entries), "session": len(load.sessions),
+        "timetable_rule": len(load.slots), "plan_entry": len(load.plan_entries), "session": len(load.sessions),
     }  # fmt: skip

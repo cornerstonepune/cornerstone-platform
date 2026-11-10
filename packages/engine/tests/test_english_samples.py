@@ -39,10 +39,13 @@ def test_every_sample_passage_rubric_and_wrong_answer_of_the_seed_is_loaded_and_
     assert first["english_sample"] == len(samples()) == 2499
     assert first["passage"] == len(english.seed("passage.json", "passages")) == 253
     assert first["rubric"] == len(english.seed("rubric.json", "rubrics")) == 7
-    assert first["english_sample_wrong"] == sum(len(s["wrong"]) for s in samples()) == 4366
+    wrong = (
+        "select sum(jsonb_array_length(wrong))::int from english_sample"  # each sample's own (CP-27 group 6)
+    )
+    assert one(conn, wrong) == sum(len(s["wrong"]) for s in samples()) == 4366
     stamp = (
         "select max(updated_at) from (select updated_at from english_sample union all select updated_at from"
-        " english_sample_wrong union all select updated_at from passage union all select updated_at from rubric) u"
+        " passage union all select updated_at from rubric) u"
     )
     when = one(conn, stamp)
     assert loaders.load_all() == first, "a second load moved a row"
@@ -66,8 +69,9 @@ def test_a_sample_is_stored_whole(conn):
         s["passage"],
     )
     wrong = conn.execute(
-        "select w.answer, w.mistake_code, m.name from english_sample_wrong w join english_sample e on e.id = w.sample_id"
-        " join misconception m on m.tenant_id = w.tenant_id and m.code = w.mistake_code and m.op = w.op"
+        "select w ->> 'answer' as answer, w ->> 'mistake_code' as mistake_code, m.name from english_sample e"
+        " cross join jsonb_array_elements(e.wrong) w"
+        " join misconception m on m.tenant_id = e.tenant_id and m.code = w ->> 'mistake_code' and m.op = 'any'"
         " where e.skill_code = %s and e.difficulty = %s and e.question_type = %s and e.ord = %s",
         (s["skill_code"], s["difficulty"], s["question_type"], s["n"]),
     ).fetchall()
@@ -112,7 +116,7 @@ def test_the_load_a_deploy_runs_adds_the_samples(conn):
     counts = loaders.load_settings()
     assert (
         counts["english_sample"],
-        counts["english_sample_wrong"],
+        one(conn, "select sum(jsonb_array_length(wrong))::int from english_sample"),
         counts["passage"],
         counts["rubric"],
     ) == (

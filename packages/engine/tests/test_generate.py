@@ -21,6 +21,11 @@ from engine.w1_bank import generate
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs the local copy (bin/testdb)")
 BY = "Ayush (English)"
 MINE = "created_at >= now()"
+# an edit of a sample, as `english_sample_edit` held it: a row of the one history log (CP-27 group 6)
+EDITS = (
+    "(select at as created_at, before as replaced, after as sample, origin as edited_by, op from change_log"
+    " where table_name = 'english_sample') e"
+)
 
 
 @pytest.fixture
@@ -84,7 +89,7 @@ def test_english_questions_that_fail_a_check_are_never_stored_and_the_educator_i
     assert sum(t["n"] for t in got["thrown"]) == 2
     said = " ".join(t["why"] for t in got["thrown"])
     assert "is a right answer" in said and "already" in said
-    assert one(conn, f"select count(*) from english_sample_edit where {MINE}") == 1
+    assert one(conn, f"select count(*) from {EDITS} where {MINE}") == 1
 
 
 def test_english_questions_that_pass_are_drafts_made_from_the_sample_and_the_level_waits_for_approval(
@@ -128,7 +133,8 @@ def test_a_maths_sample_of_a_known_case_makes_more_of_that_case_by_code(conn):
     got = generate.maths(conn, "ADD.2D2D", "Medium", "47 + 38", "columns", 5, BY)
     assert got["made"] and got["cases"] == ["A19"] and got["kept"] == 5, got
     rows = conn.execute(
-        "select i.generator from maths_sample m join item i on i.id = any(m.item_ids) where m.id = %s",
+        "select i.generator from flow_run m join item i on i.id::text in (select jsonb_array_elements_text("
+        "m.result -> 'item_ids')) where m.id = %s and m.flow = 'maths_sample'",
         (got["sample"],),
     ).fetchall()
     assert len(rows) == 5 and {r["generator"] for r in rows} == {"case:A19"}
@@ -145,7 +151,13 @@ def test_a_maths_sample_of_no_known_case_is_kept_as_a_sample_and_nothing_is_made
     got = generate.maths(conn, "ADD.2D2D", "Medium", "6 × 7", "line", 5, BY)
     assert not got["made"] and got["kept"] == 0 and "kept as a sample" in got["why"]
     assert one(conn, "select count(*) from item where skill_set_code = 'ADD.2D2D'") == before
-    assert one(conn, f"select count(*) from maths_sample where skill_code = 'ADD.2D2D' and {MINE}") == 1
+    assert (
+        one(
+            conn,
+            f"select count(*) from flow_run where flow = 'maths_sample' and request ->> 'skill' = 'ADD.2D2D' and {MINE}",
+        )
+        == 1
+    )
     assert "Medium" in one(conn, "select level_approved from skill where code = 'ADD.2D2D'")
     got = generate.maths(conn, "ADD.2D2D", "Medium", "forty-seven and some", "line", 5, BY)
     assert not got["made"] and "a sum" in got["why"]
@@ -171,7 +183,7 @@ def test_how_many_is_at_most_the_row_and_no_prompt_is_used_until_it_is_active(co
     )
     got = generate.english(conn, s["skill_code"], s["difficulty"], s["question_type"], s["ord"], 3, BY)
     assert not got["made"] and "not switched on yet" in got["why"]
-    assert one(conn, f"select count(*) from english_sample_edit where {MINE}") == 0
+    assert one(conn, f"select count(*) from {EDITS} where {MINE}") == 0
 
 
 NOT_IN_FORM = "The writer's reply was not in the form we need; nothing was added."
@@ -207,7 +219,7 @@ def test_a_reply_not_in_the_prompts_form_adds_nothing_and_the_educator_is_told_s
     monkeypatch.setattr(generate.llm, "_dispatch", writer(q))
     got = generate.english(conn, s["skill_code"], s["difficulty"], s["question_type"], s["ord"], 1, BY)
     assert not got["made"] and got["why"] == NOT_IN_FORM, got
-    assert one(conn, f"select count(*) from english_sample_edit where {MINE}") == 0
+    assert one(conn, f"select count(*) from {EDITS} where {MINE}") == 0
 
 
 def test_the_eval_counts_a_reply_not_in_its_form_as_thrown_away_and_still_gives_a_score(conn, monkeypatch):

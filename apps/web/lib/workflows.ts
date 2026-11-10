@@ -67,7 +67,7 @@ export async function measures(): Promise<Record<string, Measure>> {
       (select count(*) from item_result r join capture c on c.id = r.capture_id where c.superseded_by is null and r.state = 'confirmed')::int as checked,
       (select count(*) from read_correction)::int as corrections,
       (select count(*) from evidence_placed where confirmed_by is not null)::int as evidence,
-      (select count(distinct child_id) from child_skill_state)::int as graphs`;
+      (select count(distinct child_id) from child_skill_state where kind = 'written')::int as graphs`;
   return {
     N1: { n: r.sets, words: `skill sets, ${r.approved} approved`, when: null },
     N2: { n: r.items, words: `questions ready, across ${r.item_sets} skill sets`, when: null },

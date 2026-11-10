@@ -11,6 +11,7 @@ import segno
 
 from engine.core import db, history
 from engine.w3_read import whose_paper as W
+from tests import rows
 
 
 @pytest.fixture
@@ -40,12 +41,10 @@ def _pdf(path, pages):
 def _copy(conn, folder, k, code, pages, texts, section="TESTWHOSE"):
     """A child, their paper printed with `code`, and the copy `k` of the scan cut from `texts`."""
     tenant = conn.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()["id"]
-    child = conn.execute(
-        "insert into child (tenant_id, roll_no, section, band) values (%s,%s,%s,'G1') returning id",
-        (tenant, str(k), section),
-    ).fetchone()["id"]
+    child = rows.a_child_in(conn, section, "G1", str(k), tenant)
     template = conn.execute(
-        "insert into sheet_template (tenant_id, band, week) values (%s,'G1','test') returning id", (tenant,)
+        "insert into sheet_template (tenant_id, band, week) values (%s,'G1','2026-09-28') returning id",
+        (tenant,),
     ).fetchone()["id"]
     sheet = conn.execute(
         "insert into sheet_instance (tenant_id, sheet_template_id, child_id, qr_code) values (%s,%s,%s,%s) returning id",
@@ -143,7 +142,7 @@ def test_a_page_is_told_once_and_the_card_never_draws_a_photograph_again(conn, t
     W.record(conn, a)
     W.record(conn, b)
     told = conn.execute(
-        "select count(*) n from capture_page where capture_id in (%s, %s)", (a, b)
+        "select count(*) n from capture c, jsonb_object_keys(c.page_prints) p where c.id in (%s, %s)", (a, b)
     ).fetchone()["n"]
     assert told == 4
 

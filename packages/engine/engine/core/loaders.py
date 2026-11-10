@@ -15,13 +15,11 @@ SEED = settings.SEED
 FILLED_TABLES = (
     "tenant",
     "registry_skill",
-    "milestone",
     "learning_objective",
     "learning_objective_skill",
     "activity",
     "activity_skill",
     "report_item",
-    "trait",
     "level_rule",
     "misconception",
     "case_dimension",
@@ -30,13 +28,11 @@ FILLED_TABLES = (
     "config",
     "skill",
     "skill_level",
-    "skill_level_sample",
     "skill_mistake",
     "skill_registry_link",
     "skill_prerequisite",
     "subject",
     "topic",
-    "question_format",
     "question_type",
     "ask",
     "grade",
@@ -65,7 +61,7 @@ def _registry(conn: db.Conn, t: db.Id) -> None:
 
     `registry.json` is generated from the Skill Map Review artifact and never hand-edited; it
     carries the school's own learning objectives, activity plans (with their three-level mastery
-    descriptors), report-card lines and traits alongside the skills, because dropping them on
+    descriptors) and report-card lines alongside the skills (its traits are the setting `report.traits`, CP-27), because dropping them on
     import only means extracting them again later.
     """
     reg = json.loads((SEED / "registry.json").read_text())
@@ -109,15 +105,26 @@ def _registry(conn: db.Conn, t: db.Id) -> None:
         ],
     )
 
+    # a skill's milestones are its own, by band (CP-27 group 6: once the table `milestone`): a band the seed gives is set,
+    # one it no longer gives is kept, and a skill whose milestones already read so is not written
     many(
-        "insert into milestone (tenant_id, skill_code, band, descriptor, scale, source)"
-        " values (%s,%s,%s,%s,%s,%s)"
-        " on conflict (tenant_id, skill_code, band) do update set"
-        " descriptor=excluded.descriptor, scale=excluded.scale, updated_at=now()",
+        "update registry_skill set milestones = milestones || %s::jsonb, updated_at = now()"
+        " where tenant_id = %s and code = %s and not milestones @> %s::jsonb",
         [
-            (t, code, m["b"], m["d"], m.get("s", "none"), m.get("src", ""))
+            (ms, t, code, ms)
             for code, k in reg["skills"].items()
-            for m in k.get("ms", [])
+            for ms in [
+                json.dumps(
+                    {
+                        m["b"]: {
+                            "descriptor": m["d"],
+                            "scale": m.get("s", "none"),
+                            "source": m.get("src", ""),
+                        }
+                        for m in k.get("ms", [])
+                    }
+                )
+            ]
         ],
     )
 
@@ -191,31 +198,6 @@ def _registry(conn: db.Conn, t: db.Id) -> None:
         " on conflict (tenant_id, skill_code, band, title) do update set"
         " section=excluded.section, updated_at=now()",
         [(t, r["skill"], r["band"], r["title"], r["section"]) for r in reg["report_items"]],
-    )
-
-    many(
-        "insert into trait (tenant_id, code, band, label, positive, concern, expected,"
-        " exceeding, linked, authored_by, source) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-        " on conflict (tenant_id, code, band) do update set label=excluded.label,"
-        " positive=excluded.positive, concern=excluded.concern, expected=excluded.expected,"
-        " exceeding=excluded.exceeding, linked=excluded.linked,"
-        " authored_by=excluded.authored_by, source=excluded.source, updated_at=now()",
-        [
-            (
-                t,
-                tr["code"],
-                tr["band"],
-                tr["label"],
-                tr["positive"],
-                tr["concern"],
-                tr["expected"],
-                tr["exceeding"],
-                tr["linked"],
-                tr["by"],
-                tr["src"],
-            )
-            for tr in reg["traits"]
-        ],
     )
 
 

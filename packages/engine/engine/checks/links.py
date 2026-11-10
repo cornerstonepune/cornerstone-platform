@@ -1,11 +1,11 @@
 """Do a skill's rows say what its lists say? `engine links check` (goals/b3-samples-mistakes-prerequisites.yaml).
 
-B3 makes rows of four things a skill names: its levels' samples, its mistakes, its registry skills and what comes before
-it. The first three are still written as lists (a level's words, a card kind's examples, `misconception_codes`, the
-rung's `skill_codes`) and kept equal to their rows by triggers, so both must agree: every skill's mistakes and registry
-skills the same codes, every card example a sample in its place, and every level's samples the examples its words give
-by decision B3-1's rule, worked here a second time, in Python, apart from the migration's SQL. What comes before a
-skill is rows only: none comes before itself. Read only; safe on a copy of live, where the rehearsal runs it.
+B3 makes rows of three things a skill names: its mistakes, its registry skills and what comes before it. The first two
+are still written as lists (`misconception_codes`, the rung's `skill_codes`) and kept equal to their rows by triggers,
+so both must agree: every skill's mistakes and registry skills the same codes. A level's samples are worked out here
+from their sources, the examples its words give by decision B3-1's rule and its card kinds' examples (CP-27 group 6:
+they were rows, `skill_level_sample`, that only repeated them), and counted. What comes before a skill is rows only:
+none comes before itself. Read only; safe on a copy of live, where the rehearsal runs it.
 """
 
 import re
@@ -72,47 +72,37 @@ def _lists(conn: db.Conn) -> list[str]:
     return disagree
 
 
-def _samples(conn: db.Conn) -> tuple[list[str], list[tuple[str, str, list[str]]], int]:
-    """Each level whose sample rows are not its words' examples by B3-1's rule, or its card kinds' examples; the pieces
-    each level keeps in its words; and how many card examples there are."""
-    disagree = []
-    rows: dict[tuple[str, str, str | None], list[str]] = {}
-    for r in conn.execute(
-        "select skill_code, difficulty, question_format, sample from skill_level_sample order by ord"
-    ):
-        rows.setdefault((r["skill_code"], r["difficulty"], r["question_format"]), []).append(r["sample"])
-    expected: dict[tuple[str, str, str | None], list[str]] = {}
-    words_left = []
+def _samples(conn: db.Conn) -> tuple[list[tuple[str, str, list[str]]], int, int, int]:
+    """A level's samples, worked out from their sources whenever they are asked for (CP-27 group 6: once the rows of
+    `skill_level_sample`, which only ever repeated them): the pieces each level keeps in its words; how many samples the
+    levels' words give; how many card examples fall on a level the skill set has; and how many card examples there are."""
+    words_left, word_samples = [], 0
+    levels = set()
     for r in conn.execute(
         "select skill_code, difficulty, looks_like from skill_level order by skill_code, difficulty"
     ):
+        levels.add((r["skill_code"], r["difficulty"]))
         found = pieces(r["looks_like"])
-        if any(sample for _, sample in found):
-            expected[(r["skill_code"], r["difficulty"], None)] = [p for p, sample in found if sample]
+        word_samples += sum(1 for _, sample in found if sample)
         if any(not sample for _, sample in found):
             words_left.append((r["skill_code"], r["difficulty"], [p for p, sample in found if not sample]))
-    cards = 0
+    card_samples = cards = 0
     for r in conn.execute(
-        "select f.code, f.skill_set_code, e.key as level, e.value as examples from question_format f"
-        " cross join jsonb_each(case when jsonb_typeof(f.kind -> 'examples') = 'object'"
-        "   then f.kind -> 'examples' else '{}' end) e"
+        "select s.code as skill_set_code, e.key as level, e.value as examples from skill s"
+        " cross join jsonb_each(s.question_kinds) k"
+        " cross join jsonb_each(case when jsonb_typeof(k.value -> 'examples') = 'object'"
+        "   then k.value -> 'examples' else '{}' end) e"
     ):
         cards += len(r["examples"])
-        if r["examples"]:
-            expected[(r["skill_set_code"], r["level"], r["code"])] = list(r["examples"])
-    for key in sorted(expected.keys() | rows.keys(), key=str):
-        if expected.get(key, []) != rows.get(key, []):
-            disagree.append(
-                f"{key[0]} {key[1]} {key[2] or 'words'}: {expected.get(key)} expected, {rows.get(key)} rows"
-            )
-    return disagree, words_left, cards
+        if (r["skill_set_code"], r["level"]) in levels:
+            card_samples += len(r["examples"])
+    return words_left, word_samples, card_samples, cards
 
 
 def compare(conn: db.Conn) -> dict[str, Any]:
     """The lists against the rows. `disagree` names every skill or level where they part, and how."""
     disagree = _lists(conn)
-    samples_disagree, words_left, cards = _samples(conn)
-    disagree += samples_disagree
+    words_left, word_samples, card_samples, cards = _samples(conn)
     circles = conn.execute(
         "with recursive walk(start, code) as ("
         "  select skill_code, before_code from skill_prerequisite_audit"
@@ -124,11 +114,16 @@ def compare(conn: db.Conn) -> dict[str, Any]:
         conn,
         "select (select count(*) from skill)::int as skills, (select count(*) from skill_mistake)::int as mistakes,"
         " (select count(*) from skill_registry_link)::int as links,"
-        " (select count(*) from skill_prerequisite_audit)::int as prerequisites,"
-        " (select count(*) from skill_level_sample where question_format is null)::int as word_samples,"
-        " (select count(*) from skill_level_sample where question_format is not null)::int as card_samples",
+        " (select count(*) from skill_prerequisite_audit)::int as prerequisites",
     )
-    return {**dict(count), "card_examples": cards, "words_left": words_left, "disagree": disagree}
+    return {
+        **dict(count),
+        "word_samples": word_samples,
+        "card_samples": card_samples,
+        "card_examples": cards,
+        "words_left": words_left,
+        "disagree": disagree,
+    }
 
 
 links_app = typer.Typer(
@@ -158,7 +153,9 @@ def check_(
             typer.echo(f"    {code} {level}: {' | '.join(left)}")
     for line in r["disagree"][:20]:
         typer.echo(f"  FAIL  {line}", err=True)
-    if r["disagree"] or r["card_samples"] != r["card_examples"]:
+    if (
+        r["disagree"] or r["card_samples"] != r["card_examples"]
+    ):  # a card example on a level the skill set has not
         typer.echo(f"  the rows and the lists disagree in {len(r['disagree'])} places")
         raise typer.Exit(1)
     typer.echo("  the rows and the lists agree on every skill and level")

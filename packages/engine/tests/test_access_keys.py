@@ -46,11 +46,8 @@ def _build(c):
             )  # fmt: skip
             s["cls"][who] = cls
             s["child"][who] = _one(
-                c,
-                "insert into child (tenant_id, roll_no, band, section, active) values (%s, '1', 'K2', %s, true)"
-                " returning id",
-                t, section,
-            )  # fmt: skip
+                c, "insert into child (tenant_id, band, active) values (%s, 'K2', true) returning id", t
+            )
             c.execute(
                 "insert into enrolment (tenant_id, child_id, class_id, roll_no, from_date, recorded_by)"
                 " values (%s, %s, %s, '1', current_date - 30, 'cp4 keys')",
@@ -88,7 +85,7 @@ def test_a_blueprint_made_for_one_child_is_seen_through_that_childs_class_and_a_
     for child in (s["child"]["X"], s["child"]["Y"], None):
         c.execute(
             "insert into sheet_template (tenant_id, band, variant, week, item_ids, key, source, child_id)"
-            " values (%s, 'G1', 1, '2026-W45', '{}', '{}', 'generated', %s)",
+            " values (%s, 'G1', 1, '2026-11-02', '{}', '{}', 'generated', %s)",
             (s["tenant"], child),
         )
     mine = f"tenant_id = '{s['tenant']}'"
@@ -113,14 +110,14 @@ def test_a_run_of_the_reader_is_seen_by_whoever_put_the_file_in_whoever_sees_a_p
     tpl = _one(
         c,
         "insert into sheet_template (tenant_id, band, variant, week, item_ids, key, source) values"
-        " (%s, 'K2', 1, '2026-W45', '{}', '{}', 'generated') returning id",
+        " (%s, 'K2', 1, '2026-11-02', '{}', '{}', 'generated') returning id",
         s["tenant"],
     )
     sheet = _one(
         c,
         "insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, print_status, section, week,"
         " approved_by, approved_at) values (%s, 'CS' || substr(md5(random()::text), 1, 6), %s, %s, 'printed', 'P',"
-        " 'W1', 'cp4', now()) returning id",
+        " '2026-11-02', 'cp4', now()) returning id",
         s["tenant"], tpl, s["child"]["X"],
     )  # fmt: skip
     cap = _one(
@@ -147,7 +144,7 @@ def test_the_reason_a_parent_report_was_sent_back_is_seen_by_that_childs_class_a
     for who in ("X", "Y"):
         note = _one(
             c,
-            "insert into parent_note (tenant_id, child_id, week, body) values (%s, %s, '2026-W45', 'x') returning id",
+            "insert into parent_note (tenant_id, child_id, week, body) values (%s, %s, '2026-11-02', 'x') returning id",
             s["tenant"], s["child"][who],
         )  # fmt: skip
         c.execute(
@@ -192,3 +189,36 @@ def test_a_class_card_confirmed_is_seen_by_that_class_and_a_way_of_asking_approv
     assert _seen(s, None, "approval", mine) == 0
     for who in ("X", "Y", "all"):
         assert _seen(s, who, "approval", mine + " and kind = 'question_type'") == 1
+
+
+def test_whoever_sees_a_child_through_a_paper_they_put_in_sees_that_childs_class(school):
+    """A child's class is their enrolment since CP-27 group 4. Keyed by class, the enrolment of another class's child was
+    hidden from the educator who put in that child's paper, who saw the child with no class (u68, 10 Nov 2026); before,
+    the class was a column of the child. Whoever sees a child sees their enrolment."""
+    s, c = school, school["c"]
+    xs_child = f"id = '{s['child']['X']}' and section = 'P'"
+    assert _seen(s, "Y", "child_now", xs_child) == 0  # another class's child: not seen
+    tpl = _one(
+        c,
+        "insert into sheet_template (tenant_id, band, variant, week, item_ids, key, source) values"
+        " (%s, 'K2', 1, '2026-11-02', '{}', '{}', 'generated') returning id",
+        s["tenant"],
+    )
+    sheet = _one(
+        c,
+        "insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, print_status, week,"
+        " approved_by, approved_at) values (%s, 'CS' || substr(md5(random()::text), 1, 6), %s, %s, 'printed', '2026-11-02',"
+        " 'cp27', now()) returning id",
+        s["tenant"], tpl, s["child"]["X"],
+    )  # fmt: skip
+    c.execute(
+        "insert into capture (tenant_id, path, sheet_instance_id, status, uploaded_by)"
+        " values (%s, 'cp27/k.pdf', %s, 'processed', %s)",
+        (s["tenant"], sheet, s["entry"]["Y"]),
+    )
+    assert _seen(s, "Y", "child_now", xs_child) == 1  # the child of the paper Y put in, in their own class
+    assert (
+        _seen(s, "Y", "enrolment", f"class_id = '{s['cls']['X']}'") == 1
+    )  # that child's enrolment, no other
+    assert _seen(s, "X", "child_now", xs_child) == 1
+    assert _seen(s, "all", "child_now", xs_child) == 1

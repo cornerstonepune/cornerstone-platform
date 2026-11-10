@@ -24,7 +24,7 @@ let kids: Record<string, string> = {};
 
 test.beforeAll(async () => {
   kids = await aClass(sql, SECTION, "G2", ["Asha", "Bina", "Chetan", "Dev"]);
-  const [{ tenant }] = await sql<{ tenant: string }[]>`select tenant_id as tenant from child where id = ${kids.Asha}`;
+  const [{ tenant }] = await sql<{ tenant: string }[]>`select tenant_id as tenant from child_now where id = ${kids.Asha}`;
   const ws = await sql<{ id: string; item_ids: string[]; skill: string }[]>`
     select id, item_ids, skill_set_code as skill from sheet_template
     where source = 'library' and retired_at is null and band = 'G2'
@@ -35,7 +35,7 @@ test.beforeAll(async () => {
   if (ws.length < 4) throw new Error(`the flow needs four library worksheets of one Grade 2 skill set; the database has ${ws.length}`);
   const paper = (qr: string, w: string, child: string | null, status: string) => sql`
     insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, week, section, kind, print_status, approved_by, approved_at)
-    select ${tenant}, ${qr}, ${w}, ${child}, ${THIS}, ${SECTION}, 'assessment', ${status},
+    select ${tenant}, ${qr}, ${w}, ${child}, to_date(${THIS}, 'IYYY-"W"IW'), ${SECTION}, 'assessment', ${status},
            ${status === "new" ? null : "wv1"}, ${status === "new" ? null : sql`now()`}
     where not exists (select 1 from sheet_instance where qr_code = ${qr})`;
   await paper(QR.asha, ws[0].id, kids.Asha, "printed");
@@ -50,7 +50,7 @@ test.beforeAll(async () => {
     items: ws[1].item_ids.slice(0, 2),
     reads: [{ status: "correct", read: "1" }, { status: "needs_teacher", read: "7" }],
   });
-  await sql`delete from prescription where child_id in ${sql(Object.values(kids))} and week = ${THIS}`;
+  await sql`delete from prescription where child_id in ${sql(Object.values(kids))} and week = to_date(${THIS}, 'IYYY-"W"IW')`;
   const sheet = async (qr: string) => (await sql<{ id: string }[]>`select id from sheet_instance where qr_code = ${qr}`)[0].id;
   for (const [who, level, qr] of [
     ["Asha", "Hard", QR.asha],
@@ -60,7 +60,7 @@ test.beforeAll(async () => {
   ] as const) {
     await sql`
       insert into prescription (tenant_id, child_id, week, kind, skill_set_code, difficulty, rule_fired, strand, sheet_instance_id, no_paper, created_at)
-      values (${tenant}, ${kids[who]}, ${THIS}, 'assessment', ${ws[0].skill}, ${level}, 'band_default', 'NUM',
+      values (${tenant}, ${kids[who]}, to_date(${THIS}, 'IYYY-"W"IW'), 'assessment', ${ws[0].skill}, ${level}, 'band_default', 'NUM',
               ${qr ? await sheet(qr) : null}, ${qr ? null : "has sat every worksheet at Hard (4)"}, now() - interval '1 day')`;
   }
 });

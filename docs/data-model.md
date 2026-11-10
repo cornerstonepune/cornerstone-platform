@@ -76,3 +76,53 @@ stands, the value is on its own row and each change a row of `change_log`, which
 - a kind stopped at a level is `skill_level_question_type.stopped_at`/`stopped_by` (the view `kind_stopped`), a kind
   taken from an English level `removed_at`/`removed_by`; the bank's links keep a row that carries either. Each stop,
   restart, addition and removal is a row (row: `skill level kind`).
+
+**How the staff list and a child's class are kept (CP-27 group 4).** The staff list is `staff` (active, `role_code`,
+the `classes` and `subjects` the website shows; never a grant) with its `pii.staff` row (name, email, the password hash
+and `password_set_at`). The website signs a person in as their `staff.id` (`app.staff_id`, `current_staff()`), reads the
+list through `staff_list(slug)` and writes it through `staff_set_password` and `staff_add` (it has no right on
+`pii.staff`); taking a person off makes them inactive with no password, never a delete. A child's class and roll number
+are their open `enrolment` in a `school_class` of the year; `school_class.label` is what pages, URLs and `staff.classes`
+call the class (K2's class is section A, label K2), and the view `child_now` gives a child with their class label (as
+`section`) and roll number. A move closes one enrolment and opens one, and writes one `change_log` row (table `child`,
+op `move`). A class's word that a skill is taught is `school_class.taught` ({skill: {taught, by, at}}); the class card
+is built from the graph when asked, never stored.
+
+<!-- CP-27 group 5 (time): begin -->
+**How time is kept (CP-27 group 5).** The timetable of a date is its `session` rows: one per lesson, with its `kind`
+(`fixed`, `subject`, `specialist`); a period with no lesson is empty. `timetable_rule` holds the rules a timetable is made
+from, told apart by `kind`: `frame` (the week A/B frame: a class's period on a weekday of week A or B, its cell and words,
+from a date), `block` (a date, or a weekday of a week, or one period of either, on which nothing is placed, and why) and
+`limit` (the fewest and most periods of a subject in a week or a fortnight). FET reads the frame from there; a draft
+(`timetable_run`) put live and a lesson moved by hand change the sessions, never the frame. No table keeps a second copy
+of a fortnight's periods. A fortnight's state is `fortnight.state`; each step taken (`freeze`, `align`, `approve`,
+`list_sent`) is an `approval` row of kind `fortnight`. A class's fortnight approved (CP-7) is an `approval` row of kind
+`timetable` (target `<class> <fortnight>`) carrying the signature of its lessons and the baseline it was given on; a
+fortnight whose lessons say what the class's last settled fortnight said rolls forward with no row, and carries that
+signature as the next one's baseline (`timetable_standing`). A draft put live is kind `timetable_live`, a clash accepted
+kind `timetable_clash`, a week's declaration (N4) kind `week`. A lesson moved by hand, a change made after a fortnight
+froze, a rule changed and a fortnight's state are `change_log` rows. Every `week` column is a `date`, the Monday of the
+ISO week (`core/weeks.py`: `2026-W40` is 2026-09-28); an old paper's own label (`Sep W1`) stays in its key, with no date; a label the engine wrote for a week of papers before weeks were dates (`T2W1`) is dated by the week its first row was made, kept in a paper's key or as a `change_log` row (op `week_label`).
+<!-- CP-27 group 5 (time): end -->
+
+**The last tables (CP-27 group 6).** What a row only repeated, or a list that belongs to one row, is on that row:
+- a sample's likely wrong answers are `english_sample.wrong` ([{answer, mistake_code}]); an educator's change is made on
+  the sample's own row (`removed_at`, `made_from`), and what it replaced is a `change_log` row (table `english_sample`,
+  row `skill level kind ord`), which the loader reads to leave the sample hers;
+- a registry skill's milestones are `registry_skill.milestones` ({band: {descriptor, scale, source}}); a curriculum
+  version's skills `curriculum_version.skills` ({skill: version}); a skill set's card kinds `skill.question_kinds`
+  ({code: kind}); a scan's pages `capture.page_prints` ({file page: {print, code}}: added, never changed); the report
+  traits the setting `report.traits`; a catalogue item's approved words and unit conversions `material_item.aliases` and
+  `conversions`; a materials line's lessons `materials_line.sources`; the copy that replaced a paper
+  `sheet_instance.replaced_by`;
+- a child's observed (K2) states are rows of `child_skill_state` of kind `observed` (by grade, no rung): every reader of
+  the written graph says `kind = 'written'` (a test holds every statement to it);
+- a link between broad registry skills is a row of `skill_prerequisite` naming `registry_code`/`before_registry_code`;
+- a run of code is a `flow_run` row: the nightly rebuild (`graph_nightly`, its digests in `result`), a Maths sample
+  (`maths_sample`), the school's materials list of a range (`materials_consolidate`, its latest build), a materials send
+  (`materials_send`, `materials_school_send`); the team saying they have a list is an `approval` row (`materials_ack`);
+  a materials note a person must read is a `curriculum_proposal` (`materials_note`), their answer a later row;
+- whose words each part of a K2 page is, an assessment's chosen name and a person's change to a materials line or an
+  item are `change_log` rows; `activity_part_source` is a view of the newest mark;
+- worked out when asked, never stored: a question's attempts and share right (the view `item_stat`), a level's samples
+  (`engine links`), a child's reading notebook (`profiles.current`), a materials list's reminders.

@@ -23,8 +23,8 @@ sys.path.insert(0, str(ROOT / "packages" / "engine"))
 
 from engine.core import db  # noqa: E402
 
-TABLES = ("timetable_slot", "session", "plan_entry", "materials_line", "materials_line_source", "timetable_live",
-          "timetable_run")
+TABLES = ("timetable_rule", "session", "plan_entry", "materials_line", "materials_line_source", "approval",
+          "timetable_run")  # since CP-27 the frame is in timetable_rule and a draft put live an approval row
 
 
 def counts(c) -> dict[str, int]:

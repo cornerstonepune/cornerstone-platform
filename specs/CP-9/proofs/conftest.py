@@ -149,8 +149,26 @@ def run_nightly(conn, now=None) -> dict:
     return nightly(conn, now=now)
 
 
+# CP-27 group 6: a child's written and observed states are rows of one table, told apart by `kind`; a nightly run is a
+# row of the run list (flow `graph_nightly`), its numbers in `result`
+WRITTEN = "(select * from child_skill_state where kind = 'written') w"
+OBSERVED = "(select * from child_skill_state where kind = 'observed') o"
+RUNS = (
+    "(select r.id, r.tenant_id, r.started_at, r.finished_at as ran_at, r.status = 'ok' as ok, r.error,"
+    " (r.result ->> 'children')::int as children, (r.result ->> 'evidence_rows')::int as evidence_rows,"
+    " r.result ->> 'evidence_digest_before' as evidence_digest_before,"
+    " r.result ->> 'evidence_digest_after' as evidence_digest_after,"
+    " (r.result ->> 'skill_states_before')::int as skill_states_before,"
+    " (r.result ->> 'skill_states_after')::int as skill_states_after,"
+    " (r.result ->> 'observed_states_before')::int as observed_states_before,"
+    " (r.result ->> 'observed_states_after')::int as observed_states_after,"
+    " r.result ->> 'states_digest_before' as states_digest_before,"
+    " r.result ->> 'states_digest_after' as states_digest_after from flow_run r where r.flow = 'graph_nightly') g"
+)
+
+
 def graph_runs(conn) -> list[dict]:
-    return conn.execute("select * from graph_run order by started_at, id").fetchall()
+    return conn.execute(f"select * from {RUNS} order by started_at, id").fetchall()
 
 
 def states(conn, table: str, child=None) -> list[dict]:
@@ -168,9 +186,7 @@ def tenant(conn):
 
 
 def a_child(conn, t):
-    child = conn.execute(
-        "insert into child (tenant_id, roll_no, section, band) values (%s, '1', %s, 'G2') returning id",
-        (t, f"CP9-{uuid.uuid4().hex[:6].upper()}")).fetchone()["id"]
+    child = conn.execute("insert into child (tenant_id, band) values (%s, 'G2') returning id", (t,)).fetchone()["id"]
     conn.execute("insert into pii.child (tenant_id, child_id, first_name) values (%s, %s, 'Placeholder')", (t, child))
     return child
 
@@ -222,7 +238,7 @@ def a_paper(conn, t, child, answers: list[tuple[str, str]]) -> list:
     tag = uuid.uuid4().hex.upper()
     tpl = conn.execute(
         "insert into sheet_template (tenant_id, band, child_id, week, key, batch_id) values (%s, 'G2', %s, %s, %s, %s)"
-        " returning id", (t, child, f"CP9-{tag[:8]}", json.dumps({"code": "CP9-P1"}), "CP9-P1")).fetchone()["id"]
+        " returning id", (t, child, "2099-01-05", json.dumps({"code": "CP9-P1"}), "CP9-P1")).fetchone()["id"]  # a week: a date (CP-27)
     inst = conn.execute(
         "insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, print_status)"
         " values (%s, %s, %s, %s, 'returned') returning id", (t, f"CS{tag}", tpl, child)).fetchone()["id"]

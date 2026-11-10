@@ -141,8 +141,7 @@ def school(c) -> uuid.UUID:
 
 
 def child(c, t, band="G2") -> uuid.UUID:
-    return c.execute("insert into child (tenant_id, roll_no, section, band) values (%s, '1', %s, %s) returning id",
-                     (t, f"P-{uuid.uuid4().hex[:6]}", band)).fetchone()[0]
+    return c.execute("insert into child (tenant_id, band) values (%s, %s) returning id", (t, band)).fetchone()[0]
 
 
 def at(day: int) -> dt.datetime:
@@ -187,7 +186,7 @@ def paper(c, t, kid, day, statuses, signed_off=True):
     and a candidate answer each, then `confirm_results`, which writes evidence through `answer_evidence`.
     `statuses` like 'correct blank wrong wrong:M_ALIGN_LEFT'. Returns the item_result ids in order."""
     tag = uuid.uuid4().hex[:6].upper()
-    tpl = ins(c, "sheet_template", tenant_id=t, band="G2", child_id=kid, week=f"P-{tag}",
+    tpl = ins(c, "sheet_template", tenant_id=t, band="G2", child_id=kid, week="2099-01-05",  # a week is a date (CP-27)
               key=json.dumps({"code": tag, "date": at(day).isoformat()}))
     inst = ins(c, "sheet_instance", tenant_id=t, qr_code=f"CS{tag}", sheet_template_id=tpl, child_id=kid,
                print_status="returned")
@@ -244,5 +243,5 @@ def seen(c, s, kid, day, by, reached=3, expected=2, mode="individual"):
 def observed(c, kid):
     """`rebuild_child_observed_state`, then the child's observed picture: [(skill, grade, state, adults)]."""
     c.execute("select public.rebuild_child_observed_state(%s)", (kid,))
-    return c.execute("select skill_code, grade_code, state, adults from child_observed_state where child_id = %s"
-                     " order by 1, 2", (kid,)).fetchall()
+    return c.execute("select skill_code, grade_code, state, adults from child_skill_state where kind = 'observed'"
+                     " and child_id = %s order by 1, 2", (kid,)).fetchall()

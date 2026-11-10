@@ -1,24 +1,27 @@
 """A coordinator changes a child's grade, or moves them to another class (goals/mov_move_a_child.yaml).
 
 Nimish, 27 Oct 2026, asked for a child to be moved to Grade 4 and wanted the data "in a structured way. It's not like some
-hard-coded backend". The change is one database function, `move_child`, that writes the child's row and one row of
-`child_move` together, and brings the rings that depend on the child's grade or class up to date. No child's name is
-anywhere in this file (rule 6): the children are made here, in a transaction rolled back at the end.
+hard-coded backend". The change is one database function, `move_child`, that changes the child's grade and their
+enrolment (CP-27 group 4: a child's class and roll live there alone; one closed, one opened) together with one row of the
+history log, `change_log`, and brings what depends on the child's grade or class up to date. No child's name is anywhere
+in this file (rule 6): the children are made here, in a transaction rolled back at the end.
 """
 
 import os
 import uuid
-from datetime import date
 
 import pytest
 
-from engine.core import db, roster
+from engine.core import db, roster, weeks
 from engine.w4_close import card
 from tests import rows
 from tests.rows import a_child_in
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
-FUTURE, PAST = "2099-W10", "2020-W01"  # a week still to come, and one long gone, whatever day this runs
+FUTURE, PAST = (
+    weeks.day("2099-W10"),
+    weeks.day("2020-W01"),
+)  # a week still to come, one long gone (a date: CP-27)
 
 
 @pytest.fixture
@@ -29,50 +32,12 @@ def conn():
 
 
 def _class(conn, bands):
-    """A class of the test's own, one child per band in the order given, rolls 1 up → (section, [child ids])."""
+    """A class of the test's own, this school year, one child per band in the order given, rolls 1 up →
+    (section, [child ids]). The class takes the grade of its first child."""
     section = f"MOV-{uuid.uuid4().hex[:8].upper()}"
     t = rows.tenant(conn)
-    ids = [
-        conn.execute(
-            "insert into child (tenant_id, roll_no, section, band) values (%s, %s, %s, %s) returning id",
-            (t, str(roll), section, band),
-        ).fetchone()["id"]
-        for roll, band in enumerate(bands, 1)
-    ]
+    ids = [a_child_in(conn, section, band, str(roll), t) for roll, band in enumerate(bands, 1)]
     return section, ids
-
-
-def _school_class(conn, t, band, section):
-    """The `school_class` row of this school year for a grade and section, made when it is not there (CP-1: a move goes
-    to a class, and these tests make children and sections only)."""
-    from engine.core import people
-
-    label = people.year_label(date.today())
-    start = int(label[:4])
-    conn.execute(
-        "insert into academic_year (tenant_id, label, starts_on, ends_on) values (%s, %s, %s, %s)"
-        " on conflict (tenant_id, label) do nothing",
-        (t, label, date(start, 4, 1), date(start + 1, 3, 31)),
-    )
-    year = conn.execute(
-        "select id from academic_year where tenant_id = %s and label = %s", (t, label)
-    ).fetchone()["id"]
-    campus = conn.execute(
-        "select id from campus where tenant_id = %s order by created_at limit 1", (t,)
-    ).fetchone()
-    campus = (
-        campus["id"]
-        if campus
-        else conn.execute(
-            "insert into campus (tenant_id, name) values (%s, 'move test campus') returning id", (t,)
-        ).fetchone()["id"]
-    )
-    conn.execute(  # only for a grade that is a row: a typed grade that is not one is refused before it matters
-        "insert into school_class (tenant_id, campus_id, academic_year_id, grade_code, section)"
-        " select %s, %s, %s, %s, %s where exists (select 1 from grade where tenant_id = %s and code = %s)"
-        " on conflict do nothing",
-        (t, campus, year, band, section, t, band),
-    )
 
 
 def _move(conn, child, band, section, roll, by="coordinator@cornerstone.test", reason=""):
@@ -82,11 +47,18 @@ def _move(conn, child, band, section, roll, by="coordinator@cornerstone.test", r
 
 
 def _row(conn, child):
-    return conn.execute("select band, section, roll_no from child where id = %s", (child,)).fetchone()
+    return conn.execute("select band, section, roll_no from child_now where id = %s", (child,)).fetchone()
 
 
 def _history(conn, child):
-    return conn.execute("select * from child_move where child_id = %s order by moved_at", (child,)).fetchall()
+    """Each move of the child as the history log keeps it: from and to (grade, class, roll), who, why and when."""
+    return conn.execute(
+        "select before ->> 'band' as from_band, before ->> 'section' as from_section, before ->> 'roll_no' as from_roll_no,"
+        " after ->> 'band' as to_band, after ->> 'section' as to_section, after ->> 'roll_no' as to_roll_no,"
+        " staff_id, origin, reason, at from change_log where table_name = 'child' and op = 'move' and row_id = %s"
+        " order by at",
+        (str(child),),
+    ).fetchall()
 
 
 def test_a_grade_change_keeps_the_child_in_their_class_and_writes_one_history_row(conn):
@@ -97,8 +69,8 @@ def test_a_grade_change_keeps_the_child_in_their_class_and_writes_one_history_ro
     [h] = _history(conn, child)
     assert (h["from_band"], h["from_section"], h["from_roll_no"]) == ("G3", section, "1")
     assert (h["to_band"], h["to_section"], h["to_roll_no"]) == ("G4", section, "1")
-    assert h["moved_by"] == "coordinator@cornerstone.test" and h["reason"] == "ready for the next grade"
-    assert h["moved_at"] is not None
+    assert h["origin"] == "coordinator@cornerstone.test" and h["reason"] == "ready for the next grade"
+    assert h["at"] is not None and h["staff_id"] is None, "a mover who is no member of staff is kept as given"
 
 
 def test_a_move_keeps_the_same_child_id_so_every_answer_stays_with_them(conn):
@@ -169,43 +141,35 @@ def test_a_child_who_does_not_exist_is_refused(conn):
 def test_the_history_is_append_only_and_holds_no_name(conn):
     section, (child,) = _class(conn, ["G3"])
     _move(conn, child, "G4", section, "1")
-    cols = {
-        r["column_name"]
-        for r in conn.execute(
-            "select column_name from information_schema.columns where table_name = 'child_move' and table_schema = 'public'"
-        ).fetchall()
-    }
-    assert not {c for c in cols if "name" in c.replace("section", "")}, "names stay in pii (rule 6)"
-    assert {
-        "child_id",
-        "from_band",
-        "to_band",
-        "from_section",
-        "to_section",
-        "from_roll_no",
-        "to_roll_no",
-    } <= cols
+    [h] = conn.execute(
+        "select before, after from change_log where table_name = 'child' and row_id = %s", (str(child),)
+    ).fetchall()
+    assert set(h["before"]) == set(h["after"]) == {"band", "section", "roll_no"}, "names stay in pii (rule 6)"
     with pytest.raises(Exception, match="append|change|forbid|ledger|read-only"):
-        conn.execute("update child_move set reason = 'edited' where child_id = %s", (child,))
+        conn.execute("update change_log set reason = 'edited' where row_id = %s", (str(child),))
     conn.rollback()
 
 
-def test_the_history_table_has_row_security_and_the_web_role_reads_it_and_adds_only_through_the_function(
-    conn,
-):
+def test_the_history_has_row_security_and_the_web_role_reads_it_and_moves_only_through_the_function(conn):
     flags = conn.execute(
-        "select relrowsecurity as on_, relforcerowsecurity as forced from pg_class where relname = 'child_move'"
+        "select relrowsecurity as on_, relforcerowsecurity as forced from pg_class where relname = 'change_log'"
     ).fetchone()
     assert flags == {"on_": True, "forced": True}
     web = conn.execute("select 1 from pg_roles where rolname = 'app_web'").fetchone()
     if web:  # the roles of CI and live; a plain copy has none
 
-        def can(p):
-            return conn.execute(
-                "select has_table_privilege('app_web', 'child_move', %s) as c", (p,)
-            ).fetchone()["c"]
+        def can(table, p):
+            return conn.execute("select has_table_privilege('app_web', %s, %s) as c", (table, p)).fetchone()[
+                "c"
+            ]
 
-        assert (can("select"), can("insert"), can("update"), can("delete")) == (True, False, False, False)
+        assert [can("change_log", p) for p in ("select", "insert", "update", "delete")] == [
+            True,
+            False,
+            False,
+            False,
+        ]
+        assert [can("enrolment", p) for p in ("insert", "update", "delete")] == [False, False, False]
         calls = conn.execute(
             "select has_function_privilege('app_web', 'move_child(uuid,text,text,text,text,text,timestamptz)', 'execute') as c"
         ).fetchone()
@@ -248,7 +212,7 @@ def test_a_move_withdraws_what_was_not_yet_made_and_leaves_every_paper_made_as_i
         plan(PAST),
         plan(FUTURE),
         plan(FUTURE, kind="assessment", sheet=printed),
-        plan("2099-W11", by="educator@cornerstone.test"),
+        plan(weeks.day("2099-W11"), by="educator@cornerstone.test"),
     )
     said = _move(conn, child, "G4", section, "1")
     left = {
@@ -264,24 +228,11 @@ def test_a_move_withdraws_what_was_not_yet_made_and_leaves_every_paper_made_as_i
     }
 
 
-def test_a_move_clears_the_stored_class_card_of_both_classes_and_the_card_is_rebuilt_from_the_graph(conn):
+def test_after_a_move_the_card_of_both_classes_is_built_from_the_class_the_child_is_in_now(conn):
+    """A class card is built from the graph whenever it is asked for (no stored copy to go stale, CP-27 group 4)."""
     old, (x, y) = _class(conn, ["G3", "G3"])
     new, _ = _class(conn, ["G3"])
-    other, _ = _class(conn, ["G3"])
-    t = rows.tenant(conn)
-    for s in (old, new, other):
-        conn.execute(
-            "insert into class_card (tenant_id, section, week, rung_code) values (%s, %s, %s, 'R1')",
-            (t, s, FUTURE),
-        )
     _move(conn, x, "G3", new, "5")
-
-    def held(s):
-        return conn.execute("select count(*) as n from class_card where section = %s", (s,)).fetchone()["n"]
-
-    assert (held(old), held(new), held(other)) == (0, 0, 1), (
-        "a card is ring B: dropped, rebuilt when next asked"
-    )
     assert [k["id"] for k in card._children(conn, old)] == [y]
     assert x in [k["id"] for k in card._children(conn, new)]
 
@@ -307,63 +258,70 @@ def test_two_tables_carry_a_childs_class_or_grade_as_text_and_both_are_a_printed
 # CP-1: a move is also a change of enrolment, in the same step.
 
 
-def _enrolled(conn, section, band="G3"):
-    """A child in a class of the test's own, with an open enrolment row."""
-    t = rows.tenant(conn)
-    _school_class(conn, t, band, section)
-    class_id = conn.execute(
-        "select id from school_class where tenant_id = %s and grade_code = %s and section = %s",
-        (t, band, section),
-    ).fetchone()["id"]
-    child = a_child_in(conn, section, band, "1", t)
-    conn.execute("select enrol_child(%s, %s, '1', current_date, 'test')", (child, class_id))
-    return child, class_id
-
-
 def _open(conn, child):
     return conn.execute(
         "select class_id, roll_no from enrolment where child_id = %s and to_date is null", (child,)
     ).fetchall()
 
 
-def test_a_move_moves_the_open_enrolment_with_it(conn):
-    child, _ = _enrolled(conn, f"MOV-{uuid.uuid4().hex[:8].upper()}")
+def _class_id(conn, label):
+    return conn.execute(
+        "select id from school_class where tenant_id = %s and label = %s", (rows.tenant(conn), label)
+    ).fetchone()["id"]
+
+
+def test_a_move_between_classes_closes_one_enrolment_and_opens_another_in_one_step_with_one_history_row(conn):
+    here, (child,) = _class(conn, ["G3"])
     there, _ = _class(conn, ["G3"])
-    _school_class(conn, rows.tenant(conn), "G3", there)
-    assert _move(conn, child, "G3", there, "7")["moved"] is True
+    assert _move(conn, child, "G3", there, "7", reason="a smaller class")["moved"] is True
     [now] = _open(conn, child)
-    assert now["roll_no"] == "7"
-    assert conn.execute("select section from school_class where id = %s", (now["class_id"],)).fetchone() == {
-        "section": there
-    }
+    assert now == {"class_id": _class_id(conn, there), "roll_no": "7"}
+    closed = conn.execute(
+        "select class_id, roll_no from enrolment where child_id = %s and to_date is not null", (child,)
+    ).fetchall()
+    assert closed == [{"class_id": _class_id(conn, here), "roll_no": "1"}], (
+        "the old enrolment is kept, closed"
+    )
+    [h] = _history(conn, child)
+    assert (h["from_section"], h["from_roll_no"], h["to_section"], h["to_roll_no"]) == (here, "1", there, "7")
+    assert h["reason"] == "a smaller class"
 
 
-def test_a_class_with_no_school_class_row_refuses_and_changes_nothing(conn):
-    child, was = _enrolled(conn, f"MOV-{uuid.uuid4().hex[:8].upper()}")
-    there, _ = _class(conn, ["G4"])  # children in it, but no school_class row for it
-    said = conn.execute(
-        "select move_child(%s, 'G4', %s, '9', 'someone', '') as r", (child, there)
-    ).fetchone()["r"]
-    assert said == {"moved": False, "refused": "no_such_class"}
-    assert [r["class_id"] for r in _open(conn, child)] == [was]
+def test_a_class_is_a_class_of_this_school_year(conn):
+    here, (child,) = _class(conn, ["G3"])
+    t = rows.tenant(conn)
+    last_year = conn.execute(
+        "insert into academic_year (tenant_id, label, starts_on, ends_on) values (%s, '1999-00', '1999-04-01',"
+        " '2000-03-31') returning id",
+        (t,),
+    ).fetchone()["id"]
+    conn.execute(
+        "insert into school_class (tenant_id, campus_id, academic_year_id, grade_code, section, label)"
+        " select tenant_id, campus_id, %s, grade_code, 'OLD', 'MOV-OLD' from school_class where id = %s",
+        (last_year, _class_id(conn, here)),
+    )
+    assert _move(conn, child, "G3", "MOV-OLD", "9") == {"moved": False, "refused": "no_such_class"}
+    assert [r["class_id"] for r in _open(conn, child)] == [_class_id(conn, here)]
     assert _history(conn, child) == []
 
 
 def test_a_roll_held_on_an_open_enrolment_is_taken(conn):
-    here = f"MOV-{uuid.uuid4().hex[:8].upper()}"
-    there = f"MOV-{uuid.uuid4().hex[:8].upper()}"
-    child, _ = _enrolled(conn, here)
-    holder, _ = _enrolled(conn, there)
-    conn.execute(
-        "update child set roll_no = '2' where id = %s", (holder,)
-    )  # the child row alone would allow roll 1
+    _, (child,) = _class(conn, ["G3"])
+    there, _ = _class(conn, ["G3"])
     assert _move(conn, child, "G3", there, "1") == {"moved": False, "refused": "roll_taken"}
 
 
-def test_a_child_not_yet_enrolled_moves_as_before_to_a_class_with_no_row(conn):
-    """On 8 Nov only K2 had class rows: every other child has no enrolment, and a move must still work for them."""
-    section, (child,) = _class(conn, ["G3"])
-    assert _move(conn, child, "G4", section, "1")["moved"] is True
-    assert (
-        conn.execute("select count(*) as n from enrolment where child_id = %s", (child,)).fetchone()["n"] == 0
-    )
+def test_an_enrolled_k2_child_is_moved_though_their_class_is_section_a(conn):
+    """K2's class is grade K2, section A; its children are called by the label 'K2'. A move found a class by its
+    section, so every enrolled K2 child was refused (`no_such_class`). A class is now found by its label."""
+    t = rows.tenant(conn)
+    k2 = f"K2-{uuid.uuid4().hex[:6].upper()}"
+    child = a_child_in(conn, k2, "K2", "1", t)
+    conn.execute("update school_class set section = 'A' where id = %s", (_class_id(conn, k2),))
+    other = f"K2-{uuid.uuid4().hex[:6].upper()}"
+    a_child_in(conn, other, "K2", "1", t)
+    conn.execute("update school_class set section = 'B' where id = %s", (_class_id(conn, other),))
+    assert _move(conn, child, "K2", other, "2")["moved"] is True
+    assert _row(conn, child) == {"band": "K2", "section": other, "roll_no": "2"}
+    assert _move(conn, child, "K2", other, "3")["moved"] is True, "a new roll in the same class"
+    assert [h["to_roll_no"] for h in _history(conn, child)] == ["2", "3"]

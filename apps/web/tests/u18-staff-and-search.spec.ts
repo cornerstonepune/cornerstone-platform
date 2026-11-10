@@ -47,11 +47,11 @@ test("an educator put on the staff list signs in, and a decision carries their n
     await row.getByRole("button", { name: "Mark as taught" }).click();
     await expect(page.getByRole("main")).toContainText(`${topic.name} is taught in ${SECTION} now`);
     const [now] = await sql<{ taught: boolean; taught_by: string | null }[]>`
-      select bool_and(taught) as taught, min(taught_by) as taught_by from class_skill where section = ${SECTION} and skill_set_code in (select code from skill where topic_code = 'DIV')`;
+      select bool_and(taught) as taught, min(taught_by) as taught_by from (select sc.tenant_id, sc.label as section, w.key as skill_set_code, (w.value ->> 'taught')::boolean as taught, w.value ->> 'by' as taught_by from school_class sc cross join jsonb_each(sc.taught) w) class_skill where section = ${SECTION} and skill_set_code in (select code from skill where topic_code = 'DIV')`;
     expect(now).toEqual({ taught: true, taught_by: EDUCATOR.name });
   } finally {
     await context.close();
-    await sql`delete from class_skill where section = ${SECTION}`;
+    await sql`update school_class set taught = '{}' where label = ${SECTION}`;
   }
 });
 

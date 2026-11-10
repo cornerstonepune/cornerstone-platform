@@ -14,7 +14,7 @@ from tests.test_the_loop import _counted, _planted, _round, _slots
 conn = test_maker.conn  # the real schema, rolled back
 
 SECTION = "EDITTEST"
-WEEK = "2026-W44-edit"
+WEEK = "2091-W02"  # a week of its own (weeks are dates since CP-27)
 BY = "educator@school.test"
 ASK = [
     {"skill_set": "MUL.2D1D", "level": "Medium", "n": 4},
@@ -31,7 +31,7 @@ def paper(conn):
 
 def _row(conn, qr):
     return conn.execute(
-        "select si.print_status, si.approved_by, si.key, t.item_ids from sheet_instance si"
+        "select si.id, si.print_status, si.approved_by, si.key, si.replaced_by, t.item_ids from sheet_instance si"
         " join sheet_template t on t.id = si.sheet_template_id where si.qr_code = %s",
         (qr,),
     ).fetchone()
@@ -108,7 +108,7 @@ def test_a_question_given_lately_is_offered_with_its_days(conn, paper):
     q = _another(conn, paper)
     conn.execute(
         "insert into item_exposure (tenant_id, child_id, item_id, week, created_at)"
-        " select tenant_id, %s, %s, 'earlier', now() - interval '9 days' from child where id = %s",
+        " select tenant_id, %s, %s, '2020-01-06', now() - interval '9 days' from child where id = %s",
         (child, q["id"], child),
     )
     offered = {x["id"]: x for x in edit_paper.bank(conn, paper, "x", "MUL.2D1D", "Medium")["questions"]}
@@ -127,12 +127,22 @@ def test_editing_an_approved_paper_withdraws_its_approval_and_every_edit_is_a_ro
     assert (new["print_status"], new["approved_by"]) == ("new", None)
     assert edit_paper.review(conn, out["qr"])["state"] == "waiting"
     assert edit_paper.review(conn, paper)["newer"] == out["qr"]
-    edit = conn.execute("select * from paper_edit where qr_before = %s", (paper,)).fetchone()
-    assert (edit["qr_after"], edit["changed_by"], edit["withdrew_approval"]) == (out["qr"], BY, True)
-    assert [str(i) for i in edit["removed"]] == [_ids(conn, paper)[0]] and edit["added"] == []
-    with pytest.raises(Exception, match="never changed|cannot|not allowed|forbid"):
+    assert _row(conn, paper)["replaced_by"] == _row(conn, out["qr"])["id"], (
+        "the void copy names its replacement"
+    )
+    edit = conn.execute(
+        "select id, after, origin from change_log where table_name = 'sheet_instance' and row_id = %s"
+        " and op = 'edit_paper'",
+        (paper,),
+    ).fetchone()
+    assert (edit["after"]["qr"], edit["origin"], edit["after"]["withdrew_approval"]) == (out["qr"], BY, True)
+    assert edit["after"]["removed"] == [_ids(conn, paper)[0]] and edit["after"]["added"] == []
+    assert "child_id" not in edit["after"], (
+        "the school-wide log names the codes and questions, never the child"
+    )
+    with pytest.raises(Exception, match="never changed|cannot|not allowed|forbid|refuse"):
         conn.execute("savepoint s")
-        conn.execute("update paper_edit set changed_by = 'someone else' where id = %s", (edit["id"],))
+        conn.execute("update change_log set origin = 'someone else' where id = %s", (edit["id"],))
     conn.execute("rollback to savepoint s")
     with pytest.raises(PermissionError):
         edit_paper.remove(conn, paper, _ids(conn, paper)[1], BY)

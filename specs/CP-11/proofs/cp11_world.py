@@ -105,9 +105,9 @@ def world(starts_on: dt.date, *, days: int = 14, frame=FRAME, blocks=(), limits=
                      subj if kind == "subject" else ("Music" if kind == "specialist" else ""))
                     for i, (kind, subj) in enumerate(cells)]
                 for p, kind, subj, text in rows:
-                    c.execute("insert into timetable_slot (tenant_id, school_class_id, period_id, week_code, weekday,"
-                              " kind, subject_code, text, valid_from) values (%s, %s, %s, %s, %s, %s, %s, %s,"
-                              " '2031-01-01')", (t, klass, periods[p], week, wd, kind, subj, text))
+                    c.execute("insert into timetable_rule (tenant_id, school_class_id, kind, period_id, week_code,"
+                              " weekday, cell, subject_code, text, valid_from) values (%s, %s, 'frame', %s, %s, %s, %s,"
+                              " %s, %s, '2031-01-01')", (t, klass, periods[p], week, wd, kind, subj, text))
         number = 100000 + uuid.uuid4().int % 800000
         ends_on = starts_on + dt.timedelta(days=days - 1)
         fortnight = db.one(c, "insert into fortnight (tenant_id, academic_year_id, number, kind, starts_on, ends_on)"
@@ -116,15 +116,15 @@ def world(starts_on: dt.date, *, days: int = 14, frame=FRAME, blocks=(), limits=
         block_ids = []
         for b in blocks:
             block_ids.append(db.one(
-                c, "insert into timetable_block (tenant_id, school_class_id, on_date, weekday, week_code, period_id,"
-                   " reason) values (%s, %s, %s, %s, %s, %s, %s) returning id",
+                c, "insert into timetable_rule (tenant_id, school_class_id, kind, on_date, weekday, week_code, period_id,"
+                   " reason) values (%s, %s, 'block', %s, %s, %s, %s, %s) returning id",
                 (t, klass, b.get("on_date"), b.get("weekday"), b.get("week_code"),
                  periods[b["period"]] if b.get("period") else None, b["reason"]))["id"])
         limit_ids = []
         for subj, span, fewest, most in limits:
             limit_ids.append(db.one(
-                c, "insert into timetable_limit (tenant_id, school_class_id, subject_code, span, fewest, most)"
-                   " values (%s, %s, %s, %s, %s, %s) returning id", (t, klass, subj, span, fewest, most))["id"])
+                c, "insert into timetable_rule (tenant_id, school_class_id, kind, subject_code, span, fewest, most)"
+                   " values (%s, %s, 'limit', %s, %s, %s, %s) returning id", (t, klass, subj, span, fewest, most))["id"])
         for h in holidays:
             c.execute("insert into school_day (tenant_id, campus_id, on_date, kind, note) values (%s, %s, %s,"
                       " 'holiday', 'CP-11 proof holiday')", (t, campus, h))
@@ -230,7 +230,7 @@ def snapshot() -> dict[str, tuple[int, str]]:
     with db.connect() as c:
         return {t: tuple(c.execute(f"select count(*) as n, md5(coalesce(string_agg(x::text, '|' order by x.id), ''))"
                                    f" as h from {t} x").fetchone().values())
-                for t in ("timetable_slot", "session", "plan_entry")}
+                for t in ("timetable_rule", "session", "plan_entry")}
 
 
 @contextmanager

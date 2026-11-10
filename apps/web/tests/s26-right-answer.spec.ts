@@ -8,6 +8,7 @@
  * - 4a, "48 + 35 =", left blank;
  * - 4b, the number line's first box, read 78, against a key typed 80 in the file.
  */
+import { aChildIn } from "./rows";
 import { expect, type Page, test } from "@playwright/test";
 import { execFileSync } from "node:child_process";
 import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
@@ -44,8 +45,7 @@ test.beforeAll(async () => {
   execFileSync(path.resolve(__dirname, "../../../bin/engine"), ["legacy", "paper", file], { env: { ...process.env } });
   rmSync(dir, { recursive: true });
   const [{ tenant_id }] = await sql<{ tenant_id: string }[]>`select id as tenant_id from tenant limit 1`;
-  const [{ id: child }] = await sql<{ id: string }[]>`
-    insert into child (tenant_id, roll_no, section, band) values (${tenant_id}, '1', ${CODE}, 'G4') returning id`;
+  const [{ id: child }] = [{ id: await aChildIn(sql, CODE, "G4", "1") }];
   await sql`insert into pii.child (tenant_id, child_id, first_name) values (${tenant_id}, ${child}, 'Rudra')`;
   const [t] = await sql<{ id: string; item_ids: string[] }[]>`
     select id, item_ids from sheet_template where source = 'legacy' and batch_id = ${CODE}`;

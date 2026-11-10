@@ -1,7 +1,7 @@
 """CP-13 item 2: two notes by the same adult count as one adult (D2).
 
 - K2 observed path: two confirmed observed notes by one staff id, on different days, on one skill give `adults` = 1 in
-  `child_observed_state`; a second, different staff id gives 2.
+  the child's observed states (`child_skill_state`, kind `observed`); a second, different staff id gives 2.
 - Written graph: answers naming one adult on two days count 1 adult in `graph_level_window`, so under the minimum of 2
   (the default for a Grade 2 child) the level is never past practising; a second adult on the same answers lifts it.
 """

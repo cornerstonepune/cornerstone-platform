@@ -30,7 +30,7 @@ PARTS: dict[str, LiteralString] = {
     "evidence": "select row(id, tenant_id, child_id, skill_code, rung_code, correct, misconception_codes, channel,"
     " item_result_id, observed_at, stored_at, confirmed_by is not null, created_at)::text as r from evidence_event",
     "states": "select concat_ws('|', child_id, skill_code, rung_code, state, n_events, n_correct,"
-    " repeating_misconception, last_seen) as r from child_skill_state",
+    " repeating_misconception, last_seen) as r from child_skill_state where kind = 'written'",
     "scored": "select concat_ws('|', id, capture_id, item_id, rid, raw_read, status, misconception_codes,"
     " working_shown, state, confirmed_by is not null, confirmed_at) as r from item_result",
 }
@@ -49,6 +49,21 @@ CURRICULUM: dict[str, LiteralString] = {
 }
 
 
+WRITTEN: LiteralString = " where kind = 'written'"
+
+
+def as_the_database_has_it(conn: db.Conn, sql: LiteralString) -> LiteralString:
+    """A query on the states, for the database it is asked of. From CP-27 group 6 the picture's observed states share
+    the table and every read names the kind it means; a database not yet migrated (the rehearsal's snapshot, taken
+    before the migrations) has no `kind` and only written states, so the same query without that condition reads
+    the same states there and after."""
+    has = conn.execute(
+        "select exists (select 1 from information_schema.columns where table_schema = 'public'"
+        " and table_name = 'child_skill_state' and column_name = 'kind') as has"
+    ).fetchone()
+    return sql if has and has["has"] else sql.replace(WRITTEN, "")
+
+
 def fingerprint(conn: db.Conn, parts: dict[str, LiteralString] = PARTS) -> dict[str, dict[str, Any]]:
     """{part: {n, checksum}} for the evidence, the children's states and the scored answers, or the parts given."""
     return {
@@ -56,7 +71,7 @@ def fingerprint(conn: db.Conn, parts: dict[str, LiteralString] = PARTS) -> dict[
             db.one(
                 conn,
                 f"select count(*)::int as n, md5(coalesce(string_agg(r, chr(10) order by r), '')) as checksum"
-                f" from ({sql}) x",
+                f" from ({as_the_database_has_it(conn, sql)}) x",
             )
         )
         for part, sql in parts.items()
@@ -84,9 +99,9 @@ def past(
 
 # A child's states as the table holds them, and the next paper's level on each skill whose rung they answered on: the
 # columns every version of the graph has, so a snapshot taken before a migration reads the same after it.
-STATES = (
+STATES: LiteralString = (
     "select child_id::text as child, skill_code as skill, rung_code as rung, state, n_events, n_correct,"
-    " repeating_misconception as repeating from child_skill_state order by 1, 2, 3"
+    " repeating_misconception as repeating from child_skill_state where kind = 'written' order by 1, 2, 3"
 )
 NEXT = (
     "select x.child, x.skill, n.difficulty as level, n.rule from ("
@@ -103,7 +118,10 @@ WHY = (
 
 def snapshot(conn: db.Conn) -> dict[str, list[dict[str, Any]]]:
     """Every child's states and next levels, as rows of codes and numbers."""
-    return {"states": [dict(r) for r in conn.execute(STATES)], "next": [dict(r) for r in conn.execute(NEXT)]}
+    return {
+        "states": [dict(r) for r in conn.execute(as_the_database_has_it(conn, STATES))],
+        "next": [dict(r) for r in conn.execute(NEXT)],
+    }
 
 
 def _why(r: dict[str, Any] | None) -> str:

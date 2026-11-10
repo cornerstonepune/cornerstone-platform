@@ -30,13 +30,13 @@ def paper(conn):
         r["id"] for r in conn.execute("select id from item where status = 'active' order by item_key limit 5")
     ]
     template = conn.execute(
-        "insert into sheet_template (tenant_id, band, week, item_ids, source, key) values (%s,'G2','STANDING-TEST',%s,'legacy',"
+        "insert into sheet_template (tenant_id, band, week, item_ids, source, key) values (%s,'G2','2026-09-28',%s,'legacy',"
         ' \'{"title": "Standing test"}\') returning id',
         (tenant, items),
     ).fetchone()["id"]
     sheet = conn.execute(
         "insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, print_status)"
-        " values (%s,'STANDING-TEST',%s,%s,'returned') returning id",
+        " values (%s,'2026-09-28',%s,%s,'returned') returning id",
         (tenant, template, child),
     ).fetchone()["id"]
     cap = conn.execute(

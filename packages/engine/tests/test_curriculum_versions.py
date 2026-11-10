@@ -2,7 +2,7 @@
 
 BUILD-ORDER, the locked scope of 22 Oct: "the curriculum published as numbered versions; every new result names its
 version; an edit takes effect from the next week". A version is `curriculum_version` with every skill at its version
-(`curriculum_version_skill`); `curriculum_in_force` names the newest whose Monday has come.
+(`curriculum_version.skills`); `curriculum_in_force` names the newest whose Monday has come.
 """
 
 import os
@@ -45,8 +45,8 @@ def _skills(conn, number):
     return {
         r["skill_code"]: r["skill_version"]
         for r in conn.execute(
-            "select s.skill_code, s.skill_version from curriculum_version_skill s"
-            " join curriculum_version v on v.id = s.curriculum_version_id where v.tenant_id = %s and v.number = %s",
+            "select s.key as skill_code, (s.value #>> '{}')::int as skill_version from curriculum_version v"
+            " cross join jsonb_each(v.skills) s where v.tenant_id = %s and v.number = %s",
             (rows.tenant(conn), number),
         ).fetchall()
     }
@@ -58,7 +58,10 @@ def test_version_one_is_the_curriculum_as_it_stands(conn):
     assert v1["takes_effect"].isoweekday() == 1 and v1["takes_effect"] <= date.today()
     every = {r["code"]: r["version"] for r in conn.execute("select code, version from skill").fetchall()}
     published = {
-        r["skill_code"] for r in conn.execute("select skill_code from curriculum_version_skill").fetchall()
+        r["skill_code"]
+        for r in conn.execute(
+            "select s.key as skill_code from curriculum_version v cross join jsonb_each(v.skills) s"
+        ).fetchall()
     }
     assert every and set(every) <= published
     assert _in_force(conn, "now()") is not None
@@ -112,7 +115,7 @@ def test_every_new_result_names_its_version(conn):
 
 def test_a_published_version_is_never_edited(conn):
     _publish(conn)
-    for table in ("curriculum_version", "curriculum_version_skill"):
+    for table in ("curriculum_version",):  # its skills are its own column (CP-27 group 6)
         with pytest.raises(psycopg.Error), conn.transaction():
             conn.execute(f"update {table} set updated_at = now()")
         with pytest.raises(psycopg.Error), conn.transaction():
@@ -122,5 +125,8 @@ def test_a_published_version_is_never_edited(conn):
 def test_past_results_are_the_same_before_and_after(conn):
     """Nimish: "nothing will change for any of the past assessments, scoring etc. right?"."""
     before = past.fingerprint(conn) | past.fingerprint(conn, past.CURRICULUM)
-    conn.execute(MIGRATION.read_text())
+    # its data steps on today's schema: the table it made is a column of the version now (CP-27 group 6)
+    if steps := rows.data_steps(MIGRATION):
+        conn.execute(steps)
+    conn.execute("select curriculum_begins(%s)", (rows.tenant(conn),))
     assert past.fingerprint(conn) | past.fingerprint(conn, past.CURRICULUM) == before

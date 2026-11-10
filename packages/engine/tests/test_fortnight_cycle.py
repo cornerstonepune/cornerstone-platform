@@ -9,7 +9,7 @@ import uuid
 import pytest
 
 from engine.checks import watch
-from engine.core import db
+from engine.core import db, history
 from engine.w2_print import fortnight_cycle as fc
 
 WHO = f"staff:{uuid.uuid4()}"
@@ -37,7 +37,6 @@ def a_fortnight(c, t, year, starts_on: str):
         " values (%s, %s, %s, 'teaching', %s, %s) returning id",
         (t, year, 100000 + uuid.uuid4().int % 800000, start, start + dt.timedelta(days=13)),
     )["id"]
-    c.execute("insert into fortnight_cycle (tenant_id, fortnight_id) values (%s, %s)", (t, fid))
     return fid
 
 
@@ -46,12 +45,12 @@ def test_a_fortnight_moves_one_step_at_a_time_and_each_step_is_kept(world):
     fid = a_fortnight(c, t, year, "2033-07-04")
     for step in fc.STATES[1:]:
         fc.move(c, fid, step, WHO)
-    row = db.one(c, "select * from fortnight_cycle where fortnight_id = %s", (fid,))
+    row = fc.standing(c, fid)
     assert row["state"] == "list_sent" and all(row[f"{s}_by"] == WHO for s in fc.STATES[1:])
-    history = c.execute(
-        "select subject from fortnight_edit where fortnight_id = %s and kind = 'state'", (fid,)
-    )
-    assert len(history.fetchall()) == 4
+    kept = [r for r in history.of(c, "fortnight", str(fid)) if r["op"] == "update"]
+    assert [(r["before"]["state"], r["after"]["state"], r["origin"]) for r in kept] == [
+        (a, b, WHO) for a, b in zip(fc.STATES, fc.STATES[1:], strict=False)
+    ]
 
 
 @pytest.mark.parametrize("to", ["approved", "planning", "closed"])
@@ -60,9 +59,7 @@ def test_a_step_cannot_be_skipped_repeated_or_invented(world, to):
     fid = a_fortnight(c, t, year, "2033-07-04")
     with pytest.raises(fc.CycleError):
         fc.move(c, fid, to, WHO)
-    assert (
-        db.one(c, "select state from fortnight_cycle where fortnight_id = %s", (fid,))["state"] == "planning"
-    )
+    assert fc.standing(c, fid)["state"] == "planning"
 
 
 def test_a_frozen_fortnight_needs_a_reason_and_keeps_it(world):
@@ -76,8 +73,10 @@ def test_a_frozen_fortnight_needs_a_reason_and_keeps_it(world):
     with pytest.raises(fc.CycleError, match="reason"):
         fc.ensure_editable(c, [fid], **edit | {"reason": "  "})
     fc.ensure_editable(c, [fid], **edit | {"reason": "Sports day moved"})
-    kept = c.execute("select reason, changed_by from fortnight_edit where kind = 'frozen_change'").fetchall()
-    assert [(r["reason"], r["changed_by"]) for r in kept] == [("Sports day moved", WHO)]
+    kept = history.of(c, "plan_entry", "r1")
+    assert [(r["reason"], r["origin"], r["after"]["fortnight_id"]) for r in kept] == [
+        ("Sports day moved", WHO, str(fid))
+    ]
 
 
 def test_a_step_date_moves_back_past_a_weekend_and_a_holiday(world):

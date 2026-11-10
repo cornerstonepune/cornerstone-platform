@@ -204,7 +204,14 @@ def test_a_fixed_slot_is_pinned_then_released_and_the_slot_it_replaced_is_in_the
     got = ask(rules, "read").json()
     mine = [f for f in got["fixed"] if f["text"] == "Library visit"]
     assert len(mine) == 1 and (mine[0]["weekday"], mine[0]["week"]) == (2, "A")
-    assert got["history"][0]["before"] is not None  # the lesson that was there is not lost
+    replaced, pinned = (
+        got["history"][1],
+        got["history"][0],
+    )  # one change for each row: the old ended, the new added
+    assert pinned["after"]["text"] == "Library visit" and pinned["before"] is None
+    assert (
+        replaced["rule"] == "fixed" and replaced["before"] is not None
+    )  # the lesson that was there is not lost
     assert ask(rules, "change", rule="fixed", action="remove", id=mine[0]["id"]).status_code == 200
     assert not [f for f in ask(rules, "read").json()["fixed"] if f["text"] == "Library visit"]
 
@@ -212,7 +219,7 @@ def test_a_fixed_slot_is_pinned_then_released_and_the_slot_it_replaced_is_in_the
 def test_the_history_cannot_be_rewritten(rules):
     ask(rules, "change", rule="block", action="set", on_date="2026-11-25", reason="Sports day")
     with pytest.raises(psycopg.errors.Error):
-        rules["conn"].execute("delete from timetable_rule_edit")
+        rules["conn"].execute("delete from change_log where table_name = 'timetable_rule'")
 
 
 def test_a_period_with_no_end_keeps_none_and_is_not_given_one(rules):

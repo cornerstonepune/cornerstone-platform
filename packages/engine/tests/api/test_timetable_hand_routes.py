@@ -47,21 +47,15 @@ def test_the_move_route_moves_as_the_person_named_and_refuses_a_stranger_or_a_fi
     r = _move(client, w, w["staff"]["coordinator"]["email"])
     assert r.status_code == 200, r.text
     assert r.json()["swapped_with"] == "english" and tw.cell(conn, w, THU, "p2")["subject"] == "math"
-    (kept,) = conn.execute(
-        "select who from timetable_move where school_class_id = %s", (w["class"],)
-    ).fetchall()
-    assert kept["who"] == w["staff"]["coordinator"]["id"]
+    (kept,) = tw.moves(conn, w)
+    assert kept["staff_id"] == w["staff"]["coordinator"]["id"]
     refused = _move(client, w, w["staff"]["coordinator"]["email"], to_period=tw.ORD["circle"])
     assert refused.status_code == 409 and "fixed" in refused.json()["detail"]
 
 
 def test_the_accept_route_accepts_a_clash_for_the_coordinator_group_only(engine):
     client, conn, w = engine
-    conn.execute(
-        "insert into timetable_limit (tenant_id, school_class_id, subject_code, span, most)"
-        " values (%s, %s, 'math', 'fortnight', 8)",
-        (w["tenant"], w["class"]),
-    )
+    tw.rule(conn, w, rule="limit", subject_code="math", span="fortnight", most=8)
     (clash,) = conn.execute(
         "select * from timetable_clash where fortnight_id = %s", (w["fortnight"],)
     ).fetchall()

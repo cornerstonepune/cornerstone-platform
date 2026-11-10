@@ -9,6 +9,7 @@
  * The class is the test's own: two Grade 2 children, three read papers of two worksheets. One paper is signed off,
  * which makes evidence, and evidence is append-only, so the class is made once and kept.
  */
+import { aChildIn } from "./rows";
 import { expect, type Locator, test } from "@playwright/test";
 import { execFileSync } from "node:child_process";
 import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
@@ -77,13 +78,12 @@ async function testClass(): Promise<Record<string, string>> {
   const kids: Record<string, string> = {};
   const [{ tenant_id }] = await sql<{ tenant_id: string }[]>`select id as tenant_id from tenant limit 1`;
   for (const [roll, name] of [["1", "Dev"], ["2", "Esha"]]) {
-    const [had] = await sql<{ id: string }[]>`select id from child where section = ${SECTION} and roll_no = ${roll}`;
+    const [had] = await sql<{ id: string }[]>`select id from child_now where section = ${SECTION} and roll_no = ${roll}`;
     if (had) {
       kids[name] = had.id;
       continue;
     }
-    const [{ id }] = await sql<{ id: string }[]>`
-      insert into child (tenant_id, roll_no, section, band) values (${tenant_id}, ${roll}, ${SECTION}, 'G2') returning id`;
+    const [{ id }] = [{ id: await aChildIn(sql, SECTION, "G2", roll) }];
     await sql`insert into pii.child (tenant_id, child_id, first_name) values (${tenant_id}, ${id}, ${name})`;
     kids[name] = id;
   }
@@ -129,7 +129,7 @@ async function counts(where = sql`true`): Promise<Counts> {
            count(*) filter (where ${STANDING} = 'person')::int as person,
            count(*) filter (where ${STANDING} = 'waiting')::int as waiting
     from item_result r join capture c on c.id = r.capture_id join sheet_instance si on si.id = c.sheet_instance_id
-    join child ch on ch.id = si.child_id join sheet_template t on t.id = si.sheet_template_id
+    join child_now ch on ch.id = si.child_id join sheet_template t on t.id = si.sheet_template_id
     where c.superseded_by is null and ${where}`;
   return c;
 }

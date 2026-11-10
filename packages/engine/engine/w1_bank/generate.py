@@ -169,8 +169,9 @@ def _measured(conn: db.Conn, code: str, text: str, layout: str) -> list[str] | N
 
 def maths(conn: db.Conn, code: str, level: str, text: str, layout: str, n: int, by: str) -> dict[str, Any]:
     """`n` questions like a typed Maths sample ("47 + 38", in a line or in columns), made by code. {made, why, cases,
-    kept, sample}: the sample is kept (`maths_sample`) whenever it is a sum code can read, made into questions only when
-    it is a case its level's generator holds."""
+    kept, sample}: the sample is kept whenever it is a sum code can read, as a row of the one run list (`flow_run`, flow
+    `maths_sample`: request {skill, level, text, layout, by}, result {cases, item_ids}; its id is the sample's; CP-27
+    group 6: once the table `maths_sample`), made into questions only when it is a case its level's generator holds."""
 
     def refuse(why: str, found: list[str] | None = None, sample: str | None = None) -> dict[str, Any]:
         return {"made": False, "why": why, "cases": found or [], "kept": 0, "sample": sample}
@@ -198,9 +199,12 @@ def maths(conn: db.Conn, code: str, level: str, text: str, layout: str, n: int, 
     sample = str(
         db.one(
             conn,
-            "insert into maths_sample (tenant_id, skill_code, difficulty, text, layout, cases, item_ids, given_by)"
-            " values (%s, %s, %s, %s, %s, %s, array(select id from item where item_key = any(%s)), %s) returning id",
-            (level_row["tenant_id"], code, level, text.strip(), layout, on, made, by),
+            "insert into flow_run (tenant_id, flow, trigger, finished_at, status, request, result)"
+            " values (%s, 'maths_sample', 'educator', clock_timestamp(), 'ok',"
+            " jsonb_build_object('skill', %s::text, 'level', %s::text, 'text', %s::text, 'layout', %s::text, 'by', %s::text),"
+            " jsonb_build_object('cases', %s::text[], 'item_ids', array(select id from item where item_key = any(%s))))"
+            " returning id",
+            (level_row["tenant_id"], code, level, text.strip(), layout, by, on, made),
         )["id"]
     )
     if not on:

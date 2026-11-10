@@ -11,6 +11,7 @@ from pathlib import Path
 
 import pytest
 
+from engine.core import weeks
 from engine.w2_print import assemble, maker
 from engine.w3_read import copies
 from tests import test_maker, test_paper_from_library
@@ -23,7 +24,7 @@ conn = test_maker.conn  # the same fixture: the real schema, rolled back
 children = test_paper_from_library.children  # three children of a class, named in `pii`
 
 SECTION = "READBACK"
-WEEK = "2026-W42-readback"
+WEEK = "2091-W05"  # a week of its own (weeks are dates since CP-27)
 BY = "educator@school.test"
 ASK = [{"skill_set": "MUL.2D1D", "level": "Medium", "n": 4}]
 
@@ -79,7 +80,7 @@ def test_a_home_assessment_made_again_in_the_week_leaves_the_earlier_one_readabl
     read = conn.execute(
         "select si.qr_code from capture k join sheet_instance si on si.id = k.sheet_instance_id"
         " where si.child_id = %s and si.week = %s and k.superseded_by is null",
-        (copy["child_id"], WEEK),
+        (copy["child_id"], weeks.day(WEEK)),
     ).fetchall()
     assert [r["qr_code"] for r in read] == [earlier], "read as the earlier paper, not the newer one"
 

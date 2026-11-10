@@ -10,12 +10,14 @@ from pathlib import Path
 
 import pymupdf
 
+from engine.core import weeks
+
 # The papers in one pack. A paper handed out from the library, or a child's next paper, knows its own week,
 # class and purpose; a paper generated before step 7 is found, as it always was, through its template's week.
 _IN_PACK = (
     "((si.week = %(week)s and si.section = %(section)s and si.kind = %(kind)s)"
     " or si.sheet_template_id in ("
-    "   select st.id from sheet_template st left join child c on c.id = st.child_id"
+    "   select st.id from sheet_template st left join child_now c on c.id = st.child_id"
     "   where st.source = 'generated' and st.week = %(week)s and (c.section = %(section)s or st.child_id is null)))"
 )
 
@@ -34,7 +36,7 @@ def approve(conn, section: str, week: str, kind: str = "practice", by: str = "")
         " approved_by = %(by)s, approved_at = now(), updated_at = now()"
         f" where si.print_status = 'new' and {_IN_PACK}"
         " returning si.qr_code, si.child_id",
-        {"by": by, "week": week, "section": section, "kind": kind},
+        {"by": by, "week": weeks.day(week), "section": section, "kind": kind},
     ).fetchall()
     return {
         "section": section,
@@ -52,11 +54,11 @@ def papers(conn, section: str, week: str, kind: str) -> list[dict]:
     """The pack in handout order: each child's paper by roll number, then the spares."""
     return conn.execute(
         "select si.qr_code, si.child_id, c.roll_no, si.print_status, si.approved_by, si.pdf_path"
-        " from sheet_instance si left join child c on c.id = si.child_id"
+        " from sheet_instance si left join child_now c on c.id = si.child_id"
         f" where si.print_status <> 'void' and {_IN_PACK}"
         " order by si.child_id is null,"
         "   roll_order(c.roll_no), c.roll_no, si.qr_code",
-        {"week": week, "section": section, "kind": kind},
+        {"week": weeks.or_none(week), "section": section, "kind": kind},  # a label that is no week: no papers
     ).fetchall()
 
 

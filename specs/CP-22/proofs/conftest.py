@@ -11,13 +11,15 @@ Every proof makes its own fake school (a new tenant), one K2 class in far-future
 with placeholder emails, and is rolled back at the end: nothing is kept. No real name, email or child appears.
 
 Names used are the contract of specs/CP-22/design.md: `engine timetable go-live --grade --section --year --fortnight
---run --by [--reason] [--discard-changes] [--dry]`, table `timetable_live`, column `timetable_slot.fortnight_id`,
-setting `timetable.go_live_group`. What the proofs need from scopes not yet on main, each named where it is used:
+--run --by [--reason] [--discard-changes] [--dry]`, setting `timetable.go_live_group`. Since CP-27 the timetable of a
+date is its lessons (`session`, each with its kind; the dated `timetable_slot` rows before), the frame is `timetable_rule`
+rows, and a draft put live is a row of the one approval list (kind `timetable_live`; the table `timetable_live` before),
+read here through `live_rows` with the names that table gave. What the proofs need from scopes not yet on main, each named where it is used:
 - CP-11 (issue #459): table `timetable_run (id, school_class_id, fortnight_id, outcome, input_text, draft)` and the
   command `engine timetable generate --grade --section --year --fortnight`, which keeps a run whose `input_text` is
   the rules as they are now. A draft is a list with one entry per placed lesson: date, week, period id, subject code,
   read here as the keys `date`, `week`, `period_id`, `subject_code` (checked against a run CP-11 makes, below).
-- CP-6 (issue #454): table `fortnight_cycle (tenant_id, fortnight_id, state)`; `planning`, then `frozen`.
+- CP-6 (issue #454): the fortnight's state (`fortnight.state` since CP-27); `planning`, then `frozen`.
 - CP-3 / CP-4: the coordinator is a person with a current `coordinator` grant (CP-3's `everything` group); an educator
   holds `class_teacher` on the class (CP-3's `own_classes`).
 """
@@ -41,6 +43,7 @@ from psycopg import sql
 from psycopg.pq import TransactionStatus
 
 from engine.core import db
+from engine.w2_print import materials_list
 
 ROOT = Path(os.environ.get("ATHENA_ROOT", Path(__file__).resolve().parents[3]))
 MIGRATIONS = sorted((ROOT / "supabase" / "migrations").glob("*.sql"))
@@ -254,9 +257,9 @@ def world(c, monkeypatch, *, start=START, days=14, holiday=None, missing=None, n
                      "s2": ("subject", "english", "English"),
                      "extra": ("specialist", "music", "Visiting music") if wd == 3 else ("empty", None, "")}
             for p, (kind, subj, text) in cells.items():
-                c.execute("insert into timetable_slot (tenant_id, school_class_id, period_id, week_code, weekday, kind,"
-                          " subject_code, text, valid_from) values (%s, %s, %s, %s, %s, %s, %s, %s, '2026-01-01')",
-                          (t, klass, per[p], wk, wd, kind, subj, text))
+                c.execute("insert into timetable_rule (tenant_id, school_class_id, kind, period_id, week_code, weekday,"
+                          " cell, subject_code, text, valid_from) values (%s, %s, 'frame', %s, %s, %s, %s, %s, %s,"
+                          " '2026-01-01')", (t, klass, per[p], wk, wd, kind, subj, text))
                 frame[(wk, wd, p)] = (kind, subj, text)
     coord, educator = _staff(c, t, campus, klass)
     w = {"tenant": t, "slug": slug, "campus": campus, "year": year, "class": klass, "section": section,
@@ -277,10 +280,6 @@ def world(c, monkeypatch, *, start=START, days=14, holiday=None, missing=None, n
                           (t, campus, d, "holiday" if d == holiday else "teaching"))
         if sessions:
             _plan(c, w, fn)
-    needs(c, "public.fortnight_cycle", "CP-6 (the fortnight cycle, issue #454)")
-    for fn in w["fortnights"].values():
-        c.execute("insert into fortnight_cycle (tenant_id, fortnight_id, state) values (%s, %s, 'planning')"
-                  " on conflict (fortnight_id) do nothing", (t, fn["id"]))
     return w
 
 
@@ -321,9 +320,9 @@ def _plan(c, w, fn):
                 entry = _one(c, "insert into plan_entry (tenant_id, school_class_id, fortnight_id, plan_key, ord,"
                                 " text, source, week_code) values (%s, %s, %s, %s, %s, %s, 'proof', %s) returning id",
                              (w["tenant"], w["class"], fn["id"], subj, n, text, wk))["id"]
-            c.execute("insert into session (tenant_id, school_class_id, school_day_id, period_id, subject_code,"
-                      " plan_entry_id, text) values (%s, %s, %s, %s, %s, %s, %s)",
-                      (w["tenant"], w["class"], day, w["period"][p], subj, entry, text))
+            c.execute("insert into session (tenant_id, school_class_id, school_day_id, period_id, subject_code, kind,"
+                      " plan_entry_id, text) values (%s, %s, %s, %s, %s, %s, %s, %s)",
+                      (w["tenant"], w["class"], day, w["period"][p], subj, kind, entry, text))
 
 
 def sessions(c, w, number=2) -> list[dict]:
@@ -426,7 +425,7 @@ def draft_by_date(draft) -> dict[str, set[tuple[str, str]]]:
 
 
 SNAP = {
-    "timetable_slot": "select * from timetable_slot where school_class_id = %(k)s order by id",
+    "timetable_rule": "select * from timetable_rule where school_class_id = %(k)s order by id",
     "session": "select * from session where school_class_id = %(k)s order by id",
     "plan_entry": "select * from plan_entry where school_class_id = %(k)s order by id",
     "materials_list": "select * from materials_list where school_class_id = %(k)s order by id",
@@ -434,8 +433,18 @@ SNAP = {
                       " where m.school_class_id = %(k)s order by l.id",
     "materials_line_source": "select s.* from materials_line_source s join session x on x.id = s.session_id"
                              " where x.school_class_id = %(k)s order by s.line_id, s.session_id",
-    "timetable_live": "select * from timetable_live where school_class_id = %(k)s order by id",
+    "timetable_live": "select * from approval where kind = 'timetable_live' and target like %(k)s::text || ' %%'"
+                      " order by seq",
 }
+
+
+def live_rows(c, klass) -> list[dict]:
+    """Each draft put live for the class, oldest first, as the one approval list keeps it (CP-27), read with the names
+    `timetable_live` gave: who, when, which run, the fortnight, the reason, whether changes were discarded."""
+    return [{"id": r["id"], "who": uuid.UUID(r["by"]), "at": r["created_at"], "run_id": uuid.UUID(r["detail"]["run_id"]),
+             "fortnight_id": uuid.UUID(r["target"].split(" ")[1]), "reason": r["reason"],
+             "discarded": r["detail"]["discarded"], "state_hash": r["detail"]["state_hash"]}
+            for r in c.execute(SNAP["timetable_live"], {"k": klass}).fetchall()]
 
 
 def snapshot(c, w) -> dict:
@@ -459,8 +468,7 @@ def materials(c, w, session_ids, *, from_on=None, to_on=None, state="draft", per
         line = _one(c, "insert into materials_line (tenant_id, list_id, material_code, unit, quantity, needed_on,"
                        " source) values (%s, %s, %s, 'piece', 1, %s, 'educator') returning id",
                     (w["tenant"], lst, code, on))["id"]
-        c.execute("insert into materials_line_source (line_id, session_id, activity_code, on_date, quantity)"
-                  " values (%s, %s, 'ACT-PROOF', %s, 1)", (line, sid, on))
+        c.execute(materials_list.ADD_SOURCE, (line, sid, "ACT-PROOF", on, 1))  # its lessons: the line's (CP-27 g6)
         out[sid] = line
     return out
 

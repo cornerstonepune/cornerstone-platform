@@ -17,7 +17,7 @@ from engine.w1_bank import question_types, retire
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs the local copy (bin/testdb)")
 BY = "Shweta (Maths)"
-THIS_WEEK = "to_char(now() at time zone 'Asia/Kolkata', 'IYYY-\"W\"IW')"
+THIS_WEEK = "date_trunc('week', now() at time zone 'Asia/Kolkata')::date"  # a week is its Monday (CP-27)
 
 
 @pytest.fixture
@@ -88,7 +88,9 @@ def paper(conn, k, qr, week=None, approved=True):
     )
     conn.execute(
         "insert into sheet_instance (tenant_id, qr_code, sheet_template_id, week, kind, print_status, printed_at,"
-        " approved_by, approved_at) select tenant_id, %s, id, coalesce(%s, " + THIS_WEEK + "), 'practice',"
+        " approved_by, approved_at) select tenant_id, %s, id, coalesce(%s::date, "
+        + THIS_WEEK
+        + "), 'practice',"
         " case when %s then 'printed' else 'new' end, case when %s then now() end, case when %s then 'Achal' end,"
         " case when %s then now() end from sheet_template where id = %s",
         (qr, week, approved, approved, approved, approved, t),
@@ -144,7 +146,7 @@ def test_an_approved_paper_not_yet_given_is_withdrawn_and_named(conn):
     k = a_kind(conn)
     paper(conn, k, "CSTEST2")  # approved this week, not given, not read: withdrawn
     paper(conn, k, "CSTEST3")  # given: kept
-    paper(conn, k, "CSTEST4", week="2020-W01")  # an earlier week's: it was given, kept
+    paper(conn, k, "CSTEST4", week="2019-12-30")  # an earlier week's: it was given, kept
     paper(conn, k, "CSTEST5", approved=False)  # never approved: nothing to withdraw
     conn.execute(
         "insert into flow_run (tenant_id, flow, trigger, status, started_at, finished_at, request)"
