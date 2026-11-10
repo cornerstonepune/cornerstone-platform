@@ -35,6 +35,10 @@ class ClassDay(Who):
     day: dt.date | None = None
 
 
+class DayOnly(Who):
+    day: dt.date | None = None
+
+
 class TypedNote(Who):
     class_id: str
     session_id: str | None = None
@@ -99,13 +103,17 @@ async def send_note(
 ):
     """One recording from her phone, kept on the private side; it is read after this answers."""
     form = await request.form(max_files=1)
-    upload, class_id = form.get("file"), form.get("class_id")
+    upload, class_id, lesson = form.get("file"), form.get("class_id"), form.get("session_id")
     if isinstance(upload, str) or upload is None or not isinstance(class_id, str):
         raise HTTPException(status_code=422, detail="Not sent. Try again.")
+    if lesson is not None and (not isinstance(lesson, str) or not lesson):
+        lesson = None
     with db.connect() as conn:
         _recording(conn)
         try:
-            note = voice_intake.receive(conn, actor, class_id, upload.filename or "", await upload.read())
+            note = voice_intake.receive(
+                conn, actor, class_id, upload.filename or "", await upload.read(), lesson
+            )
         except voice_store.Refused as no:
             raise _refused(no) from no
     background.add_task(_transcribe, str(note["id"]))
@@ -182,6 +190,16 @@ def class_notes(body: ClassDay, conn=Depends(get_conn, scope="function")):
     _on(conn)
     try:
         return voice_class.class_notes(conn, body.actor, body.class_id, body.day)
+    except voice_store.Refused as no:
+        raise _refused(no) from no
+
+
+@keyed.post("/voice/coordinator-notes")
+def coordinator_notes(body: DayOnly, conn=Depends(get_conn, scope="function")):
+    """Every educator's notes for every class of the coordinator's campus on a day. Coordinators only."""
+    _on(conn)
+    try:
+        return voice_class.coordinator_notes(conn, body.actor, body.day)
     except voice_store.Refused as no:
         raise _refused(no) from no
 

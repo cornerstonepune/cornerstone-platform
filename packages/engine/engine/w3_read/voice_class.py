@@ -12,7 +12,7 @@ from collections import defaultdict
 from typing import Any
 
 from engine.core import db, settings
-from engine.w3_read import voice_intake
+from engine.w3_read import k2_reads, voice_intake
 from engine.w3_read.voice_store import Refused
 
 WAITING = ("received", "drafted")
@@ -75,19 +75,42 @@ def class_notes(conn: db.Conn, email: str, class_id: str, day: dt.date | None = 
     """Her notes for one class received on a day, and, over all her notes still waiting in the class, how many notes
     wait on each child. Only her own notes, only for a class she holds."""
     staff, class_id = _held(conn, email, class_id)
-    day = day or settings.school_today(conn)
-    hours = int(settings.config(conn, "voice.confirm_within_hours", 48))
     notes = conn.execute(
         "select *, floor(extract(epoch from now() - received_at) / 3600)::int as age_hours from pii.educator_note"
         " where staff_id = %s and class_id = %s order by received_at, id",
         (staff, class_id),
     ).fetchall()
-    rolls: dict[dt.date, dict[str, str]] = {}
+    return _listing(conn, notes, day or settings.school_today(conn))
+
+
+def coordinator_notes(conn: db.Conn, email: str, day: dt.date | None = None) -> dict:
+    """Every educator's notes for every class of the coordinator's campus, received on a day, with the same fields as
+    her own list and the class each note belongs to. Coordinators only (`k2.reads` roles)."""
+    _, campus = k2_reads.require_coordinator(conn, email)
+    notes = conn.execute(
+        "select n.*, floor(extract(epoch from now() - n.received_at) / 3600)::int as age_hours"
+        " from pii.educator_note n join school_class c on c.id = n.class_id where c.campus_id = %s"
+        " order by n.received_at, n.id",
+        (campus,),
+    ).fetchall()
+    return _listing(conn, notes, day or settings.school_today(conn))
+
+
+def _listing(conn: db.Conn, notes: list[dict], day: dt.date) -> dict:
+    hours = int(settings.config(conn, "voice.confirm_within_hours", 48))
+    labels = {
+        r["id"]: f"{r['grade_code']} {r['section']}"
+        for r in conn.execute(
+            "select id, grade_code, section from school_class where id = any(%s)",
+            (list({n["class_id"] for n in notes}),),
+        ).fetchall()
+    }
+    rolls: dict[tuple, dict[str, str]] = {}
 
     def enrolled_on(cid: str, on: dt.date) -> dict[str, str]:
-        if on not in rolls:
-            rolls[on] = voice_intake.enrolled(conn, cid, on)
-        return rolls[on]
+        if (cid, on) not in rolls:
+            rolls[(cid, on)] = voice_intake.enrolled(conn, cid, on)
+        return rolls[(cid, on)]
 
     confirmed = [n["id"] for n in notes if n["status"] == "confirmed"]
     claims = _claims(conn, confirmed) if confirmed else {}
@@ -114,7 +137,8 @@ def class_notes(conn: db.Conn, email: str, class_id: str, day: dt.date | None = 
         )  # fmt: skip
         kids = sorted({c for line in claims.get(n["id"], []) for c in line["children"]})
         shown.append({
-            "note_id": str(n["id"]), "status": n["status"], "state": state, "typed": typed,
+            "note_id": str(n["id"]), "class_id": str(n["class_id"]), "class": labels[n["class_id"]],
+            "status": n["status"], "state": state, "typed": typed,
             "session_id": None if n["session_id"] is None else str(n["session_id"]),
             "received_at": n["received_at"].isoformat(), "taught_on": taught.isoformat(),
             "activity": found.activity if found else None,

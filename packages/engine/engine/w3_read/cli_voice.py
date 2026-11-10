@@ -76,7 +76,8 @@ def replay(
 def switch(
     which: str = typer.Argument(
         ...,
-        help="screens (What needs doing, the form, Confirm), recording (record and play) or sarvam (its no-retention)",
+        help="screens (What needs doing, the form, Confirm), recording (record and play), sarvam (its no-retention),"
+        " timetable (the educator's timetable and materials screens) or curriculum (the curriculum screens)",
     ),
     state: str = typer.Argument(..., help="on or off"),
     by: str = typer.Option(..., "--by", help="your email, the one you sign in with; your staff id is logged"),
@@ -86,7 +87,7 @@ def switch(
         help="sarvam on only: the reference of Sarvam's written 'No retention' (D-065)",
     ),
 ) -> None:
-    """Turn a K2 voice switch on or off, logged under your staff id. `sarvam` needs --ref to go on."""
+    """Turn a screen or voice switch on or off, logged under your staff id. `sarvam` needs --ref to go on."""
     if state not in ("on", "off"):
         raise typer.BadParameter("say on or off")
     with db.connect() as conn:
