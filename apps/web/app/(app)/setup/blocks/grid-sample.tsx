@@ -3,13 +3,14 @@
 import { useState } from "react";
 import { ClassGrid, type GridCell, type Look } from "@/components/class-grid";
 import type { IconName } from "@/lib/icons";
+import { EMERGING, PRACTISING, SECURE, STATES } from "@/components/status-chip";
 
 // The ClassGrid on sample children (names from the fake-names list): a tap on a square moves it to the next mark, as a
 // mark is tapped on the confirm screen.
 const LOOKS: { look: Look; icon: IconName; words: string }[] = [
-  { look: "ok", icon: "secure", words: "secure" },
-  { look: "wait", icon: "practising", words: "practising" },
-  { look: "quiet", icon: "emerging", words: "emerging" },
+  { look: "ok", icon: STATES[SECURE].icon, words: STATES[SECURE].words },
+  { look: "wait", icon: STATES[PRACTISING].icon, words: STATES[PRACTISING].words },
+  { look: "quiet", icon: STATES[EMERGING].icon, words: STATES[EMERGING].words },
   { look: "unseen", icon: "not-seen", words: "not seen yet" },
 ];
 export const CHILDREN = ["Alba Ant", "Bea Badger", "Cal Crow", "Dot Deer", "Eli Eel", "Finn Fox", "Gus Goat", "Hazel Hare"] as const;

@@ -9,6 +9,14 @@ export type Tone = "ok" | "wait" | "act" | "quiet";
 /** A state is its tone (the colour), its words and its icon: a row without an icon does not compile. `look: "unseen"` is
  *  grey on the panel colour with a dashed edge (a child not seen yet). */
 export type StateRow = { tone: Tone; words: string; icon: IconName; look?: "unseen" };
+// A child's growth on a skill is drawn by a tree, a leaf and a sprout. The school's words for it are the engine's rows
+// (`child_state`, read by lib/states.ts), so no page types them: a row's key here is the state's own code and its words
+// are that key, never a second copy (test_states_and_subject.py).
+const GROWTH = { secure: 0, practising: 0, emerging: 0 };
+type Growth = keyof typeof GROWTH;
+const SAYS = Object.fromEntries(Object.keys(GROWTH).map((k) => [k, k])) as { [K in Growth]: K };
+/** The growth states, in the order the blocks draw them (strongest first). */
+export const [SECURE, PRACTISING, EMERGING] = Object.keys(GROWTH) as [Growth, Growth, Growth];
 export const STATES = {
   right: { tone: "ok", words: "right", icon: "done" },
   done: { tone: "ok", words: "done", icon: "done" },
@@ -59,9 +67,9 @@ export const STATES = {
   toDo: { tone: "quiet", words: "to do", icon: "to-do" },
   reading: { tone: "wait", words: "reading", icon: "to-confirm" },
   // the blocks (UI-2): a child's growth on a skill, a lesson moved, two lessons at once, a day of the class's record
-  secure: { tone: "ok", words: "secure", icon: "secure" },
-  practising: { tone: "wait", words: "practising", icon: "practising" },
-  emerging: { tone: "quiet", words: "emerging", icon: "emerging" },
+  secure: { tone: "ok", words: SAYS.secure, icon: "tree" },
+  practising: { tone: "wait", words: SAYS.practising, icon: "leaf" },
+  emerging: { tone: "quiet", words: SAYS.emerging, icon: "sprout" },
   notSeenYet: { tone: "quiet", words: "not seen yet", icon: "not-seen", look: "unseen" },
   moved: { tone: "wait", words: "moved", icon: "moved" },
   clash: { tone: "act", words: "clash", icon: "clash" },

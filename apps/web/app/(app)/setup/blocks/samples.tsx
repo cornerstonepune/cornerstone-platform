@@ -21,7 +21,7 @@ import { PeriodRow } from "@/components/period-row";
 import { Spark } from "@/components/spark";
 import { StackBar } from "@/components/stack-bar";
 import { Stepper } from "@/components/stepper";
-import { StatusChip, type State } from "@/components/status-chip";
+import { EMERGING, PRACTISING, SECURE, StatusChip, type State } from "@/components/status-chip";
 import { Timeline } from "@/components/timeline";
 import { Trend } from "@/components/trend";
 import { KanbanBoard, ViewToggle } from "@/components/kanban-board";
@@ -78,13 +78,13 @@ export function sampleOf(name: string, q: Record<string, string | undefined>, me
       ]} />;
     case "ChildGraph":
       return <ChildGraph initials="AA" skills={[
-        { name: "Counting in tens", state: "secure", seen: 5, domain: "numeracy", href: "/setup/blocks?open=ChildGraph" },
-        { name: "Sharing equally", state: "practising", seen: 2, domain: "numeracy", href: "/setup/blocks?open=ChildGraph" },
-        { name: "Retelling", state: "practising", seen: 3, domain: "language", href: "/setup/blocks?open=ChildGraph" },
+        { name: "Counting in tens", state: SECURE, seen: 5, domain: "numeracy", href: "/setup/blocks?open=ChildGraph" },
+        { name: "Sharing equally", state: PRACTISING, seen: 2, domain: "numeracy", href: "/setup/blocks?open=ChildGraph" },
+        { name: "Retelling", state: PRACTISING, seen: 3, domain: "language", href: "/setup/blocks?open=ChildGraph" },
         { name: "Clay shapes", state: "notSeenYet", seen: 0, domain: "arts", href: "/setup/blocks?open=ChildGraph" },
       ]} />;
     case "StackBar":
-      return <StackBar parts={[{ state: "secure", n: 10 }, { state: "practising", n: 7 }, { state: "emerging", n: 4 }, { state: "notSeenYet", n: 3 }]} />;
+      return <StackBar parts={[{ state: SECURE, n: 10 }, { state: PRACTISING, n: 7 }, { state: EMERGING, n: 4 }, { state: "notSeenYet", n: 3 }]} />;
     case "LevelBars":
       return <LevelBars levels={[{ level: 0, n: 3 }, { level: 1, n: 10 }, { level: 2, n: 8 }, { level: 3, n: 3 }]} />;
     case "Spark":

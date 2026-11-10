@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ChildPeek, NameChip, type Peeked, type PeekCount } from "@/components/child-peek";
+import { PRACTISING, SECURE, STATES } from "@/components/status-chip";
 import type { Seen } from "@/components/timeline";
 
 // Sample children (fake names, docs/frontend/wireframes/fake-names.json): the peek opens for the one chosen, the address
@@ -11,8 +12,8 @@ const KIDS: readonly Peeked[] = [
   { no: "02", initials: "BB", name: "Bea Badger", className: "K2 Red" },
 ];
 const COUNTS: readonly PeekCount[] = [
-  { state: "secure", words: "6 secure" },
-  { state: "practising", words: "3 practising" },
+  { state: SECURE, words: `6 ${STATES[SECURE].words}` },
+  { state: PRACTISING, words: `3 ${STATES[PRACTISING].words}` },
   { state: "notSeenYet", words: "2 not seen yet" },
 ];
 const SEEN: readonly Seen[] = [

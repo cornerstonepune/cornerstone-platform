@@ -90,9 +90,9 @@ export const ICONS = {
   late: Hourglass,
   unplanned: CalendarX,
   // a child's growth on a skill (the class picture, M1-03)
-  secure: TreeDeciduous,
-  practising: Leaf,
-  emerging: Sprout,
+  tree: TreeDeciduous,
+  leaf: Leaf,
+  sprout: Sprout,
   "re-check": RefreshCw,
   "not-enough": SquareDashed,
   // actions
