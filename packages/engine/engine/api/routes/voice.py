@@ -17,7 +17,7 @@ from engine.adapters import speech
 from engine.api.deps import get_conn, get_tenant_id, require_engine_key, require_upload_token
 from engine.api.idempotency import run_idempotent
 from engine.core import db, settings
-from engine.w3_read import voice_confirm, voice_intake, voice_note, voice_store
+from engine.w3_read import voice_class, voice_confirm, voice_intake, voice_note, voice_store
 
 Section = Literal["above", "below", "not_willing", "absent"]
 
@@ -33,6 +33,11 @@ class NoteRef(Who):
 class ClassDay(Who):
     class_id: str
     day: dt.date | None = None
+
+
+class TypedNote(Who):
+    class_id: str
+    session_id: str | None = None
 
 
 class Confirm(Who):
@@ -168,6 +173,27 @@ def audio(body: NoteRef, conn=Depends(get_conn, scope="function")):
     except voice_store.Refused as no:
         raise _refused(no) from no
     return Response(content=data, media_type=mimetypes.guess_type(key)[0] or "application/octet-stream")
+
+
+@keyed.post("/voice/class-notes")
+def class_notes(body: ClassDay, conn=Depends(get_conn, scope="function")):
+    """Her notes for a class on a day, each with its state, children, problems and claims, and the notes waiting on
+    each child. Only her own notes, only for a class she holds."""
+    _on(conn)
+    try:
+        return voice_class.class_notes(conn, body.actor, body.class_id, body.day)
+    except voice_store.Refused as no:
+        raise _refused(no) from no
+
+
+@keyed.post("/voice/notes/typed")
+def typed_note(body: TypedNote, conn=Depends(get_conn, scope="function")):
+    """The empty note for typing the marks: it has no recording, and is confirmed like any other note."""
+    _on(conn)
+    try:
+        return {"note_id": voice_class.create_typed(conn, body.actor, body.class_id, body.session_id)}
+    except voice_store.Refused as no:
+        raise _refused(no) from no
 
 
 @keyed.post("/voice/class")

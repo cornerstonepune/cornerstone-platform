@@ -66,6 +66,7 @@ def test_every_table_that_holds_a_childs_data_is_in_the_register(conn):
 PII_COLUMN_WORDS = {
     "pii.child.birthday": "date of birth",
     "pii.educator_note.sentence": "the one sentence she confirms from each",
+    "pii.educator_note.session_id": "which lesson each note was about",
 }
 
 
