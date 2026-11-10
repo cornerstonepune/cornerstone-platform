@@ -51,7 +51,7 @@
     "who": [
       "educator"
     ],
-    "sees": "You look over the pack and approve it before it prints. See [Papers to approve](/guide/papers-to-approve#approve)."
+    "sees": "You look over the pack and approve it before it prints. See [Assessments](/guide/assessments#approve)."
   },
   "N8": {
     "name": "Papers come back",
@@ -59,7 +59,7 @@
       "educator",
       "the engine"
     ],
-    "sees": "You upload the scans or photos. The engine lines each page up with the page it was printed from. See [Upload papers](/guide/upload-papers#upload)."
+    "sees": "You upload the scans or photos. The engine lines each page up with the page it was printed from. See [Assessments](/guide/assessments#make)."
   },
   "N9": {
     "name": "Read, check and learn",
@@ -67,7 +67,7 @@
       "the engine",
       "educator"
     ],
-    "sees": "The engine reads each answer and marks it by the answer key. What it is not sure of goes to you on [Check answers](/guide/check-answers#check)."
+    "sees": "The engine reads each answer and marks it by the answer key. What it is not sure of goes to you on [Assessments](/guide/assessments#check)."
   },
   "N10": {
     "name": "Each child's skills worked out",

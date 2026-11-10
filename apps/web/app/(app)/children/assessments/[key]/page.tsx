@@ -111,7 +111,7 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
       ),
     },
     { key: "settled", label: "Answers settled", num: true, width: "9rem", value: (p) => (p.answers > 0 ? `${p.answers - p.waiting} of ${p.answers}` : grp === "replaced" ? "none" : "none yet") },
-    { key: "state", label: "State", status: true, width: "13rem", value: (p) => grp, cell: (p) => <StatusChip state={GROUPS.find((x) => x.key === grp)!.state} words={grp === "judge" ? "Answers to judge" : undefined} /> },
+    { key: "state", label: "State", status: true, width: "13rem", value: () => grp, cell: () => <StatusChip state={GROUPS.find((x) => x.key === grp)!.state} words={grp === "judge" ? "Answers to judge" : undefined} /> },
     {
       key: "action",
       label: "Action",

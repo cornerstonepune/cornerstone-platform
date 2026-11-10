@@ -17,7 +17,7 @@ export async function makePapers(formData: FormData): Promise<void> {
   const once = String(formData.get("once") ?? "");
   const seen = String(formData.get("seen") ?? "");
   const batch = readBatch((k) => formData.getAll(k).map(String), week);
-  if (!batch || !batch.children.length || !WEEK.test(week) || !UUID.test(once) || !seen) redirect("/papers/make");
+  if (!batch || !batch.children.length || !WEEK.test(week) || !UUID.test(once) || !seen) redirect("/children/assessments?make=class");
   // a home assessment is the home papers' decision; a class practice or assessment, the class papers'
   const kind = batch.kind === "focus" ? "home_papers" : "class_papers";
   const me = await deciding(kind);
@@ -25,12 +25,14 @@ export async function makePapers(formData: FormData): Promise<void> {
   const out = await makeBatch(batch, me.email, once, seen);
   if ("why" in out) {
     const q = batchQuery(batch);
+    q.set("make", batch.way === "own" ? "each" : "class");
     if (out.unsure) q.set("once", once);
     q.set("why", out.why);
-    redirect(`/papers/make?${q}`);
+    redirect(`/children/assessments?${q}`);
   }
   revalidatePath("/papers");
-  const q = new URLSearchParams({ class: batch.section, kind: batch.kind, made: out.made.qrs.join(".") });
+  revalidatePath("/children/assessments");
+  const q = new URLSearchParams({ make: "class", class: batch.section, kind: batch.kind, made: out.made.qrs.join(".") });
   if (out.made.already) q.set("already", "1");
-  redirect(`/papers/make?${q}`);
+  redirect(`/children/assessments?${q}`);
 }
