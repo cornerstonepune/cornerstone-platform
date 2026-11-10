@@ -59,7 +59,7 @@ export default async function ConfirmWhatTheReaderHeard({ params }: { params: Pr
       <Screen
         stage={`${klass} · note of ${heard}${draft.activity ? ` · ${names[draft.activity] ?? ""}` : ""}`}
         title="Confirm what the reader heard"
-        purpose="Left, your words line by line. Right, the class already marked from them. Nothing is ticked for you; 'the rest did as expected' is one switch. Confirm is for this note only."
+        purpose="Left, your words line by line. Right, the class marked from them. Nothing is ticked for you. Confirm is for this note only."
         action={
           <Link href="/notes" className="btn secondary">
             All notes

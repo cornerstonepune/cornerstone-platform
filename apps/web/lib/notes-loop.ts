@@ -55,13 +55,13 @@ const initials = (name: string) =>
  *  and class. A child outside their reach is left out, never named. */
 export const childrenByIds = cache(async (me: Pick<Session, "email" | "role" | "classes" | "subjects" | "id">, ids: string[]): Promise<Record<string, Peeked & { id: string; classId: string }>> => {
   if (!ids.length) return {};
-  const rows = await sql<{ id: string; roll_no: string; section: string; class_id: string; first_name: string; last_name: string }[]>`
+  const rows = await sql<{ id: string; roll_no: string; section: string; class_id: string; first_name: string; last_name: string | null }[]>`
     select c.id, c.roll_no, c.section, c.class_id, n.first_name, n.last_name
     from child_now c, lateral pii.read_child(c.id, ${me.email}) n
     where c.id = any(${ids}::uuid[]) and c.active and ${seesClass(me, sql`c.section`)}`;
   return Object.fromEntries(
     rows.map((r) => {
-      const name = `${r.first_name} ${r.last_name}`.trim();
+      const name = [r.first_name, r.last_name].filter(Boolean).join(" ");
       return [r.id, { id: r.id, classId: r.class_id, no: r.roll_no.padStart(2, "0"), initials: initials(name), name, className: r.section }];
     }),
   );
