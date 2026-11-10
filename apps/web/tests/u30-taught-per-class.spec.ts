@@ -10,10 +10,9 @@
  * Two Grade 2 classes of the test's own (tests/rows.ts), made once and kept; the educator and every class's word on a
  * topic this test said are taken away after.
  */
-import { scryptSync } from "node:crypto";
 import { expect, test, type Browser, type Page } from "@playwright/test";
 import postgres from "postgres";
-import { aClass } from "./rows";
+import { aClass, aPerson, forgetPerson } from "./rows";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -22,25 +21,17 @@ const OTHER = "U30-OTHER";
 const TOPIC = "FACTORS"; // multiples and factors: not taught in the school's rows; the nth multiple is Grade 2's
 const EDUCATOR = { email: "u30-educator@cornerstone.test", name: "U30 Educator", role: "educator", classes: [MINE] };
 const PASSWORD = "u30-a-long-test-password";
-const SALT = "00112233445566778899aabbccddeeff";
 let topicName: string;
 
 test.beforeAll(async () => {
   await aClass(sql, MINE, "G2", ["Ira", "Jai"]);
   await aClass(sql, OTHER, "G2", ["Kavya", "Laksh"]);
-  const password = `scrypt$${SALT}$${scryptSync(PASSWORD, SALT, 64).toString("hex")}`;
-  await sql`
-    update config set value = (select coalesce(jsonb_agg(s), '[]'::jsonb) from jsonb_array_elements(value) s
-                               where s ->> 'email' <> ${EDUCATOR.email}) || ${sql.json([{ ...EDUCATOR, password }])}
-    where key = 'app.staff'`;
+  await aPerson(sql, { ...EDUCATOR, password: PASSWORD });
   [{ name: topicName }] = await sql<{ name: string }[]>`select name from topic where code = ${TOPIC}`;
 });
 test.afterAll(async () => {
   await sql`delete from class_skill where section in (${MINE}, ${OTHER})`;
-  await sql`
-    update config set value = (select coalesce(jsonb_agg(s), '[]'::jsonb) from jsonb_array_elements(value) s
-                               where s ->> 'email' <> ${EDUCATOR.email})
-    where key = 'app.staff'`;
+  await forgetPerson(sql, EDUCATOR.email);
   await sql.end();
 });
 

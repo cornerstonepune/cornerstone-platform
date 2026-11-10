@@ -35,6 +35,7 @@ from engine.w3_read import (
     second_reader,
 )
 from engine.w4_close import report
+from tests.rows import a_child_in
 from tests.test_each_answer import _wrote
 from tests.test_sorting import _scanned as _scanned_file
 
@@ -98,10 +99,7 @@ def worksheet(conn, tmp_path, monkeypatch):
     )
     monkeypatch.setattr(library, "PDF_DIR", tmp_path / "worksheets")
     monkeypatch.setattr(copies, "CUT", tmp_path / "scans")
-    child = conn.execute(
-        "insert into child (tenant_id, roll_no, band, section) values (%s, '51', 'G2', %s) returning id",
-        (tenant["id"], SECTION),
-    ).fetchone()["id"]
+    child = a_child_in(conn, SECTION, "G2", "51", tenant["id"])
     conn.execute(
         "insert into pii.child (tenant_id, child_id, first_name) values (%s,%s,'Esha')", (tenant["id"], child)
     )

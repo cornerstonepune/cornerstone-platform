@@ -17,6 +17,7 @@ import pytest
 from engine.assess import graph
 from engine.core import db, settings
 from engine.w2_print import focus_paper, maker, shelf
+from tests.rows import a_child_in
 
 WEEK = "T3W1-maker-test"
 SECTION = "MAKERTEST"
@@ -42,10 +43,7 @@ def conn():
 
 def _child(conn, roll, section=SECTION, answers=(), band="G3"):
     tenant = conn.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()["id"]
-    cid = conn.execute(
-        "insert into child (tenant_id, roll_no, section, band) values (%s,%s,%s,%s) returning id",
-        (tenant, roll, section, band),
-    ).fetchone()["id"]
+    cid = a_child_in(conn, section, band, roll, tenant)
     for skill, rung, right, mistakes in answers:
         conn.execute(
             "insert into evidence_event (tenant_id, child_id, skill_code, rung_code, correct, misconception_codes,"

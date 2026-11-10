@@ -7,10 +7,9 @@
  * Two Grade 2 classes of the test's own (tests/rows.ts), one the educator's; the educator and the question drafted for
  * the coordinator are taken away after.
  */
-import { scryptSync } from "node:crypto";
 import { expect, test, type Browser, type Page } from "@playwright/test";
 import postgres from "postgres";
-import { aClass, aWaitingSkill } from "./rows";
+import { aClass, aWaitingSkill, aPerson, forgetPerson } from "./rows";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -19,7 +18,6 @@ const OTHER = "U32-OTHER";
 const ASK = "U32-FOR-THE-COORDINATOR";
 const EDUCATOR = { email: "u32-educator@cornerstone.test", name: "U32 Educator", role: "educator", classes: [MINE] };
 const PASSWORD = "u32-a-long-test-password";
-const SALT = "00112233445566778899aabbccddeeff";
 let draft: string;
 let putBack: () => Promise<void>;
 let sheet: string;
@@ -27,11 +25,7 @@ let sheet: string;
 test.beforeAll(async () => {
   await aClass(sql, MINE, "G2", ["Ira", "Jai"]);
   await aClass(sql, OTHER, "G2", ["Kavi", "Lata"]);
-  const password = `scrypt$${SALT}$${scryptSync(PASSWORD, SALT, 64).toString("hex")}`;
-  await sql`
-    update config set value = (select coalesce(jsonb_agg(s), '[]'::jsonb) from jsonb_array_elements(value) s
-                               where s ->> 'email' <> ${EDUCATOR.email}) || ${sql.json([{ ...EDUCATOR, password }])}
-    where key = 'app.staff'`;
+  await aPerson(sql, { ...EDUCATOR, password: PASSWORD });
   // a question the engine drafted for the coordinator, not for an educator
   await sql`
     insert into ask (tenant_id, code, ord, for_role, question, drafted, source)
@@ -46,10 +40,7 @@ test.beforeAll(async () => {
 test.afterAll(async () => {
   await putBack?.();
   await sql`delete from ask where code = ${ASK}`;
-  await sql`
-    update config set value = (select coalesce(jsonb_agg(s), '[]'::jsonb) from jsonb_array_elements(value) s
-                               where s ->> 'email' <> ${EDUCATOR.email})
-    where key = 'app.staff'`;
+  await forgetPerson(sql, EDUCATOR.email);
   await sql.end();
 });
 

@@ -10,6 +10,7 @@ from engine.api import deps
 from engine.api.app import app
 from engine.core import db
 from engine.w2_print import library
+from tests.rows import a_child_in
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
 
@@ -75,10 +76,7 @@ def test_a_worksheet_printed_for_two_children_is_one_pdf_of_two_copies_each_with
 
     tenant = conn.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()["id"]
     kids = [
-        str(conn.execute(
-            "insert into child (tenant_id, roll_no, section, band) values (%s,%s,'PRINTTEST','G2') returning id",
-            (tenant, roll),
-        ).fetchone()["id"])
+        str(a_child_in(conn, "PRINTTEST", "G2", roll, tenant))
         for roll in ("1", "2")
     ]  # fmt: skip
     for k in kids:

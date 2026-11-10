@@ -8,6 +8,7 @@ import pytest
 
 from engine.core import db
 from engine.w2_print import assemble, pack, prescribe
+from tests.rows import a_child_in
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
 
@@ -26,10 +27,7 @@ def made(conn, tmp_path):
     """Three children in a section of their own, rolls given out of order, their week made and rendered."""
     tenant = conn.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()["id"]
     for roll in ("10", "2", "1"):
-        conn.execute(
-            "insert into child (tenant_id, roll_no, section, band) values (%s,%s,%s,'G2')",
-            (tenant, roll, SECTION),
-        )
+        a_child_in(conn, SECTION, "G2", roll, tenant)
     prescribe.for_class(conn, SECTION, WEEK, SET)
     built = assemble.for_week(conn, SECTION, WEEK)
     assemble.render(conn, built, tmp_path / "made", WEEK, "a test")

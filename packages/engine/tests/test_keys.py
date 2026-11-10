@@ -11,6 +11,7 @@ import pytest
 from engine.core import db, history
 from engine.w3_read import again, keys, legacy, marking
 from tests import test_legacy as legacy_tests
+from tests.rows import a_child_in
 
 KEYS = {
     "code": "TEST-KEYS",
@@ -43,10 +44,7 @@ def conn():
 
 def _child(conn, roll):
     tenant = conn.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()["id"]
-    cid = conn.execute(
-        "insert into child (tenant_id, roll_no, section, band) values (%s,%s,'TESTKEYS','G4') returning id",
-        (tenant, roll),
-    ).fetchone()["id"]
+    cid = a_child_in(conn, "TESTKEYS", "G4", roll, tenant)
     conn.execute(
         "insert into pii.child (tenant_id, child_id, first_name) values (%s,%s,'Test')", (tenant, cid)
     )

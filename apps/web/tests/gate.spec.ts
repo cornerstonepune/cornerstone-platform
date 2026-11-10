@@ -3,8 +3,9 @@
  * A gate that is only tested with the bypass on is not tested at all.
  */
 import { expect, test } from "@playwright/test";
-import { randomBytes, randomUUID, scryptSync } from "node:crypto";
+import { randomUUID } from "node:crypto";
 import postgres from "postgres";
+import { aPerson, forgetPerson } from "./rows";
 
 const ROUTES = ["/", "/worksheets", "/library", "/capture", "/growth", "/home", "/skill-sets/SUB.2D2D"];
 
@@ -81,10 +82,7 @@ test("a right password signs you in and lands on What needs doing", async ({ pag
   const sql = postgres(process.env.DATABASE_URL!, { max: 1 });
   const email = `lands-${randomUUID().slice(0, 8)}@example.com`;
   const password = randomUUID();
-  const salt = randomBytes(16).toString("hex");
-  const hash = `scrypt$${salt}$${scryptSync(password, salt, 64).toString("hex")}`;
-  const one = { email, name: "Lands on Today", role: "educator", password: hash };
-  await sql`update config set value = value || ${sql.json([one])} where key = 'app.staff'`;
+  await aPerson(sql, { email, name: "Lands on Today", role: "educator", password });
   try {
     await page.goto("/login");
     await page.getByLabel("School email").fill(email);
@@ -93,10 +91,7 @@ test("a right password signs you in and lands on What needs doing", async ({ pag
     await expect(page).toHaveURL(/\/today$/);
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("What needs doing");
   } finally {
-    await sql`
-      update config set value = (select coalesce(jsonb_agg(s), '[]'::jsonb) from jsonb_array_elements(value) s
-                                 where s ->> 'email' <> ${email})
-      where key = 'app.staff'`;
+    await forgetPerson(sql, email);
     await sql.end();
   }
 });

@@ -16,6 +16,7 @@ import pytest
 from engine.core import db, settings, vocabulary
 from engine.w2_print import focus_paper, prescribe
 from engine.w4_close import card
+from tests.rows import a_child_in
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
 
@@ -187,10 +188,7 @@ def test_a_state_reworded_in_its_row_is_reworded_on_the_paper(conn):
 @pytest.fixture
 def child(conn):
     t = conn.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()["id"]
-    return conn.execute(
-        "insert into child (tenant_id, roll_no, section, band) values (%s, '1', 'B0DSEC', 'G2') returning id",
-        (t,),
-    ).fetchone()["id"]
+    return a_child_in(conn, "B0DSEC", "G2", "1", t)
 
 
 def test_a_prescription_takes_its_subject_from_the_skills_topic(conn, child):

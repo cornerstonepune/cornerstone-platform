@@ -6,7 +6,6 @@ as the same kind of text (no @).
 """
 
 import copy
-import json
 import os
 import re
 import threading
@@ -15,6 +14,7 @@ import time
 import pytest
 
 from engine.core import db
+from tests import rows
 from tests.test_cli import run
 
 needs_db = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
@@ -42,12 +42,12 @@ OTHERS = [BOSS, TEACHER]
 
 def _staff():
     with db.connect() as conn:
-        return conn.execute("select value from config where key = 'app.staff'").fetchone()["value"]
+        return rows.signin_list(conn)
 
 
 def _put(people):
     with db.connect() as conn:
-        conn.execute("update config set value = %s where key = 'app.staff'", (json.dumps(people),))
+        rows.signin_list_is(conn, people)
         conn.commit()
 
 
@@ -136,9 +136,7 @@ def test_apply_holds_the_staff_list_and_removes_in_one_transaction(list_of, monk
         done.start()
         time.sleep(1.5)
         assert done.is_alive(), "apply did not wait for the lock on the staff list"
-        site.execute(
-            "update config set value = value || %s::jsonb where key = 'app.staff'", (json.dumps([late]),)
-        )
+        rows.a_person(site, **late)
         site.commit()
     done.join(20)
     assert result and result[0].exit_code == 0, result and result[0].output_plain

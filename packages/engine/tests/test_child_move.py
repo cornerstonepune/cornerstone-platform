@@ -15,6 +15,7 @@ import pytest
 from engine.core import db, roster
 from engine.w4_close import card
 from tests import rows
+from tests.rows import a_child_in
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
 FUTURE, PAST = "2099-W10", "2020-W01"  # a week still to come, and one long gone, whatever day this runs
@@ -314,10 +315,7 @@ def _enrolled(conn, section, band="G3"):
         "select id from school_class where tenant_id = %s and grade_code = %s and section = %s",
         (t, band, section),
     ).fetchone()["id"]
-    child = conn.execute(
-        "insert into child (tenant_id, roll_no, section, band) values (%s, '1', %s, %s) returning id",
-        (t, section, band),
-    ).fetchone()["id"]
+    child = a_child_in(conn, section, band, "1", t)
     conn.execute("select enrol_child(%s, %s, '1', current_date, 'test')", (child, class_id))
     return child, class_id
 

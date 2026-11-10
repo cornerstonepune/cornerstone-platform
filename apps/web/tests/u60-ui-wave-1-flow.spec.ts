@@ -11,7 +11,7 @@
  */
 import { expect, test, type Page } from "@playwright/test";
 import postgres from "postgres";
-import { aClass, aReadPaper } from "./rows";
+import { aClass, aReadPaper, aPerson } from "./rows";
 import { createHmac } from "node:crypto";
 import { isoWeek } from "../lib/week";
 
@@ -71,9 +71,7 @@ test.afterAll(async () => {
 // An educator mapped to one class and one subject (goals/nav_teacher_scope_and_todo.yaml): signed in as the site signs one in.
 const EDUCATOR = { email: "wv1-educator@cornerstone.test", name: "Wave Educator", role: "educator", classes: [SECTION], subjects: ["NUM"] };
 test.beforeAll(async () => {
-  await sql`
-    update config set value = value || ${sql.json([EDUCATOR])}
-    where key = 'app.staff' and not value @> ${sql.json([{ email: EDUCATOR.email }])}`;
+  await aPerson(sql, EDUCATOR);
 });
 async function asEducator(browser: import("@playwright/test").Browser) {
   const body = `${Buffer.from(EDUCATOR.email).toString("base64url")}.${Date.now() + 3_600_000}`;

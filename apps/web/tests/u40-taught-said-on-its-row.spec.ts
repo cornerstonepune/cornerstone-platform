@@ -6,30 +6,26 @@
  * in the school's rows; the test takes back what it says. The coordinator sees every class, so a row offers a choice of
  * them; an educator with one class is offered that class alone, in one button.
  */
-import { scryptSync } from "node:crypto";
 import { expect, test, type Browser, type Page } from "@playwright/test";
 import postgres from "postgres";
-import { aClass } from "./rows";
+import { aClass, aPerson, forgetPerson } from "./rows";
 
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 const CLASS = "U40-G2";
 const OTHER = "U40-G2B";
 const EDUCATOR = { email: "u40-educator@cornerstone.test", name: "U40 Educator", role: "educator", classes: [CLASS] };
 const PASSWORD = "u40-a-long-test-password";
-const SALT = "00112233445566778899aabbccddeeff";
-const others = sql`(select coalesce(jsonb_agg(s), '[]'::jsonb) from jsonb_array_elements(value) s where s ->> 'email' <> ${EDUCATOR.email})`;
 
 test.beforeAll(async () => {
   await aClass(sql, CLASS, "G2", ["Om", "Pia"]);
   await aClass(sql, OTHER, "G2", ["Raj", "Sia"]);
-  const password = `scrypt$${SALT}$${scryptSync(PASSWORD, SALT, 64).toString("hex")}`;
-  await sql`update config set value = ${others} || ${sql.json([{ ...EDUCATOR, password }])} where key = 'app.staff'`;
+  await aPerson(sql, { ...EDUCATOR, password: PASSWORD });
 });
 test.afterEach(async () => {
   await sql`delete from class_skill where section in (${CLASS}, ${OTHER})`;
 });
 test.afterAll(async () => {
-  await sql`update config set value = ${others} where key = 'app.staff'`;
+  await forgetPerson(sql, EDUCATOR.email);
   await sql.end();
 });
 

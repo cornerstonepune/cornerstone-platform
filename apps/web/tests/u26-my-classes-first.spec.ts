@@ -6,10 +6,9 @@
  *
  * The classes are the test's own (tests/rows.ts), made once and kept; the educators are taken off the list after.
  */
-import { scryptSync } from "node:crypto";
 import { expect, test, type Browser, type Page } from "@playwright/test";
 import postgres from "postgres";
-import { aClass } from "./rows";
+import { aClass, aPerson, forgetPerson } from "./rows";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -18,18 +17,12 @@ const OTHER = "U26-OTHER";
 const LINKED = { email: "u26-linked@cornerstone.test", name: "U26 Linked", role: "educator", classes: [MINE] };
 const UNLINKED = { email: "u26-unlinked@cornerstone.test", name: "U26 Unlinked", role: "educator", classes: [] };
 const PASSWORD = "u26-a-long-test-password";
-const SALT = "00112233445566778899aabbccddeeff";
 let other: Record<string, string>;
 
 test.beforeAll(async () => {
   await aClass(sql, MINE, "G2", ["Aarav", "Bela"]);
   other = await aClass(sql, OTHER, "G3", ["Chirag", "Dia"]);
-  const password = `scrypt$${SALT}$${scryptSync(PASSWORD, SALT, 64).toString("hex")}`;
-  await sql`
-    update config set value = (select coalesce(jsonb_agg(s), '[]'::jsonb) from jsonb_array_elements(value) s
-                               where s ->> 'email' not in (${LINKED.email}, ${UNLINKED.email}))
-                              || ${sql.json([{ ...LINKED, password }, { ...UNLINKED, password }])}
-    where key = 'app.staff'`;
+  for (const person of [LINKED, UNLINKED]) await aPerson(sql, { ...person, password: PASSWORD });
   // a class practice made for the other class and not yet approved: Today and the menu count it for whoever sees it
   const [{ id: tenant }] = await sql<{ id: string }[]>`select id from tenant limit 1`;
   const [had] = await sql`select 1 from sheet_instance where qr_code = 'CSF1B026'`;
@@ -43,10 +36,7 @@ test.beforeAll(async () => {
   }
 });
 test.afterAll(async () => {
-  await sql`
-    update config set value = (select coalesce(jsonb_agg(s), '[]'::jsonb) from jsonb_array_elements(value) s
-                               where s ->> 'email' not in (${LINKED.email}, ${UNLINKED.email}))
-    where key = 'app.staff'`;
+  for (const person of [LINKED, UNLINKED]) await forgetPerson(sql, person.email);
   await sql.end();
 });
 

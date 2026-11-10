@@ -14,6 +14,7 @@ import pytest
 
 from engine.core import db, settings
 from engine.core.staff import staff_hash
+from tests import rows
 from tests.test_cli import run
 
 pytestmark = pytest.mark.usefixtures("forgets_what_it_commits")
@@ -26,7 +27,7 @@ needs_db = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATAB
 
 def _staff():
     with db.connect() as conn:
-        return conn.execute("select value from config where key = 'app.staff'").fetchone()["value"]
+        return rows.signin_list(conn)
 
 
 def _add(monkeypatch, *args, typed=(PASSWORD, PASSWORD)):
@@ -40,11 +41,7 @@ def clean():
     """The staff list as it was: whatever a test added is taken off again."""
     yield
     with db.connect() as conn:
-        conn.execute(
-            "update config set value = (select coalesce(jsonb_agg(s), '[]'::jsonb) from jsonb_array_elements(value) s"
-            " where s ->> 'email' <> %s) where key = 'app.staff'",
-            (EMAIL,),
-        )
+        rows.forget_person(conn, EMAIL)
         conn.commit()
 
 

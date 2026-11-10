@@ -19,6 +19,7 @@ from engine.assess import graph
 from engine.core import db, history
 from engine.w1_bank import cases, mistake_guess, rehome
 from engine.w3_read import again, legacy, marking, naming
+from tests.rows import a_child_in
 
 # ---- pure: shape → rung, and marking by lookup
 
@@ -352,10 +353,7 @@ def conn():
 @pytest.fixture
 def child(conn):
     tenant = conn.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()["id"]
-    cid = conn.execute(
-        "insert into child (tenant_id, roll_no, section, band) values (%s,'1','TESTSEC','G2') returning id",
-        (tenant,),
-    ).fetchone()["id"]
+    cid = a_child_in(conn, "TESTSEC", "G2", "1", tenant)
     conn.execute(
         "insert into pii.child (tenant_id, child_id, first_name) values (%s,%s,'Aarav')", (tenant, cid)
     )

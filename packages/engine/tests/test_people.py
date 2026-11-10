@@ -11,6 +11,7 @@ import psycopg
 import pytest
 
 from engine.core import db, people
+from tests.rows import signin_list, signin_list_is
 from tests.test_cli import run
 
 pytestmark = pytest.mark.usefixtures("forgets_what_it_commits")
@@ -84,14 +85,14 @@ def wipe(conn):
 @pytest.fixture
 def school():
     with db.connect() as conn:
-        was = conn.execute("select value from config where key = 'app.staff'").fetchone()["value"]
+        was = signin_list(conn)
         wipe(conn)
-        conn.execute("update config set value = %s where key = 'app.staff'", (json.dumps(SIGN_IN),))
+        signin_list_is(conn, SIGN_IN)
         conn.commit()
     yield
     with db.connect() as conn:
         wipe(conn)
-        conn.execute("update config set value = %s where key = 'app.staff'", (json.dumps(was),))
+        signin_list_is(conn, was)
         conn.commit()
 
 
@@ -224,7 +225,8 @@ def test_staff_import_copies_the_staff_list_leaves_the_config_and_changes_nothin
     tmp_path, school
 ):
     def config():
-        return rows("select value from config where key = 'app.staff'")[0]["value"]
+        with db.connect() as conn:
+            return signin_list(conn)
 
     before = config()
     dry = run("staff", "import")
@@ -266,7 +268,7 @@ def test_staff_import_copies_the_staff_list_leaves_the_config_and_changes_nothin
         },
     ]
     with db.connect() as conn:
-        conn.execute("update config set value = %s where key = 'app.staff'", (json.dumps(bad),))
+        signin_list_is(conn, bad)
         conn.commit()
     refused = run("staff", "import", "--apply", "--by", SIGNER)
     assert refused.exit_code == 1 and "'wizard' is not a role" in refused.output_plain
