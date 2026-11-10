@@ -39,7 +39,7 @@ export default async function StaffPage({ searchParams }: Props) {
       title="Staff"
       purpose="Who teaches which class. Open a person's classes, tick the ones they teach and save: their pages open on those classes."
       action={
-        <Link href="/school" className="btn">
+        <Link href="/setup/classes" className="btn">
           See the school&rsquo;s classes
         </Link>
       }

@@ -40,8 +40,8 @@ test.afterAll(async () => {
  *  period in a timetable, a recorded note, a printed paper), or it is four clicks deep (a child's report). The screens
  *  that replace them (docs/frontend/screens.json) are each reached by the inventory test once built. */
 const NOT_BY_CLICK: Record<string, string> = {
-  "/k2/[class]": "the Children page lists the K2 classes whose timetable is in force today, and the test database has none",
-  "/k2/[class]/[roll]": "a child's square on that class's page",
+  "/children/[class]": "the Children table lists children and opens their peek; the class picture is its toggle, drawn only for a person with a class",
+  "/children/[class]/[roll]": "a child's page, opened from the peek of a child in the table",
   "/refused": "where an action sends a person it refused",
   "/papers/review/[qr]": "where making a paper sends the maker; a link on a child's page once a paper is approved",
   "/papers/card": "opened by a button of the paper's own form",
@@ -55,6 +55,7 @@ const NOT_BY_CLICK: Record<string, string> = {
   "/period/[id]": "a link of a day of the timetable, which needs a timetable's rows",
   "/notes/[id]": "a card or a row of Notes, which needs a recorded note",
   "/educator/activity/[code]": "a link of a period or of the materials list, which need a timetable's rows",
+  "/timetable/materials": "the menu's Materials still opens the old page, which keeps the controls this one lacks, until UI-9b moves them (tests/u74-materials.spec.ts opens it)",
   "/educator/period/[id]": "a link of a day of the timetable, which needs a timetable's rows",
   "/growth/[id]/parent": "a link on a child's page (click four)",
   "/growth/[id]/report": "a link on a child's page (click four)",

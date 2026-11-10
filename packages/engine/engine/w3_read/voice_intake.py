@@ -254,15 +254,17 @@ def cleanup(conn: db.Conn) -> dict[str, int]:
         raise CleanupFailed("the recordings folder cannot be read; nothing was cleared")
     left = expire(conn)
     notes = conn.execute(
-        "select id, status, audio_key, transcript, sentence from pii.educator_note"
+        "select id, status, audio_key, photo_keys, transcript, sentence from pii.educator_note"
         " where received_at <= now() - make_interval(hours => %s)"
         " and (audio_deleted_at is null or transcript_cleared_at is null) order by received_at",
         (hours,),
     ).fetchall()
     gone = stuck = 0
     for n in notes:
-        try:
-            voice_store.path(n["audio_key"]).unlink(missing_ok=True)
+        try:  # a note she typed has no recording; a lesson's photos go with the note's raw copies
+            for key in [n["audio_key"], *n["photo_keys"]]:
+                if key is not None:
+                    voice_store.path(key).unlink(missing_ok=True)
         except OSError:
             stuck += 1  # the recording stays, so its words do too
             continue
@@ -272,10 +274,15 @@ def cleanup(conn: db.Conn) -> dict[str, int]:
             sentence = voice_note.sentence(n["transcript"])
         conn.execute(
             "update pii.educator_note set transcript = null, sentence = %s, audio_deleted_at = now(),"
-            " transcript_cleared_at = now() where id = %s",
+            " transcript_cleared_at = now(), photo_keys = '{}' where id = %s",
             (sentence, n["id"]),
         )
-    kept = {r["audio_key"] for r in conn.execute("select audio_key from pii.educator_note").fetchall()}
+    kept = {
+        k
+        for r in conn.execute("select audio_key, photo_keys from pii.educator_note").fetchall()
+        for k in [r["audio_key"], *r["photo_keys"]]
+        if k is not None
+    }
     cutoff = time.time() - hours * 3600
     orphans = 0
     for f in folder.rglob("*"):  # a recording whose note was never written (a save whose commit failed)

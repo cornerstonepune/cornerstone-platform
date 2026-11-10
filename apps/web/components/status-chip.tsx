@@ -74,6 +74,8 @@ export const STATES = {
   secure: { tone: "ok", words: SAYS.secure, icon: "tree" },
   practising: { tone: "wait", words: SAYS.practising, icon: "leaf" },
   emerging: { tone: "quiet", words: SAYS.emerging, icon: "sprout" },
+  // a child noted away on a day (the strip of absences noted); grey, never a mark against the child
+  absent: { tone: "quiet", words: "absent", icon: "absent" },
   notSeenYet: { tone: "quiet", words: "not seen yet", icon: "not-seen", look: "unseen" },
   moved: { tone: "wait", words: "moved", icon: "moved" },
   clash: { tone: "act", words: "clash", icon: "clash" },

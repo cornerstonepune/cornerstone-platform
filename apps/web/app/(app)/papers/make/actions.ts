@@ -2,6 +2,9 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { sql } from "@/lib/db";
+import { papersCte } from "@/lib/queries-papers";
+import { assessmentHref } from "@/lib/assessment-ui";
 import { deciding, mustBeMine } from "@/lib/decides";
 import { childrenSections } from "@/lib/scope";
 import { batchQuery, makeBatch, readBatch, UUID } from "@/lib/maker";
@@ -22,14 +25,24 @@ export async function makePapers(formData: FormData): Promise<void> {
   const kind = batch.kind === "focus" ? "home_papers" : "class_papers";
   const me = await deciding(kind);
   await mustBeMine(me, kind, [batch.section, ...(await childrenSections(batch.children))]);
-  const out = await makeBatch(batch, me.email, once, seen);
+  // made from the Assessments screen: the papers are only made, at Created, and the person approves the pack on its own screen
+  const created = formData.get("approve") === "0";
+  const out = await makeBatch(batch, me.email, once, seen, !created);
   if ("why" in out) {
     const q = batchQuery(batch);
     if (out.unsure) q.set("once", once);
     q.set("why", out.why);
-    redirect(`/papers/make?${q}`);
+    if (created) q.set("make", "class");
+    redirect(created ? `/children/assessments?${q}` : `/papers/make?${q}`);
   }
   revalidatePath("/papers");
+  revalidatePath("/children/assessments");
+  // the assessment just made is opened, at Created
+  if (created && out.made.qrs[0]) {
+    const [r] = await sql<{ kind: string; section: string | null; week: string | null; set_key: string | null }[]>`
+      with ${papersCte()} select kind, section, week, set_key from papers where qr = ${out.made.qrs[0]} limit 1`;
+    if (r) redirect(assessmentHref([r.kind, r.section ?? "", r.week ?? "", r.set_key ?? ""].join("~")));
+  }
   const q = new URLSearchParams({ class: batch.section, kind: batch.kind, made: out.made.qrs.join(".") });
   if (out.made.already) q.set("already", "1");
   redirect(`/papers/make?${q}`);
