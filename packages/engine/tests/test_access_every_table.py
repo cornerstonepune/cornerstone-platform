@@ -29,7 +29,7 @@ EXEMPT = {
 }
 # child data in tables with no child_id column: they hang off a paper, a scan or an answer, or carry a class label
 NO_CHILD_COLUMN = {
-    "public.capture", "public.item_result", "public.gold", "public.page_choice",
+    "public.capture", "public.item_result", "public.page_choice",
     "public.capture_page", "public.mistake_named", "public.class_card", "public.approval",
 }  # fmt: skip
 OPEN_TO = ["app_web", "public", "authenticated", "anon"]

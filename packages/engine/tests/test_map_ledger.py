@@ -413,28 +413,30 @@ def test_a_held_out_activity_is_never_an_example_the_proposer_sees(conn, tmp_pat
 
 
 def test_a_proposal_of_another_kind_is_never_listed_settled_or_applied(conn, monkeypatch):
-    """CP-27 group 3: the one proposal list will hold the bank's proposals too. The curriculum's commands read only the
-    kinds they make a link from, so a bank proposal is never listed by `engine curriculum` nor applied through it."""
+    """CP-27 group 3: the one proposal list holds the bank's proposals too (a question far off its level, a mistake
+    learned from children's answers). The curriculum's commands read only the kinds they make a link from, so a bank
+    proposal is never listed by `engine curriculum` nor applied through it."""
     t = tenant(conn)
     lead = _staff(conn, t)
-    conn.execute(
-        "alter table curriculum_proposal drop constraint curriculum_proposal_kind_check"
-    )  # rolled back
     other = {
-        status: conn.execute(
+        (kind, status): conn.execute(
             "insert into curriculum_proposal (tenant_id, run_id, kind, subject_code, proposal, status, machine)"
-            " values (%s, gen_random_uuid(), 'mislevelled', 'a/bank/key', '{\"direction\": \"easier\"}', %s,"
-            " 'code:learn') returning id",
-            (t, status),
+            " values (%s, gen_random_uuid(), %s, 'a/bank/key', '{\"direction\": \"easier\"}', %s, 'code:' || %s)"
+            " returning id",
+            (t, kind, status, kind),
         ).fetchone()["id"]
+        for kind in ("mislevelled", "new_mistake")
         for status in ("needs_person", "auto_passed")
     }
     assert not {r["id"] for r in map_ledger.standing(conn, t)} & set(other.values())
-    assert not any(k == "mislevelled" for k, _, _ in map_ledger.proposed(conn, t))
-    with pytest.raises(ValueError):
-        map_ledger.settle(conn, t, other["needs_person"], True, lead, "yes")
-    assert map_ledger.apply(conn, t, lead, write=True, kind="mislevelled") == []
-    assert all(not d.startswith("mislevelled") for d in map_ledger.apply(conn, t, lead, write=False))
+    assert not any(k in ("mislevelled", "new_mistake") for k, _, _ in map_ledger.proposed(conn, t))
+    for kind in ("mislevelled", "new_mistake"):
+        with pytest.raises(ValueError):
+            map_ledger.settle(conn, t, other[(kind, "needs_person")], True, lead, "yes")
+        assert map_ledger.apply(conn, t, lead, write=True, kind=kind) == []
+    assert all(
+        not d.startswith(("mislevelled", "new_mistake")) for d in map_ledger.apply(conn, t, lead, write=False)
+    )
 
     class Same:  # the command reads through the test's own connection, so it sees the rows the test made
         def __enter__(self):
@@ -445,4 +447,5 @@ def test_a_proposal_of_another_kind_is_never_listed_settled_or_applied(conn, mon
 
     monkeypatch.setattr(db, "connect", lambda *_a, **_k: Same())
     listed = CliRunner().invoke(cli.app, ["curriculum", "review"])
-    assert listed.exit_code == 0 and "a/bank/key" not in listed.output and "mislevelled" not in listed.output
+    assert listed.exit_code == 0 and "a/bank/key" not in listed.output
+    assert "mislevelled" not in listed.output and "new_mistake" not in listed.output

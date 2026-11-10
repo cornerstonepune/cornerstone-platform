@@ -223,9 +223,11 @@ def test_a_typed_story_is_shaped_over_http_and_a_person_gets_it_when_jev_is_down
 def test_the_banks_proposals_are_listed_and_decided_once_over_http(client, conn):
     """goals/s21-real-difficulty.yaml over HTTP: a question 20 of 20 right at Hard is listed with its evidence;
     it is decided once — keep — and a second decision is refused with the reason."""
+    from tests.rows import a_member_of_staff
     from tests.test_learn import _answered, _question, _tenant
 
     tenant = _tenant(conn)
+    _, email = a_member_of_staff(conn)  # the sign-in email the website sends
     key = _question(conn, tenant)
     _answered(conn, tenant, key, ["correct"] * 20)
 
@@ -234,7 +236,7 @@ def test_the_banks_proposals_are_listed_and_decided_once_over_http(client, conn)
     mine = next(p for p in listed.json() if p["subject"] == key)
     assert mine["direction"] == "easier" and mine["evidence"]["n"] == 20
 
-    body = {"verdict": "keep", "by": "neha", "note": "a warm-up on purpose"}
+    body = {"verdict": "keep", "by": email, "note": "a warm-up on purpose"}
     assert (
         client.post(f"/bank/proposal/{mine['id']}/decide", json=body, headers=HEADERS).json()["verdict"]
         == "keep"

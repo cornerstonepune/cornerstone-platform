@@ -4,10 +4,10 @@ A story's key said only its numbers, so two shapes of one numbers pair were one 
 never held the shapes it listed last. A story's shape and operations are now in its spec, and so in its key
 (`words.story_spec`). A story stored before that is matched back to the template that wrote it (`words.template_of`):
 its words, numbers and answer stay as they are. Each change is a row of `item_key_change`, append-only: a review and a
-gold finding follow their question in place, and what is never rewritten (a proposal in its own ledger, a gold file, a
-page bookmarked) finds the question through that row (`inventory.current_key`). A rewording keeps its own key, its words
-being part of it (`question.correct`), and takes the shape of the story it rewords, so a relabel no longer loses it.
-Running it again changes nothing.
+gold finding follow their question in place, and what is never rewritten (a proposal in the one proposal list, a gold
+file, a page bookmarked) finds the question through that row (`inventory.current_key`). A rewording keeps its own key,
+its words being part of it (`question.correct`), and takes the shape of the story it rewords, so a relabel no longer
+loses it. Running it again changes nothing.
 """
 
 import json
@@ -17,7 +17,9 @@ from typing import Any
 from engine.assess import items
 from engine.assess import words as W
 
-NAMED_BY_KEY = (("item_review", "ref"), ("gold_finding", "item_key"))  # what follows a question in place
+# what follows a question in place: a reviewer's verdict and a report's finding, cases of the one eval set (a hand check
+# names no question; it is never changed)
+NAMED_BY_KEY = (("eval_case", "ref"),)
 KINDS = {"WP1": "word_1step", "WP2": "word_2step"}
 ACTOR = "engine (bank rekey)"
 

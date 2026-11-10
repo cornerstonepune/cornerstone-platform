@@ -11,9 +11,10 @@ import pytest
 
 from engine.assess import learned_rules as L
 from engine.assess import misconceptions as M
-from engine.core import db
+from engine.core import db, english, loaders
 from engine.w1_bank import learn, learned
 from engine.w3_read import marking
+from tests.rows import a_member_of_staff
 from tests.test_learn import _question, _tenant
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
@@ -97,12 +98,13 @@ def test_an_adopted_mistake_is_recognised_on_a_question_it_was_never_seen_on(con
     _written(conn, tenant, _sum(conn, tenant, 47, 38), 48)
     _written(conn, tenant, _sum(conn, tenant, 52, 36), 56)
     p = _mine(conn)[0]
+    _, neha = a_member_of_staff(conn)
 
     with pytest.raises(ValueError, match="named"):
-        learn.decide(conn, p["id"], "adopt", "neha", "  ")
+        learn.decide(conn, p["id"], "adopt", neha, "  ")
     with pytest.raises(ValueError, match="adopt or reject"):
-        learn.decide(conn, p["id"], "remove", "neha")
-    got = learn.decide(conn, p["id"], "adopt", "neha", "Writes the bigger digit in each column")
+        learn.decide(conn, p["id"], "remove", neha)
+    got = learn.decide(conn, p["id"], "adopt", neha, "Writes the bigger digit in each column")
     code = got["code"]
     assert code == learned.code_for(p["evidence"]["rule"]) and code.startswith("L_")
     row = conn.execute(
@@ -126,5 +128,26 @@ def test_a_rejected_rule_is_not_proposed_again_and_recognises_nothing(conn):
     _written(conn, tenant, _sum(conn, tenant, 47, 38), 48)
     _written(conn, tenant, _sum(conn, tenant, 52, 36), 56)
     p = _mine(conn)[0]
-    assert learn.decide(conn, p["id"], "reject", "neha", "a copying slip")["code"] is None
+    _, neha = a_member_of_staff(conn)
+    assert learn.decide(conn, p["id"], "reject", neha, "a copying slip")["code"] is None
     assert _mine(conn) == [] and learned.rules(conn) == []
+
+
+def test_loading_the_named_mistakes_again_leaves_an_adopted_one_recognised(conn):
+    """An adopted mistake is a named mistake with its rule (CP-27: the rule is kept on the mistake itself). `engine load`
+    writes the seed's named mistakes again; the adopted one, which no seed holds, keeps its rule and is still found."""
+    tenant = _tenant(conn)
+    _written(conn, tenant, _sum(conn, tenant, 47, 38), 48)
+    _written(conn, tenant, _sum(conn, tenant, 52, 36), 56)
+    p = _mine(conn)[0]
+    _, neha = a_member_of_staff(conn)
+    code = learn.decide(conn, p["id"], "adopt", neha, "Writes the bigger digit in each column")["code"]
+    before = learned.rules(conn)
+    assert (code, p["evidence"]["rule"]) in before
+
+    loaders._misconceptions(conn, tenant)
+    english.mistakes(conn, tenant)
+
+    assert learned.rules(conn) == before
+    result = _written(conn, tenant, _sum(conn, tenant, 63, 24), 0, state="candidate")
+    assert marking.correct(conn, result, "64", "achal")["codes"] == [code]

@@ -35,7 +35,8 @@ full list of tables is `specs/CP-27/target-tables.md`.
 | Questions of every subject (samples, passages, rubrics) | the shared tables (`english_sample` becomes the one sample table) | a table per subject |
 
 Records that are never edited (a correction is a new row): `evidence_event`, `activity_observation`, `approval`,
-`change_log`. Nothing else needs that guard.
+`change_log`, and, among the cases of `eval_case`, a hand check (CP-9 item 7: a guard on that kind's rows alone).
+Nothing else needs that guard.
 
 **How `approval` is used (CP-27 group 3).** One row per decision: `kind` and `target` say what (a level is
 `skill_code difficulty`, a way of asking its code, a report, a paper, a link or a question its id, a class card
@@ -47,3 +48,17 @@ drawn only of an approved way of asking (`drawable_item`); a report reaches a pa
 stamp on their own row (`skill.level_approved` → `skill_level.confirmed_*`, `parent_note.approved_by`,
 `sheet_instance.approved_*`, `skill_prerequisite.confirmed_*`); one trigger function, `internal.approval_from_stamp`,
 writes the matching `approval` row, so new code reads `approval` or `approval_list`, never a stamp.
+
+**How `curriculum_proposal` and `eval_case` are used (CP-27 group 3).** A proposal is a row with `about` empty, its
+`kind` saying whose: the curriculum mapping's (`skill`, `objective`, `levels`, `lo_skill`, `page_part`, `material`,
+`skill_offer`, the only kinds `engine curriculum` reads, `map_ledger.MAPPING`) or the question bank's (`mislevelled`: a
+question far off its level; `new_mistake`: a rule children's answers point to; direction and evidence in `proposal`).
+What a person or a run did with it is a later row naming it (`about`): a person's answer carries their `staff_id`; a
+bank proposal removed or adopted is `applied`, kept or rejected `rejected`, the note its `reason`. An adopted mistake
+keeps its rule on the named mistake (`misconception.learned_rule`, `learned_from`). An item an educator adds to the
+materials catalogue is not a proposal: it names who and when on the item (`material_item.proposed_by`, `proposed_at`).
+`eval_case` holds one case per row, `kind` saying which: `report_finding` (an educator's report transcribed, for one
+child; confirmed by a person), `hand_check` (a hand calculation of a child's state, never changed, dated by the school's
+day) and `item_review` (a reviewer model's verdict on a question or a level's rule, `ref` = `template:<skill>:<level>`).
+What every kind names is a column (child, skill, level, `ref`, `verdict`, `source`, `confirmed_by`, `checked_on`), the
+rest is `detail`.

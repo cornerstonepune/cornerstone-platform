@@ -34,7 +34,6 @@ CHILD = {
     "public.child_skill_state": ("learning", "child_id", "child"),
     "public.evidence_event": ("learning", "child_id", "child"),
     "public.child_reading_profile": ("answers", "child_id", "child"),
-    "public.gold_finding": ("answers", "child_id", "child"),
     "public.read_correction": ("answers", "child_id", "child"),
     "public.item_exposure": ("papers", "child_id", "child"),
     "public.paper_edit": ("papers", "child_id", "child"),
@@ -47,10 +46,12 @@ CHILD = {
     "public.capture_page": ("papers", "capture_id", "capture"),
     "public.page_choice": ("papers", "capture_id", "capture"),
     "public.item_result": ("answers", "capture_id", "capture"),
-    "public.gold": ("answers", "capture_id", "capture"),
     "public.mistake_named": ("answers", "item_result_id", "item_result"),
     # a paper blueprint made for one child (focus papers) carries child_id; a spare one carries none and is open
     "public.sheet_template": ("papers", "child_id", "child_open"),
+    # a case of the one eval set: a report's finding or a hand check is one child's; a reviewer's verdict on a question
+    # names no child and is open (CP-27)
+    "public.eval_case": ("answers", "child_id", "child_open"),
     # a run of the reader keeps the child and the scan inside its request and result: seen by whoever put the file in or sees a paper read from it
     "public.flow_run": ("papers", "id", "run"),
     # an approval of a parent report, a paper or a class card (its card in `detail`) is of that child's report, paper or
@@ -88,8 +89,7 @@ SCHOOL_WIDE = [
     ),
     (
         "the question bank: questions, their keys, checks, statistics and reviews; no child",
-        "item item_key_change item_review item_stat key_correction bank_decision "
-        "bank_proposal learned_mistake assessment_name",
+        "item item_key_change item_stat key_correction assessment_name",
     ),
     (
         "plan and timetable: what a class is to do and when, by class id; no child (the scope names both school-wide)",
@@ -98,7 +98,7 @@ SCHOOL_WIDE = [
     ),
     (
         "materials lists for the activities of a class and their shopping; by class id; no child",
-        "material_alias material_item material_item_proposal material_unit_conversion materials_consolidated "
+        "material_alias material_item material_unit_conversion materials_consolidated "
         "materials_consolidated_change materials_consolidated_line materials_consolidated_send "
         "materials_consolidated_source materials_line materials_line_edit materials_line_source materials_list "
         "materials_note_review materials_send materials_send_ack reminder",
