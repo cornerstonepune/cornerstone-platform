@@ -18,12 +18,13 @@ export type Rows = { questionKey: string; section: string; classId: string; chil
 /** The educator (one class, one subject) and a class of fake children with Sr. Nos 1..n. Made once; a second run finds them. */
 export async function inventoryRows(sql: Sql): Promise<Rows> {
   if (!(await personAsStored(sql, EDUCATOR.email))) await aPerson(sql, EDUCATOR);
-  const names = FAKE_CHILDREN.slice(0, 6);
+  // twelve: one assessment of the class then has more than ten copies, so a screen can show its second page of them
+  const names = FAKE_CHILDREN.slice(0, 12);
   const children = await aClass(sql, SECTION, "K2", [...names]);
   const [cls] = await sql<{ id: string }[]>`select id from school_class where label = ${SECTION} order by created_at limit 1`;
   const rolls = Object.fromEntries(names.map((n, i) => [n, String(i + 1)]));
-  // a class the educator does not hold, with Sr. Nos 7 and 8 that the educator's class has no child for
-  const otherNames = FAKE_CHILDREN.slice(10, 18) as unknown as string[];
+  // a class the educator does not hold, with Sr. Nos 13 and 14 that the educator's class has no child for
+  const otherNames = FAKE_CHILDREN.slice(12, 26) as unknown as string[];
   const other = await aClass(sql, OTHER, "K2", otherNames);
   // Setup content (UI-11): a class that is taught something, so the bank lists questions; the K2 curriculum pages open (the gate's
   // "reviewer" mode) with two offered skills waiting; a question to open
