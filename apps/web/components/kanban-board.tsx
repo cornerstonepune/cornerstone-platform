@@ -3,7 +3,7 @@ import { ICON_SIZE, Icon, type IconName } from "@/lib/icons";
 import { KindTile, type Kind } from "./kind-tile";
 import { STATES, StatusChip, type State, type Tone } from "./status-chip";
 
-export type KCard = { key: string; kind: Kind; title: string; sub: string; href: string; state: State; note?: string };
+export type KCard = { key: string; kind: Kind; title: string; sub: string; href: string; state: State; note?: string; main?: boolean };
 export type Lane = { key: string; label: string; state: State; count: number; empty: string; cards: readonly KCard[] };
 export type View = { key: string; label: string; icon: IconName; href: string };
 
@@ -28,7 +28,7 @@ export function KanbanBoard({ lanes }: { lanes: readonly Lane[] }) {
               <ul className="b-lane-b">
                 {l.cards.map((c) => (
                   <li key={c.key}>
-                    <Link href={c.href} className="b-kcard" data-kcard="" data-kind={c.kind} data-press="">
+                    <Link href={c.href} className="b-kcard" data-kcard="" data-kind={c.kind} data-press="" data-ux={c.main ? "action" : undefined}>
                       <KindTile kind={c.kind} />
                       <span>
                         <b>{c.title}</b>

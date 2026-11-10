@@ -74,7 +74,7 @@ export default async function PaperPage({ params, searchParams }: Props) {
       num: true,
       width: "14rem",
       value: (x) => x.a.question,
-      cell: (x) => (x.m === "judge" ? <Link href={`${paperHref(key, roll)}?answer=${x.a.id}`}>{`${x.a.n ?? x.a.slot}. ${x.a.question}`}</Link> : <span>{`${x.a.n ?? x.a.slot}. ${x.a.question}`}</span>),
+      cell: (x) => (x.m === "judge" ? <Link href={`${paperHref(key, roll)}?answer=${x.a.id}`} data-answer="">{`${x.a.n ?? x.a.slot}. ${x.a.question}`}</Link> : <span>{`${x.a.n ?? x.a.slot}. ${x.a.question}`}</span>),
     },
     { key: "read", label: "Read as", num: true, width: "11rem", value: (x) => x.a.human_read ?? x.a.read ?? "nothing" },
     { key: "mark", label: "Mark", status: true, width: "13rem", value: (x) => x.m, cell: (x) => <StatusChip state={CHIP[x.m].state} words={CHIP[x.m].words} /> },
@@ -153,7 +153,7 @@ export default async function PaperPage({ params, searchParams }: Props) {
               <button type="submit" className="btn" data-ux="action">Sign this paper off</button>
             </form>
           ) : (
-            <Link href={assessmentHref(key)}>Back to the assessment</Link>
+            <Link href={assessmentHref(key)} className="underline">Back to the assessment</Link>
           )}
         </EmptyState>
       ) : null}

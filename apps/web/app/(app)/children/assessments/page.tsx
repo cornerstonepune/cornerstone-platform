@@ -93,6 +93,7 @@ export default async function AssessmentsPage({ searchParams }: Props) {
     href: assessmentHref(r.key),
     state: r.w.state,
     note: r.w.words,
+    main: r.key === mainRow?.key,
   }));
   const lanes = LANES.map((l) => {
     const mine = cards.filter((_, i) => laneOf(rows[i].w.action.kind)?.key === l.key);

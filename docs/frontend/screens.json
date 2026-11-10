@@ -2142,28 +2142,52 @@
           "label": "Make: For a class",
           "to": "assessment",
           "effect": "creates the assessment at step Created, then opens it",
-          "text": "For a class"
+          "text": "For a class",
+          "drive": {
+            "click": "For a class",
+            "expect": {
+              "url": "make="
+            }
+          }
         },
         {
           "t": "button",
           "label": "Make: For each child",
           "to": "assessment",
           "effect": "creates the assessment at step Created, then opens it",
-          "text": "For each child"
+          "text": "For each child",
+          "drive": {
+            "click": "For each child",
+            "expect": {
+              "url": "make="
+            }
+          }
         },
         {
           "t": "button",
           "label": "Make: For one child",
           "to": "assessment",
           "effect": "creates the assessment at step Created, then opens it",
-          "text": "For one child"
+          "text": "For one child",
+          "drive": {
+            "click": "For one child",
+            "expect": {
+              "url": "make="
+            }
+          }
         },
         {
           "t": "button",
           "label": "Make: A ready-made worksheet",
           "to": "assessment",
           "effect": "creates the assessment at step Created, then opens it",
-          "text": "A ready-made worksheet"
+          "text": "A ready-made worksheet",
+          "drive": {
+            "click": "A ready-made worksheet",
+            "expect": {
+              "url": "make="
+            }
+          }
         },
         {
           "t": "upload",
@@ -2262,6 +2286,14 @@
           "to": "assessment",
           "data": "data-kcard",
           "when": "?view=board"
+        },
+        {
+          "t": "link",
+          "label": "page: Later →",
+          "to": "assessments",
+          "text": "Later",
+          "when": "paged",
+          "note": "the next ten assessments"
         }
       ],
       "rail": [
@@ -2302,7 +2334,7 @@
       "backend": [],
       "exists": "part (/papers/approve, /papers/card)",
       "eyebrow": "Grade 1 · 22 papers",
-      "title": "the built name",
+      "title": "{the built name}",
       "purpose": "Where this assessment stands, and each child's copy. A copy is its own row with its own action; there is no button over all of them.",
       "blocks": [
         [
@@ -2331,38 +2363,72 @@
         {
           "t": "field",
           "label": "Change the level (a row, before print)",
-          "effect": "Easy / Medium / Hard / Advance; the row's reason updates; kept as an override with who"
+          "effect": "Easy / Medium / Hard / Advance; the row's reason updates; kept as an override with who",
+          "text": "Level for Sr. No.",
+          "data": "data-level"
         },
         {
           "t": "button",
           "label": "Approve the pack",
-          "effect": "approval row for this pack only; the stepper moves to Approved; Print appears; the rows' Change the level disappears"
+          "effect": "approval row for this pack only; the stepper moves to Approved; Print appears; the rows' Change the level disappears",
+          "drive": {
+            "fixture": "pack-unapproved",
+            "expect": {
+              "gone": [
+                "Approve the pack"
+              ],
+              "check": "pack-approved"
+            },
+            "after": "pack-unapproved"
+          }
         },
         {
           "t": "button",
           "label": "Print",
-          "effect": "the pack PDF opens in a new tab; the stepper moves to Printed"
+          "effect": "the pack PDF opens in a new tab; the stepper moves to Printed",
+          "drive": {
+            "fixture": "pack-approved",
+            "expect": {
+              "popup": true
+            },
+            "after": "pack-unapproved"
+          }
         },
         {
           "t": "row",
           "label": "Check this paper",
-          "to": "paper"
+          "to": "paper",
+          "text": "Check this paper",
+          "data": "data-check-paper"
         },
         {
           "t": "button",
           "label": "Sign it off (a row)",
-          "effect": "the paper's results are confirmed; its chip becomes results in"
+          "effect": "the paper's results are confirmed; its chip becomes results in",
+          "text": "Sign it off",
+          "data": "data-signoff",
+          "drive": {
+            "fixture": "note-checked",
+            "expect": {
+              "check": "a-copy-signed-off"
+            },
+            "after": "checked-again"
+          }
         },
         {
           "t": "row",
           "label": "The child",
-          "to": "child"
+          "to": "child",
+          "text": "The child",
+          "data": "data-child-link"
         },
         {
           "t": "link",
           "label": "page: Later →",
           "to": "assessment",
-          "note": "the next ten copies, grouped by state"
+          "note": "the next ten copies, grouped by state",
+          "text": "Later",
+          "when": "paged"
         },
         {
           "t": "link",
@@ -2385,10 +2451,17 @@
           "to": "assessments"
         },
         {
-          "t": "link",
+          "t": "button",
           "label": "rail: the printed pack",
           "to": "assessment",
-          "note": "the PDF in a new tab"
+          "note": "the PDF in a new tab",
+          "text": "The printed pack",
+          "drive": {
+            "click": "The printed pack",
+            "expect": {
+              "popup": true
+            }
+          }
         },
         {
           "t": "upload",
@@ -2452,27 +2525,58 @@
         {
           "t": "row",
           "label": "each answer row",
-          "effect": "the page scrolls to that answer and outlines it"
+          "effect": "the page scrolls to that answer and outlines it",
+          "data": "data-answer"
         },
         {
           "t": "field",
           "label": "what the child wrote",
-          "note": "for the answer in focus; required when judging"
+          "note": "for the answer in focus; required when judging",
+          "text": "What the child wrote for question"
         },
         {
           "t": "button",
           "label": "Say what the child wrote",
-          "effect": "a read_correction row; the engine marks it right / wrong / blank; the chip updates; the next judge answer comes into focus"
+          "effect": "a read_correction row; the engine marks it right / wrong / blank; the chip updates; the next judge answer comes into focus",
+          "text": "Say what the child wrote",
+          "drive": {
+            "fixture": "answer-to-judge",
+            "fill": {
+              "What the child wrote for question": "6"
+            },
+            "expect": {
+              "check": "answer-corrected"
+            },
+            "after": "answer-to-judge"
+          }
         },
         {
           "t": "button",
           "label": "Blank (the child wrote nothing)",
-          "effect": "the answer is marked blank, never wrong"
+          "effect": "the answer is marked blank, never wrong",
+          "text": "Blank",
+          "drive": {
+            "fixture": "answer-to-judge",
+            "click": "Blank",
+            "expect": {
+              "check": "answer-blank"
+            },
+            "after": "answer-to-judge"
+          }
         },
         {
           "t": "button",
           "label": "Sign this paper off",
-          "effect": "appears only when nothing is left to judge; confirms the results; lands on the assessment"
+          "effect": "appears only when nothing is left to judge; confirms the results; lands on the assessment",
+          "when": "@settled",
+          "text": "Sign this paper off",
+          "drive": {
+            "click": "Sign this paper off",
+            "expect": {
+              "url": "/children/assessments/"
+            },
+            "after": "checked-again"
+          }
         },
         {
           "t": "link",
