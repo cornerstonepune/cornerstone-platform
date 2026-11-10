@@ -38,3 +38,27 @@ Starts after #583 merges. One PR at a time, full CI, nothing loosened. A spec is
 - Reading status and reader accuracy become a **"Reading" view** of the Assessments list, next to Board / Table / By topic: files read lately, read again, accuracy as whole counts per paper, never a person. Its controls are added to `screens.json` as elements of the `assessments` screen (PR 1).
 - **Focus paper** (old `growth/[id]/focus-panel.tsx`): the engine proposes the week's plan for one child (`GET /child/{id}/focus`); "Different questions" redraws and makes nothing; "Approve" (`approveNextPaper`) prints the questions shown, one per child per week, the newest replaces the older, and says who approved. New home: a "next paper for this child" action on the assessment and paper screens (the child page, UI-3b, links to it). Old specs carried at equal assertions. Goes into PR 2 or a PR of its own.
 - Photo: the backend photo route is queued; the old `/capture` upload page stays until it lands, then retires in PR 4 or a fifth PR.
+
+## UI-4b PR 1 (branch `ui-4b-1`, draft): the Assessments list takes over rename, By topic and Reading
+
+Built: a rename field and "Save the name" on every table row and on the assessment screen (`renameThisAssessment`, the engine's
+`/assessment/name`, one more row of the history log; an empty name changes nothing); two more views next to Board and Table, **By
+topic** (`?view=topic`, a topic opens by `&t=<code>`, ten assessments a page) and **Reading** (`?view=reading`: how the reader is doing
+by day, kind or confidence, and the files read lately with Read again and Give a page, both from the old Upload page's own components).
+
+Old spec to new place (the old specs stay until PR 4 deletes the old pages; each assertion below lives on the new screen first):
+
+| Old spec | Assertion | New place |
+|---|---|---|
+| `asm2-by-topic` 1 to 3 | topics collapsed with counts; a topic opens to ten rows and no other topic's rows are read; stage and class narrow it | `u75-assessments-list.spec.ts` (By topic tests) |
+| `asm2-by-topic` 4 (seven step chips in order) | each assessment shows its seven steps | the assessment screen's stepper, `u73-assessments.spec.ts` (3) |
+| `u63` rename test, `asm2-by-topic` name test | the educator's name wins; each name a history-log row | `u75-assessments-list.spec.ts` (rename tests, table and assessment screen) |
+
+Observations, for whoever owns them:
+
+- The educator's view of `/papers` and the new list both fail the 8-second database wait on this machine's test copy (about 2,000
+  sheets, most of them put away by earlier runs); the coordinator's view of the same pages takes about 1.4 s. It is the educator
+  scope (`staff_sees_sheet` over every sheet) that grows. The old page fails the same way, so it is not new; on a live copy with
+  more sheets it deserves a look by whoever owns the queries.
+- The engine marks every held answer again each time a person types a reading (`again.trusted`); a copy settled for sign-off turns
+  back into an answer to judge. The inventory fixture puts it back first; worth a product decision.

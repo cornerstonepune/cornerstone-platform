@@ -2314,7 +2314,8 @@
           "label": "rename: name this assessment",
           "note": "one on each row; the built name shows until a name is chosen",
           "text": "Name this assessment",
-          "when": "?view=table"
+          "when": "?view=table",
+          "data": "data-rename-name"
         },
         {
           "t": "button",
@@ -2333,7 +2334,8 @@
               "check": "assessment-renamed"
             },
             "after": "name-undone"
-          }
+          },
+          "data": "data-rename-save"
         },
         {
           "t": "link",
@@ -2524,7 +2526,8 @@
           "t": "field",
           "label": "rename: name this assessment",
           "note": "the built name shows until a name is chosen",
-          "text": "Name this assessment"
+          "text": "Name this assessment",
+          "data": "data-rename-name"
         },
         {
           "t": "button",
@@ -2542,7 +2545,8 @@
               "check": "assessment-renamed"
             },
             "after": "name-undone"
-          }
+          },
+          "data": "data-rename-save"
         }
       ],
       "rail": [
