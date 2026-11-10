@@ -21,8 +21,9 @@ export async function inventoryRows(sql: Sql): Promise<Rows> {
   const children = await aClass(sql, SECTION, "K2", [...names]);
   const [cls] = await sql<{ id: string }[]>`select id from school_class where label = ${SECTION} order by created_at limit 1`;
   const rolls = Object.fromEntries(names.map((n, i) => [n, String(i + 1)]));
-  // a class the educator does not hold, with Sr. Nos 7 and 8 that the educator's class has no child for
-  const otherNames = FAKE_CHILDREN.slice(12, 20) as unknown as string[];
+  // a class the educator does not hold, with Sr. Nos 13 and 14 that the educator's class (twelve children, so the Children table has a
+  // second page) has no child for
+  const otherNames = FAKE_CHILDREN.slice(12, 26) as unknown as string[];
   const other = await aClass(sql, OTHER, "K2", otherNames);
   await seedSeen(sql, cls?.id ?? "");
   return { section: SECTION, classId: cls?.id ?? "", children, rolls, other, otherNames };
