@@ -8,7 +8,7 @@ import { FilterBar, type Filter } from "@/components/filter-bar";
 import { SwitchedOff } from "@/components/children/switched-off";
 import { requireStaff } from "@/lib/auth";
 import { screensOn } from "@/lib/children-reads";
-import { ATTENTION_DAYS, childrenTable } from "@/lib/children-reads";
+import { childrenTable } from "@/lib/children-reads";
 import { GROUPS, filterRows, groupRows, byRoll, peekParam, type Group } from "@/lib/children-view";
 import { TABLE_ROW_LIMIT } from "@/lib/ux-rules";
 
@@ -24,8 +24,8 @@ export default async function Children({ searchParams }: { searchParams: Promise
   const group = (GROUPS as readonly string[]).includes(sp.group ?? "") ? (sp.group as Group) : undefined;
   const several = t.classes.length > 1;
   const f = { q: sp.q?.trim() || undefined, cls: t.classes.some((c) => c.id === sp.cls) ? sp.cls : undefined, show: sp.show === "attention" ? ("attention" as const) : undefined, group: group === "class" && !several ? undefined : group };
-  const rows = filterRows(t.rows, f, t.today, ATTENTION_DAYS);
-  const ordered = f.group ? groupRows(rows, f.group, t.today, ATTENTION_DAYS) : [{ key: "all", words: "All", rows: [...rows].sort(byRoll) }];
+  const rows = filterRows(t.rows, f, t.today, t.days);
+  const ordered = f.group ? groupRows(rows, f.group, t.today, t.days) : [{ key: "all", words: "All", rows: [...rows].sort(byRoll) }];
   const flat = ordered.flatMap((g) => g.rows.map((r) => ({ g: g.key, r })));
   const pages = Math.max(1, Math.ceil(flat.length / TABLE_ROW_LIMIT));
   const n = Math.min(pages, Math.max(1, Number(sp.page) || 1));

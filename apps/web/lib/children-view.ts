@@ -44,6 +44,8 @@ export type Row = {
   section: string;
   counts: Counts;
   lastSeen: string | null;
+  /** Notes waiting on the child; null where it is not known (the engine did not answer for the class). */
+  waiting: number | null;
   strip: Day[];
 };
 

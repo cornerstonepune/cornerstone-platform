@@ -3,23 +3,28 @@
 // asked. Nothing here decides a state: the graph's `child_skill_state` rows and the school's `child_state` colours are read.
 import { sql } from "./db";
 import { seesClass, type Who } from "./reach";
+import { EngineDown, engineSend } from "./engine";
 import { countsOf, stripOf, type Row } from "./children-view";
 
 export type Me = Who & { email: string };
 
-/** Not seen for this many days is "needs attention". UI-3b gap: the school's window has no setting yet (config key
- *  `children.attention_days` asked of backend, 10 Nov 2026); until it lands this is the one place the number is written. */
-export const ATTENTION_DAYS = 14;
+/** Not seen for this many days is "needs attention": the school's setting `children.attention_days`. Without the row only a child
+ *  never seen needs attention (no number is assumed here). */
+export async function attentionDays(): Promise<number> {
+  const [r] = await sql<{ days: number | null }[]>`select (select (value)::text::int from config where key = 'children.attention_days') as days`;
+  return r.days ?? Number.POSITIVE_INFINITY;
+}
 /** School days the strip of absences shows. */
 export const STRIP_DAYS = 7;
 
-export type Table = { today: string; rows: Row[]; classes: { id: string; section: string }[]; waiting: null };
+export type Table = { today: string; days: number; rows: Row[]; classes: { id: string; section: string }[] };
 
 type Base = { id: string; class_id: string; section: string; roll_no: string; first_name: string | null; last_name: string | null };
 type State = { child_id: string; skill_code: string; colour: string; kind: string; last_seen: string | null };
 
 /** Every child the person sees (their own classes; every class for the coordinator), with how they are doing, when they were last
- *  seen, and the strip of absences noted. `waiting` is null: notes waiting per child need `pii.note_claim.child_id`, not on main. */
+ *  seen, the strip of absences noted and the notes waiting on them (the engine's `waiting_by_child`, of the person's own notes in a
+ *  class they hold; null where the engine did not answer for that class). */
 export async function childrenTable(me: Me): Promise<Table> {
   const [{ today, zone }] = await sql<{ today: string; zone: string }[]>`
     select (now() at time zone z.zone)::date::text as today, z.zone
@@ -28,7 +33,8 @@ export async function childrenTable(me: Me): Promise<Table> {
     select c.id, c.class_id, c.section, c.roll_no, n.first_name, n.last_name
     from child_now c cross join lateral pii.read_child(c.id, ${me.email}) n
     where c.active and c.class_id is not null and ${seesClass(me, sql`c.section`)}`;
-  if (kids.length === 0) return { today, rows: [], classes: [], waiting: null };
+  const window = await attentionDays();
+  if (kids.length === 0) return { today, days: window, rows: [], classes: [] };
   const ids = kids.map((k) => k.id);
   const classIds = [...new Set(kids.map((k) => k.class_id))];
   const states = await sql<State[]>`
@@ -67,6 +73,7 @@ export async function childrenTable(me: Me): Promise<Table> {
     for (const s of seen(k)) set.add(s.skill_code);
     skillsOf.set(k.class_id, set);
   }
+  const waiting = await waitingByChild(me, [...new Set(kids.filter((k) => me.classes?.includes(k.section)).map((k) => k.class_id))]);
   const rows: Row[] = kids.map((k) => {
     const mine = seen(k);
     const last = mine.map((s) => s.last_seen).filter((d): d is string => d !== null).sort().pop() ?? null;
@@ -81,11 +88,12 @@ export async function childrenTable(me: Me): Promise<Table> {
         skillsOf.get(k.class_id)?.size ?? 0,
       ),
       lastSeen: last,
+      waiting: waiting.has(k.class_id) ? (waiting.get(k.class_id)!.get(k.id) ?? 0) : null,
       strip: stripOf(daysOf.get(k.class_id) ?? [], new Set((absentOf.get(k.id) ?? []).map((a) => a.date))),
     };
   });
   const classes = [...new Map(kids.map((k) => [k.class_id, k.section])).entries()].map(([id, section]) => ({ id, section })).sort((a, b) => a.section.localeCompare(b.section, "en", { numeric: true }));
-  return { today, rows, classes, waiting: null };
+  return { today, days: window, rows, classes };
 }
 
 function groupBy<T>(xs: readonly T[], key: (x: T) => string): Map<string, T[]> {
@@ -101,3 +109,22 @@ export async function screensOn(): Promise<boolean> {
   return r.on;
 }
 export const SWITCHED_OFF = "Voice notes are not switched on.";
+
+/** Notes waiting on each child, by class, as the engine counts them for the person's own notes (`POST /voice/class-notes`). A class
+ *  the engine would not answer for (not held, switch off, engine down) is left out, so its children read "not available". */
+async function waitingByChild(me: Me, classIds: string[]): Promise<Map<string, Map<string, number>>> {
+  const out = new Map<string, Map<string, number>>();
+  await Promise.all(
+    classIds.map(async (id) => {
+      try {
+        const res = await engineSend("/voice/class-notes", { actor: me.email, class_id: id });
+        if (!res.ok) return;
+        const body = (await res.json()) as { waiting_by_child?: Record<string, number> };
+        out.set(id, new Map(Object.entries(body.waiting_by_child ?? {})));
+      } catch (e) {
+        if (!(e instanceof EngineDown)) throw e;
+      }
+    }),
+  );
+  return out;
+}

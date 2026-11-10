@@ -41,4 +41,6 @@ Access (all three): an educator never sees a class that is not theirs; the peek 
 
 ### Out of scope
 
-Anything in supabase/, packages/engine, config rows. A real attendance register (a school decision; the column says "absences noted", per #551). Notes waiting per child (needs `pii.note_claim.child_id`, not on main; the column is dashed "not available yet"). The Spark's fortnight history (the nightly run does not record class counts yet; the Spark shows its empty words). The window for "needs attention" has no setting yet (14 days, one constant). Activity, objective and skill screens (UI-3c). The notes loop (UI-3a).
+Anything in supabase/, packages/engine, config rows. A real attendance register (a school decision; the column says "absences noted", per #551). The Spark's fortnight history (the nightly run does not record class counts yet; the Spark shows its empty words). Activity, objective and skill screens (UI-3c). The notes loop (UI-3a).
+
+Settled by the backend (#569, issue #565): notes waiting per child is the engine's `waiting_by_child` of `POST /voice/class-notes` (the person's own notes, a class they hold); "needs attention" reads the setting `children.attention_days`.

@@ -9,7 +9,7 @@ import postgres from "postgres";
 import { FAKE_CHILDREN } from "./fake-names";
 import { sessionFor } from "./inventory-fixtures";
 import { aClass, aPerson, personAsStored } from "./rows";
-import { voiceSwitch } from "./k2-rows";
+import { aK2Note, voiceSwitch } from "./k2-rows";
 
 const A = "U72A";
 const B = "U72B";
@@ -51,6 +51,10 @@ test.beforeAll(async () => {
   ].map((r) => ({ id: r.id }));
   if (!(await personAsStored(sql, EDUCATOR.email))) await aPerson(sql, EDUCATOR);
   [{ id: staff }] = await sql<{ id: string }[]>`select staff_id::text as id from pii.staff where email = ${EDUCATOR.email}`;
+  // she teaches the class: the engine counts a class's waiting notes only for someone who holds it as a teacher
+  await sql`insert into staff_role_grant (tenant_id, staff_id, role_code, school_class_id, valid_from, granted_by)
+            select ${tenant}, ${staff}, 'class_teacher', ${classA}, current_date - 1, 'u72 test'
+            where not exists (select 1 from staff_role_grant where staff_id = ${staff} and school_class_id = ${classA} and role_code = 'class_teacher')`;
   skills = await sql<{ code: string; name: string }[]>`select code, name from registry_skill where tenant_id = ${tenant} order by code limit 2`;
   await sql`insert into activity (tenant_id, code, band, strand, name, sheet_no) values (${tenant}, 'ACT-U72-1', 'K2', 'Maths', 'Sorting by size', '') on conflict (tenant_id, code) do nothing`;
   for (const s of skills) await sql`insert into activity_skill (tenant_id, activity_code, skill_code) values (${tenant}, 'ACT-U72-1', ${s.code}) on conflict do nothing`;
@@ -348,5 +352,40 @@ test("with the educator switch off the three screens say so, show no child, and 
     expect(r.status()).toBe(403);
   } finally {
     await voiceSwitch(sql, true);
+  }
+});
+
+test("notes waiting: the engine's count for a child, none where nothing waits, and not available where the engine cannot say", async ({ browser, page }) => {
+  await sql`insert into activity (tenant_id, code, band, strand, name, sheet_no) values (${tenant}, 'ACT-U72-912', 'K2', 'Maths', 'Counting in tens', '912') on conflict (tenant_id, code) do nothing`;
+  for (const k of skills) await sql`insert into activity_skill (tenant_id, activity_code, skill_code) values (${tenant}, 'ACT-U72-912', ${k.code}) on conflict do nothing`;
+  const note = await aK2Note(sql, { klass: classA, staff }, "Activity 912. Above 2.", "drafted");
+  try {
+    const mine = await asEducator(browser);
+    const p = await mine.newPage();
+    await p.goto(`/children?cls=${classA}`);
+    const row = (n: string) => p.locator("tbody tr").filter({ has: p.getByRole("button", { name: new RegExp(n) }) });
+    await expect(row(NAMES_A[1])).toContainText("1 to confirm");
+    await expect(row(NAMES_A[0])).toContainText("none");
+    await mine.close();
+    // the coordinator holds no class, so the engine will not count another person's notes: not available, never a guess
+    await page.goto(`/children?cls=${classA}`);
+    await expect(page.locator("tbody tr").first()).toContainText("not available yet");
+  } finally {
+    await sql`update pii.educator_note set status = 'left_unconfirmed' where id = ${note}::uuid`;
+  }
+});
+
+test("a child not seen for the school's window needs attention, by the setting and never by a number in the code", async ({ page }) => {
+  const [was] = await sql<{ value: unknown }[]>`select value from config where key = 'children.attention_days'`;
+  try {
+    await sql`update config set value = '1'::jsonb where key = 'children.attention_days'`;
+    await page.goto(`/children?cls=${classA}&show=attention`);
+    const withOne = await page.locator("tbody tr[data-child]").count();
+    await sql`update config set value = '100000'::jsonb where key = 'children.attention_days'`;
+    await page.goto(`/children?cls=${classA}&show=attention`);
+    const withMany = await page.locator("tbody tr[data-child]").count();
+    expect(withOne).toBeGreaterThan(withMany); // a shorter window flags more children
+  } finally {
+    await sql`update config set value = ${sql.json(was.value as never)} where key = 'children.attention_days'`;
   }
 });

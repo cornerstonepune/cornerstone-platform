@@ -2,7 +2,7 @@
 // that has such rows, else written); the school's colour of it (`child_state.colour`) says how it looks. Nothing here decides a state.
 import { sql } from "./db";
 import { seesClass } from "./reach";
-import type { Me } from "./children-reads";
+import { attentionDays, type Me } from "./children-reads";
 
 export type Look = "secure" | "practising" | "emerging";
 /** A state's look from its colour alone: green secure, amber practising, any other seen state emerging. */
@@ -23,6 +23,7 @@ export type Picture = {
   /** child id → the skills the child was seen on, any */
   anySeen: Map<string, string | null>;
   next: Map<string, string[]>;
+  days: number;
 };
 
 /** The class if it is the person's to see; null otherwise (the same answer as no such class). */
@@ -75,6 +76,7 @@ export async function pictureOf(me: Me, classId: string): Promise<Picture | null
     cells,
     anySeen,
     next,
+    days: await attentionDays(),
   };
 }
 

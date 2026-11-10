@@ -11,7 +11,6 @@ import { StackBar } from "@/components/stack-bar";
 import { SwitchedOff } from "@/components/children/switched-off";
 import { requireStaff } from "@/lib/auth";
 import { screensOn } from "@/lib/children-reads";
-import { ATTENTION_DAYS } from "@/lib/children-reads";
 import { pictureOf, type Look } from "@/lib/children-picture";
 import { byRoll, clustersOf, daysSince, groupByLook, peekParam, type PictureLook } from "@/lib/children-view";
 
@@ -50,7 +49,7 @@ export default async function Picture({ params, searchParams }: { params: Promis
       id: k.id,
       look: stateOn(k.id),
       readyNext: skill ? (p.next.get(skill.code) ?? []).some((n) => !p.cells.get(k.id)?.has(n)) : false,
-      attention: !p.anySeen.get(k.id) || daysSince(p.anySeen.get(k.id)!, p.today) >= ATTENTION_DAYS,
+      attention: !p.anySeen.get(k.id) || daysSince(p.anySeen.get(k.id)!, p.today) >= p.days,
     })),
   );
   const kidChosen = Object.fromEntries(kids.map((k) => [k.id, chosenOf(k)]));

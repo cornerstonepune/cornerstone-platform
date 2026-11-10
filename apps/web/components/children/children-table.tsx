@@ -26,6 +26,12 @@ export function Bar({ c }: { c: Counts }) {
   );
 }
 
+/** Notes waiting on a child: a count to confirm, "none", or, where the engine could not say, a dashed "not available yet". */
+function Waiting({ n }: { n: number | null }) {
+  if (n === null) return <span className="b-pending text-[13px]" title="Not available yet">not available yet</span>;
+  return n > 0 ? <StatusChip state="toConfirm" words={`${n} to confirm`} compact /> : <span className="b-muted text-[13px]">none</span>;
+}
+
 /** The last school days as small cells: a noted absence is a grey cell with its icon and a word beside the strip; a day with no
  *  confirmed lesson is blank, and never reads "present". */
 export function Strip({ r }: { r: Row }) {
@@ -48,22 +54,21 @@ export function Strip({ r }: { r: Row }) {
   );
 }
 
-function columns(showClass: boolean, today: string, waiting: boolean): Column<Row>[] {
+function columns(showClass: boolean, today: string): Column<Row>[] {
   const name = (r: Row) => ({ classId: r.classId, roll: r.roll, name: r.name, section: r.section, counts: r.counts });
   return [
     { key: "who", label: "Sr. No. and name", keep: true, value: (r) => `${r.roll} ${r.name}`, cell: (r) => <PeekChip child={name(r)} /> },
     ...(showClass ? [{ key: "class", label: "Class", keep: true, value: (r: Row) => r.section } satisfies Column<Row>] : []),
     { key: "doing", label: "How they are doing", keep: true, value: (r) => countWords(r.counts), cell: (r) => <Bar c={r.counts} /> },
     { key: "seen", label: "Last seen", keep: true, value: (r) => lastSeenWords(r.lastSeen, today) },
-    // notes waiting per child need pii.note_claim.child_id, not yet on main: the column says so, dashed, and shows no count
-    ...(waiting ? [] : [{ key: "waiting", label: "Notes waiting", keep: true, status: true, value: () => "not available yet", cell: () => <span className="b-pending text-[13px]" title="Not available yet">not available yet</span> } satisfies Column<Row>]),
+    { key: "waiting", label: "Notes waiting", keep: true, status: true, value: (r) => (r.waiting === null ? "not available yet" : r.waiting), cell: (r) => <Waiting n={r.waiting} /> },
     { key: "absences", label: "Absences noted", keep: true, status: true, value: (r) => noted(r.strip), cell: (r) => <Strip r={r} /> },
   ];
 }
 
 /** The page's rows, a heading and a count over each group when grouped; the same table, in Sr. No. order, when not. */
 export function ChildrenTable({ sections, grouped, showClass, today, page, hrefOf }: { sections: readonly Section[]; grouped: boolean; showClass: boolean; today: string; page: { n: number; pages: number }; hrefOf: Record<number, string> }) {
-  const cols = columns(showClass, today, false);
+  const cols = columns(showClass, today);
   return (
     <div className={grouped ? "b-groups" : undefined}>
       {sections.map((s) => (

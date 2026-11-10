@@ -19,7 +19,9 @@ in `lib/children-view.ts`. A class is the person's by `staff_sees` (`seesClass`)
 | The picture's squares read secure / practising / emerging from the same colours (green, amber, anything else). | Same rule; the squares and the stack bar use one mapping. |
 | A class is read on its `observed` rows if any child has them, else its `written` rows. | K2 and grades 1 to 4 share `child_skill_state` (CP-27). |
 | Absences noted: the last 7 teaching `school_day`s up to today for the class's campus; a day is **absent** when the child has a not-superseded `absent` observation that day, **none** when the class had a `session` in state `done` that day, otherwise **no lesson** (blank). | Done when 5; no register, no table (#551). |
-| Needs attention = never seen on any skill, or last seen 14 or more days ago. The 14 is one constant, `ATTENTION_DAYS`. | The school's window has no setting yet: asked of backend as `children.attention_days`. Rule 1 exception until it lands. |
+| Needs attention = never seen on any skill, or last seen `children.attention_days` (a setting, 14) or more days ago. With the row absent only a child never seen needs attention; no number is assumed in the code. | Rule 1. The setting came with #569. |
+| Notes waiting per child = the engine's `waiting_by_child` (`POST /voice/class-notes`), asked once per class the person teaches. A class the engine will not answer for (the coordinator holds none, switch off, engine down) shows a dashed "not available yet", never a guess. | #569 / #565. |
+| The educator switch (`voice.screens_enabled`) gates the three screens and the peek as it gated the K2 pages; the migrated m1-17 assertion is in `u72`. | Never drop behaviour a test locks. |
 | ChildPeek's history merges `activity_observation` (a voice note when `note_id` is set, else an observation; a correction names the outcome it replaces), a confirmed paper (`item_result` per capture, three signals right / wrong / wrong with working / blank), and the graph's state per skill (`child_skill_state.last_seen`). A note's words are never read. | The five sources of the data gap; `change_log` is not written yet, so a correction is read from `supersedes`. |
 | Outcome words ("as expected") come from the outcome code with underscores removed. | The word list is not a config row on main yet. |
 | The fold under a timeline entry says whether it counts toward secure from config `observed.weights`, by grade and entry mode. | Rule 1. |
@@ -27,14 +29,12 @@ in `lib/children-view.ts`. A class is the person's by `staff_sees` (`seesClass`)
 | `FilterBar`'s search takes a `label`; `STATES` has an `absent` row (grey, icon `absent`). | The inventory finds the search by its label; the strip needs a chip. |
 | The ten-row page is cut over the **whole grouped list**: a group's heading shows its total, its rows are the page's. | "Later →" is the next ten rows. |
 
-## Gaps sent to the orchestrator (backend)
+## Gaps (backend)
 
-- **Notes waiting per child** needs `pii.note_claim.child_id` (not on main). The column is drawn dashed, "not available yet".
-- **Needs attention window**: a setting, e.g. `children.attention_days` = 14.
 - **Spark** (secure per fortnight): the nightly run records no class counts in `flow_run.result`; the Spark shows its empty words.
-- **Outcome words** as a config list.
+- **Outcome words** as a config list (the peek derives them from the code).
+- **Child history from the engine** (#575, `POST /k2/child-history`) was not on main when this was written; the peek reads the database itself and keeps working. Switching to the engine's call would drop the paper and correction entries it does not carry.
 
 ## Not done here
 
-The K2 educator switch is no longer asked by these pages (they read the database, not the engine's `/k2/*` reads, which stay).
 Saved groups, a real register, a name chosen for a group: all out of scope.
