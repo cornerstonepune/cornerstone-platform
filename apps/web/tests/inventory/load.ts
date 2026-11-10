@@ -6,12 +6,14 @@ import path from "node:path";
 
 /** `pending`: the control waits on a backend piece that is not on main (the words name it); it is not drawn and not required until the field is removed. `data`: the controls that carry this attribute (a graph node, a table row's link) are this element, however many there are. `when`: the control is not on the page at rest. `peek`: after a child is chosen; `filtered`: once a filter is on (the chips and Clear);
  *  `paged`: only when the rows pass one page. The checker brings the page into that state before it asks for the control. */
-export type When = "peek" | "filtered" | "paged";
+/** `?view=table`: the same screen with those parameters in its address. `@name`: another address of the screen, by a name in `ADDRESSES` (tests/inventory-fixtures.ts), where a state of the rows draws other controls. */
+export type When = "peek" | "filtered" | "paged" | `?${string}` | `@${string}`;
 /** How a control that changes something is driven, declared on its element in screens.json (tests/inventory/drivers.ts): `fixture` puts the
  *  rows it needs in place first (a name in tests/inventory-fixtures.ts `FIXTURES`); `fill` types into fields by label; `click` names the
  *  control (default: the element's own words); `expect` says what a person sees after: the address (`url`, a pattern), words that
- *  are there (`text`) or gone (`gone`), and a named check of the rows (`check`, in `CHECKS`). Nothing declared is skipped. */
-export type Drive = { fixture?: string; fill?: Record<string, string>; click?: string; expect: { url?: string; text?: string[]; gone?: string[]; check?: string } };
+ *  are there (`text`) or gone (`gone`), and a named check of the rows (`check`, in `CHECKS`); `after` names a fixture that puts the rows back as
+ *  they were, so the next screen, the next person and the next press find the page as it rests. Nothing declared is skipped. */
+export type Drive = { fixture?: string; after?: string; fill?: Record<string, string>; click?: string; expect: { popup?: boolean; url?: string; text?: string[]; gone?: string[]; check?: string } };
 export type Element = { drive?: Drive; t: string; label: string; to?: string; href?: string; text?: string; external?: string; for?: "educator" | "coordinator"; note?: string; effect?: string; when?: When; data?: string; pending?: string; roles?: ("educator" | "coordinator")[] };
 export type Screen = {
   id: string;
@@ -21,6 +23,8 @@ export type Screen = {
   title: string;
   elements: Element[];
   rail?: unknown[];
+  /** Rows this screen needs while it is checked, made fresh before its run and put away after it (names in `FIXTURES`), so no other test sees them. */
+  rest?: { fixture: string; after?: string };
   phone_gate?: boolean;
   frame?: string;
 };

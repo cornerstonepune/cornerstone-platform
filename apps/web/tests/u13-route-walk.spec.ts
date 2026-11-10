@@ -51,6 +51,7 @@ const NOT_BY_CLICK: Record<string, string> = {
   "/skill-sets/[code]/edit": "opened from a skill's own page (click four)",
   "/voice/notes/[id]": "where recording a note sends the educator",
   "/educator/activity/[code]": "a link of a period or of the materials list, which need a timetable's rows",
+  "/timetable/materials": "the menu's Materials still opens the old page, which keeps the controls this one lacks, until UI-9b moves them (tests/u74-materials.spec.ts opens it)",
   "/educator/period/[id]": "a link of a day of the timetable, which needs a timetable's rows",
   "/growth/[id]/parent": "a link on a child's page (click four)",
   "/growth/[id]/report": "a link on a child's page (click four)",

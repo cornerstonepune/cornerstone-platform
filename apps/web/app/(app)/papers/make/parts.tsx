@@ -25,8 +25,8 @@ const paperWords = (p: PlannedPaper) => p.areas.map((a) => `${a.name} · ${a.lev
 // whose paper cannot be made with the engine's words. On each child's own next step, any child can be changed; the
 // papers are made in the educator's name only when every one can be. "Different questions" draws every paper again and
 // makes nothing; the papers made are the questions shown (goals/preview-before-print.yaml).
-export function ThePapers({ plan, batch, roll, sets, band, once }: {
-  plan: MakerPlan; batch: Batch; roll: Child[]; sets: SkillSet[]; band: string; once: string;
+export function ThePapers({ plan, batch, roll, sets, band, once, created = false }: {
+  plan: MakerPlan; batch: Batch; roll: Child[]; sets: SkillSet[]; band: string; once: string; created?: boolean;
 }) {
   const papers = new Map(plan.papers.map((p) => [p.child_id, p]));
   const refused = new Map(plan.refused.map((r) => [r.child_id, r]));
@@ -117,7 +117,7 @@ export function ThePapers({ plan, batch, roll, sets, band, once }: {
       ) : null}
       {n ? (
         <div className="mt-3">
-          <DifferentQuestions href={`/papers/make?${batchQuery({ ...batch, draw: batch.draw + 1 })}`} />
+          <DifferentQuestions href={`${created ? "/children/assessments?make=class&" : "/papers/make?"}${batchQuery({ ...batch, draw: batch.draw + 1 })}`} />
         </div>
       ) : null}
       <form action={makePapers} className="mt-4 border-t border-basalt/10 pt-4">
@@ -128,6 +128,7 @@ export function ThePapers({ plan, batch, roll, sets, band, once }: {
         <input type="hidden" name="once" value={once} />
         <input type="hidden" name="draw" value={batch.draw} />
         <input type="hidden" name="seen" value={plan.seen} />
+        {created ? <input type="hidden" name="approve" value="0" /> : null}
         {batch.children.map((c) => (
           <input key={c} type="hidden" name="c" value={c} />
         ))}
@@ -137,7 +138,7 @@ export function ThePapers({ plan, batch, roll, sets, band, once }: {
         {Object.entries(batch.changed).map(([c, [a]]) => (
           <input key={c} type="hidden" name="x" value={`${c}~${a.skill_set}~${a.level}`} />
         ))}
-        <MakeButton n={n} kind={(KINDS.find(([k]) => k === batch.kind)?.[1] ?? batch.kind).toLowerCase()} ready={ready} />
+        <MakeButton created={created} n={n} kind={(KINDS.find(([k]) => k === batch.kind)?.[1] ?? batch.kind).toLowerCase()} ready={ready} />
       </form>
     </Panel>
   );

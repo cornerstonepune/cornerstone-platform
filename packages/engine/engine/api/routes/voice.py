@@ -39,6 +39,15 @@ class DayOnly(Who):
     day: dt.date | None = None
 
 
+class SessionNote(Who):
+    class_id: str
+    session_id: str
+
+
+class PhotoRef(NoteRef):
+    index: int = 0
+
+
 class TypedNote(Who):
     class_id: str
     session_id: str | None = None
@@ -176,6 +185,8 @@ def audio(body: NoteRef, conn=Depends(get_conn, scope="function")):
     """Her own recording, to play beside her note; nobody else's."""
     _recording(conn)
     key = _mine(conn, body)["audio_key"]
+    if key is None:  # a note she typed has no recording
+        raise HTTPException(status_code=404, detail="This note has no recording.")
     try:
         data = voice_store.read(key)
     except voice_store.Refused as no:
@@ -285,3 +296,44 @@ def cleanup(
             status_code=500, detail="Some recordings could not be deleted; they are tried again."
         )
     return {**result, "already": already}
+
+
+@router.post("/voice/notes/photo")
+async def send_photo(request: Request, actor: str = Depends(require_upload_token)):
+    """One photo of a lesson's work or board, added to her note (never a photo of a child). From her browser, with the
+    token the site signed for her, as a recording comes."""
+    form = await request.form(max_files=1)
+    upload, note_id = form.get("file"), form.get("note_id")
+    if isinstance(upload, str) or upload is None or not isinstance(note_id, str):
+        raise HTTPException(status_code=422, detail="Not sent. Try again.")
+    with db.connect() as conn:
+        _on(conn)
+        try:
+            out = voice_class.add_photo(conn, actor, note_id, upload.filename or "", await upload.read())
+        except voice_store.Refused as no:
+            raise _refused(no) from no
+        conn.commit()
+    return out
+
+
+@keyed.post("/voice/notes/photo/get")
+def get_photo(body: PhotoRef, conn=Depends(get_conn, scope="function")):
+    """Her own photo, to see beside her note; nobody else's."""
+    _on(conn)
+    try:
+        ext, data = voice_class.photo(conn, body.actor, body.note_id, body.index)
+    except voice_store.Refused as no:
+        raise _refused(no) from no
+    return Response(
+        content=data, media_type=mimetypes.guess_type(f"x.{ext}")[0] or "application/octet-stream"
+    )
+
+
+@keyed.post("/voice/session-note")
+def session_note(body: SessionNote, conn=Depends(get_conn, scope="function")):
+    """Her note for a lesson, made empty if she has none: where the lesson's photo and typed marks hang."""
+    _on(conn)
+    try:
+        return {"note_id": voice_class.session_note(conn, body.actor, body.class_id, body.session_id)}
+    except voice_store.Refused as no:
+        raise _refused(no) from no

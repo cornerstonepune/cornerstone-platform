@@ -53,7 +53,7 @@ export function FilterBar({
         {filters.map((f) => (
           <label key={f.name} className="flex items-center gap-2 text-[13px] text-[var(--ink-muted)]">
             <span>{f.label}</span>
-            <select name={f.name} defaultValue={f.value ?? ""} onChange={() => form.current?.requestSubmit()} className={`select ${control} !w-auto`}>
+            <select data-filter="" name={f.name} defaultValue={f.value ?? ""} onChange={() => form.current?.requestSubmit()} className={`select ${control} !w-auto`}>
               {f.required ? null : <option value="">{f.all}</option>}
               {f.options.map(([v, words]) => (
                 <option key={v} value={v}>
@@ -70,7 +70,7 @@ export function FilterBar({
               <circle cx="7" cy="7" r="4.6" />
               <path d="M10.6 10.6L14 14" />
             </svg>
-            <input type="search" name={search.name} defaultValue={search.value ?? ""} placeholder={search.placeholder} autoComplete="off" className={`input ${control} !pl-9 !w-[240px] focus:!w-[340px]`} />
+            <input data-filter="" type="search" name={search.name} defaultValue={search.value ?? ""} placeholder={search.placeholder} autoComplete="off" className={`input ${control} !pl-9 !w-[240px] focus:!w-[340px]`} />
           </label>
         ) : null}
         <noscript>
