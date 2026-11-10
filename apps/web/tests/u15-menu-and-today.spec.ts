@@ -111,7 +111,7 @@ test("the menu is four groups, and only What needs doing carries the count of wh
   // the count is what the sections of the page add up to (red and amber; what can wait is said apart)
   const todo = (await page.locator("[data-todo]").evaluateAll((els) => els.map((e) => Number(e.getAttribute("data-todo")))));
   expect(await badge(page), "the group's count is the page's").toBe(todo.reduce((a, b) => a + b, 0));
-  for (const [group, heading] of [["Setup", "Curriculum"], ["Children", "Children"], ["Today", "What needs doing"]]) {
+  for (const [group, heading] of [["Setup", "Setup"], ["Children", "Children"], ["Today", "What needs doing"]]) {
     await menu.getByRole("link", { name: new RegExp(`^${group}\\b`) }).click();
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(heading);
     await expect(menu.getByRole("link", { name: new RegExp(`^${group}\\b`) })).toHaveAttribute("aria-current", "page");
