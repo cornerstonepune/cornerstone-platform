@@ -1,9 +1,9 @@
 """W3's gold: Aseem's five Grade 3 reports, read back against each child's graph (ADR 0028).
 
-His reports are the target output of the whole pipeline, written by hand. Each finding is one row
-(`gold_finding`): a concept he called strong or faulty for one child, the question on the child's own
-papers that shows it where there is one, the answer he quotes, and the named mistake where his words
-name a method the vocabulary holds. A person confirms the transcription before the check trusts it.
+His reports are the target output of the whole pipeline, written by hand. Each finding is one case
+of the one eval set (`eval_case`, kind `report_finding`): a concept he called strong or faulty for
+one child, the question on the child's own papers that shows it where there is one, the answer he
+quotes, and the named mistake where his words name a method the vocabulary holds. A person confirms the transcription before the check trusts it.
 
 "In the graph" means in what the graph is built from: the child's confirmed evidence on that skill,
 from a reading nobody has superseded. Whether the graph also calls it a pattern — the same mistake
@@ -15,9 +15,13 @@ import json
 from collections import Counter
 from pathlib import Path
 
+from psycopg.types.json import Jsonb
+
 from engine.w3_read import marking
 
 WAITING = ("needs_teacher", "unreadable")
+# what a finding says beyond its child, verdict, skill and question: its case's detail, from the file's names
+DETAIL = {"expect_mark": "mark", "child_answer": "answer", "misconception_code": "mistake", "words": "words"}
 
 
 def load(conn, path, actor="engine-cli") -> int:
@@ -33,37 +37,31 @@ def load(conn, path, actor="engine-cli") -> int:
         ).fetchall()
         if len(kids) != 1:
             raise ValueError(f"{len(kids)} children are named {f['child']!r}; a finding names exactly one")
-        conn.execute(
-            "insert into gold_finding (tenant_id, child_id, verdict, skill_code, item_key, expect_mark,"
-            " child_answer, misconception_code, words, source)"  # a file written before a key changed names the old one
-            " values (%s,%s,%s,%s,public.current_item_key(%s),%s,%s,%s,%s,%s)"
-            " on conflict on constraint gold_finding_one_per_example do update set"
-            " expect_mark = excluded.expect_mark, child_answer = excluded.child_answer,"
-            " misconception_code = excluded.misconception_code, words = excluded.words,"
-            " source = excluded.source, confirmed_by = case when (gold_finding.expect_mark,"
-            " gold_finding.child_answer, gold_finding.misconception_code, gold_finding.words) is not"
-            " distinct from (excluded.expect_mark, excluded.child_answer, excluded.misconception_code,"
-            " excluded.words) then gold_finding.confirmed_by end",
-            (
-                kids[0]["tenant_id"],
-                kids[0]["child_id"],
-                f["verdict"],
-                f["skill"],
-                f.get("item"),
-                f.get("mark"),
-                f.get("answer"),
-                f.get("mistake"),
-                f["words"],
-                spec["source"],
-            ),
-        )
+        record(conn, kids[0]["tenant_id"], kids[0]["child_id"], f, spec["source"])
     return len(spec["findings"])
+
+
+def record(conn, tenant, child_id, f, source) -> None:
+    """One finding as a case of the eval set: the child's id, never a name. The same finding again changes nothing;
+    changed words, mark, answer or mistake withdraw its confirmation."""
+    detail = {
+        k: None if f.get(v) is None else str(f[v]) for k, v in DETAIL.items()
+    }  # as text, as a column was
+    conn.execute(
+        "insert into eval_case (tenant_id, kind, child_id, verdict, skill_code, ref, source, detail)"
+        # a file written before a key changed names the old one
+        " values (%s, 'report_finding', %s, %s, %s, public.current_item_key(%s), %s, %s)"
+        " on conflict (tenant_id, child_id, verdict, skill_code, ref) where kind = 'report_finding' do update set"
+        " detail = eval_case.detail || excluded.detail, source = excluded.source,"
+        " confirmed_by = case when eval_case.detail @> excluded.detail then eval_case.confirmed_by end",
+        (tenant, child_id, f["verdict"], f["skill"], f.get("item"), source, Jsonb(detail)),
+    )
 
 
 def confirm(conn, by) -> int:
     """A person says the transcription is what the reports say. Only rows not yet confirmed change."""
     return conn.execute(
-        "update gold_finding set confirmed_by = %s where confirmed_by is null", (by,)
+        "update eval_case set confirmed_by = %s where kind = 'report_finding' and confirmed_by is null", (by,)
     ).rowcount
 
 
@@ -93,7 +91,10 @@ def check(conn, actor="engine-cli") -> list[dict]:
                coalesce((select array_agg(distinct s.repeating_misconception) from child_skill_state s
                           where s.child_id = g.child_id and s.skill_code = g.skill_code
                             and s.repeating_misconception is not null), '{}') as patterns
-        from gold_finding g
+        from (select child_id, verdict, skill_code, ref as item_key, detail ->> 'expect_mark' as expect_mark,
+                     detail ->> 'child_answer' as child_answer, detail ->> 'misconception_code' as misconception_code,
+                     confirmed_by
+              from eval_case where kind = 'report_finding') g
         cross join lateral pii.read_child(g.child_id, %s) p
         left join lateral (
           select r.* from item_result r join item i on i.id = r.item_id

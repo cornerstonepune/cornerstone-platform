@@ -145,9 +145,12 @@ test("an approved paper edited goes back to waiting, a printed one is read-only,
   expect(kinds.length).toBeGreaterThan(1);
   const stopped = kinds[0];
   const [{ tenant_id }] = await sql<{ tenant_id: string }[]>`select id as tenant_id from tenant limit 1`;
+  // a stop stands on the level's own row for the kind (CP-27 3C)
   const kindRow = (on: boolean) => sql`
-    insert into skill_level_kind_stop (tenant_id, skill_code, difficulty, question_type, stopped, changed_by)
-    values (${tenant_id}, ${a.skill}, ${a.level}, ${stopped.code}, ${on}, 'e2e')`;
+    update skill_level_question_type set stopped_at = case when ${on}::boolean then now() end,
+      stopped_by = case when ${on}::boolean then 'e2e' end
+    where tenant_id = ${tenant_id} and skill_code = ${a.skill} and difficulty = ${a.level}
+      and question_type = ${stopped.code}`;
   await kindRow(true);
   try {
     await page.goto(`/papers/review/${qr}?topic=${a.topic}&skill=${a.skill}&level=${a.level}`);
@@ -155,7 +158,7 @@ test("an approved paper edited goes back to waiting, a printed one is read-only,
     await expect(bank.locator(`select[name="q"]`)).toBeVisible();
     await expect(bank.locator("option", { hasText: stopped.words })).toHaveCount(0);
   } finally {
-    await kindRow(false); // started again: a stop is never deleted, a restart is its own row
+    await kindRow(false); // started again: the stop cleared on its row
   }
 
   // printed: its print opened, it is shown read-only and says how to change it

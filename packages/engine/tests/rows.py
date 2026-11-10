@@ -7,6 +7,8 @@ import re
 import uuid
 
 from engine.core import db
+from engine.w1_bank import review
+from engine.w3_read import gold
 
 
 def drawn(make):
@@ -39,14 +41,55 @@ def a_child(conn, section=None):
     """A Grade 2 child in a section of its own, on the roster as every child is: `child` and its `pii` row."""
     t = tenant(conn)
     section = section or f"ROWS-{uuid.uuid4().hex[:6].upper()}"
-    child = conn.execute(
-        "insert into child (tenant_id, roll_no, section, band) values (%s, '1', %s, 'G2') returning id",
-        (t, section),
-    ).fetchone()["id"]
+    child = a_child_in(conn, section, "G2", "1", t)
     conn.execute(
         "insert into pii.child (tenant_id, child_id, first_name) values (%s, %s, 'Rowstest')", (t, child)
     )
     return child
+
+
+def a_member_of_staff(conn, email=None, active=True):
+    """A member of staff of the school with a sign-in email (a placeholder, never a person's): (their id, the email).
+    What a person's decision names is the id the engine finds from the email the website sends (`signer.lookup`)."""
+    t = tenant(conn)
+    email = email or f"staff-{uuid.uuid4().hex[:8]}@school.invalid"
+    campus = conn.execute("select id from campus where tenant_id = %s limit 1", (t,)).fetchone()["id"]
+    sid = conn.execute(
+        "insert into staff (tenant_id, campus_id, active) values (%s, %s, %s) returning id",
+        (t, campus, active),
+    ).fetchone()["id"]
+    conn.execute(
+        "insert into pii.staff (tenant_id, staff_id, name, email) values (%s, %s, 'A placeholder', %s)",
+        (t, sid, email),
+    )
+    return sid, email
+
+
+def a_bank_proposal(conn, kind, subject, direction="easier", evidence=None):
+    """A proposal of the question bank as `learn` makes one (a question far off its level, `mislevelled`; a mistake
+    learned from children's answers, `new_mistake`): a row of the one proposal list, waiting for a person. Its id."""
+    return conn.execute(
+        "insert into curriculum_proposal (tenant_id, run_id, kind, subject_code, proposal, status, proposer, machine)"
+        " values (%s, gen_random_uuid(), %s, %s, jsonb_build_object('direction', %s::text, 'evidence', %s::jsonb),"
+        " 'needs_person', 'code', 'code:' || %s) returning id",
+        (tenant(conn), kind, subject, direction, json.dumps(evidence or {}), kind),
+    ).fetchone()["id"]
+
+
+def a_question_review(
+    conn, ref, skill="SUB.2D2D", level="Advance", reviewer="language_review", verdict="pass"
+):
+    """A reviewer model's verdict on a question (`ref` its key) or on a level's rule (`template:<skill>:<level>`),
+    stored as `review` stores one."""
+    review.record(conn, reviewer, skill, level, [{"ref": ref, "verdict": verdict}], {})
+
+
+def a_report_finding(conn, child, ref, skill="NUM.OPS.02", verdict="faulty", words="a test finding"):
+    """A finding transcribed from an educator's report for one child, about the question `ref`, stored as `gold.load`
+    stores one: not yet confirmed."""
+    gold.record(
+        conn, tenant(conn), child, {"verdict": verdict, "skill": skill, "item": ref, "words": words}, "test"
+    )
 
 
 WAITED = {
@@ -238,3 +281,114 @@ def an_approved_paper(conn, template, child, by, status="printed"):
         " select tenant_id, %s, id, %s, %s, %s from sheet_template where id = %s returning id",
         ("CS" + uuid.uuid4().hex.upper(), child, status, by, template),
     ).fetchone()["id"]
+
+
+# ---------------------------------------------------------------------------------------------------------------------
+# The people who sign in, as a test needs them (CP-27 group 4, step 4-prep): the one place that knows where the sign-in
+# list is kept, so the step that moves it changes these bodies and no test. Today the list is the `config` row
+# `app.staff` (a JSON list, an entry per person; the database gives each entry an `id`, the identity the website sets in
+# `app.staff_id`). Group 4a keeps it on `staff` / `pii.staff` instead; a test never names either.
+# Without `tenant`, every school's list (as the tests wrote it by hand); with it, that school's, made if it has none.
+
+
+def _the_list(tenant):
+    return "key = 'app.staff'" + (" and tenant_id = %s" if tenant else ""), ((tenant,) if tenant else ())
+
+
+def _only(row):
+    """The one column a row holds, whether the connection gives rows as dicts (the engine's) or tuples (some proofs')."""
+    return None if row is None else (row[0] if isinstance(row, tuple) else next(iter(row.values())))
+
+
+def signin_list(conn, tenant=None):
+    """Everyone the sign-in knows, in the order they were put on, each as kept: email, name, role, password (the hash,
+    if they have one), password_set_at, classes, subjects and the id the website signs them in as."""
+    where, args = _the_list(tenant)
+    found = _only(conn.execute(f"select value from config where {where}", args).fetchone())
+    return found if found is not None else []
+
+
+def signin_list_is(conn, people, tenant=None):
+    """The sign-in knows exactly `people` (dicts as `signin_list` gives them), and no one else: for a test that sets the
+    whole list it needs and puts back the one it found. The caller commits, if it must."""
+    if tenant:
+        conn.execute(
+            "insert into config (tenant_id, key, value) values (%s, 'app.staff', %s)"
+            " on conflict (tenant_id, key) do update set value = excluded.value",
+            (tenant, json.dumps(people)),
+        )
+        return
+    conn.execute("update config set value = %s where key = 'app.staff'", (json.dumps(people),))
+
+
+def a_person(conn, email, name="Placeholder Person", role="educator", *, tenant=None, **kept):
+    """A member of staff the sign-in knows, exactly as given: `email`, `name`, `role` and what else is `kept` of them
+    (`password`, the hash; `password_set_at`, `classes`, `subjects`, an `id` to sign in as). An entry already there for
+    the email is replaced, keeping the id it signs in as; a test that put the person on the staff tables first (same
+    email) gets that person. → {"email", "ask_as"}: `ask_as` is what the website sets in `app.staff_id` when they sign
+    in (`asking_as`). The caller commits, if it must."""
+    had = next((p for p in signin_list(conn, tenant) if p.get("email") == email and p.get("id")), None)
+    entry = {"email": email, "name": name, "role": role, **({"id": had["id"]} if had else {}), **kept}
+    if had:
+        forget_person(conn, email, tenant)
+    if tenant:
+        conn.execute(
+            "insert into config (tenant_id, key, value) values (%s, 'app.staff', %s)"
+            " on conflict (tenant_id, key) do update set value = config.value || excluded.value",
+            (tenant, json.dumps([entry])),
+        )
+    else:
+        conn.execute(
+            "update config set value = value || %s::jsonb where key = 'app.staff'", (json.dumps([entry]),)
+        )
+    where, args = _the_list(tenant)
+    me = conn.execute(
+        f"select s ->> 'id' as id from config, jsonb_array_elements(value) s where {where} and s ->> 'email' = %s",
+        (*args, email),
+    ).fetchone()
+    return {"email": email, "ask_as": _only(me)}
+
+
+def forget_person(conn, email, tenant=None):
+    """`email` is no longer someone the sign-in knows; everyone else is as they were. The caller commits, if it must."""
+    where, args = _the_list(tenant)
+    conn.execute(
+        "update config set value = (select coalesce(jsonb_agg(s), '[]'::jsonb) from jsonb_array_elements(value) s"
+        f" where s ->> 'email' <> %s) where {where}",
+        (email, *args),
+    )
+
+
+def teaches(conn, email, classes, tenant=None):
+    """`email` teaches `classes` (class labels) and nothing else of them changes, as the staff page saves a person."""
+    where, args = _the_list(tenant)
+    conn.execute(
+        "update config set value = (select jsonb_agg(case when s ->> 'email' = %s"
+        " then s || jsonb_build_object('classes', %s::jsonb) else s end order by n)"
+        f" from jsonb_array_elements(value) with ordinality as e(s, n)) where {where}",
+        (email, json.dumps(list(classes)), *args),
+    )
+
+
+def asking_as(conn, person):
+    """The rest of this transaction asks as `person` (what `a_person` gave), as the website does for a signed-in
+    request."""
+    conn.execute("select set_config('app.staff_id', %s, true)", (person["ask_as"],))
+
+
+# ---------------------------------------------------------------------------------------------------------------------
+# A child in a class, as a test needs one (CP-27 group 4, step 4-prep): the one place that knows where a child's class
+# and roll number are kept, so the step that moves them (group 4c: the class from the child's enrolment) changes this
+# body and no test. Today they are `child.section` (the class's label) and `child.roll_no`.
+
+
+def a_child_in(conn, section, band="G2", roll="1", school=None):
+    """A child at roll number `roll` of the class labelled `section`, in grade `band`, of `school` (the tests' own school
+    when none is given). → the child's id. Only the child row: a name, if the test needs one, is its own `pii.child`
+    row."""
+    return _only(
+        conn.execute(
+            "insert into child (tenant_id, roll_no, section, band) values (%s, %s, %s, %s) returning id",
+            (school or tenant(conn), roll, section, band),
+        ).fetchone()
+    )

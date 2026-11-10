@@ -13,6 +13,7 @@ from engine.cli import app
 from engine.w4_close import every_report
 from engine.w4_close import parent_report as P
 from tests import test_parent_report as parent_tests
+from tests.rows import a_child_in
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
 NAME, writer, _good = parent_tests.NAME, parent_tests.writer, parent_tests._good
@@ -48,10 +49,7 @@ def test_every_report_due_is_written_and_one_still_true_is_left_as_it_is(shared,
     is due; one with nothing signed off is not; once written, a report still true of the answers is left alone, and
     an answer signed off after it makes it due again."""
     t = shared.execute("select tenant_id from child where id = %s", (child,)).fetchone()["tenant_id"]
-    empty = shared.execute(
-        "insert into child (tenant_id, roll_no, section, band) values (%s, '2', 'PR-TEST', 'G2') returning id",
-        (t,),
-    ).fetchone()["id"]
+    empty = a_child_in(shared, "PR-TEST", "G2", "2", t)
 
     (ria,) = _mine(shared, child)
     assert (ria["band"], ria["section"], ria["roll_no"], ria["why"]) == (

@@ -5,15 +5,18 @@ me to even understand whether you are capturing the right image."
 Code decides, never a model: which copy of which scan file the page is, how many pages that copy has, the code printed on
 the page, and two checks. A page whose picture is the same, byte for byte, as a page of another child's copy cut from the
 same scan file is a repeated photograph; a page whose printed code is another child's copy is on the wrong child.
-Either puts a notice on the answer, and a person chooses (`choose`) before it can be confirmed. Nothing is edited or
-deleted: a choice is a new `page_choice` row, and the latest stands.
+Either puts a notice on the answer, and a person chooses (`choose`) before it can be confirmed. The choice that stands is
+the capture's own, page by page (`capture.page_choices`); a changed mind replaces it there, and every choice is kept in
+the one history log (CP-27 3C).
 """
 
+import json
 import re
 from pathlib import Path
 
 import pymupdf
 
+from engine.core import history
 from engine.w3_read import render_pdf, same_page, sorting
 
 COPY = re.compile(r"^copy(\d+)-")
@@ -103,9 +106,9 @@ def proof(conn, capture_id, file_page: int) -> dict | None:
     the code read off the page, the code the child's paper was printed with, the notice if any, and a person's latest
     choice on it. None where there is no such capture."""
     cap = conn.execute(
-        "select c.path, c.pages, c.qr_read, si.qr_code, si.child_id from capture c"
+        "select c.path, c.pages, c.qr_read, c.page_choices -> %s::text as chose, si.qr_code, si.child_id from capture c"
         " join sheet_instance si on si.id = c.sheet_instance_id where c.id = %s",
-        (capture_id,),
+        (file_page, capture_id),
     ).fetchone()
     if not cap:
         return None
@@ -124,10 +127,7 @@ def proof(conn, capture_id, file_page: int) -> dict | None:
         and any(told.get((str(s["id"]), q), (None,))[0] == mine for q in range(1, (s["pages"] or 0) + 1))
     }) if mine else []  # fmt: skip
     problem = verdict(code, cap["qr_code"], same_as)
-    chose = conn.execute(
-        "select choice, by from page_choice where capture_id = %s and file_page = %s order by created_at desc limit 1",
-        (capture_id, file_page),
-    ).fetchone()
+    chose = cap["chose"]
     return {"scan": Path(folder).name, "copy": k, "copies": max(nums) if nums else None, "page": file_page,
             "pages": cap["pages"], "code": code, "printed_with": cap["qr_code"], "problem": problem,
             "choice": chose["choice"] if chose else None, "chosen_by": chose["by"] if chose else None}  # fmt: skip
@@ -139,16 +139,29 @@ def may_confirm(p: dict | None) -> bool:
 
 
 def choose(conn, capture_id, file_page: int, choice: str, by: str) -> dict:
-    """A person's choice on a page with a notice, as a new row. Refused where the page has no notice."""
+    """A person's choice on a page with a notice: the page's choice on its capture, the change kept. Refused where the
+    page has no notice."""
     if choice not in ("theirs", "not_theirs"):
         raise ValueError("the choice is 'theirs' or 'not_theirs'")
     p = proof(conn, capture_id, file_page)
     if not p or not p["problem"]:
         raise ValueError("this page has no notice to choose on")
-    conn.execute(
-        "insert into page_choice (tenant_id, capture_id, file_page, problem, choice, by, created_at)"
-        " select tenant_id, id, %s, %s, %s, %s, clock_timestamp() from capture where id = %s",
-        (file_page, p["problem"]["kind"], choice, by, capture_id),
+    page = str(file_page)
+    now = {"problem": p["problem"]["kind"], "choice": choice, "by": by}
+    row = conn.execute(
+        "update capture c set page_choices = coalesce(c.page_choices, '{}') || jsonb_build_object(%s::text,"
+        " %s::jsonb || jsonb_build_object('at', clock_timestamp())), updated_at = now() from capture was"
+        " where c.id = %s and was.id = c.id returning c.tenant_id, was.page_choices -> %s::text as was,"
+        " c.page_choices -> %s::text as now",
+        (page, json.dumps(now), capture_id, page, page),
+    ).fetchone()
+    history.keep(
+        conn,
+        row["tenant_id"],
+        ("capture", str(capture_id), "choose_page"),
+        {page: row["was"]} if row["was"] else None,
+        {page: row["now"]},
+        by,
     )
     after = proof(conn, capture_id, file_page)
     if after is None:

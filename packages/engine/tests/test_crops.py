@@ -10,6 +10,7 @@ from engine.adapters import digits
 from engine.core import db
 from engine.w3_read import boxes, crops, marking, profiles, render_pdf
 from tests import test_boxes
+from tests.rows import a_child_in
 from tests.test_boxes import StandIn, _filled, _fits, _scanned
 from tests.test_legacy import _read_the_paper, pytestmark_db
 
@@ -33,10 +34,7 @@ def conn():
 @pytest.fixture
 def child(conn):
     tenant = conn.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()["id"]
-    return conn.execute(
-        "insert into child (tenant_id, roll_no, section, band) values (%s,'1','TESTSEC','G2') returning id",
-        (tenant,),
-    ).fetchone()["id"]
+    return a_child_in(conn, "TESTSEC", "G2", "1", tenant)
 
 
 def test_every_answer_the_reader_reads_keeps_the_crop_it_read_beside_the_scans(

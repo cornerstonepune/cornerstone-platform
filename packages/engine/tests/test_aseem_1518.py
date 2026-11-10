@@ -12,6 +12,7 @@ from engine.assess import graph
 from engine.core import db, settings
 from engine.w2_print import focus_paper
 from engine.w3_read import legacy, marking
+from tests.rows import a_child_in
 
 PAPER = db.REPO_ROOT / "supabase" / "seed" / "papers" / "G3-QUIZ20.json"
 PERSON = "Aseem's paper"
@@ -31,10 +32,7 @@ def conn():
 
 def _child(conn):
     tenant = conn.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()["id"]
-    cid = conn.execute(
-        "insert into child (tenant_id, roll_no, section, band) values (%s, '18', 'QUIZ20', 'G3') returning id",
-        (tenant,),
-    ).fetchone()["id"]
+    cid = a_child_in(conn, "QUIZ20", "G3", "18", tenant)
     conn.execute(
         "insert into pii.child (tenant_id, child_id, first_name) values (%s,%s,'Kabir')", (tenant, cid)
     )

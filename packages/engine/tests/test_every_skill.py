@@ -13,6 +13,7 @@ import pytest
 from engine.assess import skills as S
 from engine.core import db
 from engine.w1_bank import bank, labels
+from tests.rows import a_child_in
 
 RULES = {
     "by_operation": {"+": "NUM.OPS.01", "-": "NUM.OPS.02", "×": "NUM.OPS.03"},
@@ -260,10 +261,7 @@ def test_relabel_never_touches_a_question_from_an_old_paper(conn):
 def _paper(conn, answers):
     """One child, one scanned paper, one answer row per (item_id, status, codes). Returns the child."""
     tenant = conn.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()["id"]
-    child = conn.execute(
-        "insert into child (tenant_id, roll_no, section, band) values (%s,'1','TESTSEC8','G4') returning id",
-        (tenant,),
-    ).fetchone()["id"]
+    child = a_child_in(conn, "TESTSEC8", "G4", "1", tenant)
     tpl = conn.execute(
         "insert into sheet_template (tenant_id, band, week) values (%s,'G4','2026-W39') returning id",
         (tenant,),

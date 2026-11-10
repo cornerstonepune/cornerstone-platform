@@ -16,9 +16,10 @@ import yaml
 
 from engine.adapters import llm, ocr
 from engine.assess import graph
-from engine.core import db
+from engine.core import db, history
 from engine.w1_bank import cases, mistake_guess, rehome
 from engine.w3_read import again, legacy, marking, naming
+from tests.rows import a_child_in
 
 # ---- pure: shape → rung, and marking by lookup
 
@@ -352,10 +353,7 @@ def conn():
 @pytest.fixture
 def child(conn):
     tenant = conn.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()["id"]
-    cid = conn.execute(
-        "insert into child (tenant_id, roll_no, section, band) values (%s,'1','TESTSEC','G2') returning id",
-        (tenant,),
-    ).fetchone()["id"]
+    cid = a_child_in(conn, "TESTSEC", "G2", "1", tenant)
     conn.execute(
         "insert into pii.child (tenant_id, child_id, first_name) values (%s,%s,'Aarav')", (tenant, cid)
     )
@@ -1279,8 +1277,13 @@ def test_a_wrong_answer_no_mistake_explains_is_named_by_a_person_from_jevs_short
     assert codes() == [] and naming.unnamed(conn, capture) == {}, "none of these is an answer too"
     assert marking.correct(conn, unexplained, "93", "aseem")["codes"] == ["M_CARRY_SKIP"]
 
-    with pytest.raises(Exception, match="append-only"), conn.transaction():
-        conn.execute("update mistake_named set code = 'M_CONCAT'")
+    # naming a second reading keeps the first, on the answer and in the history log
+    kept = history.of(conn, "item_result", str(unexplained))
+    assert [(h["op"], h["origin"], h["before"]) for h in kept] == [("name_mistake", "aseem", None)] * 2
+    assert [{k: v["code"] for k, v in h["after"].items()} for h in kept] == [
+        {"93": "M_CARRY_SKIP"},
+        {"92": mistake_guess.NONE},
+    ]
     marking.correct(conn, ids["legacy/TEST-PAPER/4"], "", "aseem")
     marking.confirm(conn, child, "aseem")
     ev = conn.execute(

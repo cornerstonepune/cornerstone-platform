@@ -19,7 +19,7 @@ from engine.checks import past
 from engine.core import db
 from engine.w1_bank import question_types
 from engine.w2_print import focus_paper, handout, library
-from tests.rows import a_waiting_type, data_steps
+from tests.rows import a_child_in, a_waiting_type, data_steps
 
 NUMBERS = re.compile(r"^(ADD|SUB|MUL|DIV)\.(\dD\dD(\.REG\w*)?|MULTI\d*)$")
 CARD_KINDS = {"MUL3.SUM", "MUL3.STORY", "SEQ.ON", "SEQ.BACK", "MULT.NTH", "MULT.FIRST5"}
@@ -65,10 +65,7 @@ def _drawable(conn, code):
 
 def _child(conn, band="G4"):
     tenant = conn.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()["id"]
-    return conn.execute(
-        "insert into child (tenant_id, roll_no, section, band) values (%s, '1', 'TYPETEST', %s) returning id",
-        (tenant, band),
-    ).fetchone()["id"]
+    return a_child_in(conn, "TYPETEST", band, "1", tenant)
 
 
 @NEEDS_DB

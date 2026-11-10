@@ -120,8 +120,9 @@ test("the same photograph on two children's copies is a plain red notice, and Ye
   await proof.getByRole("button", { name: "This page is Bina’s" }).click();
   await expect(proof.getByText("e2e@cornerstone.test said this page is Bina’s.")).toBeVisible();
   await expect(page.getByRole("button", { name: "Yes, the child wrote 7" })).toBeEnabled();
-  // nothing was edited: the choice is a row of its own
-  const [{ n }] = await sql<{ n: number }[]>`select count(*)::int as n from page_choice where capture_id = ${made.CSA00002.capture}`;
+  // the choice stands on the page's own capture, and is kept as a row of the one history log (CP-27 3C)
+  const [{ n }] = await sql<{ n: number }[]>`select count(*)::int as n from change_log
+    where table_name = 'capture' and row_id = ${made.CSA00002.capture}::text and op = 'choose_page'`;
   expect(n).toBe(1);
   // and a copy with its own photograph has no notice
 });

@@ -6,7 +6,8 @@ engine's login (`app_engine`):
   that run creates the picture row and exactly one `graph_run`, ok, stamped with the run's clock;
 - evidence created after a run's clock is not in that run's digest and is in the next run's;
 - two calls at once write one `graph_run`: the second returns {"skipped": true};
-- `graph_run` and `hand_check` are listed in `access_table` (school-wide and child data);
+- `graph_run` and the hand checks are listed in `access_table` (school-wide and child data; a hand check is a case of
+  the one eval set, `eval_case`, since CP-27);
 - the n8n flow `n8n/workflows/f4-nightly-graph.json` is a daily schedule between 00:00 and 05:00 IST with one HTTP node
   to `/graph/nightly`, carrying an Idempotency-Key and the engine key, and no Code node.
 """
@@ -121,8 +122,8 @@ def test_1_two_calls_at_once_write_one_run(db_url, conn):
 def test_1_graph_run_and_hand_check_are_listed_in_access_table(conn):
     rows = {r["table_name"]: r["data_class"] for r in conn.execute(
         "select table_name, data_class from public.access_table where schema_name = 'public'"
-        " and table_name in ('graph_run', 'hand_check')")}
-    assert rows == {"graph_run": "school_wide", "hand_check": "child_data"}, rows
+        " and table_name in ('graph_run', 'eval_case')")}
+    assert rows == {"graph_run": "school_wide", "eval_case": "child_data"}, rows
 
 
 FLOW = ROOT / "n8n" / "workflows" / "f4-nightly-graph.json"
