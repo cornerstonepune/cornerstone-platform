@@ -80,8 +80,7 @@ export default async function Maker({ searchParams }: Props) {
         {get("why")[0] ? <Notice tone="terracotta">{get("why")[0]}</Notice> : null}
         <div className="grid gap-[18px] lg:grid-cols-[minmax(0,400px)_minmax(0,1fr)]">
           <Panel title="Choose">
-            <form id="choose" method="get" action="/children/assessments" aria-label="Choose the papers" className="group grid gap-4">
-              <input type="hidden" name="make" value="class" />
+            <form id="choose" method="get" action="/papers/make" aria-label="Choose the papers" className="group grid gap-4">
               <label className="field">
                 <span className="label">Class</span>
                 <select className="select" name="class" defaultValue={cls?.section ?? ""}>

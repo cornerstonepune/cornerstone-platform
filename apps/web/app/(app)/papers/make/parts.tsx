@@ -117,7 +117,7 @@ export function ThePapers({ plan, batch, roll, sets, band, once }: {
       ) : null}
       {n ? (
         <div className="mt-3">
-          <DifferentQuestions href={`/children/assessments?make=class&${batchQuery({ ...batch, draw: batch.draw + 1 })}`} />
+          <DifferentQuestions href={`/papers/make?${batchQuery({ ...batch, draw: batch.draw + 1 })}`} />
         </div>
       ) : null}
       <form action={makePapers} className="mt-4 border-t border-basalt/10 pt-4">
@@ -160,7 +160,7 @@ export function Made({ qrs, section, kind, week, already }: {
           Print them all
         </a>
         {/* the assessment just made, opened to its copies (goals/ux5-papers-grouped.yaml) */}
-        <Link href={`/children/assessments?class=${encodeURIComponent(section)}&week=${week}&kind=${kind}`} className="btn secondary">
+        <Link href={`/papers?class=${encodeURIComponent(section)}&week=${week}&kind=${kind}`} className="btn secondary">
           See them in Assessments
         </Link>
       </div>
