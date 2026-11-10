@@ -61,9 +61,25 @@ jobs:
         run: |
           psql "$DATABASE_URL" -c "select (select count(distinct section) from child_now where active) as classes, (select count(*) from child_now where active) as children, (select count(*) from sheet_instance) as sheets, (select count(*) from capture) as captures, (select count(*) from item_result) as results, (select count(*) from skill) as skills, (select count(*) from topic) as topics"
           dir="$RUNNER_TEMP/postgres"
-          pg_ctl -D "$dir/data" -l "$dir/log2" -w restart -o "-p 5432 -k $dir -c listen_addresses=127.0.0.1 -c shared_preload_libraries=pg_stat_statements -c pg_stat_statements.track=all -c track_functions=all -c compute_query_id=on" >/dev/null
+          pg_ctl -D "$dir/data" -l "$dir/log2" -w restart -o "-p 5432 -k $dir -c listen_addresses=127.0.0.1 -c shared_preload_libraries=pg_stat_statements,auto_explain -c pg_stat_statements.track=all -c auto_explain.log_min_duration=90 -c auto_explain.log_analyze=on -c auto_explain.log_buffers=on -c auto_explain.log_timing=on -c auto_explain.log_nested_statements=off -c track_functions=all -c compute_query_id=on" >/dev/null
           psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -c "create extension if not exists pg_stat_statements" -c "select pg_stat_statements_reset()" >/dev/null
           npx playwright test u99-probe --workers=1 --retries=0 --trace off --reporter=line 2>&1 | grep -E "probe \||passed|failed" || true
+          echo "--- plans of the slowest statements (auto_explain, 90 ms and over): one per statement, the slowest run"
+          python3 - "$dir/log2" <<'PY'
+          import re,sys,collections
+          t=open(sys.argv[1],errors="replace").read()
+          parts=re.split(r'(?=^\d{4}-\d\d-\d\d [\d:.]+ \w+ \[\d+\] LOG:  duration: )',t,flags=re.M)
+          best={}
+          for p in parts:
+              m=re.search(r'duration: ([\d.]+) ms\s+plan:\s*Query Text: (.*?)\n\s*(\w.*)',p,flags=re.S)
+              if not m: continue
+              d=float(m.group(1)); q=' '.join(m.group(2).split())[:90]
+              if q not in best or d>best[q][0]: best[q]=(d,p)
+          print(len(best),'distinct slow statements')
+          for q,(d,p) in sorted(best.items(),key=lambda kv:-kv[1][0])[:6]:
+              body=re.sub(r'^\d{4}-\d\d-\d\d [\d:.]+ \w+ \[\d+\] LOG:  ','',p)
+              print('=====',round(d),'ms |',q); print(body[:6500])
+          PY
           echo "--- top 25 statements by total time (calls | total ms | mean ms | query)"
           psql "$DATABASE_URL" -At -F ' | ' -c "select calls, round(total_exec_time::numeric), round(mean_exec_time::numeric,1), left(regexp_replace(query, '\\s+', ' ', 'g'), 260) from pg_stat_statements where query not ilike '%pg_stat_statements%' order by total_exec_time desc limit 25"
           echo "--- top 12 statements by calls"
