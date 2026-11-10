@@ -3678,7 +3678,8 @@
         {
           "t": "upload",
           "label": "capture: a screenshot",
-          "effect": "png/jpg attached to the note"
+          "effect": "png/jpg attached to the note",
+          "pending": "needs backend storage (issue #551)"
         },
         {
           "t": "button",
