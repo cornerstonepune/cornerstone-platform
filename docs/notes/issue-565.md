@@ -18,5 +18,8 @@ For the UI-3a screens: period, record, confirm, notes. No new table.
 ## Verified
 `tests/test_voice_class_notes.py` (8), the voice, layout, table-budget, access and API tests: all passing on a fresh Postgres 16 (migrations 153 + this one). Not verified: the live database; CI's full suite; the rehearsal.
 
+## Website route list
+`apps/web/lib/engine-routes.ts` regenerated with `bin/engine contract` (2 new routes).
+
 ## Setting
 `children.attention_days` = 14 (`supabase/seed/config.json`): read by the children screen only. Its meaning (days without a confirmed note) comes from the frontend's request; unverified against the wireframe.

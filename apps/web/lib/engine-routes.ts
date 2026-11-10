@@ -122,12 +122,14 @@ export type EngineRoutes = {
   "POST /timetable/unmatched": { actor: string; fortnight?: number | null; band?: string | null };
   "POST /timetable/week": { actor: string; class_id?: string | null; day?: string | null; week_of?: string | null; period_id?: string | null };
   "POST /voice/class": { actor: string; class_id: string; day?: string | null };
+  "POST /voice/class-notes": { actor: string; class_id: string; day?: string | null };
   "POST /voice/cleanup": null;
   "POST /voice/form": { actor: string; activity: string; level: number; lists?: Record<string, string[]>; rest?: boolean; day?: string | null; class_id: string };
   "POST /voice/notes": null;
   "POST /voice/notes/audio": { actor: string; note_id: string };
   "POST /voice/notes/confirm": { actor: string; activity: string; level: number; lists?: Record<string, string[]>; rest?: boolean; day?: string | null; note_id: string };
   "POST /voice/notes/draft": { actor: string; note_id: string };
+  "POST /voice/notes/typed": { actor: string; class_id: string; session_id?: string | null };
   "POST /voice/observations/correct": { actor: string; observation_id: string; outcome: "above" | "as_expected" | "below" | "not_willing" | "absent"; reason: string };
   "POST /voice/queue": { actor: string };
   "POST /week/approve": { section: string; week: string; kind?: string; by: string };
