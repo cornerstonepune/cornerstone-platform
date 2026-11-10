@@ -12,7 +12,7 @@ from collections import defaultdict
 from typing import Any
 
 from engine.core import db, settings
-from engine.w3_read import k2_reads, voice_intake
+from engine.w3_read import k2_reads, voice_intake, voice_store
 from engine.w3_read.voice_store import Refused
 
 WAITING = ("received", "drafted")
@@ -138,7 +138,7 @@ def _listing(conn: db.Conn, notes: list[dict], day: dt.date) -> dict:
         kids = sorted({c for line in claims.get(n["id"], []) for c in line["children"]})
         shown.append({
             "note_id": str(n["id"]), "class_id": str(n["class_id"]), "class": labels[n["class_id"]],
-            "status": n["status"], "state": state, "typed": typed,
+            "status": n["status"], "state": state, "typed": typed, "photos": len(n["photo_keys"]),
             "session_id": None if n["session_id"] is None else str(n["session_id"]),
             "received_at": n["received_at"].isoformat(), "taught_on": taught.isoformat(),
             "activity": found.activity if found else None,
@@ -147,3 +147,57 @@ def _listing(conn: db.Conn, notes: list[dict], day: dt.date) -> dict:
             "claims": claims.get(n["id"], []),
         })  # fmt: skip
     return {"notes": shown, "waiting_by_child": dict(waiting)}
+
+
+def session_note(conn: db.Conn, email: str, class_id: str, session_id: str) -> str:
+    """Her note for a lesson: the one she has, else an empty one made for it (a photo or marks for a lesson hang on it)."""
+    staff, class_id = _held(conn, email, class_id)
+    lesson = voice_intake.lesson_of(conn, session_id, class_id)
+    if lesson is None:
+        raise Refused("Name the lesson.", 422)
+    have = conn.execute(
+        "select id from pii.educator_note where staff_id = %s and class_id = %s and session_id = %s"
+        " and audio_deleted_at is null order by received_at desc limit 1",
+        (staff, class_id, lesson),
+    ).fetchone()
+    return str(have["id"]) if have else create_typed(conn, email, class_id, lesson)
+
+
+def _own_note(conn: db.Conn, email: str, note_id: str) -> dict:
+    staff = voice_intake.staff_of(conn, email)
+    note = conn.execute(
+        "select * from pii.educator_note where id = %s for update", (voice_intake.valid_id(note_id),)
+    ).fetchone()
+    if note is None or note["staff_id"] != staff:
+        raise Refused("This is not one of your notes.", 404)
+    voice_intake.may_record(conn, staff, str(note["class_id"]))
+    return note
+
+
+def add_photo(conn: db.Conn, email: str, note_id: str, filename: str, data: bytes) -> dict:
+    """A photo of the lesson's work or board on her note: kept in the private store beside the recordings, cleared on the
+    same clock (`voice.confirm_within_hours`). A photo of a child is not for here; the file cannot be checked for it, the
+    screen says so. A note whose raw copies were cleared takes no more."""
+    note = _own_note(conn, email, note_id)
+    if note["audio_deleted_at"] is not None or note["transcript_cleared_at"] is not None:
+        raise Refused("This note is past the hours its photos are kept.", 409)
+    most = int(settings.config(conn, "voice.max_photos_per_note", 6))
+    if len(note["photo_keys"]) >= most:
+        raise Refused(f"A note keeps at most {most} photos.", 409)
+    key = voice_store.photo_key(uuid.uuid4(), filename, dt.datetime.now(dt.UTC).year)
+    if not voice_store.looks_like_image(data):
+        raise Refused("Not sent. That file is not a photo.", 415)
+    conn.execute(
+        "update pii.educator_note set photo_keys = photo_keys || %s::text where id = %s", (key, note["id"])
+    )
+    voice_store.save_photo(key, data)  # after the row, so a refused photo leaves no file behind
+    return {"note_id": str(note["id"]), "photos": len(note["photo_keys"]) + 1}
+
+
+def photo(conn: db.Conn, email: str, note_id: str, index: int) -> tuple[str, bytes]:
+    """One of her note's photos, for her to see beside it: (its key's extension, the bytes)."""
+    note = _own_note(conn, email, note_id)
+    if not 0 <= index < len(note["photo_keys"]):
+        raise Refused("There is no such photo.", 404)
+    key = note["photo_keys"][index]
+    return key.rsplit(".", 1)[1], voice_store.read(key)

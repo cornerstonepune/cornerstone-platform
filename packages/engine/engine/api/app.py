@@ -30,6 +30,7 @@ from engine.api.routes import (
     paper_edit,
     parent,
     plan,
+    reports,
     runs,
     samples,
     timetable,
@@ -81,6 +82,7 @@ app.include_router(offers.router)
 app.include_router(page.router)
 app.include_router(voice.router)
 app.include_router(voice.keyed)
+app.include_router(reports.router)
 app.include_router(materials.keyed)
 app.include_router(materials_school.keyed)
 
