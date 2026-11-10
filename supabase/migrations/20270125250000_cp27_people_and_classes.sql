@@ -717,6 +717,10 @@ alter table child drop column section;
 alter table child drop column roll_no;
 
 delete from access_table where schema_name = 'public' and table_name in ('class_card', 'class_skill', 'child_move');
+-- A child's class is their enrolment now, so whoever sees a child sees their enrolment, as they saw `child.section`:
+-- keyed by class, an educator who put in a paper of another class's child saw the child with no class (u68, 10 Nov 2026)
+update access_table set key_column = 'child_id', key_type = 'child'
+where schema_name = 'public' and table_name = 'enrolment';
 update data_register set tables = array_remove(tables, 'public.child_move') where 'public.child_move' = any(tables);
 update data_register set tables = array_remove(tables, 'public.class_card') where 'public.class_card' = any(tables);
 update data_register set tables = array_remove(tables, 'public.class_skill') where 'public.class_skill' = any(tables);

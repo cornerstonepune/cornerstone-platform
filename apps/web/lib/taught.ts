@@ -9,6 +9,14 @@ import { inScope, type Scope } from "./scope";
 
 type Fragment = ReturnType<typeof sql>;
 
+/** Every class with a child on the roll, its school beside it, read once a query (a value Postgres works out before the
+ *  rows): the rule is then asked once a class. Asked of `child_now`'s rows instead, Postgres pushed the rule down to the
+ *  class each child's enrolment joins and asked it for every class for every child; asked of a list read again for each
+ *  skill, it read the roll 155 times (PR #561's browser shard 1, 10 Nov 2026: the skill list 2.9 s, then 0.25 s; 39 ms
+ *  so, at 15 classes and 73 children). */
+const onTheRoll = () => sql`jsonb_to_recordset((select jsonb_agg(distinct jsonb_build_object('t', r.tenant_id, 's', r.section))
+                                          from child_now r where r.active)) as k(t uuid, section text)`;
+
 /** Taught in this class. `tenant` and `topic` are the row's own columns. */
 export const taughtIn = (tenant: Fragment, topic: Fragment, section: Fragment | string) =>
   sql`taught_in(${tenant}, ${topic}, ${section})`;
@@ -17,7 +25,7 @@ export const taughtIn = (tenant: Fragment, topic: Fragment, section: Fragment | 
 export const taughtFor = (scope: Scope, tenant: Fragment, topic: Fragment) =>
   scope.classes
     ? sql`exists (select 1 from unnest(${scope.classes}::text[]) as k(section) where taught_in(${tenant}, ${topic}, k.section))`
-    : sql`exists (select 1 from child_now k where k.tenant_id = ${tenant} and k.active and taught_in(${tenant}, ${topic}, k.section))`;
+    : sql`exists (select 1 from ${onTheRoll()} where k.t = ${tenant} and taught_in(${tenant}, ${topic}, k.section))`;
 
 /** This skill taught in this class. `tenant` and `skill` are the row's own columns. */
 export const skillTaughtIn = (tenant: Fragment, skill: Fragment, section: Fragment | string) =>
@@ -27,7 +35,7 @@ export const skillTaughtIn = (tenant: Fragment, skill: Fragment, section: Fragme
 export const skillTaughtFor = (scope: Scope, tenant: Fragment, skill: Fragment) =>
   scope.classes
     ? sql`exists (select 1 from unnest(${scope.classes}::text[]) as k(section) where skill_taught_in(${tenant}, ${skill}, k.section))`
-    : sql`exists (select 1 from child_now k where k.tenant_id = ${tenant} and k.active and skill_taught_in(${tenant}, ${skill}, k.section))`;
+    : sql`exists (select 1 from ${onTheRoll()} where k.t = ${tenant} and skill_taught_in(${tenant}, ${skill}, k.section))`;
 
 /** The classes a scope shows, in order: an educator's own, or every class with a child on the roll. */
 export async function classesOf(scope: Scope): Promise<string[]> {
