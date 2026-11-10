@@ -31,7 +31,7 @@ says:
   - words: "if what you are mentioning, ADR, is at least happening, that's something we need to ensure from a codebase point of view"
     proved_by: packages/engine/tests/test_profiles.py::test_a_check_changes_the_notebook_of_the_child_checked_and_no_other
   - words: "if what you are mentioning, ADR, is at least happening, that's something we need to ensure from a codebase point of view"
-    proved_by: packages/engine/tests/api/test_capture_routes.py::test_every_check_rebuilds_the_notebooks_it_made_stale_correction_and_sign_off_alike
+    proved_by: packages/engine/tests/api/test_capture_routes.py::test_a_correction_and_a_sign_off_both_reach_the_notebook_with_nothing_to_rebuild
   - words: "if what you are mentioning, ADR, is at least happening, that's something we need to ensure from a codebase point of view"
     proved_by: packages/engine/tests/test_copies.py::test_a_printed_copy_is_read_against_the_childs_own_floor_on_the_box_reader_never_below_the_readers
   - words: "if what you are mentioning, ADR, is at least happening, that's something we need to ensure from a codebase point of view"

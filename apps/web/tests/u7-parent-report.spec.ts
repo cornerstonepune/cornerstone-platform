@@ -112,7 +112,7 @@ async function keepDraft(id: string, f: Facts) {
   };
   await sql`
     insert into parent_note (tenant_id, child_id, week, body, prompt_version)
-    select tenant_id, id, '2026-W40', ${JSON.stringify({ facts: f, draft })}, 1 from child_now where id = ${id}::uuid`;
+    select tenant_id, id, to_date('2026-W40', 'IYYY-"W"IW'), ${JSON.stringify({ facts: f, draft })}, 1 from child_now where id = ${id}::uuid`;
 }
 
 let id = "";

@@ -55,7 +55,7 @@ test.afterAll(async () => {
   const qrs = (await sql<{ qr_code: string }[]>`select qr_code from sheet_instance`).map((r) => r.qr_code).filter(mine);
   await sql`delete from sheet_instance where qr_code = any(${qrs})`;
   await sql`delete from sheet_template where key ->> 'test' = 'u24'`;
-  await sql`delete from prescription where child_id = ${kids.Farid} and week like '2025-W1%'`;
+  await sql`delete from prescription where child_id = ${kids.Farid} and to_char(week, 'IYYY-"W"IW') like '2025-W1%'`;
   await sql.end();
 });
 

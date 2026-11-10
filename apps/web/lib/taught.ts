@@ -14,7 +14,7 @@ type Fragment = ReturnType<typeof sql>;
  *  class each child's enrolment joins and asked it for every class for every child; asked of a list read again for each
  *  skill, it read the roll 155 times (PR #561's browser shard 1, 10 Nov 2026: the skill list 2.9 s, then 0.25 s; 39 ms
  *  so, at 15 classes and 73 children). */
-const onTheRoll = () => sql`jsonb_to_recordset((select jsonb_agg(distinct jsonb_build_object('t', r.tenant_id, 's', r.section))
+const onTheRoll = () => sql`jsonb_to_recordset((select jsonb_agg(distinct jsonb_build_object('t', r.tenant_id, 'section', r.section))
                                           from child_now r where r.active)) as k(t uuid, section text)`;
 
 /** Taught in this class. `tenant` and `topic` are the row's own columns. */
