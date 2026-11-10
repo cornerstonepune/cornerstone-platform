@@ -77,20 +77,6 @@ test("the seven steps, their words and the queries' names are the committed ones
   );
 });
 
-test("the old pages answer 308 to the new screens (2, 7)", async ({ request }) => {
-  const go = async (url: string) => {
-    const res = await request.get(url, { maxRedirects: 0 });
-    return { status: res.status(), to: new URL(res.headers().location ?? "http://x/", "http://localhost:3100").pathname };
-  };
-  for (const old of ["/papers", "/papers/make", "/capture"]) expect(await go(old)).toMatchObject({ status: 308, to: "/children/assessments" });
-  expect(await go("/capture/check")).toMatchObject({ status: 308, to: "/children/assessments" });
-  const card = new URLSearchParams({ class: SECTION, week, kind: "assessment", set: ws.set });
-  expect(await go(`/papers/card?${card}`)).toMatchObject({ status: 308, to: assessmentHref(KEY()) });
-  expect((await go(`/papers/approve?section=${SECTION}&week=${week}&kind=focus`)).status).toBe(308);
-  expect(await go(`/capture/${paper.sheet}`)).toMatchObject({ status: 308, to: paperHref(KEY(), "1") });
-  expect(await go(`/papers/review/${code("A1")}`)).toMatchObject({ status: 308, to: paperHref(KEY(), "1") });
-});
-
 test("every row of Assessments is named topic · skill · level · kind · class · day, and no screen has an approve-all control (8, 9)", async ({ page }) => {
   await page.goto(`/children/assessments?view=table&class=${SECTION}`);
   const names = await page.getByRole("table", { name: "Every assessment" }).locator("tbody tr td:first-child a").allInnerTexts();

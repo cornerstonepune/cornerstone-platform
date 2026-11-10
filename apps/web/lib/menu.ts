@@ -45,6 +45,7 @@ export const GROUPS: readonly Door[] = [
     pages: [
       { label: "Children", href: "/k2", match: ["/k2"], guide: false },
       { href: "/papers", label: "Assessments", match: ["/papers", "/make", "/home", "/worksheets/CS"] },
+      { href: "/children/assessments", label: "Assessments board", match: ["/children/assessments"] },
       { href: "/papers/approve", label: "Papers to approve", match: ["/papers/approve"] },
       { href: "/capture", label: "Upload papers", match: ["/capture"] },
       { href: "/capture/check", label: "Check answers", match: ["/capture/check"] },

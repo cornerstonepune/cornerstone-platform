@@ -7,20 +7,17 @@ Branch `ui-4-assessments`, issue #519, PR #566 (draft). Scope: `specs/UI-4/spec.
 Built: `/children/assessments` (tiles, Make, Read, filters, Board | Table), `/children/assessments/[key]` (stepper, approve this
 pack, print, the papers bar, what it asks, each child's copy grouped by state, a level choice before print, sign one paper off)
 and `.../[key]/[roll]` (the page beside each answer; right, wrong, wrong with working, blank, for you to judge as separate
-chips; say what the child wrote, blank, sign this paper off). The old pages answer 308 (config for `/papers`, `/papers/make`,
-`/capture`, `/capture/check`; route handlers for the ones that name a paper or assessment). Menu, guide and `workflows.json`
-follow. `tests/u73-assessments.spec.ts` (8 tests, all pass on a local copy) covers Done when 2, 3, 7 to 12, 14 to 17.
-Not built: the inventory support (`SLICE=UI-4`), the journey `e2e/a-paper-comes-back.spec.ts` (Done when 4), "capture: Photo"
-on the assessment screen, `UI-4` in `merged_slices`.
+chips; say what the child wrote, blank, sign this paper off). In the menu as "Assessments board", with its guide page.
+`tests/u73-assessments.spec.ts` (7 tests, pass on a local copy) covers Done when 3, 8 to 12 and 14 to 17.
 
-## Held back: the folds remove features and about 45 older specs
+## Decision (orchestrator, 10 Nov 2026): old pages stay live; UI-4b finishes the folds
 
-The pages that fold carried things the three screens do not list: the one-answer-at-a-time Check queue, changing a question's
-answer key, naming a mistake, adding or removing a question on a paper (`/papers/review`), renaming an assessment, the reader
-accuracy view, "files read lately". Their server actions remain in the code but nothing opens them. Roughly 45 older specs
-open `/papers` or `/capture` (u9, u16, u22, u37, u63, s4, s26, p5, p6 and others). Migrating them would be rewriting them to
-other behaviour, and deleting them loosens the checks, so this PR is not mergeable until the orchestrator chooses: keep those
-pages alive, drop the features and specs, or add the controls to the screens.
+The old pages carry controls the three screens do not list (the Check queue, change an answer key, name a mistake, add or
+remove a question, rename, reader accuracy) and about 45 older specs test them. So this PR redirects nothing: every old
+route has a spec, and no spec is changed or dropped. Left for UI-4b: the 308s (Done when 2 and 7), `ux.approveAll` empty (5),
+the inventory support and `UI-4` in `merged_slices` (1, 6), the journey `e2e/a-paper-comes-back.spec.ts` (4), "capture:
+Photo" on the assessment screen, and the missing controls with each old spec moved as a real test.
+`tests/u13-route-walk.spec.ts` lists the two new dynamic routes in `NOT_BY_CLICK` with their reason (they need rows of a class).
 
 ## For the orchestrator
 
