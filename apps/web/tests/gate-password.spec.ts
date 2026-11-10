@@ -209,9 +209,8 @@ test("a signed-in person changes their own password, and the old one stops worki
   const email = await staffMember();
   try {
     await signedIn(page, email, PASSWORD);
-    // "Change password" is in the account panel, behind the menu button, where Sign out is
-    await page.getByRole("button", { name: "Menu" }).click();
-    await page.getByRole("link", { name: "Change password" }).click();
+    // "Change password" is the person's own name in the bar, where Sign out is
+    await page.locator("[data-bar]").first().getByRole("link", { name: "Your account: change your password" }).or(page.locator("[data-bar]").first().locator('a[href="/account/password"]')).first().click();
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("Change password");
 
     // the current password is required

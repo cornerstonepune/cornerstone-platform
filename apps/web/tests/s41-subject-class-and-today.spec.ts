@@ -78,7 +78,7 @@ test("every screen opens with the search in the bar, above the heading, and no C
   for (const path of ["/today", "/", "/papers", "/growth", "/capture", "/worksheets", `/growth/${kids.Asha}`]) {
     await page.goto(path);
     await expect(page.locator("[data-viewing], #bar-subject, #bar-class"), path).toHaveCount(0);
-    await expect(find(page).getByRole("searchbox"), path).toBeVisible();
+    await expect(find(page).getByRole("combobox"), path).toBeVisible();
     // the bar sits above the page's heading
     const b = (await find(page).boundingBox())!;
     const h = (await page.getByRole("heading", { level: 1 }).first().boundingBox())!;
@@ -88,32 +88,28 @@ test("every screen opens with the search in the bar, above the heading, and no C
 
 test("the search finds a child, an assessment and a paper by its code", async ({ page }) => {
   await page.goto("/today");
-  const box = find(page).getByRole("searchbox");
-  const found = page.getByRole("list", { name: "Found" });
+  const box = find(page).getByRole("combobox");
+  const found = page.getByRole("listbox", { name: "Found" });
 
   await box.fill("Bina");
-  await box.press("Enter");
   await expect(found.getByRole("link", { name: new RegExp(`Bina.*${SECTION}`) })).toBeVisible();
   // the name is never in an address: a server logs addresses
   expect(page.url()).not.toContain("Bina");
   await found.getByRole("link", { name: new RegExp(`Bina.*${SECTION}`) }).click();
   await expect(page).toHaveURL(new RegExp(`/growth/${kids.Bina}$`));
 
-  await find(page).getByRole("searchbox").fill(QR.toLowerCase());
-  await find(page).getByRole("searchbox").press("Enter");
-  await page.getByRole("list", { name: "Found" }).getByRole("link", { name: new RegExp(QR) }).click();
+  await find(page).getByRole("combobox").fill(QR.toLowerCase());
+  await page.getByRole("listbox", { name: "Found" }).getByRole("link", { name: new RegExp(QR) }).click();
   await expect(page).toHaveURL(new RegExp(`/worksheets/${QR}$`));
 
-  await find(page).getByRole("searchbox").fill(setName.slice(0, 12));
-  await find(page).getByRole("searchbox").press("Enter");
-  const assessment = page.getByRole("list", { name: "Found" }).getByRole("link", { name: new RegExp(`${SECTION}`) }).first();
+  await find(page).getByRole("combobox").fill(setName.slice(0, 12));
+  const assessment = page.getByRole("listbox", { name: "Found" }).getByRole("link", { name: new RegExp(`${SECTION}`) }).first();
   await expect(assessment).toContainText("Assessment");
   await assessment.click();
   await expect(page).toHaveURL(/\/papers\?/);
   await expect(page.getByRole("main")).toContainText(setName);
 
-  await find(page).getByRole("searchbox").fill("zzqqxx-no-such-thing");
-  await find(page).getByRole("searchbox").press("Enter");
+  await find(page).getByRole("combobox").fill("zzqqxx-no-such-thing");
   await expect(page.getByRole("status").filter({ hasText: "Nothing found" })).toBeVisible();
 });
 
@@ -151,18 +147,17 @@ test("on a phone the bar and the heading are at the top and every tap is big eno
       expect(top.y, path).toBeLessThan(8);
       const h1 = page.getByRole("heading", { level: 1 }).first();
       const end = await h1.evaluate((el) => el.getBoundingClientRect().top + parseFloat(getComputedStyle(el).lineHeight));
-      expect(end, `${path}: heading's first line ends at ${end}`).toBeLessThanOrEqual(160);
+      expect(end, `${path}: heading's first line ends at ${end}`).toBeLessThanOrEqual(240); // the frame adds a row of the door's pages and the trail above the heading
       // the groups fold into the menu button on a phone; the button and the search are each big enough
-      await expect(page.getByRole("navigation", { name: "Sections" })).toBeHidden();
-      for (const field of [page.getByRole("button", { name: "Menu" }), find(page).getByRole("searchbox")]) {
+      await expect(page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" })).toBeHidden();
+      for (const field of [page.getByRole("button", { name: /account/ }), find(page).getByRole("combobox")]) {
         expect((await field.boundingBox())!.height, path).toBeGreaterThanOrEqual(44);
       }
       expect(await page.evaluate(() => document.documentElement.scrollWidth), path).toBeLessThanOrEqual(400);
     }
-    // and the menu button opens every page, each one a big tap
+    // and the doors at the foot are each a big tap
     await page.goto("/today");
-    await page.getByRole("button", { name: "Menu" }).click();
-    for (const link of await page.getByRole("dialog", { name: "Menu" }).getByRole("link").all()) expect((await link.boundingBox())!.height).toBeGreaterThanOrEqual(44);
+    for (const link of await page.locator("nav[data-bar=doors]").getByRole("link").all()) expect((await link.boundingBox())!.height).toBeGreaterThanOrEqual(44);
   } finally {
     await context.close();
   }

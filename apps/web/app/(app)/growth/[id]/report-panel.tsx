@@ -1,5 +1,5 @@
 import Link from "@/components/link";
-import { Panel, TONE_EDGE } from "@/components/shell";
+import { Panel, TONE_EDGE } from "@/components/parts";
 import { reportWords, type ReportState } from "@/lib/queries-reports";
 import { dateWords } from "@/lib/week";
 

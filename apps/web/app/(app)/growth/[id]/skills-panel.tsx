@@ -1,5 +1,5 @@
 import { mistakeName } from "@/lib/mistake-name";
-import { Pill } from "@/components/shell";
+import { Pill } from "@/components/parts";
 import type { Evidence } from "@/lib/queries";
 import type { ChildSkill } from "@/lib/queries-children";
 import { RAG_TONE } from "@/lib/rag";

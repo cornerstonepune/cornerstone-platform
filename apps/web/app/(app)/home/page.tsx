@@ -1,4 +1,4 @@
-import { Body, NotYet, PageHeader } from "@/components/shell";
+import { Body, NotYet, PageHeader } from "@/components/parts";
 import { tableCounts } from "@/lib/queries";
 import { deadline } from "@/lib/deadline";
 import { requireStaff } from "@/lib/auth";

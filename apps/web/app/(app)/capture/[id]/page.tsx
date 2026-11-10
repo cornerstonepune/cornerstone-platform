@@ -1,7 +1,7 @@
 import { mistakeName } from "@/lib/mistake-name";
 import Link from "@/components/link";
 import { notFound } from "next/navigation";
-import { Bar, Body, Notice, PageHeader, Panel, Tile } from "@/components/shell";
+import { Bar, Body, Notice, PageHeader, Panel, Tile } from "@/components/parts";
 import { requireStaff } from "@/lib/auth";
 import { NotYours } from "@/components/not-yours";
 import { sees } from "@/lib/reach";

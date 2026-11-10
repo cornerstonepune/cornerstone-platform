@@ -1,7 +1,6 @@
 import { redirect } from "next/navigation";
 import Link from "@/components/link";
-import { Crumbs } from "@/components/educator/crumbs";
-import { PageShell } from "@/components/page-shell";
+import { Screen } from "@/components/app-frame";
 import { requireStaff } from "@/lib/auth";
 import { k2Classes } from "@/lib/k2-reads";
 import { classWords } from "@/lib/voice-types";
@@ -15,14 +14,13 @@ export default async function Children() {
   const classes = got.ok ? got.value.classes : [];
   if (classes.length === 1) redirect(`/k2/${classes[0].id}`);
   return (
-    <PageShell
+    <Screen
       stage="Children"
       title="Children"
       purpose="Where each child is on each skill, class by class."
       action={<Link href="/educator" className="btn secondary">Today</Link>}
       next={{ href: "/educator", label: "Today" }}
     >
-      <Crumbs trail={[{ label: "Children" }]} />
       {!got.ok ? (
         <Notice>{got.message}</Notice>
       ) : classes.length === 0 ? (
@@ -38,6 +36,6 @@ export default async function Children() {
           ))}
         </ul>
       )}
-    </PageShell>
+    </Screen>
   );
 }

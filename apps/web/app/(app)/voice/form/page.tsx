@@ -1,5 +1,5 @@
 import Link from "@/components/link";
-import { PageShell } from "@/components/page-shell";
+import { Screen } from "@/components/app-frame";
 import { requireStaff } from "@/lib/auth";
 import { Icon } from "@/lib/icons";
 import { blankWork } from "@/lib/voice-check";
@@ -21,7 +21,7 @@ export default async function TheForm({ searchParams }: { searchParams: Promise<
   const today = await schoolToday();
   const record = { href: c ? `/voice/record?class=${c.id}` : "/voice/record", label: W.form.recordInstead };
   return (
-    <PageShell
+    <Screen
       stage={W.back}
       title={c ? `${W.form.title} · ${c.words}` : W.form.title}
       purpose={W.form.purpose}
@@ -36,7 +36,7 @@ export default async function TheForm({ searchParams }: { searchParams: Promise<
       next={{ href: "/today", label: W.back }}
     >
       {c ? <FormBoard id={c.id} grade={c.grade} words={c.words} actor={me.email} today={today} /> : <ClassChoice my={my} href={(id) => `/voice/form?class=${id}`} />}
-    </PageShell>
+    </Screen>
   );
 }
 

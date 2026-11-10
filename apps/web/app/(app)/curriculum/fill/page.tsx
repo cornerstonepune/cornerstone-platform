@@ -1,7 +1,7 @@
 import Link from "@/components/link";
 import { DataTable } from "@/components/data-table";
 import { FilterBar } from "@/components/filter-bar";
-import { PageShell } from "@/components/page-shell";
+import { Screen } from "@/components/app-frame";
 import { requireStaff } from "@/lib/auth";
 import { type Gap, gap, mustBeOn, SLOT_WORDS, waiting } from "@/lib/curriculum-screens";
 import { PART_KEYS } from "@/lib/page-part";
@@ -35,7 +35,7 @@ export default async function Fill({ searchParams }: { searchParams: Promise<Rec
   const rows = all.filter((r) => !part || r.part === part);
   const total = all[0] ? all[0].school + all[0].drafted + all[0].person + all[0].empty : 0;
   return (
-    <PageShell
+    <Screen
       stage="Curriculum"
       title="What is filled, and by whom"
       purpose={`For each part of the ${total} K2 activities: the school's words, a draft to check, a person's words, or empty.`}
@@ -47,6 +47,6 @@ export default async function Fill({ searchParams }: { searchParams: Promise<Rec
         <FilterBar action="/curriculum/fill" filters={[{ name: "part", label: "Part", value: part, all: "Every part", options: PART_KEYS.map((p) => [p, SLOT_WORDS[p]] as const) }]} />
         <DataTable label="Parts of a page" columns={COLUMNS} rows={rows} rowKey={(r) => r.part} more={{ page: 1, href: () => "/curriculum/fill" }} extras={{ attrs: (r) => ({ "data-part": r.part }) }} />
       </Chrome>
-    </PageShell>
+    </Screen>
   );
 }

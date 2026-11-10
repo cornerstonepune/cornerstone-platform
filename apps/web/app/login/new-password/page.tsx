@@ -1,6 +1,6 @@
 import { cookies } from "next/headers";
 import Link from "@/components/link";
-import { Logo } from "@/components/logo";
+import { BareFrame } from "@/components/app-frame";
 import { emailFor, LINK_COOKIE } from "@/lib/password-links";
 import { setNewPassword } from "@/lib/password-actions";
 import { sql } from "@/lib/db";
@@ -18,12 +18,7 @@ export default async function NewPasswordPage({ searchParams }: Props) {
     select (select value::numeric from config where key = 'password.min_length')::int as least`;
 
   return (
-    <main className="mx-auto flex min-h-dvh max-w-[420px] flex-col justify-center px-5 py-10">
-      <div className="mb-8 flex items-center gap-3 text-basalt">
-        <Logo size={30} />
-        <span className="font-heading text-[19px]">cornerstone</span>
-        <span className="label ml-1">assessment</span>
-      </div>
+    <BareFrame>
       <h1 className="text-[26px] leading-tight">Set a new password</h1>
       {email ? (
         <p className="mt-2 text-[13.5px] text-basalt/62">
@@ -72,6 +67,6 @@ export default async function NewPasswordPage({ searchParams }: Props) {
           Send me another link
         </Link>
       </p>
-    </main>
+    </BareFrame>
   );
 }

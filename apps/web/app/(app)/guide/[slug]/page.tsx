@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import Link from "@/components/link";
-import { PageShell } from "@/components/page-shell";
+import { Screen } from "@/components/app-frame";
 import { Swatch } from "@/components/colour-key";
 import { GuideNav, LadderDrawing, PageDrawing, Part, Rich } from "@/components/guide";
 import { requireStaff } from "@/lib/auth";
@@ -19,7 +19,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
   if (menu) {
     const g = menu.guide;
     return (
-      <PageShell
+      <Screen
         stage={`Guide · ${menu.group}`}
         title={menu.page.label}
         purpose={`What ${menu.page.label} is for, what you see where, the usual jobs, and what each button does.`}
@@ -84,7 +84,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
             ) : null}
           </Part>
         </div>
-      </PageShell>
+      </Screen>
     );
   }
 
@@ -92,7 +92,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
   if (!a) notFound();
   const drawings: Record<string, ReactNode> = { states: <StateDrawing />, level: <LadderDrawing levels={f.levels} /> };
   return (
-    <PageShell
+    <Screen
       stage="Guide"
       title={a.title}
       purpose={a.purpose}
@@ -116,7 +116,7 @@ export default async function GuidePage({ params }: { params: Promise<{ slug: st
           </Part>
         ))}
       </div>
-    </PageShell>
+    </Screen>
   );
 }
 

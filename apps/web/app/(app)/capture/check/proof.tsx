@@ -1,4 +1,4 @@
-import { Notice } from "@/components/shell";
+import { Notice } from "@/components/parts";
 import { choosePage } from "../actions";
 import type { CheckItem } from "@/lib/queries-read";
 

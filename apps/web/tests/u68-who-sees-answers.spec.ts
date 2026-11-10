@@ -91,7 +91,7 @@ const number = (t: string | null) => Number((t ?? "").replace(/\D/g, "") || 0);
 /** The figures a person is shown, each beside the list it counts. */
 async function figures(page: Page) {
   await open(page, "/today");
-  const menu = page.getByRole("navigation", { name: "Sections" }).getByRole("link", { name: /^What needs doing/ }).getByTestId("waiting");
+  const menu = page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" }).getByRole("link", { name: /^Today/ }).getByTestId("waiting");
   const badge = (await menu.count()) ? number(await menu.innerText()) : 0;
   const todo = (await page.locator("[data-todo]").evaluateAll((els) => els.map((e) => Number(e.getAttribute("data-todo"))))).reduce((x, y) => x + y, 0);
   await open(page, "/papers");

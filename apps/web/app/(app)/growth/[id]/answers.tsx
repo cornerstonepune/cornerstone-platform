@@ -1,6 +1,6 @@
 // A child's checked answers as a table, and the date format every panel of the child's page uses.
 import { mistakeName } from "@/lib/mistake-name";
-import { MarkPill } from "@/components/shell";
+import { MarkPill } from "@/components/parts";
 import type { Evidence } from "@/lib/queries";
 import { dateWords } from "@/lib/week";
 

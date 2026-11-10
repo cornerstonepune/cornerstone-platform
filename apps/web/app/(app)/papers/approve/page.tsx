@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { EmptyState } from "@/components/empty-state";
 import { FilterBar } from "@/components/filter-bar";
 import Link from "@/components/link";
-import { PageShell } from "@/components/page-shell";
+import { Screen } from "@/components/app-frame";
 import type { State } from "@/components/status-chip";
 import { spareSheets, unplanned, weekPlan, weeks, type WeekRow } from "@/lib/queries-approve";
 import { approvePack } from "./actions";
@@ -40,7 +40,7 @@ export default async function ApprovePage({ searchParams }: Props) {
 
   if (all.length === 0) {
     return (
-      <PageShell
+      <Screen
         stage="Papers to approve"
         title="Papers to approve"
         purpose="A class's week: each child's paper, the level it is set at and why. Change any child, then approve the pack to print it."
@@ -52,7 +52,7 @@ export default async function ApprovePage({ searchParams }: Props) {
           No week has been planned yet. Once a class has been taught something, its week of papers appears here, one row per child,
           for you to approve.
         </EmptyState>
-      </PageShell>
+      </Screen>
     );
   }
   const current = all.find((w) => w.section === q.section && w.week === q.week && w.kind === q.kind) ?? all[0];
@@ -102,7 +102,7 @@ export default async function ApprovePage({ searchParams }: Props) {
   const pageHref = (n: number) => `${here}${stage ? `&status=${stage}` : ""}&page=${n}`;
 
   return (
-    <PageShell
+    <Screen
       stage="Papers to approve"
       title="Papers to approve"
       purpose="A class's week: each child's paper, the level it is set at and why. Change any child, then approve the pack to print it."
@@ -149,7 +149,7 @@ export default async function ApprovePage({ searchParams }: Props) {
         <PackTable rows={shown} back={here} page={page} pageHref={pageHref} />
         {shown.length === 0 ? <p className="note mt-2">Nothing matches these filters.</p> : null}
       </section>
-    </PageShell>
+    </Screen>
   );
 }
 

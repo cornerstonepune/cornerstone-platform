@@ -1,6 +1,5 @@
-import { PageShell } from "@/components/page-shell";
+import { Screen } from "@/components/app-frame";
 import { EmptyState } from "@/components/empty-state";
-import { Crumbs } from "@/components/educator/crumbs";
 import { DataTable } from "@/components/data-table";
 import { Summary } from "@/components/educator/summary";
 import { requireStaff } from "@/lib/auth";
@@ -47,8 +46,7 @@ export default async function SchoolListPage({ searchParams }: { searchParams: P
   const list = await schoolListOf(me, from, to);
   const confirm = list?.lines.filter((l) => l.to_confirm) ?? [];
   return (
-    <PageShell stage={E.area} title={W.schoolTitle} purpose={W.schoolPurpose} action={<span className="text-[length:var(--text-label)] text-[var(--ink-muted)] tabular-nums">{month}</span>} next={{ href: "/educator/materials", label: W.classList }}>
-      <Crumbs trail={[{ label: E.area }, { label: W.nav, href: "/educator/materials" }, { label: W.schoolList }]} />
+    <Screen stage={E.area} title={W.schoolTitle} purpose={W.schoolPurpose} action={<span className="text-[length:var(--text-label)] text-[var(--ink-muted)] tabular-nums">{month}</span>} next={{ href: "/educator/materials", label: W.classList }}>
       {list === null ? (
         <EmptyState>{W.notCoordinator}</EmptyState>
       ) : list.lines.length === 0 ? (
@@ -73,6 +71,6 @@ export default async function SchoolListPage({ searchParams }: { searchParams: P
           </div>
         </>
       )}
-    </PageShell>
+    </Screen>
   );
 }

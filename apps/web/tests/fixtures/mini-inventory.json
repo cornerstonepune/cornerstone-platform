@@ -1,0 +1,81 @@
+{
+  "about": "The two-screen inventory that proves tests/u70-inventory.spec.ts (UI-13): two pages that exist today and sit in the frame. `href` names a control by its address; `external` is a link to a page the inventory does not list (it must open and show a heading).",
+  "merged_slices": [
+    "MINI"
+  ],
+  "slices": [
+    {
+      "id": "MINI",
+      "screens": [
+        "across",
+        "password"
+      ]
+    }
+  ],
+  "bar": [],
+  "screens": [
+    {
+      "id": "across",
+      "route": "/across",
+      "group": "Children",
+      "who": "both",
+      "title": "Across every class",
+      "elements": [
+        {
+          "t": "link",
+          "label": "Check answers",
+          "href": "/capture/check",
+          "external": "/capture/check"
+        },
+        {
+          "t": "link",
+          "label": "next step: Class results",
+          "href": "/growth",
+          "external": "/growth"
+        }
+      ],
+      "rail": [],
+      "phone_gate": false
+    },
+    {
+      "id": "password",
+      "route": "/account/password",
+      "group": "Outside the bar",
+      "who": "both",
+      "title": "Change password",
+      "elements": [
+        {
+          "t": "field",
+          "label": "Your current password"
+        },
+        {
+          "t": "field",
+          "label": "New password"
+        },
+        {
+          "t": "field",
+          "label": "The same password again"
+        },
+        {
+          "t": "button",
+          "label": "Save the new password",
+          "text": "Save the new password"
+        },
+        {
+          "t": "link",
+          "label": "What needs doing →",
+          "href": "/today",
+          "external": "/today"
+        },
+        {
+          "t": "link",
+          "label": "next step: What needs doing",
+          "href": "/today",
+          "external": "/today"
+        }
+      ],
+      "rail": [],
+      "phone_gate": false
+    }
+  ]
+}
