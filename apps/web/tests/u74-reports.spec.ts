@@ -37,7 +37,7 @@ test("an educator sees only their own class's children, each with Sr. No., state
   await page.goto("/children/reports");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Reports");
   const body = await table(page).locator("tbody tr:not(.under)").allInnerTexts();
-  expect(body.length).toBe(Object.keys(rows.children).length);
+  expect(body.length).toBe(Math.min(10, Object.keys(rows.children).length)); // the table pages at 10 rows (rule 3)
   expect(body.join("\n")).not.toContain(rows.otherNames[0]);
   expect(body[0]).toMatch(/Sr\. No\. 1/);
   expect(body[0]).toMatch(/to approve/);
@@ -50,7 +50,7 @@ test("an educator sees only their own class's children, each with Sr. No., state
 
 test("a coordinator sees other classes too, and the class and state filters narrow the rows (3)", async ({ page }) => {
   await page.goto(`/children/reports?class=${rows.section}`);
-  expect(await table(page).locator("tbody tr:not(.under)").count()).toBe(Object.keys(rows.children).length);
+  expect(await table(page).locator("tbody tr:not(.under)").count()).toBe(Math.min(10, Object.keys(rows.children).length));
   await page.goto(`/children/reports?class=${rows.section}&state=approved`);
   expect(await table(page).locator("tbody tr:not(.under)").count()).toBe(1);
   await page.goto(`/children/reports?class=${rows.other ? "U70B" : ""}&state=approved`);
