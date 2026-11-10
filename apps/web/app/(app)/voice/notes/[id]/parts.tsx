@@ -19,7 +19,7 @@ export function Late({ draft, zone }: { draft: Draft; zone: string }) {
   return <StatusChip state="late" round words={n === 1 ? W.facts.late : W.facts.lateDays(n)} />;
 }
 
-export async function Body({ draft, klass, grade, form, send, done }: { draft: Draft; klass: string; grade?: string; form: { href: string; label: string }; send?: (s: Sent) => Promise<{ error: string } | void>; done?: { href: string; label: string } }) {
+export async function Body({ draft, klass, grade, form, send, done, picker }: { draft: Draft; klass: string; grade?: string; form: { href: string; label: string }; send?: (s: Sent) => Promise<{ error: string } | void>; done?: { href: string; label: string }; picker?: boolean }) {
   if (draft.status === "confirmed") return <EmptyState next={done ?? { href: "/today?open=notes", label: W.groups.notes }}>{W.confirm.done}.</EmptyState>;
   if (draft.status === "left_unconfirmed") return <EmptyState next={{ href: "/today", label: W.back }}>{W.confirm.expired}</EmptyState>;
   if (draft.status === "received")
@@ -56,7 +56,7 @@ export async function Body({ draft, klass, grade, form, send, done }: { draft: D
         <h2 className="mb-2 text-[16px]">{W.confirm.heard}</h2>
         <Heard draft={draft} />
       </section>
-      <Board start={fromDraft(draft)} enrolled={draft.enrolled} klass={klass} activities={[...activities]} today={today} draft={draft} button={W.confirm.button} send={send ?? confirmNote.bind(null, draft.note_id)} />
+      <Board start={fromDraft(draft)} enrolled={draft.enrolled} klass={klass} activities={[...activities]} today={today} draft={draft} button={W.confirm.button} send={send ?? confirmNote.bind(null, draft.note_id)} picker={picker} lines={picker ? draft.lines.filter((l) => l.said && (MARKS as readonly string[]).includes(l.section) && l.numbers.length) : []} />
     </div>
   );
 }
