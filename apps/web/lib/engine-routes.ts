@@ -96,7 +96,7 @@ export type EngineRoutes = {
   "POST /paper/{qr}/remove": { by: string; item_id: string; at?: number | null };
   "POST /papers/absent": { qr: string; away: boolean; by: string };
   "POST /papers/given": { qrs: string[]; on: string; by: string };
-  "POST /papers/make": { section: string; week: string; kind: string; way: string; children: string[]; areas?: { skill_set: string; level: string; n: number }[]; changed?: Record<string, { skill_set: string; level: string; n?: number | null }[]>; draw?: number; by: string; once: string; seen: string };
+  "POST /papers/make": { section: string; week: string; kind: string; way: string; children: string[]; areas?: { skill_set: string; level: string; n: number }[]; changed?: Record<string, { skill_set: string; level: string; n?: number | null }[]>; draw?: number; by: string; once: string; seen: string; approve?: boolean };
   "POST /papers/plan": { section: string; week: string; kind: string; way: string; children: string[]; areas?: { skill_set: string; level: string; n: number }[]; changed?: Record<string, { skill_set: string; level: string; n?: number | null }[]>; draw?: number };
   "POST /read/file": { url: string; actor: string; again?: boolean };
   "POST /read/run/{run_id}/again": { by: string };
@@ -122,12 +122,14 @@ export type EngineRoutes = {
   "POST /timetable/unmatched": { actor: string; fortnight?: number | null; band?: string | null };
   "POST /timetable/week": { actor: string; class_id?: string | null; day?: string | null; week_of?: string | null; period_id?: string | null };
   "POST /voice/class": { actor: string; class_id: string; day?: string | null };
+  "POST /voice/class-notes": { actor: string; class_id: string; day?: string | null };
   "POST /voice/cleanup": null;
   "POST /voice/form": { actor: string; activity: string; level: number; lists?: Record<string, string[]>; rest?: boolean; day?: string | null; class_id: string };
   "POST /voice/notes": null;
   "POST /voice/notes/audio": { actor: string; note_id: string };
   "POST /voice/notes/confirm": { actor: string; activity: string; level: number; lists?: Record<string, string[]>; rest?: boolean; day?: string | null; note_id: string };
   "POST /voice/notes/draft": { actor: string; note_id: string };
+  "POST /voice/notes/typed": { actor: string; class_id: string; session_id?: string | null };
   "POST /voice/observations/correct": { actor: string; observation_id: string; outcome: "above" | "as_expected" | "below" | "not_willing" | "absent"; reason: string };
   "POST /voice/queue": { actor: string };
   "POST /week/approve": { section: string; week: string; kind?: string; by: string };
