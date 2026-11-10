@@ -24,7 +24,9 @@ import { Stepper } from "@/components/stepper";
 import { StatusChip, type State } from "@/components/status-chip";
 import { Timeline } from "@/components/timeline";
 import { Trend } from "@/components/trend";
+import { KanbanBoard, ViewToggle } from "@/components/kanban-board";
 import { GridSample } from "./grid-sample";
+import { PeekSample } from "./peek-sample";
 
 // Sample data for every block: it lives here, never in a database row. Names are from the fake-names list
 // (docs/frontend/wireframes/fake-names.json): the repository is public.
@@ -133,6 +135,27 @@ export function sampleOf(name: string, q: Record<string, string | undefined>, me
           </ul>
         </div>
       );
+    case "KanbanBoard":
+      return (
+        <div className="b-sample">
+          <ViewToggle current="board" views={[
+            { key: "table", label: "Table", icon: "table", href: "/setup/blocks?open=KanbanBoard&view=table" },
+            { key: "board", label: "Board", icon: "board", href: "/setup/blocks?open=KanbanBoard&view=board" },
+          ]} />
+          <KanbanBoard lanes={[
+            { key: "now", label: "Do now", state: "overdue", count: 1, empty: "Nothing is late.", cards: [
+              { key: "n1", kind: "note", title: "Counting in tens with bundles", sub: "Voice note · 3 children named", href: "/setup/blocks?open=KanbanBoard", state: "overdue", note: "2 days waiting" },
+            ] },
+            { key: "week", label: "This week", state: "toConfirm", count: 2, empty: "Nothing waits.", cards: [
+              { key: "n2", kind: "note", title: "Story circle: the lost mitten", sub: "Form · 5 children named", href: "/setup/blocks?open=KanbanBoard", state: "toConfirm" },
+              { key: "n3", kind: "note", title: "Leaf printing", sub: "Voice note · 2 children named", href: "/setup/blocks?open=KanbanBoard", state: "toConfirm" },
+            ] },
+            { key: "done", label: "Done", state: "done", count: 0, empty: "Nothing confirmed yet this week.", cards: [] },
+          ]} />
+        </div>
+      );
+    case "ChildPeek":
+      return <PeekSample first={q.peek} />;
     case "BrandMark":
       return <BrandMark size="large" />;
     case "AppFrame":

@@ -10,6 +10,9 @@ import {
   AudioLines,
   Bandage,
   Blocks,
+  Columns3,
+  History,
+  Table,
   CalendarClock,
   CalendarDays,
   CalendarRange,
@@ -151,6 +154,10 @@ export const ICONS = {
   upload: Upload,
   moved: MoveRight,
   clash: TriangleAlert,
+  close: X,
+  table: Table,
+  board: Columns3,
+  history: History,
 } satisfies Record<string, LucideIcon>;
 export type IconName = keyof typeof ICONS;
 

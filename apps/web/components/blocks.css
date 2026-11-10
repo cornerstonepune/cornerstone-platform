@@ -175,4 +175,30 @@
   .b-logo .b-ground[data-ground="dark"] { background: var(--brand-basalt); }
   .b-logo img { height: 64px; width: auto; max-width: 100%; }
   .b-sample { padding: var(--space-3) 0 var(--space-1); display: grid; gap: var(--space-3); }
+
+  /* ---------- KanbanBoard, ChildPeek and the pieces beside them (kit revision 1) ---------- */
+  .b-seg { display: inline-flex; gap: var(--space-0); padding: var(--space-0); border-radius: var(--radius-control); background: var(--surface); }
+  .b-seg [role="tab"] { display: inline-flex; align-items: center; gap: var(--space-1); min-height: 40px; padding: 0 var(--space-3); border-radius: var(--radius-control); color: var(--ink-muted); font-size: var(--text-label); font-weight: 600; text-decoration: none; }
+  .b-seg [aria-selected="true"] { background: var(--panel); color: var(--ink); box-shadow: var(--shadow-card); }
+  .b-count { min-width: 28px; height: 28px; padding: 0 var(--space-2); border-radius: var(--radius-pill); background: var(--cb, var(--surface)); color: var(--c, var(--ink)); font-size: var(--text-label); font-weight: 600; line-height: 28px; text-align: center; margin-left: auto; }
+  .b-kanban { display: grid; grid-template-columns: repeat(var(--lanes, 3), minmax(220px, 1fr)); gap: var(--space-3); align-items: start; overflow-x: auto; padding-bottom: var(--space-1); }
+  .b-lane { display: grid; gap: var(--space-2); align-content: start; min-width: 0; padding: var(--space-2); border-radius: var(--radius-card); background: var(--surface); }
+  .b-lane-h { display: flex; align-items: center; gap: var(--space-1); margin: 0; padding: var(--space-1) var(--space-1) var(--space-1) var(--space-2); font-size: var(--text-body); font-weight: 600; color: var(--c, var(--ink)); }
+  .b-lane-b { display: grid; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
+  .b-kcard { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--space-1) var(--space-2); align-items: start; min-height: var(--tap); padding: var(--space-2); border-radius: var(--radius-control); background: var(--panel); box-shadow: var(--shadow-card); color: var(--ink); text-decoration: none; }
+  .b-kcard b { font-weight: 600; }
+  .b-kcard .b-sub { display: block; font-size: var(--text-label); font-weight: 400; color: var(--ink-muted); }
+  .b-kcard [data-status] { grid-column: 2; justify-self: start; }
+  .b-lane-empty { padding: var(--space-3) var(--space-2); color: var(--ink-muted); font-size: var(--text-label); }
+  .b-nchips { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
+  .b-nchip { display: inline-flex; align-items: center; gap: var(--space-1); min-height: var(--tap); padding: 0 var(--space-2); border: 0; border-radius: var(--radius-pill); background: var(--kind-child-bg); color: var(--kind-child); font-size: var(--text-label); font-weight: 600; cursor: pointer; }
+  .b-nchip .b-no { font-weight: 400; color: var(--ink-muted); }
+  .b-peek { display: grid; gap: var(--space-3); padding: var(--space-3); border-radius: var(--radius-card); background: var(--panel); box-shadow: var(--shadow-card), inset 0 3px 0 var(--kind-child); }
+  .b-peek-h { display: flex; align-items: center; gap: var(--space-2); }
+  .b-peek-h .b-who { display: grid; flex: 1; min-width: 0; }
+  .b-peek-h .b-who b { font-size: var(--text-title-small); }
+  .b-iconbtn { display: inline-grid; place-items: center; width: var(--tap); height: var(--tap); border: 0; border-radius: var(--radius-control); background: transparent; color: var(--ink); cursor: pointer; }
+  .b-peek .b-tli:first-child { border-top: 0; padding-top: 0; }
+  .b-peek .b-tli:last-child { border-bottom: 0; }
+  .b-peek-more { justify-self: start; }
 }
