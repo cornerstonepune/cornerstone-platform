@@ -154,11 +154,13 @@ def start(tenant, path: Path, actor: str, pages: int | None = None, of_run: str 
     keeps the uploader of the run it reads again, none if that had none (goals/own_who_sees_answers.yaml)."""
     with db.connect() as conn:
         _one_at_a_time(conn, path.name)
+        # the email the site signed the upload for, looked up through the one logged door the engine's role may use
+        # (`staff_of_email`): the engine never reads `pii.staff` itself
         run = conn.execute(
             "insert into flow_run (tenant_id, flow, trigger, result, uploaded_by)"
             " select %s, %s, %s, %s::jsonb,"
-            " case when %s::uuid is null then (select p.staff_id from pii.staff p join staff s on s.id = p.staff_id"
-            " and s.active where p.tenant_id = %s and p.email = lower(btrim(%s)))"
+            " case when %s::uuid is null then (select id from staff where id = (select public.staff_of_email(%s))"
+            " and tenant_id = %s and active)"
             " else (select uploaded_by from flow_run where id = %s::uuid) end"
             f" where not exists (select 1 from flow_run where flow = %s and status = 'running' and {_FILE} = %s)"
             " returning id",
@@ -168,8 +170,8 @@ def start(tenant, path: Path, actor: str, pages: int | None = None, of_run: str 
                 f"{actor}: {path.name}",
                 json.dumps({"pages": pages, "file": path.name}),
                 of_run,
-                tenant,
                 actor,
+                tenant,
                 of_run,
                 FLOW,
                 path.name,

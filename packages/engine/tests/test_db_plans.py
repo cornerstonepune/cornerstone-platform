@@ -112,3 +112,21 @@ def test_the_websites_class_loaders_ask_for_answers_by_equality():
     assert "answers(sql`a.child_id in (" not in source, (
         "a.child_id = any(array(select …)) reaches below the view's grouping"
     )
+
+
+def test_a_classs_children_are_found_from_the_class_not_by_reading_every_childs_enrolments(conn):
+    """`child_now` gives each child the class of their open enrolment. Written as one "latest enrolment" lateral per
+    child, asking for a class's children read the enrolments of every child in the school, once per class asked:
+    `class_band`, which a page asks for each class, made the topics query 19 s against 2.4 s from `child` at 43 classes
+    (PR #561's browser shards, 10 Nov 2026). The open enrolments are read from the class's own (`enrolment_class_idx`)."""
+    tenant = conn.execute("select id from tenant limit 1").fetchone()["id"]
+    for k in range(40):
+        for roll in range(1, 11):
+            a_child_in(conn, f"PLAN-{k}", "G2", str(roll), tenant)
+    conn.execute("analyze child")
+    conn.execute("analyze enrolment")
+    conn.execute("analyze school_class")
+    plan = _plan_analyzed(conn, "select id from child_now where active and section = 'PLAN-7'")
+    assert plan["Actual Rows"] == 10
+    open_read = _rows_read(plan, "enrolment") - _rows_read(_plan_analyzed(conn, "select 1"), "enrolment")
+    assert open_read <= 10 + 1, "only the class's own enrolments are read, never one per child in the school"
