@@ -62,6 +62,13 @@ function buildable(e: Element, c: Ctx) {
 
 /** Brings the page into a state in which a conditional control exists: a child chosen, a filter on. [] when it did; the reason when it could not. */
 export async function reveal(page: Page, when: When): Promise<string | null> {
+  // a state the address holds ("?view=table"): the same screen with those parameters set, as a person's own click on a tab would leave it
+  if (when.startsWith("?")) {
+    const u = new URL(page.url());
+    for (const [k, v] of new URLSearchParams(when)) u.searchParams.set(k, v);
+    await page.goto(u.pathname + u.search, { waitUntil: "domcontentloaded" });
+    return null;
+  }
   if (when === "peek") {
     const opener = page.locator("main [data-peek-open]").first();
     await opener.waitFor({ timeout: 10_000 }).catch(() => undefined); // the page streams: the rows may arrive after the load event

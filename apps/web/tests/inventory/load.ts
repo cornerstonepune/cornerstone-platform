@@ -6,7 +6,7 @@ import path from "node:path";
 
 /** `data`: the controls that carry this attribute (a graph node, a table row's link) are this element, however many there are. `when`: the control is not on the page at rest. `peek`: after a child is chosen; `filtered`: once a filter is on (the chips and Clear);
  *  `paged`: only when the rows pass one page. The checker brings the page into that state before it asks for the control. */
-export type When = "peek" | "filtered" | "paged";
+export type When = "peek" | "filtered" | "paged" | `?${string}`;
 export type Element = { t: string; label: string; to?: string; href?: string; text?: string; external?: string; for?: "educator" | "coordinator"; note?: string; effect?: string; when?: When; data?: string; roles?: ("educator" | "coordinator")[] };
 export type Screen = {
   id: string;

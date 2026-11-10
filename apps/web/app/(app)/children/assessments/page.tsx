@@ -1,5 +1,5 @@
 import Link from "@/components/link";
-import { Screen } from "@/components/app-frame";
+import { Rail, Screen } from "@/components/app-frame";
 import { AttentionStrip } from "@/components/attention-strip";
 import { DataTable } from "@/components/data-table";
 import { EmptyState } from "@/components/empty-state";
@@ -100,7 +100,7 @@ export default async function AssessmentsPage({ searchParams }: Props) {
   });
 
   const columns: Column<(typeof rows)[number]>[] = [
-    { key: "name", label: "Assessment", value: (r) => r.a.name, cell: (r) => <Link href={assessmentHref(r.key)}>{r.a.name}</Link> },
+    { key: "name", label: "Assessment", value: (r) => r.a.name, cell: (r) => <Link href={assessmentHref(r.key)} data-assessment-row="">{r.a.name}</Link> },
     { key: "class", label: "Class", width: "7rem", value: (r) => [r.a.band ? g.name(r.a.band) : null, r.a.section].filter(Boolean).join(" · ") },
     { key: "back", label: "Papers back", num: true, width: "8rem", value: (r) => papersBack(r.a) },
     { key: "waits", label: "Waits for", status: true, width: "13rem", value: (r) => r.w.words, cell: (r) => <StatusChip state={r.w.state} words={r.w.words} /> },
@@ -111,7 +111,7 @@ export default async function AssessmentsPage({ searchParams }: Props) {
       width: "11rem",
       value: (r) => r.w.action.label,
       cell: (r) => (
-        <Link href={r.key === mainRow?.key ? paperOrAssessment(r.key, mainRow, judgeHref) : assessmentHref(r.key)} className={`btn ${r.key === mainRow?.key ? "" : "secondary"}`} data-ux={r.key === mainRow?.key ? "action" : undefined}>
+        <Link href={r.key === mainRow?.key ? paperOrAssessment(r.key, mainRow, judgeHref) : assessmentHref(r.key)} className={`btn ${r.key === mainRow?.key ? "" : "secondary"}`} data-assessment-next="" data-ux={r.key === mainRow?.key ? "action" : undefined}>
           {r.w.action.label}
         </Link>
       ),
@@ -126,6 +126,17 @@ export default async function AssessmentsPage({ searchParams }: Props) {
       stage="Grades 1 to 4 · your classes"
       title="Assessments"
       purpose="Each one goes through seven steps. Its row shows the step it waits at and the one thing to do next."
+      rail={
+        <Rail
+          edges={[
+            ...(judging ? [{ screen: "paper", href: judgeHref, label: "Answers to check", icon: "correct" as const }] : []),
+            ...(week && week.w.action.kind === "approve" ? [{ screen: "assessment", href: assessmentHref(week.key), label: "Pack to approve", icon: "assessment" as const }] : []),
+            ...(done ? [{ screen: "child", params: { id: "" }, label: "A child with results in", icon: "child" as const }] : []),
+            { screen: "skill", params: { code: "" }, label: "The skills tested", icon: "skill" },
+            { screen: "bank", label: "Question bank", icon: "skill" },
+          ]}
+        />
+      }
     >
       <AttentionStrip
         tiles={[
@@ -135,7 +146,7 @@ export default async function AssessmentsPage({ searchParams }: Props) {
         ]}
       />
       <div className="my-4 grid items-stretch gap-4 lg:grid-cols-2" data-block="Cards">
-        <MakeCard />
+        <MakeCard main={!mainRow} />
         <ReadBox read={q.read} why={q.why} pages={q.pages} reading={scans.some((s) => s.status === "running")} from={HERE} />
       </div>
       {q.said ? <p role="status" className="mb-3 p-3">{q.said}</p> : null}

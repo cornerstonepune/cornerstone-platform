@@ -90,8 +90,8 @@ export default async function PaperPage({ params, searchParams }: Props) {
           edges={[
             { screen: "child", params: { id: sheet.child_id ?? "" }, label: "This child", icon: "child" },
             { screen: "skill", params: { code: set ?? "" }, label: "The skill", icon: "skill" },
-            { screen: "assessment", params: { key }, label: "The assessment", icon: "assessment" },
-            ...(next ? [{ screen: "paper", params: { key, roll: next.roll_no ?? "" }, label: "The next paper to check", icon: "correct" as const }] : []),
+            { screen: "assessment", href: assessmentHref(key), label: "The assessment", icon: "assessment" },
+            ...(next ? [{ screen: "paper", href: paperHref(key, next.roll_no ?? ""), label: "The next paper to check", icon: "correct" as const }] : []),
           ]}
         />
       }

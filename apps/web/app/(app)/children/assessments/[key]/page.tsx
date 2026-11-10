@@ -146,9 +146,10 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
       rail={
         <Rail
           edges={[
-            { screen: "assessments", label: "All assessments", icon: "assessment" },
+            { screen: "assessments", href: "/children/assessments", label: "All assessments", icon: "assessment" },
             { screen: "skill", params: { code: a.set ?? "" }, label: "The skills", icon: "skill" },
             { screen: "picture", params: { class: a.section ?? "" }, label: "The class picture", icon: "class" },
+            ...(shown.find((x) => x.p.roll_no && x.grp.key !== "replaced") ? [{ screen: "paper", href: paperHref(key, shown.find((x) => x.p.roll_no && x.grp.key !== "replaced")!.p.roll_no!), label: "A child's paper", icon: "correct" as const }] : []),
           ]}
         />
       }

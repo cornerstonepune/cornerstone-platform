@@ -28,7 +28,7 @@ export function KanbanBoard({ lanes }: { lanes: readonly Lane[] }) {
               <ul className="b-lane-b">
                 {l.cards.map((c) => (
                   <li key={c.key}>
-                    <Link href={c.href} className="b-kcard" data-kind={c.kind} data-press="">
+                    <Link href={c.href} className="b-kcard" data-kcard="" data-kind={c.kind} data-press="">
                       <KindTile kind={c.kind} />
                       <span>
                         <b>{c.title}</b>

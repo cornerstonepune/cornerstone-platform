@@ -2121,72 +2121,98 @@
           "t": "link",
           "label": "do now tile",
           "to": "paper",
-          "note": "the first paper with answers to judge"
+          "note": "the first paper with answers to judge",
+          "text": "Do now"
         },
         {
           "t": "link",
           "label": "this week tile",
           "to": "assessment",
-          "note": "the first pack to approve"
+          "note": "the first pack to approve",
+          "text": "This week"
         },
         {
           "t": "link",
           "label": "results in tile",
-          "to": "assessment"
+          "to": "assessment",
+          "text": "Done"
         },
         {
           "t": "button",
           "label": "Make: For a class",
           "to": "assessment",
-          "effect": "creates the assessment at step Created, then opens it"
+          "effect": "creates the assessment at step Created, then opens it",
+          "text": "For a class"
         },
         {
           "t": "button",
           "label": "Make: For each child",
           "to": "assessment",
-          "effect": "creates the assessment at step Created, then opens it"
+          "effect": "creates the assessment at step Created, then opens it",
+          "text": "For each child"
         },
         {
           "t": "button",
           "label": "Make: For one child",
           "to": "assessment",
-          "effect": "creates the assessment at step Created, then opens it"
+          "effect": "creates the assessment at step Created, then opens it",
+          "text": "For one child"
         },
         {
           "t": "button",
           "label": "Make: A ready-made worksheet",
           "to": "assessment",
-          "effect": "creates the assessment at step Created, then opens it"
+          "effect": "creates the assessment at step Created, then opens it",
+          "text": "A ready-made worksheet"
         },
         {
           "t": "upload",
           "label": "Read: choose scans or drop them",
-          "effect": "pdf/jpg/png/heic; the QR names the sheet; a paper appears at Uploaded; a file with no QR shows 'could not find the QR' and nothing is written"
+          "effect": "pdf/jpg/png/heic; the QR names the sheet; a paper appears at Uploaded; a file with no QR shows 'could not find the QR' and nothing is written",
+          "text": "Choose scans"
         },
         {
           "t": "field",
           "label": "a Google Drive link",
-          "note": "a non-Drive address shows a message"
+          "note": "a non-Drive address shows a message",
+          "text": "Link to the scan on Google Drive"
         },
         {
           "t": "button",
           "label": "Read it",
-          "effect": "the Drive file is fetched and read as above"
+          "effect": "the Drive file is fetched and read as above",
+          "text": "Read it",
+          "drive": {
+            "fill": {
+              "Link to the scan on Google Drive": "https://example.com/not-drive"
+            },
+            "expect": {
+              "text": [
+                "Paste the link to the scan on Google Drive"
+              ]
+            }
+          }
         },
         {
           "t": "filter",
-          "label": "class · topic · subject · kind · week · stage"
+          "label": "class · topic · subject · kind · week · stage",
+          "text": "Class",
+          "data": "data-filter"
         },
         {
           "t": "row",
           "label": "each assessment row",
-          "to": "assessment"
+          "to": "assessment",
+          "data": "data-assessment-row",
+          "when": "?view=table"
         },
         {
           "t": "link",
           "label": "each row's next action",
           "to": "assessment",
-          "note": "lands on the step's action"
+          "note": "lands on the step's action",
+          "data": "data-assessment-next",
+          "when": "?view=table"
         },
         {
           "t": "link",
@@ -2221,17 +2247,21 @@
         {
           "t": "tab",
           "label": "Board",
-          "note": "the assessments as lanes; the address carries the tab"
+          "note": "the assessments as lanes; the address carries the tab",
+          "text": "Board"
         },
         {
           "t": "tab",
           "label": "Table",
-          "note": "the assessments as rows"
+          "note": "the assessments as rows",
+          "text": "Table"
         },
         {
           "t": "row",
           "label": "each card on the board",
-          "to": "assessment"
+          "to": "assessment",
+          "data": "data-kcard",
+          "when": "?view=board"
         }
       ],
       "rail": [
