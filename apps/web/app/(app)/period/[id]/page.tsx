@@ -6,7 +6,7 @@ import { EmptyState } from "@/components/empty-state";
 import { PeekChip, PeekHost } from "@/components/peek-names";
 import { Rail, Screen, type Edge } from "@/components/app-frame";
 import { StackBar } from "@/components/stack-bar";
-import { type State } from "@/components/status-chip";
+import { type OutcomeState } from "@/components/status-chip";
 import { requireStaff } from "@/lib/auth";
 import { sql } from "@/lib/db";
 import { pageOf } from "@/lib/educator/data";
@@ -20,7 +20,7 @@ import { classWords } from "@/lib/voice-types";
 // the activity), how the class did the last time it ran, and the steps, what to lay out and what to watch for. A fixed part of
 // the day has no activity, so no capture controls: it says "Nothing to record here".
 const UUID = /^[0-9a-f-]{36}$/;
-const OUTCOMES: [string, State][] = [["above", "outcomeAbove"], ["as_expected", "outcomeAsExpected"], ["below", "outcomeBelow"], ["not_willing", "outcomeNotWilling"], ["absent", "outcomeAbsent"]];
+const OUTCOMES: [string, OutcomeState][] = [["above", "outcomeAbove"], ["as_expected", "outcomeAsExpected"], ["below", "outcomeBelow"], ["not_willing", "outcomeNotWilling"], ["absent", "outcomeAbsent"]];
 
 export default async function Period({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;

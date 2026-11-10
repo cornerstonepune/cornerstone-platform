@@ -8,7 +8,7 @@ import { ICON_SIZE, Icon, type IconName } from "@/lib/icons";
 export type Tone = "ok" | "wait" | "act" | "quiet";
 /** A state is its tone (the colour), its words and its icon: a row without an icon does not compile. `look: "unseen"` is
  *  grey on the panel colour with a dashed edge (a child not seen yet). */
-export type StateRow = { tone: Tone; words: string; icon: IconName; look?: "unseen"; /** `false`: drawn on the screens, left out of the gallery's legend (UI-3a: the legend's height moves every picture below it) */ legend?: false };
+export type StateRow = { tone: Tone; words: string; icon: IconName; look?: "unseen" };
 // A child's growth on a skill is drawn by a tree, a leaf and a sprout. The school's words for it are the engine's rows
 // (`child_state`, read by lib/states.ts), so no page types them: a row's key here is the state's own code and its words
 // are that key, never a second copy (test_states_and_subject.py).
@@ -79,14 +79,21 @@ export const STATES = {
   notDone: { tone: "quiet", words: "not done", icon: STATUS_ICONS.quiet },
   holiday: { tone: "quiet", words: "holiday", icon: "frozen" },
   overdue: { tone: "act", words: "overdue", icon: "late" },
-  // what a child showed on an activity (observation_outcome); the screens pass the school's own words
-  outcomeAbove: { tone: "ok", words: "above", icon: "above", legend: false },
-  outcomeAsExpected: { tone: "ok", words: "as expected", icon: "as-expected", legend: false },
-  outcomeBelow: { tone: "wait", words: "below", icon: "below", legend: false },
-  outcomeNotWilling: { tone: "wait", words: "not willing", icon: "not-willing", legend: false },
-  outcomeAbsent: { tone: "quiet", words: "absent", icon: "absent", legend: false },
 } as const satisfies Record<string, StateRow>;
 export type State = keyof typeof STATES;
+
+// What a child showed on an activity (the school's `observation_outcome` rows; the screens pass its own words). Not in STATES:
+// the gallery's legend draws every STATES row, and a longer legend moves every picture below it. The chip and the stacked bar
+// take either kind.
+export const OUTCOME_STATES = {
+  outcomeAbove: { tone: "ok", words: "above", icon: "above" },
+  outcomeAsExpected: { tone: "ok", words: "as expected", icon: "as-expected" },
+  outcomeBelow: { tone: "wait", words: "below", icon: "below" },
+  outcomeNotWilling: { tone: "wait", words: "not willing", icon: "not-willing" },
+  outcomeAbsent: { tone: "quiet", words: "absent", icon: "absent" },
+} as const satisfies Record<string, StateRow>;
+export type OutcomeState = keyof typeof OUTCOME_STATES;
+export const rowOf = (state: State | OutcomeState): StateRow => (state in OUTCOME_STATES ? OUTCOME_STATES[state as OutcomeState] : STATES[state as State]);
 
 const GREEN = "text-[var(--state-ok)] bg-[var(--state-ok-bg)] border-[var(--state-ok)]";
 const AMBER = "text-[var(--state-wait)] bg-[var(--state-wait-bg)] border-[var(--state-wait)]";
@@ -101,8 +108,8 @@ const LOOK: Record<Tone, string> = { ok: "ok", wait: "wait", act: "late", quiet:
 /** `round`: a piece of work on the K2 screens (the agreed design: work is a round chip, a child a square cell).
  *  `onTint`: the chip sits on a tinted cell or square (a subject's, a child's): the fill is the panel colour with the 1 px
  *  ring in the state's colour, because a state's fill and a subject's fill can be within 5 of each other (CIE76). */
-export function StatusChip({ state, note, words, compact, round, onTint }: { state: State; note?: string; words?: string; compact?: boolean; round?: boolean; onTint?: boolean }) {
-  const s: StateRow = STATES[state];
+export function StatusChip({ state, note, words, compact, round, onTint }: { state: State | OutcomeState; note?: string; words?: string; compact?: boolean; round?: boolean; onTint?: boolean }) {
+  const s: StateRow = rowOf(state);
   const unseen = s.look === "unseen";
   const fill = onTint || unseen ? "!bg-[var(--panel)]" : "";
   return (

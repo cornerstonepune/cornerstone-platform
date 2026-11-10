@@ -1,14 +1,14 @@
-import { STATES, type State, type StateRow } from "./status-chip";
+import { rowOf, type OutcomeState, type State } from "./status-chip";
 import { StatusChip } from "./status-chip";
 
 const LOOK = { ok: "ok", wait: "wait", act: "late", quiet: "quiet" } as const;
-export const lookOf = (s: State) => ((STATES[s] as StateRow).look ?? LOOK[STATES[s].tone]);
+export const lookOf = (s: State | OutcomeState) => (rowOf(s).look ?? LOOK[rowOf(s).tone]);
 
 /** One bar split by state, each part's length its count; with a key of counts. No children: its empty words, no bar. */
-export function StackBar({ parts, empty = "No children counted yet" }: { parts: readonly { state: State; n: number; words?: string }[]; empty?: string }) {
+export function StackBar({ parts, empty = "No children counted yet" }: { parts: readonly { state: State | OutcomeState; n: number; words?: string }[]; empty?: string }) {
   const total = parts.reduce((t, p) => t + p.n, 0);
   if (total === 0) return <p data-block="StackBar" data-empty className="b-chart-empty">{empty}</p>;
-  const say = (p: { state: State; n: number; words?: string }) => `${p.n} ${p.words ?? STATES[p.state].words}`;
+  const say = (p: { state: State | OutcomeState; n: number; words?: string }) => `${p.n} ${p.words ?? rowOf(p.state).words}`;
   const words = parts.map(say);
   return (
     <div data-block="StackBar" className="b-stack">
