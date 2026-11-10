@@ -246,6 +246,31 @@ test("12 · grouping by state puts a heading and a count over each group and the
   await edu.close();
 });
 
+test("13 · tapping a child opens ChildPeek with their history; Escape closes it and focus returns; Open the child lands on their page", async ({ browser }) => {
+  const edu = await asEducator(browser);
+  const p = await edu.newPage();
+  await p.goto(skillUrl(0));
+  const square = p.locator("[data-block=ClassGrid] [data-peek-open='1']").first();
+  await square.click();
+  const peek = p.locator("[data-block=ChildPeek]");
+  await expect(peek).toBeVisible();
+  await expect(peek).toContainText(NAMES_A[0]);
+  // the child was seen on several days: the history lists them newest first, each with who and when
+  await expect(peek.locator(".b-tli").first()).toBeVisible();
+  const dates = await peek.locator(".b-tli .b-caption").allInnerTexts();
+  expect(dates.length).toBeGreaterThan(1);
+  const ms = dates.map((d) => Date.parse(d.replace(/-/g, " ")));
+  expect(ms).toEqual([...ms].sort((a, b) => b - a));
+  await expect(peek.locator(".b-tli p").first()).toContainText(/·/);
+  await p.keyboard.press("Escape");
+  await expect(peek).toHaveCount(0);
+  await expect(square).toBeFocused();
+  await square.click();
+  await peek.getByRole("link", { name: /open the child/i }).click();
+  await expect(p).toHaveURL(new RegExp(`/children/${classA}/1$`));
+  await edu.close();
+});
+
 test("14 · the spark draws only recorded fortnights: none yet, so its empty words and no line", async ({ browser }) => {
   const edu = await asEducator(browser);
   const p = await edu.newPage();

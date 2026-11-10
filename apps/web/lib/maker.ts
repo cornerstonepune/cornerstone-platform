@@ -135,10 +135,10 @@ export type Made = { qrs: string[]; already: boolean };
  *  however often it is sent — or why not: a batch whose questions changed since it was shown prints nothing.
  *  `unsure` when the engine did not answer: it may have made them after the website stopped waiting, so the same form
  *  is offered again, which makes them once or shows them made (code review, 2026-09-30). */
-export async function makeBatch(b: Batch, by: string, once: string, seen: string): Promise<{ made: Made } | { why: string; unsure: boolean }> {
+export async function makeBatch(b: Batch, by: string, once: string, seen: string, approve = true): Promise<{ made: Made } | { why: string; unsure: boolean }> {
   let res: Response;
   try {
-    res = await engineSend("/papers/make", { ...b, by, once, seen });
+    res = await engineSend("/papers/make", { ...b, by, once, seen, ...(approve ? {} : { approve: false }) });
   } catch (e) {
     if (!(e instanceof EngineDown)) throw e;
     const why = `${e.message} It may only have been slow, and made them: make them again with this same form, which never makes them twice, or look in Papers.`;

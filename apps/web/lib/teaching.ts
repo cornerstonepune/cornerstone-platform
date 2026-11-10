@@ -4,13 +4,13 @@
 import type { Session } from "./auth";
 import { sql } from "./db";
 import { PART_KEYS, type PagePart } from "./page-part";
+import { pictureOf } from "./children-picture";
+import type { Counts } from "./children-view";
+import { SECURE, UNSEEN, type Bucket } from "./looks";
 import { seesClass } from "./reach";
 import { schoolZone } from "./school-clock";
 
 export type Me = Pick<Session, "email" | "role" | "classes" | "subjects" | "id">;
-/** How a seen state looks, by the colour of its `child_state` row alone (no state is named in code): green, amber, or any other. */
-export type Look = "green" | "amber" | "other";
-export const lookOfColour = (colour: string): Look => (colour === "green" ? "green" : colour === "amber" ? "amber" : "other");
 
 // built when asked, never at import: `next build` loads every route with no database
 const current = () => sql`not exists (select 1 from activity_observation s where s.supersedes = o.id)`;
@@ -80,7 +80,8 @@ export async function objectiveOf(me: Me, code: string): Promise<ObjectivePage |
 
 // ---- Skill ---------------------------------------------------------------------------------------------------------
 
-export type Kid = { id: string; roll: string; name: string; look: Look | "unseen" };
+/** A child of the class on one skill: where they stand on it, and how they stand over every skill the class was seen on (the peek's chips). */
+export type Kid = { id: string; roll: string; name: string; look: Bucket; counts: Counts };
 export type SkillPage = {
   code: string;
   name: string;
@@ -104,27 +105,19 @@ export async function skillOf(me: Me, code: string, classId: string | undefined)
   const classes = await sql<{ id: string; section: string }[]>`select c.id, c.label as section from school_class c where ${seesClass(me, sql`c.label`)} order by c.label`;
   const cls = classId ? (classes.find((c) => c.id === classId) ?? null) : classes.length === 1 ? classes[0] : null;
   const kids: Kid[] = [];
-  if (cls) {
-    const children = await sql<{ id: string; roll: string; name: string }[]>`
-      select c.id, c.roll_no as roll, concat_ws(' ', n.first_name, n.last_name) as name
-      from child_now c cross join lateral pii.read_child(c.id, ${me.email}) n
-      where c.class_id = ${cls.id}::uuid and c.active`;
-    // a class that has observed states (K2) is read on those; otherwise on the written ones. Each statement names its kind.
-    const ids = children.map((c) => c.id);
-    type StateRow = { child_id: string; colour: string };
-    let states = await sql<StateRow[]>`
-      select s.child_id, cs.colour from child_skill_state s join child_state cs on cs.tenant_id = s.tenant_id and cs.code = s.state
-      where s.kind = 'observed' and s.skill_code = ${code} and s.child_id = any(${ids}::uuid[])`;
-    if (!states.length)
-      states = await sql<StateRow[]>`
-        select s.child_id, cs.colour from child_skill_state s join child_state cs on cs.tenant_id = s.tenant_id and cs.code = s.state
-        where s.kind = 'written' and s.skill_code = ${code} and s.child_id = any(${ids}::uuid[])`;
-    for (const c of children) {
-      const s = states.find((x) => x.child_id === c.id);
-      kids.push({ ...c, look: s ? lookOfColour(s.colour) : "unseen" });
+  // the class picture's reader (UI-3b) holds the class, its children and their states; the skill is one column of it
+  const pic = cls ? await pictureOf(me, cls.id) : null;
+  for (const k of pic?.kids ?? []) {
+    const row = pic!.cells.get(k.id);
+    const counts = { secure: 0, practising: 0, unseen: 0 };
+    for (const cell of row?.values() ?? []) {
+      if (cell.look === SECURE) counts.secure++;
+      else counts.practising++;
     }
-    kids.sort((a, b) => Number(a.roll) - Number(b.roll));
+    counts.unseen = Math.max(0, pic!.skills.length - counts.secure - counts.practising);
+    kids.push({ id: k.id, roll: k.roll, name: k.name, look: row?.get(code)?.look ?? UNSEEN, counts });
   }
+  kids.sort((a, b) => Number(a.roll) - Number(b.roll));
   const objectives = await sql<{ code: string; title: string }[]>`
     select l.code, l.title from learning_objective_skill s join learning_objective l on l.tenant_id = s.tenant_id and l.code = s.lo_code where s.skill_code = ${code} order by l.title`;
   const after = await sql<{ code: string; name: string }[]>`

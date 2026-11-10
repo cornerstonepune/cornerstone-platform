@@ -735,29 +735,30 @@ Main action: Check answers · Next step: an assessment
 Data: existing queries-papers (assessmentList, paperList), STEP_WORDS, STATUS_WORDS
 Empty: No assessments yet: Make one · Phone: the table scrolls sideways in its own box; the drop zone becomes 'take photos'
 Folds in: /papers, /papers/make, /capture, /capture/[id]
-Every control on the screen (22), and what the test does with each:
+Every control on the screen (23), and what the test does with each:
 - **link** do now tile → Check the answers (`/children/assessments/[key]/[roll]`) (the first paper with answers to judge)
-- **link** this week tile → the built name (`/children/assessments/[key]`) (the first pack to approve)
-- **link** results in tile → the built name (`/children/assessments/[key]`)
-- **button** Make: For a class → the built name (`/children/assessments/[key]`): creates the assessment at step Created, then opens it
-- **button** Make: For each child → the built name (`/children/assessments/[key]`): creates the assessment at step Created, then opens it
-- **button** Make: For one child → the built name (`/children/assessments/[key]`): creates the assessment at step Created, then opens it
-- **button** Make: A ready-made worksheet → the built name (`/children/assessments/[key]`): creates the assessment at step Created, then opens it
+- **link** this week tile → {the built name} (`/children/assessments/[key]`) (the first pack to approve)
+- **link** results in tile → {the built name} (`/children/assessments/[key]`)
+- **button** Make: For a class → {the built name} (`/children/assessments/[key]`): creates the assessment at step Created, then opens it
+- **button** Make: For each child → {the built name} (`/children/assessments/[key]`): creates the assessment at step Created, then opens it
+- **button** Make: For one child → {the built name} (`/children/assessments/[key]`): creates the assessment at step Created, then opens it
+- **button** Make: A ready-made worksheet → {the built name} (`/children/assessments/[key]`): creates the assessment at step Created, then opens it
 - **upload** Read: choose scans or drop them: pdf/jpg/png/heic; the QR names the sheet; a paper appears at Uploaded; a file with no QR shows 'could not find the QR' and nothing is written
 - **field** a Google Drive link (a non-Drive address shows a message)
 - **button** Read it: the Drive file is fetched and read as above
 - **filter** class · topic · subject · kind · week · stage
-- **row** each assessment row → the built name (`/children/assessments/[key]`)
-- **link** each row's next action → the built name (`/children/assessments/[key]`) (lands on the step's action)
+- **row** each assessment row → {the built name} (`/children/assessments/[key]`)
+- **link** each row's next action → {the built name} (`/children/assessments/[key]`) (lands on the step's action)
 - **link** rail: Answers to check → Check the answers (`/children/assessments/[key]/[roll]`)
-- **link** rail: Pack to approve → the built name (`/children/assessments/[key]`)
+- **link** rail: Pack to approve → {the built name} (`/children/assessments/[key]`)
 - **link** rail: A child with results in → Where this child is (`/children/[class]/[roll]`)
 - **link** rail: The skills tested → the skill's name (`/setup/skills/[code]`)
 - **link** rail: Question bank → Question bank (`/setup/question-bank`)
 - **upload** capture: Photo: same as Read
 - **tab** Board (the assessments as lanes; the address carries the tab)
 - **tab** Table (the assessments as rows)
-- **row** each card on the board → the built name (`/children/assessments/[key]`)
+- **row** each card on the board → {the built name} (`/children/assessments/[key]`)
+- **link** page: Later → → Assessments (`/children/assessments`) (the next ten assessments)
 Done when (on top of the ten generic checks):
 - the four old pages answer 308 to this one or to the Assessment node
 - every row's name is built topic · skill · level · kind · class · day (regex)
@@ -766,7 +767,7 @@ Done when (on top of the ten generic checks):
 - each board lane's card count equals the table rows at the lane's steps
 
 
-#### the built name `/children/assessments/[key]`
+#### {the built name} `/children/assessments/[key]`
 Who: both · Phase: Core · Backend: none · Old page today: part (/papers/approve, /papers/card) · Slice: UI-4
 Eyebrow: Grade 1 · 22 papers
 Purpose: Where this assessment stands, and each child's copy. A copy is its own row with its own action; there is no button over all of them.
@@ -788,12 +789,12 @@ Every control on the screen (14), and what the test does with each:
 - **row** Check this paper → Check the answers (`/children/assessments/[key]/[roll]`)
 - **button** Sign it off (a row): the paper's results are confirmed; its chip becomes results in
 - **row** The child → Where this child is (`/children/[class]/[roll]`)
-- **link** page: Later → → the built name (`/children/assessments/[key]`) (the next ten copies, grouped by state)
+- **link** page: Later → → {the built name} (`/children/assessments/[key]`) (the next ten copies, grouped by state)
 - **link** rail: a child's paper → Check the answers (`/children/assessments/[key]/[roll]`)
 - **link** rail: the skills → the skill's name (`/setup/skills/[code]`)
 - **link** rail: the class picture → Class picture (`/children/[class]`)
 - **link** rail: all assessments → Assessments (`/children/assessments`)
-- **link** rail: the printed pack → the built name (`/children/assessments/[key]`) (the PDF in a new tab)
+- **button** rail: the printed pack → {the built name} (`/children/assessments/[key]`) (the PDF in a new tab)
 - **upload** capture: Photo: a scan of this assessment's paper; the QR must belong to it, else a message
 Done when (on top of the ten generic checks):
 - Approve acts on this pack only; no control acts on more than one pack or more than one row
@@ -823,7 +824,7 @@ Every control on the screen (9), and what the test does with each:
 - **button** Sign this paper off: appears only when nothing is left to judge; confirms the results; lands on the assessment
 - **link** rail: This child → Where this child is (`/children/[class]/[roll]`)
 - **link** rail: The skill → the skill's name (`/setup/skills/[code]`)
-- **link** rail: The assessment → the built name (`/children/assessments/[key]`)
+- **link** rail: The assessment → {the built name} (`/children/assessments/[key]`)
 - **link** rail: the next paper to check → Check the answers (`/children/assessments/[key]/[roll]`)
 Done when (on top of the ten generic checks):
 - right, wrong and blank are three different chips and three counts; a wrong-with-working reason is shown with its wrong chip
@@ -1068,15 +1069,15 @@ Done when (on top of the ten generic checks):
 #### Staff and classes `/setup/staff`
 Who: coordinator · Phase: Core · Backend: CP-1 · CP-3 · Old page today: yes · Slice: UI-5
 Eyebrow: This fortnight
-Purpose: Who teaches which class, and three numbers the database can stand behind per class. No ranking: the school decides what they mean.
+Purpose: Who teaches which class, and whole counts the database can stand behind. No score, no ranking: the school decides what they mean.
 Blocks, in order:
-- **DataTable**: role · class · sessions done of planned · notes late · reader accuracy; each row opens the person's grants
+- **DataTable**: role · class · sessions done of planned · notes confirmed · notes late · lines accepted / changed / removed; each row opens the person's grants
 - **Details**: a person's grants: role, class, subject, from, to; Add a grant
 Rail (Connected to): Fortnight 9 · Timetable · Classes and children
 Main action: Add a grant · Next step: Classes and children
 Data: staff, staff_role_grant, role; session states; educator_note statuses; note_claim decisions
 Empty: none · Phone: the table scrolls sideways in its own box
-Every control on the screen (7), and what the test does with each:
+Every control on the screen (9), and what the test does with each:
 - **row** each staff row: opens that person's grants fold
 - **fold** a person's grants
 - **button** Add a grant: a form: role (rows), class, subject, from; Save writes a staff_role_grant row; the trigger's checks show as messages (needs a class, holds it twice)
@@ -1084,6 +1085,8 @@ Every control on the screen (7), and what the test does with each:
 - **link** rail: Fortnight 9 → Fortnight 9 (`/timetable/fortnight/[n]`)
 - **link** rail: Timetable → Timetable (`/timetable`)
 - **link** rail: Classes and children → Classes and children (`/setup/classes`)
+- **filter** Role: narrows the rows to one role
+- **filter** Find a person (search): narrows the rows to a name
 Done when (on top of the ten generic checks):
 - no sort, rank, ordinal or colour grading on the three numbers; the table cannot be sorted by them
 - a grant edit is a new row or a valid_to, never a delete (row count never drops)
@@ -1103,15 +1106,17 @@ Main action: Move a child · Next step: Staff
 Data: school_class, enrolment, change_log (a move is a closed enrolment, a new one and a change_log row), names read from pii by child_id at render, never stored in these tables
 Empty: none · Phone: the table scrolls sideways in its own box
 Folds in: /school
-Every control on the screen (8), and what the test does with each:
+Every control on the screen (10), and what the test does with each:
 - **row** each class row: opens that class's children table below
 - **child_name** each child row (the name beside the Sr. No., so a person moving a child knows who it is)
-- **button** Move (a child row): a picker of classes and a date; Save closes the enrolment, opens a new one and writes a change_log row; the child appears in the new class
+- **button** Move (a child row): opens a picker of classes and a date; Save closes the enrolment, opens a new one and writes a change_log row; the child appears in the new class
 - **fold** change log
 - **link** a class's picture → Class picture (`/children/[class]`)
 - **link** rail: Staff → Staff and classes (`/setup/staff`)
 - **link** rail: Class picture → Class picture (`/children/[class]`)
 - **link** rail: the fortnight → Fortnight 9 (`/timetable/fortnight/[n]`)
+- **filter** Grade: narrows the classes to one grade
+- **filter** Find a class (search): narrows the classes to a name
 Done when (on top of the ten generic checks):
 - a move closes the enrolment, opens a new one, writes a change_log row and deletes nothing
 - each child row shows the name beside the Sr. No., read from pii by child_id; the address and the change log's stored text carry no name (DOM scan)
@@ -1277,7 +1282,7 @@ What the test does with each kind of control:
 | UI-13 The frame and the inventory test | One navigation for the whole site: the top bar with the school's logo, its four doors, search, acting-as, help and sign out, the trail and the rail (AppFrame), replacing the four shells and the K2 side menu; every existing page reachable from the bar; docs/ux-rules.md brought in line; and the inventory test that reads screens.json and drives every screen like a person, proved here on a small inventory of pages that already exist. | none (infrastructure) | UI-14 |
 | UI-2 The blocks | The school's new blocks of SPEC §5, built once, each with sample data on a staff-only gallery screen (`blocks`) and screenshots in both themes; every chart drawn to scale from its data. AppFrame is built in UI-13 and the existing blocks moved onto the tokens in UI-1. | The blocks | UI-13 |
 | UI-3 Node pages: the K2 walk | Period, record, confirm, notes, children, class picture, child, activity, objective and skill as node pages on the blocks, each walking to its neighbours through the rail and back through the trail; the old routes redirect. | the session's name, Record a note, Confirm what the reader heard, Notes, Children, Class picture, Where this child is, the activity's name, the objective's title, the skill's name | UI-2; the K2 switch (a config row) on for the pages behind it |
-| UI-4 Node pages: assessments | Assessments, one assessment and one child's paper as node pages on the blocks; the seven old assessment pages and Class results fold in; the queries and the seven steps are unchanged. | Assessments, the built name, Check the answers | UI-2 |
+| UI-4 Node pages: assessments | Assessments, one assessment and one child's paper as node pages on the blocks; the seven old assessment pages and Class results fold in; the queries and the seven steps are unchanged. | Assessments, {the built name}, Check the answers | UI-2 |
 | UI-5 The coordinator's views: staff, classes and setup | Staff and grants, classes and children and the Setup home; the small writes that exist today (a grant, a child move) through their own rows. Search is the bar's typeahead (UI-13); there is no results page. | Staff and classes, Classes and children, Setup | UI-2 for the views; CP-1 merged for moving a child |
 | UI-6 Timetable, rules and the fortnight's actions | The timetable's day, week and fortnight views and the timetable rules, the fortnight node with Approve and Go live, the draft from the rules with its unmet rules, and moves by hand with clashes accepted by the coordinator only. Until this merges the bar's Timetable door opens the page that exists today. | Timetable, Timetable rules, Fortnight 9, Draft from the rules, Moves by hand | CP-6, CP-11, CP-12 and CP-22 merged |
 | UI-7 Today, both kinds | The educator's Today (the day, the attention strip, notes to confirm, the class) and the coordinator's Today (what waits, last week's heat grid, next week), composed from the blocks over the queries that exist; What needs doing folds in and its count moves to Setup where it belongs. | Today, Today, the school | UI-3 and UI-5; UI-6 for the coordinator's clash and draft rows (rows for a backend not yet merged simply do not appear) |

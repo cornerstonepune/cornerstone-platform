@@ -8,7 +8,7 @@ Tests: `apps/web/tests/u73-teaching-pages.spec.ts` (one per Done-when line that 
 Three screens at `/setup/activities/[code]`, `/setup/objectives/[code]`, `/setup/skills/[code]`, reading rows directly (`lib/teaching.ts`).
 `/educator/activity/[code]` and `/curriculum/fill/[code]` answer 308 to the first. `/curriculum/fill/walk` (the drafts queue) and
 `/skill-sets/[code]` (grades 1 to 4: worksheets, bank, approval, editing) are not moved: folding them would delete features.
-15 of 15 U73 tests pass locally on a database built from the repository's migrations and seed (no question bank or library).
+17 of 17 U73 tests pass locally on a database built from the repository's migrations and seed (no question bank or library).
 
 ## Choices
 
@@ -18,6 +18,7 @@ Three screens at `/setup/activities/[code]`, `/setup/objectives/[code]`, `/setup
 | An activity's parts are read from rows (`activityPage`), not the engine's `/curriculum/page/read`. Keep, Edit and Send back still go through the engine. | The engine read repeats the switch's gate and adds nothing. |
 | `lib/built.ts` treats the screens named in `SCREEN=` as built. | A pull request's run covers screens that link to each other (activity, objective, skill) before their slice is in `merged_slices`; unset in production. |
 | A skill's code is the `registry_skill` code. | `child_skill_state`, `learning_objective_skill`, `activity_skill` and `skill_link_confirmed` all use it. |
+| The skill screen is built on UI-3b's `pictureOf`, `PictureGrid` and `PeekProvider`: squares, counts and the tap-to-open peek are theirs. | Reuse before write; one picture of a class. |
 | The spark is always empty. | The nightly run records no class counts yet. |
 
 ## Not done, and why
@@ -28,5 +29,5 @@ Decision (orchestrator, 10 Nov): activity, objective and skill stay on the u70 p
   checker matches "each objective", "each activity row", "rail: each skill"; titles need the `{…}` form; the checker has no driver for the
   effects of Keep, Edit, Send back and "Change a level's sentence"; the skill screen took 3 minutes to time out at 1440 (not yet found).
 - **Missing on main (asked of the orchestrator):** a store for an activity's photo; `skill_level_version`; the cluster computation.
-- **ChildPeek on the skill screen** waits for `/api/children/peek` (UI-3b #570).
+- **Group by class** on the skill screen is dropped: one class is on show at a time, so it would be a single group (the grouping by state stays, with counts).
 - Kinds of question and mistakes folds on the skill screen (grades 1 to 4 data keyed by `skill.code`).

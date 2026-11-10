@@ -65,6 +65,7 @@ export type EngineRoutes = {
   "POST /graph/rebuild": { child_id?: string | null };
   "POST /ingest": { path: string; paper_code: string; child_id: string; actor: string; pages?: number[] | null; masks?: Record<string, number> | null };
   "POST /k2/child": { actor: string; class_id: string; roll_no: string };
+  "POST /k2/child-history": { actor: string; class_id: string; roll_no: string; limit?: number; before?: string | null };
   "POST /k2/classes": { actor: string };
   "POST /k2/coordinator": { actor: string };
   "POST /k2/picture": { actor: string; class_id: string };
@@ -102,6 +103,11 @@ export type EngineRoutes = {
   "POST /read/run/{run_id}/again": { by: string };
   "POST /read/run/{run_id}/page": { page: number; child_id: string; by: string };
   "POST /read/upload": null;
+  "POST /reports/counts": { actor: string };
+  "POST /reports/lines": { actor: string; note_id: string };
+  "POST /reports/lines/approve": { actor: string; note_id: string; line_id: string };
+  "POST /reports/lines/set": { actor: string; note_id: string; lines: { id?: string | null; words: string; evidence?: string[] }[] };
+  "POST /reports/send": { actor: string; note_id: string };
   "POST /skill/{code}/kind": { level: string; kind: string; by: string; samples?: { fields: { ask?: string; text?: string; options?: string; left?: string; right?: string; answer?: string; accept?: string; key_points?: string; not_words?: string }; wrong?: { answer?: string; mistake_code?: string }[]; passage_code?: string | null; passage_title?: string | null; passage_text?: string | null; rubric_code?: string | null }[] };
   "POST /skill/{code}/kind/remove": { level: string; kind: string; by: string };
   "POST /skill/{code}/kind/start": { level?: string | null; kind: string; by: string };
@@ -124,14 +130,18 @@ export type EngineRoutes = {
   "POST /voice/class": { actor: string; class_id: string; day?: string | null };
   "POST /voice/class-notes": { actor: string; class_id: string; day?: string | null };
   "POST /voice/cleanup": null;
+  "POST /voice/coordinator-notes": { actor: string; day?: string | null };
   "POST /voice/form": { actor: string; activity: string; level: number; lists?: Record<string, string[]>; rest?: boolean; day?: string | null; class_id: string };
   "POST /voice/notes": null;
   "POST /voice/notes/audio": { actor: string; note_id: string };
   "POST /voice/notes/confirm": { actor: string; activity: string; level: number; lists?: Record<string, string[]>; rest?: boolean; day?: string | null; note_id: string };
   "POST /voice/notes/draft": { actor: string; note_id: string };
+  "POST /voice/notes/photo": null;
+  "POST /voice/notes/photo/get": { actor: string; note_id: string; index?: number };
   "POST /voice/notes/typed": { actor: string; class_id: string; session_id?: string | null };
   "POST /voice/observations/correct": { actor: string; observation_id: string; outcome: "above" | "as_expected" | "below" | "not_willing" | "absent"; reason: string };
   "POST /voice/queue": { actor: string };
+  "POST /voice/session-note": { actor: string; class_id: string; session_id: string };
   "POST /week/approve": { section: string; week: string; kind?: string; by: string };
   "POST /week/assemble": { section: string; week: string; kind?: string };
   "POST /week/declaration": { section: string; week: string; note?: string; skill_sets: string[]; by: string; proposed?: Record<string, unknown>[] };

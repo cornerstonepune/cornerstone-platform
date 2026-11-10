@@ -32,7 +32,7 @@ Skill
 10. A prerequisite or next skill is shown only when its link is confirmed (a proposed link in the fixture does not appear).
 11. The class grid's squares equal the class's enrolment in Sr. No. order, each with the Sr. No. and the name; the stack bar's counts equal the squares by state.
 12. Grouping by state puts a heading and a count over each group and the counts sum to the squares.
-13. Tapping a square opens ChildPeek with that child's recent history newest first, each entry with who and when; Escape closes it and focus returns; "Open the child" lands on the child page.
+13. Tapping a square opens UI-3b's ChildPeek with that child's recent history newest first, each entry with who and when; Escape closes it and focus returns; "Open the child" lands on the child page.
 14. The spark draws only fortnights that were recorded; the nightly run records no class counts yet, so it shows its empty words and never a made-up line.
 15. An educator is shown only the classes they hold; a coordinator picks a class with the class filter.
 

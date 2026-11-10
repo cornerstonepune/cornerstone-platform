@@ -36,7 +36,7 @@ test("1. the four shells, the old menu and the second icon file are gone, and no
 });
 
 test("1. every existing page renders inside AppFrame (the bar, the trail, one main)", async ({ page }) => {
-  for (const route of ["/today", "/papers", "/growth", "/educator", "/educator/week", "/k2", "/library", "/school", "/curriculum/browse", "/guide"]) {
+  for (const route of ["/today", "/papers", "/growth", "/educator", "/educator/week", "/children", "/library", "/setup/classes", "/curriculum/browse", "/guide"]) {
     await page.goto(route);
     await expect(page.locator("[data-frame] [data-bar]").first(), route).toBeVisible();
     await expect(page.getByRole("main"), route).toHaveCount(1);
@@ -146,7 +146,7 @@ test("8. search is a typeahead: an educator's Sr. No. and fake name find their o
   await box.fill("1");
   await expect(options.first()).toContainText(first);
   await expect(options.first()).toContainText("Sr. No. 1");
-  await box.fill("7"); // Sr. No. 7 exists only in a class the educator does not hold
+  await box.fill("13"); // Sr. No. 13 exists only in a class the educator does not hold
   await expect(person.getByRole("status")).toContainText("Nothing found");
   await expect(person.getByRole("listbox", { name: "Found" })).toHaveCount(0);
   const outside = rows.otherNames[0].split(" ")[0];
@@ -161,10 +161,11 @@ test("8. search is a typeahead: an educator's Sr. No. and fake name find their o
   await options.first().click();
   await expect(person).toHaveURL(new RegExp(`/growth/${rows.children[mine]}$`));
   // the typed term is in no address, no log line, no other request
-  for (const term of ["1", "7", outside, first]) {
+  for (const term of ["1", "13", outside, first]) {
     for (const r of seen) {
       if (term.length < 2) continue;
-      expect(r.url, `address of ${r.method} request`).not.toContain(term);
+      // an id in an address is random hex, which can hold any number: the term is looked for in what is left of the address
+      expect(r.url.replace(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/g, ""), `address of ${r.method} request`).not.toContain(term);
       if (r.body?.includes(term)) expect(`${r.method} ${new URL(r.url).pathname}`).toBe("POST /api/search");
     }
     expect(logs.join("\n")).not.toContain(term.length > 1 ? term : "\u0000");

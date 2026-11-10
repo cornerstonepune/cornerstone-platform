@@ -216,16 +216,16 @@ Assessments, one assessment and one child's paper as node pages on the blocks; t
 3. `lib/assessment-steps.ts` STEPS and STEP_WORDS and `lib/queries-papers.ts` exported names are unchanged (a test imports them and compares to the committed list).
 4. The journey `e2e/a-paper-comes-back.spec.ts` passes: make a class assessment → approve the pack (per pack, the pack-level button; no all-packs button exists on any screen: `u62` kept) → upload a fixture scan → the paper shows right / wrong / blank / for you to judge with the fixture's counts → say what the child wrote for the one to judge → sign off → the child's timeline shows the paper result beside a voice note; axe at each step.
 5. No approve-all control exists on any screen (the `ux.approveAll` list in workflows.json is empty at the end of this slice).
-6. Every one of the 45 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
+6. Every one of the 46 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
 7. Assessments: the four old pages answer 308 to this one or to the Assessment node
 8. Assessments: every row's name is built topic · skill · level · kind · class · day (regex)
 9. Assessments: no approve-all control anywhere
 10. Assessments: each tile's number equals the rows behind it
 11. Assessments: each board lane's card count equals the table rows at the lane's steps
-12. the built name: Approve acts on this pack only; no control acts on more than one pack or more than one row
-13. the built name: the stepper's amber step equals the status word in the list
-14. the built name: a replaced copy shows 'replaced by a newer one' and no action
-15. the built name: the papers bar's three counts sum to the number of copies
+12. {the built name}: Approve acts on this pack only; no control acts on more than one pack or more than one row
+13. {the built name}: the stepper's amber step equals the status word in the list
+14. {the built name}: a replaced copy shows 'replaced by a newer one' and no action
+15. {the built name}: the papers bar's three counts sum to the number of copies
 16. Check the answers: right, wrong and blank are three different chips and three counts; a wrong-with-working reason is shown with its wrong chip
 17. Check the answers: a person's answer writes a read_correction row and never overwrites the engine's read
 18. Check the answers: Sign off is absent while any answer is 'for you to judge', and acts on one paper
@@ -252,7 +252,7 @@ Staff and grants, classes and children and the Setup home; the small writes that
 2. Every old route listed under `folds` answers 308 to the new address.
 3. `/setup/staff` has no column, sort or text that ranks people: the table cannot be sorted by the three numbers and no ordinal appears (test asserts absence).
 4. A child move writes a child_move row and a new enrolment and deletes nothing; the class picture of both classes reflects it on the next render (database and DOM assertion).
-5. Every one of the 21 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
+5. Every one of the 25 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
 6. Staff and classes: no sort, rank, ordinal or colour grading on the three numbers; the table cannot be sorted by them
 7. Staff and classes: a grant edit is a new row or a valid_to, never a delete (row count never drops)
 8. Staff and classes: no staff name appears unless the viewer is in the everything group (names are pii)
