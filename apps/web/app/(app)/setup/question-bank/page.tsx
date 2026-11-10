@@ -52,7 +52,8 @@ export default async function QuestionBank({ searchParams }: { searchParams: Pro
     {
       key: "question",
       label: "Question",
-      value: (it) => it.stem,
+      // a drawn question has no words; the column is the one that opens it, so it never reads as empty (an empty column is not drawn)
+      value: (it) => it.stem || it.item_key,
       cell: (it) => (
         // the key is inside the link: a column sum or a drawn question prints no words, and a link with nothing in it is a control no one can see or name
         <Link href={`${HERE}/${it.item_key}`} data-question-row="" className="block" {...(it === rows[0] ? { "data-ux": "action" } : {})}>
