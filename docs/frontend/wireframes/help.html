@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wireframe: Start here (help)</title>
+<link rel="stylesheet" href="kit.css">
+</head>
+<!-- Wireframe of screens.json "help" (/guide), drawn as an educator (a coordinator sees the same sections plus the coordinator's jobs). No table: every job and section is generated from screens.json (each screen's title, purpose, elements and their effects), so a new screen gets its help with no hand edit. Static text, so no data-source. Reached from the ? on every page (bar item 6), which opens this page at that page's section: drawn as opened from Today, its section open and the jump link at the top. No door is lit. Main action: back to the page you came from (the jump link). The four stages are the agreed workflow's four (build the bank, assemble and print, read and graph, and the daily round), drawn as a Stepper for orientation only.
+     data-el = index in screens.json help.elements; data-bar = index in screens.json bar; data-source = target
+     table.column; data-gap = what the target tables cannot give. Both frames hold the same markup: the phone layout
+     comes from kit.css container queries, as it will on the site. Names are from fake-names.json. -->
+<body>
+<div class="wf-sheet">
+  <header>
+    <p class="wf-label">help · Start here · /guide · laptop 1440 and phone 400 · add data-theme="dark" on &lt;html&gt; for dark</p>
+  </header>
+  <section class="wf" data-viewport="1440" aria-label="Laptop, 1440 px">
+    <div class="frame">
+      <header class="bar">
+        <a class="brand" data-bar="0" href="#today" aria-label="Cornerstone Gurukul, go to Today">
+          <img class="wide on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-colour.svg" alt="">
+          <img class="wide on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-for-dark-backgrounds.svg" alt="">
+          <img class="small on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark.svg" alt="">
+          <img class="small on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark-on-white-tile.svg" alt="">
+        </a>
+        <ul class="doors" aria-label="Doors">
+          <li><a class="door" data-bar="0" href="#today"><i class="ic" data-icon="today"></i>Today <span class="badge num" data-source="pii.educator_note.status pii.educator_note.received_at" aria-label="7 notes to confirm">7</span></a></li>
+          <li><a class="door" data-bar="1" href="#timetable"><i class="ic" data-icon="timetable"></i>Timetable</a></li>
+          <li><a class="door" data-bar="2" href="#children"><i class="ic" data-icon="children"></i>Children</a></li>
+          <li><a class="door" data-bar="3" href="#setup"><i class="ic" data-icon="setup"></i>Setup</a></li>
+        </ul>
+        <label class="search"><i class="ic s" data-icon="search"></i><span class="vh">Search</span><input data-bar="4" type="search" placeholder="Sr. No., name or activity"></label>
+        <button class="barbtn press" data-bar="5" type="button" role="switch" aria-checked="false"><i class="ic" data-icon="acting-as"></i><span class="w">Acting as</span></button>
+        <a class="barbtn" data-bar="6" href="#help" aria-label="Help for this page"><i class="ic" data-icon="help"></i></a>
+        <button class="barbtn press" data-bar="7" type="button"><i class="ic" data-icon="sign-out"></i><span class="w">Sign out</span></button>
+      </header>
+      <ol class="trail" aria-label="Trail">
+        <li aria-current="page">Start here</li>
+      </ol>
+      <div class="page">
+        <main class="main">
+          <div class="head">
+            <p class="eyebrow"><i class="ic s" data-icon="help"></i>Start here · 33 pages</p>
+            <h1 class="title">Start here</h1>
+            <p class="purpose">What each page is for, the usual jobs, and what each button does; the school's steps in four stages. Reached from the ? on every page.</p>
+          </div>
+          <div class="card" data-kind="period"><div class="card-h"><span class="tile"><i class="ic" data-icon="today"></i></span>You came from Today</div><div class="card-b"><span class="muted">Its section is open below.</span><a class="btn btn-main press" data-el="2" href="#help-today"><i class="ic" data-icon="previous"></i>Today's section, then back to Today</a></div></div>
+          <h2 class="title-section">I want to…</h2>
+          <div class="cards" data-block="Cards">
+            <article class="card" data-kind="period"><div class="card-h"><span class="tile"><i class="ic" data-icon="today"></i></span>See what waits on me today</div><div class="card-b"><a data-el="0" href="#today-educator">Today</a></div></article>
+            <article class="card" data-kind="note"><div class="card-h"><span class="tile"><i class="ic" data-icon="record"></i></span>Say what happened in a period</div><div class="card-b"><a data-el="0" href="#record">Record a note</a></div></article>
+            <article class="card" data-kind="note"><div class="card-h"><span class="tile"><i class="ic" data-icon="confirm"></i></span>Check the marks the reader drafted</div><div class="card-b"><a data-el="0" href="#confirm">Confirm a note</a></div></article>
+            <article class="card" data-kind="child"><div class="card-h"><span class="tile"><i class="ic" data-icon="class"></i></span>See how my class is doing on a skill</div><div class="card-b"><a data-el="0" href="#picture">Class picture</a></div></article>
+            <article class="card" data-kind="assessment"><div class="card-h"><span class="tile"><i class="ic" data-icon="assessment"></i></span>Print, scan and read a paper</div><div class="card-b"><a data-el="0" href="#assessments">Assessments</a></div></article>
+            <article class="card" data-kind="period"><div class="card-h"><span class="tile"><i class="ic" data-icon="timetable"></i></span>See this fortnight's periods</div><div class="card-b"><a data-el="0" href="#timetable">Timetable</a></div></article>
+            <article class="card" data-kind="note"><div class="card-h"><span class="tile"><i class="ic" data-icon="materials"></i></span>Fill in the materials for the fortnight</div><div class="card-b"><a data-el="0" href="#materials">Materials, this fortnight</a></div></article>
+            <article class="card" data-kind="child"><div class="card-h"><span class="tile"><i class="ic" data-icon="parent"></i></span>Approve my report lines</div><div class="card-b"><a data-el="0" href="#reports">Reports</a></div></article>
+            <article class="card" data-kind="note"><div class="card-h"><span class="tile"><i class="ic" data-icon="send"></i></span>Tell the team something is wrong</div><div class="card-b"><a data-el="0" href="#feedback">Report a problem</a></div></article>
+          </div>
+          <h2 class="title-section">The school's steps, in four stages</h2>
+          <ol class="stepper" data-block="Stepper">
+            <li class="step" data-state="quiet"><i class="ic s" data-icon="checklist"></i>1 · The bank: skills and questions made and checked</li>
+            <li class="step" data-state="quiet"><i class="ic s" data-icon="assessment"></i>2 · Assemble and print the papers</li>
+            <li class="step" data-state="quiet"><i class="ic s" data-icon="heard"></i>3 · Read, mark and update each child's picture</li>
+            <li class="step" data-state="quiet"><i class="ic s" data-icon="today"></i>4 · The daily round: periods, notes, the fortnight</li>
+          </ol>
+          <h2 class="title-section">Each page</h2>
+          <details class="details" data-block="Details" open><summary data-el="1"><i class="ic s" data-icon="details"></i>Today <span class="caption">Today door</span></summary><div>
+            <dl class="kv" data-block="KeyValue">
+              <dt>What it is for</dt><dd>What waits on you today: periods to teach, notes to confirm, papers to check.</dd>
+              <dt>What you see where</dt><dd>Your periods in time order at the top; the notes waiting for you under them, oldest first.</dd>
+              <dt>What each button does</dt><dd>A period opens it. A note's Confirm opens the marks the reader drafted; nothing is ticked for you.</dd>
+            </dl>
+          </div></details>
+          <details class="details" data-block="Details"><summary data-el="1"><i class="ic s" data-icon="details"></i>Record a note <span class="caption">from a period</span></summary><div>
+            <dl class="kv" data-block="KeyValue">
+              <dt>What it is for</dt><dd>Saying what happened in a period, by Sr. No., in your own words.</dd>
+              <dt>What you see where</dt><dd>The period and activity at the top; Start recording under them.</dd>
+              <dt>What each button does</dt><dd>Start recording, Stop, Send. Add a photo of the work. Type the marks if you cannot speak.</dd>
+            </dl>
+          </div></details>
+          <details class="details" data-block="Details"><summary data-el="1"><i class="ic s" data-icon="details"></i>Class picture <span class="caption">Children door</span></summary><div>
+            <dl class="kv" data-block="KeyValue">
+              <dt>What it is for</dt><dd>How every child in a class is doing on one skill.</dd>
+              <dt>What you see where</dt><dd>A square per child with its state word; groups with counts under it.</dd>
+              <dt>What each button does</dt><dd>A square opens that child's recent history. Open the child goes to their page.</dd>
+            </dl>
+          </div></details>
+          <details class="details" data-block="Details"><summary data-el="1"><i class="ic s" data-icon="details"></i>Timetable <span class="caption">Timetable door</span></summary><div>
+            <dl class="kv" data-block="KeyValue">
+              <dt>What it is for</dt><dd>The fortnight, week A and week B, each period a block.</dd>
+              <dt>What you see where</dt><dd>A moved period has an amber outline; a clash is red until the coordinator accepts it.</dd>
+              <dt>What each button does</dt><dd>A cell opens its period. A moved cell's details say who moved it and why.</dd>
+            </dl>
+          </div></details>
+          <details class="details" data-block="Details"><summary data-el="1"><i class="ic s" data-icon="details"></i>Reports <span class="caption">Children door</span></summary><div>
+            <dl class="kv" data-block="KeyValue">
+              <dt>What it is for</dt><dd>Each child's report, line by line, in your words.</dd>
+              <dt>What you see where</dt><dd>Rows grouped by stage, with counts; a child's lines in a fold.</dd>
+              <dt>What each button does</dt><dd>Approve (educator) on each of your lines. Preview opens the parent's copy.</dd>
+            </dl>
+          </div></details>
+        </main>
+        <aside class="rail" aria-label="Connected to">
+          <section class="rail-box">
+            <h2>Pages by door</h2>
+            <ul class="rlist">
+              <li><span class="ritem"><span class="tile" data-kind="period"><i class="ic" data-icon="today"></i></span><span>Today<small>5 pages</small></span></span></li>
+              <li><span class="ritem"><span class="tile" data-kind="period"><i class="ic" data-icon="timetable"></i></span><span>Timetable<small>6 pages</small></span></span></li>
+              <li><span class="ritem"><span class="tile" data-kind="child"><i class="ic" data-icon="children"></i></span><span>Children<small>8 pages</small></span></span></li>
+              <li><span class="ritem"><span class="tile" data-kind="note"><i class="ic" data-icon="setup"></i></span><span>Setup<small>11 pages</small></span></span></li>
+            </ul>
+            <p class="caption">Counted from screens.json, as the sections are; 3 more sit outside the bar.</p>
+          </section>
+        </aside>
+      </div>
+      <nav class="tabbar" aria-label="Doors">
+        <a class="tab" data-bar="0" href="#today"><i class="ic" data-icon="today"></i>Today</a>
+        <a class="tab" data-bar="1" href="#timetable"><i class="ic" data-icon="timetable"></i>Timetable</a>
+        <a class="tab" data-bar="2" href="#children"><i class="ic" data-icon="children"></i>Children</a>
+        <a class="tab" data-bar="3" href="#setup"><i class="ic" data-icon="setup"></i>Setup</a>
+      </nav>
+    </div>
+  </section>
+  <section class="wf" data-viewport="400" aria-label="Phone, 400 px">
+    <div class="frame">
+      <header class="bar">
+        <a class="brand" data-bar="0" href="#today" aria-label="Cornerstone Gurukul, go to Today">
+          <img class="wide on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-colour.svg" alt="">
+          <img class="wide on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-for-dark-backgrounds.svg" alt="">
+          <img class="small on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark.svg" alt="">
+          <img class="small on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark-on-white-tile.svg" alt="">
+        </a>
+        <ul class="doors" aria-label="Doors">
+          <li><a class="door" data-bar="0" href="#today"><i class="ic" data-icon="today"></i>Today <span class="badge num" data-source="pii.educator_note.status pii.educator_note.received_at" aria-label="7 notes to confirm">7</span></a></li>
+          <li><a class="door" data-bar="1" href="#timetable"><i class="ic" data-icon="timetable"></i>Timetable</a></li>
+          <li><a class="door" data-bar="2" href="#children"><i class="ic" data-icon="children"></i>Children</a></li>
+          <li><a class="door" data-bar="3" href="#setup"><i class="ic" data-icon="setup"></i>Setup</a></li>
+        </ul>
+        <label class="search"><i class="ic s" data-icon="search"></i><span class="vh">Search</span><input data-bar="4" type="search" placeholder="Sr. No., name or activity"></label>
+        <button class="barbtn press" data-bar="5" type="button" role="switch" aria-checked="false"><i class="ic" data-icon="acting-as"></i><span class="w">Acting as</span></button>
+        <a class="barbtn" data-bar="6" href="#help" aria-label="Help for this page"><i class="ic" data-icon="help"></i></a>
+        <button class="barbtn press" data-bar="7" type="button"><i class="ic" data-icon="sign-out"></i><span class="w">Sign out</span></button>
+      </header>
+      <ol class="trail" aria-label="Trail">
+        <li aria-current="page">Start here</li>
+      </ol>
+      <div class="page">
+        <main class="main">
+          <div class="head">
+            <p class="eyebrow"><i class="ic s" data-icon="help"></i>Start here · 33 pages</p>
+            <h1 class="title">Start here</h1>
+            <p class="purpose">What each page is for, the usual jobs, and what each button does; the school's steps in four stages. Reached from the ? on every page.</p>
+          </div>
+          <div class="card" data-kind="period"><div class="card-h"><span class="tile"><i class="ic" data-icon="today"></i></span>You came from Today</div><div class="card-b"><span class="muted">Its section is open below.</span><a class="btn btn-main press" data-el="2" href="#help-today"><i class="ic" data-icon="previous"></i>Today's section, then back to Today</a></div></div>
+          <h2 class="title-section">I want to…</h2>
+          <div class="cards" data-block="Cards">
+            <article class="card" data-kind="period"><div class="card-h"><span class="tile"><i class="ic" data-icon="today"></i></span>See what waits on me today</div><div class="card-b"><a data-el="0" href="#today-educator">Today</a></div></article>
+            <article class="card" data-kind="note"><div class="card-h"><span class="tile"><i class="ic" data-icon="record"></i></span>Say what happened in a period</div><div class="card-b"><a data-el="0" href="#record">Record a note</a></div></article>
+            <article class="card" data-kind="note"><div class="card-h"><span class="tile"><i class="ic" data-icon="confirm"></i></span>Check the marks the reader drafted</div><div class="card-b"><a data-el="0" href="#confirm">Confirm a note</a></div></article>
+            <article class="card" data-kind="child"><div class="card-h"><span class="tile"><i class="ic" data-icon="class"></i></span>See how my class is doing on a skill</div><div class="card-b"><a data-el="0" href="#picture">Class picture</a></div></article>
+            <article class="card" data-kind="assessment"><div class="card-h"><span class="tile"><i class="ic" data-icon="assessment"></i></span>Print, scan and read a paper</div><div class="card-b"><a data-el="0" href="#assessments">Assessments</a></div></article>
+            <article class="card" data-kind="period"><div class="card-h"><span class="tile"><i class="ic" data-icon="timetable"></i></span>See this fortnight's periods</div><div class="card-b"><a data-el="0" href="#timetable">Timetable</a></div></article>
+            <article class="card" data-kind="note"><div class="card-h"><span class="tile"><i class="ic" data-icon="materials"></i></span>Fill in the materials for the fortnight</div><div class="card-b"><a data-el="0" href="#materials">Materials, this fortnight</a></div></article>
+            <article class="card" data-kind="child"><div class="card-h"><span class="tile"><i class="ic" data-icon="parent"></i></span>Approve my report lines</div><div class="card-b"><a data-el="0" href="#reports">Reports</a></div></article>
+            <article class="card" data-kind="note"><div class="card-h"><span class="tile"><i class="ic" data-icon="send"></i></span>Tell the team something is wrong</div><div class="card-b"><a data-el="0" href="#feedback">Report a problem</a></div></article>
+          </div>
+          <h2 class="title-section">The school's steps, in four stages</h2>
+          <ol class="stepper" data-block="Stepper">
+            <li class="step" data-state="quiet"><i class="ic s" data-icon="checklist"></i>1 · The bank: skills and questions made and checked</li>
+            <li class="step" data-state="quiet"><i class="ic s" data-icon="assessment"></i>2 · Assemble and print the papers</li>
+            <li class="step" data-state="quiet"><i class="ic s" data-icon="heard"></i>3 · Read, mark and update each child's picture</li>
+            <li class="step" data-state="quiet"><i class="ic s" data-icon="today"></i>4 · The daily round: periods, notes, the fortnight</li>
+          </ol>
+          <h2 class="title-section">Each page</h2>
+          <details class="details" data-block="Details" open><summary data-el="1"><i class="ic s" data-icon="details"></i>Today <span class="caption">Today door</span></summary><div>
+            <dl class="kv" data-block="KeyValue">
+              <dt>What it is for</dt><dd>What waits on you today: periods to teach, notes to confirm, papers to check.</dd>
+              <dt>What you see where</dt><dd>Your periods in time order at the top; the notes waiting for you under them, oldest first.</dd>
+              <dt>What each button does</dt><dd>A period opens it. A note's Confirm opens the marks the reader drafted; nothing is ticked for you.</dd>
+            </dl>
+          </div></details>
+          <details class="details" data-block="Details"><summary data-el="1"><i class="ic s" data-icon="details"></i>Record a note <span class="caption">from a period</span></summary><div>
+            <dl class="kv" data-block="KeyValue">
+              <dt>What it is for</dt><dd>Saying what happened in a period, by Sr. No., in your own words.</dd>
+              <dt>What you see where</dt><dd>The period and activity at the top; Start recording under them.</dd>
+              <dt>What each button does</dt><dd>Start recording, Stop, Send. Add a photo of the work. Type the marks if you cannot speak.</dd>
+            </dl>
+          </div></details>
+          <details class="details" data-block="Details"><summary data-el="1"><i class="ic s" data-icon="details"></i>Class picture <span class="caption">Children door</span></summary><div>
+            <dl class="kv" data-block="KeyValue">
+              <dt>What it is for</dt><dd>How every child in a class is doing on one skill.</dd>
+              <dt>What you see where</dt><dd>A square per child with its state word; groups with counts under it.</dd>
+              <dt>What each button does</dt><dd>A square opens that child's recent history. Open the child goes to their page.</dd>
+            </dl>
+          </div></details>
+          <details class="details" data-block="Details"><summary data-el="1"><i class="ic s" data-icon="details"></i>Timetable <span class="caption">Timetable door</span></summary><div>
+            <dl class="kv" data-block="KeyValue">
+              <dt>What it is for</dt><dd>The fortnight, week A and week B, each period a block.</dd>
+              <dt>What you see where</dt><dd>A moved period has an amber outline; a clash is red until the coordinator accepts it.</dd>
+              <dt>What each button does</dt><dd>A cell opens its period. A moved cell's details say who moved it and why.</dd>
+            </dl>
+          </div></details>
+          <details class="details" data-block="Details"><summary data-el="1"><i class="ic s" data-icon="details"></i>Reports <span class="caption">Children door</span></summary><div>
+            <dl class="kv" data-block="KeyValue">
+              <dt>What it is for</dt><dd>Each child's report, line by line, in your words.</dd>
+              <dt>What you see where</dt><dd>Rows grouped by stage, with counts; a child's lines in a fold.</dd>
+              <dt>What each button does</dt><dd>Approve (educator) on each of your lines. Preview opens the parent's copy.</dd>
+            </dl>
+          </div></details>
+        </main>
+        <aside class="rail" aria-label="Connected to">
+          <section class="rail-box">
+            <h2>Pages by door</h2>
+            <ul class="rlist">
+              <li><span class="ritem"><span class="tile" data-kind="period"><i class="ic" data-icon="today"></i></span><span>Today<small>5 pages</small></span></span></li>
+              <li><span class="ritem"><span class="tile" data-kind="period"><i class="ic" data-icon="timetable"></i></span><span>Timetable<small>6 pages</small></span></span></li>
+              <li><span class="ritem"><span class="tile" data-kind="child"><i class="ic" data-icon="children"></i></span><span>Children<small>8 pages</small></span></span></li>
+              <li><span class="ritem"><span class="tile" data-kind="note"><i class="ic" data-icon="setup"></i></span><span>Setup<small>11 pages</small></span></span></li>
+            </ul>
+            <p class="caption">Counted from screens.json, as the sections are; 3 more sit outside the bar.</p>
+          </section>
+        </aside>
+      </div>
+      <nav class="tabbar" aria-label="Doors">
+        <a class="tab" data-bar="0" href="#today"><i class="ic" data-icon="today"></i>Today</a>
+        <a class="tab" data-bar="1" href="#timetable"><i class="ic" data-icon="timetable"></i>Timetable</a>
+        <a class="tab" data-bar="2" href="#children"><i class="ic" data-icon="children"></i>Children</a>
+        <a class="tab" data-bar="3" href="#setup"><i class="ic" data-icon="setup"></i>Setup</a>
+      </nav>
+    </div>
+  </section>
+</div>
+</body>
+</html>

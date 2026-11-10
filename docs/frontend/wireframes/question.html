@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wireframe: the question as it prints (question)</title>
+<link rel="stylesheet" href="kit.css">
+</head>
+<!-- Wireframe of screens.json "question" (/setup/question-bank/[key]), drawn as a coordinator (an educator sees the same page without the two forms). The h1 is the question itself (screens.json title: the question as it prints). Main action Correct the wording. Bindings follow issue 551's later revision: the current key is item.item_key, old keys and old wordings are change_log rows, the reviewer model's verdict is eval_case rows (there is no item.key or item.review column). Remove sets item.status to removed; nothing is deleted. A second block shows how the question has done on papers, the three signals kept apart (right, wrong, wrong with working, blank).
+     data-el = index in screens.json question.elements; data-bar = index in screens.json bar; data-source = target
+     table.column; data-gap = what the target tables cannot give. Both frames hold the same markup: the phone layout
+     comes from kit.css container queries, as it will on the site. Names are from fake-names.json. -->
+<body>
+<div class="wf-sheet">
+  <header>
+    <p class="wf-label">question · the question as it prints · /setup/question-bank/[key] · laptop 1440 and phone 400 · add data-theme="dark" on &lt;html&gt; for dark</p>
+  </header>
+  <section class="wf" data-viewport="1440" aria-label="Laptop, 1440 px">
+    <div class="frame">
+      <header class="bar">
+        <a class="brand" data-bar="0" href="#today" aria-label="Cornerstone Gurukul, go to Today">
+          <img class="wide on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-colour.svg" alt="">
+          <img class="wide on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-for-dark-backgrounds.svg" alt="">
+          <img class="small on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark.svg" alt="">
+          <img class="small on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark-on-white-tile.svg" alt="">
+        </a>
+        <ul class="doors" aria-label="Doors">
+          <li><a class="door" data-bar="0" href="#today"><i class="ic" data-icon="today"></i>Today <span class="badge num" data-source="pii.educator_note.status pii.educator_note.received_at" aria-label="7 notes to confirm">7</span></a></li>
+          <li><a class="door" data-bar="1" href="#timetable"><i class="ic" data-icon="timetable"></i>Timetable</a></li>
+          <li><a class="door" data-bar="2" href="#children"><i class="ic" data-icon="children"></i>Children</a></li>
+          <li><a class="door" data-bar="3" href="#setup" aria-current="page"><i class="ic" data-icon="setup"></i>Setup</a></li>
+        </ul>
+        <label class="search"><i class="ic s" data-icon="search"></i><span class="vh">Search</span><input data-bar="4" type="search" placeholder="Sr. No., name or activity"></label>
+        <button class="barbtn press" data-bar="5" type="button" role="switch" aria-checked="false"><i class="ic" data-icon="acting-as"></i><span class="w">Acting as</span></button>
+        <a class="barbtn" data-bar="6" href="#help" aria-label="Help for this page"><i class="ic" data-icon="help"></i></a>
+        <button class="barbtn press" data-bar="7" type="button"><i class="ic" data-icon="sign-out"></i><span class="w">Sign out</span></button>
+      </header>
+      <ol class="trail" aria-label="Trail">
+        <li><a data-trail href="#bank">Question bank</a></li>
+        <li><i class="ic s" data-icon="trail"></i></li>
+        <li aria-current="page">N1-SUB-031</li>
+      </ol>
+      <div class="page">
+        <main class="main">
+          <div class="head">
+            <p class="eyebrow"><i class="ic s" data-icon="numeracy"></i><span data-source="subject.name">Numeracy</span> · <span data-source="item.difficulty">Medium</span> · <span class="num" data-source="item.item_key">N1-SUB-031</span></p>
+            <h1 class="title" data-source="item.stem">15 − 7 = ___ (exchange a ten if you need to)</h1>
+            <p class="purpose">The question, its answer, the wrong answers it catches, and where it came from. Correct the wording or remove it.</p>
+          </div>
+          <div class="keyrow"><span class="chip" data-state="ok" data-source="item.status"><i class="ic s" data-icon="done"></i>Ready</span><span class="chip" data-state="ok" data-source="eval_case.verdict eval_case.checked_on"><i class="ic s" data-icon="correct"></i>Reviewer: the answer checks out · 7-Nov</span><span class="caption">corrected by <span data-source="pii.staff.name change_log.staff_id">Asha Almond</span>, <span class="num" data-source="change_log.at">8-Nov</span></span></div>
+          <div class="cards" data-block="Cards">
+            <article class="card" data-kind="assessment"><div class="card-h"><span class="tile"><i class="ic" data-icon="assessment"></i></span>As it prints</div><div class="card-b">
+              <p class="title-small" data-source="item.stem">15 − 7 = ___</p>
+              <p class="muted" data-source="item.spec">Exchange a ten if you need to. Show your working in the box.</p>
+              <span class="caption" data-source="item.fmt">fill the blank · working box</span>
+            </div></article>
+            <article class="card" data-kind="assessment"><div class="card-h"><span class="tile"><i class="ic" data-icon="correct"></i></span>Answer</div><div class="card-b">
+              <p class="title-small num" data-source="item.responses">8</p>
+              <span class="muted">Checked by code, not by a model.</span>
+            </div></article>
+            <article class="card" data-kind="assessment"><div class="card-h"><span class="tile"><i class="ic" data-icon="fix-this"></i></span>Wrong answers it catches</div><div class="card-b">
+              <dl class="kv" data-block="KeyValue">
+                <dt class="num" data-source="item.responses">12</dt><dd data-source="misconception.name item.mistake_skills">Takes the smaller digit from the larger (5 − 7 read as 7 − 5)</dd>
+                <dt class="num" data-source="item.responses">22</dt><dd data-source="misconception.name item.mistake_skills">Adds instead of taking away</dd>
+                <dt class="num" data-source="item.responses">9</dt><dd data-source="misconception.name item.mistake_skills">Exchanges a ten but does not take one from the tens</dd>
+              </dl>
+            </div></article>
+          </div>
+          <details class="details" data-block="Details"><summary data-el="0"><i class="ic s" data-icon="details"></i>About it (source, versions)</summary><div>
+            <dl class="kv">
+              <dt>Made by</dt><dd data-source="item.generator item.model">the bank run, checked by code</dd>
+              <dt>Prompt</dt><dd data-source="item.prompt_id prompt.purpose prompt.version">bank question, version 4</dd>
+              <dt>Skill set</dt><dd data-source="item.skill_set_code item.skill_set_version">Grade 1 subtraction, version 2</dd>
+              <dt>Reviewer</dt><dd data-source="eval_case.kind eval_case.verdict eval_case.source eval_case.detail">the reviewer model read it on 7-Nov: the answer checks out, the wording is clear</dd>
+            </dl>
+            <ol class="timeline" data-block="Timeline">
+              <li class="tli"><span class="tile" data-kind="assessment"><i class="ic" data-icon="history"></i></span><div><b>Wording corrected</b><p data-source="change_log.before change_log.after">Was "15 take away 7". Old key <span class="num">N1-SUB-031a</span> kept and readable · <span data-source="pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="change_log.at">8-Nov</span></li>
+              <li class="tli"><span class="tile" data-kind="assessment"><i class="ic" data-icon="done"></i></span><div><b>Ready</b><p>Read by a person · <span data-source="pii.staff.name">Bina Basil</span></p></div><span class="caption num" data-source="item.created_at">12-Sep</span></li>
+            </ol>
+          </div></details>
+          <form class="form" data-block="Form">
+            <h2 class="title-section">Correct the wording</h2>
+            <div class="field"><label for="wording-1440">The wording (required)</label><textarea id="wording-1440" data-el="1" required data-source="item.stem">15 − 7 = ___ (exchange a ten if you need to)</textarea></div>
+            <div><button class="btn btn-main press" data-el="2" type="submit"><i class="ic" data-icon="send"></i>Correct the wording</button></div>
+            <p class="caption">A new version is made; the old wording and key stay readable in About it.</p>
+          </form>
+          <form class="form" data-block="Form">
+            <h2 class="title-section">Remove it</h2>
+            <div class="field"><label for="reason-1440">Reason for removal (required)</label><input id="reason-1440" data-el="3" required placeholder="For example: two answers are right" data-source="change_log.reason"></div>
+            <div><button class="btn press" data-el="4" type="submit"><i class="ic" data-icon="clear"></i>Remove</button></div>
+            <p class="caption">Removed questions are kept with the reason and never printed again; the chip reads "removed".</p>
+          </form>
+          <div class="card" data-kind="assessment">
+            <div class="card-h"><span class="tile"><i class="ic" data-icon="assessment"></i></span>How it has done on papers <span class="count num" data-source="item_result.item_id">96</span></div>
+            <div class="card-b">
+              <div class="sbar" role="img" aria-label="58 right, 21 wrong, 11 wrong with working, 6 blank" data-source="item_result.state item_result.working_shown"><i data-state="ok" style="--n: 58"></i><i data-state="wait" style="--n: 21"></i><i data-state="wait" style="--n: 11"></i><i data-state="quiet" style="--n: 6"></i></div>
+              <div class="keyrow" data-source="item_result.state item_result.working_shown"><span class="chip" data-state="ok"><i class="ic s" data-icon="correct"></i>58 right</span><span class="chip" data-state="wait"><i class="ic s" data-icon="fix-this"></i>21 wrong</span><span class="chip" data-state="wait"><i class="ic s" data-icon="form"></i>11 wrong with working</span><span class="chip" data-state="quiet"><i class="ic s" data-icon="to-do"></i>6 blank</span></div>
+              <span class="caption">The most caught wrong answer: <span class="num" data-source="item_result.misconception_codes">12</span> (smaller from larger), 14 times.</span>
+            </div>
+          </div>
+        </main>
+        <aside class="rail" aria-label="Connected to">
+          <section class="rail-box">
+            <h2>Connected to</h2>
+            <ul class="rlist">
+              <li><a class="ritem" data-el="5" href="#skill"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><span><span data-source="skill.name item.skill_codes">Subtracts within 20</span><small>the skill</small></span></a></li>
+              <li><a class="ritem" data-el="6" href="#bank"><span class="tile" data-kind="assessment"><i class="ic" data-icon="checklist"></i></span><span>Question bank<small><span class="num" data-source="item.status">1,284</span> ready</small></span></a></li>
+            </ul>
+          </section>
+        </aside>
+      </div>
+      <nav class="tabbar" aria-label="Doors">
+        <a class="tab" data-bar="0" href="#today"><i class="ic" data-icon="today"></i>Today</a>
+        <a class="tab" data-bar="1" href="#timetable"><i class="ic" data-icon="timetable"></i>Timetable</a>
+        <a class="tab" data-bar="2" href="#children"><i class="ic" data-icon="children"></i>Children</a>
+        <a class="tab" data-bar="3" href="#setup" aria-current="page"><i class="ic" data-icon="setup"></i>Setup</a>
+      </nav>
+    </div>
+  </section>
+  <section class="wf" data-viewport="400" aria-label="Phone, 400 px">
+    <div class="frame">
+      <header class="bar">
+        <a class="brand" data-bar="0" href="#today" aria-label="Cornerstone Gurukul, go to Today">
+          <img class="wide on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-colour.svg" alt="">
+          <img class="wide on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-for-dark-backgrounds.svg" alt="">
+          <img class="small on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark.svg" alt="">
+          <img class="small on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark-on-white-tile.svg" alt="">
+        </a>
+        <ul class="doors" aria-label="Doors">
+          <li><a class="door" data-bar="0" href="#today"><i class="ic" data-icon="today"></i>Today <span class="badge num" data-source="pii.educator_note.status pii.educator_note.received_at" aria-label="7 notes to confirm">7</span></a></li>
+          <li><a class="door" data-bar="1" href="#timetable"><i class="ic" data-icon="timetable"></i>Timetable</a></li>
+          <li><a class="door" data-bar="2" href="#children"><i class="ic" data-icon="children"></i>Children</a></li>
+          <li><a class="door" data-bar="3" href="#setup" aria-current="page"><i class="ic" data-icon="setup"></i>Setup</a></li>
+        </ul>
+        <label class="search"><i class="ic s" data-icon="search"></i><span class="vh">Search</span><input data-bar="4" type="search" placeholder="Sr. No., name or activity"></label>
+        <button class="barbtn press" data-bar="5" type="button" role="switch" aria-checked="false"><i class="ic" data-icon="acting-as"></i><span class="w">Acting as</span></button>
+        <a class="barbtn" data-bar="6" href="#help" aria-label="Help for this page"><i class="ic" data-icon="help"></i></a>
+        <button class="barbtn press" data-bar="7" type="button"><i class="ic" data-icon="sign-out"></i><span class="w">Sign out</span></button>
+      </header>
+      <ol class="trail" aria-label="Trail">
+        <li><a data-trail href="#bank">Question bank</a></li>
+        <li><i class="ic s" data-icon="trail"></i></li>
+        <li aria-current="page">N1-SUB-031</li>
+      </ol>
+      <div class="page">
+        <main class="main">
+          <div class="head">
+            <p class="eyebrow"><i class="ic s" data-icon="numeracy"></i><span data-source="subject.name">Numeracy</span> · <span data-source="item.difficulty">Medium</span> · <span class="num" data-source="item.item_key">N1-SUB-031</span></p>
+            <h1 class="title" data-source="item.stem">15 − 7 = ___ (exchange a ten if you need to)</h1>
+            <p class="purpose">The question, its answer, the wrong answers it catches, and where it came from. Correct the wording or remove it.</p>
+          </div>
+          <div class="keyrow"><span class="chip" data-state="ok" data-source="item.status"><i class="ic s" data-icon="done"></i>Ready</span><span class="chip" data-state="ok" data-source="eval_case.verdict eval_case.checked_on"><i class="ic s" data-icon="correct"></i>Reviewer: the answer checks out · 7-Nov</span><span class="caption">corrected by <span data-source="pii.staff.name change_log.staff_id">Asha Almond</span>, <span class="num" data-source="change_log.at">8-Nov</span></span></div>
+          <div class="cards" data-block="Cards">
+            <article class="card" data-kind="assessment"><div class="card-h"><span class="tile"><i class="ic" data-icon="assessment"></i></span>As it prints</div><div class="card-b">
+              <p class="title-small" data-source="item.stem">15 − 7 = ___</p>
+              <p class="muted" data-source="item.spec">Exchange a ten if you need to. Show your working in the box.</p>
+              <span class="caption" data-source="item.fmt">fill the blank · working box</span>
+            </div></article>
+            <article class="card" data-kind="assessment"><div class="card-h"><span class="tile"><i class="ic" data-icon="correct"></i></span>Answer</div><div class="card-b">
+              <p class="title-small num" data-source="item.responses">8</p>
+              <span class="muted">Checked by code, not by a model.</span>
+            </div></article>
+            <article class="card" data-kind="assessment"><div class="card-h"><span class="tile"><i class="ic" data-icon="fix-this"></i></span>Wrong answers it catches</div><div class="card-b">
+              <dl class="kv" data-block="KeyValue">
+                <dt class="num" data-source="item.responses">12</dt><dd data-source="misconception.name item.mistake_skills">Takes the smaller digit from the larger (5 − 7 read as 7 − 5)</dd>
+                <dt class="num" data-source="item.responses">22</dt><dd data-source="misconception.name item.mistake_skills">Adds instead of taking away</dd>
+                <dt class="num" data-source="item.responses">9</dt><dd data-source="misconception.name item.mistake_skills">Exchanges a ten but does not take one from the tens</dd>
+              </dl>
+            </div></article>
+          </div>
+          <details class="details" data-block="Details"><summary data-el="0"><i class="ic s" data-icon="details"></i>About it (source, versions)</summary><div>
+            <dl class="kv">
+              <dt>Made by</dt><dd data-source="item.generator item.model">the bank run, checked by code</dd>
+              <dt>Prompt</dt><dd data-source="item.prompt_id prompt.purpose prompt.version">bank question, version 4</dd>
+              <dt>Skill set</dt><dd data-source="item.skill_set_code item.skill_set_version">Grade 1 subtraction, version 2</dd>
+              <dt>Reviewer</dt><dd data-source="eval_case.kind eval_case.verdict eval_case.source eval_case.detail">the reviewer model read it on 7-Nov: the answer checks out, the wording is clear</dd>
+            </dl>
+            <ol class="timeline" data-block="Timeline">
+              <li class="tli"><span class="tile" data-kind="assessment"><i class="ic" data-icon="history"></i></span><div><b>Wording corrected</b><p data-source="change_log.before change_log.after">Was "15 take away 7". Old key <span class="num">N1-SUB-031a</span> kept and readable · <span data-source="pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="change_log.at">8-Nov</span></li>
+              <li class="tli"><span class="tile" data-kind="assessment"><i class="ic" data-icon="done"></i></span><div><b>Ready</b><p>Read by a person · <span data-source="pii.staff.name">Bina Basil</span></p></div><span class="caption num" data-source="item.created_at">12-Sep</span></li>
+            </ol>
+          </div></details>
+          <form class="form" data-block="Form">
+            <h2 class="title-section">Correct the wording</h2>
+            <div class="field"><label for="wording-400">The wording (required)</label><textarea id="wording-400" data-el="1" required data-source="item.stem">15 − 7 = ___ (exchange a ten if you need to)</textarea></div>
+            <div><button class="btn btn-main press" data-el="2" type="submit"><i class="ic" data-icon="send"></i>Correct the wording</button></div>
+            <p class="caption">A new version is made; the old wording and key stay readable in About it.</p>
+          </form>
+          <form class="form" data-block="Form">
+            <h2 class="title-section">Remove it</h2>
+            <div class="field"><label for="reason-400">Reason for removal (required)</label><input id="reason-400" data-el="3" required placeholder="For example: two answers are right" data-source="change_log.reason"></div>
+            <div><button class="btn press" data-el="4" type="submit"><i class="ic" data-icon="clear"></i>Remove</button></div>
+            <p class="caption">Removed questions are kept with the reason and never printed again; the chip reads "removed".</p>
+          </form>
+          <div class="card" data-kind="assessment">
+            <div class="card-h"><span class="tile"><i class="ic" data-icon="assessment"></i></span>How it has done on papers <span class="count num" data-source="item_result.item_id">96</span></div>
+            <div class="card-b">
+              <div class="sbar" role="img" aria-label="58 right, 21 wrong, 11 wrong with working, 6 blank" data-source="item_result.state item_result.working_shown"><i data-state="ok" style="--n: 58"></i><i data-state="wait" style="--n: 21"></i><i data-state="wait" style="--n: 11"></i><i data-state="quiet" style="--n: 6"></i></div>
+              <div class="keyrow" data-source="item_result.state item_result.working_shown"><span class="chip" data-state="ok"><i class="ic s" data-icon="correct"></i>58 right</span><span class="chip" data-state="wait"><i class="ic s" data-icon="fix-this"></i>21 wrong</span><span class="chip" data-state="wait"><i class="ic s" data-icon="form"></i>11 wrong with working</span><span class="chip" data-state="quiet"><i class="ic s" data-icon="to-do"></i>6 blank</span></div>
+              <span class="caption">The most caught wrong answer: <span class="num" data-source="item_result.misconception_codes">12</span> (smaller from larger), 14 times.</span>
+            </div>
+          </div>
+        </main>
+        <aside class="rail" aria-label="Connected to">
+          <section class="rail-box">
+            <h2>Connected to</h2>
+            <ul class="rlist">
+              <li><a class="ritem" data-el="5" href="#skill"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><span><span data-source="skill.name item.skill_codes">Subtracts within 20</span><small>the skill</small></span></a></li>
+              <li><a class="ritem" data-el="6" href="#bank"><span class="tile" data-kind="assessment"><i class="ic" data-icon="checklist"></i></span><span>Question bank<small><span class="num" data-source="item.status">1,284</span> ready</small></span></a></li>
+            </ul>
+          </section>
+        </aside>
+      </div>
+      <nav class="tabbar" aria-label="Doors">
+        <a class="tab" data-bar="0" href="#today"><i class="ic" data-icon="today"></i>Today</a>
+        <a class="tab" data-bar="1" href="#timetable"><i class="ic" data-icon="timetable"></i>Timetable</a>
+        <a class="tab" data-bar="2" href="#children"><i class="ic" data-icon="children"></i>Children</a>
+        <a class="tab" data-bar="3" href="#setup" aria-current="page"><i class="ic" data-icon="setup"></i>Setup</a>
+      </nav>
+    </div>
+  </section>
+</div>
+</body>
+</html>

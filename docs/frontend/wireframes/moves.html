@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wireframe: Moves by hand (moves)</title>
+<link rel="stylesheet" href="kit.css">
+</head>
+<!-- Wireframe of screens.json "moves" (/timetable/moves), drawn as the coordinator (an educator sees it read-only: no pick, no Accept). Fortnight 10's draft for K2 Red, after two moves. Clay pots and Sorting by size moved (amber dashed); Number stories now clashes (Chetan Clove leads two classes at Thu 3, 09:30), red until accepted. Each cell is a button: pick one, then a target. The accept form sits under the grid with its reason field; Accept the clash is the main action. Undo is a new move row. A second block lists the fortnight's clashes; the grid's source is a data-gap (see the attribute).
+     data-el = index in screens.json moves.elements; data-bar = index in screens.json bar; data-source = target
+     table.column; data-gap = what the target tables cannot give. Both frames hold the same markup: the phone layout
+     comes from kit.css container queries, as it will on the site. Names are from fake-names.json. -->
+<body>
+<div class="wf-sheet">
+  <header>
+    <p class="wf-label">moves · Moves by hand · /timetable/moves · laptop 1440 and phone 400 · add data-theme="dark" on &lt;html&gt; for dark</p>
+  </header>
+  <section class="wf" data-viewport="1440" aria-label="Laptop, 1440 px">
+    <div class="frame">
+      <header class="bar">
+        <a class="brand" data-bar="0" href="#today" aria-label="Cornerstone Gurukul, go to Today">
+          <img class="wide on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-colour.svg" alt="">
+          <img class="wide on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-for-dark-backgrounds.svg" alt="">
+          <img class="small on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark.svg" alt="">
+          <img class="small on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark-on-white-tile.svg" alt="">
+        </a>
+        <ul class="doors" aria-label="Doors">
+          <li><a class="door" data-bar="0" href="#today"><i class="ic" data-icon="today"></i>Today <span class="badge num" data-source="pii.educator_note.status pii.educator_note.received_at" aria-label="7 notes to confirm">7</span></a></li>
+          <li><a class="door" data-bar="1" href="#timetable" aria-current="page"><i class="ic" data-icon="timetable"></i>Timetable</a></li>
+          <li><a class="door" data-bar="2" href="#children"><i class="ic" data-icon="children"></i>Children</a></li>
+          <li><a class="door" data-bar="3" href="#setup"><i class="ic" data-icon="setup"></i>Setup</a></li>
+        </ul>
+        <label class="search"><i class="ic s" data-icon="search"></i><span class="vh">Search</span><input data-bar="4" type="search" placeholder="Sr. No., name or activity"></label>
+        <button class="barbtn press" data-bar="5" type="button" role="switch" aria-checked="false"><i class="ic" data-icon="acting-as"></i><span class="w">Acting as</span></button>
+        <a class="barbtn" data-bar="6" href="#help" aria-label="Help for this page"><i class="ic" data-icon="help"></i></a>
+        <button class="barbtn press" data-bar="7" type="button"><i class="ic" data-icon="sign-out"></i><span class="w">Sign out</span></button>
+      </header>
+      <ol class="trail" aria-label="Trail">
+        <li><a data-trail href="#timetable">Timetable</a></li>
+        <li><i class="ic s" data-icon="trail"></i></li>
+        <li aria-current="page">Moves by hand</li>
+      </ol>
+      <div class="page">
+        <main class="main">
+          <div class="head">
+            <p class="eyebrow"><i class="ic s" data-icon="moved"></i><span data-source="fortnight.number">Fortnight 10</span> · <span data-source="fortnight.state">draft</span> · <span data-source="school_class.label">K2 Red</span></p>
+            <h1 class="title">Moves by hand</h1>
+            <p class="purpose">Move a period; the clash it makes shows at once; only the coordinator accepts one, with a reason.</p>
+          </div>
+          <div class="toolbar">
+            <p class="muted">Pick a lesson, then the period it goes to. Only this fortnight's lessons change.</p>
+            <button class="btn press" data-el="1" type="button" data-source="change_log.op change_log.before change_log.after"><i class="ic" data-icon="previous"></i>Undo the last move</button>
+          </div>
+          <div class="keyrow"><span class="chip on-tint" data-state="wait"><i class="ic s" data-icon="moved"></i>Moved by hand</span><span class="chip on-tint" data-state="late"><i class="ic s" data-icon="clash"></i>Clash, not yet accepted</span><span class="chip on-tint" data-state="wait"><i class="ic s" data-icon="done"></i>Clash accepted (amber)</span></div>
+          <div class="fgrid-box" data-block="FortnightGrid" data-gap="whether a drafted fortnight&#39;s lessons are already session rows (the timetable_clash view reads sessions) or still only in timetable_run.draft, so which rows a hand move on a draft changes"><div class="fgrid" style="--cols: 5">
+<span></span><span class="dh" data-source="school_day.on_date">Mon 30</span><span class="dh" data-source="school_day.on_date">Tue 1</span><span class="dh" data-source="school_day.on_date">Wed 2</span><span class="dh" data-source="school_day.on_date">Thu 3</span><span class="dh" data-source="school_day.on_date">Fri 4</span>
+<span class="band" data-source="period.label period.starts_at period.fixed"><i class="ic s" data-icon="break"></i>Settling in · 08:30</span>
+<span class="tm" data-source="period.starts_at">08:45</span><button class="cell press" data-el="0" type="button" data-subject="numeracy" data-source="session.subject_code session.text session.period_id session.school_day_id session.led_by_staff_id"><span class="subj"><i class="ic s" data-icon="numeracy"></i>Numeracy</span><b>Counting to 50</b></button><button class="cell press" data-el="0" type="button" data-subject="language" data-source="session.subject_code session.text session.period_id session.school_day_id session.led_by_staff_id"><span class="subj"><i class="ic s" data-icon="language"></i>Language</span><b>Story circle: the red hen</b></button><button class="cell press" data-el="0" type="button" data-subject="numeracy" data-source="session.subject_code session.text session.period_id session.school_day_id session.led_by_staff_id"><span class="subj"><i class="ic s" data-icon="numeracy"></i>Numeracy</span><b>Counting to 50</b></button><button class="cell press" data-el="0" type="button" data-subject="language" data-source="session.subject_code session.text session.period_id session.school_day_id session.led_by_staff_id"><span class="subj"><i class="ic s" data-icon="language"></i>Language</span><b>Rhyme time</b></button><button class="cell press" data-el="0" type="button" data-subject="numeracy" data-source="session.subject_code session.text session.period_id session.school_day_id session.led_by_staff_id"><span class="subj"><i class="ic s" data-icon="numeracy"></i>Numeracy</span><b>Shapes around us</b></button>
+<span class="tm" data-source="period.starts_at">09:30</span><button class="cell press" data-el="0" type="button" data-subject="language" data-source="session.subject_code session.text session.period_id session.school_day_id session.led_by_staff_id"><span class="subj"><i class="ic s" data-icon="language"></i>Language</span><b>Sounds of the week</b></button><button class="cell moved press" data-el="0" type="button" data-subject="arts" data-source="session.subject_code session.text session.period_id session.school_day_id session.led_by_staff_id"><span class="subj"><i class="ic s" data-icon="arts"></i>Arts</span><b>Clay pots</b><span class="chip on-tint" data-state="wait"><i class="ic s" data-icon="moved"></i>Moved</span></button><button class="cell press" data-el="0" type="button" data-subject="language" data-source="session.subject_code session.text session.period_id session.school_day_id session.led_by_staff_id"><span class="subj"><i class="ic s" data-icon="language"></i>Language</span><b>Picture talk</b></button><button class="cell clash press" data-el="0" type="button" data-subject="numeracy" data-source="session.subject_code session.text session.period_id session.school_day_id session.led_by_staff_id"><span class="subj"><i class="ic s" data-icon="numeracy"></i>Numeracy</span><b>Number stories</b><span class="chip on-tint" data-state="late"><i class="ic s" data-icon="clash"></i>Clash</span></button><button class="cell press" data-el="0" type="button" data-subject="arts" data-source="session.subject_code session.text session.period_id session.school_day_id session.led_by_staff_id"><span class="subj"><i class="ic s" data-icon="arts"></i>Arts</span><b>Music and movement</b></button>
+<span class="band" data-source="period.label period.starts_at period.fixed"><i class="ic s" data-icon="break"></i>Fruit and play · 10:15</span>
+<span class="tm" data-source="period.starts_at">10:30</span><button class="cell press" data-el="0" type="button" data-subject="arts" data-source="session.subject_code session.text session.period_id session.school_day_id session.led_by_staff_id"><span class="subj"><i class="ic s" data-icon="arts"></i>Arts</span><b>Free drawing</b></button><button class="cell press" data-el="0" type="button" data-subject="numeracy" data-source="session.subject_code session.text session.period_id session.school_day_id session.led_by_staff_id"><span class="subj"><i class="ic s" data-icon="numeracy"></i>Numeracy</span><b>Sorting by colour</b></button><button class="cell press" data-el="0" type="button" data-subject="arts" data-source="session.subject_code session.text session.period_id session.school_day_id session.led_by_staff_id"><span class="subj"><i class="ic s" data-icon="arts"></i>Arts</span><b>Leaf printing</b></button><button class="cell press" data-el="0" type="button" data-subject="language" data-source="session.subject_code session.text session.period_id session.school_day_id session.led_by_staff_id"><span class="subj"><i class="ic s" data-icon="language"></i>Language</span><b>Letter hunt</b></button><button class="cell moved press" data-el="0" type="button" data-subject="numeracy" data-source="session.subject_code session.text session.period_id session.school_day_id session.led_by_staff_id"><span class="subj"><i class="ic s" data-icon="numeracy"></i>Numeracy</span><b>Sorting by size</b><span class="chip on-tint" data-state="wait"><i class="ic s" data-icon="moved"></i>Moved</span></button>
+<span class="band" data-source="period.label period.starts_at period.fixed"><i class="ic s" data-icon="break"></i>Lunch and going home · 12:00</span>
+</div></div>
+          <form class="form" data-block="Form">
+            <p class="title-small">Accept this clash: Number stories, Thu 3 at 09:30</p>
+            <p class="muted"><span data-source="pii.staff.name">Chetan Clove</span> would lead K2 Red and Grade 1 in the same period.</p>
+            <div class="field"><label for="why-1440">Reason (required)</label><textarea id="why-1440" data-el="2" required data-source="approval.reason">Grade 1 joins K2 Red for this story; one room, two classes.</textarea></div>
+            <p class="caption">Left empty, the form says "Say why" and accepts nothing.</p>
+            <div><button class="btn btn-main press" data-el="3" type="submit" data-source="approval.kind approval.target approval.by"><i class="ic" data-icon="done"></i>Accept the clash</button></div>
+          </form>
+          <h2 class="title-section">Moves made <span class="count num" data-source="change_log.row_id">3</span></h2>
+          <div class="table-box" data-block="DataTable">
+            <table class="table">
+              <thead><tr><th>What</th><th>From</th><th>To</th><th>Who, when</th><th>Why</th><th class="st">Clash accepted?</th></tr></thead>
+              <tbody>
+                <tr><td data-source="session.text">Number stories</td><td class="num" data-source="change_log.before">Thu 3, 08:45</td><td class="num" data-source="change_log.after">Thu 3, 09:30</td><td><span data-source="change_log.staff_id pii.staff.name">Asha Almond</span> · <span class="num" data-source="change_log.at">10-Nov</span></td><td data-source="change_log.reason">Keep 08:45 for the hall rehearsal</td><td class="st" data-source="approval.kind approval.reason approval.by"><span class="chip" data-state="late"><i class="ic s" data-icon="clash"></i>Not yet</span></td></tr>
+                <tr><td data-source="session.text">Sorting by size</td><td class="num" data-source="change_log.before">Fri 4, 09:30</td><td class="num" data-source="change_log.after">Fri 4, 10:30</td><td><span data-source="change_log.staff_id pii.staff.name">Asha Almond</span> · <span class="num" data-source="change_log.at">10-Nov</span></td><td data-source="change_log.reason">Undo of the move before</td><td class="st" data-source="approval.kind approval.reason approval.by"><span class="muted">no clash</span></td></tr>
+                <tr><td data-source="session.text">Clay pots</td><td class="num" data-source="change_log.before">Mon 30, 10:30</td><td class="num" data-source="change_log.after">Tue 1, 09:30</td><td><span data-source="change_log.staff_id pii.staff.name">Asha Almond</span> · <span class="num" data-source="change_log.at">10-Nov</span></td><td data-source="change_log.reason">The kiln is free on Tuesday</td><td class="st" data-source="approval.kind approval.reason approval.by"><span class="muted">no clash</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <h2 class="title-section">Clashes in Fortnight 10, all classes</h2>
+          <div class="groups">
+            <div class="grp" data-state="late">
+              <h3 class="grp-h"><i class="ic s" data-icon="clash"></i>Not yet accepted <span class="count num">1</span></h3>
+              <ol class="timeline"><li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="clash"></i></span><div><b>Thu 3 at 09:30: Number stories (K2 Red) and Reading pairs (Grade 1)</b><p>One educator, two classes</p></div><span class="caption num" data-source="school_day.on_date">3-Dec</span></li></ol>
+            </div>
+            <div class="grp" data-state="wait">
+              <h3 class="grp-h"><i class="ic s" data-icon="done"></i>Accepted <span class="count num">1</span></h3>
+              <ol class="timeline"><li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="clash"></i></span><div><b>Wed 9 at 08:45: two Numeracy lessons for Grade 2</b><p><span data-source="approval.reason">Two groups, two rooms.</span> · <span data-source="approval.by pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="approval.created_at">9-Nov</span></li></ol>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: before the first move</div>
+            <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="moved"></i><b>No moves yet</b><span class="muted">The draft stands as the rules made it.</span></div></div>
+          </div>
+        </main>
+        <aside class="rail" aria-label="Connected to">
+          <section class="rail-box">
+            <h2>Connected to</h2>
+            <ul class="rlist">
+              <li><a class="ritem" data-el="4" href="#fortnight"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span><span><span data-source="fortnight.number">Fortnight 10</span><small>then Approve there</small></span></a></li>
+              <li><a class="ritem" data-el="5" href="#timetable"><span class="tile" data-kind="period"><i class="ic" data-icon="timetable"></i></span><span>The grid<small>the live fortnight</small></span></a></li>
+              <li><a class="ritem" data-el="6" href="#rules"><span class="tile" data-kind="period"><i class="ic" data-icon="checklist"></i></span><span>Rules<small>what the draft read</small></span></a></li>
+            </ul>
+          </section>
+          <section class="rail-box">
+            <h2>This draft so far</h2>
+            <dl class="kv" data-block="KeyValue">
+              <dt>Lessons</dt><dd class="num" data-source="session.id">40</dd>
+              <dt>Moved by hand</dt><dd class="num" data-source="change_log.row_id">3</dd>
+              <dt>Clashes open</dt><dd class="num" data-source="session.led_by_staff_id">1</dd>
+              <dt>Clashes accepted</dt><dd class="num" data-source="approval.kind">1</dd>
+            </dl>
+          </section>
+        </aside>
+      </div>
+      <nav class="tabbar" aria-label="Doors">
+        <a class="tab" data-bar="0" href="#today"><i class="ic" data-icon="today"></i>Today</a>
+        <a class="tab" data-bar="1" href="#timetable" aria-current="page"><i class="ic" data-icon="timetable"></i>Timetable</a>
+        <a class="tab" data-bar="2" href="#children"><i class="ic" data-icon="children"></i>Children</a>
+        <a class="tab" data-bar="3" href="#setup"><i class="ic" data-icon="setup"></i>Setup</a>
+      </nav>
+    </div>
+  </section>
+  <section class="wf" data-viewport="400" aria-label="Phone, 400 px">
+    <div class="frame">
+      <header class="bar">
+        <a class="brand" data-bar="0" href="#today" aria-label="Cornerstone Gurukul, go to Today">
+          <img class="wide on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-colour.svg" alt="">
+          <img class="wide on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-for-dark-backgrounds.svg" alt="">
+          <img class="small on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark.svg" alt="">
+          <img class="small on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark-on-white-tile.svg" alt="">
+        </a>
+        <ul class="doors" aria-label="Doors">
+          <li><a class="door" data-bar="0" href="#today"><i class="ic" data-icon="today"></i>Today <span class="badge num" data-source="pii.educator_note.status pii.educator_note.received_at" aria-label="7 notes to confirm">7</span></a></li>
+          <li><a class="door" data-bar="1" href="#timetable" aria-current="page"><i class="ic" data-icon="timetable"></i>Timetable</a></li>
+          <li><a class="door" data-bar="2" href="#children"><i class="ic" data-icon="children"></i>Children</a></li>
+          <li><a class="door" data-bar="3" href="#setup"><i class="ic" data-icon="setup"></i>Setup</a></li>
+        </ul>
+        <label class="search"><i class="ic s" data-icon="search"></i><span class="vh">Search</span><input data-bar="4" type="search" placeholder="Sr. No., name or activity"></label>
+        <button class="barbtn press" data-bar="5" type="button" role="switch" aria-checked="false"><i class="ic" data-icon="acting-as"></i><span class="w">Acting as</span></button>
+        <a class="barbtn" data-bar="6" href="#help" aria-label="Help for this page"><i class="ic" data-icon="help"></i></a>
+        <button class="barbtn press" data-bar="7" type="button"><i class="ic" data-icon="sign-out"></i><span class="w">Sign out</span></button>
+      </header>
+      <ol class="trail" aria-label="Trail">
+        <li><a data-trail href="#timetable">Timetable</a></li>
+        <li><i class="ic s" data-icon="trail"></i></li>
+        <li aria-current="page">Moves by hand</li>
+      </ol>
+      <div class="page">
+        <main class="main">
+          <div class="head">
+            <p class="eyebrow"><i class="ic s" data-icon="moved"></i><span data-source="fortnight.number">Fortnight 10</span> · <span data-source="fortnight.state">draft</span> · <span data-source="school_class.label">K2 Red</span></p>
+            <h1 class="title">Moves by hand</h1>
+            <p class="purpose">Move a period; the clash it makes shows at once; only the coordinator accepts one, with a reason.</p>
+          </div>
+          <div class="toolbar">
+            <p class="muted">Pick a lesson, then the period it goes to. Only this fortnight's lessons change.</p>
+            <button class="btn press" data-el="1" type="button" data-source="change_log.op change_log.before change_log.after"><i class="ic" data-icon="previous"></i>Undo the last move</button>
+          </div>
+          <div class="keyrow"><span class="chip on-tint" data-state="wait"><i class="ic s" data-icon="moved"></i>Moved by hand</span><span class="chip on-tint" data-state="late"><i class="ic s" data-icon="clash"></i>Clash, not yet accepted</span><span class="chip on-tint" data-state="wait"><i class="ic s" data-icon="done"></i>Clash accepted (amber)</span></div>
+          <div class="fgrid-box" data-block="FortnightGrid" data-gap="whether a drafted fortnight&#39;s lessons are already session rows (the timetable_clash view reads sessions) or still only in timetable_run.draft, so which rows a hand move on a draft changes"><div class="fgrid" style="--cols: 5">
+<span></span><span class="dh" data-source="school_day.on_date">Mon 30</span><span class="dh" data-source="school_day.on_date">Tue 1</span><span class="dh" data-source="school_day.on_date">Wed 2</span><span class="dh" data-source="school_day.on_date">Thu 3</span><span class="dh" data-source="school_day.on_date">Fri 4</span>
+<span class="band" data-source="period.label period.starts_at period.fixed"><i class="ic s" data-icon="break"></i>Settling in · 08:30</span>
+<span class="tm" data-source="period.starts_at">08:45</span><button class="cell press" data-el="0" type="button" data-subject="numeracy" data-source="session.subject_code session.text session.period_id session.school_day_id session.led_by_staff_id"><span class="subj"><i class="ic s" data-icon="numeracy"></i>Numeracy</span><b>Counting to 50</b></button><button class="cell press" data-el="0" type="button" data-subject="language" data-source="session.subject_code session.text session.period_id session.school_day_id session.led_by_staff_id"><span class="subj"><i class="ic s" data-icon="language"></i>Language</span><b>Story circle: the red hen</b></button><button class="cell press" data-el="0" type="button" data-subject="numeracy" data-source="session.subject_code session.text session.period_id session.school_day_id session.led_by_staff_id"><span class="subj"><i class="ic s" data-icon="numeracy"></i>Numeracy</span><b>Counting to 50</b></button><button class="cell press" data-el="0" type="button" data-subject="language" data-source="session.subject_code session.text session.period_id session.school_day_id session.led_by_staff_id"><span class="subj"><i class="ic s" data-icon="language"></i>Language</span><b>Rhyme time</b></button><button class="cell press" data-el="0" type="button" data-subject="numeracy" data-source="session.subject_code session.text session.period_id session.school_day_id session.led_by_staff_id"><span class="subj"><i class="ic s" data-icon="numeracy"></i>Numeracy</span><b>Shapes around us</b></button>
+<span class="tm" data-source="period.starts_at">09:30</span><button class="cell press" data-el="0" type="button" data-subject="language" data-source="session.subject_code session.text session.period_id session.school_day_id session.led_by_staff_id"><span class="subj"><i class="ic s" data-icon="language"></i>Language</span><b>Sounds of the week</b></button><button class="cell moved press" data-el="0" type="button" data-subject="arts" data-source="session.subject_code session.text session.period_id session.school_day_id session.led_by_staff_id"><span class="subj"><i class="ic s" data-icon="arts"></i>Arts</span><b>Clay pots</b><span class="chip on-tint" data-state="wait"><i class="ic s" data-icon="moved"></i>Moved</span></button><button class="cell press" data-el="0" type="button" data-subject="language" data-source="session.subject_code session.text session.period_id session.school_day_id session.led_by_staff_id"><span class="subj"><i class="ic s" data-icon="language"></i>Language</span><b>Picture talk</b></button><button class="cell clash press" data-el="0" type="button" data-subject="numeracy" data-source="session.subject_code session.text session.period_id session.school_day_id session.led_by_staff_id"><span class="subj"><i class="ic s" data-icon="numeracy"></i>Numeracy</span><b>Number stories</b><span class="chip on-tint" data-state="late"><i class="ic s" data-icon="clash"></i>Clash</span></button><button class="cell press" data-el="0" type="button" data-subject="arts" data-source="session.subject_code session.text session.period_id session.school_day_id session.led_by_staff_id"><span class="subj"><i class="ic s" data-icon="arts"></i>Arts</span><b>Music and movement</b></button>
+<span class="band" data-source="period.label period.starts_at period.fixed"><i class="ic s" data-icon="break"></i>Fruit and play · 10:15</span>
+<span class="tm" data-source="period.starts_at">10:30</span><button class="cell press" data-el="0" type="button" data-subject="arts" data-source="session.subject_code session.text session.period_id session.school_day_id session.led_by_staff_id"><span class="subj"><i class="ic s" data-icon="arts"></i>Arts</span><b>Free drawing</b></button><button class="cell press" data-el="0" type="button" data-subject="numeracy" data-source="session.subject_code session.text session.period_id session.school_day_id session.led_by_staff_id"><span class="subj"><i class="ic s" data-icon="numeracy"></i>Numeracy</span><b>Sorting by colour</b></button><button class="cell press" data-el="0" type="button" data-subject="arts" data-source="session.subject_code session.text session.period_id session.school_day_id session.led_by_staff_id"><span class="subj"><i class="ic s" data-icon="arts"></i>Arts</span><b>Leaf printing</b></button><button class="cell press" data-el="0" type="button" data-subject="language" data-source="session.subject_code session.text session.period_id session.school_day_id session.led_by_staff_id"><span class="subj"><i class="ic s" data-icon="language"></i>Language</span><b>Letter hunt</b></button><button class="cell moved press" data-el="0" type="button" data-subject="numeracy" data-source="session.subject_code session.text session.period_id session.school_day_id session.led_by_staff_id"><span class="subj"><i class="ic s" data-icon="numeracy"></i>Numeracy</span><b>Sorting by size</b><span class="chip on-tint" data-state="wait"><i class="ic s" data-icon="moved"></i>Moved</span></button>
+<span class="band" data-source="period.label period.starts_at period.fixed"><i class="ic s" data-icon="break"></i>Lunch and going home · 12:00</span>
+</div></div>
+          <form class="form" data-block="Form">
+            <p class="title-small">Accept this clash: Number stories, Thu 3 at 09:30</p>
+            <p class="muted"><span data-source="pii.staff.name">Chetan Clove</span> would lead K2 Red and Grade 1 in the same period.</p>
+            <div class="field"><label for="why-400">Reason (required)</label><textarea id="why-400" data-el="2" required data-source="approval.reason">Grade 1 joins K2 Red for this story; one room, two classes.</textarea></div>
+            <p class="caption">Left empty, the form says "Say why" and accepts nothing.</p>
+            <div><button class="btn btn-main press" data-el="3" type="submit" data-source="approval.kind approval.target approval.by"><i class="ic" data-icon="done"></i>Accept the clash</button></div>
+          </form>
+          <h2 class="title-section">Moves made <span class="count num" data-source="change_log.row_id">3</span></h2>
+          <div class="table-box" data-block="DataTable">
+            <table class="table">
+              <thead><tr><th>What</th><th>From</th><th>To</th><th>Who, when</th><th>Why</th><th class="st">Clash accepted?</th></tr></thead>
+              <tbody>
+                <tr><td data-source="session.text">Number stories</td><td class="num" data-source="change_log.before">Thu 3, 08:45</td><td class="num" data-source="change_log.after">Thu 3, 09:30</td><td><span data-source="change_log.staff_id pii.staff.name">Asha Almond</span> · <span class="num" data-source="change_log.at">10-Nov</span></td><td data-source="change_log.reason">Keep 08:45 for the hall rehearsal</td><td class="st" data-source="approval.kind approval.reason approval.by"><span class="chip" data-state="late"><i class="ic s" data-icon="clash"></i>Not yet</span></td></tr>
+                <tr><td data-source="session.text">Sorting by size</td><td class="num" data-source="change_log.before">Fri 4, 09:30</td><td class="num" data-source="change_log.after">Fri 4, 10:30</td><td><span data-source="change_log.staff_id pii.staff.name">Asha Almond</span> · <span class="num" data-source="change_log.at">10-Nov</span></td><td data-source="change_log.reason">Undo of the move before</td><td class="st" data-source="approval.kind approval.reason approval.by"><span class="muted">no clash</span></td></tr>
+                <tr><td data-source="session.text">Clay pots</td><td class="num" data-source="change_log.before">Mon 30, 10:30</td><td class="num" data-source="change_log.after">Tue 1, 09:30</td><td><span data-source="change_log.staff_id pii.staff.name">Asha Almond</span> · <span class="num" data-source="change_log.at">10-Nov</span></td><td data-source="change_log.reason">The kiln is free on Tuesday</td><td class="st" data-source="approval.kind approval.reason approval.by"><span class="muted">no clash</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <h2 class="title-section">Clashes in Fortnight 10, all classes</h2>
+          <div class="groups">
+            <div class="grp" data-state="late">
+              <h3 class="grp-h"><i class="ic s" data-icon="clash"></i>Not yet accepted <span class="count num">1</span></h3>
+              <ol class="timeline"><li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="clash"></i></span><div><b>Thu 3 at 09:30: Number stories (K2 Red) and Reading pairs (Grade 1)</b><p>One educator, two classes</p></div><span class="caption num" data-source="school_day.on_date">3-Dec</span></li></ol>
+            </div>
+            <div class="grp" data-state="wait">
+              <h3 class="grp-h"><i class="ic s" data-icon="done"></i>Accepted <span class="count num">1</span></h3>
+              <ol class="timeline"><li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="clash"></i></span><div><b>Wed 9 at 08:45: two Numeracy lessons for Grade 2</b><p><span data-source="approval.reason">Two groups, two rooms.</span> · <span data-source="approval.by pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="approval.created_at">9-Nov</span></li></ol>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: before the first move</div>
+            <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="moved"></i><b>No moves yet</b><span class="muted">The draft stands as the rules made it.</span></div></div>
+          </div>
+        </main>
+        <aside class="rail" aria-label="Connected to">
+          <section class="rail-box">
+            <h2>Connected to</h2>
+            <ul class="rlist">
+              <li><a class="ritem" data-el="4" href="#fortnight"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span><span><span data-source="fortnight.number">Fortnight 10</span><small>then Approve there</small></span></a></li>
+              <li><a class="ritem" data-el="5" href="#timetable"><span class="tile" data-kind="period"><i class="ic" data-icon="timetable"></i></span><span>The grid<small>the live fortnight</small></span></a></li>
+              <li><a class="ritem" data-el="6" href="#rules"><span class="tile" data-kind="period"><i class="ic" data-icon="checklist"></i></span><span>Rules<small>what the draft read</small></span></a></li>
+            </ul>
+          </section>
+          <section class="rail-box">
+            <h2>This draft so far</h2>
+            <dl class="kv" data-block="KeyValue">
+              <dt>Lessons</dt><dd class="num" data-source="session.id">40</dd>
+              <dt>Moved by hand</dt><dd class="num" data-source="change_log.row_id">3</dd>
+              <dt>Clashes open</dt><dd class="num" data-source="session.led_by_staff_id">1</dd>
+              <dt>Clashes accepted</dt><dd class="num" data-source="approval.kind">1</dd>
+            </dl>
+          </section>
+        </aside>
+      </div>
+      <nav class="tabbar" aria-label="Doors">
+        <a class="tab" data-bar="0" href="#today"><i class="ic" data-icon="today"></i>Today</a>
+        <a class="tab" data-bar="1" href="#timetable" aria-current="page"><i class="ic" data-icon="timetable"></i>Timetable</a>
+        <a class="tab" data-bar="2" href="#children"><i class="ic" data-icon="children"></i>Children</a>
+        <a class="tab" data-bar="3" href="#setup"><i class="ic" data-icon="setup"></i>Setup</a>
+      </nav>
+    </div>
+  </section>
+</div>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wireframe: Sign in (login)</title>
+<link rel="stylesheet" href="kit.css">
+</head>
+<!-- Wireframe of screens.json "login" (/login), drawn as anyone on the staff list (pii.staff); the page is the same for both groups. Frame bare: no bar, trail or tab bar. The BrandMark's large lockup sits above the form (the dark-ground lockup in dark). Main action Sign in. The Sign in / Forgot tab is one element: the forgot panel is drawn below as an inset; screens.json lists no separate send-the-link button, so the panel shows the email field and says what happens (judgement call). The sign-in list is pii.staff (email, password_hash); a wrong password is a sign_in_failure row; a link is a password_link row, refused once used_at is set.
+     data-el = index in screens.json login.elements; data-bar = index in screens.json bar; data-source = target
+     table.column; data-gap = what the target tables cannot give. Both frames hold the same markup: the phone layout
+     comes from kit.css container queries, as it will on the site. Names are from fake-names.json. -->
+<body>
+<div class="wf-sheet">
+  <header>
+    <p class="wf-label">login · Sign in · /login · laptop 1440 and phone 400 · add data-theme="dark" on &lt;html&gt; for dark</p>
+  </header>
+  <section class="wf" data-viewport="1440" aria-label="Laptop, 1440 px">
+    <div class="frame">
+      <div class="page">
+        <main class="main">
+          <span class="brand large" data-block="BrandMark" role="img" aria-label="Cornerstone Gurukul">
+            <img class="on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-colour.svg" alt="">
+            <img class="on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-for-dark-backgrounds.svg" alt="">
+          </span>
+          <div class="head">
+            <p class="eyebrow"><i class="ic s" data-icon="educator"></i>Staff only</p>
+            <h1 class="title">Sign in</h1>
+            <p class="purpose">School email and password. Forgot it: a link by email, set by its owner.</p>
+          </div>
+          <div class="toolbar">
+            <div class="seg" role="tablist" aria-label="Sign in or forgot"><a role="tab" data-el="3" aria-selected="true" href="#sign-in">Sign in</a><a role="tab" data-el="3" aria-selected="false" href="#forgot">Forgot your password?</a></div>
+          </div>
+          <form class="form" data-block="Form">
+            <div class="field"><label for="email-1440">School email</label><input id="email-1440" data-el="0" type="email" required autocomplete="username" value="asha.almond@school.example" data-source="pii.staff.email"></div>
+            <div class="field"><label for="pw-1440">Password</label><input id="pw-1440" data-el="1" type="password" required autocomplete="current-password" value="••••••••••" data-source="pii.staff.password_hash"></div>
+            <div><button class="btn btn-main press" data-el="2" type="submit"><i class="ic" data-icon="next"></i>Sign in</button></div>
+          </form>
+          <div class="card">
+            <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: a wrong password</div>
+            <div class="card-b"><div class="keyrow"><span class="chip" data-state="wait" data-source="sign_in_failure.email sign_in_failure.created_at"><i class="ic s" data-icon="to-confirm"></i>Not signed in</span></div><span class="muted">That email and password do not match. Try again.</span><span class="caption">One message, never which of the two was wrong. Each try is counted.</span></div>
+          </div>
+          <div class="card">
+            <div class="card-h"><i class="ic s" data-icon="time"></i>Inset: after too many tries</div>
+            <div class="card-b"><div class="keyrow"><span class="chip" data-state="quiet" data-source="sign_in_failure.created_at config.value"><i class="ic s" data-icon="time"></i>Wait 15 minutes</span></div><span class="muted">Too many tries. Wait, or use Forgot your password?</span></div>
+          </div>
+          <div class="card">
+            <div class="card-h"><i class="ic s" data-icon="send"></i>Inset: the Forgot your password? tab</div>
+            <div class="card-b">
+              <div class="field"><label for="forgot-1440">School email</label><input id="forgot-1440" data-el="0" type="email" required value="asha.almond@school.example" data-source="password_link.email"></div>
+              <span class="muted">One email is sent with a link. The link sets a new password once; a used link is refused.</span>
+              <div class="keyrow"><span class="chip" data-state="ok" data-source="password_link.email password_link.expires_at"><i class="ic s" data-icon="done"></i>Link sent</span><span class="chip" data-state="quiet" data-source="password_link.used_at"><i class="ic s" data-icon="to-do"></i>Link used already</span></div><span class="caption">"Link sent" shows whether or not the address is on the staff list.</span>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </section>
+  <section class="wf" data-viewport="400" aria-label="Phone, 400 px">
+    <div class="frame">
+      <div class="page">
+        <main class="main">
+          <span class="brand large" data-block="BrandMark" role="img" aria-label="Cornerstone Gurukul">
+            <img class="on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-colour.svg" alt="">
+            <img class="on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-for-dark-backgrounds.svg" alt="">
+          </span>
+          <div class="head">
+            <p class="eyebrow"><i class="ic s" data-icon="educator"></i>Staff only</p>
+            <h1 class="title">Sign in</h1>
+            <p class="purpose">School email and password. Forgot it: a link by email, set by its owner.</p>
+          </div>
+          <div class="toolbar">
+            <div class="seg" role="tablist" aria-label="Sign in or forgot"><a role="tab" data-el="3" aria-selected="true" href="#sign-in">Sign in</a><a role="tab" data-el="3" aria-selected="false" href="#forgot">Forgot your password?</a></div>
+          </div>
+          <form class="form" data-block="Form">
+            <div class="field"><label for="email-400">School email</label><input id="email-400" data-el="0" type="email" required autocomplete="username" value="asha.almond@school.example" data-source="pii.staff.email"></div>
+            <div class="field"><label for="pw-400">Password</label><input id="pw-400" data-el="1" type="password" required autocomplete="current-password" value="••••••••••" data-source="pii.staff.password_hash"></div>
+            <div><button class="btn btn-main press" data-el="2" type="submit"><i class="ic" data-icon="next"></i>Sign in</button></div>
+          </form>
+          <div class="card">
+            <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: a wrong password</div>
+            <div class="card-b"><div class="keyrow"><span class="chip" data-state="wait" data-source="sign_in_failure.email sign_in_failure.created_at"><i class="ic s" data-icon="to-confirm"></i>Not signed in</span></div><span class="muted">That email and password do not match. Try again.</span><span class="caption">One message, never which of the two was wrong. Each try is counted.</span></div>
+          </div>
+          <div class="card">
+            <div class="card-h"><i class="ic s" data-icon="time"></i>Inset: after too many tries</div>
+            <div class="card-b"><div class="keyrow"><span class="chip" data-state="quiet" data-source="sign_in_failure.created_at config.value"><i class="ic s" data-icon="time"></i>Wait 15 minutes</span></div><span class="muted">Too many tries. Wait, or use Forgot your password?</span></div>
+          </div>
+          <div class="card">
+            <div class="card-h"><i class="ic s" data-icon="send"></i>Inset: the Forgot your password? tab</div>
+            <div class="card-b">
+              <div class="field"><label for="forgot-400">School email</label><input id="forgot-400" data-el="0" type="email" required value="asha.almond@school.example" data-source="password_link.email"></div>
+              <span class="muted">One email is sent with a link. The link sets a new password once; a used link is refused.</span>
+              <div class="keyrow"><span class="chip" data-state="ok" data-source="password_link.email password_link.expires_at"><i class="ic s" data-icon="done"></i>Link sent</span><span class="chip" data-state="quiet" data-source="password_link.used_at"><i class="ic s" data-icon="to-do"></i>Link used already</span></div><span class="caption">"Link sent" shows whether or not the address is on the staff list.</span>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </section>
+</div>
+</body>
+</html>
