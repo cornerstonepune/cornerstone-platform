@@ -62,7 +62,9 @@
     "Empty: with the fixture's empty class or empty filter, the screen shows exactly its stated empty text and its next-step link, and no table head over no rows, no zero columns, no dash columns.",
     "Themes: a screenshot in light at 1440 is committed as the baseline; the `blocks` screen and the journey steps are also committed in dark. Text contrast is measured by the token-pair script (UI-14) and by axe, not by sampling every page."
   ],
-  "merged_slices": [],
+  "merged_slices": [
+    "UI-11"
+  ],
   "slices": [
     {
       "id": "UI-1",
