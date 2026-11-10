@@ -30,6 +30,8 @@ test.beforeAll(async () => {
   await timetableSwitch(sql, true);
 });
 test.afterAll(async () => {
+  // a grant is never deleted, only ended (the table refuses a delete)
+  await sql`update staff_role_grant set valid_to = valid_from where staff_id = ${staff} and granted_by = 'u74 test' and valid_to is null`;
   await timetableSwitch(sql, false);
   await sql.end();
 });
@@ -85,6 +87,9 @@ test("4. the School list tab is the coordinator's: the educator has none and the
 
 test("5. 'Notes to read' shows only the notes the system could not read", async ({ page }) => {
   const [{ tenant }] = await sql<{ tenant: string }[]>`select tenant_id as tenant from school_class where id = ${klass}`;
+  // the notes are read by the coordinator role (as in m1-09-materials.spec.ts)
+  await sql`insert into staff_role_grant (tenant_id, staff_id, role_code, valid_from, granted_by) select ${tenant}, ${staff}, 'coordinator', current_date - 1, 'u74 test'
+            where not exists (select 1 from staff_role_grant where staff_id = ${staff} and role_code = 'coordinator' and granted_by = 'u74 test' and valid_to is null)`;
   const [{ id: list }] = await sql<{ id: string }[]>`select id from materials_list where school_class_id = ${klass} order by created_at desc limit 1`;
   await sql`insert into curriculum_proposal (tenant_id, run_id, kind, subject_code, proposal, status, reason, staff_id, machine)
     values (${tenant}, gen_random_uuid(), 'materials_note', ${list}, ${sql.json({ text: "Placeholder note: UI-9 lolly sticks" })},
