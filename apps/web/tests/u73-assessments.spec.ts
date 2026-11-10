@@ -65,6 +65,8 @@ test.beforeAll(async () => {
   checked = { sheet: paper.sheet };
 });
 test.afterAll(async () => {
+  // this spec's papers are put away as a paper made in error is, so no later spec finds a pack waiting for approval or more assessments on a page
+  await sql`update sheet_instance set print_status = 'void' where section in (${SECTION}, 'U73-OTHER', 'U73-MAKE') and print_status <> 'void'`;
   await sql.end();
 });
 
@@ -139,11 +141,13 @@ test("a paper shows right, wrong, blank and for you to judge as separate chips, 
 
 test("a person's answer is a new read_correction row and the engine's read stays (16)", async ({ page }) => {
   await page.goto(paperHref(KEY(), "1"));
-  const before = await sql<{ raw: string }[]>`select raw_read as raw from item_result where id = any(${paper.results}::uuid[]) order by id`;
+  // the answer a person corrects is the one whose read must stay: the engine marks the answers again, and may say more about others
+  const judged = paper.results[3];
+  const before = await sql<{ raw: string }[]>`select raw_read as raw from item_result where id = ${judged}::uuid`;
   await page.getByLabel(/What the child wrote for question/).fill("6");
   await page.getByRole("button", { name: "Say what the child wrote" }).click();
   await expect.poll(async () => (await sql`select 1 from read_correction where item_result_id = any(${paper.results}::uuid[]) and human_read = '6'`).length).toBeGreaterThan(0);
-  const after = await sql<{ raw: string }[]>`select raw_read as raw from item_result where id = any(${paper.results}::uuid[]) order by id`;
+  const after = await sql<{ raw: string }[]>`select raw_read as raw from item_result where id = ${judged}::uuid`;
   expect(after.map((r) => r.raw)).toEqual(before.map((r) => r.raw));
   void checked;
 });

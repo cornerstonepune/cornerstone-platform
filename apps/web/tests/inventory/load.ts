@@ -23,6 +23,8 @@ export type Screen = {
   title: string;
   elements: Element[];
   rail?: unknown[];
+  /** Rows this screen needs while it is checked, made fresh before its run and put away after it (names in `FIXTURES`), so no other test sees them. */
+  rest?: { fixture: string; after?: string };
   phone_gate?: boolean;
   frame?: string;
 };

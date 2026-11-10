@@ -2323,7 +2323,11 @@
         "no approve-all control anywhere",
         "each tile's number equals the rows behind it",
         "each board lane's card count equals the table rows at the lane's steps"
-      ]
+      ],
+      "rest": {
+        "fixture": "assessments-rest",
+        "after": "assessments-gone"
+      }
     },
     {
       "id": "assessment",
@@ -2494,7 +2498,11 @@
         "the stepper's amber step equals the status word in the list",
         "a replaced copy shows 'replaced by a newer one' and no action",
         "the papers bar's three counts sum to the number of copies"
-      ]
+      ],
+      "rest": {
+        "fixture": "assessments-rest",
+        "after": "assessments-gone"
+      }
     },
     {
       "id": "paper",
@@ -2619,7 +2627,11 @@
         "right, wrong and blank are three different chips and three counts; a wrong-with-working reason is shown with its wrong chip",
         "a person's answer writes a read_correction row and never overwrites the engine's read",
         "Sign off is absent while any answer is 'for you to judge', and acts on one paper"
-      ]
+      ],
+      "rest": {
+        "fixture": "assessments-rest",
+        "after": "assessments-gone"
+      }
     },
     {
       "id": "reports",
