@@ -207,13 +207,9 @@ export default async function AssessmentsPage({ searchParams }: Props) {
         <>
           {reader ? <ReaderPanel r={reader} view={readerView} page={Math.max(1, Math.floor(Number(q.rpage)) || 1)} keep={{ view: "reading" }} base={HERE} /> : null}
           {scans.length ? (
-            <section aria-label="Read a scan" className="mt-4">
-              <details open data-files-read>
-                <summary className="cursor-pointer text-[13.5px]">Files read lately, and what each lacks ({scans.length})</summary>
-                <div className="mt-2">
-                  <ScansTable scans={scans} from={HERE} />
-                </div>
-              </details>
+            <section aria-label="Read a scan" className="mt-4" data-files-read>
+              <h2 className="mb-2">Files read lately, and what each lacks ({scans.length})</h2>
+              <ScansTable scans={scans} from={HERE} />
             </section>
           ) : (
             <EmptyState>No file has been read yet. Read one with the box above and it appears here.</EmptyState>

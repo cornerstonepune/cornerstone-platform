@@ -2221,7 +2221,7 @@
         },
         {
           "t": "filter",
-          "label": "class · topic · subject · kind · week · stage",
+          "label": "class · topic · subject · kind · week · stage (and, on Reading, Show: by day, by kind of question, by how sure)",
           "text": "Class",
           "data": "data-filter"
         },
@@ -2344,13 +2344,6 @@
           "data": "data-topic-open",
           "when": "?view=topic",
           "to": "assessments"
-        },
-        {
-          "t": "filter",
-          "label": "reader: show by day, by kind of question, by how sure",
-          "note": "how the reader is doing; the address carries the choice",
-          "text": "Show",
-          "when": "?view=reading"
         },
         {
           "t": "button",
