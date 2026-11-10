@@ -8,7 +8,7 @@ export function LevelSelect({ assessment, sheet, roll, level, order }: { assessm
     <form action={changeLevel}>
       <input type="hidden" name="key" value={assessment} />
       <input type="hidden" name="sheet" value={sheet} />
-      <select name="difficulty" defaultValue={level} aria-label={`Level for Sr. No. ${roll}`} className="select" onChange={(e) => e.currentTarget.form?.requestSubmit()}>
+      <select data-level="" name="difficulty" defaultValue={level} aria-label={`Level for Sr. No. ${roll}`} className="select" onChange={(e) => e.currentTarget.form?.requestSubmit()}>
         {order.map((d) => (
           <option key={d} value={d}>
             {d}

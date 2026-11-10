@@ -1,5 +1,7 @@
 {
-  "merged_slices": [],
+  "merged_slices": [
+    "UI-5"
+  ],
   "screens": {
     "today-educator": {
       "route": "/today/new",
@@ -107,15 +109,15 @@
     },
     "staff": {
       "route": "/setup/staff",
-      "built": false
+      "built": true
     },
     "classes": {
       "route": "/setup/classes",
-      "built": false
+      "built": true
     },
     "setup": {
       "route": "/setup",
-      "built": false
+      "built": true
     },
     "login": {
       "route": "/login",

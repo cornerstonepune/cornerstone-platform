@@ -17,6 +17,14 @@ import type { Column } from "@/lib/ux-rules";
 import { signOffPaper } from "../actions";
 import { sayWhatWasWritten } from "./actions";
 
+const safeDecode = (v: string) => {
+  try {
+    return decodeURIComponent(v);
+  } catch {
+    return v;
+  }
+};
+
 type Props = { params: Promise<{ key: string; roll: string }>; searchParams: Promise<Record<string, string | undefined>> };
 
 /** One answer's mark: three signals that stay three (rule 5), and an answer nobody has settled, which is the person's to judge. */
@@ -38,9 +46,14 @@ const CHIP: Record<Mark, { state: State; words: string }> = {
 // was unsure; the engine marks it. Sign the paper off only when nothing is left to judge.
 export default async function PaperPage({ params, searchParams }: Props) {
   const me = await requireStaff();
-  const { key, roll } = await params;
+  const raw = await params;
+  // the address arrives percent-encoded where the key or the Sr. No. holds a character an address cannot
+  const key = safeDecode(raw.key);
+  const roll = safeDecode(raw.roll);
   const q = await searchParams;
-  const [kind, section, week, set] = key.split("~");
+  // the set can hold a "~" of its own (a paper made from chosen areas), so it is the rest of the key
+  const [kind, section, week, ...rest] = key.split("~");
+  const set = rest.join("~");
   const all = await deadline(paperList({ kind, class: section || undefined, week: week || undefined, set: set || undefined }, me.email, me, "roll"));
   const mine = all.rows.filter((p) => p.roll_no === roll && !p.spare && !p.extra);
   const sheet = mine.find((p) => p.stage !== "replaced") ?? mine[0];
@@ -61,7 +74,7 @@ export default async function PaperPage({ params, searchParams }: Props) {
       num: true,
       width: "14rem",
       value: (x) => x.a.question,
-      cell: (x) => (x.m === "judge" ? <Link href={`${paperHref(key, roll)}?answer=${x.a.id}`}>{`${x.a.n ?? x.a.slot}. ${x.a.question}`}</Link> : <span>{`${x.a.n ?? x.a.slot}. ${x.a.question}`}</span>),
+      cell: (x) => (x.m === "judge" ? <Link href={`${paperHref(key, roll)}?answer=${x.a.id}`} data-answer="">{`${x.a.n ?? x.a.slot}. ${x.a.question}`}</Link> : <span>{`${x.a.n ?? x.a.slot}. ${x.a.question}`}</span>),
     },
     { key: "read", label: "Read as", num: true, width: "11rem", value: (x) => x.a.human_read ?? x.a.read ?? "nothing" },
     { key: "mark", label: "Mark", status: true, width: "13rem", value: (x) => x.m, cell: (x) => <StatusChip state={CHIP[x.m].state} words={CHIP[x.m].words} /> },
@@ -90,8 +103,8 @@ export default async function PaperPage({ params, searchParams }: Props) {
           edges={[
             { screen: "child", params: { id: sheet.child_id ?? "" }, label: "This child", icon: "child" },
             { screen: "skill", params: { code: set ?? "" }, label: "The skill", icon: "skill" },
-            { screen: "assessment", params: { key }, label: "The assessment", icon: "assessment" },
-            ...(next ? [{ screen: "paper", params: { key, roll: next.roll_no ?? "" }, label: "The next paper to check", icon: "correct" as const }] : []),
+            { screen: "assessment", href: assessmentHref(key), label: "The assessment", icon: "assessment" },
+            ...(next ? [{ screen: "paper", href: paperHref(key, next.roll_no ?? ""), label: "The next paper to check", icon: "correct" as const }] : []),
           ]}
         />
       }
@@ -140,7 +153,7 @@ export default async function PaperPage({ params, searchParams }: Props) {
               <button type="submit" className="btn" data-ux="action">Sign this paper off</button>
             </form>
           ) : (
-            <Link href={assessmentHref(key)}>Back to the assessment</Link>
+            <Link href={assessmentHref(key)} className="underline">Back to the assessment</Link>
           )}
         </EmptyState>
       ) : null}
