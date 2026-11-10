@@ -14,20 +14,21 @@ export const isCoordinator = cache(async (): Promise<boolean> => {
 
 export type Fn = { id: string; number: number; starts_on: string; ends_on: string; state: string };
 
-const FN = sql`select f.id, f.number, f.starts_on::text as starts_on, f.ends_on::text as ends_on, f.state
+// a function, not a constant: a query built at import would ask for the database while the site is being built
+const FN = () => sql`select f.id, f.number, f.starts_on::text as starts_on, f.ends_on::text as ends_on, f.state
   from fortnight f where f.kind = 'teaching'`;
 
 /** The teaching fortnight holding `day`, or the first one after it when none does (a holiday between). */
 export async function fortnightAt(day: string): Promise<Fn | null> {
-  const [r] = await sql<Fn[]>`${FN} and f.ends_on >= ${day}::date order by f.starts_on limit 1`;
+  const [r] = await sql<Fn[]>`${FN()} and f.ends_on >= ${day}::date order by f.starts_on limit 1`;
   return r ?? null;
 }
 export async function fortnightAfter(f: Fn): Promise<Fn | null> {
-  const [r] = await sql<Fn[]>`${FN} and f.starts_on > ${f.starts_on}::date order by f.starts_on limit 1`;
+  const [r] = await sql<Fn[]>`${FN()} and f.starts_on > ${f.starts_on}::date order by f.starts_on limit 1`;
   return r ?? null;
 }
 export async function fortnightNumber(n: number): Promise<Fn | null> {
-  const [r] = await sql<Fn[]>`${FN} and f.number = ${n} limit 1`;
+  const [r] = await sql<Fn[]>`${FN()} and f.number = ${n} limit 1`;
   return r ?? null;
 }
 
