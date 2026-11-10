@@ -16,10 +16,10 @@ type Props = { searchParams: Promise<Record<string, string | undefined>> };
 // numbers (no sort link, no rank, no ordinal, no colour on a number): the school decides what they mean. A person's grants
 // open below the table (?person=<id>); a grant is read here, never edited. Names are `pii`: only the 'everything' group sees them.
 export default async function StaffPage({ searchParams }: Props) {
-  await requireStaff();
+  const me = await requireStaff();
   if (!(await namesMayShow())) return <NotYours what="Staff" />;
   const q = await searchParams;
-  const all = await staffLines();
+  const { lines: all, answered } = await staffLines(me.email);
   const text = q.q?.trim().toLowerCase();
   const shown = all.filter((p) => (!q.role || p.roleLabel === q.role) && (!text || `${p.name} ${p.email}`.toLowerCase().includes(text)));
   const open = shown.find((p) => p.id === q.person) ?? shown[0];
@@ -30,18 +30,20 @@ export default async function StaffPage({ searchParams }: Props) {
     { key: "role", label: "Role", width: "12rem", keep: true, value: (p) => p.roleLabel },
     { key: "class", label: "Class", keep: true, value: (p) => (p.classes ? p.classes.join(", ") : "Every class") },
     { key: "sessions", label: "Sessions done of planned", width: "11rem", num: true, value: (p) => (p.planned ? `${p.done} of ${p.planned}` : null) },
+    { key: "confirmed", label: "Notes confirmed", width: "8rem", num: true, value: (p) => p.notesConfirmed },
     { key: "late", label: "Notes late", width: "7rem", num: true, value: (p) => p.notesLate },
-    { key: "accuracy", label: "Reader accuracy", width: "9rem", num: true, value: (p) => (p.readerAccuracy == null ? null : `${p.readerAccuracy}%`) },
+    { key: "lines", label: "Lines accepted / changed / removed", width: "12rem", num: true, value: (p) => (p.lines ? `${p.lines.accepted} / ${p.lines.changed} / ${p.lines.removed}` : null) },
   ];
   return (
     <Screen
       stage="This fortnight"
       title="Staff and classes"
-      purpose="Who teaches which class, and three numbers the database can stand behind per class. No ranking: the school decides what they mean."
+      purpose="Who teaches which class, and whole counts the database can stand behind. No score, no ranking: the school decides what they mean."
       action={<p className="m-0 text-[14px]">Open a person to see what they hold.</p>}
       next={{ href: screenHref("classes") ?? "/school", label: "Classes and children" }}
       rail={<Rail edges={[{ screen: "fortnight", label: "Fortnight", icon: "week" }, { screen: "timetable", label: "Timetable", icon: "week" }, { screen: "classes", label: "Classes and children", icon: "class" }]} />}
     >
+      {answered ? null : <p className="note mb-2">The note counts are not available right now.</p>}
       <FilterBar
         action="/setup/staff"
         filters={[{ name: "role", label: "Role", value: q.role, all: "Every role", options: roles.map((r) => [r, r] as const) }]}
