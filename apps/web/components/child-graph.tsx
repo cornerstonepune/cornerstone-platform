@@ -12,7 +12,7 @@ const r2 = (n: number) => Math.round(n * 100) / 100;
 /** The child's initials at the centre; a coloured ring arc for each domain; each skill a node on the outer ring, filled with
  *  its state's tint, edged in its state colour, sized by times seen, labelled with name and state word; node and label one
  *  link with a 44 px target. A table of the same skills sits beside it; on a phone the graph is replaced by that list. */
-export function ChildGraph({ initials, skills, empty = "No skill seen yet" }: { initials: string; skills: readonly GraphSkill[]; empty?: string }) {
+export function ChildGraph({ initials, skills, empty = "No skill seen yet", label, table = true }: { initials: string; skills: readonly GraphSkill[]; empty?: string; label?: string; table?: boolean }) {
   if (skills.length === 0) return <p data-block="ChildGraph" data-empty className="b-chart-empty">{empty}</p>;
   const arcs = DOMAINS.map((d, i) => {
     const a = -90 + i * 120, b = a + 120;
@@ -27,8 +27,8 @@ export function ChildGraph({ initials, skills, empty = "No skill seen yet" }: { 
     return { s, p, radius: Math.min(18, 8 + s.seen * 2) };
   });
   return (
-    <div data-block="ChildGraph" className="b-cgraph">
-      <svg viewBox="-80 0 560 310" role="group" aria-label="Skills seen around one child">
+    <div data-block="ChildGraph" className="b-cgraph" data-solo={table ? undefined : ""}>
+      <svg viewBox="-80 0 560 310" {...(label ? { role: "img", "aria-label": label } : { role: "group", "aria-label": "Skills seen around one child" })}>
         <circle className="b-ring" cx={CX} cy={CY} r={R} />
         {arcs.map((a) => <path key={a.d} className="b-dom" data-subject={a.d} d={a.path} />)}
         <circle className="b-ctr" cx={CX} cy={CY} r={30} />
@@ -46,7 +46,7 @@ export function ChildGraph({ initials, skills, empty = "No skill seen yet" }: { 
           );
         })}
       </svg>
-      <div className="b-table-box">
+      {table ? <div className="b-table-box">
         <table className="grid list steady" aria-label="The same skills">
           <thead><tr><th scope="col">Skill</th><th scope="col">State</th></tr></thead>
           <tbody>
@@ -58,7 +58,7 @@ export function ChildGraph({ initials, skills, empty = "No skill seen yet" }: { 
             ))}
           </tbody>
         </table>
-      </div>
+      </div> : null}
     </div>
   );
 }

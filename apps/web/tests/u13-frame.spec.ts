@@ -36,7 +36,7 @@ test("1. the four shells, the old menu and the second icon file are gone, and no
 });
 
 test("1. every existing page renders inside AppFrame (the bar, the trail, one main)", async ({ page }) => {
-  for (const route of ["/today", "/papers", "/growth", "/educator", "/educator/week", "/k2", "/library", "/school", "/curriculum/browse", "/guide"]) {
+  for (const route of ["/today", "/papers", "/growth", "/educator", "/educator/week", "/children", "/library", "/school", "/curriculum/browse", "/guide"]) {
     await page.goto(route);
     await expect(page.locator("[data-frame] [data-bar]").first(), route).toBeVisible();
     await expect(page.getByRole("main"), route).toHaveCount(1);
