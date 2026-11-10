@@ -150,7 +150,7 @@ export function Screen({
       <Body>
         <div className={rail ? "grid gap-[var(--space-4)] min-[1000px]:grid-cols-[minmax(0,1fr)_320px]" : undefined}>
           <div className="min-w-0">
-            <div className={action || details ? "mb-4 flex flex-wrap items-center gap-3" : undefined} data-ux={action ? "action" : undefined}>
+            <div className={action !== undefined || details ? "mb-4 flex flex-wrap items-center gap-3" : undefined} data-ux={action !== undefined ? "action" : undefined}>
               {action}
               {details ? (
                 <Link href={details.href} className="ml-auto text-[13px]" data-ux="details">

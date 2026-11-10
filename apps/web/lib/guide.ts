@@ -10,7 +10,6 @@ import problem from "@/guide/report-a-problem.json";
 import steps from "@/guide/steps.json";
 import today from "@/guide/pages/what-needs-doing.json";
 import assessments from "@/guide/pages/assessments.json";
-import board from "@/guide/pages/assessments-board.json";
 import approvePapers from "@/guide/pages/papers-to-approve.json";
 import upload from "@/guide/pages/upload-papers.json";
 import check from "@/guide/pages/check-answers.json";
@@ -39,7 +38,7 @@ export type MenuGuide = { menu: string; forWhat: Para[]; layout: Area[]; jobs: J
 export type StepGuide = { name: string; who: string[]; sees: Para };
 export type Want = { label: string; href: string };
 
-const PAGES = [today, assessments, board, approvePapers, upload, check, results, reports, across, curriculum, approveSkills, bank, staff, school, timetableRules] as MenuGuide[];
+const PAGES = [today, assessments, approvePapers, upload, check, results, reports, across, curriculum, approveSkills, bank, staff, school, timetableRules] as MenuGuide[];
 
 export const START = start as { purpose: string; forWhat: Para[]; wants: Want[] };
 export const ARTICLES = { "worked-out": workedOut, words, "report-a-problem": problem } as Record<string, Article>;
