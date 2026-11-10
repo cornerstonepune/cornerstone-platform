@@ -30,13 +30,18 @@ test.afterAll(async () => {
 });
 
 const table = (page: import("@playwright/test").Page) => page.getByRole("table", { name: "Every child's report" });
+/** The rows of the table once it has drawn: the page shows a loading skeleton first, so nothing is counted before the table is there. */
+const rowsOf = async (page: import("@playwright/test").Page) => {
+  await expect(table(page)).toBeVisible();
+  return table(page).locator("tbody tr:not(.under)").allInnerTexts();
+};
 
 test("an educator sees only their own class's children, each with Sr. No., state, educator approval and consent (1, 2)", async ({ browser }) => {
   const ctx = await signedInAs(browser, "educator", { width: 1440, height: 900 });
   const page = await ctx.newPage();
   await page.goto("/children/reports");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Reports");
-  const body = await table(page).locator("tbody tr:not(.under)").allInnerTexts();
+  const body = await rowsOf(page);
   expect(body.length).toBe(Math.min(10, Object.keys(rows.children).length)); // the table pages at 10 rows (rule 3)
   expect(body.join("\n")).not.toContain(rows.otherNames[0]);
   expect(body[0]).toMatch(/Sr\. No\. 1/);
@@ -50,16 +55,16 @@ test("an educator sees only their own class's children, each with Sr. No., state
 
 test("a coordinator sees other classes too, and the class and state filters narrow the rows (3)", async ({ page }) => {
   await page.goto(`/children/reports?class=${rows.section}`);
-  expect(await table(page).locator("tbody tr:not(.under)").count()).toBe(Math.min(10, Object.keys(rows.children).length));
+  expect((await rowsOf(page)).length).toBe(Math.min(10, Object.keys(rows.children).length));
   await page.goto(`/children/reports?class=${rows.section}&state=approved`);
-  expect(await table(page).locator("tbody tr:not(.under)").count()).toBe(1);
+  expect((await rowsOf(page)).length).toBe(1);
   await page.goto(`/children/reports?class=${rows.other ? "U70B" : ""}&state=approved`);
   await expect(page.getByText("No report lines drafted yet")).toBeVisible();
 });
 
 test("a coordinator sees each child's consent: on file, or not recorded (2)", async ({ page }) => {
   await page.goto(`/children/reports?class=${rows.section}`);
-  const body = await table(page).locator("tbody tr:not(.under)").allInnerTexts();
+  const body = await rowsOf(page);
   expect(body[0]).toMatch(/on file/);
   expect(body[1]).toMatch(/not recorded/);
 });
@@ -74,14 +79,16 @@ test("a child's fold shows the report's words with the name put in; a child with
 
 test("the screen never says teacher, a rung or skill code, or borrow, and orders rows by Sr. No. (5)", async ({ page }) => {
   await page.goto(`/children/reports?class=${rows.section}`);
+  await expect(table(page)).toBeVisible();
   const text = await page.locator("main").innerText();
   expect(text).not.toMatch(/teacher|borrow|\bR\d+\b|NUM\./i);
-  const rolls = (await table(page).locator("tbody tr:not(.under)").allInnerTexts()).map((r) => Number(/Sr\. No\. (\d+)/.exec(r)![1]));
+  const rolls = (await rowsOf(page)).map((r) => Number(/Sr\. No\. (\d+)/.exec(r)![1]));
   expect(rolls).toEqual([...rolls].sort((a, b) => a - b));
   void EDUCATOR;
 });
 
 test("nothing on the screen sends a report, and the CP-19 controls are not drawn (6)", async ({ page }) => {
   await page.goto(`/children/reports?class=${rows.section}`);
+  await expect(table(page)).toBeVisible(); // the screen has drawn, so no button being there means something
   await expect(page.getByRole("button", { name: /send|approve|preview/i })).toHaveCount(0);
 });
