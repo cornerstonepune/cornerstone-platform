@@ -45,6 +45,8 @@ const NOT_BY_CLICK: Record<string, string> = {
   "/refused": "where an action sends a person it refused",
   "/papers/review/[qr]": "where making a paper sends the maker; a link on a child's page once a paper is approved",
   "/papers/card": "opened by a button of the paper's own form",
+  "/children/assessments/[key]": "a link on an assessment's row, which needs an assessment of the class (tests/u73-assessments.spec.ts opens it with rows)",
+  "/children/assessments/[key]/[roll]": "a child's copy on that assessment (tests/u73-assessments.spec.ts opens it with rows)",
   "/make/[section]/week": "opened by the make form's choice of a class and a week",
   "/skill-sets/[code]/edit": "opened from a skill's own page (click four)",
   "/voice/notes/[id]": "where recording a note sends the educator",
