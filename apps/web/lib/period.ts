@@ -51,3 +51,19 @@ export async function lastTime(classId: string, activity: string, before: string
   const named = ["below", "not_willing"].map((outcome) => ({ outcome, children: of.filter((r) => r.outcome === outcome).map((r) => r.child_id) }));
   return { day, counts, named };
 }
+
+export type DaySession = { id: string; starts_at: string; name: string };
+
+/** The class's lessons with an activity on a day, by time: the periods a note can be about. A fixed part of the day has no activity
+ *  to record, so it is not offered. */
+export async function sessionsOfDay(classId: string, day: string): Promise<DaySession[]> {
+  return sql<DaySession[]>`
+    select s.id, to_char(p.starts_at, 'HH24:MI') as starts_at, coalesce(a.name, nullif(s.text, ''), p.label) as name
+    from session s
+    join school_day d on d.id = s.school_day_id
+    join period p on p.id = s.period_id
+    left join plan_entry pe on pe.id = s.plan_entry_id
+    left join activity a on a.id = pe.activity_id
+    where s.school_class_id = ${classId} and d.on_date = ${day}::date and s.kind <> 'fixed'
+    order by p.starts_at`;
+}
