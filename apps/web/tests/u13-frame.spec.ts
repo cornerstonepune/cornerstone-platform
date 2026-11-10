@@ -164,7 +164,8 @@ test("8. search is a typeahead: an educator's Sr. No. and fake name find their o
   for (const term of ["1", "13", outside, first]) {
     for (const r of seen) {
       if (term.length < 2) continue;
-      expect(r.url, `address of ${r.method} request`).not.toContain(term);
+      // an id in an address is random hex, which can hold any number: the term is looked for in what is left of the address
+      expect(r.url.replace(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/g, ""), `address of ${r.method} request`).not.toContain(term);
       if (r.body?.includes(term)) expect(`${r.method} ${new URL(r.url).pathname}`).toBe("POST /api/search");
     }
     expect(logs.join("\n")).not.toContain(term.length > 1 ? term : "\u0000");
