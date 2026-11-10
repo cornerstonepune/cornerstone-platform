@@ -32,10 +32,14 @@ export async function fortnightNumber(n: number): Promise<Fn | null> {
   return r ?? null;
 }
 
-/** The three subject colours the grid has; a subject with no colour of its own is drawn as arts. A presentation grouping
- *  only (it says nothing about the subject): numeracy is Number, language the languages, the rest the arts. */
-const LANGUAGE = new Set(["ENG", "HIN", "MAR", "SAN"]);
-export const subjectLook = (code: string | null): Exclude<Subject, "fixed"> => (code === "NUM" ? "numeracy" : code && LANGUAGE.has(code) ? "language" : "arts");
+/** The three subject colours the grid has, by subject: the school's own row (config `timetable.subject_looks`, a subject's
+ *  code to "numeracy", "language" or "arts"). A subject with no entry is drawn as arts, so no code here names a subject. */
+export type Looks = Record<string, Exclude<Subject, "fixed">>;
+export const subjectLooks = cache(async (): Promise<Looks> => {
+  const [r] = await sql<{ value: Looks }[]>`select value from config where key = 'timetable.subject_looks'`;
+  return r?.value && typeof r.value === "object" ? r.value : {};
+});
+export const subjectLook = (looks: Looks, code: string | null): Exclude<Subject, "fixed"> => (code && looks[code]) || "arts";
 
 export type Move = { id: string; fortnight_id: string; class_id: string; from: string; to: string; who: string; why: string | null; at: string; undo: boolean };
 

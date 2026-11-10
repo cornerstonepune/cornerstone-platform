@@ -2,12 +2,12 @@ import type { FCell, FRow } from "@/components/fortnight-grid";
 import { shortDate } from "./educator/clock";
 import type { Week } from "./educator/types";
 import { isLesson } from "./educator/period";
-import { subjectLook, type Clash, type Move } from "./timetable-ui";
+import { subjectLook, type Clash, type Looks, type Move } from "./timetable-ui";
 
 /** The fortnight grid for one class from the engine's weeks (the sessions as they stand): days across, periods down. A cell
  *  is a moved one when the session is marked moved, a clash one when an unaccepted clash names its class, day and period.
  *  The cells are the session rows for the days shown, one for one; a period fixed on every day shown is a full-width band. */
-export function gridOf(weeks: readonly Week[], show: { days?: readonly string[]; clashes: readonly Clash[]; href: (day: string, periodId: string) => string }) {
+export function gridOf(weeks: readonly Week[], show: { days?: readonly string[]; looks: Looks; clashes: readonly Clash[]; href: (day: string, periodId: string) => string }) {
   const days = weeks.flatMap((w) => w.days).filter((d) => !show.days || show.days.includes(d.day));
   const starts = [...new Set(days.flatMap((d) => d.periods.map((p) => p.starts_at)))].sort();
   const classId = weeks[0]?.class.id ?? "";
@@ -22,7 +22,7 @@ export function gridOf(weeks: readonly Week[], show: { days?: readonly string[];
       cells: at.map((p, i): FCell | null =>
         p && isLesson(p)
           ? {
-              subject: subjectLook(p.subject),
+              subject: subjectLook(show.looks, p.subject),
               activity: p.name,
               href: show.href(days[i].day, p.period_id),
               moved: p.state === "moved",

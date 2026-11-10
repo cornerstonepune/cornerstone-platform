@@ -13,7 +13,7 @@ import { isDay } from "@/lib/educator/period";
 import { dateWords } from "@/lib/week";
 import { stateWords } from "@/lib/fortnight-words";
 import { gridOf, moveInto } from "@/lib/timetable-grid";
-import { clashesOf, fortnightAfter, fortnightAt, fortnightNumber, isCoordinator, movesOf } from "@/lib/timetable-ui";
+import { subjectLooks, clashesOf, fortnightAfter, fortnightAt, fortnightNumber, isCoordinator, movesOf } from "@/lib/timetable-ui";
 import { schoolToday } from "@/lib/voice-page";
 import "./timetable.css";
 
@@ -56,7 +56,7 @@ export default async function TimetablePage({ searchParams }: Props) {
   const moves = await movesOf(fn.id);
   const focus = q.day && weeks.some((w) => w.days.some((d) => d.day === q.day)) ? q.day : today >= fn.starts_on && today <= fn.ends_on ? today : fn.starts_on;
   const shown = view === "day" ? [focus] : view === "week" ? weeks.find((w) => w.days.some((d) => d.day === focus))!.days.map((d) => d.day) : undefined;
-  const grid = gridOf(weeks, { days: shown, clashes, href: (day, p) => `/educator/period/${p}?class=${klass.id}&day=${day}` });
+  const grid = gridOf(weeks, { looks: await subjectLooks(), days: shown, clashes, href: (day, p) => `/educator/period/${p}?class=${klass.id}&day=${day}` });
   const lessons = grid.rows.some((r) => "cells" in r && r.cells.some((c) => c));
   const movedHere = grid.days.flatMap((day, i) =>
     grid.rows.flatMap((r) => ("cells" in r ? [{ day, cell: r.cells[i], row: r }] : [])).filter((x) => x.cell?.moved).map((x) => ({ ...x, move: moveInto(moves, day, x.cell!.href.split("/period/")[1].split("?")[0]) })),

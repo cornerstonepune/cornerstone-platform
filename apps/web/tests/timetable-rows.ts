@@ -5,7 +5,7 @@ import type { Sql } from "postgres";
 import { k2Class } from "./k2-rows";
 
 export const SECTION = "U74";
-export const YEAR = "2033-34";
+export const YEAR = "2041-42";
 export const GRADE = "K1"; // its own grade and year, so the school's own K2 timetable load (m1-14a) never meets these rows
 export const HERE = 7401;
 export const AHEAD = 7402;

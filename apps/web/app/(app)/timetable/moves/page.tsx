@@ -9,7 +9,7 @@ import { sql } from "@/lib/db";
 import { shortDate } from "@/lib/educator/clock";
 import { weekOf } from "@/lib/educator/data";
 import { gridOf } from "@/lib/timetable-grid";
-import { clashesOf, fortnightAfter, fortnightAt, fortnightNumber, isCoordinator, movesOf, type Move } from "@/lib/timetable-ui";
+import { subjectLooks, clashesOf, fortnightAfter, fortnightAt, fortnightNumber, isCoordinator, movesOf, type Move } from "@/lib/timetable-ui";
 import type { Column } from "@/lib/ux-rules";
 import { dateWords } from "@/lib/week";
 import { schoolToday } from "@/lib/voice-page";
@@ -39,7 +39,7 @@ export default async function MovesPage({ searchParams }: Props) {
   const pick = q.from ?? "";
   const [fromDay, fromPeriod] = pick.split("~");
   const stay = (extra: Record<string, string>) => `${HERE}?${new URLSearchParams({ fn: String(fn.number), class: klass.id, ...extra })}`;
-  const grid = gridOf(weeks, {
+  const grid = gridOf(weeks, { looks: await subjectLooks(),
     clashes,
     href: (day, p) => (!coordinator ? `/educator/period/${p}?class=${klass.id}&day=${day}` : !pick ? stay({ from: `${day}~${p}` }) : stay({ from: pick, to: `${day}~${p}` })),
   });
