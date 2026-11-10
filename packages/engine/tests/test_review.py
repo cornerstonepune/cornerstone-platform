@@ -66,10 +66,7 @@ def test_a_unit_is_judged_as_its_rule_plus_a_bounded_sample_not_every_item(conn,
 def test_a_verdict_is_stored_as_a_row_a_person_can_act_on(conn, monkeypatch):
     monkeypatch.setattr(review.llm, "generate", fake("reject", ["skill"]))
     verdicts, _ = review.review_unit(conn, SET, DIFF, "pedagogy_review", seed=2)
-    row = conn.execute(
-        "select reviewer, verdict, reasons, acted_on_by from item_review where ref = %s",
-        (verdicts[0]["ref"],),
-    ).fetchone()
+    row = next(r for r in review.verdicts(conn, verdicts[0]["ref"]) if r["reviewer"] == "pedagogy_review")
     assert (row["reviewer"], row["verdict"], row["reasons"]) == ("pedagogy_review", "reject", ["skill"])
     assert row["acted_on_by"] is None, "advisory until a person acts — never auto-applied"
 

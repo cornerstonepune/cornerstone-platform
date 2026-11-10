@@ -4,7 +4,8 @@ calculation for 5 children matches the system exactly. A manual acceptance gate 
 - Real notes: distinct `confirmation_id` of `activity_observation` with `route` in ('form', 'voice'), stored on or after
   the config row `cp9.real_notes_from` (absent: fail, saying so), in a class whose grade is a K2 grade (config `k2.reads`
   grades), confirmed by a member of staff holding a recording role (config `voice.roles_that_record`) on that class.
-- Hand calculation: `hand_check` rows (written by `engine graph --hand-check`): at least 5 distinct children, and every
+- Hand calculation: hand checks (written by `engine graph --hand-check`; `eval_case` rows of kind `hand_check` since
+  CP-27, the table `hand_check` before): at least 5 distinct children, and every
   row matches (`matches` true and `expected_state` = `system_state`).
 Prints counts only: never a name, a child id or a state of a named child.
 """
@@ -40,12 +41,19 @@ def main() -> int:
             "             and g.school_class_id = o.class_id and g.role_code in"
             "             (select jsonb_array_elements_text(value) from config where key = 'voice.roles_that_record'))",
             (since[0],)).fetchone()[0]
-        if conn.execute("select to_regclass('public.hand_check') is null").fetchone()[0]:
-            print(f"{notes} real notes confirmed since {since[0]} (20 needed); hand_check is not on the live database")
+        # the one eval set since CP-27; the table before it, on a database not yet moved
+        checks = ("select child_id, (detail ->> 'matches')::boolean as matches, verdict as expected_state,"
+                  " detail ->> 'system_state' as system_state from eval_case where kind = 'hand_check'"
+                  if conn.execute("select to_regclass('public.eval_case') is not null").fetchone()[0] else
+                  "select child_id, matches, expected_state, system_state from hand_check"
+                  if conn.execute("select to_regclass('public.hand_check') is not null").fetchone()[0] else None)
+        if checks is None:
+            print(f"{notes} real notes confirmed since {since[0]} (20 needed); no hand checks on the live database")
             return 1
         rows, children, wrong = conn.execute(
             "select count(*), count(distinct child_id),"
-            " count(*) filter (where not matches or expected_state is distinct from system_state) from hand_check"
+            " count(*) filter (where not matches or expected_state is distinct from system_state)"
+            f" from ({checks}) h"  # noqa: S608 (one of the two fixed queries above)
         ).fetchone()
     print(f"{notes} real notes confirmed since {since[0]} (20 needed); hand calculations: {rows} rows for "
           f"{children} children (5 needed), {wrong} not matching the system")

@@ -278,8 +278,8 @@ def add(
 
 def propose_item(conn: db.Conn, tenant: UUID, name: str, unit: str, who: UUID) -> str:
     """A catalogue entry for a new item: no home and no value, which is what makes it wait for a person (M1-11). An
-    item already in the catalogue under that name, in any case or spacing, is that item, not a second. The proposal
-    names who added it and that it needs a person (`material_item_proposal`)."""
+    item already in the catalogue under that name, in any case or spacing, is that item, not a second. The item names
+    who added it and when (`proposed_by`, `proposed_at`)."""
     name = " ".join(name.split())
     if not name:
         raise ValueError("a new item needs a name")
@@ -296,14 +296,20 @@ def propose_item(conn: db.Conn, tenant: UUID, name: str, unit: str, who: UUID) -
     )["n"]
     code = f"MAT-{(last or 0) + 1:04d}"
     conn.execute(
-        "insert into material_item (tenant_id, code, name, unit) values (%s, %s, %s, %s)",
-        (tenant, code, name, unit.strip() or "piece"),
-    )
-    conn.execute(
-        "insert into material_item_proposal (tenant_id, material_code, who) values (%s, %s, %s)",
-        (tenant, code, who),
+        "insert into material_item (tenant_id, code, name, unit, proposed_by, proposed_at)"
+        " values (%s, %s, %s, %s, %s, clock_timestamp())",
+        (tenant, code, name, unit.strip() or "piece", who),
     )
     return code
+
+
+def waiting_items(conn: db.Conn, tenant: UUID) -> list[dict]:
+    """The catalogue items an educator added that wait for a person to give them a home and a value, oldest first."""
+    return conn.execute(
+        "select code, name, unit, proposed_by, proposed_at from material_item where tenant_id = %s"
+        " and proposed_by is not null and home is null and unit_value is null order by proposed_at, code",
+        (tenant,),
+    ).fetchall()
 
 
 def enabled(conn: db.Conn) -> bool:

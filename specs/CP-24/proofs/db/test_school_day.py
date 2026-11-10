@@ -1,7 +1,7 @@
 """CP-24 items 1 and 2, in the database.
 
 Item 1: `move_child` as the database holds it says no `current_date`, and a hand check the engine writes with no date
-is dated `internal.school_day(...)` (the column's own default is left to CP-27).
+is dated `internal.school_day(...)` (CP-27: the column has no default, so nothing dates one by the server's clock).
 Item 2: a move made at 01:00 IST (19:30 UTC the day before) opens the new enrolment on that IST day. `move_child` takes
 the moment as its 7th parameter, `p_at timestamptz` (specs/CP-24/design.md, "One clock").
 
@@ -39,12 +39,8 @@ def test_1_a_hand_check_the_engine_writes_is_dated_by_the_school_day(conn, tenan
         (tenant, f"CP24-{uuid.uuid4().hex[:6].upper()}"),
     )["id"]
     nightly.hand_check(conn, child, "NUM.OPS.01", "G3", "secure", BY)
-    row = db.one(
-        conn,
-        "select checked_on, internal.school_day(tenant_id, now()) as school_day from hand_check where child_id = %s",
-        (child,),
-    )
-    assert row["checked_on"] == row["school_day"]
+    (row,) = nightly.hand_checks(conn, child)
+    assert row["checked_on"] == db.one(conn, "select internal.school_day(%s, now()) as d", (tenant,))["d"]
 
 
 def _school(conn, tenant):

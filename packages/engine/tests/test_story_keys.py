@@ -19,7 +19,15 @@ from engine.assess import misconceptions as M
 from engine.assess import words as W
 from engine.core import db
 from engine.w1_bank import bank, inventory, labels, question, story_keys
-from tests.rows import a_child, a_retired_question, drawn, tenant
+from tests.rows import (
+    a_bank_proposal,
+    a_child,
+    a_question_review,
+    a_report_finding,
+    a_retired_question,
+    drawn,
+    tenant,
+)
 
 SEED = pathlib.Path(__file__).resolve().parents[3] / "supabase" / "seed"
 SETS = {s["code"]: s for s in json.loads((SEED / "skill_sets.json").read_text())["skill_sets"]}
@@ -220,22 +228,10 @@ def test_a_stored_story_is_keyed_again_and_what_names_it_follows(conn):
     ids["rewording"] = conn.execute("select id from item where item_key = %s", (new["item_key"],)).fetchone()[
         "id"
     ]
-    old_key, t = take_away[1].item_id, tenant(conn)
-    conn.execute(
-        "insert into item_review (tenant_id, reviewer, skill_set_code, difficulty, ref, verdict)"
-        " values (%s, 'language_review', 'SUB.2D2D', 'Advance', %s, 'pass')",
-        (t, old_key),
-    )
-    conn.execute(
-        "insert into gold_finding (tenant_id, child_id, verdict, skill_code, item_key, words, source)"
-        " values (%s, %s, 'faulty', 'NUM.OPS.02', %s, 'a test finding', 'test')",
-        (t, a_child(conn), old_key),
-    )
-    conn.execute(
-        "insert into bank_proposal (tenant_id, kind, subject, direction, evidence)"
-        " values (%s, 'mislevelled', %s, 'easier', '{}')",
-        (t, old_key),
-    )
+    old_key = take_away[1].item_id
+    a_question_review(conn, old_key)
+    a_report_finding(conn, a_child(conn), old_key)
+    a_bank_proposal(conn, "mislevelled", old_key)
     before = {name: _row(conn, i) for name, i in ids.items()}
 
     out = story_keys.rekey(conn)
@@ -274,13 +270,16 @@ def test_a_stored_story_is_keyed_again_and_what_names_it_follows(conn):
             conn.execute(
                 f"select count(*) as n from {table} where {column} = %s", (take_away[0].item_id,)
             ).fetchone()["n"]
-            == 1
+            == 2  # the review and the report's finding, cases of the one eval set
         ), table
     assert out["keyed"] >= 5 and out["duplicates"] >= 1 and out["reworded"] >= 1 and out["unwritten"] >= 1
     assert all(out["followed"][table] >= 1 for table, _ in story_keys.NAMED_BY_KEY)
     # a proposal is in an append-only ledger: it keeps the key it named, and that key still leads to its question
     assert (
-        conn.execute("select count(*) as n from bank_proposal where subject = %s", (old_key,)).fetchone()["n"]
+        conn.execute(
+            "select count(*) as n from curriculum_proposal where kind = 'mislevelled' and subject_code = %s",
+            (old_key,),
+        ).fetchone()["n"]
         == 1
     )
     assert inventory.current_key(conn, old_key) == take_away[0].item_id
