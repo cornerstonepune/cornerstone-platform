@@ -4,9 +4,8 @@ import { sql } from "./db";
 import { seesClass } from "./reach";
 import { attentionDays, type Me } from "./children-reads";
 
-export type Look = "secure" | "practising" | "emerging";
-/** A state's look from its colour alone: green secure, amber practising, any other seen state emerging. */
-export const lookOfColour = (colour: string): Look => (colour === "green" ? "secure" : colour === "amber" ? "practising" : "emerging");
+import { SECURE, lookOfColour, type Look } from "./looks";
+export type { Look };
 
 export type Kid = { id: string; roll: string; name: string };
 export type Skill = { code: string; name: string; domain: string; seen: number };
@@ -93,7 +92,7 @@ export async function skillsOfChild(childId: string): Promise<ChildSkill[]> {
   const mine = rows.filter((r) => r.kind === kind);
   const links = await sql<{ before_code: string; skill_code: string; name: string }[]>`
     select l.before_code, l.skill_code, rs.name from skill_link_confirmed l join registry_skill rs on rs.tenant_id = l.tenant_id and rs.code = l.skill_code`;
-  const secure = new Set(mine.filter((r) => lookOfColour(r.colour) === "secure").map((r) => r.skill_code));
+  const secure = new Set(mine.filter((r) => lookOfColour(r.colour) === SECURE).map((r) => r.skill_code));
   const seen = new Set(mine.map((r) => r.skill_code));
   return mine
     .map((r): ChildSkill => ({

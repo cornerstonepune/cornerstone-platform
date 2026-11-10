@@ -2,14 +2,15 @@
 
 import { useContext } from "react";
 import { ClassGrid, type GridCell } from "@/components/class-grid";
+import { STATES } from "@/components/status-chip";
 import { ICON_SIZE, Icon, type IconName } from "@/lib/icons";
 import { initialsOf, type Cluster, type PictureLook } from "@/lib/children-view";
 import { PeekChip, PeekContext, type Chosen } from "./peek";
 
 const LOOK: Record<PictureLook, { look: GridCell["look"]; icon: IconName; words: string }> = {
-  secure: { look: "ok", icon: "tree", words: "secure" },
-  practising: { look: "wait", icon: "leaf", words: "practising" },
-  emerging: { look: "quiet", icon: "sprout", words: "emerging" },
+  secure: { look: "ok", icon: "tree", words: STATES.secure.words },
+  practising: { look: "wait", icon: "leaf", words: STATES.practising.words },
+  emerging: { look: "quiet", icon: "sprout", words: STATES.emerging.words },
   unseen: { look: "unseen", icon: "not-seen", words: "not seen yet" },
 };
 export const GROUP_ICON: Record<PictureLook, IconName> = { secure: "tree", practising: "leaf", emerging: "sprout", unseen: "not-seen" };

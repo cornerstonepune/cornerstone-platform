@@ -5,7 +5,7 @@ import { DataTable } from "@/components/data-table";
 import { EmptyState } from "@/components/empty-state";
 import { FilterBar } from "@/components/filter-bar";
 import { NotYours } from "@/components/not-yours";
-import { StatusChip, type State } from "@/components/status-chip";
+import { StatusChip } from "@/components/status-chip";
 import { Timeline } from "@/components/timeline";
 import { Trend } from "@/components/trend";
 import { SwitchedOff } from "@/components/children/switched-off";
@@ -13,12 +13,11 @@ import { requireStaff } from "@/lib/auth";
 import { screensOn } from "@/lib/children-reads";
 import { screenHref } from "@/lib/built";
 import { childOf, historyOf } from "@/lib/children-peek";
-import { sittingsOf, skillsOfChild, type ChildSkill, type Look } from "@/lib/children-picture";
+import { sittingsOf, skillsOfChild, type ChildSkill } from "@/lib/children-picture";
 import { initialsOf } from "@/lib/children-view";
 import { dateWords } from "@/lib/week";
 import type { Column } from "@/lib/ux-rules";
 
-const STATE: Record<Look, State> = { secure: "secure", practising: "practising", emerging: "emerging" };
 const PAGE = 10;
 const DOMAIN_SLOTS = ["numeracy", "language", "arts"] as const;
 
@@ -41,7 +40,7 @@ export default async function TheChild({ params, searchParams }: { params: Promi
   const href = (code: string) => screenHref("skill", { code }) ?? `/setup/skills/${encodeURIComponent(code)}`;
   const domains = [...new Set(skills.map((s) => s.domain))].sort();
   const slot = (d: string) => DOMAIN_SLOTS[Math.max(0, domains.indexOf(d)) % DOMAIN_SLOTS.length];
-  const graph: GraphSkill[] = skills.map((s) => ({ name: s.name, state: STATE[s.look], seen: s.seen, domain: slot(s.domain), href: href(s.code) }));
+  const graph: GraphSkill[] = skills.map((s) => ({ name: s.name, state: s.look, seen: s.seen, domain: slot(s.domain), href: href(s.code) }));
   const by = { secure: 0, practising: 0, emerging: 0 };
   for (const s of skills) by[s.look]++;
   const label = `${skills.length} ${skills.length === 1 ? "skill" : "skills"} seen: ${by.secure} secure, ${by.practising} practising, ${by.emerging} emerging`;
@@ -91,7 +90,7 @@ export default async function TheChild({ params, searchParams }: { params: Promi
 function columns(href: (code: string) => string): Column<ChildSkill>[] {
   return [
     { key: "skill", label: "Skill", keep: true, value: (s) => s.name, cell: (s) => <Link href={href(s.code)} data-skill-row className="inline-flex min-h-[var(--tap)] items-center">{s.name}</Link> },
-    { key: "state", label: "State", keep: true, status: true, value: (s) => s.words, cell: (s) => <StatusChip state={STATE[s.look]} round /> },
+    { key: "state", label: "State", keep: true, status: true, value: (s) => s.words, cell: (s) => <StatusChip state={s.look} round /> },
     { key: "days", label: "Times seen", keep: true, num: true, value: (s) => s.seen },
     { key: "seen", label: "Last seen", keep: true, value: (s) => (s.lastSeen ? dateWords(s.lastSeen) : "not yet") },
     { key: "next", label: "Ready next", keep: true, value: (s) => s.readyNext.join(", ") || "nothing confirmed yet" },

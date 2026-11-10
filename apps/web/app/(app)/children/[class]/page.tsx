@@ -12,10 +12,10 @@ import { SwitchedOff } from "@/components/children/switched-off";
 import { requireStaff } from "@/lib/auth";
 import { screensOn } from "@/lib/children-reads";
 import { pictureOf, type Look } from "@/lib/children-picture";
-import { byRoll, clustersOf, daysSince, groupByLook, peekParam, type PictureLook } from "@/lib/children-view";
+import { LOOK_ORDER, byRoll, clustersOf, daysSince, groupByLook, peekParam, type PictureLook } from "@/lib/children-view";
+import { SECURE, UNSEEN, stateOf } from "@/lib/looks";
 
 type Q = { skill?: string; domain?: string; group?: string; peek?: string };
-const BAR: Record<PictureLook, "secure" | "practising" | "emerging" | "notSeenYet"> = { secure: "secure", practising: "practising", emerging: "emerging", unseen: "notSeenYet" };
 
 // The class picture (UI-3b): each square a child by Sr. No., shown on one skill at a time. A square a child has no state on is
 // "not seen yet", which is not "not secure". The clusters are worked out here from the graph's rows, each child in as many as fit.
@@ -36,14 +36,15 @@ export default async function Picture({ params, searchParams }: { params: Promis
   const chosenOf = (k: (typeof kids)[number]): Chosen => {
     const row = p.cells.get(k.id);
     const c = { secure: 0, practising: 0, unseen: 0 };
-    for (const cell of row?.values() ?? []) c[cell.look === "secure" ? "secure" : "practising"]++;
+    for (const cell of row?.values() ?? []) if (cell.look === SECURE) c.secure++;
+      else c.practising++;
     c.unseen = Math.max(0, p.skills.length - c.secure - c.practising);
     return { classId, roll: k.roll, name: k.name, section: p.section, counts: c };
   };
-  const squares: (Square & { id: string })[] = kids.map((k) => ({ ...chosenOf(k), id: k.id, look: stateOn(k.id) ?? "unseen", skill: skill?.name ?? "" }));
-  const words = (l: PictureLook) => (l === "unseen" ? STATES.notSeenYet.words : STATES[BAR[l]].words);
-  const blocks: Block[] = grouped ? groupByLook(squares).map((g) => ({ look: g.look, words: words(g.look)[0].toUpperCase() + words(g.look).slice(1), squares: g.cells })) : [{ look: "secure", words: "Class", squares }];
-  const parts = (["secure", "practising", "emerging", "unseen"] as const).map((l) => ({ state: BAR[l], n: squares.filter((s) => s.look === l).length }));
+  const squares: (Square & { id: string })[] = kids.map((k) => ({ ...chosenOf(k), id: k.id, look: stateOn(k.id) ?? UNSEEN, skill: skill?.name ?? "" }));
+  const words = (l: PictureLook) => STATES[stateOf(l)].words;
+  const blocks: Block[] = grouped ? groupByLook(squares).map((g) => ({ look: g.look, words: words(g.look)[0].toUpperCase() + words(g.look).slice(1), squares: g.cells })) : [{ look: SECURE, words: "Class", squares }];
+  const parts = LOOK_ORDER.map((l) => ({ state: stateOf(l), n: squares.filter((s) => s.look === l).length }));
   const clusters = clustersOf(
     kids.map((k) => ({
       id: k.id,

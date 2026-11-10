@@ -7,7 +7,7 @@ import { lastSeenWords, noted, stripWords, type Counts, type Row } from "@/lib/c
 import type { Column } from "@/lib/ux-rules";
 import { PeekChip } from "./peek";
 
-export type Section = { key: string; words: string; icon?: "secure" | "practising" | "not-seen" | "child" | "class"; total: number; rows: Row[] };
+export type Section = { key: string; words: string; total: number; rows: Row[] };
 
 const countWords = (c: Counts) => `${c.secure} secure · ${c.practising} practising · ${c.unseen} not seen`;
 

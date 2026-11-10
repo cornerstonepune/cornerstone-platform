@@ -3,6 +3,7 @@
 import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
 import { ChildPeek, NameChip } from "@/components/child-peek";
 import { STATES } from "@/components/status-chip";
+import { PRACTISING, SECURE } from "@/lib/looks";
 import type { Entry } from "@/lib/children-peek";
 import { initialsOf, peekParam, type Counts } from "@/lib/children-view";
 
@@ -57,8 +58,8 @@ export function PeekPanel() {
   if (!chosen) return null;
   const c = chosen.counts;
   const counts = [
-    { state: "secure" as const, words: `${c.secure} ${STATES.secure.words}` },
-    { state: "practising" as const, words: `${c.practising} ${STATES.practising.words}` },
+    { state: SECURE, words: `${c.secure} ${STATES.secure.words}` },
+    { state: PRACTISING, words: `${c.practising} ${STATES.practising.words}` },
     { state: "notSeenYet" as const, words: `${c.unseen} ${STATES.notSeenYet.words}` },
   ];
   const entries = got.key === key ? (got.entries ?? []) : [];
