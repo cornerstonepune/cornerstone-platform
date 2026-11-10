@@ -2,7 +2,7 @@
 // that has such rows, else written); the school's colour of it (`child_state.colour`) says how it looks. Nothing here decides a state.
 import { sql } from "./db";
 import { seesClass } from "./reach";
-import { attentionDays, type Me } from "./children-reads";
+import { attentionDays, stateRows, type Me } from "./children-reads";
 
 import { SECURE, lookOfColour, type Look } from "./looks";
 export type { Look };
@@ -43,9 +43,8 @@ export async function pictureOf(me: Me, classId: string): Promise<Picture | null
     where c.class_id = ${classId}::uuid and c.active`;
   const rows = await sql<{ child_id: string; skill_code: string; name: string; domain: string | null; colour: string; words: string; kind: string; last_seen: string | null }[]>`
     select s.child_id, s.skill_code, rs.name, rs.domain, cs.colour, cs.words, s.kind, (s.last_seen at time zone ${zone})::date::text as last_seen
-    from child_skill_state s join child_state cs on cs.tenant_id = s.tenant_id and cs.code = s.state
-    join registry_skill rs on rs.tenant_id = s.tenant_id and rs.code = s.skill_code
-    where s.child_id = any(${kids.map((k) => k.id)}::uuid[]) and s.kind in ('observed', 'written')`;
+    from (${stateRows(kids.map((k) => k.id))}) s join child_state cs on cs.tenant_id = s.tenant_id and cs.code = s.state
+    join registry_skill rs on rs.tenant_id = s.tenant_id and rs.code = s.skill_code`;
   const kind = rows.some((r) => r.kind === "observed") ? "observed" : "written";
   const mine = rows.filter((r) => r.kind === kind);
   const cells = new Map<string, Map<string, Cell>>();
@@ -85,9 +84,8 @@ export type ChildSkill = { code: string; name: string; domain: string; look: Loo
 export async function skillsOfChild(childId: string): Promise<ChildSkill[]> {
   const rows = await sql<{ skill_code: string; name: string; domain: string | null; colour: string; words: string; kind: string; seen: number; last_seen: string | null }[]>`
     select s.skill_code, rs.name, rs.domain, cs.colour, cs.words, s.kind, coalesce(s.named_days, s.n_events, 0)::int as seen, s.last_seen::date::text as last_seen
-    from child_skill_state s join child_state cs on cs.tenant_id = s.tenant_id and cs.code = s.state
-    join registry_skill rs on rs.tenant_id = s.tenant_id and rs.code = s.skill_code
-    where s.child_id = ${childId}::uuid and s.kind in ('observed', 'written')`;
+    from (${stateRows([childId])}) s join child_state cs on cs.tenant_id = s.tenant_id and cs.code = s.state
+    join registry_skill rs on rs.tenant_id = s.tenant_id and rs.code = s.skill_code`;
   const kind = rows.some((r) => r.kind === "observed") ? "observed" : "written";
   const mine = rows.filter((r) => r.kind === kind);
   const links = await sql<{ before_code: string; skill_code: string; name: string }[]>`

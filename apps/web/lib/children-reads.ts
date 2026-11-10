@@ -17,6 +17,14 @@ export async function attentionDays(): Promise<number> {
 /** School days the strip of absences shows. */
 export const STRIP_DAYS = 7;
 
+/** The states of children, of both kinds, as a statement to read from. Every statement that reads `child_skill_state` names the kind
+ *  it means (tests/test_k2_picture.py): here each is named, and the caller keeps the kind a class is read on (observed if any child has
+ *  such rows, else written). */
+export const stateRows = (ids: readonly string[]) => sql`
+  select * from child_skill_state where kind = 'observed' and child_id = any(${ids as string[]}::uuid[])
+  union all
+  select * from child_skill_state where kind = 'written' and child_id = any(${ids as string[]}::uuid[])`;
+
 export type Table = { today: string; days: number; rows: Row[]; classes: { id: string; section: string }[] };
 
 type Base = { id: string; class_id: string; section: string; roll_no: string; first_name: string | null; last_name: string | null };
@@ -39,8 +47,7 @@ export async function childrenTable(me: Me): Promise<Table> {
   const classIds = [...new Set(kids.map((k) => k.class_id))];
   const states = await sql<State[]>`
     select s.child_id, s.skill_code, cs.colour, s.kind, (s.last_seen at time zone ${zone})::date::text as last_seen
-    from child_skill_state s join child_state cs on cs.tenant_id = s.tenant_id and cs.code = s.state
-    where s.child_id = any(${ids}::uuid[]) and s.kind in ('observed', 'written')`;
+    from (${stateRows(ids)}) s join child_state cs on cs.tenant_id = s.tenant_id and cs.code = s.state`;
   const days = await sql<{ class_id: string; date: string; lesson: boolean }[]>`
     with sd as (
       select d.id, d.on_date, c.id as class_id

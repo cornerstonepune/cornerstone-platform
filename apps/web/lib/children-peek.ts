@@ -6,7 +6,7 @@ import { sql } from "./db";
 import { seesClass } from "./reach";
 import { staffList } from "./queries";
 import { dateWords } from "./week";
-import type { Me } from "./children-reads";
+import { stateRows, type Me } from "./children-reads";
 import type { Kind } from "@/components/kind-tile";
 
 export type Entry = { kind: Kind; title: string; line: string; at: string; when: string; more?: string };
@@ -48,12 +48,14 @@ export async function historyOf(childId: string, limit = SIZE, before: string | 
     join item_result r on r.capture_id = k.id and r.confirmed_at is not null
     where si.child_id = ${childId}::uuid and (${before}::timestamptz is null or r.confirmed_at < ${before}::timestamptz)
     group by k.id, si.qr_code order by max(r.confirmed_at) desc limit ${limit}`;
-  const states = await sql<{ skill: string; words: string; at: string }[]>`
-    select rs.name as skill, cs.words, s.last_seen::text as at
-    from child_skill_state s join child_state cs on cs.tenant_id = s.tenant_id and cs.code = s.state
+  const held = await sql<{ skill: string; words: string; at: string; kind: string }[]>`
+    select rs.name as skill, cs.words, s.last_seen::text as at, s.kind
+    from (${stateRows([childId])}) s join child_state cs on cs.tenant_id = s.tenant_id and cs.code = s.state
     join registry_skill rs on rs.tenant_id = s.tenant_id and rs.code = s.skill_code
-    where s.child_id = ${childId}::uuid and s.last_seen is not null and (${before}::timestamptz is null or s.last_seen < ${before}::timestamptz)
+    where s.last_seen is not null and (${before}::timestamptz is null or s.last_seen < ${before}::timestamptz)
     order by s.last_seen desc limit ${limit}`;
+  // the kind the child is read on: observed where there are such rows, else written (as the child's page reads it)
+  const states = held.filter((s) => s.kind === (held.some((r) => r.kind === "observed") ? "observed" : "written"));
   const out: Entry[] = [
     ...seen.map((o) => entryOf(o, who)),
     ...papers.map((p): Entry => ({
