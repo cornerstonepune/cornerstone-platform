@@ -41,9 +41,10 @@ test("an educator sees only their own class's children, each with Sr. No., state
   expect(body.join("\n")).not.toContain(rows.otherNames[0]);
   expect(body[0]).toMatch(/Sr\. No\. 1/);
   expect(body[0]).toMatch(/to approve/);
-  expect(body[0]).toMatch(/on file/);
   expect(body[1]).toMatch(/approved/);
-  expect(body[1]).toMatch(/not recorded/);
+  // consent is the coordinator's alone to see (the school's access rule): an educator is shown no consent column, never a guessed word
+  await expect(table(page).getByRole("columnheader", { name: "Consent" })).toHaveCount(0);
+  expect(body.join("\n")).not.toMatch(/on file|not recorded|withdrawn/);
   await ctx.close();
 });
 
@@ -54,6 +55,13 @@ test("a coordinator sees other classes too, and the class and state filters narr
   expect(await table(page).locator("tbody tr:not(.under)").count()).toBe(1);
   await page.goto(`/children/reports?class=${rows.other ? "U70B" : ""}&state=approved`);
   await expect(page.getByText("No report lines drafted yet")).toBeVisible();
+});
+
+test("a coordinator sees each child's consent: on file, or not recorded (2)", async ({ page }) => {
+  await page.goto(`/children/reports?class=${rows.section}`);
+  const body = await table(page).locator("tbody tr:not(.under)").allInnerTexts();
+  expect(body[0]).toMatch(/on file/);
+  expect(body[1]).toMatch(/not recorded/);
 });
 
 test("a child's fold shows the report's words with the name put in; a child with no report says so (4)", async ({ page }) => {

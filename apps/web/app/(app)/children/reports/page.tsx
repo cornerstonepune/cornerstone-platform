@@ -40,7 +40,7 @@ export default async function ReportsScreen({ searchParams }: Props) {
     { key: "class", label: "Class", width: "7rem", value: (r) => classWords(g, r.band, r.section) },
     { key: "state", label: "Report", status: true, width: "10rem", value: (r) => STATE_OF(r), cell: (r) => <StatusChip state={CHIP[STATE_OF(r)]} words={STATE_OF(r)} /> },
     { key: "educator", label: "Educator approved", status: true, width: "9rem", value: (r) => (r.report.note?.approved ? "yes" : "no") },
-    { key: "consent", label: "Consent", width: "9rem", value: (r) => CONSENT_WORDS[r.consent] },
+    { key: "consent", label: "Consent", width: "9rem", value: (r) => (r.consent ? CONSENT_WORDS[r.consent] : null) },
   ];
 
   return (
