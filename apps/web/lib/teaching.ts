@@ -105,12 +105,18 @@ export async function skillOf(me: Me, code: string, classId: string | undefined)
       select c.id, c.roll_no as roll, concat_ws(' ', n.first_name, n.last_name) as name
       from child_now c cross join lateral pii.read_child(c.id, ${me.email}) n
       where c.class_id = ${cls.id}::uuid and c.active`;
-    const states = await sql<{ child_id: string; colour: string; words: string; kind: string }[]>`
-      select s.child_id, cs.colour, cs.words, s.kind from child_skill_state s join child_state cs on cs.tenant_id = s.tenant_id and cs.code = s.state
-      where s.skill_code = ${code} and s.child_id = any(${children.map((c) => c.id)}::uuid[]) and s.kind in ('observed', 'written')`;
-    const kind = states.some((s) => s.kind === "observed") ? "observed" : "written";
+    // a class that has observed states (K2) is read on those; otherwise on the written ones. Each statement names its kind.
+    const ids = children.map((c) => c.id);
+    type StateRow = { child_id: string; colour: string; words: string };
+    let states = await sql<StateRow[]>`
+      select s.child_id, cs.colour, cs.words from child_skill_state s join child_state cs on cs.tenant_id = s.tenant_id and cs.code = s.state
+      where s.kind = 'observed' and s.skill_code = ${code} and s.child_id = any(${ids}::uuid[])`;
+    if (!states.length)
+      states = await sql<StateRow[]>`
+        select s.child_id, cs.colour, cs.words from child_skill_state s join child_state cs on cs.tenant_id = s.tenant_id and cs.code = s.state
+        where s.kind = 'written' and s.skill_code = ${code} and s.child_id = any(${ids}::uuid[])`;
     for (const c of children) {
-      const s = states.find((x) => x.child_id === c.id && x.kind === kind);
+      const s = states.find((x) => x.child_id === c.id);
       kids.push({ ...c, look: s ? lookOfColour(s.colour) : "unseen", words: s ? s.words : "Not seen yet" });
     }
     kids.sort((a, b) => Number(a.roll) - Number(b.roll));
