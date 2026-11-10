@@ -31,7 +31,7 @@ export function PictureGrid({ blocks, grouped, label }: { blocks: readonly Block
           name: s.name,
           ...LOOK[s.look],
           // no aria-label: the name a screen reader says is the square's own text (number, name, state), which is what axe holds it to
-          attrs: { "data-roll": s.roll, title: s.look === "unseen" ? "not seen yet" : LOOK[s.look].words },
+          attrs: { "data-peek-open": s.roll, "data-roll": s.roll, title: s.look === "unseen" ? "not seen yet" : LOOK[s.look].words },
         }));
         return (
           <section key={b.look} className="b-grp" aria-label={`${b.words}, ${b.squares.length}`} data-group={b.look}>

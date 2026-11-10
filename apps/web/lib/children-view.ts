@@ -130,3 +130,6 @@ export type PictureLook = (typeof LOOK_ORDER)[number];
 export function groupByLook<T extends { look: PictureLook }>(cells: readonly T[]): { look: PictureLook; cells: T[] }[] {
   return LOOK_ORDER.map((look) => ({ look, cells: cells.filter((c) => c.look === look) })).filter((g) => g.cells.length > 0);
 }
+
+/** The open peek as the address carries it: the class and the Sr. No., never a name. */
+export const peekParam = (c: { classId: string; roll: string }) => `${c.classId}:${c.roll}`;

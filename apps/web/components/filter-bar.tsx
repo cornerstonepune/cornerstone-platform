@@ -83,7 +83,7 @@ export function FilterBar({
         <ul data-active-filters aria-label="Filters on" className="mt-2 flex flex-wrap items-center gap-2 text-[13px]">
           {on.map((a) => (
             <li key={a.name}>
-              <Link href={href([a.name])} aria-label={`Remove filter ${a.label}`} className="inline-flex min-h-8 items-center gap-2 border border-[var(--line-control)] bg-[var(--surface)] px-3 text-[var(--ink)] no-underline hover:border-[var(--ink)]">
+              <Link href={href([a.name])} data-chip aria-label={`Remove filter ${a.label}`} className="inline-flex min-h-8 items-center gap-2 border border-[var(--line-control)] bg-[var(--surface)] px-3 text-[var(--ink)] no-underline hover:border-[var(--ink)]">
                 {a.label}
                 <span aria-hidden="true">×</span>
               </Link>

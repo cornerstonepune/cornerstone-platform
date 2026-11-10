@@ -1,19 +1,19 @@
 import Link from "@/components/link";
 import { Rail, Screen } from "@/components/app-frame";
-import { Clusters, GROUP_ICON, PictureGrid, type Block, type Square } from "@/components/children/picture-grid";
+import { Clusters, PictureGrid, type Block, type Square } from "@/components/children/picture-grid";
 import { PeekPanel, PeekProvider, type Chosen } from "@/components/children/peek";
 import { EmptyState } from "@/components/empty-state";
 import { FilterBar } from "@/components/filter-bar";
 import { NotYours } from "@/components/not-yours";
 import { Spark } from "@/components/spark";
-import { STATES, StatusChip } from "@/components/status-chip";
+import { STATES } from "@/components/status-chip";
 import { StackBar } from "@/components/stack-bar";
 import { requireStaff } from "@/lib/auth";
 import { ATTENTION_DAYS } from "@/lib/children-reads";
 import { pictureOf, type Look } from "@/lib/children-picture";
-import { byRoll, clustersOf, daysSince, groupByLook, type PictureLook } from "@/lib/children-view";
+import { byRoll, clustersOf, daysSince, groupByLook, peekParam, type PictureLook } from "@/lib/children-view";
 
-type Q = { skill?: string; domain?: string; group?: string };
+type Q = { skill?: string; domain?: string; group?: string; peek?: string };
 const BAR: Record<PictureLook, "secure" | "practising" | "emerging" | "notSeenYet"> = { secure: "secure", practising: "practising", emerging: "emerging", unseen: "notSeenYet" };
 
 // The class picture (UI-3b): each square a child by Sr. No., shown on one skill at a time. A square a child has no state on is
@@ -51,13 +51,15 @@ export default async function Picture({ params, searchParams }: { params: Promis
     })),
   );
   const kidChosen = Object.fromEntries(kids.map((k) => [k.id, chosenOf(k)]));
+  const open = squares.find((x) => peekParam(x) === sp.peek);
+  const initial = open ? (({ classId: c, roll, name, section, counts }) => ({ classId: c, roll, name, section, counts }))(open) : null;
   const q = (over: Q) => {
     const u = new URLSearchParams();
     for (const [k, v] of Object.entries({ skill: skill?.code, domain, group: sp.group, ...over })) if (v) u.set(k, v);
     return `/children/${classId}${u.size ? `?${u}` : ""}`;
   };
   return (
-    <PeekProvider>
+    <PeekProvider initial={initial}>
       <Screen
         stage={`${p.section} · ${kids.length} children`}
         title="Class picture"
@@ -65,10 +67,29 @@ export default async function Picture({ params, searchParams }: { params: Promis
         action={<Link href="/children" className="btn secondary">Show as a table</Link>}
         next={{ href: kids[0] ? `/children/${classId}/${encodeURIComponent(kids[0].roll)}` : "/children", label: "A child" }}
         rail={
-          <div className="grid content-start gap-[var(--space-3)]">
+          <aside aria-label="Rail" data-rail className="grid content-start gap-[var(--space-3)]">
             <PeekPanel />
-            <Rail edges={[{ screen: "record", label: "Record a note", icon: "note" }, { screen: "assessments", label: "Assessments", icon: "assessment" }]} />
-          </div>
+            <div className="grid gap-[var(--space-2)] rounded-[var(--radius-card)] bg-[var(--surface)] p-[var(--space-3)]">
+              <section aria-label="Show">
+                <h2 className="mb-[var(--space-1)] text-[length:var(--text-eyebrow)] text-[var(--ink-muted)] uppercase">Show</h2>
+                <ul className="grid gap-[var(--space-1)]">
+                  {skills.map((s) => (
+                    <li key={s.code}>
+                      <Link href={q({ skill: s.code })} data-show aria-label={`Show: ${s.name}`} aria-current={s.code === skill?.code ? "true" : undefined} className="flex min-h-[var(--tap)] items-center text-[var(--link)] underline">
+                        {s.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+              {kids[0] ? (
+                <Link href={`/children/${classId}/${encodeURIComponent(kids[0].roll)}`} className="flex min-h-[var(--tap)] items-center text-[var(--link)] underline">
+                  A child
+                </Link>
+              ) : null}
+              <Rail edges={[{ screen: "record", label: "Record a note", icon: "note" }, { screen: "assessments", label: "Assessments", icon: "assessment" }]} />
+            </div>
+          </aside>
         }
       >
         {p.skills.length === 0 ? (
@@ -84,7 +105,7 @@ export default async function Picture({ params, searchParams }: { params: Promis
               keep={{}}
               filters={[
                 { name: "skill", label: "Skill", value: skill?.code, all: "", required: true, options: skills.map((s) => [s.code, `${s.name} · ${s.seen} seen`] as const) },
-                ...(domains.length > 1 ? [{ name: "domain", label: "Domain", value: domain, all: "All", options: domains.map((d) => [d, d] as const) }] : []),
+                { name: "domain", label: "Domain", value: domain, all: "All", options: domains.map((d) => [d, d] as const) },
                 { name: "group", label: "Group by", value: sp.group, all: "State on this skill", options: [["class", "Class: one grid, in Sr. No. order"]] },
               ]}
             />
@@ -96,18 +117,6 @@ export default async function Picture({ params, searchParams }: { params: Promis
             <Spark values={[]} label="Secure children" empty="No fortnights recorded yet" />
             <h2 className="mt-4 mb-2 text-[18px]">Clusters</h2>
             <Clusters clusters={clusters} kids={kidChosen} />
-            <nav aria-label="Skills seen" className="mt-4">
-              <h2 className="mb-1 text-[16px]">Show</h2>
-              <ul className="flex flex-wrap gap-2">
-                {skills.map((s) => (
-                  <li key={s.code}>
-                    <Link href={q({ skill: s.code })} className="chip" aria-current={s.code === skill?.code ? "true" : undefined}>
-                      {s.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
           </>
         )}
       </Screen>
@@ -115,5 +124,3 @@ export default async function Picture({ params, searchParams }: { params: Promis
   );
 }
 
-void GROUP_ICON;
-void StatusChip;

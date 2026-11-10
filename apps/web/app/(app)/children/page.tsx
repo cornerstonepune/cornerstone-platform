@@ -7,10 +7,10 @@ import { EmptyState } from "@/components/empty-state";
 import { FilterBar, type Filter } from "@/components/filter-bar";
 import { requireStaff } from "@/lib/auth";
 import { ATTENTION_DAYS, childrenTable } from "@/lib/children-reads";
-import { GROUPS, filterRows, groupRows, byRoll, type Group } from "@/lib/children-view";
+import { GROUPS, filterRows, groupRows, byRoll, peekParam, type Group } from "@/lib/children-view";
 import { TABLE_ROW_LIMIT } from "@/lib/ux-rules";
 
-type Q = { q?: string; cls?: string; show?: string; group?: string; page?: string };
+type Q = { q?: string; cls?: string; show?: string; group?: string; page?: string; peek?: string };
 
 // Children (UI-3b): the educator's own children in one table, or every class for the coordinator. The filters, the grouping and
 // the page are all in the address, so a reload keeps them. Groups are computed on each visit and never stored.
@@ -41,10 +41,12 @@ export default async function Children({ searchParams }: { searchParams: Promise
     { name: "show", label: "Needs attention", value: f.show, all: "All", options: [["attention", "Needs attention"]] },
     { name: "group", label: "Group by", value: f.group, all: "None: one table in Sr. No. order", options: [...(several ? ([["class", "Class"]] as const) : []), ["doing", "How they are doing"], ["attention", "Needs attention"]] },
   ];
+  const open = t.rows.find((r) => peekParam(r) === sp.peek);
+  const initial = open ? { classId: open.classId, roll: open.roll, name: open.name, section: open.section, counts: open.counts } : null;
   const first = (f.cls ? t.classes.find((c) => c.id === f.cls) : t.classes[0])?.id;
   const everyone = me.role === "coordinator" || several;
   return (
-    <PeekProvider>
+    <PeekProvider initial={initial}>
       <Screen
         stage={`${everyone ? "All classes" : "Your class"} · ${t.rows.length} ${t.rows.length === 1 ? "child" : "children"}`}
         title="Children"

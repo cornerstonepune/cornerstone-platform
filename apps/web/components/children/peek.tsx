@@ -4,17 +4,32 @@ import { createContext, useCallback, useContext, useEffect, useState, type React
 import { ChildPeek, NameChip } from "@/components/child-peek";
 import { STATES } from "@/components/status-chip";
 import type { Entry } from "@/lib/children-peek";
-import { initialsOf, type Counts } from "@/lib/children-view";
+import { initialsOf, peekParam, type Counts } from "@/lib/children-view";
 
 // The child chosen in a table, a grid or a cluster (UI-3b). One provider wraps the screen: any NameChip or square opens the same
 // ChildPeek in the rail; the history is fetched when it opens (a POST by class and Sr. No., never a name in an address).
 export type Chosen = { classId: string; roll: string; name: string; section: string; counts: Counts };
 export const PeekContext = createContext<{ chosen: Chosen | null; open: (c: Chosen) => void; close: () => void }>({ chosen: null, open: () => undefined, close: () => undefined });
 
-export function PeekProvider({ children }: { children: ReactNode }) {
-  const [chosen, setChosen] = useState<Chosen | null>(null);
-  const close = useCallback(() => setChosen(null), []);
-  return <PeekContext.Provider value={{ chosen, open: setChosen, close }}>{children}</PeekContext.Provider>;
+/** The address carries the open peek as `peek=<class>:<Sr. No.>`, never a name; a page opened with it shows the peek (`initial`). */
+function writeAddress(c: Chosen | null) {
+  const u = new URL(window.location.href);
+  if (c) u.searchParams.set("peek", peekParam(c));
+  else u.searchParams.delete("peek");
+  window.history.replaceState(window.history.state, "", u);
+}
+
+export function PeekProvider({ initial = null, children }: { initial?: Chosen | null; children: ReactNode }) {
+  const [chosen, setChosen] = useState<Chosen | null>(initial);
+  const open = useCallback((c: Chosen) => {
+    setChosen(c);
+    writeAddress(c);
+  }, []);
+  const close = useCallback(() => {
+    setChosen(null);
+    writeAddress(null);
+  }, []);
+  return <PeekContext.Provider value={{ chosen, open, close }}>{children}</PeekContext.Provider>;
 }
 
 /** A child as a chip that opens the peek. */

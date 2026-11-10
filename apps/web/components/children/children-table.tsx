@@ -81,7 +81,7 @@ export function ChildrenTable({ sections, grouped, showClass, today, page, hrefO
         </section>
       ))}
       {page.pages > 1 ? (
-        <nav className="mt-2 flex items-center gap-3 text-[13px]" aria-label="Children pages">
+        <nav className="mt-2 flex items-center gap-3 text-[13px]" aria-label="Children pages" data-more>
           {page.n > 1 ? <a href={hrefOf[page.n - 1]} className="chip">← Earlier</a> : null}
           <span>Page {page.n} of {page.pages}</span>
           {page.n < page.pages ? <a href={hrefOf[page.n + 1]} className="chip">Later →</a> : null}

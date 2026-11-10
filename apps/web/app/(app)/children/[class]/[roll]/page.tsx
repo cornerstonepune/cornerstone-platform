@@ -48,16 +48,15 @@ export default async function TheChild({ params, searchParams }: { params: Promi
       stage={`${child.section} · Sr. No. ${child.roll_no} · ${name}`}
       title="Where this child is"
       purpose="Each skill this child was seen on, coloured by how secure it is and sized by how often. Every mark opens the note or paper behind it."
-      action={<Link href={note} className="btn secondary">Add a note</Link>}
+      action={<Link href={note} className="btn secondary">Add a note about this child</Link>}
       next={{ href: `/children/${classId}`, label: "The class" }}
       rail={
-        <div className="grid content-start gap-[var(--space-3)]">
-          <Rail edges={[{ screen: "reports", label: "Reports", icon: "parent" }]} />
+        <aside aria-label="Rail" data-rail className="grid content-start gap-[var(--space-3)]">
           <nav aria-label="Back to the class" className="rounded-[var(--radius-card)] bg-[var(--surface)] p-[var(--space-3)]">
             <Link href={`/children/${classId}`} className="flex min-h-[var(--tap)] items-center text-[var(--link)] underline">Back to the class</Link>
-            <Link href={note} className="flex min-h-[var(--tap)] items-center text-[var(--link)] underline">Add a note about this child</Link>
           </nav>
-        </div>
+          <Rail edges={[{ screen: "reports", label: "Reports", icon: "parent" }]} />
+        </aside>
       }
     >
       {skills.length === 0 ? (
@@ -79,7 +78,7 @@ export default async function TheChild({ params, searchParams }: { params: Promi
       {entries.length === 0 ? <EmptyState>Nothing seen yet for this child.</EmptyState> : <Timeline entries={[...entries].reverse().map((e) => ({ kind: e.kind, title: e.title, line: e.line, when: e.when, more: e.more }))} />}
       {older ? (
         <p className="mt-2">
-          <Link href={`/children/${classId}/${encodeURIComponent(roll)}?${new URLSearchParams({ ...(skill ? { skill: skill.code } : {}), before: older })}`}>Older entries</Link>
+          <Link data-more href={`/children/${classId}/${encodeURIComponent(roll)}?${new URLSearchParams({ ...(skill ? { skill: skill.code } : {}), before: older })}`}>Older entries</Link>
         </p>
       ) : null}
     </Screen>
@@ -88,7 +87,7 @@ export default async function TheChild({ params, searchParams }: { params: Promi
 
 function columns(href: (code: string) => string): Column<ChildSkill>[] {
   return [
-    { key: "skill", label: "Skill", keep: true, value: (s) => s.name, cell: (s) => <Link href={href(s.code)} className="inline-flex min-h-[var(--tap)] items-center">{s.name}</Link> },
+    { key: "skill", label: "Skill", keep: true, value: (s) => s.name, cell: (s) => <Link href={href(s.code)} data-skill-row className="inline-flex min-h-[var(--tap)] items-center">{s.name}</Link> },
     { key: "state", label: "State", keep: true, status: true, value: (s) => s.words, cell: (s) => <StatusChip state={STATE[s.look]} round /> },
     { key: "days", label: "Times seen", keep: true, num: true, value: (s) => s.seen },
     { key: "seen", label: "Last seen", keep: true, value: (s) => (s.lastSeen ? dateWords(s.lastSeen) : "not yet") },
