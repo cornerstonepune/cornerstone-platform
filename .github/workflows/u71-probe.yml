@@ -12,7 +12,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - { name: before-ui2, ref: 2d39ff9 }
           - { name: main, ref: 18d42cc }
     env:
       DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/postgres
@@ -54,26 +53,33 @@ jobs:
           TEST_WEB_DATABASE_URL: postgresql://app_web:ci-web@127.0.0.1:5432/postgres
           TEST_ENGINE_DATABASE_URL: postgresql://app_engine:ci-engine@127.0.0.1:5432/postgres
         run: npx playwright test --shard=3/3 --retries=0 --trace off --reporter=line 2>&1 | grep -E "u71 \||passed|failed|flaky" || true
-      - name: the probe on that copy, with every statement over 30 ms logged
+      - name: the probe on that copy, with every statement logged
         working-directory: apps/web
         env:
           TEST_WEB_DATABASE_URL: postgresql://app_web:ci-web@127.0.0.1:5432/postgres
           TEST_ENGINE_DATABASE_URL: postgresql://app_engine:ci-engine@127.0.0.1:5432/postgres
         run: |
-          psql "$DATABASE_URL" -c "select count(distinct section) as classes, count(*) as children from child_now where active"
-          psql "$DATABASE_URL" -At -c "alter system set log_min_duration_statement = 30" -c "select pg_reload_conf()"
+          psql "$DATABASE_URL" -c "select (select count(distinct section) from child_now where active) as classes, (select count(*) from child_now where active) as children, (select count(*) from evidence_event) as evidence, (select count(*) from pg_class where relkind='r') as tables"
+          psql "$DATABASE_URL" -At -c "alter system set log_min_duration_statement = 0" -c "select pg_reload_conf()"
           LOG="$RUNNER_TEMP/postgres/log"; MARK=$(wc -c <"$LOG")
           npx playwright test u99-probe --workers=1 --retries=0 --trace off --reporter=line 2>&1 | grep -E "probe \||passed|failed" || true
-          echo "--- statements over 30 ms during the probe (top 25 by time)"
-          tail -c +"$MARK" "$LOG" | python3 -c "
-          import re,sys
-          t=sys.stdin.read()
-          parts=re.split(r'(?=\d{4}-\d\d-\d\d [\d:.]+ \w+ \[\d+\] LOG:  duration: )',t)
-          rows=[]
+          tail -c +"$MARK" "$LOG" >"$RUNNER_TEMP/probe.log"
+          wc -l "$RUNNER_TEMP/probe.log"
+          python3 - "$RUNNER_TEMP/probe.log" <<'PY'
+          import re,sys,collections
+          t=open(sys.argv[1]).read()
+          parts=re.split(r'(?=^\d{4}-\d\d-\d\d [\d:.]+ \w+ \[\d+\] LOG:  duration: )',t,flags=re.M)
+          agg=collections.defaultdict(lambda:[0,0.0,0.0])
+          tot=0;n=0
           for p in parts:
-              m=re.search(r'duration: ([\d.]+) ms',p)
-              if m: rows.append((float(m.group(1)),' '.join(p.split())[:420]))
-          rows.sort(reverse=True)
-          print(len(rows),'statements')
-          for d,q in rows[:25]: print(f'{d:8.1f} ms | {q[60:]}')
-          "
+              m=re.search(r'duration: ([\d.]+) ms\s+(?:statement|execute [^:]*|parse [^:]*|bind [^:]*): (.*)',p,flags=re.S)
+              if not m: continue
+              d=float(m.group(1)); q=' '.join(m.group(2).split())
+              q=re.sub(r"'[^']*'","?",q); q=re.sub(r'\b\d+\b','N',q); q=re.sub(r'\$\d+','$',q)[:230]
+              a=agg[q]; a[0]+=1; a[1]+=d; a[2]=max(a[2],d); tot+=d; n+=1
+          print(n,'statements, total',round(tot),'ms over the whole probe (40 page loads + warmups)')
+          print('--- top 30 by total time: count | total ms | max ms | statement')
+          for q,(c,s,mx) in sorted(agg.items(),key=lambda kv:-kv[1][1])[:30]: print(f'{c:6d} | {s:8.0f} | {mx:6.1f} | {q}')
+          print('--- top 12 by count')
+          for q,(c,s,mx) in sorted(agg.items(),key=lambda kv:-kv[1][0])[:12]: print(f'{c:6d} | {s:8.0f} | {mx:6.1f} | {q}')
+          PY
