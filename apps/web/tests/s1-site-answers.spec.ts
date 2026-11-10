@@ -33,7 +33,8 @@ async function menu(page: Page, label: string) {
 
 test("a click shows the page is loading at once, and a database that does not answer is said in words within 12 s", async ({ page }) => {
   await page.goto("/today", { waitUntil: "networkidle" });
-  await whileLocked("item", async () => {
+  // Setup (UI-5) reads the staff check and the settings, not the question bank, so the lock is on `config`
+  await whileLocked("config", async () => {
     const clicked = Date.now();
     await menu(page, "Setup");
     await expect(page.getByRole("status", { name: "Loading this page" })).toBeVisible({ timeout: 1_500 });
@@ -43,7 +44,7 @@ test("a click shows the page is loading at once, and a database that does not an
   });
   // Once the database answers again, Try again brings the page back.
   await page.getByRole("button", { name: "Try again" }).click();
-  await expect(page.getByRole("heading", { level: 1, name: "Curriculum" })).toBeVisible({ timeout: 10_000 });
+  await expect(page.getByRole("heading", { level: 1, name: "Setup" })).toBeVisible({ timeout: 10_000 });
 });
 
 test("when the staff check cannot reach the database, the page says so instead of asking you to sign in again", async ({ page }) => {
@@ -59,7 +60,7 @@ test("when the staff check cannot reach the database, the page says so instead o
 // screen separately, so at most two small requests each.
 test("opening the Skill Map loads nothing ahead but the menu pages", async ({ page }) => {
   // the four doors (lib/menu.ts) and the logo link are what the bar pre-loads, beside the old menu pages
-  const MENU = ["/today", "/educator/week", "/k2", "/papers/approve", "/", "/papers", "/make", "/worksheets", "/library", "/capture", "/capture/check", "/growth", "/home", "/workflows"];
+  const MENU = ["/today", "/educator/week", "/k2", "/papers/approve", "/", "/setup", "/papers", "/make", "/worksheets", "/library", "/capture", "/capture/check", "/growth", "/home", "/workflows"];
   const background: string[] = [];
   page.on("request", (r) => {
     if (r.resourceType() !== "document" && r.headers()["rsc"] === "1") background.push(new URL(r.url()).pathname);
@@ -75,7 +76,7 @@ test("every menu page opens within three seconds of its click", async ({ page })
   for (const [label, heading] of [
     ["Today", "What needs doing"],
     ["Children", "Children"],
-    ["Setup", "Curriculum"],
+    ["Setup", "Setup"],
   ]) {
     const clicked = Date.now();
     await menu(page, label);
