@@ -22,6 +22,7 @@ export const GROUPS: readonly Door[] = [
     pages: [
       { href: "/today", label: "What needs doing", match: ["/today", "/voice"] },
       { label: "Your day", href: "/educator", match: ["/educator"], guide: false },
+      { label: "Notes", href: "/notes", match: ["/notes", "/record", "/period"], guide: false },
     ],
   },
   {
