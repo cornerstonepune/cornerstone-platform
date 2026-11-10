@@ -25,6 +25,8 @@ export async function drive(page: Page, s: Screen, e: Element, needle: string): 
   const name = d.click ?? needle;
   const button = main.getByRole("button", { name: new RegExp(name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i") }).first();
   const link = main.getByRole("link", { name: new RegExp(name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i") }).first();
+  // the page streams its rows in: wait for the control to be drawn before saying it is not there
+  await button.or(link).first().waitFor({ timeout: 10_000 }).catch(() => undefined);
   const press = (await button.count()) ? button : link;
   if (!(await press.count())) return [at(`cannot be driven: nothing to press called “${name}”`)];
   // a control that opens a new tab is held to opening it at its own address; the file behind that address (a pack of papers the engine
@@ -45,7 +47,14 @@ export async function drive(page: Page, s: Screen, e: Element, needle: string): 
   if (target) await page.context().unroute(target, stand);
   if (target && opened && !asked.length) out.push(at(`opened a new tab, but not at its own address ${target}`));
   await page.waitForLoadState("domcontentloaded");
-  await page.waitForTimeout(500);
+  // what a person sees afterwards is waited for, not guessed at with a pause: the action runs on the server and the page is drawn again
+  const holds = async () => {
+    const now = (await main.innerText().catch(() => "")).toLowerCase();
+    const at_ = new URL(page.url()).pathname + new URL(page.url()).search;
+    return (!d.expect.url || new RegExp(d.expect.url).test(at_)) && (d.expect.text ?? []).every((t) => now.includes(t.toLowerCase())) && (d.expect.gone ?? []).every((t) => !now.includes(t.toLowerCase()));
+  };
+  for (let i = 0; i < 40 && !(await holds()); i++) await page.waitForTimeout(250);
+  await page.waitForTimeout(250);
   const text = await main.innerText();
   if (d.expect.url && !new RegExp(d.expect.url).test(new URL(page.url()).pathname + new URL(page.url()).search)) out.push(at(`ended at ${page.url()}, which does not match ${d.expect.url}`));
   for (const t of d.expect.text ?? []) if (!text.toLowerCase().includes(t.toLowerCase())) out.push(at(`did not show “${t}” afterwards`));

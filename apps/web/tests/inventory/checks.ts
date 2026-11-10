@@ -267,6 +267,7 @@ export async function drive(page: Page, s: Screen, e: Element, c: Ctx, byId: Map
   }
   if (e.t === "filter") return filter(page, s, e);
   if (["link", "row", "cell"].includes(e.t)) {
+    await find().waitFor({ timeout: 10_000 }).catch(() => undefined); // rows stream in after the shell
     if (!(await find().count())) return [`${s.id}: cannot drive “${e.label}”: no such link`];
     const same = e.href === new URL(here).pathname + new URL(here).search;
     await find().click();
