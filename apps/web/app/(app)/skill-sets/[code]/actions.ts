@@ -61,9 +61,11 @@ function openedOf(formData: FormData): string | null {
 function unchangedSince(code: ReturnType<typeof sql>, opened: string | null, level?: string) {
   if (!opened) return sql`true`;
   const at = level ? sql`and x.difficulty = ${level}` : sql``;
+  // a kind added to or taken from a level is a row of the history log, `skill level kind` (CP-27 3C)
   return sql`not exists (
     select 1 from (select skill_code, difficulty, created_at from english_sample_edit
-                   union all select skill_code, difficulty, created_at from skill_level_kind_change) x
+                   union all select split_part(row_id, ' ', 1), split_part(row_id, ' ', 2), at from change_log
+                   where table_name = 'skill_level_question_type' and op in ('add_kind', 'remove_kind')) x
     where x.skill_code = ${code} ${at} and x.created_at > ${opened}::text::timestamptz)`;
 }
 

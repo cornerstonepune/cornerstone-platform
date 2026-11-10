@@ -11,7 +11,7 @@ import os
 
 import pytest
 
-from engine.core import db, english
+from engine.core import db, english, history
 from engine.w1_bank import english_edit as ed
 from engine.w1_bank import english_form as ef
 from tests.rows import a_waiting_type, an_approved_type
@@ -197,6 +197,11 @@ def test_a_kind_is_added_to_a_level_only_with_three_samples_that_pass(conn):
     assert kind not in ed.level_kinds(conn, code, level), (
         "a load does not bring back a kind a person took away"
     )
+    again = ed.add_kind(conn, code, level, kind, [], BY)  # its three samples are still stored
+    assert again["saved"], again
+    assert kind in ed.level_kinds(conn, code, level)
+    kept = history.of(conn, "skill_level_question_type", f"{code} {level} {kind}")
+    assert [(h["op"], h["origin"]) for h in kept] == [("add_kind", BY), ("remove_kind", BY), ("add_kind", BY)]
 
 
 def test_only_an_approved_kind_is_added(conn):

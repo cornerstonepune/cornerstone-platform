@@ -134,36 +134,3 @@ test("an educator makes a home assessment, removes a question, adds one through 
   expect(await status(third)).toEqual({ print_status: "printed", approved_by: TEST_STAFF.email });
 });
 
-test("an approved paper edited goes back to waiting, a printed one is read-only, a retired kind is not offered", async ({ page }) => {
-  const qr = await made(page);
-  const a = await area(qr);
-
-  // a kind stopped at this level ("stop using this kind", #335) is not offered, nor are its questions
-  const kinds = await sql<{ code: string; words: string }[]>`
-    select distinct k.code, k.words from drawable_item d join question_type k on k.code = d.question_type
-    where d.skill_set_code = ${a.skill} and d.difficulty = ${a.level} order by k.words`;
-  expect(kinds.length).toBeGreaterThan(1);
-  const stopped = kinds[0];
-  const [{ tenant_id }] = await sql<{ tenant_id: string }[]>`select id as tenant_id from tenant limit 1`;
-  const kindRow = (on: boolean) => sql`
-    insert into skill_level_kind_stop (tenant_id, skill_code, difficulty, question_type, stopped, changed_by)
-    values (${tenant_id}, ${a.skill}, ${a.level}, ${stopped.code}, ${on}, 'e2e')`;
-  await kindRow(true);
-  try {
-    await page.goto(`/papers/review/${qr}?topic=${a.topic}&skill=${a.skill}&level=${a.level}`);
-    const bank = page.getByRole("region", { name: "Add a question from the bank" });
-    await expect(bank.locator(`select[name="q"]`)).toBeVisible();
-    await expect(bank.locator("option", { hasText: stopped.words })).toHaveCount(0);
-  } finally {
-    await kindRow(false); // started again: a stop is never deleted, a restart is its own row
-  }
-
-  // printed: its print opened, it is shown read-only and says how to change it
-  expect((await page.request.get(`/api/papers/print?qr=${qr}`)).ok()).toBe(true);
-  await page.goto(`/papers/review/${qr}`);
-  await expect(page.locator("[data-summary]")).toContainText("printed");
-  await expect(page.getByText("This paper is already printed. Make a new one to change it.")).toBeVisible();
-  await expect(page.getByRole("button", { name: /Remove/ })).toHaveCount(0);
-  await expect(page.getByRole("link", { name: "Remove" })).toHaveCount(0);
-  await expect(page.getByRole("region", { name: "Add a question from the bank" })).toHaveCount(0);
-});

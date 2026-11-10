@@ -17,7 +17,7 @@ says:
   - words: "When we have the capability to edit, the educator also, today, does not want certain types of questions. They should be able to delete those kinds of questions from the bank itself."
     proved_by: "packages/engine/tests/test_retire_kind.py::test_an_approved_paper_not_yet_given_is_withdrawn_and_named"
   - words: "When we have the capability to edit, the educator also, today, does not want certain types of questions. They should be able to delete those kinds of questions from the bank itself."
-    proved_by: "packages/engine/tests/test_retire_kind.py::test_a_stop_is_a_new_row_and_a_restart_switches_it_back"
+    proved_by: "packages/engine/tests/test_retire_kind.py::test_a_stop_is_kept_and_a_restart_switches_it_back"
   - words: "When we have the capability to edit, the educator also, today, does not want certain types of questions. They should be able to delete those kinds of questions from the bank itself."
     proved_by: "packages/engine/tests/test_retire_kind.py::test_stopping_withdraws_that_levels_approval_and_no_other"
   - words: "When we have the capability to edit, the educator also, today, does not want certain types of questions. They should be able to delete those kinds of questions from the bank itself."

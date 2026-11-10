@@ -16,7 +16,7 @@ import yaml
 
 from engine.adapters import llm, ocr
 from engine.assess import graph
-from engine.core import db
+from engine.core import db, history
 from engine.w1_bank import cases, mistake_guess, rehome
 from engine.w3_read import again, legacy, marking, naming
 
@@ -1279,8 +1279,13 @@ def test_a_wrong_answer_no_mistake_explains_is_named_by_a_person_from_jevs_short
     assert codes() == [] and naming.unnamed(conn, capture) == {}, "none of these is an answer too"
     assert marking.correct(conn, unexplained, "93", "aseem")["codes"] == ["M_CARRY_SKIP"]
 
-    with pytest.raises(Exception, match="append-only"), conn.transaction():
-        conn.execute("update mistake_named set code = 'M_CONCAT'")
+    # naming a second reading keeps the first, on the answer and in the history log
+    kept = history.of(conn, "item_result", str(unexplained))
+    assert [(h["op"], h["origin"], h["before"]) for h in kept] == [("name_mistake", "aseem", None)] * 2
+    assert [{k: v["code"] for k, v in h["after"].items()} for h in kept] == [
+        {"93": "M_CARRY_SKIP"},
+        {"92": mistake_guess.NONE},
+    ]
     marking.correct(conn, ids["legacy/TEST-PAPER/4"], "", "aseem")
     marking.confirm(conn, child, "aseem")
     ev = conn.execute(

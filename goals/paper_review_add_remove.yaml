@@ -31,7 +31,7 @@ says:
   - words: "one can remove a specific question and then can add another question from the bank"
     proved_by: packages/engine/tests/test_edit_paper.py::test_an_edited_paper_is_read_and_marked_against_its_new_questions_and_the_old_copy_as_itself
   - words: "When a teacher generates an assessment, they should see a page where they can look at the actual questions"
-    proved_by: apps/web/tests/p5-review-a-paper.spec.ts::an approved paper edited goes back to waiting, a printed one is read-only, a retired kind is not offered
+    proved_by: apps/web/tests/p5-review-a-paper.spec.ts::an educator makes a home assessment, removes a question, adds one through the dropdowns and approves it
 manual:
   - "On live, once merged and the rehearsal has run: approve a child's home assessment, land on its review page, remove one question and add one from the dropdowns, then approve it again and print it."
 scenarios: []

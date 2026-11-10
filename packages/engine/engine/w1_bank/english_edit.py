@@ -14,7 +14,7 @@ import secrets
 from dataclasses import replace
 from typing import Any
 
-from engine.core import db, english, settings
+from engine.core import db, english, history, settings
 from engine.w1_bank import english_check, english_form, english_words
 
 NUMBER_WORDS = ("none", "one", "two", "three", "four", "five", "six")
@@ -79,7 +79,7 @@ def level_kinds(conn: db.Conn, code: str, level: str) -> list[str]:
         r["question_type"]
         for r in conn.execute(
             "select question_type from skill_level_question_type where skill_code = %s and difficulty = %s"
-            " order by place nulls last, question_type",
+            " and removed_at is null order by place nulls last, question_type",
             (code, level),
         )
     ]
@@ -247,10 +247,15 @@ def approved_kinds(conn: db.Conn) -> list[dict[str, Any]]:
 
 
 def _kind_changed(conn: db.Conn, code: str, level: str, kind: str, added: bool, by: str) -> None:
-    conn.execute(
-        "insert into skill_level_kind_change (tenant_id, skill_code, difficulty, question_type, added, changed_by)"
-        " values (%s, %s, %s, %s, %s, %s)",
-        (_tenant(conn), code, level, kind, added, by),
+    """A kind added to or taken from a level, kept in the one history log (CP-27 3C): the website's approval lands only
+    on a level none of whose kinds changed since its page was drawn."""
+    history.keep(
+        conn,
+        _tenant(conn),
+        ("skill_level_question_type", f"{code} {level} {kind}", "add_kind" if added else "remove_kind"),
+        None,
+        {"added": added},
+        by,
     )
 
 
@@ -279,10 +284,11 @@ def add_kind(conn: db.Conn, code: str, level: str, kind: str, samples: list[dict
     t, first = _tenant(conn), _next_ord(conn, code, level, kind)
     for i, ((s, _), one) in enumerate(zip(checked, samples, strict=True)):
         _store(conn, t, (code, level, kind, first + i), s, one, by, None)
-    conn.execute(
-        "insert into skill_level_question_type (tenant_id, skill_code, difficulty, question_type)"
+    conn.execute(  # a kind taken before is asked again on its own row
+        "insert into skill_level_question_type as x (tenant_id, skill_code, difficulty, question_type)"
         " select tenant_id, skill_code, difficulty, %s from skill_level where skill_code = %s and difficulty = %s"
-        " on conflict do nothing",
+        " on conflict (tenant_id, skill_code, difficulty, question_type) do update set removed_at = null,"
+        " removed_by = null where x.removed_at is not null",
         (kind, code, level),
     )
     _kind_changed(conn, code, level, kind, True, by)
@@ -291,15 +297,17 @@ def add_kind(conn: db.Conn, code: str, level: str, kind: str, samples: list[dict
 
 
 def remove_kind(conn: db.Conn, code: str, level: str, kind: str, by: str) -> dict[str, Any]:
-    """A kind taken from a level; its samples stay stored, off the page. A level keeps at least one kind."""
+    """A kind taken from a level; its samples stay stored, off the page, and the level's row for it stays, marked taken,
+    so a load of the seed does not bring it back. A level keeps at least one kind."""
     kinds = level_kinds(conn, code, level)
     if not is_english(conn, code) or kind not in kinds:
         return {"removed": False, "why": "This level does not ask that kind."}
     if len(kinds) == 1:
         return {"removed": False, "why": "A level asks at least one kind of question; add another first."}
     conn.execute(
-        "delete from skill_level_question_type where skill_code = %s and difficulty = %s and question_type = %s",
-        (code, level, kind),
+        "update skill_level_question_type set removed_at = clock_timestamp(), removed_by = %s"
+        " where skill_code = %s and difficulty = %s and question_type = %s",
+        (by, code, level, kind),
     )
     _kind_changed(conn, code, level, kind, False, by)
     withdraw(conn, code, level)
