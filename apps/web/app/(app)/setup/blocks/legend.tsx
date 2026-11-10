@@ -1,5 +1,5 @@
 import { KindTile, type Kind } from "@/components/kind-tile";
-import { STATES, StatusChip, type State } from "@/components/status-chip";
+import { STATES, StatusChip, type State, type StateRow } from "@/components/status-chip";
 import { ACTIONS, ICON_SIZE, Icon, type IconName } from "@/lib/icons";
 import tokens from "@/design-system/tokens.json";
 
@@ -31,7 +31,7 @@ export function Legend() {
       <h2 id="legend-h">The legend</h2>
       <div data-legend="states">
         <h3>States: an icon, a word and a colour</h3>
-        <ul>{(Object.keys(STATES) as State[]).map((s) => <li key={s}><StatusChip state={s} round /></li>)}</ul>
+        <ul>{(Object.keys(STATES) as State[]).filter((s) => (STATES[s] as StateRow).legend !== false).map((s) => <li key={s}><StatusChip state={s} round /></li>)}</ul>
       </div>
       <div data-legend="actions">
         <h3>Actions</h3>

@@ -8,7 +8,7 @@ import { ICON_SIZE, Icon, type IconName } from "@/lib/icons";
 export type Tone = "ok" | "wait" | "act" | "quiet";
 /** A state is its tone (the colour), its words and its icon: a row without an icon does not compile. `look: "unseen"` is
  *  grey on the panel colour with a dashed edge (a child not seen yet). */
-export type StateRow = { tone: Tone; words: string; icon: IconName; look?: "unseen" };
+export type StateRow = { tone: Tone; words: string; icon: IconName; look?: "unseen"; /** `false`: drawn on the screens, left out of the gallery's legend (UI-3a: the legend's height moves every picture below it) */ legend?: false };
 // A child's growth on a skill is drawn by a tree, a leaf and a sprout. The school's words for it are the engine's rows
 // (`child_state`, read by lib/states.ts), so no page types them: a row's key here is the state's own code and its words
 // are that key, never a second copy (test_states_and_subject.py).
@@ -80,11 +80,11 @@ export const STATES = {
   holiday: { tone: "quiet", words: "holiday", icon: "frozen" },
   overdue: { tone: "act", words: "overdue", icon: "late" },
   // what a child showed on an activity (observation_outcome); the screens pass the school's own words
-  outcomeAbove: { tone: "ok", words: "above", icon: "above" },
-  outcomeAsExpected: { tone: "ok", words: "as expected", icon: "as-expected" },
-  outcomeBelow: { tone: "wait", words: "below", icon: "below" },
-  outcomeNotWilling: { tone: "wait", words: "not willing", icon: "not-willing" },
-  outcomeAbsent: { tone: "quiet", words: "absent", icon: "absent" },
+  outcomeAbove: { tone: "ok", words: "above", icon: "above", legend: false },
+  outcomeAsExpected: { tone: "ok", words: "as expected", icon: "as-expected", legend: false },
+  outcomeBelow: { tone: "wait", words: "below", icon: "below", legend: false },
+  outcomeNotWilling: { tone: "wait", words: "not willing", icon: "not-willing", legend: false },
+  outcomeAbsent: { tone: "quiet", words: "absent", icon: "absent", legend: false },
 } as const satisfies Record<string, StateRow>;
 export type State = keyof typeof STATES;
 
