@@ -121,8 +121,10 @@ test("an educator makes a home assessment, removes a question, adds one through 
   await seeIt.getByRole("button", { name: "Add" }).click();
   await expect(page.getByRole("status").first()).toContainText("Added: the paper now holds 12 questions.");
   const third = page.url().split("?")[0].match(REVIEW)![1];
+  // each edit a row of the one history log (CP-27 group 6)
   const edits = await sql<{ qr_before: string; qr_after: string; changed_by: string }[]>`
-    select qr_before, qr_after, changed_by from paper_edit where qr_before in (${first}, ${second}) order by created_at`;
+    select row_id as qr_before, after ->> 'qr' as qr_after, origin as changed_by from change_log
+    where table_name = 'sheet_instance' and op = 'edit_paper' and row_id in (${first}, ${second}) order by at`;
   expect(edits).toEqual([
     { qr_before: first, qr_after: second, changed_by: TEST_STAFF.email },
     { qr_before: second, qr_after: third, changed_by: TEST_STAFF.email },

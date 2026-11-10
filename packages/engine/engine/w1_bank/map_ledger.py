@@ -15,6 +15,7 @@ from psycopg.rows import DictRow
 from psycopg.types.json import Jsonb
 
 from engine.core import db, history, settings
+from engine.w1_bank import k2_part_source
 from engine.w1_bank.k2_format import LISTS, render
 from engine.w1_bank.k2_gaps import column
 from engine.w1_bank.map_agents import Proposal
@@ -206,11 +207,17 @@ def _page_part(conn: db.Conn, tenant: db.Id, p: DictRow, only: set[str] | None =
             ),
         ).fetchone()
         if hit:
-            conn.execute(
-                "insert into activity_part_source (tenant_id, activity_code, part, source, proposal_id, check_me)"
-                " values (%s,%s,%s,'drafted',%s,%s) on conflict (tenant_id, activity_code, part)"
-                " do update set source = 'drafted', proposal_id = excluded.proposal_id, check_me = excluded.check_me",
-                (tenant, code, part, p["id"], doubt),
+            was = k2_part_source.now(conn, tenant, code, part)
+            k2_part_source.mark(
+                conn,
+                tenant,
+                code,
+                part,
+                f"machine:{p['id']}",
+                was,
+                source="drafted",
+                proposal_id=p["id"],
+                check_me=doubt,
             )
             wrote.append(part)
     return f"{code} drafted {', '.join(wrote) or 'nothing (every part had words by then)'}"
@@ -352,10 +359,12 @@ def revert(conn: db.Conn, tenant: db.Id, about: db.Id, staff: db.Id | None, why:
                 " and s.part = %s and s.proposal_id = %s and s.source = 'drafted')",  # a person's kept words stay
                 (tenant, p["subject_code"], text, tenant, p["subject_code"], part, p["id"]),
             )
-        conn.execute(
-            "delete from activity_part_source where tenant_id = %s and proposal_id = %s and source = 'drafted'",
+        for m in conn.execute(
+            "select activity_code, part from activity_part_source where tenant_id = %s and proposal_id = %s"
+            " and source = 'drafted'",
             (tenant, p["id"]),
-        )
+        ).fetchall():
+            k2_part_source.mark(conn, tenant, m["activity_code"], m["part"], f"revert:{p['id']}", None)
     if p["kind"] == "levels":
         for f, text in sorted(p["proposal"]["levels"].items()):
             if f not in LEVELS:

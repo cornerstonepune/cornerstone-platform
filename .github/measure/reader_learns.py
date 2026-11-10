@@ -1,7 +1,10 @@
 """Whether the reader learns from every check on live (ADR 0032, docs/notes/reader-learns-audit.md): run inside the engine
 by engine-logs.yml, in a read-only transaction. Counts and dates only: never a child's name, an answer or a scan (rule 6)."""
 
+import json
+
 from engine.core import db
+from engine.w3_read import profiles
 
 SINCE = "2026-09-01"
 
@@ -27,14 +30,18 @@ def show(title, rows):
 
 with db.connect() as c:
     c.execute("set transaction read only")
+    # a child's notebook is built from the checks whenever it is read (CP-27 group 6): never older than the last check
+    books = json.dumps([{"child_id": k, "notes": v} for k, v in profiles.notebooks(c).items()], default=str)
+    nb = f"(select x.child_id, x.notes from jsonb_to_recordset('{books.replace(chr(39), chr(39) * 2)}'::jsonb)"
+    nb += " x(child_id uuid, notes jsonb))"
     show("notebooks", c.execute(
-        "select count(*) as notebooks, min(updated_at) as oldest_rebuild, max(updated_at) as newest_rebuild,"
+        "select count(*) as notebooks,"
         " count(*) filter (where notes ->> 'floor' = '70') as floor_70, count(*) filter (where notes ->> 'floor' = '80') as floor_80,"
         " count(*) filter (where notes ->> 'floor' = '90') as floor_90, count(*) filter (where notes ->> 'floor' = '95') as floor_95,"
         " count(*) filter (where jsonb_array_length(notes -> 'route') > 0) as with_routed_kinds,"
         " count(*) filter (where notes -> 'confusions' <> '{}'::jsonb) as with_confusions,"
         " count(*) filter (where jsonb_array_length(notes -> 'samples') > 0) as with_samples"
-        " from child_reading_profile"))
+        f" from {nb} p"))
     # the last time a person checked something of each child, against when the child's notebook was last written
     last_check = (
         "with checks as (select si.child_id, greatest(max(r.confirmed_at), max(rc.created_at)) as at"
@@ -45,11 +52,9 @@ with db.connect() as c:
         " where c.superseded_by is null group by 1)"
     )
     show("checked children and their notebooks", c.execute(
-        last_check + " select count(*) as checked_children, count(p.id) as with_notebook,"
-        " count(*) filter (where p.updated_at >= k.at) as notebook_newer_than_last_check,"
-        " count(*) filter (where p.updated_at < k.at) as checked_since_notebook,"
-        " count(*) filter (where p.updated_at < k.at and rd.at > k.at) as read_again_since_check_yet_notebook_older"
-        " from checks k left join child_reading_profile p on p.child_id = k.child_id left join reads rd on rd.child_id = k.child_id"))
+        last_check + " select count(*) as checked_children, count(p.child_id) as with_notebook,"
+        " count(*) filter (where rd.at > k.at) as read_again_since_check"
+        f" from checks k left join {nb} p on p.child_id = k.child_id left join reads rd on rd.child_id = k.child_id"))
     show("answers per paper, week by week, by what became of them", c.execute(
         f"select date_trunc('week', c.created_at)::date as week, count(distinct c.id) as papers,"
         f" count(distinct si.child_id) as children, count(*) filter (where fate <> 'never read') as read,"
@@ -77,15 +82,14 @@ with db.connect() as c:
         " (select count(*) from read_correction rc join capture c2 on c2.id = rc.capture_id"
         "   where c2.created_at::date = '2026-10-16' and c2.superseded_by is null) as typed,"
         " max(k.at) as last_check_of_these_children,"
-        " count(distinct si.child_id) filter (where p.updated_at >= k.at) as notebook_rebuilt_after_last_check,"
-        " count(distinct si.child_id) filter (where p.id is null) as no_notebook,"
+        " count(distinct si.child_id) filter (where p.child_id is null) as no_notebook,"
         " count(distinct si.child_id) filter (where rd.at > c.created_at) as read_again_since"
         " from capture c join sheet_instance si on si.id = c.sheet_instance_id join item_result r on r.capture_id = c.id"
-        " left join checks k on k.child_id = si.child_id left join child_reading_profile p on p.child_id = si.child_id"
+        f" left join checks k on k.child_id = si.child_id left join {nb} p on p.child_id = si.child_id"
         " left join reads rd on rd.child_id = si.child_id"
         " where c.created_at::date = '2026-10-16' and c.superseded_by is null"))
     show("the kinds notebooks route to a person", c.execute(
-        "select k as fmt, count(*) as notebooks from child_reading_profile, jsonb_array_elements_text(notes -> 'route') k"
+        f"select k as fmt, count(*) as notebooks from {nb} p, jsonb_array_elements_text(p.notes -> 'route') k"
         " group by 1 order by 1"))
     # the next read uses the notebook: a reading holding a digit this child has had confused twice is flagged (`profiles.apply`)
     show("readings since 1 Oct holding a digit the child's notebook says is confused", c.execute(
@@ -96,7 +100,7 @@ with db.connect() as c:
         " count(*) filter (where (coalesce(r.raw_read::jsonb ->> 'why', '') = '' or r.raw_read::jsonb ->> 'why' like 'read as%%')"
         "   and r.raw_read::jsonb ? 'boxes') as of_them_read_in_boxes"
         " from item_result r join capture c on c.id = r.capture_id join sheet_instance si on si.id = c.sheet_instance_id"
-        " join child_reading_profile p on p.child_id = si.child_id"
+        f" join {nb} p on p.child_id = si.child_id"
         " where c.superseded_by is null and c.created_at >= '2026-10-01'"
         "   and coalesce(nullif(r.raw_read::jsonb ->> 'child_answer', ''), r.raw_read::jsonb ->> 'guess', '') <> ''"
         "   and exists (select 1 from jsonb_each_text(p.notes -> 'confusions') e where e.value::int >= 2"

@@ -38,7 +38,6 @@ from engine.w3_read import (
     legacy,
     marking,
     naming,
-    profiles,
     same_page,
     whose_paper,
 )
@@ -112,7 +111,6 @@ def commit(
         body.model_dump(),
         lambda: {"confirmed": marking.confirm(conn, body.child_id, body.by)},
     )
-    profiles.refresh(conn)  # a sign-off is a check: the child's notebook is rebuilt from it (ADR 0032)
     return {**result, "already": already}
 
 
@@ -125,24 +123,22 @@ def correct(body: CorrectRequest, conn=Depends(get_conn, scope="function")) -> d
     (rule 4). The append-only table is what makes that safe.
 
     A check may be the one that earns its kind the reader's trust (ADR 0032): what that trust settles is marked again
-    in the same transaction (`again.trusted`), and the child's notebook is rebuilt from it (`profiles.refresh`).
+    in the same transaction (`again.trusted`); the child's notebook is built from the checks when it is next read.
     """
     try:
         out = marking.correct(conn, body.result_id, body.human_read, body.by)
     except ValueError as why:
         raise HTTPException(status_code=409, detail=str(why)) from why
     again.trusted(conn)
-    profiles.refresh(conn)
     return out
 
 
 @router.post("/capture/trusted", response_model=TrustedResponse)
 def trusted(conn=Depends(get_conn, scope="function")) -> dict:
-    """Every answer the reader's trust now settles, marked again (`again.trusted`), and the notebook of each child just
-    checked rebuilt (`profiles.refresh`): the website asks after a person signs off a paper, a check it writes itself.
+    """Every answer the reader's trust now settles, marked again (`again.trusted`): the website asks after a person
+    signs off a paper, a check it writes itself (each child's notebook is built from the checks when it is read).
     Safe to repeat: a second call finds nothing left to change."""
     marked = again.trusted(conn)
-    profiles.refresh(conn)
     return {"marked_again": marked}
 
 

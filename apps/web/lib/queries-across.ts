@@ -89,7 +89,7 @@ export async function across(actor: string, me: Who): Promise<Across> {
         from child_skill_state s join child_state cs on cs.tenant_id = s.tenant_id and cs.code = s.state
         join skill ss on ss.tenant_id = s.tenant_id and ss.rung_code = s.rung_code
         join topic t on t.tenant_id = ss.tenant_id and t.code = ss.topic_code
-        where cs.enough and cs.colour = 'red'
+        where s.kind = 'written' and cs.enough and cs.colour = 'red'
         group by 1, 2
       ),
       many as (select child_id, array_agg(subject_code order by subject_code) as codes from red group by 1 having count(*) >= 2)
@@ -100,7 +100,7 @@ export async function across(actor: string, me: Who): Promise<Across> {
     sql<{ subjects: number }[]>`
       select count(distinct t.subject_code)::int as subjects from child_skill_state s
       join skill ss on ss.tenant_id = s.tenant_id and ss.rung_code = s.rung_code
-      join topic t on t.tenant_id = ss.tenant_id and t.code = ss.topic_code`,
+      join topic t on t.tenant_id = ss.tenant_id and t.code = ss.topic_code where s.kind = 'written'`,
   ]);
   return { stages, overdue, missing, struggling, days: limits.days, hours: limits.hours, subjects };
 }

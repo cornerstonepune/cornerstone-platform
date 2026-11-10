@@ -48,7 +48,7 @@ export async function childTable(actor: string, topic: string | null = null, sco
                 filter (where s.repeating_misconception is not null))[1] as mistake
       from child_skill_state s
       join child_state cs on cs.tenant_id = s.tenant_id and cs.code = s.state
-      join skill ss on ss.tenant_id = s.tenant_id and ss.rung_code = s.rung_code
+      join skill ss on ss.tenant_id = s.tenant_id and ss.rung_code = s.rung_code and s.kind = 'written'
       join child_now sc on sc.id = s.child_id
       join topic t on t.tenant_id = ss.tenant_id and t.code = ss.topic_code
         and ${skillTaughtIn(sql`ss.tenant_id`, sql`ss.code`, sql`sc.section`)} ${topic ? sql`and t.code = ${topic}` : sql``}
@@ -136,18 +136,20 @@ export async function classGrid(
       from child_skill_state s join child_now c on c.id = s.child_id
       join skill ss on ss.tenant_id = s.tenant_id and ss.rung_code = s.rung_code and s.skill_code = any(ss.registry_codes)
       join topic t on t.tenant_id = ss.tenant_id and t.code = ss.topic_code and ${skillTaughtIn(sql`ss.tenant_id`, sql`ss.code`, section)}
-      where c.section = ${section} and c.active and s.n_events > 0
+      where s.kind = 'written' and c.section = ${section} and c.active and s.n_events > 0
       order by t.ord, ss.ladder_order nulls last, ss.rung_code`,
     classRoll(section, actor),
     sql<{ child_id: string; skill_code: string; rung_code: string; state: string; n_events: number; n_correct: number }[]>`
       select s.child_id, s.skill_code, s.rung_code, s.state, s.n_events, s.n_correct
-      from child_skill_state s join child_now c on c.id = s.child_id where c.section = ${section} and c.active`,
+      from child_skill_state s join child_now c on c.id = s.child_id
+      where s.kind = 'written' and c.section = ${section} and c.active`,
     sql<Unanswered[]>`
       select ss.code, ss.name, ${levelsUsedBy(sql`class_band(ss.tenant_id, ${section})`)} as levels, t.code as topic_code from skill ss
       join topic t on t.tenant_id = ss.tenant_id and t.code = ss.topic_code and ${skillTaughtIn(sql`ss.tenant_id`, sql`ss.code`, section)}
       where ss.grade in (select band from child_now where section = ${section} and active)
         and not exists (select 1 from child_skill_state s join child_now c on c.id = s.child_id
-                        where c.section = ${section} and c.active and s.rung_code = ss.rung_code and s.n_events > 0)
+                        where s.kind = 'written' and c.section = ${section} and c.active and s.rung_code = ss.rung_code
+                          and s.n_events > 0)
       order by t.ord, ss.ladder_order nulls last`,
     // the class's grade: the database's one rule, which the engine asks too (goals/ux2-one-count-one-thing.yaml)
     sql<{ band: string }[]>`
@@ -194,7 +196,8 @@ export async function childSkills(id: string): Promise<ChildSkill[]> {
     from skill ss
     join topic t on t.tenant_id = ss.tenant_id and t.code = ss.topic_code
       and ${skillTaughtIn(sql`ss.tenant_id`, sql`ss.code`, sql`(select section from child_now where id = ${id}::uuid)`)}
-    left join child_skill_state s on s.child_id = ${id}::uuid and s.rung_code = ss.rung_code and s.skill_code = any(ss.registry_codes)
+    left join child_skill_state s on s.kind = 'written' and s.child_id = ${id}::uuid and s.rung_code = ss.rung_code
+      and s.skill_code = any(ss.registry_codes)
     left join registry_skill sk on sk.tenant_id = ss.tenant_id and sk.code = s.skill_code
     where ss.grade = (select band from child_now where id = ${id}::uuid) or s.n_events > 0
     order by t.ord, ss.ladder_order nulls last, ss.code, s.skill_code`;
@@ -266,7 +269,7 @@ export async function classLatest(section: string): Promise<string[]> {
     select ss.code from child_skill_state s
     join child_now c on c.id = s.child_id and c.section = ${section}
     join skill ss on ss.tenant_id = s.tenant_id and ss.rung_code = s.rung_code
-    where s.n_events > 0
+    where s.kind = 'written' and s.n_events > 0
     group by ss.code order by max(s.last_seen) desc, ss.code`;
   return rows.map((r) => r.code);
 }
@@ -287,7 +290,7 @@ export async function repeatedMistakes(id: string): Promise<Repeated[]> {
     join skill r on r.tenant_id = s.tenant_id and r.rung_code = s.rung_code
     left join lateral (select name from registry_skill where code = s.skill_code limit 1) k on true
     left join lateral (select mistake_name(s.repeating_misconception, s.skill_code) as name) m on true
-    where s.child_id = ${id}::uuid and s.repeating_misconception is not null
+    where s.kind = 'written' and s.child_id = ${id}::uuid and s.repeating_misconception is not null
     order by times desc, r.ladder_order`;
 }
 

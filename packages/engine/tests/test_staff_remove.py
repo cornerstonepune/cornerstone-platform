@@ -162,8 +162,9 @@ def test_a_removed_persons_past_sign_offs_are_not_touched(list_of):
     list_of([BOSS, TEACHER])
     with db.connect() as conn:
         tenant = conn.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()["id"]
-        conn.execute(  # a sign-off as the site writes one: the email as free text (assessment_name is append-only)
-            "insert into assessment_name (tenant_id, key, name, named_by) values (%s, 'remove-test~key', 'Kept', %s)",
+        conn.execute(  # a name given as the engine writes one: the email as free text, a row of the one history log
+            "insert into change_log (tenant_id, table_name, row_id, op, after, origin)"
+            " values (%s, 'assessment', 'remove-test~key', 'name', '{\"name\": \"Kept\"}', %s)",
             (tenant, TEACHER["email"]),
         )
         tables = [
@@ -188,8 +189,10 @@ def test_a_removed_persons_past_sign_offs_are_not_touched(list_of):
             ).fetchone()
             == sums
         )
-        kept = conn.execute("select named_by from assessment_name where key = 'remove-test~key'").fetchone()
-        assert kept["named_by"] == TEACHER["email"], "the old sign-off must still name them"
+        kept = conn.execute(
+            "select origin from change_log where table_name = 'assessment' and row_id = 'remove-test~key'"
+        ).fetchone()
+        assert kept["origin"] == TEACHER["email"], "the old sign-off must still name them"
         conn.rollback()  # nothing of this test is left behind
     assert "past sign-offs" in r.output_plain.lower()
 

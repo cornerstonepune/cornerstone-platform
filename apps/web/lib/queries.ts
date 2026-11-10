@@ -174,7 +174,7 @@ export async function tableCounts(): Promise<Record<string, number>> {
     union all select 'item_result', count(*)::int from item_result
     union all select 'evidence_event', count(*)::int from evidence_event
     union all select 'child', count(*)::int from child_now
-    union all select 'child_skill_state', count(*)::int from child_skill_state
+    union all select 'child_skill_state', count(*)::int from child_skill_state where kind = 'written'
     union all select 'parent_note', count(*)::int from parent_note`;
   return Object.fromEntries(rows.map((r) => [r.t, r.n]));
 }

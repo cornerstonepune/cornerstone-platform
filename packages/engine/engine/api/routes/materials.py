@@ -136,7 +136,6 @@ def build(body: Build, conn=Depends(get_conn, scope="function")):
     force on the first day asked: it is answered the list as it would be built, and nothing is kept."""
     staff = staff_of(conn, body, reads=True)
     preview = educator_gate.previewing(conn, staff)
-    today = rem.school_today(conn)
     if not preview:
         holds(conn, staff, body.class_id)
     elif str(body.class_id) not in {c["id"] for c in educator_gate.timetabled_classes(conn, body.from_)}:
@@ -147,7 +146,6 @@ def build(body: Build, conn=Depends(get_conn, scope="function")):
             lid = ml.build(conn, body.class_id, body.period, body.from_, body.to)
         except ValueError as no:
             raise HTTPException(status_code=422, detail=str(no)) from no
-        rem.sync(conn, lid, today)
         return ml.read(conn, lid, body.group_by)
 
     return unsaved(conn, preview, work)
@@ -173,9 +171,8 @@ def quantity(body: Quantity, conn=Depends(get_conn, scope="function")):
 
 @keyed.post("/line/remove")
 def remove(body: Line, conn=Depends(get_conn, scope="function")):
-    staff, list_id = _mine_line(conn, body, body.line_id)
+    staff, _ = _mine_line(conn, body, body.line_id)
     ml.remove(conn, body.line_id, staff)
-    rem.sync(conn, list_id, rem.school_today(conn))
     return {"ok": True}
 
 
@@ -194,7 +191,6 @@ def add(body: AddLine, conn=Depends(get_conn, scope="function")):
         raise HTTPException(status_code=409, detail="It is already on the list: change its quantity.") from no
     except ValueError as no:
         raise HTTPException(status_code=422, detail=str(no)) from no
-    rem.sync(conn, body.list_id, rem.school_today(conn))
     return {"line_id": line}
 
 
@@ -237,7 +233,10 @@ def send_list(body: Send, conn=Depends(get_conn, scope="function")):
 
 @keyed.post("/send/ack")
 def ack(body: Ack, conn=Depends(get_conn, scope="function")):
-    row = conn.execute("select list_id from materials_send where id = %s", (body.send_id,)).fetchone()
+    row = conn.execute(
+        "select (request ->> 'list_id')::uuid as list_id from flow_run where id = %s and flow = %s",
+        (body.send_id, send.FLOW),
+    ).fetchone()
     if row is None:
         raise HTTPException(status_code=404, detail="No such send.")
     staff = _mine_list(conn, body, row["list_id"])

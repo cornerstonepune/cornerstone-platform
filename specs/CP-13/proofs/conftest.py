@@ -243,5 +243,5 @@ def seen(c, s, kid, day, by, reached=3, expected=2, mode="individual"):
 def observed(c, kid):
     """`rebuild_child_observed_state`, then the child's observed picture: [(skill, grade, state, adults)]."""
     c.execute("select public.rebuild_child_observed_state(%s)", (kid,))
-    return c.execute("select skill_code, grade_code, state, adults from child_observed_state where child_id = %s"
-                     " order by 1, 2", (kid,)).fetchall()
+    return c.execute("select skill_code, grade_code, state, adults from child_skill_state where kind = 'observed'"
+                     " and child_id = %s order by 1, 2", (kid,)).fetchall()

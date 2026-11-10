@@ -221,8 +221,9 @@ def test_the_coordinators_build_makes_every_class_list_and_names_the_classes_it_
 
 def _waiting_note(conn, s, lid, text="some pens"):
     return conn.execute(
-        "insert into materials_note_review (tenant_id, list_id, text, reason, who) values (%s, %s, %s, 'no quantity', %s)"
-        " returning id",
+        "insert into curriculum_proposal (tenant_id, run_id, kind, subject_code, proposal, status, reason, staff_id,"
+        " machine) values (%s, gen_random_uuid(), 'materials_note', %s::text, jsonb_build_object('text', %s::text),"
+        " 'needs_person', 'no quantity', %s, 'materials_read') returning id",
         (s["tenant"], lid, text, s["staff"]),
     ).fetchone()["id"]
 

@@ -72,7 +72,8 @@ def _stale_graph(conn):
         "        count(*) filter (where f.child_id is null) as stale,"
         "        count(*) filter (where f.state <> s.state or f.n_events <> s.n_events or f.n_correct <> s.n_correct)"
         "          as differ"
-        " from fresh f full join child_skill_state s using (child_id, skill_code, rung_code)"
+        " from fresh f full join (select * from child_skill_state where kind = 'written') s"
+        " using (child_id, skill_code, rung_code)"
     ).fetchone()
     if not any(r.values()):
         return []

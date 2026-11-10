@@ -125,8 +125,8 @@ def measure(conn, sc):
     }
     row = db.one(
         conn,
-        "select state, repeating_misconception from child_skill_state where child_id = %s and skill_code = %s"
-        " and rung_code = %s",
+        "select state, repeating_misconception from child_skill_state where kind = 'written' and child_id = %s"
+        " and skill_code = %s and rung_code = %s",
         (child, skill["registry"], skill["rung_code"]),
     )
     nxt = db.one(conn, "select difficulty, rule from next_difficulty(%s, %s)", (child, sc["skill"]))

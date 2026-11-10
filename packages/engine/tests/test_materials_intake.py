@@ -99,7 +99,9 @@ def test_a_confirmed_reading_becomes_a_line_and_an_unconfirmed_one_never_does(co
     lines = [ln for g in ml.read(conn, lid)["groups"] for ln in g["lines"]]
     assert [(ln["material_code"], ln["quantity"]) for ln in lines] == [(pen, 20)]
     waiting = conn.execute(
-        "select text, state from materials_note_review where list_id = %s", (lid,)
+        "select proposal ->> 'text' as text, status as state from curriculum_proposal"
+        " where kind = 'materials_note' and subject_code = %s::text",
+        (lid,),
     ).fetchall()
     assert [(w["text"], w["state"]) for w in waiting] == [("some ribbon", "needs_person")]
 

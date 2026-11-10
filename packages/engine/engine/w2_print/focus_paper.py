@@ -126,7 +126,7 @@ def _short(k, name, level, earlier=False) -> str:
 def _states(conn, child_id):
     return conn.execute(
         "select skill_code, rung_code, state, n_events, n_correct, repeating_misconception"
-        " from child_skill_state where child_id = %s",
+        " from child_skill_state where kind = 'written' and child_id = %s",
         (child_id,),
     ).fetchall()
 

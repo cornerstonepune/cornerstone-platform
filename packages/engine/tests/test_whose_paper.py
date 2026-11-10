@@ -141,7 +141,7 @@ def test_a_page_is_told_once_and_the_card_never_draws_a_photograph_again(conn, t
     W.record(conn, a)
     W.record(conn, b)
     told = conn.execute(
-        "select count(*) n from capture_page where capture_id in (%s, %s)", (a, b)
+        "select count(*) n from capture c, jsonb_object_keys(c.page_prints) p where c.id in (%s, %s)", (a, b)
     ).fetchone()["n"]
     assert told == 4
 

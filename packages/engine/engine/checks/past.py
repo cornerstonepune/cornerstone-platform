@@ -30,7 +30,7 @@ PARTS: dict[str, LiteralString] = {
     "evidence": "select row(id, tenant_id, child_id, skill_code, rung_code, correct, misconception_codes, channel,"
     " item_result_id, observed_at, stored_at, confirmed_by is not null, created_at)::text as r from evidence_event",
     "states": "select concat_ws('|', child_id, skill_code, rung_code, state, n_events, n_correct,"
-    " repeating_misconception, last_seen) as r from child_skill_state",
+    " repeating_misconception, last_seen) as r from child_skill_state where kind = 'written'",
     "scored": "select concat_ws('|', id, capture_id, item_id, rid, raw_read, status, misconception_codes,"
     " working_shown, state, confirmed_by is not null, confirmed_at) as r from item_result",
 }
@@ -86,7 +86,7 @@ def past(
 # columns every version of the graph has, so a snapshot taken before a migration reads the same after it.
 STATES = (
     "select child_id::text as child, skill_code as skill, rung_code as rung, state, n_events, n_correct,"
-    " repeating_misconception as repeating from child_skill_state order by 1, 2, 3"
+    " repeating_misconception as repeating from child_skill_state where kind = 'written' order by 1, 2, 3"
 )
 NEXT = (
     "select x.child, x.skill, n.difficulty as level, n.rule from ("

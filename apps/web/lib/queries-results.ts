@@ -27,7 +27,7 @@ const classSkills = (section: string) => sql`
   where ${skillTaughtIn(sql`ss.tenant_id`, sql`ss.code`, section)}
     and (ss.grade = class_band(ss.tenant_id, ${section})
          or exists (select 1 from child_skill_state s join child_now c on c.id = s.child_id
-                    where c.section = ${section} and c.active and s.rung_code = ss.rung_code
+                    where s.kind = 'written' and c.section = ${section} and c.active and s.rung_code = ss.rung_code
                       and s.skill_code = any(ss.registry_codes) and s.n_events > 0))`;
 
 /** A severity's colour: the states of one severity share it (as `childTable` reads it). */
@@ -75,7 +75,7 @@ export async function classTopics(section: string, me: Who): Promise<TopicLine[]
       from child_skill_state s join kids k on k.id = s.child_id
       join sk on sk.tenant_id = s.tenant_id and sk.rung_code = s.rung_code and s.skill_code = any(sk.registry_codes)
       join child_state cs on cs.tenant_id = s.tenant_id and cs.code = s.state
-      where s.n_events > 0 group by 1, 2),
+      where s.kind = 'written' and s.n_events > 0 group by 1, 2),
     sv as (${severityColour()}),
     spread as (
       select per.topic_code, sv.colour, count(*)::int as n from per join sv on sv.severity = per.sev group by 1, 2),
@@ -121,7 +121,7 @@ export async function topicSkills(section: string, topic: string): Promise<Skill
       from child_skill_state s join kids k on k.id = s.child_id
       join sk on sk.tenant_id = s.tenant_id and sk.rung_code = s.rung_code and s.skill_code = any(sk.registry_codes)
       join child_state cs on cs.tenant_id = s.tenant_id and cs.code = s.state
-      where s.n_events > 0 group by 1, 2),
+      where s.kind = 'written' and s.n_events > 0 group by 1, 2),
     sv as (${severityColour()}),
     spread as (select per.code, sv.colour, count(*)::int as n from per join sv on sv.severity = per.sev group by 1, 2),
     a as (select a.*, sk.code from (${answers(sql`a.child_id = any(array(select id from kids))`)}) a join sk on sk.rung_code = a.placed_rung),
@@ -160,7 +160,7 @@ export async function skillChildren(section: string, skill: string, me: Who & { 
       select s.child_id, (array_agg(s.state order by cs.severity, cs.ord))[1] as state, min(cs.severity) as sev
       from child_skill_state s join ss on ss.tenant_id = s.tenant_id and ss.rung_code = s.rung_code and s.skill_code = any(ss.registry_codes)
       join child_state cs on cs.tenant_id = s.tenant_id and cs.code = s.state
-      join child_now c on c.id = s.child_id and c.section = ${section} and c.active
+      join child_now c on c.id = s.child_id and c.section = ${section} and c.active and s.kind = 'written'
       where s.n_events > 0 group by 1),
     a as (select a.* from (${answers(sql`a.child_id = any(array(select id from child_now where active and section = ${section}))`)}) a
           join ss on ss.rung_code = a.placed_rung),

@@ -28,8 +28,10 @@ async function activity(sql: Sql, t: string, n: number, strand: string, parts: P
   return c;
 }
 
+// a part's mark is a row of the one history log; the view `activity_part_source` reads the newest (CP-27 group 6)
 const mark = (sql: Sql, t: string, c: string, part: string, source: string, check: boolean) =>
-  sql`insert into activity_part_source (tenant_id, activity_code, part, source, check_me) values (${t}, ${c}, ${part}, ${source}, ${check})`;
+  sql`insert into change_log (tenant_id, table_name, row_id, op, after, origin)
+      values (${t}, 'activity', ${c}, 'part_source', ${sql.json({ part, source, check_me: check })}, 'a test')`;
 
 /** What the fixtures hold, for the specs to compare the screens with. */
 export const FILLED = { [RED]: 20, [AMBER]: 9, [GREEN]: 18 } as const;

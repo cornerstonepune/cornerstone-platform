@@ -34,8 +34,8 @@ def refresh_item_usage(conn) -> int:
 
 
 def rebuild(conn, child_id: str | None = None) -> int:
-    """Ring B from Ring A: a child's states from written answers (child_skill_state) and from what an educator
-    confirmed seeing (child_observed_state, migration 20261228090000), for one child or every child with evidence."""
+    """Ring B from Ring A: a child's states from written answers and from what an educator confirmed seeing (the
+    `written` and `observed` rows of child_skill_state; CP-27 group 6), for one child or every child with evidence."""
     refresh_item_usage(conn)
     ids = (
         [child_id]

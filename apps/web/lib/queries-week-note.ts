@@ -50,7 +50,7 @@ export async function weekNote(scope: Scope, subject: string): Promise<WeekNote>
       states as (
         select s.child_id, s.rung_code, cs.colour
         from child_skill_state s join child_state cs on cs.tenant_id = s.tenant_id and cs.code = s.state
-        where s.child_id in (select id from kids) and cs.enough and ${rungIn(subject, sql`s.rung_code`)}
+        where s.kind = 'written' and s.child_id in (select id from kids) and cs.enough and ${rungIn(subject, sql`s.rung_code`)}
       )
       select (select count(*)::int from kids) as children,
              count(distinct child_id) filter (where colour = 'green')::int as secure,

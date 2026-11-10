@@ -36,7 +36,7 @@ export async function skillMap(id: string): Promise<MapNode[]> {
              (array_agg(s.state order by cs.ord))[1] as state
       from child_skill_state s join skill r on r.tenant_id = s.tenant_id and r.rung_code = s.rung_code
       join child_state cs on cs.tenant_id = s.tenant_id and cs.code = s.state -- weakest first, as its rows order it
-      where s.child_id = ${id}::uuid and s.skill_code = any(r.registry_codes) and s.n_events > 0
+      where s.kind = 'written' and s.child_id = ${id}::uuid and s.skill_code = any(r.registry_codes) and s.n_events > 0
       group by s.rung_code),
     -- each signed-off answer once (answer_placed), not once per skill its question tests
     sig as (

@@ -1,6 +1,6 @@
 """The K2 class picture and a child's page (task M1-03 part B, goals/m1-03-k2-reads.yaml).
 
-They read `child_observed_state` (#364, M1-02), which the graph rebuilds from confirmed voice observations. A class of
+They read a child's observed states (`child_skill_state` of kind `observed`; #364, M1-02), which the graph rebuilds from confirmed voice observations. A class of
 22 children and 20 skills is made here with real observations and evidence rows (placeholders, inside the test's
 transaction), the graph rebuilt by the engine's own function, and each answer is held to a table worked out by hand
 from the scenario's rules, and to counts taken straight from the database. A child is by Sr. No.; nothing here names a
@@ -152,8 +152,8 @@ def test_the_class_picture_is_children_by_number_by_skill_and_equals_the_databas
         cell = cells[key]
         assert (cell["state"], cell["level"], cell["last_seen"]) == (state, level, _day(day)), key
     states = conn.execute(
-        "select cs.words, cs.colour, s.state from child_observed_state s join child_state cs on cs.code = s.state"
-        " and cs.tenant_id = s.tenant_id where s.child_id = any(%s::uuid[])",
+        "select cs.words, cs.colour, s.state from child_skill_state s join child_state cs on cs.code = s.state"
+        " and cs.tenant_id = s.tenant_id where s.kind = 'observed' and s.child_id = any(%s::uuid[])",
         (list(k["children"].values()),),
     ).fetchall()
     assert len(cells) == len(states), "as many cells as the database holds rows"

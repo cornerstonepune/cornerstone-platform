@@ -11,6 +11,8 @@ from engine.core import db, settings
 from engine.w2_print import materials_consolidate, materials_coverage, materials_text
 from engine.w2_print.materials_send import NothingToSend
 
+FLOW = "materials_school_send"  # each send a row of the run list (CP-27 group 6: once `materials_consolidated_send`)
+
 
 def _q(q: Any) -> str:
     return "unknown" if q is None else materials_text.number(q)
@@ -39,13 +41,14 @@ def send(conn: db.Conn, cid: UUID, who: UUID) -> dict[str, Any]:
     if not got["lines"]:
         raise NothingToSend("the list has no lines")
     prior = conn.execute(
-        "select lines from materials_consolidated_send where consolidated_id = %s order by at desc limit 1",
-        (cid,),
+        "select result -> 'lines' as lines from flow_run where flow = %s and request ->> 'consolidated_id' = %s::text"
+        " order by started_at desc, id desc limit 1",
+        (FLOW, cid),
     ).fetchone()
     last = None if prior is None else {x["material_code"]: x for x in prior["lines"]}
     body = [f"School materials, {materials_text.short(got['from'])} to {materials_text.short(got['to'])}"]
     body += [_line(item, last) for item in got["lines"]]
-    tenant = db.one(conn, "select tenant_id from materials_consolidated where id = %s", (cid,))["tenant_id"]
+    tenant = materials_consolidate.tenant_of(conn, cid)
     # the classes absent from the very build the lines above come from (not from today's plans)
     names = materials_coverage.class_names(conn, tenant)
     expected = materials_coverage.planned_classes(conn, tenant, got["from"], got["to"])
@@ -60,19 +63,21 @@ def send(conn: db.Conn, cid: UUID, who: UUID) -> dict[str, Any]:
     number = str(settings.config(conn, "materials.inventory_whatsapp_to", "") or "")
     row = db.one(
         conn,
-        "insert into materials_consolidated_send (tenant_id, consolidated_id, build, text, lines, status, who)"
-        " values ((select tenant_id from materials_consolidated where id = %s), %s, %s, %s, %s, 'opened', %s)"
-        " returning id",
+        "insert into flow_run (tenant_id, flow, trigger, started_at, finished_at, status, request, result, uploaded_by)"
+        " values (%s, %s, 'whatsapp', clock_timestamp(), clock_timestamp(), 'ok', %s, %s, %s) returning id",
         (
-            cid,
-            cid,
-            got["build"],
-            text,
+            tenant,
+            FLOW,
+            json.dumps({"consolidated_id": str(cid), "build": got["build"]}),
             json.dumps(
-                [
-                    {"material_code": x["material_code"], "item": x["item"], "quantity": x["quantity"]}
-                    for x in got["lines"]
-                ]
+                {
+                    "text": text,
+                    "status": "opened",
+                    "lines": [
+                        {"material_code": x["material_code"], "item": x["item"], "quantity": x["quantity"]}
+                        for x in got["lines"]
+                    ],
+                }
             ),
             who,
         ),

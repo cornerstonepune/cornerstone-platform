@@ -10,7 +10,7 @@ from typing import LiteralString
 from psycopg.types.json import Jsonb
 
 from engine.core import db
-from engine.w1_bank import map_ledger
+from engine.w1_bank import k2_part_source, map_ledger
 from engine.w1_bank.k2_format import LISTS, edited, render
 from engine.w1_bank.k2_gaps import column
 from engine.w1_bank.map_agents import sampled
@@ -33,11 +33,11 @@ def _column(conn: db.Conn, tenant: db.Id, code: str, part: str) -> LiteralString
 
 
 def _made_theirs(conn: db.Conn, tenant: db.Id, staff: db.Id, code: str, part: str) -> None:
-    conn.execute(
-        "update activity_part_source set source = 'person', check_me = false, staff_id = %s, updated_at = now()"
-        " where tenant_id = %s and activity_code = %s and part = %s",
-        (staff, tenant, code, part),
-    )
+    was = k2_part_source.now(conn, tenant, code, part)
+    if was is not None:
+        k2_part_source.mark(
+            conn, tenant, code, part, f"staff:{staff}", was, source="person", check_me=False, staff_id=staff
+        )
 
 
 def keep(conn: db.Conn, tenant: db.Id, staff: db.Id, code: str, part: str) -> None:
@@ -70,10 +70,8 @@ def reject(conn: db.Conn, tenant: db.Id, staff: db.Id, code: str, part: str) -> 
         f"update activity set {col} = ''{f', {listed} = null' if listed else ''} where tenant_id = %s and code = %s",  # noqa: S608
         (tenant, code),
     )
-    conn.execute(
-        "delete from activity_part_source where tenant_id = %s and activity_code = %s and part = %s",
-        (tenant, code, part),
-    )
+    if (was := k2_part_source.now(conn, tenant, code, part)) is not None:
+        k2_part_source.mark(conn, tenant, code, part, f"staff:{staff}", was)
 
 
 def review_list(conn: db.Conn, tenant: db.Id) -> list[dict]:

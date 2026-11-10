@@ -1,5 +1,7 @@
-"""Kinds of question: rows from supabase/seed/question_formats.json (ADR 0075). A kind is drafted once by the seed and
-is the educators' after that, as a skill set is: a load inserts the kinds it does not have and never overwrites one.
+"""Kinds of question: from supabase/seed/question_formats.json (ADR 0075), each kept on its skill set's row
+(`skill.question_kinds` {code: kind}; CP-27 group 6: once the table `question_format`). A kind is drafted once by the
+seed and is the educators' after that, as a skill set is: a load adds the kinds a skill set does not have and never
+overwrites one. A code names one kind in the school: a load refuses a code another skill set already holds.
 The question types (B2, supabase/seed/question_types.json) are kinds of question too, and load here."""
 
 import json
@@ -11,10 +13,16 @@ from engine.core import db
 
 def load(conn: db.Conn, tenant: db.Id, seed: Callable[[str, str], Any]) -> None:
     for k in seed("question_formats.json", "question_formats"):
+        elsewhere = conn.execute(
+            "select code from skill where tenant_id = %s and code <> %s and question_kinds ? %s",
+            (tenant, k["skill_set"], k["code"]),
+        ).fetchone()
+        if elsewhere:
+            raise ValueError(f"the kind {k['code']} is already {elsewhere['code']}'s: a code names one kind")
         conn.execute(
-            "insert into question_format (tenant_id, code, skill_set_code, name, kind) values (%s,%s,%s,%s,%s)"
-            " on conflict (tenant_id, code) do nothing",
-            (tenant, k["code"], k["skill_set"], k["name"], json.dumps(k, ensure_ascii=False)),
+            "update skill set question_kinds = question_kinds || jsonb_build_object(%s::text, %s::jsonb)"
+            " where tenant_id = %s and code = %s and not question_kinds ? %s",
+            (k["code"], json.dumps(k, ensure_ascii=False), tenant, k["skill_set"], k["code"]),
         )
 
 

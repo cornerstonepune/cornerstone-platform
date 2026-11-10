@@ -87,3 +87,25 @@ call the class (K2's class is section A, label K2), and the view `child_now` giv
 `section`) and roll number. A move closes one enrolment and opens one, and writes one `change_log` row (table `child`,
 op `move`). A class's word that a skill is taught is `school_class.taught` ({skill: {taught, by, at}}); the class card
 is built from the graph when asked, never stored.
+
+**The last tables (CP-27 group 6).** What a row only repeated, or a list that belongs to one row, is on that row:
+- a sample's likely wrong answers are `english_sample.wrong` ([{answer, mistake_code}]); an educator's change is made on
+  the sample's own row (`removed_at`, `made_from`), and what it replaced is a `change_log` row (table `english_sample`,
+  row `skill level kind ord`), which the loader reads to leave the sample hers;
+- a registry skill's milestones are `registry_skill.milestones` ({band: {descriptor, scale, source}}); a curriculum
+  version's skills `curriculum_version.skills` ({skill: version}); a skill set's card kinds `skill.question_kinds`
+  ({code: kind}); a scan's pages `capture.page_prints` ({file page: {print, code}}: added, never changed); the report
+  traits the setting `report.traits`; a catalogue item's approved words and unit conversions `material_item.aliases` and
+  `conversions`; a materials line's lessons `materials_line.sources`; the copy that replaced a paper
+  `sheet_instance.replaced_by`;
+- a child's observed (K2) states are rows of `child_skill_state` of kind `observed` (by grade, no rung): every reader of
+  the written graph says `kind = 'written'` (a test holds every statement to it);
+- a link between broad registry skills is a row of `skill_prerequisite` naming `registry_code`/`before_registry_code`;
+- a run of code is a `flow_run` row: the nightly rebuild (`graph_nightly`, its digests in `result`), a Maths sample
+  (`maths_sample`), the school's materials list of a range (`materials_consolidate`, its latest build), a materials send
+  (`materials_send`, `materials_school_send`); the team saying they have a list is an `approval` row (`materials_ack`);
+  a materials note a person must read is a `curriculum_proposal` (`materials_note`), their answer a later row;
+- whose words each part of a K2 page is, an assessment's chosen name and a person's change to a materials line or an
+  item are `change_log` rows; `activity_part_source` is a view of the newest mark;
+- worked out when asked, never stored: a question's attempts and share right (the view `item_stat`), a level's samples
+  (`engine links`), a child's reading notebook (`profiles.current`), a materials list's reminders.

@@ -1,21 +1,24 @@
 """N10, every night: rebuild the picture of every child from confirmed evidence and log the run (CP-9, specs/CP-9).
 
-Ring B is a pure function of ring A, so the job only rebuilds it (`assess.graph.rebuild`) and writes one row to the
-append-only ledger `graph_run`; it never touches evidence. The ledger carries digests of the evidence and the states
-before and after, so each run says by itself that it changed nothing it should not have. A full rebuild is cheap and
+Ring B is a pure function of ring A, so the job only rebuilds it (`assess.graph.rebuild`) and writes one row of the one
+run list, `flow_run` (flow `graph_nightly`; CP-27 group 6: once the table `graph_run`); it never touches evidence. The
+row's `result` carries digests of the evidence and the states before and after, so each run says by itself that it
+changed nothing it should not have. A full rebuild is cheap and
 cannot drift from the rule the way an incremental one can.
 
-`now` is the run's clock only: it sets `started_at`/`ran_at` and so the watermark that bounds the evidence the digests
+`now` is the run's clock only: it sets `started_at`/`finished_at` and so the watermark that bounds the evidence the digests
 cover. Production passes nothing.
 """
 
 import datetime as dt
+import json
 import time
 
 from engine.assess import graph
 from engine.core import db, settings
 
 LOCK = ("graph_nightly", "run")  # one run at a time, over every connection
+FLOW = "graph_nightly"  # its rows in `flow_run`
 
 
 def _numbers(conn: db.Conn, before: dt.datetime) -> dict:
@@ -39,26 +42,22 @@ def nightly(conn: db.Conn, now: dt.datetime | None = None) -> dict:
         graph.rebuild(conn)
         after = _numbers(conn, started)
         ran_at = started + dt.timedelta(seconds=time.monotonic() - t0)
+        result = {
+            "children": after["children"],
+            "evidence_rows": after["evidence_rows"],
+            "evidence_digest_before": before["evidence_digest"],
+            "evidence_digest_after": after["evidence_digest"],
+            "skill_states_before": before["skill_states"],
+            "skill_states_after": after["skill_states"],
+            "observed_states_before": before["observed_states"],
+            "observed_states_after": after["observed_states"],
+            "states_digest_before": before["states_digest"],
+            "states_digest_after": after["states_digest"],
+        }
         conn.execute(
-            "insert into graph_run (tenant_id, started_at, ran_at, ok, children, evidence_rows, evidence_digest_before,"
-            " evidence_digest_after, skill_states_before, skill_states_after, observed_states_before,"
-            " observed_states_after, states_digest_before, states_digest_after)"
-            " values (%s, %s, %s, true, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
-            (
-                _tenant(conn),
-                started,
-                ran_at,
-                after["children"],
-                after["evidence_rows"],
-                before["evidence_digest"],
-                after["evidence_digest"],
-                before["skill_states"],
-                after["skill_states"],
-                before["observed_states"],
-                after["observed_states"],
-                before["states_digest"],
-                after["states_digest"],
-            ),
+            "insert into flow_run (tenant_id, flow, trigger, started_at, finished_at, status, result)"
+            " values (%s, %s, 'nightly', %s, %s, 'ok', %s)",
+            (_tenant(conn), FLOW, started, ran_at, json.dumps(result)),
         )
     return {
         "skipped": False,
@@ -76,8 +75,9 @@ def failed(conn: db.Conn, error: Exception, now: dt.datetime | None = None) -> N
     commits. Call it on a connection that is not in a failed transaction."""
     started = now or dt.datetime.now(dt.timezone.utc)
     conn.execute(
-        "insert into graph_run (tenant_id, started_at, ran_at, ok, error) values (%s, %s, %s, false, %s)",
-        (_tenant(conn), started, started, f"{type(error).__name__}: {str(error)[:200]}"),
+        "insert into flow_run (tenant_id, flow, trigger, started_at, finished_at, status, error)"
+        " values (%s, %s, 'nightly', %s, %s, 'error', %s)",
+        (_tenant(conn), FLOW, started, started, f"{type(error).__name__}: {str(error)[:200]}"),
     )
 
 
@@ -89,7 +89,8 @@ def hand_check(
     never lets change or go (CP-27). The caller commits. With no `on`, it is dated by the school's clock (CP-24), never
     the server's: the database has no day of its own to give it."""
     row = conn.execute(
-        "select state from child_observed_state where child_id = %s and skill_code = %s and grade_code = %s",
+        "select state from child_skill_state where kind = 'observed' and child_id = %s and skill_code = %s"
+        " and grade_code = %s",
         (child_id, skill, grade),
     ).fetchone()
     system = row["state"] if row else None

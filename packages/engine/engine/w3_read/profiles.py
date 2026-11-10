@@ -1,15 +1,15 @@
 """ADR 0032 — a notebook per child, rebuilt by code from every check a person makes, and read before
 every read of that child.
 
-Ring B: `child_reading_profile` is a pure function of `item_result` and `read_correction`, truncatable
-at any time; nothing in it is a model's guess (rule 1). What it holds: how often the reader was right
+Ring B: a child's notebook is a pure function of `item_result` and `read_correction`, built from them
+whenever it is read and never stored (CP-27 group 6: once the table `child_reading_profile`, which was
+written again before every read of the child anyway); nothing in it is a model's guess (rule 1). What it holds: how often the reader was right
 for this child, by kind of question and by confidence; the child's own confidence floor; the kinds
 routed to a person whatever the confidence; the digits the reader confuses in this child's hand; and
 confirmed handwriting samples for the second reader. `apply` is the other half — the next read of the
 child, changed by it (`correction_must_change_a_later_read`).
 """
 
-import json
 import re
 from collections import Counter
 
@@ -272,67 +272,40 @@ def signed_off(conn):
     return [r for r in checked_rows(conn) if not r["corrected"] and r["answer_state"] in ("written", "blank")]
 
 
-def rebuild(conn, child_ids=None):
-    """Every checked child's notebook, written; returns how many. The caller commits."""
+def notebooks(conn, child_ids=None):
+    """{child id: notebook} for every child a person has checked something of (only `child_ids`, when given)."""
     route_above = settings.threshold(conn, "read.route_above_overturn", 0.25)
     by_child = {}
     rows = [r for c in child_ids for r in checked_rows(conn, c)] if child_ids else checked_rows(conn)
     for r in rows:
         by_child.setdefault(str(r["child_id"]), []).append(r)
-    wanted = {str(c) for c in child_ids} if child_ids else set(by_child)
-    for child, rows in by_child.items():
-        if child not in wanted:
-            continue
-        conn.execute(
-            "insert into child_reading_profile (tenant_id, child_id, notes)"
-            " select tenant_id, id, %s from child where id = %s"
-            " on conflict (tenant_id, child_id) do update set notes = excluded.notes, updated_at = now()",
-            (json.dumps(build(rows, route_above)), child),
-        )
-    return len(wanted & set(by_child))
+    return {child: build(rows, route_above) for child, rows in by_child.items()}
 
 
-def refresh(conn):
-    """The notebook of every child a person has checked something of since it was written, rebuilt; returns how many.
-    Run after every check (`/capture/correct`, and `/capture/trusted` after a sign-off), so the notebook is the child's
-    as of the last check, not of the last paper read. The caller commits."""
-    stale = conn.execute(
-        "select distinct si.child_id from item_result r join capture c on c.id = r.capture_id"
-        " join sheet_instance si on si.id = c.sheet_instance_id"
-        " left join read_correction rc on rc.item_result_id = r.id"
-        " left join child_reading_profile p on p.child_id = si.child_id"
-        " where c.superseded_by is null and (r.state = 'confirmed' or rc.id is not null)"
-        "   and (p.id is null or p.updated_at < greatest(r.confirmed_at, rc.created_at))"
-    ).fetchall()
-    ids = [str(r["child_id"]) for r in stale]
-    return rebuild(conn, ids) if ids else 0
+def rebuild(conn, child_ids=None):
+    """How many of these children (every checked child, when none are named) have a notebook: it is built from their
+    checks whenever it is read, so nothing is written."""
+    return len(notebooks(conn, child_ids))
 
 
 def current(conn, child_id):
-    """The child's notebook from every check made up to this moment, written back. Every read of a
-    child goes through this, so a correction or a sign-off reaches that child's next paper without
-    anyone running `engine read profile` (the loop takes care of itself, BUILD-ORDER standing
-    direction 2)."""
-    rebuild(conn, [child_id])
-    return for_child(conn, child_id)
-
-
-def for_child(conn, child_id):
-    row = conn.execute("select notes from child_reading_profile where child_id = %s", (child_id,)).fetchone()
-    return (json.loads(row["notes"]) if isinstance(row["notes"], str) else row["notes"]) if row else {}
+    """The child's notebook from every check made up to this moment ({} for a child nobody has checked). Every read of
+    a child goes through this, so a correction or a sign-off reaches that child's next paper without anyone running
+    `engine read profile` (the loop takes care of itself, BUILD-ORDER standing direction 2)."""
+    return notebooks(conn, [child_id]).get(str(child_id), {})
 
 
 def lines(conn, child_ids=None, actor="engine-cli"):
     """One line per notebook, for a person: the child by name (read through pii, logged), and what it holds."""
+    books = notebooks(conn, child_ids)
     rows = conn.execute(
-        "select p.first_name, c.section, cp.notes from child_reading_profile cp join child_now c on c.id = cp.child_id,"
-        " lateral pii.read_child(c.id, %s) p where (%s::uuid[] is null or cp.child_id = any(%s::uuid[]))"
-        " order by c.section, p.first_name",
-        (actor, child_ids, child_ids),
+        "select c.id::text as child_id, p.first_name, c.section from child_now c,"
+        " lateral pii.read_child(c.id, %s) p where c.id = any(%s::uuid[]) order by c.section, p.first_name",
+        (actor, list(books)),
     ).fetchall()
     out = []
     for r in rows:
-        n = json.loads(r["notes"]) if isinstance(r["notes"], str) else r["notes"]
+        n = books[r["child_id"]]
         stood = sum(k["stood_behind"] for k in n["by_kind"].values())
         bits = [
             f"{n['checked']} checked",

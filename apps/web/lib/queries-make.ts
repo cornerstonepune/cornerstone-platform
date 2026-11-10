@@ -24,7 +24,7 @@ export async function homeByClass(week?: string, scope: Scope = EVERY_CLASS): Pr
              -- a child the engine can propose a home paper for: a skill on their map in a state with enough answers to
              -- say (red, amber or green), and no home paper yet this week
              select 1 from child_skill_state s join child_state cs on cs.tenant_id = s.tenant_id and cs.code = s.state
-             where s.child_id = c.id and cs.enough))::int as proposed,
+             where s.kind = 'written' and s.child_id = c.id and cs.enough))::int as proposed,
            count(h.qr_code)::int as approved
     from child_now c
     -- the week's home assessment is the newest; one made again is still one child's (goals/home-assessment-remake.yaml)

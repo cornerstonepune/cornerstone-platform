@@ -11,7 +11,7 @@ import { NEW_PASSAGE } from "./sample-shape";
 // Nimish, 2026-10-24: "It should simply have the capability to edit the skill, where the nature or the description of
 // the skill can be changed." The engine checks every sample by code before it stores it and says in words what failed;
 // a refused save comes back to the form with those words beside their fields and what was typed kept. A save withdraws
-// that level's approval and keeps what it replaced (the engine's `english_sample_edit`).
+// that level's approval and keeps what it replaced (the sample changed in place, what it replaced a row of the history log).
 
 const CODE = /^[A-Z0-9._]+$/; // a skill's code, and a kind's
 const FIELDS = ["ask", "text", "options", "left", "right", "answer", "accept", "key_points", "not_words"] as const;

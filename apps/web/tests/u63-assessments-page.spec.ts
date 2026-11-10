@@ -210,7 +210,9 @@ test("an educator renames an assessment; the old name stays as a row, the newest
     await r.getByRole("button", { name: "Save" }).click();
     await expect(r.locator("a[aria-expanded]")).toHaveText(name);
   }
-  const rows = await sql<{ name: string }[]>`select name from assessment_name where key like ${key + "%"} order by created_at`;
+  // each name a row of the one history log, given through the engine (CP-27 group 6)
+  const rows = await sql<{ name: string }[]>`select after ->> 'name' as name from change_log
+    where table_name = 'assessment' and op = 'name' and row_id like ${key + "%"} order by at`;
   expect(rows.map((x) => x.name).slice(-2)).toEqual(names);
 });
 

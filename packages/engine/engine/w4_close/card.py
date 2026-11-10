@@ -48,7 +48,7 @@ def build(conn, section):
     ids = [k["id"] for k in kids]
     states = conn.execute(
         "select child_id, skill_code, rung_code, state, n_events, n_correct, repeating_misconception"
-        " from child_skill_state where child_id = any(%s)",
+        " from child_skill_state where kind = 'written' and child_id = any(%s)",
         (ids,),
     ).fetchall()
     sets = {

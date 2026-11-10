@@ -20,6 +20,11 @@ pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs the
 BY = "Ayush (English)"
 # the rows a test wrote: its transaction began at now(), and a ledger row is stamped by the clock (the copy keeps others')
 MINE = "created_at >= now()"
+# an edit of a sample, as `english_sample_edit` held it: a row of the one history log (CP-27 group 6)
+EDITS = (
+    "(select at as created_at, before as replaced, after as sample, origin as edited_by, op from change_log"
+    " where table_name = 'english_sample') e"
+)
 
 
 @pytest.fixture
@@ -70,7 +75,7 @@ def test_a_sample_that_fails_a_check_is_refused_in_words_and_nothing_is_stored(c
         conn, slot["skill_code"], slot["difficulty"], slot["question_type"], slot["ord"], BY, **form
     )
     assert not got["saved"] and "is a right answer" in " ".join(got["faults"]["wrong.0"])
-    assert one(conn, f"select count(*) from english_sample_edit where {MINE}") == 0
+    assert one(conn, f"select count(*) from {EDITS} where {MINE}") == 0
     assert set(approved(conn, slot["skill_code"])) == set(
         one(conn, "select difficulty from skill where code = %s", slot["skill_code"])
     )
@@ -93,7 +98,7 @@ def test_a_saved_sample_is_a_new_version_and_withdraws_only_its_levels_approval(
     assert got == {"saved": True, "ord": slot["ord"], "faults": {}}
     now = ed.current(conn, slot["skill_code"], slot["difficulty"], slot["question_type"], slot["ord"])
     assert [w["answer"] for w in now["wrong"]] == [other] and now["edited_by"] == BY
-    edit = conn.execute(f"select replaced, edited_by from english_sample_edit where {MINE}").fetchone()
+    edit = conn.execute(f"select replaced, edited_by from {EDITS} where {MINE}").fetchone()
     assert edit["replaced"]["wrong"] == before["wrong"], "what it replaced is kept"
     left = approved(conn, slot["skill_code"])
     assert slot["difficulty"] not in left and len(left) >= 1, "only the edited level waits for approval again"
@@ -111,7 +116,7 @@ def test_history_is_kept_and_never_changed(conn):
             conn, slot["skill_code"], slot["difficulty"], slot["question_type"], slot["ord"], BY, **form
         )["saved"]
     rows = conn.execute(
-        f"select sample ->> 'ask' as ask, replaced ->> 'ask' as was from english_sample_edit where {MINE} order by created_at"
+        f"select sample ->> 'ask' as ask, replaced ->> 'ask' as was from {EDITS} where {MINE} order by created_at"
     ).fetchall()
     assert [r["ask"] for r in rows] == ["Tick the best word.", "Tick the word that fits best."]
     assert rows[1]["was"] == "Tick the best word."
@@ -122,7 +127,7 @@ def test_history_is_kept_and_never_changed(conn):
         == kept_before + 1
     )
     with pytest.raises(Exception, match="kept|forbid|not be changed|cannot"):
-        conn.execute("update english_sample_edit set edited_by = 'someone else'")
+        conn.execute("update change_log set origin = 'someone else' where table_name = 'english_sample'")
 
 
 def test_a_sample_is_added_and_removed_but_a_level_keeps_three_of_each_kind(conn):
@@ -243,14 +248,14 @@ def test_the_website_route_answers_a_failed_check_in_words_and_stores_nothing(mo
             "select skill_code, difficulty, question_type, ord from english_sample_now where question_type = 'ENG.CHOOSE'"
             " order by skill_code limit 1"
         ).fetchone()
-        before = one(c, "select count(*) from english_sample_edit")
+        before = one(c, f"select count(*) from {EDITS}")
     body = {"level": slot["difficulty"], "kind": slot["question_type"], "ord": slot["ord"], "by": BY,
             "fields": {"ask": "Tick one.", "options": "red\nrun", "answer": "blue"}, "wrong": []}  # fmt: skip
     with TestClient(app, headers={"X-Engine-Key": "k"}) as client:
         got = client.post(f"/skill/{slot['skill_code']}/sample", json=body).json()
     assert got["saved"] is False and "not one of the options" in got["faults"]["answer"][0]
     with db.connect() as c:
-        assert one(c, "select count(*) from english_sample_edit") == before
+        assert one(c, f"select count(*) from {EDITS}") == before
 
 
 def test_a_sample_is_saved_only_to_a_kind_its_level_asks(conn):
@@ -280,4 +285,4 @@ def test_a_save_when_the_spelling_list_cannot_be_read_is_refused_in_words(conn, 
         **as_saved(conn, slot),
     )
     assert not got["saved"] and "spelling list" in got["faults"]["skill"][0]
-    assert one(conn, f"select count(*) from english_sample_edit where {MINE}") == 0
+    assert one(conn, f"select count(*) from {EDITS} where {MINE}") == 0

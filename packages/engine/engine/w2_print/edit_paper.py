@@ -5,15 +5,16 @@ questions, and that should have an add/remove button".
 A paper's code, the boxes the reader looks for and its answer key belong to what was printed with that code, so an edit
 never changes a paper in place. It makes the paper again from the questions now chosen, exactly as a paper is first
 made (`focus_paper.print_paper`): a template, a new code, the page and its key rendered. The earlier copy is set void,
-and a copy of it already in a child's hands still reads and marks as itself. Each edit is a `paper_edit` row, never
-changed (rule 4). An approved paper edited waits for approval again; a printed one is refused.
+and a copy of it already in a child's hands still reads and marks as itself; it names the copy that replaced it
+(`sheet_instance.replaced_by`). Each edit is a row of the one history log, never changed (rule 4; CP-27 group 6: once
+the table `paper_edit`): the codes and the questions, never the child. An approved paper edited waits for approval again; a printed one is refused.
 
 Printed means the paper left the screen: its print was opened (`printed`, a `flow_run` this module writes when the
 print PDF is fetched), it was said given (`given.py`), or a copy of it was uploaded. A page printed from the browser's
 own menu is not seen; the new code is what keeps that copy right.
 """
 
-from engine.core import db, settings
+from engine.core import db, history, settings, who
 from engine.w2_print import focus_paper, given, shelf
 
 PRINTED = "printed"
@@ -91,9 +92,10 @@ def newer(conn, qr: str) -> str | None:
     """The code an edit replaced this paper with, following every later edit; None for a paper never edited."""
     now = None
     while row := conn.execute(
-        "select qr_after from paper_edit where qr_before = %s", (now or qr,)
+        "select n.qr_code from sheet_instance s join sheet_instance n on n.id = s.replaced_by where s.qr_code = %s",
+        (now or qr,),
     ).fetchone():
-        now = row["qr_after"]
+        now = row["qr_code"]
     return now
 
 
@@ -156,12 +158,23 @@ def _edit(conn, qr: str, by: str, ids: list, removed=(), added=(), at=None) -> d
         key.get("how") or focus_paper.HOW["custom"], ids=ids, waiting=True,
     )  # fmt: skip
     conn.execute(
-        "update sheet_instance set print_status = 'void', updated_at = now() where id = %s", (p["id"],)
+        "update sheet_instance set print_status = 'void', replaced_by = (select id from sheet_instance"
+        " where tenant_id = %s and qr_code = %s), updated_at = now() where id = %s",
+        (p["tenant_id"], made["qr"], p["id"]),
     )
-    conn.execute(
-        "insert into paper_edit (tenant_id, child_id, qr_before, qr_after, removed, added, at_position,"
-        " withdrew_approval, changed_by) values (%s,%s,%s,%s,%s::uuid[],%s::uuid[],%s,%s,%s)",
-        (p["tenant_id"], p["child_id"], qr, made["qr"], list(removed), list(added), at, withdrew, by.strip()),
+    history.keep(
+        conn,
+        p["tenant_id"],
+        ("sheet_instance", qr, "edit_paper"),
+        {"qr": qr},
+        {
+            "qr": made["qr"],
+            "removed": [str(i) for i in removed],
+            "added": [str(i) for i in added],
+            "at_position": at,
+            "withdrew_approval": withdrew,
+        },
+        by.strip(),
     )
     before = {(c["skill_set"], c["level"]): c for c in covers(questions(conn, p["item_ids"]))}
     after = {(c["skill_set"], c["level"]) for c in covers(qs)}
@@ -273,3 +286,25 @@ def _given_days(conn, child_id, ids: list) -> dict[str, int]:
             (settings.school_today(conn), child_id, ids, window),
         )
     }
+
+
+def name(conn, key: str, name: str, by: str) -> dict:
+    """The name a person gives an assessment (the website's key for it: kind, class, week and the rest), a row of the one
+    history log (table `assessment`, op `name`; CP-27 group 6: once the table `assessment_name`): the newest stands,
+    the older are kept (rule 4). An empty name changes nothing."""
+    name = name.strip()[:120]
+    if not by.strip():
+        raise ValueError("a name is given in a person's name")
+    if name:
+        tenant = db.one(conn, "select id from tenant where slug = %s", (db.tenant_slug(),))["id"]
+        person = who.who(conn, by, tenant)
+        history.keep(
+            conn,
+            tenant,
+            ("assessment", key, "name"),
+            None,
+            {"name": name},
+            person.origin or by.strip(),
+            staff=person.staff_id,
+        )
+    return {"key": key, "name": name}

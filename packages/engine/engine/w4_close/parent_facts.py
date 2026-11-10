@@ -64,7 +64,7 @@ def _every(conn, child_id, states):
     return {
         r["rung_code"]
         for r in conn.execute(
-            "select rung_code from child_skill_state where child_id = %s"
+            "select rung_code from child_skill_state where kind = 'written' and child_id = %s"
             " group by rung_code having bool_and(state = any(%s))",
             (child_id, list(states)),
         )
@@ -76,7 +76,8 @@ def _any(conn, child_id, states):
     return {
         r["rung_code"]
         for r in conn.execute(
-            "select distinct rung_code from child_skill_state where child_id = %s and state = any(%s)",
+            "select distinct rung_code from child_skill_state where kind = 'written' and child_id = %s"
+            " and state = any(%s)",
             (child_id, list(states)),
         )
     }

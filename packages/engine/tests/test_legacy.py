@@ -1111,10 +1111,8 @@ def test_the_childs_notebook_changes_the_next_import_of_that_child(
         * 10
     )
     assert notes["confusions"] == {"8>3": 2} and notes["floor"] == 70
-    conn.execute(
-        "insert into child_reading_profile (tenant_id, child_id, notes) select tenant_id, id, %s from child where id = %s",
-        (_json.dumps({**notes, "floor": 90}), child),
-    )
+    kept = {**notes, "floor": 90}  # the child's notebook as the reader is handed it (built from the checks)
+    monkeypatch.setattr(profiles, "current", lambda _conn, c: kept if str(c) == str(child) else {})
     s = legacy.import_scan(conn, scan, "TEST-PAPER", child, "test")
     assert floors == [90.0]
     one = next(r for r in s["results"] if r["item"] == "1")

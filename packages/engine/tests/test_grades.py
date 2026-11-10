@@ -150,11 +150,10 @@ GRADE_COLUMNS = [
     ("child", "band"),
     ("sheet_template", "band"),
     ("level_rule", "band"),
-    ("milestone", "band"),
     ("learning_objective", "band"),
     ("activity", "band"),
     ("report_item", "band"),
-    ("trait", "band"),
+    ("child_skill_state", "grade_code"),
 ]
 
 

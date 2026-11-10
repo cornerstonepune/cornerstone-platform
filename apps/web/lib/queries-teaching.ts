@@ -46,7 +46,7 @@ export async function teaching(scope: Scope): Promise<TeachingTopic[]> {
     sql<{ topic: string; colour: string; n: number }[]>`
       select s.topic_code as topic, cs.colour, count(*)::int as n
       from child_skill_state k
-      join child_now ch on ch.id = k.child_id and ch.active
+      join child_now ch on ch.id = k.child_id and ch.active and k.kind = 'written'
       join skill s on s.tenant_id = k.tenant_id and s.code = k.skill_code
       join child_state cs on cs.tenant_id = k.tenant_id and cs.code = k.state and cs.enough
       where s.topic_code is not null and ${inScope(scope, sql`ch.section`)}

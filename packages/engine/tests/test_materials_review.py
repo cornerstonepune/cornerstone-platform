@@ -1,6 +1,6 @@
 """A waiting note cleared by a person, and the two things she can approve so the next note needs no one (task M1-16,
-brick 2): a word that means a catalogue item (`material_alias`) and a unit that converts to the item's own
-(`material_unit_conversion`). Clearing goes through `materials_list.add`, so a cleared note is a line like any other and
+brick 2): a word that means a catalogue item (`material_item.aliases`) and a unit that converts to the item's own
+(`material_item.conversions`; CP-27 group 6, each approval a row of the one history log). Clearing goes through `materials_list.add`, so a cleared note is a line like any other and
 the note keeps who cleared it. Code never invents a conversion: only an approved row converts. Placeholder rows only,
 rolled back."""
 
@@ -8,7 +8,7 @@ import os
 
 import pytest
 
-from engine.core import db
+from engine.core import db, history
 from engine.w2_print import materials_intake as mi
 from engine.w2_print import materials_list as ml
 from engine.w2_print import materials_review as rv
@@ -26,11 +26,31 @@ def conn():
 
 
 def _waiting(conn, s, lid, text="some pens", reason="the note gives no quantity"):
+    """A note waiting for a person: a row of the one proposal list (CP-27 group 6: once `materials_note_review`)."""
     return conn.execute(
-        "insert into materials_note_review (tenant_id, list_id, text, reason, who) values (%s, %s, %s, %s, %s)"
-        " returning id",
+        "insert into curriculum_proposal (tenant_id, run_id, kind, subject_code, proposal, status, reason, staff_id,"
+        " machine) values (%s, gen_random_uuid(), 'materials_note', %s::text, jsonb_build_object('text', %s::text),"
+        " 'needs_person', %s, %s, 'materials_read') returning id",
         (s["tenant"], lid, text, reason, s["staff"]),
     ).fetchone()["id"]
+
+
+def _note(conn, nid):
+    """What became of a note: waiting, or a person's answer, a later row naming it."""
+    a = conn.execute(
+        "select status, staff_id, proposal, reason, created_at from curriculum_proposal where about = %s",
+        (nid,),
+    ).fetchone()
+    if a is None:
+        return {"state": "needs_person"}
+    return {
+        "state": {"applied": "added", "rejected": "dismissed"}[a["status"]],
+        "resolved_by": a["staff_id"],
+        "resolved_code": a["proposal"].get("added"),
+        "resolved_quantity": a["proposal"].get("quantity"),
+        "why": a["reason"],
+        "resolved_at": a["created_at"],
+    }
 
 
 def _lines(conn, lid):
@@ -97,10 +117,12 @@ def test_clearing_a_waiting_note_adds_the_line_and_closes_the_note(conn):
     nid = _waiting(conn, s, lid)
     rv.resolve(conn, s["tenant"], nid, pen, 30, m.MON, s["staff"])
     assert _lines(conn, lid) == [(pen, 30)]
-    row = conn.execute("select * from materials_note_review where id = %s", (nid,)).fetchone()
+    row = _note(conn, nid)
     assert (row["state"], row["resolved_by"], row["resolved_code"]) == ("added", s["staff"], pen)
     added = conn.execute(
-        "select after from materials_line_edit where list_id = %s and kind = 'add'", (lid,)
+        "select k.after from change_log k join materials_line l on l.id::text = k.row_id"
+        " where k.table_name = 'materials_line' and l.list_id = %s and k.op = 'add'",
+        (lid,),
     ).fetchone()
     assert added["after"]["via"] == "note_review"  # told apart from a line code confirmed ("note")
     assert row["resolved_at"] is not None and float(row["resolved_quantity"]) == 30.0
@@ -127,9 +149,7 @@ def test_an_item_already_on_the_list_keeps_the_note_waiting(conn):
     nid = _waiting(conn, s, lid)
     with pytest.raises(ml.AlreadyOnList):
         rv.resolve(conn, s["tenant"], nid, pen, 30, m.MON, s["staff"])
-    assert conn.execute("select state from materials_note_review where id = %s", (nid,)).fetchone()[
-        "state"
-    ] == ("needs_person")
+    assert _note(conn, nid)["state"] == "needs_person"
     assert _lines(conn, lid) == [(pen, 5)]
 
 
@@ -151,9 +171,7 @@ def test_dismissing_a_note_closes_it_with_a_reason_and_adds_nothing(conn):
     with pytest.raises(ValueError):
         rv.dismiss(conn, s["tenant"], nid, "  ", s["staff"])
     rv.dismiss(conn, s["tenant"], nid, "not a material", s["staff"])
-    row = conn.execute(
-        "select state, resolved_by, why from materials_note_review where id = %s", (nid,)
-    ).fetchone()
+    row = _note(conn, nid)
     assert (row["state"], row["resolved_by"], row["why"]) == ("dismissed", s["staff"], "not a material")
     assert _lines(conn, lid) == []
 
@@ -193,12 +211,10 @@ def test_an_approved_alias_is_given_to_the_model_with_its_item(conn):
     rv.approve_alias(conn, s["tenant"], "ball pen", pen, s["staff"])  # the same word again is the same row
     got = {c["code"]: c for c in mi.catalogue(conn, s["tenant"])}
     assert got[pen]["aliases"] == ["ball pen"]
-    assert (
-        conn.execute(
-            "select count(*) as n from material_alias where tenant_id = %s", (s["tenant"],)
-        ).fetchone()["n"]
-        == 1
-    )
+    assert conn.execute(
+        "select aliases from material_item where tenant_id = %s and code = %s", (s["tenant"], pen)
+    ).fetchone()["aliases"] == ["ball pen"]
+    assert len([c for c in history.of(conn, "material_item", pen) if c["op"] == "alias"]) == 1
 
 
 @needs_db
@@ -240,10 +256,9 @@ def test_changing_a_conversion_keeps_the_old_one_and_the_latest_is_used(conn):
     rv.approve_conversion(conn, s["tenant"], pen, "Dozen", 12, s["staff"])  # the same again adds nothing
     rv.approve_conversion(conn, s["tenant"], pen, "dozen", 10, s["staff"])
     assert mi.conversions(conn, s["tenant"]) == {(pen, "dozen"): 10.0}
-    rows = conn.execute("select factor from material_unit_conversion order by approved_at").fetchall()
-    assert [float(r["factor"]) for r in rows] == [12.0, 10.0]
-    with pytest.raises(Exception, match="append|forbid|not allowed|cannot"):
-        conn.execute("update material_unit_conversion set factor = 1")
+    kept = [c for c in history.of(conn, "material_item", pen) if c["op"] == "conversion"]
+    assert [c["after"]["factor"] for c in kept] == [12, 10], "each approval a row of the one history log"
+    assert kept[1]["before"] == {"unit": "dozen", "factor": 12.0}, "the old factor is kept, in the log"
 
 
 @needs_db

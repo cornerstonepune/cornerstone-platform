@@ -94,9 +94,10 @@ def _band(conn):
     _activity(conn, t, "ACT-KX-0102", "Maths", "Count steps on the stairs")
     _activity(conn, t, "ACT-KX-0103", "Clay", "Roll clay snakes")
     conn.execute(  # a skill of this band (a milestone at it) that people never linked to Clay
-        "insert into milestone (tenant_id, skill_code, band, descriptor, scale, source)"
-        " values (%s, 'ART.CLAY.01', %s, 'Rolls clay', 'yes_sometimes_no_na', 'a test')",
-        (t, BAND),
+        "update registry_skill set milestones = milestones || jsonb_build_object(%s::text, jsonb_build_object("
+        "'descriptor', 'Rolls clay', 'scale', 'yes_sometimes_no_na', 'source', 'a test'))"
+        " where tenant_id = %s and code = 'ART.CLAY.01'",
+        (BAND, t),
     )
     return t
 

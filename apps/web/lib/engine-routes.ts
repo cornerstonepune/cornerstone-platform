@@ -32,6 +32,7 @@ export type EngineRoutes = {
   "GET /week/{section}/{week}/{kind}/pack.pdf": null;
   "GET /worksheet/{code}.pdf": null;
   "GET /worksheet/{code}/geometry": null;
+  "POST /assessment/name": { by: string; key: string; name: string };
   "POST /bank/fill": { skill_set: string; difficulty: string; count: number };
   "POST /bank/item/{item_key}/correct": { stem: string; by: string; reason: string };
   "POST /bank/item/{item_key}/remove": { by: string; note: string };

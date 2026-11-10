@@ -29,7 +29,7 @@ says:
   # check; a printed paper was read against the digit reader's floor for every child; and an answer signed off that no
   # person was shown counted as the reader being right.
   - words: "if what you are mentioning, ADR, is at least happening, that's something we need to ensure from a codebase point of view"
-    proved_by: packages/engine/tests/test_profiles.py::test_a_check_rebuilds_the_notebook_of_the_child_checked_and_no_other
+    proved_by: packages/engine/tests/test_profiles.py::test_a_check_changes_the_notebook_of_the_child_checked_and_no_other
   - words: "if what you are mentioning, ADR, is at least happening, that's something we need to ensure from a codebase point of view"
     proved_by: packages/engine/tests/api/test_capture_routes.py::test_every_check_rebuilds_the_notebooks_it_made_stale_correction_and_sign_off_alike
   - words: "if what you are mentioning, ADR, is at least happening, that's something we need to ensure from a codebase point of view"

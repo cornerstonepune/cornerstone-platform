@@ -1,6 +1,6 @@
 """The K2 class picture and a child's page (task M1-03 part B, goals/m1-03-k2-reads.yaml). Only reading: the child's
-state per skill is `child_observed_state`, which the graph rebuilds from confirmed observations (M1-02); nothing here
-works a state out.
+state per skill is its observed row of `child_skill_state` (kind `observed`; CP-27 group 6: once the table
+`child_observed_state`), which the graph rebuilds from confirmed observations (M1-02); nothing here works a state out.
 
 A child is by Sr. No. (`enrolment.roll_no`) and never by name or id. A cell exists only where the child was seen on
 the skill: an empty cell is "not seen", which is not "not secure" (D-008). The state's words and colour are the
@@ -23,7 +23,7 @@ CELLS_SQL = """
 select s.child_id, e.roll_no, s.skill_code, rs.name as skill_name, s.state, cs.words, cs.colour,
        (s.last_seen at time zone %(zone)s)::date as last_seen, lv.reached_level, lv.note_id
 from enrolment e
-join child_observed_state s on s.child_id = e.child_id and s.grade_code = %(grade)s
+join child_skill_state s on s.kind = 'observed' and s.child_id = e.child_id and s.grade_code = %(grade)s
 join child_state cs on cs.tenant_id = s.tenant_id and cs.code = s.state
 join registry_skill rs on rs.tenant_id = s.tenant_id and rs.code = s.skill_code
 left join lateral (

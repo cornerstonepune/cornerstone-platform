@@ -122,7 +122,15 @@ def _materials_rows(c) -> dict[str, int]:
             " and table_name like 'materials%%' and table_type = 'BASE TABLE' order by 1"
         ).fetchall()
     ]
-    return {n: c.execute(f"select count(*) as n from {n}").fetchone()["n"] for n in names}  # noqa: S608
+    out = {n: c.execute(f"select count(*) as n from {n}").fetchone()["n"] for n in names}  # noqa: S608
+    # a school list, a send and a note waiting are rows of the run list and the proposal list (CP-27 group 6)
+    out["flow_run"] = c.execute(
+        "select count(*) as n from flow_run where flow like 'materials%%'"
+    ).fetchone()["n"]
+    out["curriculum_proposal"] = c.execute(
+        "select count(*) as n from curriculum_proposal where kind = 'materials_note'"
+    ).fetchone()["n"]
+    return out
 
 
 def _a_material(w):

@@ -13,7 +13,7 @@ import datetime as dt
 import pytest
 from fastapi.testclient import TestClient
 
-from conftest import a_k2_class, run_nightly, states
+from conftest import OBSERVED, a_k2_class, run_nightly, states
 
 DAY = dt.date(2026, 6, 1)
 KEY = "cp9-proof-engine-key"
@@ -41,7 +41,7 @@ def _evidence(conn, oid):
 
 
 def _picture(conn, child):
-    return [{k: v for k, v in r.items() if k != "child_id"} for r in states(conn, "child_observed_state", child)]
+    return [{k: v for k, v in r.items() if k != "child_id"} for r in states(conn, OBSERVED, child)]
 
 
 def _old_row_holds(conn, old, before_row, before_evidence):

@@ -1,7 +1,7 @@
 """CP-9 item 4: the picture reads only confirmed notes.
 
 On a throwaway database, one child with confirmed and unconfirmed evidence of both kinds, then the nightly run:
-- observed evidence with `confirmed_by` null never reaches `child_observed_state`; the same child's confirmed observed
+- observed evidence with `confirmed_by` null never reaches a child's observed states (`child_skill_state` of kind `observed`); the same child's confirmed observed
   evidence does;
 - written evidence with `confirmed_by` null never reaches `child_skill_state`; the same child's confirmed written
   answer does;
@@ -50,11 +50,11 @@ def test_4_only_confirmed_evidence_reaches_either_picture(conn):
     conn.execute("reset role")
 
     seen = {r["skill_code"] for r in conn.execute(
-        "select skill_code from child_observed_state where child_id = %s", (child,))}
+        "select skill_code from child_skill_state where kind = 'observed' and child_id = %s", (child,))}
     assert seen == set(k["skills"]), f"observed picture: {sorted(seen)}; confirmed skills {k['skills']}, " \
                                      f"unconfirmed {unconfirmed['skills']}"
     written = {r["skill_code"] for r in conn.execute(
-        "select skill_code from child_skill_state where child_id = %s", (child,))}
+        "select skill_code from child_skill_state where kind = 'written' and child_id = %s", (child,))}
     assert written == {"NUM.OPS.02"}, f"written picture: {sorted(written)}"
 
 
@@ -73,6 +73,6 @@ def test_4_evidence_from_a_drafted_voice_note_is_refused_by_the_database(conn):
     conn.commit()
     conn.execute("reset role")
     assert {r["skill_code"] for r in conn.execute(
-        "select skill_code from child_observed_state where child_id = %s", (k["children"]["3"],))} == set(k["skills"])
+        "select skill_code from child_skill_state where kind = 'observed' and child_id = %s", (k["children"]["3"],))} == set(k["skills"])
     assert conn.execute("select count(*) as n from activity_observation where note_id = %s",
                         (note,)).fetchone()["n"] == 0

@@ -65,3 +65,15 @@ def paper_add(qr: str, body: Edit, conn=Depends(get_conn, scope="function")) -> 
 @router.post("/paper/{qr}/approve")
 def paper_approve(qr: str, body: By, conn=Depends(get_conn, scope="function")) -> dict:
     return _said(lambda: edit_paper.approve(conn, qr, body.by))
+
+
+class Name(BaseModel):
+    by: str
+    key: str = Field(pattern=r"^(practice|assessment|focus|custom|earlier)~[^~]{0,60}~[^~]{0,20}~.{0,2000}$")
+    name: str = Field(max_length=120)
+
+
+@router.post("/assessment/name")
+def assessment_name(body: Name, conn=Depends(get_conn, scope="function")) -> dict:
+    """The name an educator gives an assessment, by the website's key for it; the newest stands, the older are kept."""
+    return _said(lambda: edit_paper.name(conn, body.key, body.name, body.by))

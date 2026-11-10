@@ -42,8 +42,6 @@ WEB_WRITES = {
     # a person's approval of a way of asking, and "I've looked at this" on a level suggested for review: rows of the one
     # approval list, added and never changed (goals/e0-english-in-the-system.yaml, goals/cal_levels_to_review.yaml, CP-27)
     "public.approval": {"INSERT"},
-    # the name an educator gives an assessment, added and never changed (goals/asm_assessments_page.yaml)
-    "public.assessment_name": {"INSERT"},
     # a class's word on a skill is said through `say_taught` (goals/t1-topics-are-operations.yaml), never written
 }
 # Every function of ours the website calls: signing a paper off, settling one answer, a roll in its order, a name, a

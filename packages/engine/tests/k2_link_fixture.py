@@ -17,9 +17,10 @@ def main(before: str, after: str, proposed: str) -> None:
         ]
         for skill, status in ((after, "confirmed"), (proposed, "proposed")):
             conn.execute(
-                "insert into skill_link (tenant_id, skill_code, before_code, strength, reason, source, status,"
-                " confirmed_by, confirmed_at) values (%s, %s, %s, 'hard', 'a test reason', 'm1-17 test', %s, %s,"
-                " case when %s = 'confirmed' then now() end) on conflict (tenant_id, skill_code, before_code) do nothing",
+                "insert into skill_prerequisite (tenant_id, registry_code, before_registry_code, strength, reason, source,"
+                " status, confirmed_by, confirmed_at) values (%s, %s, %s, 'hard', 'a test reason', 'm1-17 test', %s, %s,"
+                " case when %s = 'confirmed' then now() end)"
+                " on conflict (tenant_id, registry_code, before_registry_code) do nothing",
                 (t, skill, before, status, staff if status == "confirmed" else None, status),
             )
         conn.commit()

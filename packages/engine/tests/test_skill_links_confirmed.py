@@ -1,8 +1,9 @@
 """A prerequisite link between two skills holds its reason and who confirmed it, and nothing reads one nobody confirmed
 (goals/m1-15-skill-links.yaml; Nimish, approved 2026-11-04).
 
-Two tables hold links: `skill_link` between the broad skills the evidence and K2's observations point at
-(`registry_skill`), and `skill_prerequisite` between the maths micro-steps (`skill`), which gains the same words. Every
+One table holds links (CP-27 group 6: `skill_link` was the second): a row of `skill_prerequisite` is a link between the
+broad skills the evidence and K2's observations point at (`registry_skill`, `registry_code`) or between the maths
+micro-steps (`skill`, `skill_code`), with the same words. Every
 reader goes through a view that shows confirmed links only. Staff here are placeholders on the reserved `.invalid`
 domain, never a real person.
 """
@@ -68,8 +69,8 @@ def test_a_link_is_proposed_or_confirmed_and_nothing_else(conn):
     a, b = _skills(conn, 2)
     who = _staff(conn, t)
     add = (
-        "insert into skill_link (tenant_id, skill_code, before_code, strength, reason, source, status, confirmed_by)"
-        " values (%s, %s, %s, 'hard', 'r', 's', %s, %s)"
+        "insert into skill_prerequisite (tenant_id, registry_code, before_registry_code, strength, reason, source,"
+        " status, confirmed_by) values (%s, %s, %s, 'hard', 'r', 's', %s, %s)"
     )
     assert _refused(conn, add, (t, b, a, "maybe", None)), "a status is proposed or confirmed"
     row = conn.execute("select id from skill_prerequisite limit 1").fetchone()["id"]
@@ -83,14 +84,15 @@ def test_confirmed_needs_a_person_and_a_time_and_proposed_has_neither(conn):
     a, b = _skills(conn, 2)
     who = _staff(conn, t)
     add = (
-        "insert into skill_link (tenant_id, skill_code, before_code, strength, reason, source, status, confirmed_by)"
-        " values (%s, %s, %s, 'hard', 'r', 's', %s, %s)"
+        "insert into skill_prerequisite (tenant_id, registry_code, before_registry_code, strength, reason, source,"
+        " status, confirmed_by) values (%s, %s, %s, 'hard', 'r', 's', %s, %s)"
     )
     assert _refused(conn, add, (t, b, a, "confirmed", None)), "confirmed by nobody"
     assert _refused(conn, add, (t, b, a, "proposed", who)), "proposed, yet someone confirmed it"
     assert not _refused(conn, add, (t, b, a, "confirmed", who))
     row = conn.execute(
-        "select confirmed_at from skill_link where skill_code = %s and before_code = %s", (b, a)
+        "select confirmed_at from skill_prerequisite where registry_code = %s and before_registry_code = %s",
+        (b, a),
     ).fetchone()
     assert row["confirmed_at"] is not None, "the time is written with the person"
 
@@ -98,8 +100,8 @@ def test_confirmed_needs_a_person_and_a_time_and_proposed_has_neither(conn):
 def test_a_link_can_never_be_deleted_by_the_engine_or_the_site(conn):
     for role in ("app_engine", "app_web"):
         assert not conn.execute(
-            "select has_table_privilege(%s, 'skill_link', 'DELETE') as ok", (role,)
-        ).fetchone()["ok"], f"{role} may delete from skill_link"
+            "select has_table_privilege(%s, 'skill_prerequisite', 'DELETE') as ok", (role,)
+        ).fetchone()["ok"], f"{role} may delete from skill_prerequisite"
 
 
 # ---- Done when 2: skill_prerequisite gains the same words; the 282 are proposed, never confirmed --------------------

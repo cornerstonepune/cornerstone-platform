@@ -44,17 +44,20 @@ def _refused(conn, sql, params=()):
 
 
 def _samples(conn, code, level, card=None):
-    return [
-        r["sample"]
-        for r in conn.execute(
-            "select sample from skill_level_sample where skill_code = %s and difficulty = %s"
-            " and question_format is not distinct from %s order by ord",
-            (code, level, card),
-        )
-    ]
+    """A level's samples, worked out from their sources as `engine links` does (CP-27 group 6: once the rows of
+    `skill_level_sample`): its words' examples, or a card kind's examples at that level."""
+    if card is None:
+        words = conn.execute(
+            "select looks_like from skill_level where skill_code = %s and difficulty = %s", (code, level)
+        ).fetchone()
+        return links.samples(words["looks_like"]) if words else []
+    kind = conn.execute(
+        "select question_kinds -> %s as kind from skill where code = %s", (card, code)
+    ).fetchone()["kind"]
+    return list(((kind or {}).get("examples") or {}).get(level) or [])
 
 
-def test_every_card_example_and_level_example_is_a_sample_row(conn):
+def test_every_card_example_and_level_example_is_a_sample_worked_out_from_its_source(conn):
     """Nimish: "we need proper tables". Every card kind's example is a row in its place, and every example a level's
     words give is a row; the counts are the seed's own, worked from the seed's files, not from the database."""
     r = links.compare(conn)
@@ -79,12 +82,10 @@ def test_a_levels_samples_are_its_words_own_examples_in_order(conn):
     a number sentence, in the words' order; a piece in words stays words; the words themselves never change; a person
     changing a level's words changes its samples."""
     for r in conn.execute(
-        "select l.skill_code, l.difficulty, l.looks_like, array_agg(x.sample order by x.ord) as got"
-        " from skill_level l join skill_level_sample x on x.tenant_id = l.tenant_id and x.skill_code = l.skill_code"
-        "  and x.difficulty = l.difficulty and x.question_format is null group by 1, 2, 3"
+        "select skill_code, difficulty, looks_like from skill_level where looks_like like '%%:%%'"
     ):
         tail, at = r["looks_like"].rsplit(":", 1)[1], 0
-        for sample in r["got"]:
+        for sample in _samples(conn, r["skill_code"], r["difficulty"]):
             at = tail.index(sample, at) + len(sample)  # each is the words' own text, in their order
             assert not any(c.isalpha() for c in sample.replace(" r ", " ")), (r["skill_code"], sample)
     assert _samples(conn, "MUL.FACTS", "Easy") == ["2 × 7", "5 × 6", "10 × 4"]
@@ -127,18 +128,12 @@ def test_every_code_a_skill_names_is_a_key_the_database_checks(conn):
         " values (%s, 'MUL.FACTS', 'NOT.A.SKILL', 'a test', 'a test')",
         (tenant,),
     )
-    assert _refused(
-        conn,
-        "insert into skill_level_sample (tenant_id, skill_code, difficulty, ord, sample)"
-        " values (%s, 'MUL.FACTS', 'Expert', 1, '2 × 2')",
-        (tenant,),
-    )
     grants = {
         r["table_name"]
         for r in conn.execute(
             "select distinct table_name from information_schema.role_table_grants where grantee = 'app_web'"
             " and privilege_type in ('INSERT', 'UPDATE', 'DELETE')"
-            " and table_name in ('skill_level_sample', 'skill_mistake', 'skill_registry_link')"
+            " and table_name in ('skill_mistake', 'skill_registry_link')"
         )
     }
     assert grants == set()
@@ -256,8 +251,8 @@ def test_a_new_sample_mistake_or_link_is_an_insert(conn):
         ).fetchone()["ops"]
     ) == ["×", "÷"]
     conn.execute(
-        "update question_format set kind = jsonb_set(kind, '{examples,Easy}', kind -> 'examples' -> 'Easy' || '[\"3 × 3 × 3 = □\"]')"
-        " where code = 'MUL3.SUM'"
+        "update skill set question_kinds = jsonb_set(question_kinds, '{MUL3.SUM,examples,Easy}',"
+        " question_kinds -> 'MUL3.SUM' -> 'examples' -> 'Easy' || '[\"3 × 3 × 3 = □\"]') where code = 'MUL.THREE'"
     )
     assert _samples(conn, "MUL.THREE", "Easy", "MUL3.SUM")[-1] == "3 × 3 × 3 = □"
     other = conn.execute(
@@ -299,7 +294,8 @@ def test_past_results_are_the_same_before_and_after(conn):
     graph.rebuild(conn, str(child))
     before = past.fingerprint(conn)
     assert before["evidence"]["n"] >= 3 and before["states"]["n"] >= 1
-    conn.execute(data_steps(MIGRATION))
+    # the samples' sync is gone with their rows (CP-27 group 6: worked out when asked); every other step runs again
+    conn.execute("\n".join(x for x in data_steps(MIGRATION).splitlines() if "skill_level_sample" not in x))
     graph.rebuild(conn, str(child))
     assert past.fingerprint(conn) == before
     conn.execute(add, (tenant, child, False, []))
