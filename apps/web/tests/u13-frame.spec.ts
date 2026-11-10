@@ -146,7 +146,7 @@ test("8. search is a typeahead: an educator's Sr. No. and fake name find their o
   await box.fill("1");
   await expect(options.first()).toContainText(first);
   await expect(options.first()).toContainText("Sr. No. 1");
-  await box.fill("13"); // Sr. No. 13 exists only in a class the educator does not hold (hers has twelve children)
+  await box.fill("13"); // Sr. No. 13 exists only in a class the educator does not hold
   await expect(person.getByRole("status")).toContainText("Nothing found");
   await expect(person.getByRole("listbox", { name: "Found" })).toHaveCount(0);
   const outside = rows.otherNames[0].split(" ")[0];
