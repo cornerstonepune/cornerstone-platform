@@ -45,7 +45,8 @@ def _copy(conn, folder, k, code, pages, texts, section="TESTWHOSE"):
         (tenant, str(k), section),
     ).fetchone()["id"]
     template = conn.execute(
-        "insert into sheet_template (tenant_id, band, week) values (%s,'G1','test') returning id", (tenant,)
+        "insert into sheet_template (tenant_id, band, week) values (%s,'G1','2026-09-28') returning id",
+        (tenant,),
     ).fetchone()["id"]
     sheet = conn.execute(
         "insert into sheet_instance (tenant_id, sheet_template_id, child_id, qr_code) values (%s,%s,%s,%s) returning id",

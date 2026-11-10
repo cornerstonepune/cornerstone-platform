@@ -77,8 +77,8 @@ def load(conn: db.Conn, grade: str, section: str, year: str, number: int) -> Inp
     frame = {
         (r["week_code"], r["weekday"], r["period_id"]): (r["kind"], r["subject_code"])
         for r in conn.execute(
-            "select week_code, weekday, period_id::text as period_id, kind, subject_code from timetable_slot"
-            " where school_class_id = %s and valid_to is null",
+            "select week_code, weekday, period_id::text as period_id, cell as kind, subject_code from timetable_rule"
+            " where school_class_id = %s and kind = 'frame' and valid_to is null",
             (found["id"],),
         ).fetchall()
     }

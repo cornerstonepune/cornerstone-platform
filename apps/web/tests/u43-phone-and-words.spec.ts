@@ -64,16 +64,16 @@ test.beforeAll(async ({ browser }) => {
   // not read: the parent page is read for Bina, who has none)
   const [{ n: notes }] = await sql<{ n: number }[]>`select count(*)::int as n from parent_note where child_id = ${kids.Asha}`;
   if (!notes) {
-    await sql`insert into parent_note (tenant_id, child_id, week, body) values (${tenant}, ${kids.Asha}, ${THIS}, '{"facts": {}, "draft": {}}')`;
+    await sql`insert into parent_note (tenant_id, child_id, week, body) values (${tenant}, ${kids.Asha}, to_date(${THIS}, 'IYYY-"W"IW'), '{"facts": {}, "draft": {}}')`;
   }
   // Asha's home assessment and the class's practice paper, this week
   await sql`delete from sheet_instance where qr_code in ${sql([QR.home, QR.spare])}`;
   await sql`
     insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, week, kind, print_status)
-    values (${tenant}, ${QR.home}, ${ws.id}, ${kids.Asha}, ${THIS}, 'focus', 'new')`;
+    values (${tenant}, ${QR.home}, ${ws.id}, ${kids.Asha}, to_date(${THIS}, 'IYYY-"W"IW'), 'focus', 'new')`;
   await sql`
     insert into sheet_instance (tenant_id, qr_code, sheet_template_id, section, week, kind, print_status)
-    values (${tenant}, ${QR.spare}, ${ws.id}, ${SECTION}, ${THIS}, 'practice', 'new')`;
+    values (${tenant}, ${QR.spare}, ${ws.id}, ${SECTION}, to_date(${THIS}, 'IYYY-"W"IW'), 'practice', 'new')`;
   const password = `scrypt$${SALT}$${scryptSync(PASSWORD, SALT, 64).toString("hex")}`;
   await sql`
     update config set value = (select coalesce(jsonb_agg(s), '[]'::jsonb) from jsonb_array_elements(value) s

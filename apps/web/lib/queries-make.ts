@@ -2,6 +2,7 @@ import { sql } from "./db";
 import { EVERY_CLASS, inScope, type Scope } from "./scope";
 import { engineGet } from "./engine";
 import { schoolWeek } from "./school-clock";
+import { weekOf } from "./queries-papers";
 
 // Make papers (goals/m1-make-papers.yaml): each child's own paper. The engine proposes each home paper from the
 // child's map (`w2_print/focus_paper.py`) and makes any paper a teacher asks for; this reads what it proposes.
@@ -29,7 +30,7 @@ export async function homeByClass(week?: string, scope: Scope = EVERY_CLASS): Pr
     from child c
     -- the week's home assessment is the newest; one made again is still one child's (goals/home-assessment-remake.yaml)
     left join lateral (select qr_code from sheet_instance si
-                       where si.child_id = c.id and si.kind = 'focus' and si.week = ${week}
+                       where si.child_id = c.id and si.kind = 'focus' and ${weekOf("si")} = ${week}
                        order by si.created_at desc limit 1) h on true
     where c.active and ${inScope(scope, sql`c.section`)}
     group by c.tenant_id, c.section

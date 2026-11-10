@@ -113,7 +113,7 @@ def test_3_the_uploader_of_a_class_y_paper_sees_that_child_only(school):
     c.execute("insert into enrolment (tenant_id, child_id, class_id, roll_no, from_date, recorded_by) "
               "values (%s, %s, %s, 'P4', %s::date - 30, 'cp3 proof')", (s.t, other, s.y, s.today))
     paper_kid = s.kids[s.y][0]
-    tpl = one(c, "insert into sheet_template (tenant_id, band, level, week) values (%s, 'G1', 'L0', '2099-W01') "
+    tpl = one(c, "insert into sheet_template (tenant_id, band, level, week) values (%s, 'G1', 'L0', '2098-12-29') "
                  "returning id", (s.t,))
     sheet = one(c, "insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id) "
                    "values (%s, 'CSC0FFEE', %s, %s) returning id", (s.t, tpl, paper_kid))

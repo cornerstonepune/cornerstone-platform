@@ -41,7 +41,7 @@ async function seed(section: string, kids: Mark[][][]) {
       const tag = `${RUN}${Math.random().toString(16).slice(2, 8)}`.toUpperCase();
       const [tpl] = await sql<{ id: string }[]>`
         insert into sheet_template (tenant_id, band, child_id, week, key, batch_id)
-        values (${tenant}, ${GRADE}, ${child}, ${"CAL-" + tag}, ${sql.json({ code: tag })}, ${tag}) returning id`;
+        values (${tenant}, ${GRADE}, ${child}, date_trunc('week', now())::date, ${sql.json({ code: tag })}, ${tag}) returning id`;
       const [inst] = await sql<{ id: string }[]>`
         insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, print_status)
         values (${tenant}, ${"CS" + tag.slice(-6)}, ${tpl.id}, ${child}, 'returned') returning id`;

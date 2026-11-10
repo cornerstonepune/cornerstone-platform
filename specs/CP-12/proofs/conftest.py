@@ -16,16 +16,17 @@ Names used are the contract of specs/CP-12/design.md:
   [--reason TEXT]`: N is the period's number in its grade's day (`period.ord`); moving onto a lesson swaps the two.
 - `engine timetable accept --key CLASH_KEY --by EMAIL --reason TEXT`;
   `engine timetable clashes --year --fortnight N` (one group per fortnight headed `FN<n>`).
-- table `timetable_move (school_class_id, fortnight_id, from_date, from_period, to_date, to_period, reason, who, at)`;
+- a move kept as a `change_log` row (table `session`, row `<class> <fortnight>`, op `move`, before and after the date and
+  period, reason, staff id, at; `timetable_move` until CP-27);
   view `timetable_clash (fortnight_id, fortnight_number, week_code, kind, clash_key, places, detail, accepted)` with
-  kinds `blocked`, `over_limit`, `under_limit`; table `timetable_clash_accept (fortnight_id, clash_key, kind, reason,
-  who, at)`; setting `timetable.open_clash_blocks_approval` (on by default), checked by the approve command
+  kinds `blocked`, `over_limit`, `under_limit`; an acceptance an `approval` row (kind `timetable_clash`, target the
+  clash key, decision `accept`, reason, by, created_at; `timetable_clash_accept` until CP-27); setting `timetable.open_clash_blocks_approval` (on by default), checked by the approve command
   `engine fortnight approve --year --fortnight N --by EMAIL` (decision 6; its name is `APPROVE` below).
 What the proofs need from scopes not yet on main, each named where it is used:
-- CP-6 (issue #454): `fortnight_cycle (tenant_id, fortnight_id, state)`, states planning, frozen, aligned, approved,
-  moved one step at a time by updating `state`; `fortnight_edit` keeps a frozen change's reason.
-- CP-21 (issue #496): the dated layer (`timetable_slot.fortnight_id`, `timetable_fortnight_layer`); the educator's day
-  prefers it.
+- CP-6 (issue #454): the fortnight's state (`fortnight.state` since CP-27), states planning, frozen, aligned, approved,
+  moved one step at a time by updating `state`; the history (`change_log`) keeps a frozen change's reason.
+- CP-27: the timetable of a date is its lessons (`session`, with their `kind`); the frame and the blocks and limits are
+  `timetable_rule` rows; the educator's day reads the lessons.
 - CP-3 / CP-4: the coordinator holds a current `coordinator` grant (the `everything` group); an educator holds
   `class_teacher` on the class; `access_table (schema_name, table_name, data_class, key_column)`.
 """
@@ -237,14 +238,12 @@ def needs(c, table: str, scope: str) -> None:
         pytest.fail(f"this proof needs `{table}` from {scope}, which is not on this database yet")
 
 
-def needs_layer(c) -> None:
-    """CP-21's dated layer: a move works on a fortnight's own dated rows (specs/CP-12/design.md decision 1)."""
+def needs_lessons(c) -> None:
+    """CP-27: a move works on the fortnight's own dated lessons (`session`, each with its kind)."""
     has = _one(c, "select exists (select from information_schema.columns where table_schema = 'public'"
-                  " and table_name = 'timetable_slot' and column_name = 'fortnight_id') as col,"
-                  " exists (select from pg_proc where proname = 'timetable_fortnight_layer') as fn")
-    if not (has["col"] and has["fn"]):
-        pytest.fail("this proof needs CP-21's dated layer (`timetable_slot.fortnight_id`, `timetable_fortnight_layer`,"
-                    " issue #496), which is not on this database yet")
+                  " and table_name = 'session' and column_name = 'kind') as col")
+    if not has["col"]:
+        pytest.fail("this proof needs CP-27's dated lessons (`session.kind`), which is not on this database yet")
 
 
 def today(c) -> dt.date:
@@ -278,9 +277,9 @@ def world(c, monkeypatch, *, start=START, days=14, holiday=None, neighbours=True
                      "s2": ("subject", "english", "English"),
                      "extra": ("specialist", "music", "Visiting music") if wd == 3 else ("empty", None, "")}
             for p, (kind, subj, text) in cells.items():
-                c.execute("insert into timetable_slot (tenant_id, school_class_id, period_id, week_code, weekday, kind,"
-                          " subject_code, text, valid_from) values (%s, %s, %s, %s, %s, %s, %s, %s, '2026-01-01')",
-                          (t, klass, per[p], wk, wd, kind, subj, text))
+                c.execute("insert into timetable_rule (tenant_id, school_class_id, kind, period_id, week_code, weekday,"
+                          " cell, subject_code, text, valid_from) values (%s, %s, 'frame', %s, %s, %s, %s, %s, %s,"
+                          " '2026-01-01')", (t, klass, per[p], wk, wd, kind, subj, text))
                 frame[(wk, wd, p)] = (kind, subj, text)
     coord, educator = _staff(c, t, campus, klass)
     w = {"tenant": t, "slug": slug, "campus": campus, "year": year, "class": klass, "section": section,
@@ -300,11 +299,7 @@ def world(c, monkeypatch, *, start=START, days=14, holiday=None, neighbours=True
                 c.execute("insert into school_day (tenant_id, campus_id, on_date, kind) values (%s, %s, %s, %s)",
                           (t, campus, d, "holiday" if d == holiday else "teaching"))
         _plan(c, w, fn)
-    needs(c, "public.fortnight_cycle", "CP-6 (the fortnight cycle, issue #454)")
-    for fn in w["fortnights"].values():
-        c.execute("insert into fortnight_cycle (tenant_id, fortnight_id, state) values (%s, %s, 'planning')"
-                  " on conflict (fortnight_id) do nothing", (t, fn["id"]))
-    needs_layer(c)
+    needs_lessons(c)
     return w
 
 
@@ -331,6 +326,27 @@ def _staff(c, t, campus, klass):
     return out
 
 
+def block(conn, w, *, on_date=None, weekday=None, week=None, period=None, reason="Proof block"):
+    """A block on the class (a `timetable_rule` of kind `block`, CP-27)."""
+    return _one(conn, "insert into timetable_rule (tenant_id, school_class_id, kind, on_date, weekday, week_code,"
+                      " period_id, reason) values (%s, %s, 'block', %s, %s, %s, %s, %s) returning id",
+                (w["tenant"], w["class"], on_date, weekday, week, w["period"][period] if period else None, reason))["id"]
+
+
+def limit(conn, w, subject, span, fewest=None, most=None):
+    """A subject's limit for the class (a `timetable_rule` of kind `limit`, CP-27); set again, it is changed."""
+    return _one(conn, "insert into timetable_rule (tenant_id, school_class_id, kind, subject_code, span, fewest, most)"
+                      " values (%s, %s, 'limit', %s, %s, %s, %s) on conflict (school_class_id, subject_code, span)"
+                      " where kind = 'limit' do update set fewest = excluded.fewest, most = excluded.most returning id",
+                (w["tenant"], w["class"], subject, span, fewest, most))["id"]
+
+
+def accepted(conn, key) -> list[dict]:
+    """The acceptances of one clash, as the one approval list keeps them (kind `timetable_clash`, CP-27)."""
+    return conn.execute("select * from approval where kind = 'timetable_clash' and target = %s order by seq",
+                        (key,)).fetchall()
+
+
 def teaching(w, number) -> list[dt.date]:
     """The fortnight's weekdays that are not a holiday."""
     return [d for d in w["fortnights"][number]["dates"] if d.isoweekday() <= 5 and d != w["holiday"]]
@@ -353,9 +369,9 @@ def _plan(c, w, fn):
                 entry = _one(c, "insert into plan_entry (tenant_id, school_class_id, fortnight_id, plan_key, ord,"
                                 " text, source, week_code) values (%s, %s, %s, %s, %s, %s, 'proof', %s) returning id",
                              (w["tenant"], w["class"], fn["id"], subj, n, text, wk))["id"]
-            c.execute("insert into session (tenant_id, school_class_id, school_day_id, period_id, subject_code,"
-                      " plan_entry_id, text) values (%s, %s, %s, %s, %s, %s, %s)",
-                      (w["tenant"], w["class"], day, w["period"][p], subj, entry, text))
+            c.execute("insert into session (tenant_id, school_class_id, school_day_id, period_id, subject_code, kind,"
+                      " plan_entry_id, text) values (%s, %s, %s, %s, %s, %s, %s, %s)",
+                      (w["tenant"], w["class"], day, w["period"][p], subj, kind, entry, text))
 
 
 def session_at(c, w, d: dt.date, p: str):
@@ -409,18 +425,20 @@ def clashes(c, w, number=2) -> list[dict]:
 def settle(c, w, number=2):
     """CP-7's per-class yes, which its gate on CP-6's approved step needs: draft the class's fortnight plan (the cycle
     must be frozen or aligned) and approve it as the coordinator, unless it came back already settled."""
-    plan = _one(c, "select public.fortnight_draft(%s, %s) as id", (w["class"], w["fortnights"][number]["id"]))["id"]
-    if _one(c, "select state from fortnight_plan where id = %s", (plan,))["state"] != "rolled_forward":
+    from engine.w2_print import fortnight_cycle as fc
+
+    fid = w["fortnights"][number]["id"]
+    if fc.draft(c, w["class"], fid, f"staff:{w['coordinator']['id']}") == "draft":
         c.execute("select set_config('app.staff_id', %s, true)", (str(w["coordinator"]["id"]),))
-        c.execute("select public.fortnight_approve(%s)", (plan,))
+        c.execute("select public.fortnight_approve(%s, %s)", (w["class"], fid))
         c.execute("select set_config('app.staff_id', '', true)")
-    return plan
+    return (w["class"], fid)
 
 
 def step(c, w, *states, number=2):
     """CP-6's cycle, one step at a time."""
     for s in states:
-        c.execute("update fortnight_cycle set state = %s where fortnight_id = %s", (s, w["fortnights"][number]["id"]))
+        c.execute("update fortnight set state = %s where id = %s", (s, w["fortnights"][number]["id"]))
 
 
 # ---- what the educator sees, and what is written ----------------------------------------------------------------
@@ -443,17 +461,28 @@ def shown(c, w, d: dt.date, p: str) -> dict:
 
 
 SNAP = {
-    "timetable_slot": "select * from timetable_slot where school_class_id = %(k)s order by id",
+    "timetable_rule": "select * from timetable_rule where school_class_id = %(k)s order by id",
     "session": "select * from session where school_class_id = %(k)s order by id",
     "plan_entry": "select * from plan_entry where school_class_id = %(k)s order by id",
     "materials_line_source": "select s.* from materials_line_source s join session x on x.id = s.session_id"
                              " where x.school_class_id = %(k)s order by s.line_id, s.session_id",
-    "timetable_move": "select * from timetable_move where school_class_id = %(k)s order by id",
+    "moves": "select * from change_log where table_name = 'session' and op = 'move' and row_id like %(k)s::text || ' %%'"
+             " order by at, id",
 }
 
 
+def moves(c, w) -> list[dict]:
+    """Every lesson moved by hand in the class, oldest first, as the one history log keeps them (CP-27), each read with
+    the names `timetable_move` gave: from and to date and period, what moved, reason, who and when."""
+    return [{"from_date": dt.date.fromisoformat(r["before"]["on_date"]), "from_period": r["before"]["period_id"],
+             "to_date": dt.date.fromisoformat(r["after"]["on_date"]), "to_period": r["after"]["period_id"],
+             "moved_kind": r["after"]["kind"], "moved_subject": r["after"].get("subject_code"),
+             "fortnight_id": r["row_id"].split(" ")[1], "reason": r["reason"], "who": r["staff_id"], "at": r["at"]}
+            for r in c.execute(SNAP["moves"], {"k": w["class"]}).fetchall()]
+
+
 def snapshot(c, w) -> dict:
-    needs(c, "public.timetable_move", "CP-12 (this scope)")
+    needs(c, "public.change_log", "CP-27 (the one history log)")
     return {name: c.execute(q, {"k": w["class"]}).fetchall() for name, q in SNAP.items()}
 
 

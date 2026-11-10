@@ -1,6 +1,6 @@
 """CP-22: what going live does to the fortnight's sessions, worked out before any write (specs/CP-22/design.md).
-Sessions on the frame's subject cells, per subject and week in plan order, are matched to the draft's lessons of that
-subject and week in date order. Reads only; `tt_live` writes. No model, no name."""
+The fortnight's subject lessons (`session.kind`), per subject and week in plan order, are matched to the draft's lessons
+of that subject and week in date order. Reads only; `tt_live` writes. No model, no name."""
 
 import datetime as dt
 from dataclasses import dataclass, field
@@ -38,7 +38,7 @@ class Plan:
 
 def _sessions(conn: db.Conn, i: need.Inputs, fn: dict) -> list[dict]:
     return conn.execute(
-        "select s.id, s.subject_code, s.state, s.planned, s.period_id::text as period_id, s.text, d.on_date,"
+        "select s.id, s.subject_code, s.kind, s.state, s.planned, s.period_id::text as period_id, s.text, d.on_date,"
         " pe.ord, pe.week_code, pe.text as line,"
         " exists (select 1 from materials_line_source m where m.session_id = s.id) as linked"
         " from session s join school_day d on d.id = s.school_day_id"
@@ -64,7 +64,7 @@ def _sorted_out(
     for s in _sessions(conn, i, fn):
         cell: Cell = (s["on_date"], s["period_id"])
         marked = s["state"] != "planned" or not s["planned"]
-        if i.frame.get((week.get(cell[0], ""), cell[0].isoweekday(), cell[1]), ("", None))[0] != "subject":
+        if s["kind"] != "subject":  # a fixed lesson, a specialist's: it stays where it is
             occupied.add(cell)
         elif marked and lesson_at.get(cell) == s["subject_code"]:
             pinned.add(cell)  # already marked, and the draft keeps it: not moved, not matched

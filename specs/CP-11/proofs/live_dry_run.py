@@ -18,8 +18,7 @@ from pathlib import Path
 import psycopg
 
 ROOT = Path(__file__).resolve().parents[3]
-TABLES = ["timetable_run", "timetable_slot", "timetable_block", "timetable_limit", "timetable_rule_edit", "session",
-          "plan_entry"]
+TABLES = ["timetable_run", "timetable_rule", "change_log", "session", "plan_entry"]  # the rules in one table (CP-27)
 CONTAINER = os.environ.get("ENGINE_CONTAINER", "deploy-engine-1")
 
 

@@ -20,7 +20,7 @@ test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 // A class and a week of the test's own: the week's rows are removed afterwards; the class is kept.
 const SECTION = "S7-TEST";
-const WEEK = "S7-WEEK";
+const WEEK = "2091-W34"; // an ISO week of its own: a week is a date since CP-27
 const LIST = `/papers/approve?section=${SECTION}&week=${WEEK}&kind=practice`;
 
 async function engine(path: string, body: object) {
@@ -39,15 +39,15 @@ async function engine(path: string, body: object) {
 }
 
 async function clearUp() {
-  await sql`delete from item_exposure where week = ${WEEK}`;
-  await sql`delete from prescription where week = ${WEEK}`;
-  await sql`delete from sheet_instance where week = ${WEEK}`;
+  await sql`delete from item_exposure where week = to_date(${WEEK}, 'IYYY-"W"IW')`;
+  await sql`delete from prescription where week = to_date(${WEEK}, 'IYYY-"W"IW')`;
+  await sql`delete from sheet_instance where week = to_date(${WEEK}, 'IYYY-"W"IW')`;
 }
 
 const papers = () =>
   sql<{ qr_code: string; worksheet: string }[]>`
     select si.qr_code, st.code as worksheet from sheet_instance si join sheet_template st on st.id = si.sheet_template_id
-    where si.section = ${SECTION} and si.week = ${WEEK} and si.child_id is not null order by si.qr_code`;
+    where si.section = ${SECTION} and si.week = to_date(${WEEK}, 'IYYY-"W"IW') and si.child_id is not null order by si.qr_code`;
 
 test.beforeAll(async () => {
   await aClass(sql, SECTION, "G2", ["Anya", "Bilal", "Chitra", "Dhruv"]);
@@ -91,7 +91,7 @@ test("a paper says which worksheet it is, and that worksheet's own page opens fr
 
 test("a spare is listed with the week it was printed for", async ({ page }) => {
   const spares = await sql<{ qr_code: string }[]>`
-    select qr_code from sheet_instance where section = ${SECTION} and week = ${WEEK} and child_id is null`;
+    select qr_code from sheet_instance where section = ${SECTION} and week = to_date(${WEEK}, 'IYYY-"W"IW') and child_id is null`;
   expect(spares.length).toBeGreaterThan(0);
   // spares are rows of the pack's table (goals/uxn4-papers-to-approve.yaml), after the children: read every page of it
   await page.goto(LIST);
@@ -116,7 +116,7 @@ test("a paper opens from its code: the page as printed, how it was drawn, and it
     join child c on c.id = p.child_id
     join sheet_instance si on si.id = p.sheet_instance_id
     join sheet_template st on st.id = si.sheet_template_id
-    where si.pdf_path is not null and c.section = ${SECTION} and p.week = ${WEEK}
+    where si.pdf_path is not null and c.section = ${SECTION} and p.week = to_date(${WEEK}, 'IYYY-"W"IW')
     order by si.created_at limit 1`;
   expect(paper, "a paper of the week, rendered").toBeTruthy();
 
@@ -151,7 +151,7 @@ test("the week's plan shows every child with a level and a reason", async ({ pag
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Worksheets");
   const [{ n }] = await sql<{ n: number }[]>`
     select count(*)::int as n from prescription p join child c on c.id = p.child_id
-    where c.section = ${SECTION} and p.week = ${WEEK} and p.kind = 'practice'`;
+    where c.section = ${SECTION} and p.week = to_date(${WEEK}, 'IYYY-"W"IW') and p.kind = 'practice'`;
   await page.goto(LIST);
   // every page of the pack's table: the children, then the spares (goals/uxn4-papers-to-approve.yaml)
   const lines: string[] = [];
@@ -185,14 +185,14 @@ test("every child's paper has its own code, and no two children share questions"
   const [{ shared }] = await sql<{ shared: number }[]>`
     select count(*)::int as shared from sheet_template a join sheet_template b
     on a.id < b.id and a.item_ids && b.item_ids
-    where a.week = ${WEEK} and b.week = ${WEEK} and a.child_id is not null and b.child_id is not null`;
+    where a.week = to_date(${WEEK}, 'IYYY-"W"IW') and b.week = to_date(${WEEK}, 'IYYY-"W"IW') and a.child_id is not null and b.child_id is not null`;
   expect(shared).toBe(0);
 });
 
 test("changing one child's level writes the reason and survives the next prescribe", async ({ page }) => {
   const [before] = await sql<{ id: string; difficulty: string; rule_fired: string }[]>`
     select p.id, p.difficulty, p.rule_fired from prescription p join child c on c.id = p.child_id
-    where c.section = ${SECTION} and p.week = ${WEEK} and c.roll_no = '1'`;
+    where c.section = ${SECTION} and p.week = to_date(${WEEK}, 'IYYY-"W"IW') and c.roll_no = '1'`;
   try {
     await page.goto(LIST);
     const row = page.getByRole("table", { name: "Each child's paper this week" }).locator("tbody tr").first();
@@ -217,7 +217,7 @@ test("changing one child's level writes the reason and survives the next prescri
 test("a level change with no reason is refused and nothing moves", async ({ page }) => {
   const [before] = await sql<{ id: string; difficulty: string }[]>`
     select p.id, p.difficulty from prescription p join child c on c.id = p.child_id
-    where c.section = ${SECTION} and p.week = ${WEEK} and c.roll_no = '2'`;
+    where c.section = ${SECTION} and p.week = to_date(${WEEK}, 'IYYY-"W"IW') and c.roll_no = '2'`;
   await page.goto(LIST);
   const row = page.getByRole("table", { name: "Each child's paper this week" }).locator("tbody tr").nth(1);
   await row.getByText("Change level").click();
@@ -234,7 +234,7 @@ test("approving the pack marks the papers printed", async ({ page }) => {
   // must not name someone as having approved it.
   const codes = await sql<{ id: string; print_status: string; approved_by: string | null; approved_at: Date | null }[]>`
     select id, print_status, approved_by, approved_at from sheet_instance
-    where section = ${SECTION} and week = ${WEEK} and kind = 'practice'`;
+    where section = ${SECTION} and week = to_date(${WEEK}, 'IYYY-"W"IW') and kind = 'practice'`;
   try {
     await page.goto(LIST);
     await page.getByRole("button", { name: /^Approve \d+ papers?\b/ }).click();
@@ -242,7 +242,7 @@ test("approving the pack marks the papers printed", async ({ page }) => {
 
     const [{ n }] = await sql<{ n: number }[]>`
       select count(*)::int as n from sheet_instance
-      where section = ${SECTION} and week = ${WEEK} and kind = 'practice' and print_status = 'printed'`;
+      where section = ${SECTION} and week = to_date(${WEEK}, 'IYYY-"W"IW') and kind = 'practice' and print_status = 'printed'`;
     expect(n).toBeGreaterThan(0);
     await expect(page.getByRole("table", { name: "Each child's paper this week" })).toContainText("printed");
   } finally {

@@ -9,7 +9,7 @@ rebuilt whenever it is built); the educator confirms it once, by name, and what 
 
 import json
 
-from engine.core import db, mistake_names, vocabulary
+from engine.core import db, mistake_names, vocabulary, weeks
 from engine.w2_print import focus_paper
 
 BY_MISTAKE = "reteach"  # the card's group whose children are grouped by the named mistake each repeats
@@ -113,7 +113,7 @@ def build(conn, section):
 
 def store(conn, section, week, card):
     """The week's card as `class_card` rows, one per rung: what was there for this section and week is replaced."""
-    conn.execute("delete from class_card where section = %s and week = %s", (section, week))
+    conn.execute("delete from class_card where section = %s and week = %s", (section, weeks.day(week)))
     rows = vocabulary.states(conn)
     # the rows' own columns: those ready to move up, and the others strong enough to need nothing (secure)
     up = [r["card_group"] for r in rows if r["move_up"]]
@@ -125,7 +125,7 @@ def store(conn, section, week, card):
             " select id, %s, %s, %s, %s::uuid[], %s, %s::uuid[], %s from tenant where slug = %s",
             (
                 section,
-                week,
+                weeks.day(week),
                 s["rung"],
                 [who for k in strong for who in g[k]],
                 json.dumps({c: r["children"] for c, r in g[BY_MISTAKE].items()}),

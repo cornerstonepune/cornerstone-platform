@@ -27,7 +27,7 @@ def _a_paper(conn, qr):
     template = conn.execute("select id from sheet_template order by code limit 1").fetchone()["id"]
     conn.execute(
         "insert into sheet_instance (tenant_id, qr_code, sheet_template_id, section, week, kind, print_status)"
-        " values (%s, %s, %s, 'GIVEN-TEST', '2026-W43', 'practice', 'new')",
+        " values (%s, %s, %s, 'GIVEN-TEST', '2026-10-19', 'practice', 'new')",
         (t, qr, template),
     )
     return t

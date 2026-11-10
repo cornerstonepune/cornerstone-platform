@@ -39,7 +39,7 @@ def child(conn):
         "insert into pii.child (tenant_id, child_id, first_name) values (%s, %s, %s)", (t, kid, NAME)
     )
     tpl = conn.execute(
-        "insert into sheet_template (tenant_id, band, child_id, week) values (%s, 'G2', %s, 'PR-TEST') returning id",
+        "insert into sheet_template (tenant_id, band, child_id, week) values (%s, 'G2', %s, '2026-09-28') returning id",
         (t, kid),
     ).fetchone()["id"]
     inst = conn.execute(
@@ -743,7 +743,7 @@ def test_one_answer_to_a_question_of_two_skills_counts_once(conn):
     ).fetchone()["id"]
     conn.execute("insert into pii.child (tenant_id, child_id, first_name) values (%s, %s, 'Onea')", (t, kid))
     tpl = conn.execute(
-        "insert into sheet_template (tenant_id, band, child_id, week) values (%s, 'G2', %s, 'ONE-ANSWER') returning id",
+        "insert into sheet_template (tenant_id, band, child_id, week) values (%s, 'G2', %s, '2026-09-28') returning id",
         (t, kid),
     ).fetchone()["id"]
     inst = conn.execute(

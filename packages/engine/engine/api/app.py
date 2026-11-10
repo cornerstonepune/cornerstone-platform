@@ -39,6 +39,7 @@ from engine.api.routes import (
     voice,
     week,
 )
+from engine.core.weeks import NotAWeek
 
 
 @asynccontextmanager
@@ -100,3 +101,9 @@ def in_progress(request: Request, exc: InProgress) -> JSONResponse:
     # A genuine concurrent duplicate (the same Idempotency-Key arrived twice before the first
     # finished) is the caller's to retry, not this process's to guess at — 409, not 500.
     return JSONResponse(status_code=409, content={"detail": str(exc)})
+
+
+@app.exception_handler(NotAWeek)
+def not_a_week(request: Request, exc: NotAWeek) -> JSONResponse:
+    # a week is named by its ISO label (CP-27: weeks are dates); any other is refused in words, never guessed
+    return JSONResponse(status_code=422, content={"detail": str(exc)})

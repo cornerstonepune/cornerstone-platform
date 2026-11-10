@@ -45,7 +45,7 @@ test.beforeAll(async () => {
     facts: { grade: "Grade 2", from: "2026-10-01", to: "2026-10-10", answers: 24, can_do: [], nearly: [], improving: [], working_on: [], next: null },
     draft: { summary: "[child] has worked on addition and subtraction.", can_do: [], working_on: [], at_home: [] },
   };
-  await sql`insert into parent_note (tenant_id, child_id, week, body) values (${tenant_id}, ${kids.Ishaan}, '2026-W41', ${JSON.stringify(body)})`;
+  await sql`insert into parent_note (tenant_id, child_id, week, body) values (${tenant_id}, ${kids.Ishaan}, to_date('2026-W41', 'IYYY-"W"IW'), ${JSON.stringify(body)})`;
   // Mira's one answer waits for a person: her page is a page (goals/ux4-class-and-child.yaml), with nothing signed off
   const [w] = await sql<{ id: string; item_ids: string[] }[]>`
     select id, item_ids from sheet_template where source = 'library' and retired_at is null and band = 'G2'

@@ -56,6 +56,9 @@ WAITED = {
 }
 
 
+ROWS_WEEK = "2090-01-02"  # the Monday of the week a made-up paper is for (weeks are dates since CP-27)
+
+
 def a_read_paper(conn, answers, path="scan.pdf", paper="TEST-P1", fmt="column"):
     """One child's paper, read: a child, the worksheet it was printed from, its copy, the scan and one answer per
     entry of `answers`. Each entry is a dict of `status` (correct / wrong / blank / needs_teacher), `read` (what
@@ -67,7 +70,7 @@ def a_read_paper(conn, answers, path="scan.pdf", paper="TEST-P1", fmt="column"):
     tpl = conn.execute(
         "insert into sheet_template (tenant_id, band, child_id, week, key, batch_id) values (%s, 'G2', %s, %s, %s, %s)"
         " returning id",
-        (t, child, f"ROWS-{tag[:8]}", json.dumps({"code": paper}), paper),
+        (t, child, ROWS_WEEK, json.dumps({"code": paper}), paper),
     ).fetchone()["id"]
     inst = conn.execute(
         "insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, print_status)"

@@ -28,7 +28,9 @@ def test_a_fifteen_day_fortnight_is_live_on_every_date_and_its_holiday_has_no_le
     holiday = day_view(conn, w, [HOLIDAY])[0]
     assert holiday["periods"] == [], "a holiday shows lessons"
     fid = w["fortnights"][2]["id"]
-    on = {r["valid_from"]: r["n"] for r in conn.execute(
-        "select valid_from, count(*) as n from timetable_slot where fortnight_id = %s group by 1", (fid,)).fetchall()}
-    assert HOLIDAY not in on, "the holiday has timetable rows of the fortnight"
-    assert MONDAY_AGAIN in on and MONDAY_B in on, "a Monday of week B has no live row"
+    on = {r["on_date"]: r["n"] for r in conn.execute(
+        "select d.on_date, count(*) as n from session s join school_day d on d.id = s.school_day_id"
+        " join fortnight f on f.id = %s and d.on_date between f.starts_on and f.ends_on"
+        " where s.school_class_id = %s group by 1", (fid, w["class"])).fetchall()}
+    assert HOLIDAY not in on, "the holiday has lessons of the fortnight"
+    assert MONDAY_AGAIN in on and MONDAY_B in on, "a Monday of week B has no lesson"

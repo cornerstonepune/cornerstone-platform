@@ -100,7 +100,7 @@ def test_the_card_is_kept_as_the_weeks_rows_and_confirmed_once_by_name(conn, sec
     assert card.store(conn, name, "2026-W40", built) == 2
     assert card.store(conn, name, "2026-W40", built) == 2, "rebuilding replaces the week's rows"
     rows = conn.execute(
-        "select rung_code, move_up, reteach, groups from class_card where section = %s and week = '2026-W40'",
+        "select rung_code, move_up, reteach, groups from class_card where section = %s and week = '2026-09-28'",
         (name,),
     ).fetchall()
     r24 = next(r for r in rows if r["rung_code"] == "R24")

@@ -80,10 +80,7 @@ def test_every_route_needs_the_key_and_a_staff_sign_in(world):
         assert _post(client, path, {"actor": w["email"], **body}, key=None).status_code == 401
         r = _post(client, path, {"actor": "nobody@cornerstone.test", **body})
         assert r.status_code == 403, (path, r.json())
-    assert (
-        db.one(conn, "select state from fortnight_cycle where fortnight_id = %s", (w["fortnight"],))["state"]
-        == "planning"
-    )
+    assert fc.standing(conn, w["fortnight"])["state"] == "planning"
 
 
 def test_a_fortnight_is_read_and_moved_one_step_at_a_time(world):

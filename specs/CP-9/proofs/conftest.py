@@ -222,7 +222,7 @@ def a_paper(conn, t, child, answers: list[tuple[str, str]]) -> list:
     tag = uuid.uuid4().hex.upper()
     tpl = conn.execute(
         "insert into sheet_template (tenant_id, band, child_id, week, key, batch_id) values (%s, 'G2', %s, %s, %s, %s)"
-        " returning id", (t, child, f"CP9-{tag[:8]}", json.dumps({"code": "CP9-P1"}), "CP9-P1")).fetchone()["id"]
+        " returning id", (t, child, "2099-01-05", json.dumps({"code": "CP9-P1"}), "CP9-P1")).fetchone()["id"]  # a week: a date (CP-27)
     inst = conn.execute(
         "insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, print_status)"
         " values (%s, %s, %s, %s, 'returned') returning id", (t, f"CS{tag}", tpl, child)).fetchone()["id"]

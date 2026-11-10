@@ -24,6 +24,10 @@ map_text = (ROOT / "workflows.json").read_text()
 removed = {(n if "." in n else f"public.{n}").lower()
            for p in (ROOT / "supabase/migrations").glob("*.sql")
            for pair in REMOVED.findall(re.sub(r"--[^\n]*", "", p.read_text())) for n in pair if n}
+# a CP-27 migration that retires each table with rows and drops each empty one, by a loop over the names it lists
+removed |= {f"public.{n}" for p in (ROOT / "supabase/migrations").glob("*.sql")
+            for lst in re.findall(r"going constant text\[\] := array\[(.*?)\];", p.read_text(), re.S)
+            for n in re.findall(r"'([a-z_]+)'", lst)}
 
 missing = []
 for m in new:

@@ -69,7 +69,8 @@ def test_a_holiday_has_no_lines(world):
         "campus_id"
     ]
     world.c.execute(
-        "insert into school_day (tenant_id, campus_id, on_date, kind) values (%s, %s, %s, 'holiday')",
+        "insert into school_day (tenant_id, campus_id, on_date, kind) values (%s, %s, %s, 'holiday')"
+        " on conflict (tenant_id, campus_id, on_date) do update set kind = 'holiday'",  # the world made it a school day
         (world.t, campus, day),
     )
     world.freeze(9)

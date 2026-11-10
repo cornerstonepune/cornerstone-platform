@@ -2,8 +2,9 @@
 settings rows exist.
 
 In one read-only transaction on the live database: for every school with a teaching fortnight that has not ended, the
-one containing today (Asia/Kolkata), or the next one when today falls in a break, has a `fortnight_cycle` row; every
-school has its four `fortnight.*` step settings; `fortnight_edit` exists. Prints counts only, never a row or a name.
+one containing today (Asia/Kolkata), or the next one when today falls in a break, has its state (`fortnight.state`
+since CP-27; a `fortnight_cycle` row before); every school has its four `fortnight.*` step settings; the history,
+`change_log`, exists. Prints counts only, never a row or a name.
 """
 
 import os
@@ -20,8 +21,11 @@ def main() -> int:
         print("DATABASE_URL is not set: the live check needs the production database")
         return 1
     with psycopg.connect(url, options="-c default_transaction_read_only=on", connect_timeout=15) as conn:
-        missing = [t for t in ("fortnight_cycle", "fortnight_edit")
+        missing = [t for t in ("change_log",)
                    if conn.execute("select to_regclass(%s) is null", (f"public.{t}",)).fetchone()[0]]
+        if conn.execute("select not exists (select from information_schema.columns where table_schema = 'public'"
+                        " and table_name = 'fortnight' and column_name = 'state')").fetchone()[0]:
+            missing.append("fortnight.state")
         if missing:
             print(f"not on the live database: {', '.join(missing)}")
             return 1
@@ -29,8 +33,7 @@ def main() -> int:
             "with today as (select (now() at time zone 'Asia/Kolkata')::date as d),"
             " current_fn as (select distinct on (f.tenant_id) f.tenant_id, f.id from fortnight f, today"
             "   where f.kind = 'teaching' and f.ends_on >= today.d order by f.tenant_id, f.starts_on)"
-            " select count(*), count(c.fortnight_id) from current_fn cf"
-            " left join fortnight_cycle c on c.fortnight_id = cf.id").fetchone()
+            " select count(*), count(f.state) from current_fn cf join fortnight f on f.id = cf.id").fetchone()
         tenants = conn.execute("select count(*) from tenant").fetchone()[0]
         short = conn.execute(
             "select count(*) from tenant t where (select count(*) from config c where c.tenant_id = t.id"

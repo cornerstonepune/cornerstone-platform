@@ -13,7 +13,7 @@ from engine.assess import graph
 from engine.core import db
 from engine.w2_print import focus_paper, maker, seen
 
-WEEK = "T3W1-seen-test"
+WEEK = "2091-W06"  # a week of its own (weeks are dates since CP-27)
 SECTION = "SEENTEST"
 BY = "educator@school.test"
 EASY = [{"skill_set": "SUB.3D3D", "level": "Easy", "n": 4}]

@@ -47,7 +47,8 @@ def _written(conn, tenant, key, wrote, state="confirmed"):
         (tenant, uuid.uuid4().hex[:6]),
     ).fetchone()["id"]
     t = conn.execute(
-        "insert into sheet_template (tenant_id, band, week) values (%s, 'G2', 'W1') returning id", (tenant,)
+        "insert into sheet_template (tenant_id, band, week) values (%s, 'G2', '2026-09-28') returning id",
+        (tenant,),
     ).fetchone()["id"]
     si = conn.execute(
         "insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id) values (%s,%s,%s,%s) returning id",

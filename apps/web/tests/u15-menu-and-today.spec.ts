@@ -53,12 +53,12 @@ async function testChild(): Promise<string> {
     facts: { grade: "Grade 2", from: "2026-10-01", to: "2026-10-10", answers: 6, can_do: [], nearly: [], improving: [], working_on: [], next: null },
     draft: { summary: "[child] has worked on subtraction this fortnight.", can_do: [], working_on: [], at_home: [] },
   };
-  await sql`insert into parent_note (tenant_id, child_id, week, body) values (${tenant_id}, ${child.id}, ${WEEK}, ${JSON.stringify(body)})`;
+  await sql`insert into parent_note (tenant_id, child_id, week, body) values (${tenant_id}, ${child.id}, to_date(${WEEK}, 'IYYY-"W"IW'), ${JSON.stringify(body)})`;
   return child.id;
 }
 
 async function clearUp() {
-  await sql`delete from item_exposure where week = ${WEEK} and child_id in (select id from child where section = ${SECTION})`;
+  await sql`delete from item_exposure where week = to_date(${WEEK}, 'IYYY-"W"IW') and child_id in (select id from child where section = ${SECTION})`;
   await sql`delete from prescription where child_id in (select id from child where section = ${SECTION})`;
   await sql`delete from sheet_instance where section = ${SECTION}`;
   await sql`delete from parent_note where child_id in (select id from child where section = ${SECTION})`;

@@ -1,5 +1,6 @@
-"""CP-7 item 7: the fortnight cannot be marked approved (CP-6's step, `fortnight_cycle` aligned -> approved) while any
-class's fortnight is not settled or no longer matches the timetable (design, rule 4 "Gate").
+"""CP-7 item 7: the fortnight cannot be marked approved (CP-6's step, `fortnight.state` aligned -> approved) while any
+class's fortnight is not settled or no longer matches the timetable (design, rule 4 "Gate"). Since CP-27 the timetable
+is the fortnight's lessons: one changed after its yes makes the class unsettled again.
 
 Two K2 classes, A and B, each with a timetable in Fortnight 9. Message stem from the design's Refusals table:
 `fortnight <n> cannot be approved: class <id> is not settled` (23514).
@@ -20,8 +21,7 @@ def aligned_fn9(world):
 
 
 def cycle_state(world, n):
-    return world.c.execute("select state from fortnight_cycle where fortnight_id = %s", (world.fn[n],)).fetchone()[
-        "state"]
+    return world.c.execute("select state from fortnight where id = %s", (world.fn[n],)).fetchone()["state"]
 
 
 def test_7_refused_while_a_class_has_no_drafted_fortnight(world):
@@ -67,8 +67,8 @@ def test_7_refused_when_a_settled_fortnight_no_longer_matches_the_timetable(worl
     aligned_fn9(world)
     world.settle(world.a, 9)
     world.settle(world.b, 9)
-    # after A was settled its frame changes (allowed with a reason under CP-6's freeze)
-    world.change(world.a, "B", 4, 2, world.start[9], "Fake lesson changed late", reason="Fake reason: late change")
+    # after A was settled one of its lessons changes (allowed with a reason under CP-6's freeze)
+    world.relesson(world.a, 9, "B", 4, 2, "Fake lesson changed late")
     refused(world.move, 9, "approved", stem=gate_stem(world, 9, world.a), code="23514")
     assert cycle_state(world, 9) == "aligned"
     world.settle(world.a, 9)  # drafted again and approved: the gate opens

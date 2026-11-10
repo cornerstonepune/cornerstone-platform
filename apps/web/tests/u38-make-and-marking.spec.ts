@@ -82,11 +82,11 @@ test.beforeAll(async () => {
     sheet[who] = { id, title: ws[i].title };
   }
   // Dev's home assessment this week, approved by the educator
-  await sql`delete from sheet_instance where child_id in ${sql(Object.values(kids))} and kind = 'focus' and week = ${THIS}`;
+  await sql`delete from sheet_instance where child_id in ${sql(Object.values(kids))} and kind = 'focus' and week = to_date(${THIS}, 'IYYY-"W"IW')`;
   await sql`
     insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, week, kind, print_status, approved_by,
                                 approved_at)
-    values (${tenant}, ${QR.home}, ${ws[0].id}, ${kids.Dev}, ${THIS}, 'focus', 'new', ${EDUCATOR.email}, now())
+    values (${tenant}, ${QR.home}, ${ws[0].id}, ${kids.Dev}, to_date(${THIS}, 'IYYY-"W"IW'), 'focus', 'new', ${EDUCATOR.email}, now())
     on conflict (tenant_id, qr_code) do update set week = excluded.week`;
   const password = `scrypt$${SALT}$${scryptSync(PASSWORD, SALT, 64).toString("hex")}`;
   await sql`
@@ -95,7 +95,7 @@ test.beforeAll(async () => {
     where key = 'app.staff'`;
 });
 test.afterAll(async () => {
-  await sql`delete from sheet_instance where child_id in ${sql(Object.values(kids))} and kind = 'focus' and week = ${THIS}`;
+  await sql`delete from sheet_instance where child_id in ${sql(Object.values(kids))} and kind = 'focus' and week = to_date(${THIS}, 'IYYY-"W"IW')`;
   await sql`
     update config set value = (select coalesce(jsonb_agg(s), '[]'::jsonb) from jsonb_array_elements(value) s
                                where s ->> 'email' <> ${EDUCATOR.email})

@@ -4,6 +4,7 @@ import { sql } from "./db";
 import type { Difficulty } from "./queries";
 import { EVERY_CLASS, type Scope } from "./scope";
 import { skillTaughtFor } from "./taught";
+import { weekSql } from "./queries-papers";
 
 // A question's own numbers, by kind: `a op b` for most, `addends` for a long column, `base` for a
 // number wall, `left`/`right` for a balance (null is the box the child fills), `planted` for the
@@ -193,7 +194,7 @@ export async function printedPaper(qr: string): Promise<PrintedPaper | undefined
   const rows = await sql<PrintedPaper[]>`
     select si.qr_code, si.print_status, si.approved_by, si.pdf_path is not null as rendered,
            coalesce((si.key ->> 'pages')::int, (st.key ->> 'pages')::int, 1) as pages,
-           coalesce(si.week, st.week) as week, st.difficulty, st.source, si.key ->> 'how' as how, si.key -> 'areas' as areas,
+           ${weekSql("si", "st")} as week, st.difficulty, st.source, si.key ->> 'how' as how, si.key -> 'areas' as areas,
            coalesce(s.name, (select string_agg(distinct s2.name, ' · ') from item i2
               join skill s2 on s2.tenant_id = i2.tenant_id and s2.code = i2.skill_set_code
               where i2.id = any(st.item_ids))) as skill_set_name,

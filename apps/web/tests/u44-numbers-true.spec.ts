@@ -55,7 +55,7 @@ test.beforeAll(async () => {
   await sql`delete from sheet_instance where qr_code = ${QR.home}`;
   await sql`
     insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, week, kind, print_status)
-    values (${tenant}, ${QR.home}, ${ws[0].id}, ${mine.Bina}, ${THIS}, 'focus', 'new')`;
+    values (${tenant}, ${QR.home}, ${ws[0].id}, ${mine.Bina}, to_date(${THIS}, 'IYYY-"W"IW'), 'focus', 'new')`;
   const password = `scrypt$${SALT}$${scryptSync(PASSWORD, SALT, 64).toString("hex")}`;
   await sql`
     update config set value = (select coalesce(jsonb_agg(s), '[]'::jsonb) from jsonb_array_elements(value) s

@@ -12,7 +12,7 @@ sys.path.insert(0, str(ROOT / "packages" / "engine"))
 
 from engine.core import db
 
-TABLES = ("timetable_move", "timetable_clash_accept")
+TABLES = ("change_log", "approval")  # since CP-27: a move a history row, an acceptance an approval row
 
 
 def main() -> int:

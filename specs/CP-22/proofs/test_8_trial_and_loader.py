@@ -1,6 +1,7 @@
 """CP-22 item 8 (the parts that run off the box): a trial run shows what would change, date by date, and writes
 nothing; loading the school's sheet again refuses a fortnight that is live."""
 
+import json
 import uuid
 
 from conftest import ROOT, generated, go_live, ins, needs, run_with, snapshot, swapped, teaching, world
@@ -45,13 +46,13 @@ def test_loading_the_schools_sheet_again_refuses_a_live_fortnight(conn, engine, 
     fn = conn.execute("select id from fortnight where academic_year_id = %s and number = 10", (year,)).fetchone()["id"]
 
     needs(conn, "public.timetable_run", "CP-11 (the generator, issue #459)")
-    needs(conn, "public.timetable_live", "CP-22 itself")
+    needs(conn, "public.approval", "CP-27 (the one approval list; a draft put live is its row)")
     staff = conn.execute("insert into staff (tenant_id, campus_id) values (%s, %s) returning id",
                          (t, campus)).fetchone()["id"]
     run = ins(conn, "timetable_run", tenant_id=t, school_class_id=klass, fortnight_id=fn, outcome="placed",
               input_text="proof", draft="[]", solve_seconds=1)
-    ins(conn, "timetable_live", tenant_id=t, school_class_id=klass, fortnight_id=fn, run_id=run, state_hash="proof",
-        discarded=False, who=staff)
+    ins(conn, "approval", tenant_id=t, kind="timetable_live", target=f"{klass} {fn}", decision="go_live", by=str(staff),
+        detail=json.dumps({"run_id": str(run), "state_hash": "proof", "discarded": False}))
     gone = conn.execute(
         "delete from session where id = (select s.id from session s join school_day d on d.id = s.school_day_id"
         " join fortnight f on f.id = %s and d.on_date between f.starts_on and f.ends_on"

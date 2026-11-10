@@ -1,9 +1,11 @@
 """CP-22: a placed draft (CP-11's `timetable_run`) goes live for one class and one fortnight (specs/CP-22/design.md).
 
-A live fortnight is a layer of dated `timetable_slot` rows (`fortnight_id` set, valid for one date each) over the standing
-frame, which is never touched; the day page prefers the layer. Sessions already planned on the frame's subject cells move
-to the draft's lessons of their subject and week in plan order, keeping their id, plan line, text and materials links
-(whose dates follow). Every check runs before any write; a refusal names its reason and the lessons it stops on, and writes
+The timetable of a date is its lessons (`session`, CP-27): the frame is never touched. The fortnight's planned subject
+lessons move to the draft's lessons of their subject and week in plan order, keeping their id, plan line, text and
+materials links (whose dates follow); a draft lesson no session takes is a new lesson in the frame's words for its subject,
+and a fortnight that had no lessons gets the frame's fixed and specialists' lessons too. Who put which draft live, and the
+fortnight as it was written, is an approval row (kind `timetable_live`). Every check runs before any write; a refusal
+names its reason and the lessons it stops on, and writes
 nothing. `dry` works everything out and writes nothing. Code decides everything here; no model, no name."""
 
 import datetime as dt
@@ -100,73 +102,65 @@ def _school_days(conn: db.Conn, i: need.Inputs) -> dict[dt.date, Any]:
 
 
 def _hash(conn: db.Conn, i: need.Inputs, fn: dict) -> str:
-    """The fortnight as it stands: its layer rows and its sessions, so a later go-live sees a hand change."""
-    layer = conn.execute(
-        "select valid_from::text as d, period_id::text as p, kind, subject_code, text from timetable_slot"
-        " where school_class_id = %s and fortnight_id = %s order by 1, 2",
-        (i.class_id, i.fortnight_id),
-    ).fetchall()
+    """The fortnight as it stands, its lessons, so a later go-live sees a hand change."""
     sessions = conn.execute(
-        "select s.id::text as id, d.on_date::text as d, s.period_id::text as p, s.plan_entry_id::text as pe, s.state,"
-        " s.text from session s join school_day d on d.id = s.school_day_id"
+        "select s.id::text as id, d.on_date::text as d, s.period_id::text as p, s.kind, s.subject_code,"
+        " s.plan_entry_id::text as pe, s.state, s.text from session s join school_day d on d.id = s.school_day_id"
         " where s.school_class_id = %s and d.on_date between %s and %s order by 2, 3",
         (i.class_id, fn["starts_on"], fn["ends_on"]),
     ).fetchall()
-    return hashlib.sha256(
-        json.dumps([[dict(r) for r in layer], [dict(r) for r in sessions]]).encode()
-    ).hexdigest()
+    return hashlib.sha256(json.dumps([dict(r) for r in sessions]).encode()).hexdigest()
 
 
-# ---- the layer and the writes -----------------------------------------------------------------------------------------
+# ---- the writes ---------------------------------------------------------------------------------------------------
 
 
-def _layer(conn: db.Conn, i: need.Inputs, draft: list[dict]) -> list[tuple]:
-    """One row per teaching date and period: the draft's lesson, else the frame's fixed or specialist cell, else empty
-    (with a block's reason as its text)."""
+def _new_lessons(conn: db.Conn, i: need.Inputs, fn: dict, draft: list[dict], plan: Plan) -> list[tuple]:
+    """The lessons the fortnight is short of once the plan's moves are made: a draft lesson no session takes (in the
+    frame's words for its subject), and, for a fortnight that had no lessons, the frame's fixed and specialists' cells."""
     frame = {
-        (r["week_code"], r["weekday"], r["period_id"]): (r["kind"], r["subject_code"], r["text"])
+        (r["week_code"], r["weekday"], r["period_id"]): (r["cell"], r["subject_code"], r["text"])
         for r in conn.execute(
-            "select week_code, weekday, period_id::text as period_id, kind, subject_code, text from timetable_slot"
-            " where school_class_id = %s and valid_to is null",
+            "select week_code, weekday, period_id::text as period_id, cell, subject_code, text from timetable_rule"
+            " where school_class_id = %s and kind = 'frame' and valid_to is null",
             (i.class_id,),
         ).fetchall()
     }
     words = {subj: text for kind, subj, text in frame.values() if kind == "subject" and subj}
-    lesson_at = {(dt.date.fromisoformat(e["date"]), str(e["period_id"])): e["subject_code"] for e in draft}
+    held = {
+        (r["on_date"], r["period_id"])
+        for r in conn.execute(
+            "select d.on_date, s.period_id::text as period_id from session s join school_day d on d.id = s.school_day_id"
+            " where s.school_class_id = %s and d.on_date between %s and %s",
+            (i.class_id, fn["starts_on"], fn["ends_on"]),
+        ).fetchall()
+    }
+    gone = {(s["on_date"], s["period_id"]) for s, _ in plan.moves} | {
+        (s["on_date"], s["period_id"]) for s in plan.removed
+    }
+    taken = (held - gone) | {cell for _, cell in plan.moves}
     rows = []
-    for d in i.days:
-        for p in i.periods:
-            cell = frame.get((d.week, d.date.isoweekday(), p["id"]), ("empty", None, ""))
-            if subject := lesson_at.get((d.date, p["id"])):
-                cell = ("subject", subject, words.get(subject, subject))
-            elif cell[0] not in ("fixed", "specialist"):
-                cell = ("empty", None, "; ".join(b["reason"] for b in need.blocked(i, d, p["id"])))
+    for e in draft:
+        cell = (dt.date.fromisoformat(e["date"]), str(e["period_id"]))
+        if cell not in taken:
             rows.append(
-                (
-                    i.tenant_id,
-                    i.class_id,
-                    p["id"],
-                    d.week,
-                    d.date.isoweekday(),
-                    *cell,
-                    d.date,
-                    d.date,
-                    i.fortnight_id,
-                )
+                (*cell, "subject", e["subject_code"], words.get(e["subject_code"], e["subject_code"]))
             )
+    if not held:
+        for d in i.days:
+            for p in i.periods:
+                kind, subject, text = frame.get((d.week, d.date.isoweekday(), p["id"]), ("empty", None, ""))
+                if kind in ("fixed", "specialist"):
+                    rows.append((d.date, p["id"], kind, subject, text))
     return rows
 
 
-def _write(conn: db.Conn, i: need.Inputs, layer: list[tuple], plan: Plan, days: dict[dt.date, Any]) -> None:
+def _write(conn: db.Conn, i: need.Inputs, new: list[tuple], plan: Plan, days: dict[dt.date, Any]) -> None:
     """The session key is immediate, so sessions that change place are taken out together (with their materials links,
-    which the delete would cascade) and put back at the same id in their new cells."""
-    conn.execute(
-        "delete from timetable_slot where school_class_id = %s and fortnight_id = %s",
-        (i.class_id, i.fortnight_id),
-    )
+    which the delete would cascade) and put back at the same id in their new cells; then the lessons it is short of."""
     moving = [s["id"] for s, _ in plan.moves]
     held = conn.execute(
-        "select s.id, s.tenant_id, s.school_class_id, s.subject_code, s.led_by_staff_id, s.state, s.planned,"
+        "select s.id, s.tenant_id, s.school_class_id, s.subject_code, s.kind, s.led_by_staff_id, s.state, s.planned,"
         " s.plan_entry_id, s.text from session s where s.id = any(%s)",
         (moving,),
     ).fetchall()
@@ -185,22 +179,22 @@ def _write(conn: db.Conn, i: need.Inputs, layer: list[tuple], plan: Plan, days: 
     }
     with conn.cursor() as cur:
         cur.executemany(
-            "insert into timetable_slot (tenant_id, school_class_id, period_id, week_code, weekday, kind, subject_code,"
-            " text, valid_from, valid_to, fortnight_id) values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
-            layer,
-        )
-        cur.executemany(
             "delete from session where id = %s", [(x,) for x in [*moving, *(s["id"] for s in plan.removed)]]
         )
         cur.executemany(
-            "insert into session (id, tenant_id, school_class_id, school_day_id, period_id, subject_code,"
-            " led_by_staff_id, state, planned, plan_entry_id, text) values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+            "insert into session (id, tenant_id, school_class_id, school_day_id, period_id, subject_code, kind,"
+            " led_by_staff_id, state, planned, plan_entry_id, text) values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
             [
                 (h["id"], h["tenant_id"], h["school_class_id"], days[where[h["id"]][0]], where[h["id"]][1],
-                 h["subject_code"], h["led_by_staff_id"], h["state"], h["planned"], h["plan_entry_id"], h["text"])
+                 h["subject_code"], h["kind"], h["led_by_staff_id"], h["state"], h["planned"], h["plan_entry_id"], h["text"])
                 for h in held
             ],
         )  # fmt: skip
+        cur.executemany(
+            "insert into session (tenant_id, school_class_id, school_day_id, period_id, kind, subject_code, text)"
+            " values (%s, %s, %s, %s, %s, %s, %s)",
+            [(i.tenant_id, i.class_id, days[d], p, kind, subject, text) for d, p, kind, subject, text in new],
+        )
         cur.executemany(
             "insert into materials_line_source (line_id, session_id, activity_code, on_date, quantity)"
             " values (%s, %s, %s, %s, %s)",
@@ -236,8 +230,9 @@ def go_live(
     if fc.is_frozen(conn, i.tenant_id, fn["starts_on"]) and not (reason or "").strip():
         raise Refused(f"fortnight {number} is frozen: give a reason (--reason) to put a draft live in it.")
     last = conn.execute(
-        "select state_hash from timetable_live where school_class_id = %s and fortnight_id = %s order by at desc limit 1",
-        (i.class_id, i.fortnight_id),
+        "select detail ->> 'state_hash' as state_hash from approval where kind = 'timetable_live' and target = %s"
+        " order by seq desc limit 1",
+        (f"{i.class_id} {i.fortnight_id}",),
     ).fetchone()
     changed = last is not None and _hash(conn, i, fn) != last["state_hash"]
     if changed and not discard:
@@ -245,7 +240,7 @@ def go_live(
             "this fortnight was changed since it went live; say --discard-changes to overwrite those changes."
         )
     plan = sessions_plan.plan(conn, i, fn, run["draft"])
-    layer = _layer(conn, i, run["draft"])
+    new = _new_lessons(conn, i, fn, run["draft"], plan)
     lessons: dict[dt.date, int] = {}
     for e in run["draft"]:
         d = dt.date.fromisoformat(e["date"])
@@ -259,15 +254,17 @@ def go_live(
         conn,
         [i.fortnight_id],
         reason=reason,
-        table="timetable_slot",
+        table="session",
         record_id=i.class_id,
         op="update",
         actor=who,
     )
-    _write(conn, i, layer, plan, days)
+    _write(conn, i, new, plan, days)
     conn.execute(
-        "insert into timetable_live (tenant_id, school_class_id, fortnight_id, run_id, state_hash, discarded, reason, who)"
-        " values (%s, %s, %s, %s, %s, %s, %s, %s)",
-        (i.tenant_id, i.class_id, i.fortnight_id, run["id"], _hash(conn, i, fn), changed, reason, who),
-    )
+        "insert into approval (tenant_id, kind, target, decision, by, reason, detail, created_at) values (%s,"
+        " 'timetable_live', %s, 'go_live', %s, %s, jsonb_build_object('run_id', %s::text, 'state_hash', %s::text,"
+        " 'discarded', %s::boolean), clock_timestamp())",
+        (i.tenant_id, f"{i.class_id} {i.fortnight_id}", str(who), (reason or "").strip() or None, str(run["id"]),
+         _hash(conn, i, fn), changed),
+    )  # fmt: skip
     return report

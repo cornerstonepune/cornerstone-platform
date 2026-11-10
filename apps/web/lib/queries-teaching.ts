@@ -40,9 +40,10 @@ export async function teaching(scope: Scope): Promise<TeachingTopic[]> {
       left join child ch on ch.id = si.child_id
       where si.print_status <> 'void' and s.topic_code is not null and ${inScope(scope, sql`coalesce(si.section, ch.section)`)}`,
     sql<{ topic: string }[]>`
-      select distinct s.topic_code as topic from week_declaration w
-      join skill s on s.code = any(w.skill_sets)
-      where w.week = ${week} and s.topic_code is not null and ${inScope(scope, sql`w.section`)}`,
+      select distinct s.topic_code as topic from approval w
+      join skill s on s.tenant_id = w.tenant_id and s.code in (select jsonb_array_elements_text(w.detail -> 'skill_sets'))
+      where w.kind = 'week' and w.detail ->> 'week' = ${week} and s.topic_code is not null
+        and ${inScope(scope, sql`(w.detail ->> 'section')`)}`,
     sql<{ topic: string; colour: string; n: number }[]>`
       select s.topic_code as topic, cs.colour, count(*)::int as n
       from child_skill_state k

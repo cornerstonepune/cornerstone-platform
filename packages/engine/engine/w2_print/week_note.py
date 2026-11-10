@@ -3,7 +3,8 @@
 An educator says in their own words what the class did this week. The engine proposes which of that grade's skill sets
 it covered: one yes/no per skill set, asked of Jev in one call (ADR 0036), each with its probability; those at or
 above `week.skill_yes_above` come ticked. The educator confirms or changes the ticks, and what they confirm is kept
-(`week_declaration`, append-only: the latest for a section and week stands) — the week's papers are made from it.
+(a row of the one approval list, kind `week`, target `<section> <week>`: the latest stands) — the week's papers are
+made from it.
 If Jev cannot be reached, nothing is ticked and the educator ticks the skill sets themselves.
 
 Measured 2026-09-28 on 24 gold notes (`supabase/seed/week_note_gold.json`): at 0.5, precision 0.94, recall 0.97, the
@@ -70,21 +71,27 @@ def confirm(conn, section, week, note, skill_sets, by, proposed=()):
         raise ValueError(f"not skill sets of {band}: {', '.join(unknown)}")
     if not by:
         raise ValueError("a declaration names the educator making it")
-    return conn.execute(
-        # clock_timestamp, not now(): two declarations in one transaction still have an order, and the latest stands
-        "insert into week_declaration (tenant_id, section, week, note, skill_sets, proposed, by, created_at)"
-        " select id, %s, %s, %s, %s, %s, %s, clock_timestamp() from tenant where slug = %s returning id, created_at",
-        (section, week, note, sorted(skill_sets), json.dumps(list(proposed)), by, db.tenant_slug()),
-    ).fetchone()
+    row = conn.execute(
+        "insert into approval (tenant_id, kind, target, decision, by, detail)"
+        " select id, 'week', %s, 'confirmed', %s, jsonb_build_object('section', %s::text, 'week', %s::text, 'note', %s::text,"
+        " 'skill_sets', %s::jsonb, 'proposed', %s::jsonb) from tenant where slug = %s returning id, created_at, seq",
+        (f"{section} {week}", by, section, week, note, json.dumps(sorted(skill_sets)), json.dumps(list(proposed)),
+         db.tenant_slug()),
+    ).fetchone()  # fmt: skip
+    return {"id": row["id"], "created_at": row["created_at"]}
 
 
 def current(conn, section, week):
     """The week's declaration that stands — the latest — or None."""
-    return conn.execute(
-        "select section, week, note, skill_sets, proposed, by, created_at from week_declaration"
-        " where section = %s and week = %s order by created_at desc limit 1",
-        (section, week),
+    row = conn.execute(
+        "select detail, by, created_at from approval where kind = 'week' and target = %s order by seq desc limit 1",
+        (f"{section} {week}",),
     ).fetchone()
+    if row is None:
+        return None
+    d = row["detail"]
+    return {"section": d["section"], "week": d["week"], "note": d["note"], "skill_sets": d["skill_sets"],
+            "proposed": d["proposed"], "by": row["by"], "created_at": row["created_at"]}  # fmt: skip
 
 
 def evaluate(conn, ask=None, gold=None):

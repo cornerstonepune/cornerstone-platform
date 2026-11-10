@@ -265,7 +265,7 @@ def _paper(conn, answers):
         (tenant,),
     ).fetchone()["id"]
     tpl = conn.execute(
-        "insert into sheet_template (tenant_id, band, week) values (%s,'G4','2026-W39') returning id",
+        "insert into sheet_template (tenant_id, band, week) values (%s,'G4','2026-09-21') returning id",
         (tenant,),
     ).fetchone()["id"]
     inst = conn.execute(

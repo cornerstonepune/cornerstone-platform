@@ -11,7 +11,7 @@ from engine.w2_print import assemble, pack, prescribe
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
 
-SET, SECTION, WEEK = "SUB.2D2D", "PACKTEST", "U4-W1"
+SET, SECTION, WEEK = "SUB.2D2D", "PACKTEST", "2091-W03"  # a week of its own (CP-27: a date)
 
 
 @pytest.fixture

@@ -38,20 +38,11 @@ def _clashes(c, w):
 
 
 def _limit(c, w, subject, span, fewest=None, most=None):
-    c.execute(
-        "insert into timetable_limit (tenant_id, school_class_id, subject_code, span, fewest, most)"
-        " values (%s, %s, %s, %s, %s, %s)",
-        (w["tenant"], w["class"], subject, span, fewest, most),
-    )
+    tw.rule(c, w, rule="limit", subject_code=subject, span=span, fewest=fewest, most=most)
 
 
 def _block(c, w, **where):
-    cols = ", ".join(where)
-    c.execute(
-        f"insert into timetable_block (tenant_id, school_class_id, {cols}, reason)"  # noqa: S608
-        f" values (%s, %s, {', '.join('%s' for _ in where)}, 'Test block')",
-        (w["tenant"], w["class"], *where.values()),
-    )
+    tw.rule(c, w, rule="block", reason="Test block", **where)
 
 
 def _move(c, w, frm, fp, to, tp):
@@ -64,18 +55,22 @@ def _move(c, w, frm, fp, to, tp):
 def test_a_fortnight_that_breaks_no_rule_has_no_clash(world):
     c, w = world
     _limit(c, w, "math", "week", fewest=4, most=5)
-    _block(c, w, on_date=TUE, period_id=w["period"]["p3"])
+    _block(c, w, on_date=TUE, period="p3")
     assert _clashes(c, w) == []
 
 
-def test_each_kind_is_listed_from_the_frame_and_from_the_layer_with_the_lessons_involved(world):
+def test_each_kind_is_listed_from_the_lessons_with_the_lessons_involved(world):
     c, w = world
     _block(
         c, w, weekday=2, week_code="B"
     )  # every period of week B's Tuesday, which is the holiday: no lesson there
-    _block(c, w, weekday=1, week_code="B", period_id=w["period"]["p1"])  # week B's Monday maths
+    _block(c, w, weekday=1, week_code="B", period="p1")  # week B's Monday maths
     _limit(c, w, "math", "fortnight", most=8)  # nine maths lessons (the holiday takes one)
-    _limit(c, w, "art", "fortnight", fewest=1)  # no art at all
+    c.execute(  # no art at all: a limit the rules page refuses (no art period), as a rule row
+        "insert into timetable_rule (tenant_id, school_class_id, kind, subject_code, span, fewest)"
+        " values (%s, %s, 'limit', 'art', 'fortnight', 1)",
+        (w["tenant"], w["class"]),
+    )
     rows = _clashes(c, w)
     kinds = [(r["kind"], r["week_code"]) for r in rows]
     assert kinds == [("blocked", "B"), ("over_limit", None), ("under_limit", None)], kinds
@@ -87,7 +82,7 @@ def test_each_kind_is_listed_from_the_frame_and_from_the_layer_with_the_lessons_
     assert under["places"] == [] and "fewest 1" in under["detail"]
     assert all(not r["accepted"] and r["fortnight_number"] == w["number"] for r in rows)
 
-    _move(c, w, B_MON, "p1", B_MON, "p3")  # the maths lesson leaves the blocked period: the layer is read now
+    _move(c, w, B_MON, "p1", B_MON, "p3")  # the maths lesson leaves the blocked period: the lessons are read
     rows = _clashes(c, w)
     assert [r["kind"] for r in rows] == ["over_limit", "under_limit"]
 
@@ -122,14 +117,14 @@ def test_an_acceptance_is_kept_with_who_and_why_and_reopens_when_its_limit_chang
     (now,) = _clashes(c, w)
     assert now["accepted"] is True
     (row,) = c.execute(
-        "select * from timetable_clash_accept where clash_key = %s", (clash["clash_key"],)
+        "select * from approval where kind = 'timetable_clash' and target = %s", (clash["clash_key"],)
     ).fetchall()
-    assert (row["who"], row["reason"], row["kind"]) == (coordinator, REASON, "over_limit")
+    assert (row["by"], row["reason"], row["detail"]["clash"]) == (str(coordinator), REASON, "over_limit")
     with pytest.raises(tt_clash.Refused, match="already"):
         tt_clash.accept(c, clash["clash_key"], who=coordinator, reason=REASON, today=MON)
     with pytest.raises(psycopg.Error), c.transaction():
-        c.execute("delete from timetable_clash_accept where id = %s", (row["id"],))
-    c.execute("update timetable_limit set most = 7 where school_class_id = %s", (w["class"],))
+        c.execute("delete from approval where id = %s", (row["id"],))
+    _limit(c, w, "math", "fortnight", most=7)
     (reopened,) = _clashes(c, w)
     assert reopened["accepted"] is False and reopened["clash_key"] != clash["clash_key"]
     assert tt_clash.open_by_kind(c, w["fortnight"]) == {"over_limit": 1}
@@ -148,10 +143,7 @@ def test_the_approve_command_refuses_an_open_clash_and_the_list_names_no_one(wor
     args = ["fortnight", "approve", "--year", "2033-34", "--fortnight", str(w["number"]), "--by"]
     out = run.invoke(app, [*args, w["staff"]["coordinator"]["email"]])
     assert out.exit_code == 1 and "clash" in out.output and "Nothing was written" in out.output, out.output
-    assert (
-        db.one(c, "select state from fortnight_cycle where fortnight_id = %s", (w["fortnight"],))["state"]
-        == "aligned"
-    )
+    assert db.one(c, "select state from fortnight where id = %s", (w["fortnight"],))["state"] == "aligned"
     listed = run.invoke(app, ["timetable", "clashes", "--year", "2033-34", "--fortnight", str(w["number"])])
     assert listed.exit_code == 0 and f"FN{w['number']}" in listed.output and "over_limit" in listed.output
     assert "Test Person" not in listed.output and "@example.org" not in listed.output
@@ -159,10 +151,7 @@ def test_the_approve_command_refuses_an_open_clash_and_the_list_names_no_one(wor
     assert (
         out.exit_code == 2
     )  # typer's bad-parameter code; its coloured box can split the words, so none are matched
-    assert (
-        db.one(c, "select state from fortnight_cycle where fortnight_id = %s", (w["fortnight"],))["state"]
-        == "aligned"
-    )
+    assert db.one(c, "select state from fortnight where id = %s", (w["fortnight"],))["state"] == "aligned"
 
 
 def _accept(c, w, clash):
@@ -182,7 +171,7 @@ def test_an_accepted_limit_clash_reopens_when_a_lesson_in_it_moves_within_the_sa
 
 def test_a_different_lesson_swapped_into_an_accepted_blocked_cell_reopens_it(world):
     c, w = world
-    _block(c, w, on_date=TUE, period_id=w["period"]["p3"])
+    _block(c, w, on_date=TUE, period="p3")
     _move(c, w, MON, "p1", TUE, "p3")  # maths into the blocked cell
     (clash,) = [r for r in _clashes(c, w) if r["kind"] == "blocked"]
     _accept(c, w, clash)
@@ -193,7 +182,7 @@ def test_a_different_lesson_swapped_into_an_accepted_blocked_cell_reopens_it(wor
 
 def test_the_same_lesson_leaving_and_coming_back_reopens_an_accepted_clash(world):
     c, w = world
-    _block(c, w, on_date=TUE, period_id=w["period"]["p3"])
+    _block(c, w, on_date=TUE, period="p3")
     _move(c, w, MON, "p1", TUE, "p3")
     (clash,) = [r for r in _clashes(c, w) if r["kind"] == "blocked"]
     _accept(c, w, clash)

@@ -52,7 +52,7 @@ async function testClass(): Promise<Record<string, string>> {
     // the reports before the answers they rest on: roll 1's, a draft, goes out of date; roll 10's is approved after
     if (c.roll === "1")
       await sql`insert into parent_note (tenant_id, child_id, week, body, created_at)
-                values (${tenant_id}, ${id}, 'U8', '{"facts": {}, "draft": {}}', now() - interval '2 days')`;
+                values (${tenant_id}, ${id}, to_date('2091-W33', 'IYYY-"W"IW'), '{"facts": {}, "draft": {}}', now() - interval '2 days')`;
     const of = c.answers.map(([skill, rung]) => `${skill}|${rung}`);
     for (const [i, [skill, rung, right, mistakes]] of c.answers.entries()) {
       await sql`
@@ -64,10 +64,10 @@ async function testClass(): Promise<Record<string, string>> {
     await sql`select rebuild_child_skill_state(${id}::uuid)`;
     if (c.roll === "10")
       await sql`insert into parent_note (tenant_id, child_id, week, body, approved_by, created_at)
-                values (${tenant_id}, ${id}, 'U8', '{"facts": {}, "draft": {}}', 'e2e', now() + interval '1 minute')`;
+                values (${tenant_id}, ${id}, to_date('2091-W33', 'IYYY-"W"IW'), '{"facts": {}, "draft": {}}', 'e2e', now() + interval '1 minute')`;
     if (c.roll === "1") {
       const [{ id: tpl }] = await sql<{ id: string }[]>`
-        insert into sheet_template (tenant_id, band, child_id, week) values (${tenant_id}, 'G2', ${id}, 'U8') returning id`;
+        insert into sheet_template (tenant_id, band, child_id, week) values (${tenant_id}, 'G2', ${id}, to_date('2091-W33', 'IYYY-"W"IW')) returning id`;
       const [{ id: inst }] = await sql<{ id: string }[]>`
         insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, print_status)
         values (${tenant_id}, ${"U8-" + id.slice(0, 8)}, ${tpl}, ${id}, 'returned') returning id`;

@@ -23,7 +23,7 @@ const setName = async (code: string) => (await sql<{ name: string }[]>`select na
 /** A paper made for one skill set at one level, its questions the bank's own; → its template and questions. */
 async function aSheet(code: string, level: string): Promise<{ template: string; items: string[] }> {
   const [had] = await sql<{ id: string; item_ids: string[] }[]>`
-    select id, item_ids from sheet_template where skill_set_code = ${code} and difficulty = ${level} and week = ${WEEK}
+    select id, item_ids from sheet_template where skill_set_code = ${code} and difficulty = ${level} and week = to_date(${WEEK}, 'IYYY-"W"IW')
       and key ->> 'test' = 'u22'`;
   if (had) return { template: had.id, items: had.item_ids };
   const items = (await sql<{ id: string }[]>`
@@ -31,7 +31,7 @@ async function aSheet(code: string, level: string): Promise<{ template: string; 
     order by id limit 2`).map((i) => i.id);
   const [{ id }] = await sql<{ id: string }[]>`
     insert into sheet_template (tenant_id, band, week, item_ids, skill_set_code, difficulty, key)
-    select id, 'G2', ${WEEK}, ${items}::uuid[], ${code}, ${level}, '{"test": "u22"}' from tenant limit 1 returning id`;
+    select id, 'G2', to_date(${WEEK}, 'IYYY-"W"IW'), ${items}::uuid[], ${code}, ${level}, '{"test": "u22"}' from tenant limit 1 returning id`;
   return { template: id, items };
 }
 
@@ -40,7 +40,7 @@ async function aCopy(qr: string, child: string, template: string, kind: string, 
   const by = status === "printed" ? "e2e" : null;
   await sql`
     insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, week, section, kind, print_status, approved_by)
-    select tenant_id, ${qr}, ${template}, ${child}, ${WEEK}, ${SECTION}, ${kind}, ${status}, ${by} from child where id = ${child}
+    select tenant_id, ${qr}, ${template}, ${child}, to_date(${WEEK}, 'IYYY-"W"IW'), ${SECTION}, ${kind}, ${status}, ${by} from child where id = ${child}
     on conflict do nothing`;
 }
 
@@ -56,7 +56,7 @@ test.beforeAll(async () => {
     items: add.items,
     reads: [{ status: "correct", read: "84" }, { status: "needs_teacher", read: "8?", why: "the reader could not settle it" }],
   });
-  await sql`update sheet_instance set kind = 'assessment', week = ${WEEK}, section = ${SECTION}, print_status = 'returned'
+  await sql`update sheet_instance set kind = 'assessment', week = to_date(${WEEK}, 'IYYY-"W"IW'), section = ${SECTION}, print_status = 'returned'
             where qr_code = 'U22TEST-A'`;
   await aCopy("U22TEST-B", kids.Bina, add.template, "assessment", "printed");
   await aCopy("U22TEST-C", kids.Chetan, add.template, "assessment", "new");

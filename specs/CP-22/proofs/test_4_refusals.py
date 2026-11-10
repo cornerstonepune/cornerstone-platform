@@ -20,8 +20,8 @@ def _refused(conn, engine, w, run, said):
 def test_a_draft_whose_rules_changed_since_it_was_made_is_refused(conn, engine, monkeypatch):
     w = world(conn, monkeypatch)
     run = run_with(conn, generated(conn, engine, w), swapped(w))
-    conn.execute("insert into timetable_block (tenant_id, school_class_id, on_date, reason) values (%s, %s, %s,"
-                 " 'proof block')", (w["tenant"], w["class"], START + dt.timedelta(2)))
+    conn.execute("insert into timetable_rule (tenant_id, school_class_id, kind, on_date, reason) values (%s, %s, 'block',"
+                 " %s, 'proof block')", (w["tenant"], w["class"], START + dt.timedelta(2)))
     _refused(conn, engine, w, run, lambda o: "rule" in o)
 
 

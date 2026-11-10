@@ -7,7 +7,8 @@
 #      deleted, renamed or has a line removed or rewritten, except a passage that named a table CP-27 removed (spec
 #      CP-27, Done when 18: "except where a test named a removed table directly"; group 3 moved
 #      `question_type_approval` into `approval`). Each such passage must name, in what it removes, a table a migration
-#      retired or dropped; any other removed line still fails. Lines added (new tests) are allowed, as before.
+#      retired or dropped, or write a week label into a `week` column group 5 made a date; any other removed line still
+#      fails. Lines added (new tests) are allowed, as before.
 #   2. Pass: the five engine suites are run here, on the local test database (TEST_DATABASE_URL).
 #      The four journeys need a production build of the website (over five minutes, past the two minutes these proofs
 #      may use), so their pass is ci.yml's browser job, which the merge rule needs green; they are not run twice here.
@@ -20,20 +21,24 @@ files=(apps/web/playwright.config.ts)
 for f in "${engine[@]}"; do files+=("packages/engine/tests/$f"); done
 for p in "${pages[@]}"; do files+=("apps/web/tests/$p.spec.ts"); done
 
-for f in "${files[@]}"; do [ -f "$f" ] || { echo "named suite missing: $f"; exit 1; }; done
 base=$(git merge-base HEAD origin/main 2>/dev/null || git merge-base HEAD main) \
   || { echo "no main to compare with: this proof needs the repository's history"; exit 1; }
-# the tables CP-27 took out of the schema: moved to `retired` or dropped by a migration
-removed=$(grep -hoE "alter table public\.[a-z_]+ set schema retired|^drop table (if exists )?(public\.)?[a-z_]+" \
-            supabase/migrations/*.sql | sed -E 's/^alter table public\.([a-z_]+) .*/\1/; s/^drop table (if exists )?(public\.)?//' \
-          | sort -u | paste -sd'|' -)
+# the tables CP-27 took out of the schema: moved to `retired` or dropped by a migration (a migration of CP-27 group 5
+# leaves each one with rows in `retired` and drops each empty one, by a loop over the names it lists as `going`)
+removed=$( { grep -hoE "alter table public\.[a-z_]+ set schema retired|^drop table (if exists )?(public\.)?[a-z_]+" \
+               supabase/migrations/*.sql | sed -E 's/^alter table public\.([a-z_]+) .*/\1/; s/^drop table (if exists )?(public\.)?//'
+             sed -n "/going constant text\[\] := array\[/,/\];/p" supabase/migrations/*.sql | grep -oE "'[a-z_]+'" | tr -d "'"
+           } | sort -u | paste -sd'|' -)
+for f in "${files[@]}"; do [ -f "$f" ] || { echo "named suite missing: $f"; exit 1; }; done
 # each passage (diff hunk) that removes or rewrites lines must name one of them in what it removes
-changed=$(git diff -U0 -M "$base" -- "${files[@]}" | awk -v gone="(^|[^a-z_])(${removed:-^$})([^a-z_]|$)" '
+# a passage that wrote a week label into a `week` column CP-27 made a date (group 5: "no table has a text week column")
+dated="insert into (prescription|sheet_instance|sheet_template|parent_note|item_exposure|class_card) \\([^)]*week"
+changed=$(git diff -U0 -M "$base" -- "${files[@]}" | awk -v gone="(^|[^a-z_])(${removed:-^$})([^a-z_]|$)" -v dated="$dated" '
   function done_hunk() { if (minus > 0 && !named) print file " (" minus " lines removed or rewritten at line " at ")" }
   /^\+\+\+ / { done_hunk(); minus = 0; file = substr($2, 3); next }
   /^--- / { next }
   /^@@/ { done_hunk(); minus = 0; named = 0; split($2, a, ","); at = substr(a[1], 2); next }
-  /^-/ { minus++; if ($0 ~ gone) named = 1 }
+  /^-/ { minus++; if ($0 ~ gone || $0 ~ dated) named = 1 }
   END { done_hunk() }')
 gone=$(git diff --name-status -M --diff-filter=DR "$base" -- "${files[@]}")
 if [ -n "$changed$gone" ]; then

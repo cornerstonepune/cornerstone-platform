@@ -18,7 +18,7 @@ import { daysAgo } from "./rows";
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 const SECTION = "U2-TEST-B"; // answers on the taxonomy-shaped skills' rungs (ADR 0034)
-const WEEK = "U2-TEST";
+const WEEK = "2091-W36"; // an ISO week of its own: a week is a date since CP-27
 
 // The settled colours (BUILD-ORDER, "the website as the teacher's week"), written here so the test does not
 // read them from the code it checks.
@@ -97,9 +97,9 @@ async function clearUp() {
   await sql`delete from item_exposure where child_id in (${children})`;
   await sql`delete from prescription where child_id in (${children})`;
   // the children's papers, and the class's spare copies of the week, which name no child
-  await sql`delete from sheet_instance where child_id in (${children}) or week = ${WEEK}`;
+  await sql`delete from sheet_instance where child_id in (${children}) or week = to_date(${WEEK}, 'IYYY-"W"IW')`;
   await sql`delete from sheet_template where child_id in (${children})`;
-  await sql`delete from sheet_template where week = ${WEEK}`;
+  await sql`delete from sheet_template where week = to_date(${WEEK}, 'IYYY-"W"IW')`;
 }
 
 let ids: Record<string, string> = {};

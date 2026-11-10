@@ -4,7 +4,7 @@ fortnight. Moving a lesson back removes its clash from the list. One test per ki
 
 import datetime as dt
 
-from conftest import REASON, START, clashes, move, world
+from conftest import REASON, START, block, clashes, limit, move, world
 
 MON, TUE = START, START + dt.timedelta(1)
 B_MON, B_TUE = START + dt.timedelta(7), START + dt.timedelta(8)
@@ -21,14 +21,11 @@ def _mentions(r, d: dt.date, period_id: str) -> bool:
 
 
 def _block(conn, w, *, on_date=None, weekday=None, week=None, period=None):
-    conn.execute("insert into timetable_block (tenant_id, school_class_id, on_date, weekday, week_code, period_id,"
-                 " reason) values (%s, %s, %s, %s, %s, %s, 'Proof block')",
-                 (w["tenant"], w["class"], on_date, weekday, week, w["period"][period] if period else None))
+    block(conn, w, on_date=on_date, weekday=weekday, week=week, period=period)
 
 
 def _limit(conn, w, subject, span, fewest=None, most=None):
-    conn.execute("insert into timetable_limit (tenant_id, school_class_id, subject_code, span, fewest, most)"
-                 " values (%s, %s, %s, %s, %s, %s)", (w["tenant"], w["class"], subject, span, fewest, most))
+    limit(conn, w, subject, span, fewest, most)
 
 
 def test_a_plain_fortnight_has_no_clash(conn, monkeypatch):

@@ -12,12 +12,15 @@ from datetime import date
 
 import pytest
 
-from engine.core import db, roster
+from engine.core import db, roster, weeks
 from engine.w4_close import card
 from tests import rows
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
-FUTURE, PAST = "2099-W10", "2020-W01"  # a week still to come, and one long gone, whatever day this runs
+FUTURE, PAST = (
+    weeks.day("2099-W10"),
+    weeks.day("2020-W01"),
+)  # a week still to come, one long gone (a date: CP-27)
 
 
 @pytest.fixture
@@ -247,7 +250,7 @@ def test_a_move_withdraws_what_was_not_yet_made_and_leaves_every_paper_made_as_i
         plan(PAST),
         plan(FUTURE),
         plan(FUTURE, kind="assessment", sheet=printed),
-        plan("2099-W11", by="educator@cornerstone.test"),
+        plan(weeks.day("2099-W11"), by="educator@cornerstone.test"),
     )
     said = _move(conn, child, "G4", section, "1")
     left = {

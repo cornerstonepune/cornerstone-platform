@@ -22,8 +22,8 @@ const qr = () => `CS${randomBytes(3).toString("hex").toUpperCase()}`;
 const number = (s: string) => Number(s.replace(/[^\d]/g, "")) || 0;
 
 async function clearUp() {
-  await sql`delete from prescription where week = ${WEEK} and child_id in (select id from child where section = ${CLASS})`;
-  await sql`delete from sheet_instance where section = ${CLASS} and week = ${WEEK}`;
+  await sql`delete from prescription where week = to_date(${WEEK}, 'IYYY-"W"IW') and child_id in (select id from child where section = ${CLASS})`;
+  await sql`delete from sheet_instance where section = ${CLASS} and week = to_date(${WEEK}, 'IYYY-"W"IW')`;
 }
 
 test.beforeAll(async () => {
@@ -36,15 +36,15 @@ test.beforeAll(async () => {
   for (const id of Object.values(kids)) {
     const [{ id: copy }] = await sql<{ id: string }[]>`
       insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, print_status, section, week, kind)
-      values (${w.tenant_id}, ${qr()}, ${w.id}, ${id}, 'new', ${CLASS}, ${WEEK}, 'practice') returning id`;
+      values (${w.tenant_id}, ${qr()}, ${w.id}, ${id}, 'new', ${CLASS}, to_date(${WEEK}, 'IYYY-"W"IW'), 'practice') returning id`;
     await sql`
       insert into prescription (tenant_id, child_id, week, rule_fired, skill_set_code, difficulty, kind, sheet_instance_id)
-      values (${w.tenant_id}, ${id}, ${WEEK}, 'band_default', ${w.skill_set_code}, ${w.difficulty}, 'practice', ${copy})`;
+      values (${w.tenant_id}, ${id}, to_date(${WEEK}, 'IYYY-"W"IW'), 'band_default', ${w.skill_set_code}, ${w.difficulty}, 'practice', ${copy})`;
   }
   // the spare: the same worksheet, the class's, no child's
   await sql`
     insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, print_status, section, week, kind)
-    values (${w.tenant_id}, ${qr()}, ${w.id}, null, 'new', ${CLASS}, ${WEEK}, 'practice')`;
+    values (${w.tenant_id}, ${qr()}, ${w.id}, null, 'new', ${CLASS}, to_date(${WEEK}, 'IYYY-"W"IW'), 'practice')`;
 });
 test.afterAll(async () => {
   await clearUp();

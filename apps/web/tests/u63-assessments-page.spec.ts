@@ -34,7 +34,7 @@ test.beforeAll(async () => {
   [{ name: skillName }] = await sql<{ name: string }[]>`select name from skill where code = ${ws[0].skill}`;
   const paper = (qr: string, w: string, child: string, status: string, kind: string) => sql`
     insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, week, section, kind, print_status, approved_by, approved_at)
-    select ${tenant}, ${qr}, ${w}, ${child}, ${THIS}, ${SECTION}, ${kind}, ${status},
+    select ${tenant}, ${qr}, ${w}, ${child}, to_date(${THIS}, 'IYYY-"W"IW'), ${SECTION}, ${kind}, ${status},
            ${status === "new" ? null : "asm"}, ${status === "new" ? null : sql`now()`}
     where not exists (select 1 from sheet_instance where qr_code = ${qr})`;
   await paper(QR.asha, ws[0].id, kids.Asha, "printed", "assessment");
@@ -154,7 +154,7 @@ test("with nothing waiting on a person, the action is what comes next: print, th
     select tenant_id, sheet_template_id, child_id from sheet_instance where qr_code = ${QR.asha}`;
   const made = async (qr: string, wk: string, status: string) => sql`
     insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, week, section, kind, print_status, approved_by, approved_at)
-    select ${t.tenant_id}, ${qr}, ${t.sheet_template_id}, ${t.child_id}, ${wk}, ${SECTION}, 'assessment', ${status},
+    select ${t.tenant_id}, ${qr}, ${t.sheet_template_id}, ${t.child_id}, to_date(${wk}, 'IYYY-"W"IW'), ${SECTION}, 'assessment', ${status},
            ${status === "new" ? null : "asm"}, ${status === "new" ? null : sql`now()`}
     where not exists (select 1 from sheet_instance where qr_code = ${qr})`;
   await made("CSA5A006", "2026-W03", "new");
@@ -198,7 +198,7 @@ test("an educator renames an assessment; the old name stays as a row, the newest
     select tenant_id, sheet_template_id, child_id from sheet_instance where qr_code = ${QR.asha}`;
   await sql`
     insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, week, section, kind, print_status, approved_by, approved_at)
-    select ${t.tenant_id}, 'CSA5A005', ${t.sheet_template_id}, ${t.child_id}, ${wk}, ${SECTION}, 'assessment', 'printed', 'asm', now()
+    select ${t.tenant_id}, 'CSA5A005', ${t.sheet_template_id}, ${t.child_id}, to_date(${wk}, 'IYYY-"W"IW'), ${SECTION}, 'assessment', 'printed', 'asm', now()
     where not exists (select 1 from sheet_instance where qr_code = 'CSA5A005')`;
   await page.goto(`/papers?class=${SECTION}&week=${wk}`);
   const r = page.locator(`tr[data-assessment^='${key}']`);
@@ -256,7 +256,7 @@ test("the list is the last ten assessments, newest first, paged", async ({ page 
     const wk = `2026-W${String(10 + i).padStart(2, "0")}`;
     await sql`
       insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, week, section, kind, print_status, approved_by, approved_at, created_at)
-      select ${t.tenant_id}, ${`CSA5B${String(i).padStart(3, "0")}`}, ${t.sheet_template_id}, ${kids.Esha}, ${wk}, ${long}, 'assessment', 'printed', 'asm', now(),
+      select ${t.tenant_id}, ${`CSA5B${String(i).padStart(3, "0")}`}, ${t.sheet_template_id}, ${kids.Esha}, to_date(${wk}, 'IYYY-"W"IW'), ${long}, 'assessment', 'printed', 'asm', now(),
              now() - ${(12 - i) * 3} * interval '1 day'
       where not exists (select 1 from sheet_instance where qr_code = ${`CSA5B${String(i).padStart(3, "0")}`})`;
   }

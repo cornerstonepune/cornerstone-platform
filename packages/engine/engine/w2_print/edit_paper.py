@@ -20,7 +20,8 @@ PRINTED = "printed"
 LIMITS = ("assessment.min_questions", "assessment.max_questions")
 MOST_OFFERED = 60  # questions listed in the last dropdown; the bank holds about fifty a skill and level
 _PAPER = (
-    "select si.id, si.tenant_id, si.qr_code as qr, si.child_id, si.section, si.week, si.kind, si.print_status,"
+    "select si.id, si.tenant_id, si.qr_code as qr, si.child_id, si.section, to_char(si.week, 'IYYY-\"W\"IW') as week,"
+    " si.kind, si.print_status,"
     " si.approved_by, si.approved_at, si.key, t.item_ids, t.source from sheet_instance si"
     " join sheet_template t on t.id = si.sheet_template_id where si.qr_code = %s"
 )

@@ -10,7 +10,7 @@ import os
 import pytest
 
 from engine.assess import graph
-from engine.core import db, roster
+from engine.core import db, roster, weeks
 from engine.w2_print import assemble, prescribe
 
 pytestmark = [
@@ -18,7 +18,8 @@ pytestmark = [
     pytest.mark.usefixtures("forgets_what_it_commits"),
 ]
 
-SET, WEEK, SECTION = "SUB.2D2D", "T2W9-test", "TESTSEC"
+SET, WEEK, SECTION = "SUB.2D2D", "2091-W12", "TESTSEC"  # weeks are dates since CP-27
+NEXT = "2091-W13"
 
 
 @pytest.fixture
@@ -74,7 +75,7 @@ def test_prescribing_twice_updates_rather_than_duplicating(conn, children):
     n = conn.execute(
         "select count(*) as n from prescription p join child c on c.id = p.child_id"
         " where c.section = %s and p.week = %s",
-        (SECTION, WEEK),
+        (SECTION, weeks.day(WEEK)),
     ).fetchone()["n"]
     assert n == 3
 
@@ -143,9 +144,9 @@ def test_a_child_is_never_shown_the_same_question_twice(conn, children):
     first = assemble.for_week(conn, SECTION, WEEK)
     seen = {s["child_id"]: {r["item_key"] for r in s["item_rows"]} for s in first["sheets"]}
 
-    conn.execute("update prescription set sheet_instance_id = null where week = %s", (WEEK,))
-    conn.execute("update prescription set week = %s where week = %s", (WEEK + "b", WEEK))
-    second = assemble.for_week(conn, SECTION, WEEK + "b")
+    conn.execute("update prescription set sheet_instance_id = null where week = %s", (weeks.day(WEEK),))
+    conn.execute("update prescription set week = %s where week = %s", (weeks.day(NEXT), weeks.day(WEEK)))
+    second = assemble.for_week(conn, SECTION, NEXT)
     for s in second["sheets"]:
         assert seen[s["child_id"]] & {r["item_key"] for r in s["item_rows"]} == set()
 
@@ -239,7 +240,7 @@ def test_two_classes_assembled_at_the_same_moment_both_finish():
                 (tenant, row["id"], f"Concurrent {i}"),
             )
         setup.commit()
-    threads = [threading.Thread(target=build, args=(f"{WEEK}-c{i}",)) for i in (1, 2)]
+    threads = [threading.Thread(target=build, args=(f"2091-W{20 + i}",)) for i in (1, 2)]
     for th in threads:
         th.start()
     for th in threads:

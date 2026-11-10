@@ -9,7 +9,7 @@ from engine.core import db, settings
 from engine.w2_print import assemble, pack, prescribe
 
 SECTION = "GOALSEC"
-WEEK = "goal-week"
+WEEK, NEXT_WEEK = "2099-W10", "2099-W11"  # weeks no school reaches: the goal's own rows
 SET = "SUB.2D2D"
 
 
@@ -132,8 +132,8 @@ def respects_exposure_window(conn, sc):
     if not built["sheets"]:
         return {"children": len(rx)}, ["no sheets were built, so nothing could be checked"]
     seen = {s["roll_no"]: set(_sheet_items(s)) for s in built["sheets"]}
-    prescribe.for_class(conn, SECTION, WEEK + "-2", sc.get("skill_set", SET))
-    again = assemble.for_week(conn, SECTION, WEEK + "-2")
+    prescribe.for_class(conn, SECTION, NEXT_WEEK, sc.get("skill_set", SET))
+    again = assemble.for_week(conn, SECTION, NEXT_WEEK)
     fails, checked = [], 0
     for sheet in again["sheets"]:
         before = seen.get(sheet["roll_no"])

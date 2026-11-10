@@ -40,14 +40,14 @@ test.beforeAll(async () => {
     items: ws.item_ids.slice(0, 2),
     reads: [{ status: "correct", read: "1" }, { status: "needs_teacher", read: "7" }],
   }));
-  await sql`delete from prescription where child_id = ${kids.Asha} and week = ${THIS} and kind = 'practice'`;
+  await sql`delete from prescription where child_id = ${kids.Asha} and week = to_date(${THIS}, 'IYYY-"W"IW') and kind = 'practice'`;
   await sql`delete from sheet_instance where qr_code = ${QR.practice}`;
   const [{ id: practice }] = await sql<{ id: string }[]>`
     insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, section, week, kind, print_status)
-    values (${tenant}, ${QR.practice}, ${ws.id}, ${kids.Asha}, ${SECTION}, ${THIS}, 'practice', 'new') returning id`;
+    values (${tenant}, ${QR.practice}, ${ws.id}, ${kids.Asha}, ${SECTION}, to_date(${THIS}, 'IYYY-"W"IW'), 'practice', 'new') returning id`;
   await sql`
     insert into prescription (tenant_id, child_id, week, kind, rule_fired, skill_set_code, difficulty, sheet_instance_id)
-    values (${tenant}, ${kids.Asha}, ${THIS}, 'practice', 'band_default', 'ADD.2D2D', 'Medium', ${practice})`;
+    values (${tenant}, ${kids.Asha}, to_date(${THIS}, 'IYYY-"W"IW'), 'practice', 'band_default', 'ADD.2D2D', 'Medium', ${practice})`;
   const password = `scrypt$${SALT}$${scryptSync(PASSWORD, SALT, 64).toString("hex")}`;
   await sql`
     update config set value = (select coalesce(jsonb_agg(s), '[]'::jsonb) from jsonb_array_elements(value) s
@@ -55,7 +55,7 @@ test.beforeAll(async () => {
     where key = 'app.staff'`;
 });
 test.afterAll(async () => {
-  await sql`delete from prescription where child_id = ${kids.Asha} and week = ${THIS} and kind = 'practice'`;
+  await sql`delete from prescription where child_id = ${kids.Asha} and week = to_date(${THIS}, 'IYYY-"W"IW') and kind = 'practice'`;
   await sql`delete from sheet_instance where qr_code = ${QR.practice}`;
   await sql`
     update config set value = (select coalesce(jsonb_agg(s), '[]'::jsonb) from jsonb_array_elements(value) s

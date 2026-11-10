@@ -45,19 +45,22 @@ def world():
         for week in "AB":
             for day in range(1, 6):
                 c.execute(
-                    "insert into timetable_slot (tenant_id, school_class_id, period_id, week_code, weekday, kind, text,"
-                    " valid_from) values (%s, %s, %s, %s, %s, 'subject', 'Test lesson', '2033-06-01')",
+                    "insert into timetable_rule (tenant_id, school_class_id, kind, period_id, week_code, weekday, cell,"
+                    " text, valid_from) values (%s, %s, 'frame', %s, %s, %s, 'subject', 'Test lesson', '2033-06-01')",
                     (t, klass, period, week, day),
                 )
-        fid = db.one(
+        c.execute(  # the fortnight's school days, so its lessons have days to be on
+            "insert into school_day (tenant_id, campus_id, on_date, kind) select %s, %s, d, 'teaching'"
+            " from generate_series('2033-09-05'::date, '2033-09-16', '1 day') d where extract(isodow from d) <= 5"
+            " on conflict (tenant_id, campus_id, on_date) do update set kind = 'teaching'",
+            (t, campus),
+        )
+        db.one(
             c,
-            "insert into fortnight (tenant_id, academic_year_id, number, kind, starts_on, ends_on)"
-            " values (%s, %s, 77, 'teaching', '2033-09-05', '2033-09-18') returning id",
+            "insert into fortnight (tenant_id, academic_year_id, number, kind, starts_on, ends_on, state)"
+            " values (%s, %s, 77, 'teaching', '2033-09-05', '2033-09-18', 'frozen') returning id",
             (t, year),
         )["id"]
-        c.execute(
-            "insert into fortnight_cycle (tenant_id, fortnight_id, state) values (%s, %s, 'frozen')", (t, fid)
-        )
         yield c, section
         c.rollback()
 
@@ -67,6 +70,9 @@ def test_a_class_with_nothing_before_it_waits_for_approval(world):
     rows = fc.draft_classes(c, "2033-34", 77, WHO)
     assert [(r["grade"], r["section"], r["state"]) for r in rows] == [("K2", section, "draft")]
     assert fc.draft_classes(c, "2033-34", 77, WHO) == rows  # again with nothing changed: the same answer
+    lessons = c.execute("select count(*) as n from session s join school_class k on k.id = s.school_class_id"
+                        " where k.section = %s", (section,)).fetchone()["n"]  # fmt: skip
+    assert lessons == 10, "one lesson per period of each school day of weeks A and B, made once"
 
 
 def test_a_fortnight_that_is_not_there_is_refused(world):
@@ -89,8 +95,8 @@ def test_the_command_prints_a_line_per_class_and_a_dry_run_says_so(world, monkey
 def test_a_fortnight_not_yet_frozen_is_refused_with_its_reason(world, monkeypatch):
     c, _ = world
     c.execute(
-        "update fortnight_cycle set state = 'planning' where fortnight_id = (select id from fortnight where number = 77"
-        " and academic_year_id = (select id from academic_year where label = '2033-34' limit 1))"
+        "update fortnight set state = 'planning' where number = 77"
+        " and academic_year_id = (select id from academic_year where label = '2033-34' limit 1)"
     )
     monkeypatch.setattr(cli_timetable, "_connect", lambda stack: c)
     out = CliRunner().invoke(

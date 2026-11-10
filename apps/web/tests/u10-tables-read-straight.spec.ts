@@ -31,11 +31,11 @@ async function twoDays() {
   if (papers) return;
   for (const [day, readings] of [["2026-08-01", [["35", null], ["35", "34"]]], ["2026-08-02", [["35", null], ["35", null]]]] as const) {
     const [{ id: tpl }] = await sql<{ id: string }[]>`
-      insert into sheet_template (tenant_id, band, week, source, child_id, key) values (${tenant}, 'G2', 'U10-W', 'legacy', ${kid}, '{}')
+      insert into sheet_template (tenant_id, band, week, source, child_id, key) values (${tenant}, 'G2', to_date('2091-W31', 'IYYY-"W"IW'), 'legacy', ${kid}, '{}')
       returning id`;
     const [{ id: si }] = await sql<{ id: string }[]>`
       insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, print_status, section, week)
-      values (${tenant}, ${`U10-${day}`}, ${tpl}, ${kid}, 'returned', ${SECTION}, 'U10-W') returning id`;
+      values (${tenant}, ${`U10-${day}`}, ${tpl}, ${kid}, 'returned', ${SECTION}, to_date('2091-W31', 'IYYY-"W"IW')) returning id`;
     const [{ id: cap }] = await sql<{ id: string }[]>`
       insert into capture (tenant_id, path, pages, sheet_instance_id, status, created_at)
       values (${tenant}, 'u10', 1, ${si}, 'processed', ${`${day} 10:00+05:30`}) returning id`;

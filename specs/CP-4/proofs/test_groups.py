@@ -118,7 +118,7 @@ def _build_school(c):
         c.execute("insert into config (tenant_id, key, value) values (%s, %s, %s) "
                   "on conflict (tenant_id, key) do update set value = excluded.value",
                   (tenant, key, psycopg.types.json.Jsonb(value)))
-    template = ins(c, "public.sheet_template", tenant_id=tenant, band="G1", source="generated", week="2026-W45")
+    template = ins(c, "public.sheet_template", tenant_id=tenant, band="G1", source="generated", week="2026-11-02")  # a week is a date (CP-27)
     seeded = {}
     for t, s in (("X", "P"), ("Y", "Q")):
         _chain(c, tenant, classes[t], s, people[t]["staff"], template, seeded)

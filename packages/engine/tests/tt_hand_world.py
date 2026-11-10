@@ -64,8 +64,8 @@ def school(c: db.Conn) -> dict:
         for wd in range(1, 6):
             for p, (kind, subj, text) in cells(wd).items():
                 c.execute(
-                    "insert into timetable_slot (tenant_id, school_class_id, period_id, week_code, weekday, kind,"
-                    " subject_code, text, valid_from) values (%s, %s, %s, %s, %s, %s, %s, %s, '2033-06-01')",
+                    "insert into timetable_rule (tenant_id, school_class_id, kind, period_id, week_code, weekday, cell,"
+                    " subject_code, text, valid_from) values (%s, %s, 'frame', %s, %s, %s, %s, %s, %s, '2033-06-01')",
                     (t, klass, period[p], wk, wd, kind, subj, text),
                 )
     fortnight = db.one(
@@ -74,7 +74,6 @@ def school(c: db.Conn) -> dict:
         " values (%s, %s, %s, 'teaching', %s, %s) returning id",
         (t, year, 100000 + uuid.uuid4().int % 800000, START, START + dt.timedelta(days=13)),
     )["id"]
-    c.execute("insert into fortnight_cycle (tenant_id, fortnight_id) values (%s, %s)", (t, fortnight))
     for d in dates():
         day = db.one(
             c,
@@ -87,9 +86,9 @@ def school(c: db.Conn) -> dict:
         for p, (kind, subj, text) in cells(d.isoweekday()).items():
             if kind != "empty":
                 c.execute(
-                    "insert into session (tenant_id, school_class_id, school_day_id, period_id, subject_code, text)"
-                    " values (%s, %s, %s, %s, %s, %s)",
-                    (t, klass, day, period[p], subj, text),
+                    "insert into session (tenant_id, school_class_id, school_day_id, period_id, subject_code, kind,"
+                    " text) values (%s, %s, %s, %s, %s, %s, %s)",
+                    (t, klass, day, period[p], subj, kind, text),
                 )
     staff = {}
     for who, role, on_class in (("coordinator", "coordinator", None), ("educator", "class_teacher", klass)):
@@ -113,6 +112,24 @@ def school(c: db.Conn) -> dict:
     }  # fmt: skip
 
 
+def rule(c: db.Conn, w: dict, **change) -> None:
+    """A block or a limit for the class, set as the rules page sets one (`tt_rules.change`), by the coordinator."""
+    from engine.w2_print import tt_rules
+
+    if "period" in change:
+        change["period_id"] = str(w["period"][change.pop("period")])
+    tt_rules.change(
+        c, w["staff"]["coordinator"]["id"], str(w["class"]), tt_rules.Change(action="set", **change), START
+    )
+
+
+def moves(c: db.Conn, w: dict) -> list[dict]:
+    """The lessons moved by hand in the world's fortnight, as the one history log keeps them, oldest first."""
+    from engine.core import history
+
+    return [r for r in history.of(c, "session", f"{w['class']} {w['fortnight']}") if r["op"] == "move"]
+
+
 def session_at(c: db.Conn, w: dict, d: dt.date, p: str):
     return c.execute(
         "select s.* from session s join school_day d on d.id = s.school_day_id"
@@ -122,10 +139,10 @@ def session_at(c: db.Conn, w: dict, d: dt.date, p: str):
 
 
 def cell(c: db.Conn, w: dict, d: dt.date, p: str):
-    """What the educator's day shows at one place (the layer row when there is one, else the frame's)."""
+    """What the educator's day shows at one place: the lesson there, or an empty period."""
     from engine.w2_print import k2_day
 
-    klass = {"id": str(w["class"]), "academic_year_id": w["year"], "campus_id": w["campus"]}
+    klass = {"id": str(w["class"]), "academic_year_id": w["year"], "campus_id": w["campus"], "grade": "K2"}
     day = k2_day.days(c, klass, [d])[0]
     return next(x for x in day["periods"] if x["period_id"] == str(w["period"][p]))
 
@@ -134,7 +151,7 @@ def set_state(c: db.Conn, w: dict, state: str) -> None:
     """Put the fortnight's cycle at `state` for a test, past CP-7's gate (a test sets the scene; the product never
     does this: `fortnight_cycle.move` is the one way)."""
     c.execute("set local session_replication_role = replica")
-    c.execute("update fortnight_cycle set state = %s where fortnight_id = %s", (state, w["fortnight"]))
+    c.execute("update fortnight set state = %s where id = %s", (state, w["fortnight"]))
     c.execute("set local session_replication_role = origin")
 
 

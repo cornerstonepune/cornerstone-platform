@@ -44,7 +44,7 @@ def _a_paper(c, child, skill, level, marks, section, confirmed=True, day=0):
     tpl = c.execute(
         "insert into sheet_template (tenant_id, band, child_id, week, key, batch_id) values (%s, %s, %s, %s, %s, %s)"
         " returning id",
-        (t, GRADE, child, f"CAL-{tag}", json.dumps({"code": tag}), tag),
+        (t, GRADE, child, "2026-09-28", json.dumps({"code": tag}), tag),  # a week is a date (CP-27)
     ).fetchone()["id"]
     inst = c.execute(
         "insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, print_status)"

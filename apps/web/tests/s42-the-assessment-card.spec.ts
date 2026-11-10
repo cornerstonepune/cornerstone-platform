@@ -39,14 +39,14 @@ test.beforeAll(async () => {
   for (const [who, qr] of Object.entries(QR)) {
     await sql`
       insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, section, week, kind, print_status)
-      values (${tenant}, ${qr}, ${ws.id}, ${who === "spare" ? null : kids[who]}, ${SECTION}, ${week}, 'practice', 'new')`;
+      values (${tenant}, ${qr}, ${ws.id}, ${who === "spare" ? null : kids[who]}, ${SECTION}, to_date(${week}, 'IYYY-"W"IW'), 'practice', 'new')`;
   }
   // the class assessment, printed, whose papers come back with no one pressing "Given on"
   for (const [who, n] of [["Asha", "B1"], ["Bina", "B2"]] as const) {
     await sql`
       insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, section, week, kind, print_status,
                                   approved_by, approved_at, printed_at)
-      values (${tenant}, ${code(n)}, ${ws.id}, ${kids[who]}, ${SECTION}, ${week}, 'assessment', 'printed', 'e2e', now(), now())`;
+      values (${tenant}, ${code(n)}, ${ws.id}, ${kids[who]}, ${SECTION}, to_date(${week}, 'IYYY-"W"IW'), 'assessment', 'printed', 'e2e', now(), now())`;
   }
 });
 test.afterAll(async () => {

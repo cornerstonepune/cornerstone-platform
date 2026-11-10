@@ -26,12 +26,12 @@ test.beforeAll(async () => {
     where id = ${kids.Esha} and not exists (select 1 from evidence_event where child_id = ${kids.Esha})`;
   const [{ id: template }] = await sql<{ id: string }[]>`
     insert into sheet_template (tenant_id, band, week, item_ids, key)
-    select id, 'G2', '2026-W01', '{}'::uuid[], '{"test": "u24"}' from tenant limit 1 returning id`;
+    select id, 'G2', to_date('2026-W01', 'IYYY-"W"IW'), '{}'::uuid[], '{"test": "u24"}' from tenant limit 1 returning id`;
   // seven papers for Esha, one a week
   for (let i = 1; i <= 7; i++) {
     await sql`
       insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, week, section, kind, print_status, approved_by)
-      select tenant_id, ${`U24T-E${i}`}, ${template}, id, ${`2026-W0${i}`}, ${SECTION}, 'practice', 'printed', 'e2e'
+      select tenant_id, ${`U24T-E${i}`}, ${template}, id, to_date(${`2026-W0${i}`}, 'IYYY-"W"IW'), ${SECTION}, 'practice', 'printed', 'e2e'
       from child where id = ${kids.Esha} on conflict do nothing`;
   }
   // a class practice waiting for approval in each of seven classes
@@ -39,14 +39,14 @@ test.beforeAll(async () => {
     const one = await aClass(sql, section, "G2", ["Gita"]);
     await sql`
       insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, week, section, kind, print_status)
-      select tenant_id, ${`U24T-${section}`}, ${template}, id, '2026-W02', ${section}, 'practice', 'new'
+      select tenant_id, ${`U24T-${section}`}, ${template}, id, to_date('2026-W02', 'IYYY-"W"IW'), ${section}, 'practice', 'new'
       from child where id = ${one.Gita} on conflict do nothing`;
   }
   // a class plan in each of eight weeks long past
   for (let i = 1; i <= 8; i++) {
     await sql`
       insert into prescription (tenant_id, child_id, week, kind, skill_set_code, difficulty, rule_fired, misconception_targets, strand)
-      select tenant_id, id, ${`2025-W1${i}`}, 'practice', 'ADD.2D2D', 'Medium', 'band_default', '{}', 'NUM'
+      select tenant_id, id, to_date(${`2025-W1${i}`}, 'IYYY-"W"IW'), 'practice', 'ADD.2D2D', 'Medium', 'band_default', '{}', 'NUM'
       from child where id = ${kids.Farid} on conflict do nothing`;
   }
 });

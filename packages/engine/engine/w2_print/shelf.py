@@ -8,7 +8,7 @@ import contextvars
 from contextlib import contextmanager
 from typing import Any
 
-from engine.core import roster, settings, vocabulary
+from engine.core import roster, settings, vocabulary, weeks
 
 _BATCH: contextvars.ContextVar[dict[str, Any] | None] = contextvars.ContextVar(
     "focus_paper_batch", default=None
@@ -161,5 +161,5 @@ def seen_by(conn, tenant, child_id, week, ids) -> None:
     conn.execute(
         "insert into item_exposure (tenant_id, child_id, item_id, week)"
         " select %s, %s, id, %s from unnest(%s::uuid[]) as id order by id on conflict do nothing",
-        (tenant, child_id, week, ids),
+        (tenant, child_id, weeks.day(week), ids),
     )

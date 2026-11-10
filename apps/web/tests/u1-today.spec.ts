@@ -13,7 +13,7 @@ import { ENGINE_PORT } from "../playwright.config";
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 const SECTION = "U1-TEST";
-const WEEK = "U1-TEST";
+const WEEK = "2091-W35"; // an ISO week of its own: a week is a date since CP-27
 
 async function engine(path: string, body: object) {
   const r = await fetch(`http://127.0.0.1:${ENGINE_PORT}${path}`, {
@@ -47,9 +47,9 @@ async function testChild(): Promise<string> {
 }
 
 async function clearUp() {
-  await sql`delete from item_exposure where week = ${WEEK}`;
-  await sql`delete from prescription where week = ${WEEK}`;
-  await sql`delete from sheet_instance where week = ${WEEK}`;
+  await sql`delete from item_exposure where week = to_date(${WEEK}, 'IYYY-"W"IW')`;
+  await sql`delete from prescription where week = to_date(${WEEK}, 'IYYY-"W"IW')`;
+  await sql`delete from sheet_instance where week = to_date(${WEEK}, 'IYYY-"W"IW')`;
 }
 
 /** The rows of one kind on What needs doing (Today's old address), and how many answers, papers or children they say. */
@@ -109,7 +109,7 @@ test("today lists everything waiting on a teacher, each with its count and one c
     select count(distinct s.child_id)::int as n from child_skill_state s join child c on c.id = s.child_id
     where c.active and s.state in ('patterned_error', 'emerging', 'practising', 'secure', 'stretch_ready')
       and not exists (select 1 from sheet_instance si where si.child_id = s.child_id and si.kind = 'focus'
-                      and si.week = ${isoWeek()})`;
+                      and si.week = to_date(${isoWeek()}, 'IYYY-"W"IW'))`;
   const home = await kind(page, "home");
   expect(home.n).toBe(n);
   if (n) {

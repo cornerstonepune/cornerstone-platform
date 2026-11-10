@@ -93,7 +93,7 @@ def worksheet(conn, tmp_path, monkeypatch):
     code = f"R5-A9{uuid.uuid4().int % 100:02d}"
     conn.execute(
         "insert into sheet_template (tenant_id, band, week, variant, source, code, skill_set_code, difficulty,"
-        " item_ids) values (%s, 'G2', 'library', 99, 'library', %s, 'ADD.2D2D', 'Advance', %s)",
+        " item_ids) values (%s, 'G2', null, 99, 'library', %s, 'ADD.2D2D', 'Advance', %s)",
         (tenant["id"], code, ids),
     )
     monkeypatch.setattr(library, "PDF_DIR", tmp_path / "worksheets")

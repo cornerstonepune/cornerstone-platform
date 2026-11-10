@@ -47,3 +47,20 @@ drawn only of an approved way of asking (`drawable_item`); a report reaches a pa
 stamp on their own row (`skill.level_approved` → `skill_level.confirmed_*`, `parent_note.approved_by`,
 `sheet_instance.approved_*`, `skill_prerequisite.confirmed_*`); one trigger function, `internal.approval_from_stamp`,
 writes the matching `approval` row, so new code reads `approval` or `approval_list`, never a stamp.
+
+<!-- CP-27 group 5 (time): begin -->
+**How time is kept (CP-27 group 5).** The timetable of a date is its `session` rows: one per lesson, with its `kind`
+(`fixed`, `subject`, `specialist`); a period with no lesson is empty. `timetable_rule` holds the rules a timetable is made
+from, told apart by `kind`: `frame` (the week A/B frame: a class's period on a weekday of week A or B, its cell and words,
+from a date), `block` (a date, or a weekday of a week, or one period of either, on which nothing is placed, and why) and
+`limit` (the fewest and most periods of a subject in a week or a fortnight). FET reads the frame from there; a draft
+(`timetable_run`) put live and a lesson moved by hand change the sessions, never the frame. No table keeps a second copy
+of a fortnight's periods. A fortnight's state is `fortnight.state`; each step taken (`freeze`, `align`, `approve`,
+`list_sent`) is an `approval` row of kind `fortnight`. A class's fortnight approved (CP-7) is an `approval` row of kind
+`timetable` (target `<class> <fortnight>`) carrying the signature of its lessons and the baseline it was given on; a
+fortnight whose lessons say what the class's last settled fortnight said rolls forward with no row, and carries that
+signature as the next one's baseline (`timetable_standing`). A draft put live is kind `timetable_live`, a clash accepted
+kind `timetable_clash`, a week's declaration (N4) kind `week`. A lesson moved by hand, a change made after a fortnight
+froze, a rule changed and a fortnight's state are `change_log` rows. Every `week` column is a `date`, the Monday of the
+ISO week (`core/weeks.py`: `2026-W40` is 2026-09-28); an old paper's own label (`Sep W1`) stays in its key, with no date.
+<!-- CP-27 group 5 (time): end -->

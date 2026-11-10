@@ -5,6 +5,7 @@ import { sql } from "./db";
 import { seesClass, seesSheet } from "./reach";
 import { grades } from "./queries";
 import { weekWords } from "./week";
+import { weekSql } from "./queries-papers";
 
 // The search box at the top of every screen (goals/s1-subject-class-and-today.yaml): "a search box that finds a child,
 // an assessment or a paper code". What is typed is posted, never put in an address: a child's name never goes into an
@@ -38,7 +39,7 @@ export async function find(_: Found | null, form: FormData): Promise<Found> {
     // an assessment — a class paper given in a week — by the skill or the title it tests, as Assessments lists it
     sql<{ name: string; kind: string; section: string; band: string; week: string | null; set: string }[]>`
       select coalesce(ss.name, t.key ->> 'title', t.code) as name, si.kind, si.section, class_band(si.tenant_id, si.section) as band,
-             coalesce(si.week, t.week) as week, coalesce(t.skill_set_code, t.id::text) as set
+             ${weekSql("si", "t")} as week, coalesce(t.skill_set_code, t.id::text) as set
       from sheet_instance si join sheet_template t on t.id = si.sheet_template_id
       left join skill ss on ss.tenant_id = t.tenant_id and ss.code = t.skill_set_code
       where si.print_status <> 'void' and si.kind in ('practice', 'assessment') and si.section is not null
