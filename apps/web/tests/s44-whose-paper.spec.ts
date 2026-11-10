@@ -110,6 +110,23 @@ test("checking runs per child: a next-child step only when this child is done, a
   await expect(page.locator("[data-ux=next]")).toHaveText(/Next paper in this assessment|This assessment is done — next assessment/);
 });
 
+test("the same photograph on two children's copies is a plain red notice, and Yes waits for a person", async ({ page }) => {
+  await open(page, "CSA00002", 0);
+  const proof = page.getByRole("complementary", { name: "Whose paper this page is" });
+  await expect(proof.getByText(/same picture as a page of copy 1 in this file/)).toBeVisible();
+  const yes = page.getByRole("button", { name: "Yes, the child wrote 7" });
+  await expect(yes).toBeDisabled();
+  await page.screenshot({ path: path.join(SHOTS, "same-photograph.png") });
+  await proof.getByRole("button", { name: "This page is Bina’s" }).click();
+  await expect(proof.getByText("e2e@cornerstone.test said this page is Bina’s.")).toBeVisible();
+  await expect(page.getByRole("button", { name: "Yes, the child wrote 7" })).toBeEnabled();
+  // the choice stands on the page's own capture, and is kept as a row of the one history log (CP-27 3C)
+  const [{ n }] = await sql<{ n: number }[]>`select count(*)::int as n from change_log
+    where table_name = 'capture' and row_id = ${made.CSA00002.capture}::text and op = 'choose_page'`;
+  expect(n).toBe(1);
+  // and a copy with its own photograph has no notice
+});
+
 test("signing a paper off says the score recorded, and the last paper of an assessment links to its Results", async ({ page }) => {
   for (const [qr, child, score] of [["CSA00003", "Chitra", "3 of 3"], ["CSA00004", "Devi", "2 of 3"]] as const) {
     await page.goto(`/capture/${made[qr].sheet}`);

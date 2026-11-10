@@ -134,3 +134,39 @@ test("an educator makes a home assessment, removes a question, adds one through 
   expect(await status(third)).toEqual({ print_status: "printed", approved_by: TEST_STAFF.email });
 });
 
+test("an approved paper edited goes back to waiting, a printed one is read-only, a retired kind is not offered", async ({ page }) => {
+  const qr = await made(page);
+  const a = await area(qr);
+
+  // a kind stopped at this level ("stop using this kind", #335) is not offered, nor are its questions
+  const kinds = await sql<{ code: string; words: string }[]>`
+    select distinct k.code, k.words from drawable_item d join question_type k on k.code = d.question_type
+    where d.skill_set_code = ${a.skill} and d.difficulty = ${a.level} order by k.words`;
+  expect(kinds.length).toBeGreaterThan(1);
+  const stopped = kinds[0];
+  const [{ tenant_id }] = await sql<{ tenant_id: string }[]>`select id as tenant_id from tenant limit 1`;
+  // a stop stands on the level's own row for the kind (CP-27 3C)
+  const kindRow = (on: boolean) => sql`
+    update skill_level_question_type set stopped_at = case when ${on}::boolean then now() end,
+      stopped_by = case when ${on}::boolean then 'e2e' end
+    where tenant_id = ${tenant_id} and skill_code = ${a.skill} and difficulty = ${a.level}
+      and question_type = ${stopped.code}`;
+  await kindRow(true);
+  try {
+    await page.goto(`/papers/review/${qr}?topic=${a.topic}&skill=${a.skill}&level=${a.level}`);
+    const bank = page.getByRole("region", { name: "Add a question from the bank" });
+    await expect(bank.locator(`select[name="q"]`)).toBeVisible();
+    await expect(bank.locator("option", { hasText: stopped.words })).toHaveCount(0);
+  } finally {
+    await kindRow(false); // started again: the stop cleared on its row
+  }
+
+  // printed: its print opened, it is shown read-only and says how to change it
+  expect((await page.request.get(`/api/papers/print?qr=${qr}`)).ok()).toBe(true);
+  await page.goto(`/papers/review/${qr}`);
+  await expect(page.locator("[data-summary]")).toContainText("printed");
+  await expect(page.getByText("This paper is already printed. Make a new one to change it.")).toBeVisible();
+  await expect(page.getByRole("button", { name: /Remove/ })).toHaveCount(0);
+  await expect(page.getByRole("link", { name: "Remove" })).toHaveCount(0);
+  await expect(page.getByRole("region", { name: "Add a question from the bank" })).toHaveCount(0);
+});
