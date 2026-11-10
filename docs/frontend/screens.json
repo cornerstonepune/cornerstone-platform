@@ -754,7 +754,11 @@
         "the steps fold is open on load and the others closed",
         "tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page"
       ],
-      "phone_gate": true
+      "phone_gate": true,
+      "rest": {
+        "fixture": "voice-rest",
+        "after": "voice-gone"
+      }
     },
     {
       "id": "record",
@@ -788,27 +792,38 @@
         {
           "t": "button",
           "label": "Start recording",
-          "effect": "microphone permission asked; the button becomes Stop; a timer counts"
+          "effect": "microphone permission asked; the button becomes Stop; a timer counts",
+          "pending": "checker cannot drive a microphone or file picker"
         },
         {
           "t": "button",
           "label": "Stop",
-          "effect": "recording ends; Send and Record again appear"
+          "effect": "recording ends; Send and Record again appear",
+          "pending": "checker cannot drive a microphone or file picker"
         },
         {
           "t": "button",
           "label": "Send",
-          "effect": "one pii.educator_note row with the session id, status received; the page says 'sent, the reader is listening' and links to Notes"
+          "effect": "one pii.educator_note row with the session id, status received; the page says 'sent, the reader is listening' and links to Notes",
+          "pending": "checker cannot drive a microphone or file picker"
         },
         {
           "t": "upload",
           "label": "Add a photo",
-          "effect": "jpg/png/heic accepted; the photo attaches to the session, never to a child"
+          "effect": "jpg/png/heic accepted; the photo attaches to the session, never to a child",
+          "pending": "checker cannot drive a microphone or file picker"
         },
         {
           "t": "button",
           "label": "Type the marks",
-          "effect": "creates the empty note for the chosen session and class in this step and opens it on the confirm screen"
+          "effect": "creates the empty note for the chosen session and class in this step and opens it on the confirm screen",
+          "drive": {
+            "click": "Type the marks",
+            "expect": {
+              "url": "^/notes/[0-9a-f-]{36}$",
+              "check": "typed-note-written"
+            }
+          }
         },
         {
           "t": "link",
@@ -849,7 +864,11 @@
       "phone_gate": true,
       "folds": [
         "/voice/record"
-      ]
+      ],
+      "rest": {
+        "fixture": "voice-rest",
+        "after": "voice-gone"
+      }
     },
     {
       "id": "confirm",
@@ -904,7 +923,17 @@
           "t": "button",
           "label": "Correct this note",
           "effect": "a confirmed note only: writes a superseding note row; the old row is never edited",
-          "note": "absent on a waiting note"
+          "note": "absent on a waiting note",
+          "when": "@confirmed-note",
+          "drive": {
+            "fill": {
+              "Why": "I misheard the number"
+            },
+            "click": "Correct this note",
+            "expect": {
+              "check": "mark-corrected"
+            }
+          }
         },
         {
           "t": "link",
@@ -962,7 +991,11 @@
         "a child's name on a claim line opens ChildPeek; a square still changes the mark and never opens the peek",
         "tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page"
       ],
-      "phone_gate": true
+      "phone_gate": true,
+      "rest": {
+        "fixture": "voice-rest",
+        "after": "voice-gone"
+      }
     },
     {
       "id": "notes",
@@ -1117,7 +1150,11 @@
         "a note left unconfirmed past 48 hours carries the red 'late' chip and sorts first",
         "each board lane's card count equals the rows of the table in that state",
         "tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page"
-      ]
+      ],
+      "rest": {
+        "fixture": "voice-rest",
+        "after": "voice-gone"
+      }
     },
     {
       "id": "timetable",

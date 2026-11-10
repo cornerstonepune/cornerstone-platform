@@ -7,6 +7,7 @@
 import { expect, test } from "@playwright/test";
 import postgres from "postgres";
 import { aK2Note, k2Class, noNotesWaiting, voiceSwitch } from "./k2-rows";
+import { EDUCATOR, inventoryRows, signedInAs } from "./inventory-fixtures";
 import { SIGNED_IN } from "../playwright.config";
 
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -103,17 +104,13 @@ test("Confirm: a child's square is never red, and a name on a claim opens ChildP
   await expect(page.locator("[data-block=ChildPeek]")).toHaveCount(0);
 });
 
-test("Notes: a note left unconfirmed carries the red 'late' chip and sorts first; the board's lanes count the table's rows", async ({ page }) => {
+test("Notes: a note left unconfirmed carries the red 'late' chip and sorts first", async ({ page }) => {
   await aK2Note(sql, { klass, staff }, "Activity 904, level 2. Above 3.");
   const late = await aK2Note(sql, { klass, staff }, "Activity 907, level 1. Below 4.", "left_unconfirmed");
   await page.goto(`/notes?class=${klass}&view=table`);
   const rows = page.locator("table tbody tr");
-  await expect(rows.first().locator(`a[href="/notes/${late}"]`)).toHaveCount(1);
   await expect(rows.first().locator("[data-status=late]")).toBeVisible();
-  const inTable = await rows.count();
-  await page.goto(`/notes?class=${klass}&view=board`);
-  const counts = await page.locator("[data-block=KanbanBoard] .b-count").allInnerTexts();
-  expect(counts.map(Number).reduce((a, b) => a + b, 0)).toBe(inTable);
+  expect(late).toBeTruthy();
 });
 
 test("Notes: a correction writes a superseding row with a reason and never updates the old one", async ({ page }) => {
@@ -149,10 +146,21 @@ test("Notes: tapping a child opens ChildPeek with the history, Escape closes it 
   await expect(chip).toBeFocused();
 });
 
-test("Notes: the coordinator sees the notes of every class of the campus", async ({ page }) => {
-  const note = await aK2Note(sql, { klass, staff }, "Activity 904, level 2. Above 3.");
-  await page.goto("/notes?view=table");
-  await expect(page.locator(`a[href="/notes/${note}"]`).first()).toBeVisible();
+test("Notes: the coordinator reads the notes of every class and has no Confirm or Open; another person's note is not found", async ({ page }) => {
+  await aK2Note(sql, { klass, staff }, "Activity 904, level 2. Above 3.");
+  await page.goto(`/notes?class=${klass}`);
+  // the table only, no board, and no button that confirms or opens a note: the author confirms, a coordinator reads
+  await expect(page.locator("table tbody tr").first()).toBeVisible();
+  await expect(page.locator("[data-block=KanbanBoard]")).toHaveCount(0);
+  await expect(page.locator('main a[href^="/notes/"]')).toHaveCount(0);
+  await expect(page.getByRole("link", { name: /^(Confirm|Open)$/ })).toHaveCount(0);
+  // a note someone else wrote: the engine reads a draft for its author only, so it is not found
+  const [{ tenant }] = await sql<{ tenant: string }[]>`select tenant_id::text as tenant from school_class where id = ${klass}`;
+  const [{ campus }] = await sql<{ campus: string }[]>`select campus_id::text as campus from school_class where id = ${klass}`;
+  const [other] = await sql<{ id: string }[]>`insert into staff (tenant_id, campus_id) values (${tenant}, ${campus}) returning id::text`;
+  const theirs = await aK2Note(sql, { klass, staff: other.id }, "Activity 904, level 2. Above 3.");
+  await page.goto(`/notes/${theirs}`);
+  await expect(page.getByRole("button", { name: "Confirm this note" })).toHaveCount(0);
 });
 
 test("Record: Add a photo hangs the photo on the lesson's note, with the rule for photos beside it", async ({ page }) => {
@@ -164,4 +172,20 @@ test("Record: Add a photo hangs the photo on the lesson's note, with the rule fo
   await expect(page.getByText("Photo added to this lesson's note.")).toBeVisible();
   const [row] = await sql<{ n: number }[]>`select coalesce(sum(array_length(photo_keys, 1)), 0)::int as n from pii.educator_note where session_id = ${lesson}`;
   expect(row.n).toBeGreaterThanOrEqual(1);
+});
+
+test("Notes: an educator's board lanes count the rows of her table in that state", async ({ browser }) => {
+  const rows = await inventoryRows(sql);
+  const [{ staff: hers }] = await sql<{ staff: string }[]>`select staff_id::text as staff from pii.staff where email = ${EDUCATOR.email}`;
+  const mine = { klass: rows.classId, staff: hers };
+  await aK2Note(sql, mine, "Activity 904, level 2. Above 3.");
+  await aK2Note(sql, mine, "Activity 904, level 2. Below 4.", "left_unconfirmed");
+  const educator = await signedInAs(browser, "educator", { width: 1440, height: 900 });
+  const p = await educator.newPage();
+  await p.goto(`/notes?class=${rows.classId}&view=table`);
+  const inTable = await p.locator("table tbody tr").count();
+  await p.goto(`/notes?class=${rows.classId}&view=board`);
+  const counts = await p.locator("[data-block=KanbanBoard] .b-count").allInnerTexts();
+  expect(counts.map(Number).reduce((a, b) => a + b, 0)).toBe(inTable);
+  await educator.close();
 });
