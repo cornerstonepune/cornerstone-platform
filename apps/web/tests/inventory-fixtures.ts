@@ -58,3 +58,8 @@ export const sessionFor = (email: string, secret = process.env.E2E_AUTH_SECRET!)
   const body = `${Buffer.from(email).toString("base64url")}.${Date.now() + 3_600_000}`;
   return `${body}.${createHmac("sha256", secret).update(body).digest("hex")}`;
 };
+
+/** The rows a stateful control needs in place before it is pressed, by the name an element's `drive.fixture` gives (tests/inventory/drivers.ts). */
+export const FIXTURES: Record<string, () => Promise<void>> = {};
+/** What a control must have done to the rows, by the name an element's `drive.expect.check` gives: the problems, [] when it holds. */
+export const CHECKS: Record<string, () => Promise<string[]>> = {};

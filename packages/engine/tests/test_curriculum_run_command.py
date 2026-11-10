@@ -234,3 +234,15 @@ def test_the_tranche_run_drafts_the_next_pages_in_the_draft_stage_and_the_size_i
 def test_loading_the_settings_is_a_fixed_command_that_spends_nothing_and_needs_no_person():
     assert lines("load_settings") == ["engine load --settings"]
     assert cmd.RUNS["load_settings"]["spends"] is False
+
+
+def test_the_screens_go_on_by_signed_switch_commands_and_recording_is_its_own_run():
+    on = lines("switch_screens_on", staff=STAFF)
+    assert [c.split()[4] for c in on] == ["screens", "timetable", "curriculum"]
+    assert all(c.startswith("engine read voice switch ") and " on --by " in c for c in on)
+    recording = lines("switch_recording_on", staff=STAFF)
+    assert len(recording) == 1 and "recording on --by" in recording[0]
+    assert not any("recording" in c for c in on), (
+        "a child's voice is never switched on as part of another run"
+    )
+    assert lines("switch_status", staff=STAFF) == ["engine read voice status"]

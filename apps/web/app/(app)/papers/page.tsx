@@ -353,6 +353,9 @@ export default async function PapersPage({ searchParams }: Props) {
           </details>
         </section>
       ) : null}
+      <p className="note mt-3">
+        <Link href="/children/assessments">Try the new Assessments board</Link>
+      </p>
       <details className="mt-3 text-[13px] text-basalt/75">
         <summary className="cursor-pointer">How it works</summary>
         <p className="mt-1">
