@@ -3,7 +3,8 @@ import AxeBuilder from "@axe-core/playwright";
 import type { Browser } from "@playwright/test";
 import { addressOf, signedInAs, type Rows } from "../inventory-fixtures";
 import { brandRules } from "./brand";
-import { completeness, drive, keyboard, renders, touch, words, type Ctx } from "./checks";
+import { completeness, drive, forRole, keyboard, renders, touch, words, type Ctx } from "./checks";
+import type { When } from "./load";
 import type { Inventory, Screen } from "./load";
 
 export type Audit = { inv: Inventory; rows: Rows; allow: readonly string[]; names: readonly string[]; address?: Record<string, string> };
@@ -30,12 +31,18 @@ export async function auditScreen(browser: Browser, s: Screen, role: "educator" 
       if (width >= 1000 || s.phone_gate) {
         out.push(...(await completeness(page, s, c)));
         out.push(...(await keyboard(page, s)));
+        // the controls that exist only in a state: a child chosen, a filter on, a second page
+        for (const state of [...new Set(s.elements.filter((x) => forRole(x, role) && x.when).map((x) => x.when as When))]) {
+          await page.goto(address, { waitUntil: "domcontentloaded" });
+          out.push(...(await completeness(page, s, c, state)));
+        }
+        await page.goto(address, { waitUntil: "domcontentloaded" });
       }
       if (width >= 1000) {
         out.push(...(await words(page, s, c, hosts)));
         const axe = await new AxeBuilder({ page }).analyze();
         for (const v of axe.violations.filter((x) => x.impact === "serious" || x.impact === "critical")) out.push(`${s.id}: axe ${v.impact}: ${v.id} (${v.nodes.length} nodes)`);
-        for (const e of s.elements.filter((x) => !x.for || x.for === role)) {
+        for (const e of s.elements.filter((x) => forRole(x, role))) {
           out.push(...(await drive(page, s, e, c, byId)));
           if (page.url() !== `http://localhost:3100${address}`) await page.goto(address, { waitUntil: "domcontentloaded" });
         }

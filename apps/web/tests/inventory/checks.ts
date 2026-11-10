@@ -3,7 +3,7 @@
 // controls, its focus. Nothing here knows a particular screen.
 import type { Page } from "@playwright/test";
 import { PURPOSE_MAX } from "../../lib/ux-rules";
-import { titleMatches, type Element, type Inventory, type Screen } from "./load";
+import { builtScreens, titleMatches, type Element, type Inventory, type Screen, type When } from "./load";
 
 export type Ctx = { inv: Inventory; role: "educator" | "coordinator"; width: number; allow: readonly string[]; names: readonly string[]; address: string };
 type Problems = string[];
@@ -17,11 +17,14 @@ async function mainControls(page: Page) {
     if (!main) return [];
     return [...main.querySelectorAll<HTMLElement>(sel)]
       .filter((e) => !e.closest("[data-trail]") && !(e as HTMLInputElement).name?.startsWith("$ACTION"))
-      .map((e) => ({ tag: e.tagName.toLowerCase(), href: e.getAttribute("href") ?? "", name: (e.getAttribute("aria-label") || (e as HTMLInputElement).labels?.[0]?.innerText || e.innerText || (e as HTMLInputElement).placeholder || "").trim(), ...(() => { const r = e.getBoundingClientRect(); return { w: r.width, h: r.height, x: r.x, y: r.y }; })() }));
+      // the frame's own links (the next step, the details link) are drawn on every screen: an element may list one, and none is extra
+      .map((e) => ({ tag: e.tagName.toLowerCase(), frame: e.matches("[data-ux=next], [data-ux=details]"), peek: e.hasAttribute("data-peek-open"), href: e.getAttribute("href") ?? "", name: (e.getAttribute("aria-label") || (e as HTMLInputElement).labels?.[0]?.innerText || e.innerText || (e as HTMLInputElement).placeholder || "").trim(), ...(() => { const r = e.getBoundingClientRect(); return { w: r.width, h: r.height, x: r.x, y: r.y }; })() }));
   }, CONTROLS);
 }
 
-const expectedFor = (s: Screen, role: Ctx["role"]) => s.elements.filter((e) => e.t !== "child_name" && (!e.for || e.for === role));
+/** An element is for the person when it names no group, or names theirs (`for`, or `roles` on a filter). */
+export const forRole = (e: Element, role: Ctx["role"]) => (!e.for || e.for === role) && (!e.roles || e.roles.includes(role));
+const expectedFor = (s: Screen, role: Ctx["role"]) => s.elements.filter((e) => e.t !== "child_name" && forRole(e, role));
 
 /** 1. Renders: eyebrow 14 px or more, one h1 equal to the title, a purpose line within its limit, one main action, the trail, the rail where listed; bare for `frame: bare`. At 400 the smoke test. */
 export async function renders(page: Page, s: Screen, c: Ctx, errors: string[]): Promise<Problems> {
@@ -43,22 +46,65 @@ export async function renders(page: Page, s: Screen, c: Ctx, errors: string[]): 
   const actions = await page.locator("[data-ux=action]").count();
   if (actions !== 1) out.push(`${s.id}: ${actions} main actions, not exactly one`);
   if (!(await page.locator("[data-trail]").count())) out.push(`${s.id}: no trail`);
-  if ((s.rail?.length ?? 0) > 0 && !(await page.locator("[data-rail]").count())) out.push(`${s.id}: the inventory lists a rail and the page has none`);
+  // a rail whose every link goes to a screen not built yet has nothing to draw (the link is not a dead link, it is not there)
+  const railEls = s.elements.filter((e) => /^(rail|capture):/i.test(e.label));
+  const railDrawn = railEls.length === 0 || railEls.some((e) => buildable(e, c));
+  if ((s.rail?.length ?? 0) > 0 && railDrawn && !(await page.locator("[data-rail]").count())) out.push(`${s.id}: the inventory lists a rail and the page has none`);
   return out;
 }
 
-/** 2. Completeness: the controls of the main column and the rail are this screen's element list for the role. */
-export async function completeness(page: Page, s: Screen, c: Ctx): Promise<Problems> {
-  const out: Problems = [];
-  const found = await mainControls(page);
-  const want = expectedFor(s, c.role);
-  const left = [...found];
-  for (const e of want) {
-    const at = left.findIndex((f) => (e.href ? f.href === e.href : f.name.toLowerCase().includes((e.text ?? e.label).toLowerCase())));
-    if (at < 0) out.push(`${s.id}: missing control — “${e.label}” (${e.t}${e.href ? ` ${e.href}` : ""}) is in the inventory and not on the page`);
-    else left.splice(at, 1);
+/** What a control is called in the inventory is what a person reads on it, after the place it sits in: "rail: Notes" is the link "Notes". */
+const needle = (e: Element) => (e.text ?? e.label).replace(/^(rail|page|peek|capture|next step|details):\s*/i, "").toLowerCase();
+/** Whether a screen's element is expected on the page in this run: the one whose target is not built is not drawn (and not a dead link). */
+function buildable(e: Element, c: Ctx) {
+  return !e.to || builtScreens(c.inv).has(e.to);
+}
+
+/** Brings the page into a state in which a conditional control exists: a child chosen, a filter on. [] when it did; the reason when it could not. */
+export async function reveal(page: Page, when: When): Promise<string | null> {
+  if (when === "peek") {
+    const opener = page.locator("main [data-peek-open]").first();
+    if (!(await opener.count())) return "no child to choose";
+    await opener.click();
+    await page.locator("[data-block=ChildPeek]").first().waitFor({ timeout: 10_000 }).catch(() => undefined);
+    return (await page.locator("[data-block=ChildPeek]").count()) ? null : "choosing a child did not open the peek";
   }
-  for (const f of left) out.push(`${s.id}: extra control — “${f.name || f.href}” (${f.tag}) is on the page and not in the inventory`);
+  if (when === "filtered") {
+    const box = page.locator("main input[type=search]").first();
+    if (!(await box.count())) return "no search field to filter with";
+    await box.fill("1");
+    await box.press("Enter");
+    await page.locator("[data-active-filters]").first().waitFor({ timeout: 10_000 }).catch(() => undefined);
+    return (await page.locator("[data-active-filters]").count()) ? null : "searching did not show a filter chip";
+  }
+  return (await page.locator("main nav[aria-label$=' pages'], main nav[aria-label$=' page']").count()) ? null : "the fixture has too few rows for a second page";
+}
+
+/** 2. Completeness: the controls of the main column and the rail are this screen's element list for the role, in the given state. Nothing
+ *  extra, nothing missing. A control of an element with a `when` is required only once the page is in that state, and allowed in any;
+ *  one whose target screen is not built is not required. A `peek` element is every child's open button. */
+export async function completeness(page: Page, s: Screen, c: Ctx, state: When | "rest" = "rest"): Promise<Problems> {
+  const out: Problems = [];
+  if (state !== "rest") {
+    const why = await reveal(page, state);
+    if (why) return [`${s.id}: cannot bring the page to “${state}” to look for its controls: ${why}`];
+  }
+  const found = await mainControls(page);
+  const left = [...found];
+  for (const e of expectedFor(s, c.role)) {
+    const needed = buildable(e, c) && (e.when ? e.when === state : state === "rest");
+    if (e.t === "peek") {
+      const taken = left.filter((f) => f.peek);
+      if (!taken.length && needed) out.push(`${s.id}: missing control — “${e.label}” (peek) is in the inventory and not on the page`);
+      for (const f of taken) left.splice(left.indexOf(f), 1);
+      continue;
+    }
+    const at = left.findIndex((f) => (e.href ? f.href === e.href : f.name.toLowerCase().includes(needle(e))));
+    if (at < 0) {
+      if (needed) out.push(`${s.id}: missing control — “${e.label}” (${e.t}${e.href ? ` ${e.href}` : ""}) is in the inventory and not on the page`);
+    } else left.splice(at, 1);
+  }
+  for (const f of left.filter((x) => !x.frame)) out.push(`${s.id}: extra control — “${f.name || f.href}” (${f.tag}) is on the page and not in the inventory`);
   return out;
 }
 
@@ -114,11 +160,81 @@ export async function words(page: Page, s: Screen, c: Ctx, hosts: Set<string>): 
   return out;
 }
 
-/** The element kinds a person drives: a link, a row or a cell lands on its target screen; Back returns; a tab keeps the h1; a fold opens and closes. */
+/** The stated effect of a button, driven against the page the way a person would, in the state the element says. [] when it holds. */
+async function effect(page: Page, s: Screen, e: Element): Promise<Problems> {
+  const out: Problems = [];
+  const say = e.effect ?? "";
+  if (/closes ChildPeek/i.test(say)) {
+    const peek = page.locator("[data-block=ChildPeek]").first();
+    await peek.getByRole("button", { name: /^close$/i }).click();
+    if (await peek.count()) out.push(`${s.id}: “${e.label}” did not close the peek`);
+    else if (!(await page.evaluate(() => document.activeElement?.hasAttribute("data-peek-open")))) out.push(`${s.id}: after “${e.label}” focus did not return to the child that opened the peek`);
+    if (new URL(page.url()).searchParams.has("peek")) out.push(`${s.id}: after “${e.label}” the address still carries the peek`);
+  } else if (/removes every filter/i.test(say)) {
+    await page.locator("[data-active-filters]").getByRole("link", { name: "Clear" }).click();
+    await page.waitForURL((u) => ![...u.searchParams.keys()].some((k) => k !== "peek"), { timeout: 10_000 }).catch(() => undefined);
+    if ([...new URL(page.url()).searchParams.keys()].length || (await page.locator("[data-active-filters]").count())) out.push(`${s.id}: “${e.label}” left a filter on (${page.url()})`);
+  } else if (/removes that filter/i.test(say)) {
+    const before = [...new URL(page.url()).searchParams.keys()].length;
+    await page.locator("[data-active-filters] a[aria-label^='Remove filter']").first().click();
+    await page.waitForURL((u) => [...u.searchParams.keys()].length < before, { timeout: 10_000 }).catch(() => undefined);
+    if ([...new URL(page.url()).searchParams.keys()].length >= before) out.push(`${s.id}: “${e.label}” did not take its filter out of the address (${page.url()})`);
+  } else out.push(`${s.id}: the effect of “${e.label}” (${say}) is not yet drivable by tests/inventory/checks.ts`);
+  return out;
+}
+
+/** A filter changes the rows and writes itself into the address, and a reload keeps it. */
+async function filter(page: Page, s: Screen, e: Element): Promise<Problems> {
+  const out: Problems = [];
+  const first = new URL(page.url()).search;
+  const search = /search/i.test(e.label);
+  if (search) {
+    const box = page.locator("main input[type=search]").first();
+    if (!(await box.count())) return [`${s.id}: the filter “${e.label}” has no search field`];
+    await box.fill("1");
+    await box.press("Enter");
+  } else {
+    const sel = page.locator("main label").filter({ hasText: new RegExp(needle(e), "i") }).locator("select").first();
+    if (!(await sel.count())) return [`${s.id}: the filter “${e.label}” has no select`];
+    const options = await sel.locator("option").evaluateAll((os) => os.map((o) => (o as HTMLOptionElement).value));
+    const now = await sel.inputValue();
+    const pick = options.reverse().find((v) => v !== now);
+    if (pick === undefined) return [`${s.id}: the filter “${e.label}” offers no other choice`];
+    await sel.selectOption(pick);
+  }
+  await page.waitForURL((u) => u.search !== first, { timeout: 10_000 }).catch(() => undefined);
+  const set = new URL(page.url()).search;
+  if (set === first) return [`${s.id}: the filter “${e.label}” did not write itself into the address`];
+  await page.reload({ waitUntil: "domcontentloaded" });
+  if (new URL(page.url()).search !== set) out.push(`${s.id}: a reload lost the filter “${e.label}”`);
+  return out;
+}
+
+/** The element kinds a person drives: a link, a row or a cell lands on its target screen; Back returns; a tab keeps the h1; a fold opens and closes;
+ *  a peek opens in place, carries the Sr. No. and closes on Escape with focus back; a filter writes itself into the address; a button does its stated effect. */
 export async function drive(page: Page, s: Screen, e: Element, c: Ctx, byId: Map<string, Screen>): Promise<Problems> {
   const out: Problems = [];
+  if (!buildable(e, c)) return out;
+  if (e.when) {
+    const why = await reveal(page, e.when);
+    if (why) return [`${s.id}: cannot bring the page to “${e.when}” to drive “${e.label}”: ${why}`];
+  }
   const here = page.url();
-  const find = () => (e.href ? page.locator("main").locator(`a[href="${e.href}"]`).first() : page.locator("main a").filter({ hasText: e.text ?? e.label }).first());
+  const find = () => (e.href ? page.locator("main").locator(`a[href="${e.href}"]`).first() : page.locator("main a").filter({ hasText: needle(e) }).first());
+  if (e.t === "peek") {
+    const opener = page.locator("main [data-peek-open]").first();
+    if (!(await opener.count())) return [`${s.id}: cannot drive “${e.label}”: no child to choose`];
+    await opener.focus();
+    await opener.click();
+    await page.locator("[data-block=ChildPeek]").first().waitFor({ timeout: 10_000 }).catch(() => undefined);
+    if (!(await page.locator("[data-block=ChildPeek]").count())) return [`${s.id}: “${e.label}” did not open the peek in place`];
+    if (!new URL(page.url()).searchParams.has("peek")) out.push(`${s.id}: the open peek is not in the address (the Sr. No., never a name)`);
+    await page.keyboard.press("Escape");
+    if (await page.locator("[data-block=ChildPeek]").count()) out.push(`${s.id}: Escape did not close the peek`);
+    else if (!(await page.evaluate(() => document.activeElement?.hasAttribute("data-peek-open")))) out.push(`${s.id}: after Escape focus did not return to the child that opened the peek`);
+    return out;
+  }
+  if (e.t === "filter") return filter(page, s, e);
   if (["link", "row", "cell"].includes(e.t)) {
     if (!(await find().count())) return [`${s.id}: cannot drive “${e.label}”: no such link`];
     const same = e.href === new URL(here).pathname + new URL(here).search;
@@ -137,8 +253,8 @@ export async function drive(page: Page, s: Screen, e: Element, c: Ctx, byId: Map
       if (page.url() !== here) out.push(`${s.id}: Back from “${e.label}” returned to ${page.url()}, not ${here}`);
     }
   } else if (e.t === "button") {
-    // a button is driven only where the inventory states its effect: otherwise there is nothing to assert but that it exists (check 2)
-    if (e.effect) out.push(`${s.id}: the effect of “${e.label}” (${e.effect}) is not yet drivable by tests/inventory/checks.ts`);
+    // a button is driven by its stated effect; with none stated there is nothing to assert but that it exists (check 2)
+    if (e.effect) out.push(...(await effect(page, s, e)));
   } else if (e.t === "fold") {
     const sum = page.locator("main summary").filter({ hasText: e.text ?? e.label }).first();
     const d = sum.locator("xpath=..");
@@ -151,7 +267,7 @@ export async function drive(page: Page, s: Screen, e: Element, c: Ctx, byId: Map
     const sw = page.getByRole("switch").first();
     if (!(await sw.getAttribute("aria-checked"))) out.push(`${s.id}: the switch “${e.label}” does not speak its state (aria-checked)`);
   } else if (e.t === "field") {
-    const f = page.locator("main").getByLabel(e.text ?? e.label).first();
+    const f = page.locator("main").getByLabel(needle(e)).first();
     if (!(await f.count())) out.push(`${s.id}: the field “${e.label}” has no label`);
   }
   return out;
