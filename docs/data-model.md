@@ -102,7 +102,7 @@ fortnight whose lessons say what the class's last settled fortnight said rolls f
 signature as the next one's baseline (`timetable_standing`). A draft put live is kind `timetable_live`, a clash accepted
 kind `timetable_clash`, a week's declaration (N4) kind `week`. A lesson moved by hand, a change made after a fortnight
 froze, a rule changed and a fortnight's state are `change_log` rows. Every `week` column is a `date`, the Monday of the
-ISO week (`core/weeks.py`: `2026-W40` is 2026-09-28); an old paper's own label (`Sep W1`) stays in its key, with no date.
+ISO week (`core/weeks.py`: `2026-W40` is 2026-09-28); an old paper's own label (`Sep W1`) stays in its key, with no date; a label the engine wrote for a week of papers before weeks were dates (`T2W1`) is dated by the week its first row was made, kept in a paper's key or as a `change_log` row (op `week_label`).
 <!-- CP-27 group 5 (time): end -->
 
 **The last tables (CP-27 group 6).** What a row only repeated, or a list that belongs to one row, is on that row:

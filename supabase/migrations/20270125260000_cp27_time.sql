@@ -27,6 +27,36 @@ create function pg_temp.cp27_week(p text) returns date language sql immutable as
               then to_date(p, 'IYYY-"W"IW') end
 $$;
 
+-- A label the engine itself wrote for a week of papers (`engine week prescribe G3 T2W1`, 2026-09: the week was any
+-- text then) names no ISO week and no calendar defines it, but its rows say when that week was: it is the week its
+-- first row was made in, the Monday of the school's day of the earliest row carrying it (in any of the five tables).
+-- Such a label is one found on a prescription, a parent note or an exposure (tables with no key to keep a label in);
+-- every row with it, papers too, gets that one date, so what belonged to one week still does. The label itself is
+-- kept: on a paper in its key (as an old paper's), on any other row as a `change_log` row (op `week_label`). A label
+-- found only on papers (`Sep W1`, `Baseline` from the legacy import, made when imported, not in that week) keeps an
+-- empty date, as before.
+create temp table cp27_label_day as
+with labelled as (
+  select tenant_id, week, created_at from prescription where week is not null and pg_temp.cp27_week(week) is null
+  union all select tenant_id, week, created_at from parent_note where week is not null and pg_temp.cp27_week(week) is null
+  union all select tenant_id, week, created_at from item_exposure where week is not null and pg_temp.cp27_week(week) is null
+), every_row as (
+  select tenant_id, week, created_at from labelled
+  union all select tenant_id, week, created_at from sheet_template where week is not null
+  union all select tenant_id, week, created_at from sheet_instance where week is not null
+)
+select l.tenant_id, l.week as label,
+       date_trunc('week', internal.school_day(l.tenant_id, min(r.created_at)))::date as day
+from (select distinct tenant_id, week from labelled) l
+join every_row r on r.tenant_id = l.tenant_id and r.week = l.week
+group by l.tenant_id, l.week;
+
+-- A row's week as a date: an ISO week's Monday, an engine label's date (above), else null (an old paper's own label).
+create function pg_temp.cp27_day(p_tenant uuid, p text) returns date language sql stable as $$
+  select coalesce(pg_temp.cp27_week(p), (select d.day from pg_temp.cp27_label_day d where d.tenant_id = p_tenant
+                                                                                       and d.label = p))
+$$;
+
 -- 1. Refuse what this cannot move faithfully; then say how much it moves. ----------------------------------------
 
 do $$
@@ -44,14 +74,27 @@ begin
   if bad is not null then
     raise exception 'CP-27: tables expected empty are not: %', bad;
   end if;
-  -- a label that is no week cannot be kept where the table has no paper key to keep it in
+  -- a label that is no week cannot be kept where the table has no paper key to keep it in, unless its rows date it
   select string_agg(t || ' ' || w, ', ') into bad from (
-    select 'prescription' as t, week as w from prescription where week is not null and pg_temp.cp27_week(week) is null
-    union all select 'parent_note', week from parent_note where week is not null and pg_temp.cp27_week(week) is null
-    union all select 'item_exposure', week from item_exposure where week is not null and pg_temp.cp27_week(week) is null
+    select 'prescription' as t, week as w from prescription where week is not null and pg_temp.cp27_day(tenant_id, week) is null
+    union all select 'parent_note', week from parent_note where week is not null and pg_temp.cp27_day(tenant_id, week) is null
+    union all select 'item_exposure', week from item_exposure where week is not null and pg_temp.cp27_day(tenant_id, week) is null
   ) x;
   if bad is not null then
     raise exception 'CP-27: week labels that are no ISO week, with nowhere to keep them: %', left(bad, 500);
+  end if;
+  -- two weeks never become one: a child's rows under two different week texts that come to the same date
+  select string_agg(distinct x.weeks, '; ') into bad from (
+    select string_agg(distinct w.week, ' and ' order by w.week) || ' (' || w.d || ')' as weeks
+    from (select child_id, week, pg_temp.cp27_day(tenant_id, week) as d from prescription where week is not null
+          union all select child_id, week, pg_temp.cp27_day(tenant_id, week) from parent_note where week is not null
+          union all select child_id, week, pg_temp.cp27_day(tenant_id, week) from item_exposure where week is not null
+          union all select child_id, week, pg_temp.cp27_day(tenant_id, week) from sheet_instance where week is not null
+          union all select child_id, week, pg_temp.cp27_day(tenant_id, week) from sheet_template where week is not null) w
+    where w.child_id is not null and w.d is not null
+    group by w.child_id, w.d having count(distinct w.week) > 1) x;
+  if bad is not null then
+    raise exception 'CP-27: a child''s rows under two weeks that come to one date: %', left(bad, 500);
   end if;
   -- a step taken has a person
   if exists (select 1 from fortnight_cycle where (frozen_at is null) <> (frozen_by is null)
@@ -257,11 +300,18 @@ from timetable_move m;
 -- 7. Weeks become dates. --------------------------------------------------------------------------------------------
 
 create temp table cp27_weeks_before as
-  select 'sheet_template' as t, id, week from sheet_template where week is not null
-  union all select 'sheet_instance', id, week from sheet_instance where week is not null
-  union all select 'prescription', id, week from prescription where week is not null
-  union all select 'parent_note', id, week from parent_note where week is not null
-  union all select 'item_exposure', id, week from item_exposure where week is not null;
+  select 'sheet_template' as t, id, tenant_id, week, pg_temp.cp27_day(tenant_id, week) as d from sheet_template where week is not null
+  union all select 'sheet_instance', id, tenant_id, week, pg_temp.cp27_day(tenant_id, week) from sheet_instance where week is not null
+  union all select 'prescription', id, tenant_id, week, pg_temp.cp27_day(tenant_id, week) from prescription where week is not null
+  union all select 'parent_note', id, tenant_id, week, pg_temp.cp27_day(tenant_id, week) from parent_note where week is not null
+  union all select 'item_exposure', id, tenant_id, week, pg_temp.cp27_day(tenant_id, week) from item_exposure where week is not null;
+
+-- an engine label on a row with no key to keep it: kept in the one history log, with the date it became
+insert into change_log (tenant_id, table_name, row_id, op, before, after, origin, reason)
+select b.tenant_id, b.t, b.id::text, 'week_label', jsonb_build_object('week', b.week), jsonb_build_object('week', b.d),
+       'CP-27 group 5', 'CP-27: the week label names no ISO week; dated by the week its first row was made in'
+from cp27_weeks_before b
+where b.t in ('prescription', 'parent_note', 'item_exposure') and pg_temp.cp27_week(b.week) is null;
 
 -- a paper's label that is no week stays with the paper (a legacy paper's key already holds it as its own `week`)
 alter table sheet_template disable trigger touch_updated_at;
@@ -272,15 +322,15 @@ update sheet_instance set key = coalesce(key, '{}'::jsonb) || jsonb_build_object
 where week is not null and pg_temp.cp27_week(week) is null and coalesce(key ->> 'week', '') <> week;
 
 alter table sheet_template drop constraint sheet_template_week_unless_library;
-alter table sheet_template alter column week type date using pg_temp.cp27_week(week);
+alter table sheet_template alter column week type date using pg_temp.cp27_day(tenant_id, week);
 alter table sheet_template add constraint sheet_template_week_unless_library
   check (week is not null or source = 'library' or key ->> 'week' is not null);
-alter table sheet_instance alter column week type date using pg_temp.cp27_week(week);
+alter table sheet_instance alter column week type date using pg_temp.cp27_day(tenant_id, week);
 alter table sheet_template enable trigger touch_updated_at;
 alter table sheet_instance enable trigger touch_updated_at;
-alter table prescription alter column week type date using pg_temp.cp27_week(week);
-alter table parent_note alter column week type date using pg_temp.cp27_week(week);
-alter table item_exposure alter column week type date using pg_temp.cp27_week(week);
+alter table prescription alter column week type date using pg_temp.cp27_day(tenant_id, week);
+alter table parent_note alter column week type date using pg_temp.cp27_day(tenant_id, week);
+alter table item_exposure alter column week type date using pg_temp.cp27_day(tenant_id, week);
 
 -- a child moved mid-week: the week's papers from this Monday on (it compared the text label before)
 do $$
@@ -635,26 +685,34 @@ begin
   if n_old <> n_new then
     raise exception 'CP-27: % clashes accepted, % in approval', n_old, n_new;
   end if;
-  -- the weeks: every one that is a week now its Monday, every one that is not kept with its paper, nothing else
-  n_old := (select count(*) from cp27_weeks_before where pg_temp.cp27_week(week) is not null);
-  n_new := (select count(*) from cp27_weeks_before b where pg_temp.cp27_week(b.week) is not null and pg_temp.cp27_week(b.week) =
+  -- the weeks: every one that is a week (or an engine label) now its date, every label kept, nothing else
+  n_old := (select count(*) from cp27_weeks_before where d is not null);
+  n_new := (select count(*) from cp27_weeks_before b where b.d is not null and b.d =
             case b.t when 'sheet_template' then (select week from sheet_template where id = b.id)
                      when 'sheet_instance' then (select week from sheet_instance where id = b.id)
                      when 'prescription' then (select week from prescription where id = b.id)
                      when 'parent_note' then (select week from parent_note where id = b.id)
                      when 'item_exposure' then (select week from item_exposure where id = b.id) end);
   n_tag := (select count(*) from cp27_weeks_before b where pg_temp.cp27_week(b.week) is null and b.week =
-            case b.t when 'sheet_template' then (select key ->> 'week' from sheet_template where id = b.id and week is null)
-                     when 'sheet_instance' then (select key ->> 'week' from sheet_instance where id = b.id and week is null) end);
+            case b.t when 'sheet_template' then (select key ->> 'week' from sheet_template where id = b.id
+                                                   and week is not distinct from b.d)
+                     when 'sheet_instance' then (select key ->> 'week' from sheet_instance where id = b.id
+                                                   and week is not distinct from b.d)
+                     else (select l.before ->> 'week' from change_log l where l.tenant_id = b.tenant_id
+                             and l.table_name = b.t and l.row_id = b.id::text and l.op = 'week_label'
+                             and l.after ->> 'week' = b.d::text) end);
   if n_old <> n_new or n_tag <> (select count(*) from cp27_weeks_before where pg_temp.cp27_week(week) is null) then
-    raise exception 'CP-27: % weeks that are weeks, % now their Monday; % labels that are not, % kept with their paper',
+    raise exception 'CP-27: % weeks that are weeks or dated labels, % now their date; % labels that are not ISO weeks, % kept',
       n_old, n_new, (select count(*) from cp27_weeks_before where pg_temp.cp27_week(week) is null), n_tag;
   end if;
-  raise notice 'CP-27 weeks: % became a date, % labels kept with their paper (by table: %)', n_new, n_tag,
-    (select string_agg(t || ' ' || c || '/' || k, ', ') from (
+  raise notice 'CP-27 weeks: % became a date, % labels kept (by table, ISO/dated label/label only: %; labels dated: %)',
+    n_new, n_tag,
+    (select string_agg(t || ' ' || c || '/' || l || '/' || k, ', ') from (
        select t, count(*) filter (where pg_temp.cp27_week(week) is not null) as c,
-              count(*) filter (where pg_temp.cp27_week(week) is null) as k
-       from cp27_weeks_before group by t order by t) x);
+              count(*) filter (where pg_temp.cp27_week(week) is null and d is not null) as l,
+              count(*) filter (where d is null) as k
+       from cp27_weeks_before group by t order by t) x),
+    (select string_agg(label || ' ' || day, ', ' order by label) from cp27_label_day);
   -- the lessons: the same per class and date
   if exists (
     (select school_class_id, on_date, n, sig from cp27_sessions_before
@@ -755,7 +813,7 @@ begin
   end loop;
 end $$;
 
-drop table cp27_sessions_before, cp27_weeks_before;
+drop table cp27_sessions_before, cp27_weeks_before, cp27_label_day;
 analyze timetable_rule;
 analyze approval;
 select internal.apply_conventions();
