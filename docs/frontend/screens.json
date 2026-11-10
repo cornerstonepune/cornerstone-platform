@@ -2292,7 +2292,7 @@
           "label": "page: Later →",
           "to": "assessments",
           "text": "Later",
-          "when": "paged",
+          "when": "?view=table",
           "note": "the next ten assessments"
         }
       ],
