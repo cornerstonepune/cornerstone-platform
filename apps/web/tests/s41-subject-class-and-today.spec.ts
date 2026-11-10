@@ -65,7 +65,7 @@ test.beforeAll(async () => {
     items: ws.item_ids.slice(0, 2),
     reads: [{ status: "correct", read: "1" }, { status: "needs_teacher", read: "7" }],
   });
-  await sql`update sheet_instance set section = ${SECTION}, kind = 'practice', week = to_char(now(), 'IYYY-"W"IW') where qr_code = ${QR}`;
+  await sql`update sheet_instance set section = ${SECTION}, kind = 'practice', week = date_trunc('week', now())::date where qr_code = ${QR}`;
 });
 test.afterAll(async () => {
   await sql.end();

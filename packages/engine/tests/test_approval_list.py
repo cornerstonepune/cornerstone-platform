@@ -50,7 +50,7 @@ def _entry(conn, kind, target):
 def _note(conn):
     return db.one(
         conn,
-        "insert into parent_note (tenant_id, child_id, week, body) values (%s, %s, 'W1', 'a report') returning id",
+        "insert into parent_note (tenant_id, child_id, week, body) values (%s, %s, '2026-09-28', 'a report') returning id",
         (tenant(conn), a_child(conn)),
     )["id"]
 

@@ -118,7 +118,10 @@ def load(
         )
 
 
-DRAFT_WORDS = {"rolled_forward": "rolled forward", "draft": "waiting for approval", "approved": "approved"}
+DRAFT_WORDS = {
+    "rolled_forward": "rolled forward", "draft": "waiting for approval", "approved": "approved",
+    "empty": "no lessons: the fortnight has no school day on record for its frame",
+}  # fmt: skip
 
 
 @timetable_app.command("draft")

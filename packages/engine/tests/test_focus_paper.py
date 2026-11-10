@@ -18,7 +18,7 @@ from engine.w1_bank import labels
 from engine.w2_print import focus_paper, shelf
 from tests.rows import a_child_in
 
-WEEK = "T3W1-focus-test"
+WEEK = "2091-W08"  # a week of its own (weeks are dates since CP-27)
 
 
 @pytest.fixture
@@ -63,7 +63,7 @@ def test_the_home_paper_is_one_skill_the_weakest_random_bank_questions_at_its_le
     ).fetchall()
     conn.execute(
         "insert into item_exposure (tenant_id, child_id, item_id, week)"
-        " select tenant_id, %s, id, 'earlier' from item where id = any(%s)",
+        " select tenant_id, %s, id, '2020-01-06' from item where id = any(%s)",
         (child, [r["id"] for r in seen]),
     )
     p = focus_paper.plan(conn, child, WEEK)
@@ -230,7 +230,7 @@ def test_a_request_that_cannot_be_made_is_refused_in_words_and_a_short_bank_repe
         "select count(*) as n from item where status = 'active' and skill_set_code = 'SUB.3D3D' and difficulty = 'Easy'"
     ).fetchone()["n"]
     conn.execute(
-        "insert into item_exposure (tenant_id, child_id, item_id, week) select tenant_id, %s, id, 'earlier' from item"
+        "insert into item_exposure (tenant_id, child_id, item_id, week) select tenant_id, %s, id, '2020-01-06' from item"
         " where status = 'active' and skill_set_code = 'SUB.3D3D' and difficulty = 'Easy' order by item_key limit %s",
         (child, left - 3),
     )

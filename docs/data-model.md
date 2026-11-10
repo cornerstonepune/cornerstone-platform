@@ -88,6 +88,23 @@ call the class (K2's class is section A, label K2), and the view `child_now` giv
 op `move`). A class's word that a skill is taught is `school_class.taught` ({skill: {taught, by, at}}); the class card
 is built from the graph when asked, never stored.
 
+<!-- CP-27 group 5 (time): begin -->
+**How time is kept (CP-27 group 5).** The timetable of a date is its `session` rows: one per lesson, with its `kind`
+(`fixed`, `subject`, `specialist`); a period with no lesson is empty. `timetable_rule` holds the rules a timetable is made
+from, told apart by `kind`: `frame` (the week A/B frame: a class's period on a weekday of week A or B, its cell and words,
+from a date), `block` (a date, or a weekday of a week, or one period of either, on which nothing is placed, and why) and
+`limit` (the fewest and most periods of a subject in a week or a fortnight). FET reads the frame from there; a draft
+(`timetable_run`) put live and a lesson moved by hand change the sessions, never the frame. No table keeps a second copy
+of a fortnight's periods. A fortnight's state is `fortnight.state`; each step taken (`freeze`, `align`, `approve`,
+`list_sent`) is an `approval` row of kind `fortnight`. A class's fortnight approved (CP-7) is an `approval` row of kind
+`timetable` (target `<class> <fortnight>`) carrying the signature of its lessons and the baseline it was given on; a
+fortnight whose lessons say what the class's last settled fortnight said rolls forward with no row, and carries that
+signature as the next one's baseline (`timetable_standing`). A draft put live is kind `timetable_live`, a clash accepted
+kind `timetable_clash`, a week's declaration (N4) kind `week`. A lesson moved by hand, a change made after a fortnight
+froze, a rule changed and a fortnight's state are `change_log` rows. Every `week` column is a `date`, the Monday of the
+ISO week (`core/weeks.py`: `2026-W40` is 2026-09-28); an old paper's own label (`Sep W1`) stays in its key, with no date.
+<!-- CP-27 group 5 (time): end -->
+
 **The last tables (CP-27 group 6).** What a row only repeated, or a list that belongs to one row, is on that row:
 - a sample's likely wrong answers are `english_sample.wrong` ([{answer, mistake_code}]); an educator's change is made on
   the sample's own row (`removed_at`, `made_from`), and what it replaced is a `change_log` row (table `english_sample`,

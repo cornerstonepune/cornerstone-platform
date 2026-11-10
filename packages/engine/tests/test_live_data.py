@@ -89,7 +89,7 @@ def _paper(conn, responses):
         (tenant, json.dumps([{"rid": r} for r in responses]), [rows.a_registry_skill(conn, tenant)]),
     ).fetchone()["id"]
     template = conn.execute(
-        "insert into sheet_template (tenant_id, band, level, week, item_ids) values (%s, 'G2', 'L0', 'w', %s)"
+        "insert into sheet_template (tenant_id, band, level, week, item_ids) values (%s, 'G2', 'L0', '2026-09-28', %s)"
         " returning id",
         (tenant, [item]),
     ).fetchone()["id"]

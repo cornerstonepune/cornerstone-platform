@@ -33,7 +33,7 @@ test.beforeAll(async () => {
   if (!n) {
     // Asha's report first, then the answers it no longer covers
     await sql`insert into parent_note (tenant_id, child_id, week, body, created_at)
-              values (${tenant}, ${kids.Asha}, 'U35', '{"facts": {}, "draft": {}}', now() - interval '2 days')`;
+              values (${tenant}, ${kids.Asha}, to_date('2091-W32', 'IYYY-"W"IW'), '{"facts": {}, "draft": {}}', now() - interval '2 days')`;
     const answers: [string, boolean, string[]][] = [
       ...Array<[string, boolean, string[]]>(4).fill([kids.Asha, false, ["M_SMALL_FROM_LARGE"]]),
       ...Array<[string, boolean, string[]]>(2).fill([kids.Asha, true, []]),
@@ -51,7 +51,7 @@ test.beforeAll(async () => {
     }
     for (const child of [kids.Asha, kids.Chetan]) await sql`select rebuild_child_skill_state(${child}::uuid)`;
     await sql`insert into parent_note (tenant_id, child_id, week, body, approved_by, created_at)
-              values (${tenant}, ${kids.Chetan}, 'U35', '{"facts": {}, "draft": {}}', 'u35', now() + interval '1 minute')`;
+              values (${tenant}, ${kids.Chetan}, to_date('2091-W32', 'IYYY-"W"IW'), '{"facts": {}, "draft": {}}', 'u35', now() + interval '1 minute')`;
   }
   // two of Asha's answers wait for a person, on a worksheet the library holds
   const [w] = await sql<{ id: string; item_ids: string[] }[]>`

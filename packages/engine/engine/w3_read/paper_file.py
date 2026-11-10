@@ -8,6 +8,8 @@ import re
 
 import psycopg
 
+from engine.core import weeks
+
 ACTOR = "engine (legacy paper)"
 
 
@@ -47,11 +49,11 @@ def follow(conn, tenant, paper, ids, keys):
         conn.execute(
             "update sheet_template set band = %s, week = %s, item_ids = %s, key = %s, updated_at = now()"
             " where id = %s",
-            (paper["band"], paper["week"], ids, json.dumps(paper), existing["id"]),
+            (paper["band"], weeks.or_none(paper["week"]), ids, json.dumps(paper), existing["id"]),
         )
         return existing["id"]
     return conn.execute(
         "insert into sheet_template (tenant_id, band, week, variant, batch_id, item_ids, key, source)"
         " values (%s,%s,%s,1,%s,%s,%s,'legacy') returning id",
-        (tenant, paper["band"], paper["week"], paper["code"], ids, json.dumps(paper)),
+        (tenant, paper["band"], weeks.or_none(paper["week"]), paper["code"], ids, json.dumps(paper)),
     ).fetchone()["id"]

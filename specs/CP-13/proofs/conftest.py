@@ -186,7 +186,7 @@ def paper(c, t, kid, day, statuses, signed_off=True):
     and a candidate answer each, then `confirm_results`, which writes evidence through `answer_evidence`.
     `statuses` like 'correct blank wrong wrong:M_ALIGN_LEFT'. Returns the item_result ids in order."""
     tag = uuid.uuid4().hex[:6].upper()
-    tpl = ins(c, "sheet_template", tenant_id=t, band="G2", child_id=kid, week=f"P-{tag}",
+    tpl = ins(c, "sheet_template", tenant_id=t, band="G2", child_id=kid, week="2099-01-05",  # a week is a date (CP-27)
               key=json.dumps({"code": tag, "date": at(day).isoformat()}))
     inst = ins(c, "sheet_instance", tenant_id=t, qr_code=f"CS{tag}", sheet_template_id=tpl, child_id=kid,
                print_status="returned")

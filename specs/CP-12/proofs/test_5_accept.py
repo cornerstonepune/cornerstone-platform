@@ -4,19 +4,17 @@ accepts a clash (Nimish, 8 Nov, in the spec's decisions)."""
 
 import datetime as dt
 
-from conftest import REASON, START, accept, clashes, move, refused, world
+from conftest import REASON, START, accept, accepted, block, clashes, limit, move, refused, world
 
 MON, TUE, THU = START, START + dt.timedelta(1), START + dt.timedelta(3)
 
 
 def _over_by_fortnight(conn, w, most=9):
-    conn.execute("insert into timetable_limit (tenant_id, school_class_id, subject_code, span, most)"
-                 " values (%s, %s, 'math', 'fortnight', %s)", (w["tenant"], w["class"], most))
+    limit(conn, w, "math", "fortnight", most=most)
 
 
 def _blocked(conn, w, d):
-    conn.execute("insert into timetable_block (tenant_id, school_class_id, on_date, period_id, reason)"
-                 " values (%s, %s, %s, %s, 'Proof block')", (w["tenant"], w["class"], d, w["period"]["extra"]))
+    block(conn, w, on_date=d, period="extra")
 
 
 def test_a_clash_is_accepted_with_a_reason_who_and_when(conn, engine, monkeypatch):
@@ -29,13 +27,13 @@ def test_a_clash_is_accepted_with_a_reason_who_and_when(conn, engine, monkeypatc
     assert code == 0, out
     (now,) = clashes(conn, w)
     assert now["clash_key"] == clash["clash_key"] and now["accepted"] is True, "the clash is not listed as accepted"
-    rows = conn.execute("select * from timetable_clash_accept where clash_key = %s", (clash["clash_key"],)).fetchall()
+    rows = accepted(conn, clash["clash_key"])
     assert len(rows) == 1
     r = rows[0]
-    assert r["who"] == w["coordinator"]["id"] and r["at"] is not None and r["reason"] == REASON
-    assert r["fortnight_id"] == w["fortnights"][2]["id"]
-    refused(conn, "update timetable_clash_accept set reason = 'changed' where id = %s", (r["id"],))
-    refused(conn, "delete from timetable_clash_accept where id = %s", (r["id"],))
+    assert r["by"] == str(w["coordinator"]["id"]) and r["created_at"] is not None and r["reason"] == REASON
+    assert r["detail"]["fortnight_id"] == str(w["fortnights"][2]["id"])
+    refused(conn, "update approval set reason = 'changed' where id = %s", (r["id"],))
+    refused(conn, "delete from approval where id = %s", (r["id"],))
 
 
 def test_an_acceptance_needs_a_reason_the_coordinator_group_and_a_clash_that_is_listed(conn, engine, monkeypatch):
@@ -49,8 +47,7 @@ def test_an_acceptance_needs_a_reason_the_coordinator_group_and_a_clash_that_is_
     }.items():
         code, out = accept(engine, w, key, by=by, reason=reason)
         assert code != 0, f"an acceptance with {why} went through:\n{out}"
-    assert conn.execute("select count(*) as n from timetable_clash_accept where fortnight_id = %s",
-                        (w["fortnights"][2]["id"],)).fetchone()["n"] == 0, "an acceptance was written"
+    assert accepted(conn, clash["clash_key"]) == [], "an acceptance was written"
     assert clashes(conn, w)[0]["accepted"] is False
 
 
@@ -79,7 +76,6 @@ def test_the_clash_is_open_again_when_its_limit_changes(conn, engine, monkeypatc
     (clash,) = clashes(conn, w)
     code, out = accept(engine, w, clash["clash_key"])
     assert code == 0, out
-    conn.execute("update timetable_limit set most = 8 where school_class_id = %s and subject_code = 'math'",
-                 (w["class"],))
+    limit(conn, w, "math", "fortnight", most=8)
     (now,) = clashes(conn, w)
     assert now["accepted"] is False, "an acceptance carried over to a limit that changed"

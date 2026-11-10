@@ -1,8 +1,8 @@
 """CP-6 item 5, read for the fortnight: each state change writes an edit-history row.
 
-Each `fortnight_cycle.move` leaves exactly one `fortnight_edit` row of kind 'state' for that fortnight, with subject
-'<from>-><to>', op 'state', no reason, changed_by = the actor (a staff id) and a time. A refused move writes none (item 4
-proves that). No database triggers exist in the lean design, so append-only is not claimed here.
+Each `fortnight_cycle.move` leaves exactly one history row for that fortnight (since CP-27 a `change_log` row of the
+fortnight's state, written by the one trigger; a `fortnight_edit` row before), read as subject '<from>-><to>', op
+'state', no reason, changed_by = the actor (a staff id) and a time. A refused move writes none (item 4 proves that).
 """
 
 import uuid

@@ -84,7 +84,7 @@ SCHOOL_WIDE = [
     ),
     (
         "plan and timetable: what a class is to do and when, by class id; no child (the scope names both school-wide)",
-        "plan_entry session timetable_block timetable_limit timetable_rule_edit timetable_slot week_declaration",
+        "plan_entry session timetable_rule",
     ),
     (
         "materials lists for the activities of a class and their shopping; by class id; no child",

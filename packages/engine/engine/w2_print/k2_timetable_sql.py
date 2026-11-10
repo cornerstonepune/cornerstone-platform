@@ -9,7 +9,7 @@ from engine.core import db
 from engine.w2_print import fortnight_cycle as fc
 from engine.w2_print import k2_timetable_load as ld
 
-TABLES = ("fortnight", "school_day", "period", "timetable_slot", "plan_entry", "session")
+TABLES = ("fortnight", "school_day", "period", "timetable_rule", "plan_entry", "session")
 S, L = sql.SQL, sql.Literal
 
 
@@ -18,8 +18,8 @@ class NoSuchClass(Exception):
 
 
 class LiveFortnight(Exception):
-    """A fortnight the load reaches went live from a generated draft (CP-22, `timetable_live`): the sheet's old rows
-    are not put back under it. Nothing is written."""
+    """A fortnight the load reaches went live from a generated draft (CP-22, an approval row of kind `timetable_live`):
+    the sheet's old rows are not put back under it. Nothing is written."""
 
 
 def _values(rows: list[tuple]) -> sql.Composed:
@@ -42,14 +42,10 @@ def tables(load: ld.Load, t: ld.Target) -> list[tuple[str, sql.Composed]]:
     """One insert per table that has rows, in the order the foreign keys need."""
     g, out = L(t.grade), []
     if load.fortnights:
-        out.append(("fortnight", S(
-            "with new_fortnight as (\n"
+        out.append(("fortnight", S(  # a fortnight made here starts at planning (CP-6): `fortnight.state`'s default
             "insert into fortnight (tenant_id, academic_year_id, number, kind, starts_on, ends_on)\n"
             "select x.tenant, x.year, v.n::int, 'teaching', v.s::date, v.e::date from k2_ctx x cross join (values\n  {rows}\n"
-            ") as v(n, s, e)\non conflict do nothing returning id, tenant_id)\n"
-            # a fortnight made here starts at planning (CP-6), or the freeze would silently not apply to it
-            "insert into fortnight_cycle (tenant_id, fortnight_id) select tenant_id, id from new_fortnight"
-            " on conflict do nothing"
+            ") as v(n, s, e)\non conflict do nothing"
         ).format(rows=_values(load.fortnights))))  # fmt: skip
     if load.school_days:
         out.append(("school_day", S(
@@ -65,9 +61,9 @@ def tables(load: ld.Load, t: ld.Target) -> list[tuple[str, sql.Composed]]:
             ") as v(o, s, e, l, f)\non conflict do nothing"
         ).format(g=g, rows=_values(rows))))  # fmt: skip
     if load.slots:
-        out.append(("timetable_slot", S(
-            "insert into timetable_slot (tenant_id, school_class_id, period_id, week_code, weekday, kind, subject_code,"
-            " text, valid_from)\nselect x.tenant, x.klass, p.id, v.w, v.wd::int, v.k, v.s, v.t, {first}"
+        out.append(("timetable_rule", S(
+            "insert into timetable_rule (tenant_id, school_class_id, kind, period_id, week_code, weekday, cell, subject_code,"
+            " text, valid_from)\nselect x.tenant, x.klass, 'frame', p.id, v.w, v.wd::int, v.k, v.s, v.t, {first}"
             " from k2_ctx x cross join (values\n  {rows}\n) as v(w, wd, st, k, s, t)\n"
             "join period p on p.tenant_id = x.tenant and p.grade_code = {g} and p.starts_at = v.st::time\non conflict do nothing"
         ).format(first=L(min(f[1] for f in load.fortnights)), g=g, rows=_values(load.slots))))  # fmt: skip
@@ -96,14 +92,20 @@ def tables(load: ld.Load, t: ld.Target) -> list[tuple[str, sql.Composed]]:
     if load.sessions:
         rows = [(s.day, s.start, s.subject, s.key, s.ord, s.fortnight, s.text) for s in load.sessions]
         out.append(("session", S(
-            "insert into session (tenant_id, school_class_id, school_day_id, period_id, subject_code, state, planned,"
-            " plan_entry_id, text)\nselect x.tenant, x.klass, d.id, p.id, v.sub, 'planned', true, pe.id, v.t"
+            "insert into session (tenant_id, school_class_id, school_day_id, period_id, subject_code, kind, state, planned,"
+            " plan_entry_id, text)\nselect x.tenant, x.klass, d.id, p.id, v.sub, coalesce(r.cell, case when v.sub is null"
+            " then 'fixed' else 'subject' end), 'planned', true, pe.id, v.t"
             " from k2_ctx x cross join (values\n  {rows}\n) as v(d, st, sub, k, o, n, t)\n"
             "join school_day d on d.campus_id = x.campus and d.on_date = v.d::date\n"
             "join period p on p.tenant_id = x.tenant and p.grade_code = {g} and p.starts_at = v.st::time\n"
             "left join fortnight f on f.academic_year_id = x.year and f.number = v.n::int\n"
             "left join plan_entry pe on pe.school_class_id = x.klass and pe.fortnight_id = f.id and pe.plan_key = v.k"
-            " and pe.ord = v.o::int\non conflict do nothing"
+            " and pe.ord = v.o::int\n"
+            # what the lesson is: the frame's cell on its date (week A the first seven days of its fortnight, B after)
+            "left join timetable_rule r on r.kind = 'frame' and r.school_class_id = x.klass and r.period_id = p.id"
+            " and r.cell <> 'empty' and r.weekday = extract(isodow from d.on_date)"
+            " and r.week_code = case when d.on_date - f.starts_on < 7 then 'A' else 'B' end"
+            " and r.valid_from <= d.on_date and (r.valid_to is null or r.valid_to >= d.on_date)\non conflict do nothing"
         ).format(g=g, rows=_values(rows))))  # fmt: skip
     return out
 
@@ -140,7 +142,7 @@ def _frozen_gate(
     ctx = db.one(conn, "select year, klass::text as klass from k2_ctx")
     touched = {
         "plan_entry": reached,
-        "timetable_slot": fc.fortnights_touched(
+        "timetable_rule": fc.fortnights_touched(
             conn, ctx["year"], from_day=min((f[1] for f in load.fortnights), default=None)
         ),
     }
@@ -162,8 +164,8 @@ def apply(
     if db.one(conn, "select klass from k2_ctx")["klass"] is None:
         raise NoSuchClass(f"{t.grade} {t.section} {t.year}")
     live = conn.execute(
-        "select distinct f.number from timetable_live l join fortnight f on f.id = l.fortnight_id"
-        " where l.school_class_id = (select klass from k2_ctx) and f.number = any(%s) order by 1",
+        "select distinct f.number from approval a join fortnight f on a.target = (select klass from k2_ctx)::text"
+        " || ' ' || f.id::text where a.kind = 'timetable_live' and f.number = any(%s) order by 1",
         ([n for n, _, _ in load.fortnights],),
     ).fetchall()
     if live:
@@ -193,7 +195,7 @@ COUNTS = S(
     "select 'fortnight' as t, count(*) from fortnight where academic_year_id = (select year from k2_ctx)\n"
     "union all select 'school_day', count(*) from school_day where campus_id = (select campus from k2_ctx)\n"
     "union all select 'period', count(*) from period where tenant_id = (select tenant from k2_ctx)\n"
-    "union all select 'timetable_slot', count(*) from timetable_slot where school_class_id = (select klass from k2_ctx)\n"
+    "union all select 'timetable_rule', count(*) from timetable_rule where school_class_id = (select klass from k2_ctx)\n"
     "union all select 'plan_entry', count(*) from plan_entry where school_class_id = (select klass from k2_ctx)\n"
     "union all select 'session', count(*) from session where school_class_id = (select klass from k2_ctx)"
 )  # fmt: skip

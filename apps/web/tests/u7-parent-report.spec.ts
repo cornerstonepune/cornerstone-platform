@@ -28,7 +28,7 @@ async function tara(): Promise<string> {
     const [{ id }] = [{ id: await aChildIn(sql, SECTION, "G2", "1") }];
     await sql`insert into pii.child (tenant_id, child_id, first_name) values (${tenant_id}, ${id}, 'Tara')`;
     const [{ template }] = await sql<{ template: string }[]>`
-      insert into sheet_template (tenant_id, band, child_id, week) values (${tenant_id}, 'G2', ${id}, ${SECTION}) returning id as template`;
+      insert into sheet_template (tenant_id, band, child_id, week) values (${tenant_id}, 'G2', ${id}, date_trunc('week', now())::date) returning id as template`;
     const [{ instance }] = await sql<{ instance: string }[]>`
       insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, print_status)
       values (${tenant_id}, ${`U7-TEST-${id.slice(0, 8)}`}, ${template}, ${id}, 'returned') returning id as instance`;

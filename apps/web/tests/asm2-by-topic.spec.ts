@@ -35,7 +35,7 @@ test.beforeAll(async () => {
   [{ name: addName }] = await sql<{ name: string }[]>`select name from skill where code = ${addSkill}`;
   const paper = (qr: string, template: string, week: string) => sql`
     insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, week, section, kind, print_status, approved_by, approved_at)
-    select ${tenant}, ${qr}, ${template}, ${kids.Asha}, ${week}, ${SECTION}, 'assessment', 'printed', 'asm2', now()
+    select ${tenant}, ${qr}, ${template}, ${kids.Asha}, to_date(${week}, 'IYYY-"W"IW'), ${SECTION}, 'assessment', 'printed', 'asm2', now()
     where not exists (select 1 from sheet_instance where qr_code = ${qr})`;
   for (const [i, w] of WEEKS.entries()) await paper(`CSB2A${String(i).padStart(3, "0")}`, add.id, w);
   for (const [i, w] of MUL_WEEKS.entries()) await paper(`CSB2B${String(i).padStart(3, "0")}`, mul.id, w);

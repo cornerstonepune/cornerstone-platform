@@ -19,7 +19,7 @@ from engine.core import db, english, settings, topics
 from engine.w2_print import focus_paper, maker, shelf
 from tests import rows
 
-WEEK = "T3W1-taught-test"
+WEEK = "2091-W01"  # a week of its own (weeks are dates since CP-27)
 MODELS = [{"skill_set": "MUL.MODELS", "level": "Easy", "n": 4}]
 ADDING = [{"skill_set": "ADD.2D1D", "level": "Easy", "n": 4}]
 BY = "F1F Educator"

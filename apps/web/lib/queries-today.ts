@@ -1,5 +1,6 @@
 import { sql } from "./db";
 import { EVERY_CLASS, inScope, type Scope } from "./scope";
+import { weekOf } from "./queries-papers";
 
 // Today — everything waiting on a teacher (goals/u1-today.yaml). Each count is the one the page it opens shows:
 // the answers queue and the papers to sign off are read through that page's own query, not a second copy of it.
@@ -10,7 +11,7 @@ export type Report = { child_id: string; band: string; section: string; roll_no:
 /** Class papers the engine made that no teacher has approved for print, pack by pack. */
 export async function classPacksWaiting(scope: Scope = EVERY_CLASS): Promise<Pack[]> {
   return sql<Pack[]>`
-      select c.section, class_band(c.tenant_id, c.section) as band, si.week, si.kind, count(*)::int as n
+      select c.section, class_band(c.tenant_id, c.section) as band, ${weekOf("si")} as week, si.kind, count(*)::int as n
       from sheet_instance si join child_now c on c.id = si.child_id
       where si.print_status = 'new' and si.kind in ('practice', 'assessment') and ${inScope(scope, sql`c.section`)}
       group by c.tenant_id, c.section, si.week, si.kind

@@ -263,7 +263,7 @@ def _paper(conn, answers):
     tenant = conn.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()["id"]
     child = a_child_in(conn, "TESTSEC8", "G4", "1", tenant)
     tpl = conn.execute(
-        "insert into sheet_template (tenant_id, band, week) values (%s,'G4','2026-W39') returning id",
+        "insert into sheet_template (tenant_id, band, week) values (%s,'G4','2026-09-21') returning id",
         (tenant,),
     ).fetchone()["id"]
     inst = conn.execute(

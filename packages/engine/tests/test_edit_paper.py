@@ -14,7 +14,7 @@ from tests.test_the_loop import _counted, _planted, _round, _slots
 conn = test_maker.conn  # the real schema, rolled back
 
 SECTION = "EDITTEST"
-WEEK = "2026-W44-edit"
+WEEK = "2091-W02"  # a week of its own (weeks are dates since CP-27)
 BY = "educator@school.test"
 ASK = [
     {"skill_set": "MUL.2D1D", "level": "Medium", "n": 4},
@@ -108,7 +108,7 @@ def test_a_question_given_lately_is_offered_with_its_days(conn, paper):
     q = _another(conn, paper)
     conn.execute(
         "insert into item_exposure (tenant_id, child_id, item_id, week, created_at)"
-        " select tenant_id, %s, %s, 'earlier', now() - interval '9 days' from child where id = %s",
+        " select tenant_id, %s, %s, '2020-01-06', now() - interval '9 days' from child where id = %s",
         (child, q["id"], child),
     )
     offered = {x["id"]: x for x in edit_paper.bank(conn, paper, "x", "MUL.2D1D", "Medium")["questions"]}

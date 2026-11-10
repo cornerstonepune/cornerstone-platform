@@ -53,7 +53,7 @@ test.beforeAll(async () => {
   await sql`delete from sheet_instance where qr_code = ${QR.home}`;
   await sql`
     insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, week, kind, print_status)
-    values (${tenant}, ${QR.home}, ${ws[0].id}, ${mine.Bina}, ${THIS}, 'focus', 'new')`;
+    values (${tenant}, ${QR.home}, ${ws[0].id}, ${mine.Bina}, to_date(${THIS}, 'IYYY-"W"IW'), 'focus', 'new')`;
   await aPerson(sql, { ...EDUCATOR, password: PASSWORD });
 });
 test.afterAll(async () => {

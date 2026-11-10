@@ -28,11 +28,11 @@ test.beforeAll(async () => {
   const [had] = await sql`select 1 from sheet_instance where qr_code = 'CSF1B026'`;
   if (!had) {
     const [{ id: template }] = await sql<{ id: string }[]>`
-      insert into sheet_template (tenant_id, band, week, item_ids, source) values (${tenant}, 'G3', '2026-W42', '{}', 'generated')
+      insert into sheet_template (tenant_id, band, week, item_ids, source) values (${tenant}, 'G3', to_date('2026-W42', 'IYYY-"W"IW'), '{}', 'generated')
       returning id`;
     await sql`
       insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, print_status, week, section, kind)
-      values (${tenant}, 'CSF1B026', ${template}, ${other.Chirag}, 'new', '2026-W42', ${OTHER}, 'practice')`;
+      values (${tenant}, 'CSF1B026', ${template}, ${other.Chirag}, 'new', to_date('2026-W42', 'IYYY-"W"IW'), ${OTHER}, 'practice')`;
   }
 });
 test.afterAll(async () => {

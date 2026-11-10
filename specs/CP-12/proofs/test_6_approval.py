@@ -4,25 +4,23 @@ move command refuses a move that would leave a clash nobody accepted. This is a 
 Approval is CP-6's step (issue #454) run as an engine command (design decision 6: the check sits in the command, not in
 a database trigger). The earlier steps (frozen, aligned) are still set directly; only the step into `approved` goes
 through the command, via `conftest.approve`. Each proof settles the class's fortnight first (`conftest.settle`), because
-CP-7's trigger `fortnight_cycle_gate` refuses the approved step while a class with a timetable has no settled plan."""
+CP-7's trigger `fortnight_cycle_gate` refuses the approved step while a class with a timetable is not settled."""
 
 import datetime as dt
 import json
 
-from conftest import REASON, ROOT, START, accept, approve, clashes, move, settle, snapshot, step, world
+from conftest import REASON, ROOT, START, accept, approve, block, clashes, limit, move, settle, snapshot, step, world
 
 SETTING = "timetable.open_clash_blocks_approval"
 MON, TUE = START, START + dt.timedelta(1)
 
 
 def _over(conn, w):
-    conn.execute("insert into timetable_limit (tenant_id, school_class_id, subject_code, span, most)"
-                 " values (%s, %s, 'math', 'fortnight', 9)", (w["tenant"], w["class"]))
+    limit(conn, w, "math", "fortnight", most=9)
 
 
 def _state(conn, w):
-    return conn.execute("select state from fortnight_cycle where fortnight_id = %s",
-                        (w["fortnights"][2]["id"],)).fetchone()["state"]
+    return conn.execute("select state from fortnight where id = %s", (w["fortnights"][2]["id"],)).fetchone()["state"]
 
 
 def test_the_setting_is_on_by_default_in_the_seed():
@@ -63,8 +61,7 @@ def test_with_the_setting_off_the_approve_command_approves_with_an_open_clash(co
 
 def test_in_an_approved_fortnight_a_move_that_leaves_an_open_clash_is_refused(conn, engine, monkeypatch):
     w = world(conn, monkeypatch)
-    conn.execute("insert into timetable_block (tenant_id, school_class_id, on_date, period_id, reason)"
-                 " values (%s, %s, %s, %s, 'Proof block')", (w["tenant"], w["class"], TUE, w["period"]["extra"]))
+    block(conn, w, on_date=TUE, period="extra")
     step(conn, w, "frozen", "aligned")
     settle(conn, w)
     code, out = approve(engine, w)  # no clash yet: the blocked period is empty

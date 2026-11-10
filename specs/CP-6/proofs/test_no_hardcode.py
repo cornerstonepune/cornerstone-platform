@@ -44,11 +44,6 @@ def _freeze_fortnight_of(conn, klass, day: str) -> None:
         " and f.ends_on",
         (klass, day),
     )
-    conn.execute(
-        "insert into fortnight_cycle (tenant_id, fortnight_id, state) values (%s, %s, 'planning')"
-        " on conflict (fortnight_id) do nothing",
-        (f["tenant_id"], f["id"]),
-    )
     from engine.w2_print import fortnight_cycle
 
     fortnight_cycle.move(conn, f["id"], "frozen", f"staff:{uuid.uuid4()}")

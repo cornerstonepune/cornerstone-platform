@@ -55,7 +55,7 @@ def _worksheet(conn, instance_id):
 
 
 def test_every_paper_is_one_library_worksheet_whole(conn, children):
-    built = _week(conn, "S7-W1")
+    built = _week(conn, "2091-W11")
     assert len(built["sheets"]) == 3, built["short"]
     for s in built["sheets"] + built["spares"]:
         t = _worksheet(conn, s["instance_id"])
@@ -64,7 +64,7 @@ def test_every_paper_is_one_library_worksheet_whole(conn, children):
 
 
 def test_one_level_in_one_week_never_repeats_a_worksheet_and_spares_are_ones_nobody_was_given(conn, children):
-    built = _week(conn, "S7-W1")
+    built = _week(conn, "2091-W11")
     given = [s["code"] for s in built["sheets"]]
     spares = [s["code"] for s in built["spares"]]
     assert len(set(given)) == len(given) == 3
@@ -72,8 +72,8 @@ def test_one_level_in_one_week_never_repeats_a_worksheet_and_spares_are_ones_nob
 
 
 def test_no_child_is_given_a_worksheet_they_sat(conn, children):
-    first = {s["child_id"]: s["code"] for s in _week(conn, "S7-W1")["sheets"]}
-    second = {s["child_id"]: s["code"] for s in _week(conn, "S7-W2")["sheets"]}
+    first = {s["child_id"]: s["code"] for s in _week(conn, "2091-W11")["sheets"]}
+    second = {s["child_id"]: s["code"] for s in _week(conn, "2091-W15")["sheets"]}
     assert first.keys() == second.keys()
     assert all(first[c] != second[c] for c in first)
 
@@ -81,12 +81,12 @@ def test_no_child_is_given_a_worksheet_they_sat(conn, children):
 def test_a_retired_worksheet_is_never_handed_out_again_and_a_printed_paper_keeps_its_questions(
     conn, children
 ):
-    s = _week(conn, "S7-W1")["sheets"][0]
+    s = _week(conn, "2091-W11")["sheets"][0]
     conn.execute(
         "update sheet_template set retired_at = now() where source = 'library' and code = %s", (s["code"],)
     )
     assert list(_worksheet(conn, s["instance_id"])["item_ids"]) == [r["id"] for r in s["item_rows"]]
-    again = _week(conn, "S7-W2")
+    again = _week(conn, "2091-W15")
     assert s["code"] not in {x["code"] for x in again["sheets"] + again["spares"]}
 
 
@@ -98,7 +98,7 @@ def test_a_worksheet_holding_a_question_no_longer_in_the_bank_is_never_handed_ou
         (SET,),
     ).fetchone()
     conn.execute("update item set status = 'retired' where id = %s", (first["item_ids"][0],))
-    built = _week(conn, "S7-W1")
+    built = _week(conn, "2091-W11")
     assert first["code"] not in {s["code"] for s in built["sheets"] + built["spares"]}
 
 
@@ -120,11 +120,11 @@ def test_a_child_who_has_sat_every_worksheet_at_a_level_is_given_the_one_sat_lon
         )
         conn.execute(
             "insert into item_exposure (tenant_id, child_id, item_id, week, created_at)"
-            " select %s, %s, x, 'earlier', now() - make_interval(days => %s) from unnest(%s::uuid[]) x"
+            " select %s, %s, x, '2020-01-06', now() - make_interval(days => %s) from unnest(%s::uuid[]) x"
             " on conflict do nothing",
             (tenant, kid, 30 + age, list(t["item_ids"])),
         )
-    built = _week(conn, "S7-W1")
+    built = _week(conn, "2091-W11")
     assert not built["short"], built["short"]
     (mine,) = [s for s in built["sheets"] if s["child_id"] == kid]
     assert mine["code"] == sheets[0]["code"], "the worksheet sat longest ago"
@@ -140,14 +140,14 @@ def test_the_reason_a_child_has_no_paper_is_kept_on_their_plan(conn, children):
         " and skill_set_code = %s and difficulty = 'Hard' returning id",
         (SET,),
     ).fetchall()
-    built = _week(conn, "S7-W1")
+    built = _week(conn, "2091-W11")
     assert {x["child_id"] for x in built["short"]} == set(children)
 
     def kept():
         return {
             r["child_id"]: r["no_paper"]
             for r in conn.execute(
-                "select child_id, no_paper from prescription where week = 'S7-W1' and child_id = any(%s)",
+                "select child_id, no_paper from prescription where week = '2091-03-12' and child_id = any(%s)",
                 (children,),
             ).fetchall()
         }
@@ -156,11 +156,11 @@ def test_the_reason_a_child_has_no_paper_is_kept_on_their_plan(conn, children):
     conn.execute(
         "update sheet_template set retired_at = null where id = any(%s)", ([r["id"] for r in retired],)
     )
-    assemble.for_week(conn, SECTION, "S7-W1")
+    assemble.for_week(conn, SECTION, "2091-W11")
     assert set(kept().values()) == {None}, "a child handed a paper has no reason against them"
 
 
 def test_the_printed_paper_names_its_worksheet(conn, children):
-    s = _week(conn, "S7-W1")["sheets"][0]
+    s = _week(conn, "2091-W11")["sheets"][0]
     assert s["code"] in assemble.label("Aarav", s, "practice")
     json.dumps(assemble.label("Aarav", s, "practice"))  # a plain string, printed as it is

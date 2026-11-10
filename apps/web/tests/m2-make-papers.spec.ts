@@ -104,7 +104,7 @@ test("each class's home papers are proposed from each child's own map, one skill
   await expect(bina.locator("[data-status=done]")).toBeVisible();
   const made = await sql<{ approved_by: string; kind: string }[]>`
     select si.approved_by, si.kind from sheet_instance si join child_now c on c.id = si.child_id
-    where c.section = ${SECTION} and si.week = ${isoWeek()}`;
+    where c.section = ${SECTION} and si.week = to_date(${isoWeek()}, 'IYYY-"W"IW')`;
   expect(made).toHaveLength(2);
   expect(new Set(made.map((m) => `${m.kind} ${m.approved_by}`))).toEqual(new Set([`focus ${TEST_STAFF.email}`]));
   // approved, a child stays in the table with a green status and who approved it, after the children still waiting
@@ -143,7 +143,7 @@ test("a paper short of fresh questions is made, and says how many it repeats", a
   // exposures back.
   await sql`
     insert into item_exposure (tenant_id, child_id, item_id, week)
-    select i.tenant_id, ${ids.Chetan}, i.id, 'M2-SEEN' from item i
+    select i.tenant_id, ${ids.Chetan}, i.id, '2020-01-06' from item i
     where i.status = 'active' and i.skill_set_code = 'SUB.1D1D' and i.difficulty = 'Medium' order by i.item_key offset 3
     on conflict do nothing`;
   await page.goto(`/make/custom?child=${ids.Chetan}&a=SUB.1D1D~Medium~8`);

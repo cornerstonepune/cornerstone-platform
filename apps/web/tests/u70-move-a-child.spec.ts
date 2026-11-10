@@ -73,7 +73,7 @@ test("Cancel writes nothing", async ({ page }) => {
 test("a move to a class that works at another grade asks which grade, keeps the same child, and shows in the history", async ({ page }) => {
   // something that is the child's own, to see it stay with them
   const [tpl] = await sql<{ id: string }[]>`
-    insert into sheet_template (tenant_id, band, child_id, week, key, batch_id) values (${tenant}, 'G3', ${kids.Cai}, ${"MV-" + RUN}, ${sql.json({ code: "MV" })}, ${"MV" + RUN}) returning id`;
+    insert into sheet_template (tenant_id, band, child_id, week, key, batch_id) values (${tenant}, 'G3', ${kids.Cai}, date_trunc('week', now())::date, ${sql.json({ code: "MV" })}, ${"MV" + RUN}) returning id`;
   await sql`insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, print_status) values (${tenant}, ${"CS" + RUN.padEnd(6, "0").slice(-6)}, ${tpl.id}, ${kids.Cai}, 'new')`;
 
   await page.goto(`/growth/${kids.Cai}`);

@@ -20,7 +20,7 @@ import postgres from "postgres";
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 const SECTION = "U9-TEST";
-const WEEK = "U9-W";
+const WEEK = "2091-W30"; // a week of its own; a week is a date since CP-27
 
 type Paper = { id: string; qr: string };
 const papers: Record<"made" | "printed" | "scanned" | "signed", Paper> = {} as never;
@@ -45,13 +45,13 @@ async function paper(
   if (had) return had;
   const [{ id: tpl }] = await sql<{ id: string }[]>`
     insert into sheet_template (tenant_id, band, week, source, skill_set_code, difficulty, child_id, key, item_ids)
-    values (${tenant}, 'G2', ${WEEK}, ${t.source}, ${t.set ?? null}, ${t.level ?? null}, ${kid}, ${sql.json((t.key ?? {}) as never)},
+    values (${tenant}, 'G2', to_date(${WEEK}, 'IYYY-"W"IW'), ${t.source}, ${t.set ?? null}, ${t.level ?? null}, ${kid}, ${sql.json((t.key ?? {}) as never)},
             ${t.drawn ?? []}::uuid[])
     returning id`;
   const [p] = await sql<Paper[]>`
     insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, print_status, kind, week, section,
                                 approved_by, approved_at)
-    values (${tenant}, ${qr}, ${tpl}, ${kid}, ${i.status}, ${i.kind}, ${WEEK}, ${SECTION},
+    values (${tenant}, ${qr}, ${tpl}, ${kid}, ${i.status}, ${i.kind}, to_date(${WEEK}, 'IYYY-"W"IW'), ${SECTION},
             ${i.approved ? "e2e" : null}, ${i.approved ? sql`now()` : null})
     returning id, qr_code as qr`;
   return p;

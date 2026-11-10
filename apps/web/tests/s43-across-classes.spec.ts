@@ -24,7 +24,7 @@ let ws: { id: string; item_ids: string[]; title: string; copy: string };
 const paper = (qr: string, child: string | null, printedDaysAgo: number) => sql`
   insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, section, week, kind, print_status,
                               approved_by, approved_at, printed_at, created_at)
-  values (${tenant}, ${qr}, ${ws.id}, ${child}, ${SECTION}, to_char(now(), 'IYYY-"W"IW'), 'practice', 'printed', 'e2e',
+  values (${tenant}, ${qr}, ${ws.id}, ${child}, ${SECTION}, date_trunc('week', now())::date, 'practice', 'printed', 'e2e',
           now() - make_interval(days => ${printedDaysAgo}), now() - make_interval(days => ${printedDaysAgo}), now())`;
 
 test.beforeAll(async () => {

@@ -2,8 +2,10 @@
 
 Everything is made here inside one transaction that is rolled back: a fake school of its own (a new tenant, so every
 per-school row the migration seeds for "every school, present and future" is exercised), academic year 2031-32, two K2
-classes, three K2 periods, and teaching fortnights 9, 10, 11 and 12 with their CP-6 `fortnight_cycle` rows. Slots are
-seeded while every fortnight is `planning`, then a test freezes what it drafts. The exception setting for 2031-32
+classes, three K2 periods, and teaching fortnights 9, 10, 11 and 12 (each at `planning`, CP-6's `fortnight.state`) with
+their school days. The frame (`timetable_rule` rows) is seeded while every fortnight is at planning, then a test freezes
+what it drafts. Since CP-27 the timetable of a date is its lessons (`session`): a draft gives a class's fortnight its
+lessons from the frame, and the fortnight's standing is worked out from them (`timetable_standing`). The exception setting for 2031-32
 lists Fortnight 10 (design, "Proofs").
 
 Two people, by staff id only (no name is written; pii.staff holds "Fake Person" and an example.test address):
@@ -14,8 +16,8 @@ Two people, by staff id only (no name is written; pii.staff holds "Fake Person" 
 Each acts as the website does: as `app_web`, with `set_config('app.staff_id', <their staff id>, true)`: since CP-27
 group 4 the sign-in list is the staff tables, and the id the website signs a person in as is their `staff.id`.
 
-Names are the design's contract (specs/CP-7/design.md, "Data", "Rules", "Refusals"). The approval is the
-`settled_by` / `settled_at` stamp on `fortnight_plan`; the shared `approval` ledger gets no row (design, "Data").
+Names are the design's contract (specs/CP-7/design.md, "Data", "Rules", "Refusals"), as CP-27 moved them: the yes is a
+row of the one `approval` list (kind `timetable`, its signature kept with it); who drafted is a `change_log` row.
 """
 
 import datetime as dt
@@ -29,6 +31,7 @@ import pytest
 from psycopg.types.json import Jsonb
 
 from engine.core import db
+from engine.w2_print import fortnight_cycle as fc
 
 # the engine tests' own rows (CP-27 group 4: who signs in), by their folder: a package named `tests` is installed too
 sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "packages" / "engine" / "tests"))
@@ -57,8 +60,9 @@ def _val(conn, sql, params=()):
 
 def needs(conn) -> None:
     """CP-7 is built on CP-6, CP-4 and CP-3; until they are on main the proofs fail here, by design, saying which."""
-    if _val(conn, "select to_regclass('public.fortnight_cycle') is null"):
-        pytest.fail("needs CP-6: fortnight_cycle missing")
+    if not _val(conn, "select exists (select from information_schema.columns where table_schema = 'public'"
+                      " and table_name = 'fortnight' and column_name = 'state')"):
+        pytest.fail("needs CP-6: fortnight.state missing")
     if not _val(conn, "select exists (select from information_schema.columns where table_schema = 'public'"
                       " and table_name = 'access_table' and column_name = 'data_class')"):
         pytest.fail("needs CP-4: access_table.data_class missing")
@@ -94,8 +98,10 @@ class World:
                                     " ends_on) values (%s, %s, %s, 'teaching', %s, %s) returning id",
                               (self.t, self.year, n, s, s + dt.timedelta(days=13)))
             self.start[n] = s
-            conn.execute("insert into fortnight_cycle (tenant_id, fortnight_id, state) values (%s, %s, 'planning')"
-                         " on conflict (fortnight_id) do nothing", (self.t, self.fn[n]))
+            conn.execute("insert into school_day (tenant_id, campus_id, on_date, kind) select %s, %s, d, 'teaching'"
+                         " from generate_series(%s::date, %s::date, '1 day') d where extract(isodow from d) <= 5"
+                         " on conflict (tenant_id, campus_id, on_date) do nothing",
+                         (self.t, campus, s, s + dt.timedelta(days=13)))
 
         self.staff = {}
         for who, role, klass in (("approver", "coordinator", None), ("other", "class_teacher", self.a)):
@@ -124,54 +130,56 @@ class World:
             for d in DAYS:
                 for o in ORDS:
                     self.c.execute(
-                        "insert into timetable_slot (tenant_id, school_class_id, period_id, week_code, weekday, kind,"
-                        " text, valid_from) values (%s, %s, %s, %s, %s, 'subject', %s, '2031-06-01')",
+                        "insert into timetable_rule (tenant_id, school_class_id, kind, period_id, week_code, weekday,"
+                        " cell, text, valid_from) values (%s, %s, 'frame', %s, %s, %s, 'subject', %s, '2031-06-01')",
                         (self.t, klass, self.period[o], w, d, self.text(w, d, o)))
 
-    def change(self, klass, week, day, o, from_date, text=None, reason=None):
-        """From `from_date` on, the slot says `text`; None removes the period. `reason` is needed once frozen (CP-6)."""
-        if reason:
-            self.c.execute("select set_config('app.change_reason', %s, true)", (reason,))
+    def change(self, klass, week, day, o, from_date, text=None):
+        """From `from_date` on, the frame's cell says `text`; None removes the period. A draft made after it follows."""
         key = (klass, self.period[o], week, day)
         same_day = self.c.execute(
-            "select id from timetable_slot where school_class_id = %s and period_id = %s and week_code = %s"
-            " and weekday = %s and valid_from = %s", (*key, from_date)).fetchone()
+            "select id from timetable_rule where kind = 'frame' and school_class_id = %s and period_id = %s"
+            " and week_code = %s and weekday = %s and valid_from = %s", (*key, from_date)).fetchone()
         if same_day:
             assert text is not None, "a proof never removes a period on the day it began"
-            self.c.execute("update timetable_slot set text = %s, kind = 'subject' where id = %s", (text, same_day["id"]))
-        else:
+            self.c.execute("update timetable_rule set text = %s where id = %s", (text, same_day["id"]))
+            return
+        self.c.execute(
+            "update timetable_rule set valid_to = %s::date - 1 where kind = 'frame' and school_class_id = %s"
+            " and period_id = %s and week_code = %s and weekday = %s and valid_from < %s"
+            " and (valid_to is null or valid_to >= %s)", (from_date, *key, from_date, from_date))
+        if text is not None:
             self.c.execute(
-                "update timetable_slot set valid_to = %s::date - 1 where school_class_id = %s and period_id = %s"
-                " and week_code = %s and weekday = %s and valid_from < %s and (valid_to is null or valid_to >= %s)",
-                (from_date, *key, from_date, from_date))
-            if text is not None:
-                self.c.execute(
-                    "insert into timetable_slot (tenant_id, school_class_id, period_id, week_code, weekday, kind, text,"
-                    " valid_from) values (%s, %s, %s, %s, %s, 'subject', %s, %s)", (self.t, *key, text, from_date))
-        if reason:
-            self.c.execute("select set_config('app.change_reason', '', true)")
+                "insert into timetable_rule (tenant_id, school_class_id, kind, period_id, week_code, weekday, cell,"
+                " text, valid_from) values (%s, %s, 'frame', %s, %s, %s, 'subject', %s, %s)", (self.t, *key, text, from_date))
+
+    def relesson(self, klass, n, week, day, o, text):
+        """A drafted lesson's words changed (by hand, allowed with a reason under CP-6's freeze)."""
+        self.c.execute("update session set text = %s where id = %s", (text, self.line((klass, n), week, day, o)["id"]))
 
     # ---- CP-6's cycle ----
 
     def move(self, n, state):
         with self.c.transaction():  # a savepoint: a refused move leaves the test's transaction usable
-            self.c.execute("update fortnight_cycle set state = %s where fortnight_id = %s", (state, self.fn[n]))
+            self.c.execute("update fortnight set state = %s where id = %s", (state, self.fn[n]))
 
     def freeze(self, *ns):
         for n in ns:
             self.move(n, "frozen")
 
-    # ---- the two functions, called as their callers call them ----
+    # ---- drafting and the yes, called as their callers call them ----
 
     def draft(self, klass, n):
-        """`engine timetable draft` calls this as app_engine, with app.changed_by set."""
+        """`engine timetable draft` drafts as app_engine, naming who drafts. The class's fortnight: (class, number)."""
         with acting(self.c, "app_engine"):
-            return self.c.execute("select public.fortnight_draft(%s, %s) as id", (klass, self.fn[n])).fetchone()["id"]
+            fc.draft(self.c, klass, self.fn[n], WHO)
+        return (klass, n)
 
     def approve(self, plan, who="approver"):
         """The website calls this as app_web, with the signed-in person's app.staff_id."""
+        klass, n = plan
         with acting(self.c, "app_web", self.staff.get(who, who)):
-            self.c.execute("select public.fortnight_approve(%s)", (plan,))
+            self.c.execute("select public.fortnight_approve(%s, %s)", (klass, self.fn[n]))
 
     def settle(self, klass, n):
         """Draft, and approve when it waits: the class's fortnight is settled."""
@@ -183,24 +191,41 @@ class World:
 
     # ---- reading what was written (as the owner) ----
 
-    def plan(self, plan_id):
-        return db.one(self.c, "select * from fortnight_plan where id = %s", (plan_id,))
+    def plan(self, plan):
+        """Where the class's fortnight stands, its signature and baseline, who approved it and when, and who drafted it
+        and when (the history's row of its lessons being made)."""
+        klass, n = plan
+        row = db.one(self.c, "select * from public.timetable_standing(%s, %s)", (klass, self.fn[n]))
+        drafted = self.c.execute(
+            "select origin, at from change_log where table_name = 'session' and row_id = %s and op = 'insert'",
+            (f"{klass} {self.fn[n]}",)).fetchone()
+        return {**row, "drafted_by": drafted and drafted["origin"], "drafted_at": drafted and drafted["at"]}
 
-    def lines(self, plan_id):
-        return self.c.execute("select * from fortnight_plan_line where fortnight_plan_id = %s"
-                              " order by week_code, weekday, period_id", (plan_id,)).fetchall()
+    def lines(self, plan):
+        klass, n = plan
+        return self.c.execute(
+            "select s.id, s.period_id, s.text, d.on_date, extract(isodow from d.on_date)::int as weekday,"
+            " case when d.on_date - f.starts_on < 7 then 'A' else 'B' end as week_code"
+            " from session s join school_day d on d.id = s.school_day_id join fortnight f on f.id = %s"
+            " and d.on_date between f.starts_on and f.ends_on where s.school_class_id = %s"
+            " order by week_code, weekday, s.period_id", (self.fn[n], klass)).fetchall()
 
-    def line(self, plan_id, week, day, o):
-        return db.one(self.c, "select * from fortnight_plan_line where fortnight_plan_id = %s and week_code = %s"
-                              " and weekday = %s and period_id = %s", (plan_id, week, day, self.period[o]))
+    def line(self, plan, week, day, o):
+        return next(r for r in self.lines(plan)
+                    if (r["week_code"], r["weekday"], r["period_id"]) == (week, day, self.period[o]))
 
     def approvals(self):
-        """Rows of the shared approval ledger in this school (the design writes none: the stamp is on the plan)."""
+        """Rows of the one approval list in this school."""
         return _val(self.c, "select count(*) from approval where tenant_id = %s", (self.t,))
 
+    def yeses(self, plan):
+        klass, n = plan
+        return self.c.execute("select * from approval where kind = 'timetable' and target = %s order by seq",
+                              (f"{klass} {self.fn[n]}",)).fetchall()
+
     def counts(self):
-        return db.one(self.c, "select (select count(*) from fortnight_plan where tenant_id = %(t)s) as plans,"
-                              " (select count(*) from fortnight_plan_line where tenant_id = %(t)s) as lines,"
+        return db.one(self.c, "select (select count(*) from session where tenant_id = %(t)s) as lessons,"
+                              " (select count(*) from change_log where tenant_id = %(t)s) as history,"
                               " (select count(*) from approval where tenant_id = %(t)s) as approvals", {"t": self.t})
 
     def setting(self, key):

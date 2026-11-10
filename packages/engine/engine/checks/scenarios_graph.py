@@ -12,7 +12,9 @@ import datetime
 import json
 import uuid
 
-from engine.core import db, roster, settings
+from engine.core import db, roster, settings, weeks
+
+GOAL_WEEK = "2099-W20"  # a week no school reaches: the goal's own rows
 
 SECTION = "GR1-GOAL"
 DAY0 = datetime.date(2026, 9, 1)
@@ -38,7 +40,7 @@ def _paper(conn, t, child, skill, line):
     tpl = conn.execute(
         "insert into sheet_template (tenant_id, band, child_id, week, key, batch_id) values (%s, 'G2', %s, %s, %s, %s)"
         " returning id",
-        (t, child, f"GR1-{tag}", json.dumps({"code": tag}), tag),
+        (t, child, weeks.day(GOAL_WEEK), json.dumps({"code": tag}), tag),
     ).fetchone()["id"]
     inst = conn.execute(
         "insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, print_status)"
@@ -105,8 +107,8 @@ def ledger(conn, sc):
     if sc.get("prescribed"):
         conn.execute(
             "insert into prescription (tenant_id, child_id, week, kind, skill_set_code, difficulty, rule_fired)"
-            " values (%s, %s, 'GR1', 'practice', %s, %s, 'goal')",
-            (t, child, sc["skill"], sc["prescribed"]),
+            " values (%s, %s, %s, 'practice', %s, %s, 'goal')",
+            (t, child, weeks.day(GOAL_WEEK), sc["skill"], sc["prescribed"]),
         )
     return child, skill
 

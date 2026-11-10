@@ -251,7 +251,7 @@ def _six_sums(conn):
     code = "R5-T01"
     conn.execute(
         "insert into sheet_template (tenant_id, band, week, variant, source, code, skill_set_code, difficulty,"
-        " item_ids) values (%s, 'G2', 'library', 98, 'library', %s, 'ADD.2D2D', 'Easy', %s)",
+        " item_ids) values (%s, 'G2', null, 98, 'library', %s, 'ADD.2D2D', 'Easy', %s)",
         (tenant, code, ids),
     )
     return code

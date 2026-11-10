@@ -150,7 +150,7 @@ def test_a_code_the_database_printed_names_its_child_and_paper_and_one_it_did_no
     tenant = tenant.fetchone()["id"]
     child = a_child_in(conn, "G2", "G2", "7", tenant)
     template = conn.execute(
-        "insert into sheet_template (tenant_id, band, level, week, key) values (%s, 'G2', 'L0', 'W1', %s)"
+        "insert into sheet_template (tenant_id, band, level, week, key) values (%s, 'G2', 'L0', '2026-09-28', %s)"
         " returning id",
         (tenant, '{"title": "Practice"}'),
     ).fetchone()["id"]
@@ -183,7 +183,7 @@ def test_a_class_of_library_worksheet_copies_sorts_into_one_paper_per_child(conn
     for code in (a, other):
         conn.execute(
             "insert into sheet_template (tenant_id, band, week, source, code, skill_set_code, difficulty)"
-            " values (%s, 'G2', 'library', 'library', %s, 'ADD.2D2D', 'Hard')",
+            " values (%s, 'G2', null, 'library', %s, 'ADD.2D2D', 'Hard')",
             (tenant["id"], code),
         )
     a1, b, a2 = (_printed(tmp_path / str(i), code, n) for i, (code, n) in enumerate(
