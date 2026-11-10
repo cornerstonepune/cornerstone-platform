@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-// kit.mjs: writes kit.css from docs/frontend/tokens.json (every colour, type, space, radius, shadow and motion value),
+// kit.mjs: writes kit.css from docs/frontend/tokens.json (every colour, type, radius, shadow and motion value) and
+// docs/frontend/spacing.json (the spacing scale, revision 1),
 // the icon map in apps/web/lib/icons.tsx (plus the kit's added concepts, below), and components.css (the blocks).
 // No colour is typed by hand: each value comes from tokens.json, light and dark.
 //   node docs/frontend/wireframes/kit.mjs            regenerate kit.css
@@ -13,6 +14,7 @@ import { fileURLToPath } from "node:url";
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(HERE, "../../..");
 const TOKENS = join(ROOT, "docs/frontend/tokens.json");
+const SPACING = join(ROOT, "docs/frontend/spacing.json");
 const ICONS_TSX = join(ROOT, "apps/web/lib/icons.tsx");
 const OUT = join(HERE, "kit.css");
 
@@ -23,6 +25,8 @@ export const ADDED_ICONS = {
   children: "users-round", "not-seen": "circle-dashed", numeracy: "hash", language: "messages-square", arts: "palette",
   materials: "package", details: "eye", upload: "upload", help: "circle-help", "sign-out": "log-out", "acting-as": "user-cog",
   open: "chevron-down", trail: "chevron-right", moved: "move-right", clash: "triangle-alert",
+  // Wireframe revision 1 (issue #546): boards, groups, clusters, the child's recent history
+  board: "kanban", table: "table", group: "group", cluster: "network", history: "history", close: "x",
 };
 
 const kebab = (pascal) => pascal.replace(/([a-z0-9])([A-Z])/g, "$1-$2").replace(/([a-zA-Z])([0-9])/g, "$1-$2").toLowerCase();
@@ -36,6 +40,11 @@ export function iconMap() {
 }
 
 const tokens = () => JSON.parse(readFileSync(TOKENS, "utf8"));
+// Revision 1's spacing scale (spacing.json) stands in for tokens.json's space-1…space-7; `tap` stays tokens.json's.
+export const spacingTokens = () => {
+  const own = JSON.parse(readFileSync(SPACING, "utf8")).tokens;
+  return [...own, ...tokens().spacing.tokens.filter((s) => !/^space-\d+$/.test(s.name))];
+};
 const light = (v) => (typeof v === "string" ? v : v.light);
 const dark = (v) => (typeof v === "string" ? v : v.dark);
 
@@ -50,14 +59,14 @@ export function tokensCss() {
     if (s.letterSpacing) lines.push(`  --type-${s.name}-ls: ${s.letterSpacing};`);
     return lines;
   })).flat().join("\n");
-  const space = t.spacing.tokens.map((s) => `  --${s.name}: ${s.value};`).join("\n");
+  const space = spacingTokens().map((s) => `  --${s.name}: ${s.value};`).join("\n");
   const radius = t.radius.tokens.map((r) => `  --${r.name}: ${r.value};`).join("\n");
   const press = t.motion.tokens.find((m) => m.name === "press").value;
   const scale = press.match(/scale\(([\d.]+)\)/)[1];
   const transition = press.match(/transition:\s*([^;]+)/)[1].trim();
   const themeLight = `${colour(light)}\n${shadow(light)}\n  --show-on-light: block;\n  --show-on-dark: none;\n  color-scheme: light;`;
   const themeDark = `${colour(dark)}\n${shadow(dark)}\n  --show-on-light: none;\n  --show-on-dark: block;\n  color-scheme: dark;`;
-  return `/* ===== tokens: generated from docs/frontend/tokens.json v${t.version} by kit.mjs; do not edit ===== */
+  return `/* ===== tokens: generated from docs/frontend/tokens.json v${t.version} and spacing.json by kit.mjs; do not edit ===== */
 :root {
   --font-sans: ${fam.sans};
   --font-serif: ${fam.serif};

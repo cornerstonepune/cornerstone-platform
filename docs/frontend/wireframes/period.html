@@ -58,11 +58,22 @@
               <div class="sbar" role="img" aria-label="3 above, 13 as expected, 4 below, 1 not willing, 1 absent">
                 <i data-state="ok" style="--n: 3"></i><i data-state="ok" style="--n: 13"></i><i data-state="wait" style="--n: 4"></i><i data-state="wait" style="--n: 1"></i><i data-state="quiet" style="--n: 1"></i>
               </div>
-              <div class="keyrow" data-source="activity_observation.outcome" data-gap="the five outcome words (above, as expected, below, not willing, absent) live in observation_outcome, which is not a target table">
+              <div class="keyrow" data-source="activity_observation.outcome config.key config.value">
                 <span class="chip" data-state="ok"><i class="ic s" data-icon="above"></i>3 above</span><span class="chip" data-state="ok"><i class="ic s" data-icon="as-expected"></i>13 as expected</span><span class="chip" data-state="wait"><i class="ic s" data-icon="below"></i>4 below</span><span class="chip" data-state="wait"><i class="ic s" data-icon="not-willing"></i>1 not willing</span><span class="chip" data-state="quiet"><i class="ic s" data-icon="absent"></i>1 absent</span>
               </div>
-              <p class="muted"><i class="ic s" data-icon="below"></i>Below: Sr. No. <a data-el="3" href="#child" data-source="enrolment.roll_no">03</a> <a data-el="3" href="#child" data-source="enrolment.roll_no">05</a> <a data-el="3" href="#child" data-source="enrolment.roll_no">12</a> <a data-el="3" href="#child" data-source="enrolment.roll_no">17</a></p>
-              <p class="muted"><i class="ic s" data-icon="not-willing"></i>Not willing: Sr. No. <a data-el="3" href="#child" data-source="enrolment.roll_no">06</a></p>
+              <div class="groups">
+                <section class="grp" data-state="wait" aria-label="Below, 4 children"><h3 class="grp-h"><i class="ic s" data-icon="below"></i>Below <span class="count num">4</span></h3><ul class="nchips"><li><button class="nchip press" data-el="3" type="button" aria-label="Sr. No. 03, open the history"><span class="no" data-source="enrolment.roll_no">03</span></button></li><li><button class="nchip press" data-el="3" type="button" aria-label="Sr. No. 05, open the history"><span class="no" data-source="enrolment.roll_no">05</span></button></li><li><button class="nchip press" data-el="3" type="button" aria-label="Sr. No. 12, open the history"><span class="no" data-source="enrolment.roll_no">12</span></button></li><li><button class="nchip press" data-el="3" type="button" aria-label="Sr. No. 17, open the history"><span class="no" data-source="enrolment.roll_no">17</span></button></li></ul></section>
+                <section class="grp" data-state="wait" aria-label="Not willing, 1 child"><h3 class="grp-h"><i class="ic s" data-icon="not-willing"></i>Not willing <span class="count num">1</span></h3><ul class="nchips"><li><button class="nchip press" data-el="3" type="button" aria-label="Sr. No. 06, open the history"><span class="no" data-source="enrolment.roll_no">06</span></button></li></ul></section>
+              </div>
+              <span class="caption">Sr. No. only. Tap one to see that child's recent history.</span>
+              </div>
+          </div>
+          <div class="card" data-block="StackBar">
+            <div class="card-h"><i class="ic s" data-icon="skill"></i>The class on this activity's skills: <span class="num" data-source="child_skill_state.child_id">21</span> of <span class="num" data-source="enrolment.child_id">24</span> children seen</div>
+            <div class="card-b stack">
+              <div class="sbar" role="img" aria-label="10 secure, 7 practising, 4 emerging, 3 not seen yet"><i data-state="ok" style="--n: 10"></i><i data-state="wait" style="--n: 7"></i><i data-state="quiet" style="--n: 4"></i><i data-state="unseen" style="--n: 3"></i></div>
+              <div class="keyrow" data-source="child_skill_state.state"><span class="chip" data-state="ok"><i class="ic s" data-icon="secure"></i>10 secure</span><span class="chip" data-state="wait"><i class="ic s" data-icon="practising"></i>7 practising</span><span class="chip" data-state="quiet"><i class="ic s" data-icon="emerging"></i>4 emerging</span><span class="chip" data-state="unseen"><i class="ic s" data-icon="not-seen"></i>3 not seen yet</span></div>
+              <span class="caption">Counted from each child's state on the skills this activity builds</span>
             </div>
           </div>
           <details class="details" data-block="Details" open><summary data-el="4"><i class="ic s" data-icon="details"></i>The steps, short</summary><div><ol data-source="activity.steps_list">
@@ -82,7 +93,23 @@
           </div>
         </main>
         <aside class="rail" aria-label="Connected to">
-          <section class="rail-box">
+          <aside class="peek" data-block="ChildPeek" aria-label="Recent history of one child">
+          <div class="peek-h">
+            <span class="disc" aria-hidden="true">CC</span>
+            <span class="who"><b data-el="14" data-source="pii.child.first_name pii.child.last_name">Cal Crow</b><span class="muted"><span class="num" data-source="enrolment.roll_no">03</span> · K2 Red</span></span>
+            <button class="barbtn press" data-el="12" type="button" aria-label="Close"><i class="ic" data-icon="close"></i></button>
+          </div>
+          <div class="keyrow" data-source="child_skill_state.state"><span class="chip" data-state="ok"><i class="ic s" data-icon="secure"></i>2 secure</span><span class="chip" data-state="wait"><i class="ic s" data-icon="practising"></i>4 practising</span><span class="chip" data-state="quiet"><i class="ic s" data-icon="emerging"></i>3 emerging</span><span class="chip" data-state="unseen"><i class="ic s" data-icon="not-seen"></i>2 not seen yet</span></div>
+          <ol class="timeline">
+            <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><b>Counting in tens with bundles: below</b><p>Observed in the period · <span data-source="pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="activity_observation.observed_at">3-Nov</span></li>
+            <li class="tli"><span class="tile" data-kind="note"><i class="ic" data-icon="note"></i></span><div><b>Lost count after fifteen</b><p>Voice note · confirmed by <span data-source="pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="pii.educator_note.received_at">28-Oct</span></li>
+            <li class="tli"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><div><b>Paper, sheet 2</b><p>3 right, 1 wrong with working, 2 blank · signed off by <span data-source="pii.staff.name">Bina Basil</span></p></div><span class="caption num" data-source="item_result.confirmed_at">26-Oct</span></li>
+            <li class="tli"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><div><b>Counting to 20: now practising</b><p>The state changed after a second day seen</p></div><span class="caption num" data-source="evidence_event.observed_at">20-Oct</span></li>
+            <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="history"></i></span><div><b>A mark corrected: as expected became below</b><p>A new entry that replaces the first · <span data-source="pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="change_log.at">14-Oct</span></li>
+          </ol>
+          <a class="btn press" data-el="13" href="#child">Open Cal</a>
+        </aside>
+        <section class="rail-box">
             <h2>Connected to</h2>
             <ul class="rlist">
               <li><a class="ritem" data-el="7" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><span><span data-source="activity.name">Counting in tens with bundles</span><small>the activity</small></span></a></li>
@@ -146,11 +173,22 @@
               <div class="sbar" role="img" aria-label="3 above, 13 as expected, 4 below, 1 not willing, 1 absent">
                 <i data-state="ok" style="--n: 3"></i><i data-state="ok" style="--n: 13"></i><i data-state="wait" style="--n: 4"></i><i data-state="wait" style="--n: 1"></i><i data-state="quiet" style="--n: 1"></i>
               </div>
-              <div class="keyrow" data-source="activity_observation.outcome" data-gap="the five outcome words (above, as expected, below, not willing, absent) live in observation_outcome, which is not a target table">
+              <div class="keyrow" data-source="activity_observation.outcome config.key config.value">
                 <span class="chip" data-state="ok"><i class="ic s" data-icon="above"></i>3 above</span><span class="chip" data-state="ok"><i class="ic s" data-icon="as-expected"></i>13 as expected</span><span class="chip" data-state="wait"><i class="ic s" data-icon="below"></i>4 below</span><span class="chip" data-state="wait"><i class="ic s" data-icon="not-willing"></i>1 not willing</span><span class="chip" data-state="quiet"><i class="ic s" data-icon="absent"></i>1 absent</span>
               </div>
-              <p class="muted"><i class="ic s" data-icon="below"></i>Below: Sr. No. <a data-el="3" href="#child" data-source="enrolment.roll_no">03</a> <a data-el="3" href="#child" data-source="enrolment.roll_no">05</a> <a data-el="3" href="#child" data-source="enrolment.roll_no">12</a> <a data-el="3" href="#child" data-source="enrolment.roll_no">17</a></p>
-              <p class="muted"><i class="ic s" data-icon="not-willing"></i>Not willing: Sr. No. <a data-el="3" href="#child" data-source="enrolment.roll_no">06</a></p>
+              <div class="groups">
+                <section class="grp" data-state="wait" aria-label="Below, 4 children"><h3 class="grp-h"><i class="ic s" data-icon="below"></i>Below <span class="count num">4</span></h3><ul class="nchips"><li><button class="nchip press" data-el="3" type="button" aria-label="Sr. No. 03, open the history"><span class="no" data-source="enrolment.roll_no">03</span></button></li><li><button class="nchip press" data-el="3" type="button" aria-label="Sr. No. 05, open the history"><span class="no" data-source="enrolment.roll_no">05</span></button></li><li><button class="nchip press" data-el="3" type="button" aria-label="Sr. No. 12, open the history"><span class="no" data-source="enrolment.roll_no">12</span></button></li><li><button class="nchip press" data-el="3" type="button" aria-label="Sr. No. 17, open the history"><span class="no" data-source="enrolment.roll_no">17</span></button></li></ul></section>
+                <section class="grp" data-state="wait" aria-label="Not willing, 1 child"><h3 class="grp-h"><i class="ic s" data-icon="not-willing"></i>Not willing <span class="count num">1</span></h3><ul class="nchips"><li><button class="nchip press" data-el="3" type="button" aria-label="Sr. No. 06, open the history"><span class="no" data-source="enrolment.roll_no">06</span></button></li></ul></section>
+              </div>
+              <span class="caption">Sr. No. only. Tap one to see that child's recent history.</span>
+              </div>
+          </div>
+          <div class="card" data-block="StackBar">
+            <div class="card-h"><i class="ic s" data-icon="skill"></i>The class on this activity's skills: <span class="num" data-source="child_skill_state.child_id">21</span> of <span class="num" data-source="enrolment.child_id">24</span> children seen</div>
+            <div class="card-b stack">
+              <div class="sbar" role="img" aria-label="10 secure, 7 practising, 4 emerging, 3 not seen yet"><i data-state="ok" style="--n: 10"></i><i data-state="wait" style="--n: 7"></i><i data-state="quiet" style="--n: 4"></i><i data-state="unseen" style="--n: 3"></i></div>
+              <div class="keyrow" data-source="child_skill_state.state"><span class="chip" data-state="ok"><i class="ic s" data-icon="secure"></i>10 secure</span><span class="chip" data-state="wait"><i class="ic s" data-icon="practising"></i>7 practising</span><span class="chip" data-state="quiet"><i class="ic s" data-icon="emerging"></i>4 emerging</span><span class="chip" data-state="unseen"><i class="ic s" data-icon="not-seen"></i>3 not seen yet</span></div>
+              <span class="caption">Counted from each child's state on the skills this activity builds</span>
             </div>
           </div>
           <details class="details" data-block="Details" open><summary data-el="4"><i class="ic s" data-icon="details"></i>The steps, short</summary><div><ol data-source="activity.steps_list">
@@ -170,7 +208,23 @@
           </div>
         </main>
         <aside class="rail" aria-label="Connected to">
-          <section class="rail-box">
+          <aside class="peek" data-block="ChildPeek" aria-label="Recent history of one child">
+          <div class="peek-h">
+            <span class="disc" aria-hidden="true">CC</span>
+            <span class="who"><b data-el="14" data-source="pii.child.first_name pii.child.last_name">Cal Crow</b><span class="muted"><span class="num" data-source="enrolment.roll_no">03</span> · K2 Red</span></span>
+            <button class="barbtn press" data-el="12" type="button" aria-label="Close"><i class="ic" data-icon="close"></i></button>
+          </div>
+          <div class="keyrow" data-source="child_skill_state.state"><span class="chip" data-state="ok"><i class="ic s" data-icon="secure"></i>2 secure</span><span class="chip" data-state="wait"><i class="ic s" data-icon="practising"></i>4 practising</span><span class="chip" data-state="quiet"><i class="ic s" data-icon="emerging"></i>3 emerging</span><span class="chip" data-state="unseen"><i class="ic s" data-icon="not-seen"></i>2 not seen yet</span></div>
+          <ol class="timeline">
+            <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><b>Counting in tens with bundles: below</b><p>Observed in the period · <span data-source="pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="activity_observation.observed_at">3-Nov</span></li>
+            <li class="tli"><span class="tile" data-kind="note"><i class="ic" data-icon="note"></i></span><div><b>Lost count after fifteen</b><p>Voice note · confirmed by <span data-source="pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="pii.educator_note.received_at">28-Oct</span></li>
+            <li class="tli"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><div><b>Paper, sheet 2</b><p>3 right, 1 wrong with working, 2 blank · signed off by <span data-source="pii.staff.name">Bina Basil</span></p></div><span class="caption num" data-source="item_result.confirmed_at">26-Oct</span></li>
+            <li class="tli"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><div><b>Counting to 20: now practising</b><p>The state changed after a second day seen</p></div><span class="caption num" data-source="evidence_event.observed_at">20-Oct</span></li>
+            <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="history"></i></span><div><b>A mark corrected: as expected became below</b><p>A new entry that replaces the first · <span data-source="pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="change_log.at">14-Oct</span></li>
+          </ol>
+          <a class="btn press" data-el="13" href="#child">Open Cal</a>
+        </aside>
+        <section class="rail-box">
             <h2>Connected to</h2>
             <ul class="rlist">
               <li><a class="ritem" data-el="7" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><span><span data-source="activity.name">Counting in tens with bundles</span><small>the activity</small></span></a></li>
