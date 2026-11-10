@@ -284,7 +284,7 @@ test("Curriculum, Maths then English, and Staff and School", async ({ page }) =>
   await expect(page.getByText("This page could not load")).toHaveCount(0);
   await tablesRead(page, "/ (English)");
   await wholePage(page, "/staff", /Staff/, { filter: false });
-  await wholePage(page, "/school", /School/, { filter: false });
+  await wholePage(page, "/setup/classes", /Classes and children/, { filter: false });
 });
 
 test("the flow is one chain: each page's next step opens the following page", async ({ page }) => {

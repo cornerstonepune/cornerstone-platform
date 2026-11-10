@@ -1,20 +1,24 @@
 {
-  "menu": "/school",
+  "menu": "/setup/classes",
   "forWhat": [
-    "The school's classes: each one's grade, the children in it and who teaches it. This page only shows; nothing is changed here."
+    "The school's classes: each one's grade, the children in it and who teaches it. The coordinator moves a child from here."
   ],
   "layout": [
     {
-      "area": "Title and main button",
-      "shows": "[[Change who teaches which class]], which opens Staff."
-    },
-    {
-      "area": "Filter row",
+      "area": "Title and filter row",
       "shows": "Grade, and a search for a class or an educator."
     },
     {
-      "area": "Table",
-      "shows": "Class, Grade, Children and Taught by."
+      "area": "Classes table",
+      "shows": "Class, Grade, Children and Educators. Press a class to open its children below."
+    },
+    {
+      "area": "A class's children",
+      "shows": "Each child's Sr. No. and name, since when, and where from, with a [[Move]] button on each row."
+    },
+    {
+      "area": "Change log",
+      "shows": "Every move of a child in or out of the class: Sr. No., from, to, who and when."
     }
   ],
   "jobs": [
@@ -22,24 +26,29 @@
       "id": "who-teaches",
       "title": "See who teaches a class",
       "steps": [
-        "Find the class in the table. [[Taught by]] names its educators.",
-        "To change them, press [[Change who teaches which class]]."
+        "Find the class in the table. [[Educators]] names who holds it today."
       ]
     },
     {
       "id": "move-a-child",
       "title": "Move a child to another class",
       "steps": [
-        "This is not on the site yet. No page moves a child or changes a child's grade today.",
-        "Ask the coordinator. It is being built."
+        "Press the class, then press [[Move]] on the child's row.",
+        "Choose the class they go to, the Sr. No. they will have there and the date they start. Press [[Save the move]].",
+        "The child is in the new class from that date. Their answers and results stay with them, and the move is kept in the change log."
       ]
     }
   ],
   "buttons": [
     {
-      "label": "Change who teaches which class",
-      "does": "Opens Staff.",
-      "doesNot": "It does not move children."
+      "label": "Move",
+      "does": "Opens a small form for the new class, Sr. No. and date.",
+      "doesNot": "It does not move anyone until you press Save the move."
+    },
+    {
+      "label": "Save the move",
+      "does": "Closes the child's place in the old class, opens one in the new class and writes the change log.",
+      "doesNot": "It does not delete anything the child has done."
     }
   ]
 }

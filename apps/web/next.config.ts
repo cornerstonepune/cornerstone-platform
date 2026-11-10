@@ -10,7 +10,11 @@ const nextConfig: NextConfig = {
   distDir: process.env.NEXT_DIST_DIR || ".next",
   turbopack: { root: repo },
   // Teaching left the menu on 26 Oct 2026 (goals/nav3_what_needs_doing.yaml): its old address, in a bookmark or a link, opens What needs doing.
-  redirects: async () => [{ source: "/taught", destination: "/today", permanent: false }],
+  redirects: async () => [
+    { source: "/taught", destination: "/today", permanent: false },
+    // UI-5 (docs/frontend/screens.json `folds`): the School page is Classes and children; a bookmark answers 308 to it.
+    { source: "/school", destination: "/setup/classes", permanent: true },
+  ],
   outputFileTracingRoot: repo,
 };
 
