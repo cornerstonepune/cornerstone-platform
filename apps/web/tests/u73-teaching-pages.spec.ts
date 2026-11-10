@@ -7,6 +7,7 @@ import { expect, test, type Browser, type BrowserContext } from "@playwright/tes
 import postgres from "postgres";
 import { FAKE_CHILDREN } from "./fake-names";
 import { sessionFor } from "./inventory-fixtures";
+import { linkFixture } from "./inventory-teaching";
 import { gate } from "./m1-13-rows";
 import { aClass, aPerson, personAsStored } from "./rows";
 
@@ -71,11 +72,8 @@ test.beforeAll(async () => {
     await sql`insert into learning_objective_skill (tenant_id, lo_code, skill_code) values (${tenant}, ${LO}, ${s.code}) on conflict do nothing`;
     await sql`insert into activity_skill (tenant_id, activity_code, skill_code) values (${tenant}, ${ACT}, ${s.code}) on conflict do nothing`;
   }
-  // second comes after first by a confirmed link; third comes before second by a link nobody has confirmed
-  await sql`insert into skill_prerequisite (tenant_id, registry_code, before_registry_code, reason, source, status, confirmed_by, confirmed_at)
-    select ${tenant}, ${second.code}, ${first.code}, 'u73', 'u73 test', 'confirmed', ${staff}, now() where not exists (select 1 from skill_prerequisite where registry_code = ${second.code} and before_registry_code = ${first.code})`;
-  await sql`insert into skill_prerequisite (tenant_id, registry_code, before_registry_code, reason, source, status)
-    select ${tenant}, ${second.code}, ${third.code}, 'u73', 'u73 test', 'proposed' where not exists (select 1 from skill_prerequisite where registry_code = ${second.code} and before_registry_code = ${third.code})`;
+  // second comes after first by a confirmed link; third comes after first by a link nobody has confirmed (the engine's fixture makes both)
+  linkFixture(first.code, second.code, third.code);
   const [{ n }] = await sql<{ n: number }[]>`select count(*)::int as n from activity_observation where class_id = ${classA} and activity_code = ${ACT}`;
   if (n === 0) {
     await observe(NAMES_A[0], 3, 40);
@@ -212,9 +210,10 @@ test("10 · a prerequisite or next skill is shown only when its link is confirme
   const p = await edu.newPage();
   await p.goto(skillUrl(1));
   await expect(p.locator("main")).toContainText(skills[0].name);
-  await expect(p.locator(`main a[href="/setup/skills/${skills[2].code}"]`)).toHaveCount(0);
   await p.goto(skillUrl(0));
   await expect(p.locator(`main a[href="/setup/skills/${skills[1].code}"]`).first()).toBeVisible();
+  // the third skill follows the first by a proposed link: it is not offered as a next skill
+  await expect(p.locator(`main a[href="/setup/skills/${skills[2].code}"]`)).toHaveCount(0);
   await edu.close();
 });
 
