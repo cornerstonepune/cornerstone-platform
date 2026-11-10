@@ -65,6 +65,7 @@ export default async function MovesPage({ searchParams }: Props) {
       rail={<Rail edges={[{ screen: "fortnight", params: { n: String(fn.number) }, label: `Fortnight ${fn.number}`, icon: "fortnight" }, { screen: "timetable", label: "The grid", icon: "week" }, { screen: "rules", label: "Timetable rules", icon: "setup" }]} />}
     >
       {q.error ? <p role="alert" className="tt-error">{q.error}</p> : null}
+      {q.done ? <p role="status" className="tt-note">Done.</p> : null}
       {coordinator ? <p className="tt-note">{pick ? `Picked ${shortDate(fromDay)}. Now pick the lesson to swap it with.` : "Pick a lesson, then the lesson to swap it with."}</p> : <p className="tt-note">You can read the moves; only the coordinator makes them.</p>}
       <div className="mb-3">
         <ViewToggle current={klass.id} views={weeks[0].classes.map((c) => ({ key: c.id, label: `${c.grade} ${c.section}`, icon: "class" as const, href: stay({ class: c.id }) }))} />
@@ -76,7 +77,7 @@ export default async function MovesPage({ searchParams }: Props) {
           <input type="hidden" name="grade" value={klass.grade} /><input type="hidden" name="section" value={klass.section} /><input type="hidden" name="year" value={year} />
           <input type="hidden" name="from_date" value={fromDay} /><input type="hidden" name="from_period" value={ords.get(fromPeriod)} />
           <input type="hidden" name="to_date" value={toDay} /><input type="hidden" name="to_period" value={ords.get(toPeriod)} />
-          <label>Why<input name="reason" /></label>
+          <label>Reason<input name="reason" /></label>
           <button className="btn">Move {shortDate(fromDay)} to {shortDate(toDay)}</button>
         </form>
       ) : null}
@@ -100,7 +101,7 @@ export default async function MovesPage({ searchParams }: Props) {
               {coordinator ? (
                 <form action="/api/timetable/clash" method="post" className="tt-row" aria-label={`Accept: ${c.detail}`}>
                   <input type="hidden" name="back" value={stay({})} /><input type="hidden" name="key" value={c.key} />
-                  <label>Why<input name="reason" /></label>
+                  <label>Reason<input name="reason" /></label>
                   <button className="btn" data-ux="action">Accept the clash</button>
                 </form>
               ) : <span className="tt-note">Only the coordinator accepts a clash.</span>}

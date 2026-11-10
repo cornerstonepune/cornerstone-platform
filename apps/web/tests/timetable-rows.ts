@@ -14,7 +14,11 @@ const P = [["U74 P1", "17:01", 91, "NUM"], ["U74 P2", "17:41", 92, "ENG"], ["U74
 export type Fixture = { klass: string; staff: string; tenant: string; year: string; here: string; ahead: string; periods: { id: string; ord: number; subject: string }[]; days: string[]; block: string };
 
 export async function timetableRows(sql: Sql): Promise<Fixture> {
-  const k = await k2Class(sql, SECTION);
+  // found by its section once made: k2Class looks a class up by the school's K2 year, and this one lives in its own
+  const [made] = await sql<{ klass: string; staff: string }[]>`
+    select c.id as klass, ps.staff_id as staff from school_class c join academic_year y on y.id = c.academic_year_id, pii.staff ps
+    where c.section = ${SECTION} and y.label = ${YEAR} and ps.email = 'e2e@cornerstone.test' limit 1`;
+  const k = made ?? (await k2Class(sql, SECTION));
   const [{ tenant, campus }] = await sql<{ tenant: string; campus: string }[]>`
     select c.tenant_id as tenant, c.campus_id as campus from school_class c where c.id = ${k.klass}`;
   const [{ id: year }] = await sql<{ id: string }[]>`

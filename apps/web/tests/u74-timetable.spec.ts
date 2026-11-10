@@ -178,7 +178,7 @@ test("Moves by hand: accepting a clash needs a reason ('Say why' otherwise), the
   await expect(page.locator(".tt-error")).toContainText("Say why");
   const [{ before }] = await sql<{ before: number }[]>`select count(*)::int as before from approval where kind = 'timetable_clash'`;
   const key = await page.locator("[data-clash]").first().getAttribute("data-clash");
-  await page.locator("[data-clash]").first().getByLabel("Why").fill("Sports day is on purpose");
+  await page.locator("[data-clash]").first().getByLabel("Reason").fill("Sports day is on purpose");
   await page.locator("[data-clash]").first().getByRole("button", { name: "Accept the clash" }).click();
   const [{ after }] = await sql<{ after: number }[]>`select count(*)::int as after from approval where kind = 'timetable_clash'`;
   expect(after).toBe(before + 1);
