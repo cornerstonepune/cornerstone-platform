@@ -11,7 +11,8 @@ export type Look = "secure" | "practising" | "emerging";
 /** A state's look from its colour alone: green secure, amber practising, any other seen state emerging. */
 export const lookOfColour = (colour: string): Look => (colour === "green" ? "secure" : colour === "amber" ? "practising" : "emerging");
 
-const CURRENT = sql`not exists (select 1 from activity_observation s where s.supersedes = o.id)`;
+// built when asked, never at import: `next build` loads every route with no database
+const current = () => sql`not exists (select 1 from activity_observation s where s.supersedes = o.id)`;
 
 // ---- Activity ------------------------------------------------------------------------------------------------------
 
@@ -30,7 +31,7 @@ export async function activityFacts(me: Me, code: string): Promise<ActivityFacts
   const ids = own.map((c) => c.id);
   const rows = await sql<{ class_id: string; day: string; child_id: string; outcome: string; level: number | null; at: string }[]>`
     select o.class_id, (o.observed_at at time zone 'Asia/Kolkata')::date::text as day, o.child_id, o.outcome, o.reached_level as level, o.observed_at::text as at
-    from activity_observation o where o.activity_code = ${code} and o.class_id = any(${ids}::uuid[]) and ${CURRENT}`;
+    from activity_observation o where o.activity_code = ${code} and o.class_id = any(${ids}::uuid[]) and ${current()}`;
   const latest = rows.reduce<{ class_id: string; day: string; at: string } | null>((m, r) => (!m || r.at > m.at ? r : m), null);
   const sitting = latest ? rows.filter((r) => r.class_id === latest.class_id && r.day === latest.day && r.level !== null) : [];
   const levels = [0, 1, 2, 3].map((level) => ({ level, n: new Set(sitting.filter((r) => r.level === level).map((r) => r.child_id)).size }));
@@ -68,7 +69,7 @@ export async function objectiveOf(me: Me, code: string): Promise<ObjectivePage |
   const activities = await sql<ObjectiveActivity[]>`
     select a.code, a.name, a.strand, a.band,
       (select (max(o.observed_at) at time zone 'Asia/Kolkata')::date::text from activity_observation o
-        where o.activity_code = a.code and o.class_id = any(${own.map((c) => c.id)}::uuid[]) and ${CURRENT}) as last
+        where o.activity_code = a.code and o.class_id = any(${own.map((c) => c.id)}::uuid[]) and ${current()}) as last
     from activity_objective x join activity a on a.tenant_id = x.tenant_id and a.code = x.activity_code
     where x.lo_code = ${code} order by x.ord, a.name`;
   return { ...lo, skills: skills.map((s) => ({ ...s, after: links.filter((l) => l.skill_code === s.code).map((l) => l.name) })), activities };
