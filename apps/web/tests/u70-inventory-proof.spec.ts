@@ -160,6 +160,7 @@ test("an element for many controls takes them all, by its data attribute or by '
 });
 
 test("a control with a declared drive is pressed, and what a person sees after is held to what the element says", async ({ browser }) => {
+  test.setTimeout(300_000); // five audits of a page, each signing in afresh
   const inv = mini();
   const button = inv.screens.find((x) => x.id === "password")!.elements.find((x) => x.t === "button")!;
   // pressing it with nothing typed leaves the person on the same page, asking for the fields: a pass
