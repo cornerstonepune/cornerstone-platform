@@ -30,7 +30,7 @@ export function PictureGrid({ blocks, grouped, label }: { blocks: readonly Block
           initials: initialsOf(s.name),
           name: s.name,
           ...LOOK[s.look],
-          label: s.look === "unseen" ? `Sr. No. ${s.roll}, ${s.name}: not seen yet on ${s.skill}` : `Sr. No. ${s.roll}, ${s.name}: ${LOOK[s.look].words} on ${s.skill}`,
+          // no aria-label: the name a screen reader says is the square's own text (number, name, state), which is what axe holds it to
           attrs: { "data-roll": s.roll, title: s.look === "unseen" ? "not seen yet" : LOOK[s.look].words },
         }));
         return (

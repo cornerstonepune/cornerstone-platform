@@ -116,6 +116,11 @@
   /* drawn alone (the table is elsewhere): a node link keeps its 44 px target, so the drawing never shrinks below its own size */
   .b-cgraph[data-solo] { grid-template-columns: minmax(0, 1fr); overflow-x: auto; }
   .b-cgraph[data-solo] > svg { min-width: 560px; }
+  .b-cgraph[data-solo] { position: relative; }
+  /* the nodes as links over the image, each a 44 px target centred on its node */
+  .b-nodes { position: absolute; top: 0; left: 0; width: 100%; min-width: 560px; max-width: 560px; aspect-ratio: 560 / 310; margin: 0; padding: 0; list-style: none; }
+  .b-nodes li { position: absolute; width: 44px; height: 44px; transform: translate(-50%, -50%); }
+  .b-nodes a { display: block; width: 100%; height: 100%; border-radius: 50%; }
   .b-cgraph .b-ring { fill: none; stroke: var(--line); stroke-width: 1; }
   .b-cgraph .b-dom { fill: none; stroke-width: 6; stroke: var(--s); }
   .b-cgraph .b-ctr { fill: var(--kind-child-bg); stroke: var(--kind-child); stroke-width: 2; }
@@ -125,7 +130,7 @@
   .b-cgraph .b-w { fill: var(--c); }
   .b-cgraph .b-ctr-t { fill: var(--kind-child); font-weight: 600; }
   .b-cgraph a { text-decoration: none; }
-  @media (max-width: 700px) { .b-cgraph { grid-template-columns: 1fr; } .b-cgraph > svg { display: none; } }
+  @media (max-width: 700px) { .b-cgraph { grid-template-columns: 1fr; } .b-cgraph > svg, .b-nodes { display: none; } }
 
   /* ---------- HeatGrid, FortnightGrid ---------- */
   .b-heat { display: grid; grid-template-columns: 96px repeat(var(--cols), minmax(0, 1fr)); gap: 4px; }

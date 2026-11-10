@@ -4,6 +4,7 @@
  * Rows are made once and a second run finds them; observations are append-only, so a child keeps what a run gave them.
  */
 import { expect, test, type Browser, type BrowserContext, type Page } from "@playwright/test";
+import AxeBuilder from "@axe-core/playwright";
 import postgres from "postgres";
 import { FAKE_CHILDREN } from "./fake-names";
 import { sessionFor } from "./inventory-fixtures";
@@ -164,11 +165,9 @@ test("7 · grouping puts a heading and a count over each group; counts sum to th
     const counts = (await page.locator("[data-group] .b-count").allInnerTexts()).map(Number);
     const everyone = Number((await page.getByTestId("stage").first().innerText()).match(/(\d+) child/i)![1]);
     expect(counts.reduce((a, b) => a + b, 0), group).toBe(everyone);
-    const roll = new Set<string>();
-    for (const name of await page.locator("[data-group] .b-nchip").allInnerTexts()) {
-      expect(roll.has(name), `${name} twice`).toBe(false);
-      roll.add(name);
-    }
+    // a child is in exactly one group: no child id on two rows of the page
+    const ids = await page.locator("[data-group] tr[data-child]").evaluateAll((els) => els.map((e) => e.getAttribute("data-child")));
+    expect(new Set(ids).size, group).toBe(ids.length);
   }
 });
 
@@ -273,25 +272,34 @@ test("15 · the graph's nodes equal the skills seen and each node's state equals
   const n = await rows.count();
   expect(n).toBeGreaterThan(0);
   await expect(svg).toHaveAttribute("aria-label", new RegExp(`^${n} skills? seen: \\d+ secure, \\d+ practising, \\d+ emerging`));
-  await expect(svg.locator("a")).toHaveCount(n);
+  await expect(page.locator("[data-block=ChildGraph] [data-node]")).toHaveCount(n);
   const tableStates = await rows.locator("[data-status]").evaluateAll((els) => els.map((e) => (e as HTMLElement).innerText.trim()));
-  const nodeStates = await svg.locator("a text.b-w").evaluateAll((els) => els.map((e) => e.textContent?.trim()));
+  const nodeStates = await svg.locator("text.b-w").evaluateAll((els) => els.map((e) => e.textContent?.trim()));
   expect([...nodeStates].sort()).toEqual([...tableStates].sort());
 });
 
 test("16 · Tab reaches the nodes in the table's order, each 44 px; at 400 the graph is not drawn and the list is", async ({ page }) => {
   await page.goto(`/children/${classA}/1`);
   const svg = page.locator("[data-block=ChildGraph] svg");
-  const hrefs = await svg.locator("a").evaluateAll((els) => els.map((e) => e.getAttribute("href")));
+  const hrefs = await page.locator("[data-block=ChildGraph] [data-node]").evaluateAll((els) => els.map((e) => e.getAttribute("href")));
   const table = await page.locator('table[aria-label="Where this child is on each skill"] tbody tr td:first-child a').evaluateAll((els) => els.map((e) => e.getAttribute("href")));
-  expect(new Set(hrefs)).toEqual(new Set(table));
-  for (const rect of await svg.locator("a rect").all()) {
-    const box = (await rect.boundingBox())!;
+  expect(hrefs).toEqual(table); // Tab order is document order: the table's rows, domain then skill
+  const reached: string[] = [];
+  await page.locator("h1").click();
+  for (let i = 0; i < 60 && reached.length < hrefs.length; i++) {
+    await page.keyboard.press("Tab");
+    const at = await page.evaluate(() => (document.activeElement?.hasAttribute("data-node") ? document.activeElement.getAttribute("href") : null));
+    if (at) reached.push(at);
+  }
+  expect(reached, "Tab reaches each node, in the table's order").toEqual(hrefs);
+  for (const node of await page.locator("[data-block=ChildGraph] [data-node]").all()) {
+    const box = (await node.boundingBox())!;
     expect(box.width).toBeGreaterThanOrEqual(44);
     expect(box.height).toBeGreaterThanOrEqual(44);
   }
   await page.setViewportSize({ width: 400, height: 900 });
   await expect(svg).toBeHidden();
+  await expect(page.locator("[data-block=ChildGraph] [data-node]").first()).toBeHidden();
   for (const a of await page.locator('table[aria-label="Where this child is on each skill"] tbody tr td:first-child a').all()) expect((await a.boundingBox())!.height).toBeGreaterThanOrEqual(44);
 });
 
@@ -312,5 +320,14 @@ test("the old K2 addresses answer 308 to the new ones", async ({ request }) => {
     const r = await request.get(from, { maxRedirects: 0 });
     expect(r.status(), from).toBe(308);
     expect(new URL(r.headers().location, "http://localhost:3100").pathname).toBe(to);
+  }
+});
+
+test("axe finds nothing serious or critical on the three screens, with the peek open", async ({ page }) => {
+  for (const url of [`/children?cls=${classA}`, `/children/${classA}`, `/children/${classA}/1`]) {
+    await page.goto(url);
+    if (url.startsWith("/children?")) await page.getByRole("button", { name: new RegExp(NAMES_A[0]) }).click();
+    const found = (await new AxeBuilder({ page }).analyze()).violations.filter((v) => v.impact === "serious" || v.impact === "critical");
+    expect(found.map((v) => `${v.id} (${v.nodes.length})`), url).toEqual([]);
   }
 });

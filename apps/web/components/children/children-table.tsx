@@ -76,7 +76,7 @@ export function ChildrenTable({ sections, grouped, showClass, today, page, hrefO
           {s.rows.length === 0 ? (
             <p className="b-muted text-[13px]">The {s.total === 1 ? "child" : "children"} of this group {s.total === 1 ? "is" : "are"} on another page.</p>
           ) : (
-            <DataTable<Row> label={`Children${grouped ? ` · ${s.words}` : ""}`} columns={cols} rows={s.rows} rowKey={(r) => r.childId} more={{ page: 1, href: () => "" }} limit={s.rows.length} />
+            <DataTable<Row> label={`Children${grouped ? ` · ${s.words}` : ""}`} columns={cols} rows={s.rows} rowKey={(r) => r.childId} extras={{ attrs: (r) => ({ "data-child": r.childId }) }} more={{ page: 1, href: () => "" }} limit={s.rows.length} />
           )}
         </section>
       ))}

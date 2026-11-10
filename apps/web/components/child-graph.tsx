@@ -36,16 +36,28 @@ export function ChildGraph({ initials, skills, empty = "No skill seen yet", labe
         {placed.map(({ s, p, radius }) => {
           const right = p.x >= CX;
           const tx = right ? p.x + radius + 8 : p.x - radius - 8;
-          return (
-            <a key={s.name} href={s.href}>
-              <rect x={r2(right ? p.x - radius : p.x - radius - 130)} y={r2(p.y - 22)} width={130 + radius * 2} height={44} fill="transparent" />
+          const drawn = (
+            <>
+              {label ? null : <rect x={r2(right ? p.x - radius : p.x - radius - 130)} y={r2(p.y - 22)} width={130 + radius * 2} height={44} fill="transparent" />}
               <circle className="b-node" data-state={lookOf(s.state)} cx={r2(p.x)} cy={r2(p.y)} r={radius} />
               <text x={r2(tx)} y={r2(p.y - 2)} textAnchor={right ? "start" : "end"}>{s.name}</text>
               <text className="b-w" data-state={lookOf(s.state)} x={r2(tx)} y={r2(p.y + 16)} textAnchor={right ? "start" : "end"}>{STATES[s.state].words}</text>
-            </a>
+            </>
           );
+          // with a label the drawing is one image for a screen reader (role=img); its nodes are real links laid over it below,
+          // because a link inside an image is not reachable (axe: nested-interactive)
+          return label ? <g key={s.name}>{drawn}</g> : <a key={s.name} href={s.href}>{drawn}</a>;
         })}
       </svg>
+      {label ? (
+        <ul className="b-nodes" aria-label="Skills seen">
+          {placed.map(({ s, p }) => (
+            <li key={s.name} style={{ left: `${r2(((p.x + 80) / 560) * 100)}%`, top: `${r2((p.y / 310) * 100)}%` }}>
+              <a href={s.href} aria-label={`${s.name}, ${STATES[s.state].words}`} data-node />
+            </li>
+          ))}
+        </ul>
+      ) : null}
       {table ? <div className="b-table-box">
         <table className="grid list steady" aria-label="The same skills">
           <thead><tr><th scope="col">Skill</th><th scope="col">State</th></tr></thead>
