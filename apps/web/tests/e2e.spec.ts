@@ -69,7 +69,7 @@ test("a teacher can reach every section from the menu, and the menu says where t
   await page.goto("/");
   const sections = [
     ["Today", "What needs doing"],
-    ["Setup", "Curriculum"],
+    ["Setup", "Setup"],
     ["Children", "Children"],
   ];
   for (const [label, heading] of sections) {

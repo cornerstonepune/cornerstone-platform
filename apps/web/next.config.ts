@@ -16,6 +16,8 @@ const nextConfig: NextConfig = {
     { source: "/k2", destination: "/children", permanent: true },
     { source: "/k2/:class", destination: "/children/:class", permanent: true },
     { source: "/k2/:class/:roll", destination: "/children/:class/:roll", permanent: true },
+    // UI-5 (docs/frontend/screens.json `folds`): the School page is Classes and children; a bookmark answers 308 to it.
+    { source: "/school", destination: "/setup/classes", permanent: true },
   ],
   outputFileTracingRoot: repo,
 };
