@@ -85,3 +85,15 @@ test("nothing on the screen sends a report, and the CP-19 controls are not drawn
   await page.goto(`/children/reports?class=${rows.section}`);
   await expect(page.getByRole("button", { name: /send|approve|preview/i })).toHaveCount(0);
 });
+
+test("CP-19: an opened child shows its lines with the system's stage beside the words, Approve for the first stage, and no Send until both approvals and consent (7)", async ({ page }) => {
+  const third = Object.values(rows.children)[2];
+  await sql`delete from parent_note where child_id = ${third} and body like '{"facts"%'`;
+  const lineId = crypto.randomUUID();
+  await sql`insert into parent_note (tenant_id, child_id, week, body, lines) values (${tenant}, ${third}, to_date(${WEEK}, 'IYYY-"W"IW'), ${JSON.stringify(words)}, ${JSON.stringify([{ id: lineId, words: "Adds within 20.", evidence: [] }])}::jsonb)`;
+  await page.goto(`/children/reports?class=${rows.section}&open=${third}`);
+  await expect(page.getByLabel("The line's words")).toHaveValue("Adds within 20.");
+  await expect(page.getByText("to approve (educator)")).toBeVisible();
+  await expect(page.getByRole("button", { name: "Approve", exact: true })).toBeVisible();
+  await expect(page.getByRole("button", { name: /^send$/i })).toHaveCount(0);
+});
