@@ -1733,12 +1733,16 @@
         {
           "t": "button",
           "label": "× on a filter chip",
-          "effect": "removes that filter from the address"
+          "effect": "removes that filter from the address",
+          "text": "Remove filter",
+          "when": "filtered",
+          "data": "data-chip"
         },
         {
           "t": "button",
           "label": "Clear",
-          "effect": "removes every filter and the search"
+          "effect": "removes every filter and the search",
+          "when": "filtered"
         },
         {
           "t": "peek",
@@ -1770,7 +1774,8 @@
           "t": "link",
           "label": "page: Later →",
           "to": "children",
-          "note": "the next ten rows; the address carries the page"
+          "note": "the next ten rows; the address carries the page",
+          "when": "paged"
         },
         {
           "t": "filter",
@@ -1780,13 +1785,15 @@
         {
           "t": "button",
           "label": "peek: Close",
-          "effect": "closes ChildPeek; focus returns to the child that opened it"
+          "effect": "closes ChildPeek; focus returns to the child that opened it",
+          "when": "peek"
         },
         {
           "t": "link",
           "label": "peek: Open the child",
           "to": "child",
-          "note": "the one way from a list to the child's own page"
+          "note": "the one way from a list to the child's own page",
+          "when": "peek"
         }
       ],
       "rail": [
@@ -1873,7 +1880,8 @@
           "t": "link",
           "label": "rail: Show: each skill seen",
           "to": "picture",
-          "note": "same screen, the skill filter changes"
+          "note": "same screen, the skill filter changes",
+          "data": "data-show"
         },
         {
           "t": "link",
@@ -1914,13 +1922,15 @@
         {
           "t": "button",
           "label": "peek: Close",
-          "effect": "closes ChildPeek; focus returns to the child that opened it"
+          "effect": "closes ChildPeek; focus returns to the child that opened it",
+          "when": "peek"
         },
         {
           "t": "link",
           "label": "peek: Open the child",
           "to": "child",
-          "note": "the one way from a list to the child's own page"
+          "note": "the one way from a list to the child's own page",
+          "when": "peek"
         }
       ],
       "rail": [
@@ -1993,16 +2003,19 @@
         {
           "t": "link",
           "label": "each graph node",
-          "to": "skill"
+          "to": "skill",
+          "data": "data-node"
         },
         {
           "t": "filter",
           "label": "skill for the trend",
-          "note": "the trend redraws; the address carries it"
+          "note": "the trend redraws; the address carries it",
+          "text": "Skill"
         },
         {
           "t": "fold",
-          "label": "details on each timeline entry"
+          "label": "details on each timeline entry",
+          "text": "What it said"
         },
         {
           "t": "link",
@@ -2017,13 +2030,16 @@
         {
           "t": "link",
           "label": "each skill row",
-          "to": "skill"
+          "to": "skill",
+          "data": "data-skill-row"
         },
         {
           "t": "link",
           "label": "page: more entries",
           "to": "child",
-          "note": "older entries, ten at a time"
+          "note": "older entries, ten at a time",
+          "text": "Older entries",
+          "when": "paged"
         },
         {
           "t": "link",
