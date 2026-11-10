@@ -20,7 +20,13 @@ test.beforeAll(async () => {
   ({ klass, staff } = await k2Class(sql));
   loadFortnight10(SECTION);
   await materialsFor(sql);
-  await aPerson(sql, { ...EDUCATOR, password: PASSWORD });
+  const { id } = await aPerson(sql, { ...EDUCATOR, password: PASSWORD });
+  // she holds this class, as the K2 class's own teacher does (k2-rows.ts)
+  const [{ t }] = await sql<{ t: string }[]>`select tenant_id as t from school_class where id = ${klass}`;
+  await sql`
+    insert into staff_role_grant (tenant_id, staff_id, role_code, school_class_id, valid_from, granted_by)
+    select ${t}, ${id}, 'class_teacher', ${klass}, current_date - 1, 'u74 test'
+    where not exists (select 1 from staff_role_grant where staff_id = ${id} and school_class_id = ${klass} and valid_to is null)`;
   await timetableSwitch(sql, true);
 });
 test.afterAll(async () => {

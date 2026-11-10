@@ -21,3 +21,6 @@ inventory test does not yet run its 10 controls (same as UI-4). `/timetable/mate
 
 ## Data gaps for the orchestrator
 None found. (Photo: `photo_keys` already known.)
+
+## CI (10 Nov)
+First full run: only red was my test 4 (the educator I made held no grant on the class, so the page rightly 404'd; fixed with a class_teacher grant) and the known u71 growth-page speed test. The menu now lights Materials, not Timetable rules, on this page.

@@ -32,7 +32,7 @@ export const GROUPS: readonly Door[] = [
     screen: "timetable",
     pages: [
       { label: "This week", href: "/educator/week", match: ["/educator/week"], guide: false },
-      { label: "Materials", href: "/educator/materials", match: ["/educator/materials"], guide: false },
+      { label: "Materials", href: "/educator/materials", match: ["/educator/materials", "/timetable/materials"], guide: false },
       { href: "/timetable/rules", label: "Timetable rules", match: ["/timetable"] },
     ],
   },
