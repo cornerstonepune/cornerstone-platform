@@ -58,7 +58,7 @@ export async function renders(page: Page, s: Screen, c: Ctx, errors: string[]): 
 const needle = (e: Element) => (e.text ?? e.label).replace(/^(rail|page|peek|capture|next step|details):\s*/i, "").toLowerCase();
 /** Whether a screen's element is expected on the page in this run: the one whose target is not built is not drawn (and not a dead link). */
 function buildable(e: Element, c: Ctx) {
-  return !e.to || builtScreens(c.inv).has(e.to);
+  return !e.pending && (!e.to || builtScreens(c.inv).has(e.to));
 }
 
 /** Brings the page into a state in which a conditional control exists: a child chosen, a filter on. [] when it did; the reason when it could not. */

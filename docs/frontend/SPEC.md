@@ -219,7 +219,7 @@ done. Wireframes of all of them: (see docs/notes/frontend-landscape.md).
 
 ### Today
 
-#### Today `/today`
+#### Today `/today/new`
 Who: educator · Phase: Core · Backend: CP-8 · CP-10 · Old page today: part · Slice: UI-7
 Eyebrow: Wednesday 18-Nov · K2 Red · Fortnight 9, week A
 Purpose: Your periods in order. Tap one for what to teach, how, and what to lay out. After it, record a note.
@@ -259,7 +259,7 @@ Done when (on top of the ten generic checks):
 - tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page
 
 
-#### Today, the school `/today`
+#### Today, the school `/today/new`
 Who: coordinator · Phase: Core · Backend: CP-6 · CP-12 · CP-22 · CP-10 · Old page today: no · Slice: UI-7
 Eyebrow: Wednesday 18-Nov · every class
 Purpose: What waits on you, each with its own button. Then the week ahead.
@@ -586,7 +586,7 @@ Every control on the screen (19), and what the test does with each:
 - **link** page: Later → → Notes (`/notes`) (the next ten rows; the address carries the page)
 - **link** rail: Record a note → Record a note (`/record`)
 - **link** rail: Class picture → Class picture (`/children/[class]`)
-- **link** rail: Today → Today (`/today`)
+- **link** rail: Today → Today (`/today/new`)
 - **link** capture: Voice note → Record a note (`/record`)
 - **tab** Board (the notes as lanes; the address carries the tab)
 - **tab** Table (the notes as rows)
@@ -1198,7 +1198,7 @@ Data: static, generated from screens.json
 Empty: none · Phone: stacked
 Folds in: /guide/[slug], /guide/workflows, /workflows
 Every control on the screen (3), and what the test does with each:
-- **link** each job → Today (`/today`) (the jobs are generated from screens.json: each names its own screen, and the test follows every one)
+- **link** each job → Today (`/today/new`) (the jobs are generated from screens.json: each names its own screen, and the test follows every one)
 - **fold** each page's section
 - **link** ? on any page → Start here (`/guide`) (opens this page at that page's section)
 Done when (on top of the ten generic checks):
@@ -1244,7 +1244,7 @@ test or a script named in it. The generic checks apply to every screen a slice b
 
 The bar is on every signed-in screen and is driven once per run, not once per screen (its controls are outside each screen's count):
 
-- **link** Today → Today (`/today`) (a coordinator lands on Today, the school; on a phone the four doors are a bottom tab bar, the same four links)
+- **link** Today → Today (`/today/new`) (a coordinator lands on Today, the school; on a phone the four doors are a bottom tab bar, the same four links)
 - **link** Timetable → Timetable (`/timetable`)
 - **link** Children → Children (`/children`)
 - **link** Setup → Setup (`/setup`) (shown to the coordinator group only)

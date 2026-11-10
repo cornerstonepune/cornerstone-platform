@@ -360,7 +360,7 @@
   "screens": [
     {
       "id": "today-educator",
-      "route": "/today",
+      "route": "/today/new",
       "group": "Today",
       "who": "educator",
       "phase": "Core",
@@ -460,23 +460,27 @@
         {
           "t": "peek",
           "label": "each Sr. No. in Your class",
-          "effect": "opens ChildPeek for that child"
+          "effect": "opens ChildPeek for that child",
+          "pending": "waits on UI-3b (#570): the child peek's history route, and UI-3c (#577): the link from an activity to the skill being taught; 'Your class' lists no children until both are on main"
         },
         {
           "t": "button",
           "label": "peek: Close",
-          "effect": "closes ChildPeek; focus returns to the child that opened it"
+          "effect": "closes ChildPeek; focus returns to the child that opened it",
+          "pending": "waits on UI-3b (#570): the child peek's history route, and UI-3c (#577): the link from an activity to the skill being taught; 'Your class' lists no children until both are on main"
         },
         {
           "t": "link",
           "label": "peek: Open the child",
           "to": "child",
-          "note": "the one way from a list to the child's own page"
+          "note": "the one way from a list to the child's own page",
+          "pending": "waits on UI-3b (#570): the child peek's history route, and UI-3c (#577): the link from an activity to the skill being taught; 'Your class' lists no children until both are on main"
         },
         {
           "t": "child_name",
           "label": "the name in the peek",
-          "note": "the child's name beside the Sr. No., read from pii by child_id"
+          "note": "the child's name beside the Sr. No., read from pii by child_id",
+          "pending": "waits on UI-3b (#570): the child peek's history route, and UI-3c (#577): the link from an activity to the skill being taught; 'Your class' lists no children until both are on main"
         }
       ],
       "rail": [
@@ -504,7 +508,7 @@
     },
     {
       "id": "today-coordinator",
-      "route": "/today",
+      "route": "/today/new",
       "group": "Today",
       "who": "coordinator",
       "phase": "Core",
@@ -545,18 +549,21 @@
         {
           "t": "link",
           "label": "this week tile",
-          "to": "fortnight"
+          "to": "fortnight",
+          "pending": "the school's counts are not readable by the web yet (clashes not accepted, drafts to approve, materials lines without a quantity, last week's sessions by class and day, consent on file, next week's new activities): asked of the orchestrator on 10 Nov"
         },
         {
           "t": "link",
           "label": "sessions done tile",
-          "to": "staff"
+          "to": "staff",
+          "pending": "the school's counts are not readable by the web yet (clashes not accepted, drafts to approve, materials lines without a quantity, last week's sessions by class and day, consent on file, next week's new activities): asked of the orchestrator on 10 Nov"
         },
         {
           "t": "cell",
           "label": "each heat-grid cell",
           "to": "timetable",
-          "note": "opens that class's day"
+          "note": "opens that class's day",
+          "pending": "the school's counts are not readable by the web yet (clashes not accepted, drafts to approve, materials lines without a quantity, last week's sessions by class and day, consent on file, next week's new activities): asked of the orchestrator on 10 Nov"
         },
         {
           "t": "row",
@@ -564,7 +571,8 @@
           "to": "moves",
           "roles": [
             "coordinator"
-          ]
+          ],
+          "pending": "the school's counts are not readable by the web yet (clashes not accepted, drafts to approve, materials lines without a quantity, last week's sessions by class and day, consent on file, next week's new activities): asked of the orchestrator on 10 Nov"
         },
         {
           "t": "row",
@@ -572,7 +580,8 @@
           "to": "draft",
           "roles": [
             "coordinator"
-          ]
+          ],
+          "pending": "the school's counts are not readable by the web yet (clashes not accepted, drafts to approve, materials lines without a quantity, last week's sessions by class and day, consent on file, next week's new activities): asked of the orchestrator on 10 Nov"
         },
         {
           "t": "row",
@@ -582,17 +591,20 @@
         {
           "t": "row",
           "label": "sessions not done row",
-          "to": "staff"
+          "to": "staff",
+          "pending": "the school's counts are not readable by the web yet (clashes not accepted, drafts to approve, materials lines without a quantity, last week's sessions by class and day, consent on file, next week's new activities): asked of the orchestrator on 10 Nov"
         },
         {
           "t": "row",
           "label": "materials row",
-          "to": "materials"
+          "to": "materials",
+          "pending": "the school's counts are not readable by the web yet (clashes not accepted, drafts to approve, materials lines without a quantity, last week's sessions by class and day, consent on file, next week's new activities): asked of the orchestrator on 10 Nov"
         },
         {
           "t": "link",
           "label": "each new activity next week",
-          "to": "activity"
+          "to": "activity",
+          "pending": "the school's counts are not readable by the web yet (clashes not accepted, drafts to approve, materials lines without a quantity, last week's sessions by class and day, consent on file, next week's new activities): asked of the orchestrator on 10 Nov"
         },
         {
           "t": "link",
