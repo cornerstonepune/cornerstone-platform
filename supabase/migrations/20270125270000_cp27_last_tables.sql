@@ -243,13 +243,24 @@ alter table sheet_instance add column replaced_by uuid references sheet_instance
 comment on column sheet_instance.replaced_by is
   'The copy an edit made of this paper (CP-27 group 6: once the table paper_edit); the edit is a change_log row.';
 
-alter table approval drop constraint approval_kind_check;
-alter table approval add constraint approval_kind_check check (kind = any (array['skill_level', 'question_type',
-  'parent_note', 'sheet', 'skill_prerequisite', 'item', 'calibration', 'class_card', 'materials_ack']));
-alter table curriculum_proposal drop constraint curriculum_proposal_kind_check;
-alter table curriculum_proposal add constraint curriculum_proposal_kind_check check (kind = any (array['skill',
-  'objective', 'levels', 'lo_skill', 'page_part', 'material', 'skill_offer', 'mislevelled', 'new_mistake',
-  'materials_note']));
+-- one kind more on each list, added to whatever kinds it has (so other steps' kinds stay, group 5's among them)
+do $$
+declare
+  d text;
+  k record;
+begin
+  for k in select * from (values ('approval', 'approval_kind_check', 'materials_ack'),
+                                 ('curriculum_proposal', 'curriculum_proposal_kind_check', 'materials_note')) x(t, c, kind)
+  loop
+    d := pg_get_constraintdef((select oid from pg_constraint where conrelid = k.t::regclass and conname = k.c));
+    if position('ARRAY[' in d) = 0 then
+      raise exception 'CP-27: % is not a list: %', k.c, d;
+    end if;
+    d := regexp_replace(d, 'ARRAY\[', format('ARRAY[%L::text, ', k.kind));
+    execute format('alter table %I drop constraint %I', k.t, k.c);
+    execute format('alter table %I add constraint %I %s', k.t, k.c, d);
+  end loop;
+end $$;
 
 -- the team saying they have a materials list is its own first approval (as a way of asking's is)
 create or replace function internal.approval_checked() returns trigger
