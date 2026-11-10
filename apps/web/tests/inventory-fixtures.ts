@@ -31,6 +31,8 @@ export async function inventoryRows(sql: Sql): Promise<Rows> {
   await aTaughtClass(sql);
   await gate(sql, "reviewer");
   const { skills } = await curriculumRows(sql);
+  // other specs name 22 children "Placeholder" (tests/k2-rows.ts): an activity of that name would be read by the words check as a child's name on the page
+  await sql`update activity set name = replace(name, 'Placeholder', 'Sample') where code like 'ACT-K2-M113-%'`;
   await offers(sql, skills);
   waitingAtStart = Number((await sql<{ n: string }[]>`select count(*)::text as n from skill where status <> 'ratified'`)[0].n);
   // the question the screens open: ready, and worded without a number
