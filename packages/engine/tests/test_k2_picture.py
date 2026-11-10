@@ -8,8 +8,8 @@ mentioned is not observed and has no row. Each observation and its evidence row 
 """
 
 import datetime as dt
-import re
 import os
+import re
 import uuid
 
 import pytest
