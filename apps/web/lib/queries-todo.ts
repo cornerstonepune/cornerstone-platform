@@ -3,7 +3,7 @@ import { sql } from "./db";
 import type { Session } from "./auth";
 import { decidable } from "./decides";
 import { grades } from "./queries";
-import { asksWaiting, topics } from "./queries-people";
+import { asksWaiting, classWords, skillIsTaught, untaughtTopics } from "./queries-people";
 import { homeByClass } from "./queries-make";
 import { checkQueue } from "./queries-read";
 import { classPacksWaiting, reportsWaiting } from "./queries-today";
@@ -64,12 +64,14 @@ export const tasksFor = cache(async (me: Session): Promise<Task[]> => {
       : Promise.resolve([]),
     may("class_papers") ? classPacksWaiting(scope) : Promise.resolve([]),
     may("reports") ? reportsWaiting(scope) : Promise.resolve([]),
-    topics(scope),
+    untaughtTopics(scope),
     sql<{ topic: string; topic_name: string; subject: string; section: string }[]>`
+      with cls as (${classWords()})
       select t.code as topic, t.name as topic_name, t.subject_code as subject, k.section
       from topic t
       cross join (select distinct section from child_now where active and ${inScope(scope, sql`section`)}) k
-      where taught_in(t.tenant_id, t.code, k.section)
+      left join cls on cls.tenant_id = t.tenant_id and cls.section = k.section
+      where exists (select 1 from skill s where s.tenant_id = t.tenant_id and s.topic_code = t.code and ${skillIsTaught()})
         and not exists (
           select 1 from sheet_instance si
           join sheet_template st on st.id = si.sheet_template_id
@@ -106,7 +108,7 @@ export const tasksFor = cache(async (me: Session): Promise<Task[]> => {
     check: [...perPaper].map(([paper, v]) => ({ paper, first: v.first, n: v.n, ...ref(paper) })),
     signoff: signoff.map((s) => ({ paper: s.id, n: s.n, ...ref(s.id) })),
     packs: packs.map((p) => ({ section: p.section, gradeWords: g.name(p.band), week: p.week, weekWords: weekWords(p.week), kind: p.kind, n: p.n, subject: null, topic: null, topicName: null })),
-    untaught: tps.filter((t) => t.classes.some((c) => !c.taught)).map((t) => ({ topic: t.code, topicName: t.name, subject: t.subject, sections: t.classes.filter((c) => !c.taught).map((c) => c.section) })),
+    untaught: tps.map((t) => ({ topic: t.code, topicName: t.name, subject: t.subject, sections: t.sections })),
     generate: generate.map((x) => ({ topic: x.topic, topicName: x.topic_name, subject: x.subject, section: x.section })),
     reports: [...reportsBy.values()].map((r) => ({ section: r.section, gradeWords: g.name(r.band), n: r.n })),
     asks: asks.filter((a) => mayUse(me, "any_ask") || a.for_role === me.role).reduce((n, a) => n + a.n, 0),

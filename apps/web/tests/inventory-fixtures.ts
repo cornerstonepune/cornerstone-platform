@@ -18,12 +18,13 @@ export type Rows = { section: string; classId: string; children: Record<string, 
 /** The educator (one class, one subject) and a class of fake children with Sr. Nos 1..n. Made once; a second run finds them. */
 export async function inventoryRows(sql: Sql): Promise<Rows> {
   if (!(await personAsStored(sql, EDUCATOR.email))) await aPerson(sql, EDUCATOR);
-  const names = FAKE_CHILDREN.slice(0, 6);
+  // twelve: one assessment of the class then has more than ten copies, so a screen can show its second page of them
+  const names = FAKE_CHILDREN.slice(0, 12);
   const children = await aClass(sql, SECTION, "K2", [...names]);
   const [cls] = await sql<{ id: string }[]>`select id from school_class where label = ${SECTION} order by created_at limit 1`;
   const rolls = Object.fromEntries(names.map((n, i) => [n, String(i + 1)]));
-  // a class the educator does not hold, with Sr. Nos 7 and 8 that the educator's class has no child for
-  const otherNames = FAKE_CHILDREN.slice(10, 18) as unknown as string[];
+  // a class the educator does not hold, with Sr. Nos 13 and 14 that the educator's class has no child for
+  const otherNames = FAKE_CHILDREN.slice(12, 26) as unknown as string[];
   const other = await aClass(sql, OTHER, "K2", otherNames);
   return { section: SECTION, classId: cls?.id ?? "", children, rolls, other, otherNames };
 }
@@ -44,10 +45,12 @@ export async function signedInAs(browser: Browser, who: "educator" | "coordinato
 export function addressOf(route: string, rows: Rows, over: Record<string, string> = {}): string {
   const first = Object.values(rows.children)[0] ?? "";
   const given: Record<string, string> = { class: rows.classId, section: rows.section, roll: "1", id: first, ...over };
-  return route.replace(/\[(\w+)\]/g, (_, k: string) => {
+  const path = route.replace(/\[(\w+)\]/g, (_, k: string) => {
     if (!(k in given)) throw new Error(`tests/inventory/fixtures.ts has no fixture for [${k}] of ${route}: add one built from the test's own rows`);
     return encodeURIComponent(given[k]);
   });
+  // Classes and children opens one class below its table: the test's own, so the children are the fake ones above and not whatever other specs left in the first
+  return route === "/setup/classes" ? `${path}?class=${rows.classId}` : path;
 }
 
 /** The coordinator's own copy of createHmac is not needed: the signed-in file holds the cookie. */

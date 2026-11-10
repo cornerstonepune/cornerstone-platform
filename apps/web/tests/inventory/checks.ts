@@ -192,6 +192,16 @@ async function effect(page: Page, s: Screen, e: Element): Promise<Problems> {
     await page.locator("[data-active-filters] a[aria-label^='Remove filter']").first().click();
     await page.waitForURL((u) => [...u.searchParams.keys()].length < before, { timeout: 10_000 }).catch(() => undefined);
     if ([...new URL(page.url()).searchParams.keys()].length >= before) out.push(`${s.id}: “${e.label}” did not take its filter out of the address (${page.url()})`);
+  } else if (/^opens an? [^;]*\b(picker|form)\b/i.test(say)) {
+    // a button that opens a form in place: pressed, it says it is open and a form with a labelled field and a Save appears; pressed again, it closes
+    const btn = e.data ? page.locator(`main [${e.data}]`).first() : page.locator("main").getByRole("button", { name: needle(e) }).first();
+    await btn.click();
+    if ((await btn.getAttribute("aria-expanded")) !== "true") out.push(`${s.id}: “${e.label}” does not say it is open (aria-expanded)`);
+    const form = page.locator("main form").filter({ has: page.locator("select, input:not([type=hidden])") }).last();
+    if (!(await form.count()) || !(await form.getByRole("button", { name: /save/i }).count())) out.push(`${s.id}: “${e.label}” opened no form with a field and a Save`);
+    else if (!(await form.locator("select, input:not([type=hidden])").first().evaluate((f) => ((f as HTMLInputElement).labels?.length ?? 0) > 0))) out.push(`${s.id}: the form “${e.label}” opens has a field with no label`);
+    await btn.click();
+    if ((await btn.getAttribute("aria-expanded")) !== "false") out.push(`${s.id}: “${e.label}” did not close on a second press`);
   } else out.push(`${s.id}: the effect of “${e.label}” (${say}) is not yet drivable by tests/inventory/checks.ts`);
   return out;
 }

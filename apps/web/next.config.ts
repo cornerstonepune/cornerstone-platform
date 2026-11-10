@@ -17,6 +17,8 @@ const nextConfig: NextConfig = {
     { source: "/login/new-password", destination: "/login?view=new-password", permanent: true },
     { source: "/account/password", destination: "/login?view=forgot", permanent: true },
     { source: "/guide/:path+", destination: "/guide", permanent: true },
+    // UI-5 (docs/frontend/screens.json `folds`): the School page is Classes and children; a bookmark answers 308 to it.
+    { source: "/school", destination: "/setup/classes", permanent: true },
   ],
   outputFileTracingRoot: repo,
 };

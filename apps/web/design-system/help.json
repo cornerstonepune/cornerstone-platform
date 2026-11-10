@@ -1426,7 +1426,7 @@
       "eyebrow": "This fortnight",
       "group": "Setup",
       "route": "/setup/staff",
-      "purpose": "Who teaches which class, and three numbers the database can stand behind per class. No ranking: the school decides what they mean.",
+      "purpose": "Who teaches which class, and whole counts the database can stand behind. No score, no ranking: the school decides what they mean.",
       "does": [
         {
           "label": "each staff row",
@@ -1455,6 +1455,14 @@
         {
           "label": "rail: Classes and children",
           "says": "Opens Classes and children."
+        },
+        {
+          "label": "Role",
+          "says": "narrows the rows to one role"
+        },
+        {
+          "label": "Find a person (search)",
+          "says": "narrows the rows to a name"
         }
       ]
     },
@@ -1472,7 +1480,7 @@
         },
         {
           "label": "Move (a child row)",
-          "says": "a picker of classes and a date; Save closes the enrolment, opens a new one and writes a change_log row; the child appears in the new class"
+          "says": "opens a picker of classes and a date; Save closes the enrolment, opens a new one and writes a change_log row; the child appears in the new class"
         },
         {
           "label": "change log",
@@ -1493,6 +1501,14 @@
         {
           "label": "rail: the fortnight",
           "says": "Opens Fortnight 9."
+        },
+        {
+          "label": "Grade",
+          "says": "narrows the classes to one grade"
+        },
+        {
+          "label": "Find a class (search)",
+          "says": "narrows the classes to a name"
         }
       ]
     },
