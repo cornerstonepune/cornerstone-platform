@@ -93,3 +93,11 @@ function groupBy<T>(xs: readonly T[], key: (x: T) => string): Map<string, T[]> {
   for (const x of xs) m.set(key(x), [...(m.get(key(x)) ?? []), x]);
   return m;
 }
+
+/** The educator switch: while `voice.screens_enabled` is off these screens show no child, as the K2 pages never did (the engine
+ *  refused them with "Voice notes are not switched on."). Locked by tests/u72-children.spec.ts, migrated from m1-17. */
+export async function screensOn(): Promise<boolean> {
+  const [r] = await sql<{ on: boolean }[]>`select coalesce((select (value)::text = 'true' from config where key = 'voice.screens_enabled'), false) as on`;
+  return r.on;
+}
+export const SWITCHED_OFF = "Voice notes are not switched on.";

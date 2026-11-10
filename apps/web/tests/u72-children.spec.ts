@@ -9,6 +9,7 @@ import postgres from "postgres";
 import { FAKE_CHILDREN } from "./fake-names";
 import { sessionFor } from "./inventory-fixtures";
 import { aClass, aPerson, personAsStored } from "./rows";
+import { voiceSwitch } from "./k2-rows";
 
 const A = "U72A";
 const B = "U72B";
@@ -41,6 +42,7 @@ async function observe(roll: string, level: number | null, daysAgo: number, outc
 }
 
 test.beforeAll(async () => {
+  await voiceSwitch(sql, true); // the educator screens are on (the K2 switch); the last test turns them off and on again
   [{ id: tenant }] = await sql<{ id: string }[]>`select id from tenant order by created_at limit 1`;
   kids = { ...(await aClass(sql, A, "K2", [...NAMES_A])), ...(await aClass(sql, B, "K2", [...NAMES_B])) };
   [{ id: classA }, { id: classB }] = [
@@ -196,6 +198,7 @@ test("9 · each square shows the Sr. No. and the name, no photo, in Sr. No. orde
   await expect(squares.first()).toContainText(NAMES_A[0]);
   await expect(page.locator("main img")).toHaveCount(0);
   const perRow = async () => {
+    await page.waitForLoadState("networkidle");
     const ys = await squares.evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().y)));
     return ys.filter((y) => y === ys[0]).length;
   };
@@ -329,5 +332,21 @@ test("axe finds nothing serious or critical on the three screens, with the peek 
     if (url.startsWith("/children?")) await page.getByRole("button", { name: new RegExp(NAMES_A[0]) }).click();
     const found = (await new AxeBuilder({ page }).analyze()).violations.filter((v) => v.impact === "serious" || v.impact === "critical");
     expect(found.map((v) => `${v.id} (${v.nodes.length})`), url).toEqual([]);
+  }
+});
+
+test("with the educator switch off the three screens say so, show no child, and the peek refuses", async ({ page }) => {
+  await voiceSwitch(sql, false);
+  try {
+    for (const url of ["/children", `/children/${classA}`, `/children/${classA}/1`]) {
+      await page.goto(url);
+      await expect(page.locator("[data-ux=empty]"), url).toContainText("Voice notes are not switched on.");
+      await expect(page.locator("[data-block=ClassGrid], [data-block=ChildGraph], [data-block=DataTable]"), url).toHaveCount(0);
+      await expect(page.locator("main"), url).not.toContainText(NAMES_A[0]);
+    }
+    const r = await page.request.post("/api/children/peek", { data: { class: classA, roll: "1" } });
+    expect(r.status()).toBe(403);
+  } finally {
+    await voiceSwitch(sql, true);
   }
 });

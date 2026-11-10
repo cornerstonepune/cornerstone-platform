@@ -1,12 +1,14 @@
 import { NextResponse } from "next/server";
 import { currentStaff } from "@/lib/auth";
 import { childOf, historyOf } from "@/lib/children-peek";
+import { SWITCHED_OFF, screensOn } from "@/lib/children-reads";
 
 // ChildPeek's history (UI-3b): one child, by class and Sr. No. (never a name), newest first. A class that is not the person's
 // answers 404, the same as no such child, so nothing of another class is learned. Signed out: refused.
 export async function POST(request: Request) {
   const me = await currentStaff();
   if (!me) return NextResponse.json({ detail: "Sign in first." }, { status: 401 });
+  if (!(await screensOn())) return NextResponse.json({ detail: SWITCHED_OFF }, { status: 403 });
   let body: { class?: unknown; roll?: unknown };
   try {
     body = (await request.json()) as typeof body;

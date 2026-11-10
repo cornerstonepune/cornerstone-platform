@@ -8,7 +8,9 @@ import { NotYours } from "@/components/not-yours";
 import { StatusChip, type State } from "@/components/status-chip";
 import { Timeline } from "@/components/timeline";
 import { Trend } from "@/components/trend";
+import { SwitchedOff } from "@/components/children/switched-off";
 import { requireStaff } from "@/lib/auth";
+import { screensOn } from "@/lib/children-reads";
 import { screenHref } from "@/lib/built";
 import { childOf, historyOf } from "@/lib/children-peek";
 import { sittingsOf, skillsOfChild, type ChildSkill, type Look } from "@/lib/children-picture";
@@ -24,6 +26,7 @@ const DOMAIN_SLOTS = ["numeracy", "language", "arts"] as const;
 // on a phone the graph is not drawn and the table is the list. The address is by class and Sr. No.; a name is never in it.
 export default async function TheChild({ params, searchParams }: { params: Promise<{ class: string; roll: string }>; searchParams: Promise<{ skill?: string; before?: string }> }) {
   const me = await requireStaff();
+  if (!(await screensOn())) return <SwitchedOff title="Where this child is" stage="Children" />;
   const { class: classId, roll } = await params;
   const sp = await searchParams;
   const child = await childOf({ ...me, email: me.email }, classId, roll);

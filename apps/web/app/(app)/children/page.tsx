@@ -5,7 +5,9 @@ import { ChildrenTable, type Section } from "@/components/children/children-tabl
 import { PeekPanel, PeekProvider } from "@/components/children/peek";
 import { EmptyState } from "@/components/empty-state";
 import { FilterBar, type Filter } from "@/components/filter-bar";
+import { SwitchedOff } from "@/components/children/switched-off";
 import { requireStaff } from "@/lib/auth";
+import { screensOn } from "@/lib/children-reads";
 import { ATTENTION_DAYS, childrenTable } from "@/lib/children-reads";
 import { GROUPS, filterRows, groupRows, byRoll, peekParam, type Group } from "@/lib/children-view";
 import { TABLE_ROW_LIMIT } from "@/lib/ux-rules";
@@ -16,6 +18,7 @@ type Q = { q?: string; cls?: string; show?: string; group?: string; page?: strin
 // the page are all in the address, so a reload keeps them. Groups are computed on each visit and never stored.
 export default async function Children({ searchParams }: { searchParams: Promise<Q> }) {
   const me = await requireStaff();
+  if (!(await screensOn())) return <SwitchedOff title="Children" stage="Children" />;
   const sp = await searchParams;
   const t = await childrenTable({ ...me, email: me.email });
   const group = (GROUPS as readonly string[]).includes(sp.group ?? "") ? (sp.group as Group) : undefined;

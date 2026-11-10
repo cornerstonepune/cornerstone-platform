@@ -8,7 +8,9 @@ import { NotYours } from "@/components/not-yours";
 import { Spark } from "@/components/spark";
 import { STATES } from "@/components/status-chip";
 import { StackBar } from "@/components/stack-bar";
+import { SwitchedOff } from "@/components/children/switched-off";
 import { requireStaff } from "@/lib/auth";
+import { screensOn } from "@/lib/children-reads";
 import { ATTENTION_DAYS } from "@/lib/children-reads";
 import { pictureOf, type Look } from "@/lib/children-picture";
 import { byRoll, clustersOf, daysSince, groupByLook, peekParam, type PictureLook } from "@/lib/children-view";
@@ -20,6 +22,7 @@ const BAR: Record<PictureLook, "secure" | "practising" | "emerging" | "notSeenYe
 // "not seen yet", which is not "not secure". The clusters are worked out here from the graph's rows, each child in as many as fit.
 export default async function Picture({ params, searchParams }: { params: Promise<{ class: string }>; searchParams: Promise<Q> }) {
   const me = await requireStaff();
+  if (!(await screensOn())) return <SwitchedOff title="Class picture" stage="Children" />;
   const { class: classId } = await params;
   const sp = await searchParams;
   const p = await pictureOf({ ...me, email: me.email }, classId);
