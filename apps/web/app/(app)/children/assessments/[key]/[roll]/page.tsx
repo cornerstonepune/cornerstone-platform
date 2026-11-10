@@ -17,6 +17,14 @@ import type { Column } from "@/lib/ux-rules";
 import { signOffPaper } from "../actions";
 import { sayWhatWasWritten } from "./actions";
 
+const safeDecode = (v: string) => {
+  try {
+    return decodeURIComponent(v);
+  } catch {
+    return v;
+  }
+};
+
 type Props = { params: Promise<{ key: string; roll: string }>; searchParams: Promise<Record<string, string | undefined>> };
 
 /** One answer's mark: three signals that stay three (rule 5), and an answer nobody has settled, which is the person's to judge. */
@@ -38,9 +46,14 @@ const CHIP: Record<Mark, { state: State; words: string }> = {
 // was unsure; the engine marks it. Sign the paper off only when nothing is left to judge.
 export default async function PaperPage({ params, searchParams }: Props) {
   const me = await requireStaff();
-  const { key, roll } = await params;
+  const raw = await params;
+  // the address arrives percent-encoded where the key or the Sr. No. holds a character an address cannot
+  const key = safeDecode(raw.key);
+  const roll = safeDecode(raw.roll);
   const q = await searchParams;
-  const [kind, section, week, set] = key.split("~");
+  // the set can hold a "~" of its own (a paper made from chosen areas), so it is the rest of the key
+  const [kind, section, week, ...rest] = key.split("~");
+  const set = rest.join("~");
   const all = await deadline(paperList({ kind, class: section || undefined, week: week || undefined, set: set || undefined }, me.email, me, "roll"));
   const mine = all.rows.filter((p) => p.roll_no === roll && !p.spare && !p.extra);
   const sheet = mine.find((p) => p.stage !== "replaced") ?? mine[0];

@@ -25,6 +25,14 @@ import { assessmentKey } from "../../../papers/assessments-table";
 import { approveThisPack, signOffPaper } from "./actions";
 import { LevelSelect } from "./level-select";
 
+const safeDecode = (v: string) => {
+  try {
+    return decodeURIComponent(v);
+  } catch {
+    return v;
+  }
+};
+
 type Props = { params: Promise<{ key: string }>; searchParams: Promise<Record<string, string | undefined>> };
 
 /** Where one copy stands, in the order an educator needs them: answers to judge first. */
@@ -54,9 +62,12 @@ const PAGE = 10;
 // its own action. There is no button over all of the copies.
 export default async function AssessmentPage({ params, searchParams }: Props) {
   const me = await requireStaff();
-  const { key } = await params;
+  // the address arrives as it was written, percent-encoded where the key holds a character an address cannot
+  const key = safeDecode((await params).key);
   const q = await searchParams;
-  const [kind, section, week, set] = key.split("~");
+  // the set can hold a "~" of its own (a paper made from chosen areas), so it is the rest of the key
+  const [kind, section, week, ...rest] = key.split("~");
+  const set = rest.join("~");
   if (!kind || key.split("~").length < 4) notFound();
   const filter = { kind, class: section || undefined, week: week || undefined, set: set || undefined };
   const [{ rows: found }, copiesAll, g, order, topicNames, chosen] = await deadline(
