@@ -57,7 +57,7 @@ export default async function Record({ searchParams }: { searchParams: Promise<{
               { label: "Activity", value: picked?.activity?.name ?? "Not chosen" },
               { label: "Class", value: c.words },
               { label: "Time", value: picked?.starts_at ?? "—", num: true },
-              { label: "Kept", value: "Audio and transcript are kept on the private side." },
+              { label: "Kept", value: "Recordings and transcripts are cleared after 48 hours." },
             ]}
           />
           {my.recording ? <TypeMarks classId={c.id} sessionId={picked?.id} /> : null}
