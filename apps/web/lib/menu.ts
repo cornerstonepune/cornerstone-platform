@@ -50,6 +50,7 @@ export const GROUPS: readonly Door[] = [
       { href: "/capture/check", label: "Check answers", match: ["/capture/check"] },
       { href: "/growth", label: "Class results", match: ["/growth"] },
       { href: "/growth/reports", label: "Parent reports", match: ["/growth/reports"] },
+      { label: "Reports", href: "/children/reports", match: ["/children/reports"], guide: false },
       { href: "/across", label: "Across classes", match: ["/across"] },
     ],
   },
