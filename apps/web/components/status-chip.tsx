@@ -1,4 +1,5 @@
 import { ICON_SIZE, Icon, type IconName } from "@/lib/icons";
+import { OUTCOME_STATES, type OutcomeState } from "./outcome-states";
 
 // The one chip a state is shown in (docs/ux-rules.md, rule 2 and 9): an icon, the word, and one of red, amber or green,
 // from this table alone — never colour by itself. Nimish, 2026-10-22: "use icons or red, amber, green in places that make
@@ -84,6 +85,9 @@ export const STATES = {
 } as const satisfies Record<string, StateRow>;
 export type State = keyof typeof STATES;
 
+/** A state's row, whether it is one of STATES or one of the outcomes (components/outcome-states.ts). */
+export const rowOf = (state: State | OutcomeState): StateRow => (state in OUTCOME_STATES ? OUTCOME_STATES[state as OutcomeState] : STATES[state as State]);
+
 const GREEN = "text-[var(--state-ok)] bg-[var(--state-ok-bg)] border-[var(--state-ok)]";
 const AMBER = "text-[var(--state-wait)] bg-[var(--state-wait-bg)] border-[var(--state-wait)]";
 const RED = "text-[var(--state-late)] bg-[var(--state-late-bg)] border-[var(--state-late)]";
@@ -97,8 +101,8 @@ const LOOK: Record<Tone, string> = { ok: "ok", wait: "wait", act: "late", quiet:
 /** `round`: a piece of work on the K2 screens (the agreed design: work is a round chip, a child a square cell).
  *  `onTint`: the chip sits on a tinted cell or square (a subject's, a child's): the fill is the panel colour with the 1 px
  *  ring in the state's colour, because a state's fill and a subject's fill can be within 5 of each other (CIE76). */
-export function StatusChip({ state, note, words, compact, round, onTint }: { state: State; note?: string; words?: string; compact?: boolean; round?: boolean; onTint?: boolean }) {
-  const s: StateRow = STATES[state];
+export function StatusChip({ state, note, words, compact, round, onTint }: { state: State | OutcomeState; note?: string; words?: string; compact?: boolean; round?: boolean; onTint?: boolean }) {
+  const s: StateRow = rowOf(state);
   const unseen = s.look === "unseen";
   const fill = onTint || unseen ? "!bg-[var(--panel)]" : "";
   return (
