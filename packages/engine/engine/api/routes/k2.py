@@ -11,7 +11,7 @@ from pydantic import BaseModel, Field
 
 from engine.api.deps import get_conn, require_engine_key
 from engine.w2_print import educator_gate
-from engine.w3_read import k2_picture_reads, k2_reads, voice_intake, voice_store
+from engine.w3_read import child_history, k2_picture_reads, k2_reads, voice_intake, voice_store
 
 router = APIRouter(dependencies=[Depends(require_engine_key)])
 
@@ -211,5 +211,21 @@ def child(body: Child, conn=Depends(get_conn, scope="function")):
     _on_or_preview(conn, body.actor)
     try:
         return k2_picture_reads.child_page(conn, body.actor, body.class_id, body.roll_no)
+    except voice_store.Refused as no:
+        raise _refused(no) from no
+
+
+class HistoryAsk(Child):
+    limit: int = 50
+    before: str | None = None
+
+
+@router.post("/k2/child-history")
+def child_history_route(body: HistoryAsk, conn=Depends(get_conn, scope="function")):
+    """A child's history, newest first: observations, evidence and papers, with when and who (a staff id, or none).
+    Codes and ids only, never a note's words."""
+    _on_or_preview(conn, body.actor)
+    try:
+        return child_history.history(conn, body.actor, body.class_id, body.roll_no, body.limit, body.before)
     except voice_store.Refused as no:
         raise _refused(no) from no

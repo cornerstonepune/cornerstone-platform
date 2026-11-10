@@ -65,6 +65,7 @@ export type EngineRoutes = {
   "POST /graph/rebuild": { child_id?: string | null };
   "POST /ingest": { path: string; paper_code: string; child_id: string; actor: string; pages?: number[] | null; masks?: Record<string, number> | null };
   "POST /k2/child": { actor: string; class_id: string; roll_no: string };
+  "POST /k2/child-history": { actor: string; class_id: string; roll_no: string; limit?: number; before?: string | null };
   "POST /k2/classes": { actor: string };
   "POST /k2/coordinator": { actor: string };
   "POST /k2/picture": { actor: string; class_id: string };
@@ -124,6 +125,7 @@ export type EngineRoutes = {
   "POST /voice/class": { actor: string; class_id: string; day?: string | null };
   "POST /voice/class-notes": { actor: string; class_id: string; day?: string | null };
   "POST /voice/cleanup": null;
+  "POST /voice/coordinator-notes": { actor: string; day?: string | null };
   "POST /voice/form": { actor: string; activity: string; level: number; lists?: Record<string, string[]>; rest?: boolean; day?: string | null; class_id: string };
   "POST /voice/notes": null;
   "POST /voice/notes/audio": { actor: string; note_id: string };
