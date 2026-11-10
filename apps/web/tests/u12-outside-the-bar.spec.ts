@@ -49,10 +49,14 @@ test("the help has one section for every screen of the inventory", async ({ page
 test("the ? of every screen names that screen's own section", async () => {
   for (const s of INVENTORY.screens) {
     // the first screen of a route owns it (Today for the educator and the coordinator is one address)
-    const first = INVENTORY.screens.find((x) => x.route === s.route)!;
     const concrete = s.route.replace(/\[\w+\]/g, "7");
-    expect(sectionFor(concrete), s.route).toBe(first.id);
-    expect(guideFor(concrete), s.route).toBe(`/guide#${first.id}`);
+    const first = INVENTORY.screens.find((x) => x.route === s.route)!;
+    // an address another screen's pattern also matches belongs to the screen with fewer [params] (a fixed word beats a class)
+    const fewer = (r: string) => r.split("/").filter((p) => p.startsWith("[")).length;
+    const owner = INVENTORY.screens.filter((x) => new RegExp(`^${x.route.replace(/\[\w+\]/g, "[^/]+")}$`).test(concrete)).sort((a, b) => fewer(a.route) - fewer(b.route))[0];
+    expect(owner.id === first.id || owner.route !== s.route, s.route).toBe(true);
+    expect(sectionFor(concrete), s.route).toBe(owner.id);
+    expect(guideFor(concrete), s.route).toBe(`/guide#${owner.id}`);
   }
   expect(guideFor("/guide")).toBe("/guide");
   expect(guideFor("/a-page-nobody-listed")).toBe("/guide");
@@ -115,7 +119,7 @@ test("sign in is the bare frame and a wrong password says one thing", async ({ b
   await page.getByLabel("School email").fill("nobody@cornerstone.test");
   await page.getByLabel("Password").fill("not-it-at-all-1");
   await page.getByRole("button", { name: "Sign in" }).click();
-  await expect(page.getByRole("alert")).toHaveText("That email and password do not match a staff member.");
+  await expect(page.getByRole("main").getByRole("alert")).toHaveText("That email and password do not match a staff member.");
   await context.close();
 });
 

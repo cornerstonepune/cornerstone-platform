@@ -6,7 +6,9 @@ type Section = { id: string; route: string };
 const SECTIONS = data.sections as Section[];
 
 const pattern = (route: string) => new RegExp(`^${route.split("/").map((p) => (p.startsWith("[") ? "[^/]+" : p.replace(/[.*+?^${}()|\\]/g, "\\$&"))).join("/")}$`);
-const MATCHERS = SECTIONS.map((s) => ({ id: s.id, re: pattern(s.route) }));
+// the screen whose route has the fewest [params] wins ("/children/assessments" is Assessments, not a class), the first of equals
+const params = (route: string) => route.split("/").filter((p) => p.startsWith("[")).length;
+const MATCHERS = SECTIONS.map((s) => ({ id: s.id, re: pattern(s.route), params: params(s.route) })).sort((a, b) => a.params - b.params);
 
 /** The help section of the screen a path belongs to (the first screen of that route), or none: a page not in the inventory has no section. */
 export function sectionFor(path: string): string | undefined {

@@ -16,7 +16,7 @@ const nextConfig: NextConfig = {
     { source: "/login/forgot", destination: "/login?view=forgot", permanent: true },
     { source: "/login/new-password", destination: "/login?view=new-password", permanent: true },
     { source: "/account/password", destination: "/login?view=forgot", permanent: true },
-    { source: "/guide/:path*", destination: "/guide", permanent: true },
+    { source: "/guide/:path+", destination: "/guide", permanent: true },
   ],
   outputFileTracingRoot: repo,
 };
