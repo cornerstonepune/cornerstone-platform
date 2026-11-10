@@ -34,8 +34,8 @@ frontend (from #551): do not build a control that needs a table not named here; 
 | `activity`, `curriculum` | `activity_part_source` | table | **derive** | A view over `change_log` (origin: upload = school, proposal = drafted, person = person) and `curriculum_proposal` (the `check_me` flag). Rows in `change_log` already tell school text from drafted text. | 2 and 6 |
 | `skills-approve` | `calibration_review` | table | **rows** | `approval` rows, kind `calibration` (not `eval_case`). | 3 |
 | `bank` | `bank_proposal` | table | **rows** | `curriculum_proposal`, and the decision as an `approval` row. | 3 |
-| `question` | `key_correction`, `item_key_change` | table | **column** | `item.key` holds the current key; the history is in `change_log`. | 3 |
-| `question` | `item_review` | table | **column** | `item.review` (the reviewer model's latest verdict) plus `change_log`. It is a review queue, not gold. | 3 |
+| `question` | `key_correction`, `item_key_change` | table | **rows** | No new column (revised in #551 after the group 3 code map): `item.item_key` already is the current key; old keys are `change_log` rows. | 3 |
+| `question` | `item_review` | table | **rows** | Rows in `eval_case` (revised in #551 after the group 3 code map: it also holds verdicts on whole levels, not only questions). It is a review queue, not gold. | 3 |
 | `bank` | `item_stat` | table | **derive** | A view over `item_result`. The "mislevelled" flag is computed from `level_rule`, not stored. Kept as a view only if it returns the same numbers as the table on live-shaped rows. | 6 |
 
 ## Decided in issue #551: found while drawing the wireframes
