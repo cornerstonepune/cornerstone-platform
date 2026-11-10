@@ -74,6 +74,8 @@ export const CHECKS: Record<string, () => Promise<string[]>> = {};
 let RUN = "0000";
 /** The answer on Sr. No. 1's paper that is for a person to judge, by its id: the engine rewrites what it read when it marks, so no wording finds it again. */
 let JUDGE = "";
+/** The home assessment's key, for the name a test gives it and takes back. */
+let KEY = "";
 let SETTLED_CAPTURES: string[] = [];
 const code = (n: number) => `CS${RUN}${n.toString(16).toUpperCase().padStart(2, "0")}`;
 
@@ -147,6 +149,7 @@ export async function anAssessment(sql: Sql, children: Record<string, string>): 
       values (${tenant}, ${code(0xa0 + i)}, ${t.id}, ${kids[i % kids.length]}, ${SECTION}, ${monday}, 'assessment', 'printed', 'e2e', now(), now())`;
   }
   const key = ["focus", SECTION, week, ""].join("~");
+  KEY = key;
   // a paper read and settled, nothing left to judge: the first of Sr. Nos 2, 4, 5, 6 not yet signed off (a sign-off uses one up)
   ADDRESSES.settled = async () => {
     const sql2 = postgres(process.env.DATABASE_URL!, { max: 1 });
@@ -241,4 +244,16 @@ FIXTURES["assessments-rest"] = () =>
 FIXTURES["assessments-gone"] = () =>
   aside(async (sql) => {
     await sql`update sheet_instance set print_status = 'void' where qr_code like ${`CS${RUN}%`}`;
+  });
+
+/** A name an educator chose is a row of the history log and stays (rule 4); to give the built name back, the last row says an empty name,
+ *  which the screens read as no chosen name (`nameOf`). */
+FIXTURES["name-undone"] = () =>
+  aside(async (sql) => {
+    await sql`insert into change_log (tenant_id, table_name, row_id, op, after, origin) select id, 'assessment', ${KEY}, 'name', '{"name": ""}'::jsonb, 'inventory' from tenant limit 1`;
+  });
+CHECKS["assessment-renamed"] = () =>
+  aside(async (sql) => {
+    const [row] = await sql`select after ->> 'name' as name from change_log where table_name = 'assessment' and op = 'name' and row_id = ${KEY} order by at desc, id desc limit 1`;
+    return row?.name === "Named in the inventory" ? [] : [`the assessment's latest name is “${row?.name ?? "none"}”`];
   });

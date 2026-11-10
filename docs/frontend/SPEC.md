@@ -735,7 +735,7 @@ Main action: Check answers · Next step: an assessment
 Data: existing queries-papers (assessmentList, paperList), STEP_WORDS, STATUS_WORDS
 Empty: No assessments yet: Make one · Phone: the table scrolls sideways in its own box; the drop zone becomes 'take photos'
 Folds in: /papers, /papers/make, /capture, /capture/[id]
-Every control on the screen (23), and what the test does with each:
+Every control on the screen (28), and what the test does with each:
 - **link** do now tile → Check the answers (`/children/assessments/[key]/[roll]`) (the first paper with answers to judge)
 - **link** this week tile → {the built name} (`/children/assessments/[key]`) (the first pack to approve)
 - **link** results in tile → {the built name} (`/children/assessments/[key]`)
@@ -759,6 +759,11 @@ Every control on the screen (23), and what the test does with each:
 - **tab** Table (the assessments as rows)
 - **row** each card on the board → {the built name} (`/children/assessments/[key]`)
 - **link** page: Later → → Assessments (`/children/assessments`) (the next ten assessments)
+- **tab** By topic (every topic a row with its count, closed until opened; the address carries the topic)
+- **tab** Reading (how the reader is doing, and the files read lately)
+- **field** rename: name this assessment (one on each row; the built name shows until a name is chosen)
+- **button** Save the name: the name is the educator's own and is kept as a row of the history log, the older names stay
+- **link** each topic → Assessments (`/children/assessments`) (opens the topic's assessments beneath it)
 Done when (on top of the ten generic checks):
 - the four old pages answer 308 to this one or to the Assessment node
 - every row's name is built topic · skill · level · kind · class · day (regex)
@@ -781,7 +786,7 @@ Main action: the step's action · Next step: Assessments
 Data: sheet/paper rows, counts per step (Counts), prescriptions and reasons, approval ledger
 Empty: No copies yet · Phone: stepper wraps; the table scrolls sideways in its own box
 Folds in: /papers/approve, /papers/card, /papers/review/[qr]
-Every control on the screen (14), and what the test does with each:
+Every control on the screen (16), and what the test does with each:
 - **link** Open the skill → the skill's name (`/setup/skills/[code]`)
 - **field** Change the level (a row, before print): Easy / Medium / Hard / Advance; the row's reason updates; kept as an override with who
 - **button** Approve the pack: approval row for this pack only; the stepper moves to Approved; Print appears; the rows' Change the level disappears
@@ -796,6 +801,8 @@ Every control on the screen (14), and what the test does with each:
 - **link** rail: all assessments → Assessments (`/children/assessments`)
 - **button** rail: the printed pack → {the built name} (`/children/assessments/[key]`) (the PDF in a new tab)
 - **upload** capture: Photo: a scan of this assessment's paper; the QR must belong to it, else a message
+- **field** rename: name this assessment (the built name shows until a name is chosen)
+- **button** Save the name: the name is the educator's own and is kept as a row of the history log, the older names stay
 Done when (on top of the ten generic checks):
 - Approve acts on this pack only; no control acts on more than one pack or more than one row
 - the stepper's amber step equals the status word in the list

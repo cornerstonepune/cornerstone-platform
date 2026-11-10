@@ -2296,6 +2296,52 @@
           "text": "Later",
           "when": "?view=table",
           "note": "the next ten assessments"
+        },
+        {
+          "t": "tab",
+          "label": "By topic",
+          "note": "every topic a row with its count, closed until opened; the address carries the topic",
+          "text": "By topic"
+        },
+        {
+          "t": "tab",
+          "label": "Reading",
+          "note": "how the reader is doing, and the files read lately",
+          "text": "Reading"
+        },
+        {
+          "t": "field",
+          "label": "rename: name this assessment",
+          "note": "one on each row; the built name shows until a name is chosen",
+          "text": "Name this assessment",
+          "when": "?view=table"
+        },
+        {
+          "t": "button",
+          "label": "Save the name",
+          "effect": "the name is the educator's own and is kept as a row of the history log, the older names stay",
+          "text": "Save the name",
+          "when": "?view=table",
+          "drive": {
+            "fill": {
+              "Name this assessment": "Named in the inventory"
+            },
+            "expect": {
+              "text": [
+                "Named in the inventory"
+              ],
+              "check": "assessment-renamed"
+            },
+            "after": "name-undone"
+          }
+        },
+        {
+          "t": "link",
+          "label": "each topic",
+          "note": "opens the topic's assessments beneath it",
+          "data": "data-topic-open",
+          "when": "?view=topic",
+          "to": "assessments"
         }
       ],
       "rail": [
@@ -2473,6 +2519,30 @@
           "t": "upload",
           "label": "capture: Photo",
           "effect": "a scan of this assessment's paper; the QR must belong to it, else a message"
+        },
+        {
+          "t": "field",
+          "label": "rename: name this assessment",
+          "note": "the built name shows until a name is chosen",
+          "text": "Name this assessment"
+        },
+        {
+          "t": "button",
+          "label": "Save the name",
+          "effect": "the name is the educator's own and is kept as a row of the history log, the older names stay",
+          "text": "Save the name",
+          "drive": {
+            "fill": {
+              "Name this assessment": "Named in the inventory"
+            },
+            "expect": {
+              "text": [
+                "Named in the inventory"
+              ],
+              "check": "assessment-renamed"
+            },
+            "after": "name-undone"
+          }
         }
       ],
       "rail": [

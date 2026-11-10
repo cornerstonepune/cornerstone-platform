@@ -12,6 +12,7 @@ import { choices } from "@/lib/choices";
 import { scopeOf } from "@/lib/scope";
 import { lastScans } from "@/lib/queries-scans";
 import { topics } from "@/lib/queries-people";
+import { readerReport } from "@/lib/queries-read";
 import { grades } from "@/lib/queries";
 import { chosenNames, fileLinks } from "@/lib/queries-assessment-extras";
 import { assessmentList, KIND_WORDS, paperFilters, paperList, type PaperFilter } from "@/lib/queries-papers";
@@ -24,8 +25,13 @@ import { assessmentKey, type Named } from "../../papers/assessments-table";
 import { ghostRow, namedRows } from "../../papers/named";
 import { countsOf } from "../../papers/step-columns";
 import { ReadBox } from "../../papers/read-box";
-import { topicNamesOf } from "@/lib/queries-by-topic";
+import { topicGroups, topicNamesOf } from "@/lib/queries-by-topic";
+import { ScansTable } from "../../capture/scans-table";
+import { ReaderPanel } from "../../capture/parts";
+import { READER_VIEWS, type ReaderView } from "../../capture/reader-table";
 import { MakeCard } from "./make-card";
+import { RenameForm } from "./rename-form";
+import { TopicView } from "./topic-view";
 import { Maker } from "./maker";
 
 type Props = { searchParams: Promise<Record<string, string | undefined>> };
@@ -51,9 +57,25 @@ export default async function AssessmentsPage({ searchParams }: Props) {
     status: q.status && q.status in STAGE_WORDS ? q.status : undefined,
   };
   const { status, ...sql } = f;
+  const byTopic = q.view === "topic";
+  const reading = q.view === "reading";
+  // by topic, no topic narrows the list: each topic is a group of its own, and only the open one's rows are read, a page of them
+  const listFilter = byTopic ? { ...sql, topic: undefined } : sql;
   const [{ rows: all, more }, { options }, scans, g, { subjects }] = await deadline(
-    Promise.all([assessmentList(sql, me, status ? { limit: 300, offset: 0, sigs: sigsFor(status as never) } : undefined), paperFilters(me), lastScans(me), grades(), choices()]),
+    Promise.all([
+      byTopic || reading ? Promise.resolve({ rows: [] as Awaited<ReturnType<typeof assessmentList>>["rows"], more: false, total: 0 }) : assessmentList(sql, me, status ? { limit: 300, offset: 0, sigs: sigsFor(status as never) } : undefined),
+      paperFilters(me), lastScans(me), grades(), choices(),
+    ]),
   );
+  const topicList = byTopic ? await deadline(topicGroups(listFilter, me)) : [];
+  const openTopic = topicList.find((x) => x.code === q.t)?.code;
+  const topicPage = Math.max(1, Math.floor(Number(q.page)) || 1);
+  const opened = openTopic
+    ? await deadline(assessmentList({ ...listFilter, topic: openTopic }, me, { limit: 10, offset: (topicPage - 1) * 10, sigs: status ? sigsFor(status as never) : undefined }))
+    : null;
+  if (opened) all.push(...opened.rows);
+  const reader = reading ? await deadline(readerReport()) : null;
+  const readerView: ReaderView = READER_VIEWS.some(([v]) => v === q.reader) ? (q.reader as ReaderView) : "day";
   all.sort((a, b) => (a.week && b.week ? b.week.localeCompare(a.week) : a.week ? -1 : b.week ? 1 : 0));
   const keys = all.map((a) => ({ key: assessmentKey(a), qrs: a.qrs ?? [] }));
   const [chosen, files] = await deadline(Promise.all([chosenNames(keys.map((k) => k.key)), fileLinks(keys, me)]));
@@ -79,10 +101,9 @@ export default async function AssessmentsPage({ searchParams }: Props) {
   const week = first((r) => r.w.action.kind === "approve" || r.w.action.kind === "signoff");
   const done = first((r) => r.w.action.kind === "results");
   const mainRow = judging ?? week ?? rows[0];
-  const view = q.view === "table" ? "table" : "board";
+  const view = byTopic ? "topic" : reading ? "reading" : q.view === "table" ? "table" : "board";
   const view_ = (v: string) => `${HERE}?${new URLSearchParams({ ...Object.fromEntries(Object.entries(q).filter(([k, x]) => x && k !== "view" && k !== "page")) as Record<string, string>, view: v })}`;
   const subjectWords = new Map(subjects.map((x) => [x.code, x.label] as const));
-  void subjectWords;
   const papersBack = (a: Named) => `${a.by.printed + a.by.scanned + a.by.checked + a.by["signed off"]} of ${a.copies}`;
 
   const cards: KCard[] = rows.map((r) => ({
@@ -101,7 +122,13 @@ export default async function AssessmentsPage({ searchParams }: Props) {
   });
 
   const columns: Column<(typeof rows)[number]>[] = [
-    { key: "name", label: "Assessment", value: (r) => r.a.name, cell: (r) => <Link href={assessmentHref(r.key)} data-assessment-row="">{r.a.name}</Link> },
+    { key: "name", label: "Assessment", value: (r) => r.a.name, cell: (r) => (
+        <>
+          <Link href={assessmentHref(r.key)} data-assessment-row="">{r.a.name}</Link>
+          <RenameForm assessmentKey={r.key} name={r.a.name} back={view_("table")} />
+        </>
+      ),
+    },
     { key: "class", label: "Class", width: "7rem", value: (r) => [r.a.band ? g.name(r.a.band) : null, r.a.section].filter(Boolean).join(" · ") },
     { key: "back", label: "Papers back", num: true, width: "8rem", value: (r) => papersBack(r.a) },
     { key: "waits", label: "Waits for", status: true, width: "13rem", value: (r) => r.w.words, cell: (r) => <StatusChip state={r.w.state} words={r.w.words} /> },
@@ -170,10 +197,44 @@ export default async function AssessmentsPage({ searchParams }: Props) {
           views={[
             { key: "board", label: "Board", icon: "board", href: view_("board") },
             { key: "table", label: "Table", icon: "table", href: view_("table") },
+            { key: "topic", label: "By topic", icon: "table", href: view_("topic") },
+            { key: "reading", label: "Reading", icon: "table", href: view_("reading") },
           ]}
         />
       </div>
-      {empty ? (
+      {reading ? (
+        <>
+          {reader ? <ReaderPanel r={reader} view={readerView} page={Math.max(1, Math.floor(Number(q.rpage)) || 1)} keep={{ view: "reading" }} base={HERE} /> : null}
+          {scans.length ? (
+            <section aria-label="Read a scan" className="mt-4">
+              <details open={trouble} data-files-read>
+                <summary className="cursor-pointer text-[13.5px]">Files read lately, and what each lacks ({scans.length})</summary>
+                <div className="mt-2">
+                  <ScansTable scans={scans} from={HERE} />
+                </div>
+              </details>
+            </section>
+          ) : (
+            <EmptyState>No file has been read yet. Read one with the box above and it appears here.</EmptyState>
+          )}
+        </>
+      ) : byTopic ? (
+        <>
+          <TopicView
+            groups={topicList}
+            subjects={subjectWords}
+            open={openTopic}
+            rows={rows.map((r) => ({ key: r.key, name: r.a.name, klass: [r.a.band ? g.name(r.a.band) : null, r.a.section].filter(Boolean).join(" · "), back: HERE, state: r.w.state, words: r.w.words, next: r.w.action.label }))}
+            of={opened?.total ?? 0}
+            page={topicPage}
+            topicPage={Math.max(1, Math.floor(Number(q.tp)) || 1)}
+            topicHref={(code, isOpen) => `${view_("topic")}${isOpen ? "" : `&t=${encodeURIComponent(code)}`}`}
+            assessmentsPageHref={(n) => `${view_("topic")}&t=${encodeURIComponent(openTopic ?? "")}&page=${n}`}
+            topicsPageHref={(n) => `${view_("topic")}&tp=${n}`}
+          />
+          {topicList.length === 0 ? <EmptyState>No assessments yet.</EmptyState> : null}
+        </>
+      ) : empty ? (
         <EmptyState>
           <Icon name="assessment" size={ICON_SIZE.row} /> No assessments yet. Make one with a button under “Make an assessment” above, and it appears here at Created.
         </EmptyState>
