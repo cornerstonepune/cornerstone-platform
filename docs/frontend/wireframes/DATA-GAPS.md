@@ -83,6 +83,19 @@ New asks for the backend. None needs a new table, and none is built; the wirefra
 | `assessment` | **Two packs of one assessment** (a first pack, and later copies for absent or new children) each approved on its own. | `approval` rows (kind, target) can carry it; the wireframe assumes one `approval` row per pack, target = the pack's copies. | Confirm the `approval.target` shape for a pack. |
 | `paper` | The wireframe uses `item_result.read_confidence` and `read_correction.human_read` for "the engine was 61% sure" and "your answer, beside the engine's read". | Both exist today. | none |
 
+## Added by wireframe batch 4 (the 17 remaining screens, 10 Nov 2026)
+
+New asks for the backend. None needs a new table; the wireframes mark each with `data-gap`.
+
+| Screen | What the screens ask | Why it is a gap | Backend must answer |
+|---|---|---|---|
+| `reports` | **One child's report lines**: the educator's words for each line and the line's stage (drafted, educator approved, coordinator approved). | `report_item` is the catalogue of possible lines (skill, band, title, section), not one child's line; `approval` rows can carry the two yeses (target = child and line) but nothing holds the words. | Where a child's line and its words live: a row in a kept table (for example `report_item` with `child_id`, or `approval.detail`), and the `approval.target` shape. |
+| `reports` | **When a child's report was sent.** | No column holds a report's sent time (`parent_note.sent_at` is the weekly note, not the term report). | A column or an `approval` row (kind `report_sent`). |
+| `moves` | **Which rows a hand move changes on a drafted fortnight.** | The data model says a hand move changes `session` rows and the clash view reads sessions, but Moves works on a fortnight still in draft (`timetable_run.draft`). | Whether a drafted fortnight's lessons are already `session` rows, or a move edits `timetable_run.draft` until Go live. |
+| `materials` | **A photo of the materials list** (capture: Photo, attached to the list, never to a child). | `capture` holds scanned sheets only, and `materials_list` has no column for a photo. | A column on `materials_list` or a `capture` row with a kind. |
+| `feedback` | **Where a feedback screenshot is kept** (the private side, linked by id, never on the public GitHub issue). | `staff_note` has no column for it; `capture` holds scanned sheets only. | A column on `staff_note` (a private storage key) or a `capture` row with a kind. Same answer as the materials photo, ideally. |
+| `materials` | "Notes to read" (lines the system could not match to an item). | Not a gap: `curriculum_proposal` rows of kind `materials_note` (CP-27 group 6). Noted so a builder does not look for a table. | none |
+
 ## Other things the frontend noticed (not table gaps)
 
 - Decided 9 Nov 2026 (frontend orchestrator): the class grid is 8 columns at 1440 and 3 on a phone (SPEC §2 rule 10,
