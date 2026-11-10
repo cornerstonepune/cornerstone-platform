@@ -59,16 +59,37 @@ def may_record(conn: db.Conn, staff: uuid.UUID, class_id: str) -> None:
         raise voice_store.Refused("You do not hold this class.", 403)
 
 
-def receive(conn: db.Conn, email: str, class_id: str, filename: str, data: bytes) -> dict:
-    """The recording kept and its row written; the words come after (`transcribe`)."""
+def lesson_of(conn: db.Conn, session_id: str | None, class_id: str) -> str | None:
+    """The lesson (a `session`) a note is about, once it is shown to be a lesson of this class; none when none was
+    named. Refused in words, never a database error."""
+    if session_id is None:
+        return None
+    session_id = valid_id(session_id)
+    if (
+        conn.execute(
+            "select 1 from session where id = %s and school_class_id = %s",
+            (session_id, valid_id(str(class_id))),
+        ).fetchone()
+        is None
+    ):
+        raise voice_store.Refused("This lesson is not one of this class's.", 422)
+    return session_id
+
+
+def receive(
+    conn: db.Conn, email: str, class_id: str, filename: str, data: bytes, session_id: str | None = None
+) -> dict:
+    """The recording kept and its row written; the words come after (`transcribe`). `session_id`: the lesson it is
+    about, when the educator named one."""
     staff = staff_of(conn, email)
     may_record(conn, staff, class_id)
+    lesson = lesson_of(conn, session_id, class_id)
     note_id = uuid.uuid4()
     key = voice_store.key_for(note_id, filename, dt.datetime.now(dt.UTC).year)
     note = conn.execute(
-        "insert into pii.educator_note (id, tenant_id, staff_id, class_id, audio_key)"
-        " select %s, c.tenant_id, %s, c.id, %s from school_class c where c.id = %s::text::uuid returning *",
-        (note_id, staff, key, valid_id(class_id)),
+        "insert into pii.educator_note (id, tenant_id, staff_id, class_id, audio_key, session_id)"
+        " select %s, c.tenant_id, %s, c.id, %s, %s from school_class c where c.id = %s::text::uuid returning *",
+        (note_id, staff, key, lesson, valid_id(class_id)),
     ).fetchone()
     if note is None:
         raise voice_store.Refused("Not sent. That class is not one of the school's.", 404)
