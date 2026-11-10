@@ -58,10 +58,12 @@ export async function signedInAs(browser: Browser, who: "educator" | "coordinato
 export function addressOf(route: string, rows: Rows, over: Record<string, string> = {}): string {
   const first = Object.values(rows.children)[0] ?? "";
   const given: Record<string, string> = { key: rows.questionKey, class: rows.classId, section: rows.section, roll: "1", id: first, ...over };
-  return route.replace(/\[(\w+)\]/g, (_, k: string) => {
+  const path = route.replace(/\[(\w+)\]/g, (_, k: string) => {
     if (!(k in given)) throw new Error(`tests/inventory/fixtures.ts has no fixture for [${k}] of ${route}: add one built from the test's own rows`);
     return encodeURIComponent(given[k]);
   });
+  // Classes and children opens one class below its table: the test's own, so the children are the fake ones above and not whatever other specs left in the first
+  return route === "/setup/classes" ? `${path}?class=${rows.classId}` : path;
 }
 
 /** The coordinator's own copy of createHmac is not needed: the signed-in file holds the cookie. */

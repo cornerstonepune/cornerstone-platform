@@ -1,5 +1,6 @@
 {
   "merged_slices": [
+    "UI-5",
     "UI-11"
   ],
   "screens": {
@@ -109,15 +110,15 @@
     },
     "staff": {
       "route": "/setup/staff",
-      "built": false
+      "built": true
     },
     "classes": {
       "route": "/setup/classes",
-      "built": false
+      "built": true
     },
     "setup": {
       "route": "/setup",
-      "built": false
+      "built": true
     },
     "login": {
       "route": "/login",

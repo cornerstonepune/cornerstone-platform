@@ -63,6 +63,7 @@
     "Themes: a screenshot in light at 1440 is committed as the baseline; the `blocks` screen and the journey steps are also committed in dark. Text contrast is measured by the token-pair script (UI-14) and by axe, not by sampling every page."
   ],
   "merged_slices": [
+    "UI-5",
     "UI-11"
   ],
   "slices": [
@@ -3394,11 +3395,11 @@
       "exists": "yes",
       "eyebrow": "This fortnight",
       "title": "Staff and classes",
-      "purpose": "Who teaches which class, and three numbers the database can stand behind per class. No ranking: the school decides what they mean.",
+      "purpose": "Who teaches which class, and whole counts the database can stand behind. No score, no ranking: the school decides what they mean.",
       "blocks": [
         [
           "DataTable",
-          "role · class · sessions done of planned · notes late · reader accuracy; each row opens the person's grants"
+          "role · class · sessions done of planned · notes confirmed · notes late · lines accepted / changed / removed; each row opens the person's grants"
         ],
         [
           "Details",
@@ -3409,21 +3410,26 @@
         {
           "t": "row",
           "label": "each staff row",
-          "effect": "opens that person's grants fold"
+          "effect": "opens that person's grants fold",
+          "data": "data-staff-row"
         },
         {
           "t": "fold",
-          "label": "a person's grants"
+          "label": "a person's grants",
+          "text": "grants"
         },
         {
           "t": "button",
           "label": "Add a grant",
-          "effect": "a form: role (rows), class, subject, from; Save writes a staff_role_grant row; the trigger's checks show as messages (needs a class, holds it twice)"
+          "effect": "a form: role (rows), class, subject, from; Save writes a staff_role_grant row; the trigger's checks show as messages (needs a class, holds it twice)",
+          "pending": "backend: public.grant_role and public.end_grant (comment on #551); app_web cannot write staff_role_grant"
         },
         {
           "t": "button",
           "label": "End a grant",
-          "effect": "valid_to set to today on that grant; nothing deleted"
+          "effect": "valid_to set to today on that grant; nothing deleted",
+          "data": "data-end-grant",
+          "pending": "backend: public.grant_role and public.end_grant (comment on #551); app_web cannot write staff_role_grant"
         },
         {
           "t": "link",
@@ -3439,6 +3445,17 @@
           "t": "link",
           "label": "rail: Classes and children",
           "to": "classes"
+        },
+        {
+          "t": "filter",
+          "label": "Role",
+          "effect": "narrows the rows to one role"
+        },
+        {
+          "t": "filter",
+          "label": "Find a person (search)",
+          "effect": "narrows the rows to a name",
+          "text": "Search the list"
         }
       ],
       "rail": [
@@ -3489,7 +3506,8 @@
         {
           "t": "row",
           "label": "each class row",
-          "effect": "opens that class's children table below"
+          "effect": "opens that class's children table below",
+          "data": "data-class-row"
         },
         {
           "t": "child_name",
@@ -3499,7 +3517,8 @@
         {
           "t": "button",
           "label": "Move (a child row)",
-          "effect": "a picker of classes and a date; Save closes the enrolment, opens a new one and writes a change_log row; the child appears in the new class"
+          "effect": "opens a picker of classes and a date; Save closes the enrolment, opens a new one and writes a change_log row; the child appears in the new class",
+          "data": "data-move"
         },
         {
           "t": "fold",
@@ -3524,6 +3543,17 @@
           "t": "link",
           "label": "rail: the fortnight",
           "to": "fortnight"
+        },
+        {
+          "t": "filter",
+          "label": "Grade",
+          "effect": "narrows the classes to one grade"
+        },
+        {
+          "t": "filter",
+          "label": "Find a class (search)",
+          "effect": "narrows the classes to a name",
+          "text": "Search the list"
         }
       ],
       "rail": [
