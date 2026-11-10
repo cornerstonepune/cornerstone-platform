@@ -3,11 +3,11 @@
  * block of docs/frontend/screens.json on sample data; charts are rendered by tests/render-blocks.mjs on known data.
  */
 import { execFileSync } from "node:child_process";
-import { scryptSync } from "node:crypto";
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import path from "node:path";
 import { expect, test, type Browser, type Page } from "@playwright/test";
 import postgres from "postgres";
+import { aPerson, forgetPerson } from "./rows";
 
 const WEB = path.resolve(__dirname, "..");
 const read = (f: string) => readFileSync(path.join(WEB, f), "utf8");
@@ -276,15 +276,12 @@ test("11. one fold per block, and each has a sample", async ({ page }) => {
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 const EDUCATOR = { email: "u71-educator@cornerstone.test", name: "U71 Educator", role: "educator" };
 const PASSWORD = "u71-a-long-test-password";
-const SALT = "00112233445566778899aabbccddeeff";
-const others = sql`(select coalesce(jsonb_agg(s), '[]'::jsonb) from jsonb_array_elements(value) s where s ->> 'email' <> ${EDUCATOR.email})`;
 test.afterAll(async () => {
-  await sql`update config set value = ${others} where key = 'app.staff'`;
+  await forgetPerson(sql, EDUCATOR.email);
   await sql.end();
 });
 async function asEducator(browser: Browser): Promise<Page> {
-  const password = `scrypt$${SALT}$${scryptSync(PASSWORD, SALT, 64).toString("hex")}`;
-  await sql`update config set value = ${others} || ${sql.json([{ ...EDUCATOR, classes: [], password }])} where key = 'app.staff'`;
+  await aPerson(sql, { ...EDUCATOR, password: PASSWORD });
   const page = await (await browser.newContext({ storageState: { cookies: [], origins: [] } })).newPage();
   await page.goto("/login");
   await page.getByLabel("School email").fill(EDUCATOR.email);
