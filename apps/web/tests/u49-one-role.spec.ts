@@ -70,10 +70,19 @@ async function offered(page: Page, at: string, name: string): Promise<{ refused:
   await page.goto(at);
   await page.waitForLoadState("networkidle");
   // every section folded open, so what a tap would show is counted: details, and toggles a page draws itself
+  // Each toggle is unfolded once, by its words: a toggle that opens its row by loading the page again shows the page with
+  // that row open and the others folded, so a second pass would load every one of them again for nothing (a page of ten
+  // rows was thirty loads, and the rows other specs leave behind multiply them).
+  const unfolded = new Set<string>();
   for (let i = 0; i < 3; i++) {
     await page.evaluate(() => document.querySelectorAll("main details:not([open])").forEach((d) => d.setAttribute("open", "")));
     const closed = page.locator("main [aria-expanded=false]");
-    for (let n = await closed.count(); n > 0; n--) await unfold(page, closed.first());
+    for (;;) {
+      const next = (await closed.allTextContents()).findIndex((t) => !unfolded.has(t.replace(/^\s*[▸▾]/, "").trim()));
+      if (next < 0) break;
+      unfolded.add(((await closed.nth(next).textContent()) ?? "").replace(/^\s*[▸▾]/, "").trim());
+      await unfold(page, closed.nth(next));
+    }
   }
   return page.evaluate((name) => {
     // an action said in the person's own name ("as U49 Educator") is the same action for each of them
@@ -98,8 +107,9 @@ test("an educator reaches every page and every action the coordinator does", asy
   const educator = await asEducator(browser);
   try {
     for (const at of pages) {
-      const theirs = await offered(page, at, TEST_STAFF.name);
-      const mine = await offered(educator, at, EDUCATOR.name);
+      // two people, two browsers, nothing shared between them: both read the page at once, so the walk costs the slower of
+      // the two, not their sum (a page with many toggles reloads once per toggle, and the rows other specs leave multiply them)
+      const [theirs, mine] = await Promise.all([offered(page, at, TEST_STAFF.name), offered(educator, at, EDUCATOR.name)]);
       // a page's own words may name the coordinator (the map does); a refusal is one the coordinator is not given
       expect(mine.refused, `${at} refuses an educator`).toBe(theirs.refused);
       expect(theirs.actions.filter((a) => !mine.actions.includes(a)), `on ${at}, offered to the coordinator only`).toEqual([]);
