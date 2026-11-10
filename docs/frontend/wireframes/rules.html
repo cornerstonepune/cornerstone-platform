@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wireframe: Timetable rules (rules)</title>
+<link rel="stylesheet" href="kit.css">
+</head>
+<!-- Wireframe of screens.json "rules" (/timetable/rules), drawn as the coordinator (the only role that sees it). Under the Timetable door, not Setup. The rules grouped by kind, each heading with its count (fixed slots are the periods marked fixed, so they sit in Period times). Edit turns a row's value into a field with Save and Cancel; those two and the field are not on the screen's elements, so they are described, not drawn. Add a rule is the main action. The History of edits fold is drawn open.
+     data-el = index in screens.json rules.elements; data-bar = index in screens.json bar; data-source = target
+     table.column; data-gap = what the target tables cannot give. Both frames hold the same markup: the phone layout
+     comes from kit.css container queries, as it will on the site. Names are from fake-names.json. -->
+<body>
+<div class="wf-sheet">
+  <header>
+    <p class="wf-label">rules · Timetable rules · /timetable/rules · laptop 1440 and phone 400 · add data-theme="dark" on &lt;html&gt; for dark</p>
+  </header>
+  <section class="wf" data-viewport="1440" aria-label="Laptop, 1440 px">
+    <div class="frame">
+      <header class="bar">
+        <a class="brand" data-bar="0" href="#today" aria-label="Cornerstone Gurukul, go to Today">
+          <img class="wide on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-colour.svg" alt="">
+          <img class="wide on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-for-dark-backgrounds.svg" alt="">
+          <img class="small on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark.svg" alt="">
+          <img class="small on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark-on-white-tile.svg" alt="">
+        </a>
+        <ul class="doors" aria-label="Doors">
+          <li><a class="door" data-bar="0" href="#today"><i class="ic" data-icon="today"></i>Today <span class="badge num" data-source="pii.educator_note.status pii.educator_note.received_at" aria-label="7 notes to confirm">7</span></a></li>
+          <li><a class="door" data-bar="1" href="#timetable" aria-current="page"><i class="ic" data-icon="timetable"></i>Timetable</a></li>
+          <li><a class="door" data-bar="2" href="#children"><i class="ic" data-icon="children"></i>Children</a></li>
+          <li><a class="door" data-bar="3" href="#setup"><i class="ic" data-icon="setup"></i>Setup</a></li>
+        </ul>
+        <label class="search"><i class="ic s" data-icon="search"></i><span class="vh">Search</span><input data-bar="4" type="search" placeholder="Sr. No., name or activity"></label>
+        <button class="barbtn press" data-bar="5" type="button" role="switch" aria-checked="false"><i class="ic" data-icon="acting-as"></i><span class="w">Acting as</span></button>
+        <a class="barbtn" data-bar="6" href="#help" aria-label="Help for this page"><i class="ic" data-icon="help"></i></a>
+        <button class="barbtn press" data-bar="7" type="button"><i class="ic" data-icon="sign-out"></i><span class="w">Sign out</span></button>
+      </header>
+      <ol class="trail" aria-label="Trail">
+        <li><a data-trail href="#timetable">Timetable</a></li>
+        <li><i class="ic s" data-icon="trail"></i></li>
+        <li aria-current="page">Timetable rules</li>
+      </ol>
+      <div class="page">
+        <main class="main">
+          <div class="head">
+            <p class="eyebrow"><i class="ic s" data-icon="checklist"></i>Every grade · <span class="num" data-source="timetable_rule.id period.id">10</span> rules</p>
+            <h1 class="title">Timetable rules</h1>
+            <p class="purpose">Period times, blocked days, fixed slots and subject limits, kept as rows with who changed them.</p>
+          </div>
+          <div class="filters" data-block="FilterBar">
+            <label class="sel"><i class="ic s" data-icon="filter"></i>Grade <select data-el="0" data-source="grade.name"><option>Every grade</option><option>K2</option><option>Grade 1</option><option>Grade 2</option></select></label>
+            <label class="sel">Kind <select data-el="1" data-source="timetable_rule.kind"><option>Every kind</option><option>Period times</option><option>Blocked days</option><option>Subject limits</option></select></label>
+            <button class="btn btn-main press" data-el="3" type="button"><i class="ic" data-icon="form"></i>Add a rule</button>
+          </div>
+          <p class="caption">Edit makes the row's value a field with Save and Cancel; Save keeps who changed it and when, in the history below.</p>
+          <div class="groups">
+            <div class="grp" data-state="quiet">
+              <h3 class="grp-h"><i class="ic s" data-icon="time"></i>Period times and fixed slots <span class="count num">4</span></h3>
+              <div class="table-box" data-block="DataTable"><table class="table"><thead><tr><th>Rule</th><th>Grade</th><th>Value</th><th>Changed by, when</th><th class="st">Edit</th></tr></thead><tbody>
+<tr><td data-source="period.label">Settling in</td><td data-source="period.grade_code grade.name">K2</td><td class="num" data-source="period.starts_at period.ends_at period.fixed">08:30 to 08:45 · fixed</td><td><span data-source="change_log.staff_id pii.staff.name">Asha Almond</span> · <span class="num" data-source="change_log.at">2-Jun</span></td><td class="st"><button class="btn press" data-el="2" type="button">Edit</button></td></tr>
+<tr><td data-source="period.label">Period 1</td><td data-source="period.grade_code grade.name">K2</td><td class="num" data-source="period.starts_at period.ends_at period.fixed">08:45 to 09:30</td><td><span data-source="change_log.staff_id pii.staff.name">Asha Almond</span> · <span class="num" data-source="change_log.at">2-Jun</span></td><td class="st"><button class="btn press" data-el="2" type="button">Edit</button></td></tr>
+<tr><td data-source="period.label">Period 2</td><td data-source="period.grade_code grade.name">K2</td><td class="num" data-source="period.starts_at period.ends_at period.fixed">09:30 to 10:15</td><td><span data-source="change_log.staff_id pii.staff.name">Asha Almond</span> · <span class="num" data-source="change_log.at">2-Jun</span></td><td class="st"><button class="btn press" data-el="2" type="button">Edit</button></td></tr>
+<tr><td data-source="period.label">Fruit and play</td><td data-source="period.grade_code grade.name">K2</td><td class="num" data-source="period.starts_at period.ends_at period.fixed">10:15 to 10:30 · fixed</td><td><span data-source="change_log.staff_id pii.staff.name">Gopal Ginger</span> · <span class="num" data-source="change_log.at">14-Oct</span></td><td class="st"><button class="btn press" data-el="2" type="button">Edit</button></td></tr>
+              </tbody></table></div>
+            </div>
+            <div class="grp" data-state="quiet">
+              <h3 class="grp-h"><i class="ic s" data-icon="frozen"></i>Blocked days <span class="count num">3</span></h3>
+              <div class="table-box" data-block="DataTable"><table class="table"><thead><tr><th>Rule</th><th>Grade</th><th>Value</th><th>Changed by, when</th><th class="st">Edit</th></tr></thead><tbody>
+<tr><td data-source="timetable_rule.reason">Sports day</td><td data-source="timetable_rule.school_class_id school_class.grade_code">Grade 1</td><td data-source="timetable_rule.on_date timetable_rule.weekday timetable_rule.week_code timetable_rule.period_id">Thu 10 Dec, all day</td><td><span data-source="change_log.staff_id pii.staff.name">Asha Almond</span> · <span class="num" data-source="change_log.at">4-Nov</span></td><td class="st"><button class="btn press" data-el="2" type="button">Edit</button></td></tr>
+<tr><td data-source="timetable_rule.reason">Diwali break</td><td data-source="timetable_rule.school_class_id school_class.grade_code">Every grade</td><td data-source="timetable_rule.on_date timetable_rule.weekday timetable_rule.week_code timetable_rule.period_id">9 Nov to 13 Nov</td><td><span data-source="change_log.staff_id pii.staff.name">Asha Almond</span> · <span class="num" data-source="change_log.at">1-Sep</span></td><td class="st"><button class="btn press" data-el="2" type="button">Edit</button></td></tr>
+<tr><td data-source="timetable_rule.reason">Library visit kept free</td><td data-source="timetable_rule.school_class_id school_class.grade_code">K2</td><td data-source="timetable_rule.on_date timetable_rule.weekday timetable_rule.week_code timetable_rule.period_id">Friday, period 4, week B</td><td><span data-source="change_log.staff_id pii.staff.name">Gopal Ginger</span> · <span class="num" data-source="change_log.at">20-Oct</span></td><td class="st"><button class="btn press" data-el="2" type="button">Edit</button></td></tr>
+              </tbody></table></div>
+            </div>
+            <div class="grp" data-state="quiet">
+              <h3 class="grp-h"><i class="ic s" data-icon="checklist"></i>Subject limits <span class="count num">3</span></h3>
+              <div class="table-box" data-block="DataTable"><table class="table"><thead><tr><th>Rule</th><th>Grade</th><th>Value</th><th>Changed by, when</th><th class="st">Edit</th></tr></thead><tbody>
+<tr><td data-source="timetable_rule.subject_code subject.name">Arts</td><td data-source="timetable_rule.school_class_id school_class.grade_code">K2</td><td data-source="timetable_rule.fewest timetable_rule.most timetable_rule.span">at least 6 a fortnight</td><td><span data-source="change_log.staff_id pii.staff.name">Asha Almond</span> · <span class="num" data-source="change_log.at">2-Jun</span></td><td class="st"><button class="btn press" data-el="2" type="button">Edit</button></td></tr>
+<tr><td data-source="timetable_rule.subject_code subject.name">Numeracy</td><td data-source="timetable_rule.school_class_id school_class.grade_code">K2</td><td data-source="timetable_rule.fewest timetable_rule.most timetable_rule.span">16 to 20 a fortnight</td><td><span data-source="change_log.staff_id pii.staff.name">Asha Almond</span> · <span class="num" data-source="change_log.at">2-Jun</span></td><td class="st"><button class="btn press" data-el="2" type="button">Edit</button></td></tr>
+<tr><td data-source="timetable_rule.subject_code subject.name">Numeracy</td><td data-source="timetable_rule.school_class_id school_class.grade_code">Grade 1</td><td data-source="timetable_rule.fewest timetable_rule.most timetable_rule.span">at most 2 a day</td><td><span data-source="change_log.staff_id pii.staff.name">Gopal Ginger</span> · <span class="num" data-source="change_log.at">6-Nov</span></td><td class="st"><button class="btn press" data-el="2" type="button">Edit</button></td></tr>
+              </tbody></table></div>
+            </div>
+          </div>
+          <details class="details" data-block="Details" open><summary data-el="4"><i class="ic s" data-icon="history"></i>History of edits</summary><div>
+            <ol class="timeline">
+              <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="history"></i></span><div><b>Numeracy, Grade 1: at most 2 a day (added)</b><p data-source="change_log.staff_id pii.staff.name">Gopal Ginger</p></div><span class="caption num" data-source="change_log.at">6-Nov</span></li>
+              <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="history"></i></span><div><b>Sports day moved from 3 Dec to 10 Dec</b><p><span data-source="change_log.reason">The ground is booked on the 3rd.</span> · <span data-source="change_log.staff_id pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="change_log.at">4-Nov</span></li>
+              <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="history"></i></span><div><b>Fruit and play: 10:10 became 10:15</b><p data-source="change_log.staff_id pii.staff.name">Gopal Ginger</p></div><span class="caption num" data-source="change_log.at">14-Oct</span></li>
+            </ol></div></details>
+          <div class="card">
+            <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: before any rule</div>
+            <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="time"></i><b>No rules yet</b><span class="muted">Add the period times first; the draft cannot run without them.</span></div></div>
+          </div>
+        </main>
+        <aside class="rail" aria-label="Connected to">
+          <section class="rail-box">
+            <h2>Connected to</h2>
+            <ul class="rlist">
+              <li><a class="ritem" data-el="5" href="#draft"><span class="tile" data-kind="period"><i class="ic" data-icon="form"></i></span><span>Draft from the rules<small>reads these rows</small></span></a></li>
+              <li><a class="ritem" data-el="6" href="#timetable"><span class="tile" data-kind="period"><i class="ic" data-icon="timetable"></i></span><span>Timetable<small>the live grid</small></span></a></li>
+            </ul>
+          </section>
+          <section class="rail-box">
+            <h2>Rules by grade</h2>
+            <dl class="kv" data-block="KeyValue">
+              <dt>K2</dt><dd class="num" data-source="timetable_rule.school_class_id period.grade_code">7</dd>
+              <dt>Grade 1</dt><dd class="num" data-source="timetable_rule.school_class_id period.grade_code">2</dd>
+              <dt>Every grade</dt><dd class="num" data-source="timetable_rule.school_class_id">1</dd>
+              <dt>Last change</dt><dd class="num" data-source="change_log.at">6-Nov</dd>
+            </dl>
+          </section>
+        </aside>
+      </div>
+      <nav class="tabbar" aria-label="Doors">
+        <a class="tab" data-bar="0" href="#today"><i class="ic" data-icon="today"></i>Today</a>
+        <a class="tab" data-bar="1" href="#timetable" aria-current="page"><i class="ic" data-icon="timetable"></i>Timetable</a>
+        <a class="tab" data-bar="2" href="#children"><i class="ic" data-icon="children"></i>Children</a>
+        <a class="tab" data-bar="3" href="#setup"><i class="ic" data-icon="setup"></i>Setup</a>
+      </nav>
+    </div>
+  </section>
+  <section class="wf" data-viewport="400" aria-label="Phone, 400 px">
+    <div class="frame">
+      <header class="bar">
+        <a class="brand" data-bar="0" href="#today" aria-label="Cornerstone Gurukul, go to Today">
+          <img class="wide on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-colour.svg" alt="">
+          <img class="wide on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-for-dark-backgrounds.svg" alt="">
+          <img class="small on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark.svg" alt="">
+          <img class="small on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark-on-white-tile.svg" alt="">
+        </a>
+        <ul class="doors" aria-label="Doors">
+          <li><a class="door" data-bar="0" href="#today"><i class="ic" data-icon="today"></i>Today <span class="badge num" data-source="pii.educator_note.status pii.educator_note.received_at" aria-label="7 notes to confirm">7</span></a></li>
+          <li><a class="door" data-bar="1" href="#timetable" aria-current="page"><i class="ic" data-icon="timetable"></i>Timetable</a></li>
+          <li><a class="door" data-bar="2" href="#children"><i class="ic" data-icon="children"></i>Children</a></li>
+          <li><a class="door" data-bar="3" href="#setup"><i class="ic" data-icon="setup"></i>Setup</a></li>
+        </ul>
+        <label class="search"><i class="ic s" data-icon="search"></i><span class="vh">Search</span><input data-bar="4" type="search" placeholder="Sr. No., name or activity"></label>
+        <button class="barbtn press" data-bar="5" type="button" role="switch" aria-checked="false"><i class="ic" data-icon="acting-as"></i><span class="w">Acting as</span></button>
+        <a class="barbtn" data-bar="6" href="#help" aria-label="Help for this page"><i class="ic" data-icon="help"></i></a>
+        <button class="barbtn press" data-bar="7" type="button"><i class="ic" data-icon="sign-out"></i><span class="w">Sign out</span></button>
+      </header>
+      <ol class="trail" aria-label="Trail">
+        <li><a data-trail href="#timetable">Timetable</a></li>
+        <li><i class="ic s" data-icon="trail"></i></li>
+        <li aria-current="page">Timetable rules</li>
+      </ol>
+      <div class="page">
+        <main class="main">
+          <div class="head">
+            <p class="eyebrow"><i class="ic s" data-icon="checklist"></i>Every grade · <span class="num" data-source="timetable_rule.id period.id">10</span> rules</p>
+            <h1 class="title">Timetable rules</h1>
+            <p class="purpose">Period times, blocked days, fixed slots and subject limits, kept as rows with who changed them.</p>
+          </div>
+          <div class="filters" data-block="FilterBar">
+            <label class="sel"><i class="ic s" data-icon="filter"></i>Grade <select data-el="0" data-source="grade.name"><option>Every grade</option><option>K2</option><option>Grade 1</option><option>Grade 2</option></select></label>
+            <label class="sel">Kind <select data-el="1" data-source="timetable_rule.kind"><option>Every kind</option><option>Period times</option><option>Blocked days</option><option>Subject limits</option></select></label>
+            <button class="btn btn-main press" data-el="3" type="button"><i class="ic" data-icon="form"></i>Add a rule</button>
+          </div>
+          <p class="caption">Edit makes the row's value a field with Save and Cancel; Save keeps who changed it and when, in the history below.</p>
+          <div class="groups">
+            <div class="grp" data-state="quiet">
+              <h3 class="grp-h"><i class="ic s" data-icon="time"></i>Period times and fixed slots <span class="count num">4</span></h3>
+              <div class="table-box" data-block="DataTable"><table class="table"><thead><tr><th>Rule</th><th>Grade</th><th>Value</th><th>Changed by, when</th><th class="st">Edit</th></tr></thead><tbody>
+<tr><td data-source="period.label">Settling in</td><td data-source="period.grade_code grade.name">K2</td><td class="num" data-source="period.starts_at period.ends_at period.fixed">08:30 to 08:45 · fixed</td><td><span data-source="change_log.staff_id pii.staff.name">Asha Almond</span> · <span class="num" data-source="change_log.at">2-Jun</span></td><td class="st"><button class="btn press" data-el="2" type="button">Edit</button></td></tr>
+<tr><td data-source="period.label">Period 1</td><td data-source="period.grade_code grade.name">K2</td><td class="num" data-source="period.starts_at period.ends_at period.fixed">08:45 to 09:30</td><td><span data-source="change_log.staff_id pii.staff.name">Asha Almond</span> · <span class="num" data-source="change_log.at">2-Jun</span></td><td class="st"><button class="btn press" data-el="2" type="button">Edit</button></td></tr>
+<tr><td data-source="period.label">Period 2</td><td data-source="period.grade_code grade.name">K2</td><td class="num" data-source="period.starts_at period.ends_at period.fixed">09:30 to 10:15</td><td><span data-source="change_log.staff_id pii.staff.name">Asha Almond</span> · <span class="num" data-source="change_log.at">2-Jun</span></td><td class="st"><button class="btn press" data-el="2" type="button">Edit</button></td></tr>
+<tr><td data-source="period.label">Fruit and play</td><td data-source="period.grade_code grade.name">K2</td><td class="num" data-source="period.starts_at period.ends_at period.fixed">10:15 to 10:30 · fixed</td><td><span data-source="change_log.staff_id pii.staff.name">Gopal Ginger</span> · <span class="num" data-source="change_log.at">14-Oct</span></td><td class="st"><button class="btn press" data-el="2" type="button">Edit</button></td></tr>
+              </tbody></table></div>
+            </div>
+            <div class="grp" data-state="quiet">
+              <h3 class="grp-h"><i class="ic s" data-icon="frozen"></i>Blocked days <span class="count num">3</span></h3>
+              <div class="table-box" data-block="DataTable"><table class="table"><thead><tr><th>Rule</th><th>Grade</th><th>Value</th><th>Changed by, when</th><th class="st">Edit</th></tr></thead><tbody>
+<tr><td data-source="timetable_rule.reason">Sports day</td><td data-source="timetable_rule.school_class_id school_class.grade_code">Grade 1</td><td data-source="timetable_rule.on_date timetable_rule.weekday timetable_rule.week_code timetable_rule.period_id">Thu 10 Dec, all day</td><td><span data-source="change_log.staff_id pii.staff.name">Asha Almond</span> · <span class="num" data-source="change_log.at">4-Nov</span></td><td class="st"><button class="btn press" data-el="2" type="button">Edit</button></td></tr>
+<tr><td data-source="timetable_rule.reason">Diwali break</td><td data-source="timetable_rule.school_class_id school_class.grade_code">Every grade</td><td data-source="timetable_rule.on_date timetable_rule.weekday timetable_rule.week_code timetable_rule.period_id">9 Nov to 13 Nov</td><td><span data-source="change_log.staff_id pii.staff.name">Asha Almond</span> · <span class="num" data-source="change_log.at">1-Sep</span></td><td class="st"><button class="btn press" data-el="2" type="button">Edit</button></td></tr>
+<tr><td data-source="timetable_rule.reason">Library visit kept free</td><td data-source="timetable_rule.school_class_id school_class.grade_code">K2</td><td data-source="timetable_rule.on_date timetable_rule.weekday timetable_rule.week_code timetable_rule.period_id">Friday, period 4, week B</td><td><span data-source="change_log.staff_id pii.staff.name">Gopal Ginger</span> · <span class="num" data-source="change_log.at">20-Oct</span></td><td class="st"><button class="btn press" data-el="2" type="button">Edit</button></td></tr>
+              </tbody></table></div>
+            </div>
+            <div class="grp" data-state="quiet">
+              <h3 class="grp-h"><i class="ic s" data-icon="checklist"></i>Subject limits <span class="count num">3</span></h3>
+              <div class="table-box" data-block="DataTable"><table class="table"><thead><tr><th>Rule</th><th>Grade</th><th>Value</th><th>Changed by, when</th><th class="st">Edit</th></tr></thead><tbody>
+<tr><td data-source="timetable_rule.subject_code subject.name">Arts</td><td data-source="timetable_rule.school_class_id school_class.grade_code">K2</td><td data-source="timetable_rule.fewest timetable_rule.most timetable_rule.span">at least 6 a fortnight</td><td><span data-source="change_log.staff_id pii.staff.name">Asha Almond</span> · <span class="num" data-source="change_log.at">2-Jun</span></td><td class="st"><button class="btn press" data-el="2" type="button">Edit</button></td></tr>
+<tr><td data-source="timetable_rule.subject_code subject.name">Numeracy</td><td data-source="timetable_rule.school_class_id school_class.grade_code">K2</td><td data-source="timetable_rule.fewest timetable_rule.most timetable_rule.span">16 to 20 a fortnight</td><td><span data-source="change_log.staff_id pii.staff.name">Asha Almond</span> · <span class="num" data-source="change_log.at">2-Jun</span></td><td class="st"><button class="btn press" data-el="2" type="button">Edit</button></td></tr>
+<tr><td data-source="timetable_rule.subject_code subject.name">Numeracy</td><td data-source="timetable_rule.school_class_id school_class.grade_code">Grade 1</td><td data-source="timetable_rule.fewest timetable_rule.most timetable_rule.span">at most 2 a day</td><td><span data-source="change_log.staff_id pii.staff.name">Gopal Ginger</span> · <span class="num" data-source="change_log.at">6-Nov</span></td><td class="st"><button class="btn press" data-el="2" type="button">Edit</button></td></tr>
+              </tbody></table></div>
+            </div>
+          </div>
+          <details class="details" data-block="Details" open><summary data-el="4"><i class="ic s" data-icon="history"></i>History of edits</summary><div>
+            <ol class="timeline">
+              <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="history"></i></span><div><b>Numeracy, Grade 1: at most 2 a day (added)</b><p data-source="change_log.staff_id pii.staff.name">Gopal Ginger</p></div><span class="caption num" data-source="change_log.at">6-Nov</span></li>
+              <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="history"></i></span><div><b>Sports day moved from 3 Dec to 10 Dec</b><p><span data-source="change_log.reason">The ground is booked on the 3rd.</span> · <span data-source="change_log.staff_id pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="change_log.at">4-Nov</span></li>
+              <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="history"></i></span><div><b>Fruit and play: 10:10 became 10:15</b><p data-source="change_log.staff_id pii.staff.name">Gopal Ginger</p></div><span class="caption num" data-source="change_log.at">14-Oct</span></li>
+            </ol></div></details>
+          <div class="card">
+            <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: before any rule</div>
+            <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="time"></i><b>No rules yet</b><span class="muted">Add the period times first; the draft cannot run without them.</span></div></div>
+          </div>
+        </main>
+        <aside class="rail" aria-label="Connected to">
+          <section class="rail-box">
+            <h2>Connected to</h2>
+            <ul class="rlist">
+              <li><a class="ritem" data-el="5" href="#draft"><span class="tile" data-kind="period"><i class="ic" data-icon="form"></i></span><span>Draft from the rules<small>reads these rows</small></span></a></li>
+              <li><a class="ritem" data-el="6" href="#timetable"><span class="tile" data-kind="period"><i class="ic" data-icon="timetable"></i></span><span>Timetable<small>the live grid</small></span></a></li>
+            </ul>
+          </section>
+          <section class="rail-box">
+            <h2>Rules by grade</h2>
+            <dl class="kv" data-block="KeyValue">
+              <dt>K2</dt><dd class="num" data-source="timetable_rule.school_class_id period.grade_code">7</dd>
+              <dt>Grade 1</dt><dd class="num" data-source="timetable_rule.school_class_id period.grade_code">2</dd>
+              <dt>Every grade</dt><dd class="num" data-source="timetable_rule.school_class_id">1</dd>
+              <dt>Last change</dt><dd class="num" data-source="change_log.at">6-Nov</dd>
+            </dl>
+          </section>
+        </aside>
+      </div>
+      <nav class="tabbar" aria-label="Doors">
+        <a class="tab" data-bar="0" href="#today"><i class="ic" data-icon="today"></i>Today</a>
+        <a class="tab" data-bar="1" href="#timetable" aria-current="page"><i class="ic" data-icon="timetable"></i>Timetable</a>
+        <a class="tab" data-bar="2" href="#children"><i class="ic" data-icon="children"></i>Children</a>
+        <a class="tab" data-bar="3" href="#setup"><i class="ic" data-icon="setup"></i>Setup</a>
+      </nav>
+    </div>
+  </section>
+</div>
+</body>
+</html>

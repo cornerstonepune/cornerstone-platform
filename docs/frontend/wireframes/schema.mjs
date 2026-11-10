@@ -8,8 +8,27 @@ import { join } from "node:path";
 
 const norm = (n) => n.replace(/"/g, "").replace(/^public\./i, "").toLowerCase();
 
+// String-aware: a "--" inside a quoted literal (a comment on a column that says "engine load --check") is text, not a
+// comment. Stripping it as one cut the literal's closing quote and hid every later statement of the file.
 function stripComments(sql) {
-  return sql.replace(/\/\*[\s\S]*?\*\//g, " ").replace(/--[^\n]*/g, " ");
+  let out = "";
+  for (let i = 0; i < sql.length; ) {
+    const ch = sql[i];
+    if (ch === "'") {
+      let j = i + 1;
+      while (j < sql.length && !(sql[j] === "'" && sql[j + 1] !== "'")) j += sql[j] === "'" ? 2 : 1;
+      out += sql.slice(i, j + 1);
+      i = j + 1;
+    } else if (ch === "-" && sql[i + 1] === "-") {
+      while (i < sql.length && sql[i] !== "\n") i++;
+      out += " ";
+    } else if (ch === "/" && sql[i + 1] === "*") {
+      const end = sql.indexOf("*/", i + 2);
+      i = end < 0 ? sql.length : end + 2;
+      out += " ";
+    } else { out += ch; i++; }
+  }
+  return out;
 }
 
 // Remove function bodies (create function ... as $tag$ ... $tag$); keep DO block bodies, whose DDL runs.
