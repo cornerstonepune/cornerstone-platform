@@ -22,6 +22,8 @@ Three screens at `/setup/activities/[code]`, `/setup/objectives/[code]`, `/setup
 
 ## Not done, and why
 
+Decision (orchestrator, 10 Nov): activity, objective and skill stay on the u70 pending list (their slice is not in `merged_slices`) with these reasons: *needs checker drivers* (added once, in UI-4b, not here), *needs backend* (photo store, `skill_level_version`, clusters). Nothing is loosened; the three controls are added when the routes land. The educator-switch gate stays.
+
 - **Inventory run `SCREEN=activity,objective,skill` fails.** What is left: elements need `text`/`data` fields in screens.json so the
   checker matches "each objective", "each activity row", "rail: each skill"; titles need the `{…}` form; the checker has no driver for the
   effects of Keep, Edit, Send back and "Change a level's sentence"; the skill screen took 3 minutes to time out at 1440 (not yet found).

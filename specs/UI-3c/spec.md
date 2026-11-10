@@ -39,7 +39,7 @@ Skill
 All three
 16. While the educator screens are switched off an educator is shown "not found" on all three (a coordinator who reviews is not); the switch is the school's, the pages do not decide it.
 17. The two old single-activity addresses (`/educator/activity/[code]`, `/curriculum/fill/[code]`) answer 308 to the new one, with the code kept.
-18. Every control listed for these screens in docs/frontend/screens.json behaves as its kind says, proved by the inventory run `SCREEN=activity,objective,skill`.
+18. (Pending, not in this PR: needs the checker's drivers from UI-4b and the backend rows named under Out of scope.) Every control listed for these screens in docs/frontend/screens.json behaves as its kind says, proved by the inventory run `SCREEN=activity,objective,skill`.
 
 ### Out of scope
 
