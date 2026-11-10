@@ -2344,6 +2344,28 @@
           "data": "data-topic-open",
           "when": "?view=topic",
           "to": "assessments"
+        },
+        {
+          "t": "filter",
+          "label": "reader: show by day, by kind of question, by how sure",
+          "note": "how the reader is doing; the address carries the choice",
+          "text": "Show",
+          "when": "?view=reading"
+        },
+        {
+          "t": "button",
+          "label": "Read again",
+          "effect": "the file is read again with the reader as it now is; the page says in words when the engine no longer keeps it",
+          "text": "Read again",
+          "when": "?view=reading",
+          "drive": {
+            "expect": {
+              "url": "read=refused",
+              "text": [
+                "no longer kept by the engine"
+              ]
+            }
+          }
         }
       ],
       "rail": [

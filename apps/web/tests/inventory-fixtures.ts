@@ -76,6 +76,8 @@ let RUN = "0000";
 let JUDGE = "";
 /** The name the inventory types into a rename field. */
 const NAMED = "Named in the inventory";
+/** The file the inventory has been read lately. */
+const SCAN = "Inventory scan.pdf";
 let SETTLED_CAPTURES: string[] = [];
 const code = (n: number) => `CS${RUN}${n.toString(16).toUpperCase().padStart(2, "0")}`;
 
@@ -239,9 +241,13 @@ FIXTURES["assessments-rest"] = () =>
     RUN = Math.floor(Math.random() * 0xffff).toString(16).toUpperCase().padStart(4, "0");
     const names = Object.fromEntries((await sql<{ id: string; roll: string }[]>`select id, roll_no as roll from child_now where section = ${SECTION}`).map((c) => [c.roll, c.id]));
     await anAssessment(sql, Object.fromEntries(Array.from({ length: 12 }, (_, i) => [`k${i}`, names[String(i + 1)]])));
+    // one file read lately, so the Reading view has a row with Read again (the engine no longer keeps it, and says so)
+    await sql`insert into flow_run (tenant_id, flow, trigger, status, finished_at, result)
+      select id, 'read-scan', ${`e2e@cornerstone.test: ${SCAN}`}, 'ok', now(), ${sql.json({ pages: 2, file: SCAN, copies: [] })} from tenant limit 1`;
   });
 FIXTURES["assessments-gone"] = () =>
   aside(async (sql) => {
+    await sql`delete from flow_run where flow = 'read-scan' and trigger like ${`%${SCAN}`}`;
     await sql`update sheet_instance set print_status = 'void' where qr_code like ${`CS${RUN}%`}`;
   });
 

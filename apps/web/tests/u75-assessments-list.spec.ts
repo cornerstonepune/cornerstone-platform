@@ -40,6 +40,13 @@ test.beforeAll(async () => {
   set = add.skill;
   [{ name: addName }] = await sql<{ name: string }[]>`select name from skill where code = ${addSkill}`;
   await sql`update sheet_instance set print_status = 'void' where section = ${SECTION} and qr_code not like ${`CS${RUN}%`}`;
+  // a name an earlier run gave stays in the history log (rule 4); a last row with an empty name gives the built name back
+  await sql`
+    insert into change_log (tenant_id, table_name, row_id, op, after, origin)
+    select tenant_id, 'assessment', row_id, 'name', '{"name": ""}'::jsonb, 'u75' from (
+      select distinct on (row_id) row_id, tenant_id, after ->> 'name' as name from change_log
+      where table_name = 'assessment' and op = 'name' and row_id like ${`assessment~${SECTION}~%`} order by row_id, at desc, id desc) x
+    where name <> ''`;
   const paper = (qr: string, template: string, week: string) => sql`
     insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, week, section, kind, print_status, approved_by, approved_at, printed_at)
     values (${tenant}, ${qr}, ${template}, ${kids.Asha}, to_date(${week}, 'IYYY-"W"IW'), ${SECTION}, 'assessment', 'printed', 'u75', now(), now())`;
@@ -152,4 +159,24 @@ test("the assessment's own screen takes the name as its title, and a new name re
   await page.getByLabel("Name this assessment").fill("   ");
   await page.getByRole("button", { name: "Save the name" }).click();
   await expect(page.locator("h1")).toHaveText(names[1]);
+});
+
+test("a Reading view says how the reader is doing and lists the files read lately, and a file can be read again (u10, u51)", async ({ page }) => {
+  const FILE = `U75 scan ${Date.now()}.pdf`;
+  const [t] = await sql<{ id: string }[]>`select id from tenant limit 1`;
+  await sql`insert into flow_run (tenant_id, flow, trigger, status, finished_at, result)
+    values (${t.id}, 'read-scan', ${`e2e@cornerstone.test: ${FILE}`}, 'ok', now(), ${sql.json({ pages: 2, file: FILE, copies: [] })})`;
+  try {
+    await page.goto(`${LIST}&view=reading`);
+    await expect(page.getByRole("tab", { name: "Reading" })).toHaveAttribute("aria-selected", "true");
+    // the reader's record is the school's, never one person's: it names no child and no educator
+    await expect(page.getByRole("heading", { name: "How the reader is doing" })).toBeVisible();
+    const run = page.getByRole("table", { name: "Scans read last" }).getByRole("row").filter({ hasText: FILE }).first();
+    await expect(run).toBeVisible();
+    await run.getByRole("button", { name: "Read again" }).click();
+    await expect(page).toHaveURL(/read=refused/);
+    await expect(page.getByText("is no longer kept by the engine: send the scan again")).toBeVisible();
+  } finally {
+    await sql`delete from flow_run where flow = 'read-scan' and trigger like ${`%${FILE}`}`;
+  }
 });

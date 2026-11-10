@@ -735,7 +735,7 @@ Main action: Check answers · Next step: an assessment
 Data: existing queries-papers (assessmentList, paperList), STEP_WORDS, STATUS_WORDS
 Empty: No assessments yet: Make one · Phone: the table scrolls sideways in its own box; the drop zone becomes 'take photos'
 Folds in: /papers, /papers/make, /capture, /capture/[id]
-Every control on the screen (28), and what the test does with each:
+Every control on the screen (30), and what the test does with each:
 - **link** do now tile → Check the answers (`/children/assessments/[key]/[roll]`) (the first paper with answers to judge)
 - **link** this week tile → {the built name} (`/children/assessments/[key]`) (the first pack to approve)
 - **link** results in tile → {the built name} (`/children/assessments/[key]`)
@@ -764,6 +764,8 @@ Every control on the screen (28), and what the test does with each:
 - **field** rename: name this assessment (one on each row; the built name shows until a name is chosen)
 - **button** Save the name: the name is the educator's own and is kept as a row of the history log, the older names stay
 - **link** each topic → Assessments (`/children/assessments`) (opens the topic's assessments beneath it)
+- **filter** reader: show by day, by kind of question, by how sure (how the reader is doing; the address carries the choice)
+- **button** Read again: the file is read again with the reader as it now is; the page says in words when the engine no longer keeps it
 Done when (on top of the ten generic checks):
 - the four old pages answer 308 to this one or to the Assessment node
 - every row's name is built topic · skill · level · kind · class · day (regex)

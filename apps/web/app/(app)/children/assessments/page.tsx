@@ -103,6 +103,9 @@ export default async function AssessmentsPage({ searchParams }: Props) {
   const mainRow = judging ?? week ?? rows[0];
   const view = byTopic ? "topic" : reading ? "reading" : q.view === "table" ? "table" : "board";
   const view_ = (v: string) => `${HERE}?${new URLSearchParams({ ...Object.fromEntries(Object.entries(q).filter(([k, x]) => x && k !== "view" && k !== "page")) as Record<string, string>, view: v })}`;
+  /** The By topic view as addressed now, with some parameters changed (undefined removes one): each appears once. */
+  const topicAt = (over: Record<string, string | undefined>) =>
+    `${HERE}?${new URLSearchParams(Object.entries({ ...q, view: "topic", said: undefined, ...over }).filter(([, v]) => v) as [string, string][])}`;
   const subjectWords = new Map(subjects.map((x) => [x.code, x.label] as const));
   const papersBack = (a: Named) => `${a.by.printed + a.by.scanned + a.by.checked + a.by["signed off"]} of ${a.copies}`;
 
@@ -145,8 +148,6 @@ export default async function AssessmentsPage({ searchParams }: Props) {
       ),
     },
   ];
-  const trouble = scans.some((s) => s.status === "error" || s.noCode.length || s.lines.length);
-  void trouble;
   const empty = rows.length === 0;
 
   return (
@@ -180,7 +181,7 @@ export default async function AssessmentsPage({ searchParams }: Props) {
       {q.said ? <p role="status" className="mb-3 p-3">{q.said}</p> : null}
       <FilterBar
         action={HERE}
-        keep={{ view: q.view }}
+        keep={{ view: q.view, t: byTopic ? q.t : undefined }}
         filters={[
           { name: "class", label: "Class", value: f.class, all: "Every class", options: options.classes.map((c) => [c, c] as const) },
           { name: "topic", label: "Topic", value: f.topic, all: "Every topic", options: taught.map((x) => [x.code, x.name] as const) },
@@ -207,7 +208,7 @@ export default async function AssessmentsPage({ searchParams }: Props) {
           {reader ? <ReaderPanel r={reader} view={readerView} page={Math.max(1, Math.floor(Number(q.rpage)) || 1)} keep={{ view: "reading" }} base={HERE} /> : null}
           {scans.length ? (
             <section aria-label="Read a scan" className="mt-4">
-              <details open={trouble} data-files-read>
+              <details open data-files-read>
                 <summary className="cursor-pointer text-[13.5px]">Files read lately, and what each lacks ({scans.length})</summary>
                 <div className="mt-2">
                   <ScansTable scans={scans} from={HERE} />
@@ -228,9 +229,9 @@ export default async function AssessmentsPage({ searchParams }: Props) {
             of={opened?.total ?? 0}
             page={topicPage}
             topicPage={Math.max(1, Math.floor(Number(q.tp)) || 1)}
-            topicHref={(code, isOpen) => `${view_("topic")}${isOpen ? "" : `&t=${encodeURIComponent(code)}`}`}
-            assessmentsPageHref={(n) => `${view_("topic")}&t=${encodeURIComponent(openTopic ?? "")}&page=${n}`}
-            topicsPageHref={(n) => `${view_("topic")}&tp=${n}`}
+            topicHref={(code, isOpen) => topicAt({ t: isOpen ? undefined : code, page: undefined })}
+            assessmentsPageHref={(n) => topicAt({ page: String(n) })}
+            topicsPageHref={(n) => topicAt({ tp: String(n), t: undefined, page: undefined })}
           />
           {topicList.length === 0 ? <EmptyState>No assessments yet.</EmptyState> : null}
         </>
