@@ -81,17 +81,18 @@ export async function sendWaiting(first?: string): Promise<void> {
   for (const r of rows) await send(r.id);
 }
 
-export type MyReport = { id: string; kind: NoteKind; title: string; created_at: Date; seen: Seen };
+export type MyReport = { id: string; kind: NoteKind; route: string; title: string; created_at: Date; seen: Seen };
 
 /** This person's own notes, newest first, as received, taken up or done. */
 export async function myReports(reporter: string): Promise<MyReport[]> {
-  const rows = await sql<{ id: string; kind: NoteKind; doing: string; happened: string; created_at: Date; issue_number: number | null }[]>`
-    select id, kind, doing, happened, created_at, issue_number from staff_note
+  const rows = await sql<{ id: string; kind: NoteKind; route: string; doing: string; happened: string; created_at: Date; issue_number: number | null }[]>`
+    select id, kind, route, doing, happened, created_at, issue_number from staff_note
     where reporter = ${reporter} order by created_at desc limit 50`;
   const issues = rows.some((r) => r.issue_number) ? await toolIssues() : new Map();
   return rows.map((r) => ({
     id: r.id,
     kind: r.kind,
+    route: r.route,
     title: issueTitle(r).replace(/​/g, ""),
     created_at: r.created_at,
     seen: seenAs(r.issue_number ? issues.get(r.issue_number) : undefined),

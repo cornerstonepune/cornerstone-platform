@@ -142,7 +142,6 @@ const ROUTES = (): [string, string][] => [
   ["/growth/reports", "/growth/reports"],
   ["/asks", "/asks"],
   ["/home", "/home"],
-  ["/workflows", "/workflows"],
 ];
 
 test("every page keeps the rules, or is named as still breaking them, and only those", async ({ browser }) => {

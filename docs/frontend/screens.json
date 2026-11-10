@@ -62,7 +62,9 @@
     "Empty: with the fixture's empty class or empty filter, the screen shows exactly its stated empty text and its next-step link, and no table head over no rows, no zero columns, no dash columns.",
     "Themes: a screenshot in light at 1440 is committed as the baseline; the `blocks` screen and the journey steps are also committed in dark. Text contrast is measured by the token-pair script (UI-14) and by axe, not by sampling every page."
   ],
-  "merged_slices": [],
+  "merged_slices": [
+    "UI-12"
+  ],
   "slices": [
     {
       "id": "UI-1",
@@ -3611,17 +3613,21 @@
           "t": "link",
           "label": "each job",
           "to": "today-educator",
-          "note": "the jobs are generated from screens.json: each names its own screen, and the test follows every one"
+          "note": "the jobs are generated from screens.json: each names its own screen, and the test follows every one",
+          "data": "data-job"
         },
         {
           "t": "fold",
-          "label": "each page's section"
+          "label": "each page's section",
+          "data": "data-section",
+          "text": "Sign in"
         },
         {
           "t": "link",
           "label": "? on any page",
           "to": "help",
-          "note": "opens this page at that page's section"
+          "note": "opens this page at that page's section",
+          "text": "its section"
         }
       ],
       "rail": [],

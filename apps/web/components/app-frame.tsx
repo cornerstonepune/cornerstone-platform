@@ -3,10 +3,10 @@ import Link from "@/components/link";
 import { BrandMark } from "./brand-mark";
 import { BottomDoors, DoorPages, HelpLink, TopDoors } from "./frame/doors";
 import { ActingAsSwitch, AccountLink, Person } from "./frame/person";
-import { MapLink, ReportLink } from "./frame/foot-links";
+import { ReportLink } from "./frame/foot-links";
 import { SearchBox } from "./frame/search-box";
 import { WalkProvider, type FrameDoor } from "./frame/walk";
-import { Body, PageHeader } from "./parts";
+import { Body, PageHeader, classesSaid } from "./parts";
 import { Icon } from "@/lib/icons";
 import { signOut } from "@/lib/auth-actions";
 import type { Session } from "@/lib/auth";
@@ -48,7 +48,7 @@ export async function AppFrame({ me, waiting, children }: { me: Session; waiting
             <div className="ml-auto flex min-w-0 items-center gap-[var(--space-2)] max-[700px]:flex-1 max-[700px]:justify-end">
               <SearchBox />
               <Person name={me.name}>
-                <AccountLink name={me.name} />
+                <AccountLink name={me.name} classes={classesSaid(me)} />
                 {me.role === "coordinator" ? <ActingAsSwitch on={acting} /> : null}
                 <HelpLink />
                 {me.devBypass ? (
@@ -70,7 +70,6 @@ export async function AppFrame({ me, waiting, children }: { me: Session; waiting
         <footer className="mx-auto w-full max-w-[1560px] px-[var(--space-3)] py-[var(--space-3)] text-[length:var(--text-label)] md:px-[var(--space-4)] print:hidden">
           <span className="flex flex-wrap gap-x-[var(--space-4)]">
             <ReportLink />
-            {mayUse(me, "the_map") ? <MapLink /> : null}
           </span>
         </footer>
         <BottomDoors />

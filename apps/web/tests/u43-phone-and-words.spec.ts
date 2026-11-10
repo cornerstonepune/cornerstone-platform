@@ -108,7 +108,7 @@ test.beforeAll(async ({ browser }) => {
   ];
   for (const role of ["educator", "coordinator"] as const) {
     const page = role === "educator" ? await asEducator(browser) : await signedIn(browser);
-    for (const path of [...pages, ...(role === "coordinator" ? ["/workflows"] : [])]) seen[role].push(await look(page, path));
+    for (const path of pages) seen[role].push(await look(page, path));
     await page.context().close();
   }
 });

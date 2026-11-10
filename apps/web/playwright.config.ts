@@ -54,7 +54,6 @@ export default defineConfig({
     { name: "steps", testMatch: /[sumpe]\d+-[\w-]+\.spec\.ts/, use: { storageState: SIGNED_IN } },
     // Athena's journeys (e2e/athena-journey.ts): signed in like the screens, each step checked with axe
     { name: "journey", testDir: "./e2e", testMatch: /.*\.spec\.ts/, use: { storageState: SIGNED_IN } },
-    { name: "map", testMatch: /workflows\.spec\.ts/, use: { storageState: SIGNED_IN } },
   ],
   webServer: [
     {

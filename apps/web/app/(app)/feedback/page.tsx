@@ -1,13 +1,13 @@
 import { after } from "next/server";
-import Link from "@/components/link";
 import { DataTable } from "@/components/data-table";
 import { Screen } from "@/components/app-frame";
 import { ReportForm } from "@/components/report-form";
 import { StatusChip, type State } from "@/components/status-chip";
 import { requireStaff } from "@/lib/auth";
 import { deadline } from "@/lib/deadline";
+import { routeOnly } from "@/lib/feedback-words";
 import { limits, myReports, reporterMark, sendWaiting, type MyReport } from "@/lib/feedback";
-import { KINDS, type Seen } from "@/lib/feedback-words";
+import { type Seen } from "@/lib/feedback-words";
 import type { Column } from "@/lib/ux-rules";
 import { dateWords } from "@/lib/week";
 
@@ -24,10 +24,10 @@ const CHIP: Record<Seen, [State, string]> = {
 };
 
 const columns: Column<MyReport>[] = [
-  { key: "title", label: "Your words", value: (r) => r.title },
-  { key: "kind", label: "Kind", value: (r) => KINDS[r.kind].words, width: "14rem" },
-  { key: "on", label: "Sent on", value: (r) => dateWords(r.created_at.toISOString()), width: "8rem" },
-  { key: "seen", label: "Status", status: true, value: (r) => r.seen, cell: (r) => <StatusChip state={CHIP[r.seen][0]} words={CHIP[r.seen][1]} />, width: "9rem" },
+  { key: "title", label: "What", value: (r) => r.title },
+  { key: "route", label: "Where", value: (r) => r.route, width: "14rem" },
+  { key: "on", label: "Sent", value: (r) => dateWords(r.created_at.toISOString()), width: "8rem" },
+  { key: "seen", label: "State", status: true, value: (r) => r.seen, cell: (r) => <StatusChip state={CHIP[r.seen][0]} words={CHIP[r.seen][1]} />, width: "9rem" },
 ];
 
 export default async function ReportPage({ searchParams }: Props) {
@@ -38,13 +38,13 @@ export default async function ReportPage({ searchParams }: Props) {
   const page = Number(q.page) || 1;
   return (
     <Screen
-      stage="Help"
+      stage="To the team"
       title="Report a problem or suggest something"
       purpose="Tell us what is broken, what you would like, or ask a question. It reaches the team, who decide what is built."
       action={<span className="note">One note at a time, in your own words.</span>}
-      next={{ href: "/today", label: "What needs doing" }}
+      next={{ href: routeOnly(q.from ?? "/today"), label: "Back to the page you came from" }}
     >
-      <ReportForm from={q.from ?? "/"} maxChars={maxChars} />
+      <ReportForm from={routeOnly(q.from ?? "/")} maxChars={maxChars} />
       <section className="mt-8" aria-label="Your reports">
         <h2 className="mb-2 text-[16px]">Your reports</h2>
         {mine.length ? (
@@ -60,7 +60,7 @@ export default async function ReportPage({ searchParams }: Props) {
           <p className="note">Nothing sent yet. What you send shows here, and whether it was taken up or done.</p>
         )}
         <p className="note mt-2">
-          Taken up means it will be built; done means it is finished. <Link href="/today">Back to what needs doing</Link>
+          Taken up means it will be built; done means it is finished.
         </p>
       </section>
     </Screen>

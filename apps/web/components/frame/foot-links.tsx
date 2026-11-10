@@ -16,12 +16,3 @@ export function ReportLink() {
     </Link>
   );
 }
-
-/** The engineering map: for the groups whose rows name it (lib/access.ts `the_map`), at the foot beside the report link. */
-export function MapLink() {
-  return (
-    <Link href="/workflows" className={LINK}>
-      How it works
-    </Link>
-  );
-}
