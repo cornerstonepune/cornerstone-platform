@@ -14,12 +14,12 @@ The timetable's day, week and fortnight views and the timetable rules, the fortn
 
 ### Done when
 
-1. Every screen of this slice passes the ten generic checks and every element in its list behaves as its kind says, as educator (read-only) and as coordinator; the slice's last commit adds `UI-6` to `merged_slices`.
+1. Moved to UI-6b (#586).
 2. As educator, Approve, Go live, Make a draft, Accept the clash are absent and their requests are refused (test both).
 3. The plan routes the backend exposes (the fortnight move, the timetable link apply and the timetable generate routes) check only that the actor is on the staff list, so the website checks the coordinator group itself before calling each: an educator's request to each is answered 403 by the web layer (test, one per route).
-4. Go live updates sessions in place and lists every changed session on the fortnight page; a hand move after freeze is kept with who and why and shows amber on the grid (database and DOM).
-5. The journey `e2e/the-coordinators-fortnight.spec.ts` passes: Today (coordinator) → the red clash row → Moves → accept with a reason → Fortnight → Approve → Go live → Timetable shows the change as educator; axe at each step.
-6. Every one of the 42 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; controls whose backend piece is not on main sit on the inventory's pending list with a reason.
+4. Moved to UI-6b (#586).
+5. Moved to UI-6b (#586).
+6. Moved to UI-6b (#586).
 7. Timetable: its stated purpose holds: the fortnight is the unit, week A and week B, each period a block, a moved period marked, a clash red until the coordinator accepts it
 8. Timetable: a hand move shows an amber outline and its details name who and why
 9. Timetable: an educator never sees an accept-clash control; a clash cell is red for both roles
@@ -28,13 +28,17 @@ The timetable's day, week and fortnight views and the timetable rules, the fortn
 12. Timetable rules: every edit shows who and when, and the history fold lists it
 13. Fortnight 9: Approve and Go live exist for the 'everything' group only and their requests are refused for others
 14. Fortnight 9: a frozen fortnight shows no Approve, Go live or edit control
-15. Fortnight 9: the what-changed table lists every session the go-live updated, and nothing else
+15. Moved to UI-6b (#586).
 16. Draft from the rules: the draft shown equals the slots the generator wrote (count and cells)
 17. Draft from the rules: every unmet rule row names a rule row that exists
 18. Draft from the rules: Make a draft never changes a live fortnight's sessions (count unchanged before and after)
 19. Moves by hand: a move changes only its own fortnight's sessions
 20. Moves by hand: as educator the page is read-only: no pick, no Accept, and the requests are refused
 21. Moves by hand: every move is listed with who made it and when, and an undo is a new row
+
+### Split
+
+Go live, the what-changed table, the journey, the inventory drives, the rules page's per-row Edit and the phone Day default are UI-6b (#586): the engine's Go live route is not on main and #578 is not yet merged.
 
 ### Out of scope
 

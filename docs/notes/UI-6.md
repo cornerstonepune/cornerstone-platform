@@ -32,7 +32,7 @@ repository: all pass; `m1-14a-timetable-rules` still passes beside it):
 | The new specs use a class, grade (K1) and year (2033-34) of their own. | The school's own K2 timetable load (m1-14a) refuses to run over fortnights it did not make. |
 | Cells link to `/educator/period/[id]` and `/educator/activity/[code]` until UI-3 builds `/period/[id]` and `/setup/activities/[code]`. | A rail or card link to a screen that is not built is not drawn (lib/built.ts), so no link is dead. |
 
-## Held (not built; named so nothing is silently dropped)
+## Held: split to UI-6b (#586), decided by the orchestrator, 10 Nov
 
 - **Go live** and the **what-changed table** (Done when 4, 15 of the spec's fortnight lines): the engine has no route for going live
   and the report is never stored. Reported to the orchestrator and the backend.
