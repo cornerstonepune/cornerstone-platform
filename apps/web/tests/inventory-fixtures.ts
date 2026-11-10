@@ -5,14 +5,15 @@ import { createHmac } from "node:crypto";
 import type { Browser, BrowserContext } from "@playwright/test";
 import type { Sql } from "postgres";
 import { SIGNED_IN } from "../playwright.config";
-import { aClass, aPerson, personAsStored } from "./rows";
+import { aClass, aPerson, aTaughtClass, personAsStored } from "./rows";
+import { curriculumRows, gate, offers } from "./m1-13-rows";
 import { FAKE_CHILDREN } from "./fake-names";
 
 export const SECTION = "U70A";
 export const EDUCATOR = { email: "u70-educator@cornerstone.test", name: "Inventory Educator", role: "educator", classes: [SECTION], subjects: ["NUM"] };
 
 export const OTHER = "U70B";
-export type Rows = { section: string; classId: string; children: Record<string, string>; rolls: Record<string, string>; other: Record<string, string>; otherNames: string[] };
+export type Rows = { questionKey: string; section: string; classId: string; children: Record<string, string>; rolls: Record<string, string>; other: Record<string, string>; otherNames: string[] };
 
 /** The educator (one class, one subject) and a class of fake children with Sr. Nos 1..n. Made once; a second run finds them. */
 export async function inventoryRows(sql: Sql): Promise<Rows> {
@@ -24,7 +25,16 @@ export async function inventoryRows(sql: Sql): Promise<Rows> {
   // a class the educator does not hold, with Sr. Nos 7 and 8 that the educator's class has no child for
   const otherNames = FAKE_CHILDREN.slice(10, 18) as unknown as string[];
   const other = await aClass(sql, OTHER, "K2", otherNames);
-  return { section: SECTION, classId: cls?.id ?? "", children, rolls, other, otherNames };
+  // Setup content (UI-11): a class that is taught something, so the bank lists questions; the K2 curriculum pages open (the gate's
+  // "reviewer" mode) with two offered skills waiting; a question to open
+  await aTaughtClass(sql);
+  await gate(sql, "reviewer");
+  const { skills } = await curriculumRows(sql);
+  await offers(sql, skills);
+  const [q] = await sql<{ item_key: string }[]>`
+    select i.item_key from item i join question_type t on t.fmt = i.fmt and t.own_words
+    where i.source = 'generated' and i.status = 'active' order by i.created_at, i.item_key limit 1`;
+  return { questionKey: q?.item_key ?? "", section: SECTION, classId: cls?.id ?? "", children, rolls, other, otherNames };
 }
 
 /** A new browser context signed in as the educator or the coordinator, the way the site signs anyone in. */
@@ -42,7 +52,7 @@ export async function signedInAs(browser: Browser, who: "educator" | "coordinato
  *  slice adds its own here before its screens can be covered. */
 export function addressOf(route: string, rows: Rows, over: Record<string, string> = {}): string {
   const first = Object.values(rows.children)[0] ?? "";
-  const given: Record<string, string> = { class: rows.classId, section: rows.section, roll: "1", id: first, ...over };
+  const given: Record<string, string> = { key: rows.questionKey, class: rows.classId, section: rows.section, roll: "1", id: first, ...over };
   return route.replace(/\[(\w+)\]/g, (_, k: string) => {
     if (!(k in given)) throw new Error(`tests/inventory/fixtures.ts has no fixture for [${k}] of ${route}: add one built from the test's own rows`);
     return encodeURIComponent(given[k]);

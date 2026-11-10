@@ -407,7 +407,7 @@ The four existing Setup pages that carry content rather than people, rebuilt on 
 2. Every old route listed under `folds` for these screens answers 308 to the new address.
 3. No approve-all control exists on any of these screens (Skills to approve and the offers act on one row each).
 4. The skills-to-approve count is the eyebrow of Skills to approve and appears on no card, tile, badge or other page.
-5. Every one of the 32 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
+5. Every one of the 40 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
 6. Curriculum: one list carries activities (K2) and skills (grades 1–4) under one filter row
 7. Curriculum: Curriculum shows no count of skills to approve; that number is the eyebrow of Skills to approve and appears nowhere else
 8. Curriculum: Yes / No act on one offer each; no control acts on all offers
@@ -415,8 +415,8 @@ The four existing Setup pages that carry content rather than people, rebuilt on 
 10. Skills to approve: the eyebrow count equals the rows across all pages, and it is the only place the number is shown
 11. Question bank: statistics and taxonomy sit behind the details link, not on the first view (rule 8)
 12. Question bank: the table shows ten rows then pages
-13. the question as it prints: a correction keeps the old key in change_log and the old version readable
-14. the question as it prints: Remove retires, never deletes (row count unchanged)
+13. {the question as it prints}: a correction keeps the old key in change_log and the old version readable
+14. {the question as it prints}: Remove retires, never deletes (row count unchanged)
 
 ### Out of scope
 

@@ -91,8 +91,8 @@ export default async function SkillsToApprove({ searchParams }: { searchParams: 
             <input type="hidden" name="opened" value={opened} />
             <input type="hidden" name="code" value={x.code} />
             <input type="hidden" name="version" value={x.version} />
-            <button type="submit" name="only" value={x.code} className="btn" aria-label={`Approve ${x.name}`} {...(x === first ? { "data-ux": "action" } : {})}>
-              Approve
+            <button type="submit" name="only" value={x.code} className="btn" data-approve="" {...(x === first ? { "data-ux": "action" } : {})}>
+              Approve<span className="sr-only"> {x.name}</span>
             </button>
           </form>
         ) : null,
@@ -117,7 +117,7 @@ export default async function SkillsToApprove({ searchParams }: { searchParams: 
           Levels to review
         </Link>
       </nav>
-      {q.approved === "0" ? <p role="status" className="note mb-3">Nothing was approved: it changed since this page was opened. Read it again, then approve.</p> : null}
+      {q.approved === "0" ? <p role="status" className="mb-3 text-[13px] text-[var(--ink-muted)]">Nothing was approved: it changed since this page was opened. Read it again, then approve.</p> : null}
       {tab === "levels" ? (
         <LevelsTab q={q} />
       ) : (

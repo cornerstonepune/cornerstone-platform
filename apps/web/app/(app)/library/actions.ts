@@ -12,16 +12,16 @@ export async function flagItem(formData: FormData): Promise<void> {
   const me = await deciding("questions");
   const itemKey = String(formData.get("item_key") ?? "");
   const note = String(formData.get("note") ?? "").trim().slice(0, 300);
-  const back = String(formData.get("back") ?? "/library");
-  if (!/^[A-Za-z0-9._-]+$/.test(itemKey) || !/^\/library(\/|\?|$)/.test(back)) redirect("/library");
+  const back = String(formData.get("back") ?? "/setup/question-bank");
+  if (!/^[A-Za-z0-9._-]+$/.test(itemKey) || !/^\/setup\/question-bank(\/|\?|$)/.test(back)) redirect("/setup/question-bank");
   let next = back;
   try {
     const res = await engineSend(`/bank/item/${itemKey}/remove`, { by: me.email, note });
-    if (!res.ok) next = `/library/${itemKey}?error=${encodeURIComponent("That question could not be removed. Nothing was changed.")}`;
+    if (!res.ok) next = `/setup/question-bank/${itemKey}?error=${encodeURIComponent("That question could not be removed. Nothing was changed.")}`;
   } catch (e) {
-    next = `/library/${itemKey}?error=${encodeURIComponent(e instanceof EngineDown ? e.message : "The engine could not be reached. Nothing was changed.")}`;
+    next = `/setup/question-bank/${itemKey}?error=${encodeURIComponent(e instanceof EngineDown ? e.message : "The engine could not be reached. Nothing was changed.")}`;
   }
-  revalidatePath("/library");
+  revalidatePath("/setup/question-bank");
   revalidatePath("/worksheets");
   revalidatePath("/");
   redirect(next);
@@ -33,8 +33,8 @@ export async function flagItem(formData: FormData): Promise<void> {
 export async function correctItem(formData: FormData): Promise<void> {
   const me = await deciding("questions");
   const key = String(formData.get("item_key") ?? "");
-  if (!/^[A-Za-z0-9._-]+$/.test(key)) redirect("/library");
-  let next = `/library/${key}`;
+  if (!/^[A-Za-z0-9._-]+$/.test(key)) redirect("/setup/question-bank");
+  let next = `/setup/question-bank/${key}`;
   try {
     const res = await engineSend(`/bank/item/${key}/correct`, {
       stem: String(formData.get("stem") ?? "").slice(0, 600),
@@ -43,12 +43,12 @@ export async function correctItem(formData: FormData): Promise<void> {
     });
     const body = (await res.json()) as { item_key?: string; detail?: unknown };
     next = res.ok
-      ? `/library/${body.item_key}?corrected=1`
+      ? `/setup/question-bank/${body.item_key}?corrected=1`
       : `${next}?error=${encodeURIComponent(typeof body.detail === "string" ? body.detail : "That wording could not be saved. Nothing was changed.")}`;
   } catch (e) {
     next = `${next}?error=${encodeURIComponent(e instanceof EngineDown ? e.message : "The engine could not be reached. Nothing was changed.")}`;
   }
-  revalidatePath("/library");
+  revalidatePath("/setup/question-bank");
   redirect(next);
 }
 
@@ -60,20 +60,20 @@ export async function decideProposal(formData: FormData): Promise<void> {
   const me = await deciding("questions");
   const id = String(formData.get("id") ?? "");
   const verdict = VERDICTS.find((v) => v === formData.get("verdict"));
-  if (!/^[0-9a-f-]{36}$/.test(id) || !verdict) redirect("/library");
+  if (!/^[0-9a-f-]{36}$/.test(id) || !verdict) redirect("/setup/question-bank");
   // a mistake adopted is named by the person adopting it; the engine refuses one without a name
   const note = String(formData.get("name") ?? "").trim().slice(0, 300);
-  let next = "/library";
+  let next = "/setup/question-bank";
   try {
     const res = await engineSend(`/bank/proposal/${id}/decide`, { verdict, by: me.email, note });
     if (!res.ok) {
       const why = ((await res.json().catch(() => ({}))) as { detail?: string }).detail ?? "it could not be decided";
-      next = `/library?error=${encodeURIComponent(`Nothing was changed: ${why}.`)}`;
+      next = `/setup/question-bank?error=${encodeURIComponent(`Nothing was changed: ${why}.`)}`;
     }
   } catch (e) {
-    next = `/library?error=${encodeURIComponent(e instanceof EngineDown ? e.message : "The engine could not be reached. Nothing was changed.")}`;
+    next = `/setup/question-bank?error=${encodeURIComponent(e instanceof EngineDown ? e.message : "The engine could not be reached. Nothing was changed.")}`;
   }
-  revalidatePath("/library");
+  revalidatePath("/setup/question-bank");
   revalidatePath("/worksheets");
   redirect(next);
 }

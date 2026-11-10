@@ -970,12 +970,15 @@ Main action: Check the drafted parts · Next step: an activity
 Data: activity, skill, skill_level, change_log and curriculum_proposal (the source of each part), curriculum_proposal
 Empty: none · Phone: the table scrolls sideways in its own box
 Folds in: /, /curriculum/browse, /curriculum/fill, /curriculum/offers, /asks
-Every control on the screen (11), and what the test does with each:
-- **filter** grade · subject · topic · status
+Every control on the screen (14), and what the test does with each:
+- **filter** Grade
+- **filter** Subject
+- **filter** Topic
+- **filter** Status
 - **filter** search (matches names and codes, never children)
 - **row** an activity row → the activity's name (`/setup/activities/[code]`)
 - **row** a skill row → the skill's name (`/setup/skills/[code]`)
-- **link** Drafts to check → the activity's name (`/setup/activities/[code]`) (the first activity with a drafted part)
+- **link** Check the drafted parts → the activity's name (`/setup/activities/[code]`) (the first activity with a drafted part)
 - **button** Yes (an offer): the skill is linked to the activity; the offer closes [coordinator only; absent and refused for others]
 - **button** No (an offer): the offer closes; nothing is linked [coordinator only; absent and refused for others]
 - **link** page: Later → → Curriculum (`/setup/curriculum`)
@@ -1001,11 +1004,13 @@ Main action: Read and approve the first · Next step: Curriculum
 Data: skill.level_approved, skill_level, approval (kind calibration)
 Empty: Nothing to approve · Phone: the table scrolls sideways in its own box
 Folds in: /skill-sets/approve, /skill-sets/levels
-Every control on the screen (7), and what the test does with each:
-- **filter** grade · subject
-- **tab** Skills / Levels to review (the second list is the levels most children are secure at; the address carries the tab)
+Every control on the screen (9), and what the test does with each:
+- **filter** Grade
+- **filter** Subject
+- **tab** Skills (the first list; the address carries the tab)
+- **tab** Levels to review (the second list is the levels most children are secure at; the address carries the tab)
 - **link** a skill's name → the skill's name (`/setup/skills/[code]`)
-- **button** Approve (a row): level_approved set for that skill with who; the row leaves the list; the eyebrow's count drops by one
+- **button** Approve (a row): level_approved set for that skill with who; the row leaves the list; the eyebrow's count drops by one [coordinator only; absent and refused for others]
 - **fold** What a wrong answer counts against
 - **link** page: Later → → Skills to approve (`/setup/skills/approve`)
 - **link** rail: Curriculum → Curriculum (`/setup/curriculum`)
@@ -1027,11 +1032,13 @@ Main action: Open a question · Next step: Curriculum
 Data: item, item_stat (a view over item_result), curriculum_proposal with its decision as an approval row
 Empty: No questions for this skill yet · Phone: the table scrolls sideways in its own box
 Folds in: /library, /worksheets, /worksheets/taxonomy
-Every control on the screen (7), and what the test does with each:
+Every control on the screen (9), and what the test does with each:
 - **fold** What the bank is
-- **filter** grade · skill · difficulty
+- **filter** Grade
+- **filter** Skill
+- **filter** Difficulty
 - **filter** search
-- **row** each question row → the question as it prints (`/setup/question-bank/[key]`)
+- **row** each question row → {the question as it prints} (`/setup/question-bank/[key]`)
 - **link** page: Later → → Question bank (`/setup/question-bank`)
 - **fold** Statistics (counts and worksheets by taxonomy)
 - **link** rail: a skill → the skill's name (`/setup/skills/[code]`)
@@ -1040,7 +1047,7 @@ Done when (on top of the ten generic checks):
 - the table shows ten rows then pages
 
 
-#### the question as it prints `/setup/question-bank/[key]`
+#### {the question as it prints} `/setup/question-bank/[key]`
 Who: both · Phase: Core · Backend: none · Old page today: yes (/library/[key]) · Slice: UI-11
 Eyebrow: Numeracy · Easy
 Purpose: The question, its answer, the wrong answers it catches, and where it came from. Correct the wording or remove it.
@@ -1052,10 +1059,11 @@ Rail (Connected to): the skill · the bank
 Main action: Correct the wording · Next step: the bank
 Data: item, item.key (the current key), item.review (the reviewer model's latest verdict), change_log (key history)
 Empty: none · Phone: stacked
-Every control on the screen (7), and what the test does with each:
+Every control on the screen (8), and what the test does with each:
 - **fold** About it
 - **field** the wording [coordinator only; absent and refused for others] (required when correcting)
-- **button** Correct the wording: a new item version; change_log keeps the old key; the page shows the new wording and 'corrected by' [coordinator only; absent and refused for others]
+- **field** what was wrong [coordinator only; absent and refused for others] (required when correcting: the engine refuses a correction with no reason)
+- **button** Correct the wording: a new item version; the old one stays, readable, and points to the new; the page shows the new wording [coordinator only; absent and refused for others]
 - **field** reason for removal [coordinator only; absent and refused for others] (required)
 - **button** Remove: the item is retired with the reason, never deleted; the chip reads 'removed' [coordinator only; absent and refused for others]
 - **link** rail: the skill → the skill's name (`/setup/skills/[code]`)
@@ -1283,6 +1291,6 @@ What the test does with each kind of control:
 | UI-7 Today, both kinds | The educator's Today (the day, the attention strip, notes to confirm, the class) and the coordinator's Today (what waits, last week's heat grid, next week), composed from the blocks over the queries that exist; What needs doing folds in and its count moves to Setup where it belongs. | Today, Today, the school | UI-3 and UI-5; UI-6 for the coordinator's clash and draft rows (rows for a backend not yet merged simply do not appear) |
 | UI-8 Reports | Each child's report, line by line, in the educator's words: two approvals per line, consent on file, then sent. The parent's copy says educator, Easy / Medium / Hard / Advance, no rung and no code. | Reports | CP-19 merged (Next) |
 | UI-9 Materials | The class's materials list for a fortnight, the school's list, the notes the system could not read, and the educator's approval of her own class's list. | Materials, this fortnight | CP-17 and CP-18 merged (Later) |
-| UI-11 Setup content pages: curriculum, skills to approve, question bank, a question | The four existing Setup pages that carry content rather than people, rebuilt on the frame and the blocks: Curriculum (activities and skills under one filter row, with drafts and offers), Skills to approve, the Question bank and one question as it prints. Their queries and their one-row-at-a-time approvals are unchanged; the old routes fold in. | Curriculum, Skills to approve, Question bank, the question as it prints | UI-2 |
+| UI-11 Setup content pages: curriculum, skills to approve, question bank, a question | The four existing Setup pages that carry content rather than people, rebuilt on the frame and the blocks: Curriculum (activities and skills under one filter row, with drafts and offers), Skills to approve, the Question bank and one question as it prints. Their queries and their one-row-at-a-time approvals are unchanged; the old routes fold in. | Curriculum, Skills to approve, Question bank, {the question as it prints} | UI-2 |
 | UI-12 The screens outside the bar: sign in, help, report a problem | Sign in (with forgot and new password), the help pages and the feedback form, rebuilt on the tokens and the blocks; help is generated from screens.json so a new screen gets its section without a hand edit; the feedback form keeps names out of the public GitHub issue. | Sign in, Start here, Report a problem or suggest something | UI-13 (lands on Today once UI-7 is merged) |
 | UI-10 The as-built milestone document | A script that generates docs/frontend/AS-BUILT.md from screens.json plus the last inventory-test run: the milestone document Nimish asked for, so he can see exactly what exists, what each screen's controls are, and what the checks reported. Every slice adds its id to `merged_slices` in screens.json when its proofs pass, so the document is always true. | none (infrastructure) | UI-13 (it can be built early and re-run after every slice) |
