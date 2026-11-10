@@ -142,14 +142,17 @@ export async function keyboard(page: Page, s: Screen): Promise<Problems> {
   await page.locator("body").click({ position: { x: 1, y: 1 } });
   await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur());
   const seen = new Set<string>();
-  for (let i = 0; i < 80 && seen.size < n; i++) {
+  // the bar's own stops come first (about 27), then the page's: the limit only stops a loop that never ends, so it grows with the page and every control must still be reached
+  for (let i = 0; i < 60 + n && seen.size < n; i++) {
     await page.keyboard.press("Tab");
-    const at = await page.evaluate(() => {
+    const at = await page.evaluate((sel) => {
       const e = document.activeElement as HTMLElement | null;
       if (!e || !e.closest("main") || e.closest("[data-trail]")) return null;
       const st = getComputedStyle(e);
-      return { key: `${e.tagName}${e.getAttribute("href") ?? ""}${(e.innerText || "").slice(0, 20)}${Math.round(e.getBoundingClientRect().y)}`, ring: st.outlineStyle !== "none" ? parseFloat(st.outlineWidth) : 0, shadow: st.boxShadow !== "none" };
-    });
+      // a control is known by its place in the page, not by where it is on screen: Tab scrolls each newly focused control to the same spot, so two like controls (twelve "Move" buttons) would share a position
+      const place = [...document.querySelector("main")!.querySelectorAll(sel)].indexOf(e);
+      return { key: `#${place} ${e.tagName} ${e.getAttribute("href") ?? ""} ${(e.innerText || "").slice(0, 20)}`, ring: st.outlineStyle !== "none" ? parseFloat(st.outlineWidth) : 0, shadow: st.boxShadow !== "none" };
+    }, CONTROLS);
     if (!at || seen.has(at.key)) continue;
     seen.add(at.key);
     if (at.ring < 2 && !at.shadow) out.push(`${s.id}: a focused control shows no ring of 2 px or more (${at.key})`);
@@ -279,7 +282,10 @@ export async function drive(page: Page, s: Screen, e: Element, c: Ctx, byId: Map
   if (["link", "row", "cell"].includes(e.t)) {
     await find().waitFor({ timeout: 10_000 }).catch(() => undefined); // rows stream in after the shell
     if (!(await find().count())) return [`${s.id}: cannot drive “${e.label}”: no such link`];
-    const same = e.href === new URL(here).pathname + new URL(here).search;
+    // a link to the page one is on changes no address, whichever link it is (the first class row may be the class already open): what it points at
+    // is read from the link itself unless the inventory says. A link that points elsewhere must still change the address, or it is a dead link.
+    const pointsAt = new URL(e.href ?? (await find().getAttribute("href")) ?? "", here);
+    const same = pointsAt.pathname + pointsAt.search === new URL(here).pathname + new URL(here).search;
     await find().click();
     if (!same) await page.waitForURL((u) => u.href !== here, { timeout: 20_000 });
     await page.waitForLoadState("domcontentloaded");
