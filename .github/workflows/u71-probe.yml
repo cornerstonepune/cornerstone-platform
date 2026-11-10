@@ -12,7 +12,7 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - { name: main, ref: 18d42cc }
+          - { name: fix-589, ref: 879ea7c }
     env:
       DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/postgres
       TEST_DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/postgres
@@ -53,33 +53,20 @@ jobs:
           TEST_WEB_DATABASE_URL: postgresql://app_web:ci-web@127.0.0.1:5432/postgres
           TEST_ENGINE_DATABASE_URL: postgresql://app_engine:ci-engine@127.0.0.1:5432/postgres
         run: npx playwright test --shard=3/3 --retries=0 --trace off --reporter=line 2>&1 | grep -E "u71 \||passed|failed|flaky" || true
-      - name: the probe on that copy, with every statement logged
+      - name: the probe on that copy, with the database's own counters
         working-directory: apps/web
         env:
           TEST_WEB_DATABASE_URL: postgresql://app_web:ci-web@127.0.0.1:5432/postgres
           TEST_ENGINE_DATABASE_URL: postgresql://app_engine:ci-engine@127.0.0.1:5432/postgres
         run: |
-          psql "$DATABASE_URL" -c "select (select count(distinct section) from child_now where active) as classes, (select count(*) from child_now where active) as children, (select count(*) from evidence_event) as evidence, (select count(*) from pg_class where relkind='r') as tables"
-          psql "$DATABASE_URL" -At -c "alter system set log_min_duration_statement = 0" -c "select pg_reload_conf()"
-          LOG="$RUNNER_TEMP/postgres/log"; MARK=$(wc -c <"$LOG")
+          psql "$DATABASE_URL" -c "select (select count(distinct section) from child_now where active) as classes, (select count(*) from child_now where active) as children, (select count(*) from sheet_instance) as sheets, (select count(*) from capture) as captures, (select count(*) from item_result) as results, (select count(*) from skill) as skills, (select count(*) from topic) as topics"
+          dir="$RUNNER_TEMP/postgres"
+          pg_ctl -D "$dir/data" -l "$dir/log2" -w restart -o "-p 5432 -k $dir -c listen_addresses=127.0.0.1 -c shared_preload_libraries=pg_stat_statements -c pg_stat_statements.track=all -c track_functions=all -c compute_query_id=on" >/dev/null
+          psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -c "create extension if not exists pg_stat_statements" -c "select pg_stat_statements_reset()" >/dev/null
           npx playwright test u99-probe --workers=1 --retries=0 --trace off --reporter=line 2>&1 | grep -E "probe \||passed|failed" || true
-          tail -c +"$MARK" "$LOG" >"$RUNNER_TEMP/probe.log"
-          wc -l "$RUNNER_TEMP/probe.log"
-          python3 - "$RUNNER_TEMP/probe.log" <<'PY'
-          import re,sys,collections
-          t=open(sys.argv[1]).read()
-          parts=re.split(r'(?=^\d{4}-\d\d-\d\d [\d:.]+ \w+ \[\d+\] LOG:  duration: )',t,flags=re.M)
-          agg=collections.defaultdict(lambda:[0,0.0,0.0])
-          tot=0;n=0
-          for p in parts:
-              m=re.search(r'duration: ([\d.]+) ms\s+(?:statement|execute [^:]*|parse [^:]*|bind [^:]*): (.*)',p,flags=re.S)
-              if not m: continue
-              d=float(m.group(1)); q=' '.join(m.group(2).split())
-              q=re.sub(r"'[^']*'","?",q); q=re.sub(r'\b\d+\b','N',q); q=re.sub(r'\$\d+','$',q)[:230]
-              a=agg[q]; a[0]+=1; a[1]+=d; a[2]=max(a[2],d); tot+=d; n+=1
-          print(n,'statements, total',round(tot),'ms over the whole probe (40 page loads + warmups)')
-          print('--- top 30 by total time: count | total ms | max ms | statement')
-          for q,(c,s,mx) in sorted(agg.items(),key=lambda kv:-kv[1][1])[:30]: print(f'{c:6d} | {s:8.0f} | {mx:6.1f} | {q}')
-          print('--- top 12 by count')
-          for q,(c,s,mx) in sorted(agg.items(),key=lambda kv:-kv[1][0])[:12]: print(f'{c:6d} | {s:8.0f} | {mx:6.1f} | {q}')
-          PY
+          echo "--- top 25 statements by total time (calls | total ms | mean ms | query)"
+          psql "$DATABASE_URL" -At -F ' | ' -c "select calls, round(total_exec_time::numeric), round(mean_exec_time::numeric,1), left(regexp_replace(query, '\\s+', ' ', 'g'), 260) from pg_stat_statements where query not ilike '%pg_stat_statements%' order by total_exec_time desc limit 25"
+          echo "--- top 12 statements by calls"
+          psql "$DATABASE_URL" -At -F ' | ' -c "select calls, round(total_exec_time::numeric), round(mean_exec_time::numeric,1), left(regexp_replace(query, '\\s+', ' ', 'g'), 200) from pg_stat_statements where query not ilike '%pg_stat_statements%' order by calls desc limit 12"
+          echo "--- functions by total time (calls | total ms | self ms | name)"
+          psql "$DATABASE_URL" -At -F ' | ' -c "select calls, round(total_time::numeric), round(self_time::numeric), schemaname||'.'||funcname from pg_stat_user_functions order by total_time desc limit 15"
