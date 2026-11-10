@@ -6,6 +6,7 @@ website asks of everything it shows; these hold the rule itself, the staff ids i
 new upload records.
 """
 
+import contextlib
 import os
 import uuid
 from pathlib import Path
@@ -140,4 +141,30 @@ def test_an_upload_records_who_put_it_in_and_a_reading_again_keeps_it(person, mo
         with db.connect() as conn:
             conn.execute("delete from flow_run where id = any(%s::uuid[])", (runs,))
             forget_paper(conn, paper)  # it was committed above so that a second connection could read it
+            conn.commit()
+
+
+def test_an_upload_records_who_put_it_in_when_the_engine_asks_as_its_own_role(person, monkeypatch, tmp_path):
+    """Live, the engine reaches the database as `app_engine`, which may not read `pii.staff` (CI, 10 Nov 2026: every
+    upload failed "permission denied for table staff" while the owner's tests passed)."""
+    with db.connect() as conn:
+        t = str(tenant(conn))
+        me = conn.execute("select staff_of_email(%s) as id", (person,)).fetchone()["id"]
+    plain = db.connect
+
+    @contextlib.contextmanager
+    def as_engine(*a, **k):
+        with plain(*a, **k) as conn:
+            conn.execute("set role app_engine")
+            yield conn
+
+    monkeypatch.setattr(inbox.db, "connect", as_engine)
+    run = inbox.start(t, tmp_path / f"who-sees-{uuid.uuid4().hex[:6]}.pdf", person, pages=1)
+    monkeypatch.setattr(inbox.db, "connect", plain)
+    with db.connect() as conn:
+        try:
+            got = conn.execute("select uploaded_by from flow_run where id = %s", (run,)).fetchone()
+            assert got["uploaded_by"] == me
+        finally:
+            conn.execute("delete from flow_run where id = %s", (run,))
             conn.commit()

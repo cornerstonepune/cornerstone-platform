@@ -350,15 +350,28 @@ where sc.tenant_id = w.tenant_id and sc.label = w.section
                order by y.starts_on desc limit 1);
 
 -- What a page reads of a child: the child row, and the class (its label as `section`) and roll number of their open
--- enrolment, else of their latest one. A child never enrolled has none.
+-- enrolment, else of their latest one. A child never enrolled has none. One row a child, in three branches that a
+-- class asked for by label (`class_band`, a grade's classes, a class's papers) reaches from the class: written as one
+-- "latest enrolment" lateral per child, it read every child's enrolments for each class asked (PR #561's browser
+-- shards, 10 Nov 2026: the topics query 19 s against 2.4 s for the same rows read from `child`, at 43 classes).
 create view child_now with (security_invoker = true) as
 select c.id, c.tenant_id, c.band, c.active, c.created_at, c.updated_at, e.class_id, sc.label as section, e.roll_no
+from enrolment e
+join child c on c.id = e.child_id
+join school_class sc on sc.id = e.class_id
+where e.to_date is null
+union all
+select c.id, c.tenant_id, c.band, c.active, c.created_at, c.updated_at, e.class_id, sc.label as section, e.roll_no
+from enrolment e
+join child c on c.id = e.child_id
+join school_class sc on sc.id = e.class_id
+where e.to_date is not null
+  and not exists (select from enrolment o where o.child_id = e.child_id
+                  and (o.to_date is null or (o.to_date, o.from_date, o.id) > (e.to_date, e.from_date, e.id)))
+union all
+select c.id, c.tenant_id, c.band, c.active, c.created_at, c.updated_at, null::uuid, null::text, null::text
 from child c
-left join lateral (
-  select x.class_id, x.roll_no from enrolment x where x.child_id = c.id
-  order by x.to_date is null desc, x.to_date desc, x.from_date desc limit 1
-) e on true
-left join school_class sc on sc.id = e.class_id;
+where not exists (select from enrolment o where o.child_id = c.id);
 
 create index enrolment_child_idx on enrolment (child_id);
 
