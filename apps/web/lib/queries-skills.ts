@@ -57,7 +57,7 @@ export async function skillWays(code: string): Promise<WaysRow[]> {
     left join approval_list a on a.tenant_id = q.tenant_id and a.kind = 'question_type' and a.target = q.code
     left join kind_stopped k on k.tenant_id = l.tenant_id and k.skill_code = l.skill_code
       and k.difficulty = l.difficulty and k.question_type = l.question_type
-    where l.skill_code = ${code}
+    where l.skill_code = ${code} and l.removed_at is null
     group by q.code, q.words, q.marked, a.first_by, a.first_at
     order by min(d.ord), q.code`;
 }
@@ -116,7 +116,7 @@ export async function skillSamples(code: string): Promise<SampleRow[]> {
     from english_sample_now e
     join question_type q on q.tenant_id = e.tenant_id and q.code = e.question_type
     join skill_level_question_type l on l.tenant_id = e.tenant_id and l.skill_code = e.skill_code
-      and l.difficulty = e.difficulty and l.question_type = e.question_type
+      and l.difficulty = e.difficulty and l.question_type = e.question_type and l.removed_at is null
     left join passage p on p.tenant_id = e.tenant_id and p.code = e.passage_code
     left join rubric r on r.tenant_id = e.tenant_id and r.code = e.rubric_code
     where e.skill_code = ${code}

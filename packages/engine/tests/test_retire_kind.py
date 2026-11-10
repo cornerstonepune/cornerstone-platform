@@ -3,7 +3,8 @@ Nimish, 2026-10-26: "They should be able to delete those kinds of questions from
 
 Answers already given must stay readable (rule 4), so a stop deletes nothing: the next paper draws no question of the kind
 there, past papers keep theirs, an approved paper not yet given is sent back for approval and named, and that level's
-approval, no other, is withdrawn. Each stop and restart is a new row, never an update. Each test rolls back.
+approval, no other, is withdrawn. A stop stands on the level's own row for the kind, kept while it stands; each stop
+and restart is a row of the one history log, never changed. Each test rolls back.
 """
 
 import os
@@ -11,13 +12,11 @@ import os
 import psycopg
 import pytest
 
-from engine.core import db
-from engine.w1_bank import retire
+from engine.core import db, history
+from engine.w1_bank import question_types, retire
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs the local copy (bin/testdb)")
 BY = "Shweta (Maths)"
-# the rows a test wrote: its transaction began at now(), and a ledger row is stamped by the clock (the copy keeps others')
-MINE = "created_at >= now()"
 THIS_WEEK = "to_char(now() at time zone 'Asia/Kolkata', 'IYYY-\"W\"IW')"
 
 
@@ -26,6 +25,12 @@ def conn():
     with db.connect() as c:
         yield c
         c.rollback()
+
+
+def kept(conn, k):
+    """What the history log keeps of the kind at the level: (op, by, what it did), oldest first."""
+    rows = history.of(conn, "skill_level_question_type", f"{k['code']} {k['level']} {k['kind']}")
+    return [(h["op"], h["origin"], h["after"]) for h in rows]
 
 
 def one(conn, sql, *params):
@@ -99,10 +104,7 @@ def test_stopping_says_what_it_touches_and_changes_nothing(conn):
     assert got["questions"] == before > 0
     assert got["papers"] >= 1 and "CSTEST1" in got["withdraw"]
     assert drawable(conn, k) == before
-    assert (
-        one(conn, f"select count(*) from skill_level_kind_stop where skill_code = %s and {MINE}", k["code"])
-        == 0
-    )
+    assert kept(conn, k) == []
 
 
 def test_a_stopped_kind_is_drawn_by_no_new_paper_and_past_papers_keep_their_questions(conn):
@@ -158,12 +160,10 @@ def test_an_approved_paper_not_yet_given_is_withdrawn_and_named(conn):
     }
     assert rows["CSTEST2"]["print_status"] == "new" and rows["CSTEST2"]["approved_by"] is None
     assert rows["CSTEST3"]["print_status"] == "printed" and rows["CSTEST4"]["print_status"] == "printed"
-    assert one(
-        conn, f"select withdrawn from skill_level_kind_stop where skill_code = %s and {MINE}", k["code"]
-    ) == ["CSTEST2"]
+    assert kept(conn, k) == [("stop_kind", BY, {"stopped": True, "withdrawn": ["CSTEST2"]})]
 
 
-def test_a_stop_is_a_new_row_and_a_restart_switches_it_back(conn):
+def test_a_stop_is_kept_and_a_restart_switches_it_back(conn):
     k = a_kind(conn)
     before = drawable(conn, k)
     assert retire.stop(conn, k["code"], k["kind"], BY, k["level"])["stopped"]
@@ -175,20 +175,33 @@ def test_a_stop_is_a_new_row_and_a_restart_switches_it_back(conn):
     assert drawable(conn, k) == 0  # the level waits for approval again
     approve(conn, k)
     assert drawable(conn, k) == before
-    rows = conn.execute(
-        f"select stopped, changed_by from skill_level_kind_stop where skill_code = %s and {MINE} order by created_at",
-        (k["code"],),
-    ).fetchall()
-    assert [r["stopped"] for r in rows] == [True, False] and {r["changed_by"] for r in rows} == {BY}
+    assert [(op, by) for op, by, _ in kept(conn, k)] == [("stop_kind", BY), ("start_kind", BY)]
+    row = f"{k['code']} {k['level']} {k['kind']}"
+    with pytest.raises(psycopg.Error):  # the history is never changed or removed
+        with conn.transaction():
+            conn.execute("update change_log set op = 'start_kind' where row_id = %s", (row,))
     with pytest.raises(psycopg.Error):
         with conn.transaction():
-            conn.execute(
-                f"update skill_level_kind_stop set stopped = true where skill_code = %s and {MINE}",
-                (k["code"],),
-            )
-    with pytest.raises(psycopg.Error):
-        with conn.transaction():
-            conn.execute(f"delete from skill_level_kind_stop where skill_code = %s and {MINE}", (k["code"],))
+            conn.execute("delete from change_log where row_id = %s", (row,))
+
+
+def test_a_stop_stands_when_the_levels_questions_of_the_kind_all_leave_the_bank_and_come_back(conn):
+    """The bank's links follow its questions: a link to a kind no active question holds goes. A stop stands on that
+    link, so the bank keeps it while it is stopped, and a question of the kind made again is still not drawn there."""
+    k = a_kind(conn)
+    assert retire.stop(conn, k["code"], k["kind"], BY, k["level"])["stopped"]
+    mine = "skill_set_code = %s and difficulty = %s and question_type_of(fmt, template) = %s and status = 'active'"
+    ids = [
+        r["id"] for r in conn.execute(f"select id from item where {mine}", (k["code"], k["level"], k["kind"]))
+    ]
+    conn.execute("update item set status = 'retired' where id = any(%s)", (ids,))
+    assert "stopped by an educator" in question_types.why_not(conn, k["code"], k["level"])
+    conn.execute("update item set status = 'active' where id = any(%s)", (ids,))
+    approve(conn, k)
+    assert drawable(conn, k) == 0
+    assert retire.start(conn, k["code"], k["kind"], BY, k["level"])["started"]
+    approve(conn, k)
+    assert drawable(conn, k) == len(ids)
 
 
 def test_stopping_withdraws_that_levels_approval_and_no_other(conn):

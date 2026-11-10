@@ -20,7 +20,7 @@ from engine.assess import items, words
 from engine.assess.pick import Sheet
 from engine.assess.render import render_sheet
 from engine.core import db
-from engine.w1_bank import bank
+from engine.w1_bank import bank, story_keys
 from engine.w2_print import library
 from engine.w3_read import boxes, copies, copy_scores, placing, printed_paper, render_pdf, second_reader
 from tests import rows
@@ -318,10 +318,7 @@ def test_a_copy_printed_before_a_story_was_keyed_again_reads_its_boxes_by_the_ke
     assert any(cell["item"] == now for cell in printed["geometry"])
     printed["geometry"] = [{**c, "item": was if c["item"] == now else c["item"]} for c in printed["geometry"]]
     key_file.write_text(json.dumps(printed), encoding="utf-8")
-    conn.execute(
-        "insert into item_key_change (tenant_id, item_id, old_key, new_key, why) values (%s, %s, %s, %s, 'a test')",
-        (tenant, ids[0], was, now),
-    )
+    story_keys.kept(conn, tenant, ids[0], was, now, "a test")
     paper, by_key, unread = printed_paper.paper(conn, code, pdf)
     keys = {r["item_key"] for r in conn.execute("select item_key from item where id = any(%s)", (ids,))}
     assert {

@@ -63,6 +63,20 @@ day) and `item_review` (a reviewer model's verdict on a question or a level's ru
 What every kind names is a column (child, skill, level, `ref`, `verdict`, `source`, `confirmed_by`, `checked_on`), the
 rest is `detail`.
 
+**Current values, and how they came to be (CP-27 group 3, step 3C).** Where a history table also held the value that
+stands, the value is on its own row and each change a row of `change_log`, which nothing reads back as the value:
+- a question's key is `item.item_key`; each re-key is a `change_log` row of `item` (row: the question's id, op
+  `rekey`, before/after `{item_key}`), and `current_item_key()` follows them from any key it had (a unique index: a key
+  is left once);
+- a paper question's right answer is on the question (`spec`, `responses`); each correction is a row of `item` (row:
+  its key `legacy/<paper>/<question>`, op `correct_key`, before/after `{answer}`, origin who), which every entry of the
+  paper on deploy puts back over its file (`keys.reapply`);
+- a person's choice on a doubtful page is `capture.page_choices` (by file page), a named mistake
+  `item_result.named_mistakes` (by the reading it was named on): maps, so each page and each reading keeps its own;
+- a kind stopped at a level is `skill_level_question_type.stopped_at`/`stopped_by` (the view `kind_stopped`), a kind
+  taken from an English level `removed_at`/`removed_by`; the bank's links keep a row that carries either. Each stop,
+  restart, addition and removal is a row (row: `skill level kind`).
+
 **How the staff list and a child's class are kept (CP-27 group 4).** The staff list is `staff` (active, `role_code`,
 the `classes` and `subjects` the website shows; never a grant) with its `pii.staff` row (name, email, the password hash
 and `password_set_at`). The website signs a person in as their `staff.id` (`app.staff_id`, `current_staff()`), reads the

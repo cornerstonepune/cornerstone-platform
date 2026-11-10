@@ -61,7 +61,8 @@ def refresh(conn) -> list[dict]:
         " where s.flagged_mislevelled and i.status = 'active' and not exists ("
         "   select 1 from curriculum_proposal p where p.tenant_id = i.tenant_id and p.kind = 'mislevelled'"
         "   and p.about is null and p.proposal ->> 'direction' = d.direction and (p.subject_code = i.item_key"
-        "   or p.subject_code in (select k.old_key from item_key_change k where k.item_id = i.id)))",  # ADR 0053
+        "   or p.subject_code in (select k.before ->> 'item_key' from change_log k where k.tenant_id = i.tenant_id"
+        "     and k.table_name = 'item' and k.row_id = i.id::text and k.op = 'rekey')))",  # ADR 0053
         (run, high),
     )
     learned.propose(

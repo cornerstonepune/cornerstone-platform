@@ -153,7 +153,7 @@ def test_no_service_can_change_remove_or_empty_a_ledger_row(conn):
     """An append-only ledger (a table `internal.forbid_change` guards) is read and added to, never changed, removed or
     emptied — by grant, not by its trigger alone. A ledger made later is held the moment its trigger is."""
     ledgers = _ledgers(conn)
-    assert {"public.evidence_event", "public.curriculum_proposal", "public.key_correction"} <= set(ledgers), (
+    assert {"public.evidence_event", "public.curriculum_proposal", "public.change_log"} <= set(ledgers), (
         ledgers
     )
     for role in ROLES:

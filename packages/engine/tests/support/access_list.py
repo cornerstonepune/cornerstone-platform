@@ -43,9 +43,7 @@ CHILD = {
     "public.sheet_instance": ("papers", "id", "sheet"),
     "public.capture": ("papers", "id", "capture"),
     "public.capture_page": ("papers", "capture_id", "capture"),
-    "public.page_choice": ("papers", "capture_id", "capture"),
     "public.item_result": ("answers", "capture_id", "capture"),
-    "public.mistake_named": ("answers", "item_result_id", "item_result"),
     # a paper blueprint made for one child (focus papers) carries child_id; a spare one carries none and is open
     "public.sheet_template": ("papers", "child_id", "child_open"),
     # a case of the one eval set: a report's finding or a hand check is one child's; a reviewer's verdict on a question
@@ -73,7 +71,7 @@ SCHOOL_WIDE = [
     ),
     (
         "skill registry and curriculum: the school's own teaching content, open to every educator; no child",
-        "registry_skill skill skill_level skill_level_kind_change skill_level_kind_stop skill_level_question_type "
+        "registry_skill skill skill_level skill_level_question_type "
         "skill_level_sample skill_link skill_mistake skill_prerequisite skill_registry_link "
         "curriculum_proposal curriculum_version curriculum_version_skill "
         "learning_objective learning_objective_skill milestone misconception trait rubric level_rule "
@@ -86,7 +84,7 @@ SCHOOL_WIDE = [
     ),
     (
         "the question bank: questions, their keys, checks, statistics and reviews; no child",
-        "item item_key_change item_stat key_correction assessment_name",
+        "item item_stat assessment_name",
     ),
     (
         "plan and timetable: what a class is to do and when, by class id; no child (the scope names both school-wide)",
