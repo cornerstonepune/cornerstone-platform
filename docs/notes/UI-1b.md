@@ -17,3 +17,6 @@ could not pass any real screen. Root-cause changes, nothing weakened: every wire
 Proved on pages the test serves itself (`u70-inventory-proof.spec.ts`, no app code): a peek that opens, carries the Sr. No., closes on Escape
 with focus back; the same peek failing when it does not give focus back; filters, × and Clear; the frame's links and an unbuilt target; an
 effect with no driver still failing.
+
+Added after the first push: an element may carry `data` (an attribute name) and then stands for every control that carries it (a graph's nodes);
+an element whose label says "each" takes every control whose name has the rest of the label. At least one is required while the element is expected.

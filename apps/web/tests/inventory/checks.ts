@@ -18,7 +18,7 @@ async function mainControls(page: Page) {
     return [...main.querySelectorAll<HTMLElement>(sel)]
       .filter((e) => !e.closest("[data-trail]") && !(e as HTMLInputElement).name?.startsWith("$ACTION"))
       // the frame's own links (the next step, the details link) are drawn on every screen: an element may list one, and none is extra
-      .map((e) => ({ tag: e.tagName.toLowerCase(), frame: e.matches("[data-ux=next], [data-ux=details]"), peek: e.hasAttribute("data-peek-open"), href: e.getAttribute("href") ?? "", name: (e.getAttribute("aria-label") || (e as HTMLInputElement).labels?.[0]?.innerText || e.innerText || (e as HTMLInputElement).placeholder || "").trim(), ...(() => { const r = e.getBoundingClientRect(); return { w: r.width, h: r.height, x: r.x, y: r.y }; })() }));
+      .map((e) => ({ tag: e.tagName.toLowerCase(), frame: e.matches("[data-ux=next], [data-ux=details]"), peek: e.hasAttribute("data-peek-open"), attrs: e.getAttributeNames(), href: e.getAttribute("href") ?? "", name: (e.getAttribute("aria-label") || (e as HTMLInputElement).labels?.[0]?.innerText || e.innerText || (e as HTMLInputElement).placeholder || "").trim(), ...(() => { const r = e.getBoundingClientRect(); return { w: r.width, h: r.height, x: r.x, y: r.y }; })() }));
   }, CONTROLS);
 }
 
@@ -77,7 +77,7 @@ export async function reveal(page: Page, when: When): Promise<string | null> {
     await page.locator("[data-active-filters]").first().waitFor({ timeout: 10_000 }).catch(() => undefined);
     return (await page.locator("[data-active-filters]").count()) ? null : "searching did not show a filter chip";
   }
-  return (await page.locator("main nav[aria-label$=' pages'], main nav[aria-label$=' page']").count()) ? null : "the fixture has too few rows for a second page";
+  return (await page.locator("main [data-more], main nav[aria-label$=' pages']").count()) ? null : "the fixture has too few rows for a second page";
 }
 
 /** 2. Completeness: the controls of the main column and the rail are this screen's element list for the role, in the given state. Nothing
@@ -93,9 +93,12 @@ export async function completeness(page: Page, s: Screen, c: Ctx, state: When | 
   const left = [...found];
   for (const e of expectedFor(s, c.role)) {
     const needed = buildable(e, c) && (e.when ? e.when === state : state === "rest");
-    if (e.t === "peek") {
-      const taken = left.filter((f) => f.peek);
-      if (!taken.length && needed) out.push(`${s.id}: missing control — “${e.label}” (peek) is in the inventory and not on the page`);
+    // an element that stands for many controls takes them all: every child's open button (`peek`), every control carrying its `data`
+    // attribute, or every control it names with "each"; at least one is required while the element is expected
+    const many = e.t === "peek" ? (f: (typeof left)[number]) => f.peek : e.data ? (f: (typeof left)[number]) => f.attrs.includes(e.data!) : /\beach\b/i.test(e.label) ? (f: (typeof left)[number]) => f.name.toLowerCase().includes(needle(e).replace(/^each\s+/, "")) : null;
+    if (many) {
+      const taken = left.filter(many);
+      if (!taken.length && needed) out.push(`${s.id}: missing control — “${e.label}” (${e.t}) is in the inventory and not on the page`);
       for (const f of taken) left.splice(left.indexOf(f), 1);
       continue;
     }
@@ -220,7 +223,7 @@ export async function drive(page: Page, s: Screen, e: Element, c: Ctx, byId: Map
     if (why) return [`${s.id}: cannot bring the page to “${e.when}” to drive “${e.label}”: ${why}`];
   }
   const here = page.url();
-  const find = () => (e.href ? page.locator("main").locator(`a[href="${e.href}"]`).first() : page.locator("main a").filter({ hasText: needle(e) }).first());
+  const find = () => (e.data ? page.locator(`main a[${e.data}]`).first() : e.href ? page.locator("main").locator(`a[href="${e.href}"]`).first() : page.locator("main a").filter({ hasText: needle(e) }).first());
   if (e.t === "peek") {
     const opener = page.locator("main [data-peek-open]").first();
     if (!(await opener.count())) return [`${s.id}: cannot drive “${e.label}”: no child to choose`];

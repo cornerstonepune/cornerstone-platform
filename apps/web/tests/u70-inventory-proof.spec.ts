@@ -146,3 +146,15 @@ test("a button whose effect the checker cannot drive still fails, so nothing pas
   const s = screen([{ t: "button", label: "Send it", effect: "writes a row" }]);
   expect((await drive(page, s, s.elements[0], ctx(inv), new Map())).join("\n")).toContain("not yet drivable");
 });
+
+test("an element for many controls takes them all, by its data attribute or by 'each', and is driven through the first", async ({ page }) => {
+  const inv = mini();
+  const body = `<!doctype html><html><body><main><h1>Proof</h1><a data-ux="action" href="/__proof/other">Main action</a>
+    <a data-node href="/__proof/other">Counting, secure</a><a data-node href="/__proof/other">Sorting, practising</a>
+    <details><summary>What it said</summary>words</details><details><summary>What it said</summary>more words</details></main></body></html>`;
+  await serve(page, body);
+  const s = screen([{ t: "link", label: "Main action", href: "/__proof/other" }, { t: "link", label: "each graph node", data: "data-node", to: "nowhere" }, { t: "fold", label: "details on each timeline entry", text: "What it said" }]);
+  expect(await completeness(page, s, ctx(inv))).toEqual([]);
+  s.elements.pop();
+  expect((await completeness(page, s, ctx(inv))).join("\n")).toContain("extra control — “What it said”");
+});
