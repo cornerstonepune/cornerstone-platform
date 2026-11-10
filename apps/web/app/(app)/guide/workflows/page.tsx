@@ -1,5 +1,5 @@
 import Link from "@/components/link";
-import { PageShell } from "@/components/page-shell";
+import { Screen } from "@/components/app-frame";
 import { FlowDrawing, GuideNav, StepList } from "@/components/guide";
 import { requireStaff } from "@/lib/auth";
 import { guideFacts, nextAfter } from "@/lib/guide";
@@ -10,7 +10,7 @@ export default async function GuideWorkflows() {
   await requireStaff();
   const f = await guideFacts();
   return (
-    <PageShell
+    <Screen
       stage="Guide"
       title="The school's steps"
       purpose="The steps agreed with the school, in four stages: who does each one, and what they see."
@@ -26,6 +26,6 @@ export default async function GuideWorkflows() {
         <FlowDrawing link={false} />
         <StepList f={f} />
       </div>
-    </PageShell>
+    </Screen>
   );
 }

@@ -1,6 +1,6 @@
 import Link from "@/components/link";
 import { FilterBar } from "@/components/filter-bar";
-import { PageShell } from "@/components/page-shell";
+import { Screen } from "@/components/app-frame";
 import { NotYours } from "@/components/not-yours";
 import { EmptyState } from "@/components/empty-state";
 import { ColourKeyLine } from "@/components/colour-key";
@@ -35,7 +35,7 @@ export default async function ClassResults({ searchParams }: Props) {
   classes.sort();
   const section = q.class ?? classes.find((c) => mine.includes(c)) ?? classes[0];
   const shell = (body: React.ReactNode) => (
-    <PageShell
+    <Screen
       stage="Class results"
       title="Class results"
       purpose="Each topic of the class: who is secure, practising or needs help. Open a topic for its skills, a skill for its children."
@@ -47,7 +47,7 @@ export default async function ClassResults({ searchParams }: Props) {
       next={{ href: "/today", label: "Today" }}
     >
       {body}
-    </PageShell>
+    </Screen>
   );
   if (!section) return shell(<EmptyState>You are linked to no class yet. The coordinator links you to the classes you teach.</EmptyState>);
 

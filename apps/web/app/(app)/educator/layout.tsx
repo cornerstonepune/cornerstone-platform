@@ -1,12 +1,6 @@
-import { SchoolShell } from "@/components/educator/shell";
-import { EDUCATOR_MENU } from "@/lib/educator/menu";
-import { E } from "@/lib/educator/words";
+import { EducatorArea } from "@/components/educator/area";
 
-// The K2 educator's screens (M1-09, D-075) in the school's shell, with her menu.
+// The K2 educator's screens (M1-09, D-075) in the frame's main column, on the school's ground.
 export default function EducatorLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <SchoolShell items={EDUCATOR_MENU} label={E.nav.label}>
-      {children}
-    </SchoolShell>
-  );
+  return <EducatorArea>{children}</EducatorArea>;
 }

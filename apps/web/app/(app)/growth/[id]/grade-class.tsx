@@ -3,7 +3,7 @@
 // the change in a sentence, then confirms it; a teacher reads the same section and has no buttons. The check is on the
 // server (`moveChild`), not in this page.
 import Link from "@/components/link";
-import { Notice, Panel } from "@/components/shell";
+import { Notice, Panel } from "@/components/parts";
 import type { Session } from "@/lib/auth";
 import { mayUse } from "@/lib/access";
 import { classChoices, HISTORY_SHOWN, moveHistory, moveSentence, refusedWords, rollIsTaken, ROLL, type MoveRow, type Place } from "@/lib/move-child";

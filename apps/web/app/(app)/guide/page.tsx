@@ -1,5 +1,5 @@
 import Link from "@/components/link";
-import { PageShell } from "@/components/page-shell";
+import { Screen } from "@/components/app-frame";
 import { FlowDrawing, GuideNav, MenuDrawing, Part, Rich } from "@/components/guide";
 import { requireStaff } from "@/lib/auth";
 import { START, guideFacts, nextAfter } from "@/lib/guide";
@@ -10,7 +10,7 @@ export default async function GuideStart() {
   await requireStaff();
   const f = await guideFacts();
   return (
-    <PageShell
+    <Screen
       stage="Guide"
       title="Start here"
       purpose={START.purpose}
@@ -54,6 +54,6 @@ export default async function GuideStart() {
           <MenuDrawing />
         </section>
       </div>
-    </PageShell>
+    </Screen>
   );
 }

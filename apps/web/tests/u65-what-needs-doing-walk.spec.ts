@@ -158,14 +158,12 @@ test("the queue-shrinking trend is off What needs doing, its data and function k
 
 test("Teaching is not in the menu and its old address opens What needs doing", async ({ page }) => {
   await open(page, "/today");
-  const top = page.getByRole("navigation", { name: "Sections" }).getByRole("link");
+  const top = page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" }).getByRole("link");
   const names = (await top.allInnerTexts()).map((n) => n.replace(/\s*\d[\d,]*$/, "").trim());
   expect(names).not.toContain("Teaching");
   test.info().annotations.push({ type: "top-level menu items", description: `${names.length}: ${names.join(", ")}` });
-  expect(names).toEqual(["What needs doing", "Assessments", "Results", "Setup"]);
-  await page.getByRole("button", { name: "Menu" }).click();
-  await expect(page.getByRole("dialog", { name: "Menu" }).getByRole("link", { name: "Teaching" })).toHaveCount(0);
-  await page.keyboard.press("Escape");
+  expect(names).toEqual(["Today", "Timetable", "Children", "Setup"]);
+  await expect(page.locator("[data-bar]").first().getByRole("link", { name: "Teaching" })).toHaveCount(0);
   for (const old of ["/taught", "/taught?subject=NUM", "/taught?topic=MUL"]) {
     await page.goto(old);
     await expect(page, old).toHaveURL(/\/today(\?|$)/);

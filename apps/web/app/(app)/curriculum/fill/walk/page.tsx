@@ -1,7 +1,7 @@
 import Link from "@/components/link";
 import { requireStaff } from "@/lib/auth";
 import { mustBeOn, readPage, waiting } from "@/lib/curriculum-screens";
-import { PageShell } from "@/components/page-shell";
+import { Screen } from "@/components/app-frame";
 import { Chrome, Empty } from "../../chrome";
 import { PartCard } from "../../parts";
 
@@ -20,7 +20,7 @@ export default async function Walk({ searchParams }: { searchParams: Promise<Rec
   const page = item ? await readPage(me, item.code) : null;
   const card = page?.parts.find((p) => p.part === item?.part);
   return (
-    <PageShell
+    <Screen
       stage="Curriculum"
       title="Check the drafted parts"
       purpose="Read each draft. Keep it, change it, or send it back to be empty again."
@@ -45,6 +45,6 @@ export default async function Walk({ searchParams }: { searchParams: Promise<Rec
           </div>
         )}
       </Chrome>
-    </PageShell>
+    </Screen>
   );
 }

@@ -3,7 +3,7 @@
 // next in class and at home. Only answers an educator signed off count; the card says how many are still waiting.
 import Link from "@/components/link";
 import { notFound } from "next/navigation";
-import { Body, Notice, PageHeader, Panel, Tile } from "@/components/shell";
+import { Body, Notice, PageHeader, Panel, Tile } from "@/components/parts";
 import { requireStaff } from "@/lib/auth";
 import { deadline } from "@/lib/deadline";
 import { EngineDown, engineGet } from "@/lib/engine";

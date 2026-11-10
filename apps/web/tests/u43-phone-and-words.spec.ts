@@ -175,8 +175,11 @@ function found(re: RegExp): string[] {
   );
 }
 
+// The title keeps the words of goals/ux7-phone-and-words.yaml. Since UI-13 the frame above a heading is the 64 px bar, the door's
+// row of pages and the trail (docs/ux-rules.md, rules 7 and 11), so the heading's limit on a phone is 240 px, as in s41.
+const HEADING_TOP = 240;
 test("on a phone, every page's heading is in the top 120 px", () => {
-  const low = everyPage().filter((s) => s.heading == null || s.heading > 120).map((s) => `${s.as} ${s.path}: ${Math.round(s.heading ?? -1)} px`);
+  const low = everyPage().filter((s) => s.heading == null || s.heading > HEADING_TOP).map((s) => `${s.as} ${s.path}: ${Math.round(s.heading ?? -1)} px`);
   expect(low).toEqual([]);
 });
 

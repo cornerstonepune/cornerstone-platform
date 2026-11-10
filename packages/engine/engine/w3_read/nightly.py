@@ -85,26 +85,39 @@ def hand_check(
     conn: db.Conn, child_id: str, skill: str, grade: str, expected: str, by: str, on: dt.date | None = None
 ) -> dict:
     """One hand calculation against the system's state at this moment, stored with whether they matched so a later
-    change of the system cannot make an honest old row wrong (CP-9 item 7). Append-only; the caller commits. With no
-    `on`, it is dated by the school's clock (CP-24), never the server's."""
+    change of the system cannot make an honest old row wrong (CP-9 item 7): a case of the one eval set that the database
+    never lets change or go (CP-27). The caller commits. With no `on`, it is dated by the school's clock (CP-24), never
+    the server's: the database has no day of its own to give it."""
     row = conn.execute(
         "select state from child_observed_state where child_id = %s and skill_code = %s and grade_code = %s",
         (child_id, skill, grade),
     ).fetchone()
     system = row["state"] if row else None
     conn.execute(
-        "insert into hand_check (tenant_id, child_id, skill_code, grade_code, expected_state, system_state, matches,"
-        " checked_by, checked_on) values (%s, %s, %s, %s, %s, %s, %s, %s, %s)",
+        "insert into eval_case (tenant_id, kind, child_id, skill_code, verdict, confirmed_by, checked_on, detail)"
+        " values (%s, 'hand_check', %s, %s, %s, %s, %s, jsonb_build_object('grade', %s::text, 'system_state',"
+        " %s::text, 'matches', %s::boolean))",
         (
             _tenant(conn),
             child_id,
             skill,
-            grade,
             expected,
-            system,
-            system == expected,
             by,
             on or settings.school_today(conn),
+            grade,
+            system,
+            system == expected,
         ),
     )
     return {"system_state": system, "matches": system == expected}
+
+
+def hand_checks(conn: db.Conn, child_id: str) -> list[dict]:
+    """A child's hand calculations as they were written, oldest first."""
+    return conn.execute(
+        "select skill_code, detail ->> 'grade' as grade, verdict as expected_state,"
+        " detail ->> 'system_state' as system_state, (detail ->> 'matches')::boolean as matches,"
+        " confirmed_by as checked_by, checked_on, created_at from eval_case"
+        " where kind = 'hand_check' and child_id = %s order by created_at, id",
+        (child_id,),
+    ).fetchall()

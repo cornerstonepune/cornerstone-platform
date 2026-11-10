@@ -805,7 +805,7 @@ Done when (on top of the ten generic checks):
 #### Check the answers `/children/assessments/[key]/[roll]`
 Who: both · Phase: Core · Backend: none · Old page today: yes (/capture/check, /capture/[id]) · Slice: UI-4
 Eyebrow: Grade 1 · Sr. No. 7 · Easy
-Purpose: The page as photographed on the left; each answer as the engine read it on the right. Say what the child wrote where it was not sure; the engine marks it. Right, wrong and blank are kept apart, always.
+Purpose: The page as photographed, and each answer as the engine read it. Say what the child wrote where it was unsure; the engine marks it.
 Blocks, in order:
 - **PageImage**: the scan, zoomable, the answer in focus outlined
 - **DataTable**: question · read as · mark chip (right / wrong / blank / for you to judge) · the wrong-with-working reason

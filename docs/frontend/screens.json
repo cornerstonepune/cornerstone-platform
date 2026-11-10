@@ -2403,7 +2403,7 @@
       "exists": "yes (/capture/check, /capture/[id])",
       "eyebrow": "Grade 1 · Sr. No. 7 · Easy",
       "title": "Check the answers",
-      "purpose": "The page as photographed on the left; each answer as the engine read it on the right. Say what the child wrote where it was not sure; the engine marks it. Right, wrong and blank are kept apart, always.",
+      "purpose": "The page as photographed, and each answer as the engine read it. Say what the child wrote where it was unsure; the engine marks it.",
       "blocks": [
         [
           "PageImage",

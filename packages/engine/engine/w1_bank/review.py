@@ -13,6 +13,8 @@ bank just removed.
 import json
 import random
 
+from psycopg.types.json import Jsonb
+
 from engine.adapters import llm
 from engine.assess import words as W
 from engine.core import db, levels
@@ -94,34 +96,38 @@ def review_unit(conn, code, difficulty, reviewer, fraction=SAMPLE_FRACTION, seed
     out = llm.generate(conn, reviewer, variables, meta=meta)
     verdicts = out["verdicts"]
     if store:
-        _store(conn, reviewer, code, difficulty, verdicts, meta)
+        record(conn, reviewer, code, difficulty, verdicts, meta)
     return verdicts, meta
 
 
-def _store(conn, reviewer, code, difficulty, verdicts, meta):
+def record(conn, reviewer, code, difficulty, verdicts, meta):
+    """Each verdict as a case of the one eval set (`eval_case`, kind `item_review`), one per reviewer and question or
+    level rule: a review run again replaces its verdict, and leaves who acted on it."""
     tenant = conn.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()["id"]
     for v in verdicts:
+        detail = {"reasons": v.get("reasons", []), "note": v.get("note", "")} | {
+            k: str(meta[k]) if meta.get(k) is not None else None
+            for k in ("prompt_id", "model", "flow_run_id")
+        }
         conn.execute(
-            "insert into item_review (tenant_id, reviewer, skill_set_code, difficulty, ref,"
-            " verdict, reasons, note, prompt_id, model, flow_run_id)"
-            " values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-            " on conflict (tenant_id, reviewer, ref) do update set verdict = excluded.verdict,"
-            " reasons = excluded.reasons, note = excluded.note, prompt_id = excluded.prompt_id,"
-            " model = excluded.model, flow_run_id = excluded.flow_run_id, updated_at = now()",
-            (
-                tenant,
-                reviewer,
-                code,
-                difficulty,
-                v["ref"],
-                v["verdict"],
-                v.get("reasons", []),
-                v.get("note", ""),
-                meta.get("prompt_id"),
-                meta.get("model"),
-                meta.get("flow_run_id"),
-            ),
+            "insert into eval_case (tenant_id, kind, source, skill_code, difficulty, ref, verdict, detail)"
+            " values (%s, 'item_review', %s, %s, %s, %s, %s, %s)"
+            # what a person did with the last verdict (`acted_at`) and where a row came from stay
+            " on conflict (tenant_id, source, ref) where kind = 'item_review' do update set verdict = excluded.verdict,"
+            " detail = eval_case.detail || excluded.detail",
+            (tenant, reviewer, code, difficulty, v["ref"], v["verdict"], Jsonb(detail)),
         )
+
+
+def verdicts(conn, ref) -> list[dict]:
+    """Every reviewer's verdict on a question or a level's rule (`template:<skill>:<level>`), and who acted on it."""
+    return conn.execute(
+        "select source as reviewer, skill_code, difficulty, verdict,"
+        " array(select jsonb_array_elements_text(detail -> 'reasons')) as reasons, detail ->> 'note' as note,"
+        " confirmed_by as acted_on_by, (detail ->> 'acted_at')::timestamptz as acted_at from eval_case"
+        " where kind = 'item_review' and ref = %s order by source",
+        (ref,),
+    ).fetchall()
 
 
 def evaluate(conn, reviewer, gold):

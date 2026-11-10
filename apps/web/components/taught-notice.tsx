@@ -1,4 +1,4 @@
-import { Notice } from "./shell";
+import { Notice } from "./parts";
 import { sql } from "@/lib/db";
 
 // What was just said of a class, on the page it was said on (lib: app/(app)/topic-actions.ts sets `said`, `in` and `taught`):

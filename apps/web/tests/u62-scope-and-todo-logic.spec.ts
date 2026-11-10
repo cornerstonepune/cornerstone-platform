@@ -9,7 +9,7 @@ import path from "node:path";
 import { subjectsFor } from "../lib/viewing";
 import { buildTasks, filterTasks, KINDS, waitingCount, type Sources } from "../lib/todo";
 import { classResult, topicFlow, topicStatuses } from "../lib/topic-flow";
-import { groupOf, GROUPS, tabsOf } from "../lib/menu";
+import { doorOf, GROUPS, pagesOf } from "../lib/menu";
 
 const SUBJECTS = [
   { code: "NUM", label: "Maths" },
@@ -124,15 +124,15 @@ test.describe("topic flow", () => {
 });
 
 test.describe("the menu", () => {
-  test("four groups, in order, and every sub-page belongs to one", () => {
-    expect(GROUPS.map((g) => g.label)).toEqual(["What needs doing", "Assessments", "Results", "Setup"]);
-    expect(groupOf("/papers/approve")?.label).toBe("Assessments");
-    expect(groupOf("/capture/check")?.label).toBe("Assessments");
-    expect(groupOf("/skill-sets/approve")?.label).toBe("Setup");
-    expect(groupOf("/taught")).toBeUndefined();
-    expect(groupOf("/growth/class/2B")?.label).toBe("Results");
-    expect(tabsOf("/papers").map((t) => t.label)).toContain("Papers to approve");
-    expect(tabsOf("/today")).toEqual([]);
+  test("four doors, in order, and every sub-page belongs to one", () => {
+    expect(GROUPS.map((g) => g.label)).toEqual(["Today", "Timetable", "Children", "Setup"]);
+    expect(doorOf("/papers/approve")?.label).toBe("Children");
+    expect(doorOf("/capture/check")?.label).toBe("Children");
+    expect(doorOf("/skill-sets/approve")?.label).toBe("Setup");
+    expect(doorOf("/taught")).toBeUndefined();
+    expect(doorOf("/growth/class/2B")?.label).toBe("Children");
+    expect(pagesOf(doorOf("/papers")).map((t) => t.label)).toContain("Papers to approve");
+    expect(pagesOf(doorOf("/today")).length).toBeGreaterThan(0);
   });
 });
 

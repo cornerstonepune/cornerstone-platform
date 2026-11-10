@@ -115,25 +115,25 @@ test("any block opens its period: the time, the school's words, the planner's li
   await tapsAreBig(page);
   await displayFaceOnlyLarge(page);
   await shoot(page, "3-period");
-  await page.getByRole("navigation", { name: "Where you are" }).getByRole("link", { name: "Today" }).click();
+  // the trail is the door and the thing; the page's own next step is the day it came from
+  await expect(page.getByRole("navigation", { name: "Where you are" })).toContainText("Academic 2 General Awareness");
+  await page.locator('[data-ux="next"]').click();
   await expect(page).toHaveURL(/\/educator\?class=.*day=2026-11-23/);
 });
 
 test("her menu is a sidebar on a desktop and tabs at the foot of a phone, each with where she is marked", async ({ page }) => {
   await timetableSwitch(sql, true);
   await page.goto(`/educator/week?class=${klass}&day=${MONDAY}`);
-  const side = page.locator('[data-educator-nav="side"]');
-  await expect(side).toBeVisible();
-  await expect(side.locator('[data-nav="week"]')).toHaveAttribute("aria-current", "page");
-  await side.locator('[data-nav="week-next"]').click();
-  await expect(page.locator("[data-week]")).toHaveAttribute("data-week", /^\d{4}-\d{2}-\d{2}$/);
+  const row = page.getByRole("navigation", { name: "Pages in this section" });
+  await expect(row).toBeVisible();
+  await expect(row.getByRole("link", { name: "This week" })).toHaveAttribute("aria-current", "page");
+  await expect(page.locator("[data-bar] [data-door=timetable]").first()).toHaveAttribute("aria-current", "page");
   await page.setViewportSize({ width: 390, height: 900 });
   await page.goto(`/educator?class=${klass}&day=${MONDAY}`);
-  await expect(side).toBeHidden();
-  const tabs = page.locator('[data-educator-nav="tabs"]');
+  const tabs = page.locator("nav[data-bar=doors]");
   await expect(tabs).toBeVisible();
-  await expect(tabs.locator('[data-tab="today"]')).toHaveAttribute("aria-current", "page");
-  await tabs.locator('[data-tab="week"]').click();
+  await expect(tabs.getByRole("link", { name: "Today" })).toHaveAttribute("aria-current", "page");
+  await tabs.getByRole("link", { name: "Timetable" }).click();
   await expect(page).toHaveURL(/\/educator\/week/);
 });
 

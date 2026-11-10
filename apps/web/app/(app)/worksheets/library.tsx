@@ -1,6 +1,6 @@
 import Link from "@/components/link";
 import { kindWords } from "@/components/question";
-import { Panel } from "@/components/shell";
+import { Panel } from "@/components/parts";
 import { deadline } from "@/lib/deadline";
 import { questionKinds } from "@/lib/question-types";
 import { levels } from "@/lib/levels";

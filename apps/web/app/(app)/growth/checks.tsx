@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import Link from "@/components/link";
-import { Panel } from "@/components/shell";
+import { Panel } from "@/components/parts";
 
 /** `none`: no answer at all on the skill yet, as against too few to say. */
 export type Check = { key: string; skill: string; who: ReactNode; level: string; n: number; href: string; none?: boolean };

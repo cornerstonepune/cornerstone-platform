@@ -37,8 +37,8 @@ A skill set changed ─┘      (the engine decides what "short" means)
                      email a person ──→ next unit
 ```
 
-Nothing in this flow retires an item. A reviewer's verdict is advice; it lands in `item_review`
-and waits for a person to agree or overrule it.
+Nothing in this flow retires an item. A reviewer's verdict is advice; it lands in `eval_case` (kind
+`item_review`) and waits for a person to agree or overrule it.
 
 ## F4 — rebuild the picture every night (`workflows/f4-nightly-graph.json`)
 

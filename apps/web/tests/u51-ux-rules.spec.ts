@@ -20,7 +20,7 @@ import postgres from "postgres";
 import { aClass, aReadPaper } from "./rows";
 import { aK2Note, k2Class, voiceSwitch } from "./k2-rows";
 import { SIGNED_IN } from "../playwright.config";
-import { FILTER_FROM_ROWS, PURPOSE_MAX, SEARCH_PX, TABLE_ROW_LIMIT, TOP_BAR_MIN_PX, groupRows, isEmptyCell, pageOf, visibleColumns } from "../lib/ux-rules";
+import { BAR_HEIGHT_PX, FILTER_FROM_ROWS, PURPOSE_MAX, SEARCH_PX, TABLE_ROW_LIMIT, TOP_BAR_MIN_PX, groupRows, isEmptyCell, pageOf, visibleColumns } from "../lib/ux-rules";
 
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 const SECTION = "U51-CLASS";
@@ -247,9 +247,11 @@ test("the top bar: the menu button is full-size, the student search is a compact
   const page = await (await browser.newContext({ storageState: SIGNED_IN, viewport: DESKTOP })).newPage();
   for (const url of ["/today", "/papers", "/growth", "/"]) {
     await open(page, url);
-    expect((await page.getByRole("button", { name: "Menu" }).boundingBox())!.height, `${url}: the menu button`).toBeGreaterThanOrEqual(TOP_BAR_MIN_PX);
+    expect((await page.locator("[data-bar]").first().locator("div").first().boundingBox())!.height, `${url}: the bar`).toBe(BAR_HEIGHT_PX);
+    for (const door of await page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" }).getByRole("link").all())
+      expect((await door.boundingBox())!.height, `${url}: a door`).toBeGreaterThanOrEqual(TOP_BAR_MIN_PX);
     await expect(page.locator("[data-viewing]"), `${url}: no Viewing control in the bar`).toHaveCount(0);
-    const search = page.getByRole("search", { name: "Find a child or paper" }).getByRole("searchbox");
+    const search = page.getByRole("search", { name: "Find a child or paper" }).getByRole("combobox");
     const box = (await search.boundingBox())!;
     expect(box.height).toBeGreaterThanOrEqual(TOP_BAR_MIN_PX);
     expect(Math.round(box.width), `${url}: the search is a field, about ${SEARCH_PX} px`).toBeLessThanOrEqual(SEARCH_PX + 20);

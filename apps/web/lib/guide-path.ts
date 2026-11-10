@@ -9,5 +9,5 @@ export const slugOf = (label: string) => label.toLowerCase().replace(/[^a-z]+/g,
 /** The guide page for a path of the site: its menu page's, or none (the guide's own pages, a page on no menu item). */
 export function guideFor(path: string): string | undefined {
   const page = locate(path)?.page;
-  return page && !path.startsWith("/guide") ? `/guide/${slugOf(page.label)}` : undefined;
+  return page && page.guide !== false && !path.startsWith("/guide") ? `/guide/${slugOf(page.label)}` : undefined;
 }

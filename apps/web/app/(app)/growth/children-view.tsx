@@ -1,6 +1,6 @@
 import Link from "@/components/link";
 import { FilterBar } from "@/components/filter-bar";
-import { PageShell } from "@/components/page-shell";
+import { Screen } from "@/components/app-frame";
 import type { Session } from "@/lib/auth";
 import { workScope } from "@/lib/reach";
 import { childTable } from "@/lib/queries-children";
@@ -64,7 +64,7 @@ export async function ChildrenView({ me, q }: { me: Session; q: Record<string, s
   const pageHref = (n: number, k = "page") => `/growth?${new URLSearchParams({ ...(Object.fromEntries(Object.entries(keep).filter(([, v]) => v)) as Record<string, string>), [k]: String(n) })}`;
 
   return (
-    <PageShell
+    <Screen
       stage="Class results"
       title="Children, one by one"
       purpose={own ? "Your classes, child by child. The children who need you come first." : "Every class, child by child. The children who need you come first."}
@@ -122,6 +122,6 @@ export async function ChildrenView({ me, q }: { me: Session; q: Record<string, s
           </details>
         </div>
       )}
-    </PageShell>
+    </Screen>
   );
 }

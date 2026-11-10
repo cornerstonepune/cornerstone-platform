@@ -1,4 +1,4 @@
-import { Notice, Panel } from "@/components/shell";
+import { Notice, Panel } from "@/components/parts";
 import { gradeOf, levelsOf, type Grades, type SkillSet } from "@/lib/queries";
 import { dateWords } from "@/lib/week";
 import { saveGrades } from "./actions";

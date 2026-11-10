@@ -4,7 +4,7 @@ the child made, how often, with the child's own example — the question as prin
 Wrong answers no named mistake explains are counted per skill, never spread. Next: the area their home paper works on
 (W2's own choice). Only what a person signed off counts, from readings nobody has superseded.
 
-`against` reads the reports back against Aseem's transcribed findings (`gold_finding`): every faulty concept he named
+`against` reads the reports back against Aseem's transcribed findings (`eval_case`, kind `report_finding`): every faulty concept he named
 that the papers hold must be in the report, and nothing he called strong may be faulty in it.
 """
 

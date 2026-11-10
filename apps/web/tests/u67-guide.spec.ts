@@ -23,7 +23,7 @@ const MAP = JSON.parse(readFileSync(path.resolve(__dirname, "../../../workflows.
   workflows: { code: string; name: string; steps: string[] }[];
   steps: { code: string }[];
 };
-const MENU = GROUPS.flatMap((g) => g.pages);
+const MENU = GROUPS.flatMap((g) => g.pages).filter((p) => p.guide !== false);
 const GUIDE = ["/guide", ...MENU.map((p) => `/guide/${slugOf(p.label)}`), "/guide/workflows", "/guide/worked-out", "/guide/words", "/guide/report-a-problem"];
 
 test("start here draws the whole flow from the map and the menu from the real menu", async ({ page }) => {
@@ -125,16 +125,14 @@ test("the glossary and why did it say that", async ({ page }) => {
 test("the help mark on a page's header opens that page's guide, and the menu has the Guide", async ({ page }) => {
   for (const [href, label] of [["/papers", "Assessments"], ["/capture/check", "Check answers"], ["/staff", "Staff"]]) {
     await page.goto(href);
-    await page.locator("[data-ux=help]").click();
+    await page.locator("[data-bar] [data-ux=help]").first().click();
     await expect(page).toHaveURL(new RegExp(`/guide/${slugOf(label)}$`));
     await expect(page.getByRole("heading", { level: 1, name: label, exact: true })).toBeVisible();
   }
-  // the guide's own pages carry no "?" of their own
-  await expect(page.locator("[data-ux=help]")).toHaveCount(0);
-  await page.goto("/today");
-  await page.getByRole("button", { name: "Menu" }).click();
-  await page.locator("#site-menu").getByRole("link", { name: "Guide", exact: true }).click();
-  await expect(page).toHaveURL(/\/guide$/);
+  // the guide's own pages: the "?" opens the guide's front; a page with no guide page of its own does the same
+  await expect(page.locator("[data-bar] [data-ux=help]").first()).toHaveAttribute("href", "/guide");
+  await page.goto("/educator/week");
+  await expect(page.locator("[data-bar] [data-ux=help]").first()).toHaveAttribute("href", "/guide");
 });
 
 test("every guide page reads at phone width with no sideways scroll", async ({ page }) => {

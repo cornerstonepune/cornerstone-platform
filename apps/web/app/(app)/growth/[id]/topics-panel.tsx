@@ -1,6 +1,6 @@
 import Link from "@/components/link";
 import { DataTable } from "@/components/data-table";
-import { Panel } from "@/components/shell";
+import { Panel } from "@/components/parts";
 import { Score, StandingChip } from "@/components/standing";
 import type { Evidence } from "@/lib/queries";
 import { PURPOSE, type ChildSkill, type Repeated } from "@/lib/queries-children";

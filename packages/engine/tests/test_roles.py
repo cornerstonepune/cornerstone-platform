@@ -111,7 +111,8 @@ def _ledgers(conn):
     return _names(
         conn,
         "select distinct t.relnamespace::regnamespace || '.' || t.relname as name from pg_trigger g"
-        " join pg_class t on t.oid = g.tgrelid where g.tgfoid = 'internal.forbid_change'::regproc order by 1",
+        " join pg_class t on t.oid = g.tgrelid where g.tgfoid = 'internal.forbid_change'::regproc"
+        " and g.tgtype & 1 = 0 order by 1",  # a statement's: the whole table (a row's guards some rows, CP-27)
     )
 
 
@@ -148,7 +149,9 @@ def test_no_service_can_change_remove_or_empty_a_ledger_row(conn):
     """An append-only ledger (a table `internal.forbid_change` guards) is read and added to, never changed, removed or
     emptied — by grant, not by its trigger alone. A ledger made later is held the moment its trigger is."""
     ledgers = _ledgers(conn)
-    assert {"public.evidence_event", "public.bank_decision", "public.key_correction"} <= set(ledgers), ledgers
+    assert {"public.evidence_event", "public.curriculum_proposal", "public.key_correction"} <= set(ledgers), (
+        ledgers
+    )
     for role in ROLES:
         held = [
             f"{t} {w}" for t in ledgers for w in ("UPDATE", "DELETE", "TRUNCATE") if _can(conn, role, t, w)

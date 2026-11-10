@@ -57,7 +57,7 @@ async function signedIn(browser: Browser): Promise<Page> {
 
 /** The count a menu tab carries, 0 when it carries none (as u15 reads it). */
 async function badge(page: Page, tab: string): Promise<number> {
-  const link = page.getByRole("navigation", { name: "Sections" }).getByRole("link", { name: new RegExp(`^${tab}\\b`) });
+  const link = page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" }).getByRole("link", { name: new RegExp(`^${tab}\\b`) });
   const n = link.getByTestId("waiting");
   return (await n.count()) ? Number((await n.innerText()).replace(/\D/g, "")) : 0;
 }
@@ -72,7 +72,7 @@ test("an educator's Today lists every decision the coordinator's does, and the m
     const main = page.getByRole("main");
     await expect(main).toContainText("Skills to approve");
     // the menu carries a count on What needs doing alone: a row for each skill waiting and one for the questions
-    expect(await badge(page, "What needs doing"), "every skill waiting and the questions").toBeGreaterThanOrEqual((await waitingSkills()) + ((await waitingAsks(null)) > 0 ? 1 : 0));
+    expect(await badge(page, "Today"), "every skill waiting and the questions").toBeGreaterThanOrEqual((await waitingSkills()) + ((await waitingAsks(null)) > 0 ? 1 : 0));
     expect(await badge(page, "Setup"), "no count on Setup").toBe(0);
   } finally {
     await page.context().close();
@@ -110,7 +110,7 @@ test("the coordinator is shown every decision and every class", async ({ page })
   await page.goto("/today");
   await expect(page.getByRole("main")).toContainText("Skills to approve");
   // the menu carries a count on What needs doing alone: a row for each skill waiting and one for the questions
-  expect(await badge(page, "What needs doing"), "every skill waiting and the questions").toBeGreaterThanOrEqual((await waitingSkills()) + ((await waitingAsks(null)) > 0 ? 1 : 0));
+  expect(await badge(page, "Today"), "every skill waiting and the questions").toBeGreaterThanOrEqual((await waitingSkills()) + ((await waitingAsks(null)) > 0 ? 1 : 0));
   expect(await badge(page, "Setup"), "no count on Setup").toBe(0);
 
   await page.goto(`/skill-sets/${draft}`);

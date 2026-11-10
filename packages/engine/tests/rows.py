@@ -7,6 +7,8 @@ import re
 import uuid
 
 from engine.core import db
+from engine.w1_bank import review
+from engine.w3_read import gold
 
 
 def drawn(make):
@@ -44,6 +46,50 @@ def a_child(conn, section=None):
         "insert into pii.child (tenant_id, child_id, first_name) values (%s, %s, 'Rowstest')", (t, child)
     )
     return child
+
+
+def a_member_of_staff(conn, email=None, active=True):
+    """A member of staff of the school with a sign-in email (a placeholder, never a person's): (their id, the email).
+    What a person's decision names is the id the engine finds from the email the website sends (`signer.lookup`)."""
+    t = tenant(conn)
+    email = email or f"staff-{uuid.uuid4().hex[:8]}@school.invalid"
+    campus = conn.execute("select id from campus where tenant_id = %s limit 1", (t,)).fetchone()["id"]
+    sid = conn.execute(
+        "insert into staff (tenant_id, campus_id, active) values (%s, %s, %s) returning id",
+        (t, campus, active),
+    ).fetchone()["id"]
+    conn.execute(
+        "insert into pii.staff (tenant_id, staff_id, name, email) values (%s, %s, 'A placeholder', %s)",
+        (t, sid, email),
+    )
+    return sid, email
+
+
+def a_bank_proposal(conn, kind, subject, direction="easier", evidence=None):
+    """A proposal of the question bank as `learn` makes one (a question far off its level, `mislevelled`; a mistake
+    learned from children's answers, `new_mistake`): a row of the one proposal list, waiting for a person. Its id."""
+    return conn.execute(
+        "insert into curriculum_proposal (tenant_id, run_id, kind, subject_code, proposal, status, proposer, machine)"
+        " values (%s, gen_random_uuid(), %s, %s, jsonb_build_object('direction', %s::text, 'evidence', %s::jsonb),"
+        " 'needs_person', 'code', 'code:' || %s) returning id",
+        (tenant(conn), kind, subject, direction, json.dumps(evidence or {}), kind),
+    ).fetchone()["id"]
+
+
+def a_question_review(
+    conn, ref, skill="SUB.2D2D", level="Advance", reviewer="language_review", verdict="pass"
+):
+    """A reviewer model's verdict on a question (`ref` its key) or on a level's rule (`template:<skill>:<level>`),
+    stored as `review` stores one."""
+    review.record(conn, reviewer, skill, level, [{"ref": ref, "verdict": verdict}], {})
+
+
+def a_report_finding(conn, child, ref, skill="NUM.OPS.02", verdict="faulty", words="a test finding"):
+    """A finding transcribed from an educator's report for one child, about the question `ref`, stored as `gold.load`
+    stores one: not yet confirmed."""
+    gold.record(
+        conn, tenant(conn), child, {"verdict": verdict, "skill": skill, "item": ref, "words": words}, "test"
+    )
 
 
 WAITED = {

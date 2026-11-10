@@ -46,7 +46,7 @@ export const STEP_GUIDE = steps as Record<string, StepGuide>;
 
 /** The menu's pages in its own order, each with its guide: one list, so the guide cannot reorder or skip the menu. */
 export const MENU_GUIDE: { group: string; page: MenuPage; slug: string; guide: MenuGuide }[] = GROUPS.flatMap((g) =>
-  g.pages.map((page) => ({ group: g.label, page, slug: slugOf(page.label), guide: PAGES.find((p) => p.menu === page.href)! })),
+  g.pages.filter((page) => page.guide !== false).map((page) => ({ group: g.label, page, slug: slugOf(page.label), guide: PAGES.find((p) => p.menu === page.href)! })),
 );
 
 /** What the tokens of the guide's text are filled from: the number settings, and the school's grades, levels and states. */

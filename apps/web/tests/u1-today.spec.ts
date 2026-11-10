@@ -78,14 +78,13 @@ test.afterAll(async () => {
 
 test("the menu is the teacher's week, and says where they are", async ({ page }) => {
   await page.goto("/today");
-  const menu = page.getByRole("navigation", { name: "Sections" });
-  // four groups (goals/nav3_what_needs_doing.yaml); the group's count of what waits follows its name
-  await expect(menu.getByRole("link")).toHaveText([/^What needs doing/, /^Assessments/, /^Results/, /^Setup/]);
+  const menu = page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" });
+  // four doors (lib/menu.ts); the one count of what waits follows the first name
+  await expect(menu.getByRole("link")).toHaveText([/^Today/, /^Timetable/, /^Children/, /^Setup/]);
   for (const [label, heading] of [
     ["Setup", "Curriculum"],
-    ["Assessments", "Assessments"],
-    ["Results", "Class results"],
-    ["What needs doing", "What needs doing"],
+    ["Children", "Children"],
+    ["Today", "What needs doing"],
   ]) {
     await menu.getByRole("link", { name: new RegExp(`^${label}\\b`) }).click();
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(heading);

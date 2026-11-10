@@ -32,7 +32,7 @@ KEYS = {
     ("item", "difficulty"): "difficulty",
     ("prescription", "difficulty"): "difficulty",
     ("sheet_template", "difficulty"): "difficulty",
-    ("item_review", "difficulty"): "difficulty",
+    ("eval_case", "difficulty"): "difficulty",
     ("child_skill_state", "state"): "child_state",
 }
 

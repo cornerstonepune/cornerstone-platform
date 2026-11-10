@@ -1,7 +1,7 @@
 import Link from "@/components/link";
 import { Answers, kindWords, Question } from "@/components/question";
 import { questionKinds } from "@/lib/question-types";
-import { Body, PageHeader, Panel } from "@/components/shell";
+import { Body, PageHeader, Panel } from "@/components/parts";
 import { levels } from "@/lib/levels";
 import { bankGrid, bankTotals, itemCount, items } from "@/lib/queries-bank";
 import { deadline } from "@/lib/deadline";
