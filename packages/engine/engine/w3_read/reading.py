@@ -8,6 +8,7 @@ reader's guess for whatever is left doubted.
 """
 
 from engine.adapters import digits, ocr
+from engine.core import settings
 from engine.w3_read import (
     boxes,
     crops,
@@ -126,7 +127,7 @@ def read_pages(conn, scan, cli, child_id, notes=None, second=True):
             img, frame = render_pdf.photo(path, file_page)
             # the digit reader's own floor (ADR 0035), raised to this child's measured on that reader's readings
             # (`box_floor`): the child's floor from Textract's readings is on another scale. It only ever rises.
-            floor = digits.settings(conn)
+            floor = digits.settings(settings.numbers(conn, "read.") if conn is not None else None)
             floor["min_confidence"] = max(floor["min_confidence"], float(notes.get("box_floor") or 0))
             readings = boxes.read_page(
                 img, page_no, paper["printed"], paper["geometry"], wanted, {**cfg, **floor}, frame=frame,

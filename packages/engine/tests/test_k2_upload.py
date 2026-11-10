@@ -12,7 +12,7 @@ import pytest
 from typer.testing import CliRunner
 
 from engine import cli
-from engine.core import db
+from engine.core import db, history
 from engine.w1_bank import k2_upload as up
 
 BLOCK = {
@@ -129,9 +129,9 @@ def test_the_comparison_matches_an_activity_by_its_strand_and_name_and_says_what
 
 def test_a_dry_run_writes_nothing_and_an_upload_twice_changes_nothing_the_second_time(tmp_path, conn):
     rows, _ = up.read_csv(sheet(tmp_path, BLOCK, PINK))
-    before = conn.execute("select count(*) as n from curriculum_edit").fetchone()["n"]
+    before = conn.execute("select count(*) as n from change_log").fetchone()["n"]
     first = _plan(conn, rows)
-    assert conn.execute("select count(*) as n from curriculum_edit").fetchone()["n"] == before
+    assert conn.execute("select count(*) as n from change_log").fetchone()["n"] == before
     up.apply(conn, conn.info_tenant, first, "K2 upload — test")
     second = _plan(conn, rows)
     assert not second.changes and not second.inserts and second.same == 2
@@ -162,14 +162,11 @@ def test_every_outcome_becomes_a_k2_learning_objective_linked_to_its_activity(tm
 def test_every_change_is_kept_with_who_and_when_and_the_history_cannot_be_changed(tmp_path, conn):
     rows, _ = up.read_csv(sheet(tmp_path, BLOCK))
     up.apply(conn, conn.info_tenant, _plan(conn, rows), "K2 upload — Tester")
-    kept = conn.execute(
-        "select field, before, after, changed_by, created_at from curriculum_edit"
-        " where code = 'ACT-K2-0001' and field = 'level_0'"
-    ).fetchall()
+    kept = [k for k in _kept(conn, "activity", "ACT-K2-0001") if k["field"] == "level_0"]
     assert len(kept) == 1 and kept[0]["after"] == "Doesn't sit for the class"
-    assert kept[0]["changed_by"] == "K2 upload — Tester" and kept[0]["created_at"] is not None
+    assert kept[0]["changed_by"] == "K2 upload — Tester" and kept[0]["at"] is not None
     with pytest.raises(Exception, match="append|change|ledger|never"):
-        conn.execute("update curriculum_edit set after = 'x'")
+        conn.execute("update change_log set after = '{}'")
 
 
 def test_a_word_a_person_edited_on_the_site_is_not_written_over_by_the_sheet(tmp_path, conn):
@@ -279,11 +276,11 @@ def test_a_dry_run_runs_in_a_read_only_transaction_so_it_cannot_write_even_if_ap
     monkeypatch.setattr(up, "snapshot", snapshot_then_try_to_write)
     # the history is not empty on a fresh copy: the seed's own links are in it (M1-05 keeps every link change)
     with db.connect() as conn:
-        before = conn.execute("select count(*) as n from curriculum_edit").fetchone()["n"]
+        before = conn.execute("select count(*) as n from change_log").fetchone()["n"]
     result = CliRunner().invoke(cli.app, ["curriculum", "k2", str(sheet(tmp_path, BLOCK))])
     assert isinstance(result.exception, psycopg.errors.ReadOnlySqlTransaction)
     with db.connect() as conn:
-        assert conn.execute("select count(*) as n from curriculum_edit").fetchone()["n"] == before
+        assert conn.execute("select count(*) as n from change_log").fetchone()["n"] == before
 
 
 def test_apply_without_by_is_refused_before_the_sheet_is_read_or_the_database_opened(tmp_path, monkeypatch):
@@ -302,11 +299,24 @@ def test_apply_without_by_is_refused_before_the_sheet_is_read_or_the_database_op
 # CP-1: the first write of an activity, and a link changed in place, are kept with who and when like every other edit.
 
 
+def _text(value) -> str:
+    return "" if value is None else str(value)
+
+
 def _kept(conn, record, code):
-    return conn.execute(
-        "select field, before, after, changed_by from curriculum_edit where record = %s and code = %s order by created_at, after",
-        (record, code),
-    ).fetchall()
+    """Each field a kept change of the row touched, oldest first: its field, before and after as words ("" for none),
+    who it came from and when."""
+    return [
+        {
+            "field": f,
+            "before": _text((c["before"] or {}).get(f)),
+            "after": _text((c["after"] or {}).get(f)),
+            "changed_by": c["origin"],
+            "at": c["at"],
+        }
+        for c in history.of(conn, record, code)
+        for f in sorted(set(c["before"] or {}) | set(c["after"] or {}))
+    ]
 
 
 def _activity_with_a_link(conn):
@@ -335,7 +345,7 @@ def test_a_new_activity_is_kept_field_by_field_with_who_and_empty_fields_are_not
     assert got == {("strand", "", "Maths", "cp1-test"), ("name", "", "n", "cp1-test")}
 
 
-def test_a_link_changed_in_place_is_a_removal_and_an_addition_and_a_change_of_nothing_it_says_is_not_kept(
+def test_a_link_changed_in_place_is_one_change_from_the_old_to_the_new_and_a_change_of_nothing_it_says_is_not_kept(
     conn,
 ):
     t = _activity_with_a_link(conn)
@@ -350,7 +360,7 @@ def test_a_link_changed_in_place_is_a_removal_and_an_addition_and_a_change_of_no
     got = [
         (r["before"], r["after"], r["changed_by"]) for r in _kept(conn, "activity_objective", "ACT-CP1")[1:]
     ]
-    assert sorted(got) == [("", "LO-CP1-B", "cp1-test"), ("LO-CP1-A", "", "cp1-test")]
+    assert got == [("LO-CP1-A", "LO-CP1-B", "cp1-test")]
 
 
 # CP-1 fix: the seed loader's first write of an activity is kept under its own label, which the upload does not
@@ -385,6 +395,6 @@ def test_an_activity_a_person_adds_is_kept_and_does_read_as_edited_on_the_site(c
 
 def test_the_seed_load_leaves_no_activity_history_under_the_bare_database_login(conn):
     n = conn.execute(
-        "select count(*) as n from curriculum_edit where record = 'activity' and changed_by = session_user::text"
+        "select count(*) as n from change_log where table_name = 'activity' and origin = session_user::text"
     ).fetchone()["n"]
     assert n == 0, "the loader must say who it is; a bare login would read as a person"

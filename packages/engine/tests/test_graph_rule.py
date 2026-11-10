@@ -10,7 +10,7 @@ import pytest
 import yaml
 
 from engine.checks import scenarios_graph
-from engine.core import db
+from engine.core import db, settings
 from tests.rows import tenant
 
 GOAL = db.REPO_ROOT / "goals" / "gr1-state-from-recent-evidence.yaml"
@@ -120,9 +120,11 @@ RULE_ROWS = {
 
 
 def test_every_number_of_the_rule_is_a_row(conn):
-    """Every number the rule reads is a threshold row, and moving one moves the rule: three right answers no longer
+    """Every number the rule reads is a setting, and moving one moves the rule: three right answers no longer
     clear a mistake once the row asks for four."""
-    have = {r["key"] for r in conn.execute("select key from threshold where tenant_id = %s", (tenant(conn),))}
+    have = {f"state.{k}" for k in settings.numbers(conn, "state.", tenant(conn))} | {
+        f"next_sheet.{k}" for k in settings.numbers(conn, "next_sheet.", tenant(conn))
+    }
     assert RULE_ROWS <= have
     assert "state.min_observers" not in have  # papers were never observers
     src = db.one(
@@ -133,7 +135,7 @@ def test_every_number_of_the_rule_is_a_row(conn):
     for key in RULE_ROWS:
         assert key in src, key
     assert "state.min_adults" not in have and "min_adults" in src  # the minimum is a grade's row (CP-13)
-    conn.execute("update threshold set value = 4 where key = 'state.repeat_clears_after'")
+    settings.put(conn, "state.repeat_clears_after", 4)
     sc = dict(SCENARIOS["A repeating mistake clears after three right answers on a later paper"])
     got = scenarios_graph.measure(conn, sc)
     assert got["skill"] == "patterned_error" and got["repeating"] == "M_ALIGN_LEFT"

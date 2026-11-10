@@ -68,7 +68,7 @@ with db.connect() as c:
     show("of each kind's trust window, the checks no person was asked about", c.execute(
         "with w as (select fmt, how, why, answer_state, row_number() over (partition by tenant_id, fmt"
         " order by read_at desc, item_key desc, item_result_id desc) as rn from answer_checked where stood),"
-        " g as (select coalesce((select value::int from threshold where key = 'marking.agreement_window'), 50) as size)"
+        " g as (select coalesce((select value::int from config where key = 'marking.agreement_window'), 50) as size)"
         " select fmt, count(*) as in_window, count(*) filter (where how = 'signed off' and why = '' and answer_state = 'written')"
         " as never_shown from w, g where rn <= g.size group by 1 order by 1"))
     show("the papers read on 16 Oct", c.execute(
@@ -126,5 +126,5 @@ with db.connect() as c:
         "   and coalesce(r.raw_read::jsonb ->> 'why', '') <> '' and r.raw_read::jsonb ->> 'why' not like 'read as%%'"
         "   and r.raw_read::jsonb ->> 'why' not like '%%not a number%%' and r.raw_read::jsonb ->> 'why' not like 'this child%%'"))
     show("the rows the loop reads", c.execute(
-        "select key, value from threshold where key in ('read.route_above_overturn', 'marking.agreement_gate',"
+        "select key, value from config where key in ('read.route_above_overturn', 'marking.agreement_gate',"
         " 'marking.agreement_window', 'marking.spot_check_rate', 'read.auto_confirm_above') order by key"))

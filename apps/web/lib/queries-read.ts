@@ -256,8 +256,8 @@ export type ReaderReport = {
 
 export async function readerReport(): Promise<ReaderReport> {
   const [gate] = await sql<{ bar: number; window: number }[]>`
-    select coalesce((select value from threshold where key = 'marking.agreement_gate'), 0.95)::float as bar,
-           coalesce((select value from threshold where key = 'marking.agreement_window'), 50)::int as window`;
+    select coalesce((select value::numeric from config where key = 'marking.agreement_gate'), 0.95)::float as bar,
+           coalesce((select value::numeric from config where key = 'marking.agreement_window'), 50)::int as window`;
   // `answer_checked` is the one definition of a checked answer and its label (goals/s19-validation-teaches.yaml); a kind
   // the reader stood behind no reading of has no `kind_trust` row, and the whole window to go
   const rows = await sql<(ReaderKind & { stood_behind: number; guess_right: number })[]>`
@@ -295,7 +295,7 @@ export async function readerReport(): Promise<ReaderReport> {
     group by b.lo, b.hi order by b.lo`;
   const [floor] = await sql<
     { floor: number }[]
-  >`select coalesce((select value from threshold where key = 'read.auto_confirm_above'), 0.9)::float * 100 as floor`;
+  >`select coalesce((select value::numeric from config where key = 'read.auto_confirm_above'), 0.9)::float * 100 as floor`;
   const sum = (k: keyof (typeof rows)[number]) => rows.reduce((n, r) => n + Number(r[k]), 0);
   return {
     checked: sum("checked"),

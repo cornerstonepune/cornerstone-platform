@@ -13,7 +13,7 @@ from pathlib import Path
 import psycopg
 import pytest
 
-from engine.core import db
+from engine.core import db, history
 from engine.w1_bank import k2_gaps as gaps
 from engine.w1_bank import k2_upload as up
 
@@ -152,11 +152,8 @@ def test_an_upload_keeps_the_lesson_plan_as_steps_marks_it_the_schools_and_a_sec
     dbrows, edited = up.snapshot(conn, conn.info_tenant)
     second = up.plan(rows, dbrows, edited)
     assert not second.changes and second.same == 1
-    kept = conn.execute(
-        "select changed_by from curriculum_edit where record = 'activity' and code = %s and field = 'steps'",
-        (code,),
-    ).fetchall()
-    assert [k["changed_by"] for k in kept] == ["K2 upload — test"], "the history keeps who loaded the steps"
+    kept = [c["origin"] for c in history.of(conn, "activity", code) if "steps" in (c["after"] or {})]
+    assert kept == ["K2 upload — test"], "the history keeps who loaded the steps"
 
 
 @needs_db

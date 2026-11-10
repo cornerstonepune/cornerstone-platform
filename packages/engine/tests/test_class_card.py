@@ -114,7 +114,9 @@ def test_the_card_is_kept_as_the_weeks_rows_and_confirmed_once_by_name(conn, sec
     import psycopg
 
     with pytest.raises(psycopg.errors.RaiseException):
-        conn.execute("update class_card_confirmation set by = 'x' where section = %s", (name,))
+        conn.execute(
+            "update approval set by = 'x' where kind = 'class_card' and detail ->> 'section' = %s", (name,)
+        )
 
 
 def test_the_card_over_http_is_the_cards_and_its_confirmation_names_the_educator(conn, section, monkeypatch):

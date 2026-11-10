@@ -14,7 +14,7 @@ import uuid
 import pytest
 
 from engine.assess import graph
-from engine.core import db
+from engine.core import db, settings
 from tests.rows import a_child, tenant
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
@@ -219,25 +219,20 @@ def test_written_evidence_is_read_exactly_as_before(conn, k2):
     )
 
 
-def test_the_rule_is_rows_per_grade_and_way_of_entry(conn, k2):
+def test_the_rule_is_the_grades_row_and_a_setting_per_way_of_entry(conn, k2):
+    """K2's rule is its grade's row (CP-27: it was observed_rule), and how each way of entry counts is the school's
+    setting `observed.weights` (it was observed_weight)."""
     rule = conn.execute(
-        "select r.secure_level, r.secure_days, r.recheck_days, g.min_adults from observed_rule r"
-        " join grade g on g.tenant_id = r.tenant_id and g.code = r.grade_code"
-        " where r.tenant_id = %s and r.grade_code = 'K2'",  # min_adults is the grade's (CP-13)
+        "select secure_level, secure_days, recheck_days, min_adults from grade where tenant_id = %s and code = 'K2'",
         (k2["tenant"],),
     ).fetchone()
     assert dict(rule) == {"secure_level": 3, "secure_days": 2, "recheck_days": 14, "min_adults": 1}
     weights = {
-        r["entry_mode"]: (r["opens_secure"], r["rechecks"], r["lowers"])
-        for r in conn.execute(
-            "select entry_mode, opens_secure, rechecks, lowers from observed_weight"
-            " where tenant_id = %s and grade_code = 'K2' and kind = 'observed'",
-            (k2["tenant"],),
-        )
+        w["entry_mode"]: (w["opens_secure"], w["rechecks"], w["lowers"])
+        for w in settings.config(conn, "observed.weights", {}, tenant=k2["tenant"])["K2"]
+        if w["kind"] == "observed"
     }
     assert weights == {"individual": (True, True, True), "group_as_expected": (False, True, False)}
-    with pytest.raises(Exception), conn.transaction():
-        conn.execute("set local role app_engine; delete from observed_weight")
 
 
 def test_notes_confirmed_by_the_educator_change_the_picture_through_the_confirm_step(conn):

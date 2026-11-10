@@ -42,7 +42,7 @@ with db.connect() as c:
         " where flow = 'read_with_examples' and started_at::date = current_date group by 1, 2 order by 3 desc limit 8"
     ).fetchall():
         print("  " + json.dumps(dict(r), default=str))
-    budget = c.execute("select value from threshold where key = 'llm.daily_budget_inr'").fetchone()
+    budget = c.execute("select value from config where key = 'llm.daily_budget_inr'").fetchone()
     spent = c.execute("select coalesce(sum(cost_inr), 0) as n from flow_run where started_at::date = current_date").fetchone()
     print("  " + json.dumps({"daily_budget_inr": budget and budget["value"], "spent_today_inr": spent["n"]}, default=str))
     print("-- the eval: the second reader on every checked answer the box reader guessed, notebook without its paper")

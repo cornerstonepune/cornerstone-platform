@@ -13,7 +13,7 @@ exact set on 21 of 24, about 0.3 s a note. Jev is shown the note and the skill s
 import json
 
 from engine.adapters import jev
-from engine.core import db, roster
+from engine.core import db, roster, settings
 
 PURPOSE = "week_skills"
 GOLD = db.REPO_ROOT / "supabase" / "seed" / "week_note_gold.json"
@@ -21,8 +21,7 @@ BAR = ("week.skill_yes_above", 0.5)
 
 
 def _bar(conn):
-    row = conn.execute("select value from threshold where key = %s", (BAR[0],)).fetchone()
-    return float(row["value"]) if row else BAR[1]
+    return settings.threshold(conn, *BAR)
 
 
 def options(conn, band):

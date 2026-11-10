@@ -57,7 +57,7 @@ test("each kind of question says how many more checks before the reader is trust
   // every kind Marking lists, in its order: the one rule's number, or the whole window where the reader has stood
   // behind no reading of it yet
   const want = await sql<{ k: number }[]>`
-    select coalesce(t.checks_to_trust, (select value::int from threshold where key = 'marking.agreement_window')) as k
+    select coalesce(t.checks_to_trust, (select value::int from config where key = 'marking.agreement_window')) as k
     from (select distinct fmt from answer_checked where not never_read) a
     left join kind_trust t on t.tenant_id = (select id from tenant limit 1) and t.fmt = a.fmt
     order by a.fmt`;

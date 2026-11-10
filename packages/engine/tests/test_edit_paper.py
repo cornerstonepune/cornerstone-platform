@@ -3,6 +3,7 @@ against the real schema, rolled back. The handwriting reader is stood in, as in 
 
 import pytest
 
+from engine.core import settings
 from engine.w1_bank import retire
 from engine.w2_print import edit_paper, maker
 from tests import test_maker
@@ -160,15 +161,15 @@ def test_a_printed_paper_or_one_with_answers_uploaded_cannot_be_edited(conn, pap
 
 
 def test_the_fewest_and_most_questions_are_rows_and_a_full_paper_takes_no_more(conn, paper):
-    conn.execute("update threshold set value = 6 where key = 'assessment.max_questions'")
+    settings.put(conn, "assessment.max_questions", 6)
     with pytest.raises(ValueError, match="at most 6 questions"):
         edit_paper.add(conn, paper, _another(conn, paper)["id"], BY)
-    conn.execute("update threshold set value = 6 where key = 'assessment.min_questions'")
+    settings.put(conn, "assessment.min_questions", 6)
     with pytest.raises(ValueError, match="at least 6 questions"):
         edit_paper.remove(conn, paper, _ids(conn, paper)[0], BY)
     assert _row(conn, paper)["print_status"] == "printed", "a refused edit writes nothing"
-    conn.execute("delete from threshold where key = 'assessment.min_questions'")
-    with pytest.raises(LookupError, match="threshold rows"):
+    settings.put(conn, "assessment.min_questions", None)  # a setting with no number is one that is not there
+    with pytest.raises(LookupError, match="settings assessment"):
         edit_paper.review(conn, paper)
 
 

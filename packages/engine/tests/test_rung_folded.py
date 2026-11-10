@@ -121,7 +121,7 @@ def test_every_rung_code_on_record_is_a_skills_second_code(conn):
     assert conn.execute(
         "select count(*) = count(distinct (tenant_id, rung_code)) as one from skill"
     ).fetchone()["one"]
-    for table in ("item", "evidence_event", "child_skill_state", "class_card", "skill_set_version"):
+    for table in ("item", "evidence_event", "child_skill_state", "class_card"):
         # Only a written answer comes from a question, so only it has a rung. A record of another kind names a registry
         # skill and no rung: the database's own rule (evidence_event_written_has_rung, C2, 20261205100000).
         unrunged = (

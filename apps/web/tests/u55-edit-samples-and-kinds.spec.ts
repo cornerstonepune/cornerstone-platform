@@ -13,6 +13,7 @@
  */
 import { expect, test } from "@playwright/test";
 import postgres from "postgres";
+import { anApprovedWay } from "./rows";
 
 test.describe.configure({ mode: "serial" });
 test.use({ viewport: { width: 1440, height: 900 } });
@@ -22,7 +23,7 @@ type Slot = { code: string; ord: number; answer: string; options: string[]; wron
 let slot: Slot;
 let kept: { level_approved: unknown; difficulty: unknown; name: string; learning_objective: string };
 let bare = ""; // a level of the skill that does not ask "Write the word"
-let approvedHere = false; // whether this spec approved "Write the word", to take back after
+let unapprove: () => Promise<void> = async () => {}; // takes back "Write the word" if this spec approved it
 
 test.beforeAll(async () => {
   // an English Grade 4 skill with a Hard choice question and no passage (U54 reads Grade 3's)
@@ -44,16 +45,14 @@ test.beforeAll(async () => {
     where l.skill_code = ${slot.code} and not exists (select 1 from skill_level_question_type k where k.skill_code = l.skill_code
       and k.difficulty = l.difficulty and k.question_type = 'ENG.WRITE_WORD') order by d.ord limit 1`;
   // a kind is added only from the approved ones; a database built afresh approves no English kind (bin/testdb)
-  approvedHere = (await sql`
-    insert into question_type_approval (tenant_id, question_type, approved_by)
-    select tenant_id, code, 'U55' from question_type where code = 'ENG.WRITE_WORD' on conflict do nothing returning 1`).length > 0;
+  unapprove = await anApprovedWay(sql, "ENG.WRITE_WORD", "U55");
 });
 
 test.afterAll(async () => {
   await sql`update skill set name = ${kept.name}, learning_objective = ${kept.learning_objective},
               difficulty = ${sql.json(kept.difficulty as never)}, level_approved = ${sql.json(kept.level_approved as never)}
             where code = ${slot.code}`;
-  if (approvedHere) await sql`delete from question_type_approval where question_type = 'ENG.WRITE_WORD' and approved_by = 'U55'`;
+  await unapprove();
   await sql.end();
 });
 

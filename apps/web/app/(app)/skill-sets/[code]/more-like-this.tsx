@@ -38,7 +38,7 @@ export function EnglishMore({ code, level, kind, ord, most }: { code: string; le
 /** Under a Maths level: a sum typed as an example, and how many more of its kind code should make. */
 export async function MathsMore({ code, level }: { code: string; level: string }) {
   const [{ most }] = await sql<{ most: number }[]>`
-    select coalesce((select value::int from threshold where key = 'generate.max_per_request'), 20) as most`;
+    select coalesce((select value::int from config where key = 'generate.max_per_request'), 20) as most`;
   return (
     <details className="text-[13px]" data-more={level}>
       <summary className="cursor-pointer">More questions like a sample</summary>

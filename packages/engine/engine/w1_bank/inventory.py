@@ -11,7 +11,7 @@ from engine.assess.items import Item, Response
 from engine.assess.layout import WORKING_LINES
 from engine.assess.pick import Sheet, sheet_id
 from engine.assess.render import render_sheet
-from engine.core import levels
+from engine.core import levels, settings
 from engine.w1_bank import cases, kinds
 
 
@@ -20,8 +20,7 @@ def _class_need(conn):
     spares, drawn without replacement (`assemble.for_week`). All three numbers are config rows."""
 
     def cfg(key, default):
-        row = conn.execute("select value from config where key = %s", (key,)).fetchone()
-        return int(default if row is None else row["value"])
+        return int(settings.config(conn, key, default))
 
     return (cfg("bank.class_size", 16) + cfg("assemble.spares_per_difficulty", 2)) * cfg(
         "assemble.items_per_sheet", 12
@@ -171,9 +170,9 @@ def flag(conn, item_key, actor, note, verdict="retire"):
     ).fetchone()
     if not row:
         raise ValueError(f"no item {item_key!r}")
-    conn.execute(
-        "insert into item_feedback (tenant_id, item_id, actor, verdict, note) values (%s,%s,%s,%s,%s)",
-        (row["tenant_id"], row["id"], actor, verdict, note),
+    conn.execute(  # a flag is an approval row of the question (CP-27); the database retires it on `retire`
+        "insert into approval (tenant_id, kind, target, decision, by, reason) values (%s, 'item', %s::text, %s, %s, %s)",
+        (row["tenant_id"], row["id"], verdict, actor, note if note.strip() else None),
     )
     return conn.execute("select status from item where id = %s", (row["id"],)).fetchone()["status"]
 

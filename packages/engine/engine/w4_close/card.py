@@ -141,17 +141,20 @@ def confirm(conn, section, week, by, card):
     """The educator confirms the week's card, by name; kept as they saw it (append-only; the latest stands)."""
     if not by:
         raise ValueError("a confirmation names the educator making it")
-    return db.one(
+    return db.one(  # an approval row of the class's week (CP-27), the card as they saw it in `detail`
         conn,
-        "insert into class_card_confirmation (tenant_id, section, week, by, card, created_at)"
-        " select id, %s, %s, %s, %s, clock_timestamp() from tenant where slug = %s returning id, created_at",
-        (section, week, by, json.dumps(card), db.tenant_slug()),
+        "insert into approval (tenant_id, kind, target, decision, by, detail, created_at)"
+        " select id, 'class_card', %s || ' ' || %s, 'confirmed', %s,"
+        " jsonb_build_object('section', %s::text, 'week', %s::text, 'card', %s::jsonb), clock_timestamp()"
+        " from tenant where slug = %s returning id, created_at",
+        (section, week, by, section, week, json.dumps(card), db.tenant_slug()),
     )
 
 
 def confirmed(conn, section, week):
     return conn.execute(
-        "select by, card, created_at from class_card_confirmation where section = %s and week = %s"
-        " order by created_at desc limit 1",
-        (section, week),
+        "select by, detail -> 'card' as card, created_at from approval where kind = 'class_card'"
+        " and tenant_id = (select id from tenant where slug = %s) and target = %s || ' ' || %s"
+        " order by created_at desc, seq desc limit 1",
+        (db.tenant_slug(), section, week),
     ).fetchone()

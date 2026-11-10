@@ -12,7 +12,7 @@ from typer.testing import CliRunner
 
 from engine import cli
 from engine.adapters import llm
-from engine.core import db, settings
+from engine.core import db, history, settings
 from engine.w1_bank import k2_draft as draft
 from engine.w1_bank import k2_review, map_ledger
 from engine.w1_bank.k2_gaps import PAGE_PARTS
@@ -280,10 +280,8 @@ def test_applying_writes_the_drafted_parts_where_they_are_still_empty_marks_them
     }
     assert src["thinking"] == "drafted" and src["level_2"] == "drafted"
     assert "steps" not in src and "objective" not in src, "a part the draft did not write has no draft mark"
-    history = conn.execute(
-        "select changed_by from curriculum_edit where code = 'KX-1' and field = 'thinking'"
-    ).fetchone()
-    assert history["changed_by"].startswith("machine:")
+    kept = [c for c in history.of(conn, "activity", "KX-1") if "thinking" in (c["after"] or {})]
+    assert kept and kept[-1]["origin"].startswith("machine:")
 
 
 def test_reverting_empties_only_what_is_still_the_drafts_and_takes_its_mark_away(conn):
@@ -391,9 +389,7 @@ def test_the_forecast_and_the_batches_read_one_config_row_not_numbers_in_code_no
         "est_split_in",
         "est_split_out",
     } <= set(got)
-    assert (
-        conn.execute("select count(*) as n from threshold where starts_with(key, 'k2.')").fetchone()["n"] == 0
-    )
+    assert settings.numbers(conn, "k2.") == {}, "no k2 setting is a lone number the guide would read"
 
 
 def test_every_paid_call_is_committed_at_once_so_a_crash_later_cannot_erase_the_spend_record(monkeypatch):
@@ -506,9 +502,7 @@ def test_the_review_list_holds_every_unreviewed_draft_whatever_the_machine_said_
     )
     run(conn, ask)
     map_ledger.apply(conn, conn.t, conn.staff, True)
-    conn.execute(
-        "update threshold set value = 0 where key = 'map.audit_share'"
-    )  # no sample: the tag alone lists it
+    settings.put(conn, "map.audit_share", 0)  # no sample: the tag alone lists it
     assert [(r["code"], r["check_me"]) for r in k2_review.review_list(conn, conn.t)] == [
         ("KX-1", True),
         ("KX-2", True),
@@ -531,17 +525,17 @@ def test_the_review_list_is_check_me_first_then_the_audit_share_of_the_rest_draw
         conn, conn.t, first["id"], True, conn.staff, "read it"
     )  # a person approves KX-1's proposal
     map_ledger.apply(conn, conn.t, conn.staff, True)
-    conn.execute("update threshold set value = 1 where key = 'map.audit_share'")
+    settings.put(conn, "map.audit_share", 1)
     assert [(r["code"], r["check_me"]) for r in k2_review.review_list(conn, conn.t)] == [
         ("KX-2", True),
         ("KX-3", True),
         ("KX-1", False),
     ]
-    conn.execute("update threshold set value = 0 where key = 'map.audit_share'")
+    settings.put(conn, "map.audit_share", 0)
     assert [r["code"] for r in k2_review.review_list(conn, conn.t)] == ["KX-2", "KX-3"], (
         "with no share, only the unreviewed ones"
     )
-    conn.execute("update threshold set value = 0.5 where key = 'map.audit_share'")
+    settings.put(conn, "map.audit_share", 0.5)
     again = [r["code"] for r in k2_review.review_list(conn, conn.t)]
     assert again == [r["code"] for r in k2_review.review_list(conn, conn.t)] and again[:2] == [
         "KX-2",

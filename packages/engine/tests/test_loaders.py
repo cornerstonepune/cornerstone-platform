@@ -103,8 +103,8 @@ EXPECTED = {
     # prompts, thresholds and config are settings a PR adds to: counted from their seed files, never typed here
     # (2026-09-29: the typed 20, 26 and 16 had fallen to 37, 31 and 17 without anyone noticing)
     "prompt": _seeded("prompts"),
-    "threshold": _seeded("thresholds"),
-    "config": _seeded("config"),
+    # every setting is a config row: the numbers' file and the rest (CP-27: the numbers were the table threshold)
+    "config": _seeded("config") + _seeded("thresholds"),
     "skill": 155,  # 46 of maths and the 109 of English Grades 3 and 4 (E0): the maths  # fifteen + and − calculation skills (ADR 0034), eleven others, tally, equal groups, five × (M2a),
     # multiplication's models (M2d1), four ÷ (M3a), division's models (M3c), mental multiplication and division (M4a),
     # estimating products and quotients (M4b1), equations with × and ÷ (M4b2), multiples and factors (M4c),
@@ -205,12 +205,9 @@ def test_a_deploy_loads_the_rows_the_engine_reads_as_settings_and_no_others(monk
         monkeypatch.setattr(loaders, step, lambda *a, s=step: touched.append(s))
     monkeypatch.setattr(loaders.topics, "load", lambda *a: touched.append("topics"))
 
-    assert (
-        set(loaders.load_settings()) == {"prompt", "threshold", "config", *english.SAMPLE_TABLES}
-        and touched == []
-    )
+    assert set(loaders.load_settings()) == {"prompt", "config", *english.SAMPLE_TABLES} and touched == []
     with db.connect() as conn:
-        layouts = conn.execute("select value from config where key = 'render.layouts'").fetchone()["value"]
+        layouts = settings.config(conn, "render.layouts")
         assert [x["name"] for x in layouts] == [
             "2026-09-21",
             "2026-09-23-L3",

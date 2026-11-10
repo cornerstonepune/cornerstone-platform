@@ -5,7 +5,7 @@ an approved fortnight check, and a person's acceptance of one clash with a reaso
 import datetime as dt
 from typing import Any
 
-from engine.core import db
+from engine.core import db, settings
 from engine.w2_print.tt_live import in_group
 from engine.w2_print.tt_live_plan import Refused
 
@@ -15,9 +15,8 @@ KINDS = ("blocked", "over_limit", "under_limit")
 
 
 def setting(conn: db.Conn, tenant: Any, key: str, default: Any) -> Any:
-    """One school's setting (the row is per tenant; `settings.config` reads any tenant's)."""
-    row = conn.execute("select value from config where tenant_id = %s and key = %s", (tenant, key)).fetchone()
-    return row["value"] if row else default
+    """One school's setting."""
+    return settings.config(conn, key, default, tenant=tenant)
 
 
 def blocks_approval(conn: db.Conn, tenant: Any) -> bool:

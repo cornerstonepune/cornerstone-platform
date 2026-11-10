@@ -2,6 +2,7 @@
 
 import json
 
+from engine.core import settings
 from engine.w1_bank import map_why as mw
 from tests.test_map_replay import needs_db, prop
 
@@ -97,7 +98,7 @@ def test_the_held_out_run_kept_in_the_database_is_summed_up_in_counts_and_names_
     }
     with db.connect() as conn:
         _band(conn)
-        conn.execute("update threshold set value = 1 where key = 'map.dev_count'")
+        settings.put(conn, "map.dev_count", 1)
         monkey = pytest.MonkeyPatch()
         monkey.setattr(cli_map, "config", lambda: {"band": "KX"})
         tenant = conn.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()["id"]

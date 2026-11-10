@@ -284,6 +284,7 @@
 
 
 
+
 /* ===== blocks: components.css ===== */
 /* The kit's blocks. Source for kit.css: kit.mjs puts the tokens and icons above this file and writes kit.css.
    Rule: no colour, size, radius or shadow typed here; only var(--token). A hex in this file fails check.mjs.

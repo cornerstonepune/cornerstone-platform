@@ -14,7 +14,7 @@ import uuid
 import pytest
 
 from engine.checks import watch
-from engine.core import db
+from engine.core import db, settings
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
 
@@ -135,8 +135,8 @@ def test_mail_that_is_not_configured_is_said_in_the_health_check_with_no_secret(
 
 def test_every_number_and_the_common_list_are_rows_and_seed_files(conn):
     """Rule 1: the shortest password, how hard it is hashed, how long a link lasts and how often it may be asked for
-    are threshold rows; the commonest passwords are a seed file. None of them is a number in the website's code."""
-    have = {r["key"] for r in conn.execute("select key from threshold where key like 'password%'").fetchall()}
+    are number settings; the commonest passwords are a seed file. None of them is a number in the website's code."""
+    have = {f"password{k}" for k in settings.numbers(conn, "password")}
     assert ROWS <= have, ROWS - have
 
     common = json.loads((SEED / "common_passwords.json").read_text())["passwords"]

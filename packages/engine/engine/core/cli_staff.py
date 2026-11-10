@@ -122,7 +122,7 @@ def remove_(
     with db.connect() as conn:
         # --apply holds the list while it is read and written, so the website cannot be overwritten between
         if apply_:
-            conn.execute("select 1 from config where key = 'app.staff' for update")
+            settings.lock(conn, "app.staff")
         lines = staff_remove.plan(conn, emails)
         refused = sum(ln.action == "refused" for ln in lines)
         if refused or not apply_:  # an applied removal says what it did, not what it would do
@@ -184,7 +184,7 @@ def load_(
         if (
             apply_
         ):  # the list is held while it is read and written, so the website cannot be overwritten between
-            conn.execute("select 1 from config where key = 'app.staff' for update")
+            settings.lock(conn, "app.staff")
         lines = staff_load.plan(conn, rows, change_roles)
         refused = _show(lines, sum(s["email"].lower() not in {ln.email for ln in lines} for s in staff(conn)))
         if not apply_:
