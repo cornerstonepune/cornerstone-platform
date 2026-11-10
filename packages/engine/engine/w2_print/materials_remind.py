@@ -4,7 +4,7 @@ reminder for the educator and one for the materials team at each lead time, work
 A list that has been sent has none."""
 
 import datetime as dt
-from typing import Any
+from typing import Any, LiteralString
 from uuid import UUID
 
 from engine.core import db, settings
@@ -38,7 +38,7 @@ def _holidays(conn: db.Conn, tenant: UUID, campus: UUID, lo: dt.date, hi: dt.dat
     return out
 
 
-def _lists(conn: db.Conn, where: str, params: tuple) -> list[dict[str, Any]]:
+def _lists(conn: db.Conn, where: LiteralString, params: tuple) -> list[dict[str, Any]]:
     return conn.execute(
         "select l.id, l.tenant_id, l.school_class_id as class_id, c.campus_id, (select min(needed_on)"
         " from materials_line where list_id = l.id and removed_at is null) as first"
@@ -77,7 +77,9 @@ def reminders(conn: db.Conn, list_id: UUID, today: dt.date) -> list[dict[str, An
     ]
 
 
-def _due_by(conn: db.Conn, today: dt.date, where: str, params: tuple) -> list[tuple[dict, dates.Reminder]]:
+def _due_by(
+    conn: db.Conn, today: dt.date, where: LiteralString, params: tuple
+) -> list[tuple[dict, dates.Reminder]]:
     """(list, reminder) for each reminder of the draft lists `where` names that has come due by `today`."""
     weeks = [int(w) for w in settings.config(conn, "materials.reminder_weeks", [2, 1])]
     return [

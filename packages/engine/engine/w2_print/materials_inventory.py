@@ -49,6 +49,8 @@ def send(conn: db.Conn, cid: UUID, who: UUID) -> dict[str, Any]:
     body = [f"School materials, {materials_text.short(got['from'])} to {materials_text.short(got['to'])}"]
     body += [_line(item, last) for item in got["lines"]]
     tenant = materials_consolidate.tenant_of(conn, cid)
+    if tenant is None:
+        raise NothingToSend("no such list")
     # the classes absent from the very build the lines above come from (not from today's plans)
     names = materials_coverage.class_names(conn, tenant)
     expected = materials_coverage.planned_classes(conn, tenant, got["from"], got["to"])
