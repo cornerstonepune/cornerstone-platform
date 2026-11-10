@@ -23,3 +23,6 @@ For the UI-3a screens: period, record, confirm, notes. No new table.
 
 ## Setting
 `children.attention_days` = 14 (`supabase/seed/config.json`): read by the children screen only. Its meaning (days without a confirmed note) comes from the frontend's request; unverified against the wireframe.
+
+## Data register
+The new `educator_note.session_id` is said in the register's observations entry, in a parent's words ("which lesson each note was about"), and in the guard's list (`PII_COLUMN_WORDS` in `tests/test_data_register.py`). Editing the register changes its fingerprint, so a consent given before it would read "register changed". Live has 0 consents (read-only count, 10 Nov), so none is affected; the next orchestrator should re-count before any later register edit.
