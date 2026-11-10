@@ -10,7 +10,7 @@ import { requireStaff } from "@/lib/auth";
 import { mayDecide } from "@/lib/decides";
 import { deadline } from "@/lib/deadline";
 import { questionKinds } from "@/lib/question-types";
-import { mistakeBook, questionPage, bankTotals } from "@/lib/queries-bank";
+import { mistakeBook, questionPage } from "@/lib/queries-bank";
 import { correctItem, flagItem } from "../../../library/actions";
 import type { Column } from "@/lib/ux-rules";
 
@@ -27,7 +27,7 @@ export default async function QuestionScreen({ params, searchParams }: Props) {
   if (!/^[A-Za-z0-9._-]+$/.test(key)) notFound();
   const [it, book, qk] = await deadline(Promise.all([questionPage(key), mistakeBook(), questionKinds()]));
   if (!it) notFound();
-  const [totals, may] = await deadline(Promise.all([bankTotals(), mayDecide(me, "questions").then((ok) => ok && me.role === "coordinator")]));
+  const may = await deadline(mayDecide(me, "questions").then((ok) => ok && me.role === "coordinator"));
   const live = it.status === "active";
   const canCorrect = may && live && qk.ownWords[it.fmt] !== false;
   const caught = it.responses.flatMap((r) =>
@@ -135,7 +135,7 @@ export default async function QuestionScreen({ params, searchParams }: Props) {
             <input className="input" name="note" maxLength={300} required placeholder="For example: two answers are right" />
           </label>
           <button className="btn secondary" type="submit" data-remove {...(canCorrect ? {} : { "data-ux": "action" })}>Remove</button>
-          <p className="text-[13px] text-[var(--ink-muted)]">A removed question is kept with the reason and never printed again. {totals.active} remain ready.</p>
+          <p className="text-[13px] text-[var(--ink-muted)]">A removed question is kept with the reason and never printed again.</p>
         </form>
       ) : null}
     </Screen>
