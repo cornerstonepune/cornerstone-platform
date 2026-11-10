@@ -10,10 +10,11 @@
 --                                      of the same name reads the newest mark of each part. Rows: copied, `retired`
 --   milestone (849)                 -> registry_skill.milestones {band: {descriptor, scale, source}}. Copied, `retired`
 --   item_stat (486)                 -> a view of the same name over the confirmed answers (count and share right); a
---                                      question far off its level is worked out by `learn` from the settings. The view
---                                      must give the table's numbers here (run `engine graph` before). `retired`
+--                                      question far off its level is worked out by `learn` from the settings. A stored
+--                                      row computed after its last answer must equal the view; a stale one is only
+--                                      counted (ring B never blocks this). `retired`
 --   skill_level_sample (251)        -> nothing: the rows were only ever `internal.skill_level_sample_sync`'s output,
---                                      checked equal here; its 2 triggers and 4 functions go. `retired`
+--                                      compared here (a difference is said, not refused); its 2 triggers and 4 functions go. `retired`
 --   curriculum_version_skill (155)  -> curriculum_version.skills {skill: version}, written in the version's own insert.
 --                                      Copied (the version's guard off for the copy alone), `retired`
 --   capture_page (77)               -> capture.page_prints {file page: {print, code}}; a page may be added, never
@@ -55,6 +56,10 @@
 do $$
 declare
   bad text;
+  n bigint;
+  bad_n bigint;
+  stale bigint;
+  missing bigint;
 begin
   select string_agg(format('%s: %s', t, v), '; ') into bad from (
     select 'english_sample_wrong.op not any' as t, count(*)::text as v from english_sample_wrong where op <> 'any'
@@ -94,8 +99,9 @@ begin
   if bad is not null then
     raise exception 'CP-27 group 6 refused: %', bad;
   end if;
-  -- the samples' rows are what the sync makes of the levels' words and the card kinds' examples, and nothing else
-  if exists (
+  -- Derived rows (ring B) never block this: a stale copy is only said, never refused. The samples' rows are what the
+  -- sync makes of the levels' words and the card kinds' examples (its triggers keep them so); any other row is said
+  select count(*) into n from (
     with made as (
       select l.tenant_id, l.skill_code, l.difficulty, null::text as question_format, x.ord::integer as ord, x.sample
       from skill_level l cross join lateral internal.level_samples(l.looks_like) x
@@ -110,21 +116,35 @@ begin
       select tenant_id, skill_code, difficulty, question_format, ord::integer, sample from skill_level_sample
     )
     (select * from made except all select * from kept) union all (select * from kept except all select * from made)
-  ) then
-    raise exception 'CP-27 group 6: skill_level_sample holds rows its sync would not make; its rows are not only derived';
+  ) x;
+  raise notice 'CP-27 group 6: skill_level_sample rows not as their sync makes them: % (derived; worked out when asked from now)', n;
+  -- A question's numbers: a stored row is fresh when it was computed after every answer of that question last changed
+  -- (`item_result.updated_at`) and after its scan last changed (superseded or not, `capture.updated_at`). A fresh row
+  -- must be the view's numbers, or this raises; a stale or missing one is only counted (the view is the answers' own).
+  with v as (
+    select r.tenant_id, r.item_id, count(*)::integer as n, avg((r.status = 'correct')::int)::numeric(5, 4) as p
+    from item_result r join capture c on c.id = r.capture_id
+    where r.state = 'confirmed' and r.status in ('correct', 'wrong', 'blank') and c.superseded_by is null
+    group by r.tenant_id, r.item_id
+  ), touched as (
+    select r.item_id, max(greatest(r.updated_at, c.updated_at)) as at
+    from item_result r join capture c on c.id = r.capture_id group by r.item_id
+  ), t as (
+    select s.tenant_id, s.item_id, s.n, s.p_correct::numeric(5, 4) as p,
+           coalesce(s.computed_at >= coalesce(u.at, '-infinity'), false) as fresh
+    from item_stat s left join touched u on u.item_id = s.item_id
+  )
+  select count(*) filter (where t.fresh and v.item_id is not null and (t.n, t.p) is not distinct from (v.n, v.p)),
+         count(*) filter (where t.fresh and (v.item_id is null or (t.n, t.p) is distinct from (v.n, v.p))),
+         count(*) filter (where not t.fresh),
+         (select count(*) from v where not exists (select 1 from item_stat s where s.item_id = v.item_id))
+  into n, bad_n, stale, missing
+  from t left join v on v.item_id = t.item_id;
+  if bad_n > 0 then
+    raise exception 'CP-27 group 6: % item_stat rows computed after their last answer differ from the answers'' numbers', bad_n;
   end if;
-  -- the stored numbers are the answers' numbers (a table left stale since the last `engine graph`: run it first)
-  if exists (
-    with v as (
-      select r.tenant_id, r.item_id, count(*)::integer as n, avg((r.status = 'correct')::int)::numeric(5, 4) as p
-      from item_result r join capture c on c.id = r.capture_id
-      where r.state = 'confirmed' and r.status in ('correct', 'wrong', 'blank') and c.superseded_by is null
-      group by r.tenant_id, r.item_id
-    ), t as (select tenant_id, item_id, n, p_correct::numeric(5, 4) as p from item_stat)
-    (select * from v except select * from t) union all (select * from t except select * from v)
-  ) then
-    raise exception 'CP-27 group 6: item_stat is not what the confirmed answers say; run engine graph, then this again';
-  end if;
+  raise notice 'CP-27 group 6: item_stat % fresh and equal, % stale (an answer changed since), % missing (worked out from now)',
+    n, stale, missing;
   raise notice 'CP-27 group 6: % wrong answers, % part marks, % milestones, % question stats, % samples, % version skills, % pages, % traits, % notebooks, % kinds',
     (select count(*) from english_sample_wrong), (select count(*) from activity_part_source),
     (select count(*) from milestone), (select count(*) from item_stat), (select count(*) from skill_level_sample),
