@@ -2,12 +2,25 @@
 
 Branch `ui-4-assessments`, issue #519, PR #566 (draft). Scope: `specs/UI-4/spec.md`.
 
-## State (10 Nov 2026): first increment only
+## State (10 Nov 2026)
 
-Built: `/children/assessments` (tiles, Make, Read, filters, Board | Table) on the 28 blocks and the existing queries.
-Not built: the assessment screen, the paper screen, the 308 redirects, the Done-when tests, the journey, inventory support.
-Verified: `tsc` and `eslint` on the changed files. Not run: the browser, the inventory test (a local test database was built,
-no browser run yet).
+Built: `/children/assessments` (tiles, Make, Read, filters, Board | Table), `/children/assessments/[key]` (stepper, approve this
+pack, print, the papers bar, what it asks, each child's copy grouped by state, a level choice before print, sign one paper off)
+and `.../[key]/[roll]` (the page beside each answer; right, wrong, wrong with working, blank, for you to judge as separate
+chips; say what the child wrote, blank, sign this paper off). The old pages answer 308 (config for `/papers`, `/papers/make`,
+`/capture`, `/capture/check`; route handlers for the ones that name a paper or assessment). Menu, guide and `workflows.json`
+follow. `tests/u73-assessments.spec.ts` (8 tests, all pass on a local copy) covers Done when 2, 3, 7 to 12, 14 to 17.
+Not built: the inventory support (`SLICE=UI-4`), the journey `e2e/a-paper-comes-back.spec.ts` (Done when 4), "capture: Photo"
+on the assessment screen, `UI-4` in `merged_slices`.
+
+## Held back: the folds remove features and about 45 older specs
+
+The pages that fold carried things the three screens do not list: the one-answer-at-a-time Check queue, changing a question's
+answer key, naming a mistake, adding or removing a question on a paper (`/papers/review`), renaming an assessment, the reader
+accuracy view, "files read lately". Their server actions remain in the code but nothing opens them. Roughly 45 older specs
+open `/papers` or `/capture` (u9, u16, u22, u37, u63, s4, s26, p5, p6 and others). Migrating them would be rewriting them to
+other behaviour, and deleting them loosens the checks, so this PR is not mergeable until the orchestrator chooses: keep those
+pages alive, drop the features and specs, or add the controls to the screens.
 
 ## For the orchestrator
 
