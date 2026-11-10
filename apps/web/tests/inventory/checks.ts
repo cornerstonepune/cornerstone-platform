@@ -64,6 +64,7 @@ function buildable(e: Element, c: Ctx) {
 export async function reveal(page: Page, when: When): Promise<string | null> {
   if (when === "peek") {
     const opener = page.locator("main [data-peek-open]").first();
+    await opener.waitFor({ timeout: 10_000 }).catch(() => undefined); // the page streams: the rows may arrive after the load event
     if (!(await opener.count())) return "no child to choose";
     await opener.click();
     await page.locator("[data-block=ChildPeek]").first().waitFor({ timeout: 10_000 }).catch(() => undefined);
@@ -71,12 +72,14 @@ export async function reveal(page: Page, when: When): Promise<string | null> {
   }
   if (when === "filtered") {
     const box = page.locator("main input[type=search]").first();
+    await box.waitFor({ timeout: 10_000 }).catch(() => undefined);
     if (!(await box.count())) return "no search field to filter with";
     await box.fill("1");
     await box.press("Enter");
     await page.locator("[data-active-filters]").first().waitFor({ timeout: 10_000 }).catch(() => undefined);
     return (await page.locator("[data-active-filters]").count()) ? null : "searching did not show a filter chip";
   }
+  await page.locator("main [data-more], main nav[aria-label$=' pages']").first().waitFor({ timeout: 10_000 }).catch(() => undefined);
   return (await page.locator("main [data-more], main nav[aria-label$=' pages']").count()) ? null : "the fixture has too few rows for a second page";
 }
 
@@ -102,7 +105,12 @@ export async function completeness(page: Page, s: Screen, c: Ctx, state: When | 
       for (const f of taken) left.splice(left.indexOf(f), 1);
       continue;
     }
-    const at = left.findIndex((f) => (e.href ? f.href === e.href : f.name.toLowerCase().includes(needle(e))));
+    // the best match first: a control named exactly what the element says, then one that starts with it, then one that holds it; a
+    // control of the screen before one of the frame's (the Next step link may carry the same words)
+    const named = (f: (typeof left)[number]) => f.name.split("\n")[0].trim().toLowerCase();
+    const tries = e.href ? [(f: (typeof left)[number]) => f.href === e.href] : [(f: (typeof left)[number]) => named(f) === needle(e), (f: (typeof left)[number]) => named(f).startsWith(needle(e)), (f: (typeof left)[number]) => f.name.toLowerCase().includes(needle(e))];
+    let at = -1;
+    for (const t of tries) for (const frame of [false, true]) if (at < 0) at = left.findIndex((f) => f.frame === frame && t(f));
     if (at < 0) {
       if (needed) out.push(`${s.id}: missing control — “${e.label}” (${e.t}${e.href ? ` ${e.href}` : ""}) is in the inventory and not on the page`);
     } else left.splice(at, 1);
@@ -193,11 +201,13 @@ async function filter(page: Page, s: Screen, e: Element): Promise<Problems> {
   const search = /search/i.test(e.label);
   if (search) {
     const box = page.locator("main input[type=search]").first();
+    await box.waitFor({ timeout: 10_000 }).catch(() => undefined);
     if (!(await box.count())) return [`${s.id}: the filter “${e.label}” has no search field`];
     await box.fill("1");
     await box.press("Enter");
   } else {
     const sel = page.locator("main label").filter({ hasText: new RegExp(needle(e), "i") }).locator("select").first();
+    await sel.waitFor({ timeout: 10_000 }).catch(() => undefined);
     if (!(await sel.count())) return [`${s.id}: the filter “${e.label}” has no select`];
     const options = await sel.locator("option").evaluateAll((os) => os.map((o) => (o as HTMLOptionElement).value));
     const now = await sel.inputValue();
@@ -226,6 +236,7 @@ export async function drive(page: Page, s: Screen, e: Element, c: Ctx, byId: Map
   const find = () => (e.data ? page.locator(`main a[${e.data}]`).first() : e.href ? page.locator("main").locator(`a[href="${e.href}"]`).first() : page.locator("main a").filter({ hasText: needle(e) }).first());
   if (e.t === "peek") {
     const opener = page.locator("main [data-peek-open]").first();
+    await opener.waitFor({ timeout: 10_000 }).catch(() => undefined);
     if (!(await opener.count())) return [`${s.id}: cannot drive “${e.label}”: no child to choose`];
     await opener.focus();
     await opener.click();
