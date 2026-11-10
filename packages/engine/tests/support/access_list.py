@@ -53,11 +53,11 @@ CHILD = {
     "public.sheet_template": ("papers", "child_id", "child_open"),
     # a run of the reader keeps the child and the scan inside its request and result: seen by whoever put the file in or sees a paper read from it
     "public.flow_run": ("papers", "id", "run"),
-    # a sent-back reason on a parent report is words about that child's report; the other kinds are the school's
+    # an approval of a parent report, a paper or a class card (its card in `detail`) is of that child's report, paper or
+    # class, each seen through its own kind; the other kinds (a level, a way of asking, a question, a link) are the school's
     "public.approval": ("reports", "target", "approval_target"),
     # CP-4: legacy class label (section) with child ids inside
     "public.class_card": ("learning", "section", "section"),
-    "public.class_card_confirmation": ("learning", "section", "section"),
 }
 
 SCHOOL_WIDE = [
@@ -71,15 +71,15 @@ SCHOOL_WIDE = [
     ),
     (
         "a word list the screens read (names, order, colour of states, marks, routes); no child",
-        "approval_kind case_dimension child_state difficulty validation_stage",
+        "case_dimension child_state difficulty",
     ),
     (
         "skill registry and curriculum: the school's own teaching content, open to every educator; no child",
         "registry_skill skill skill_level skill_level_kind_change skill_level_kind_stop skill_level_question_type "
-        "skill_level_sample skill_level_version skill_link skill_mistake skill_prerequisite skill_registry_link "
-        "skill_set_version curriculum_edit curriculum_proposal curriculum_version curriculum_version_skill "
+        "skill_level_sample skill_link skill_mistake skill_prerequisite skill_registry_link "
+        "curriculum_proposal curriculum_version curriculum_version_skill "
         "learning_objective learning_objective_skill milestone misconception trait rubric level_rule "
-        "validation_rule observed_rule observed_weight question_format question_type question_type_approval",
+        "question_format question_type",
     ),
     (
         "activities and sample material the school wrote or approved for its curriculum; no child",
@@ -88,8 +88,8 @@ SCHOOL_WIDE = [
     ),
     (
         "the question bank: questions, their keys, checks, statistics and reviews; no child",
-        "item item_feedback item_key_change item_review item_stat key_correction bank_decision "
-        "bank_proposal learned_mistake calibration_review assessment_name",
+        "item item_key_change item_review item_stat key_correction bank_decision "
+        "bank_proposal learned_mistake assessment_name",
     ),
     (
         "plan and timetable: what a class is to do and when, by class id; no child (the scope names both school-wide)",
@@ -105,7 +105,11 @@ SCHOOL_WIDE = [
     ),
     (
         "the tool's own records: settings, prompts, errors, staff feedback notes, register text; no child",
-        "config threshold prompt web_error staff_note ask data_register",
+        "config prompt web_error staff_note ask data_register",
+    ),
+    (
+        "the one history log of the school's own records (curriculum, skills, levels); no child",
+        "change_log",
     ),
     (
         "sign-in before anyone is known: the website reads and writes these as the login itself, so they stay open to it",

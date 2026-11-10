@@ -8,7 +8,7 @@ questions — one worksheet's worth — thin below that, missing at none.
 from collections import Counter, defaultdict
 
 from engine.assess import cards, stale, taxonomy, verify, words
-from engine.core import levels
+from engine.core import levels, settings
 from engine.w1_bank import kinds
 
 
@@ -150,8 +150,7 @@ def placed(conn):
     that name it, or — for a section the `taxonomy.across_levels` row names — the rule those levels climb.
     Returns [(code, taxonomy, section, [(skill, level), ...], 'placed' | 'pattern' | 'unplaced')], in each document's
     order. A section number is its own document's: both have a §11."""
-    row = conn.execute("select value from config where key = 'taxonomy.across_levels'").fetchone()
-    across = set((row["value"] if row else {}).get("sections", []))
+    across = set(settings.config(conn, "taxonomy.across_levels", {}).get("sections", []))
     named = defaultdict(list)
     for s in conn.execute(f"select s.code, {levels.LEVELS} as difficulty from skill s order by s.code"):
         for level, spec in s["difficulty"].items():

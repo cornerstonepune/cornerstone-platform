@@ -73,19 +73,23 @@ def forgets_what_it_commits():
     of the module every row made since it began is deleted, in every table that stamps `created_at`, with the
     append-only triggers and foreign keys off for that transaction (`session_replication_role`; the tests' role may).
     Names the work it undoes, so that a module opts in and the check below still fails for one that does not. A table
-    that does not stamp `created_at` is not reached, and the check says so."""
+    with no `created_at` whose clock is `at` (the history log, `change_log`, CP-27) is reached by that; a table with
+    neither is not, and the check says so."""
     with db.connect(db.dsn()) as c:
         since = c.execute("select clock_timestamp() as t").fetchone()["t"]
     yield
     with db.connect(db.dsn()) as c:
         c.execute("set local session_replication_role = replica")
         for r in c.execute(
-            "select col.table_schema as s, col.table_name as t from information_schema.columns col"
+            # `created_at` sorts after `at`, so a table with both is cleaned by `created_at`, as it always was
+            "select col.table_schema as s, col.table_name as t, max(col.column_name) as clock"
+            " from information_schema.columns col"
             " join information_schema.tables x on x.table_schema = col.table_schema and x.table_name = col.table_name"
-            " where col.column_name = 'created_at' and col.table_schema in ('public', 'pii')"
-            " and x.table_type = 'BASE TABLE'"
+            " where col.table_schema in ('public', 'pii') and x.table_type = 'BASE TABLE'"
+            " and (col.column_name = 'created_at' or (col.column_name = 'at' and col.data_type like 'timestamp%'))"
+            " group by 1, 2"
         ).fetchall():
-            c.execute(f'delete from {r["s"]}."{r["t"]}" where created_at >= %s', (since,))
+            c.execute(f'delete from {r["s"]}."{r["t"]}" where "{r["clock"]}" >= %s', (since,))
         c.commit()
 
 

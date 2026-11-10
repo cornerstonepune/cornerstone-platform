@@ -21,7 +21,7 @@ from engine.adapters import llm
 from engine.assess import bands, draw
 from engine.assess import misconceptions as M
 from engine.assess import operations as O
-from engine.core import db, levels
+from engine.core import db, levels, settings
 from engine.w1_bank import cases, kinds
 
 MISCONCEPTION_PROMPT = "misconception_list"
@@ -50,7 +50,7 @@ def read(conn, code, difficulty):
     band = s["difficulty"].get(difficulty)
     if not band:
         raise ValueError(f"{code} has no difficulty {difficulty!r}; it has {', '.join(s['difficulty'])}")
-    school = conn.execute("select value from config where key = 'assessment.philosophy'").fetchone()
+    school = settings.config(conn, "assessment.philosophy", [])
     mis = conn.execute(
         "select distinct on (code) code, description from misconception where code = any(%s) order by code",
         (list(s["misconception_codes"]),),
@@ -60,7 +60,7 @@ def read(conn, code, difficulty):
         "skill": f"{s['rung_code']} — {', '.join(s['skill_codes'])}",
         "learning_objective": s["learning_objective"],
         "difficulty": f"{difficulty}: {band['words']}",
-        "philosophy": list(school["value"] if school else []) + list(s["philosophy"]),
+        "philosophy": list(school) + list(s["philosophy"]),
         "formats": list(s["formats"]),
         "misconceptions": [{"code": m["code"], "description": m["description"]} for m in mis],
     }

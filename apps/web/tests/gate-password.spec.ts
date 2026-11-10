@@ -242,7 +242,7 @@ test("past the limit on asks for one email the form sends nothing and still says
   const email = await staffMember();
   try {
     const [row] = await sql<{ most: number }[]>`
-      select (select value from threshold where key = 'password_ask.max_per_email')::int as most`;
+      select (select value::numeric from config where key = 'password_ask.max_per_email')::int as most`;
     for (let n = 0; n < row.most; n += 1) await askForALink(page, email);
     await linkSentTo(email);
     const sent = mailFor(email).length;

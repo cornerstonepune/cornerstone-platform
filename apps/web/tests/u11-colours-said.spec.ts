@@ -69,13 +69,13 @@ test.afterAll(async () => sql.end());
 /** The rows the graph decides a colour by, and the check size the pages derive from them. */
 async function rules() {
   const [r] = await sql<{ min_events: number; min_days: number; window: number; repeat_min: number; recheck: number; promote: number; demote: number; g2: string }[]>`
-    select (select value from threshold where key = 'state.min_events')::float as min_events,
-           (select value from threshold where key = 'state.min_days')::float as min_days,
-           (select value from threshold where key = 'state.window_answers')::float as window,
-           (select value from threshold where key = 'state.repeat_min')::float as repeat_min,
-           (select value from threshold where key = 'state.recheck_days')::float as recheck,
-           (select value from threshold where key = 'next_sheet.promote_at')::float as promote,
-           (select value from threshold where key = 'next_sheet.demote_below')::float as demote,
+    select (select value::numeric from config where key = 'state.min_events')::float as min_events,
+           (select value::numeric from config where key = 'state.min_days')::float as min_days,
+           (select value::numeric from config where key = 'state.window_answers')::float as window,
+           (select value::numeric from config where key = 'state.repeat_min')::float as repeat_min,
+           (select value::numeric from config where key = 'state.recheck_days')::float as recheck,
+           (select value::numeric from config where key = 'next_sheet.promote_at')::float as promote,
+           (select value::numeric from config where key = 'next_sheet.demote_below')::float as demote,
            (select value ->> 'G2' from config where key = 'prescribe.band_default') as g2`;
   return { ...r, check: Math.max(r.min_events, Math.round(1 / (1 - r.promote))) };
 }

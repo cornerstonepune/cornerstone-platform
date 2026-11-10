@@ -11,12 +11,12 @@
     "AttentionStrip": "three tiles filled with their state's tint: do now (red) · this week (amber) · done (green); number, icon+word, one sentence; each a link; no border, no shadow",
     "PeriodRow": "time · the subject's icon tile and colour edge · name · subject and one fact · state chip; the row is the link, a panel with shadow-card; the current period carries the action outline; fixed parts of the day are a quiet sand row",
     "StatusChip": "pill: icon + word + colour from the STATES rows, on its tint; on a tinted cell (a subject cell, a child's square) the chip sits on the panel colour with a 1 px ring in its state colour, because a state's fill and a subject's fill can be near each other",
-    "DataTable": "≤10 rows then grouped/paged; needs-you first; numbers right, status centred; FilterBar built in at 6+ rows; on a phone it scrolls sideways in its own box; inside a card with shadow-card",
+    "DataTable": "≤10 rows then grouped/paged; needs-you first; numbers right, status centred; FilterBar built in at 6+ rows; on a phone it scrolls sideways in its own box; inside a card with shadow-card; where children are listed it can be grouped (a group heading with its count, the same rows under it)",
     "FilterBar": "dropdowns + compact search over any table of 6+ rows; filters in the address",
-    "ClassGrid": "a tinted square per child by Sr. No., radius-card: Sr. No., the child's initials disc, the name, and the state's icon + word on the state's tint; not seen = an untinted square with a dashed ring; tap = act; 8 columns at 1440, 3 on a phone",
+    "ClassGrid": "a tinted square per child by Sr. No., radius-card: Sr. No., the child's initials disc, the name, and the state's icon + word on the state's tint; not seen = an untinted square with a dashed ring; tap = open ChildPeek (on the confirm screen: change the mark); 8 columns at 1440, 3 on a phone",
     "Stepper": "the steps of a thing; done green, waiting amber, late red, rest quiet",
     "Details": "a fold that opens on click, eye icon; never hides the main action",
-    "Timeline": "what was seen, newest last; words beside the mark; a details fold each",
+    "Timeline": "what was seen, newest last (ChildPeek keeps newest first); words beside the mark; a details fold each",
     "ChildGraph": "the child's initials at the centre in the child colour; a coloured ring around it marks each domain (Number, Language, Arts); each skill is a node on the outer ring, filled with its state's tint and edged in its state colour, sized by times seen, labelled with the skill name and the state word; every node and its label form one link with a 44 px target; a DataTable of the same skills sits beside it; on a phone the graph is replaced by that list",
     "StackBar": "one bar split by state with a key of counts",
     "LevelBars": "four bars, levels 0–3, how many children at each",
@@ -32,7 +32,9 @@
     "KeyValue": "facts as label: value pairs, five lines at most",
     "Cards": "two to three panels side by side, each with a header tinted in its kind's colour (kind tile + title) and a few lines and one link",
     "KindTile": "a 32 px tile, radius-control, filled with a kind's tint and holding that kind's icon in its colour (period slate, child teal, activity indigo, objective violet, skill orchid, assessment sky, note stone); every rail link, card header and timeline entry starts with one",
-    "BrandMark": "the school's logo (Cornerstone Gurukul) as one of the four official files, drawn as given: `lockup-colour` on a light ground, `lockup-for-dark-backgrounds` on a dark ground, `mark` alone where the space is small on a light ground, `mark-on-white-tile` where it is small on a dark ground and for the tab and app icon; accessible name 'Cornerstone Gurukul'; never recoloured, stretched, rotated, filtered or shadowed, never inside a card; clear space on every side at least a quarter of the mark's height"
+    "BrandMark": "the school's logo (Cornerstone Gurukul) as one of the four official files, drawn as given: `lockup-colour` on a light ground, `lockup-for-dark-backgrounds` on a dark ground, `mark` alone where the space is small on a light ground, `mark-on-white-tile` where it is small on a dark ground and for the tab and app icon; accessible name 'Cornerstone Gurukul'; never recoloured, stretched, rotated, filtered or shadowed, never inside a card; clear space on every side at least a quarter of the mark's height",
+    "KanbanBoard": "what moves through stages, one lane per stage, each lane headed by its state's icon, word and count; each card a link (kind tile, one line, one fact, a state chip); lanes scroll sideways in their own box on a phone; offered next to the table of the same things by a Table | Board toggle (segmented tabs, the address carries the tab); a lane with no card says so in words",
+    "ChildPeek": "one child's recent history in a panel, opened by tapping a child anywhere a child is listed: initials disc, Sr. No., name, class; the child's state counts as chips; then notes, observations, papers, state changes and corrections newest first, each with a kind tile, one line, who and when; Close and 'Open the child' (the one way to the child's own page); the top of the rail on a wide screen, a sheet over the bottom on a phone; Escape closes it and focus returns to the child that opened it"
   },
   "element_kinds": {
     "link": "click lands on the target screen: its h1 equals the target's title (or matches its pattern); Back returns",
@@ -45,7 +47,8 @@
     "field": "a form field with a label; empty when required shows the stated message and submits nothing",
     "switch": "a two-state control; the state is spoken (aria-checked) and shown as a word, never colour alone",
     "child_name": "not a control: text. The child's name, read from the pii schema at render time and joined by child_id, shown only where an element of this kind is listed. The test asserts the name is present and, on every other screen, absent; it is never in a URL, a log line, a state word or an analytics call",
-    "upload": "accepts the stated file kinds; a wrong kind shows a message; a right one shows the file's name before anything is sent"
+    "upload": "accepts the stated file kinds; a wrong kind shows a message; a right one shows the file's name before anything is sent",
+    "peek": "a button on a child (a name, a square, a row or a chip) that opens ChildPeek in place for that child; the address carries the Sr. No. (never a name); Escape or Close closes it and focus returns to the button; the peek's own 'Open the child' link is the only route to the child page from a list"
   },
   "generic_checks": [
     "Renders at 1440: the eyebrow (14 px or larger), one h1 equal to the title, a purpose line of at most 140 characters, exactly one main action, the trail, and the rail where the screen lists one; a screen marked `frame: bare` (sign in) shows the bare frame, its h1 and its main action only. At 400 px every screen passes a smoke test (it renders, one h1, no console error, no sideways scroll of the page); screens marked `phone_gate` also pass checks 2, 5, 6 and 9 at 400.",
@@ -375,12 +378,20 @@
           "do now = notes unconfirmed past 48 h; this week = notes waiting to confirm that are younger than 48 h (the two never overlap); done = periods finished of planned, children seen this fortnight"
         ],
         [
+          "KanbanBoard",
+          "what waits on me, by Table | Board toggle: Do now (notes past 48 h) · This week (notes waiting, younger than 48 h) · Done (periods taught and confirmed today); the List is the periods below"
+        ],
+        [
           "PeriodRow",
           "one per session of the day, from `session` for my class; fixed parts of the day included, greyed"
         ],
         [
           "Cards",
           "Notes to confirm (count, oldest) · Your class (children not seen this fortnight on the skill being taught)"
+        ],
+        [
+          "ChildPeek",
+          "the child chosen from 'Your class'"
         ]
       ],
       "elements": [
@@ -425,6 +436,47 @@
           "t": "link",
           "label": "rail: Materials",
           "to": "materials"
+        },
+        {
+          "t": "tab",
+          "label": "Board",
+          "note": "what waits on me as lanes; the address carries the tab"
+        },
+        {
+          "t": "tab",
+          "label": "List",
+          "note": "what waits on me as the tiles and the period rows"
+        },
+        {
+          "t": "row",
+          "label": "each note card on the board",
+          "to": "confirm"
+        },
+        {
+          "t": "row",
+          "label": "each period card on the board",
+          "to": "period"
+        },
+        {
+          "t": "peek",
+          "label": "each Sr. No. in Your class",
+          "effect": "opens ChildPeek for that child"
+        },
+        {
+          "t": "button",
+          "label": "peek: Close",
+          "effect": "closes ChildPeek; focus returns to the child that opened it"
+        },
+        {
+          "t": "link",
+          "label": "peek: Open the child",
+          "to": "child",
+          "note": "the one way from a list to the child's own page"
+        },
+        {
+          "t": "child_name",
+          "label": "the name in the peek",
+          "note": "the child's name beside the Sr. No., read from pii by child_id"
         }
       ],
       "rail": [
@@ -434,7 +486,7 @@
       "capture": [],
       "main": "the current period",
       "next": "Timetable",
-      "data": "session × plan_entry × activity for my class on this school_day; pii.educator_note status counts; child_observed_state gaps",
+      "data": "session × plan_entry × activity for my class on this school_day; pii.educator_note status counts and ages (note status words are a config list); child_skill_state not-seen per child on the skill being taught (an open enrolment with no state row)",
       "empty": "No sessions today (a holiday or no timetable live): say which, link to the fortnight",
       "phone": "same order; the strip stacks; the record button is one tap from the period",
       "folds": [
@@ -444,7 +496,9 @@
       "done_when": [
         "an educator sees only sessions of classes their grant names (the access fixture's second educator sees a different list)",
         "each tile's number equals the count of rows the tile opens",
-        "the lit row is the session whose period contains the current time; before 08:30 none is lit"
+        "the lit row is the session whose period contains the current time; before 08:30 none is lit",
+        "each board lane's card count equals the tile of the same name; a lane with no card says so in words",
+        "tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page"
       ],
       "phone_gate": true
     },
@@ -620,9 +674,9 @@
           "to": "activity"
         },
         {
-          "t": "link",
+          "t": "peek",
           "label": "each Sr. No. named under the last-time bar",
-          "to": "child"
+          "effect": "opens ChildPeek for that child"
         },
         {
           "t": "fold",
@@ -661,6 +715,22 @@
           "t": "link",
           "label": "rail: The class",
           "to": "picture"
+        },
+        {
+          "t": "button",
+          "label": "peek: Close",
+          "effect": "closes ChildPeek; focus returns to the child that opened it"
+        },
+        {
+          "t": "link",
+          "label": "peek: Open the child",
+          "to": "child",
+          "note": "the one way from a list to the child's own page"
+        },
+        {
+          "t": "child_name",
+          "label": "the name in the peek",
+          "note": "the child's name beside the Sr. No., read from pii by child_id"
         }
       ],
       "rail": [
@@ -673,13 +743,14 @@
       "capture": [],
       "main": "Record a note",
       "next": "the next period",
-      "data": "session → plan_entry → activity (+activity_material, activity_objective); activity_observation of this activity for this class, last session",
+      "data": "session → plan_entry → activity (+activity_material, activity_objective); activity_observation of this activity for this class, last session (the five outcome words are a config list)",
       "empty": "A fixed part of the day: 'Nothing to record here'",
       "phone": "actions first, then the fold; the record button fills the width",
       "done_when": [
         "a period with no activity shows no capture controls and the words 'Nothing to record here'",
         "the last-time bar's segments sum to the number of children named in the last session's observations",
-        "the steps fold is open on load and the others closed"
+        "the steps fold is open on load and the others closed",
+        "tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page"
       ],
       "phone_gate": true
     },
@@ -852,6 +923,22 @@
           "t": "child_name",
           "label": "each square and each claim line",
           "note": "the name beside the Sr. No., so she can check the right child is marked"
+        },
+        {
+          "t": "peek",
+          "label": "each child's name on a claim line",
+          "effect": "opens ChildPeek for that child"
+        },
+        {
+          "t": "button",
+          "label": "peek: Close",
+          "effect": "closes ChildPeek; focus returns to the child that opened it"
+        },
+        {
+          "t": "link",
+          "label": "peek: Open the child",
+          "to": "child",
+          "note": "the one way from a list to the child's own page"
         }
       ],
       "rail": [
@@ -862,14 +949,16 @@
       "capture": [],
       "main": "Confirm this note",
       "next": "the next note waiting",
-      "data": "pii.educator_note + draft claims from the engine; activity_observation written at confirm, one row per child, confirmation_id",
+      "data": "pii.educator_note + draft claims from the engine (pii.note_claim: flag, outcome, entry_mode, child_id, set when the note is read); activity_observation written at confirm, one row per child, confirmation_id",
       "empty": "No note waiting: link to Record",
       "phone": "the grid first, then her words; Confirm fixed at the bottom",
       "done_when": [
         "Confirm writes one activity_observation per marked child, none for an unmarked child, all with one confirmation_id",
         "a changed or removed claim is kept as changed/removed in note_claim (reader accuracy)",
         "no control confirms more than one note",
-        "a child's square is never red, whatever the mark"
+        "a child's square is never red, whatever the mark",
+        "a child's name on a claim line opens ChildPeek; a square still changes the mark and never opens the peek",
+        "tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page"
       ],
       "phone_gate": true
     },
@@ -893,8 +982,16 @@
           "class · state · week"
         ],
         [
+          "KanbanBoard",
+          "the notes as lanes by Table | Board toggle: To confirm (late ones first, red; a note still being read or left unconfirmed sits here too) · Confirmed; each card a note"
+        ],
+        [
           "DataTable",
           "when · activity · by voice/form · state chip · children named · its button (Confirm / Open / Correct)"
+        ],
+        [
+          "ChildPeek",
+          "the child chosen from the children-named column"
         ]
       ],
       "elements": [
@@ -915,9 +1012,9 @@
           "label": "week"
         },
         {
-          "t": "child_name",
-          "label": "the children named column",
-          "note": "each named child's name beside the Sr. No."
+          "t": "peek",
+          "label": "each child named in a note",
+          "effect": "opens ChildPeek for that child; a name is read from pii by child_id (pii.note_claim.child_id), the chip shows the Sr. No. and the name"
         },
         {
           "t": "button",
@@ -965,6 +1062,38 @@
           "t": "link",
           "label": "capture: Voice note",
           "to": "record"
+        },
+        {
+          "t": "tab",
+          "label": "Board",
+          "note": "the notes as lanes; the address carries the tab"
+        },
+        {
+          "t": "tab",
+          "label": "Table",
+          "note": "the notes as rows"
+        },
+        {
+          "t": "row",
+          "label": "each card on the board",
+          "to": "confirm",
+          "note": "a waiting note's card confirms it; a confirmed note's card opens it"
+        },
+        {
+          "t": "button",
+          "label": "peek: Close",
+          "effect": "closes ChildPeek; focus returns to the child that opened it"
+        },
+        {
+          "t": "link",
+          "label": "peek: Open the child",
+          "to": "child",
+          "note": "the one way from a list to the child's own page"
+        },
+        {
+          "t": "child_name",
+          "label": "the name in the peek",
+          "note": "the child's name beside the Sr. No., read from pii by child_id"
         }
       ],
       "rail": [
@@ -977,13 +1106,15 @@
       ],
       "main": "Confirm the oldest",
       "next": "Class picture",
-      "data": "pii.educator_note joined to activity_observation counts; note_status rows",
+      "data": "pii.educator_note joined to activity_observation counts; pii.educator_note.status (the words are a config list); pii.educator_note.route (by voice / form); pii.note_claim.child_id for the children named",
       "empty": "No notes yet this fortnight: link to Record",
       "phone": "the table scrolls sideways in its own box",
       "done_when": [
         "a correction writes a superseding row with a reason and never updates the old one",
         "the coordinator sees every class, an educator their own (access fixture)",
-        "a note left unconfirmed past 48 hours carries the red 'late' chip and sorts first"
+        "a note left unconfirmed past 48 hours carries the red 'late' chip and sorts first",
+        "each board lane's card count equals the rows of the table in that state",
+        "tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page"
       ]
     },
     {
@@ -1006,7 +1137,7 @@
         ],
         [
           "FortnightGrid",
-          "from timetable_slot in force + session overrides; subject colours; moved/clash outlines; a cell is the period's link"
+          "from the timetable_rule rows in force + the dated session rows; subject colours; moved/clash outlines; a cell is the period's link"
         ],
         [
           "Cards",
@@ -1083,7 +1214,7 @@
       "capture": [],
       "main": "Open today",
       "next": "Fortnight",
-      "data": "timetable_slot valid today; session for the fortnight's days; period times; school_day kinds",
+      "data": "timetable_rule rows (kind slot) valid today; session for the fortnight's days; period times; school_day kinds",
       "empty": "No timetable live for this class: coordinator sees 'Make a draft'",
       "phone": "Day view by default; week scrolls sideways in its box",
       "folds": [
@@ -1191,7 +1322,7 @@
       "capture": [],
       "main": "Approve / Go live (coordinator) · Open the grid (educator)",
       "next": "Timetable",
-      "data": "fortnight + fortnight_cycle state (CP-6); plan_entry; session diffs at go-live (CP-22); approval ledger",
+      "data": "fortnight + fortnight.state (CP-6; each step's yes is an approval row); plan_entry; session diffs at go-live (CP-22); approval ledger",
       "empty": "No plan lines yet: link to the planner upload",
       "phone": "stepper wraps to two rows",
       "done_when": [
@@ -1401,7 +1532,7 @@
         ],
         [
           "Details",
-          "history of edits (timetable_rule_edit)"
+          "history of edits (change_log)"
         ]
       ],
       "elements": [
@@ -1416,7 +1547,7 @@
         {
           "t": "button",
           "label": "Edit (a row)",
-          "effect": "the row's value becomes a field; Save writes a timetable_rule_edit row with who and when; Cancel restores"
+          "effect": "the row's value becomes a field; Save writes a change_log row with who and when; Cancel restores"
         },
         {
           "t": "button",
@@ -1445,7 +1576,7 @@
       "capture": [],
       "main": "Add a rule",
       "next": "Draft",
-      "data": "period, timetable_block, timetable_limit, timetable_rule_edit",
+      "data": "period, timetable_rule (kind block or limit), change_log for each edit",
       "empty": "No rules yet: 'Add the period times first'",
       "phone": "the table scrolls sideways in its own box",
       "done_when": [
@@ -1568,11 +1699,15 @@
       "blocks": [
         [
           "FilterBar",
-          "search by name or Sr. No. · class (coordinator) · needs attention"
+          "search by name or Sr. No. · class (coordinator) · needs attention · group by (none · class · how they are doing · needs attention)"
         ],
         [
           "DataTable",
-          "Sr. No. · name · class (only when several) · how they are doing (stacked bar of secure / practising / not seen skills) · last seen · notes waiting · attendance, last 7 days (placeholder)"
+          "Sr. No. · name (opens ChildPeek) · class (only when several) · how they are doing (stacked bar of secure / practising / not seen skills) · last seen · notes waiting · absences noted, last 7 school days; with a group heading and count when grouped"
+        ],
+        [
+          "ChildPeek",
+          "the child chosen in the table: recent history, newest first"
         ]
       ],
       "elements": [
@@ -1604,13 +1739,13 @@
           "effect": "removes every filter and the search"
         },
         {
-          "t": "row",
+          "t": "peek",
           "label": "each child",
-          "to": "child"
+          "effect": "opens ChildPeek for that child (the Sr. No. and name are the button)"
         },
         {
           "t": "child_name",
-          "label": "the name column",
+          "label": "the name column and the peek's name",
           "note": "the name beside the Sr. No."
         },
         {
@@ -1634,6 +1769,22 @@
           "label": "page: Later →",
           "to": "children",
           "note": "the next ten rows; the address carries the page"
+        },
+        {
+          "t": "filter",
+          "label": "group by",
+          "note": "none / class (coordinator) / how they are doing / needs attention; the address carries it; a heading and a count per group"
+        },
+        {
+          "t": "button",
+          "label": "peek: Close",
+          "effect": "closes ChildPeek; focus returns to the child that opened it"
+        },
+        {
+          "t": "link",
+          "label": "peek: Open the child",
+          "to": "child",
+          "note": "the one way from a list to the child's own page"
         }
       ],
       "rail": [
@@ -1643,7 +1794,7 @@
       "capture": [],
       "main": "Class picture grid",
       "next": "a child",
-      "data": "school_class, enrolment, pii.child, child_skill_state counts per child, pii.educator_note waiting per child, attendance_mark (last 7 school days)",
+      "data": "school_class, enrolment, pii.child, child_skill_state counts per child, pii.educator_note waiting per child (pii.note_claim.child_id), activity_observation with outcome 'absent' over session (absences noted, last 7 school days that had a confirmed lesson for the class); the peek: see ChildPeek",
       "empty": "No class linked to you: 'The coordinator links you to the classes you teach'; no match: 'No child matches' with Clear",
       "phone": "the table scrolls sideways in its own box",
       "done_when": [
@@ -1651,8 +1802,10 @@
         "the class column and the class filter appear only when the person has several classes",
         "the how-they-are-doing bar's segments are secure, practising and not seen, and sum to the child's skill count; never a red segment",
         "searching a Sr. No. or part of a name narrows the rows and writes itself into the address; a reload keeps it",
-        "the attendance column is a dashed placeholder naming the gap",
-        "a row opens the child; the toggle opens the class picture grid and the picture's toggle returns here"
+        "the absences-noted column shows the last 7 school days that had a confirmed lesson for the class: a noted absence is a grey 'absent' cell with its word, a day with no confirmed lesson is blank and never reads 'present'; the column head says 'absences noted'",
+        "tapping a row opens ChildPeek for that child; the peek's 'Open the child' lands on the child; the toggle opens the class picture grid and the picture's toggle returns here",
+        "grouping by class, by how they are doing or by needs attention puts a heading and a count over each group, the counts sum to the rows, and a child is in exactly one group; groups are computed, never stored",
+        "tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page"
       ]
     },
     {
@@ -1672,11 +1825,11 @@
       "blocks": [
         [
           "FilterBar",
-          "skill (the skills anyone was seen on) · domain"
+          "skill (the skills anyone was seen on) · domain · group by (state on this skill · class)"
         ],
         [
           "ClassGrid",
-          "state on the chosen skill; not seen = dashed"
+          "state on the chosen skill; not seen = dashed; tap = open ChildPeek; with a group heading and count when grouped"
         ],
         [
           "StackBar",
@@ -1685,6 +1838,14 @@
         [
           "Spark",
           "secure over six fortnights"
+        ],
+        [
+          "Cards",
+          "Clusters: children who share a place on this topic (for example secure here, ready for the next skill), each with its count and its children as chips that open ChildPeek"
+        ],
+        [
+          "ChildPeek",
+          "the child chosen in the grid"
         ]
       ],
       "elements": [
@@ -1697,9 +1858,9 @@
           "label": "domain"
         },
         {
-          "t": "cell",
-          "label": "each square",
-          "to": "child"
+          "t": "peek",
+          "label": "each square (and each child chip in a cluster)",
+          "effect": "opens ChildPeek for that child"
         },
         {
           "t": "child_name",
@@ -1742,6 +1903,22 @@
           "label": "Show as a table",
           "to": "children",
           "note": "the toggle between the class picture grid and the table of children"
+        },
+        {
+          "t": "filter",
+          "label": "group by",
+          "note": "state on this skill / class; a heading and a count per group"
+        },
+        {
+          "t": "button",
+          "label": "peek: Close",
+          "effect": "closes ChildPeek; focus returns to the child that opened it"
+        },
+        {
+          "t": "link",
+          "label": "peek: Open the child",
+          "to": "child",
+          "note": "the one way from a list to the child's own page"
         }
       ],
       "rail": [
@@ -1756,7 +1933,7 @@
       ],
       "main": "a child",
       "next": "the skill",
-      "data": "child_observed_state (K2) or child_skill_state (grades 1–4) for the class by skill; graph_run date",
+      "data": "child_skill_state (kind 'observed' for K2, 'written' for grades 1–4) for the class by skill; flow_run (the nightly graph run's row) finished_at for the date; evidence_event for clusters",
       "empty": "No child seen yet: the grid of dashed squares with 'not seen yet, nothing more'",
       "phone": "3 columns of squares (a name and a state word do not fit a 44 px square; SPEC §2 rule 10)",
       "folds": [
@@ -1764,10 +1941,13 @@
         "/growth/class/[section]"
       ],
       "done_when": [
-        "an empty square's title reads 'not seen yet', never 'not secure'",
         "each square shows the Sr. No. and the child's name read from pii by child_id, and no photo (DOM scan)",
         "the stack bar's counts equal the squares by state",
-        "the squares are in Sr. No. order, 8 per row at 1440, 3 at 400"
+        "the squares are in Sr. No. order, 8 per row at 1440, 3 at 400",
+        "an empty square's title reads 'not seen yet', never 'not secure'",
+        "grouping by state puts a heading and a count over each group; the counts sum to the squares and equal the stack bar; a child is in exactly one group",
+        "a cluster's count equals the chips in it; clusters are computed by code from child_skill_state and evidence_event, never by a model, and a child may be in several clusters",
+        "tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page"
       ]
     },
     {
@@ -1886,7 +2066,7 @@
       ],
       "main": "Add a note",
       "next": "the class",
-      "data": "child_observed_state + child_skill_state; activity_observation (+note words); evidence_event / item_result for papers; skill_link_confirmed",
+      "data": "child_skill_state (kind observed for K2, written for grades 1–4, with named_days); activity_observation (+note words); evidence_event / item_result for papers; skill_link_confirmed (a view over activity_skill and approval)",
       "empty": "Not seen yet on any skill: the graph is the child alone with 'not seen yet'",
       "phone": "the graph is replaced by the list of skills (name, times seen, state chip), then the trend, then the timeline",
       "folds": [
@@ -1930,6 +2110,10 @@
         [
           "DataTable",
           "assessment (built name) · class · papers back · waits for (chip) · next"
+        ],
+        [
+          "KanbanBoard",
+          "the assessments as lanes by Table | Board toggle, the seven steps grouped by who has the paper: To approve and print (Created, Approved) · With the children (Printed) · To read and check (Uploaded, Read, Checked) · Results in; each card an assessment, its next action beside it"
         ]
       ],
       "elements": [
@@ -2033,6 +2217,21 @@
           "t": "upload",
           "label": "capture: Photo",
           "effect": "same as Read"
+        },
+        {
+          "t": "tab",
+          "label": "Board",
+          "note": "the assessments as lanes; the address carries the tab"
+        },
+        {
+          "t": "tab",
+          "label": "Table",
+          "note": "the assessments as rows"
+        },
+        {
+          "t": "row",
+          "label": "each card on the board",
+          "to": "assessment"
         }
       ],
       "rail": [
@@ -2060,7 +2259,8 @@
         "the four old pages answer 308 to this one or to the Assessment node",
         "every row's name is built topic · skill · level · kind · class · day (regex)",
         "no approve-all control anywhere",
-        "each tile's number equals the rows behind it"
+        "each tile's number equals the rows behind it",
+        "each board lane's card count equals the table rows at the lane's steps"
       ]
     },
     {
@@ -2203,7 +2403,7 @@
       "exists": "yes (/capture/check, /capture/[id])",
       "eyebrow": "Grade 1 · Sr. No. 7 · Easy",
       "title": "Check the answers",
-      "purpose": "The page as photographed on the left; each answer as the engine read it on the right. Say what the child wrote where it was not sure; the engine marks it. Right, wrong and blank are kept apart, always.",
+      "purpose": "The page as photographed, and each answer as the engine read it. Say what the child wrote where it was unsure; the engine marks it.",
       "blocks": [
         [
           "PageImage",
@@ -2274,7 +2474,7 @@
       "capture": [],
       "main": "Say what the child wrote",
       "next": "the next paper",
-      "data": "capture_page, item_result with status and confidence, key, misconception tags",
+      "data": "capture.pages, item_result with status and confidence, key, misconception tags",
       "empty": "Nothing left to judge on this paper: Sign it off",
       "phone": "image above, answers below",
       "folds": [
@@ -2454,7 +2654,7 @@
           "roles": [
             "coordinator"
           ],
-          "effect": "activity_part_source becomes person with who; the 'drafted' badge goes"
+          "effect": "the part's source becomes person (a change_log row with who); the 'drafted' badge goes"
         },
         {
           "t": "button",
@@ -2462,7 +2662,7 @@
           "roles": [
             "coordinator"
           ],
-          "effect": "the part becomes a field; Save writes a curriculum_edit row; the source becomes person"
+          "effect": "the part becomes a field; Save writes a change_log row; the source becomes person"
         },
         {
           "t": "button",
@@ -2509,7 +2709,7 @@
       ],
       "main": "Keep / Edit a drafted part (curriculum team) · Open the period (educator)",
       "next": "an objective",
-      "data": "activity (+steps, thinking, levels, materials), activity_objective, activity_material, activity_part_source, curriculum_edit",
+      "data": "activity (+steps, thinking, levels, materials), activity_objective, activity_material, change_log (origin: upload = school, proposal = drafted, person = person) and curriculum_proposal for the source of each part, change_log for each edit",
       "empty": "a part with no text: shown empty and marked, never invented",
       "phone": "levels as a 2×2",
       "folds": [
@@ -2519,7 +2719,7 @@
       ],
       "done_when": [
         "a drafted part carries the 'drafted' badge until Keep, Edit or Send back; an educator sees the badge but not the three buttons",
-        "every edit writes a curriculum_edit row with who",
+        "every edit writes a change_log row with who",
         "a photo attaches to the activity, never to a child"
       ]
     },
@@ -2597,11 +2797,11 @@
       "blocks": [
         [
           "Cards",
-          "The class now (StackBar) · Secure, fortnight by fortnight (Spark)"
+          "The class now (StackBar) · Secure, fortnight by fortnight (Spark) · Clusters: children who share a place on this skill, each with its count and its children as chips"
         ],
         [
           "ClassGrid",
-          "the class on this skill; tap a child"
+          "the class on this skill; tap a child to open ChildPeek; groups by state or class, each with a count"
         ],
         [
           "Cards",
@@ -2610,6 +2810,10 @@
         [
           "Details",
           "for grades 1–4: each level in a sentence, kinds of question, mistakes it watches for (today's skill-set page)"
+        ],
+        [
+          "ChildPeek",
+          "the child chosen in the grid"
         ]
       ],
       "elements": [
@@ -2621,9 +2825,9 @@
           ]
         },
         {
-          "t": "cell",
-          "label": "each square",
-          "to": "child"
+          "t": "peek",
+          "label": "each square (and each child chip in a cluster)",
+          "effect": "opens ChildPeek for that child"
         },
         {
           "t": "child_name",
@@ -2679,6 +2883,22 @@
           "t": "link",
           "label": "rail: Question bank for this skill",
           "to": "bank"
+        },
+        {
+          "t": "filter",
+          "label": "group by",
+          "note": "state on this skill / class (coordinator); a heading and a count per group"
+        },
+        {
+          "t": "button",
+          "label": "peek: Close",
+          "effect": "closes ChildPeek; focus returns to the child that opened it"
+        },
+        {
+          "t": "link",
+          "label": "peek: Open the child",
+          "to": "child",
+          "note": "the one way from a list to the child's own page"
         }
       ],
       "rail": [
@@ -2690,7 +2910,7 @@
       "capture": [],
       "main": "a child",
       "next": "the next skill",
-      "data": "child_observed_state / child_skill_state by skill; skill_link_confirmed; skill_level; misconception",
+      "data": "child_skill_state (kind 'observed' / 'written') by skill; skill_link_confirmed (a view over activity_skill and approval); skill_level; misconception; flow_run result for the six-fortnight spark; evidence_event for clusters",
       "empty": "nobody seen on it yet",
       "phone": "grid of 3 columns of squares (SPEC §2 rule 10)",
       "folds": [
@@ -2700,7 +2920,10 @@
       "done_when": [
         "a prerequisite or next skill is shown only when its link is confirmed (a proposed link in the fixture does not appear)",
         "the spark's last value equals the grid's secure count",
-        "the grid's squares equal the class's enrolment in Sr. No. order"
+        "the grid's squares equal the class's enrolment in Sr. No. order",
+        "grouping by state puts a heading and a count over each group and the counts sum to the squares",
+        "a cluster's count equals the chips in it; clusters are computed by code, never by a model",
+        "tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page"
       ]
     },
     {
@@ -2802,7 +3025,7 @@
       "capture": [],
       "main": "Check the drafted parts",
       "next": "an activity",
-      "data": "activity, skill, skill_level, activity_part_source, curriculum_proposal",
+      "data": "activity, skill, skill_level, change_log and curriculum_proposal (the source of each part), curriculum_proposal",
       "empty": "none",
       "phone": "the table scrolls sideways in its own box",
       "folds": [
@@ -2884,7 +3107,7 @@
       "capture": [],
       "main": "Read and approve the first",
       "next": "Curriculum",
-      "data": "skill.level_approved, skill_level, calibration_review",
+      "data": "skill.level_approved, skill_level, approval (kind calibration)",
       "empty": "Nothing to approve",
       "phone": "the table scrolls sideways in its own box",
       "folds": [
@@ -2960,7 +3183,7 @@
       "capture": [],
       "main": "Open a question",
       "next": "Curriculum",
-      "data": "item, item_stat, bank_proposal/decision",
+      "data": "item, item_stat (a view over item_result), curriculum_proposal with its decision as an approval row",
       "empty": "No questions for this skill yet",
       "phone": "the table scrolls sideways in its own box",
       "folds": [
@@ -3017,7 +3240,7 @@
           "roles": [
             "coordinator"
           ],
-          "effect": "a new item version; item_key_change keeps the old key; the page shows the new wording and 'corrected by'"
+          "effect": "a new item version; change_log keeps the old key; the page shows the new wording and 'corrected by'"
         },
         {
           "t": "field",
@@ -3053,11 +3276,11 @@
       "capture": [],
       "main": "Correct the wording",
       "next": "the bank",
-      "data": "item, key_correction, item_key_change, item_review",
+      "data": "item, item.key (the current key), item.review (the reviewer model's latest verdict), change_log (key history)",
       "empty": "none",
       "phone": "stacked",
       "done_when": [
-        "a correction keeps the old key in item_key_change and the old version readable",
+        "a correction keeps the old key in change_log and the old version readable",
         "Remove retires, never deletes (row count unchanged)"
       ]
     },
@@ -3162,7 +3385,7 @@
         ],
         [
           "Details",
-          "change log (child_move, enrolment)"
+          "change log (change_log, enrolment)"
         ]
       ],
       "elements": [
@@ -3179,7 +3402,7 @@
         {
           "t": "button",
           "label": "Move (a child row)",
-          "effect": "a picker of classes and a date; Save writes child_move and a new enrolment; the child appears in the new class"
+          "effect": "a picker of classes and a date; Save closes the enrolment, opens a new one and writes a change_log row; the child appears in the new class"
         },
         {
           "t": "fold",
@@ -3214,14 +3437,14 @@
       "capture": [],
       "main": "Move a child",
       "next": "Staff",
-      "data": "school_class, enrolment, child_move, names read from pii by child_id at render, never stored in these tables",
+      "data": "school_class, enrolment, change_log (a move is a closed enrolment, a new one and a change_log row), names read from pii by child_id at render, never stored in these tables",
       "empty": "none",
       "phone": "the table scrolls sideways in its own box",
       "folds": [
         "/school"
       ],
       "done_when": [
-        "a move writes child_move and a new enrolment and deletes nothing",
+        "a move closes the enrolment, opens a new one, writes a change_log row and deletes nothing",
         "each child row shows the name beside the Sr. No., read from pii by child_id; the address and the change log's stored text carry no name (DOM scan)",
         "the change log lists the move with who and when"
       ]

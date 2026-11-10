@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Wireframe kit: the 26 blocks</title>
+<title>Wireframe kit: the 28 blocks</title>
 <link rel="stylesheet" href="kit.css">
 </head>
 <!-- Each block of docs/frontend/SPEC.md §5 drawn once, root element data-block="<Name>", kit.css classes only.
@@ -12,7 +12,7 @@
 <body>
 <main class="gallery">
   <header class="head">
-    <p class="eyebrow"><i class="ic s" data-icon="checklist"></i>Wireframe kit · 26 blocks</p>
+    <p class="eyebrow"><i class="ic s" data-icon="checklist"></i>Wireframe kit · 28 blocks</p>
     <h1 class="title">The blocks</h1>
     <p class="purpose">Every screen is built from these. A wireframe copies a block's markup; a builder ports it into a component.</p>
   </header>
@@ -167,11 +167,11 @@
   </section>
 
   <section><h2>HeatGrid</h2>
-    <div class="heat" data-block="HeatGrid" style="--cols: 3">
+    <div class="heat-box"><div class="heat" data-block="HeatGrid" style="--cols: 3">
       <span class="h"></span><span class="h">Mon</span><span class="h">Tue</span><span class="h">Wed</span>
       <span class="h">K2 Red</span><span class="hc" data-state="ok"><i class="ic s" data-icon="done"></i>Done</span><span class="hc" data-state="wait"><i class="ic s" data-icon="moved"></i>Moved</span><span class="hc" data-state="quiet"><i class="ic s" data-icon="to-do"></i>Not done</span>
-      <span class="h">K2 Blue</span><span class="hc" data-state="ok"><i class="ic s" data-icon="done"></i>Done</span><span class="hc" data-state="ok"><i class="ic s" data-icon="done"></i>Done</span><span class="hc" data-state="quiet"><i class="ic s" data-icon="frozen"></i>Holiday</span>
-    </div>
+      <span class="h">K2 Blue</span><span class="hc" data-state="ok"><i class="ic s" data-icon="done"></i>Done</span><span class="hc" data-state="ok"><i class="ic s" data-icon="done"></i>Done</span><span class="hc" data-state="unseen"><i class="ic s" data-icon="frozen"></i>Holiday</span>
+    </div></div>
   </section>
 
   <section><h2>FortnightGrid</h2>
@@ -191,6 +191,70 @@
     </div>
   </section>
 
+  <section><h2>KanbanBoard</h2>
+    <div class="toolbar">
+      <div class="seg" role="tablist" aria-label="View"><a role="tab" aria-selected="false" href="#table"><i class="ic s" data-icon="table"></i>Table</a><a role="tab" aria-selected="true" href="#board"><i class="ic s" data-icon="board"></i>Board</a></div>
+    </div>
+    <div class="kanban" data-block="KanbanBoard" style="--lanes: 3">
+      <section class="lane" data-state="late" aria-label="Do now">
+        <h3 class="lane-h"><i class="ic s" data-icon="late"></i>Do now <span class="count num">1</span></h3>
+        <ul class="lane-b">
+          <li><a class="kcard press" data-kind="note" href="#" data-source="pii.educator_note.received_at pii.educator_note.status"><span class="tile"><i class="ic" data-icon="note"></i></span><span><b>Counting in tens with bundles</b><span class="sub">Voice note · 3 children named</span></span><span class="chip" data-state="late"><i class="ic s" data-icon="late"></i>2 days waiting</span></a></li>
+        </ul>
+      </section>
+      <section class="lane" data-state="wait" aria-label="This week">
+        <h3 class="lane-h"><i class="ic s" data-icon="to-confirm"></i>This week <span class="count num">2</span></h3>
+        <ul class="lane-b">
+          <li><a class="kcard press" data-kind="note" href="#"><span class="tile"><i class="ic" data-icon="note"></i></span><span><b>Story circle: the lost mitten</b><span class="sub">Form · 5 children named</span></span><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To confirm</span></a></li>
+          <li><a class="kcard press" data-kind="note" href="#"><span class="tile"><i class="ic" data-icon="note"></i></span><span><b>Leaf printing</b><span class="sub">Voice note · 2 children named</span></span><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To confirm</span></a></li>
+        </ul>
+      </section>
+      <section class="lane" data-state="ok" aria-label="Done">
+        <h3 class="lane-h"><i class="ic s" data-icon="done"></i>Done <span class="count num">0</span></h3>
+        <p class="lane-empty">Nothing confirmed yet this week.</p>
+      </section>
+    </div>
+  </section>
+
+  <section><h2>ChildPeek</h2>
+    <aside class="peek" data-block="ChildPeek" aria-label="Recent history of one child">
+      <div class="peek-h">
+        <span class="disc" aria-hidden="true">AA</span>
+        <span class="who"><b data-source="pii.child.first_name pii.child.last_name">Alba Ant</b><span class="muted"><span class="num" data-source="enrolment.roll_no">01</span> · K2 Red</span></span>
+        <button class="barbtn press" type="button" aria-label="Close"><i class="ic" data-icon="close"></i></button>
+      </div>
+      <div class="keyrow"><span class="chip" data-state="ok"><i class="ic s" data-icon="secure"></i>6 secure</span><span class="chip" data-state="wait"><i class="ic s" data-icon="practising"></i>3 practising</span><span class="chip" data-state="unseen"><i class="ic s" data-icon="not-seen"></i>2 not seen yet</span></div>
+      <ol class="timeline">
+        <li class="tli"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><div><b>Counting in tens: now secure</b><p>The state changed after a third day seen</p></div><span class="caption num" data-source="evidence_event.observed_at">20-Nov</span></li>
+        <li class="tli"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><div><b>Paper, sheet 3</b><p>4 right, 1 wrong with working, 1 blank · signed off by Bina Basil</p></div><span class="caption num" data-source="item_result.confirmed_at">20-Nov</span></li>
+        <li class="tli"><span class="tile" data-kind="note"><i class="ic" data-icon="note"></i></span><div><b>Counts on from 30 in tens, with bundles</b><p>Voice note · confirmed by Asha Almond</p></div><span class="caption num" data-source="pii.educator_note.received_at">18-Nov</span></li>
+        <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><b>Counting in tens with bundles: as expected</b><p>Observed in the period · Asha Almond</p></div><span class="caption num" data-source="activity_observation.observed_at">18-Nov</span></li>
+        <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="history"></i></span><div><b>A mark corrected: below became as expected</b><p>A new entry that replaces the first · Asha Almond</p></div><span class="caption num" data-source="change_log.at">18-Nov</span></li>
+      </ol>
+      <a class="btn press" href="#">Open Alba</a>
+    </aside>
+  </section>
+
+  <section><h2>Groups, clusters and the week strip (patterns inside blocks, not blocks)</h2>
+    <div class="toolbar">
+      <label class="sel"><i class="ic s" data-icon="group"></i>Group by <select><option>State on this skill</option><option>Class</option></select></label>
+    </div>
+    <div class="groups">
+      <section class="grp" data-state="ok" aria-label="Secure, 2 children">
+        <h3 class="grp-h"><i class="ic s" data-icon="secure"></i>Secure <span class="count num">2</span></h3>
+        <ul class="nchips"><li><button class="nchip press" type="button"><span class="no">01</span>Alba Ant</button></li><li><button class="nchip press" type="button"><span class="no">04</span>Dot Deer</button></li></ul>
+      </section>
+      <section class="grp" data-state="wait" aria-label="Practising, 1 child">
+        <h3 class="grp-h"><i class="ic s" data-icon="practising"></i>Practising <span class="count num">1</span></h3>
+        <ul class="nchips"><li><button class="nchip press" type="button"><span class="no">02</span>Bea Badger</button></li></ul>
+      </section>
+    </div>
+    <div class="cards">
+      <article class="card" data-kind="skill"><div class="card-h"><span class="tile"><i class="ic" data-icon="cluster"></i></span>Secure here, ready for the next skill<span class="count num">2</span></div><div class="card-b"><ul class="nchips"><li><button class="nchip press" type="button"><span class="no">01</span>Alba Ant</button></li><li><button class="nchip press" type="button"><span class="no">04</span>Dot Deer</button></li></ul><span class="caption">Worked out by code from each child's state and what was seen</span></div></article>
+    </div>
+    <span class="days" role="img" aria-label="Absences noted: none Monday, noted Tuesday, no lesson Wednesday, none Thursday, none Friday"><i></i><i data-state="quiet"><i class="ic s" data-icon="absent"></i></i><i></i><i></i><i></i></span>
+  </section>
+
   <section><h2>CaptureBar</h2>
     <div class="capture" data-block="CaptureBar"><a class="btn btn-capture press" href="#"><i class="ic" data-icon="record"></i>Voice note</a><a class="btn btn-capture press" href="#"><i class="ic" data-icon="photo"></i>Photo</a></div>
   </section>
@@ -200,7 +264,7 @@
   </section>
 
   <section><h2>PageImage</h2>
-    <figure class="pimg" data-block="PageImage"><span class="qr" aria-hidden="true"></span><figcaption>The child's page as photographed</figcaption></figure>
+    <div class="split"><figure class="pimg" data-block="PageImage"><span class="qr" aria-hidden="true"></span><span class="hit" style="--x: 12%; --y: 42%; --w: 76%; --h: 10%"></span><figcaption>The child's page as photographed; the answer in focus is outlined</figcaption></figure><p class="muted">Pattern: <code>.split</code> puts the page image beside the table of its answers, and one column on a phone.</p></div>
   </section>
 
   <section><h2>EmptyState</h2>
@@ -216,7 +280,8 @@
   </section>
 
   <section><h2>KeyValue</h2>
-    <dl class="kv" data-block="KeyValue"><dt>Class</dt><dd>K2 Red</dd><dt>Sr. No.</dt><dd class="num">01</dd><dt>Educator</dt><dd data-source="pii.staff.name">Asha Almond</dd><dt>Since</dt><dd>June 2026</dd></dl>
+    <div data-block="KeyValue"><dl class="kv"><dt>Class</dt><dd>K2 Red</dd><dt>Sr. No.</dt><dd class="num">01</dd><dt>Educator</dt><dd data-source="pii.staff.name">Asha Almond</dd><dt>Since</dt><dd>June 2026</dd></dl>
+    <dl class="kv cells"><div><dt>Level 0</dt><dd>Needs help to start</dd></div><div><dt>Level 1</dt><dd>Does it with a prompt</dd></div><div><dt>Level 2</dt><dd>Does it alone</dd></div><div><dt>Level 3</dt><dd>Explains it to a friend</dd></div></dl></div>
   </section>
 
   <section><h2>Cards</h2>

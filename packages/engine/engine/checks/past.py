@@ -33,10 +33,16 @@ PARTS: dict[str, LiteralString] = {
 }
 
 # What a migration of the curriculum's tables must leave as it was (C1 on): the questions and the skills' levels. Read
-# before and after the migrations only; update-live then writes the bank, as it is meant to.
+# before and after the migrations only; update-live then writes the bank, as it is meant to. Each is a fixed list of the
+# columns that say what the question asks or the level is (CP-27 group 3), not the whole row: a column added later, the
+# clock every update rewrites (`updated_at`), the usage the graph recounts (`times_used`, `p_correct`) and the level's
+# approval stamp (`confirmed_by`, `confirmed_at`, which move to `approval`; its own checks guard them) leave it as it was.
 CURRICULUM: dict[str, LiteralString] = {
-    "questions": "select i::text as r from item i",
-    "levels": "select l::text as r from skill_level l",
+    "questions": "select row(id, tenant_id, item_key, template, rung_code, skill_codes, signal, fmt, stem, spec,"
+    " responses, tags, source, status, skill_set_code, difficulty, eval_type, skill_set_version, generator, prompt_id,"
+    " model, corrected_from, mistake_skills, case_codes, created_at)::text as r from item",
+    "levels": "select row(id, tenant_id, skill_code, difficulty, grade, learning_objective, looks_like, rule, version,"
+    " created_at)::text as r from skill_level",
 }
 
 

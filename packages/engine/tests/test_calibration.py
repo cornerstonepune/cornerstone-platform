@@ -16,8 +16,8 @@ from pathlib import Path
 import psycopg
 import pytest
 
-from engine.core import db
-from tests.rows import a_registry_skill, tenant
+from engine.core import db, settings
+from tests.rows import a_level_looked_at, a_registry_skill, tenant
 
 REPO = Path(__file__).resolve().parents[3]
 GRADE = "G10"  # a grade no school class is in, so a grade's count here is the test's own
@@ -226,7 +226,7 @@ def test_a_grade_and_a_class_are_counted_separately():
 
 
 def test_the_system_only_suggests_no_level_is_changed():
-    watched = ("skill_level", "skill_level_version", "skill")
+    watched = ("skill_level", "skill", "change_log")  # a level changed would be in the history log
     with db.connect() as c:
         skill = _a_skill(c)
 
@@ -242,10 +242,8 @@ def test_the_system_only_suggests_no_level_is_changed():
         section = _a_class(c, skill, 9)
         got = _row(c, "class", section, skill)
         assert got["verdict"] == "review"
-        c.execute(
-            "insert into calibration_review (tenant_id, skill_code, difficulty, scope_kind, scope_value, assessed, secure,"
-            " reviewed_by) values (%s, %s, %s, 'class', %s, %s, %s, 'tester@example.org')",
-            (tenant(c), skill["code"], LEVEL, section, got["assessed"], got["secure"]),
+        a_level_looked_at(
+            c, skill["code"], LEVEL, "class", section, got["assessed"], got["secure"], "tester@example.org"
         )
         assert snapshot() == before
         c.rollback()
@@ -258,14 +256,11 @@ def test_the_threshold_is_80_percent_and_is_a_row():
     }
     assert seed["calibration.too_easy_share"] == 0.8
     with db.connect() as c:
-        assert (
-            float(db.one(c, "select value from threshold where key = 'calibration.too_easy_share'")["value"])
-            == 0.8
-        )
+        assert settings.threshold(c, "calibration.too_easy_share", 0) == 0.8
         skill = _a_skill(c)
         section = _a_class(c, skill, 7, others=[PRACTISING] * 3)
         assert _row(c, "class", section, skill)["verdict"] == "fine"
-        c.execute("update threshold set value = 0.7 where key = 'calibration.too_easy_share'")
+        settings.put(c, "calibration.too_easy_share", 0.7)
         assert _row(c, "class", section, skill)["verdict"] == "review"  # a row moved it; no deploy
         c.rollback()
 
@@ -286,13 +281,10 @@ def test_the_minimum_is_a_row():
     }
     assert seed["calibration.min_children"] == 8
     with db.connect() as c:
-        assert (
-            float(db.one(c, "select value from threshold where key = 'calibration.min_children'")["value"])
-            == 8
-        )
+        assert settings.threshold(c, "calibration.min_children", 0) == 8
         skill = _a_skill(c)
         section = _a_class(c, skill, 7)
-        c.execute("update threshold set value = 7 where key = 'calibration.min_children'")
+        settings.put(c, "calibration.min_children", 7)
         assert _row(c, "class", section, skill)["verdict"] == "review"
         c.rollback()
 
@@ -303,22 +295,17 @@ def test_a_review_hides_a_suggestion_until_the_numbers_move_and_is_only_ever_add
         section = _a_class(c, skill, 9)
         got = _row(c, "class", section, skill)
         assert got["looked_at"] is None
-        c.execute(
-            "insert into calibration_review (tenant_id, skill_code, difficulty, scope_kind, scope_value, assessed, secure,"
-            " reviewed_by) values (%s, %s, %s, 'class', %s, %s, %s, 'tester@example.org')",
-            (tenant(c), skill["code"], LEVEL, section, got["assessed"], got["secure"]),
+        a_level_looked_at(
+            c, skill["code"], LEVEL, "class", section, got["assessed"], got["secure"], "tester@example.org"
         )
         assert _row(c, "class", section, skill)["looked_at"] is not None  # hidden: nothing has moved
-        for _ in range(
-            int(
-                db.one(c, "select value from threshold where key = 'calibration.review_again_children'")[
-                    "value"
-                ]
-            )
-        ):
+        for _ in range(int(settings.threshold(c, "calibration.review_again_children", 0))):
             _a_child_at(c, section, skill, LEVEL, SECURE)
         assert _row(c, "class", section, skill)["looked_at"] is None  # the numbers moved: it is asked again
-        for change in ("update calibration_review set reviewed_by = 'x'", "delete from calibration_review"):
+        for change in (
+            "update approval set by = 'x' where kind = 'calibration'",
+            "delete from approval where kind = 'calibration'",
+        ):
             with pytest.raises(psycopg.Error):
                 with c.transaction():
                     c.execute(change)

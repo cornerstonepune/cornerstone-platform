@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wireframe: Where this child is (child)</title>
+<link rel="stylesheet" href="kit.css">
+</head>
+<!-- Wireframe of screens.json "child" (/children/[class]/[roll]), drawn as an educator for a child the signed-in person may see. The graph has its table beside it; on a phone kit.css swaps the graph for that list.
+     data-el = index in screens.json child.elements; data-bar = index in screens.json bar; data-source = target
+     table.column; data-gap = what the target tables cannot give. Both frames hold the same markup: the phone layout
+     comes from kit.css container queries, as it will on the site. Names are from fake-names.json. -->
+<body>
+<div class="wf-sheet">
+  <header>
+    <p class="wf-label">child · Where this child is · /children/[class]/[roll] · laptop 1440 and phone 400 · add data-theme="dark" on &lt;html&gt; for dark</p>
+  </header>
+  <section class="wf" data-viewport="1440" aria-label="Laptop, 1440 px">
+    <div class="frame">
+      <header class="bar">
+        <a class="brand" data-bar="0" href="#today" aria-label="Cornerstone Gurukul, go to Today">
+          <img class="wide on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-colour.svg" alt="">
+          <img class="wide on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-for-dark-backgrounds.svg" alt="">
+          <img class="small on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark.svg" alt="">
+          <img class="small on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark-on-white-tile.svg" alt="">
+        </a>
+        <ul class="doors" aria-label="Doors">
+          <li><a class="door" data-bar="0" href="#today"><i class="ic" data-icon="today"></i>Today <span class="badge num" data-source="pii.educator_note.status pii.educator_note.received_at" aria-label="7 notes to confirm">7</span></a></li>
+          <li><a class="door" data-bar="1" href="#timetable"><i class="ic" data-icon="timetable"></i>Timetable</a></li>
+          <li><a class="door" data-bar="2" href="#children" aria-current="page"><i class="ic" data-icon="children"></i>Children</a></li>
+          <li><a class="door" data-bar="3" href="#setup"><i class="ic" data-icon="setup"></i>Setup</a></li>
+        </ul>
+        <label class="search"><i class="ic s" data-icon="search"></i><span class="vh">Search</span><input data-bar="4" type="search" placeholder="Sr. No., name or activity"></label>
+        <button class="barbtn press" data-bar="5" type="button" role="switch" aria-checked="false"><i class="ic" data-icon="acting-as"></i><span class="w">Acting as</span></button>
+        <a class="barbtn" data-bar="6" href="#help" aria-label="Help for this page"><i class="ic" data-icon="help"></i></a>
+        <button class="barbtn press" data-bar="7" type="button"><i class="ic" data-icon="sign-out"></i><span class="w">Sign out</span></button>
+      </header>
+      <ol class="trail" aria-label="Trail">
+        <li><a data-trail href="#children">Children</a></li>
+        <li><i class="ic s" data-icon="trail"></i></li>
+        <li><a data-trail href="#picture"><span data-source="grade.name">K2</span> <span data-source="school_class.section">Red</span></a></li>
+        <li><i class="ic s" data-icon="trail"></i></li>
+        <li aria-current="page">Sr. No. <span class="num" data-source="enrolment.roll_no">12</span> · <span data-el="0" data-source="pii.child.first_name pii.child.last_name">Lou Lynx</span></li>
+      </ol>
+      <div class="page">
+        <main class="main">
+          <div class="head">
+            <p class="eyebrow"><i class="ic s" data-icon="child"></i><span data-source="grade.name">K2</span> <span data-source="school_class.section">Red</span> · Sr. No. <span class="num" data-source="enrolment.roll_no">12</span> · <span data-el="0" data-source="pii.child.first_name pii.child.last_name">Lou Lynx</span></p>
+            <h1 class="title">Where this child is</h1>
+            <p class="purpose">Each skill this child was seen on, coloured by how secure it is and sized by how often. Every mark opens the note or paper behind it.</p>
+            <p class="caption">Rebuilt <span data-source="flow_run.finished_at">last night, 21:04</span>, from confirmed notes and papers</p>
+          </div>
+          <div class="cgraph" data-block="ChildGraph">
+        <svg viewBox="-100 0 600 310" role="img" aria-label="Lou Lynx's skills seen: 2 secure, 2 practising, 2 emerging, around 3 domains">
+          <circle class="ring" cx="200" cy="150" r="110"></circle>
+          <path class="dom" data-subject="numeracy" d="M200 40 A110 110 0 0 1 295.3 205"></path>
+          <path class="dom" data-subject="language" d="M295.3 205 A110 110 0 0 1 104.7 205"></path>
+          <path class="dom" data-subject="arts" d="M104.7 205 A110 110 0 0 1 200 40"></path>
+          <text x="257.2" y="117" text-anchor="middle">Number</text>
+          <text x="200" y="216" text-anchor="middle">Language</text>
+          <text x="142.8" y="117" text-anchor="middle">Arts</text>
+          <circle class="ctr" cx="200" cy="150" r="30"></circle><text class="ctr-t" x="200" y="155" text-anchor="middle">LL</text>
+          <a data-el="1" href="#skill" aria-label="Comparing groups, secure, seen 5 times"><circle class="node" data-state="ok" cx="251.6" cy="52.9" r="14"></circle><text x="274" y="51" data-source="skill.name">Comparing groups</text><text class="w" data-state="ok" x="274" y="67" data-source="child_skill_state.state child_state.words">secure · 5 times</text></a>
+          <a data-el="1" href="#skill" aria-label="Counting in tens, emerging, seen 4 times"><circle class="node" data-state="quiet" cx="297.1" cy="98.4" r="12.8"></circle><text x="318" y="96" data-source="skill.name">Counting in tens</text><text class="w" data-state="quiet" x="318" y="112" data-source="child_skill_state.state child_state.words">emerging · 4 times</text></a>
+          <a data-el="1" href="#skill" aria-label="Sorting by size, practising, seen 6 times"><circle class="node" data-state="wait" cx="309.4" cy="161.5" r="15.2"></circle><text x="333" y="160" data-source="skill.name">Sorting by size</text><text class="w" data-state="wait" x="333" y="176" data-source="child_skill_state.state child_state.words">practising · 6 times</text></a>
+          <a data-el="1" href="#skill" aria-label="Retelling a story, secure, seen 7 times"><circle class="node" data-state="ok" cx="251.6" cy="247.1" r="16.4"></circle><text x="276" y="245" data-source="skill.name">Retelling a story</text><text class="w" data-state="ok" x="276" y="261" data-source="child_skill_state.state child_state.words">secure · 7 times</text></a>
+          <a data-el="1" href="#skill" aria-label="Rhyming words, practising, seen 3 times"><circle class="node" data-state="wait" cx="148.4" cy="247.1" r="11.6"></circle><text x="129" y="245" text-anchor="end" data-source="skill.name">Rhyming words</text><text class="w" data-state="wait" x="129" y="261" text-anchor="end" data-source="child_skill_state.state child_state.words">practising · 3 times</text></a>
+          <a data-el="1" href="#skill" aria-label="Mixing colours, emerging, seen 2 times"><circle class="node" data-state="quiet" cx="100.3" cy="103.5" r="10.4"></circle><text x="82" y="102" text-anchor="end" data-source="skill.name">Mixing colours</text><text class="w" data-state="quiet" x="82" y="118" text-anchor="end" data-source="child_skill_state.state child_state.words">emerging · 2 times</text></a>
+        </svg>
+            <div class="table-box"><table class="table" aria-label="The same skills as the graph">
+              <thead><tr><th>Skill</th><th class="st">State</th><th class="n">Seen</th></tr></thead>
+              <tbody>
+          <tr><td><a data-el="6" href="#skill" data-source="skill.name">Comparing groups</a></td><td class="st" data-source="child_skill_state.state child_state.words"><span class="chip" data-state="ok"><i class="ic s" data-icon="secure"></i>Secure</span></td><td class="n num" data-source="child_skill_state.n_events">5</td></tr>
+          <tr><td><a data-el="6" href="#skill" data-source="skill.name">Counting in tens</a></td><td class="st" data-source="child_skill_state.state child_state.words"><span class="chip" data-state="quiet"><i class="ic s" data-icon="emerging"></i>Emerging</span></td><td class="n num" data-source="child_skill_state.n_events">4</td></tr>
+          <tr><td><a data-el="6" href="#skill" data-source="skill.name">Sorting by size</a></td><td class="st" data-source="child_skill_state.state child_state.words"><span class="chip" data-state="wait"><i class="ic s" data-icon="practising"></i>Practising</span></td><td class="n num" data-source="child_skill_state.n_events">6</td></tr>
+          <tr><td><a data-el="6" href="#skill" data-source="skill.name">Retelling a story</a></td><td class="st" data-source="child_skill_state.state child_state.words"><span class="chip" data-state="ok"><i class="ic s" data-icon="secure"></i>Secure</span></td><td class="n num" data-source="child_skill_state.n_events">7</td></tr>
+          <tr><td><a data-el="6" href="#skill" data-source="skill.name">Rhyming words</a></td><td class="st" data-source="child_skill_state.state child_state.words"><span class="chip" data-state="wait"><i class="ic s" data-icon="practising"></i>Practising</span></td><td class="n num" data-source="child_skill_state.n_events">3</td></tr>
+          <tr><td><a data-el="6" href="#skill" data-source="skill.name">Mixing colours</a></td><td class="st" data-source="child_skill_state.state child_state.words"><span class="chip" data-state="quiet"><i class="ic s" data-icon="emerging"></i>Emerging</span></td><td class="n num" data-source="child_skill_state.n_events">2</td></tr>
+              </tbody></table></div>
+          </div>
+          <div class="cards" data-block="Cards">
+            <article class="card" data-kind="child"><div class="card-h"><span class="tile"><i class="ic" data-icon="child"></i></span>Counts by state</div><div class="card-b stack" data-block="StackBar">
+              <div class="sbar" role="img" aria-label="2 secure, 2 practising, 2 emerging"><i data-state="ok" style="--n: 2"></i><i data-state="wait" style="--n: 2"></i><i data-state="quiet" style="--n: 2"></i></div>
+              <div class="keyrow" data-source="child_skill_state.state child_state.words"><span class="chip" data-state="ok"><i class="ic s" data-icon="secure"></i>2 secure</span><span class="chip" data-state="wait"><i class="ic s" data-icon="practising"></i>2 practising</span><span class="chip" data-state="quiet"><i class="ic s" data-icon="emerging"></i>2 emerging</span></div>
+              <span class="muted">6 skills seen in all</span>
+              <span class="muted" data-source="enrolment.roll_no enrolment.class_id">Sr. No. 12 of 24 in <span data-source="grade.name school_class.section">K2 Red</span>, since <span data-source="enrolment.from_date">4-Jun</span></span>
+            </div></article>
+            <article class="card" data-kind="child"><div class="card-h"><span class="tile"><i class="ic" data-icon="history"></i></span>Last seen, by skill</div><div class="card-b"><dl class="kv" data-source="skill.name child_skill_state.last_seen">
+              <dt>Counting in tens</dt><dd>18-Nov</dd><dt>Retelling a story</dt><dd>17-Nov</dd><dt>Sorting by size</dt><dd>16-Nov</dd><dt>Rhyming words</dt><dd>12-Nov</dd><dt>Comparing groups</dt><dd>9-Nov</dd><dt>Mixing colours</dt><dd>6-Nov</dd>
+            </dl></div></article>
+            <article class="card" data-kind="child"><div class="card-h"><span class="tile"><i class="ic" data-icon="note"></i></span>Notes and papers</div><div class="card-b"><dl class="kv">
+              <dt>Notes confirmed</dt><dd class="num" data-source="activity_observation.child_id activity_observation.confirmed_by">12</dd><dt>Papers read</dt><dd class="num" data-source="item_result.state item_result.confirmed_at">3</dd><dt>Corrections</dt><dd class="num" data-source="activity_observation.supersedes">1</dd><dt>Newest entry</dt><dd data-source="activity_observation.observed_at">18-Nov</dd>
+            </dl></div></article>
+          </div>
+          <div class="filters" data-block="FilterBar">
+            <label class="sel"><i class="ic s" data-icon="skill"></i>Trend for <select data-el="2" data-source="skill.name"><option>Counting in tens</option><option>Comparing groups</option><option>Sorting by size</option><option>Retelling a story</option><option>Rhyming words</option><option>Mixing colours</option></select></label>
+          </div>
+          <div class="card">
+            <div class="card-h"><i class="ic s" data-icon="skill"></i>Counting in tens, level by sitting</div>
+            <div class="card-b"><svg class="trend" viewBox="0 0 600 120" role="img" aria-label="Counting in tens, level by sitting: 0, 1, 1, 2" data-source="activity_observation.reached_level activity_observation.observed_at"><polyline points="40,100 220,70 400,70 580,40"></polyline><circle cx="40" cy="100" r="4"></circle><circle cx="220" cy="70" r="4"></circle><circle cx="400" cy="70" r="4"></circle><circle cx="580" cy="40" r="4"></circle><text x="20" y="118">4-Aug · level 0</text><text x="500" y="30">18-Nov · level 2</text></svg></div>
+          </div>
+          <h2 class="title-small">What was seen, newest last</h2>
+          <p><a data-el="7" href="#child?older=1"><i class="ic s" data-icon="previous"></i>Show ten older entries</a></p>
+          <ol class="timeline" data-block="Timeline">
+            <li class="tli" data-source="activity_observation.outcome activity_observation.observed_at"><span class="tile" data-kind="note"><i class="ic" data-icon="note"></i></span><div><b>Voice note, confirmed</b><p>Sorted ten leaves from smallest to biggest without help.</p><p><a data-el="4" href="#activity" data-source="activity.name">Sorting by size with leaves</a></p>
+              <details class="details"><summary data-el="3"><i class="ic s" data-icon="details"></i>Details</summary><div><dl class="kv"><dt>Observed by</dt><dd data-source="activity_observation.observed_by">an educator</dd><dt>Confirmed by</dt><dd data-source="activity_observation.confirmed_by pii.staff.name">Asha Almond</dd><dt>Observed</dt><dd data-source="activity_observation.observed_at activity_observation.stored_at">25-Aug 09:40 · stored 25-Aug 09:40, evening</dd><dt>Route</dt><dd data-source="activity_observation.route">voice</dd><dt>Counts toward secure</dt><dd data-source="evidence_event.confirmed_by">yes</dd></dl></div></details></div><span class="caption">25-Aug · voice</span></li>
+            <li class="tli" data-source="item_result.state item_result.working_shown"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><div><b>Paper, sheet 3</b><p>4 right, 1 wrong with working, 1 blank.</p><p><a data-el="5" href="#paper" data-source="capture.sheet_instance_id">Open the paper</a></p>
+              <details class="details"><summary data-el="3"><i class="ic s" data-icon="details"></i>Details</summary><div><dl class="kv"><dt>Read by</dt><dd data-source="item_result.raw_read">the system, from the photographed page</dd><dt>Checked by</dt><dd data-source="item_result.confirmed_by pii.staff.name">Bina Basil</dd><dt>Settled</dt><dd data-source="item_result.confirmed_at">8-Oct 14:20</dd><dt>Route</dt><dd data-source="capture.status">paper</dd><dt>Counts toward secure</dt><dd data-source="evidence_event.confirmed_by">yes</dd></dl></div></details></div><span class="caption">8-Oct · paper</span></li>
+            <li class="tli" data-source="activity_observation.outcome activity_observation.observed_at"><span class="tile" data-kind="note"><i class="ic" data-icon="note"></i></span><div><b>Voice note, confirmed</b><p>Counted in tens to 60 with bundles; needed a prompt past 60.</p><p><a data-el="4" href="#activity" data-source="activity.name">Counting in tens with bundles</a></p>
+              <details class="details"><summary data-el="3"><i class="ic s" data-icon="details"></i>Details</summary><div><dl class="kv"><dt>Observed by</dt><dd data-source="activity_observation.observed_by">an educator</dd><dt>Confirmed by</dt><dd data-source="activity_observation.confirmed_by pii.staff.name">Asha Almond</dd><dt>Observed</dt><dd data-source="activity_observation.observed_at activity_observation.stored_at">11-Nov 09:50 · stored 11-Nov 09:50, evening</dd><dt>Route</dt><dd data-source="activity_observation.route">voice</dd><dt>Counts toward secure</dt><dd data-source="evidence_event.confirmed_by">no: replaced by a later entry</dd></dl></div></details></div><span class="caption">11-Nov · voice</span></li>
+            <li class="tli" data-source="activity_observation.outcome activity_observation.observed_at"><span class="tile" data-kind="note"><i class="ic" data-icon="note"></i></span><div><b>Form, confirmed</b><p>Sorted five things by size; mixed up the middle two.</p><p><a data-el="4" href="#activity" data-source="activity.name">Sorting by size with leaves</a></p>
+              <details class="details"><summary data-el="3"><i class="ic s" data-icon="details"></i>Details</summary><div><dl class="kv"><dt>Observed by</dt><dd data-source="activity_observation.observed_by">an educator</dd><dt>Confirmed by</dt><dd data-source="activity_observation.confirmed_by pii.staff.name">Asha Almond</dd><dt>Observed</dt><dd data-source="activity_observation.observed_at activity_observation.stored_at">16-Nov 10:30 · stored 16-Nov 10:30, evening</dd><dt>Route</dt><dd data-source="activity_observation.route">form</dd><dt>Counts toward secure</dt><dd data-source="evidence_event.confirmed_by">yes</dd></dl></div></details></div><span class="caption">16-Nov · form</span></li>
+            <li class="tli" data-source="activity_observation.outcome activity_observation.supersedes"><span class="tile" data-kind="note"><i class="ic" data-icon="fix-this"></i></span><div><b>Correction: replaces the 11-Nov entry</b><p>Counted on from 30 in tens with bundles, no prompt. The 11-Nov entry named the wrong child.</p><p><a data-el="4" href="#activity" data-source="activity.name">Counting in tens with bundles</a></p>
+              <details class="details"><summary data-el="3"><i class="ic s" data-icon="details"></i>Details</summary><div><dl class="kv"><dt>Observed by</dt><dd data-source="activity_observation.observed_by">an educator</dd><dt>Confirmed by</dt><dd data-source="activity_observation.confirmed_by pii.staff.name">Asha Almond</dd><dt>Observed</dt><dd data-source="activity_observation.observed_at activity_observation.stored_at">18-Nov 09:50 · stored 18-Nov 09:50, evening</dd><dt>Route</dt><dd data-source="activity_observation.route">voice</dd><dt>Counts toward secure</dt><dd data-source="evidence_event.confirmed_by">yes</dd><dt>Replaces</dt><dd data-source="activity_observation.supersedes">the 11-Nov entry</dd><dt>Why</dt><dd data-source="activity_observation.reason">named the wrong child</dd></dl></div></details></div><span class="caption">18-Nov · voice</span></li>
+          </ol>
+          <h2 class="title-small">Skill by skill</h2>
+          <div class="table-box" data-block="DataTable"><table class="table">
+            <thead><tr><th>Skill</th><th class="n">Named days</th><th>Last seen</th><th>Ready next</th></tr></thead>
+            <tbody>
+          <tr><td><a data-el="6" href="#skill" data-source="skill.name">Comparing groups</a></td><td class="n num" data-source="child_skill_state.named_days">4</td><td data-source="child_skill_state.last_seen">9-Nov</td><td data-source="activity_skill.skill_code approval.decision approval.target">Counting in tens</td></tr>
+          <tr><td><a data-el="6" href="#skill" data-source="skill.name">Counting in tens</a></td><td class="n num" data-source="child_skill_state.named_days">3</td><td data-source="child_skill_state.last_seen">18-Nov</td><td data-source="activity_skill.skill_code approval.decision approval.target">—</td></tr>
+          <tr><td><a data-el="6" href="#skill" data-source="skill.name">Sorting by size</a></td><td class="n num" data-source="child_skill_state.named_days">4</td><td data-source="child_skill_state.last_seen">16-Nov</td><td data-source="activity_skill.skill_code approval.decision approval.target">—</td></tr>
+          <tr><td><a data-el="6" href="#skill" data-source="skill.name">Retelling a story</a></td><td class="n num" data-source="child_skill_state.named_days">5</td><td data-source="child_skill_state.last_seen">17-Nov</td><td data-source="activity_skill.skill_code approval.decision approval.target">Predicting what happens next</td></tr>
+          <tr><td><a data-el="6" href="#skill" data-source="skill.name">Rhyming words</a></td><td class="n num" data-source="child_skill_state.named_days">3</td><td data-source="child_skill_state.last_seen">12-Nov</td><td data-source="activity_skill.skill_code approval.decision approval.target">—</td></tr>
+          <tr><td><a data-el="6" href="#skill" data-source="skill.name">Mixing colours</a></td><td class="n num" data-source="child_skill_state.named_days">2</td><td data-source="child_skill_state.last_seen">6-Nov</td><td data-source="activity_skill.skill_code approval.decision approval.target">—</td></tr>
+            </tbody></table></div>
+          <p class="caption">Ready next shows only links a person confirmed.</p>
+          <div class="card">
+            <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: a child not seen on any skill yet</div>
+            <div class="card-b"><div class="cgraph" data-block="ChildGraph"><svg viewBox="-100 0 600 310" role="img" aria-label="Not seen yet on any skill"><circle class="ring" cx="200" cy="150" r="110"></circle><circle class="ctr" cx="200" cy="150" r="30"></circle><text class="ctr-t" x="200" y="155" text-anchor="middle">LL</text><text x="200" y="215" text-anchor="middle">not seen yet</text></svg><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="not-seen"></i><b>Not seen yet on any skill</b><span class="muted">Record a note in a period and the first mark appears here.</span></div></div></div>
+          </div>
+        </main>
+        <aside class="rail" aria-label="Connected to">
+          <section class="rail-box">
+            <h2>Connected to</h2>
+            <ul class="rlist">
+<li><a class="ritem" data-el="8" href="#skill"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><span><span data-source="skill.name">Comparing groups</span><small><span data-source="child_state.words">secure</span> · seen <span class="num" data-source="child_skill_state.n_events">5</span> times</small></span></a></li>
+<li><a class="ritem" data-el="8" href="#skill"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><span><span data-source="skill.name">Counting in tens</span><small><span data-source="child_state.words">emerging</span> · seen <span class="num" data-source="child_skill_state.n_events">4</span> times</small></span></a></li>
+<li><a class="ritem" data-el="8" href="#skill"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><span><span data-source="skill.name">Sorting by size</span><small><span data-source="child_state.words">practising</span> · seen <span class="num" data-source="child_skill_state.n_events">6</span> times</small></span></a></li>
+<li><a class="ritem" data-el="8" href="#skill"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><span><span data-source="skill.name">Retelling a story</span><small><span data-source="child_state.words">secure</span> · seen <span class="num" data-source="child_skill_state.n_events">7</span> times</small></span></a></li>
+<li><a class="ritem" data-el="8" href="#skill"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><span><span data-source="skill.name">Rhyming words</span><small><span data-source="child_state.words">practising</span> · seen <span class="num" data-source="child_skill_state.n_events">3</span> times</small></span></a></li>
+<li><a class="ritem" data-el="8" href="#skill"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><span><span data-source="skill.name">Mixing colours</span><small><span data-source="child_state.words">emerging</span> · seen <span class="num" data-source="child_skill_state.n_events">2</span> times</small></span></a></li>
+              <li><a class="ritem" data-el="9" href="#picture"><span class="tile" data-kind="child"><i class="ic" data-icon="class"></i></span><span><span><span data-source="grade.name">K2</span> <span data-source="school_class.section">Red</span></span><small>Back to the class</small></span></a></li>
+              <li><a class="ritem" data-el="11" href="#reports"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><span>Reports<small>coming later</small></span></a></li>
+            </ul>
+          </section>
+          <section class="rail-box">
+            <h2>Next</h2>
+            <a class="btn btn-main press" data-el="10" href="#record?child=12"><i class="ic" data-icon="record"></i>Add a note about this child</a>
+          </section>
+          <section class="rail-box" data-block="CaptureBar">
+            <h2>Capture here</h2>
+            <div class="capture">
+              <a class="btn btn-capture press" data-el="12" href="#record?mode=voice&amp;child=12"><i class="ic" data-icon="record"></i>Voice note</a>
+              <a class="btn btn-capture press" data-el="13" href="#record?mode=photo&amp;child=12"><i class="ic" data-icon="photo"></i>Photo</a>
+            </div>
+          </section>
+        </aside>
+      </div>
+      <nav class="tabbar" aria-label="Doors">
+        <a class="tab" data-bar="0" href="#today"><i class="ic" data-icon="today"></i>Today</a>
+        <a class="tab" data-bar="1" href="#timetable"><i class="ic" data-icon="timetable"></i>Timetable</a>
+        <a class="tab" data-bar="2" href="#children" aria-current="page"><i class="ic" data-icon="children"></i>Children</a>
+        <a class="tab" data-bar="3" href="#setup"><i class="ic" data-icon="setup"></i>Setup</a>
+      </nav>
+    </div>
+  </section>
+  <section class="wf" data-viewport="400" aria-label="Phone, 400 px">
+    <div class="frame">
+      <header class="bar">
+        <a class="brand" data-bar="0" href="#today" aria-label="Cornerstone Gurukul, go to Today">
+          <img class="wide on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-colour.svg" alt="">
+          <img class="wide on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-for-dark-backgrounds.svg" alt="">
+          <img class="small on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark.svg" alt="">
+          <img class="small on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark-on-white-tile.svg" alt="">
+        </a>
+        <ul class="doors" aria-label="Doors">
+          <li><a class="door" data-bar="0" href="#today"><i class="ic" data-icon="today"></i>Today <span class="badge num" data-source="pii.educator_note.status pii.educator_note.received_at" aria-label="7 notes to confirm">7</span></a></li>
+          <li><a class="door" data-bar="1" href="#timetable"><i class="ic" data-icon="timetable"></i>Timetable</a></li>
+          <li><a class="door" data-bar="2" href="#children" aria-current="page"><i class="ic" data-icon="children"></i>Children</a></li>
+          <li><a class="door" data-bar="3" href="#setup"><i class="ic" data-icon="setup"></i>Setup</a></li>
+        </ul>
+        <label class="search"><i class="ic s" data-icon="search"></i><span class="vh">Search</span><input data-bar="4" type="search" placeholder="Sr. No., name or activity"></label>
+        <button class="barbtn press" data-bar="5" type="button" role="switch" aria-checked="false"><i class="ic" data-icon="acting-as"></i><span class="w">Acting as</span></button>
+        <a class="barbtn" data-bar="6" href="#help" aria-label="Help for this page"><i class="ic" data-icon="help"></i></a>
+        <button class="barbtn press" data-bar="7" type="button"><i class="ic" data-icon="sign-out"></i><span class="w">Sign out</span></button>
+      </header>
+      <ol class="trail" aria-label="Trail">
+        <li><a data-trail href="#children">Children</a></li>
+        <li><i class="ic s" data-icon="trail"></i></li>
+        <li><a data-trail href="#picture"><span data-source="grade.name">K2</span> <span data-source="school_class.section">Red</span></a></li>
+        <li><i class="ic s" data-icon="trail"></i></li>
+        <li aria-current="page">Sr. No. <span class="num" data-source="enrolment.roll_no">12</span> · <span data-el="0" data-source="pii.child.first_name pii.child.last_name">Lou Lynx</span></li>
+      </ol>
+      <div class="page">
+        <main class="main">
+          <div class="head">
+            <p class="eyebrow"><i class="ic s" data-icon="child"></i><span data-source="grade.name">K2</span> <span data-source="school_class.section">Red</span> · Sr. No. <span class="num" data-source="enrolment.roll_no">12</span> · <span data-el="0" data-source="pii.child.first_name pii.child.last_name">Lou Lynx</span></p>
+            <h1 class="title">Where this child is</h1>
+            <p class="purpose">Each skill this child was seen on, coloured by how secure it is and sized by how often. Every mark opens the note or paper behind it.</p>
+            <p class="caption">Rebuilt <span data-source="flow_run.finished_at">last night, 21:04</span>, from confirmed notes and papers</p>
+          </div>
+          <div class="cgraph" data-block="ChildGraph">
+        <svg viewBox="-100 0 600 310" role="img" aria-label="Lou Lynx's skills seen: 2 secure, 2 practising, 2 emerging, around 3 domains">
+          <circle class="ring" cx="200" cy="150" r="110"></circle>
+          <path class="dom" data-subject="numeracy" d="M200 40 A110 110 0 0 1 295.3 205"></path>
+          <path class="dom" data-subject="language" d="M295.3 205 A110 110 0 0 1 104.7 205"></path>
+          <path class="dom" data-subject="arts" d="M104.7 205 A110 110 0 0 1 200 40"></path>
+          <text x="257.2" y="117" text-anchor="middle">Number</text>
+          <text x="200" y="216" text-anchor="middle">Language</text>
+          <text x="142.8" y="117" text-anchor="middle">Arts</text>
+          <circle class="ctr" cx="200" cy="150" r="30"></circle><text class="ctr-t" x="200" y="155" text-anchor="middle">LL</text>
+          <a data-el="1" href="#skill" aria-label="Comparing groups, secure, seen 5 times"><circle class="node" data-state="ok" cx="251.6" cy="52.9" r="14"></circle><text x="274" y="51" data-source="skill.name">Comparing groups</text><text class="w" data-state="ok" x="274" y="67" data-source="child_skill_state.state child_state.words">secure · 5 times</text></a>
+          <a data-el="1" href="#skill" aria-label="Counting in tens, emerging, seen 4 times"><circle class="node" data-state="quiet" cx="297.1" cy="98.4" r="12.8"></circle><text x="318" y="96" data-source="skill.name">Counting in tens</text><text class="w" data-state="quiet" x="318" y="112" data-source="child_skill_state.state child_state.words">emerging · 4 times</text></a>
+          <a data-el="1" href="#skill" aria-label="Sorting by size, practising, seen 6 times"><circle class="node" data-state="wait" cx="309.4" cy="161.5" r="15.2"></circle><text x="333" y="160" data-source="skill.name">Sorting by size</text><text class="w" data-state="wait" x="333" y="176" data-source="child_skill_state.state child_state.words">practising · 6 times</text></a>
+          <a data-el="1" href="#skill" aria-label="Retelling a story, secure, seen 7 times"><circle class="node" data-state="ok" cx="251.6" cy="247.1" r="16.4"></circle><text x="276" y="245" data-source="skill.name">Retelling a story</text><text class="w" data-state="ok" x="276" y="261" data-source="child_skill_state.state child_state.words">secure · 7 times</text></a>
+          <a data-el="1" href="#skill" aria-label="Rhyming words, practising, seen 3 times"><circle class="node" data-state="wait" cx="148.4" cy="247.1" r="11.6"></circle><text x="129" y="245" text-anchor="end" data-source="skill.name">Rhyming words</text><text class="w" data-state="wait" x="129" y="261" text-anchor="end" data-source="child_skill_state.state child_state.words">practising · 3 times</text></a>
+          <a data-el="1" href="#skill" aria-label="Mixing colours, emerging, seen 2 times"><circle class="node" data-state="quiet" cx="100.3" cy="103.5" r="10.4"></circle><text x="82" y="102" text-anchor="end" data-source="skill.name">Mixing colours</text><text class="w" data-state="quiet" x="82" y="118" text-anchor="end" data-source="child_skill_state.state child_state.words">emerging · 2 times</text></a>
+        </svg>
+            <div class="table-box"><table class="table" aria-label="The same skills as the graph">
+              <thead><tr><th>Skill</th><th class="st">State</th><th class="n">Seen</th></tr></thead>
+              <tbody>
+          <tr><td><a data-el="6" href="#skill" data-source="skill.name">Comparing groups</a></td><td class="st" data-source="child_skill_state.state child_state.words"><span class="chip" data-state="ok"><i class="ic s" data-icon="secure"></i>Secure</span></td><td class="n num" data-source="child_skill_state.n_events">5</td></tr>
+          <tr><td><a data-el="6" href="#skill" data-source="skill.name">Counting in tens</a></td><td class="st" data-source="child_skill_state.state child_state.words"><span class="chip" data-state="quiet"><i class="ic s" data-icon="emerging"></i>Emerging</span></td><td class="n num" data-source="child_skill_state.n_events">4</td></tr>
+          <tr><td><a data-el="6" href="#skill" data-source="skill.name">Sorting by size</a></td><td class="st" data-source="child_skill_state.state child_state.words"><span class="chip" data-state="wait"><i class="ic s" data-icon="practising"></i>Practising</span></td><td class="n num" data-source="child_skill_state.n_events">6</td></tr>
+          <tr><td><a data-el="6" href="#skill" data-source="skill.name">Retelling a story</a></td><td class="st" data-source="child_skill_state.state child_state.words"><span class="chip" data-state="ok"><i class="ic s" data-icon="secure"></i>Secure</span></td><td class="n num" data-source="child_skill_state.n_events">7</td></tr>
+          <tr><td><a data-el="6" href="#skill" data-source="skill.name">Rhyming words</a></td><td class="st" data-source="child_skill_state.state child_state.words"><span class="chip" data-state="wait"><i class="ic s" data-icon="practising"></i>Practising</span></td><td class="n num" data-source="child_skill_state.n_events">3</td></tr>
+          <tr><td><a data-el="6" href="#skill" data-source="skill.name">Mixing colours</a></td><td class="st" data-source="child_skill_state.state child_state.words"><span class="chip" data-state="quiet"><i class="ic s" data-icon="emerging"></i>Emerging</span></td><td class="n num" data-source="child_skill_state.n_events">2</td></tr>
+              </tbody></table></div>
+          </div>
+          <div class="cards" data-block="Cards">
+            <article class="card" data-kind="child"><div class="card-h"><span class="tile"><i class="ic" data-icon="child"></i></span>Counts by state</div><div class="card-b stack" data-block="StackBar">
+              <div class="sbar" role="img" aria-label="2 secure, 2 practising, 2 emerging"><i data-state="ok" style="--n: 2"></i><i data-state="wait" style="--n: 2"></i><i data-state="quiet" style="--n: 2"></i></div>
+              <div class="keyrow" data-source="child_skill_state.state child_state.words"><span class="chip" data-state="ok"><i class="ic s" data-icon="secure"></i>2 secure</span><span class="chip" data-state="wait"><i class="ic s" data-icon="practising"></i>2 practising</span><span class="chip" data-state="quiet"><i class="ic s" data-icon="emerging"></i>2 emerging</span></div>
+              <span class="muted">6 skills seen in all</span>
+              <span class="muted" data-source="enrolment.roll_no enrolment.class_id">Sr. No. 12 of 24 in <span data-source="grade.name school_class.section">K2 Red</span>, since <span data-source="enrolment.from_date">4-Jun</span></span>
+            </div></article>
+            <article class="card" data-kind="child"><div class="card-h"><span class="tile"><i class="ic" data-icon="history"></i></span>Last seen, by skill</div><div class="card-b"><dl class="kv" data-source="skill.name child_skill_state.last_seen">
+              <dt>Counting in tens</dt><dd>18-Nov</dd><dt>Retelling a story</dt><dd>17-Nov</dd><dt>Sorting by size</dt><dd>16-Nov</dd><dt>Rhyming words</dt><dd>12-Nov</dd><dt>Comparing groups</dt><dd>9-Nov</dd><dt>Mixing colours</dt><dd>6-Nov</dd>
+            </dl></div></article>
+            <article class="card" data-kind="child"><div class="card-h"><span class="tile"><i class="ic" data-icon="note"></i></span>Notes and papers</div><div class="card-b"><dl class="kv">
+              <dt>Notes confirmed</dt><dd class="num" data-source="activity_observation.child_id activity_observation.confirmed_by">12</dd><dt>Papers read</dt><dd class="num" data-source="item_result.state item_result.confirmed_at">3</dd><dt>Corrections</dt><dd class="num" data-source="activity_observation.supersedes">1</dd><dt>Newest entry</dt><dd data-source="activity_observation.observed_at">18-Nov</dd>
+            </dl></div></article>
+          </div>
+          <div class="filters" data-block="FilterBar">
+            <label class="sel"><i class="ic s" data-icon="skill"></i>Trend for <select data-el="2" data-source="skill.name"><option>Counting in tens</option><option>Comparing groups</option><option>Sorting by size</option><option>Retelling a story</option><option>Rhyming words</option><option>Mixing colours</option></select></label>
+          </div>
+          <div class="card">
+            <div class="card-h"><i class="ic s" data-icon="skill"></i>Counting in tens, level by sitting</div>
+            <div class="card-b"><svg class="trend" viewBox="0 0 600 120" role="img" aria-label="Counting in tens, level by sitting: 0, 1, 1, 2" data-source="activity_observation.reached_level activity_observation.observed_at"><polyline points="40,100 220,70 400,70 580,40"></polyline><circle cx="40" cy="100" r="4"></circle><circle cx="220" cy="70" r="4"></circle><circle cx="400" cy="70" r="4"></circle><circle cx="580" cy="40" r="4"></circle><text x="20" y="118">4-Aug · level 0</text><text x="500" y="30">18-Nov · level 2</text></svg></div>
+          </div>
+          <h2 class="title-small">What was seen, newest last</h2>
+          <p><a data-el="7" href="#child?older=1"><i class="ic s" data-icon="previous"></i>Show ten older entries</a></p>
+          <ol class="timeline" data-block="Timeline">
+            <li class="tli" data-source="activity_observation.outcome activity_observation.observed_at"><span class="tile" data-kind="note"><i class="ic" data-icon="note"></i></span><div><b>Voice note, confirmed</b><p>Sorted ten leaves from smallest to biggest without help.</p><p><a data-el="4" href="#activity" data-source="activity.name">Sorting by size with leaves</a></p>
+              <details class="details"><summary data-el="3"><i class="ic s" data-icon="details"></i>Details</summary><div><dl class="kv"><dt>Observed by</dt><dd data-source="activity_observation.observed_by">an educator</dd><dt>Confirmed by</dt><dd data-source="activity_observation.confirmed_by pii.staff.name">Asha Almond</dd><dt>Observed</dt><dd data-source="activity_observation.observed_at activity_observation.stored_at">25-Aug 09:40 · stored 25-Aug 09:40, evening</dd><dt>Route</dt><dd data-source="activity_observation.route">voice</dd><dt>Counts toward secure</dt><dd data-source="evidence_event.confirmed_by">yes</dd></dl></div></details></div><span class="caption">25-Aug · voice</span></li>
+            <li class="tli" data-source="item_result.state item_result.working_shown"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><div><b>Paper, sheet 3</b><p>4 right, 1 wrong with working, 1 blank.</p><p><a data-el="5" href="#paper" data-source="capture.sheet_instance_id">Open the paper</a></p>
+              <details class="details"><summary data-el="3"><i class="ic s" data-icon="details"></i>Details</summary><div><dl class="kv"><dt>Read by</dt><dd data-source="item_result.raw_read">the system, from the photographed page</dd><dt>Checked by</dt><dd data-source="item_result.confirmed_by pii.staff.name">Bina Basil</dd><dt>Settled</dt><dd data-source="item_result.confirmed_at">8-Oct 14:20</dd><dt>Route</dt><dd data-source="capture.status">paper</dd><dt>Counts toward secure</dt><dd data-source="evidence_event.confirmed_by">yes</dd></dl></div></details></div><span class="caption">8-Oct · paper</span></li>
+            <li class="tli" data-source="activity_observation.outcome activity_observation.observed_at"><span class="tile" data-kind="note"><i class="ic" data-icon="note"></i></span><div><b>Voice note, confirmed</b><p>Counted in tens to 60 with bundles; needed a prompt past 60.</p><p><a data-el="4" href="#activity" data-source="activity.name">Counting in tens with bundles</a></p>
+              <details class="details"><summary data-el="3"><i class="ic s" data-icon="details"></i>Details</summary><div><dl class="kv"><dt>Observed by</dt><dd data-source="activity_observation.observed_by">an educator</dd><dt>Confirmed by</dt><dd data-source="activity_observation.confirmed_by pii.staff.name">Asha Almond</dd><dt>Observed</dt><dd data-source="activity_observation.observed_at activity_observation.stored_at">11-Nov 09:50 · stored 11-Nov 09:50, evening</dd><dt>Route</dt><dd data-source="activity_observation.route">voice</dd><dt>Counts toward secure</dt><dd data-source="evidence_event.confirmed_by">no: replaced by a later entry</dd></dl></div></details></div><span class="caption">11-Nov · voice</span></li>
+            <li class="tli" data-source="activity_observation.outcome activity_observation.observed_at"><span class="tile" data-kind="note"><i class="ic" data-icon="note"></i></span><div><b>Form, confirmed</b><p>Sorted five things by size; mixed up the middle two.</p><p><a data-el="4" href="#activity" data-source="activity.name">Sorting by size with leaves</a></p>
+              <details class="details"><summary data-el="3"><i class="ic s" data-icon="details"></i>Details</summary><div><dl class="kv"><dt>Observed by</dt><dd data-source="activity_observation.observed_by">an educator</dd><dt>Confirmed by</dt><dd data-source="activity_observation.confirmed_by pii.staff.name">Asha Almond</dd><dt>Observed</dt><dd data-source="activity_observation.observed_at activity_observation.stored_at">16-Nov 10:30 · stored 16-Nov 10:30, evening</dd><dt>Route</dt><dd data-source="activity_observation.route">form</dd><dt>Counts toward secure</dt><dd data-source="evidence_event.confirmed_by">yes</dd></dl></div></details></div><span class="caption">16-Nov · form</span></li>
+            <li class="tli" data-source="activity_observation.outcome activity_observation.supersedes"><span class="tile" data-kind="note"><i class="ic" data-icon="fix-this"></i></span><div><b>Correction: replaces the 11-Nov entry</b><p>Counted on from 30 in tens with bundles, no prompt. The 11-Nov entry named the wrong child.</p><p><a data-el="4" href="#activity" data-source="activity.name">Counting in tens with bundles</a></p>
+              <details class="details"><summary data-el="3"><i class="ic s" data-icon="details"></i>Details</summary><div><dl class="kv"><dt>Observed by</dt><dd data-source="activity_observation.observed_by">an educator</dd><dt>Confirmed by</dt><dd data-source="activity_observation.confirmed_by pii.staff.name">Asha Almond</dd><dt>Observed</dt><dd data-source="activity_observation.observed_at activity_observation.stored_at">18-Nov 09:50 · stored 18-Nov 09:50, evening</dd><dt>Route</dt><dd data-source="activity_observation.route">voice</dd><dt>Counts toward secure</dt><dd data-source="evidence_event.confirmed_by">yes</dd><dt>Replaces</dt><dd data-source="activity_observation.supersedes">the 11-Nov entry</dd><dt>Why</dt><dd data-source="activity_observation.reason">named the wrong child</dd></dl></div></details></div><span class="caption">18-Nov · voice</span></li>
+          </ol>
+          <h2 class="title-small">Skill by skill</h2>
+          <div class="table-box" data-block="DataTable"><table class="table">
+            <thead><tr><th>Skill</th><th class="n">Named days</th><th>Last seen</th><th>Ready next</th></tr></thead>
+            <tbody>
+          <tr><td><a data-el="6" href="#skill" data-source="skill.name">Comparing groups</a></td><td class="n num" data-source="child_skill_state.named_days">4</td><td data-source="child_skill_state.last_seen">9-Nov</td><td data-source="activity_skill.skill_code approval.decision approval.target">Counting in tens</td></tr>
+          <tr><td><a data-el="6" href="#skill" data-source="skill.name">Counting in tens</a></td><td class="n num" data-source="child_skill_state.named_days">3</td><td data-source="child_skill_state.last_seen">18-Nov</td><td data-source="activity_skill.skill_code approval.decision approval.target">—</td></tr>
+          <tr><td><a data-el="6" href="#skill" data-source="skill.name">Sorting by size</a></td><td class="n num" data-source="child_skill_state.named_days">4</td><td data-source="child_skill_state.last_seen">16-Nov</td><td data-source="activity_skill.skill_code approval.decision approval.target">—</td></tr>
+          <tr><td><a data-el="6" href="#skill" data-source="skill.name">Retelling a story</a></td><td class="n num" data-source="child_skill_state.named_days">5</td><td data-source="child_skill_state.last_seen">17-Nov</td><td data-source="activity_skill.skill_code approval.decision approval.target">Predicting what happens next</td></tr>
+          <tr><td><a data-el="6" href="#skill" data-source="skill.name">Rhyming words</a></td><td class="n num" data-source="child_skill_state.named_days">3</td><td data-source="child_skill_state.last_seen">12-Nov</td><td data-source="activity_skill.skill_code approval.decision approval.target">—</td></tr>
+          <tr><td><a data-el="6" href="#skill" data-source="skill.name">Mixing colours</a></td><td class="n num" data-source="child_skill_state.named_days">2</td><td data-source="child_skill_state.last_seen">6-Nov</td><td data-source="activity_skill.skill_code approval.decision approval.target">—</td></tr>
+            </tbody></table></div>
+          <p class="caption">Ready next shows only links a person confirmed.</p>
+          <div class="card">
+            <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: a child not seen on any skill yet</div>
+            <div class="card-b"><div class="cgraph" data-block="ChildGraph"><svg viewBox="-100 0 600 310" role="img" aria-label="Not seen yet on any skill"><circle class="ring" cx="200" cy="150" r="110"></circle><circle class="ctr" cx="200" cy="150" r="30"></circle><text class="ctr-t" x="200" y="155" text-anchor="middle">LL</text><text x="200" y="215" text-anchor="middle">not seen yet</text></svg><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="not-seen"></i><b>Not seen yet on any skill</b><span class="muted">Record a note in a period and the first mark appears here.</span></div></div></div>
+          </div>
+        </main>
+        <aside class="rail" aria-label="Connected to">
+          <section class="rail-box">
+            <h2>Connected to</h2>
+            <ul class="rlist">
+<li><a class="ritem" data-el="8" href="#skill"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><span><span data-source="skill.name">Comparing groups</span><small><span data-source="child_state.words">secure</span> · seen <span class="num" data-source="child_skill_state.n_events">5</span> times</small></span></a></li>
+<li><a class="ritem" data-el="8" href="#skill"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><span><span data-source="skill.name">Counting in tens</span><small><span data-source="child_state.words">emerging</span> · seen <span class="num" data-source="child_skill_state.n_events">4</span> times</small></span></a></li>
+<li><a class="ritem" data-el="8" href="#skill"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><span><span data-source="skill.name">Sorting by size</span><small><span data-source="child_state.words">practising</span> · seen <span class="num" data-source="child_skill_state.n_events">6</span> times</small></span></a></li>
+<li><a class="ritem" data-el="8" href="#skill"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><span><span data-source="skill.name">Retelling a story</span><small><span data-source="child_state.words">secure</span> · seen <span class="num" data-source="child_skill_state.n_events">7</span> times</small></span></a></li>
+<li><a class="ritem" data-el="8" href="#skill"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><span><span data-source="skill.name">Rhyming words</span><small><span data-source="child_state.words">practising</span> · seen <span class="num" data-source="child_skill_state.n_events">3</span> times</small></span></a></li>
+<li><a class="ritem" data-el="8" href="#skill"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><span><span data-source="skill.name">Mixing colours</span><small><span data-source="child_state.words">emerging</span> · seen <span class="num" data-source="child_skill_state.n_events">2</span> times</small></span></a></li>
+              <li><a class="ritem" data-el="9" href="#picture"><span class="tile" data-kind="child"><i class="ic" data-icon="class"></i></span><span><span><span data-source="grade.name">K2</span> <span data-source="school_class.section">Red</span></span><small>Back to the class</small></span></a></li>
+              <li><a class="ritem" data-el="11" href="#reports"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><span>Reports<small>coming later</small></span></a></li>
+            </ul>
+          </section>
+          <section class="rail-box">
+            <h2>Next</h2>
+            <a class="btn btn-main press" data-el="10" href="#record?child=12"><i class="ic" data-icon="record"></i>Add a note about this child</a>
+          </section>
+          <section class="rail-box" data-block="CaptureBar">
+            <h2>Capture here</h2>
+            <div class="capture">
+              <a class="btn btn-capture press" data-el="12" href="#record?mode=voice&amp;child=12"><i class="ic" data-icon="record"></i>Voice note</a>
+              <a class="btn btn-capture press" data-el="13" href="#record?mode=photo&amp;child=12"><i class="ic" data-icon="photo"></i>Photo</a>
+            </div>
+          </section>
+        </aside>
+      </div>
+      <nav class="tabbar" aria-label="Doors">
+        <a class="tab" data-bar="0" href="#today"><i class="ic" data-icon="today"></i>Today</a>
+        <a class="tab" data-bar="1" href="#timetable"><i class="ic" data-icon="timetable"></i>Timetable</a>
+        <a class="tab" data-bar="2" href="#children" aria-current="page"><i class="ic" data-icon="children"></i>Children</a>
+        <a class="tab" data-bar="3" href="#setup"><i class="ic" data-icon="setup"></i>Setup</a>
+      </nav>
+    </div>
+  </section>
+</div>
+</body>
+</html>

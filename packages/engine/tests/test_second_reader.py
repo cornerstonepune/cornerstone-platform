@@ -8,6 +8,7 @@ from pathlib import Path
 import pytest
 
 from engine.adapters import llm
+from engine.core import settings
 from engine.w3_read import marking, second_reader
 from tests.rows import a_read_paper
 
@@ -297,5 +298,5 @@ def test_the_eval_of_the_second_opinion_reads_again_only_what_the_box_reader_gue
 def test_the_second_opinion_is_off_until_its_row_turns_it_on(conn):
     # rule 7: off until its eval is scored on live; a row turns it on, never code
     assert second_reader.switched_on(conn) is False
-    conn.execute("update threshold set value = 1 where key = 'read.second_opinion'")
+    settings.put(conn, "read.second_opinion", 1)
     assert second_reader.switched_on(conn) is True

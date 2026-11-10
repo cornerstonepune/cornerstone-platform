@@ -72,7 +72,10 @@ def test_rewording_keeps_every_number_answer_and_mistake_and_retires_the_old_wor
     assert (new["spec"], new["responses"], new["tags"]) == (old["spec"], old["responses"], old["tags"])
     assert new["corrected_from"] == old["id"] and new["generator"] == "correction"
     assert _status(conn, old["id"]) == "retired"
-    note = conn.execute("select actor, note from item_feedback where item_id = %s", (old["id"],)).fetchone()
+    note = conn.execute(
+        "select by as actor, reason as note from approval where kind = 'item' and target = %s::text",
+        (old["id"],),
+    ).fetchone()
     assert note["actor"] == BY and out["item_key"] in note["note"] and "clearer wording" in note["note"]
     seen = conn.execute(
         "select week from item_exposure where item_id = %s and child_id = %s", (new["id"], child)

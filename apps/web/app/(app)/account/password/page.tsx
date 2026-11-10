@@ -14,7 +14,7 @@ export default async function MyPasswordPage({ searchParams }: Props) {
   const me = await requireStaff();
   const q = await searchParams;
   const [row] = await sql<{ least: number }[]>`
-    select (select value from threshold where key = 'password.min_length')::int as least`;
+    select (select value::numeric from config where key = 'password.min_length')::int as least`;
   const least = row?.least ?? 10;
 
   return (

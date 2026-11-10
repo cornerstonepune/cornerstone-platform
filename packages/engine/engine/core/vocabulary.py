@@ -1,8 +1,8 @@
 """The school's words as rows (ADR 0084): its grades, the four levels and the states of a child's map, from
 supabase/seed/vocabulary.json, each list in its order. A topic's subject, a question's level and a child's state are
 keys into these tables, so a word is a row before anything may use it, and adding one is an insert. A short fixed list
-nobody edits (a kind of evidence, a colour, a link's strength) is a check on its column instead (CP-27,
-docs/data-model.md); a colour's words are the setting `state.colours`.
+nobody edits (a kind of evidence, a colour, a link's strength, a kind of approval) is a check on its column instead
+(CP-27, docs/data-model.md); a colour's words are the setting `state.colours`.
 
 The seed is their source: a load upserts every row, so a word changed in the file is changed on the next
 load. The migration that made the tables inserts the same rows for every school, there now or added later
@@ -49,26 +49,6 @@ def load(conn: db.Conn, tenant: db.Id, seed: Callable[[str, str], Any]) -> None:
                 s["card_group"],
                 s["why"],
             ),
-        )
-    _records(conn, tenant, seed)
-
-
-def _records(conn: db.Conn, tenant: db.Id, seed: Callable[[str, str], Any]) -> None:
-    """The words of what is recorded about the school's work (C4, C5): the approval list's kinds and the stages a kind of
-    question passes through."""
-    for i, a in enumerate(seed("vocabulary.json", "approval_kinds")):
-        conn.execute(
-            "insert into approval_kind (tenant_id, code, ord, words, reaches_parent) values (%s,%s,%s,%s,%s)"
-            " on conflict (tenant_id, code) do update set ord=excluded.ord, words=excluded.words,"
-            " reaches_parent=excluded.reaches_parent, updated_at=now()",
-            (tenant, a["code"], i, a["words"], a["reaches_parent"]),
-        )
-    for i, v in enumerate(seed("vocabulary.json", "validation_stages")):
-        conn.execute(
-            "insert into validation_stage (tenant_id, code, ord, words, every_answer_to_person) values (%s,%s,%s,%s,%s)"
-            " on conflict (tenant_id, code) do update set ord=excluded.ord, words=excluded.words,"
-            " every_answer_to_person=excluded.every_answer_to_person, updated_at=now()",
-            (tenant, v["code"], i, v["words"], v["every_answer_to_person"]),
         )
 
 

@@ -1,7 +1,7 @@
 """Step 8i: the bank brought to its levels' rules — retire what no longer fits, fill what is short.
 
 A level's rule changed (step 8h), so some of its stored questions are now outside it: they are retired
-through the same path a person's flag takes (`item_feedback`, verdict retire — the question stays, and
+through the same path a person's flag takes (an `approval` row of the question, decision retire — the question stays, and
 says why), never deleted. Then every level is topped up to its target: a level made of taxonomy cases
 case by case, each case to its fair share of the target and the rest spread where numbers remain; any
 other level through the generator it always used. Papers already printed point at their own questions
@@ -15,7 +15,7 @@ from collections import Counter
 
 from engine.assess import draw, taxonomy
 from engine.assess import draw_case as K
-from engine.core import db
+from engine.core import db, settings
 from engine.w1_bank import bank, cases, inventory, labels
 from engine.w1_bank.spec import read as spec
 
@@ -70,7 +70,7 @@ def retire_outside(conn, actor=ACTOR):
     out = Counter()
     for r in cases.outside_their_level(conn):
         conn.execute(
-            "insert into item_feedback (tenant_id, item_id, actor, verdict, note) values (%s,%s,%s,'retire',%s)",
+            "insert into approval (tenant_id, kind, target, decision, by, reason) values (%s, 'item', %s::text, 'retire', %s, %s)",
             (r["tenant_id"], r["id"], actor, "no longer what its level holds: " + "; ".join(r["why"])),
         )
         out[(r["skill_set_code"], r["difficulty"])] += 1
@@ -79,10 +79,10 @@ def retire_outside(conn, actor=ACTOR):
 
 def fairness_rule(conn):
     """The row that says when a choice is answered by ticking one place (`bank.choice_answer_max_share`)."""
-    row = conn.execute("select value from config where key = 'bank.choice_answer_max_share'").fetchone()
-    if not row:
+    rule = settings.config(conn, "bank.choice_answer_max_share")
+    if not rule:
         raise ValueError("the config row bank.choice_answer_max_share is missing (engine load)")
-    return row["value"]
+    return rule
 
 
 def _drawn_now(conn, code, difficulty, n):
@@ -135,8 +135,8 @@ def redraw_unfair(conn, actor=ACTOR):
         ).fetchall()
         for r in rows:
             conn.execute(
-                "insert into item_feedback (tenant_id, item_id, actor, verdict, note)"
-                " values (%s,%s,%s,'retire',%s)",
+                "insert into approval (tenant_id, kind, target, decision, by, reason)"
+                " values (%s, 'item', %s::text, 'retire', %s, %s)",
                 (r["tenant_id"], r["id"], actor, f"its right answers sat in one place ({rid}): drawn again"),
             )
         out[(code, difficulty)] += len(rows)
@@ -175,7 +175,8 @@ def reinstate(conn, code, difficulty, n):
     for r in conn.execute(
         "select i.id, i.fmt, i.stem, i.tags, i.spec, i.responses, i.skill_set_code, i.difficulty from item i"
         " where i.status = 'retired' and i.source = 'generated' and i.skill_set_code = %s and i.difficulty = %s"
-        " and not exists (select 1 from item_feedback f where f.item_id = i.id) order by i.created_at, i.item_key",
+        " and not exists (select 1 from approval f where f.tenant_id = i.tenant_id and f.kind = 'item'"
+        "   and f.target = i.id::text) order by i.created_at, i.item_key",
         (code, difficulty),
     ).fetchall():
         if back < n and not held(r):

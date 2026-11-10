@@ -5,7 +5,7 @@
 # Names are design.md's: move_child's 7th parameter `p_at`, the five keyed routes, `fortnight_cycle.CycleError`,
 # `watch.problems` and `graph.nightly_stale_hours`. Database proofs (proofs/db/) run on TEST_DATABASE_URL, rolled back;
 # the LIVE half of item 5 alone reads the live database, read-only, on the box.
-source "$ATHENA_ROOT/.claude/athena/bin/checklib.sh"
+source "$ATHENA_ROOT/bin/checklib.sh"
 cd "$ATHENA_ROOT"
 
 P=specs/CP-24/proofs

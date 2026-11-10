@@ -4,7 +4,10 @@
 # test_timetable_run_command.py, test_k2_day.py, test_approval_list.py; website journeys m1-09-activity,
 # m1-09-calendar, m1-09-materials, m1-14a-timetable-rules.
 #   1. Unchanged: against where this branch left main, none of those nine files (nor the browser suite's config) is
-#      deleted, renamed or has a line removed or rewritten.
+#      deleted, renamed or has a line removed or rewritten, except a passage that named a table CP-27 removed (spec
+#      CP-27, Done when 18: "except where a test named a removed table directly"; group 3 moved
+#      `question_type_approval` into `approval`). Each such passage must name, in what it removes, a table a migration
+#      retired or dropped; any other removed line still fails. Lines added (new tests) are allowed, as before.
 #   2. Pass: the five engine suites are run here, on the local test database (TEST_DATABASE_URL).
 #      The four journeys need a production build of the website (over five minutes, past the two minutes these proofs
 #      may use), so their pass is ci.yml's browser job, which the merge rule needs green; they are not run twice here.
@@ -20,12 +23,23 @@ for p in "${pages[@]}"; do files+=("apps/web/tests/$p.spec.ts"); done
 for f in "${files[@]}"; do [ -f "$f" ] || { echo "named suite missing: $f"; exit 1; }; done
 base=$(git merge-base HEAD origin/main 2>/dev/null || git merge-base HEAD main) \
   || { echo "no main to compare with: this proof needs the repository's history"; exit 1; }
-changed=$(git diff --numstat -M "$base" -- "${files[@]}" | awk '$2 != "0" { print $3 " (" $2 " lines removed or rewritten)" }')
+# the tables CP-27 took out of the schema: moved to `retired` or dropped by a migration
+removed=$(grep -hoE "alter table public\.[a-z_]+ set schema retired|^drop table (if exists )?(public\.)?[a-z_]+" \
+            supabase/migrations/*.sql | sed -E 's/^alter table public\.([a-z_]+) .*/\1/; s/^drop table (if exists )?(public\.)?//' \
+          | sort -u | paste -sd'|' -)
+# each passage (diff hunk) that removes or rewrites lines must name one of them in what it removes
+changed=$(git diff -U0 -M "$base" -- "${files[@]}" | awk -v gone="(^|[^a-z_])(${removed:-^$})([^a-z_]|$)" '
+  function done_hunk() { if (minus > 0 && !named) print file " (" minus " lines removed or rewritten at line " at ")" }
+  /^\+\+\+ / { done_hunk(); minus = 0; file = substr($2, 3); next }
+  /^--- / { next }
+  /^@@/ { done_hunk(); minus = 0; named = 0; split($2, a, ","); at = substr(a[1], 2); next }
+  /^-/ { minus++; if ($0 ~ gone) named = 1 }
+  END { done_hunk() }')
 gone=$(git diff --name-status -M --diff-filter=DR "$base" -- "${files[@]}")
 if [ -n "$changed$gone" ]; then
   echo "existing suites changed since main:"; printf '%s\n' "$changed" "$gone" | sed '/^$/d'; exit 1
 fi
-echo "the nine named suites and the browser config are unchanged since main"
+echo "the nine named suites and the browser config are unchanged since main (but for passages naming a removed table)"
 
 py="${CP7_PYTHON:-$root/packages/engine/.venv/bin/python}"
 [ -x "$py" ] || { echo "the engine is not installed ($py missing; cd packages/engine && uv sync --extra dev)"; exit 1; }

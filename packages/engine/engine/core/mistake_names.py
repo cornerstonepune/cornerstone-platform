@@ -13,7 +13,7 @@ from collections.abc import Callable
 from typing import Literal, overload
 
 from engine.assess import operations as O
-from engine.core import db
+from engine.core import db, settings
 
 Field = Literal["name", "repair_hint", "description"]
 FIELDS: tuple[Field, ...] = ("name", "repair_hint", "description")
@@ -35,8 +35,7 @@ def names(conn: db.Conn, field: Field = "name") -> HintOf:
     alone: dict[str, set[str]] = {}
     for r in rows:
         alone.setdefault(r["code"], set()).add(r["name"])
-    row = conn.execute("select value from config where key = 'skills.by_operation'").fetchone()
-    by_operation: dict[str, str] = row["value"] if row else {}
+    by_operation: dict[str, str] = settings.config(conn, "skills.by_operation", {})
     op_of_skill = {skill: op for op, skill in by_operation.items()}
 
     def name_of(code: str, op: str | None = None, skill: str | None = None) -> str | None:

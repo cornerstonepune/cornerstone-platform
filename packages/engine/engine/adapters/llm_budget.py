@@ -16,8 +16,7 @@ class Refused(Exception):
 
 
 def campaigns(conn) -> dict:
-    row = conn.execute("select value from config where key = 'llm.campaigns'").fetchone()
-    return (row or {}).get("value") or {}
+    return settings.config(conn, "llm.campaigns") or {}
 
 
 def campaign_for(conn, purpose: str) -> dict | None:

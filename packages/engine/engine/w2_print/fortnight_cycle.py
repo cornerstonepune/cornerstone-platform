@@ -10,7 +10,7 @@ from typing import Any
 
 from psycopg import sql
 
-from engine.core import db
+from engine.core import db, settings
 
 STATES = ("planning", "frozen", "aligned", "approved", "list_sent")
 STEPS = ("freeze", "align", "approve", "list_sent")  # the `fortnight.<step>` settings
@@ -121,11 +121,8 @@ def fortnights_touched(
 def step_days(conn: db.Conn, tenant_id: Any) -> dict[str, int]:
     """The school's four `fortnight.<step>` settings as days before the fortnight starts, each well-formed, by step.
     `CycleError` for a missing or malformed one."""
-    rows = conn.execute(
-        "select key, value from config where tenant_id = %s and key = any(%s)",
-        (tenant_id, [f"fortnight.{s}" for s in STEPS]),
-    ).fetchall()
-    found = {r["key"].removeprefix("fortnight."): r["value"] for r in rows}
+    rows = settings.many(conn, [f"fortnight.{s}" for s in STEPS], tenant_id)
+    found = {k.removeprefix("fortnight."): v for k, v in rows.items()}
     days: dict[str, int] = {}
     for step in STEPS:
         if step not in found:

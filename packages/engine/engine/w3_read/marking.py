@@ -11,6 +11,7 @@ from engine.assess import equation
 from engine.assess import learned_rules as L
 from engine.assess import misconceptions as M
 from engine.assess import multiples as MU
+from engine.core import settings
 from engine.w1_bank import learned as learned_mistakes
 from engine.w3_read import naming, profiles
 
@@ -143,8 +144,7 @@ def spot_checked(capture_id, item_id, rate):
 
 
 def spot_rate(conn):
-    row = conn.execute("select value from threshold where key = 'marking.spot_check_rate'").fetchone()
-    return float(row["value"]) if row else 0.15
+    return settings.threshold(conn, "marking.spot_check_rate", 0.15)
 
 
 def mark_read(spec, response, read, gate=None, spot=False, learned=()):

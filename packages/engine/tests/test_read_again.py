@@ -8,7 +8,7 @@ import os
 
 import pytest
 
-from engine.core import db
+from engine.core import db, settings
 from engine.w3_read import legacy, reread
 from tests.rows import a_read_paper
 
@@ -88,8 +88,8 @@ def test_answers_waiting_only_for_trust_leave_the_queue_the_moment_their_kind_ea
 
     from engine.w3_read import again
 
-    conn.execute("update threshold set value = 3 where key = 'marking.agreement_window'")
-    conn.execute("update threshold set value = 0 where key = 'marking.spot_check_rate'")
+    settings.put(conn, "marking.agreement_window", 3)
+    settings.put(conn, "marking.spot_check_rate", 0)
     waiting = a_read_paper(
         conn,
         [{"status": "needs_teacher", "read": "35"}, {"status": "needs_teacher", "read": "17"}],

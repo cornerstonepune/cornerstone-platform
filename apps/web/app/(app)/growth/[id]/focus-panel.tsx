@@ -33,7 +33,7 @@ const TITLE = "Home assessment";
 
 /** How long a question a child was given is held back from them: the `exposure.days` row the engine draws by. */
 async function windowDays(): Promise<number> {
-  const [r] = await sql<{ days: number }[]>`select coalesce((select value from threshold where key = 'exposure.days'), 21)::int as days`;
+  const [r] = await sql<{ days: number }[]>`select coalesce((select value::numeric from config where key = 'exposure.days'), 21)::int as days`;
   return r.days;
 }
 

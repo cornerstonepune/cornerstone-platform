@@ -16,7 +16,7 @@ from pathlib import Path
 
 import typer
 
-from engine.core import db
+from engine.core import db, history
 from engine.w1_bank import k2_gaps as gaps
 
 SEED = db.REPO_ROOT / "supabase" / "seed" / "k2_sheet.json"
@@ -218,8 +218,9 @@ def snapshot(conn, tenant) -> tuple[list[dict], set[tuple[str, str]]]:
     edited = {
         (r["code"], r["field"])
         for r in conn.execute(
-            "select code, field from curriculum_edit where tenant_id = %s and record = 'activity'"
-            " and changed_by not like %s and changed_by <> %s",  # neither the upload's nor the seed's words
+            "select c.row_id as code, f.field from change_log c, jsonb_object_keys(c.after) f (field)"
+            " where c.tenant_id = %s and c.table_name = 'activity'"
+            " and c.origin not like %s and c.origin <> %s",  # neither the upload's nor the seed's words
             (tenant, cfg["upload_label"] + "%", cfg["seed_label"]),
         ).fetchall()
     }
@@ -239,7 +240,7 @@ def mark_school(conn, tenant, code: str, parts: list[str]) -> None:
 
 def apply(conn, tenant, p: Plan, by: str) -> dict[str, int]:
     """Writes the plan in the caller's transaction: edits are kept by the database's own trigger under `by`."""
-    conn.execute("select set_config('app.changed_by', %s, true)", (by,))
+    history.by(conn, by)
     cfg = config()
     top = db.one(
         conn,
@@ -294,8 +295,8 @@ def apply(conn, tenant, p: Plan, by: str) -> dict[str, int]:
         ).fetchone():
             conn.execute(
                 "update learning_objective set title = %s, subject = %s, unit = %s where tenant_id = %s and code = %s"
-                " and title is distinct from %s and not exists (select 1 from curriculum_edit e where e.tenant_id = %s"
-                " and e.record = 'learning_objective' and e.code = %s and e.changed_by not like %s)",
+                " and title is distinct from %s and not exists (select 1 from change_log e where e.tenant_id = %s"
+                " and e.table_name = 'learning_objective' and e.row_id = %s and e.origin not like %s)",
                 (
                     title,
                     r.pillar or r.values["strand"],

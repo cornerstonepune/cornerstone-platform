@@ -13,6 +13,7 @@ import path from "node:path";
 import postgres from "postgres";
 import { GROUPS } from "../lib/menu";
 import { slugOf } from "../lib/guide-path";
+import { aSetting } from "./rows";
 
 test.use({ viewport: { width: 1440, height: 900 } });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -73,21 +74,22 @@ test("every menu item's guide page opens, in the menu's order, with its labelled
 });
 
 test("a number in the guide is the row in force: change the row and the guide changes", async ({ page }) => {
-  const [row] = await sql<{ value: number }[]>`select value::float as value from threshold where key = 'calibration.too_easy_share'`;
+  const [row] = await sql<{ value: number }[]>`select value::float as value from config where key = 'calibration.too_easy_share'`;
   const pc = (v: number) => `${Math.round(v * 100)}%`;
   const section = page.locator("#levels-to-review");
+  let putBack = async () => {};
   try {
     await page.goto("/guide/worked-out");
     await expect(section).toContainText(`When ${pc(row.value)} or more`);
-    await sql`update threshold set value = 0.75 where key = 'calibration.too_easy_share'`;
+    putBack = await aSetting(sql, "calibration.too_easy_share", 0.75);
     await page.reload();
     await expect(section).toContainText("When 75% or more");
   } finally {
-    await sql`update threshold set value = ${row.value} where key = 'calibration.too_easy_share'`;
+    await putBack();
   }
   await page.reload();
   await expect(section).toContainText(`When ${pc(row.value)} or more`);
-  const [min] = await sql<{ value: number }[]>`select value::int as value from threshold where key = 'calibration.min_children'`;
+  const [min] = await sql<{ value: number }[]>`select value::int as value from config where key = 'calibration.min_children'`;
   await expect(section).toContainText(`fewer than ${min.value} children assessed`);
 });
 

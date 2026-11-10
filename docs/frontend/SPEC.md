@@ -97,11 +97,20 @@ Nimish: Source Sans 3 has no Devanagari and nothing in Devanagari is rendered to
 is added. The fonts and every colour are in `docs/frontend/tokens.json`, which the build copies to
 `apps/web/design-system/tokens.json`.
 
-**Space and shape**: 4 / 8 / 16 / 24 / 32 / 48 / 64 px; 44 px tap. Three shapes, each with a meaning: a card (14 px corners:
+**Space and shape**: 4 / 6 / 12 / 20 / 32 / 48 / 64 / 96 px, the more generous scale of wireframe revision 1 (Nimish, 9 Nov
+2026, issue 546; `docs/frontend/spacing.json`, which the site adopts into `tokens.json` when it is built); 44 px tap. Three shapes, each with a meaning: a card (14 px corners:
 cards, period rows, timetable cells, a child's square, the rail box), a control (10 px: buttons, inputs, tabs, icon tiles),
 a pill (a state chip, the count badge, a name chip). One elevation, `shadow-card`, a faint ring and a soft shadow under a
 card, a period row and the chosen tab; it replaces the card's border. No other shadow, no gradient; hairlines separate rows
 inside a card, a surface box groups the rail.
+
+**Revision 1** (Nimish, 9 Nov 2026, issue 546, applied to every wireframe, `DESIGN.md` §7 and §10): a page has no empty-looking
+region (a second block of real data); what moves through stages is also a **KanbanBoard** beside its table (assessments,
+the educator's what-waits-on-me, notes); wherever children are listed they can be **grouped** (by state, by skill and level,
+by class, with a count; computed, not stored); the skill and class pictures show **clusters** of children who share a place
+on a topic (computed by code from `child_skill_state` and `evidence_event`); and tapping a child anywhere opens
+**ChildPeek**, that child's recent history newest first with who and when, whose "Open the child" is the one way from a
+list to the child page. The school has no attendance register: the children list shows **absences noted**.
 
 **The logo** (the school's logo pack, `docs/brand/cornerstone-logo/`, sent by Nimish on 9 Nov 2026: "that needs to be
 incorporated everywhere"): "Cornerstone" with "गुरुकुल", the terracotta courtyard mark with its basalt dot. Four files, used
@@ -176,12 +185,12 @@ built.
 | AttentionStrip | three tiles filled with their state's tint: do now (red) · this week (amber) · done (green); number, icon+word, one sentence; each a link; no border, no shadow |
 | PeriodRow | time · the subject's icon tile and colour edge · name · subject and one fact · state chip; the row is the link, a panel with shadow-card; the current period carries the action outline; fixed parts of the day are a quiet sand row |
 | StatusChip | pill: icon + word + colour from the STATES rows, on its tint; on a tinted cell (a subject cell, a child's square) the chip sits on the panel colour with a 1 px ring in its state colour, because a state's fill and a subject's fill can be near each other |
-| DataTable | ≤10 rows then grouped/paged; needs-you first; numbers right, status centred; FilterBar built in at 6+ rows; on a phone it scrolls sideways in its own box; inside a card with shadow-card |
+| DataTable | ≤10 rows then grouped/paged; needs-you first; numbers right, status centred; FilterBar built in at 6+ rows; on a phone it scrolls sideways in its own box; inside a card with shadow-card; where children are listed it can be grouped (a group heading with its count, the same rows under it) |
 | FilterBar | dropdowns + compact search over any table of 6+ rows; filters in the address |
-| ClassGrid | a tinted square per child by Sr. No., radius-card: Sr. No., the child's initials disc, the name, and the state's icon + word on the state's tint; not seen = an untinted square with a dashed ring; tap = act; 8 columns at 1440, 3 on a phone |
+| ClassGrid | a tinted square per child by Sr. No., radius-card: Sr. No., the child's initials disc, the name, and the state's icon + word on the state's tint; not seen = an untinted square with a dashed ring; tap = open ChildPeek (on the confirm screen: change the mark); 8 columns at 1440, 3 on a phone |
 | Stepper | the steps of a thing; done green, waiting amber, late red, rest quiet |
 | Details | a fold that opens on click, eye icon; never hides the main action |
-| Timeline | what was seen, newest last; words beside the mark; a details fold each |
+| Timeline | what was seen, newest last (ChildPeek keeps newest first); words beside the mark; a details fold each |
 | ChildGraph | the child's initials at the centre in the child colour; a coloured ring around it marks each domain (Number, Language, Arts); each skill is a node on the outer ring, filled with its state's tint and edged in its state colour, sized by times seen, labelled with the skill name and the state word; every node and its label form one link with a 44 px target; a DataTable of the same skills sits beside it; on a phone the graph is replaced by that list |
 | StackBar | one bar split by state with a key of counts |
 | LevelBars | four bars, levels 0–3, how many children at each |
@@ -198,6 +207,8 @@ built.
 | Cards | two to three panels side by side, each with a header tinted in its kind's colour (kind tile + title) and a few lines and one link |
 | KindTile | a 32 px tile, radius-control, filled with a kind's tint and holding that kind's icon in its colour (period slate, child teal, activity indigo, objective violet, skill orchid, assessment sky, note stone); every rail link, card header and timeline entry starts with one |
 | BrandMark | the school's logo (Cornerstone Gurukul) as one of the four official files, drawn as given: `lockup-colour` on a light ground, `lockup-for-dark-backgrounds` on a dark ground, `mark` alone where the space is small on a light ground, `mark-on-white-tile` where it is small on a dark ground and for the tab and app icon; accessible name 'Cornerstone Gurukul'; never recoloured, stretched, rotated, filtered or shadowed, never inside a card; clear space on every side at least a quarter of the mark's height |
+| KanbanBoard | what moves through stages, one lane per stage, each lane headed by its state's icon, word and count; each card a link (kind tile, one line, one fact, a state chip); lanes scroll sideways in their own box on a phone; offered next to the table of the same things by a Table | Board toggle (segmented tabs, the address carries the tab); a lane with no card says so in words |
+| ChildPeek | one child's recent history in a panel, opened by tapping a child anywhere a child is listed: initials disc, Sr. No., name, class; the child's state counts as chips; then notes, observations, papers, state changes and corrections newest first, each with a kind tile, one line, who and when; Close and 'Open the child' (the one way to the child's own page); the top of the rail on a wide screen, a sheet over the bottom on a phone; Escape closes it and focus returns to the child that opened it |
 
 ## 6. Every screen
 
@@ -214,14 +225,16 @@ Eyebrow: Wednesday 18-Nov · K2 Red · Fortnight 9, week A
 Purpose: Your periods in order. Tap one for what to teach, how, and what to lay out. After it, record a note.
 Blocks, in order:
 - **AttentionStrip**: do now = notes unconfirmed past 48 h; this week = notes waiting to confirm that are younger than 48 h (the two never overlap); done = periods finished of planned, children seen this fortnight
+- **KanbanBoard**: what waits on me, by Table | Board toggle: Do now (notes past 48 h) · This week (notes waiting, younger than 48 h) · Done (periods taught and confirmed today); the List is the periods below
 - **PeriodRow**: one per session of the day, from `session` for my class; fixed parts of the day included, greyed
 - **Cards**: Notes to confirm (count, oldest) · Your class (children not seen this fortnight on the skill being taught)
+- **ChildPeek**: the child chosen from 'Your class'
 Rail (Connected to): This fortnight · Materials
 Main action: the current period · Next step: Timetable
-Data: session × plan_entry × activity for my class on this school_day; pii.educator_note status counts; child_observed_state gaps
+Data: session × plan_entry × activity for my class on this school_day; pii.educator_note status counts and ages (note status words are a config list); child_skill_state not-seen per child on the skill being taught (an open enrolment with no state row)
 Empty: No sessions today (a holiday or no timetable live): say which, link to the fortnight · Phone: same order; the strip stacks; the record button is one tap from the period
 Folds in: /today (What needs doing), /educator (K2 Today)
-Every control on the screen (8), and what the test does with each:
+Every control on the screen (16), and what the test does with each:
 - **link** do now tile → Confirm what the reader heard (`/notes/[id]`) (the oldest unconfirmed note; absent (grey 0) when none)
 - **link** this week tile → Notes (`/notes`)
 - **link** done today tile → Class picture (`/children/[class]`)
@@ -230,10 +243,20 @@ Every control on the screen (8), and what the test does with each:
 - **link** Class picture → Class picture (`/children/[class]`)
 - **link** rail: This fortnight → Timetable (`/timetable`)
 - **link** rail: Materials → Materials, this fortnight (`/timetable/materials`)
+- **tab** Board (what waits on me as lanes; the address carries the tab)
+- **tab** List (what waits on me as the tiles and the period rows)
+- **row** each note card on the board → Confirm what the reader heard (`/notes/[id]`)
+- **row** each period card on the board → the session's name (`/period/[id]`)
+- **peek** each Sr. No. in Your class: opens ChildPeek for that child
+- **button** peek: Close: closes ChildPeek; focus returns to the child that opened it
+- **link** peek: Open the child → Where this child is (`/children/[class]/[roll]`) (the one way from a list to the child's own page)
+- **child_name** the name in the peek (the child's name beside the Sr. No., read from pii by child_id)
 Done when (on top of the ten generic checks):
 - an educator sees only sessions of classes their grant names (the access fixture's second educator sees a different list)
 - each tile's number equals the count of rows the tile opens
 - the lit row is the session whose period contains the current time; before 08:30 none is lit
+- each board lane's card count equals the tile of the same name; a lane with no card says so in words
+- tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page
 
 
 #### Today, the school `/today`
@@ -280,13 +303,13 @@ Blocks, in order:
 - **Details**: The steps, short (open) · Lay out (materials with quantities) · Watch for (the thinking)
 Rail (Connected to): The activity · its learning objectives · Materials · Its place in the fortnight · The class
 Main action: Record a note · Next step: the next period
-Data: session → plan_entry → activity (+activity_material, activity_objective); activity_observation of this activity for this class, last session
+Data: session → plan_entry → activity (+activity_material, activity_objective); activity_observation of this activity for this class, last session (the five outcome words are a config list)
 Empty: A fixed part of the day: 'Nothing to record here' · Phone: actions first, then the fold; the record button fills the width
-Every control on the screen (12), and what the test does with each:
+Every control on the screen (15), and what the test does with each:
 - **link** Record a note → Record a note (`/record`) (opens Record with this period's session preselected)
 - **link** Type the marks instead → Record a note (`/record`) (opens Record on its typing path, session preselected)
 - **link** Open the activity → the activity's name (`/setup/activities/[code]`)
-- **link** each Sr. No. named under the last-time bar → Where this child is (`/children/[class]/[roll]`)
+- **peek** each Sr. No. named under the last-time bar: opens ChildPeek for that child
 - **fold** The steps, short (open by default)
 - **fold** Lay out
 - **fold** Watch for
@@ -295,10 +318,14 @@ Every control on the screen (12), and what the test does with each:
 - **link** rail: Materials → Materials, this fortnight (`/timetable/materials`)
 - **link** rail: Its place in the fortnight → Timetable (`/timetable`)
 - **link** rail: The class → Class picture (`/children/[class]`)
+- **button** peek: Close: closes ChildPeek; focus returns to the child that opened it
+- **link** peek: Open the child → Where this child is (`/children/[class]/[roll]`) (the one way from a list to the child's own page)
+- **child_name** the name in the peek (the child's name beside the Sr. No., read from pii by child_id)
 Done when (on top of the ten generic checks):
 - a period with no activity shows no capture controls and the words 'Nothing to record here'
 - the last-time bar's segments sum to the number of children named in the last session's observations
 - the steps fold is open on load and the others closed
+- tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page
 
 
 #### Record a note `/record`
@@ -339,9 +366,9 @@ Blocks, in order:
 - **Form**: 'the rest did as expected' switch · Confirm this note (main)
 Rail (Connected to): The period · The activity · The class
 Main action: Confirm this note · Next step: the next note waiting
-Data: pii.educator_note + draft claims from the engine; activity_observation written at confirm, one row per child, confirmation_id
+Data: pii.educator_note + draft claims from the engine (pii.note_claim: flag, outcome, entry_mode, child_id, set when the note is read); activity_observation written at confirm, one row per child, confirmation_id
 Empty: No note waiting: link to Record · Phone: the grid first, then her words; Confirm fixed at the bottom
-Every control on the screen (9), and what the test does with each:
+Every control on the screen (12), and what the test does with each:
 - **button** each claim line's × (remove): the claim is marked removed; its children's squares return to unmarked; recorded as her decision
 - **cell** each square: opens the mark picker: above / as expected / below / not willing / absent / clear; the square's corner mark changes; the claim it came from is marked changed
 - **switch** the rest did as expected: every unmarked present child gets as-expected with entry mode group; off removes them
@@ -351,11 +378,16 @@ Every control on the screen (9), and what the test does with each:
 - **link** rail: The activity → the activity's name (`/setup/activities/[code]`)
 - **link** rail: The class → Class picture (`/children/[class]`)
 - **child_name** each square and each claim line (the name beside the Sr. No., so she can check the right child is marked)
+- **peek** each child's name on a claim line: opens ChildPeek for that child
+- **button** peek: Close: closes ChildPeek; focus returns to the child that opened it
+- **link** peek: Open the child → Where this child is (`/children/[class]/[roll]`) (the one way from a list to the child's own page)
 Done when (on top of the ten generic checks):
 - Confirm writes one activity_observation per marked child, none for an unmarked child, all with one confirmation_id
 - a changed or removed claim is kept as changed/removed in note_claim (reader accuracy)
 - no control confirms more than one note
 - a child's square is never red, whatever the mark
+- a child's name on a claim line opens ChildPeek; a square still changes the mark and never opens the peek
+- tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page
 
 
 ### Timetable
@@ -366,11 +398,11 @@ Eyebrow: K2 Red
 Purpose: The fortnight is the unit. Week A and week B, each period a block; a moved period is marked, a clash is red until the coordinator accepts it.
 Blocks, in order:
 - **FilterBar**: class (coordinator only) · Day / Week / Fortnight view · this / next fortnight
-- **FortnightGrid**: from timetable_slot in force + session overrides; subject colours; moved/clash outlines; a cell is the period's link
+- **FortnightGrid**: from the timetable_rule rows in force + the dated session rows; subject colours; moved/clash outlines; a cell is the period's link
 - **Cards**: Fortnight 9: state · Materials for this fortnight
 Rail (Connected to): Fortnight 9 · Materials · Today's period · Rules (coordinator)
 Main action: Open today · Next step: Fortnight
-Data: timetable_slot valid today; session for the fortnight's days; period times; school_day kinds
+Data: timetable_rule rows (kind slot) valid today; session for the fortnight's days; period times; school_day kinds
 Empty: No timetable live for this class: coordinator sees 'Make a draft' · Phone: Day view by default; week scrolls sideways in its box
 Folds in: /educator (day), /educator/week
 Every control on the screen (11), and what the test does with each:
@@ -402,7 +434,7 @@ Blocks, in order:
 - **Form**: coordinator: Approve · Go live (main, one at a time)
 Rail (Connected to): The grid · every activity in the plan · Materials · Draft (coordinator)
 Main action: Approve / Go live (coordinator) · Open the grid (educator) · Next step: Timetable
-Data: fortnight + fortnight_cycle state (CP-6); plan_entry; session diffs at go-live (CP-22); approval ledger
+Data: fortnight + fortnight.state (CP-6; each step's yes is an approval row); plan_entry; session diffs at go-live (CP-22); approval ledger
 Empty: No plan lines yet: link to the planner upload · Phone: stepper wraps to two rows
 Every control on the screen (8), and what the test does with each:
 - **link** each plan line → the activity's name (`/setup/activities/[code]`)
@@ -481,15 +513,15 @@ Purpose: Period times, blocked days, fixed slots and subject limits, kept as row
 Blocks, in order:
 - **FilterBar**: grade · kind
 - **DataTable**: rule · grade · value · changed by · when; each row its own Edit
-- **Details**: history of edits (timetable_rule_edit)
+- **Details**: history of edits (change_log)
 Rail (Connected to): Draft from the rules · Timetable
 Main action: Add a rule · Next step: Draft
-Data: period, timetable_block, timetable_limit, timetable_rule_edit
+Data: period, timetable_rule (kind block or limit), change_log for each edit
 Empty: No rules yet: 'Add the period times first' · Phone: the table scrolls sideways in its own box
 Every control on the screen (7), and what the test does with each:
 - **filter** grade
 - **filter** kind
-- **button** Edit (a row): the row's value becomes a field; Save writes a timetable_rule_edit row with who and when; Cancel restores
+- **button** Edit (a row): the row's value becomes a field; Save writes a change_log row with who and when; Cancel restores
 - **button** Add a rule: a new row form; Save adds the rule and its edit row
 - **fold** History of edits
 - **link** rail: Draft from the rules → Draft from the rules (`/timetable/draft`)
@@ -535,16 +567,18 @@ Eyebrow: K2 Red · this fortnight
 Purpose: Every note of your classes: waiting, confirmed, left unconfirmed. Open one to confirm it or to correct a confirmed one.
 Blocks, in order:
 - **FilterBar**: class · state · week
+- **KanbanBoard**: the notes as lanes by Table | Board toggle: To confirm (late ones first, red; a note still being read or left unconfirmed sits here too) · Confirmed; each card a note
 - **DataTable**: when · activity · by voice/form · state chip · children named · its button (Confirm / Open / Correct)
+- **ChildPeek**: the child chosen from the children-named column
 Rail (Connected to): Record a note · Class picture · Today · Capture here: voice
 Main action: Confirm the oldest · Next step: Class picture
-Data: pii.educator_note joined to activity_observation counts; note_status rows
+Data: pii.educator_note joined to activity_observation counts; pii.educator_note.status (the words are a config list); pii.educator_note.route (by voice / form); pii.note_claim.child_id for the children named
 Empty: No notes yet this fortnight: link to Record · Phone: the table scrolls sideways in its own box
-Every control on the screen (13), and what the test does with each:
+Every control on the screen (19), and what the test does with each:
 - **filter** class [coordinator only; absent and refused for others] (an educator with one class has no class filter)
 - **filter** state
 - **filter** week
-- **child_name** the children named column (each named child's name beside the Sr. No.)
+- **peek** each child named in a note: opens ChildPeek for that child; a name is read from pii by child_id (pii.note_claim.child_id), the chip shows the Sr. No. and the name
 - **button** × on a filter chip: removes that filter from the address
 - **button** Clear: removes every filter
 - **row** Confirm (a waiting note) → Confirm what the reader heard (`/notes/[id]`)
@@ -554,10 +588,18 @@ Every control on the screen (13), and what the test does with each:
 - **link** rail: Class picture → Class picture (`/children/[class]`)
 - **link** rail: Today → Today (`/today`)
 - **link** capture: Voice note → Record a note (`/record`)
+- **tab** Board (the notes as lanes; the address carries the tab)
+- **tab** Table (the notes as rows)
+- **row** each card on the board → Confirm what the reader heard (`/notes/[id]`) (a waiting note's card confirms it; a confirmed note's card opens it)
+- **button** peek: Close: closes ChildPeek; focus returns to the child that opened it
+- **link** peek: Open the child → Where this child is (`/children/[class]/[roll]`) (the one way from a list to the child's own page)
+- **child_name** the name in the peek (the child's name beside the Sr. No., read from pii by child_id)
 Done when (on top of the ten generic checks):
 - a correction writes a superseding row with a reason and never updates the old one
 - the coordinator sees every class, an educator their own (access fixture)
 - a note left unconfirmed past 48 hours carries the red 'late' chip and sorts first
+- each board lane's card count equals the rows of the table in that state
+- tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page
 
 
 #### Children `/children`
@@ -565,31 +607,37 @@ Who: both · Phase: Core · Backend: CP-13 · Old page today: part (/k2) · Slic
 Eyebrow: Your classes
 Purpose: Your children in one table: how each is doing, last seen, notes waiting. Search, filter, open a child.
 Blocks, in order:
-- **FilterBar**: search by name or Sr. No. · class (coordinator) · needs attention
-- **DataTable**: Sr. No. · name · class (only when several) · how they are doing (stacked bar of secure / practising / not seen skills) · last seen · notes waiting · attendance, last 7 days (placeholder)
+- **FilterBar**: search by name or Sr. No. · class (coordinator) · needs attention · group by (none · class · how they are doing · needs attention)
+- **DataTable**: Sr. No. · name (opens ChildPeek) · class (only when several) · how they are doing (stacked bar of secure / practising / not seen skills) · last seen · notes waiting · absences noted, last 7 school days; with a group heading and count when grouped
+- **ChildPeek**: the child chosen in the table: recent history, newest first
 Rail (Connected to): Assessments · Notes
 Main action: Class picture grid · Next step: a child
-Data: school_class, enrolment, pii.child, child_skill_state counts per child, pii.educator_note waiting per child, attendance_mark (last 7 school days)
+Data: school_class, enrolment, pii.child, child_skill_state counts per child, pii.educator_note waiting per child (pii.note_claim.child_id), activity_observation with outcome 'absent' over session (absences noted, last 7 school days that had a confirmed lesson for the class); the peek: see ChildPeek
 Empty: No class linked to you: 'The coordinator links you to the classes you teach'; no match: 'No child matches' with Clear · Phone: the table scrolls sideways in its own box
-Every control on the screen (11), and what the test does with each:
+Every control on the screen (14), and what the test does with each:
 - **filter** search by name or Sr. No.
 - **filter** class [coordinator only; absent and refused for others] (an educator with one class has no class filter and no class column)
 - **filter** needs attention (all / needs attention)
 - **button** × on a filter chip: removes that filter from the address
 - **button** Clear: removes every filter and the search
-- **row** each child → Where this child is (`/children/[class]/[roll]`)
-- **child_name** the name column (the name beside the Sr. No.)
+- **peek** each child: opens ChildPeek for that child (the Sr. No. and name are the button)
+- **child_name** the name column and the peek's name (the name beside the Sr. No.)
 - **link** Class picture grid → Class picture (`/children/[class]`) (the toggle between this table and the class picture grid; the picture's own toggle returns here)
 - **link** rail: Assessments → Assessments (`/children/assessments`)
 - **link** rail: Notes → Notes (`/notes`)
 - **link** page: Later → → Children (`/children`) (the next ten rows; the address carries the page)
+- **filter** group by (none / class (coordinator) / how they are doing / needs attention; the address carries it; a heading and a count per group)
+- **button** peek: Close: closes ChildPeek; focus returns to the child that opened it
+- **link** peek: Open the child → Where this child is (`/children/[class]/[roll]`) (the one way from a list to the child's own page)
 Done when (on top of the ten generic checks):
 - for a signed-in educator the table lists their own children; a coordinator sees every class, with a class filter
 - the class column and the class filter appear only when the person has several classes
 - the how-they-are-doing bar's segments are secure, practising and not seen, and sum to the child's skill count; never a red segment
 - searching a Sr. No. or part of a name narrows the rows and writes itself into the address; a reload keeps it
-- the attendance column is a dashed placeholder naming the gap
-- a row opens the child; the toggle opens the class picture grid and the picture's toggle returns here
+- the absences-noted column shows the last 7 school days that had a confirmed lesson for the class: a noted absence is a grey 'absent' cell with its word, a day with no confirmed lesson is blank and never reads 'present'; the column head says 'absences noted'
+- tapping a row opens ChildPeek for that child; the peek's 'Open the child' lands on the child; the toggle opens the class picture grid and the picture's toggle returns here
+- grouping by class, by how they are doing or by needs attention puts a heading and a count over each group, the counts sum to the rows, and a child is in exactly one group; groups are computed, never stored
+- tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page
 
 
 #### Class picture `/children/[class]`
@@ -597,19 +645,21 @@ Who: both · Phase: Core · Backend: CP-13 · CP-9 · Old page today: yes (/k2/[
 Eyebrow: K2 Red · 24 children
 Purpose: Each square a child by Sr. No., shown on one skill at a time. Tap a child. Change the skill from the rail.
 Blocks, in order:
-- **FilterBar**: skill (the skills anyone was seen on) · domain
-- **ClassGrid**: state on the chosen skill; not seen = dashed
+- **FilterBar**: skill (the skills anyone was seen on) · domain · group by (state on this skill · class)
+- **ClassGrid**: state on the chosen skill; not seen = dashed; tap = open ChildPeek; with a group heading and count when grouped
 - **StackBar**: the class on this skill with counts
 - **Spark**: secure over six fortnights
+- **Cards**: Clusters: children who share a place on this topic (for example secure here, ready for the next skill), each with its count and its children as chips that open ChildPeek
+- **ChildPeek**: the child chosen in the grid
 Rail (Connected to): Show: each skill seen · a child · Record a note · Assessments (grades 1–4: Class results folds here) · Capture here: voice, photo
 Main action: a child · Next step: the skill
-Data: child_observed_state (K2) or child_skill_state (grades 1–4) for the class by skill; graph_run date
+Data: child_skill_state (kind 'observed' for K2, 'written' for grades 1–4) for the class by skill; flow_run (the nightly graph run's row) finished_at for the date; evidence_event for clusters
 Empty: No child seen yet: the grid of dashed squares with 'not seen yet, nothing more' · Phone: 3 columns of squares (a name and a state word do not fit a 44 px square; SPEC §2 rule 10)
 Folds in: /growth (Class results), /growth/class/[section]
-Every control on the screen (11), and what the test does with each:
+Every control on the screen (14), and what the test does with each:
 - **filter** skill
 - **filter** domain
-- **cell** each square → Where this child is (`/children/[class]/[roll]`)
+- **peek** each square (and each child chip in a cluster): opens ChildPeek for that child
 - **child_name** each square (the name beside the Sr. No.)
 - **link** rail: Show: each skill seen → Class picture (`/children/[class]`) (same screen, the skill filter changes)
 - **link** rail: a child → Where this child is (`/children/[class]/[roll]`)
@@ -618,11 +668,17 @@ Every control on the screen (11), and what the test does with each:
 - **link** capture: Voice note → Record a note (`/record`)
 - **link** capture: Photo → Record a note (`/record`)
 - **link** Show as a table → Children (`/children`) (the toggle between the class picture grid and the table of children)
+- **filter** group by (state on this skill / class; a heading and a count per group)
+- **button** peek: Close: closes ChildPeek; focus returns to the child that opened it
+- **link** peek: Open the child → Where this child is (`/children/[class]/[roll]`) (the one way from a list to the child's own page)
 Done when (on top of the ten generic checks):
-- an empty square's title reads 'not seen yet', never 'not secure'
 - each square shows the Sr. No. and the child's name read from pii by child_id, and no photo (DOM scan)
 - the stack bar's counts equal the squares by state
 - the squares are in Sr. No. order, 8 per row at 1440, 3 at 400
+- an empty square's title reads 'not seen yet', never 'not secure'
+- grouping by state puts a heading and a count over each group; the counts sum to the squares and equal the stack bar; a child is in exactly one group
+- a cluster's count equals the chips in it; clusters are computed by code from child_skill_state and evidence_event, never by a model, and a child may be in several clusters
+- tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page
 
 
 #### Where this child is `/children/[class]/[roll]`
@@ -636,7 +692,7 @@ Blocks, in order:
 - **DataTable**: skill · state · named days · last seen · ready next (CP-14, confirmed links only)
 Rail (Connected to): each skill · Back to the class · Add a note about this child · Reports (Next) · Capture here: voice, photo
 Main action: Add a note · Next step: the class
-Data: child_observed_state + child_skill_state; activity_observation (+note words); evidence_event / item_result for papers; skill_link_confirmed
+Data: child_skill_state (kind observed for K2, written for grades 1–4, with named_days); activity_observation (+note words); evidence_event / item_result for papers; skill_link_confirmed (a view over activity_skill and approval)
 Empty: Not seen yet on any skill: the graph is the child alone with 'not seen yet' · Phone: the graph is replaced by the list of skills (name, times seen, state chip), then the trend, then the timeline
 Folds in: /growth/[id], /k2/[class]/[roll]
 Every control on the screen (14), and what the test does with each:
@@ -673,12 +729,13 @@ Blocks, in order:
 - **Cards**: Make an assessment (for a class · for each child · for one child · a ready-made worksheet) · Read an assessment (DropZone)
 - **FilterBar**: class · topic · subject · kind · week · stage
 - **DataTable**: assessment (built name) · class · papers back · waits for (chip) · next
+- **KanbanBoard**: the assessments as lanes by Table | Board toggle, the seven steps grouped by who has the paper: To approve and print (Created, Approved) · With the children (Printed) · To read and check (Uploaded, Read, Checked) · Results in; each card an assessment, its next action beside it
 Rail (Connected to): Answers to check · Pack to approve · A child with results in · The skills tested · Question bank · Capture here: photo
 Main action: Check answers · Next step: an assessment
 Data: existing queries-papers (assessmentList, paperList), STEP_WORDS, STATUS_WORDS
 Empty: No assessments yet: Make one · Phone: the table scrolls sideways in its own box; the drop zone becomes 'take photos'
 Folds in: /papers, /papers/make, /capture, /capture/[id]
-Every control on the screen (19), and what the test does with each:
+Every control on the screen (22), and what the test does with each:
 - **link** do now tile → Check the answers (`/children/assessments/[key]/[roll]`) (the first paper with answers to judge)
 - **link** this week tile → the built name (`/children/assessments/[key]`) (the first pack to approve)
 - **link** results in tile → the built name (`/children/assessments/[key]`)
@@ -698,11 +755,15 @@ Every control on the screen (19), and what the test does with each:
 - **link** rail: The skills tested → the skill's name (`/setup/skills/[code]`)
 - **link** rail: Question bank → Question bank (`/setup/question-bank`)
 - **upload** capture: Photo: same as Read
+- **tab** Board (the assessments as lanes; the address carries the tab)
+- **tab** Table (the assessments as rows)
+- **row** each card on the board → the built name (`/children/assessments/[key]`)
 Done when (on top of the ten generic checks):
 - the four old pages answer 308 to this one or to the Assessment node
 - every row's name is built topic · skill · level · kind · class · day (regex)
 - no approve-all control anywhere
 - each tile's number equals the rows behind it
+- each board lane's card count equals the table rows at the lane's steps
 
 
 #### the built name `/children/assessments/[key]`
@@ -744,14 +805,14 @@ Done when (on top of the ten generic checks):
 #### Check the answers `/children/assessments/[key]/[roll]`
 Who: both · Phase: Core · Backend: none · Old page today: yes (/capture/check, /capture/[id]) · Slice: UI-4
 Eyebrow: Grade 1 · Sr. No. 7 · Easy
-Purpose: The page as photographed on the left; each answer as the engine read it on the right. Say what the child wrote where it was not sure; the engine marks it. Right, wrong and blank are kept apart, always.
+Purpose: The page as photographed, and each answer as the engine read it. Say what the child wrote where it was unsure; the engine marks it.
 Blocks, in order:
 - **PageImage**: the scan, zoomable, the answer in focus outlined
 - **DataTable**: question · read as · mark chip (right / wrong / blank / for you to judge) · the wrong-with-working reason
 - **Form**: Say what the child wrote (main) · Sign this paper off (when nothing is left to judge)
 Rail (Connected to): This child · The skill · The assessment · the next paper to check
 Main action: Say what the child wrote · Next step: the next paper
-Data: capture_page, item_result with status and confidence, key, misconception tags
+Data: capture.pages, item_result with status and confidence, key, misconception tags
 Empty: Nothing left to judge on this paper: Sign it off · Phone: image above, answers below
 Folds in: /capture/check, /capture/[id]
 Every control on the screen (9), and what the test does with each:
@@ -812,7 +873,7 @@ Blocks, in order:
 - **Cards**: Builds toward: objectives (links) · Where each part came from (school / drafted / person) with Keep · Edit · Send back on a drafted part
 Rail (Connected to): each objective · each material · next taught (a period) · the fortnights it is in · Capture here: photo
 Main action: Keep / Edit a drafted part (curriculum team) · Open the period (educator) · Next step: an objective
-Data: activity (+steps, thinking, levels, materials), activity_objective, activity_material, activity_part_source, curriculum_edit
+Data: activity (+steps, thinking, levels, materials), activity_objective, activity_material, change_log (origin: upload = school, proposal = drafted, person = person) and curriculum_proposal for the source of each part, change_log for each edit
 Empty: a part with no text: shown empty and marked, never invented · Phone: levels as a 2×2
 Folds in: /educator/activity/[code], /curriculum/fill/[code], /curriculum/fill/walk
 Every control on the screen (13), and what the test does with each:
@@ -821,8 +882,8 @@ Every control on the screen (13), and what the test does with each:
 - **fold** Materials
 - **link** each objective → the objective's title (`/setup/objectives/[code]`)
 - **link** each material → Materials, this fortnight (`/timetable/materials`)
-- **button** Keep (a drafted part): activity_part_source becomes person with who; the 'drafted' badge goes [coordinator only; absent and refused for others]
-- **button** Edit (a part): the part becomes a field; Save writes a curriculum_edit row; the source becomes person [coordinator only; absent and refused for others]
+- **button** Keep (a drafted part): the part's source becomes person (a change_log row with who); the 'drafted' badge goes [coordinator only; absent and refused for others]
+- **button** Edit (a part): the part becomes a field; Save writes a change_log row; the source becomes person [coordinator only; absent and refused for others]
 - **button** Send back (a drafted part): the part is emptied and marked; the proposal is rejected [coordinator only; absent and refused for others]
 - **upload** capture: Photo: a photo of the set-up attaches to the activity
 - **link** rail: each objective → the objective's title (`/setup/objectives/[code]`)
@@ -831,7 +892,7 @@ Every control on the screen (13), and what the test does with each:
 - **link** rail: the fortnights it is in → Fortnight 9 (`/timetable/fortnight/[n]`)
 Done when (on top of the ten generic checks):
 - a drafted part carries the 'drafted' badge until Keep, Edit or Send back; an educator sees the badge but not the three buttons
-- every edit writes a curriculum_edit row with who
+- every edit writes a change_log row with who
 - a photo attaches to the activity, never to a child
 
 
@@ -860,18 +921,19 @@ Who: both · Phase: Core · Backend: CP-13 · CP-14 · Old page today: part (/sk
 Eyebrow: Skill · Numeracy
 Purpose: Where the class stands on this skill, from confirmed notes and papers. A child not seen on it is not seen, nothing more.
 Blocks, in order:
-- **Cards**: The class now (StackBar) · Secure, fortnight by fortnight (Spark)
-- **ClassGrid**: the class on this skill; tap a child
+- **Cards**: The class now (StackBar) · Secure, fortnight by fortnight (Spark) · Clusters: children who share a place on this skill, each with its count and its children as chips
+- **ClassGrid**: the class on this skill; tap a child to open ChildPeek; groups by state or class, each with a count
 - **Cards**: Comes after (confirmed links) · Ready next (confirmed links) · 'only links a person confirmed are read'
 - **Details**: for grades 1–4: each level in a sentence, kinds of question, mistakes it watches for (today's skill-set page)
+- **ChildPeek**: the child chosen in the grid
 Rail (Connected to): the class picture on this skill · its objectives · after / next skills · Question bank for this skill
 Main action: a child · Next step: the next skill
-Data: child_observed_state / child_skill_state by skill; skill_link_confirmed; skill_level; misconception
+Data: child_skill_state (kind 'observed' / 'written') by skill; skill_link_confirmed (a view over activity_skill and approval); skill_level; misconception; flow_run result for the six-fortnight spark; evidence_event for clusters
 Empty: nobody seen on it yet · Phone: grid of 3 columns of squares (SPEC §2 rule 10)
 Folds in: /skill-sets/[code], /skill-sets/[code]/edit
-Every control on the screen (13), and what the test does with each:
+Every control on the screen (16), and what the test does with each:
 - **filter** class [coordinator only; absent and refused for others]
-- **cell** each square → Where this child is (`/children/[class]/[roll]`)
+- **peek** each square (and each child chip in a cluster): opens ChildPeek for that child
 - **child_name** each square (the name beside the Sr. No. (same ClassGrid as the class picture))
 - **link** Comes after: each skill → the skill's name (`/setup/skills/[code]`)
 - **link** Ready next: each skill → the skill's name (`/setup/skills/[code]`)
@@ -883,10 +945,16 @@ Every control on the screen (13), and what the test does with each:
 - **link** rail: its objectives → the objective's title (`/setup/objectives/[code]`)
 - **link** rail: after / next skills → the skill's name (`/setup/skills/[code]`)
 - **link** rail: Question bank for this skill → Question bank (`/setup/question-bank`)
+- **filter** group by (state on this skill / class (coordinator); a heading and a count per group)
+- **button** peek: Close: closes ChildPeek; focus returns to the child that opened it
+- **link** peek: Open the child → Where this child is (`/children/[class]/[roll]`) (the one way from a list to the child's own page)
 Done when (on top of the ten generic checks):
 - a prerequisite or next skill is shown only when its link is confirmed (a proposed link in the fixture does not appear)
 - the spark's last value equals the grid's secure count
 - the grid's squares equal the class's enrolment in Sr. No. order
+- grouping by state puts a heading and a count over each group and the counts sum to the squares
+- a cluster's count equals the chips in it; clusters are computed by code, never by a model
+- tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page
 
 
 #### Curriculum `/setup/curriculum`
@@ -899,7 +967,7 @@ Blocks, in order:
 - **Cards**: Drafts to check (count, link) · Offers waiting (skills offered to activities: Yes / No per row)
 Rail (Connected to): Skills to approve · Question bank · Drafts to check · Offers
 Main action: Check the drafted parts · Next step: an activity
-Data: activity, skill, skill_level, activity_part_source, curriculum_proposal
+Data: activity, skill, skill_level, change_log and curriculum_proposal (the source of each part), curriculum_proposal
 Empty: none · Phone: the table scrolls sideways in its own box
 Folds in: /, /curriculum/browse, /curriculum/fill, /curriculum/offers, /asks
 Every control on the screen (11), and what the test does with each:
@@ -930,7 +998,7 @@ Blocks, in order:
 - **Details**: What a wrong answer counts against
 Rail (Connected to): Curriculum
 Main action: Read and approve the first · Next step: Curriculum
-Data: skill.level_approved, skill_level, calibration_review
+Data: skill.level_approved, skill_level, approval (kind calibration)
 Empty: Nothing to approve · Phone: the table scrolls sideways in its own box
 Folds in: /skill-sets/approve, /skill-sets/levels
 Every control on the screen (7), and what the test does with each:
@@ -956,7 +1024,7 @@ Blocks, in order:
 - **DataTable**: question · skill · level · kind · status
 Rail (Connected to): a skill
 Main action: Open a question · Next step: Curriculum
-Data: item, item_stat, bank_proposal/decision
+Data: item, item_stat (a view over item_result), curriculum_proposal with its decision as an approval row
 Empty: No questions for this skill yet · Phone: the table scrolls sideways in its own box
 Folds in: /library, /worksheets, /worksheets/taxonomy
 Every control on the screen (7), and what the test does with each:
@@ -982,18 +1050,18 @@ Blocks, in order:
 - **Form**: Correct the wording · Remove (with reason)
 Rail (Connected to): the skill · the bank
 Main action: Correct the wording · Next step: the bank
-Data: item, key_correction, item_key_change, item_review
+Data: item, item.key (the current key), item.review (the reviewer model's latest verdict), change_log (key history)
 Empty: none · Phone: stacked
 Every control on the screen (7), and what the test does with each:
 - **fold** About it
 - **field** the wording [coordinator only; absent and refused for others] (required when correcting)
-- **button** Correct the wording: a new item version; item_key_change keeps the old key; the page shows the new wording and 'corrected by' [coordinator only; absent and refused for others]
+- **button** Correct the wording: a new item version; change_log keeps the old key; the page shows the new wording and 'corrected by' [coordinator only; absent and refused for others]
 - **field** reason for removal [coordinator only; absent and refused for others] (required)
 - **button** Remove: the item is retired with the reason, never deleted; the chip reads 'removed' [coordinator only; absent and refused for others]
 - **link** rail: the skill → the skill's name (`/setup/skills/[code]`)
 - **link** rail: the bank → Question bank (`/setup/question-bank`)
 Done when (on top of the ten generic checks):
-- a correction keeps the old key in item_key_change and the old version readable
+- a correction keeps the old key in change_log and the old version readable
 - Remove retires, never deletes (row count unchanged)
 
 
@@ -1029,23 +1097,23 @@ Purpose: Each class, its grade, its children by Sr. No., and who teaches it. Mov
 Blocks, in order:
 - **DataTable**: class · grade · children · educators; open a class
 - **DataTable**: a class: Sr. No. · since · moved from; Move (its own action)
-- **Details**: change log (child_move, enrolment)
+- **Details**: change log (change_log, enrolment)
 Rail (Connected to): Staff · Class picture · the fortnight
 Main action: Move a child · Next step: Staff
-Data: school_class, enrolment, child_move, names read from pii by child_id at render, never stored in these tables
+Data: school_class, enrolment, change_log (a move is a closed enrolment, a new one and a change_log row), names read from pii by child_id at render, never stored in these tables
 Empty: none · Phone: the table scrolls sideways in its own box
 Folds in: /school
 Every control on the screen (8), and what the test does with each:
 - **row** each class row: opens that class's children table below
 - **child_name** each child row (the name beside the Sr. No., so a person moving a child knows who it is)
-- **button** Move (a child row): a picker of classes and a date; Save writes child_move and a new enrolment; the child appears in the new class
+- **button** Move (a child row): a picker of classes and a date; Save closes the enrolment, opens a new one and writes a change_log row; the child appears in the new class
 - **fold** change log
 - **link** a class's picture → Class picture (`/children/[class]`)
 - **link** rail: Staff → Staff and classes (`/setup/staff`)
 - **link** rail: Class picture → Class picture (`/children/[class]`)
 - **link** rail: the fortnight → Fortnight 9 (`/timetable/fortnight/[n]`)
 Done when (on top of the ten generic checks):
-- a move writes child_move and a new enrolment and deletes nothing
+- a move closes the enrolment, opens a new one, writes a change_log row and deletes nothing
 - each child row shows the name beside the Sr. No., read from pii by child_id; the address and the change log's stored text carry no name (DOM scan)
 - the change log lists the move with who and when
 
@@ -1200,6 +1268,7 @@ What the test does with each kind of control:
 | switch | a two-state control; the state is spoken (aria-checked) and shown as a word, never colour alone |
 | child_name | not a control: text. The child's name, read from the pii schema at render time and joined by child_id, shown only where an element of this kind is listed. The test asserts the name is present and, on every other screen, absent; it is never in a URL, a log line, a state word or an analytics call |
 | upload | accepts the stated file kinds; a wrong kind shows a message; a right one shows the file's name before anything is sent |
+| peek | a button on a child (a name, a square, a row or a chip) that opens ChildPeek in place for that child; the address carries the Sr. No. (never a name); Escape or Close closes it and focus returns to the button; the peek's own 'Open the child' link is the only route to the child page from a list |
 
 | Slice | What | Screens | Waits for |
 |---|---|---|---|

@@ -15,7 +15,7 @@ import psycopg
 import pytest
 
 from engine.checks import watch
-from engine.core import db
+from engine.core import db, settings
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
 
@@ -102,7 +102,7 @@ def test_the_website_may_add_a_note_and_mark_it_sent_but_never_change_its_words(
 def test_the_limits_are_rows(conn):
     seeded = {r["key"] for r in json.loads((SEED / "thresholds.json").read_text())["thresholds"]}
     assert ROWS <= seeded, ROWS - seeded
-    loaded = {r["key"] for r in conn.execute("select key from threshold where key like 'feedback.%%'")}
+    loaded = {f"feedback.{k}" for k in settings.numbers(conn, "feedback.")}
     assert ROWS <= loaded, ROWS - loaded
     web = db.REPO_ROOT / "apps" / "web" / "lib" / "feedback.ts"
     src = web.read_text()
