@@ -3,6 +3,7 @@
 import { requireStaff } from "@/lib/auth";
 import { sql } from "@/lib/db";
 import { EngineDown, engineSend } from "@/lib/engine";
+import { schoolZone } from "@/lib/school-clock";
 import { voiceOn } from "@/lib/voice";
 import type { Seen } from "@/components/timeline";
 
@@ -11,7 +12,7 @@ import type { Seen } from "@/components/timeline";
 // come from the school's rows here: outcomes, activity names, staff names. Only a person who may read the class gets an answer.
 type Entry = { kind: "observation" | "evidence" | "paper"; at: string; who: string | null; what: Record<string, string | null> };
 
-const when = (iso: string) => new Date(iso).toLocaleDateString("en-IN", { day: "numeric", month: "short" }).replace(" ", "-");
+const whenIn = (zone: string) => (iso: string) => new Date(iso).toLocaleDateString("en-IN", { timeZone: zone, day: "numeric", month: "short" }).replace(" ", "-");
 
 export async function peekHistory(classId: string, roll: string): Promise<Seen[]> {
   const me = await requireStaff();
@@ -25,6 +26,7 @@ export async function peekHistory(classId: string, roll: string): Promise<Seen[]
   }
   if (!res.ok) return [];
   const { entries } = (await res.json()) as { entries: Entry[] };
+  const when = whenIn(await schoolZone());
   const staff = [...new Set(entries.flatMap((e) => (e.who ? [e.who] : [])))];
   const names = staff.length ? Object.fromEntries((await sql<{ id: string; name: string }[]>`select staff_id::text as id, name from pii.staff where staff_id = any(${staff}::uuid[])`).map((r) => [r.id, r.name])) : {};
   const codes = [...new Set(entries.flatMap((e) => (e.what.activity ? [e.what.activity] : [])))];

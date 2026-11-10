@@ -8,7 +8,7 @@ import { Rail, Screen } from "@/components/app-frame";
 import { StatusChip, type State } from "@/components/status-chip";
 import { requireStaff } from "@/lib/auth";
 import { activityNames, childrenByIds, classNotes, coordinatorNotes, type ClassNote } from "@/lib/notes-loop";
-import { schoolToday } from "@/lib/school-clock";
+import { schoolToday, schoolZone } from "@/lib/school-clock";
 import { notFound } from "next/navigation";
 import { voiceOn } from "@/lib/voice";
 import { herVoice } from "@/lib/voice-page";
@@ -43,7 +43,7 @@ export default async function Notes({ searchParams }: { searchParams: Promise<{ 
   const state = q.state && q.state in STATES ? q.state : undefined;
   const view = q.view === "table" ? "table" : "board";
   const classes = q.class ? my.classes.filter((c) => c.id === q.class) : my.classes;
-  const today = await schoolToday();
+  const [today, zone] = await Promise.all([schoolToday(), schoolZone()]);
   const [span, skip] = [WEEKS[week][1], week === "last" ? 7 : 0];
   const days = Array.from({ length: span }, (_, i) => day(today, i + skip));
   const got = coord
@@ -61,7 +61,7 @@ export default async function Notes({ searchParams }: { searchParams: Promise<{ 
   };
   const oldest = all.find((n) => n.state === "to_confirm" || n.state === "fix_this");
   const title = (n: Row) => (n.activity ? (names[n.activity] ?? `Activity ${n.activity}`) : n.typed ? "Typed marks" : "A voice note");
-  const when = (n: Row) => new Date(n.received_at).toLocaleString("en-IN", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit", hour12: false });
+  const when = (n: Row) => new Date(n.received_at).toLocaleString("en-IN", { timeZone: zone, day: "numeric", month: "short", hour: "2-digit", minute: "2-digit", hour12: false });
   const named = (n: Row) => `${n.children.length} ${n.children.length === 1 ? "child" : "children"} named`;
   const card = (n: Row): KCard => ({ key: n.note_id, kind: "note", title: title(n), sub: `${n.typed ? "Form" : "Voice note"} · ${named(n)} · ${n.klass}`, href: `/notes/${n.note_id}`, ...(() => { const c = chipOf(n); return { state: c.state, note: undefined }; })() });
   const lane = (key: string, label: string, state: State, rows: Row[]) => ({ key, label, state, count: rows.length, empty: "Nothing here", cards: rows.map(card) });

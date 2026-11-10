@@ -38,9 +38,9 @@ export type LastTime = { day: string; counts: Record<string, number>; named: { o
  *  counted twice), and who was below or not willing. */
 export async function lastTime(classId: string, activity: string, before: string): Promise<LastTime> {
   const rows = await sql<{ day: string; outcome: string; child_id: string }[]>`
-    select o.observed_at::date::text as day, o.outcome, o.child_id
+    select (o.observed_at at time zone (select value #>> '{}' from config where key = 'school.time_zone'))::date::text as day, o.outcome, o.child_id
     from activity_observation o
-    where o.class_id = ${classId} and o.activity_code = ${activity} and o.observed_at::date < ${before}::date
+    where o.class_id = ${classId} and o.activity_code = ${activity} and (o.observed_at at time zone (select value #>> '{}' from config where key = 'school.time_zone'))::date < ${before}::date
       and not exists (select 1 from activity_observation s where s.supersedes = o.id)
     order by o.observed_at desc`;
   if (!rows.length) return null;
