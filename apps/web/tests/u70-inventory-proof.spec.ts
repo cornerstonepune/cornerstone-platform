@@ -204,3 +204,26 @@ test("a page that traps focus in three controls fails the keyboard check however
   const problems = (await keyboard(page, screen([]))).join("\n");
   expect(problems).toMatch(/Tab reached \d+ of 71 controls in the main column/);
 });
+
+// ---- UI-5b: a link to the page one is on (the first class row can be the class already open) changes no address and is not waited on;
+// a link that points elsewhere and goes nowhere is still a dead link.
+test("a row link that points at the page already open is driven without waiting for an address that cannot change", async ({ page }) => {
+  const inv = mini();
+  const body = `<!doctype html><html><body><main><h1>Proof</h1><div data-ux="action"><a href="/__proof/other">Main action</a></div>
+    <a data-row href="/__proof/page?class=1">Class one (open)</a><a data-row href="/__proof/page?class=2">Class two</a></main></body></html>`;
+  await page.route("**/__proof/**", (r) => r.fulfill({ contentType: "text/html", body }));
+  await page.goto(`${ORIGIN}/__proof/page?class=1`);
+  const s = screen([{ t: "row", label: "each class row", data: "data-row" }]);
+  expect(await drive(page, s, s.elements[0], { ...ctx(inv), address: "/__proof/page?class=1" }, new Map())).toEqual([]);
+});
+
+test("a link that points elsewhere and leads nowhere still fails, by never changing the address", async ({ page }) => {
+  test.setTimeout(90_000);
+  const inv = mini();
+  const body = `<!doctype html><html><body><main><h1>Proof</h1><div data-ux="action"><a href="/__proof/other">Main action</a></div>
+    <a data-row href="/__proof/elsewhere" onclick="event.preventDefault()">Goes nowhere</a></main></body></html>`;
+  await page.route("**/__proof/**", (r) => r.fulfill({ contentType: "text/html", body }));
+  await page.goto(`${ORIGIN}/__proof/page`);
+  const s = screen([{ t: "row", label: "each class row", data: "data-row" }]);
+  await expect(drive(page, s, s.elements[0], ctx(inv), new Map())).rejects.toThrow(/waitForURL|Timeout/i);
+});
