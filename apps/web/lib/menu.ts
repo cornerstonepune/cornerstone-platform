@@ -61,7 +61,7 @@ export const GROUPS: readonly Door[] = [
     screen: "setup",
     setup: true,
     pages: [
-      { href: "/", label: "Curriculum", match: ["/", "/curriculum", "/skill-sets", "/worksheets", "/asks", "/educator/activity"] },
+      { href: "/", label: "Curriculum", match: ["/", "/curriculum", "/skill-sets", "/worksheets", "/asks", "/educator/activity", "/setup"] },
       { label: "Browse the curriculum", href: "/curriculum/browse", match: ["/curriculum/browse"], guide: false },
       { label: "What is filled", href: "/curriculum/fill", match: ["/curriculum/fill"], guide: false },
       { label: "Check the drafted parts", href: "/curriculum/fill/walk", match: ["/curriculum/fill/walk"], guide: false },

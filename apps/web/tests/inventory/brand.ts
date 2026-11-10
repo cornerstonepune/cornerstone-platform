@@ -15,7 +15,7 @@ export const fileFor = (dark: boolean, width: number, size: "bar" | "large" = "b
 
 export async function brandRules(page: Page, scheme: "light" | "dark", width: number, label: string): Promise<string[]> {
   const out: string[] = [];
-  const img = page.locator("picture[data-brand-mark] img");
+  const img = page.locator("picture[data-brand-mark] img:not([data-sample] *)");
   if ((await img.count()) !== 1) return [`${label}: ${await img.count()} BrandMark images, not one`];
   const got = await img.evaluate((e: HTMLImageElement) => {
     const chain: { filter: string; shadow: string; transform: string }[] = [];

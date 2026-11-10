@@ -11,7 +11,7 @@ export const BRAND_NAME = "Cornerstone Gurukul";
 export function BrandMark({ size = "bar" }: { size?: "bar" | "large" }) {
   const height = size === "bar" ? 40 : 72;
   return (
-    <picture data-brand-mark className="block leading-none">
+    <picture data-block="BrandMark" data-brand-mark className="block leading-none">
       {size === "bar" ? <source media="(max-width: 700px) and (prefers-color-scheme: dark)" srcSet={F("mark-on-white-tile")} /> : null}
       {size === "bar" ? <source media="(max-width: 700px)" srcSet={F("mark")} /> : null}
       <source media="(prefers-color-scheme: dark)" srcSet={F("lockup-for-dark-backgrounds")} />

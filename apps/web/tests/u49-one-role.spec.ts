@@ -23,8 +23,9 @@ const OTHER = "U49-OTHER";
 const EDUCATOR = { email: "u49-educator@cornerstone.test", name: "U49 Educator", role: "educator", classes: [] as string[] };
 const PASSWORD = "u49-a-long-test-password";
 let pages: string[] = [];
+let educator: Page;
 
-test.beforeAll(async () => {
+test.beforeAll(async ({ browser }) => {
   await aClass(sql, MINE, "G2", ["Ira", "Jai"]);
   const other = await aClass(sql, OTHER, "G3", ["Kavi", "Lata"]);
   EDUCATOR.classes = (await sql<{ section: string }[]>`select distinct section from child_now where active order by 1`).map((r) => r.section);
@@ -36,8 +37,10 @@ test.beforeAll(async () => {
     `/skill-sets/${draft}`, "/capture", "/capture/check", "/make", `/make/${OTHER}`, "/papers/approve", "/growth/reports",
     `/growth/class/${OTHER}`, `/growth/${other.Kavi}`, `/growth/${other.Kavi}/report`, "/workflows",
   ];
+  educator = await asEducator(browser);
 });
 test.afterAll(async () => {
+  await educator?.context().close();
   await forgetPerson(sql, EDUCATOR.email);
   await sql.end();
 });
@@ -70,10 +73,19 @@ async function offered(page: Page, at: string, name: string): Promise<{ refused:
   await page.goto(at);
   await page.waitForLoadState("networkidle");
   // every section folded open, so what a tap would show is counted: details, and toggles a page draws itself
+  // Each toggle is unfolded once, by its words: a toggle that opens its row by loading the page again shows the page with
+  // that row open and the others folded, so a second pass would load every one of them again for nothing (a page of ten
+  // rows was thirty loads, and the rows other specs leave behind multiply them).
+  const unfolded = new Set<string>();
   for (let i = 0; i < 3; i++) {
     await page.evaluate(() => document.querySelectorAll("main details:not([open])").forEach((d) => d.setAttribute("open", "")));
     const closed = page.locator("main [aria-expanded=false]");
-    for (let n = await closed.count(); n > 0; n--) await unfold(page, closed.first());
+    for (;;) {
+      const next = (await closed.allTextContents()).findIndex((t) => !unfolded.has(t.replace(/^\s*[▸▾]/, "").trim()));
+      if (next < 0) break;
+      unfolded.add(((await closed.nth(next).textContent()) ?? "").replace(/^\s*[▸▾]/, "").trim());
+      await unfold(page, closed.nth(next));
+    }
   }
   return page.evaluate((name) => {
     // an action said in the person's own name ("as U49 Educator") is the same action for each of them
@@ -93,20 +105,35 @@ async function offered(page: Page, at: string, name: string): Promise<{ refused:
   }, name);
 }
 
-test("an educator reaches every page and every action the coordinator does", async ({ browser, page }) => {
-  test.setTimeout(300_000);
-  const educator = await asEducator(browser);
-  try {
-    for (const at of pages) {
+// One test to a page, in order: a page of many toggles reloads once per toggle, and the rows other specs leave behind
+// multiply them, so the whole walk in one test took longer than any one test may (it ran after ~200 specs in CI). The
+// two people are read one after the other, never together: the page's counts are heavy and two at once ran the
+// database past its eight seconds. The names are the pages' own, the addresses those made in `beforeAll`.
+const NAMES = [
+  "/today", "/", "/papers", "/growth", "/asks", "/library", "/worksheets", "/worksheets/taxonomy", "/skill-sets/approve",
+  "a skill waiting", "/capture", "/capture/check", "/make", "/make of another class", "/papers/approve", "/growth/reports",
+  "another class's growth", "a child of another class", "that child's report", "/workflows",
+];
+const walked: string[] = [];
+test.describe("an educator reaches every page and every action the coordinator does", () => {
+  NAMES.forEach((name, n) => {
+    test(`${name}`, async ({ page }) => {
+      test.setTimeout(300_000);
+      expect(pages.length, "the pages made in beforeAll are the pages named here").toBe(NAMES.length);
+      const at = pages[n];
       const theirs = await offered(page, at, TEST_STAFF.name);
       const mine = await offered(educator, at, EDUCATOR.name);
       // a page's own words may name the coordinator (the map does); a refusal is one the coordinator is not given
       expect(mine.refused, `${at} refuses an educator`).toBe(theirs.refused);
       expect(theirs.actions.filter((a) => !mine.actions.includes(a)), `on ${at}, offered to the coordinator only`).toEqual([]);
-    }
-  } finally {
-    await educator.context().close();
-  }
+      walked.push(name);
+    });
+  });
+});
+
+// the sentence goals/ux9c-one-role.yaml says, kept as one test: it holds when every page above was walked and none failed
+test("an educator reaches every page and every action the coordinator does", () => {
+  expect(walked).toEqual(NAMES);
 });
 
 test("an educator takes a decision once the coordinator's alone: approving a skill", async ({ browser }) => {

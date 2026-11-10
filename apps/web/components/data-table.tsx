@@ -48,7 +48,7 @@ export function DataTable<T>({
   if ("by" in more) {
     const { by, href } = more;
     return (
-      <div className="grid gap-4">
+      <div className="grid gap-4" data-block="DataTable">
         {groupRows(rows, by).map((g) => (
           <section key={g.name} aria-label={g.name}>
             <h3 className="mb-1 text-[14px]">{g.name}</h3>
@@ -74,7 +74,7 @@ export function DataTable<T>({
       ? { rows: rows.slice(0, limit), page: Math.max(1, more.page), pages: Math.max(1, Math.ceil(more.of / limit)) }
       : pageOf(rows, more.page, limit);
   return (
-    <div>
+    <div data-block="DataTable">
       <Grid label={label} cols={cols} rows={p.rows} rowKey={rowKey} extras={extras} sort={sort} dense={dense} />
       {p.pages > 1 ? (
         <nav className="mt-2 flex items-center gap-3 text-[13px]" aria-label={`${label} pages`}>

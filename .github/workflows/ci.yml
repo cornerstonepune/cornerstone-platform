@@ -358,6 +358,16 @@ jobs:
           name: browser-shard-${{ matrix.shard }}
           path: apps/web/results.json
           retention-days: 7
+      # A screenshot baseline is made where it is compared (fonts and text rendering differ between machines): when a
+      # comparison fails, the picture this runner drew (`*-actual.png`, and `-diff` beside it) is kept, so a baseline
+      # that has to change is taken from here, not from a laptop. Nothing is uploaded when every comparison passes.
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: browser-shard-${{ matrix.shard }}-screenshots
+          path: apps/web/test-results/**/*.png
+          if-no-files-found: ignore
+          retention-days: 3
 
   # The one pass or fail for the browser tests, under the name the single job had: every shard green, and every listed
   # test ran in exactly one shard, none skipped (bin/ci-browser-check).
