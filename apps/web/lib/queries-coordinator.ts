@@ -6,9 +6,9 @@ import { staffList } from "./queries";
 // `pii.child`, read through the accessor that logs who asked (rule 6). Nothing here writes; the writes are `actions.ts` beside
 // each page, and every one of them is a function of the database or an insert of a new row, never a delete.
 
-const SCHOOL = sql`(select id from tenant where slug = ${TENANT_SLUG})`;
+const school = () => sql`(select id from tenant where slug = ${TENANT_SLUG})`;
 // the school's day today, in the school's own zone (the same line `lib/move-child.ts` uses), never the server's
-const TODAY = sql`(now() at time zone (select value #>> '{}' from config where key = 'school.time_zone'))::date`;
+const today = () => sql`(now() at time zone (select value #>> '{}' from config where key = 'school.time_zone'))::date`;
 
 /** Whether the signed-in person is in the group that reads every staff row (the database's own rule, `public.my_reach`). */
 export async function namesMayShow(): Promise<boolean> {
@@ -55,16 +55,16 @@ export async function staffLines(): Promise<StaffLine[]> {
       join role r on r.tenant_id = g.tenant_id and r.code = g.role_code
       left join school_class sc on sc.id = g.school_class_id
       left join subject sj on sj.tenant_id = g.tenant_id and sj.code = g.subject_code
-      where g.tenant_id = ${SCHOOL} and g.valid_from <= ${TODAY} and (g.valid_to is null or g.valid_to > ${TODAY})`,
+      where g.tenant_id = ${school()} and g.valid_from <= ${today()} and (g.valid_to is null or g.valid_to > ${today()})`,
     sql<{ staff_id: string; done: number; planned: number }[]>`
-      with f as (select starts_on, ends_on from fortnight where tenant_id = ${SCHOOL} and ${TODAY} between starts_on and ends_on limit 1),
+      with f as (select starts_on, ends_on from fortnight where tenant_id = ${school()} and ${today()} between starts_on and ends_on limit 1),
       mine as (
         select distinct g.staff_id, s.id as session_id, s.state
         from staff_role_grant g
         join session s on s.school_class_id = g.school_class_id and (g.subject_code is null or s.subject_code = g.subject_code)
         join school_day d on d.id = s.school_day_id
         join f on d.on_date between f.starts_on and f.ends_on
-        where g.tenant_id = ${SCHOOL} and g.valid_from <= ${TODAY} and (g.valid_to is null or g.valid_to > ${TODAY})
+        where g.tenant_id = ${school()} and g.valid_from <= ${today()} and (g.valid_to is null or g.valid_to > ${today()})
           and s.state <> 'moved')
       select staff_id::text, count(*) filter (where state = 'done')::int as done, count(*)::int as planned from mine group by staff_id`,
   ]);
@@ -98,12 +98,12 @@ export async function grantsOf(staffId: string): Promise<Grant[]> {
   const rows = await sql<{ id: string; role_label: string; class: string | null; subject: string | null; from: string; to: string | null; by: string; open: boolean }[]>`
     select g.id::text, r.label as role_label, sc.label as class, coalesce(sj.label, sj.name) as subject,
            to_char(g.valid_from, 'YYYY-MM-DD') as "from", to_char(g.valid_to, 'YYYY-MM-DD') as "to", g.granted_by as by,
-           (g.valid_from <= ${TODAY} and (g.valid_to is null or g.valid_to > ${TODAY})) as open
+           (g.valid_from <= ${today()} and (g.valid_to is null or g.valid_to > ${today()})) as open
     from staff_role_grant g
     join role r on r.tenant_id = g.tenant_id and r.code = g.role_code
     left join school_class sc on sc.id = g.school_class_id
     left join subject sj on sj.tenant_id = g.tenant_id and sj.code = g.subject_code
-    where g.tenant_id = ${SCHOOL} and g.staff_id = ${staffId}::uuid
+    where g.tenant_id = ${school()} and g.staff_id = ${staffId}::uuid
     order by g.valid_from desc, g.created_at desc`;
   return rows.map((r) => ({ id: r.id, roleLabel: r.role_label, className: r.class, subject: r.subject, from: r.from, to: r.to, by: r.by, open: r.open }));
 }
@@ -117,13 +117,13 @@ export async function classLines(): Promise<ClassLine[]> {
       select sc.id::text, sc.label, sc.grade_code, coalesce(gr.name, sc.grade_code) as grade,
              (select count(*)::int from enrolment e join child c on c.id = e.child_id where e.class_id = sc.id and e.to_date is null and c.active) as children
       from school_class sc
-      join academic_year y on y.id = sc.academic_year_id and ${TODAY} between y.starts_on and y.ends_on
+      join academic_year y on y.id = sc.academic_year_id and ${today()} between y.starts_on and y.ends_on
       join grade gr on gr.tenant_id = sc.tenant_id and gr.code = sc.grade_code
-      where sc.tenant_id = ${SCHOOL}
+      where sc.tenant_id = ${school()}
       order by gr.ord, sc.label`,
     sql<{ class_id: string; staff_id: string }[]>`
       select distinct g.school_class_id::text as class_id, g.staff_id::text from staff_role_grant g
-      where g.tenant_id = ${SCHOOL} and g.school_class_id is not null and g.valid_from <= ${TODAY} and (g.valid_to is null or g.valid_to > ${TODAY})`,
+      where g.tenant_id = ${school()} and g.school_class_id is not null and g.valid_from <= ${today()} and (g.valid_to is null or g.valid_to > ${today()})`,
     staffList(),
   ]);
   // names come from the staff list (`public.staff_list`), the one function the website may read them through
@@ -173,7 +173,7 @@ export async function moveLog(classLabel: string, limit = 10): Promise<LogLine[]
            to_char(l.at at time zone (select value #>> '{}' from config where key = 'school.time_zone'), 'YYYY-MM-DD') as at,
            to_char(l.at at time zone (select value #>> '{}' from config where key = 'school.time_zone'), 'YYYY-MM-DD') as since
     from change_log l
-    where l.tenant_id = ${SCHOOL} and l.table_name = 'child' and l.op = 'move'
+    where l.tenant_id = ${school()} and l.table_name = 'child' and l.op = 'move'
       and (l.before ->> 'section' = ${classLabel} or l.after ->> 'section' = ${classLabel})
     order by l.at desc, l.id limit ${limit}`;
   const names = new Map((await staffList()).map((p) => [p.id, p.name]));
@@ -185,9 +185,9 @@ export async function moveTargets(): Promise<{ label: string; grade: string; gra
   const rows = await sql<{ label: string; grade: string; grade_code: string }[]>`
     select sc.label, coalesce(gr.name, sc.grade_code) as grade, sc.grade_code
     from school_class sc
-    join academic_year y on y.id = sc.academic_year_id and ${TODAY} between y.starts_on and y.ends_on
+    join academic_year y on y.id = sc.academic_year_id and ${today()} between y.starts_on and y.ends_on
     join grade gr on gr.tenant_id = sc.tenant_id and gr.code = sc.grade_code
-    where sc.tenant_id = ${SCHOOL} order by gr.ord, sc.label`;
+    where sc.tenant_id = ${school()} order by gr.ord, sc.label`;
   return rows.map((r) => ({ label: r.label, grade: r.grade, gradeCode: r.grade_code }));
 }
 
@@ -196,9 +196,9 @@ export type SetupCounts = { staff: number; grantsOpen: number; classes: number; 
 /** The numbers on the Setup cards: counts, computed once here. */
 export async function setupCounts(): Promise<SetupCounts> {
   const [r] = await sql<SetupCounts[]>`
-    select (select count(*)::int from staff where tenant_id = ${SCHOOL} and active) as staff,
-           (select count(*)::int from staff_role_grant where tenant_id = ${SCHOOL} and valid_from <= ${TODAY} and (valid_to is null or valid_to > ${TODAY})) as "grantsOpen",
-           (select count(*)::int from school_class sc join academic_year y on y.id = sc.academic_year_id and ${TODAY} between y.starts_on and y.ends_on where sc.tenant_id = ${SCHOOL}) as classes,
-           (select count(*)::int from child where tenant_id = ${SCHOOL} and active) as children`;
+    select (select count(*)::int from staff where tenant_id = ${school()} and active) as staff,
+           (select count(*)::int from staff_role_grant where tenant_id = ${school()} and valid_from <= ${today()} and (valid_to is null or valid_to > ${today()})) as "grantsOpen",
+           (select count(*)::int from school_class sc join academic_year y on y.id = sc.academic_year_id and ${today()} between y.starts_on and y.ends_on where sc.tenant_id = ${school()}) as classes,
+           (select count(*)::int from child where tenant_id = ${school()} and active) as children`;
   return r;
 }
