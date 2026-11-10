@@ -281,6 +281,10 @@
 [data-icon="history"] { --i: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2024%2024%27%20fill%3D%27none%27%20stroke%3D%27black%27%20stroke-width%3D%271.9%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%3E%3Cpath%20d%3D%27M3%2012a9%209%200%201%200%209-9%209.75%209.75%200%200%200-6.74%202.74L3%208%27%2F%3E%3Cpath%20d%3D%27M3%203v5h5%27%2F%3E%3Cpath%20d%3D%27M12%207v5l4%202%27%2F%3E%3C%2Fsvg%3E"); }
 [data-icon="close"] { --i: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2024%2024%27%20fill%3D%27none%27%20stroke%3D%27black%27%20stroke-width%3D%271.9%27%20stroke-linecap%3D%27round%27%20stroke-linejoin%3D%27round%27%3E%3Cpath%20d%3D%27M18%206%206%2018%27%2F%3E%3Cpath%20d%3D%27m6%206%2012%2012%27%2F%3E%3C%2Fsvg%3E"); }
 
+
+
+
+
 /* ===== blocks: components.css ===== */
 /* The kit's blocks. Source for kit.css: kit.mjs puts the tokens and icons above this file and writes kit.css.
    Rule: no colour, size, radius or shadow typed here; only var(--token). A hex in this file fails check.mjs.
@@ -470,7 +474,10 @@ a { color: var(--link); text-decoration: underline; text-underline-offset: 3px; 
 /* ---------- HeatGrid, FortnightGrid ---------- */
 .heat { display: grid; grid-template-columns: 96px repeat(var(--cols), minmax(0, 1fr)); gap: var(--space-0); }
 .heat .h { font: var(--type-label); color: var(--ink-muted); padding: var(--space-1); }
-.hc { display: flex; align-items: center; gap: var(--space-1); padding: var(--space-2) var(--space-1); border-radius: 8px; background: var(--cb); color: var(--c); font: var(--type-label); }
+.heat-box { overflow-x: auto; }
+.heat-box .heat { min-width: 560px; }
+.hc { display: flex; align-items: center; gap: var(--space-1); padding: var(--space-2) var(--space-1); border-radius: 8px; background: var(--cb); color: var(--c); font: var(--type-label); text-decoration: none; }
+.hc[data-state="unseen"] { outline: 2px dashed var(--line-control); outline-offset: -2px; }
 .fgrid-box { overflow-x: auto; }
 .fgrid { display: grid; grid-template-columns: 64px repeat(var(--cols), minmax(150px, 1fr)); gap: var(--space-1); }
 .fgrid .dh { padding: var(--space-1) var(--space-2); font-weight: 600; border-radius: var(--radius-control); }
@@ -522,7 +529,7 @@ a { color: var(--link); text-decoration: underline; text-underline-offset: 3px; 
 .days > i { display: grid; place-items: center; width: 28px; height: 28px; border-radius: var(--radius-control); background: var(--cb, transparent); color: var(--c, var(--ink-muted)); box-shadow: inset 0 0 0 1px var(--line); }
 .days > i:empty { background: transparent; box-shadow: inset 0 0 0 1px var(--line); }
 /* KanbanBoard: what moves through stages, one lane per stage, each card a link. Lanes scroll sideways in their own box. */
-.kanban { display: grid; grid-template-columns: repeat(var(--lanes, 3), minmax(260px, 1fr)); gap: var(--space-3); align-items: start; overflow-x: auto; padding-bottom: var(--space-1); }
+.kanban { display: grid; grid-template-columns: repeat(var(--lanes, 3), minmax(220px, 1fr)); gap: var(--space-3); align-items: start; overflow-x: auto; padding-bottom: var(--space-1); }
 .lane { display: grid; gap: var(--space-2); align-content: start; min-width: 0; padding: var(--space-2); border-radius: var(--radius-card); background: var(--surface); }
 .lane-h { display: flex; align-items: center; gap: var(--space-1); margin: 0; padding: var(--space-1) var(--space-1) var(--space-1) var(--space-2); font: var(--type-label); font-size: 16px; font-weight: 600; color: var(--c, var(--ink)); }
 .lane-h .count, .card-h .count { margin-left: auto; }
@@ -540,6 +547,10 @@ a { color: var(--link); text-decoration: underline; text-underline-offset: 3px; 
 .peek .timeline .tli:first-child { border-top: 0; padding-top: 0; }
 .peek .timeline .tli:last-child { border-bottom: 0; }
 .peek-more { justify-self: start; }
+
+.split { display: grid; grid-template-columns: minmax(240px, 320px) minmax(0, 1fr); gap: var(--space-4); align-items: start; }
+@container (max-width: 700px) { .split { grid-template-columns: 1fr; } }
+.pimg .hit { position: absolute; left: var(--x); top: var(--y); width: var(--w); height: var(--h); border-radius: 4px; outline: 2px solid var(--action); outline-offset: 2px; }
 
 /* ---------- wireframe-only: a data gap, and the sheet that holds frames ---------- */
 [data-gap] { outline: 2px dashed var(--state-wait); outline-offset: 3px; position: relative; }

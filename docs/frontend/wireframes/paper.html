@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wireframe: Check the answers (paper)</title>
+<link rel="stylesheet" href="kit.css">
+</head>
+<!-- Wireframe of screens.json "paper" (/children/assessments/[key]/[roll]). Drawn as the coordinator for Sr. No. 7 of the Grade 4 'Exchange and regroup' assessment (3 of its answers wait on a person; this paper holds 2). Right, wrong, wrong with working, blank and for you to judge are five different chips with five counts. Sign this paper off is drawn in the inset because the live page only shows it when nothing is left to judge. No name is shown: the screen has no child_name element. The purpose line is cut to 140 characters; screens.json's is 201 and is shortened with it.
+     data-el = index in screens.json paper.elements; data-bar = index in screens.json bar; data-source = target
+     table.column; data-gap = what the target tables cannot give. Both frames hold the same markup: the phone layout
+     comes from kit.css container queries, as it will on the site. Fake names only (none are needed on this screen). -->
+<body>
+<div class="wf-sheet">
+  <header>
+    <p class="wf-label">paper · Check the answers · /children/assessments/[key]/[roll] · laptop 1440 and phone 400 · add data-theme="dark" on &lt;html&gt; for dark</p>
+  </header>
+  <section class="wf" data-viewport="1440" aria-label="Laptop, 1440 px">
+    <div class="frame">
+      <header class="bar">
+        <a class="brand" data-bar="0" href="#today" aria-label="Cornerstone Gurukul, go to Today">
+          <img class="wide on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-colour.svg" alt="">
+          <img class="wide on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-for-dark-backgrounds.svg" alt="">
+          <img class="small on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark.svg" alt="">
+          <img class="small on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark-on-white-tile.svg" alt="">
+        </a>
+        <ul class="doors" aria-label="Doors">
+          <li><a class="door" data-bar="0" href="#today"><i class="ic" data-icon="today"></i>Today <span class="badge num" data-source="timetable_run.report pii.educator_note.status pii.educator_note.received_at timetable_run.draft materials_line.quantity" aria-label="11 things waiting on you">11</span></a></li>
+          <li><a class="door" data-bar="1" href="#timetable"><i class="ic" data-icon="timetable"></i>Timetable</a></li>
+          <li><a class="door" data-bar="2" href="#children" aria-current="page"><i class="ic" data-icon="children"></i>Children</a></li>
+          <li><a class="door" data-bar="3" href="#setup"><i class="ic" data-icon="setup"></i>Setup</a></li>
+        </ul>
+        <label class="search"><i class="ic s" data-icon="search"></i><span class="vh">Search</span><input data-bar="4" type="search" placeholder="Sr. No., name or activity"></label>
+        <button class="barbtn press" data-bar="5" type="button" role="switch" aria-checked="false"><i class="ic" data-icon="acting-as"></i><span class="w">Acting as</span></button>
+        <a class="barbtn" data-bar="6" href="#help" aria-label="Help for this page"><i class="ic" data-icon="help"></i></a>
+        <button class="barbtn press" data-bar="7" type="button"><i class="ic" data-icon="sign-out"></i><span class="w">Sign out</span></button>
+      </header>
+      <ol class="trail" aria-label="Trail">
+        <li><a data-trail href="#children">Children</a></li>
+        <li><i class="ic s" data-icon="trail"></i></li>
+        <li><a data-trail href="#assessment">Exchange and regroup</a></li>
+        <li><i class="ic s" data-icon="trail"></i></li>
+        <li aria-current="page">Sr. No. 7</li>
+      </ol>
+      <div class="page">
+        <main class="main">
+          <div class="head">
+            <p class="eyebrow"><i class="ic s" data-icon="assessment"></i>Grade 4 · Sr. No. <span class="num" data-source="enrolment.roll_no">7</span> · <span data-source="prescription.difficulty">Hard</span></p>
+            <h1 class="title">Check the answers</h1>
+            <p class="purpose">The page as photographed, and each answer as the engine read it. Say what the child wrote where it was unsure; the engine marks it.</p>
+          </div>
+          <div class="keyrow" data-source="item_result.status item_result.working_shown" aria-label="Eight answers: 3 right, 1 wrong, 1 wrong with working, 1 blank, 2 for you to judge"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>3 right</span><span class="chip" data-state="wait"><i class="ic s" data-icon="fix-this"></i>1 wrong</span><span class="chip" data-state="wait"><i class="ic s" data-icon="fix-this"></i>1 wrong, with working</span><span class="chip" data-state="quiet"><i class="ic s" data-icon="to-do"></i>1 blank</span><span class="chip" data-state="late"><i class="ic s" data-icon="late"></i>2 for you to judge</span></div>
+          <div class="split">
+            <figure class="pimg" data-block="PageImage" data-source="capture.pages capture.qr_read">
+              <span class="qr" aria-hidden="true"></span>
+              <span class="hit" style="--x: 12%; --y: 18%; --w: 76%; --h: 9%"></span>
+              <figcaption>The child's page as photographed. Question 5 is outlined.</figcaption>
+            </figure>
+            <div class="table-box" data-block="DataTable">
+              <table class="table">
+                <thead><tr><th>Question</th><th>Read as</th><th class="st">Mark</th><th>Why</th></tr></thead>
+                <tbody>
+              <tr data-el="0">
+                <td class="num" data-source="item.stem item_result.rid">1.&nbsp;645&nbsp;−&nbsp;213</td>
+                <td class="num" data-source="item_result.raw_read read_correction.human_read">432</td>
+                <td class="st" data-source="item_result.status item_result.working_shown"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Right</span></td>
+                <td data-source="item_result.misconception_codes misconception.name item_result.read_confidence"></td>
+              </tr>
+              <tr data-el="0">
+                <td class="num" data-source="item.stem item_result.rid">2.&nbsp;502&nbsp;−&nbsp;267</td>
+                <td class="num" data-source="item_result.raw_read read_correction.human_read">345</td>
+                <td class="st" data-source="item_result.status item_result.working_shown"><span class="chip" data-state="wait"><i class="ic s" data-icon="fix-this"></i>Wrong, with working</span></td>
+                <td data-source="item_result.misconception_codes misconception.name item_result.read_confidence">Took the smaller digit from the larger in each column instead of exchanging. The working shows it.</td>
+              </tr>
+              <tr data-el="0">
+                <td class="num" data-source="item.stem item_result.rid">3.&nbsp;800&nbsp;−&nbsp;354</td>
+                <td class="num" data-source="item_result.raw_read read_correction.human_read">446</td>
+                <td class="st" data-source="item_result.status item_result.working_shown"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Right</span></td>
+                <td data-source="item_result.misconception_codes misconception.name item_result.read_confidence"></td>
+              </tr>
+              <tr data-el="0">
+                <td class="num" data-source="item.stem item_result.rid">4.&nbsp;731&nbsp;−&nbsp;485</td>
+                <td class="num" data-source="item_result.raw_read read_correction.human_read">254</td>
+                <td class="st" data-source="item_result.status item_result.working_shown"><span class="chip" data-state="wait"><i class="ic s" data-icon="fix-this"></i>Wrong</span></td>
+                <td data-source="item_result.misconception_codes misconception.name item_result.read_confidence">No working shown, so no reason can be named.</td>
+              </tr>
+              <tr data-el="0" aria-current="true">
+                <td class="num" data-source="item.stem item_result.rid">5.&nbsp;604&nbsp;−&nbsp;178</td>
+                <td class="num" data-source="item_result.raw_read read_correction.human_read">426 or 436</td>
+                <td class="st" data-source="item_result.status item_result.working_shown"><span class="chip" data-state="late"><i class="ic s" data-icon="late"></i>For you to judge</span></td>
+                <td data-source="item_result.misconception_codes misconception.name item_result.read_confidence">The engine was 61% sure of the last digit.</td>
+              </tr>
+              <tr data-el="0">
+                <td class="num" data-source="item.stem item_result.rid">6.&nbsp;910&nbsp;−&nbsp;526</td>
+                <td class="num" data-source="item_result.raw_read read_correction.human_read"><span class="muted">nothing</span></td>
+                <td class="st" data-source="item_result.status item_result.working_shown"><span class="chip" data-state="quiet"><i class="ic s" data-icon="to-do"></i>Blank</span></td>
+                <td data-source="item_result.misconception_codes misconception.name item_result.read_confidence">Nothing written. Blank is never marked wrong.</td>
+              </tr>
+              <tr data-el="0">
+                <td class="num" data-source="item.stem item_result.rid">7.&nbsp;480&nbsp;−&nbsp;295</td>
+                <td class="num" data-source="item_result.raw_read read_correction.human_read">185</td>
+                <td class="st" data-source="item_result.status item_result.working_shown"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Right</span></td>
+                <td data-source="item_result.misconception_codes misconception.name item_result.read_confidence"></td>
+              </tr>
+              <tr data-el="0">
+                <td class="num" data-source="item.stem item_result.rid">8.&nbsp;372&nbsp;−&nbsp;189</td>
+                <td class="num" data-source="item_result.raw_read read_correction.human_read">183 or 188</td>
+                <td class="st" data-source="item_result.status item_result.working_shown"><span class="chip" data-state="late"><i class="ic s" data-icon="late"></i>For you to judge</span></td>
+                <td data-source="item_result.misconception_codes misconception.name item_result.read_confidence">The engine was 54% sure of the last digit.</td>
+              </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="card" data-kind="assessment">
+            <div class="card-h"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span>Question 5: 604 − 178</div>
+            <div class="card-b">
+              <span data-source="item_result.raw_read item_result.read_confidence">The engine read <b>426 or 436</b> and was <span class="num">61</span>% sure.</span>
+              <form class="form" data-block="Form">
+                <div class="field"><label for="wrote">What the child wrote for question 5</label><input data-el="1" id="wrote" inputmode="numeric" placeholder="Type the number you see" required></div>
+                <div class="keyrow"><button class="btn btn-main press" data-el="2" type="submit">Say what the child wrote</button><button class="btn press" data-el="3" type="button">Blank (the child wrote nothing)</button></div>
+                <span class="caption">You say what was written; the engine marks it. Your answer is a new line beside the engine's read, never over it.</span>
+              </form>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: when nothing is left to judge</div>
+            <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="done"></i><b>Nothing left to judge on this paper</b><span class="muted">Sign it off to confirm its results. In this state it is the page's main action; it is absent while any answer is for you to judge.</span><button class="btn press" data-el="4" type="button">Sign this paper off</button></div></div>
+          </div>
+        </main>
+        <aside class="rail" aria-label="Connected to">
+          <section class="rail-box">
+            <h2>Connected to</h2>
+            <ul class="rlist">
+<li><a class="ritem" data-el="5" href="#child"><span class="tile" data-kind="child"><i class="ic" data-icon="child"></i></span><span>This child<small data-source="enrolment.roll_no">Sr. No. 7, Grade 4</small></span></a></li>
+<li><a class="ritem" data-el="6" href="#skill"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><span>The skill<small data-source="skill.name">Exchange and regroup</small></span></a></li>
+<li><a class="ritem" data-el="7" href="#assessment"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><span>The assessment<small data-source="sheet_instance.key">Subtraction · Grade 4 · 23 papers</small></span></a></li>
+<li><a class="ritem" data-el="8" href="#paper"><span class="tile" data-kind="assessment"><i class="ic" data-icon="correct"></i></span><span>The next paper to check<small data-source="enrolment.roll_no item_result.status">Sr. No. 11, 3 answers to judge</small></span></a></li>
+            </ul>
+          </section>
+          <section class="rail-box" data-block="KeyValue">
+            <h2>This scan</h2>
+            <dl class="kv">
+              <dt>Sheet</dt><dd class="num" data-source="sheet_instance.qr_code capture.qr_read">CS4F2A91</dd>
+              <dt>QR</dt><dd data-source="capture.qr_read">read, and it belongs to this assessment</dd>
+              <dt>Scanned</dt><dd class="num" data-source="capture.created_at">17-Nov, 10:12</dd>
+              <dt>By</dt><dd data-source="capture.uploaded_by pii.staff.name">Chetan Clove</dd>
+              <dt>Pages</dt><dd class="num" data-source="capture.pages">1</dd>
+            </dl>
+          </section>
+        </aside>
+      </div>
+      <nav class="tabbar" aria-label="Doors">
+        <a class="tab" data-bar="0" href="#today"><i class="ic" data-icon="today"></i>Today</a>
+        <a class="tab" data-bar="1" href="#timetable"><i class="ic" data-icon="timetable"></i>Timetable</a>
+        <a class="tab" data-bar="2" href="#children" aria-current="page"><i class="ic" data-icon="children"></i>Children</a>
+        <a class="tab" data-bar="3" href="#setup"><i class="ic" data-icon="setup"></i>Setup</a>
+      </nav>
+    </div>
+  </section>
+  <section class="wf" data-viewport="400" aria-label="Phone, 400 px">
+    <div class="frame">
+      <header class="bar">
+        <a class="brand" data-bar="0" href="#today" aria-label="Cornerstone Gurukul, go to Today">
+          <img class="wide on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-colour.svg" alt="">
+          <img class="wide on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-for-dark-backgrounds.svg" alt="">
+          <img class="small on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark.svg" alt="">
+          <img class="small on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark-on-white-tile.svg" alt="">
+        </a>
+        <ul class="doors" aria-label="Doors">
+          <li><a class="door" data-bar="0" href="#today"><i class="ic" data-icon="today"></i>Today <span class="badge num" data-source="timetable_run.report pii.educator_note.status pii.educator_note.received_at timetable_run.draft materials_line.quantity" aria-label="11 things waiting on you">11</span></a></li>
+          <li><a class="door" data-bar="1" href="#timetable"><i class="ic" data-icon="timetable"></i>Timetable</a></li>
+          <li><a class="door" data-bar="2" href="#children" aria-current="page"><i class="ic" data-icon="children"></i>Children</a></li>
+          <li><a class="door" data-bar="3" href="#setup"><i class="ic" data-icon="setup"></i>Setup</a></li>
+        </ul>
+        <label class="search"><i class="ic s" data-icon="search"></i><span class="vh">Search</span><input data-bar="4" type="search" placeholder="Sr. No., name or activity"></label>
+        <button class="barbtn press" data-bar="5" type="button" role="switch" aria-checked="false"><i class="ic" data-icon="acting-as"></i><span class="w">Acting as</span></button>
+        <a class="barbtn" data-bar="6" href="#help" aria-label="Help for this page"><i class="ic" data-icon="help"></i></a>
+        <button class="barbtn press" data-bar="7" type="button"><i class="ic" data-icon="sign-out"></i><span class="w">Sign out</span></button>
+      </header>
+      <ol class="trail" aria-label="Trail">
+        <li><a data-trail href="#children">Children</a></li>
+        <li><i class="ic s" data-icon="trail"></i></li>
+        <li><a data-trail href="#assessment">Exchange and regroup</a></li>
+        <li><i class="ic s" data-icon="trail"></i></li>
+        <li aria-current="page">Sr. No. 7</li>
+      </ol>
+      <div class="page">
+        <main class="main">
+          <div class="head">
+            <p class="eyebrow"><i class="ic s" data-icon="assessment"></i>Grade 4 · Sr. No. <span class="num" data-source="enrolment.roll_no">7</span> · <span data-source="prescription.difficulty">Hard</span></p>
+            <h1 class="title">Check the answers</h1>
+            <p class="purpose">The page as photographed, and each answer as the engine read it. Say what the child wrote where it was unsure; the engine marks it.</p>
+          </div>
+          <div class="keyrow" data-source="item_result.status item_result.working_shown" aria-label="Eight answers: 3 right, 1 wrong, 1 wrong with working, 1 blank, 2 for you to judge"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>3 right</span><span class="chip" data-state="wait"><i class="ic s" data-icon="fix-this"></i>1 wrong</span><span class="chip" data-state="wait"><i class="ic s" data-icon="fix-this"></i>1 wrong, with working</span><span class="chip" data-state="quiet"><i class="ic s" data-icon="to-do"></i>1 blank</span><span class="chip" data-state="late"><i class="ic s" data-icon="late"></i>2 for you to judge</span></div>
+          <div class="split">
+            <figure class="pimg" data-block="PageImage" data-source="capture.pages capture.qr_read">
+              <span class="qr" aria-hidden="true"></span>
+              <span class="hit" style="--x: 12%; --y: 18%; --w: 76%; --h: 9%"></span>
+              <figcaption>The child's page as photographed. Question 5 is outlined.</figcaption>
+            </figure>
+            <div class="table-box" data-block="DataTable">
+              <table class="table">
+                <thead><tr><th>Question</th><th>Read as</th><th class="st">Mark</th><th>Why</th></tr></thead>
+                <tbody>
+              <tr data-el="0">
+                <td class="num" data-source="item.stem item_result.rid">1.&nbsp;645&nbsp;−&nbsp;213</td>
+                <td class="num" data-source="item_result.raw_read read_correction.human_read">432</td>
+                <td class="st" data-source="item_result.status item_result.working_shown"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Right</span></td>
+                <td data-source="item_result.misconception_codes misconception.name item_result.read_confidence"></td>
+              </tr>
+              <tr data-el="0">
+                <td class="num" data-source="item.stem item_result.rid">2.&nbsp;502&nbsp;−&nbsp;267</td>
+                <td class="num" data-source="item_result.raw_read read_correction.human_read">345</td>
+                <td class="st" data-source="item_result.status item_result.working_shown"><span class="chip" data-state="wait"><i class="ic s" data-icon="fix-this"></i>Wrong, with working</span></td>
+                <td data-source="item_result.misconception_codes misconception.name item_result.read_confidence">Took the smaller digit from the larger in each column instead of exchanging. The working shows it.</td>
+              </tr>
+              <tr data-el="0">
+                <td class="num" data-source="item.stem item_result.rid">3.&nbsp;800&nbsp;−&nbsp;354</td>
+                <td class="num" data-source="item_result.raw_read read_correction.human_read">446</td>
+                <td class="st" data-source="item_result.status item_result.working_shown"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Right</span></td>
+                <td data-source="item_result.misconception_codes misconception.name item_result.read_confidence"></td>
+              </tr>
+              <tr data-el="0">
+                <td class="num" data-source="item.stem item_result.rid">4.&nbsp;731&nbsp;−&nbsp;485</td>
+                <td class="num" data-source="item_result.raw_read read_correction.human_read">254</td>
+                <td class="st" data-source="item_result.status item_result.working_shown"><span class="chip" data-state="wait"><i class="ic s" data-icon="fix-this"></i>Wrong</span></td>
+                <td data-source="item_result.misconception_codes misconception.name item_result.read_confidence">No working shown, so no reason can be named.</td>
+              </tr>
+              <tr data-el="0" aria-current="true">
+                <td class="num" data-source="item.stem item_result.rid">5.&nbsp;604&nbsp;−&nbsp;178</td>
+                <td class="num" data-source="item_result.raw_read read_correction.human_read">426 or 436</td>
+                <td class="st" data-source="item_result.status item_result.working_shown"><span class="chip" data-state="late"><i class="ic s" data-icon="late"></i>For you to judge</span></td>
+                <td data-source="item_result.misconception_codes misconception.name item_result.read_confidence">The engine was 61% sure of the last digit.</td>
+              </tr>
+              <tr data-el="0">
+                <td class="num" data-source="item.stem item_result.rid">6.&nbsp;910&nbsp;−&nbsp;526</td>
+                <td class="num" data-source="item_result.raw_read read_correction.human_read"><span class="muted">nothing</span></td>
+                <td class="st" data-source="item_result.status item_result.working_shown"><span class="chip" data-state="quiet"><i class="ic s" data-icon="to-do"></i>Blank</span></td>
+                <td data-source="item_result.misconception_codes misconception.name item_result.read_confidence">Nothing written. Blank is never marked wrong.</td>
+              </tr>
+              <tr data-el="0">
+                <td class="num" data-source="item.stem item_result.rid">7.&nbsp;480&nbsp;−&nbsp;295</td>
+                <td class="num" data-source="item_result.raw_read read_correction.human_read">185</td>
+                <td class="st" data-source="item_result.status item_result.working_shown"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Right</span></td>
+                <td data-source="item_result.misconception_codes misconception.name item_result.read_confidence"></td>
+              </tr>
+              <tr data-el="0">
+                <td class="num" data-source="item.stem item_result.rid">8.&nbsp;372&nbsp;−&nbsp;189</td>
+                <td class="num" data-source="item_result.raw_read read_correction.human_read">183 or 188</td>
+                <td class="st" data-source="item_result.status item_result.working_shown"><span class="chip" data-state="late"><i class="ic s" data-icon="late"></i>For you to judge</span></td>
+                <td data-source="item_result.misconception_codes misconception.name item_result.read_confidence">The engine was 54% sure of the last digit.</td>
+              </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="card" data-kind="assessment">
+            <div class="card-h"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span>Question 5: 604 − 178</div>
+            <div class="card-b">
+              <span data-source="item_result.raw_read item_result.read_confidence">The engine read <b>426 or 436</b> and was <span class="num">61</span>% sure.</span>
+              <form class="form" data-block="Form">
+                <div class="field"><label for="wrote">What the child wrote for question 5</label><input data-el="1" id="wrote" inputmode="numeric" placeholder="Type the number you see" required></div>
+                <div class="keyrow"><button class="btn btn-main press" data-el="2" type="submit">Say what the child wrote</button><button class="btn press" data-el="3" type="button">Blank (the child wrote nothing)</button></div>
+                <span class="caption">You say what was written; the engine marks it. Your answer is a new line beside the engine's read, never over it.</span>
+              </form>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: when nothing is left to judge</div>
+            <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="done"></i><b>Nothing left to judge on this paper</b><span class="muted">Sign it off to confirm its results. In this state it is the page's main action; it is absent while any answer is for you to judge.</span><button class="btn press" data-el="4" type="button">Sign this paper off</button></div></div>
+          </div>
+        </main>
+        <aside class="rail" aria-label="Connected to">
+          <section class="rail-box">
+            <h2>Connected to</h2>
+            <ul class="rlist">
+<li><a class="ritem" data-el="5" href="#child"><span class="tile" data-kind="child"><i class="ic" data-icon="child"></i></span><span>This child<small data-source="enrolment.roll_no">Sr. No. 7, Grade 4</small></span></a></li>
+<li><a class="ritem" data-el="6" href="#skill"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><span>The skill<small data-source="skill.name">Exchange and regroup</small></span></a></li>
+<li><a class="ritem" data-el="7" href="#assessment"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><span>The assessment<small data-source="sheet_instance.key">Subtraction · Grade 4 · 23 papers</small></span></a></li>
+<li><a class="ritem" data-el="8" href="#paper"><span class="tile" data-kind="assessment"><i class="ic" data-icon="correct"></i></span><span>The next paper to check<small data-source="enrolment.roll_no item_result.status">Sr. No. 11, 3 answers to judge</small></span></a></li>
+            </ul>
+          </section>
+          <section class="rail-box" data-block="KeyValue">
+            <h2>This scan</h2>
+            <dl class="kv">
+              <dt>Sheet</dt><dd class="num" data-source="sheet_instance.qr_code capture.qr_read">CS4F2A91</dd>
+              <dt>QR</dt><dd data-source="capture.qr_read">read, and it belongs to this assessment</dd>
+              <dt>Scanned</dt><dd class="num" data-source="capture.created_at">17-Nov, 10:12</dd>
+              <dt>By</dt><dd data-source="capture.uploaded_by pii.staff.name">Chetan Clove</dd>
+              <dt>Pages</dt><dd class="num" data-source="capture.pages">1</dd>
+            </dl>
+          </section>
+        </aside>
+      </div>
+      <nav class="tabbar" aria-label="Doors">
+        <a class="tab" data-bar="0" href="#today"><i class="ic" data-icon="today"></i>Today</a>
+        <a class="tab" data-bar="1" href="#timetable"><i class="ic" data-icon="timetable"></i>Timetable</a>
+        <a class="tab" data-bar="2" href="#children" aria-current="page"><i class="ic" data-icon="children"></i>Children</a>
+        <a class="tab" data-bar="3" href="#setup"><i class="ic" data-icon="setup"></i>Setup</a>
+      </nav>
+    </div>
+  </section>
+</div>
+</body>
+</html>

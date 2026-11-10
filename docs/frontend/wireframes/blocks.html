@@ -167,11 +167,11 @@
   </section>
 
   <section><h2>HeatGrid</h2>
-    <div class="heat" data-block="HeatGrid" style="--cols: 3">
+    <div class="heat-box"><div class="heat" data-block="HeatGrid" style="--cols: 3">
       <span class="h"></span><span class="h">Mon</span><span class="h">Tue</span><span class="h">Wed</span>
       <span class="h">K2 Red</span><span class="hc" data-state="ok"><i class="ic s" data-icon="done"></i>Done</span><span class="hc" data-state="wait"><i class="ic s" data-icon="moved"></i>Moved</span><span class="hc" data-state="quiet"><i class="ic s" data-icon="to-do"></i>Not done</span>
-      <span class="h">K2 Blue</span><span class="hc" data-state="ok"><i class="ic s" data-icon="done"></i>Done</span><span class="hc" data-state="ok"><i class="ic s" data-icon="done"></i>Done</span><span class="hc" data-state="quiet"><i class="ic s" data-icon="frozen"></i>Holiday</span>
-    </div>
+      <span class="h">K2 Blue</span><span class="hc" data-state="ok"><i class="ic s" data-icon="done"></i>Done</span><span class="hc" data-state="ok"><i class="ic s" data-icon="done"></i>Done</span><span class="hc" data-state="unseen"><i class="ic s" data-icon="frozen"></i>Holiday</span>
+    </div></div>
   </section>
 
   <section><h2>FortnightGrid</h2>
@@ -264,7 +264,7 @@
   </section>
 
   <section><h2>PageImage</h2>
-    <figure class="pimg" data-block="PageImage"><span class="qr" aria-hidden="true"></span><figcaption>The child's page as photographed</figcaption></figure>
+    <div class="split"><figure class="pimg" data-block="PageImage"><span class="qr" aria-hidden="true"></span><span class="hit" style="--x: 12%; --y: 42%; --w: 76%; --h: 10%"></span><figcaption>The child's page as photographed; the answer in focus is outlined</figcaption></figure><p class="muted">Pattern: <code>.split</code> puts the page image beside the table of its answers, and one column on a phone.</p></div>
   </section>
 
   <section><h2>EmptyState</h2>
