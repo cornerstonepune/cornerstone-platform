@@ -1,16 +1,29 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import { peekHistory } from "@/app/(app)/notes/peek";
 import { ChildPeek, NameChip, type Peeked } from "./child-peek";
+import type { Seen } from "./timeline";
 
 // The children a screen names, as chips that open ChildPeek (SPEC §5): the address carries the Sr. No. (`?peek=03`, never a
-// name), Close or Escape closes it and focus returns to the chip. The history under the child (notes, observations, papers,
-// state changes) has no read behind it yet (issue #565 asks for one); until then the panel shows the child and the way on.
-export type PeekKid = Peeked & { href: string };
+// name), Close or Escape closes it and focus returns to the chip. The history under the child is read when it opens
+// (POST /k2/child-history through the `peekHistory` action): observations, evidence and papers, newest first, each with who and
+// when. A note shows no words here and the engine keeps no "state changed" entry, so the evidence that moved a state is shown.
+export type PeekKid = Peeked & { href: string; classId: string; roll: string };
 const Ctx = createContext<(k: PeekKid) => void>(() => undefined);
 
 export function PeekHost({ children }: { children: React.ReactNode }) {
   const [kid, setKid] = useState<PeekKid | null>(null);
+  const [read, setRead] = useState<{ no: string; entries: Seen[] } | null>(null);
+  const entries = kid && read?.no === kid.no ? read.entries : [];
+  useEffect(() => {
+    if (!kid) return;
+    let live = true;
+    peekHistory(kid.classId, kid.roll).then((got) => live && setRead({ no: kid.no, entries: got })).catch(() => undefined);
+    return () => {
+      live = false;
+    };
+  }, [kid]);
   const open = (k: PeekKid) => {
     setKid(k);
     const u = new URL(window.location.href);
@@ -26,7 +39,7 @@ export function PeekHost({ children }: { children: React.ReactNode }) {
   return (
     <Ctx.Provider value={open}>
       {children}
-      {kid ? <ChildPeek child={kid} counts={[]} entries={[]} openHref={kid.href} onClose={close} /> : null}
+      {kid ? <ChildPeek child={kid} counts={[]} entries={entries} openHref={kid.href} onClose={close} /> : null}
     </Ctx.Provider>
   );
 }

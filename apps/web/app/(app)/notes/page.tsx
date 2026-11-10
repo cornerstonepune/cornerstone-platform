@@ -7,8 +7,10 @@ import { PeekChip, PeekHost } from "@/components/peek-names";
 import { Rail, Screen } from "@/components/app-frame";
 import { StatusChip, type State } from "@/components/status-chip";
 import { requireStaff } from "@/lib/auth";
-import { activityNames, childrenByIds, classNotes, type ClassNote } from "@/lib/notes-loop";
+import { activityNames, childrenByIds, classNotes, coordinatorNotes, type ClassNote } from "@/lib/notes-loop";
 import { schoolToday } from "@/lib/school-clock";
+import { notFound } from "next/navigation";
+import { voiceOn } from "@/lib/voice";
 import { herVoice } from "@/lib/voice-page";
 import { classWords } from "@/lib/voice-types";
 import { pageOf } from "@/lib/ux-rules";
@@ -32,7 +34,10 @@ const group = (n: ClassNote) => (n.state === "confirmed" ? "confirmed" : n.state
 
 export default async function Notes({ searchParams }: { searchParams: Promise<{ class?: string; state?: string; week?: string; view?: string; page?: string }> }) {
   const me = await requireStaff();
-  const my = await herVoice(me);
+  // a coordinator reads every class of the campus (the engine's coordinator list); an educator her own classes
+  const coord = me.role === "coordinator";
+  if (coord && !(await voiceOn())) notFound();
+  const my = coord ? { classes: [] as { id: string; grade: string; section: string }[], notes: [], recording: false } : await herVoice(me);
   const q = await searchParams;
   const week: Week = q.week && q.week in WEEKS ? (q.week as Week) : "fortnight";
   const state = q.state && q.state in STATES ? q.state : undefined;
@@ -41,10 +46,13 @@ export default async function Notes({ searchParams }: { searchParams: Promise<{ 
   const today = await schoolToday();
   const [span, skip] = [WEEKS[week][1], week === "last" ? 7 : 0];
   const days = Array.from({ length: span }, (_, i) => day(today, i + skip));
-  const got = await Promise.all(classes.flatMap((c) => days.map(async (d) => ((await classNotes(me, c.id, d))?.notes ?? []).map((n): Row => ({ ...n, klass: classWords(c), class_id: c.id })))));
+  const got = coord
+    ? await Promise.all(days.map(async (d) => ((await coordinatorNotes(me, d))?.notes ?? []).map((n): Row => ({ ...n, klass: n.class ?? "", class_id: n.class_id ?? "" }))))
+    : await Promise.all(classes.flatMap((c) => days.map(async (d) => ((await classNotes(me, c.id, d))?.notes ?? []).map((n): Row => ({ ...n, klass: classWords(c), class_id: c.id })))));
+  const everyClass = coord ? [...new Map(got.flat().map((n) => [n.class_id, n.klass])).entries()] : my.classes.map((c) => [c.id, classWords(c)] as const);
   // late ones first, then the oldest waiting, then the confirmed, newest first
   const rank = (n: Row) => (n.state === "left_unconfirmed" ? 0 : n.state === "confirmed" ? 2 : 1);
-  const all = got.flat().filter((n) => !state || group(n) === state).sort((a, b) => rank(a) - rank(b) || (rank(a) === 2 ? b.received_at.localeCompare(a.received_at) : a.received_at.localeCompare(b.received_at)));
+  const all = got.flat().filter((n) => (!state || group(n) === state) && (!q.class || n.class_id === q.class)).sort((a, b) => rank(a) - rank(b) || (rank(a) === 2 ? b.received_at.localeCompare(a.received_at) : a.received_at.localeCompare(b.received_at)));
   const kids = await childrenByIds(me, [...new Set(all.flatMap((n) => n.children))]);
   const names = await activityNames(all.flatMap((n) => (n.activity ? [n.activity] : [])));
   const href = (extra: Record<string, string>) => {
@@ -64,7 +72,7 @@ export default async function Notes({ searchParams }: { searchParams: Promise<{ 
   return (
     <PeekHost>
       <Screen
-        stage={`${my.classes.length === 1 ? classWords(my.classes[0]) : "Your classes"} · ${WEEKS[week][0].toLowerCase()}`}
+        stage={`${everyClass.length === 1 ? everyClass[0][1] : coord ? "Every class" : "Your classes"} · ${WEEKS[week][0].toLowerCase()}`}
         title="Notes"
         purpose="Every note of your classes: waiting, confirmed, left unconfirmed. Open one to confirm it or to correct a confirmed one."
         action={
@@ -79,13 +87,13 @@ export default async function Notes({ searchParams }: { searchParams: Promise<{ 
           )
         }
         next={{ href: "/today", label: "Today" }}
-        rail={<Rail edges={[{ screen: "record", label: "Record a note", icon: "record" }, { screen: "picture", params: { class: my.classes[0]?.id ?? "" }, label: "Class picture", icon: "class" }, { screen: "today-educator", label: "Today", icon: "today" }]} capture={<Link href="/record" className="b-btn b-btn-capture">Voice note</Link>} />}
+        rail={<Rail edges={[{ screen: "record", label: "Record a note", icon: "record" }, { screen: "picture", params: { class: everyClass[0]?.[0] ?? "" }, label: "Class picture", icon: "class" }, { screen: "today-educator", label: "Today", icon: "today" }]} capture={<Link href="/record" className="b-btn b-btn-capture">Voice note</Link>} />}
       >
         <FilterBar
           action="/notes"
           keep={{ view: view === "table" ? "table" : undefined }}
           filters={[
-            ...(my.classes.length > 1 ? [{ name: "class", label: "Class", value: q.class, all: "All classes", options: my.classes.map((c) => [c.id, classWords(c)] as const) }] : []),
+            ...(everyClass.length > 1 ? [{ name: "class", label: "Class", value: q.class, all: "All classes", options: everyClass.map(([id, words]) => [id, words] as const) }] : []),
             { name: "state", label: "State", value: state, all: "All", options: Object.entries(STATES) },
             { name: "week", label: "Week", value: q.week ? week : undefined, all: "This fortnight", options: Object.entries(WEEKS).map(([k, v]) => [k, v[0]] as const) },
           ]}
@@ -114,7 +122,7 @@ export default async function Notes({ searchParams }: { searchParams: Promise<{ 
                 value: (n) => n.children.length,
                 cell: (n) => (
                   <ul className="b-nchips">
-                    {n.children.slice(0, 2).flatMap((id) => (kid(id) ? [<li key={id}><PeekChip kid={{ ...kid(id), href: `/children/${kid(id).classId}/${Number(kid(id).no)}` }} /></li>] : []))}
+                    {n.children.slice(0, 2).flatMap((id) => (kid(id) ? [<li key={id}><PeekChip kid={{ ...kid(id), href: `/children/${kid(id).classId}/${Number(kid(id).no)}`, classId: kid(id).classId, roll: String(Number(kid(id).no)) }} /></li>] : []))}
                     {n.children.length > 2 ? <li className="muted">+{n.children.length - 2} more</li> : null}
                   </ul>
                 ),

@@ -131,3 +131,26 @@ test("Notes: a correction writes a superseding row with a reason and never updat
   const [old] = await sql<{ outcome: string }[]>`select outcome from activity_observation where id = ${first.id}`;
   expect(old.outcome).toBe("above");
 });
+
+test("Notes: tapping a child opens ChildPeek with the history, Escape closes it and focus returns, 'Open the child' leads on", async ({ page }) => {
+  const note = await aK2Note(sql, { klass, staff }, "Activity 904, level 2. Above 3.");
+  await page.goto(`/notes/${note}`);
+  await page.getByRole("button", { name: "Confirm this note" }).click();
+  await page.waitForURL(/\/notes/);
+  await page.goto(`/notes?class=${klass}&view=table`);
+  const chip = page.locator("[data-peek-open]").first();
+  await chip.click();
+  const peek = page.locator("[data-block=ChildPeek]");
+  await expect(peek).toBeVisible();
+  await expect(peek.locator("li.b-tli").first()).toBeVisible(); // the observation just confirmed, newest first
+  await expect(peek.getByRole("link", { name: "Open the child" })).toHaveAttribute("href", new RegExp(`^/children/${klass}/`));
+  await page.keyboard.press("Escape");
+  await expect(peek).toHaveCount(0);
+  await expect(chip).toBeFocused();
+});
+
+test("Notes: the coordinator sees the notes of every class of the campus", async ({ page }) => {
+  const note = await aK2Note(sql, { klass, staff }, "Activity 904, level 2. Above 3.");
+  await page.goto("/notes?view=table");
+  await expect(page.locator(`a[href="/notes/${note}"]`).first()).toBeVisible();
+});

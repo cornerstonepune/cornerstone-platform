@@ -12,6 +12,9 @@ import type { Peeked } from "@/components/child-peek";
 export type NoteState = "being_read" | "fix_this" | "to_confirm" | "left_unconfirmed" | "confirmed";
 export type ClassNote = {
   note_id: string;
+  /** the class and its words, on the coordinator's list */
+  class_id?: string;
+  class?: string;
   status: string;
   state: NoteState;
   typed: boolean;
@@ -73,4 +76,12 @@ export async function activityNames(codes: string[]): Promise<Record<string, str
   if (!list.length) return {};
   const rows = await sql<{ code: string; name: string }[]>`select code, name from activity where code = any(${list}::text[])`;
   return Object.fromEntries(rows.map((r) => [r.code, r.name]));
+}
+
+/** Every educator's notes of every class of the coordinator's campus on a day (coordinators only; null for anyone else). */
+export async function coordinatorNotes(me: Pick<Session, "email">, day?: string): Promise<ClassNotes | null> {
+  const res = await engineSend("/voice/coordinator-notes", { actor: me.email, ...(day ? { day } : {}) });
+  if (res.status === 403 || res.status === 404) return null;
+  if (!res.ok) throw new EngineDown(`The engine refused that (${res.status}).`);
+  return (await res.json()) as ClassNotes;
 }

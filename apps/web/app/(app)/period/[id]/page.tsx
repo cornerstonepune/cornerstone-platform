@@ -87,7 +87,7 @@ export default async function Period({ params }: { params: Promise<{ id: string 
                       <div key={n.outcome} className="grid gap-1" data-named={n.outcome}>
                         <span className="text-[13px] text-[var(--ink-muted)]">{words[n.outcome] ?? n.outcome}</span>
                         <ul className="b-nchips">
-                          {n.children.flatMap((cid) => (named[cid] ? [<li key={cid}><PeekChip kid={{ ...named[cid], href: `/children/${named[cid].classId}/${Number(named[cid].no)}` }} /></li>] : []))}
+                          {n.children.flatMap((cid) => (named[cid] ? [<li key={cid}><PeekChip kid={{ ...named[cid], href: `/children/${named[cid].classId}/${Number(named[cid].no)}`, classId: named[cid].classId, roll: String(Number(named[cid].no)) }} /></li>] : []))}
                         </ul>
                       </div>
                     ) : null,
