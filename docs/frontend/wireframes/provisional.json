@@ -3,8 +3,6 @@
   "decided_in": "https://github.com/cornerstonepune/cornerstone-platform/issues/551",
   "columns": {
     "child_skill_state": ["kind", "named_days", "adults", "rechecked_on"],
-    "fortnight": ["state"],
-    "item": ["key", "review"],
     "curriculum_proposal": ["check_me"],
     "pii.educator_note": ["session_id", "route"],
     "pii.note_claim": ["flag", "outcome", "entry_mode", "child_id"]
