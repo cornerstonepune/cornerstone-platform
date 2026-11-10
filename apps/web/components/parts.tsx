@@ -65,9 +65,9 @@ export function Bar({ tone, share, width }: { tone: Tone; share: number; width: 
   );
 }
 
-export function Notice({ tone, children }: { tone: "neem" | "terracotta"; children: ReactNode }) {
+export function Notice({ tone, children, alert }: { tone: "neem" | "terracotta"; children: ReactNode; alert?: boolean }) {
   return (
-    <p className={`mb-4 border p-3 text-[13.5px] ${tone === "neem" ? "border-neem/30 bg-neem/10" : "border-terracotta/30 bg-terracotta/10"}`} role="status">
+    <p className={`mb-4 border p-3 text-[13.5px] ${tone === "neem" ? "border-neem/30 bg-neem/10" : "border-terracotta/30 bg-terracotta/10"}`} role={alert ? "alert" : "status"}>
       {children}
     </p>
   );
