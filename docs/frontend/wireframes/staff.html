@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wireframe: Staff and classes (staff)</title>
+<link rel="stylesheet" href="kit.css">
+</head>
+<!-- Wireframe of screens.json "staff" (/setup/staff), drawn as the coordinator (the everything group: the only viewer who sees staff names). Rows are grouped by role with a count over each group (computed from staff_role_grant; nothing stored). The three numbers are plain figures in the order the rows come (by role, then name): no sort control, no rank, no colour. One person's grants fold is drawn open with the Add a grant form under it (the main action) and an End a grant button on each open grant. A second block lists the last grant changes from change_log.
+     data-el = index in screens.json staff.elements; data-bar = index in screens.json bar; data-source = target
+     table.column; data-gap = what the target tables cannot give. Both frames hold the same markup: the phone layout
+     comes from kit.css container queries, as it will on the site. Names are from fake-names.json. -->
+<body>
+<div class="wf-sheet">
+  <header>
+    <p class="wf-label">staff · Staff and classes · /setup/staff · laptop 1440 and phone 400 · add data-theme="dark" on &lt;html&gt; for dark</p>
+  </header>
+  <section class="wf" data-viewport="1440" aria-label="Laptop, 1440 px">
+    <div class="frame">
+      <header class="bar">
+        <a class="brand" data-bar="0" href="#today" aria-label="Cornerstone Gurukul, go to Today">
+          <img class="wide on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-colour.svg" alt="">
+          <img class="wide on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-for-dark-backgrounds.svg" alt="">
+          <img class="small on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark.svg" alt="">
+          <img class="small on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark-on-white-tile.svg" alt="">
+        </a>
+        <ul class="doors" aria-label="Doors">
+          <li><a class="door" data-bar="0" href="#today"><i class="ic" data-icon="today"></i>Today <span class="badge num" data-source="pii.educator_note.status pii.educator_note.received_at" aria-label="7 notes to confirm">7</span></a></li>
+          <li><a class="door" data-bar="1" href="#timetable"><i class="ic" data-icon="timetable"></i>Timetable</a></li>
+          <li><a class="door" data-bar="2" href="#children"><i class="ic" data-icon="children"></i>Children</a></li>
+          <li><a class="door" data-bar="3" href="#setup" aria-current="page"><i class="ic" data-icon="setup"></i>Setup</a></li>
+        </ul>
+        <label class="search"><i class="ic s" data-icon="search"></i><span class="vh">Search</span><input data-bar="4" type="search" placeholder="Sr. No., name or activity"></label>
+        <button class="barbtn press" data-bar="5" type="button" role="switch" aria-checked="false"><i class="ic" data-icon="acting-as"></i><span class="w">Acting as</span></button>
+        <a class="barbtn" data-bar="6" href="#help" aria-label="Help for this page"><i class="ic" data-icon="help"></i></a>
+        <button class="barbtn press" data-bar="7" type="button"><i class="ic" data-icon="sign-out"></i><span class="w">Sign out</span></button>
+      </header>
+      <ol class="trail" aria-label="Trail">
+        <li><a data-trail href="#setup">Setup</a></li>
+        <li><i class="ic s" data-icon="trail"></i></li>
+        <li aria-current="page">Staff and classes</li>
+      </ol>
+      <div class="page">
+        <main class="main">
+          <div class="head">
+            <p class="eyebrow"><i class="ic s" data-icon="educator"></i>This fortnight · <span data-source="fortnight.number fortnight.starts_on fortnight.ends_on">Fortnight 9, 16-Nov to 27-Nov</span> · <span class="num" data-source="staff.active">7</span> staff</p>
+            <h1 class="title">Staff and classes</h1>
+            <p class="purpose">Who teaches which class, and three numbers the database can stand behind per class. No ranking: the school decides what they mean.</p>
+          </div>
+          <div class="card">
+            <div class="card-h"><i class="ic s" data-icon="details"></i>What the three numbers are</div>
+            <div class="card-b"><span class="muted">Sessions done of planned: the class's lessons this fortnight marked done, out of those planned. Notes late: notes past 48 hours still to confirm. Reader accuracy: of the reader's claims the educator decided, the share kept as read. The rows are in role order, then name; they cannot be sorted by these numbers.</span></div>
+          </div>
+          <div class="groups">
+            <div class="grp" aria-label="Coordinator, 1 person">
+              <h3 class="grp-h"><i class="ic s" data-icon="coordinator"></i>Coordinator <span class="count num">1</span></h3>
+              <div class="table-box" data-block="DataTable">
+                <table class="table">
+                  <thead><tr><th>Name</th><th>Role</th><th>Class</th><th class="n">Sessions done of planned</th><th class="n">Notes late</th><th class="n">Reader accuracy</th></tr></thead>
+                  <tbody>
+                  <tr data-el="0">
+                    <td data-source="pii.staff.name staff.active">Esha Elder</td>
+                    <td data-source="role.label staff_role_grant.role_code">Coordinator</td>
+                    <td data-source="staff_role_grant.school_class_id school_class.label">every class</td>
+                    <td class="n num" data-source="session.state session.planned session.led_by_staff_id">–</td>
+                    <td class="n num" data-source="pii.educator_note.status pii.educator_note.received_at pii.educator_note.staff_id">–</td>
+                    <td class="n num" data-source="pii.note_claim.decision pii.note_claim.decided_by">–</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="grp" aria-label="Class educator, 4 people">
+              <h3 class="grp-h"><i class="ic s" data-icon="educator"></i>Class educator <span class="count num">4</span></h3>
+              <div class="table-box" data-block="DataTable">
+                <table class="table">
+                  <thead><tr><th>Name</th><th>Role</th><th>Class</th><th class="n">Sessions done of planned</th><th class="n">Notes late</th><th class="n">Reader accuracy</th></tr></thead>
+                  <tbody>
+                  <tr data-el="0">
+                    <td data-source="pii.staff.name staff.active">Asha Almond</td>
+                    <td data-source="role.label staff_role_grant.role_code">Class educator</td>
+                    <td data-source="staff_role_grant.school_class_id school_class.label">K2 Red</td>
+                    <td class="n num" data-source="session.state session.planned session.led_by_staff_id">34 of 40</td>
+                    <td class="n num" data-source="pii.educator_note.status pii.educator_note.received_at pii.educator_note.staff_id">0</td>
+                    <td class="n num" data-source="pii.note_claim.decision pii.note_claim.decided_by">91%</td>
+                  </tr>
+                  <tr data-el="0">
+                    <td data-source="pii.staff.name staff.active">Bina Basil</td>
+                    <td data-source="role.label staff_role_grant.role_code">Class educator</td>
+                    <td data-source="staff_role_grant.school_class_id school_class.label">K2 Blue</td>
+                    <td class="n num" data-source="session.state session.planned session.led_by_staff_id">31 of 40</td>
+                    <td class="n num" data-source="pii.educator_note.status pii.educator_note.received_at pii.educator_note.staff_id">2</td>
+                    <td class="n num" data-source="pii.note_claim.decision pii.note_claim.decided_by">88%</td>
+                  </tr>
+                  <tr data-el="0">
+                    <td data-source="pii.staff.name staff.active">Chetan Clove</td>
+                    <td data-source="role.label staff_role_grant.role_code">Class educator</td>
+                    <td data-source="staff_role_grant.school_class_id school_class.label">Grade 1</td>
+                    <td class="n num" data-source="session.state session.planned session.led_by_staff_id">28 of 36</td>
+                    <td class="n num" data-source="pii.educator_note.status pii.educator_note.received_at pii.educator_note.staff_id">1</td>
+                    <td class="n num" data-source="pii.note_claim.decision pii.note_claim.decided_by">94%</td>
+                  </tr>
+                  <tr data-el="0">
+                    <td data-source="pii.staff.name staff.active">Dev Dill</td>
+                    <td data-source="role.label staff_role_grant.role_code">Class educator</td>
+                    <td data-source="staff_role_grant.school_class_id school_class.label">Grade 2</td>
+                    <td class="n num" data-source="session.state session.planned session.led_by_staff_id">30 of 36</td>
+                    <td class="n num" data-source="pii.educator_note.status pii.educator_note.received_at pii.educator_note.staff_id">0</td>
+                    <td class="n num" data-source="pii.note_claim.decision pii.note_claim.decided_by">90%</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="grp" aria-label="Subject educator, 2 people">
+              <h3 class="grp-h"><i class="ic s" data-icon="educator"></i>Subject educator <span class="count num">2</span></h3>
+              <div class="table-box" data-block="DataTable">
+                <table class="table">
+                  <thead><tr><th>Name</th><th>Role</th><th>Class</th><th class="n">Sessions done of planned</th><th class="n">Notes late</th><th class="n">Reader accuracy</th></tr></thead>
+                  <tbody>
+                  <tr data-el="0">
+                    <td data-source="pii.staff.name staff.active">Farah Fennel</td>
+                    <td data-source="role.label staff_role_grant.role_code">Subject educator (Arts)</td>
+                    <td data-source="staff_role_grant.school_class_id school_class.label">K2 Red, K2 Blue</td>
+                    <td class="n num" data-source="session.state session.planned session.led_by_staff_id">7 of 8</td>
+                    <td class="n num" data-source="pii.educator_note.status pii.educator_note.received_at pii.educator_note.staff_id">0</td>
+                    <td class="n num" data-source="pii.note_claim.decision pii.note_claim.decided_by">86%</td>
+                  </tr>
+                  <tr data-el="0">
+                    <td data-source="pii.staff.name staff.active">Gopal Ginger</td>
+                    <td data-source="role.label staff_role_grant.role_code">Subject educator (Language)</td>
+                    <td data-source="staff_role_grant.school_class_id school_class.label">Grade 1, Grade 2</td>
+                    <td class="n num" data-source="session.state session.planned session.led_by_staff_id">11 of 12</td>
+                    <td class="n num" data-source="pii.educator_note.status pii.educator_note.received_at pii.educator_note.staff_id">1</td>
+                    <td class="n num" data-source="pii.note_claim.decision pii.note_claim.decided_by">92%</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <details class="details" data-block="Details" open><summary data-el="1"><i class="ic s" data-icon="details"></i>Bina Basil's grants</summary><div>
+            <ol class="timeline" data-block="Timeline">
+              <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="educator"></i></span><div><b><span data-source="role.label staff_role_grant.role_code">Class educator</span> · <span data-source="staff_role_grant.school_class_id school_class.label">K2 Blue</span> · <span data-source="staff_role_grant.subject_code subject.name">every subject</span></b><p>From <span class="num" data-source="staff_role_grant.valid_from">1-Jun-2026</span> to <span class="num" data-source="staff_role_grant.valid_to">open</span> · granted by <span data-source="staff_role_grant.granted_by pii.staff.name">Esha Elder</span></p></div><button class="btn press" data-el="3" type="button">End a grant</button></li>
+              <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="educator"></i></span><div><b><span data-source="role.label staff_role_grant.role_code">Subject educator</span> · <span data-source="staff_role_grant.school_class_id school_class.label">K2 Red</span> · <span data-source="staff_role_grant.subject_code subject.name">Language</span></b><p>From <span class="num" data-source="staff_role_grant.valid_from">1-Jun-2026</span> to <span class="num" data-source="staff_role_grant.valid_to">open</span> · granted by <span data-source="staff_role_grant.granted_by pii.staff.name">Esha Elder</span></p></div><button class="btn press" data-el="3" type="button">End a grant</button></li>
+              <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="history"></i></span><div><b><span data-source="role.label staff_role_grant.role_code">Class educator</span> · <span data-source="staff_role_grant.school_class_id school_class.label">K2 Red</span> · <span data-source="staff_role_grant.subject_code subject.name">every subject</span></b><p>From <span class="num" data-source="staff_role_grant.valid_from">1-Jun-2025</span> to <span class="num" data-source="staff_role_grant.valid_to">31-May-2026</span> · granted by <span data-source="staff_role_grant.granted_by pii.staff.name">Esha Elder</span></p></div><span class="chip" data-state="quiet"><i class="ic s" data-icon="frozen"></i>Ended</span></li>
+            </ol>
+            <div class="toolbar"><button class="btn btn-main press" data-el="2" type="button"><i class="ic" data-icon="checklist"></i>Add a grant</button></div>
+            <div class="card">
+              <div class="card-h"><i class="ic s" data-icon="form"></i>Inset: the form Add a grant opens</div>
+              <div class="card-b">
+                <dl class="kv" data-block="KeyValue">
+                  <dt>Role</dt><dd data-source="role.label role.code">Class educator (from the role rows)</dd>
+                  <dt>Class</dt><dd data-source="school_class.label">Grade 1</dd>
+                  <dt>Subject</dt><dd data-source="subject.name">every subject</dd>
+                  <dt>From</dt><dd class="num" data-source="staff_role_grant.valid_from">16-Nov-2026</dd>
+                </dl>
+                <div class="keyrow"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>Held twice: Grade 1 has one</span></div>
+                <span class="caption">Save writes one staff_role_grant row. The database's own checks show as messages: a class educator needs a class; one class cannot be held twice.</span>
+              </div>
+            </div>
+          </div></details>
+          <h2 class="title-section">Last changes to grants</h2>
+          <ol class="timeline" data-block="Timeline">
+            <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="history"></i></span><div><b data-source="change_log.op change_log.after">Gopal Ginger: Subject educator, Grade 2, Language, from 2-Nov</b><p>Added by <span data-source="change_log.staff_id pii.staff.name">Esha Elder</span></p></div><span class="caption num" data-source="change_log.at">2-Nov</span></li>
+            <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="history"></i></span><div><b data-source="change_log.op change_log.before change_log.after">Dev Dill: Class educator, Grade 1, ended 31-Oct</b><p>Ended by <span data-source="change_log.staff_id pii.staff.name">Esha Elder</span> · nothing deleted</p></div><span class="caption num" data-source="change_log.at">31-Oct</span></li>
+            <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="history"></i></span><div><b data-source="change_log.op change_log.after">Chetan Clove: Class educator, Grade 1, from 1-Nov</b><p>Added by <span data-source="change_log.staff_id pii.staff.name">Esha Elder</span></p></div><span class="caption num" data-source="change_log.at">31-Oct</span></li>
+          </ol>
+        </main>
+        <aside class="rail" aria-label="Connected to">
+          <section class="rail-box">
+            <h2>Connected to</h2>
+            <ul class="rlist">
+              <li><a class="ritem" data-el="4" href="#fortnight"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span><span><span data-source="fortnight.number">Fortnight 9</span><small data-source="fortnight.state">live</small></span></a></li>
+              <li><a class="ritem" data-el="5" href="#timetable"><span class="tile" data-kind="period"><i class="ic" data-icon="timetable"></i></span><span>Timetable<small>every class</small></span></a></li>
+              <li><a class="ritem" data-el="6" href="#classes"><span class="tile" data-kind="child"><i class="ic" data-icon="class"></i></span><span>Classes and children<small><span class="num" data-source="school_class.id">6</span> classes</small></span></a></li>
+            </ul>
+          </section>
+          <section class="rail-box">
+            <h2>Grants open now</h2>
+            <dl class="kv" data-block="KeyValue">
+              <dt>Class educator</dt><dd class="num" data-source="staff_role_grant.role_code staff_role_grant.valid_to">6</dd>
+              <dt>Subject educator</dt><dd class="num" data-source="staff_role_grant.role_code staff_role_grant.valid_to">4</dd>
+              <dt>Coordinator</dt><dd class="num" data-source="staff_role_grant.role_code staff_role_grant.valid_to">1</dd>
+              <dt>Ended this year</dt><dd class="num" data-source="staff_role_grant.valid_to">3</dd>
+            </dl>
+          </section>
+        </aside>
+      </div>
+      <nav class="tabbar" aria-label="Doors">
+        <a class="tab" data-bar="0" href="#today"><i class="ic" data-icon="today"></i>Today</a>
+        <a class="tab" data-bar="1" href="#timetable"><i class="ic" data-icon="timetable"></i>Timetable</a>
+        <a class="tab" data-bar="2" href="#children"><i class="ic" data-icon="children"></i>Children</a>
+        <a class="tab" data-bar="3" href="#setup" aria-current="page"><i class="ic" data-icon="setup"></i>Setup</a>
+      </nav>
+    </div>
+  </section>
+  <section class="wf" data-viewport="400" aria-label="Phone, 400 px">
+    <div class="frame">
+      <header class="bar">
+        <a class="brand" data-bar="0" href="#today" aria-label="Cornerstone Gurukul, go to Today">
+          <img class="wide on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-colour.svg" alt="">
+          <img class="wide on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-for-dark-backgrounds.svg" alt="">
+          <img class="small on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark.svg" alt="">
+          <img class="small on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark-on-white-tile.svg" alt="">
+        </a>
+        <ul class="doors" aria-label="Doors">
+          <li><a class="door" data-bar="0" href="#today"><i class="ic" data-icon="today"></i>Today <span class="badge num" data-source="pii.educator_note.status pii.educator_note.received_at" aria-label="7 notes to confirm">7</span></a></li>
+          <li><a class="door" data-bar="1" href="#timetable"><i class="ic" data-icon="timetable"></i>Timetable</a></li>
+          <li><a class="door" data-bar="2" href="#children"><i class="ic" data-icon="children"></i>Children</a></li>
+          <li><a class="door" data-bar="3" href="#setup" aria-current="page"><i class="ic" data-icon="setup"></i>Setup</a></li>
+        </ul>
+        <label class="search"><i class="ic s" data-icon="search"></i><span class="vh">Search</span><input data-bar="4" type="search" placeholder="Sr. No., name or activity"></label>
+        <button class="barbtn press" data-bar="5" type="button" role="switch" aria-checked="false"><i class="ic" data-icon="acting-as"></i><span class="w">Acting as</span></button>
+        <a class="barbtn" data-bar="6" href="#help" aria-label="Help for this page"><i class="ic" data-icon="help"></i></a>
+        <button class="barbtn press" data-bar="7" type="button"><i class="ic" data-icon="sign-out"></i><span class="w">Sign out</span></button>
+      </header>
+      <ol class="trail" aria-label="Trail">
+        <li><a data-trail href="#setup">Setup</a></li>
+        <li><i class="ic s" data-icon="trail"></i></li>
+        <li aria-current="page">Staff and classes</li>
+      </ol>
+      <div class="page">
+        <main class="main">
+          <div class="head">
+            <p class="eyebrow"><i class="ic s" data-icon="educator"></i>This fortnight · <span data-source="fortnight.number fortnight.starts_on fortnight.ends_on">Fortnight 9, 16-Nov to 27-Nov</span> · <span class="num" data-source="staff.active">7</span> staff</p>
+            <h1 class="title">Staff and classes</h1>
+            <p class="purpose">Who teaches which class, and three numbers the database can stand behind per class. No ranking: the school decides what they mean.</p>
+          </div>
+          <div class="card">
+            <div class="card-h"><i class="ic s" data-icon="details"></i>What the three numbers are</div>
+            <div class="card-b"><span class="muted">Sessions done of planned: the class's lessons this fortnight marked done, out of those planned. Notes late: notes past 48 hours still to confirm. Reader accuracy: of the reader's claims the educator decided, the share kept as read. The rows are in role order, then name; they cannot be sorted by these numbers.</span></div>
+          </div>
+          <div class="groups">
+            <div class="grp" aria-label="Coordinator, 1 person">
+              <h3 class="grp-h"><i class="ic s" data-icon="coordinator"></i>Coordinator <span class="count num">1</span></h3>
+              <div class="table-box" data-block="DataTable">
+                <table class="table">
+                  <thead><tr><th>Name</th><th>Role</th><th>Class</th><th class="n">Sessions done of planned</th><th class="n">Notes late</th><th class="n">Reader accuracy</th></tr></thead>
+                  <tbody>
+                  <tr data-el="0">
+                    <td data-source="pii.staff.name staff.active">Esha Elder</td>
+                    <td data-source="role.label staff_role_grant.role_code">Coordinator</td>
+                    <td data-source="staff_role_grant.school_class_id school_class.label">every class</td>
+                    <td class="n num" data-source="session.state session.planned session.led_by_staff_id">–</td>
+                    <td class="n num" data-source="pii.educator_note.status pii.educator_note.received_at pii.educator_note.staff_id">–</td>
+                    <td class="n num" data-source="pii.note_claim.decision pii.note_claim.decided_by">–</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="grp" aria-label="Class educator, 4 people">
+              <h3 class="grp-h"><i class="ic s" data-icon="educator"></i>Class educator <span class="count num">4</span></h3>
+              <div class="table-box" data-block="DataTable">
+                <table class="table">
+                  <thead><tr><th>Name</th><th>Role</th><th>Class</th><th class="n">Sessions done of planned</th><th class="n">Notes late</th><th class="n">Reader accuracy</th></tr></thead>
+                  <tbody>
+                  <tr data-el="0">
+                    <td data-source="pii.staff.name staff.active">Asha Almond</td>
+                    <td data-source="role.label staff_role_grant.role_code">Class educator</td>
+                    <td data-source="staff_role_grant.school_class_id school_class.label">K2 Red</td>
+                    <td class="n num" data-source="session.state session.planned session.led_by_staff_id">34 of 40</td>
+                    <td class="n num" data-source="pii.educator_note.status pii.educator_note.received_at pii.educator_note.staff_id">0</td>
+                    <td class="n num" data-source="pii.note_claim.decision pii.note_claim.decided_by">91%</td>
+                  </tr>
+                  <tr data-el="0">
+                    <td data-source="pii.staff.name staff.active">Bina Basil</td>
+                    <td data-source="role.label staff_role_grant.role_code">Class educator</td>
+                    <td data-source="staff_role_grant.school_class_id school_class.label">K2 Blue</td>
+                    <td class="n num" data-source="session.state session.planned session.led_by_staff_id">31 of 40</td>
+                    <td class="n num" data-source="pii.educator_note.status pii.educator_note.received_at pii.educator_note.staff_id">2</td>
+                    <td class="n num" data-source="pii.note_claim.decision pii.note_claim.decided_by">88%</td>
+                  </tr>
+                  <tr data-el="0">
+                    <td data-source="pii.staff.name staff.active">Chetan Clove</td>
+                    <td data-source="role.label staff_role_grant.role_code">Class educator</td>
+                    <td data-source="staff_role_grant.school_class_id school_class.label">Grade 1</td>
+                    <td class="n num" data-source="session.state session.planned session.led_by_staff_id">28 of 36</td>
+                    <td class="n num" data-source="pii.educator_note.status pii.educator_note.received_at pii.educator_note.staff_id">1</td>
+                    <td class="n num" data-source="pii.note_claim.decision pii.note_claim.decided_by">94%</td>
+                  </tr>
+                  <tr data-el="0">
+                    <td data-source="pii.staff.name staff.active">Dev Dill</td>
+                    <td data-source="role.label staff_role_grant.role_code">Class educator</td>
+                    <td data-source="staff_role_grant.school_class_id school_class.label">Grade 2</td>
+                    <td class="n num" data-source="session.state session.planned session.led_by_staff_id">30 of 36</td>
+                    <td class="n num" data-source="pii.educator_note.status pii.educator_note.received_at pii.educator_note.staff_id">0</td>
+                    <td class="n num" data-source="pii.note_claim.decision pii.note_claim.decided_by">90%</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="grp" aria-label="Subject educator, 2 people">
+              <h3 class="grp-h"><i class="ic s" data-icon="educator"></i>Subject educator <span class="count num">2</span></h3>
+              <div class="table-box" data-block="DataTable">
+                <table class="table">
+                  <thead><tr><th>Name</th><th>Role</th><th>Class</th><th class="n">Sessions done of planned</th><th class="n">Notes late</th><th class="n">Reader accuracy</th></tr></thead>
+                  <tbody>
+                  <tr data-el="0">
+                    <td data-source="pii.staff.name staff.active">Farah Fennel</td>
+                    <td data-source="role.label staff_role_grant.role_code">Subject educator (Arts)</td>
+                    <td data-source="staff_role_grant.school_class_id school_class.label">K2 Red, K2 Blue</td>
+                    <td class="n num" data-source="session.state session.planned session.led_by_staff_id">7 of 8</td>
+                    <td class="n num" data-source="pii.educator_note.status pii.educator_note.received_at pii.educator_note.staff_id">0</td>
+                    <td class="n num" data-source="pii.note_claim.decision pii.note_claim.decided_by">86%</td>
+                  </tr>
+                  <tr data-el="0">
+                    <td data-source="pii.staff.name staff.active">Gopal Ginger</td>
+                    <td data-source="role.label staff_role_grant.role_code">Subject educator (Language)</td>
+                    <td data-source="staff_role_grant.school_class_id school_class.label">Grade 1, Grade 2</td>
+                    <td class="n num" data-source="session.state session.planned session.led_by_staff_id">11 of 12</td>
+                    <td class="n num" data-source="pii.educator_note.status pii.educator_note.received_at pii.educator_note.staff_id">1</td>
+                    <td class="n num" data-source="pii.note_claim.decision pii.note_claim.decided_by">92%</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <details class="details" data-block="Details" open><summary data-el="1"><i class="ic s" data-icon="details"></i>Bina Basil's grants</summary><div>
+            <ol class="timeline" data-block="Timeline">
+              <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="educator"></i></span><div><b><span data-source="role.label staff_role_grant.role_code">Class educator</span> · <span data-source="staff_role_grant.school_class_id school_class.label">K2 Blue</span> · <span data-source="staff_role_grant.subject_code subject.name">every subject</span></b><p>From <span class="num" data-source="staff_role_grant.valid_from">1-Jun-2026</span> to <span class="num" data-source="staff_role_grant.valid_to">open</span> · granted by <span data-source="staff_role_grant.granted_by pii.staff.name">Esha Elder</span></p></div><button class="btn press" data-el="3" type="button">End a grant</button></li>
+              <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="educator"></i></span><div><b><span data-source="role.label staff_role_grant.role_code">Subject educator</span> · <span data-source="staff_role_grant.school_class_id school_class.label">K2 Red</span> · <span data-source="staff_role_grant.subject_code subject.name">Language</span></b><p>From <span class="num" data-source="staff_role_grant.valid_from">1-Jun-2026</span> to <span class="num" data-source="staff_role_grant.valid_to">open</span> · granted by <span data-source="staff_role_grant.granted_by pii.staff.name">Esha Elder</span></p></div><button class="btn press" data-el="3" type="button">End a grant</button></li>
+              <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="history"></i></span><div><b><span data-source="role.label staff_role_grant.role_code">Class educator</span> · <span data-source="staff_role_grant.school_class_id school_class.label">K2 Red</span> · <span data-source="staff_role_grant.subject_code subject.name">every subject</span></b><p>From <span class="num" data-source="staff_role_grant.valid_from">1-Jun-2025</span> to <span class="num" data-source="staff_role_grant.valid_to">31-May-2026</span> · granted by <span data-source="staff_role_grant.granted_by pii.staff.name">Esha Elder</span></p></div><span class="chip" data-state="quiet"><i class="ic s" data-icon="frozen"></i>Ended</span></li>
+            </ol>
+            <div class="toolbar"><button class="btn btn-main press" data-el="2" type="button"><i class="ic" data-icon="checklist"></i>Add a grant</button></div>
+            <div class="card">
+              <div class="card-h"><i class="ic s" data-icon="form"></i>Inset: the form Add a grant opens</div>
+              <div class="card-b">
+                <dl class="kv" data-block="KeyValue">
+                  <dt>Role</dt><dd data-source="role.label role.code">Class educator (from the role rows)</dd>
+                  <dt>Class</dt><dd data-source="school_class.label">Grade 1</dd>
+                  <dt>Subject</dt><dd data-source="subject.name">every subject</dd>
+                  <dt>From</dt><dd class="num" data-source="staff_role_grant.valid_from">16-Nov-2026</dd>
+                </dl>
+                <div class="keyrow"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>Held twice: Grade 1 has one</span></div>
+                <span class="caption">Save writes one staff_role_grant row. The database's own checks show as messages: a class educator needs a class; one class cannot be held twice.</span>
+              </div>
+            </div>
+          </div></details>
+          <h2 class="title-section">Last changes to grants</h2>
+          <ol class="timeline" data-block="Timeline">
+            <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="history"></i></span><div><b data-source="change_log.op change_log.after">Gopal Ginger: Subject educator, Grade 2, Language, from 2-Nov</b><p>Added by <span data-source="change_log.staff_id pii.staff.name">Esha Elder</span></p></div><span class="caption num" data-source="change_log.at">2-Nov</span></li>
+            <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="history"></i></span><div><b data-source="change_log.op change_log.before change_log.after">Dev Dill: Class educator, Grade 1, ended 31-Oct</b><p>Ended by <span data-source="change_log.staff_id pii.staff.name">Esha Elder</span> · nothing deleted</p></div><span class="caption num" data-source="change_log.at">31-Oct</span></li>
+            <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="history"></i></span><div><b data-source="change_log.op change_log.after">Chetan Clove: Class educator, Grade 1, from 1-Nov</b><p>Added by <span data-source="change_log.staff_id pii.staff.name">Esha Elder</span></p></div><span class="caption num" data-source="change_log.at">31-Oct</span></li>
+          </ol>
+        </main>
+        <aside class="rail" aria-label="Connected to">
+          <section class="rail-box">
+            <h2>Connected to</h2>
+            <ul class="rlist">
+              <li><a class="ritem" data-el="4" href="#fortnight"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span><span><span data-source="fortnight.number">Fortnight 9</span><small data-source="fortnight.state">live</small></span></a></li>
+              <li><a class="ritem" data-el="5" href="#timetable"><span class="tile" data-kind="period"><i class="ic" data-icon="timetable"></i></span><span>Timetable<small>every class</small></span></a></li>
+              <li><a class="ritem" data-el="6" href="#classes"><span class="tile" data-kind="child"><i class="ic" data-icon="class"></i></span><span>Classes and children<small><span class="num" data-source="school_class.id">6</span> classes</small></span></a></li>
+            </ul>
+          </section>
+          <section class="rail-box">
+            <h2>Grants open now</h2>
+            <dl class="kv" data-block="KeyValue">
+              <dt>Class educator</dt><dd class="num" data-source="staff_role_grant.role_code staff_role_grant.valid_to">6</dd>
+              <dt>Subject educator</dt><dd class="num" data-source="staff_role_grant.role_code staff_role_grant.valid_to">4</dd>
+              <dt>Coordinator</dt><dd class="num" data-source="staff_role_grant.role_code staff_role_grant.valid_to">1</dd>
+              <dt>Ended this year</dt><dd class="num" data-source="staff_role_grant.valid_to">3</dd>
+            </dl>
+          </section>
+        </aside>
+      </div>
+      <nav class="tabbar" aria-label="Doors">
+        <a class="tab" data-bar="0" href="#today"><i class="ic" data-icon="today"></i>Today</a>
+        <a class="tab" data-bar="1" href="#timetable"><i class="ic" data-icon="timetable"></i>Timetable</a>
+        <a class="tab" data-bar="2" href="#children"><i class="ic" data-icon="children"></i>Children</a>
+        <a class="tab" data-bar="3" href="#setup" aria-current="page"><i class="ic" data-icon="setup"></i>Setup</a>
+      </nav>
+    </div>
+  </section>
+</div>
+</body>
+</html>
