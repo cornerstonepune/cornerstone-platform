@@ -10,7 +10,7 @@ import { createHmac } from "node:crypto";
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import postgres from "postgres";
-import { aClass, aReadPaper, aWaitingSkill } from "./rows";
+import { aClass, aReadPaper, aWaitingSkill, aPerson } from "./rows";
 import { TODO_GROUPS } from "../lib/todo";
 
 test.use({ viewport: { width: 1440, height: 900 } });
@@ -32,9 +32,7 @@ test.beforeAll(async () => {
     reads: [{ status: "correct", read: "1" }, { status: "needs_teacher", read: "7" }],
   });
   restore = await aWaitingSkill(sql, SKILL);
-  await sql`
-    update config set value = value || ${sql.json([EDUCATOR])}
-    where key = 'app.staff' and not value @> ${sql.json([{ email: EDUCATOR.email }])}`;
+  await aPerson(sql, EDUCATOR);
 });
 test.afterAll(async () => {
   await sql`delete from class_skill where section = ${SECTION}`; // what the test marked taught: no other spec finds a topic taught

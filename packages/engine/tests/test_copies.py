@@ -24,6 +24,7 @@ from engine.w1_bank import bank
 from engine.w2_print import library
 from engine.w3_read import boxes, copies, copy_scores, placing, printed_paper, render_pdf, second_reader
 from tests import rows
+from tests.rows import a_child_in
 from tests.test_sorting import _scanned
 
 
@@ -74,10 +75,7 @@ def worksheet(conn, tmp_path, monkeypatch):
 
 
 def _child(conn, tenant, roll, name):
-    cid = conn.execute(
-        "insert into child (tenant_id, roll_no, band, section) values (%s, %s, 'G2', %s) returning id",
-        (tenant, roll, SECTION),
-    ).fetchone()["id"]
+    cid = a_child_in(conn, SECTION, "G2", roll, tenant)
     conn.execute(
         "insert into pii.child (tenant_id, child_id, first_name) values (%s,%s,%s)", (tenant, cid, name)
     )

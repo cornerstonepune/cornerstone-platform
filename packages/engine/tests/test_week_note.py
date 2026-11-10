@@ -9,6 +9,7 @@ import pytest
 from engine.adapters import jev
 from engine.core import db
 from engine.w2_print import week_note
+from tests.rows import a_child_in
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
 
@@ -67,9 +68,7 @@ def test_what_the_educator_confirms_is_kept_and_the_latest_for_a_week_stands(con
     already makes: it is the week's skill sets, confirmed by a person, nothing more."""
     tenant = conn.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()["id"]
     section = f"T{uuid.uuid4().hex[:5]}"
-    conn.execute(
-        "insert into child (tenant_id, roll_no, section, band) values (%s,'1',%s,'G2')", (tenant, section)
-    )
+    a_child_in(conn, section, "G2", "1", tenant)
     week_note.confirm(conn, section, "2026-W40", "subtraction", ["SUB.2D2D"], "neha", [{"code": "SUB.2D2D"}])
     week_note.confirm(
         conn, section, "2026-W40", "subtraction and story sums", ["SUB.2D2D", "WORD.1_2STEP"], "neha"

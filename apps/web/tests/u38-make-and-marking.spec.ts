@@ -10,10 +10,9 @@
  * - marking: Asha's paper read with two answers waiting for a person, Bina's read with nothing waiting and not signed
  *   off, Dev's signed off. Signing off makes evidence, which is append-only, so the class is made once and kept.
  */
-import { scryptSync } from "node:crypto";
 import { expect, test, type Browser, type Locator, type Page } from "@playwright/test";
 import postgres from "postgres";
-import { aClass, aReadPaper } from "./rows";
+import { aClass, aReadPaper, aPerson, forgetPerson } from "./rows";
 import { isoWeek } from "../lib/week";
 
 test.describe.configure({ mode: "serial" });
@@ -23,7 +22,6 @@ const THIS = isoWeek();
 const QR = { asha: "CS38A001", bina: "CS38B002", dev: "CS38D003", home: "CS38D0F1" };
 const EDUCATOR = { email: "u38-educator@cornerstone.test", name: "U38 Educator", role: "educator", classes: [SECTION] };
 const PASSWORD = "u38-a-long-test-password";
-const SALT = "00112233445566778899aabbccddeeff";
 type Answer = [skill: string, rung: string, right: boolean, mistakes: string[]];
 const EVIDENCE: Record<string, Answer[]> = {
   Asha: [
@@ -88,18 +86,11 @@ test.beforeAll(async () => {
                                 approved_at)
     values (${tenant}, ${QR.home}, ${ws[0].id}, ${kids.Dev}, ${THIS}, 'focus', 'new', ${EDUCATOR.email}, now())
     on conflict (tenant_id, qr_code) do update set week = excluded.week`;
-  const password = `scrypt$${SALT}$${scryptSync(PASSWORD, SALT, 64).toString("hex")}`;
-  await sql`
-    update config set value = (select coalesce(jsonb_agg(s), '[]'::jsonb) from jsonb_array_elements(value) s
-                               where s ->> 'email' <> ${EDUCATOR.email}) || ${sql.json([{ ...EDUCATOR, password }])}
-    where key = 'app.staff'`;
+  await aPerson(sql, { ...EDUCATOR, password: PASSWORD });
 });
 test.afterAll(async () => {
   await sql`delete from sheet_instance where child_id in ${sql(Object.values(kids))} and kind = 'focus' and week = ${THIS}`;
-  await sql`
-    update config set value = (select coalesce(jsonb_agg(s), '[]'::jsonb) from jsonb_array_elements(value) s
-                               where s ->> 'email' <> ${EDUCATOR.email})
-    where key = 'app.staff'`;
+  await forgetPerson(sql, EDUCATOR.email);
   await sql.end();
 });
 

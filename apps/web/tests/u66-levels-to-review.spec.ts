@@ -10,7 +10,7 @@
 import { expect, test, type Browser } from "@playwright/test";
 import { createHmac } from "node:crypto";
 import postgres from "postgres";
-import { aClass } from "./rows";
+import { aClass, aPerson } from "./rows";
 
 test.use({ viewport: { width: 1440, height: 900 } });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -80,9 +80,7 @@ test.afterAll(async () => {
 
 const EDUCATOR = { email: `cal-educator-${RUN.toLowerCase()}@cornerstone.test`, name: "Cal Educator", role: "educator", classes: [BIG], subjects: ["NUM"] };
 async function asEducator(browser: Browser) {
-  await sql`
-    update config set value = value || ${sql.json([EDUCATOR])}
-    where key = 'app.staff' and not value @> ${sql.json([{ email: EDUCATOR.email }])}`;
+  await aPerson(sql, EDUCATOR);
   const body = `${Buffer.from(EDUCATOR.email).toString("base64url")}.${Date.now() + 3_600_000}`;
   const mac = createHmac("sha256", process.env.E2E_AUTH_SECRET!).update(body).digest("hex");
   const context = await browser.newContext({ baseURL: "http://localhost:3100", viewport: { width: 1440, height: 900 } });

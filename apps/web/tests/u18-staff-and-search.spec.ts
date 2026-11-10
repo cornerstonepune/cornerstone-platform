@@ -7,33 +7,27 @@
  *
  * The class is the test's own (tests/rows.ts), made once and kept; the educator is taken off the list after.
  */
-import { scryptSync } from "node:crypto";
 import { expect, test } from "@playwright/test";
 import postgres from "postgres";
-import { aClass } from "./rows";
+import { aClass, aPerson, forgetPerson } from "./rows";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 const SECTION = "U18-TEST";
 const EDUCATOR = { email: "u18-educator@cornerstone.test", name: "U18 Educator", role: "educator", classes: [SECTION] };
 const PASSWORD = "u18-a-long-test-password";
-const SALT = "00112233445566778899aabbccddeeff";
 
 test.beforeAll(async () => {
   await aClass(sql, SECTION, "G2", ["Zorawar", "Mehrunissa"]);
 });
 test.afterAll(async () => {
-  await sql`
-    update config set value = (select coalesce(jsonb_agg(s), '[]'::jsonb) from jsonb_array_elements(value) s
-                               where s ->> 'email' <> ${EDUCATOR.email})
-    where key = 'app.staff'`;
+  await forgetPerson(sql, EDUCATOR.email);
   await sql.end();
 });
 
 test("an educator put on the staff list signs in, and a decision carries their name", async ({ browser }) => {
   // on the list as `engine staff add` puts them: the hash is the one the sign-in checks (packages/engine/tests/test_cli.py)
-  const password = `scrypt$${SALT}$${scryptSync(PASSWORD, SALT, 64).toString("hex")}`;
-  await sql`update config set value = value || ${sql.json([{ ...EDUCATOR, password }])} where key = 'app.staff'`;
+  await aPerson(sql, { ...EDUCATOR, password: PASSWORD });
   const [topic] = await sql<{ name: string; taught: boolean }[]>`select name, taught_in(tenant_id, code, null) as taught from topic where code = 'DIV'`;
   expect(topic.taught, "division waits for an educator's word").toBe(false);
 

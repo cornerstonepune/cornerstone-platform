@@ -9,11 +9,10 @@
  * is offered too, and no page refuses them. Their own class and grade are where pages open; "Every class" in the
  * bar at the top, one choice, shows every class as the coordinator sees them, and that is what is compared.
  */
-import { scryptSync } from "node:crypto";
 import { expect, test, type Browser, type Locator, type Page } from "@playwright/test";
 import postgres from "postgres";
 import { TEST_STAFF } from "./global-setup";
-import { aClass, aWaitingSkill } from "./rows";
+import { aClass, aWaitingSkill, aPerson, forgetPerson } from "./rows";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -23,16 +22,13 @@ const OTHER = "U49-OTHER";
 // sees the classes they are mapped to: goals/own_who_sees_answers.yaml): the test is about what is offered, not the data
 const EDUCATOR = { email: "u49-educator@cornerstone.test", name: "U49 Educator", role: "educator", classes: [] as string[] };
 const PASSWORD = "u49-a-long-test-password";
-const SALT = "00112233445566778899aabbccddeeff";
-const others = sql`(select coalesce(jsonb_agg(s), '[]'::jsonb) from jsonb_array_elements(value) s where s ->> 'email' <> ${EDUCATOR.email})`;
 let pages: string[] = [];
 
 test.beforeAll(async () => {
   await aClass(sql, MINE, "G2", ["Ira", "Jai"]);
   const other = await aClass(sql, OTHER, "G3", ["Kavi", "Lata"]);
   EDUCATOR.classes = (await sql<{ section: string }[]>`select distinct section from child where active order by 1`).map((r) => r.section);
-  const password = `scrypt$${SALT}$${scryptSync(PASSWORD, SALT, 64).toString("hex")}`;
-  await sql`update config set value = ${others} || ${sql.json([{ ...EDUCATOR, password }])} where key = 'app.staff'`;
+  await aPerson(sql, { ...EDUCATOR, password: PASSWORD });
   const [{ code: draft }] = await sql<{ code: string }[]>`select code from skill order by status = 'ratified', code limit 1`;
   pages = [
     // a page that opens on the person's own grade is compared at "Every grade", its one tap
@@ -42,7 +38,7 @@ test.beforeAll(async () => {
   ];
 });
 test.afterAll(async () => {
-  await sql`update config set value = ${others} where key = 'app.staff'`;
+  await forgetPerson(sql, EDUCATOR.email);
   await sql.end();
 });
 
