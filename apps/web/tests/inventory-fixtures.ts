@@ -149,6 +149,7 @@ export async function anAssessment(sql: Sql, children: Record<string, string>): 
   ADDRESSES.settled = async () => {
     const sql2 = postgres(process.env.DATABASE_URL!, { max: 1 });
     try {
+      await settle(sql2);
       for (const n of [2, 4, 5, 6]) {
         const open = await sql2`select 1 from item_result r join capture c on c.id = r.capture_id join sheet_instance s on s.id = c.sheet_instance_id
           where s.qr_code = ${code(n)} and c.superseded_by is null and r.state = 'candidate' limit 1`;
@@ -178,6 +179,10 @@ const aside = async <T>(f: (sql: Sql) => Promise<T>) => {
     await sql.end();
   }
 };
+/** The copies read and settled as they were made: the engine marks every answer again from what was read each time a person types a reading (`again.trusted`),
+ *  and holds a right answer for a person until its kind has earned trust, so a copy meant to wait only for its sign-off must be put back before it is looked for. */
+const settle = (sql: Sql) =>
+  sql`update item_result set status = 'correct' where capture_id = any(${SETTLED_CAPTURES}::uuid[]) and state = 'candidate' and status = 'needs_teacher'`;
 /** The home pack as it is before anyone approves it: every copy still waiting for approval is as made. */
 FIXTURES["pack-unapproved"] = () =>
   aside(async (sql) => {
@@ -191,8 +196,13 @@ FIXTURES["pack-approved"] = () =>
 FIXTURES["checked-again"] = () =>
   aside(async (sql) => {
     await sql`update item_result set state = 'candidate' where state = 'confirmed' and capture_id = any(${SETTLED_CAPTURES}::uuid[])`;
+    await settle(sql);
   });
-FIXTURES["note-checked"] = () => aside(async (sql) => void (before = await checkedCopies(sql)));
+FIXTURES["note-checked"] = () =>
+  aside(async (sql) => {
+    await settle(sql);
+    before = await checkedCopies(sql);
+  });
 FIXTURES["answer-to-judge"] = () =>
   aside(async (sql) => {
     // Sr. No. 1's answer is for a person to judge again (the person's earlier word stays as a row beside it)
