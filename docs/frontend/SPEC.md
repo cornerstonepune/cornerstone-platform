@@ -1061,13 +1061,13 @@ Data: item, item.key (the current key), item.review (the reviewer model's latest
 Empty: none · Phone: stacked
 Every control on the screen (8), and what the test does with each:
 - **fold** About it
-- **field** the wording [coordinator only; absent and refused for others] (required when correcting)
-- **field** what was wrong [coordinator only; absent and refused for others] (required when correcting: the engine refuses a correction with no reason)
-- **button** Correct the wording: a new item version; the old one stays, readable, and points to the new; the page shows the new wording [coordinator only; absent and refused for others]
-- **field** reason for removal [coordinator only; absent and refused for others] (required)
-- **button** Remove: the item is retired with the reason, never deleted; the chip reads 'removed' [coordinator only; absent and refused for others]
 - **link** rail: the skill → the skill's name (`/setup/skills/[code]`)
 - **link** rail: the bank → Question bank (`/setup/question-bank`)
+- **field** the wording [coordinator only; absent and refused for others] (required when correcting)
+- **field** what was wrong [coordinator only; absent and refused for others] (required when correcting: the engine refuses a correction with no reason)
+- **field** reason for removal [coordinator only; absent and refused for others] (required)
+- **button** Correct the wording: a new item version; the old one stays, readable, and points to the new; the page shows the new wording [coordinator only; absent and refused for others]
+- **button** Remove: the item is retired with the reason, never deleted; the chip reads 'removed' [coordinator only; absent and refused for others]
 Done when (on top of the ten generic checks):
 - a correction keeps the old key in change_log and the old version readable
 - Remove retires, never deletes (row count unchanged)

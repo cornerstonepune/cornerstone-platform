@@ -3000,7 +3000,13 @@
             "coordinator"
           ],
           "data": "data-offer-yes",
-          "effect": "the skill is linked to the activity; the offer closes"
+          "effect": "the skill is linked to the activity; the offer closes",
+          "drive": {
+            "click": "Yes",
+            "expect": {
+              "check": "offer-answered"
+            }
+          }
         },
         {
           "t": "button",
@@ -3009,7 +3015,13 @@
             "coordinator"
           ],
           "data": "data-offer-no",
-          "effect": "the offer closes; nothing is linked"
+          "effect": "the offer closes; nothing is linked",
+          "drive": {
+            "click": "No",
+            "expect": {
+              "check": "no-offer-left"
+            }
+          }
         },
         {
           "t": "link",
@@ -3115,7 +3127,13 @@
             "coordinator"
           ],
           "data": "data-approve",
-          "effect": "level_approved set for that skill with who; the row leaves the list; the eyebrow's count drops by one"
+          "effect": "level_approved set for that skill with who; the row leaves the list; the eyebrow's count drops by one",
+          "drive": {
+            "click": "Approve",
+            "expect": {
+              "check": "one-skill-approved"
+            }
+          }
         },
         {
           "t": "fold",
@@ -3271,6 +3289,18 @@
           "text": "About it (source, versions)"
         },
         {
+          "t": "link",
+          "label": "rail: the skill",
+          "to": "skill",
+          "text": "The skill"
+        },
+        {
+          "t": "link",
+          "label": "rail: the bank",
+          "to": "bank",
+          "text": "Question bank"
+        },
+        {
           "t": "field",
           "label": "the wording",
           "roles": [
@@ -3287,15 +3317,6 @@
           "note": "required when correcting: the engine refuses a correction with no reason"
         },
         {
-          "t": "button",
-          "label": "Correct the wording",
-          "roles": [
-            "coordinator"
-          ],
-          "data": "data-correct",
-          "effect": "a new item version; the old one stays, readable, and points to the new; the page shows the new wording"
-        },
-        {
           "t": "field",
           "label": "reason for removal",
           "roles": [
@@ -3305,24 +3326,42 @@
         },
         {
           "t": "button",
+          "label": "Correct the wording",
+          "roles": [
+            "coordinator"
+          ],
+          "data": "data-correct",
+          "effect": "a new item version; the old one stays, readable, and points to the new; the page shows the new wording",
+          "drive": {
+            "fixture": "question-live",
+            "fill": {
+              "the wording": "Read the question again and write your answer.",
+              "what was wrong": "the wording was unclear"
+            },
+            "click": "Correct the wording",
+            "expect": {
+              "check": "question-corrected"
+            }
+          }
+        },
+        {
+          "t": "button",
           "label": "Remove",
           "roles": [
             "coordinator"
           ],
           "data": "data-remove",
-          "effect": "the item is retired with the reason, never deleted; the chip reads 'removed'"
-        },
-        {
-          "t": "link",
-          "label": "rail: the skill",
-          "to": "skill",
-          "text": "The skill"
-        },
-        {
-          "t": "link",
-          "label": "rail: the bank",
-          "to": "bank",
-          "text": "Question bank"
+          "effect": "the item is retired with the reason, never deleted; the chip reads 'removed'",
+          "drive": {
+            "fixture": "question-live",
+            "fill": {
+              "reason for removal": "two answers are right"
+            },
+            "click": "Remove",
+            "expect": {
+              "check": "question-removed"
+            }
+          }
         }
       ],
       "rail": [

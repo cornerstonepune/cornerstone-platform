@@ -3,7 +3,7 @@
 // so it proves the same thing on a database built from the repository as on a copy of live.
 import { createHmac } from "node:crypto";
 import type { Browser, BrowserContext } from "@playwright/test";
-import type { Sql } from "postgres";
+import postgres, { type Sql } from "postgres";
 import { SIGNED_IN } from "../playwright.config";
 import { aClass, aPerson, aTaughtClass, personAsStored } from "./rows";
 import { curriculumRows, gate, offers } from "./m1-13-rows";
@@ -31,9 +31,11 @@ export async function inventoryRows(sql: Sql): Promise<Rows> {
   await gate(sql, "reviewer");
   const { skills } = await curriculumRows(sql);
   await offers(sql, skills);
+  waitingAtStart = Number((await sql<{ n: string }[]>`select count(*)::text as n from skill where status <> 'ratified'`)[0].n);
+  // the question the screens open: ready, and worded without a number
+  await sql`update item set status = 'active', stem = ${QUESTION_WORDS} where item_key = (select item_key from item where fmt = 'word_1step' and source = 'generated' order by created_at, item_key limit 1)`;
   const [q] = await sql<{ item_key: string }[]>`
-    select i.item_key from item i join question_type t on t.fmt = i.fmt and t.own_words
-    where i.source = 'generated' and i.status = 'active' order by i.created_at, i.item_key limit 1`;
+    select i.item_key from item i where i.fmt = 'word_1step' and i.source = 'generated' order by i.created_at, i.item_key limit 1`;
   return { questionKey: q?.item_key ?? "", section: SECTION, classId: cls?.id ?? "", children, rolls, other, otherNames };
 }
 
@@ -65,7 +67,71 @@ export const sessionFor = (email: string, secret = process.env.E2E_AUTH_SECRET!)
   return `${body}.${createHmac("sha256", secret).update(body).digest("hex")}`;
 };
 
+/** The inventory's own connection, for the fixtures and checks below (the test file's is private to it). */
+let own: Sql | undefined;
+const db = () => (own ??= postgres(process.env.DATABASE_URL!, { max: 1 }));
+/** The count of skills waiting when the run began: an approval must take it below this (a run that is tried again starts lower, and the check still holds). */
+let waitingAtStart = Infinity;
+const QUESTION_WORDS = "Read the question and write your answer.";
+const openOffers = async () =>
+  Number((await db()<{ n: string }[]>`
+    select count(*)::text as n from curriculum_proposal p
+    where p.about is null and p.status = 'needs_person' and p.subject_code like 'ACT-K2-M113-%' and not exists (select 1 from curriculum_proposal f where f.about = p.id)`)[0].n);
+const draftSkills = async () => Number((await db()<{ n: string }[]>`select count(*)::text as n from skill where status <> 'ratified'`)[0].n);
+/** A press on a server action returns before its work is done (the engine rebuilds worksheets when a question changes): the check waits for the rows. */
+async function settles<T>(read: () => Promise<T>, ok: (v: T) => boolean): Promise<T> {
+  let v = await read();
+  for (let i = 0; i < 40 && !ok(v); i++) {
+    await new Promise((r) => setTimeout(r, 500));
+    v = await read();
+  }
+  return v;
+}
+/** The engine's work after a press (worksheets rebuilt, rows retired) goes on a moment after the press has returned: a fixture that revives a row waits until no other connection is busy. */
+async function quiet() {
+  let calm = 0;
+  for (let i = 0; i < 60 && calm < 3; i++) {
+    const [{ n }] = await db()<{ n: string }[]>`select count(*)::text as n from pg_stat_activity where datname = current_database() and pid <> pg_backend_pid() and state = 'active'`;
+    calm = Number(n) === 0 ? calm + 1 : 0;
+    await new Promise((r) => setTimeout(r, 400));
+  }
+}
+const questionKey = async () => (await db()<{ item_key: string }[]>`select item_key from item where fmt = 'word_1step' and source = 'generated' order by created_at, item_key limit 1`)[0].item_key;
+
 /** The rows a stateful control needs in place before it is pressed, by the name an element's `drive.fixture` gives (tests/inventory/drivers.ts). */
-export const FIXTURES: Record<string, () => Promise<void>> = {};
+export const FIXTURES: Record<string, () => Promise<void>> = {
+  // the inventory's question, ready to print again and worded without a number (a correction keeps every number, so a wording with none can be reworded freely)
+  "question-live": async () => {
+    await quiet();
+    await db()`update item set status = 'active', stem = ${QUESTION_WORDS} where item_key = ${await questionKey()}`;
+  },
+};
 /** What a control must have done to the rows, by the name an element's `drive.expect.check` gives: the problems, [] when it holds. */
-export const CHECKS: Record<string, () => Promise<string[]>> = {};
+export const CHECKS: Record<string, () => Promise<string[]>> = {
+  "offer-answered": async () => {
+    const n = await settles(openOffers, (v) => v <= 1);
+    return n <= 1 ? [] : [`${n} offers are waiting after one answer, of 2`];
+  },
+  "no-offer-left": async () => {
+    const n = await settles(openOffers, (v) => v === 0);
+    return n === 0 ? [] : [`${n} offers are still waiting after both were answered`];
+  },
+  "one-skill-approved": async () => {
+    const n = await settles(draftSkills, (v) => v < waitingAtStart);
+    return n < waitingAtStart ? [] : [`${n} skills wait after an approval, as before (${waitingAtStart})`];
+  },
+  // a corrected question exists (made by this press, or by an earlier try of this run: the same wording is refused a second time), and a moment is given for
+  // the press to retire the old one, so a revival that comes first is not undone by it
+  "question-corrected": async () => {
+    const read = async () =>
+      (await db()<{ made: string; status: string }[]>`
+        select (select count(*) from item c where c.corrected_from = o.id)::text as made, o.status from item o where o.item_key = ${await questionKey()}`)[0];
+    const r = await settles(read, (v) => Number(v.made) > 0);
+    if (Number(r.made) > 0 && r.status !== "retired") await new Promise((res) => setTimeout(res, 3_000));
+    return Number(r.made) > 0 ? [] : ["no corrected question was made, and the old one does not point to one"];
+  },
+  "question-removed": async () => {
+    const st = await settles(async () => (await db()<{ status: string }[]>`select status from item where item_key = ${await questionKey()}`)[0].status, (v) => v === "retired");
+    return st === "retired" ? [] : [`the question is ${st}, not retired`];
+  },
+};

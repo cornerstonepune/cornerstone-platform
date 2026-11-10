@@ -27,7 +27,7 @@ export default async function QuestionScreen({ params, searchParams }: Props) {
   if (!/^[A-Za-z0-9._-]+$/.test(key)) notFound();
   const [it, book, qk] = await deadline(Promise.all([questionPage(key), mistakeBook(), questionKinds()]));
   if (!it) notFound();
-  const [totals, may] = await deadline(Promise.all([bankTotals(), mayDecide(me, "questions")]));
+  const [totals, may] = await deadline(Promise.all([bankTotals(), mayDecide(me, "questions").then((ok) => ok && me.role === "coordinator")]));
   const live = it.status === "active";
   const canCorrect = may && live && qk.ownWords[it.fmt] !== false;
   const caught = it.responses.flatMap((r) =>
@@ -77,6 +77,11 @@ export default async function QuestionScreen({ params, searchParams }: Props) {
             ),
           },
           { kind: "assessment", title: "Answer", body: <Answers it={it} rubric /> },
+        ]}
+      />
+      <div className="mt-4">
+        <Cards
+          cards={[
           {
             kind: "assessment",
             title: "Wrong answers it catches",
@@ -86,8 +91,9 @@ export default async function QuestionScreen({ params, searchParams }: Props) {
               <span className="b-muted">This question is judged by a person, so there is no list of wrong answers.</span>
             ),
           },
-        ]}
-      />
+          ]}
+        />
+      </div>
       <div className="my-4">
         <Details summary="About it (source, versions)" name="about">
           <KeyValue
