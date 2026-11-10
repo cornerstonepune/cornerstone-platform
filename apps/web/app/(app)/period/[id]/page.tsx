@@ -6,7 +6,7 @@ import { EmptyState } from "@/components/empty-state";
 import { PeekChip, PeekHost } from "@/components/peek-names";
 import { Rail, Screen, type Edge } from "@/components/app-frame";
 import { StackBar } from "@/components/stack-bar";
-import { type OutcomeState } from "@/components/status-chip";
+import type { OutcomeState } from "@/components/outcome-states";
 import { requireStaff } from "@/lib/auth";
 import { sql } from "@/lib/db";
 import { pageOf } from "@/lib/educator/data";

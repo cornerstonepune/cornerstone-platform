@@ -1,4 +1,5 @@
-import { rowOf, type OutcomeState, type State } from "./status-chip";
+import type { OutcomeState } from "./outcome-states";
+import { rowOf, type State } from "./status-chip";
 import { StatusChip } from "./status-chip";
 
 const LOOK = { ok: "ok", wait: "wait", act: "late", quiet: "quiet" } as const;

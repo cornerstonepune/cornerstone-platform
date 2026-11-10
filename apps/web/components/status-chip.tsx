@@ -1,4 +1,5 @@
 import { ICON_SIZE, Icon, type IconName } from "@/lib/icons";
+import { OUTCOME_STATES, type OutcomeState } from "./outcome-states";
 
 // The one chip a state is shown in (docs/ux-rules.md, rule 2 and 9): an icon, the word, and one of red, amber or green,
 // from this table alone — never colour by itself. Nimish, 2026-10-22: "use icons or red, amber, green in places that make
@@ -82,17 +83,7 @@ export const STATES = {
 } as const satisfies Record<string, StateRow>;
 export type State = keyof typeof STATES;
 
-// What a child showed on an activity (the school's `observation_outcome` rows; the screens pass its own words). Not in STATES:
-// the gallery's legend draws every STATES row, and a longer legend moves every picture below it. The chip and the stacked bar
-// take either kind.
-export const OUTCOME_STATES = {
-  outcomeAbove: { tone: "ok", words: "above", icon: "above" },
-  outcomeAsExpected: { tone: "ok", words: "as expected", icon: "as-expected" },
-  outcomeBelow: { tone: "wait", words: "below", icon: "below" },
-  outcomeNotWilling: { tone: "wait", words: "not willing", icon: "not-willing" },
-  outcomeAbsent: { tone: "quiet", words: "absent", icon: "absent" },
-} as const satisfies Record<string, StateRow>;
-export type OutcomeState = keyof typeof OUTCOME_STATES;
+/** A state's row, whether it is one of STATES or one of the outcomes (components/outcome-states.ts). */
 export const rowOf = (state: State | OutcomeState): StateRow => (state in OUTCOME_STATES ? OUTCOME_STATES[state as OutcomeState] : STATES[state as State]);
 
 const GREEN = "text-[var(--state-ok)] bg-[var(--state-ok-bg)] border-[var(--state-ok)]";
