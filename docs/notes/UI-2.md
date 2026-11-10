@@ -26,6 +26,7 @@ BrandMark's `<picture>` carry `data-block`, so tests 1 and 11 hold. The AppFrame
 | `mayUse(me, "blocks")` is coordinator-only; for an educator the page answers with Next's not-found page (the page streams, so the status is 200). | Done when 12. |
 | The inventory's BrandMark rule (`tests/inventory/brand.ts`) counts the page's own logo only (`img:not([data-sample] *)`); the gallery shows a second one as a sample. | One logo per page is still checked; the sample is not the page's. |
 | KanbanBoard and ChildPeek (kit revision 1, #553; the kit grew from 26 to 28 blocks) were added to UI-2 on the orchestrator's decision, drawn as `docs/frontend/wireframes/blocks.html` and `components.css` do: `components/kanban-board.tsx` (with the Table \| Board `ViewToggle`, links so the address carries the tab) and `components/child-peek.tsx` (with `NameChip`; Escape or Close closes it and focus returns to the opener). | Tests 1 and 11 read the block list from `screens.json`. |
+| The 114 screenshot baselines (`tests/u71-blocks.spec.ts-snapshots/`, 28 blocks × light/dark × 1440/400, and the tinted-chip pair) are committed; `.gitignore` has an exception for `tests/*-snapshots/*.png`. | `*.png` was ignored, so CI had no baseline and tests 2 and 9 could only write them and fail. |
 | Sample names are the fake-names list (alliterative animals, spice surnames). | The repository is public. |
 
 ## Lessons

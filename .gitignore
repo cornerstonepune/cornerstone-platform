@@ -7,6 +7,8 @@ data/
 !docs/sources/*.pdf
 # the site's screens as a contact sheet for Nimish (docs/screens/<task>/): UI screenshots with placeholder children only, never a scan
 !docs/screens/**/*.png
+# a spec's committed screenshot baselines (UI-2: the blocks, in both themes): the pictures a later change is compared with
+!apps/web/tests/*-snapshots/*.png
 
 # secrets
 .env
