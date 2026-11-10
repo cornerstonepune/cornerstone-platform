@@ -12,6 +12,7 @@ import pytest
 from engine.assess import graph
 from engine.core import db, roster
 from engine.w2_print import assemble, prescribe
+from tests.rows import a_child_in
 
 pytestmark = [
     pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)"),
@@ -46,10 +47,7 @@ def children(conn, tmp_path):
     tenant = conn.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()["id"]
     rows = []
     for c in json.loads(path.read_text())["children"]:
-        r = conn.execute(
-            "insert into child (tenant_id, roll_no, section, band) values (%s,%s,%s,%s) returning id",
-            (tenant, c["roll_no"], c["section"], c["band"]),
-        ).fetchone()
+        r = {"id": a_child_in(conn, c["section"], c["band"], str(c["roll_no"]), tenant)}
         conn.execute(
             "insert into pii.child (tenant_id, child_id, first_name) values (%s,%s,%s)",
             (tenant, r["id"], c["first_name"]),
@@ -72,7 +70,7 @@ def test_prescribing_twice_updates_rather_than_duplicating(conn, children):
     prescribe.for_class(conn, SECTION, WEEK, SET)
     prescribe.for_class(conn, SECTION, WEEK, SET)
     n = conn.execute(
-        "select count(*) as n from prescription p join child c on c.id = p.child_id"
+        "select count(*) as n from prescription p join child_now c on c.id = p.child_id"
         " where c.section = %s and p.week = %s",
         (SECTION, WEEK),
     ).fetchone()["n"]
@@ -131,7 +129,7 @@ def test_every_sheet_has_a_code_and_the_prescription_points_at_it(conn, children
     for s in built["sheets"]:
         assert s["qr"].startswith("CS") and len(s["qr"]) == 8
     linked = conn.execute(
-        "select count(*) as n from prescription p join child c on c.id = p.child_id"
+        "select count(*) as n from prescription p join child_now c on c.id = p.child_id"
         " where c.section = %s and p.sheet_instance_id is not null",
         (SECTION,),
     ).fetchone()["n"]
@@ -227,13 +225,10 @@ def test_two_classes_assembled_at_the_same_moment_both_finish():
         tenant = setup.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()["id"]
         for i in (1, 2):
             if setup.execute(
-                "select 1 from child where section = %s and roll_no = %s", (section, str(i))
+                "select 1 from child_now where section = %s and roll_no = %s", (section, str(i))
             ).fetchone():
                 continue
-            row = setup.execute(
-                "insert into child (tenant_id, roll_no, section, band) values (%s,%s,%s,'G2') returning id",
-                (tenant, str(i), section),
-            ).fetchone()
+            row = {"id": a_child_in(setup, section, "G2", str(i), tenant)}
             setup.execute(
                 "insert into pii.child (tenant_id, child_id, first_name) values (%s,%s,%s)",
                 (tenant, row["id"], f"Concurrent {i}"),

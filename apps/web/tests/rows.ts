@@ -12,8 +12,10 @@ import type postgres from "postgres";
 import type { Locator } from "@playwright/test";
 
 type Sql = postgres.Sql;
+/** A connection or a transaction on one: what a spec writes its rows through. */
+type Writer = postgres.Sql | postgres.TransactionSql;
 
-async function tenant(sql: Sql): Promise<string> {
+async function tenant(sql: Writer): Promise<string> {
   return (await sql<{ id: string }[]>`select id from tenant limit 1`)[0].id;
 }
 
@@ -80,17 +82,27 @@ export async function aClass(sql: Sql, section: string, band: string, names: str
   const kids: Record<string, string> = {};
   for (const [i, name] of names.entries()) {
     const roll = String(i + 1);
-    const [had] = await sql<{ id: string }[]>`select id from child where section = ${section} and roll_no = ${roll}`;
+    const [had] = await sql<{ id: string }[]>`select id from child_now where section = ${section} and roll_no = ${roll}`;
     if (had) {
       kids[name] = had.id;
       continue;
     }
-    const [{ id }] = await sql<{ id: string }[]>`
-      insert into child (tenant_id, roll_no, section, band) values (${t}, ${roll}, ${section}, ${band}) returning id`;
+    const id = await aChildIn(sql, section, band, roll);
     await sql`insert into pii.child (tenant_id, child_id, first_name) values (${t}, ${id}, ${name})`;
     kids[name] = id;
   }
   return kids;
+}
+
+/** A child at roll `roll` of the class labelled `section` (made in this school year, with the year, when there is none),
+ *  in grade `band`: the child row and their open enrolment (CP-27 group 4: a child's class and roll live there alone).
+ *  → the child's id. */
+export async function aChildIn(sql: Writer, section: string, band: string, roll: string): Promise<string> {
+  const t = await tenant(sql);
+  const [{ id }] = await sql<{ id: string }[]>`insert into child (tenant_id, band) values (${t}, ${band}) returning id`;
+  // the access fixture's (global-setup.ts) one door to a class: the class of that label this school year, made once
+  await sql`select test_fixture.enrol(${id}, ${section}, ${roll})`;
+  return id;
 }
 
 /** The class a topic switched on is taught in. A fresh copy has none (`bin/testdb fresh`), and a spec that shows a
@@ -194,11 +206,10 @@ export function daysAgo(of: string[], i: number): number {
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
-// The people who sign in, as a browser test needs them (CP-27 group 4, step 4-prep): the one place that knows where the
-// sign-in list is kept, so the step that moves it changes these bodies and no spec. Today the list is the `config` row
-// `app.staff` (a JSON list, an entry per person; the database gives each entry an `id`, what the website signs a person
-// in as). Group 4a keeps it on `staff` / `pii.staff` instead; a spec never names either. The engine tests' own are
-// `a_person`, `forget_person`, `teaches` and `signin_list` in packages/engine/tests/rows.py.
+// The people who sign in, as a browser test needs them (CP-27 group 4): the one place that knows where the sign-in list
+// is kept. Since group 4 it is the staff tables: `staff` (active, role, classes, subjects) and `pii.staff` (name, email,
+// the password hash and when it was set); the website signs a person in as their `staff.id`. A spec never names either.
+// The engine tests' own are `a_person`, `forget_person`, `teaches` and `signin_list` in packages/engine/tests/rows.py.
 
 /** A member of staff as a spec puts one on: `password` is typed (hashed here as the sign-in checks it, at node's default
  *  cost), `hash` is one already made, kept as it is. */
@@ -212,51 +223,40 @@ export type Person = {
   hash?: string;
 };
 
-/** `p` is someone the sign-in knows, exactly as given: an entry already there for the email is replaced, keeping the id
- *  it signs in as. → the id the website signs them in as. */
+/** `p` is someone the sign-in knows, exactly as given: someone already there with the email (on the list or taken off
+ *  it) is that person, put back as given, with the id they had. → the id the website signs them in as. */
 export async function aPerson(sql: Sql, p: Person): Promise<{ id: string }> {
-  const { password, hash, ...rest } = p;
   const { randomBytes, scryptSync } = await import("node:crypto");
   const salt = randomBytes(16).toString("hex");
-  const made = hash ?? (password ? `scrypt$${salt}$${scryptSync(password, salt, 64).toString("hex")}` : undefined);
-  const entry = { ...rest, ...(made ? { password: made } : {}) };
-  await sql`
-    update config set value = (select coalesce(jsonb_agg(s), '[]'::jsonb) from jsonb_array_elements(value) s
-                               where s ->> 'email' <> ${p.email})
-      || jsonb_build_array(${sql.json(entry)}::jsonb || coalesce((select jsonb_build_object('id', s -> 'id')
-           from jsonb_array_elements(value) s where s ->> 'email' = ${p.email} and s ? 'id' limit 1), '{}'::jsonb))
-    where key = 'app.staff'`;
+  const made = p.hash ?? (p.password ? `scrypt$${salt}$${scryptSync(p.password, salt, 64).toString("hex")}` : null);
+  // the access fixture's (global-setup.ts) one door: it also gives the person the grants their classes and role need
   const [me] = await sql<{ id: string }[]>`
-    select s ->> 'id' as id from config, jsonb_array_elements(value) s
-    where key = 'app.staff' and s ->> 'email' = ${p.email}`;
+    select test_fixture.person(${await tenant(sql)}, ${p.email}, ${p.name ?? "Placeholder Person"}, ${p.role ?? null},
+                               ${p.classes ?? []}::text[], ${p.subjects ?? []}::text[], ${made})::text as id`;
   return { id: me.id };
 }
 
-/** `email` is no longer someone the sign-in knows; everyone else is as they were. */
+/** `email` is no longer someone the sign-in knows (taken off as the engine takes a person off: inactive, no password);
+ *  everyone else is as they were. */
 export async function forgetPerson(sql: Sql, email: string): Promise<void> {
-  await sql`
-    update config set value = (select coalesce(jsonb_agg(s), '[]'::jsonb) from jsonb_array_elements(value) s
-                               where s ->> 'email' <> ${email})
-    where key = 'app.staff'`;
+  const e = email.trim().toLowerCase();
+  await sql`update pii.staff set password_hash = null, password_set_at = null where email = ${e}`;
+  await sql`update staff set active = false where id in (select staff_id from pii.staff where email = ${e})`;
 }
 
 /** `email` teaches `classes` (class labels) and nothing else of them changes, as the Staff page saves a person. */
 export async function teaches(sql: Sql, email: string, classes: string[]): Promise<void> {
-  await sql`
-    update config set value = (select jsonb_agg(case when s ->> 'email' = ${email}
-                                                     then jsonb_set(s, '{classes}', ${sql.json(classes)}) else s end
-                                                order by n)
-                               from jsonb_array_elements(value) with ordinality as e(s, n))
-    where key = 'app.staff'`;
+  await sql`update staff set classes = ${classes}::text[]
+            where id in (select staff_id from pii.staff where email = ${email.trim().toLowerCase()})`;
 }
 
 export type Stored = { name: string; role: string; classes: string[] | null; subjects: string[] | null; password: string | null };
 
-/** A person as the sign-in keeps them, or undefined: `password` is the hash, null while they have none. */
+/** A person as the sign-in keeps them, or undefined (never put on, or taken off): `password` is the hash, null while they
+ *  have none. */
 export async function personAsStored(sql: Sql, email: string): Promise<Stored | undefined> {
   const [me] = await sql<Stored[]>`
-    select s ->> 'name' as name, s ->> 'role' as role, s -> 'classes' as classes, s -> 'subjects' as subjects,
-           s ->> 'password' as password
-    from config, jsonb_array_elements(value) s where key = 'app.staff' and s ->> 'email' = ${email}`;
+    select p.name, s.role_code as role, s.classes, s.subjects, p.password_hash as password
+    from pii.staff p join staff s on s.id = p.staff_id and s.active where p.email = ${email.trim().toLowerCase()}`;
   return me;
 }

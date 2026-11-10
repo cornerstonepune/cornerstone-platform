@@ -37,7 +37,7 @@ def _child(conn, section, who, actor):
     if not who.isdigit():
         return roster.find(conn, section, who, actor)
     r = conn.execute(
-        "select id from child where section = %s and roll_no = %s and active", (section, who)
+        "select id from child_now where section = %s and roll_no = %s and active", (section, who)
     ).fetchone()
     if not r:
         raise ValueError(f"no roll {who} in {section}")

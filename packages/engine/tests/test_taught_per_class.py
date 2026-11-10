@@ -2,7 +2,7 @@
 (goals/t1-topics-are-operations.yaml, ADR 0076).
 
 Nimish, 2026-10-14: "people who are there for one thing like educator only see something that's relevant for their
-class and their students." Each class has its own word on each skill, with who said it and when (`class_skill`); a
+class and their students." Each class has its own word on each skill, with who said it and when (`school_class.taught`); a
 class no one has spoken for follows the school's word on the skill (`skill_set.taught`). Switching a topic for a class
 says it of every skill in the topic (`say_taught`). One rule in the database, `skill_taught_in(tenant, skill, class)`,
 read by the engine and the site alike; a topic is taught in a class when any of its skills is (`taught_in`).
@@ -17,6 +17,7 @@ import pytest
 from engine.checks import live_data
 from engine.core import db, english, settings, topics
 from engine.w2_print import focus_paper, maker, shelf
+from tests import rows
 
 WEEK = "T3W1-taught-test"
 MODELS = [{"skill_set": "MUL.MODELS", "level": "Easy", "n": 4}]
@@ -38,12 +39,7 @@ def _tenant(conn):
 
 
 def _child(conn, roll, section, band="G2"):
-    return str(
-        conn.execute(
-            "insert into child (tenant_id, roll_no, section, band) values (%s,%s,%s,%s) returning id",
-            (_tenant(conn), roll, section, band),
-        ).fetchone()["id"]
-    )
+    return str(rows.a_child_in(conn, section, band, roll, _tenant(conn)))
 
 
 def _say(conn, section, topic, taught, skill=None):
@@ -165,7 +161,7 @@ def test_a_class_is_taught_skill_by_skill(conn):
 
 def test_regrouping_the_topics_changes_no_classs_paper(conn):
     """ADR 0076, decision 3: every word "taught" is said of a skill — the school's on the skill set, each class's in
-    `class_skill` — so a load that moves a skill to another topic, or drops the topic it sat in, changes no class's
+    `school_class.taught` — so a load that moves a skill to another topic, or drops the topic it sat in, changes no class's
     paper. (On the day the topics were regrouped, migration 20261113090000 wrote each word said of a topic onto the
     skills it held; this is what keeps it true at every load after.)
 
@@ -183,7 +179,7 @@ def test_regrouping_the_topics_changes_no_classs_paper(conn):
     conn.execute(
         "update skill set taught = true, taught_by = 'The coordinator', taught_at = now() where code = 'MUL.2D1D'"
     )
-    conn.execute("delete from class_skill where section in ('T1-A', 'T1-B', 'T1-NEW')")
+    conn.execute("update school_class set taught = '{}' where label in ('T1-A', 'T1-B', 'T1-NEW')")
     _child(conn, "T1-A-1", "T1-A")
     _child(conn, "T1-B-1", "T1-B")
     _say(conn, "T1-A", "T1.COLS", False)

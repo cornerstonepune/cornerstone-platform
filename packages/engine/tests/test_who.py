@@ -1,6 +1,6 @@
 """Who did something, as a member of staff's id (CP-27 group 4, step 4-prep: `engine.core.who`).
 
-A "who" arrives in whatever form its caller holds: a staff id, the id the website signs a person in as, the
+A "who" arrives in whatever form its caller holds: a staff id (the id the website signs a person in as), the
 `staff:<id>` a database session names, an email, a name, or "Name (role)". Each is one member of staff or nobody;
 a name two people share is nobody, never a guess; a script's own label (the loader, n8n) is kept as where it came
 from. Every person here is made up; each test rolls back.
@@ -40,7 +40,9 @@ def test_every_form_a_caller_holds_is_the_one_member_of_staff(conn):
     tag = uuid.uuid4().hex[:8]
     name, email = f"Who Test {tag}", f"who-{tag}@example.test"
     staff, signs_in_as = _member(conn, name, email)
-    assert signs_in_as and signs_in_as != str(staff), "the sign-in id is not the staff id today"
+    assert signs_in_as == str(staff), (
+        "the id the website signs a person in as is their staff id (CP-27 group 4)"
+    )
     for held in (staff, str(staff), signs_in_as, f"staff:{staff}", email, f"  {email.upper()} ", name,
                  f"{name} (educator)", f"{name}(coordinator)"):  # fmt: skip
         assert who(conn, held) == Who(staff, None), held

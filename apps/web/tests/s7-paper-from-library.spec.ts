@@ -52,7 +52,7 @@ const papers = () =>
 test.beforeAll(async () => {
   await aClass(sql, SECTION, "G2", ["Anya", "Bilal", "Chitra", "Dhruv"]);
   await clearUp();
-  const [{ n }] = await sql<{ n: number }[]>`select count(*)::int as n from child where section = ${SECTION} and active`;
+  const [{ n }] = await sql<{ n: number }[]>`select count(*)::int as n from child_now where section = ${SECTION} and active`;
   await engine("/week/prescribe", { section: SECTION, week: WEEK, skill_set: "SUB.2D2D" });
   const built = await engine("/week/assemble", { section: SECTION, week: WEEK });
   expect(built.short, "every child in the class is given a worksheet").toEqual([]);
@@ -113,7 +113,7 @@ test("a paper opens from its code: the page as printed, how it was drawn, and it
            (select count(*)::int from item i where i.status = 'active' and i.source = 'generated'
               and i.skill_set_code = st.skill_set_code and i.difficulty = st.difficulty) as pool
     from prescription p
-    join child c on c.id = p.child_id
+    join child_now c on c.id = p.child_id
     join sheet_instance si on si.id = p.sheet_instance_id
     join sheet_template st on st.id = si.sheet_template_id
     where si.pdf_path is not null and c.section = ${SECTION} and p.week = ${WEEK}
@@ -150,7 +150,7 @@ test("the week's plan shows every child with a level and a reason", async ({ pag
   await page.goto("/worksheets");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Worksheets");
   const [{ n }] = await sql<{ n: number }[]>`
-    select count(*)::int as n from prescription p join child c on c.id = p.child_id
+    select count(*)::int as n from prescription p join child_now c on c.id = p.child_id
     where c.section = ${SECTION} and p.week = ${WEEK} and p.kind = 'practice'`;
   await page.goto(LIST);
   // every page of the pack's table: the children, then the spares (goals/uxn4-papers-to-approve.yaml)
@@ -191,7 +191,7 @@ test("every child's paper has its own code, and no two children share questions"
 
 test("changing one child's level writes the reason and survives the next prescribe", async ({ page }) => {
   const [before] = await sql<{ id: string; difficulty: string; rule_fired: string }[]>`
-    select p.id, p.difficulty, p.rule_fired from prescription p join child c on c.id = p.child_id
+    select p.id, p.difficulty, p.rule_fired from prescription p join child_now c on c.id = p.child_id
     where c.section = ${SECTION} and p.week = ${WEEK} and c.roll_no = '1'`;
   try {
     await page.goto(LIST);
@@ -216,7 +216,7 @@ test("changing one child's level writes the reason and survives the next prescri
 
 test("a level change with no reason is refused and nothing moves", async ({ page }) => {
   const [before] = await sql<{ id: string; difficulty: string }[]>`
-    select p.id, p.difficulty from prescription p join child c on c.id = p.child_id
+    select p.id, p.difficulty from prescription p join child_now c on c.id = p.child_id
     where c.section = ${SECTION} and p.week = ${WEEK} and c.roll_no = '2'`;
   await page.goto(LIST);
   const row = page.getByRole("table", { name: "Each child's paper this week" }).locator("tbody tr").nth(1);

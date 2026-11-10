@@ -135,12 +135,11 @@ if (PAGES.length) {
   const postgres = require("postgres");
   const sql = postgres(process.env.UI14_DB, { max: 1 });
   const staff = { email: "e2e@cornerstone.test", name: "End-to-end test", role: "coordinator" };
-  await sql`update config set value = value || ${sql.json([staff])}
-            where key = 'app.staff' and not value @> ${sql.json([{ email: staff.email }])}`;
   const [{ id: school }] = await sql`select id from tenant order by created_at limit 1`;
   const [{ id: campus }] = await sql`select id from campus where tenant_id = ${school} limit 1`;
   const [had] = await sql`select staff_id from pii.staff where email = ${staff.email}`;
-  const id = had?.staff_id ?? (await sql`insert into staff (tenant_id, campus_id) values (${school}, ${campus}) returning id`)[0].id;
+  const id = had?.staff_id ?? (await sql`insert into staff (tenant_id, campus_id, role_code) values (${school}, ${campus}, ${staff.role}) returning id`)[0].id;
+  await sql`update staff set active = true, role_code = ${staff.role} where id = ${id}`; // on the staff list (CP-27 group 4)
   if (!had) await sql`insert into pii.staff (tenant_id, staff_id, name, email) values (${school}, ${id}, ${staff.name}, ${staff.email})`;
   await sql`insert into staff_role_grant (tenant_id, staff_id, role_code, valid_from, granted_by)
             select ${school}, ${id}, 'deputy_coordinator', current_date - 1, 'UI-14 proofs'

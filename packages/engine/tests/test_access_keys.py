@@ -46,11 +46,8 @@ def _build(c):
             )  # fmt: skip
             s["cls"][who] = cls
             s["child"][who] = _one(
-                c,
-                "insert into child (tenant_id, roll_no, band, section, active) values (%s, '1', 'K2', %s, true)"
-                " returning id",
-                t, section,
-            )  # fmt: skip
+                c, "insert into child (tenant_id, band, active) values (%s, 'K2', true) returning id", t
+            )
             c.execute(
                 "insert into enrolment (tenant_id, child_id, class_id, roll_no, from_date, recorded_by)"
                 " values (%s, %s, %s, '1', current_date - 30, 'cp4 keys')",

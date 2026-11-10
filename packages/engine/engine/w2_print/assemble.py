@@ -93,7 +93,7 @@ def for_week(conn, section: str, week: str, kind: str = "practice") -> dict:
 
     rx = conn.execute(
         "select p.id, p.child_id, p.skill_set_code, p.difficulty, p.rule_fired, c.roll_no, c.band"
-        " from prescription p join child c on c.id = p.child_id"
+        " from prescription p join child_now c on c.id = p.child_id"
         " where c.section = %s and p.week = %s and p.kind = %s"
         " order by roll_order(c.roll_no), c.roll_no",
         (section, week, kind),

@@ -1,6 +1,6 @@
 {
   "why": "CP-27: the schema may only shrink. Equal to today's counts; lower them when a change removes tables or functions. Raising one needs a line in raised_by naming the spec and why the new table cannot be a column, a row in a shared table, a rule on a column, or a view.",
-  "tables": 131,
+  "tables": 128,
   "functions": 129,
   "raised_by": []
 }

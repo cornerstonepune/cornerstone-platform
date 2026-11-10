@@ -78,7 +78,7 @@ def scene(conn, skills=20, observed=19):
     k = a_k2_class(conn)
     t = k["tenant"]
     for roll in range(6, 23):
-        child = a_child(conn)
+        child = a_child(conn, enrolled=False)
         conn.execute(
             "insert into enrolment (tenant_id, child_id, class_id, roll_no, from_date, recorded_by)"
             " values (%s, %s, %s, %s, %s, 'test')",

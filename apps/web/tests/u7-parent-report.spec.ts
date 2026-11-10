@@ -7,6 +7,7 @@
  * checks what a parent reads — the name put in for [child], the counts beside the words, the child's own example, the
  * draft mark until an educator approves it in their name, and "out of date" once more answers are signed off.
  */
+import { aChildIn } from "./rows";
 import { expect, test } from "@playwright/test";
 import postgres from "postgres";
 import { ENGINE_PORT } from "../playwright.config";
@@ -18,14 +19,13 @@ const SECTION = "U7-TEST";
 async function tara(): Promise<string> {
   const [had] = await sql<
     { id: string }[]
-  >`select id from child where section = ${SECTION} and roll_no = '1'`;
+  >`select id from child_now where section = ${SECTION} and roll_no = '1'`;
   if (had) return had.id;
   return (await sql.begin(async (sql) => {
     const [{ tenant_id }] = await sql<
       { tenant_id: string }[]
     >`select id as tenant_id from tenant limit 1`;
-    const [{ id }] = await sql<{ id: string }[]>`
-      insert into child (tenant_id, roll_no, section, band) values (${tenant_id}, '1', ${SECTION}, 'G2') returning id`;
+    const [{ id }] = [{ id: await aChildIn(sql, SECTION, "G2", "1") }];
     await sql`insert into pii.child (tenant_id, child_id, first_name) values (${tenant_id}, ${id}, 'Tara')`;
     const [{ template }] = await sql<{ template: string }[]>`
       insert into sheet_template (tenant_id, band, child_id, week) values (${tenant_id}, 'G2', ${id}, ${SECTION}) returning id as template`;
@@ -112,7 +112,7 @@ async function keepDraft(id: string, f: Facts) {
   };
   await sql`
     insert into parent_note (tenant_id, child_id, week, body, prompt_version)
-    select tenant_id, id, '2026-W40', ${JSON.stringify({ facts: f, draft })}, 1 from child where id = ${id}::uuid`;
+    select tenant_id, id, '2026-W40', ${JSON.stringify({ facts: f, draft })}, 1 from child_now where id = ${id}::uuid`;
 }
 
 let id = "";
@@ -226,7 +226,7 @@ test("an educator approves it in their own name, once, and a report out of date 
   await sql`
     insert into evidence_event (tenant_id, child_id, skill_code, rung_code, correct, misconception_codes, channel,
                                 observed_at, confirmed_by)
-    select tenant_id, id, 'NUM.OPS.01', 'R21', true, '{}', 'item', now(), 'e2e' from child where id = ${id}::uuid`;
+    select tenant_id, id, 'NUM.OPS.01', 'R21', true, '{}', 'item', now(), 'e2e' from child_now where id = ${id}::uuid`;
   await page.goto(`/growth/${id}/parent`);
   await expect(page.getByText("out of date")).toBeVisible();
 });

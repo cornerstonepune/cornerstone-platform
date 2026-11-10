@@ -8,6 +8,7 @@ from pathlib import Path
 import pytest
 
 from engine.core import topics
+from tests import rows
 
 SEED = Path(__file__).resolve().parents[3] / "supabase" / "seed"
 
@@ -162,10 +163,10 @@ def test_a_topic_the_rows_drop_is_gone_after_a_load():
             (tenant,),
         )
         conn.execute("update skill set topic_code = 'ESTIMATE' where code = 'MD.ESTIMATE'")
-        conn.execute(
-            "insert into class_skill (tenant_id, section, skill_set_code, taught, taught_by) values"
-            " (%s, 'T1-OLD', 'MD.ESTIMATE', true, 'An educator') on conflict do nothing",
-            (tenant,),
+        conn.execute(  # a class's own word on the skill
+            'update school_class set taught = taught || \'{"MD.ESTIMATE": {"taught": true, "by": "An educator"}}\''
+            " where id = %s",
+            (rows.a_class(conn, "T1-OLD", "G2", tenant),),
         )
         topics.load(conn, tenant, english.with_english(settings.seed))
         left = conn.execute(

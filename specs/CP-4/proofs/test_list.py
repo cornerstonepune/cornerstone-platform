@@ -12,7 +12,7 @@ from conftest import ROOT, base_tables, coverage_gaps
 EXEMPT = {"public.sheet_template", "public.school_class", "public.campus", "public.academic_year", "public.role"}
 # Child data held in tables with no child_id column (design, "What exists").
 CHILD_FAMILY = {"public.capture", "public.item_result",
-                "public.page_choice", "public.capture_page", "public.mistake_named", "public.class_card"}
+                "public.page_choice", "public.capture_page", "public.mistake_named"}
 
 
 def test_1_every_table_is_listed_and_every_row_is_a_table(conn):

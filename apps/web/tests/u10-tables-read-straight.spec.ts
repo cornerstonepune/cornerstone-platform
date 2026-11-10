@@ -6,6 +6,7 @@
  * places." And: "It simply shows just one table, which can have a toggle around confidence levels, the date, etc.
  * There's just one table which very clearly shows how the engine is improving or not".
  */
+import { aChildIn } from "./rows";
 import { expect, type Page, test } from "@playwright/test";
 import postgres from "postgres";
 
@@ -19,11 +20,10 @@ const WAITED = "read as a right answer; a person checks every answer of this kin
  *  (half right); on 2 August it read two and both stood (all right) — so 2 August is 50 points up on 1 August. */
 async function twoDays() {
   const [{ id: tenant }] = await sql<{ id: string }[]>`select id from tenant limit 1`;
-  const [had] = await sql<{ id: string }[]>`select id from child where section = ${SECTION}`;
+  const [had] = await sql<{ id: string }[]>`select id from child_now where section = ${SECTION}`;
   const kid =
     had?.id ??
-    (await sql<{ id: string }[]>`
-      insert into child (tenant_id, roll_no, section, band) values (${tenant}, '1', ${SECTION}, 'G2') returning id`)[0].id;
+    ([{ id: await aChildIn(sql, SECTION, "G2", "1") }])[0].id;
   // a child on the roll has a name: the pages read names through pii.read_child, and a nameless child is on none
   await sql`insert into pii.child (tenant_id, child_id, first_name) select ${tenant}, ${kid}, 'Ira'
             where not exists (select 1 from pii.child where child_id = ${kid})`;
@@ -82,7 +82,7 @@ async function offColumn(page: Page): Promise<string[]> {
 
 test("every heading sits over its own column, on every page with a table", async ({ page }) => {
   const [grid] = await sql<{ section: string }[]>`
-    select c.section from child_skill_state s join child c on c.id = s.child_id where c.active and s.n_events > 0 limit 1`;
+    select c.section from child_skill_state s join child_now c on c.id = s.child_id where c.active and s.n_events > 0 limit 1`;
   for (const path of ["/", "/papers", "/capture", "/growth", "/make", "/library", "/worksheets", `/growth/class/${grid.section}`]) {
     await page.goto(path);
     expect(await offColumn(page), path).toEqual([]);

@@ -32,7 +32,7 @@ let ashaCapture = "";
 
 test.beforeAll(async () => {
   kids = await aClass(sql, SECTION, "G2", ["Asha", "Bina", "Chetan", "Dev"]);
-  const [{ tenant }] = await sql<{ tenant: string }[]>`select tenant_id as tenant from child where id = ${kids.Asha}`;
+  const [{ tenant }] = await sql<{ tenant: string }[]>`select tenant_id as tenant from child_now where id = ${kids.Asha}`;
   // a skill whose questions test two registry skills each, with two library worksheets
   const ws = await sql<{ id: string; item_ids: string[]; skill: string }[]>`
     select t.id, t.item_ids, t.skill_set_code as skill from sheet_template t

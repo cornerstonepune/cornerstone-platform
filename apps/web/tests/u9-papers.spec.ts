@@ -13,6 +13,7 @@
  * - an earlier paper read, one answer still waiting for a person (scanned);
  * - a class assessment read and signed off, one of two right (signed off).
  */
+import { aChildIn } from "./rows";
 import { expect, type Page, test } from "@playwright/test";
 import postgres from "postgres";
 
@@ -26,10 +27,9 @@ const papers: Record<"made" | "printed" | "scanned" | "signed", Paper> = {} as n
 let kids: Record<string, string> = {};
 
 async function child(tenant: string, roll: string, name: string) {
-  const [had] = await sql<{ id: string }[]>`select id from child where section = ${SECTION} and roll_no = ${roll}`;
+  const [had] = await sql<{ id: string }[]>`select id from child_now where section = ${SECTION} and roll_no = ${roll}`;
   if (had) return had.id;
-  const [{ id }] = await sql<{ id: string }[]>`
-    insert into child (tenant_id, roll_no, section, band) values (${tenant}, ${roll}, ${SECTION}, 'G2') returning id`;
+  const [{ id }] = [{ id: await aChildIn(sql, SECTION, "G2", roll) }];
   await sql`insert into pii.child (tenant_id, child_id, first_name) values (${tenant}, ${id}, ${name})`;
   return id;
 }

@@ -112,11 +112,7 @@ def _class(conn, t):
         " values (%s, %s, %s, 'G3', %s) returning id",
         (t, campus, year, section),
     )["id"]
-    child = db.one(
-        conn,
-        "insert into child (tenant_id, roll_no, section, band) values (%s, '1', %s, 'G3') returning id",
-        (t, section),
-    )["id"]
+    child = db.one(conn, "insert into child (tenant_id, band) values (%s, 'G3') returning id", (t,))["id"]
     conn.execute(
         "insert into enrolment (tenant_id, child_id, class_id, roll_no, from_date, recorded_by)"
         " values (%s, %s, %s, '1', '2033-06-01', 'test')",

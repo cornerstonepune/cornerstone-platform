@@ -29,7 +29,7 @@ const at = (page: Page) => page.getByRole("list", { name: "Where it stands" }).l
 test.beforeAll(async () => {
   kids = await aClass(sql, SECTION, "G2", ["Asha", "Bina", "Chetan"]);
   [{ tenant, week }] = await sql<{ tenant: string; week: string }[]>`
-    select tenant_id as tenant, to_char(now(), 'IYYY-"W"IW') as week from child where id = ${kids.Asha}`;
+    select tenant_id as tenant, to_char(now(), 'IYYY-"W"IW') as week from child_now where id = ${kids.Asha}`;
   [ws] = await sql<{ id: string; item_ids: string[]; set: string; title: string }[]>`
     select t.id, t.item_ids, t.skill_set_code as set, s.name || ' · ' || t.difficulty as title
     from sheet_template t join skill s on s.code = t.skill_set_code

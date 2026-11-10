@@ -28,8 +28,9 @@ test.afterAll(async () => {
   await sql.end();
 });
 
-const row = async (id: string) => (await sql<{ band: string; section: string; roll_no: string }[]>`select band, section, roll_no from child where id = ${id}`)[0];
-const moves = (id: string) => sql<{ to_band: string; reason: string }[]>`select to_band, reason from child_move where child_id = ${id}`;
+const row = async (id: string) => (await sql<{ band: string; section: string; roll_no: string }[]>`select band, section, roll_no from child_now where id = ${id}`)[0];
+const moves = (id: string) => sql<{ to_band: string; reason: string }[]>`select after ->> 'band' as to_band, coalesce(reason, '') as reason from change_log
+  where table_name = 'child' and op = 'move' and row_id = ${id}`;
 
 test("the grades offered are the rows of the grade table, in its order", async ({ page }) => {
   await page.goto(`/growth/${kids.Ann}`);

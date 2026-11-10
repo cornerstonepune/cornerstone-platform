@@ -32,7 +32,7 @@ def written() -> tuple[int, int, int]:
 
 @needs_db
 @pytest.mark.usefixtures("school")
-def test_the_first_staff_import_is_signed_by_an_email_on_the_sign_in_list_and_stores_the_staff_id():
+def test_the_staff_import_is_signed_by_an_email_on_the_staff_list_and_stores_the_staff_id():
     done = run("staff", "import", "--apply", "--by", "CY@Example.Test ")  # any case, a stray space
     assert done.exit_code == 0, done.output_plain
     cy = staff_id(SIGNER)
@@ -75,22 +75,26 @@ def test_a_signer_who_is_not_staff_is_refused_before_any_write_in_a_dry_run_too(
 @needs_db
 @pytest.mark.usefixtures("school")
 def test_the_staff_import_refuses_a_signer_who_is_not_on_the_list_and_writes_nothing():
+    before = written()
     for extra in ([], ["--apply"]):
         out = run("staff", "import", *extra, "--by", "stranger@example.test")
         assert out.exit_code != 0 and "--by" in out.output_plain, out.output_plain
         assert "stranger" not in out.output_plain
-    assert written() == (0, 0, 0)
+    assert written() == before
     ok = run("staff", "import", "--by", SIGNER)  # on the list: the dry run is fine, and writes nothing
     assert ok.exit_code == 0 and "dry run" in ok.output_plain, ok.output_plain
-    assert written() == (0, 0, 0)
+    assert written() == before
 
 
 @needs_db
 @pytest.mark.usefixtures("school")
-def test_only_the_staff_import_may_name_a_signer_before_the_staff_exist(tmp_path):
+def test_a_signer_on_the_staff_list_signs_an_enrolment_with_no_import_first(tmp_path):
+    """The staff list is the staff tables (CP-27 group 4): whoever is on it is a member of staff from the start."""
+    staff, grants, _ = written()
     out = run("enrol", "k2", listing(tmp_path, children(2)), "--apply", "--by", SIGNER, "--from", FROM)
-    assert out.exit_code != 0 and "--by" in out.output_plain, out.output_plain
-    assert written() == (0, 0, 0)
+    assert out.exit_code == 0, out.output_plain
+    assert written() == (staff, grants, 2)
+    assert {e["recorded_by"] for e in rows("select recorded_by from enrolment")} == {staff_id(SIGNER)}
 
 
 @needs_db

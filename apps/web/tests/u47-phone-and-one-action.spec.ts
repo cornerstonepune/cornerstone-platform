@@ -26,7 +26,7 @@ let sheet: string;
 
 test.beforeAll(async () => {
   kids = await aClass(sql, SECTION, "G2", ["Asha", "Bina"]);
-  const [{ tenant }] = await sql<{ tenant: string }[]>`select tenant_id as tenant from child where id = ${kids.Asha}`;
+  const [{ tenant }] = await sql<{ tenant: string }[]>`select tenant_id as tenant from child_now where id = ${kids.Asha}`;
   const [skill] = await sql<{ code: string; rung: string }[]>`
     select ss.registry_codes[1] as code, ss.rung_code as rung from skill ss where ss.code = 'ADD.2D2D'`;
   const [{ n }] = await sql<{ n: number }[]>`select count(*)::int as n from evidence_event where child_id = ${kids.Asha}`;

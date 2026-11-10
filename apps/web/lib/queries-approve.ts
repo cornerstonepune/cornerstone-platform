@@ -29,7 +29,7 @@ export type WeekRow = {
 export async function weeks(scope: Scope = EVERY_CLASS): Promise<{ section: string; week: string; kind: string; n: number }[]> {
   return sql`
     select c.section, p.week, p.kind, count(*)::int as n
-    from prescription p join child c on c.id = p.child_id
+    from prescription p join child_now c on c.id = p.child_id
     where ${inScope(scope, sql`c.section`)}
     group by c.section, p.week, p.kind
     order by p.week desc, c.section, p.kind`;
@@ -42,7 +42,7 @@ export async function weekPlan(section: string, week: string, kind: string, acto
            p.override_by, p.override_reason, p.no_paper,
            si.qr_code, si.print_status, st.code as worksheet
     from prescription p
-    join child c on c.id = p.child_id
+    join child_now c on c.id = p.child_id
     cross join lateral pii.read_child(c.id, ${actor}) n
     left join skill s on s.tenant_id = p.tenant_id and s.code = p.skill_set_code
     left join sheet_instance si on si.id = p.sheet_instance_id
@@ -60,9 +60,9 @@ export async function unplanned(
 ): Promise<{ child_id: string; roll_no: string; first_name: string; later: boolean }[]> {
   return sql`
     select c.id as child_id, c.roll_no, n.first_name,
-           c.created_at > (select min(p.created_at) from prescription p join child k on k.id = p.child_id
+           c.created_at > (select min(p.created_at) from prescription p join child_now k on k.id = p.child_id
                            where k.section = ${section} and p.week = ${week} and p.kind = ${kind}) as later
-    from child c cross join lateral pii.read_child(c.id, ${actor}) n
+    from child_now c cross join lateral pii.read_child(c.id, ${actor}) n
     where c.section = ${section} and c.active
       and not exists (select 1 from prescription p where p.child_id = c.id and p.week = ${week} and p.kind = ${kind})
     order by roll_order(c.roll_no), c.roll_no`;
@@ -80,6 +80,6 @@ export async function spareSheets(
     where si.child_id is null and si.print_status <> 'void'
       and (si.section = ${section} and si.week = ${week} and si.kind = ${kind}
            or si.section is null and st.week = ${week}
-              and st.band in (select distinct band from child where section = ${section}))
+              and st.band in (select distinct band from child_now where section = ${section}))
     order by st.difficulty, si.qr_code`;
 }

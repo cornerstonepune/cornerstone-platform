@@ -40,14 +40,16 @@ export async function topics(scope: Scope = EVERY_CLASS): Promise<Topic[]> {
            (select coalesce(json_agg(json_build_object('section', k.section, 'skills', (
                       select coalesce(json_agg(json_build_object(
                                'code', s.code, 'name', s.name, 'taught', skill_taught_in(s.tenant_id, s.code, k.section),
-                               'own', cs.section is not null, 'by', coalesce(cs.taught_by, s.taught_by),
-                               'at', coalesce(cs.taught_at, s.taught_at)::text,
+                               'own', cw.word is not null, 'by', coalesce(cw.word ->> 'by', s.taught_by),
+                               'at', coalesce(cw.word ->> 'at', s.taught_at::text),
                                'reaches', exists (select 1 from skill_level l where l.tenant_id = s.tenant_id and l.skill_code = s.code
                                                   and grade_ord(l.tenant_id, l.grade) <= grade_ord(s.tenant_id, k.band))
                              ) order by s.code), '[]')
                       from skill s
-                      left join class_skill cs on cs.tenant_id = s.tenant_id and cs.skill_set_code = s.code
-                                              and cs.section = k.section
+                      left join lateral (  -- the class's own word on the skill (school_class.taught), this year's class
+                        select sc.taught -> s.code as word from school_class sc join academic_year y on y.id = sc.academic_year_id
+                        where sc.tenant_id = s.tenant_id and sc.label = k.section
+                        order by y.starts_on desc limit 1) cw on true
                       where s.tenant_id = t.tenant_id and s.topic_code = t.code)) order by k.section), '[]')
             from (select c.section, class_band(t.tenant_id, c.section) as band
                   from unnest(${classes}::text[]) as c(section)) k) as classes

@@ -325,7 +325,7 @@ def for_child(conn, child_id):
 def lines(conn, child_ids=None, actor="engine-cli"):
     """One line per notebook, for a person: the child by name (read through pii, logged), and what it holds."""
     rows = conn.execute(
-        "select p.first_name, c.section, cp.notes from child_reading_profile cp join child c on c.id = cp.child_id,"
+        "select p.first_name, c.section, cp.notes from child_reading_profile cp join child_now c on c.id = cp.child_id,"
         " lateral pii.read_child(c.id, %s) p where (%s::uuid[] is null or cp.child_id = any(%s::uuid[]))"
         " order by c.section, p.first_name",
         (actor, child_ids, child_ids),

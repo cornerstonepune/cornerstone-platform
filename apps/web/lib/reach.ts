@@ -46,7 +46,7 @@ export const reachOf = cache(async (me: Who): Promise<Scope> => {
   const [r] = await sql<{ every: boolean; classes: string[] }[]>`
     select staff_sees(${who(me)}, null, null, null) as every,
            coalesce(array_agg(distinct section order by section) filter (where staff_sees(${who(me)}, section, null, null)), '{}') as classes
-    from child where active`;
+    from child_now where active`;
   return r?.every ? EVERY_CLASS : { classes: r?.classes ?? [], note: null };
 });
 
@@ -82,7 +82,7 @@ function asked(me: Who, t: Thing) {
   if ("capture" in t) return sql`staff_sees_capture(${who(me)}, ${id}::uuid)`;
   if ("run" in t) return sql`(select ${seesRun(me, sql`r`)} from flow_run r where r.id = ${id}::uuid)`;
   if ("result" in t) return sql`(select staff_sees_capture(${who(me)}, capture_id) from item_result where id = ${id}::uuid)`;
-  return sql`(select staff_sees(${who(me)}, section, null, null) from child where id = ${id}::uuid)`;
+  return sql`(select staff_sees(${who(me)}, section, null, null) from child_now where id = ${id}::uuid)`;
 }
 
 /** Whether the person may see every thing named; a thing not found is no one's. */

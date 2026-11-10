@@ -29,7 +29,7 @@ let skill = "";
 
 test.beforeAll(async () => {
   kids = await aClass(sql, SECTION, "G2", ["Asha", "Bina", "Chetan", "Dev", "Esha"]);
-  const [{ tenant }] = await sql<{ tenant: string }[]>`select tenant_id as tenant from child where id = ${kids.Asha}`;
+  const [{ tenant }] = await sql<{ tenant: string }[]>`select tenant_id as tenant from child_now where id = ${kids.Asha}`;
   // one skill's worksheets from the library, at two levels
   const ws = await sql<{ id: string; item_ids: string[]; skill: string; level: string }[]>`
     select id, item_ids, skill_set_code as skill, difficulty as level from sheet_template

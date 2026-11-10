@@ -210,7 +210,7 @@ export async function printedPaper(qr: string): Promise<PrintedPaper | undefined
     from sheet_instance si
     join sheet_template st on st.id = si.sheet_template_id
     left join skill s on s.tenant_id = st.tenant_id and s.code = st.skill_set_code
-    left join child c on c.id = coalesce(si.child_id, st.child_id)
+    left join child_now c on c.id = coalesce(si.child_id, st.child_id)
     left join prescription p on p.sheet_instance_id = si.id
     where si.qr_code = ${qr} and st.source in ('generated', 'library', 'focus')`;
   return rows[0];

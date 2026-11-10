@@ -53,16 +53,12 @@ def school():
     with db.connect() as conn:
         tenant = conn.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()["id"]
         was = rows.signin_list(conn)
-        for section in SECTIONS:
-            conn.execute(
-                "insert into child (tenant_id, roll_no, section, band) values (%s, '1', %s, 'G2')"
-                " on conflict (tenant_id, section, roll_no) do update set active = true",
-                (tenant, section),
-            )
+        made = [rows.a_child_in(conn, section, "G2", "1", tenant) for section in SECTIONS]
         conn.commit()
     yield SECTIONS
     with db.connect() as conn:
-        conn.execute("update child set active = false where section = any(%s)", (list(SECTIONS),))
+        conn.execute("update child set active = false where id = any(%s)", (made,))
+        conn.execute("update enrolment set to_date = from_date where child_id = any(%s)", (made,))
         rows.signin_list_is(conn, was)
         conn.commit()
 
@@ -298,10 +294,16 @@ def test_a_person_who_already_has_a_password_keeps_it_and_is_given_none(tmp_path
         for person in had:
             rows.a_person(conn, **person)
         conn.commit()
+    [was] = [s for s in _staff() if s["email"] == "old@example.test"]
     r = _load(_file(tmp_path, HEADER, "Old Hand,old@example.test,educator,NUM,SL-ONE"), "--apply")
     assert r.exit_code == 0 and "Give each person" not in r.output_plain
     [me] = [s for s in _staff() if s["email"] == "old@example.test"]
-    assert me["password"] == kept and me["password_set_at"] == "2026-10-01" and me["classes"] == ["SL-ONE"]
+    assert (
+        me["password"] == kept
+        and me["password_set_at"] == was["password_set_at"]
+        and me["classes"] == ["SL-ONE"]
+    )
+    assert was["password_set_at"].startswith("2026-10-01")
 
 
 @needs_db

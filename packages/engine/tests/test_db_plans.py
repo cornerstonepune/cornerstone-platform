@@ -95,7 +95,7 @@ def test_a_classs_answers_are_read_from_its_own_children_not_from_every_answer_i
     )  # the question is what the query can reach, not what a tiny table costs
     asked = (
         "select a.child_id from answer_placed a where a.confirmed_by is not null and a.child_id"
-        " {} (select id from child where active and section = 'PLAN-A'{})"
+        " {} (select id from child_now where active and section = 'PLAN-A'{})"
     )
     narrowed = _plan_analyzed(conn, asked.format("= any(array", ")"))
     assert _rows_read(narrowed, "evidence_event") <= 3, "only the class's own three answers are read"

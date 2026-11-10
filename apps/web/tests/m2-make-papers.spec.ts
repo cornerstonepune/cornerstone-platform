@@ -11,7 +11,7 @@ import { expect, test } from "@playwright/test";
 import postgres from "postgres";
 import { isoWeek } from "../lib/week";
 import { TEST_STAFF } from "./global-setup";
-import { aLine, daysAgo } from "./rows";
+import { aChildIn, aLine, daysAgo } from "./rows";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -36,13 +36,12 @@ async function testClass(): Promise<Record<string, string>> {
   const [{ tenant_id }] = await sql<{ tenant_id: string }[]>`select id as tenant_id from tenant limit 1`;
   const ids: Record<string, string> = {};
   for (const c of CHILDREN) {
-    const [had] = await sql<{ id: string }[]>`select id from child where section = ${SECTION} and roll_no = ${c.roll}`;
+    const [had] = await sql<{ id: string }[]>`select id from child_now where section = ${SECTION} and roll_no = ${c.roll}`;
     if (had) {
       ids[c.name] = had.id;
       continue;
     }
-    const [{ id }] = await sql<{ id: string }[]>`
-      insert into child (tenant_id, roll_no, section, band) values (${tenant_id}, ${c.roll}, ${SECTION}, 'G2') returning id`;
+    const [{ id }] = [{ id: await aChildIn(sql, SECTION, "G2", c.roll) }];
     await sql`insert into pii.child (tenant_id, child_id, first_name) values (${tenant_id}, ${id}, ${c.name})`;
     const of = c.answers.map(([skill, rung]) => `${skill}|${rung}`);
     for (const [i, [skill, rung, right, mistakes]] of c.answers.entries()) {
@@ -59,7 +58,7 @@ async function testClass(): Promise<Record<string, string>> {
 }
 
 async function clearUp() {
-  const children = sql`select id from child where section = ${SECTION}`;
+  const children = sql`select id from child_now where section = ${SECTION}`;
   await sql`delete from item_exposure where child_id in (${children})`;
   await sql`delete from sheet_instance where child_id in (${children})`;
   await sql`delete from sheet_template where child_id in (${children})`;
@@ -104,7 +103,7 @@ test("each class's home papers are proposed from each child's own map, one skill
   await bina.getByRole("button", { name: "Approve", exact: true }).click();
   await expect(bina.locator("[data-status=done]")).toBeVisible();
   const made = await sql<{ approved_by: string; kind: string }[]>`
-    select si.approved_by, si.kind from sheet_instance si join child c on c.id = si.child_id
+    select si.approved_by, si.kind from sheet_instance si join child_now c on c.id = si.child_id
     where c.section = ${SECTION} and si.week = ${isoWeek()}`;
   expect(made).toHaveLength(2);
   expect(new Set(made.map((m) => `${m.kind} ${m.approved_by}`))).toEqual(new Set([`focus ${TEST_STAFF.email}`]));

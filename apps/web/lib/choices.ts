@@ -17,7 +17,7 @@ export const choices = cache(async (): Promise<Choices> => {
       order by exists (select 1 from skill s join topic t on t.tenant_id = s.tenant_id and t.code = s.topic_code
                        where t.tenant_id = su.tenant_id and t.subject_code = su.code and s.status = 'ratified') desc, su.code`,
     sql<{ section: string; band: string }[]>`
-      select section, band from (select distinct tenant_id, section, class_band(tenant_id, section) as band from child where active) k
+      select section, band from (select distinct tenant_id, section, class_band(tenant_id, section) as band from child_now where active) k
       order by grade_ord(tenant_id, band), section`,
     grades(),
   ]);

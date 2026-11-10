@@ -12,7 +12,7 @@ import datetime
 import json
 import uuid
 
-from engine.core import db, settings
+from engine.core import db, roster, settings
 
 SECTION = "GR1-GOAL"
 DAY0 = datetime.date(2026, 9, 1)
@@ -94,12 +94,9 @@ def ledger(conn, sc):
         (t, sc["skill"]),
     )
     roll = db.one(
-        conn, "select count(*) + 1 as n from child where tenant_id = %s and section = %s", (t, SECTION)
+        conn, "select count(*) + 1 as n from child_now where tenant_id = %s and section = %s", (t, SECTION)
     )["n"]
-    child = conn.execute(
-        "insert into child (tenant_id, roll_no, section, band) values (%s, %s, %s, 'G2') returning id",
-        (t, str(roll), SECTION),
-    ).fetchone()["id"]
+    child = roster.a_child(conn, t, SECTION, "G2", str(roll), "engine goal (a scenario)")
     conn.execute(
         "insert into pii.child (tenant_id, child_id, first_name) values (%s, %s, 'Goal')", (t, child)
     )

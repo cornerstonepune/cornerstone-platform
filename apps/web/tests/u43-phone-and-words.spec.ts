@@ -30,7 +30,7 @@ const seen: Record<"educator" | "coordinator", Seen[]> = { educator: [], coordin
 test.beforeAll(async ({ browser }) => {
   test.setTimeout(600_000);
   const kids = await aClass(sql, SECTION, "G2", ["Asha", "Bina"]);
-  const [{ tenant }] = await sql<{ tenant: string }[]>`select tenant_id as tenant from child where id = ${kids.Asha}`;
+  const [{ tenant }] = await sql<{ tenant: string }[]>`select tenant_id as tenant from child_now where id = ${kids.Asha}`;
   const [skill] = await sql<{ code: string; rung: string; set: string }[]>`
     select ss.registry_codes[1] as code, ss.rung_code as rung, ss.code as set from skill ss
     where ss.grade = 'G2' and cardinality(ss.registry_codes) > 0 order by ss.ladder_order, ss.code limit 1`;

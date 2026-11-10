@@ -22,7 +22,7 @@ test.beforeAll(async () => {
   // (goals/ux4-class-and-child.yaml). Made once: evidence is append-only.
   await sql`
     insert into evidence_event (tenant_id, child_id, skill_code, rung_code, correct, misconception_codes, channel, observed_at, confirmed_by)
-    select tenant_id, id, 'NUM.OPS.01', 'R21', true, '{}', 'item', now(), 'u24' from child
+    select tenant_id, id, 'NUM.OPS.01', 'R21', true, '{}', 'item', now(), 'u24' from child_now
     where id = ${kids.Esha} and not exists (select 1 from evidence_event where child_id = ${kids.Esha})`;
   const [{ id: template }] = await sql<{ id: string }[]>`
     insert into sheet_template (tenant_id, band, week, item_ids, key)
@@ -32,7 +32,7 @@ test.beforeAll(async () => {
     await sql`
       insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, week, section, kind, print_status, approved_by)
       select tenant_id, ${`U24T-E${i}`}, ${template}, id, ${`2026-W0${i}`}, ${SECTION}, 'practice', 'printed', 'e2e'
-      from child where id = ${kids.Esha} on conflict do nothing`;
+      from child_now where id = ${kids.Esha} on conflict do nothing`;
   }
   // a class practice waiting for approval in each of seven classes
   for (const section of PACKS) {
@@ -40,14 +40,14 @@ test.beforeAll(async () => {
     await sql`
       insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, week, section, kind, print_status)
       select tenant_id, ${`U24T-${section}`}, ${template}, id, '2026-W02', ${section}, 'practice', 'new'
-      from child where id = ${one.Gita} on conflict do nothing`;
+      from child_now where id = ${one.Gita} on conflict do nothing`;
   }
   // a class plan in each of eight weeks long past
   for (let i = 1; i <= 8; i++) {
     await sql`
       insert into prescription (tenant_id, child_id, week, kind, skill_set_code, difficulty, rule_fired, misconception_targets, strand)
       select tenant_id, id, ${`2025-W1${i}`}, 'practice', 'ADD.2D2D', 'Medium', 'band_default', '{}', 'NUM'
-      from child where id = ${kids.Farid} on conflict do nothing`;
+      from child_now where id = ${kids.Farid} on conflict do nothing`;
   }
 });
 
@@ -94,7 +94,7 @@ test("the questions answered are folded under one line until opened", async ({ p
 
 test("Papers to approve chooses a class's week in the filter row, however many weeks there are", async ({ page }) => {
   const [plan] = await sql<{ section: string; week: string; kind: string }[]>`
-    select c.section, p.week, p.kind from prescription p join child c on c.id = p.child_id order by p.week desc, c.section limit 1`;
+    select c.section, p.week, p.kind from prescription p join child_now c on c.id = p.child_id order by p.week desc, c.section limit 1`;
   await page.goto(`/papers/approve?section=${plan.section}&week=${plan.week}&kind=${plan.kind}`);
   // no row of a class-and-week tag for every week ever planned: one Week dropdown holds them (goals/uxn4-papers-to-approve.yaml)
   await expect(page.getByRole("navigation", { name: "Classes and weeks" })).toHaveCount(0);

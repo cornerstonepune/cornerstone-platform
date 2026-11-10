@@ -27,7 +27,7 @@ export async function suggest(me: Session, typed: string): Promise<Hit[]> {
     // a child by part of their name, or by Sr. No. (roll number), within the classes the person sees
     sql<{ id: string; name: string; band: string; section: string; roll_no: string }[]>`
       select c.id, n.first_name as name, class_band(c.tenant_id, c.section) as band, c.section, c.roll_no
-      from child c, lateral pii.read_child(c.id, ${me.email}) n
+      from child_now c, lateral pii.read_child(c.id, ${me.email}) n
       where c.active and ${seesClass(me, sql`c.section`)} and (${/^\d+$/.test(q)} and c.roll_no = ${q}
                           or position(lower(${q}) in lower(n.first_name || ' ' || n.last_name)) > 0)
       order by c.section, roll_order(c.roll_no), c.roll_no limit ${MOST_SUGGESTIONS}`,

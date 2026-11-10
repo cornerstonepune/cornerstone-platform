@@ -62,3 +62,14 @@ child; confirmed by a person), `hand_check` (a hand calculation of a child's sta
 day) and `item_review` (a reviewer model's verdict on a question or a level's rule, `ref` = `template:<skill>:<level>`).
 What every kind names is a column (child, skill, level, `ref`, `verdict`, `source`, `confirmed_by`, `checked_on`), the
 rest is `detail`.
+
+**How the staff list and a child's class are kept (CP-27 group 4).** The staff list is `staff` (active, `role_code`,
+the `classes` and `subjects` the website shows; never a grant) with its `pii.staff` row (name, email, the password hash
+and `password_set_at`). The website signs a person in as their `staff.id` (`app.staff_id`, `current_staff()`), reads the
+list through `staff_list(slug)` and writes it through `staff_set_password` and `staff_add` (it has no right on
+`pii.staff`); taking a person off makes them inactive with no password, never a delete. A child's class and roll number
+are their open `enrolment` in a `school_class` of the year; `school_class.label` is what pages, URLs and `staff.classes`
+call the class (K2's class is section A, label K2), and the view `child_now` gives a child with their class label (as
+`section`) and roll number. A move closes one enrolment and opens one, and writes one `change_log` row (table `child`,
+op `move`). A class's word that a skill is taught is `school_class.taught` ({skill: {taught, by, at}}); the class card
+is built from the graph when asked, never stored.

@@ -200,7 +200,7 @@ def home_area(conn, child_id: str, states: list | None = None) -> list:
     none. What `plan` draws a home paper from, and what Friday's class card names for each child."""
     if states is None:
         states = _states(conn, child_id)
-    child = conn.execute("select band, section from child where id = %s", (child_id,)).fetchone()
+    child = conn.execute("select band, section from child_now where id = %s", (child_id,)).fetchone()
     levels = _levels(conn, child["band"])
     taught = catalog(conn, child["section"])
     return [_where_it_shows(conn, a, levels) for a in focus.home(states, taught, rule(conn), levels)]
@@ -328,7 +328,9 @@ def print_paper(conn, child_id, week, actor, kind, p, how, pw=None, ids=None, wa
     kind, class and week, its questions recorded as seen, and the page rendered, saying `how` it was chosen. An edited
     paper (`edit_paper`) passes its questions in order (`ids`) and `waiting`: made by `actor`, approved by no one yet."""
     ids = ids or [q["id"] for a in p["areas"] for q in a["questions"]]
-    child = conn.execute("select tenant_id, band, section from child where id = %s", (child_id,)).fetchone()
+    child = conn.execute(
+        "select tenant_id, band, section from child_now where id = %s", (child_id,)
+    ).fetchone()
     template = conn.execute(
         "insert into sheet_template (tenant_id, band, week, item_ids, source, child_id)"
         " values (%s,%s,%s,%s::uuid[],'focus',%s) returning id",

@@ -164,7 +164,7 @@ test("class results, an open topic, an open skill and a child's page each open w
   test.setTimeout(240_000);
   // forty children, each with a state on every skill of their grade: what a full class looks like to the page
   const names = Array.from({ length: 40 }, (_, i) => `Big ${i + 1}`);
-  const big = await sql<{ id: string }[]>`select id from child where section = ${BIG}`;
+  const big = await sql<{ id: string }[]>`select id from child_now where section = ${BIG}`;
   if (!big.length) {
     const { aClass } = await import("./rows");
     const ids = Object.values(await aClass(sql, BIG, "G2", names));
@@ -172,11 +172,11 @@ test("class results, an open topic, an open skill and a child's page each open w
     await sql`
       insert into child_skill_state (tenant_id, child_id, skill_code, rung_code, state, n_events, n_correct, last_seen)
       select c.tenant_id, c.id, s.registry_codes[1], s.rung_code, (${states}::text[])[1 + (abs(hashtext(c.id::text || s.code)) % 6)], 6, 4, now()
-      from child c cross join skill s where c.id = any(${ids}::uuid[]) and s.grade = 'G2'
+      from child_now c cross join skill s where c.id = any(${ids}::uuid[]) and s.grade = 'G2'
       on conflict do nothing`;
     await sql`analyze child_skill_state`;
   }
-  const [{ id: child }] = await sql<{ id: string }[]>`select id from child where section = ${BIG} order by roll_order(roll_no) limit 1`;
+  const [{ id: child }] = await sql<{ id: string }[]>`select id from child_now where section = ${BIG} order by roll_order(roll_no) limit 1`;
   const urls = [
     `/growth?class=${BIG}`,
     `/growth?class=${BIG}&topic=${TOPIC}`,
@@ -197,7 +197,7 @@ test("class results, an open topic, an open skill and a child's page each open w
   // On the seeded copy, a second (the owner's budget). Once the other specs have filled the copy with test classes, every
   // page pays the menu's count alike (the layout's one query set, docs/notes/nav3-what-needs-doing.md), so there each is held
   // to being no slower than the site's other most-used pages, as u65 holds What needs doing.
-  const [{ classes }] = await sql<{ classes: number }[]>`select count(distinct section)::int as classes from child where active`;
+  const [{ classes }] = await sql<{ classes: number }[]>`select count(distinct section)::int as classes from child_now where active`;
   let others = 0;
   if (classes >= 30) for (const u of ["/today", "/papers", "/capture/check"]) others = Math.max(others, await median(u));
   for (const url of urls) {

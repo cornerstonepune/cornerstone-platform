@@ -29,7 +29,6 @@ CHILD = {
     # CP-4: a child's own id
     "public.access_log": ("who_looked", "child_id", "child"),
     "public.activity_observation": ("notes", "child_id", "child"),
-    "public.child_move": ("children", "child_id", "child"),
     "public.child_observed_state": ("learning", "child_id", "child"),
     "public.child_skill_state": ("learning", "child_id", "child"),
     "public.evidence_event": ("learning", "child_id", "child"),
@@ -57,8 +56,6 @@ CHILD = {
     # an approval of a parent report, a paper or a class card (its card in `detail`) is of that child's report, paper or
     # class, each seen through its own kind; the other kinds (a level, a way of asking, a question, a link) are the school's
     "public.approval": ("reports", "target", "approval_target"),
-    # CP-4: legacy class label (section) with child ids inside
-    "public.class_card": ("learning", "section", "section"),
 }
 
 SCHOOL_WIDE = [
@@ -93,8 +90,7 @@ SCHOOL_WIDE = [
     ),
     (
         "plan and timetable: what a class is to do and when, by class id; no child (the scope names both school-wide)",
-        "plan_entry session timetable_block timetable_limit timetable_rule_edit timetable_slot week_declaration "
-        "class_skill",
+        "plan_entry session timetable_block timetable_limit timetable_rule_edit timetable_slot week_declaration",
     ),
     (
         "materials lists for the activities of a class and their shopping; by class id; no child",

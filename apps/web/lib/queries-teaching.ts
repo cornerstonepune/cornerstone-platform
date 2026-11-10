@@ -37,7 +37,7 @@ export async function teaching(scope: Scope): Promise<TeachingTopic[]> {
       from sheet_instance si
       join sheet_template st on st.id = si.sheet_template_id
       join skill s on s.tenant_id = st.tenant_id and s.code = st.skill_set_code
-      left join child ch on ch.id = si.child_id
+      left join child_now ch on ch.id = si.child_id
       where si.print_status <> 'void' and s.topic_code is not null and ${inScope(scope, sql`coalesce(si.section, ch.section)`)}`,
     sql<{ topic: string }[]>`
       select distinct s.topic_code as topic from week_declaration w
@@ -46,7 +46,7 @@ export async function teaching(scope: Scope): Promise<TeachingTopic[]> {
     sql<{ topic: string; colour: string; n: number }[]>`
       select s.topic_code as topic, cs.colour, count(*)::int as n
       from child_skill_state k
-      join child ch on ch.id = k.child_id and ch.active
+      join child_now ch on ch.id = k.child_id and ch.active
       join skill s on s.tenant_id = k.tenant_id and s.code = k.skill_code
       join child_state cs on cs.tenant_id = k.tenant_id and cs.code = k.state and cs.enough
       where s.topic_code is not null and ${inScope(scope, sql`ch.section`)}

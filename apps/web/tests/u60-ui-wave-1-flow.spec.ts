@@ -24,7 +24,7 @@ let kids: Record<string, string> = {};
 
 test.beforeAll(async () => {
   kids = await aClass(sql, SECTION, "G2", ["Asha", "Bina", "Chetan", "Dev"]);
-  const [{ tenant }] = await sql<{ tenant: string }[]>`select tenant_id as tenant from child where id = ${kids.Asha}`;
+  const [{ tenant }] = await sql<{ tenant: string }[]>`select tenant_id as tenant from child_now where id = ${kids.Asha}`;
   const ws = await sql<{ id: string; item_ids: string[]; skill: string }[]>`
     select id, item_ids, skill_set_code as skill from sheet_template
     where source = 'library' and retired_at is null and band = 'G2'

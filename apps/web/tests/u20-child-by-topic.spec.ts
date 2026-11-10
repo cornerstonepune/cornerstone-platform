@@ -27,7 +27,7 @@ const STATES: [string, string, string, number, number][] = [
 
 test.beforeAll(async () => {
   kids = await aClass(sql, SECTION, "G2", ["Ishaan", "Mira", "Kabir"]);
-  const [{ tenant_id }] = await sql<{ tenant_id: string }[]>`select tenant_id from child where id = ${kids.Ishaan}`;
+  const [{ tenant_id }] = await sql<{ tenant_id: string }[]>`select tenant_id from child_now where id = ${kids.Ishaan}`;
   await sql`delete from child_skill_state where child_id = ${kids.Ishaan}`;
   for (const [rung, skill, state, n, right] of STATES) {
     await sql`
@@ -69,7 +69,7 @@ test("a child's page opens on their profile topic by topic", async ({ page }) =>
   const [{ notYet }] = await sql<{ notYet: number }[]>`
     select count(*)::int - 3 as "notYet" from skill s
     where s.topic_code = 'ADDSUB' and s.grade = 'G2'
-      and skill_taught_in(s.tenant_id, s.code, (select section from child where id = ${kids.Ishaan}))`;
+      and skill_taught_in(s.tenant_id, s.code, (select section from child_now where id = ${kids.Ishaan}))`;
   await expect(line("ADDSUB")).toContainText(`Addition & subtraction`);
   await expect(line("ADDSUB")).toContainText(`1 needs help · 1 practising · 1 secure · ${notYet} not assessed yet`);
   await expect(line("DATA")).toContainText("Data handling");

@@ -107,8 +107,7 @@ def test_3_a_grant_not_current_gives_nothing(school):
 def test_3_the_uploader_of_a_class_y_paper_sees_that_child_only(school):
     # Own classes also see a child whose paper they uploaded (Nimish, 27 Oct 2026); nothing else of class Y.
     s, c = school, school.c
-    other = one(c, "insert into child (tenant_id, roll_no, band, section) values (%s, 'P4', 'G1', 'PY') returning id",
-                (s.t,))
+    other = one(c, "insert into child (tenant_id, band) values (%s, 'G1') returning id", (s.t,))
     c.execute("insert into pii.child (tenant_id, child_id, first_name) values (%s, %s, 'Fake')", (s.t, other))
     c.execute("insert into enrolment (tenant_id, child_id, class_id, roll_no, from_date, recorded_by) "
               "values (%s, %s, %s, 'P4', %s::date - 30, 'cp3 proof')", (s.t, other, s.y, s.today))
@@ -118,7 +117,7 @@ def test_3_the_uploader_of_a_class_y_paper_sees_that_child_only(school):
     sheet = one(c, "insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id) "
                    "values (%s, 'CSC0FFEE', %s, %s) returning id", (s.t, tpl, paper_kid))
     c.execute("insert into capture (tenant_id, path, sheet_instance_id, uploaded_by) values (%s, 'proof/scan.jpg', %s, %s)",
-              (s.t, sheet, s.entry["edx"]))  # uploaded_by holds the sign-in list entry id, as the website sets it
+              (s.t, sheet, s.entry["edx"]))  # uploaded_by holds the staff id the website signs the person in as
     s.grant("nogrant", "assistant", s.x)  # a second educator of X, who uploaded nothing
 
     def sees(who, kid):
@@ -142,7 +141,7 @@ def test_4_no_identity_sees_nothing(school):
 
 def test_4_an_identity_that_is_no_one_sees_nothing(school):
     s = school
-    for who in ("", str(uuid.uuid4()), "unmatched", "gone"):  # empty, unknown id, entry with no staff, deactivated
+    for who in ("", str(uuid.uuid4()), "unmatched", "gone"):  # empty, unknown id, an id no one has, deactivated
         seen = {t: s.seen(who, f"select 1 from {t}") for t in FOUR_KINDS}
         assert seen == {t: 0 for t in FOUR_KINDS}, f"identity {who or 'empty'!r}: {seen}"
 

@@ -30,7 +30,7 @@ test.beforeAll(async () => {
   [{ name: topicName }] = await sql<{ name: string }[]>`select name from topic where code = ${TOPIC}`;
 });
 test.afterAll(async () => {
-  await sql`delete from class_skill where section in (${MINE}, ${OTHER})`;
+  await sql`update school_class set taught = '{}' where label in (${MINE}, ${OTHER})`;
   await forgetPerson(sql, EDUCATOR.email);
   await sql.end();
 });
@@ -49,7 +49,7 @@ async function signedIn(browser: Browser): Promise<Page> {
 // a class's word on the topic: said of every one of its skills alike (goals/t1-topics-are-operations.yaml)
 const said = (section: string) =>
   sql<{ taught: boolean; taught_by: string }[]>`
-    select bool_and(taught) as taught, min(taught_by) as taught_by from class_skill
+    select bool_and(taught) as taught, min(taught_by) as taught_by from (select sc.tenant_id, sc.label as section, w.key as skill_set_code, (w.value ->> 'taught')::boolean as taught, w.value ->> 'by' as taught_by from school_class sc cross join jsonb_each(sc.taught) w) class_skill
     where section = ${section} and skill_set_code in (select code from skill where topic_code = ${TOPIC})
     having count(*) > 0`;
 
@@ -70,7 +70,7 @@ test("an educator says a topic is taught in their class, in their name, and no o
     expect(school.taught, "one class's word is not the school's switch").toBe(false);
   } finally {
     await page.context().close();
-    await sql`delete from class_skill where section in (${MINE}, ${OTHER})`;
+    await sql`update school_class set taught = '{}' where label in (${MINE}, ${OTHER})`;
   }
 });
 
@@ -78,8 +78,8 @@ test("make papers says which skills a class has not been taught, and still offer
   try {
     const [{ id: tenant }] = await sql<{ id: string }[]>`select id from tenant limit 1`;
     await sql`
-      insert into class_skill (tenant_id, section, skill_set_code, taught, taught_by)
-      values (${tenant}, ${MINE}, 'MUL.MODELS', true, 'U30 test')`;
+      update school_class set taught = taught || jsonb_build_object('MUL.MODELS',
+        jsonb_build_object('taught', true, 'by', 'U30 test', 'at', now())) where tenant_id = ${tenant} and label = ${MINE}`;
     // since L7 an educator may choose any skill (ADR 0081, Nimish, 2026-10-16); the line says which one the class
     // has not been taught
     const models = async (cls: string) => {
@@ -90,7 +90,7 @@ test("make papers says which skills a class has not been taught, and still offer
     expect(await models(MINE), "taught in the class").not.toContain("not taught yet");
     expect(await models(OTHER), "not taught in the class, and still offered").toContain("not taught yet");
   } finally {
-    await sql`delete from class_skill where section in (${MINE}, ${OTHER})`;
+    await sql`update school_class set taught = '{}' where label in (${MINE}, ${OTHER})`;
   }
 });
 

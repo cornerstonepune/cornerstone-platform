@@ -137,7 +137,7 @@ def closing(conn) -> list[dict]:
         )
     }
     out = []
-    for c in conn.execute("select distinct section from child where active order by section").fetchall():
+    for c in conn.execute("select distinct section from child_now where active order by section").fetchall():
         band = roster.class_band(conn, c["section"])
         usable = _levels(conn, band)
         for s in catalog(conn, c["section"]):

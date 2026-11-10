@@ -15,7 +15,7 @@ import pymupdf
 _IN_PACK = (
     "((si.week = %(week)s and si.section = %(section)s and si.kind = %(kind)s)"
     " or si.sheet_template_id in ("
-    "   select st.id from sheet_template st left join child c on c.id = st.child_id"
+    "   select st.id from sheet_template st left join child_now c on c.id = st.child_id"
     "   where st.source = 'generated' and st.week = %(week)s and (c.section = %(section)s or st.child_id is null)))"
 )
 
@@ -52,7 +52,7 @@ def papers(conn, section: str, week: str, kind: str) -> list[dict]:
     """The pack in handout order: each child's paper by roll number, then the spares."""
     return conn.execute(
         "select si.qr_code, si.child_id, c.roll_no, si.print_status, si.approved_by, si.pdf_path"
-        " from sheet_instance si left join child c on c.id = si.child_id"
+        " from sheet_instance si left join child_now c on c.id = si.child_id"
         f" where si.print_status <> 'void' and {_IN_PACK}"
         " order by si.child_id is null,"
         "   roll_order(c.roll_no), c.roll_no, si.qr_code",

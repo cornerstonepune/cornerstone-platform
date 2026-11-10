@@ -5,6 +5,7 @@
  * click to act, listed under the tab where it is done (goals/ui1-menu-and-today.yaml). The class papers and the child whose work suggests a next paper are the test's own, made on the copy
  * and cleared afterwards; the rest is compared with whatever the copy holds.
  */
+import { aChildIn } from "./rows";
 import { expect, type Page, test } from "@playwright/test";
 import postgres from "postgres";
 import { isoWeek } from "../lib/week";
@@ -31,11 +32,10 @@ async function engine(path: string, body: object) {
 
 /** A Grade 2 child of the test's own whose checked answers show subtraction under half right. */
 async function testChild(): Promise<string> {
-  const [had] = await sql<{ id: string }[]>`select id from child where section = ${SECTION} and roll_no = '1'`;
+  const [had] = await sql<{ id: string }[]>`select id from child_now where section = ${SECTION} and roll_no = '1'`;
   if (had) return had.id;
   const [{ tenant_id }] = await sql<{ tenant_id: string }[]>`select id as tenant_id from tenant limit 1`;
-  const [{ id }] = await sql<{ id: string }[]>`
-    insert into child (tenant_id, roll_no, section, band) values (${tenant_id}, '1', ${SECTION}, 'G2') returning id`;
+  const [{ id }] = [{ id: await aChildIn(sql, SECTION, "G2", "1") }];
   await sql`insert into pii.child (tenant_id, child_id, first_name) values (${tenant_id}, ${id}, 'Today')`;
   for (const right of [false, false, false, false, true, true]) {
     await sql`
@@ -105,7 +105,7 @@ test("today lists everything waiting on a teacher, each with its count and one c
   // a child whose checked work gives the engine a home paper to propose — red, amber or green on any skill —
   // with no home paper approved this week: a row for each class, counting its children
   const [{ n }] = await sql<{ n: number }[]>`
-    select count(distinct s.child_id)::int as n from child_skill_state s join child c on c.id = s.child_id
+    select count(distinct s.child_id)::int as n from child_skill_state s join child_now c on c.id = s.child_id
     where c.active and s.state in ('patterned_error', 'emerging', 'practising', 'secure', 'stretch_ready')
       and not exists (select 1 from sheet_instance si where si.child_id = s.child_id and si.kind = 'focus'
                       and si.week = ${isoWeek()})`;

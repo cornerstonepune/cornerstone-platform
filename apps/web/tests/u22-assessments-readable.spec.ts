@@ -40,7 +40,7 @@ async function aCopy(qr: string, child: string, template: string, kind: string, 
   const by = status === "printed" ? "e2e" : null;
   await sql`
     insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, week, section, kind, print_status, approved_by)
-    select tenant_id, ${qr}, ${template}, ${child}, ${WEEK}, ${SECTION}, ${kind}, ${status}, ${by} from child where id = ${child}
+    select tenant_id, ${qr}, ${template}, ${child}, ${WEEK}, ${SECTION}, ${kind}, ${status}, ${by} from child_now where id = ${child}
     on conflict do nothing`;
 }
 

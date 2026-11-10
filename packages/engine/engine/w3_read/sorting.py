@@ -230,7 +230,7 @@ def sort_file(conn, path, pages_of=None, read_text=None) -> list[dict]:
             "       (select count(*) from capture c where c.sheet_instance_id = si.id and c.superseded_by is null)"
             "         as captures"
             " from sheet_instance si join sheet_template t on t.id = si.sheet_template_id"
-            " left join child ch on ch.id = si.child_id where si.qr_code = any(%s)",
+            " left join child_now ch on ch.id = si.child_id where si.qr_code = any(%s)",
             (qrs,),
         )
     }

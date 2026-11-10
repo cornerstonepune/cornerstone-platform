@@ -70,7 +70,7 @@ def test_an_educator_sees_the_papers_makes_them_once_and_prints_them_as_one(clie
         "sent twice, made once"
     )
     n = conn.execute(
-        "select count(*) as n from sheet_instance si join child c on c.id = si.child_id where c.section = %s",
+        "select count(*) as n from sheet_instance si join child_now c on c.id = si.child_id where c.section = %s",
         (SECTION,),
     ).fetchone()["n"]
     assert n == 2

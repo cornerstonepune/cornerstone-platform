@@ -51,6 +51,20 @@ def every_kind_trusted(monkeypatch):
     monkeypatch.setattr(marking, "spot_rate", lambda conn: 0.0)
 
 
+@pytest.fixture(autouse=True, scope="session")
+def the_school_year_of_today():
+    """The tests' school has the school year of today, as live does (CP-27 group 4: a child's class is a class of a
+    year). Made once, before any module counts its rows, and kept: a test that made it inside its own transaction
+    would hold the row every other test's classes need until it ended."""
+    if not os.environ.get("DATABASE_URL"):
+        return
+    from tests import rows
+
+    with db.connect() as c:
+        rows.this_year(c)
+        c.commit()
+
+
 def _row_counts() -> dict | None:
     """{table: its row count} for every table of the test database, or None when no test database is in use."""
     if not os.environ.get("DATABASE_URL"):

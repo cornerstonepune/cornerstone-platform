@@ -24,7 +24,7 @@ says:
   - words: "All parts should just function like a well-oiled machine, right?"
     proved_by: "packages/engine/tests/test_people.py::test_a_second_class_teacher_warns_and_is_allowed_only_with_a_recorded_reason"
   - words: "All parts should just function like a well-oiled machine, right?"
-    proved_by: "packages/engine/tests/test_people.py::test_staff_import_copies_the_staff_list_leaves_the_config_and_changes_nothing_the_second_time"
+    proved_by: "packages/engine/tests/test_people.py::test_staff_import_grants_each_persons_campus_role_once_and_leaves_the_list_as_it_is"
   - words: "All parts should just function like a well-oiled machine, right?"
     proved_by: "packages/engine/tests/test_people.py::test_enrol_k2_is_a_dry_run_until_applied_and_a_second_run_changes_nothing"
   - words: "All parts should just function like a well-oiled machine, right?"

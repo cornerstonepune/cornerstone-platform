@@ -18,7 +18,7 @@ from pathlib import Path
 from typing import Any
 
 from engine.core import db
-from engine.core.staff import classes, roles, save, staff, staff_hash
+from engine.core.staff import classes, put, roles, staff, staff_hash
 
 COLUMNS = ("name", "email", "role", "subjects", "classes")
 # no 0 O 1 l I i o: a password read aloud or copied by hand is not mistaken for another
@@ -192,22 +192,22 @@ def apply(conn: db.Conn, lines: Sequence[Line], cost: int) -> dict[str, str]:
     not in the table is not read."""
     todo = {ln.email: ln for ln in lines if ln.action in ("add", "update")}
     given: dict[str, str] = {}
-    out: list[dict[str, Any]] = []
     for s in staff(conn):
         ln = todo.pop(s["email"].lower(), None)
-        out.append(
-            {
-                **s,
-                "classes": ln.classes,
-                "subjects": ln.subjects,
-                **({"role": ln.role} if ln.change_role else {}),
-            }
-            if ln
-            else s
-        )
+        if ln:
+            put(
+                conn,
+                {
+                    **s,
+                    "classes": ln.classes,
+                    "subjects": ln.subjects,
+                    **({"role": ln.role} if ln.change_role else {}),
+                },
+            )
     for ln in todo.values():
         given[ln.email] = new_password()
-        out.append(
+        put(
+            conn,
             {
                 "email": ln.email,
                 "name": ln.name,
@@ -215,10 +215,8 @@ def apply(conn: db.Conn, lines: Sequence[Line], cost: int) -> dict[str, str]:
                 "password": staff_hash(given[ln.email], secrets.token_hex(16), cost),
                 "classes": ln.classes,
                 "subjects": ln.subjects,
-            }
+            },
         )
-    if given or any(ln.action == "update" for ln in lines):
-        save(conn, out)
     return given
 
 

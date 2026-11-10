@@ -11,9 +11,8 @@ Two people, by staff id only (no name is written; pii.staff holds "Fake Person" 
   (CP-3's role-to-group mapping, since CP-27 the column `role.access_group`, group code `everything`,
   specs/CP-3/design.md "The groups are rows").
 - `other`: role `class_teacher` of class A (CP-3's group `own_classes`): the class's own educator, not an approver.
-Each acts as the website does: as `app_web`, with `set_config('app.staff_id', <sign-in list entry id>, true)`. The
-sign-in entry (config `app.staff`) is given the same uuid as the person's `staff.id`, so the identity resolves to the
-same person whether it is read through CP-3's sign-in resolution or as a staff id directly.
+Each acts as the website does: as `app_web`, with `set_config('app.staff_id', <their staff id>, true)`: since CP-27
+group 4 the sign-in list is the staff tables, and the id the website signs a person in as is their `staff.id`.
 
 Names are the design's contract (specs/CP-7/design.md, "Data", "Rules", "Refusals"). The approval is the
 `settled_by` / `settled_at` stamp on `fortnight_plan`; the shared `approval` ledger gets no row (design, "Data").

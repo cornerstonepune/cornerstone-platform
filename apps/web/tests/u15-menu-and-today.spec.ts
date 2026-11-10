@@ -11,7 +11,7 @@ import { createHmac } from "node:crypto";
 import postgres from "postgres";
 import { isoWeek, weekWords } from "../lib/week";
 import { ENGINE_PORT } from "../playwright.config";
-import { aPerson, forgetPerson } from "./rows";
+import { aChildIn, aPerson, forgetPerson } from "./rows";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -38,10 +38,9 @@ async function engine(path: string, body: object) {
  *  the report made again each run, since the clean-up takes it away and the child stays. */
 async function testChild(): Promise<string> {
   const [{ tenant_id }] = await sql<{ tenant_id: string }[]>`select id as tenant_id from tenant limit 1`;
-  let [child] = await sql<{ id: string }[]>`select id from child where section = ${SECTION} and roll_no = '1'`;
+  let [child] = await sql<{ id: string }[]>`select id from child_now where section = ${SECTION} and roll_no = '1'`;
   if (!child) {
-    [child] = await sql<{ id: string }[]>`
-      insert into child (tenant_id, roll_no, section, band) values (${tenant_id}, '1', ${SECTION}, 'G2') returning id`;
+    [child] = [{ id: await aChildIn(sql, SECTION, "G2", "1") }];
     await sql`insert into pii.child (tenant_id, child_id, first_name) values (${tenant_id}, ${child.id}, 'Uione')`;
     for (const right of [false, false, false, false, true, true]) {
       await sql`
@@ -59,10 +58,10 @@ async function testChild(): Promise<string> {
 }
 
 async function clearUp() {
-  await sql`delete from item_exposure where week = ${WEEK} and child_id in (select id from child where section = ${SECTION})`;
-  await sql`delete from prescription where child_id in (select id from child where section = ${SECTION})`;
+  await sql`delete from item_exposure where week = ${WEEK} and child_id in (select id from child_now where section = ${SECTION})`;
+  await sql`delete from prescription where child_id in (select id from child_now where section = ${SECTION})`;
   await sql`delete from sheet_instance where section = ${SECTION}`;
-  await sql`delete from parent_note where child_id in (select id from child where section = ${SECTION})`;
+  await sql`delete from parent_note where child_id in (select id from child_now where section = ${SECTION})`;
   await forgetPerson(sql, EDUCATOR.email);
 }
 
@@ -145,7 +144,7 @@ test("What needs doing lists everything that waits as rows, and each row's butto
 
   // a topic not taught is a green row, "when ready": the school's choice, never counted as waiting
   await page.goto("/today?kind=taught");
-  const [{ off }] = await sql<{ off: number }[]>`select count(*)::int as off from topic t where not exists (select 1 from child k where k.tenant_id = t.tenant_id and k.active and taught_in(t.tenant_id, t.code, k.section))`;
+  const [{ off }] = await sql<{ off: number }[]>`select count(*)::int as off from topic t where not exists (select 1 from child_now k where k.tenant_id = t.tenant_id and k.active and taught_in(t.tenant_id, t.code, k.section))`;
   const taught = await rows(page);
   expect(taught.every((r) => r.state === "whenReady"), "marking a topic taught is never red or amber").toBe(true);
   expect(taught.length > 0 || off === 0).toBe(true);

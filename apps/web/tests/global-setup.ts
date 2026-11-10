@@ -16,10 +16,8 @@ export default async function globalSetup(): Promise<void> {
   startMailServer(MAIL_PORT);
   startGithubServer(GITHUB_PORT);
   const sql = postgres(process.env.DATABASE_URL!, { max: 1 });
-  // Only ever the copy: playwright.config.ts has already refused any other address.
-  await sql`
-    update config set value = value || ${sql.json([TEST_STAFF])}
-    where key = 'app.staff' and not value @> ${sql.json([{ email: TEST_STAFF.email }])}`;
+  // Only ever the copy: playwright.config.ts has already refused any other address. The test user is on the staff list
+  // (`staff` with its role, `pii.staff`: CP-27 group 4), with no password: the session cookie below signs them in.
   // The database's access rules (CP-3) show a person only what their role's group allows, and the site runs as app_web
   // in CI. So the test user is a member of staff with a current deputy_coordinator grant (the group that sees everything, and not a preview or review role).
   const [{ id: school }] = await sql<{ id: string }[]>`select id from tenant order by created_at limit 1`;
@@ -27,7 +25,8 @@ export default async function globalSetup(): Promise<void> {
   const [had] = await sql<{ staff_id: string }[]>`select staff_id from pii.staff where email = ${TEST_STAFF.email}`;
   const staff =
     had?.staff_id ??
-    (await sql<{ id: string }[]>`insert into staff (tenant_id, campus_id) values (${school}, ${campus}) returning id`)[0].id;
+    (await sql<{ id: string }[]>`insert into staff (tenant_id, campus_id, role_code) values (${school}, ${campus}, ${TEST_STAFF.role}) returning id`)[0].id;
+  await sql`update staff set active = true, role_code = ${TEST_STAFF.role} where id = ${staff}`;
   if (!had) {
     await sql`insert into pii.staff (tenant_id, staff_id, name, email) values (${school}, ${staff}, ${TEST_STAFF.name}, ${TEST_STAFF.email})`;
   }

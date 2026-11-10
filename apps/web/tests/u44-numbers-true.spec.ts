@@ -25,7 +25,7 @@ const PASSWORD = "u44-a-long-test-password";
 test.beforeAll(async () => {
   const mine = await aClass(sql, MINE, "G2", ["Asha", "Bina"]);
   const other = await aClass(sql, OTHER, "G2", ["Chetan"]);
-  const [{ tenant }] = await sql<{ tenant: string }[]>`select tenant_id as tenant from child where id = ${mine.Asha}`;
+  const [{ tenant }] = await sql<{ tenant: string }[]>`select tenant_id as tenant from child_now where id = ${mine.Asha}`;
   // two library worksheets of 2-digit + 2-digit at Medium, whose level the school files under Grade 2
   const ws = await sql<{ id: string; item_ids: string[] }[]>`
     select st.id, st.item_ids from sheet_template st join skill_level l on l.skill_code = st.skill_set_code and l.difficulty = st.difficulty

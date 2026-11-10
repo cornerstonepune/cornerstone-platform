@@ -20,7 +20,7 @@ def for_class(conn, section: str, week: str, skill_set: str, kind: str = "practi
     week and kind updates the rows rather than adding a second set."""
     tenant = conn.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()["id"]
     children = conn.execute(
-        "select id, roll_no, band from child where section = %s and active order by"
+        "select id, roll_no, band from child_now where section = %s and active order by"
         " roll_order(roll_no), roll_no",
         (section,),
     ).fetchall()

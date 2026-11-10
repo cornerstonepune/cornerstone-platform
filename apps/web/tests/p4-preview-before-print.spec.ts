@@ -9,6 +9,7 @@
  * The child is the test's own, made once on the copy with checked answers and kept (evidence is append-only); the
  * papers the test makes are removed.
  */
+import { aChildIn } from "./rows";
 import { expect, test, type Locator, type Page } from "@playwright/test";
 import postgres from "postgres";
 
@@ -18,11 +19,10 @@ const ASK = "SUB.3D3D~Easy~4";
 const SHOTS = "test-results/preview-before-print";
 
 async function testChild(): Promise<string> {
-  const [had] = await sql<{ id: string }[]>`select id from child where section = ${SECTION} and roll_no = '1'`;
+  const [had] = await sql<{ id: string }[]>`select id from child_now where section = ${SECTION} and roll_no = '1'`;
   if (had) return had.id;
   const [{ tenant_id }] = await sql<{ tenant_id: string }[]>`select id as tenant_id from tenant limit 1`;
-  const [{ id }] = await sql<{ id: string }[]>`
-    insert into child (tenant_id, roll_no, section, band) values (${tenant_id}, '1', ${SECTION}, 'G3') returning id`;
+  const [{ id }] = [{ id: await aChildIn(sql, SECTION, "G3", "1") }];
   await sql`insert into pii.child (tenant_id, child_id, first_name) values (${tenant_id}, ${id}, 'Preview')`;
   // 3-digit − 3-digit: 2 of 8, taking the smaller digit from the larger four times — the home assessment's one skill
   const answers: [string, string, boolean, string[]][] = [

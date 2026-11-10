@@ -33,7 +33,7 @@ def of_scan(conn, name: str) -> list[dict]:
         "select c.id as capture_id, c.path, ch.section, ch.roll_no, coalesce(t.code, t.batch_id) as code,"
         " (select count(*) from item_result r where r.capture_id = c.id) as answers"
         " from capture c join sheet_instance si on si.id = c.sheet_instance_id"
-        " join sheet_template t on t.id = si.sheet_template_id left join child ch on ch.id = si.child_id"
+        " join sheet_template t on t.id = si.sheet_template_id left join child_now ch on ch.id = si.child_id"
         " where c.superseded_by is null and (c.path like %s or c.path like %s) order by c.path",
         (copies._home(copies.CUT / stem) + "/%", copies._home(copies.WAS_CUT / stem) + "/%"),
     ).fetchall()

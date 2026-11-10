@@ -8,6 +8,7 @@
  *
  * The child is the test's own, made once with checked answers and kept (evidence is append-only); its papers are removed.
  */
+import { aChildIn } from "./rows";
 import { expect, test, type Page } from "@playwright/test";
 import postgres from "postgres";
 import { TEST_STAFF } from "./global-setup";
@@ -17,11 +18,10 @@ const SECTION = "P5-REVIEW";
 const REVIEW = /\/papers\/review\/(CS[0-9A-F]{6})$/;
 
 async function testChild(): Promise<string> {
-  const [had] = await sql<{ id: string }[]>`select id from child where section = ${SECTION} and roll_no = '1'`;
+  const [had] = await sql<{ id: string }[]>`select id from child_now where section = ${SECTION} and roll_no = '1'`;
   if (had) return had.id;
   const [{ tenant_id }] = await sql<{ tenant_id: string }[]>`select id as tenant_id from tenant limit 1`;
-  const [{ id }] = await sql<{ id: string }[]>`
-    insert into child (tenant_id, roll_no, section, band) values (${tenant_id}, '1', ${SECTION}, 'G3') returning id`;
+  const [{ id }] = [{ id: await aChildIn(sql, SECTION, "G3", "1") }];
   await sql`insert into pii.child (tenant_id, child_id, first_name) values (${tenant_id}, ${id}, 'Review')`;
   // 3-digit − 3-digit: 2 of 8, the smaller digit taken from the larger four times — the home paper's one area
   const answers: [string, string, boolean, string[]][] = [

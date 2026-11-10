@@ -36,7 +36,7 @@ def a_k2_class(conn) -> dict:
     )
     children = {}
     for roll in ("1", "2", "3", "4", "5"):
-        child = a_child(conn)
+        child = a_child(conn, enrolled=False)
         conn.execute(
             "insert into enrolment (tenant_id, child_id, class_id, roll_no, from_date, recorded_by)"
             " values (%s, %s, %s, %s, %s, 'test')",

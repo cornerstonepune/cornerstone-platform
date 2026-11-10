@@ -157,7 +157,9 @@ def start(tenant, path: Path, actor: str, pages: int | None = None, of_run: str 
         run = conn.execute(
             "insert into flow_run (tenant_id, flow, trigger, result, uploaded_by)"
             " select %s, %s, %s, %s::jsonb,"
-            " case when %s::uuid is null then staff_id(%s) else (select uploaded_by from flow_run where id = %s::uuid) end"
+            " case when %s::uuid is null then (select p.staff_id from pii.staff p join staff s on s.id = p.staff_id"
+            " and s.active where p.tenant_id = %s and p.email = lower(btrim(%s)))"
+            " else (select uploaded_by from flow_run where id = %s::uuid) end"
             f" where not exists (select 1 from flow_run where flow = %s and status = 'running' and {_FILE} = %s)"
             " returning id",
             (
@@ -166,6 +168,7 @@ def start(tenant, path: Path, actor: str, pages: int | None = None, of_run: str 
                 f"{actor}: {path.name}",
                 json.dumps({"pages": pages, "file": path.name}),
                 of_run,
+                tenant,
                 actor,
                 of_run,
                 FLOW,
