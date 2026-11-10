@@ -1,5 +1,5 @@
 import Link from "@/components/link";
-import { Body, Notice, PageHeader, Panel, Pill } from "@/components/shell";
+import { Body, Notice, PageHeader, Panel, Pill } from "@/components/parts";
 import { requireStaff } from "@/lib/auth";
 import { scopeOf } from "@/lib/scope";
 import { deadline } from "@/lib/deadline";

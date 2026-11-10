@@ -5,7 +5,6 @@ approval before anything reaches a parent; the existing approvals unchanged". Th
 existing approvals could not hold (a sending back with its reason, a second approval) is `approval`, never edited.
 """
 
-import json
 import os
 
 import psycopg
@@ -15,9 +14,6 @@ from engine.core import db
 from tests.rows import a_child, tenant
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
-
-MIGRATION = db.REPO_ROOT / "supabase/migrations/20261208090000_one_approval_list.sql"
-SEED = json.loads((db.REPO_ROOT / "supabase/seed/vocabulary.json").read_text())
 
 
 @pytest.fixture
@@ -59,13 +55,19 @@ def _note(conn):
     )["id"]
 
 
-def test_what_is_approved_and_where_it_stands_are_rows(conn):
-    kinds = conn.execute("select code, words, reaches_parent from approval_kind order by ord").fetchall()
-    assert [tuple(k.values()) for k in kinds] == [
-        (k["code"], k["words"], k["reaches_parent"]) for k in SEED["approval_kinds"]
-    ]
-    states = conn.execute("select code, words from approval_state order by ord").fetchall()
-    assert [tuple(s.values()) for s in states] == [(s["code"], s["words"]) for s in SEED["approval_states"]]
+def test_what_is_approved_is_one_of_three_kinds_and_where_it_stands_one_of_four_words(conn):
+    """A skill at a level, a way of asking, a report for a parent: a rule on the column (CP-27: it was the table
+    approval_kind); a fourth kind is refused."""
+    kinds = {r["kind"] for r in conn.execute("select distinct kind from approval_list")}
+    assert kinds <= {"skill_level", "question_type", "parent_note"}, kinds
+    with pytest.raises(psycopg.errors.CheckViolation), conn.transaction():
+        conn.execute(
+            "insert into approval (tenant_id, kind, target, decision, by, reason)"
+            " values (%s, 'a_new_kind', 'x', 'sent_back', 'a coordinator', 'a reason')",
+            (tenant(conn),),
+        )
+    states = {r["state"] for r in conn.execute("select distinct state from approval_list")}
+    assert states <= {"draft", "sent_back", "waiting_second", "approved"}, states
 
 
 def test_draft_beside_approved_in_one_list(conn):
@@ -107,11 +109,9 @@ def test_send_back_with_a_reason(conn):
         "second_by": None,
         "sent_back_because": "the stem names no number",
     }
-    conn.execute(
-        "insert into question_type_approval (tenant_id, question_type, approved_by, approved_at)"
-        " values (%s, 'C5.BACK', 'an educator', clock_timestamp())",
-        (tenant(conn),),
-    )
+    _decide(
+        conn, "question_type", "C5.BACK", "approved", "an educator"
+    )  # a way of asking is approved in the list
     assert _entry(conn, "question_type", "C5.BACK")["state"] == "approved"
 
 
@@ -137,15 +137,15 @@ def test_a_second_approval_before_anything_reaches_a_parent(conn):
 
 
 def test_the_existing_approvals_are_unchanged(conn):
-    """Every level and way of asking approved before is approved in the list, by the same person, and the migration
+    """Every level and way of asking approved before is approved in the list, by the same person, and a school's setup
     run again moves none of them; a decision is never edited."""
     before = (
         conn.execute(
             "select md5(string_agg(code || level_approved::text, ',' order by code)) as s from skill"
         ).fetchone()["s"],
         conn.execute(
-            "select md5(string_agg(question_type || approved_by, ',' order by question_type)) as s"
-            " from question_type_approval"
+            "select md5(string_agg(target || first_by, ',' order by target)) as s from approval_list"
+            " where kind = 'question_type'"
         ).fetchone()["s"],
     )
     approved = db.one(
@@ -159,14 +159,16 @@ def test_the_existing_approvals_are_unchanged(conn):
             conn, "select count(*) as n from approval_list where kind = 'skill_level' and state = 'approved'"
         )["n"]
     )
-    conn.execute(MIGRATION.read_text())
+    conn.execute(
+        "insert into tenant (slug, name) values ('a-second-school', 'A second school')"
+    )  # a new school's setup
     after = (
         conn.execute(
             "select md5(string_agg(code || level_approved::text, ',' order by code)) as s from skill"
         ).fetchone()["s"],
         conn.execute(
-            "select md5(string_agg(question_type || approved_by, ',' order by question_type)) as s"
-            " from question_type_approval"
+            "select md5(string_agg(target || first_by, ',' order by target)) as s from approval_list"
+            " where kind = 'question_type'"
         ).fetchone()["s"],
     )
     assert after == before
@@ -174,3 +176,84 @@ def test_the_existing_approvals_are_unchanged(conn):
     _decide(conn, "parent_note", str(note), "sent_back", "a coordinator", "a reason")
     with pytest.raises(psycopg.Error), conn.transaction():
         conn.execute("update approval set reason = 'another'")
+
+
+def _rows(conn, kind, target):
+    return [
+        (r["decision"], r["by"])
+        for r in conn.execute(
+            "select decision, by from approval where kind = %s and target = %s order by seq", (kind, target)
+        )
+    ]
+
+
+def test_every_yes_and_every_taking_back_is_a_row_of_the_one_list(conn):
+    """CP-27 (Done when 10): an approval still kept on the row it approves (a level, a report, a paper, a micro-step
+    link) writes a row of `approval` when it is given and when it is taken back, so the list is read from `approval`
+    alone; approved again by someone else, the level stands approved by them."""
+    level = db.one(
+        conn,
+        "select l.skill_code, l.difficulty from skill_level l join skill s on s.tenant_id = l.tenant_id"
+        " and s.code = l.skill_code where s.level_approved ? l.difficulty order by 1, 2 limit 1",
+    )
+    target = f"{level['skill_code']} {level['difficulty']}"
+    before = len(_rows(conn, "skill_level", target))
+    conn.execute(
+        "update skill set level_approved = level_approved - %s where code = %s",
+        (level["difficulty"], level["skill_code"]),
+    )
+    assert _entry(conn, "skill_level", target)["state"] == "draft"
+    conn.execute(
+        "update skill set level_approved = level_approved || jsonb_build_object(%s::text,"
+        " jsonb_build_object('by', 'a second coordinator', 'at', clock_timestamp())) where code = %s",
+        (level["difficulty"], level["skill_code"]),
+    )
+    assert dict(_entry(conn, "skill_level", target)) == {
+        "state": "approved",
+        "first_by": "a second coordinator",
+        "second_by": None,
+        "sent_back_because": None,
+    }
+    assert [d for d, _ in _rows(conn, "skill_level", target)[before:]] == ["withdrawn", "approved"]
+
+    note = _note(conn)
+    conn.execute("update parent_note set approved_by = 'an educator' where id = %s", (note,))
+    conn.execute("update parent_note set approved_by = null where id = %s", (note,))
+    assert [d for d, _ in _rows(conn, "parent_note", str(note))] == ["approved", "withdrawn"]
+    assert _entry(conn, "parent_note", str(note))["state"] == "draft"
+
+    template = db.one(conn, "select id from sheet_template limit 1")["id"]
+    paper = db.one(
+        conn,
+        "insert into sheet_instance (tenant_id, qr_code, sheet_template_id, print_status, approved_by, approved_at)"
+        " values (%s, %s, %s, 'printed', 'an educator', now()) returning id",
+        (tenant(conn), "CSA3" + str(note)[:4].upper(), template),
+    )["id"]
+    assert _rows(conn, "sheet", str(paper)) == [("approved", "an educator")]
+
+    link = db.one(conn, "select id from skill_prerequisite where tenant_id = %s limit 1", (tenant(conn),))[
+        "id"
+    ]
+    campus = db.one(conn, "select id from campus where tenant_id = %s limit 1", (tenant(conn),))["id"]
+    staff = db.one(
+        conn,
+        "insert into staff (tenant_id, campus_id, active) values (%s, %s, true) returning id",
+        (tenant(conn), campus),
+    )["id"]
+    assert db.one(conn, "select confirm_skill_link(%s, %s) as r", (link, staff))["r"] == "confirmed"
+    assert _rows(conn, "skill_prerequisite", str(link)) == [("approved", str(staff))]
+
+
+def test_a_report_is_first_approved_on_its_own_row_and_only_ever_added_to(conn):
+    """The first approval of a report is the one the report names (`parent_note.approved_by`): a row that says another
+    person approved it first is refused; a decision, once a row, is never changed or taken out."""
+    note = _note(conn)
+    assert _refused(conn, "parent_note", str(note), "approved", "someone")  # nothing on the report yet
+    conn.execute("update parent_note set approved_by = 'an educator' where id = %s", (note,))
+    _decide(conn, "parent_note", str(note), "approved", "a coordinator")
+    for change in (
+        "update approval set by = 'x' where target = %s",
+        "delete from approval where target = %s",
+    ):
+        with pytest.raises(psycopg.Error), conn.transaction():
+            conn.execute(change, (str(note),))

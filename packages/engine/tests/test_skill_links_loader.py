@@ -198,17 +198,6 @@ def test_every_line_is_read_before_any_is_written(conn, tmp_path):
     assert conn.execute("select count(*) as n from skill_link").fetchone()["n"] == 0
 
 
-def test_a_school_with_no_confirming_state_cannot_confirm_and_is_told_so(conn):
-    t = tenant(conn)
-    a, b = _skills(conn, 2)
-    _staff(conn, t)
-    link = _link(conn, t, b, a)
-    conn.execute("update link_status set confirmed = false where tenant_id = %s", (t,))
-    with pytest.raises(skill_links.Refused) as e:
-        skill_links.confirm(conn, str(link), "checker@school.invalid")
-    assert "none that means confirmed" in str(e.value)
-
-
 def test_the_words_the_seeders_give_a_draft_are_the_words_the_migration_gave_the_rows_already_there():
     sql = (ROOT / "supabase/migrations/20270103090000_skill_links.sql").read_text()
     assert f"'{topics.DRAFT_SOURCE}'" in sql

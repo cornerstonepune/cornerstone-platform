@@ -1,6 +1,5 @@
 import Link from "@/components/link";
-import { PageShell } from "@/components/page-shell";
-import { Crumbs } from "@/components/educator/crumbs";
+import { Screen } from "@/components/app-frame";
 import { Where } from "@/components/educator/day-head";
 import { Summary } from "@/components/educator/summary";
 import { ChipTag } from "@/components/educator/tags";
@@ -23,13 +22,14 @@ export default async function PeriodPage({ params, searchParams }: { params: Pro
   const me = await requireStaff();
   const [{ id }, q] = await Promise.all([params, searchParams]);
   if (q.day !== undefined && !isDay(q.day)) notFound();
-  const p = await periodOf(me, { class_id: q.class, day: q.day ?? schoolToday(), period_id: id });
-  const chip = chipOf(p, { now: nowAtSchool(), day: whenIs(p.day) });
+  const [schoolDay, now] = await Promise.all([schoolToday(), nowAtSchool()]);
+  const p = await periodOf(me, { class_id: q.class, day: q.day ?? schoolDay, period_id: id });
+  const chip = chipOf(p, { now, day: whenIs(p.day, schoolDay) });
   const time = timeOf(p);
   const today = `/educator?class=${p.class.id}&day=${p.day}`;
   const name = p.name;
   return (
-    <PageShell
+    <Screen
       stage={E.area}
       title={name}
       purpose={E.period.purpose}
@@ -45,7 +45,6 @@ export default async function PeriodPage({ params, searchParams }: { params: Pro
       }
       next={{ href: today, label: E.today.title }}
     >
-      <Crumbs trail={[{ label: E.area }, { label: E.today.title, href: today }, { label: `${time} ${name}` }]} />
       <Summary
         items={[
           { label: E.counts.lines, n: p.plan_lines.length, href: "#planner" },
@@ -94,6 +93,6 @@ export default async function PeriodPage({ params, searchParams }: { params: Pro
           )}
         </section>
       </div>
-    </PageShell>
+    </Screen>
   );
 }

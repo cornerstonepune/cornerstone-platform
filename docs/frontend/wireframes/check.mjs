@@ -6,13 +6,14 @@
 //                                                           and fail if DATA-GAPS.md does not name each one
 // A wireframe fails when: a control of its screens.json `elements` (or of the bar) is missing or extra in either
 // frame, or is drawn as the wrong kind of control; a data-source names a table not in specs/CP-27/target-tables.md, or a
-// column the migrations do not have (when the table exists today); a data-gap is empty; a colour is typed outside
-// kit.css; a style attribute sets anything but a --custom-property; a shown name is not in fake-names.json.
+// column the migrations do not have (when the table exists today, and provisional.json does not list it); a data-gap is
+// empty; a colour is typed outside kit.css; a gap, padding or margin in components.css is not a spacing token; a style
+// attribute sets anything but a --custom-property; a shown name is not in fake-names.json.
 import { readFileSync, readdirSync } from "node:fs";
 import { dirname, join, resolve, basename } from "node:path";
 import { fileURLToPath } from "node:url";
 import { loadSchema } from "./schema.mjs";
-import { tokensCss } from "./kit.mjs";
+import { tokensCss, spacingTokens } from "./kit.mjs";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(HERE, "../../..");
@@ -20,6 +21,8 @@ const SCREENS = JSON.parse(readFileSync(join(ROOT, "docs/frontend/screens.json")
 const TARGET = new Set(readFileSync(join(ROOT, "specs/CP-27/target-tables.md"), "utf8").match(/```\n([\s\S]*?)```/)[1].split("\n").filter(Boolean));
 const SCHEMA = loadSchema(join(ROOT, "supabase/migrations"));
 const FAKE = JSON.parse(readFileSync(join(HERE, "fake-names.json"), "utf8"));
+// Columns the backend decided in #551 but has not built: a data-source may name one (a note, not an error).
+const PROVISIONAL = JSON.parse(readFileSync(join(HERE, "provisional.json"), "utf8")).columns;
 const FAKE_WORDS = new Set(Object.values(FAKE).filter(Array.isArray).flat().flatMap((n) => n.split(/\s+/)));
 const NOT_WIREFRAMES = new Set(["blocks.html"]);
 
@@ -56,6 +59,7 @@ const KIND_TAGS = {
   tab: (n) => n.attrs.role === "tab", button: (n) => n.tag === "button", fold: (n) => n.tag === "summary",
   filter: (n) => n.tag === "select" || n.tag === "input", field: (n) => ["input", "select", "textarea"].includes(n.tag),
   switch: (n) => n.attrs.role === "switch" || n.attrs.type === "checkbox", upload: (n) => n.tag === "input" && n.attrs.type === "file",
+  peek: (n) => n.tag === "button",
   child_name: (n) => !INTERACTIVE(n),
 };
 const BAR_KIND = { link: "link", field: "field", switch: "switch", button: "button" };
@@ -74,7 +78,10 @@ function checkSource(src, where, errs, notes) {
     if (!col) { errs.push(`${where}: data-source "${s}" names no column (write table.column)`); continue; }
     const cols = SCHEMA.tables.get(table);
     if (!cols) notes.add(`${table}: a target table not built yet, so "${col}" is not checked`);
-    else if (!cols.has(col)) errs.push(`${where}: data-source "${s}": the migrations give ${table} no column "${col}"`);
+    else if (!cols.has(col)) {
+      if ((PROVISIONAL[table] || []).includes(col)) notes.add(`${table}.${col}: provisional, decided in #551 and not built yet (provisional.json)`);
+      else errs.push(`${where}: data-source "${s}": the migrations give ${table} no column "${col}" (and provisional.json does not list it)`);
+    }
   }
 }
 
@@ -94,6 +101,20 @@ export function checkHex(file, src, errs) {
       if (!decl.startsWith("--")) errs.push(`${file}: style="${m[1]}": only --custom-properties may be set inline`);
     }
   }
+}
+
+// Revision 1 (issue #546): a gap, a padding or a margin in the kit is a spacing token (or 0, or auto), never a typed length.
+export function checkSpacing(file, css, errs) {
+  const body = css.replace(/\/\*[\s\S]*?\*\//g, "");
+  for (const m of body.matchAll(/(?:^|[;{\s])((?:row-|column-)?gap|(?:padding|margin)(?:-[a-z]+)?)\s*:\s*([^;}]+)/g)) {
+    const left = m[2].replace(/var\(--(?:space-\d+|tap)\)/g, "").replace(/calc\(|\)|[+*\/\s-]/g, "");
+    if (left && !/^(0|auto)+$/.test(left)) errs.push(`${file}: "${m[1]}: ${m[2].trim()}" is not a spacing token (use var(--space-0) … var(--space-7), 0 or auto)`);
+  }
+}
+
+function checkSpacingScale(errs) {
+  const px = spacingTokens().filter((t) => /^space-\d+$/.test(t.name)).map((t) => parseInt(t.value, 10));
+  if (px.some((v, i) => !(v > 0) || (i && v <= px[i - 1]))) errs.push(`spacing.json: the scale must rise in whole pixels (got ${px.join(", ")})`);
 }
 
 function checkFrame(frame, screen, label, errs) {
@@ -181,7 +202,7 @@ function checkBlocks(errs) {
 
 // The gap list: every name in a screen's `data` that is a table or view today (or snake_case) and is not a target table.
 export function gaps() {
-  const cols = new Set([...TARGET].flatMap((t) => [...(SCHEMA.tables.get(t) || [])]));
+  const cols = new Set([...TARGET].flatMap((t) => [...(SCHEMA.tables.get(t) || [])]).concat(Object.values(PROVISIONAL).flat()));
   const out = [];
   for (const s of SCREENS.screens) {
     const found = new Set();
@@ -214,7 +235,10 @@ function main() {
   } else {
     const kit = readFileSync(join(HERE, "kit.css"), "utf8");
     if (!kit.includes(tokensCss())) errs.push("kit.css: its token section is not what kit.mjs makes from tokens.json; run node docs/frontend/wireframes/kit.mjs");
-    checkHex("components.css", readFileSync(join(HERE, "components.css"), "utf8"), errs);
+    const components = readFileSync(join(HERE, "components.css"), "utf8");
+    checkHex("components.css", components, errs);
+    checkSpacing("components.css", components, errs);
+    checkSpacingScale(errs);
     const files = args.length ? args.map((a) => resolve(HERE, basename(a))) : readdirSync(HERE).filter((f) => f.endsWith(".html") && !NOT_WIREFRAMES.has(f)).map((f) => join(HERE, f));
     if (!args.length) console.log(`blocks.html: ${checkBlocks(errs)}`);
     for (const f of files) {

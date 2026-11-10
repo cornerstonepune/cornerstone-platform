@@ -1,7 +1,6 @@
-import { PageShell } from "@/components/page-shell";
+import { Screen } from "@/components/app-frame";
 import { EmptyState } from "@/components/empty-state";
 import { PeriodBlock } from "@/components/educator/block";
-import { Crumbs } from "@/components/educator/crumbs";
 import { ClassPick, DayHead } from "@/components/educator/day-head";
 import { Summary } from "@/components/educator/summary";
 import { ChipTag, Legend, Pill } from "@/components/educator/tags";
@@ -20,30 +19,28 @@ import { schoolToday } from "@/lib/voice-page";
 export default async function TodayPage({ searchParams }: { searchParams: Promise<{ class?: string; day?: string; go?: string }> }) {
   const me = await requireStaff();
   const q = await searchParams;
-  const today = schoolToday();
+  const [today, now] = await Promise.all([schoolToday(), nowAtSchool()]);
   if (q.day !== undefined && !isDay(q.day)) notFound();
   const asked = q.go === "tomorrow" ? schoolDay(q.day ?? today, 1) : (q.day ?? today);
   const d = await dayOf(me, { class_id: q.class, day: asked });
   const at = (day: string) => `/educator?class=${d.class.id}&day=${day}`;
   return (
-    <PageShell
+    <Screen
       stage={E.area}
       title={d.day === today ? E.today.title : longDate(d.day)}
       purpose={E.today.purpose}
       action={<DayHead back={at(schoolDay(d.day, -1))} now={at(today)} on={at(schoolDay(d.day, 1))} words={E.day} where={d} />}
       next={{ href: `/educator/week?class=${d.class.id}&day=${d.day}`, label: E.week.title }}
     >
-      <Crumbs trail={[{ label: E.area }, { label: E.today.title, href: at(today) }, { label: longDate(d.day) }]} />
       <ClassPick classes={d.classes} on={d.class.id} href={(id) => `/educator?class=${id}&day=${d.day}`} />
-      <DayCalendar d={d} />
-    </PageShell>
+      <DayCalendar d={d} today={today} now={now} />
+    </Screen>
   );
 }
 
-function DayCalendar({ d }: { d: Day }) {
+function DayCalendar({ d, today, now }: { d: Day; today: string; now: string }) {
   if (isBlank(d)) return <EmptyState>{blankWords(d)}</EmptyState>;
-  const when = whenIs(d.day);
-  const now = nowAtSchool();
+  const when = whenIs(d.day, today);
   const periods = d.periods;
   const work = periods.map((p) => ({ p, chip: chipOf(p, { now, day: when }) }));
   const lessons = d.periods.filter(isLesson);

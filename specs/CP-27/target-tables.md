@@ -1,4 +1,4 @@
-# CP-27: the 75 target tables
+# CP-27: the 77 target tables (amendment 2, 9 Nov 2026: read_correction and item_exposure stay)
 
 One name per line (schema-qualified for `pii`). Done when 4 compares the database with this list, plus the four kept
 until sign-in moves to the platform's own login (listed last).
@@ -72,6 +72,8 @@ material_item
 activity_material
 materials_list
 materials_line
+read_correction
+item_exposure
 config
 prompt
 flow_run

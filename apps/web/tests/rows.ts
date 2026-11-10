@@ -17,6 +17,16 @@ async function tenant(sql: Sql): Promise<string> {
   return (await sql<{ id: string }[]>`select id from tenant limit 1`)[0].id;
 }
 
+/** A setting as a test needs it, for the school; the function it returns puts the value it had back. Every setting,
+ *  numbers included, is a `config` row (CP-27): the one helper a browser test changes one through. */
+export async function aSetting(sql: Sql, key: string, value: Parameters<Sql["json"]>[0]): Promise<() => Promise<void>> {
+  const [was] = await sql<{ value: Parameters<Sql["json"]>[0] }[]>`select value from config where key = ${key}`;
+  await sql`update config set value = ${sql.json(value)} where key = ${key}`;
+  return async () => {
+    await sql`update config set value = ${sql.json(was.value)} where key = ${key}`;
+  };
+}
+
 /** A skill waiting for the coordinator's approval, as a test needs one. The copy starts with every level approved, as
  *  live has them (`bin/testdb`, goals/b2-question-types-are-rows.yaml), so this withdraws the skill's level approvals;
  *  the function it returns puts them back, so no other test finds a level a paper may not draw. */
@@ -27,6 +37,40 @@ export async function aWaitingSkill(sql: Sql, code: string): Promise<() => Promi
   return async () => {
     await sql`update skill set level_approved = ${sql.json(approved)} where code = ${code}`;
   };
+}
+
+/** A way of asking (a question type) waiting for approval, as a new one is. Approvals are rows of the one approval list
+ *  (`approval`, never edited; CP-27), so a browser test withdraws, approves and forgets them only through these: a way
+ *  taken back is a `withdrawn` row. */
+export async function aWaitingWay(sql: Sql, code: string): Promise<void> {
+  await sql`
+    insert into approval (tenant_id, kind, target, decision, by)
+    select tenant_id, kind, target, 'withdrawn', 'a browser test' from approval_list
+    where kind = 'question_type' and target = ${code} and first_by is not null`;
+}
+
+/** A way of asking approved by `by`, unless it already is; the function it returns takes back only an approval this
+ *  made, so a way approved before the test stays approved after it. */
+export async function anApprovedWay(sql: Sql, code: string, by: string): Promise<() => Promise<void>> {
+  const made = await sql`
+    insert into approval (tenant_id, kind, target, decision, by)
+    select tenant_id, kind, target, 'approved', ${by} from approval_list
+    where kind = 'question_type' and target = ${code} and first_by is null returning 1`;
+  return async () => {
+    if (made.length) await aWaitingWay(sql, code);
+  };
+}
+
+/** The flags (approval rows of a question) a test left on questions taken back: every flag whose note is like `note`,
+ *  on `item` only if one is named. The list is never edited, so they are taken out with its rule off for that
+ *  transaction (`session_replication_role`, as the engine tests' own clean-up does). The caller puts the question's own
+ *  status back. */
+export async function forgetFlags(sql: Sql, note: string, item?: string): Promise<void> {
+  await sql.begin(async (tx) => {
+    await tx`set local session_replication_role = replica`;
+    if (item) await tx`delete from approval where kind = 'item' and target = ${item}::text and reason like ${note}`;
+    else await tx`delete from approval where kind = 'item' and reason like ${note}`;
+  });
 }
 
 /** A class of the test's own, `band`, its children named in roll order — made once and kept: a child some test has

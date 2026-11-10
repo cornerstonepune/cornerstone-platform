@@ -1,6 +1,6 @@
 import Link from "@/components/link";
 import { DataTable } from "@/components/data-table";
-import { Panel, Notice } from "@/components/shell";
+import { Panel, Notice } from "@/components/parts";
 import { StatusChip } from "@/components/status-chip";
 import { engineGet } from "@/lib/engine";
 import type { WaysRow } from "@/lib/queries-skills";

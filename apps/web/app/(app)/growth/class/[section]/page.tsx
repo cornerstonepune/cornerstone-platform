@@ -1,7 +1,7 @@
 import Link from "@/components/link";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
-import { Body, PageHeader } from "@/components/shell";
+import { Body, PageHeader } from "@/components/parts";
 import { ColourKeyLine, Swatch } from "@/components/colour-key";
 import { requireStaff } from "@/lib/auth";
 import { NotYours } from "@/components/not-yours";

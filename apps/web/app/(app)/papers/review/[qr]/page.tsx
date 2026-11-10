@@ -3,8 +3,8 @@ import Link from "@/components/link";
 import { DataTable } from "@/components/data-table";
 import { EmptyState } from "@/components/empty-state";
 import { FilterBar, type Filter } from "@/components/filter-bar";
-import { PageShell } from "@/components/page-shell";
-import { Notice, Panel } from "@/components/shell";
+import { Screen } from "@/components/app-frame";
+import { Notice, Panel } from "@/components/parts";
 import { StatusChip, type State } from "@/components/status-chip";
 import { NotYours } from "@/components/not-yours";
 import { requireStaff } from "@/lib/auth";
@@ -53,9 +53,9 @@ export default async function ReviewPage({ params, searchParams }: Props) {
   const here = `/papers/review/${qr}`;
   if (typeof r === "string")
     return (
-      <PageShell stage="Assessments" title="Review a paper" purpose="A paper's questions before it prints." action={null} next={{ href: "/papers", label: "Assessments" }}>
+      <Screen stage="Assessments" title="Review a paper" purpose="A paper's questions before it prints." action={null} next={{ href: "/papers", label: "Assessments" }}>
         <p className="note">{r}</p>
-      </PageShell>
+      </Screen>
     );
   const editable = !r.why_not;
   const q = new URLSearchParams(Object.entries({ topic, skill, level, kind }).filter((e): e is [string, string] => !!e[1]));
@@ -87,7 +87,7 @@ export default async function ReviewPage({ params, searchParams }: Props) {
       <a className="btn" href={`/api/papers/print?qr=${r.qr}`} target="_blank" rel="noreferrer">{r.state === "printed" ? "Print it again" : "Print it"}</a>
     ) : null;
   return (
-    <PageShell
+    <Screen
       stage="Assessments · review a paper"
       title={r.kind === "focus" ? "Review this home assessment" : "Review this paper"}
       purpose="Its questions as they will print. Remove one, or add one from the bank, before it prints."
@@ -150,6 +150,6 @@ export default async function ReviewPage({ params, searchParams }: Props) {
           </Panel>
         </details>
       ) : null}
-    </PageShell>
+    </Screen>
   );
 }

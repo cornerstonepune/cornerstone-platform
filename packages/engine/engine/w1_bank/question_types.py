@@ -22,10 +22,10 @@ def _tenant(conn: db.Conn) -> Any:
 
 
 def state(conn: db.Conn, code: str) -> dict[str, Any]:
-    """{approved, by, at} for one type: its first approval, or none."""
+    """{approved, by, at} for one type: its approval as the one approval list has it, or none."""
     row = conn.execute(
-        "select approved_by as by, approved_at as at from question_type_approval"
-        " where tenant_id = %s and question_type = %s order by approved_at limit 1",
+        "select first_by as by, first_at as at from approval_list"
+        " where tenant_id = %s and kind = 'question_type' and target = %s and first_by is not null",
         (_tenant(conn), code),
     ).fetchone()
     return {"approved": bool(row), "by": row and row["by"], "at": row and row["at"]}
@@ -50,7 +50,7 @@ def approve(conn: db.Conn, code: str, by: str) -> dict[str, Any]:
         raise LookupError(f"no question type {code}")
     if not state(conn, code)["approved"]:
         conn.execute(
-            "insert into question_type_approval (tenant_id, question_type, approved_by) values (%s, %s, %s)",
+            "insert into approval (tenant_id, kind, target, decision, by) values (%s, 'question_type', %s, 'approved', %s)",
             (tenant, code, by.strip()),
         )
     return state(conn, code)
@@ -62,8 +62,8 @@ def waiting(conn: db.Conn, skill: str, level: str) -> list[str]:
         r["question_type"]
         for r in conn.execute(
             "select l.question_type from skill_level_question_type l where l.tenant_id = %s and l.skill_code = %s"
-            " and l.difficulty = %s and not exists (select 1 from question_type_approval a"
-            "   where a.tenant_id = l.tenant_id and a.question_type = l.question_type) order by 1",
+            " and l.difficulty = %s and not exists (select 1 from approval_list a where a.tenant_id = l.tenant_id"
+            "   and a.kind = 'question_type' and a.target = l.question_type and a.first_by is not null) order by 1",
             (_tenant(conn), skill, level),
         )
     ]
@@ -99,9 +99,9 @@ def show(ctx: typer.Context) -> None:
     with db.connect() as conn:
         rows = conn.execute(
             "select t.code, t.words, (select count(*) from skill_level_question_type l where l.tenant_id = t.tenant_id"
-            "   and l.question_type = t.code)::int as levels, a.approved_by"
-            " from question_type t left join lateral (select approved_by from question_type_approval a"
-            "   where a.tenant_id = t.tenant_id and a.question_type = t.code order by approved_at limit 1) a on true"
+            "   and l.question_type = t.code)::int as levels, a.first_by as approved_by"
+            " from question_type t left join approval_list a on a.tenant_id = t.tenant_id and a.kind = 'question_type'"
+            "   and a.target = t.code"
             " where t.tenant_id = %s order by t.code",
             (_tenant(conn),),
         ).fetchall()

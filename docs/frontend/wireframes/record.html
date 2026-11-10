@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wireframe: Record a note (record)</title>
+<link rel="stylesheet" href="kit.css">
+</head>
+<!-- Wireframe of screens.json "record" (/record), drawn as an educator. The recording states are drawn together: ready, while recording, after Stop.
+     data-el = index in screens.json record.elements; data-bar = index in screens.json bar; data-source = target
+     table.column; data-gap = what the target tables cannot give. Both frames hold the same markup: the phone layout
+     comes from kit.css container queries, as it will on the site. Names are from fake-names.json. -->
+<body>
+<div class="wf-sheet">
+  <header>
+    <p class="wf-label">record · Record a note · /record · laptop 1440 and phone 400 · add data-theme="dark" on &lt;html&gt; for dark</p>
+  </header>
+  <section class="wf" data-viewport="1440" aria-label="Laptop, 1440 px">
+    <div class="frame">
+      <header class="bar">
+        <a class="brand" data-bar="0" href="#today" aria-label="Cornerstone Gurukul, go to Today">
+          <img class="wide on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-colour.svg" alt="">
+          <img class="wide on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-for-dark-backgrounds.svg" alt="">
+          <img class="small on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark.svg" alt="">
+          <img class="small on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark-on-white-tile.svg" alt="">
+        </a>
+        <ul class="doors" aria-label="Doors">
+          <li><a class="door" data-bar="0" href="#today" aria-current="page"><i class="ic" data-icon="today"></i>Today <span class="badge num" data-source="pii.educator_note.status pii.educator_note.received_at" aria-label="7 notes to confirm">7</span></a></li>
+          <li><a class="door" data-bar="1" href="#timetable"><i class="ic" data-icon="timetable"></i>Timetable</a></li>
+          <li><a class="door" data-bar="2" href="#children"><i class="ic" data-icon="children"></i>Children</a></li>
+          <li><a class="door" data-bar="3" href="#setup"><i class="ic" data-icon="setup"></i>Setup</a></li>
+        </ul>
+        <label class="search"><i class="ic s" data-icon="search"></i><span class="vh">Search</span><input data-bar="4" type="search" placeholder="Sr. No., name or activity"></label>
+        <button class="barbtn press" data-bar="5" type="button" role="switch" aria-checked="false"><i class="ic" data-icon="acting-as"></i><span class="w">Acting as</span></button>
+        <a class="barbtn" data-bar="6" href="#help" aria-label="Help for this page"><i class="ic" data-icon="help"></i></a>
+        <button class="barbtn press" data-bar="7" type="button"><i class="ic" data-icon="sign-out"></i><span class="w">Sign out</span></button>
+      </header>
+      <ol class="trail" aria-label="Trail">
+        <li><a data-trail href="#today">Today</a></li>
+        <li><i class="ic s" data-icon="trail"></i></li>
+        <li aria-current="page">Record a note</li>
+      </ol>
+      <div class="page">
+        <main class="main">
+          <div class="head">
+            <p class="eyebrow"><i class="ic s" data-icon="class"></i><span data-source="grade.name">K2</span> <span data-source="school_class.section">Red</span> · <span data-source="activity.name">Counting to 20</span></p>
+            <h1 class="title">Record a note</h1>
+            <p class="purpose">Say what happened and who, by Sr. number. The reader turns it into marks; you confirm them, one note at a time.</p>
+          </div>
+          <form class="form" data-block="Form">
+            <div class="field"><label for="period-1440">Which period</label><select id="period-1440" data-el="0" data-source="session.id period.starts_at activity.name"><option>09:15 · Counting to 20</option><option>10:30 · Story circle</option></select></div>
+          </form>
+          <dl class="kv" data-block="KeyValue">
+            <dt>Activity</dt><dd data-source="activity.name pii.educator_note.session_id">Counting in tens with bundles</dd>
+            <dt>Class</dt><dd><span data-source="grade.name">K2</span> <span data-source="school_class.section">Red</span></dd>
+            <dt>Time</dt><dd class="num" data-source="period.starts_at">09:15</dd>
+            <dt>Kept</dt><dd data-source="config.value">Audio and transcript are kept 48 hours on the private side, then deleted.</dd>
+          </dl>
+          <div class="cards" data-block="Cards">
+            <article class="card" data-kind="activity"><div class="card-h"><span class="tile"><i class="ic" data-icon="activity"></i></span>Last time this ran, <span data-source="school_day.on_date">Tue 3 Nov</span></div><div class="card-b">
+              <div class="keyrow" data-source="activity_observation.outcome config.key config.value"><span class="chip" data-state="ok"><i class="ic s" data-icon="above"></i>3 above</span><span class="chip" data-state="ok"><i class="ic s" data-icon="as-expected"></i>13 as expected</span><span class="chip" data-state="wait"><i class="ic s" data-icon="below"></i>4 below</span><span class="chip" data-state="wait"><i class="ic s" data-icon="not-willing"></i>1 not willing</span><span class="chip" data-state="quiet"><i class="ic s" data-icon="absent"></i>1 absent</span></div>
+              <span class="caption">22 children named</span></div></article>
+            <article class="card" data-kind="child"><div class="card-h"><span class="tile"><i class="ic" data-icon="class"></i></span>Not yet seen on this activity</div><div class="card-b">
+              <div class="sbar" role="img" aria-label="21 seen, 3 not yet seen"><i data-state="ok" style="--n: 21"></i><i data-state="unseen" style="--n: 3"></i></div>
+              <div class="keyrow" data-source="enrolment.child_id activity_observation.child_id"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>21 seen</span><span class="chip" data-state="unseen"><i class="ic s" data-icon="not-seen"></i>3 not seen yet</span></div></div></article>
+            <article class="card" data-kind="note"><div class="card-h"><span class="tile"><i class="ic" data-icon="note"></i></span>Recent notes for this class</div><div class="card-b">
+              <ol class="timeline">
+                <li class="tli"><span class="tile" data-kind="note"><i class="ic" data-icon="note"></i></span><div><b>Counting in tens with bundles</b><p><span data-source="pii.educator_note.route">Voice note</span> · <span class="num" data-source="pii.note_claim.child_id">5</span> children named · <span data-source="pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="pii.educator_note.received_at">3-Nov</span></li>
+                <li class="tli"><span class="tile" data-kind="note"><i class="ic" data-icon="note"></i></span><div><b>Story circle: the lost mitten</b><p><span data-source="pii.educator_note.route">Form</span> · <span class="num" data-source="pii.note_claim.child_id">4</span> children named · <span data-source="pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="pii.educator_note.received_at">2-Nov</span></li>
+              </ol></div></article>
+          </div>
+          <div class="form" data-block="CaptureBar">
+            <button class="btn btn-main press" data-el="1" type="button"><i class="ic" data-icon="record"></i>Start recording</button>
+            <div class="capture">
+              <label class="btn btn-capture press"><i class="ic" data-icon="photo"></i>Add a photo<input class="vh" data-el="4" type="file" accept="image/jpeg,image/png,image/heic"></label>
+              <button class="btn btn-capture press" data-el="5" type="button"><i class="ic" data-icon="note"></i>Type the marks</button>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-h"><i class="ic s" data-icon="record"></i>While recording <span class="caption">shown after Start recording</span></div>
+            <div class="card-b"><span class="num">00:42</span><button class="btn press" data-el="2" type="button"><i class="ic" data-icon="stop"></i>Stop</button></div>
+          </div>
+          <div class="card">
+            <div class="card-h"><i class="ic s" data-icon="send"></i>After Stop <span class="caption">shown after Stop</span></div>
+            <div class="card-b"><span class="muted">Recorded, <span class="num">00:42</span>. Send it, or start again.</span><button class="btn press" data-el="3" type="button" data-source="pii.educator_note.status pii.educator_note.session_id"><i class="ic" data-icon="send"></i>Send</button></div>
+          </div>
+          <div class="card">
+            <div class="card-h"><i class="ic s" data-icon="heard"></i>After Send</div>
+            <div class="card-b"><div class="keyrow"><span class="chip" data-state="wait"><i class="ic s" data-icon="heard"></i>Sent, the reader is listening</span></div></div>
+          </div>
+          <div class="card">
+            <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: if the microphone is denied</div>
+            <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="note"></i><b>The microphone is off for this site</b><span class="muted">Type the marks becomes the main action here. Nothing is shown as an error.</span></div></div>
+          </div>
+        </main>
+        <aside class="rail" aria-label="Connected to">
+          <section class="rail-box">
+            <h2>Connected to</h2>
+            <ul class="rlist">
+              <li><a class="ritem" data-el="6" href="#period"><span class="tile" data-kind="period"><i class="ic" data-icon="period"></i></span><span><span data-source="period.starts_at">09:15</span> <span data-source="subject.name">Numeracy</span><small>the period</small></span></a></li>
+              <li><a class="ritem" data-el="7" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><span><span data-source="activity.name">Counting in tens with bundles</span><small>the activity</small></span></a></li>
+              <li><a class="ritem" data-el="8" href="#picture"><span class="tile" data-kind="child"><i class="ic" data-icon="class"></i></span><span><span data-source="grade.name">K2</span> <span data-source="school_class.section">Red</span><small>the class picture</small></span></a></li>
+            </ul>
+          </section>
+        </aside>
+      </div>
+      <nav class="tabbar" aria-label="Doors">
+        <a class="tab" data-bar="0" href="#today" aria-current="page"><i class="ic" data-icon="today"></i>Today</a>
+        <a class="tab" data-bar="1" href="#timetable"><i class="ic" data-icon="timetable"></i>Timetable</a>
+        <a class="tab" data-bar="2" href="#children"><i class="ic" data-icon="children"></i>Children</a>
+        <a class="tab" data-bar="3" href="#setup"><i class="ic" data-icon="setup"></i>Setup</a>
+      </nav>
+    </div>
+  </section>
+  <section class="wf" data-viewport="400" aria-label="Phone, 400 px">
+    <div class="frame">
+      <header class="bar">
+        <a class="brand" data-bar="0" href="#today" aria-label="Cornerstone Gurukul, go to Today">
+          <img class="wide on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-colour.svg" alt="">
+          <img class="wide on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-for-dark-backgrounds.svg" alt="">
+          <img class="small on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark.svg" alt="">
+          <img class="small on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark-on-white-tile.svg" alt="">
+        </a>
+        <ul class="doors" aria-label="Doors">
+          <li><a class="door" data-bar="0" href="#today" aria-current="page"><i class="ic" data-icon="today"></i>Today <span class="badge num" data-source="pii.educator_note.status pii.educator_note.received_at" aria-label="7 notes to confirm">7</span></a></li>
+          <li><a class="door" data-bar="1" href="#timetable"><i class="ic" data-icon="timetable"></i>Timetable</a></li>
+          <li><a class="door" data-bar="2" href="#children"><i class="ic" data-icon="children"></i>Children</a></li>
+          <li><a class="door" data-bar="3" href="#setup"><i class="ic" data-icon="setup"></i>Setup</a></li>
+        </ul>
+        <label class="search"><i class="ic s" data-icon="search"></i><span class="vh">Search</span><input data-bar="4" type="search" placeholder="Sr. No., name or activity"></label>
+        <button class="barbtn press" data-bar="5" type="button" role="switch" aria-checked="false"><i class="ic" data-icon="acting-as"></i><span class="w">Acting as</span></button>
+        <a class="barbtn" data-bar="6" href="#help" aria-label="Help for this page"><i class="ic" data-icon="help"></i></a>
+        <button class="barbtn press" data-bar="7" type="button"><i class="ic" data-icon="sign-out"></i><span class="w">Sign out</span></button>
+      </header>
+      <ol class="trail" aria-label="Trail">
+        <li><a data-trail href="#today">Today</a></li>
+        <li><i class="ic s" data-icon="trail"></i></li>
+        <li aria-current="page">Record a note</li>
+      </ol>
+      <div class="page">
+        <main class="main">
+          <div class="head">
+            <p class="eyebrow"><i class="ic s" data-icon="class"></i><span data-source="grade.name">K2</span> <span data-source="school_class.section">Red</span> · <span data-source="activity.name">Counting to 20</span></p>
+            <h1 class="title">Record a note</h1>
+            <p class="purpose">Say what happened and who, by Sr. number. The reader turns it into marks; you confirm them, one note at a time.</p>
+          </div>
+          <form class="form" data-block="Form">
+            <div class="field"><label for="period-400">Which period</label><select id="period-400" data-el="0" data-source="session.id period.starts_at activity.name"><option>09:15 · Counting to 20</option><option>10:30 · Story circle</option></select></div>
+          </form>
+          <dl class="kv" data-block="KeyValue">
+            <dt>Activity</dt><dd data-source="activity.name pii.educator_note.session_id">Counting in tens with bundles</dd>
+            <dt>Class</dt><dd><span data-source="grade.name">K2</span> <span data-source="school_class.section">Red</span></dd>
+            <dt>Time</dt><dd class="num" data-source="period.starts_at">09:15</dd>
+            <dt>Kept</dt><dd data-source="config.value">Audio and transcript are kept 48 hours on the private side, then deleted.</dd>
+          </dl>
+          <div class="cards" data-block="Cards">
+            <article class="card" data-kind="activity"><div class="card-h"><span class="tile"><i class="ic" data-icon="activity"></i></span>Last time this ran, <span data-source="school_day.on_date">Tue 3 Nov</span></div><div class="card-b">
+              <div class="keyrow" data-source="activity_observation.outcome config.key config.value"><span class="chip" data-state="ok"><i class="ic s" data-icon="above"></i>3 above</span><span class="chip" data-state="ok"><i class="ic s" data-icon="as-expected"></i>13 as expected</span><span class="chip" data-state="wait"><i class="ic s" data-icon="below"></i>4 below</span><span class="chip" data-state="wait"><i class="ic s" data-icon="not-willing"></i>1 not willing</span><span class="chip" data-state="quiet"><i class="ic s" data-icon="absent"></i>1 absent</span></div>
+              <span class="caption">22 children named</span></div></article>
+            <article class="card" data-kind="child"><div class="card-h"><span class="tile"><i class="ic" data-icon="class"></i></span>Not yet seen on this activity</div><div class="card-b">
+              <div class="sbar" role="img" aria-label="21 seen, 3 not yet seen"><i data-state="ok" style="--n: 21"></i><i data-state="unseen" style="--n: 3"></i></div>
+              <div class="keyrow" data-source="enrolment.child_id activity_observation.child_id"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>21 seen</span><span class="chip" data-state="unseen"><i class="ic s" data-icon="not-seen"></i>3 not seen yet</span></div></div></article>
+            <article class="card" data-kind="note"><div class="card-h"><span class="tile"><i class="ic" data-icon="note"></i></span>Recent notes for this class</div><div class="card-b">
+              <ol class="timeline">
+                <li class="tli"><span class="tile" data-kind="note"><i class="ic" data-icon="note"></i></span><div><b>Counting in tens with bundles</b><p><span data-source="pii.educator_note.route">Voice note</span> · <span class="num" data-source="pii.note_claim.child_id">5</span> children named · <span data-source="pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="pii.educator_note.received_at">3-Nov</span></li>
+                <li class="tli"><span class="tile" data-kind="note"><i class="ic" data-icon="note"></i></span><div><b>Story circle: the lost mitten</b><p><span data-source="pii.educator_note.route">Form</span> · <span class="num" data-source="pii.note_claim.child_id">4</span> children named · <span data-source="pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="pii.educator_note.received_at">2-Nov</span></li>
+              </ol></div></article>
+          </div>
+          <div class="form" data-block="CaptureBar">
+            <button class="btn btn-main press" data-el="1" type="button"><i class="ic" data-icon="record"></i>Start recording</button>
+            <div class="capture">
+              <label class="btn btn-capture press"><i class="ic" data-icon="photo"></i>Add a photo<input class="vh" data-el="4" type="file" accept="image/jpeg,image/png,image/heic"></label>
+              <button class="btn btn-capture press" data-el="5" type="button"><i class="ic" data-icon="note"></i>Type the marks</button>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-h"><i class="ic s" data-icon="record"></i>While recording <span class="caption">shown after Start recording</span></div>
+            <div class="card-b"><span class="num">00:42</span><button class="btn press" data-el="2" type="button"><i class="ic" data-icon="stop"></i>Stop</button></div>
+          </div>
+          <div class="card">
+            <div class="card-h"><i class="ic s" data-icon="send"></i>After Stop <span class="caption">shown after Stop</span></div>
+            <div class="card-b"><span class="muted">Recorded, <span class="num">00:42</span>. Send it, or start again.</span><button class="btn press" data-el="3" type="button" data-source="pii.educator_note.status pii.educator_note.session_id"><i class="ic" data-icon="send"></i>Send</button></div>
+          </div>
+          <div class="card">
+            <div class="card-h"><i class="ic s" data-icon="heard"></i>After Send</div>
+            <div class="card-b"><div class="keyrow"><span class="chip" data-state="wait"><i class="ic s" data-icon="heard"></i>Sent, the reader is listening</span></div></div>
+          </div>
+          <div class="card">
+            <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: if the microphone is denied</div>
+            <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="note"></i><b>The microphone is off for this site</b><span class="muted">Type the marks becomes the main action here. Nothing is shown as an error.</span></div></div>
+          </div>
+        </main>
+        <aside class="rail" aria-label="Connected to">
+          <section class="rail-box">
+            <h2>Connected to</h2>
+            <ul class="rlist">
+              <li><a class="ritem" data-el="6" href="#period"><span class="tile" data-kind="period"><i class="ic" data-icon="period"></i></span><span><span data-source="period.starts_at">09:15</span> <span data-source="subject.name">Numeracy</span><small>the period</small></span></a></li>
+              <li><a class="ritem" data-el="7" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><span><span data-source="activity.name">Counting in tens with bundles</span><small>the activity</small></span></a></li>
+              <li><a class="ritem" data-el="8" href="#picture"><span class="tile" data-kind="child"><i class="ic" data-icon="class"></i></span><span><span data-source="grade.name">K2</span> <span data-source="school_class.section">Red</span><small>the class picture</small></span></a></li>
+            </ul>
+          </section>
+        </aside>
+      </div>
+      <nav class="tabbar" aria-label="Doors">
+        <a class="tab" data-bar="0" href="#today" aria-current="page"><i class="ic" data-icon="today"></i>Today</a>
+        <a class="tab" data-bar="1" href="#timetable"><i class="ic" data-icon="timetable"></i>Timetable</a>
+        <a class="tab" data-bar="2" href="#children"><i class="ic" data-icon="children"></i>Children</a>
+        <a class="tab" data-bar="3" href="#setup"><i class="ic" data-icon="setup"></i>Setup</a>
+      </nav>
+    </div>
+  </section>
+</div>
+</body>
+</html>

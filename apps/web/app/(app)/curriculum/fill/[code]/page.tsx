@@ -1,7 +1,7 @@
 import { requireStaff } from "@/lib/auth";
 import { notFound } from "next/navigation";
 import { mustBeOn, readPage } from "@/lib/curriculum-screens";
-import { PageShell } from "@/components/page-shell";
+import { Screen } from "@/components/app-frame";
 import Link from "@/components/link";
 import { Chrome } from "../../chrome";
 import { PartCard } from "../../parts";
@@ -16,7 +16,7 @@ export default async function ActivityFill({ params, searchParams }: { params: P
   if (!page) notFound();
   const back = `/curriculum/fill/${page.code}`;
   return (
-    <PageShell
+    <Screen
       stage={`Curriculum · ${page.section}`}
       title={page.name}
       purpose={page.code}
@@ -30,6 +30,6 @@ export default async function ActivityFill({ params, searchParams }: { params: P
         ))}
       </div>
       </Chrome>
-    </PageShell>
+    </Screen>
   );
 }

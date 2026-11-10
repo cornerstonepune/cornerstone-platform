@@ -12,7 +12,6 @@ import os
 import time
 import uuid
 from dataclasses import dataclass, field
-from zoneinfo import ZoneInfo
 
 from engine.adapters import speech
 from engine.core import db, settings
@@ -50,10 +49,11 @@ def may_record(conn: db.Conn, staff: uuid.UUID, class_id: str) -> None:
     """She records for a class only while she holds an open grant on it in a role that records
     (`voice.roles_that_record`, a config row). Anyone else is refused, a campus-wide role too unless the row names it."""
     roles = list(settings.config(conn, "voice.roles_that_record", []))
+    today = settings.school_today(conn)
     held = conn.execute(
         "select 1 from staff_role_grant where staff_id = %s and school_class_id = %s and role_code = any(%s)"
-        " and valid_from <= current_date and (valid_to is null or valid_to >= current_date)",
-        (staff, valid_id(str(class_id)), roles),
+        " and valid_from <= %s and (valid_to is null or valid_to >= %s)",
+        (staff, valid_id(str(class_id)), roles, today, today),
     ).fetchone()
     if held is None:
         raise voice_store.Refused("You do not hold this class.", 403)
@@ -64,7 +64,7 @@ def receive(conn: db.Conn, email: str, class_id: str, filename: str, data: bytes
     staff = staff_of(conn, email)
     may_record(conn, staff, class_id)
     note_id = uuid.uuid4()
-    key = voice_store.key_for(note_id, filename, dt.date.today().year)
+    key = voice_store.key_for(note_id, filename, dt.datetime.now(dt.UTC).year)
     note = conn.execute(
         "insert into pii.educator_note (id, tenant_id, staff_id, class_id, audio_key)"
         " select %s, c.tenant_id, %s, c.id, %s from school_class c where c.id = %s::text::uuid returning *",
@@ -146,7 +146,7 @@ def activity_of(conn: db.Conn, class_id: str, number: int) -> list[str]:
 def school_day(conn: db.Conn, at: dt.datetime) -> dt.date:
     """The day a moment falls on by the school's clock (config `school.time_zone`), never the server's: a note heard at
     03:54 in Pune is about that morning, though it is still the night before in UTC."""
-    return at.astimezone(ZoneInfo(settings.config(conn, "school.time_zone", "Asia/Kolkata"))).date()
+    return settings.school_day(conn, at)
 
 
 def resolve(conn: db.Conn, note: dict, enrolled_on=None, activities_of=None, day_of=None) -> Resolved:

@@ -1,4 +1,4 @@
-import { Panel } from "@/components/shell";
+import { Panel } from "@/components/parts";
 import type { Scan } from "@/lib/queries-scans";
 import { readScan } from "./actions";
 import { ScansTable } from "./scans-table";

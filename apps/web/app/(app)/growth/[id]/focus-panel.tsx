@@ -6,10 +6,10 @@
 // any lock"), the newest is the week's: shown with who approved it, the earlier ones named as replaced in one line, and
 // a new one is offered.
 import Link from "@/components/link";
-import { Panel, Pill } from "@/components/shell";
+import { Panel, Pill } from "@/components/parts";
 import { sql } from "@/lib/db";
 import { EngineDown, engineGet } from "@/lib/engine";
-import { isoWeek } from "@/lib/week";
+import { schoolWeek } from "@/lib/school-clock";
 import { seeHref } from "@/lib/next-paper";
 import { DifferentQuestions, Questions } from "@/components/questions";
 import { approveNextPaper } from "../actions";
@@ -33,12 +33,12 @@ const TITLE = "Home assessment";
 
 /** How long a question a child was given is held back from them: the `exposure.days` row the engine draws by. */
 async function windowDays(): Promise<number> {
-  const [r] = await sql<{ days: number }[]>`select coalesce((select value from threshold where key = 'exposure.days'), 21)::int as days`;
+  const [r] = await sql<{ days: number }[]>`select coalesce((select value::numeric from config where key = 'exposure.days'), 21)::int as days`;
   return r.days;
 }
 
 export async function FocusPanel({ childId, name, staff, draw }: { childId: string; name: string; staff: Record<string, string>; draw: number }) {
-  const week = isoWeek();
+  const week = await schoolWeek();
   const [p, days] = await Promise.all([plan(childId, week, draw), windowDays()]);
   return (
     <Panel title={TITLE} label={TITLE} aside={typeof p === "string" ? undefined : `${p.n} questions`}>

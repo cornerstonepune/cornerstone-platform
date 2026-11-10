@@ -28,7 +28,7 @@ async function whileLocked(table: "item" | "config", work: () => Promise<void>):
 const COULD_NOT_LOAD = "This page could not load";
 
 async function menu(page: Page, label: string) {
-  await page.getByRole("navigation", { name: "Sections" }).getByRole("link", { name: new RegExp(`^${label}\\b`) }).click();
+  await page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" }).getByRole("link", { name: new RegExp(`^${label}\\b`) }).click();
 }
 
 test("a click shows the page is loading at once, and a database that does not answer is said in words within 12 s", async ({ page }) => {
@@ -58,7 +58,8 @@ test("when the staff check cannot reach the database, the page says so instead o
 // Now only the menu pages are fetched ahead — Next 16 asks for a page's outline and its loading
 // screen separately, so at most two small requests each.
 test("opening the Skill Map loads nothing ahead but the menu pages", async ({ page }) => {
-  const MENU = ["/today", "/papers/approve", "/", "/papers", "/make", "/worksheets", "/library", "/capture", "/capture/check", "/growth", "/home", "/workflows"];
+  // the four doors (lib/menu.ts) and the logo link are what the bar pre-loads, beside the old menu pages
+  const MENU = ["/today", "/educator/week", "/k2", "/papers/approve", "/", "/papers", "/make", "/worksheets", "/library", "/capture", "/capture/check", "/growth", "/home", "/workflows"];
   const background: string[] = [];
   page.on("request", (r) => {
     if (r.resourceType() !== "document" && r.headers()["rsc"] === "1") background.push(new URL(r.url()).pathname);
@@ -72,9 +73,8 @@ test("opening the Skill Map loads nothing ahead but the menu pages", async ({ pa
 test("every menu page opens within three seconds of its click", async ({ page }) => {
   await page.goto("/", { waitUntil: "networkidle" });
   for (const [label, heading] of [
-    ["What needs doing", "What needs doing"],
-    ["Assessments", "Assessments"],
-    ["Results", "Class results"],
+    ["Today", "What needs doing"],
+    ["Children", "Children"],
     ["Setup", "Curriculum"],
   ]) {
     const clicked = Date.now();

@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wireframe: Confirm what the reader heard (confirm)</title>
+<link rel="stylesheet" href="kit.css">
+</head>
+<!-- Wireframe of screens.json "confirm" (/notes/[id]), drawn as an educator. A waiting note (status drafted); the confirmed-note variant is the inset. The switch is drawn off.
+     data-el = index in screens.json confirm.elements; data-bar = index in screens.json bar; data-source = target
+     table.column; data-gap = what the target tables cannot give. Both frames hold the same markup: the phone layout
+     comes from kit.css container queries, as it will on the site. Names are from fake-names.json. -->
+<body>
+<div class="wf-sheet">
+  <header>
+    <p class="wf-label">confirm · Confirm what the reader heard · /notes/[id] · laptop 1440 and phone 400 · add data-theme="dark" on &lt;html&gt; for dark</p>
+  </header>
+  <section class="wf" data-viewport="1440" aria-label="Laptop, 1440 px">
+    <div class="frame">
+      <header class="bar">
+        <a class="brand" data-bar="0" href="#today" aria-label="Cornerstone Gurukul, go to Today">
+          <img class="wide on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-colour.svg" alt="">
+          <img class="wide on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-for-dark-backgrounds.svg" alt="">
+          <img class="small on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark.svg" alt="">
+          <img class="small on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark-on-white-tile.svg" alt="">
+        </a>
+        <ul class="doors" aria-label="Doors">
+          <li><a class="door" data-bar="0" href="#today" aria-current="page"><i class="ic" data-icon="today"></i>Today <span class="badge num" data-source="pii.educator_note.status pii.educator_note.received_at" aria-label="7 notes to confirm">7</span></a></li>
+          <li><a class="door" data-bar="1" href="#timetable"><i class="ic" data-icon="timetable"></i>Timetable</a></li>
+          <li><a class="door" data-bar="2" href="#children"><i class="ic" data-icon="children"></i>Children</a></li>
+          <li><a class="door" data-bar="3" href="#setup"><i class="ic" data-icon="setup"></i>Setup</a></li>
+        </ul>
+        <label class="search"><i class="ic s" data-icon="search"></i><span class="vh">Search</span><input data-bar="4" type="search" placeholder="Sr. No., name or activity"></label>
+        <button class="barbtn press" data-bar="5" type="button" role="switch" aria-checked="false"><i class="ic" data-icon="acting-as"></i><span class="w">Acting as</span></button>
+        <a class="barbtn" data-bar="6" href="#help" aria-label="Help for this page"><i class="ic" data-icon="help"></i></a>
+        <button class="barbtn press" data-bar="7" type="button"><i class="ic" data-icon="sign-out"></i><span class="w">Sign out</span></button>
+      </header>
+      <ol class="trail" aria-label="Trail">
+        <li><a data-trail href="#today">Today</a></li>
+        <li><i class="ic s" data-icon="trail"></i></li>
+        <li aria-current="page">Note of 09:15</li>
+      </ol>
+      <div class="page">
+        <main class="main">
+          <div class="head">
+            <p class="eyebrow"><i class="ic s" data-icon="note"></i><span data-source="grade.name">K2</span> <span data-source="school_class.section">Red</span> · note of <span class="num" data-source="pii.educator_note.received_at">09:15</span> · <span data-source="activity.name pii.educator_note.session_id">Counting to 20</span></p>
+            <h1 class="title">Confirm what the reader heard</h1>
+            <p class="purpose">Left, your words line by line. Right, the class marked from them. Nothing is ticked for you. Confirm is for this note only.</p>
+            <p class="caption" data-source="pii.educator_note.session_id">The activity comes from the period the educator chose.</p>
+          </div>
+          <article class="card" data-block="Cards" data-source="pii.note_claim.flag">
+            <div class="card-h"><span class="chip" data-state="late"><i class="ic s" data-icon="late"></i>For you to judge</span></div>
+            <div class="card-b"><p>No mark was said for <button class="nchip press" data-el="9" type="button"><span class="no num" data-source="enrolment.roll_no">18</span><span data-el="8" data-source="pii.child.first_name pii.child.last_name">Rex Rook</span></button>. Tap the square to choose one.</p></div>
+          </article>
+          <h2 class="title-small">The class, marked from your note</h2>
+          <div class="keyrow" data-source="pii.note_claim.outcome" aria-label="The class by mark"><span class="chip" data-state="ok"><i class="ic s" data-icon="above"></i>3 above</span><span class="chip" data-state="ok"><i class="ic s" data-icon="as-expected"></i>0 as expected</span><span class="chip" data-state="wait"><i class="ic s" data-icon="below"></i>2 below</span><span class="chip" data-state="wait"><i class="ic s" data-icon="not-willing"></i>1 not willing</span><span class="chip" data-state="quiet"><i class="ic s" data-icon="absent"></i>1 absent</span><span class="chip" data-state="unseen"><i class="ic s" data-icon="not-seen"></i>17 not marked</span></div>
+          <ol class="cgrid" data-block="ClassGrid" aria-label="The class marked from this note, by Sr. No.">
+            <li><a class="sq press" data-state="ok" data-el="1" href="#mark">
+              <span class="top"><span class="no num" data-source="enrolment.roll_no">01</span><span class="disc" aria-hidden="true">AA</span><i class="ic s" data-icon="above"></i></span>
+              <span class="nm" data-el="8" data-source="pii.child.first_name pii.child.last_name">Alba Ant</span>
+              <span class="st" data-source="pii.note_claim.outcome pii.note_claim.entry_mode"><i class="ic s" data-icon="above"></i>Above</span>
+            </a></li>
+            <li><a class="sq press" data-state="ok" data-el="1" href="#mark">
+              <span class="top"><span class="no num" data-source="enrolment.roll_no">02</span><span class="disc" aria-hidden="true">BB</span><i class="ic s" data-icon="above"></i></span>
+              <span class="nm" data-el="8" data-source="pii.child.first_name pii.child.last_name">Bea Badger</span>
+              <span class="st" data-source="pii.note_claim.outcome pii.note_claim.entry_mode"><i class="ic s" data-icon="above"></i>Above</span>
+            </a></li>
+            <li><a class="sq press" data-state="wait" data-el="1" href="#mark">
+              <span class="top"><span class="no num" data-source="enrolment.roll_no">03</span><span class="disc" aria-hidden="true">CC</span><i class="ic s" data-icon="below"></i></span>
+              <span class="nm" data-el="8" data-source="pii.child.first_name pii.child.last_name">Cal Crow</span>
+              <span class="st" data-source="pii.note_claim.outcome pii.note_claim.entry_mode"><i class="ic s" data-icon="below"></i>Below</span>
+            </a></li>
+            <li><a class="sq press" data-state="ok" data-el="1" href="#mark">
+              <span class="top"><span class="no num" data-source="enrolment.roll_no">04</span><span class="disc" aria-hidden="true">DD</span><i class="ic s" data-icon="above"></i></span>
+              <span class="nm" data-el="8" data-source="pii.child.first_name pii.child.last_name">Dot Deer</span>
+              <span class="st" data-source="pii.note_claim.outcome pii.note_claim.entry_mode"><i class="ic s" data-icon="above"></i>Above</span>
+            </a></li>
+            <li><a class="sq press" data-state="wait" data-el="1" href="#mark">
+              <span class="top"><span class="no num" data-source="enrolment.roll_no">05</span><span class="disc" aria-hidden="true">EE</span><i class="ic s" data-icon="below"></i></span>
+              <span class="nm" data-el="8" data-source="pii.child.first_name pii.child.last_name">Eli Eel</span>
+              <span class="st" data-source="pii.note_claim.outcome pii.note_claim.entry_mode"><i class="ic s" data-icon="below"></i>Below</span>
+            </a></li>
+            <li><a class="sq press" data-state="wait" data-el="1" href="#mark">
+              <span class="top"><span class="no num" data-source="enrolment.roll_no">06</span><span class="disc" aria-hidden="true">FF</span><i class="ic s" data-icon="not-willing"></i></span>
+              <span class="nm" data-el="8" data-source="pii.child.first_name pii.child.last_name">Finn Fox</span>
+              <span class="st" data-source="pii.note_claim.outcome pii.note_claim.entry_mode"><i class="ic s" data-icon="not-willing"></i>Not willing</span>
+            </a></li>
+            <li><a class="sq press" data-state="quiet" data-el="1" href="#mark">
+              <span class="top"><span class="no num" data-source="enrolment.roll_no">07</span><span class="disc" aria-hidden="true">GG</span><i class="ic s" data-icon="absent"></i></span>
+              <span class="nm" data-el="8" data-source="pii.child.first_name pii.child.last_name">Gus Goat</span>
+              <span class="st" data-source="pii.note_claim.outcome pii.note_claim.entry_mode"><i class="ic s" data-icon="absent"></i>Absent</span>
+            </a></li>
+            <li><a class="sq press" data-state="unseen" data-el="1" href="#mark" title="not marked yet">
+              <span class="top"><span class="no num" data-source="enrolment.roll_no">08</span><span class="disc" aria-hidden="true">HH</span></span>
+              <span class="nm" data-el="8" data-source="pii.child.first_name pii.child.last_name">Hazel Hare</span>
+              <span class="st" data-source="pii.note_claim.outcome pii.note_claim.entry_mode"><i class="ic s" data-icon="not-seen"></i>Not marked</span>
+            </a></li>
+            <li><a class="sq press" data-state="unseen" data-el="1" href="#mark" title="not marked yet">
+              <span class="top"><span class="no num" data-source="enrolment.roll_no">09</span><span class="disc" aria-hidden="true">II</span></span>
+              <span class="nm" data-el="8" data-source="pii.child.first_name pii.child.last_name">Ivy Ibis</span>
+              <span class="st" data-source="pii.note_claim.outcome pii.note_claim.entry_mode"><i class="ic s" data-icon="not-seen"></i>Not marked</span>
+            </a></li>
+            <li><a class="sq press" data-state="unseen" data-el="1" href="#mark" title="not marked yet">
+              <span class="top"><span class="no num" data-source="enrolment.roll_no">10</span><span class="disc" aria-hidden="true">JJ</span></span>
+              <span class="nm" data-el="8" data-source="pii.child.first_name pii.child.last_name">Jo Jay</span>
+              <span class="st" data-source="pii.note_claim.outcome pii.note_claim.entry_mode"><i class="ic s" data-icon="not-seen"></i>Not marked</span>
+            </a></li>
+            <li><a class="sq press" data-state="unseen" data-el="1" href="#mark" title="not marked yet">
+              <span class="top"><span class="no num" data-source="enrolment.roll_no">11</span><span class="disc" aria-hidden="true">KK</span></span>
+              <span class="nm" data-el="8" data-source="pii.child.first_name pii.child.last_name">Kit Koala</span>
+              <span class="st" data-source="pii.note_claim.outcome pii.note_claim.entry_mode"><i class="ic s" data-icon="not-seen"></i>Not marked</span>
+            </a></li>
+            <li><a class="sq press" data-state="unseen" data-el="1" href="#mark" title="not marked yet">
+              <span class="top"><span class="no num" data-source="enrolment.roll_no">12</span><span class="disc" aria-hidden="true">LL</span></span>
+              <span class="nm" data-el="8" data-source="pii.child.first_name pii.child.last_name">Lou Lynx</span>
+              <span class="st" data-source="pii.note_claim.outcome pii.note_claim.entry_mode"><i class="ic s" data-icon="not-seen"></i>Not marked</span>
+            </a></li>
+            <li><a class="sq press" data-state="unseen" data-el="1" href="#mark" title="not marked yet">
+              <span class="top"><span class="no num" data-source="enrolment.roll_no">13</span><span class="disc" aria-hidden="true">MM</span></span>
+              <span class="nm" data-el="8" data-source="pii.child.first_name pii.child.last_name">Mina Mouse</span>
+              <span class="st" data-source="pii.note_claim.outcome pii.note_claim.entry_mode"><i class="ic s" data-icon="not-seen"></i>Not marked</span>
+            </a></li>
+            <li><a class="sq press" data-state="unseen" data-el="1" href="#mark" title="not marked yet">
+              <span class="top"><span class="no num" data-source="enrolment.roll_no">14</span><span class="disc" aria-hidden="true">NN</span></span>
+              <span class="nm" data-el="8" data-source="pii.child.first_name pii.child.last_name">Nat Newt</span>
+              <span class="st" data-source="pii.note_claim.outcome pii.note_claim.entry_mode"><i class="ic s" data-icon="not-seen"></i>Not marked</span>
+            </a></li>
+            <li><a class="sq press" data-state="unseen" data-el="1" href="#mark" title="not marked yet">
+              <span class="top"><span class="no num" data-source="enrolment.roll_no">15</span><span class="disc" aria-hidden="true">OO</span></span>
+              <span class="nm" data-el="8" data-source="pii.child.first_name pii.child.last_name">Otto Owl</span>
+              <span class="st" data-source="pii.note_claim.outcome pii.note_claim.entry_mode"><i class="ic s" data-icon="not-seen"></i>Not marked</span>
+            </a></li>
+            <li><a class="sq press" data-state="unseen" data-el="1" href="#mark" title="not marked yet">
+              <span class="top"><span class="no num" data-source="enrolment.roll_no">16</span><span class="disc" aria-hidden="true">PP</span></span>
+              <span class="nm" data-el="8" data-source="pii.child.first_name pii.child.last_name">Pia Panda</span>
+              <span class="st" data-source="pii.note_claim.outcome pii.note_claim.entry_mode"><i class="ic s" data-icon="not-seen"></i>Not marked</span>
+            </a></li>
+            <li><a class="sq press" data-state="unseen" data-el="1" href="#mark" title="not marked yet">
+              <span class="top"><span class="no num" data-source="enrolment.roll_no">17</span><span class="disc" aria-hidden="true">QQ</span></span>
+              <span class="nm" data-el="8" data-source="pii.child.first_name pii.child.last_name">Quin Quail</span>
+              <span class="st" data-source="pii.note_claim.outcome pii.note_claim.entry_mode"><i class="ic s" data-icon="not-seen"></i>Not marked</span>
+            </a></li>
+            <li><a class="sq press" data-state="unseen" data-el="1" href="#mark" title="not marked yet">
+              <span class="top"><span class="no num" data-source="enrolment.roll_no">18</span><span class="disc" aria-hidden="true">RR</span></span>
+              <span class="nm" data-el="8" data-source="pii.child.first_name pii.child.last_name">Rex Rook</span>
+              <span class="st" data-source="pii.note_claim.outcome pii.note_claim.entry_mode"><i class="ic s" data-icon="not-seen"></i>Not marked</span>
+            </a></li>
+            <li><a class="sq press" data-state="unseen" data-el="1" href="#mark" title="not marked yet">
+              <span class="top"><span class="no num" data-source="enrolment.roll_no">19</span><span class="disc" aria-hidden="true">SS</span></span>
+              <span class="nm" data-el="8" data-source="pii.child.first_name pii.child.last_name">Sam Seal</span>
+              <span class="st" data-source="pii.note_claim.outcome pii.note_claim.entry_mode"><i class="ic s" data-icon="not-seen"></i>Not marked</span>
+            </a></li>
+            <li><a class="sq press" data-state="unseen" data-el="1" href="#mark" title="not marked yet">
+              <span class="top"><span class="no num" data-source="enrolment.roll_no">20</span><span class="disc" aria-hidden="true">TT</span></span>
+              <span class="nm" data-el="8" data-source="pii.child.first_name pii.child.last_name">Tia Toad</span>
+              <span class="st" data-source="pii.note_claim.outcome pii.note_claim.entry_mode"><i class="ic s" data-icon="not-seen"></i>Not marked</span>
+            </a></li>
+            <li><a class="sq press" data-state="unseen" data-el="1" href="#mark" title="not marked yet">
+              <span class="top"><span class="no num" data-source="enrolment.roll_no">21</span><span class="disc" aria-hidden="true">UU</span></span>
+              <span class="nm" data-el="8" data-source="pii.child.first_name pii.child.last_name">Uri Urial</span>
+              <span class="st" data-source="pii.note_claim.outcome pii.note_claim.entry_mode"><i class="ic s" data-icon="not-seen"></i>Not marked</span>
+            </a></li>
+            <li><a class="sq press" data-state="unseen" data-el="1" href="#mark" title="not marked yet">
+              <span class="top"><span class="no num" data-source="enrolment.roll_no">22</span><span class="disc" aria-hidden="true">VV</span></span>
+              <span class="nm" data-el="8" data-source="pii.child.first_name pii.child.last_name">Vik Vole</span>
+              <span class="st" data-source="pii.note_claim.outcome pii.note_claim.entry_mode"><i class="ic s" data-icon="not-seen"></i>Not marked</span>
+            </a></li>
+            <li><a class="sq press" data-state="unseen" data-el="1" href="#mark" title="not marked yet">
+              <span class="top"><span class="no num" data-source="enrolment.roll_no">23</span><span class="disc" aria-hidden="true">WW</span></span>
+              <span class="nm" data-el="8" data-source="pii.child.first_name pii.child.last_name">Wren Wolf</span>
+              <span class="st" data-source="pii.note_claim.outcome pii.note_claim.entry_mode"><i class="ic s" data-icon="not-seen"></i>Not marked</span>
+            </a></li>
+            <li><a class="sq press" data-state="unseen" data-el="1" href="#mark" title="not marked yet">
+              <span class="top"><span class="no num" data-source="enrolment.roll_no">24</span><span class="disc" aria-hidden="true">XX</span></span>
+              <span class="nm" data-el="8" data-source="pii.child.first_name pii.child.last_name">Xan Xerus</span>
+              <span class="st" data-source="pii.note_claim.outcome pii.note_claim.entry_mode"><i class="ic s" data-icon="not-seen"></i>Not marked</span>
+            </a></li>
+          </ol>
+          <div class="keyrow" data-block="StatusChip">
+            <span class="muted">Tap a square to choose:</span><span class="chip" data-state="ok"><i class="ic s" data-icon="above"></i>Above</span><span class="chip" data-state="ok"><i class="ic s" data-icon="as-expected"></i>As expected</span><span class="chip" data-state="wait"><i class="ic s" data-icon="below"></i>Below</span><span class="chip" data-state="wait"><i class="ic s" data-icon="not-willing"></i>Not willing</span><span class="chip" data-state="quiet"><i class="ic s" data-icon="absent"></i>Absent</span><span class="muted">or clear it</span>
+          </div>
+          <h2 class="title-small">You said</h2>
+          <div class="cards" data-block="Cards">
+            <article class="card"><div class="card-h"><i class="ic s" data-icon="heard"></i><span data-source="pii.note_claim.section">Counting to 20</span></div><div class="card-b">
+              <p data-source="pii.note_claim.words">“Alba, Bea and Dot counted past twenty without any help.”</p>
+              <div class="muted">Read as:</div><ul class="nchips" data-source="pii.note_claim.child_id"><li><button class="nchip press" data-el="9" type="button"><span class="no num" data-source="enrolment.roll_no">01</span><span data-el="8" data-source="pii.child.first_name pii.child.last_name">Alba Ant</span></button></li><li><button class="nchip press" data-el="9" type="button"><span class="no num" data-source="enrolment.roll_no">02</span><span data-el="8" data-source="pii.child.first_name pii.child.last_name">Bea Badger</span></button></li><li><button class="nchip press" data-el="9" type="button"><span class="no num" data-source="enrolment.roll_no">04</span><span data-el="8" data-source="pii.child.first_name pii.child.last_name">Dot Deer</span></button></li></ul>
+              <div class="keyrow" data-source="pii.note_claim.read_as pii.note_claim.decision"><span class="chip" data-state="ok"><i class="ic s" data-icon="above"></i>Above</span><button class="btn press" data-el="0" type="button" aria-label="Remove this line"><i class="ic" data-icon="clear"></i>Remove</button></div>
+            </div></article>
+            <article class="card"><div class="card-h"><i class="ic s" data-icon="heard"></i><span data-source="pii.note_claim.section">Counting to 20</span></div><div class="card-b">
+              <p data-source="pii.note_claim.words">“Cal and Eli lost count after fifteen.”</p>
+              <div class="muted">Read as:</div><ul class="nchips" data-source="pii.note_claim.child_id"><li><button class="nchip press" data-el="9" type="button"><span class="no num" data-source="enrolment.roll_no">03</span><span data-el="8" data-source="pii.child.first_name pii.child.last_name">Cal Crow</span></button></li><li><button class="nchip press" data-el="9" type="button"><span class="no num" data-source="enrolment.roll_no">05</span><span data-el="8" data-source="pii.child.first_name pii.child.last_name">Eli Eel</span></button></li></ul>
+              <div class="keyrow" data-source="pii.note_claim.read_as pii.note_claim.decision"><span class="chip" data-state="wait"><i class="ic s" data-icon="below"></i>Below</span><button class="btn press" data-el="0" type="button" aria-label="Remove this line"><i class="ic" data-icon="clear"></i>Remove</button></div>
+            </div></article>
+            <article class="card"><div class="card-h"><i class="ic s" data-icon="heard"></i><span data-source="pii.note_claim.section">Counting to 20</span></div><div class="card-b">
+              <p data-source="pii.note_claim.words">“Finn did not want to join in.”</p>
+              <div class="muted">Read as:</div><ul class="nchips" data-source="pii.note_claim.child_id"><li><button class="nchip press" data-el="9" type="button"><span class="no num" data-source="enrolment.roll_no">06</span><span data-el="8" data-source="pii.child.first_name pii.child.last_name">Finn Fox</span></button></li></ul>
+              <div class="keyrow" data-source="pii.note_claim.read_as pii.note_claim.decision"><span class="chip" data-state="wait"><i class="ic s" data-icon="not-willing"></i>Not willing</span><button class="btn press" data-el="0" type="button" aria-label="Remove this line"><i class="ic" data-icon="clear"></i>Remove</button></div>
+            </div></article>
+            <article class="card"><div class="card-h"><i class="ic s" data-icon="heard"></i><span data-source="pii.note_claim.section">Counting to 20</span></div><div class="card-b">
+              <p data-source="pii.note_claim.words">“Gus was away today.”</p>
+              <div class="muted">Read as:</div><ul class="nchips" data-source="pii.note_claim.child_id"><li><button class="nchip press" data-el="9" type="button"><span class="no num" data-source="enrolment.roll_no">07</span><span data-el="8" data-source="pii.child.first_name pii.child.last_name">Gus Goat</span></button></li></ul>
+              <div class="keyrow" data-source="pii.note_claim.read_as pii.note_claim.decision"><span class="chip" data-state="quiet"><i class="ic s" data-icon="absent"></i>Absent</span><button class="btn press" data-el="0" type="button" aria-label="Remove this line"><i class="ic" data-icon="clear"></i>Remove</button></div>
+            </div></article>
+          </div>
+          <form class="form" data-block="Form">
+            <button class="btn press" data-el="2" type="button" role="switch" aria-checked="false"><i class="ic" data-icon="as-expected"></i>The rest did as expected <b>Off</b></button>
+            <div><button class="btn btn-main press" data-el="3" type="submit" data-source="activity_observation.confirmation_id"><i class="ic" data-icon="confirm"></i>Confirm this note</button></div>
+          </form>
+          <div class="card">
+            <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: on a confirmed note</div>
+            <div class="card-b"><div class="keyrow"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Confirmed</span></div><span class="muted">Correcting writes a new note that replaces this one. The old one is kept.</span><button class="btn press" data-el="4" type="button" data-source="pii.educator_note.status"><i class="ic" data-icon="correct"></i>Correct this note</button></div>
+          </div>
+          <div class="card">
+            <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: when no note is waiting</div>
+            <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="note"></i><b>No note waiting</b><span class="muted">Nothing to confirm right now. Record a note in a period.</span></div></div>
+          </div>
+        </main>
+        <aside class="rail" aria-label="Connected to">
+          <aside class="peek" data-block="ChildPeek" aria-label="Recent history of one child">
+          <div class="peek-h">
+            <span class="disc" aria-hidden="true">CC</span>
+            <span class="who"><b data-el="8" data-source="pii.child.first_name pii.child.last_name">Cal Crow</b><span class="muted"><span class="num" data-source="enrolment.roll_no">03</span> · K2 Red</span></span>
+            <button class="barbtn press" data-el="10" type="button" aria-label="Close"><i class="ic" data-icon="close"></i></button>
+          </div>
+          <div class="keyrow" data-source="child_skill_state.state"><span class="chip" data-state="ok"><i class="ic s" data-icon="secure"></i>2 secure</span><span class="chip" data-state="wait"><i class="ic s" data-icon="practising"></i>4 practising</span><span class="chip" data-state="quiet"><i class="ic s" data-icon="emerging"></i>3 emerging</span><span class="chip" data-state="unseen"><i class="ic s" data-icon="not-seen"></i>2 not seen yet</span></div>
+          <ol class="timeline">
+            <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><b>Counting in tens with bundles: below</b><p>Observed in the period · <span data-source="pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="activity_observation.observed_at">3-Nov</span></li>
+            <li class="tli"><span class="tile" data-kind="note"><i class="ic" data-icon="note"></i></span><div><b>Lost count after fifteen</b><p>Voice note · confirmed by <span data-source="pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="pii.educator_note.received_at">28-Oct</span></li>
+            <li class="tli"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><div><b>Paper, sheet 2</b><p>3 right, 1 wrong with working, 2 blank · signed off by <span data-source="pii.staff.name">Bina Basil</span></p></div><span class="caption num" data-source="item_result.confirmed_at">26-Oct</span></li>
+            <li class="tli"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><div><b>Counting to 20: now practising</b><p>The state changed after a second day seen</p></div><span class="caption num" data-source="evidence_event.observed_at">20-Oct</span></li>
+            <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="history"></i></span><div><b>A mark corrected: as expected became below</b><p>A new entry that replaces the first · <span data-source="pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="change_log.at">14-Oct</span></li>
+          </ol>
+          <a class="btn press" data-el="11" href="#child">Open Cal</a>
+        </aside>
+        <section class="rail-box">
+            <h2>Connected to</h2>
+            <ul class="rlist">
+              <li><a class="ritem" data-el="5" href="#period"><span class="tile" data-kind="period"><i class="ic" data-icon="period"></i></span><span><span data-source="period.starts_at">09:15</span> <span data-source="subject.name">Numeracy</span><small>the period</small></span></a></li>
+              <li><a class="ritem" data-el="6" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><span><span data-source="activity.name">Counting to 20</span><small>the activity</small></span></a></li>
+              <li><a class="ritem" data-el="7" href="#picture"><span class="tile" data-kind="child"><i class="ic" data-icon="class"></i></span><span><span data-source="grade.name">K2</span> <span data-source="school_class.section">Red</span><small>the class picture</small></span></a></li>
+            </ul>
+          </section>
+        </aside>
+      </div>
+      <nav class="tabbar" aria-label="Doors">
+        <a class="tab" data-bar="0" href="#today" aria-current="page"><i class="ic" data-icon="today"></i>Today</a>
+        <a class="tab" data-bar="1" href="#timetable"><i class="ic" data-icon="timetable"></i>Timetable</a>
+        <a class="tab" data-bar="2" href="#children"><i class="ic" data-icon="children"></i>Children</a>
+        <a class="tab" data-bar="3" href="#setup"><i class="ic" data-icon="setup"></i>Setup</a>
+      </nav>
+    </div>
+  </section>
+  <section class="wf" data-viewport="400" aria-label="Phone, 400 px">
+    <div class="frame">
+      <header class="bar">
+        <a class="brand" data-bar="0" href="#today" aria-label="Cornerstone Gurukul, go to Today">
+          <img class="wide on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-colour.svg" alt="">
+          <img class="wide on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-for-dark-backgrounds.svg" alt="">
+          <img class="small on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark.svg" alt="">
+          <img class="small on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark-on-white-tile.svg" alt="">
+        </a>
+        <ul class="doors" aria-label="Doors">
+          <li><a class="door" data-bar="0" href="#today" aria-current="page"><i class="ic" data-icon="today"></i>Today <span class="badge num" data-source="pii.educator_note.status pii.educator_note.received_at" aria-label="7 notes to confirm">7</span></a></li>
+          <li><a class="door" data-bar="1" href="#timetable"><i class="ic" data-icon="timetable"></i>Timetable</a></li>
+          <li><a class="door" data-bar="2" href="#children"><i class="ic" data-icon="children"></i>Children</a></li>
+          <li><a class="door" data-bar="3" href="#setup"><i class="ic" data-icon="setup"></i>Setup</a></li>
+        </ul>
+        <label class="search"><i class="ic s" data-icon="search"></i><span class="vh">Search</span><input data-bar="4" type="search" placeholder="Sr. No., name or activity"></label>
+        <button class="barbtn press" data-bar="5" type="button" role="switch" aria-checked="false"><i class="ic" data-icon="acting-as"></i><span class="w">Acting as</span></button>
+        <a class="barbtn" data-bar="6" href="#help" aria-label="Help for this page"><i class="ic" data-icon="help"></i></a>
+        <button class="barbtn press" data-bar="7" type="button"><i class="ic" data-icon="sign-out"></i><span class="w">Sign out</span></button>
+      </header>
+      <ol class="trail" aria-label="Trail">
+        <li><a data-trail href="#today">Today</a></li>
+        <li><i class="ic s" data-icon="trail"></i></li>
+        <li aria-current="page">Note of 09:15</li>
+      </ol>
+      <div class="page">
+        <main class="main">
+          <div class="head">
+            <p class="eyebrow"><i class="ic s" data-icon="note"></i><span data-source="grade.name">K2</span> <span data-source="school_class.section">Red</span> · note of <span class="num" data-source="pii.educator_note.received_at">09:15</span> · <span data-source="activity.name pii.educator_note.session_id">Counting to 20</span></p>
+            <h1 class="title">Confirm what the reader heard</h1>
+            <p class="purpose">Left, your words line by line. Right, the class marked from them. Nothing is ticked for you. Confirm is for this note only.</p>
+            <p class="caption" data-source="pii.educator_note.session_id">The activity comes from the period the educator chose.</p>
+          </div>
+          <article class="card" data-block="Cards" data-source="pii.note_claim.flag">
+            <div class="card-h"><span class="chip" data-state="late"><i class="ic s" data-icon="late"></i>For you to judge</span></div>
+            <div class="card-b"><p>No mark was said for <button class="nchip press" data-el="9" type="button"><span class="no num" data-source="enrolment.roll_no">18</span><span data-el="8" data-source="pii.child.first_name pii.child.last_name">Rex Rook</span></button>. Tap the square to choose one.</p></div>
+          </article>
+          <h2 class="title-small">The class, marked from your note</h2>
+          <div class="keyrow" data-source="pii.note_claim.outcome" aria-label="The class by mark"><span class="chip" data-state="ok"><i class="ic s" data-icon="above"></i>3 above</span><span class="chip" data-state="ok"><i class="ic s" data-icon="as-expected"></i>0 as expected</span><span class="chip" data-state="wait"><i class="ic s" data-icon="below"></i>2 below</span><span class="chip" data-state="wait"><i class="ic s" data-icon="not-willing"></i>1 not willing</span><span class="chip" data-state="quiet"><i class="ic s" data-icon="absent"></i>1 absent</span><span class="chip" data-state="unseen"><i class="ic s" data-icon="not-seen"></i>17 not marked</span></div>
+          <ol class="cgrid" data-block="ClassGrid" aria-label="The class marked from this note, by Sr. No.">
+            <li><a class="sq press" data-state="ok" data-el="1" href="#mark">
+              <span class="top"><span class="no num" data-source="enrolment.roll_no">01</span><span class="disc" aria-hidden="true">AA</span><i class="ic s" data-icon="above"></i></span>
+              <span class="nm" data-el="8" data-source="pii.child.first_name pii.child.last_name">Alba Ant</span>
+              <span class="st" data-source="pii.note_claim.outcome pii.note_claim.entry_mode"><i class="ic s" data-icon="above"></i>Above</span>
+            </a></li>
+            <li><a class="sq press" data-state="ok" data-el="1" href="#mark">
+              <span class="top"><span class="no num" data-source="enrolment.roll_no">02</span><span class="disc" aria-hidden="true">BB</span><i class="ic s" data-icon="above"></i></span>
+              <span class="nm" data-el="8" data-source="pii.child.first_name pii.child.last_name">Bea Badger</span>
+              <span class="st" data-source="pii.note_claim.outcome pii.note_claim.entry_mode"><i class="ic s" data-icon="above"></i>Above</span>
+            </a></li>
+            <li><a class="sq press" data-state="wait" data-el="1" href="#mark">
+              <span class="top"><span class="no num" data-source="enrolment.roll_no">03</span><span class="disc" aria-hidden="true">CC</span><i class="ic s" data-icon="below"></i></span>
+              <span class="nm" data-el="8" data-source="pii.child.first_name pii.child.last_name">Cal Crow</span>
+              <span class="st" data-source="pii.note_claim.outcome pii.note_claim.entry_mode"><i class="ic s" data-icon="below"></i>Below</span>
+            </a></li>
+            <li><a class="sq press" data-state="ok" data-el="1" href="#mark">
+              <span class="top"><span class="no num" data-source="enrolment.roll_no">04</span><span class="disc" aria-hidden="true">DD</span><i class="ic s" data-icon="above"></i></span>
+              <span class="nm" data-el="8" data-source="pii.child.first_name pii.child.last_name">Dot Deer</span>
+              <span class="st" data-source="pii.note_claim.outcome pii.note_claim.entry_mode"><i class="ic s" data-icon="above"></i>Above</span>
+            </a></li>
+            <li><a class="sq press" data-state="wait" data-el="1" href="#mark">
+              <span class="top"><span class="no num" data-source="enrolment.roll_no">05</span><span class="disc" aria-hidden="true">EE</span><i class="ic s" data-icon="below"></i></span>
+              <span class="nm" data-el="8" data-source="pii.child.first_name pii.child.last_name">Eli Eel</span>
+              <span class="st" data-source="pii.note_claim.outcome pii.note_claim.entry_mode"><i class="ic s" data-icon="below"></i>Below</span>
+            </a></li>
+            <li><a class="sq press" data-state="wait" data-el="1" href="#mark">
+              <span class="top"><span class="no num" data-source="enrolment.roll_no">06</span><span class="disc" aria-hidden="true">FF</span><i class="ic s" data-icon="not-willing"></i></span>
+              <span class="nm" data-el="8" data-source="pii.child.first_name pii.child.last_name">Finn Fox</span>
+              <span class="st" data-source="pii.note_claim.outcome pii.note_claim.entry_mode"><i class="ic s" data-icon="not-willing"></i>Not willing</span>
+            </a></li>
+            <li><a class="sq press" data-state="quiet" data-el="1" href="#mark">
+              <span class="top"><span class="no num" data-source="enrolment.roll_no">07</span><span class="disc" aria-hidden="true">GG</span><i class="ic s" data-icon="absent"></i></span>
+              <span class="nm" data-el="8" data-source="pii.child.first_name pii.child.last_name">Gus Goat</span>
+              <span class="st" data-source="pii.note_claim.outcome pii.note_claim.entry_mode"><i class="ic s" data-icon="absent"></i>Absent</span>
+            </a></li>
+            <li><a class="sq press" data-state="unseen" data-el="1" href="#mark" title="not marked yet">
+              <span class="top"><span class="no num" data-source="enrolment.roll_no">08</span><span class="disc" aria-hidden="true">HH</span></span>
+              <span class="nm" data-el="8" data-source="pii.child.first_name pii.child.last_name">Hazel Hare</span>
+              <span class="st" data-source="pii.note_claim.outcome pii.note_claim.entry_mode"><i class="ic s" data-icon="not-seen"></i>Not marked</span>
+            </a></li>
+            <li><a class="sq press" data-state="unseen" data-el="1" href="#mark" title="not marked yet">
+              <span class="top"><span class="no num" data-source="enrolment.roll_no">09</span><span class="disc" aria-hidden="true">II</span></span>
+              <span class="nm" data-el="8" data-source="pii.child.first_name pii.child.last_name">Ivy Ibis</span>
+              <span class="st" data-source="pii.note_claim.outcome pii.note_claim.entry_mode"><i class="ic s" data-icon="not-seen"></i>Not marked</span>
+            </a></li>
+            <li><a class="sq press" data-state="unseen" data-el="1" href="#mark" title="not marked yet">
+              <span class="top"><span class="no num" data-source="enrolment.roll_no">10</span><span class="disc" aria-hidden="true">JJ</span></span>
+              <span class="nm" data-el="8" data-source="pii.child.first_name pii.child.last_name">Jo Jay</span>
+              <span class="st" data-source="pii.note_claim.outcome pii.note_claim.entry_mode"><i class="ic s" data-icon="not-seen"></i>Not marked</span>
+            </a></li>
+            <li><a class="sq press" data-state="unseen" data-el="1" href="#mark" title="not marked yet">
+              <span class="top"><span class="no num" data-source="enrolment.roll_no">11</span><span class="disc" aria-hidden="true">KK</span></span>
+              <span class="nm" data-el="8" data-source="pii.child.first_name pii.child.last_name">Kit Koala</span>
+              <span class="st" data-source="pii.note_claim.outcome pii.note_claim.entry_mode"><i class="ic s" data-icon="not-seen"></i>Not marked</span>
+            </a></li>
+            <li><a class="sq press" data-state="unseen" data-el="1" href="#mark" title="not marked yet">
+              <span class="top"><span class="no num" data-source="enrolment.roll_no">12</span><span class="disc" aria-hidden="true">LL</span></span>
+              <span class="nm" data-el="8" data-source="pii.child.first_name pii.child.last_name">Lou Lynx</span>
+              <span class="st" data-source="pii.note_claim.outcome pii.note_claim.entry_mode"><i class="ic s" data-icon="not-seen"></i>Not marked</span>
+            </a></li>
+            <li><a class="sq press" data-state="unseen" data-el="1" href="#mark" title="not marked yet">
+              <span class="top"><span class="no num" data-source="enrolment.roll_no">13</span><span class="disc" aria-hidden="true">MM</span></span>
+              <span class="nm" data-el="8" data-source="pii.child.first_name pii.child.last_name">Mina Mouse</span>
+              <span class="st" data-source="pii.note_claim.outcome pii.note_claim.entry_mode"><i class="ic s" data-icon="not-seen"></i>Not marked</span>
+            </a></li>
+            <li><a class="sq press" data-state="unseen" data-el="1" href="#mark" title="not marked yet">
+              <span class="top"><span class="no num" data-source="enrolment.roll_no">14</span><span class="disc" aria-hidden="true">NN</span></span>
+              <span class="nm" data-el="8" data-source="pii.child.first_name pii.child.last_name">Nat Newt</span>
+              <span class="st" data-source="pii.note_claim.outcome pii.note_claim.entry_mode"><i class="ic s" data-icon="not-seen"></i>Not marked</span>
+            </a></li>
+            <li><a class="sq press" data-state="unseen" data-el="1" href="#mark" title="not marked yet">
+              <span class="top"><span class="no num" data-source="enrolment.roll_no">15</span><span class="disc" aria-hidden="true">OO</span></span>
+              <span class="nm" data-el="8" data-source="pii.child.first_name pii.child.last_name">Otto Owl</span>
+              <span class="st" data-source="pii.note_claim.outcome pii.note_claim.entry_mode"><i class="ic s" data-icon="not-seen"></i>Not marked</span>
+            </a></li>
+            <li><a class="sq press" data-state="unseen" data-el="1" href="#mark" title="not marked yet">
+              <span class="top"><span class="no num" data-source="enrolment.roll_no">16</span><span class="disc" aria-hidden="true">PP</span></span>
+              <span class="nm" data-el="8" data-source="pii.child.first_name pii.child.last_name">Pia Panda</span>
+              <span class="st" data-source="pii.note_claim.outcome pii.note_claim.entry_mode"><i class="ic s" data-icon="not-seen"></i>Not marked</span>
+            </a></li>
+            <li><a class="sq press" data-state="unseen" data-el="1" href="#mark" title="not marked yet">
+              <span class="top"><span class="no num" data-source="enrolment.roll_no">17</span><span class="disc" aria-hidden="true">QQ</span></span>
+              <span class="nm" data-el="8" data-source="pii.child.first_name pii.child.last_name">Quin Quail</span>
+              <span class="st" data-source="pii.note_claim.outcome pii.note_claim.entry_mode"><i class="ic s" data-icon="not-seen"></i>Not marked</span>
+            </a></li>
+            <li><a class="sq press" data-state="unseen" data-el="1" href="#mark" title="not marked yet">
+              <span class="top"><span class="no num" data-source="enrolment.roll_no">18</span><span class="disc" aria-hidden="true">RR</span></span>
+              <span class="nm" data-el="8" data-source="pii.child.first_name pii.child.last_name">Rex Rook</span>
+              <span class="st" data-source="pii.note_claim.outcome pii.note_claim.entry_mode"><i class="ic s" data-icon="not-seen"></i>Not marked</span>
+            </a></li>
+            <li><a class="sq press" data-state="unseen" data-el="1" href="#mark" title="not marked yet">
+              <span class="top"><span class="no num" data-source="enrolment.roll_no">19</span><span class="disc" aria-hidden="true">SS</span></span>
+              <span class="nm" data-el="8" data-source="pii.child.first_name pii.child.last_name">Sam Seal</span>
+              <span class="st" data-source="pii.note_claim.outcome pii.note_claim.entry_mode"><i class="ic s" data-icon="not-seen"></i>Not marked</span>
+            </a></li>
+            <li><a class="sq press" data-state="unseen" data-el="1" href="#mark" title="not marked yet">
+              <span class="top"><span class="no num" data-source="enrolment.roll_no">20</span><span class="disc" aria-hidden="true">TT</span></span>
+              <span class="nm" data-el="8" data-source="pii.child.first_name pii.child.last_name">Tia Toad</span>
+              <span class="st" data-source="pii.note_claim.outcome pii.note_claim.entry_mode"><i class="ic s" data-icon="not-seen"></i>Not marked</span>
+            </a></li>
+            <li><a class="sq press" data-state="unseen" data-el="1" href="#mark" title="not marked yet">
+              <span class="top"><span class="no num" data-source="enrolment.roll_no">21</span><span class="disc" aria-hidden="true">UU</span></span>
+              <span class="nm" data-el="8" data-source="pii.child.first_name pii.child.last_name">Uri Urial</span>
+              <span class="st" data-source="pii.note_claim.outcome pii.note_claim.entry_mode"><i class="ic s" data-icon="not-seen"></i>Not marked</span>
+            </a></li>
+            <li><a class="sq press" data-state="unseen" data-el="1" href="#mark" title="not marked yet">
+              <span class="top"><span class="no num" data-source="enrolment.roll_no">22</span><span class="disc" aria-hidden="true">VV</span></span>
+              <span class="nm" data-el="8" data-source="pii.child.first_name pii.child.last_name">Vik Vole</span>
+              <span class="st" data-source="pii.note_claim.outcome pii.note_claim.entry_mode"><i class="ic s" data-icon="not-seen"></i>Not marked</span>
+            </a></li>
+            <li><a class="sq press" data-state="unseen" data-el="1" href="#mark" title="not marked yet">
+              <span class="top"><span class="no num" data-source="enrolment.roll_no">23</span><span class="disc" aria-hidden="true">WW</span></span>
+              <span class="nm" data-el="8" data-source="pii.child.first_name pii.child.last_name">Wren Wolf</span>
+              <span class="st" data-source="pii.note_claim.outcome pii.note_claim.entry_mode"><i class="ic s" data-icon="not-seen"></i>Not marked</span>
+            </a></li>
+            <li><a class="sq press" data-state="unseen" data-el="1" href="#mark" title="not marked yet">
+              <span class="top"><span class="no num" data-source="enrolment.roll_no">24</span><span class="disc" aria-hidden="true">XX</span></span>
+              <span class="nm" data-el="8" data-source="pii.child.first_name pii.child.last_name">Xan Xerus</span>
+              <span class="st" data-source="pii.note_claim.outcome pii.note_claim.entry_mode"><i class="ic s" data-icon="not-seen"></i>Not marked</span>
+            </a></li>
+          </ol>
+          <div class="keyrow" data-block="StatusChip">
+            <span class="muted">Tap a square to choose:</span><span class="chip" data-state="ok"><i class="ic s" data-icon="above"></i>Above</span><span class="chip" data-state="ok"><i class="ic s" data-icon="as-expected"></i>As expected</span><span class="chip" data-state="wait"><i class="ic s" data-icon="below"></i>Below</span><span class="chip" data-state="wait"><i class="ic s" data-icon="not-willing"></i>Not willing</span><span class="chip" data-state="quiet"><i class="ic s" data-icon="absent"></i>Absent</span><span class="muted">or clear it</span>
+          </div>
+          <h2 class="title-small">You said</h2>
+          <div class="cards" data-block="Cards">
+            <article class="card"><div class="card-h"><i class="ic s" data-icon="heard"></i><span data-source="pii.note_claim.section">Counting to 20</span></div><div class="card-b">
+              <p data-source="pii.note_claim.words">“Alba, Bea and Dot counted past twenty without any help.”</p>
+              <div class="muted">Read as:</div><ul class="nchips" data-source="pii.note_claim.child_id"><li><button class="nchip press" data-el="9" type="button"><span class="no num" data-source="enrolment.roll_no">01</span><span data-el="8" data-source="pii.child.first_name pii.child.last_name">Alba Ant</span></button></li><li><button class="nchip press" data-el="9" type="button"><span class="no num" data-source="enrolment.roll_no">02</span><span data-el="8" data-source="pii.child.first_name pii.child.last_name">Bea Badger</span></button></li><li><button class="nchip press" data-el="9" type="button"><span class="no num" data-source="enrolment.roll_no">04</span><span data-el="8" data-source="pii.child.first_name pii.child.last_name">Dot Deer</span></button></li></ul>
+              <div class="keyrow" data-source="pii.note_claim.read_as pii.note_claim.decision"><span class="chip" data-state="ok"><i class="ic s" data-icon="above"></i>Above</span><button class="btn press" data-el="0" type="button" aria-label="Remove this line"><i class="ic" data-icon="clear"></i>Remove</button></div>
+            </div></article>
+            <article class="card"><div class="card-h"><i class="ic s" data-icon="heard"></i><span data-source="pii.note_claim.section">Counting to 20</span></div><div class="card-b">
+              <p data-source="pii.note_claim.words">“Cal and Eli lost count after fifteen.”</p>
+              <div class="muted">Read as:</div><ul class="nchips" data-source="pii.note_claim.child_id"><li><button class="nchip press" data-el="9" type="button"><span class="no num" data-source="enrolment.roll_no">03</span><span data-el="8" data-source="pii.child.first_name pii.child.last_name">Cal Crow</span></button></li><li><button class="nchip press" data-el="9" type="button"><span class="no num" data-source="enrolment.roll_no">05</span><span data-el="8" data-source="pii.child.first_name pii.child.last_name">Eli Eel</span></button></li></ul>
+              <div class="keyrow" data-source="pii.note_claim.read_as pii.note_claim.decision"><span class="chip" data-state="wait"><i class="ic s" data-icon="below"></i>Below</span><button class="btn press" data-el="0" type="button" aria-label="Remove this line"><i class="ic" data-icon="clear"></i>Remove</button></div>
+            </div></article>
+            <article class="card"><div class="card-h"><i class="ic s" data-icon="heard"></i><span data-source="pii.note_claim.section">Counting to 20</span></div><div class="card-b">
+              <p data-source="pii.note_claim.words">“Finn did not want to join in.”</p>
+              <div class="muted">Read as:</div><ul class="nchips" data-source="pii.note_claim.child_id"><li><button class="nchip press" data-el="9" type="button"><span class="no num" data-source="enrolment.roll_no">06</span><span data-el="8" data-source="pii.child.first_name pii.child.last_name">Finn Fox</span></button></li></ul>
+              <div class="keyrow" data-source="pii.note_claim.read_as pii.note_claim.decision"><span class="chip" data-state="wait"><i class="ic s" data-icon="not-willing"></i>Not willing</span><button class="btn press" data-el="0" type="button" aria-label="Remove this line"><i class="ic" data-icon="clear"></i>Remove</button></div>
+            </div></article>
+            <article class="card"><div class="card-h"><i class="ic s" data-icon="heard"></i><span data-source="pii.note_claim.section">Counting to 20</span></div><div class="card-b">
+              <p data-source="pii.note_claim.words">“Gus was away today.”</p>
+              <div class="muted">Read as:</div><ul class="nchips" data-source="pii.note_claim.child_id"><li><button class="nchip press" data-el="9" type="button"><span class="no num" data-source="enrolment.roll_no">07</span><span data-el="8" data-source="pii.child.first_name pii.child.last_name">Gus Goat</span></button></li></ul>
+              <div class="keyrow" data-source="pii.note_claim.read_as pii.note_claim.decision"><span class="chip" data-state="quiet"><i class="ic s" data-icon="absent"></i>Absent</span><button class="btn press" data-el="0" type="button" aria-label="Remove this line"><i class="ic" data-icon="clear"></i>Remove</button></div>
+            </div></article>
+          </div>
+          <form class="form" data-block="Form">
+            <button class="btn press" data-el="2" type="button" role="switch" aria-checked="false"><i class="ic" data-icon="as-expected"></i>The rest did as expected <b>Off</b></button>
+            <div><button class="btn btn-main press" data-el="3" type="submit" data-source="activity_observation.confirmation_id"><i class="ic" data-icon="confirm"></i>Confirm this note</button></div>
+          </form>
+          <div class="card">
+            <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: on a confirmed note</div>
+            <div class="card-b"><div class="keyrow"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Confirmed</span></div><span class="muted">Correcting writes a new note that replaces this one. The old one is kept.</span><button class="btn press" data-el="4" type="button" data-source="pii.educator_note.status"><i class="ic" data-icon="correct"></i>Correct this note</button></div>
+          </div>
+          <div class="card">
+            <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: when no note is waiting</div>
+            <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="note"></i><b>No note waiting</b><span class="muted">Nothing to confirm right now. Record a note in a period.</span></div></div>
+          </div>
+        </main>
+        <aside class="rail" aria-label="Connected to">
+          <aside class="peek" data-block="ChildPeek" aria-label="Recent history of one child">
+          <div class="peek-h">
+            <span class="disc" aria-hidden="true">CC</span>
+            <span class="who"><b data-el="8" data-source="pii.child.first_name pii.child.last_name">Cal Crow</b><span class="muted"><span class="num" data-source="enrolment.roll_no">03</span> · K2 Red</span></span>
+            <button class="barbtn press" data-el="10" type="button" aria-label="Close"><i class="ic" data-icon="close"></i></button>
+          </div>
+          <div class="keyrow" data-source="child_skill_state.state"><span class="chip" data-state="ok"><i class="ic s" data-icon="secure"></i>2 secure</span><span class="chip" data-state="wait"><i class="ic s" data-icon="practising"></i>4 practising</span><span class="chip" data-state="quiet"><i class="ic s" data-icon="emerging"></i>3 emerging</span><span class="chip" data-state="unseen"><i class="ic s" data-icon="not-seen"></i>2 not seen yet</span></div>
+          <ol class="timeline">
+            <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><b>Counting in tens with bundles: below</b><p>Observed in the period · <span data-source="pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="activity_observation.observed_at">3-Nov</span></li>
+            <li class="tli"><span class="tile" data-kind="note"><i class="ic" data-icon="note"></i></span><div><b>Lost count after fifteen</b><p>Voice note · confirmed by <span data-source="pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="pii.educator_note.received_at">28-Oct</span></li>
+            <li class="tli"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><div><b>Paper, sheet 2</b><p>3 right, 1 wrong with working, 2 blank · signed off by <span data-source="pii.staff.name">Bina Basil</span></p></div><span class="caption num" data-source="item_result.confirmed_at">26-Oct</span></li>
+            <li class="tli"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><div><b>Counting to 20: now practising</b><p>The state changed after a second day seen</p></div><span class="caption num" data-source="evidence_event.observed_at">20-Oct</span></li>
+            <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="history"></i></span><div><b>A mark corrected: as expected became below</b><p>A new entry that replaces the first · <span data-source="pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="change_log.at">14-Oct</span></li>
+          </ol>
+          <a class="btn press" data-el="11" href="#child">Open Cal</a>
+        </aside>
+        <section class="rail-box">
+            <h2>Connected to</h2>
+            <ul class="rlist">
+              <li><a class="ritem" data-el="5" href="#period"><span class="tile" data-kind="period"><i class="ic" data-icon="period"></i></span><span><span data-source="period.starts_at">09:15</span> <span data-source="subject.name">Numeracy</span><small>the period</small></span></a></li>
+              <li><a class="ritem" data-el="6" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><span><span data-source="activity.name">Counting to 20</span><small>the activity</small></span></a></li>
+              <li><a class="ritem" data-el="7" href="#picture"><span class="tile" data-kind="child"><i class="ic" data-icon="class"></i></span><span><span data-source="grade.name">K2</span> <span data-source="school_class.section">Red</span><small>the class picture</small></span></a></li>
+            </ul>
+          </section>
+        </aside>
+      </div>
+      <nav class="tabbar" aria-label="Doors">
+        <a class="tab" data-bar="0" href="#today" aria-current="page"><i class="ic" data-icon="today"></i>Today</a>
+        <a class="tab" data-bar="1" href="#timetable"><i class="ic" data-icon="timetable"></i>Timetable</a>
+        <a class="tab" data-bar="2" href="#children"><i class="ic" data-icon="children"></i>Children</a>
+        <a class="tab" data-bar="3" href="#setup"><i class="ic" data-icon="setup"></i>Setup</a>
+      </nav>
+    </div>
+  </section>
+</div>
+</body>
+</html>

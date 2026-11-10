@@ -1,7 +1,6 @@
 import Link from "@/components/link";
-import { PageShell } from "@/components/page-shell";
+import { Screen } from "@/components/app-frame";
 import { EmptyState } from "@/components/empty-state";
-import { Crumbs } from "@/components/educator/crumbs";
 import { ClassPick } from "@/components/educator/day-head";
 import { DataTable } from "@/components/data-table";
 import { BTN, FIELD, materialColumns, type DayLine } from "@/components/educator/materials-table";
@@ -24,7 +23,7 @@ export default async function MaterialsPage({ searchParams }: { searchParams: Pr
   const me = await requireStaff();
   const q = await searchParams;
   if (q.day !== undefined && !isDay(q.day)) notFound();
-  const day = q.day ?? schoolToday();
+  const day = q.day ?? (await schoolToday());
   const span: Span = SPANS.includes(q.span as Span) ? (q.span as Span) : "week";
   const d = await dayOf(me, { class_id: q.class, day }); // not found when her screens are closed to her
   const [list, catalogue, { previewing }] = await Promise.all([materialsOf(me, d.class.id, day, span), catalogueOf(me), openTo(me)]);
@@ -32,7 +31,7 @@ export default async function MaterialsPage({ searchParams }: { searchParams: Pr
   const lines = list?.groups.flatMap((g) => g.lines) ?? [];
   const on = new Set(lines.map((l) => l.material_code));
   return (
-    <PageShell
+    <Screen
       stage={E.area}
       title={W.title}
       purpose={W.purpose}
@@ -47,7 +46,6 @@ export default async function MaterialsPage({ searchParams }: { searchParams: Pr
       }
       next={{ href: `/educator?class=${d.class.id}&day=${day}`, label: E.today.title }}
     >
-      <Crumbs trail={[{ label: E.area }, { label: W.nav, href: here(span) }, { label: W.classList }]} />
       <ClassPick classes={d.classes} on={d.class.id} href={(id) => `/educator/materials?class=${id}&day=${day}&span=${span}`} />
       {list === null ? (
         <EmptyState>{W.notHers}</EmptyState>
@@ -94,6 +92,6 @@ export default async function MaterialsPage({ searchParams }: { searchParams: Pr
           </div>
         </>
       )}
-    </PageShell>
+    </Screen>
   );
 }

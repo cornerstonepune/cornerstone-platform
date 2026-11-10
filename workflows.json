@@ -133,7 +133,7 @@
       "who": "code; a model for one sentence; the teacher confirms",
       "built": "partly",
       "takes": ["child_skill_state"],
-      "gives": ["class_card", "home_sheet", "parent_note"],
+      "gives": ["class_card", "parent_note"],
       "files": ["engine/w4_close/card.py", "engine/w4_close/cli_card.py"],
       "commands": ["engine card build", "engine card confirm"],
       "screens": ["/home"],
@@ -154,7 +154,7 @@
   ],
   "shared": [
     {"code": "assess", "name": "The maths library", "does": "Pure code with no database: makes, measures, draws and marks every kind of question. W1, W2 and W3 all use it.", "folder": "engine/assess", "subject": {"any": false, "note": "All maths. A new subject brings its own library beside this one."}},
-    {"code": "core", "name": "The base", "does": "The one database connection, the seed loader, and the class list every workflow reads.", "folder": "engine/core", "subject": {"any": true, "note": ""}},
+    {"code": "core", "name": "The base", "does": "The one database connection, the seed loader, the class list, the settings every workflow reads (the table config, through core/settings.py) and the one history log (the table change_log, written by the database).", "folder": "engine/core", "subject": {"any": true, "note": ""}},
     {"code": "adapters", "name": "Outside services", "does": "The only files that talk to something outside the engine: the text model, Amazon's handwriting reader, and the digit reader run in a process of its own (ADR 0035), Jev for typed judgements code cannot compute (ADR 0036), Sarvam's speech to text for a K2 voice note (M1-01), and FET, the timetable program, run as its own process (CP-11).", "folder": "engine/adapters", "subject": {"any": true, "note": ""}},
     {"code": "checks", "name": "The proofs", "does": "Every invariant over every row, a goal's commands and scenarios, the live site's health.", "folder": "engine/checks", "subject": {"any": true, "note": ""}},
     {"code": "doors", "name": "The front doors", "does": "The command line and the web service the website and n8n call — thin, each command handing straight to a workflow.", "folder": "engine/api", "files": ["engine/cli.py"], "subject": {"any": true, "note": ""}}
@@ -213,7 +213,7 @@
     "covers": ["engine/", "apps/web/"],
     "frozen": {
       "engine/adapters/ocr.py": 999,
-      "engine/w3_read/legacy.py": 639,
+      "engine/w3_read/legacy.py": 630,
       "engine/assess/items.py": 439
     }
   },
@@ -267,8 +267,8 @@
         "C901": 11
       },
       "engine/w3_read/legacy.py::import_scan": {
-        "C901": 13,
-        "PLR0915": 57
+        "C901": 12,
+        "PLR0915": 54
       },
       "engine/w3_read/marking.py::mark": {
         "C901": 13

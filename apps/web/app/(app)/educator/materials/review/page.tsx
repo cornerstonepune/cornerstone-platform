@@ -1,6 +1,5 @@
-import { PageShell } from "@/components/page-shell";
+import { Screen } from "@/components/app-frame";
 import { EmptyState } from "@/components/empty-state";
-import { Crumbs } from "@/components/educator/crumbs";
 import { DataTable } from "@/components/data-table";
 import { BTN, FIELD } from "@/components/educator/materials-table";
 import { Summary } from "@/components/educator/summary";
@@ -64,11 +63,10 @@ export default async function ReviewPage({ searchParams }: { searchParams: Promi
   const me = await requireStaff();
   await openTo(me);
   const [notes, catalogue] = await Promise.all([waitingNotes(me), catalogueOf(me)]);
-  const today = schoolToday();
+  const today = await schoolToday();
   const q = await searchParams;
   return (
-    <PageShell stage={E.area} title={W.reviewTitle} purpose={W.reviewPurpose} action={<span />} next={{ href: "/educator/materials", label: W.classList }}>
-      <Crumbs trail={[{ label: E.area }, { label: W.nav, href: "/educator/materials" }, { label: W.review }]} />
+    <Screen stage={E.area} title={W.reviewTitle} purpose={W.reviewPurpose} action={<span />} next={{ href: "/educator/materials", label: W.classList }}>
       {notes === null ? (
         <EmptyState>{W.notReviewer}</EmptyState>
       ) : notes.length === 0 ? (
@@ -86,6 +84,6 @@ export default async function ReviewPage({ searchParams }: { searchParams: Promi
           />
         </>
       )}
-    </PageShell>
+    </Screen>
   );
 }

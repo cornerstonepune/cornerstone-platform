@@ -150,11 +150,11 @@ test("every page says the tab it is under, above its title, and the menu marks t
     ["/home", "Assessments"], ["/capture", "Upload papers"], ["/growth", "Class results"],
   ];
   // the tab is a page of a group of the top menu (lib/menu.ts): the group is marked, and so is the tab under it
-  const group: Record<string, string> = { Curriculum: "Setup", "Question bank": "Setup", Assessments: "Assessments", "Papers to approve": "Assessments", "Upload papers": "Assessments", "Class results": "Results" };
+  const group: Record<string, string> = { Curriculum: "Setup", "Question bank": "Setup", Assessments: "Children", "Papers to approve": "Children", "Upload papers": "Children", "Class results": "Children" };
   for (const [path, tab] of pages) {
     await page.goto(path);
     await expect(page.getByTestId("stage"), path).toHaveText(new RegExp(`^${tab}\\b`));
-    await expect(page.getByRole("navigation", { name: "Sections" }).locator("[aria-current=page]"), path).toHaveText(new RegExp(`^${group[tab]}`));
+    await expect(page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" }).locator("[aria-current=page]"), path).toHaveText(new RegExp(`^${group[tab]}`));
   }
 });
 

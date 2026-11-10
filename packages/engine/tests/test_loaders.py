@@ -82,7 +82,6 @@ def _seeded(name):
 
 EXPECTED = {
     "tenant": 1,
-    "domain": 14,
     "registry_skill": 244,  # the whole map, all 14 domains — not the maths slice
     "milestone": 849,
     "learning_objective": 1750,
@@ -104,8 +103,8 @@ EXPECTED = {
     # prompts, thresholds and config are settings a PR adds to: counted from their seed files, never typed here
     # (2026-09-29: the typed 20, 26 and 16 had fallen to 37, 31 and 17 without anyone noticing)
     "prompt": _seeded("prompts"),
-    "threshold": _seeded("thresholds"),
-    "config": _seeded("config"),
+    # every setting is a config row: the numbers' file and the rest (CP-27: the numbers were the table threshold)
+    "config": _seeded("config") + _seeded("thresholds"),
     "skill": 155,  # 46 of maths and the 109 of English Grades 3 and 4 (E0): the maths  # fifteen + and − calculation skills (ADR 0034), eleven others, tally, equal groups, five × (M2a),
     # multiplication's models (M2d1), four ÷ (M3a), division's models (M3c), mental multiplication and division (M4a),
     # estimating products and quotients (M4b1), equations with × and ÷ (M4b2), multiples and factors (M4c),
@@ -147,6 +146,16 @@ def test_the_vocabulary_holds_every_seeded_mistake_and_may_hold_more(loaded):
         have = {(r["code"], r["op"]) for r in conn.execute("select code, op from misconception").fetchall()}
     assert want <= have, f"the seed's own mistakes are missing: {sorted(want - have)}"
     assert loaded["misconception"] >= len(want)
+
+
+def test_every_registry_skill_carries_its_domains_name(loaded):
+    """A screen or a matcher says a skill's domain by its name ("Numeracy & Logic"), never its code: the name is on
+    the skill (CP-27: it was the table `domain`)."""
+    names = {d["code"]: d["name"] for d in json.loads((SEED / "registry.json").read_text())["domains"]}
+    with db.connect() as conn:
+        rows = conn.execute("select domain, domain_name from registry_skill").fetchall()
+    assert rows and all(r["domain_name"] == names[r["domain"]] for r in rows)
+    assert {r["domain"] for r in rows} == set(names), "every domain has a skill that carries its name"
 
 
 def test_milestones_load_for_the_registry_skills(loaded):
@@ -196,12 +205,9 @@ def test_a_deploy_loads_the_rows_the_engine_reads_as_settings_and_no_others(monk
         monkeypatch.setattr(loaders, step, lambda *a, s=step: touched.append(s))
     monkeypatch.setattr(loaders.topics, "load", lambda *a: touched.append("topics"))
 
-    assert (
-        set(loaders.load_settings()) == {"prompt", "threshold", "config", *english.SAMPLE_TABLES}
-        and touched == []
-    )
+    assert set(loaders.load_settings()) == {"prompt", "config", *english.SAMPLE_TABLES} and touched == []
     with db.connect() as conn:
-        layouts = conn.execute("select value from config where key = 'render.layouts'").fetchone()["value"]
+        layouts = settings.config(conn, "render.layouts")
         assert [x["name"] for x in layouts] == [
             "2026-09-21",
             "2026-09-23-L3",

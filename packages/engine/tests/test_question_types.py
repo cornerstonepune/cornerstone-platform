@@ -19,7 +19,7 @@ from engine.checks import past
 from engine.core import db
 from engine.w1_bank import question_types
 from engine.w2_print import focus_paper, handout, library
-from tests.rows import data_steps
+from tests.rows import a_waiting_type, data_steps
 
 NUMBERS = re.compile(r"^(ADD|SUB|MUL|DIV)\.(\dD\dD(\.REG\w*)?|MULTI\d*)$")
 CARD_KINDS = {"MUL3.SUM", "MUL3.STORY", "SEQ.ON", "SEQ.BACK", "MULT.NTH", "MULT.FIRST5"}
@@ -52,7 +52,7 @@ def _bank(conn):
 
 def _waits(conn, code):
     """`code` as a new type is: no approval. Rolled back with the test."""
-    conn.execute("delete from question_type_approval where question_type = %s", (code,))
+    a_waiting_type(conn, code)
 
 
 def _drawable(conn, code):
@@ -382,21 +382,23 @@ def test_past_results_are_the_same_before_and_after(conn):
 
 
 @NEEDS_DB
-def test_every_type_already_in_use_starts_approved(conn):
+def test_every_type_in_use_is_approved_and_every_level_with_questions_can_make_a_paper(conn):
     """Nimish: "nothing will change for any of the past assessments, scoring etc. right?". No paper that can be made
-    today is refused: the day B2 ships, every type on a paper or at a level already approved starts approved, by the
-    rule the migration runs; a type in use nowhere waits."""
+    today is refused: the day B2 shipped, every type on a paper or at a level already approved started approved (its
+    migration ran the rule once; since CP-27 those approvals are rows of the one approval list); a type in use nowhere
+    waits."""
     tenant = conn.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()["id"]
     conn.execute(
         "insert into question_type (tenant_id, code, fmt, words, reaches, marked)"
         " values (%s, 'UNUSED.TYPE', 'equation', 'make both sides equal', 'printed', '{computable}')",
         (tenant,),
     )
-    conn.execute("delete from question_type_approval")
-    conn.execute("select internal.question_types_start_approved()")
     held = {t for ts in _bank(conn).values() for t in ts}
     approved = {
-        r["question_type"] for r in conn.execute("select distinct question_type from question_type_approval")
+        r["target"]
+        for r in conn.execute(
+            "select target from approval_list where kind = 'question_type' and first_by is not null"
+        )
     }
     assert held <= approved, sorted(held - approved)
     assert "UNUSED.TYPE" not in approved

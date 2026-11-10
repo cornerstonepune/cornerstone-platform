@@ -1,4 +1,4 @@
-import { Body, NotYet, PageHeader } from "@/components/shell";
+import { Body, NotYet, PageHeader } from "@/components/parts";
 import { tableCounts } from "@/lib/queries";
 import { deadline } from "@/lib/deadline";
 import { requireStaff } from "@/lib/auth";
@@ -21,7 +21,6 @@ export default async function HomePage() {
           ]}
           when="Arrives with W4, close the loop, after Thursday's practice and Friday's assessment have both been read."
           facts={[
-            ["home sheets", c.home_sheet],
             ["parent notes", c.parent_note],
           ]}
         />

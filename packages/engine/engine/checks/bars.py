@@ -6,16 +6,14 @@ count of errors the eval may not exceed; every other measure is a floor. `engine
 eval with no bar on record does not pass: a score nothing holds to a bar proves nothing (CLAUDE.md rules 7 and 12).
 """
 
-from engine.core import db
+from engine.core import db, settings
 
 CEILING = "_at_most"
 
 
 def bars(conn: db.Conn, purpose: str) -> dict[str, float]:
-    """{measure: bar} for one purpose's eval, from its threshold rows."""
-    head = f"eval.{purpose}."
-    rows = conn.execute("select key, value from threshold where starts_with(key, %s)", (head,)).fetchall()
-    return {r["key"].removeprefix(head): float(r["value"]) for r in rows}
+    """{measure: bar} for one purpose's eval, from its `eval.<purpose>.*` settings."""
+    return settings.numbers(conn, f"eval.{purpose}.")
 
 
 def short(scores: dict[str, float], held: dict[str, float]) -> list[str]:

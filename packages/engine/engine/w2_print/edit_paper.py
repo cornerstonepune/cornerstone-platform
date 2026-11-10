@@ -65,10 +65,10 @@ def state(conn, p: dict) -> tuple[str, str]:
 
 
 def limits(conn) -> tuple[int, int]:
-    """The fewest and most questions a paper may hold: the `assessment.*_questions` threshold rows."""
+    """The fewest and most questions a paper may hold: the `assessment.*_questions` settings."""
     low, high = (settings.threshold(conn, k, float("nan")) for k in LIMITS)
     if low != low or high != high:  # NaN: a row is missing, and no number is made up for it
-        raise LookupError(f"the threshold rows {' and '.join(LIMITS)} are needed")
+        raise LookupError(f"the settings {' and '.join(LIMITS)} are needed")
     return int(low), int(high)
 
 
@@ -267,9 +267,9 @@ def _given_days(conn, child_id, ids: list) -> dict[str, int]:
     return {
         str(r["item_id"]): r["days"]
         for r in conn.execute(
-            "select item_id, (current_date - max(created_at)::date) as days from item_exposure"
+            f"select item_id, (%s::date - (max(created_at) at time zone {settings.ZONE_SQL})::date) as days from item_exposure"
             " where child_id = %s and item_id = any(%s::uuid[]) group by item_id"
             " having max(created_at) > now() - make_interval(days => %s)",
-            (child_id, ids, window),
+            (settings.school_today(conn), child_id, ids, window),
         )
     }

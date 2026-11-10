@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "@/components/link";
-import { Body, Notice, PageHeader, Panel } from "@/components/shell";
+import { Body, Notice, PageHeader, Panel } from "@/components/parts";
 import { requireStaff } from "@/lib/auth";
 import { NotYours } from "@/components/not-yours";
 import { childSection, isMine } from "@/lib/scope";
@@ -13,7 +13,7 @@ import { levels } from "@/lib/levels";
 import { lineTopics, repeatWords } from "@/lib/maker";
 import { grades, skillSets } from "@/lib/queries";
 import { oneChild } from "@/lib/queries-make";
-import { isoWeek } from "@/lib/week";
+import { schoolWeek } from "@/lib/school-clock";
 import { approveCustom } from "../actions";
 import { MakerLines } from "../lines";
 
@@ -47,7 +47,7 @@ export default async function CustomPaper({ searchParams }: Props) {
     ...all(q.a).map(readArea),
     ...s.map((v, i) => (v && n[i] ? readArea(`${v}~${n[i]}`) : null)),
   ].filter((a): a is Area => !!a);
-  const week = isoWeek();
+  const week = await schoolWeek();
   const draw = readDraw(all(q.draw)[0]);
   let plan: Plan | null = null;
   let refused = "";

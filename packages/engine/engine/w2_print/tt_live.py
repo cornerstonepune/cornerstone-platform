@@ -12,7 +12,7 @@ import json
 from dataclasses import dataclass
 from typing import Any
 
-from engine.core import db
+from engine.core import db, settings
 from engine.w2_print import educator_gate as gate
 from engine.w2_print import fortnight_cycle as fc
 from engine.w2_print import tt_generate as gen
@@ -58,13 +58,10 @@ def in_group(
 ) -> None:
     """Refuse unless `who` holds a current grant in the access group the school's setting `key` names (CP-12 asks it
     of `timetable.accept_clash_group`)."""
-    row = conn.execute(
-        "select value #>> '{}' as g from config where tenant_id = %s and key = %s", (tenant, key)
-    ).fetchone()
-    group = row["g"] if row else "everything"
+    group = str(settings.config(conn, key, "everything", tenant=tenant))
     held = conn.execute(
-        "select 1 from staff_role_grant g join access_role_group rg on rg.tenant_id = g.tenant_id"
-        " and rg.role_code = g.role_code where g.tenant_id = %s and g.staff_id = %s and rg.group_code = %s"
+        "select 1 from staff_role_grant g join role r on r.tenant_id = g.tenant_id"
+        " and r.code = g.role_code where g.tenant_id = %s and g.staff_id = %s and r.access_group = %s"
         " and g.valid_from <= %s and (g.valid_to is null or g.valid_to > %s)",
         (tenant, who, group, today, today),
     ).fetchone()

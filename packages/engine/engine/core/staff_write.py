@@ -3,7 +3,7 @@
 from datetime import date
 from typing import Any
 
-from engine.core import db
+from engine.core import db, settings
 
 
 def stage(
@@ -18,7 +18,7 @@ def stage(
 
 def grant_all(conn: db.Conn, tenant: Any, grants: list[tuple[Any, str]], who: str) -> None:
     for staff_id, role in grants:
-        grant(conn, tenant, staff_id, role, date.today(), who)
+        grant(conn, tenant, staff_id, role, settings.school_today(conn), who)
 
 
 def _new_staff(conn: db.Conn, tenant: Any, campus: Any, name: str, email: str) -> Any:

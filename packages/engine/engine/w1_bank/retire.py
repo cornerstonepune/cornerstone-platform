@@ -11,7 +11,7 @@ another row. `touches` says what a stop would touch before anything is written.
 
 from typing import Any
 
-from engine.core import db
+from engine.core import db, settings
 from engine.w1_bank import english_edit
 
 # The papers a stop touches: of these questions, not void
@@ -22,7 +22,7 @@ _PAPERS = (
 # Of those, the ones approved and not yet given: this week's or later, no word that it was given, nothing read from it
 _NOT_GIVEN = (
     " and si.approved_by is not null and si.print_status in ('printed', 'with_teacher')"
-    " and coalesce(si.week, t.week) >= to_char(now() at time zone 'Asia/Kolkata', 'IYYY-\"W\"IW')"
+    f" and coalesce(si.week, t.week) >= to_char(now() at time zone {settings.ZONE_SQL}, 'IYYY-\"W\"IW')"
     " and not exists (select 1 from capture k where k.sheet_instance_id = si.id)"
     " and not exists (select 1 from flow_run f where f.flow = 'given' and f.request -> 'qrs' ? si.qr_code)"
 )

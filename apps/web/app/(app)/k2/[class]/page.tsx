@@ -1,8 +1,7 @@
 import Link from "@/components/link";
 import { ChildStateChip } from "@/components/child-state-chip";
 import { DataTable } from "@/components/data-table";
-import { Crumbs } from "@/components/educator/crumbs";
-import { PageShell } from "@/components/page-shell";
+import { Screen } from "@/components/app-frame";
 import { Notice } from "../notice";
 import { requireStaff } from "@/lib/auth";
 import { Icon } from "@/lib/icons";
@@ -18,16 +17,15 @@ export default async function TheClassPicture({ params, searchParams }: { params
   const page = Number((await searchParams).page) || 1;
   const got = await classPicture(me.email, classId);
   return (
-    <PageShell
+    <Screen
       stage="Children"
       title={got.ok ? `Class picture · ${got.value.class}` : "Class picture"}
       purpose="Who has been seen on which skill, and where each child is. An empty square means not seen yet, nothing more."
       action={<Link href={`/voice/form?class=${classId}`} className="btn secondary inline-flex items-center gap-1.5"><Icon name="form" />Fill the form</Link>}
       next={{ href: "/today", label: "Back to what needs doing" }}
     >
-      <Crumbs trail={[{ label: "Children", href: "/k2" }, { label: got.ok ? got.value.class : "Class picture" }]} />
       {got.ok ? <Picture p={got.value} classId={classId} page={page} /> : <Notice flush>{got.message}</Notice>}
-    </PageShell>
+    </Screen>
   );
 }
 

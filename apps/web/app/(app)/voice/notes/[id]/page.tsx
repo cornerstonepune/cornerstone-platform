@@ -1,14 +1,15 @@
 import { notFound } from "next/navigation";
 import Link from "@/components/link";
 import { EmptyState } from "@/components/empty-state";
-import { PageShell } from "@/components/page-shell";
+import { Screen } from "@/components/app-frame";
 import { requireStaff } from "@/lib/auth";
 import { StatusChip } from "@/components/status-chip";
 import { ICON_SIZE, Icon, type IconName, MARK_ICON } from "@/lib/icons";
 import { daysLate, fromDraft, type Draft } from "@/lib/voice-check";
 import { activitiesOf, draftOf } from "@/lib/voice";
 import { herVoice, schoolToday } from "@/lib/voice-page";
-import { classWords, SCHOOL_ZONE } from "@/lib/voice-types";
+import { schoolZone } from "@/lib/school-clock";
+import { classWords } from "@/lib/voice-types";
 import { MARKS, W } from "@/lib/voice-words";
 import { confirmNote } from "../../actions";
 import { Board } from "../../board";
@@ -29,9 +30,10 @@ export default async function ConfirmNote({ params }: { params: Promise<{ id: st
   const c = my.classes.find((x) => x.id === queued?.class_id);
   const klass = c ? classWords(c) : "";
   const form = { href: c ? `/voice/form?class=${c.id}` : "/voice/form", label: W.fillForm };
-  const heard = new Date(draft.received_at).toLocaleString("en-IN", { timeZone: SCHOOL_ZONE, day: "numeric", month: "short", hour: "2-digit", minute: "2-digit", hour12: false });
+  const zone = await schoolZone();
+  const heard = new Date(draft.received_at).toLocaleString("en-IN", { timeZone: zone, day: "numeric", month: "short", hour: "2-digit", minute: "2-digit", hour12: false });
   return (
-    <PageShell
+    <Screen
       stage={W.back}
       title={W.confirm.title}
       purpose={W.confirm.purpose}
@@ -46,16 +48,16 @@ export default async function ConfirmNote({ params }: { params: Promise<{ id: st
       <div className="mb-4 flex flex-wrap items-center gap-3 text-[14px]" data-note-head>
         <span className="font-medium">{klass}</span>
         <span className="text-basalt/70">{heard}</span>
-        <Late draft={draft} />
+        <Late draft={draft} zone={zone} />
         {my.recording ? <audio controls preload="none" src={`/api/voice/${id}`} aria-label={W.confirm.play} className="h-9 max-w-full" /> : null}
       </div>
       <Body draft={draft} klass={klass} grade={c?.grade} form={form} />
-    </PageShell>
+    </Screen>
   );
 }
 
-function Late({ draft }: { draft: Draft }) {
-  const n = daysLate(draft.taught_on, draft.received_at, SCHOOL_ZONE);
+function Late({ draft, zone }: { draft: Draft; zone: string }) {
+  const n = daysLate(draft.taught_on, draft.received_at, zone);
   if (n < 1) return null;
   return <StatusChip state="late" round words={n === 1 ? W.facts.late : W.facts.lateDays(n)} />;
 }
@@ -89,7 +91,7 @@ async function Body({ draft, klass, grade, form }: { draft: Draft; klass: string
         </Link>
       </section>
     );
-  const today = schoolToday();
+  const today = await schoolToday();
   const activities = await activitiesOf(grade);
   return (
     <div className="grid gap-4 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]">

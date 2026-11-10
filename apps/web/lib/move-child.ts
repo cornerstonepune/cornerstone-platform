@@ -23,7 +23,7 @@ export const HISTORY_SHOWN = 10;
 
 export async function moveHistory(childId: string): Promise<{ rows: MoveRow[]; total: number }> {
   const rows = await sql<(MoveRow & { total: number })[]>`
-    select id, to_char(moved_at at time zone 'Asia/Kolkata', 'YYYY-MM-DD') as day, moved_by,
+    select id, to_char(moved_at at time zone (select value #>> '{}' from config where key = 'school.time_zone'), 'YYYY-MM-DD') as day, moved_by,
            from_band, from_section, from_roll_no, to_band, to_section, to_roll_no, reason,
            count(*) over ()::int as total
     from child_move where child_id = ${childId}::uuid order by moved_at desc, id limit ${HISTORY_SHOWN}`;

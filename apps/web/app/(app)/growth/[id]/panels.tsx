@@ -1,9 +1,8 @@
 // What a child's page holds beside the graph (goals/u2-children.yaml): the mistakes that repeat, and every paper
 // made for or read from the child — its purpose, who approved it, what was read.
 import Link from "@/components/link";
-import { Panel, Pill } from "@/components/shell";
+import { Panel, Pill } from "@/components/parts";
 import { PURPOSE, type ChildSheet, type Repeated } from "@/lib/queries-children";
-import type { Paper } from "@/lib/queries";
 import { fmtDate } from "./answers";
 import { weekWords } from "@/lib/week";
 
@@ -41,13 +40,11 @@ const NEWEST = 5;
 export function TheirPapers({
   childId,
   sheets,
-  read,
   failed,
   staff,
 }: {
   childId: string;
   sheets: ChildSheet[];
-  read: Paper[];
   failed: number;
   staff: Record<string, string>;
 }) {
@@ -57,30 +54,26 @@ export function TheirPapers({
           <p className="note">No paper has been made for this child or read from them yet.</p>
         ) : (
           <ul className="grid gap-3">
-            {sheets.slice(0, NEWEST).map((s) => {
-              const narrative = read.find((p) => p.sheet === s.id)?.narrative;
-              return (
-                <li key={s.id} className="text-[13px]">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <Pill tone="monsoon">{s.kind ? (PURPOSE[s.kind] ?? s.kind) : "paper done in class"}</Pill>
-                    <span className="fact">{s.date ? fmtDate(s.date) : s.week ? weekWords(s.week) : "—"}</span>
-                  </div>
-                  <Link href={s.n_results ? `/capture/${s.id}` : `/worksheets/${s.qr_code}`} className="mt-1 block leading-snug">
-                    {s.title ?? `Paper ${s.qr_code}`}
-                  </Link>
-                  <div className="text-[12px] text-basalt/62">
-                    {s.title ? <span className="fact">{s.qr_code} · </span> : null}
-                    {s.approved_by
-                      ? `approved by ${staff[s.approved_by] ?? s.approved_by}${s.approved_at ? ` on ${fmtDate(s.approved_at)}` : ""}`
-                      : s.print_status === "new"
-                        ? "waiting for an educator to approve"
-                        : "done before papers were approved here"}
-                    {s.n_results ? ` · ${s.n_confirmed} of ${s.n_results} answers checked` : ""}
-                  </div>
-                  {narrative ? <p className="mt-1 text-[12.5px] italic text-basalt/75">{narrative}</p> : null}
-                </li>
-              );
-            })}
+            {sheets.slice(0, NEWEST).map((s) => (
+              <li key={s.id} className="text-[13px]">
+                <div className="flex flex-wrap items-center gap-2">
+                  <Pill tone="monsoon">{s.kind ? (PURPOSE[s.kind] ?? s.kind) : "paper done in class"}</Pill>
+                  <span className="fact">{s.date ? fmtDate(s.date) : s.week ? weekWords(s.week) : "—"}</span>
+                </div>
+                <Link href={s.n_results ? `/capture/${s.id}` : `/worksheets/${s.qr_code}`} className="mt-1 block leading-snug">
+                  {s.title ?? `Paper ${s.qr_code}`}
+                </Link>
+                <div className="text-[12px] text-basalt/62">
+                  {s.title ? <span className="fact">{s.qr_code} · </span> : null}
+                  {s.approved_by
+                    ? `approved by ${staff[s.approved_by] ?? s.approved_by}${s.approved_at ? ` on ${fmtDate(s.approved_at)}` : ""}`
+                    : s.print_status === "new"
+                      ? "waiting for an educator to approve"
+                      : "done before papers were approved here"}
+                  {s.n_results ? ` · ${s.n_confirmed} of ${s.n_results} answers checked` : ""}
+                </div>
+              </li>
+            ))}
           </ul>
         )}
         {sheets.length > NEWEST ? (

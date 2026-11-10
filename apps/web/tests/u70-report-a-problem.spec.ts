@@ -7,19 +7,19 @@ import { expect, test, type Page } from "@playwright/test";
 import { randomBytes } from "node:crypto";
 import postgres from "postgres";
 import { changeIssue, githubDown, githubUp, issuesMade } from "./github-server";
+import { aSetting } from "./rows";
 
 const sql = postgres(process.env.DATABASE_URL!, { max: 1 });
 const LIMIT = "feedback.max_per_hour";
-let limitWas = 5;
+let putBack = async () => {};
 
 // A note is kept for good (no row is ever removed), so a run lifts the hourly limit for itself and puts it back.
 test.beforeAll(async () => {
-  limitWas = Number((await sql<{ v: string }[]>`select value::text as v from threshold where key = ${LIMIT}`)[0].v);
-  await sql`update threshold set value = 1000 where key = ${LIMIT}`;
+  putBack = await aSetting(sql, LIMIT, 1000);
 });
 test.afterAll(async () => {
   githubUp();
-  await sql`update threshold set value = ${limitWas} where key = ${LIMIT}`;
+  await putBack();
   await sql.end();
 });
 
@@ -41,9 +41,9 @@ const issuesWith = (m: string) => issuesMade().filter((i) => i.body.includes(m))
 test("the report button is on the top bar of every signed-in page", async ({ page }) => {
   for (const at of ["/today", "/papers", "/growth"]) {
     await page.goto(at);
-    await expect(page.locator("header").getByRole("link", { name: "Report a problem or suggest something" })).toBeVisible();
+    await expect(page.locator("[data-frame]").getByRole("link", { name: "Report a problem or suggest something" })).toBeVisible();
   }
-  await page.locator("header").getByRole("link", { name: "Report a problem or suggest something" }).click();
+  await page.locator("[data-frame]").getByRole("link", { name: "Report a problem or suggest something" }).click();
   await expect(page).toHaveURL(/\/feedback\?from=%2Fgrowth/);
   await expect(page.getByRole("heading", { name: "Report a problem or suggest something" })).toBeVisible();
   await expect(page.getByText("Please do not type a child's name, a parent's name or a phone number here.")).toBeVisible();
@@ -115,13 +115,13 @@ test("past the hourly limit a note is refused in words", async ({ page }) => {
   await write(page, `The first one ${m}`);
   await expect(page.getByRole("status")).toHaveText("Thanks, we have your note.");
   // one note an hour, and this person has just sent one, so the next is one too many
-  await sql`update threshold set value = 1 where key = ${LIMIT}`;
+  const lifted = await aSetting(sql, LIMIT, 1);
   try {
     await write(page, `One more ${m}`);
     await expect(page.getByRole("status")).toHaveText(/You have sent 1 notes in the last hour/);
     expect(await sql`select 1 from staff_note where happened = ${`One more ${m}`}`).toHaveLength(0);
   } finally {
-    await sql`update threshold set value = 1000 where key = ${LIMIT}`;
+    await lifted();
   }
 });
 

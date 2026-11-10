@@ -1,12 +1,11 @@
 import "./screens.css";
-import { SchoolShell } from "@/components/educator/shell";
-import { CURRICULUM_MENU } from "@/lib/curriculum-menu";
+import { EducatorArea } from "@/components/educator/area";
 
-// The curriculum screens in the school's shell (D-075): the area's menu down the left, a tab bar at the foot of a phone.
+// The curriculum screens in the frame's main column (D-075).
 export default function CurriculumLayout({ children }: { children: React.ReactNode }) {
   return (
-    <SchoolShell items={CURRICULUM_MENU} label="Curriculum">
+    <EducatorArea>
       <div className="cs-page">{children}</div>
-    </SchoolShell>
+    </EducatorArea>
   );
 }

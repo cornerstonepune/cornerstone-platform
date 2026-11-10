@@ -209,9 +209,8 @@ test("a signed-in person changes their own password, and the old one stops worki
   const email = await staffMember();
   try {
     await signedIn(page, email, PASSWORD);
-    // "Change password" is in the account panel, behind the menu button, where Sign out is
-    await page.getByRole("button", { name: "Menu" }).click();
-    await page.getByRole("link", { name: "Change password" }).click();
+    // "Change password" is the person's own name in the bar, where Sign out is
+    await page.locator("[data-bar]").first().getByRole("link", { name: "Your account: change your password" }).or(page.locator("[data-bar]").first().locator('a[href="/account/password"]')).first().click();
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("Change password");
 
     // the current password is required
@@ -243,7 +242,7 @@ test("past the limit on asks for one email the form sends nothing and still says
   const email = await staffMember();
   try {
     const [row] = await sql<{ most: number }[]>`
-      select (select value from threshold where key = 'password_ask.max_per_email')::int as most`;
+      select (select value::numeric from config where key = 'password_ask.max_per_email')::int as most`;
     for (let n = 0; n < row.most; n += 1) await askForALink(page, email);
     await linkSentTo(email);
     const sent = mailFor(email).length;

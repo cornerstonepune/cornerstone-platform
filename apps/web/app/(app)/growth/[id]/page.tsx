@@ -1,6 +1,6 @@
 import Link from "@/components/link";
 import { notFound } from "next/navigation";
-import { Body, Notice, PageHeader, Panel } from "@/components/shell";
+import { Body, Notice, PageHeader, Panel } from "@/components/parts";
 import { requireStaff } from "@/lib/auth";
 import { NotYours } from "@/components/not-yours";
 import { childSection, isMine } from "@/lib/scope";
@@ -242,7 +242,7 @@ export default async function ChildPage({ params, searchParams }: Props) {
           <div className="grid content-start gap-[18px] self-start xl:sticky xl:top-6">
             <FocusPanel childId={id} name={child.first_name} staff={staffNames} draw={readDraw(q.draw)} />
 
-            <TheirPapers childId={id} sheets={sheets} read={read} failed={papers.length - read.length} staff={staffNames} />
+            <TheirPapers childId={id} sheets={sheets} failed={papers.length - read.length} staff={staffNames} />
 
             <GradeClassPanel me={me} child={child} q={q} staff={staffNames} />
 

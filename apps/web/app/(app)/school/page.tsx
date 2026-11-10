@@ -1,7 +1,7 @@
 import { DataTable } from "@/components/data-table";
 import { FilterBar } from "@/components/filter-bar";
 import Link from "@/components/link";
-import { PageShell } from "@/components/page-shell";
+import { Screen } from "@/components/app-frame";
 import { requireStaff } from "@/lib/auth";
 import { grades } from "@/lib/queries";
 import { type ClassLine, classLines } from "@/lib/queries-staff";
@@ -60,7 +60,7 @@ export default async function SchoolPage({ searchParams }: Props) {
     },
   ];
   return (
-    <PageShell
+    <Screen
       stage="School"
       title="School"
       purpose="The school's classes: each one's grade, the children in it and who teaches it."
@@ -104,6 +104,6 @@ export default async function SchoolPage({ searchParams }: Props) {
       {shown.length === 0 ? (
         <p className="note mt-2">No class matches these filters.</p>
       ) : null}
-    </PageShell>
+    </Screen>
   );
 }

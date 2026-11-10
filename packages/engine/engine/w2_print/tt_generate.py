@@ -85,8 +85,9 @@ def _touching(i: need.Inputs, subjects: set[str]) -> list[dict]:
     ]
 
 
-class MissingSetting(Exception):
-    """A setting row the school's database should hold (`engine load` or the migration puts it there) is not there."""
+MissingSetting = (
+    settings.MissingSetting
+)  # the one error for a setting row that is not there (CP-24 moved it to core)
 
 
 def _setting(conn: db.Conn, key: str) -> int:

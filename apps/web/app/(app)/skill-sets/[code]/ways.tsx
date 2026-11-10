@@ -1,4 +1,4 @@
-import { Panel, Pill } from "@/components/shell";
+import { Panel, Pill } from "@/components/parts";
 import type { WaysRow } from "@/lib/queries-skills";
 import { dateWords } from "@/lib/week";
 import { approveWay } from "./actions";

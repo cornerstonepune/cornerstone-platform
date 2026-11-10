@@ -14,14 +14,13 @@ import hashlib
 import json
 
 from engine.assess import learned_rules as L
-from engine.core import db
+from engine.core import db, settings
 
 MIN = ("mistake.learn_min_questions", 2)
 
 
 def _least(conn):
-    row = conn.execute("select value from threshold where key = %s", (MIN[0],)).fetchone()
-    return int(float(row["value"])) if row else MIN[1]
+    return int(settings.threshold(conn, *MIN))
 
 
 def unexplained(conn) -> list[dict]:

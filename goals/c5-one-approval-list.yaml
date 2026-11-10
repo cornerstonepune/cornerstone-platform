@@ -9,7 +9,7 @@ goal: >
 # are not in this list (decision in the PR).
 says:
   - words: "one approval list for everything new"
-    proved_by: "packages/engine/tests/test_approval_list.py::test_what_is_approved_and_where_it_stands_are_rows"
+    proved_by: "packages/engine/tests/test_approval_list.py::test_what_is_approved_is_one_of_three_kinds_and_where_it_stands_one_of_four_words"
   - words: "draft beside approved"
     proved_by: "packages/engine/tests/test_approval_list.py::test_draft_beside_approved_in_one_list"
   - words: "draft beside approved"

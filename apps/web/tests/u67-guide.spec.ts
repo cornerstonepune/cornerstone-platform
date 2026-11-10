@@ -13,6 +13,7 @@ import path from "node:path";
 import postgres from "postgres";
 import { GROUPS } from "../lib/menu";
 import { slugOf } from "../lib/guide-path";
+import { aSetting } from "./rows";
 
 test.use({ viewport: { width: 1440, height: 900 } });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -22,7 +23,7 @@ const MAP = JSON.parse(readFileSync(path.resolve(__dirname, "../../../workflows.
   workflows: { code: string; name: string; steps: string[] }[];
   steps: { code: string }[];
 };
-const MENU = GROUPS.flatMap((g) => g.pages);
+const MENU = GROUPS.flatMap((g) => g.pages).filter((p) => p.guide !== false);
 const GUIDE = ["/guide", ...MENU.map((p) => `/guide/${slugOf(p.label)}`), "/guide/workflows", "/guide/worked-out", "/guide/words", "/guide/report-a-problem"];
 
 test("start here draws the whole flow from the map and the menu from the real menu", async ({ page }) => {
@@ -73,21 +74,22 @@ test("every menu item's guide page opens, in the menu's order, with its labelled
 });
 
 test("a number in the guide is the row in force: change the row and the guide changes", async ({ page }) => {
-  const [row] = await sql<{ value: number }[]>`select value::float as value from threshold where key = 'calibration.too_easy_share'`;
+  const [row] = await sql<{ value: number }[]>`select value::float as value from config where key = 'calibration.too_easy_share'`;
   const pc = (v: number) => `${Math.round(v * 100)}%`;
   const section = page.locator("#levels-to-review");
+  let putBack = async () => {};
   try {
     await page.goto("/guide/worked-out");
     await expect(section).toContainText(`When ${pc(row.value)} or more`);
-    await sql`update threshold set value = 0.75 where key = 'calibration.too_easy_share'`;
+    putBack = await aSetting(sql, "calibration.too_easy_share", 0.75);
     await page.reload();
     await expect(section).toContainText("When 75% or more");
   } finally {
-    await sql`update threshold set value = ${row.value} where key = 'calibration.too_easy_share'`;
+    await putBack();
   }
   await page.reload();
   await expect(section).toContainText(`When ${pc(row.value)} or more`);
-  const [min] = await sql<{ value: number }[]>`select value::int as value from threshold where key = 'calibration.min_children'`;
+  const [min] = await sql<{ value: number }[]>`select value::int as value from config where key = 'calibration.min_children'`;
   await expect(section).toContainText(`fewer than ${min.value} children assessed`);
 });
 
@@ -111,7 +113,7 @@ test("the glossary and why did it say that", async ({ page }) => {
     await expect(page.getByRole("heading", { level: 2, name: q })).toBeVisible();
   }
   // the states and the levels are the rows' own words
-  const [grey] = await sql<{ count_words: string }[]>`select count_words from state_colour where code = 'grey'`;
+  const [grey] = await sql<{ count_words: string }[]>`select e ->> 'count_words' as count_words from config c, jsonb_array_elements(c.value) e where c.key = 'state.colours' and e ->> 'code' = 'grey'`;
   await expect(page.locator("#why-too-few h2")).toContainText(grey.count_words);
   const levels = await sql<{ code: string }[]>`select code from difficulty order by ord`;
   for (const l of levels) await expect(page.locator("#level")).toContainText(l.code);
@@ -123,16 +125,14 @@ test("the glossary and why did it say that", async ({ page }) => {
 test("the help mark on a page's header opens that page's guide, and the menu has the Guide", async ({ page }) => {
   for (const [href, label] of [["/papers", "Assessments"], ["/capture/check", "Check answers"], ["/staff", "Staff"]]) {
     await page.goto(href);
-    await page.locator("[data-ux=help]").click();
+    await page.locator("[data-bar] [data-ux=help]").first().click();
     await expect(page).toHaveURL(new RegExp(`/guide/${slugOf(label)}$`));
     await expect(page.getByRole("heading", { level: 1, name: label, exact: true })).toBeVisible();
   }
-  // the guide's own pages carry no "?" of their own
-  await expect(page.locator("[data-ux=help]")).toHaveCount(0);
-  await page.goto("/today");
-  await page.getByRole("button", { name: "Menu" }).click();
-  await page.locator("#site-menu").getByRole("link", { name: "Guide", exact: true }).click();
-  await expect(page).toHaveURL(/\/guide$/);
+  // the guide's own pages: the "?" opens the guide's front; a page with no guide page of its own does the same
+  await expect(page.locator("[data-bar] [data-ux=help]").first()).toHaveAttribute("href", "/guide");
+  await page.goto("/educator/week");
+  await expect(page.locator("[data-bar] [data-ux=help]").first()).toHaveAttribute("href", "/guide");
 });
 
 test("every guide page reads at phone width with no sideways scroll", async ({ page }) => {

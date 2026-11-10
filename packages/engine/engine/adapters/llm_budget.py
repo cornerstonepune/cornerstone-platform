@@ -16,8 +16,7 @@ class Refused(Exception):
 
 
 def campaigns(conn) -> dict:
-    row = conn.execute("select value from config where key = 'llm.campaigns'").fetchone()
-    return (row or {}).get("value") or {}
+    return settings.config(conn, "llm.campaigns") or {}
 
 
 def campaign_for(conn, purpose: str) -> dict | None:
@@ -86,7 +85,7 @@ def window_start(conn, c: dict) -> str:
     the school's current calendar month (`school.time_zone`) and starts again at the next (M1-16's monthly cap)."""
     if c.get("window") != "month":
         return "-infinity"
-    zone = settings.config(conn, "school.time_zone", "Asia/Kolkata")
+    zone = settings.time_zone(conn)
     return conn.execute(
         "select (date_trunc('month', now() at time zone %s) at time zone %s)::text as t", (zone, zone)
     ).fetchone()["t"]

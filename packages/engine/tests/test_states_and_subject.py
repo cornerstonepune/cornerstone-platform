@@ -116,7 +116,8 @@ def conn():
 
 
 def test_a_states_rules_are_its_columns_and_give_the_old_answers(conn):
-    """Every list the code held is a column of `child_state` or `state_colour`, and gives what the list gave."""
+    """Every list the code held is a column of `child_state` or a colour's words in the setting `state.colours`, and
+    gives what the list gave."""
     rows = vocabulary.states(conn)
     by = {s["code"]: s for s in rows}
     assert [s["code"] for s in rows] == list(WEAKEST_FIRST)
@@ -130,7 +131,7 @@ def test_a_states_rules_are_its_columns_and_give_the_old_answers(conn):
     assert {c for c, s in by.items() if s["nearly"]} == NEARLY
     assert card.groups(rows) == (GROUPS, CARD_ORDER)
     assert focus_paper.reasons(conn) == WHY
-    colours = conn.execute("select code, words, count_words from state_colour order by ord").fetchall()
+    colours = settings.config(conn, "state.colours")
     assert [c["code"] for c in colours] == ["red", "amber", "green", "grey"]
     assert {c["code"]: c["words"] for c in colours} == RAG_WORDS
     assert {c["code"]: c["count_words"] for c in colours} == COUNT_WORDS
@@ -148,13 +149,17 @@ def test_a_states_rules_are_its_columns_and_give_the_old_answers(conn):
         (s["code"], s["enough"], s["severity"], s["move_up"], s["nearly"], s["card_group"], s.get("why"))
         for s in seeded
     ]
+    new_colours = conn.execute(
+        "select value from config where tenant_id = %s and key = 'state.colours'", (t,)
+    ).fetchone()["value"]
     assert (
-        conn.execute("select count(*) as n from state_colour where tenant_id = %s", (t,)).fetchone()["n"] == 4
+        new_colours == {c["key"]: c["value"] for c in settings.seed("config.json", "config")}["state.colours"]
     )
 
 
 def test_one_state_says_too_few_answers_and_a_colour_is_a_key(conn):
-    """A skill with no state yet reads as the one state with too few answers; a state's colour must be a colour row."""
+    """A skill with no state yet reads as the one state with too few answers; a state's colour is red, amber, green or
+    grey."""
     t = conn.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()["id"]
     with pytest.raises(Exception, match="child_state_one_too_few"):
         with conn.transaction():
@@ -163,7 +168,7 @@ def test_one_state_says_too_few_answers_and_a_colour_is_a_key(conn):
                 " move_up, nearly, card_group) values (%s, 'b0d_x', 9, 'x', 'grey', false, false, 4, false, false, 'x')",
                 (t,),
             )
-    with pytest.raises(Exception, match="child_state_tenant_id_colour_fkey"):
+    with pytest.raises(Exception, match="child_state_colour_check"):
         with conn.transaction():
             conn.execute("update child_state set colour = 'violet' where tenant_id = %s and ord = 0", (t,))
 
@@ -175,7 +180,7 @@ def test_a_state_reworded_in_its_row_is_reworded_on_the_paper(conn):
     conn.execute(
         "update child_state set why = 'still short of {next_sheet.promote_at}' where code = %s", (code,)
     )
-    conn.execute("update threshold set value = 0.75 where key = 'next_sheet.promote_at'")
+    settings.put(conn, "next_sheet.promote_at", 0.75)
     assert focus_paper.reasons(conn)[code] == "still short of three in four"
 
 

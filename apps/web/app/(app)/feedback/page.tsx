@@ -1,7 +1,7 @@
 import { after } from "next/server";
 import Link from "@/components/link";
 import { DataTable } from "@/components/data-table";
-import { PageShell } from "@/components/page-shell";
+import { Screen } from "@/components/app-frame";
 import { ReportForm } from "@/components/report-form";
 import { StatusChip, type State } from "@/components/status-chip";
 import { requireStaff } from "@/lib/auth";
@@ -37,7 +37,7 @@ export default async function ReportPage({ searchParams }: Props) {
   after(() => sendWaiting());
   const page = Number(q.page) || 1;
   return (
-    <PageShell
+    <Screen
       stage="Help"
       title="Report a problem or suggest something"
       purpose="Tell us what is broken, what you would like, or ask a question. It reaches the team, who decide what is built."
@@ -63,6 +63,6 @@ export default async function ReportPage({ searchParams }: Props) {
           Taken up means it will be built; done means it is finished. <Link href="/today">Back to what needs doing</Link>
         </p>
       </section>
-    </PageShell>
+    </Screen>
   );
 }

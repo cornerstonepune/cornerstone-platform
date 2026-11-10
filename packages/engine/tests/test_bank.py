@@ -170,12 +170,34 @@ def test_recheck_passes_the_missing_number_items_the_samplers_make(conn):
     assert inventory.recheck(conn) == []
 
 
+def test_a_question_deleted_after_its_flag_goes_and_its_flag_stays_a_row_no_question_reads(conn):
+    """CP-27: a flag is a row of the one approval list, kept, not a row that went with its question (`item_feedback`
+    did, by its key). A question its file no longer names can still be deleted (`legacy paper`, paper_file.py), and its
+    flag stays, naming an id no question has; what reads flags (`reinstate`, the question page) starts from a question,
+    so none shows it."""
+    item = conn.execute(
+        "insert into item (tenant_id, item_key, template, rung_code, skill_codes, signal, fmt, spec, responses)"
+        " select id, 'cp27/deleted/1', 'rows', 'R24', '{NUM.OPS.02}', 'Procedural', 'column', '{}', '[]'"
+        " from tenant where slug = %s returning id",
+        (db.tenant_slug(),),
+    ).fetchone()["id"]
+    assert inventory.flag(conn, "cp27/deleted/1", "a coordinator", "not on its paper") == "retired"
+    conn.execute("delete from item where id = %s", (item,))
+    assert conn.execute("select 1 from item where id = %s", (item,)).fetchone() is None
+    flags = conn.execute(
+        "select decision, by, reason from approval where kind = 'item' and target = %s::text", (item,)
+    ).fetchall()
+    assert [tuple(f.values()) for f in flags] == [("retire", "a coordinator", "not on its paper")]
+
+
 def test_a_flag_retires_the_item_by_trigger(conn, monkeypatch):
     monkeypatch.setattr(bank.llm, "generate", fake_model(candidates(2, conn=conn)))
     _, _, accepted = bank.fill(conn, SET, DIFF, 2)
     assert inventory.flag(conn, accepted[0].item_id, "nimish", "odd wording") == "retired"
     assert (
-        conn.execute("select verdict from item_feedback where note = 'odd wording'").fetchone()["verdict"]
+        conn.execute(
+            "select decision from approval where kind = 'item' and reason = 'odd wording'"
+        ).fetchone()["decision"]
         == "retire"
     )
 

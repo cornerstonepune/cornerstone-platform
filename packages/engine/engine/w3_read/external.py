@@ -20,7 +20,7 @@ import hashlib
 import json
 
 from engine.adapters import llm
-from engine.core import db
+from engine.core import db, settings
 from engine.w3_read import render_pdf
 from engine.w3_read.legacy import _jpeg, mask_name_band
 
@@ -30,8 +30,7 @@ CONFIDENCE = ("clear", "arguable", "none")
 def registry(conn):
     """Every skill the school has a name for, as the matcher sees it."""
     return conn.execute(
-        "select s.code, s.name, s.domain, s.strand, d.name as domain_name"
-        " from registry_skill s left join domain d on d.code = s.domain order by s.code"
+        "select code, name, domain, strand, domain_name from registry_skill order by code"
     ).fetchall()
 
 
@@ -156,7 +155,8 @@ def run(conn, path, pages=None, mask=None):
 def spend_today(conn):
     return conn.execute(
         "select coalesce(sum(f.cost_inr), 0) as n from flow_run f join tenant t on t.id = f.tenant_id"
-        " where t.slug = %s and f.started_at::date = current_date",
+        f" where t.slug = %s and (f.started_at at time zone {settings.ZONE_SQL})::date"
+        f" = (now() at time zone {settings.ZONE_SQL})::date",
         (db.tenant_slug(),),
     ).fetchone()["n"]
 

@@ -1,7 +1,6 @@
-import { PageShell } from "@/components/page-shell";
+import { Screen } from "@/components/app-frame";
 import { PartView } from "@/components/page-part/part";
 import { Answers } from "@/components/educator/page-answers";
-import { Crumbs } from "@/components/educator/crumbs";
 import { Summary } from "@/components/educator/summary";
 import { requireStaff } from "@/lib/auth";
 import { openTo, pageOf } from "@/lib/educator/data";
@@ -35,14 +34,13 @@ export default async function ActivityPage({ params, searchParams }: { params: P
   const check = parts.filter((p) => p.check_me);
   const school = parts.filter((p) => p.source === "school");
   return (
-    <PageShell
+    <Screen
       stage={E.area}
       title={page.name}
       purpose={W.purpose}
       action={<span className="text-[length:var(--text-label)] text-[var(--ink-muted)]">{[page.section, page.code].filter(Boolean).join(" · ")}</span>}
       next={{ href: back, label: E.today.title }}
     >
-      <Crumbs trail={[{ label: E.area }, { label: E.today.title, href: back }, { label: page.name }]} />
       <Summary
         items={[
           { label: W.counts.parts, n: parts.length, href: first(parts) },
@@ -78,6 +76,6 @@ export default async function ActivityPage({ params, searchParams }: { params: P
           </section>
         </aside>
       </div>
-    </PageShell>
+    </Screen>
   );
 }

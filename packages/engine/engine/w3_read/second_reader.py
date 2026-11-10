@@ -14,6 +14,7 @@ one-click guess (`second_read`, and the reason says what the second reader read)
 from pathlib import Path
 
 from engine.adapters import llm
+from engine.core import settings
 from engine.w3_read import legacy, profiles
 
 PURPOSE = "read_with_examples"
@@ -55,8 +56,7 @@ def ask(conn, target, n_answers, samples):
 
 def switched_on(conn):
     """Whether the second opinion is on (`read.second_opinion`, ADR 0091): off until its eval is scored on live."""
-    row = conn.execute("select value from threshold where key = 'read.second_opinion'").fetchone()
-    return bool(row and row["value"])
+    return bool(settings.threshold(conn, "read.second_opinion", 0))
 
 
 def _groups(readings, second_opinion=True):

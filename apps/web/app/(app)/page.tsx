@@ -1,7 +1,7 @@
 import Link from "@/components/link";
 import { FilterBar } from "@/components/filter-bar";
-import { PageShell } from "@/components/page-shell";
-import { Notice } from "@/components/shell";
+import { Screen } from "@/components/app-frame";
+import { Notice } from "@/components/parts";
 import { TaughtNotice } from "@/components/taught-notice";
 import { deadline } from "@/lib/deadline";
 import { curriculumRows } from "@/lib/queries-curriculum";
@@ -73,7 +73,7 @@ export default async function CurriculumPage({ searchParams }: Props) {
   const shown = chosen(lines, { ...q, topic });
 
   return (
-    <PageShell
+    <Screen
       stage="Curriculum"
       title="Curriculum"
       purpose="Every skill of every grade, with its levels and where it stands. Open a skill to read what each level asks."
@@ -190,6 +190,6 @@ export default async function CurriculumPage({ searchParams }: Props) {
           </section>
         </>
       )}
-    </PageShell>
+    </Screen>
   );
 }

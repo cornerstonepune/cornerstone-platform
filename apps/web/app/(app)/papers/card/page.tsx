@@ -2,8 +2,8 @@ import Link from "@/components/link";
 import { DataTable } from "@/components/data-table";
 import { FilterBar } from "@/components/filter-bar";
 import { StatusChip } from "@/components/status-chip";
-import { PageShell } from "@/components/page-shell";
-import { Notice, Panel } from "@/components/shell";
+import { Screen } from "@/components/app-frame";
+import { Notice, Panel } from "@/components/parts";
 import { requireStaff } from "@/lib/auth";
 import { sees } from "@/lib/reach";
 import { NotYours } from "@/components/not-yours";
@@ -12,6 +12,7 @@ import { classWords } from "@/lib/needs-you";
 import { grades } from "@/lib/queries";
 import { assessmentCard, CARD_STAGES, type Card, type CardCopy, type CardKey, standing } from "@/lib/queries-card";
 import { KIND_WORDS, STAGE_WORDS } from "@/lib/queries-papers";
+import { schoolToday } from "@/lib/school-clock";
 import type { Column } from "@/lib/ux-rules";
 import { dateWords, weekWords } from "@/lib/week";
 import { UploadScans } from "../../capture/upload-scans";
@@ -36,9 +37,9 @@ export default async function CardPage({ searchParams }: Props) {
   const band = card.copies[0]?.band ?? card.spares[0]?.band;
   const s = standing(card);
   // the school's day, as the engine checks it: "2026-10-22" in Pune, whatever the server's clock
-  const today = new Date().toLocaleDateString("en-CA", { timeZone: "Asia/Kolkata" });
+  const today = await schoolToday();
   return (
-    <PageShell
+    <Screen
       stage="Assessments · its card"
       title={key.kind === "focus" ? "Home assessments" : title}
       purpose={`${KIND_WORDS[key.kind] ?? key.kind} · ${band ? classWords(g, band, key.class) : key.class} · ${weekWords(key.week || null)}`}
@@ -63,7 +64,7 @@ export default async function CardPage({ searchParams }: Props) {
           <Copies card={card} page={Number(q.page) || 1} where={q.where} />
         </div>
       )}
-    </PageShell>
+    </Screen>
   );
 }
 

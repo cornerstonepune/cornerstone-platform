@@ -1,6 +1,6 @@
 import Link from "@/components/link";
-import { PageShell } from "@/components/page-shell";
-import { Notice } from "@/components/shell";
+import { Screen } from "@/components/app-frame";
+import { Notice, classesSaid } from "@/components/parts";
 import { requireStaff } from "@/lib/auth";
 import { sql } from "@/lib/db";
 import { changeMyPassword } from "@/lib/password-actions";
@@ -14,11 +14,11 @@ export default async function MyPasswordPage({ searchParams }: Props) {
   const me = await requireStaff();
   const q = await searchParams;
   const [row] = await sql<{ least: number }[]>`
-    select (select value from threshold where key = 'password.min_length')::int as least`;
+    select (select value::numeric from config where key = 'password.min_length')::int as least`;
   const least = row?.least ?? 10;
 
   return (
-    <PageShell
+    <Screen
       stage="Account"
       title="Change password"
       purpose={`Your own password for ${me.email}. At least ${least} characters, and not your email address.`}
@@ -29,6 +29,9 @@ export default async function MyPasswordPage({ searchParams }: Props) {
       }
       next={{ href: "/today", label: "What needs doing" }}
     >
+      <p className="mb-4 text-[var(--ink-muted)]" data-testid="who">
+        {me.name} · {classesSaid(me)}
+      </p>
       {q.saved ? <Notice tone="neem">Your password is changed. Any other browser you left signed in is signed out.</Notice> : null}
       {q.error === "current" ? <Notice tone="terracotta">That is not your current password.</Notice> : null}
       {q.error === "match" ? <Notice tone="terracotta">The two new passwords are not the same.</Notice> : null}
@@ -54,6 +57,6 @@ export default async function MyPasswordPage({ searchParams }: Props) {
           Save the new password
         </button>
       </form>
-    </PageShell>
+    </Screen>
   );
 }

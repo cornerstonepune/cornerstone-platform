@@ -1,6 +1,9 @@
 // The week a paper is made for, as the engine names it: a child's next paper is one per ISO week.
-/** The ISO week, "2026-W39": a paper chosen in one week is the same paper however often the page opens. */
-export function isoWeek(d = new Date()): string {
+/** The ISO week of a day ("2026-11-09", the school's own day: lib/school-clock.ts `schoolWeek`), "2026-W46": a paper chosen in one
+ *  week is the same paper however often the page opens. A page never leaves `day` out (it asks `schoolWeek()`); the
+ *  default, the server's date, is for the specs that pin "this week" without a school clock. */
+export function isoWeek(day: string | Date = new Date()): string {
+  const d = typeof day === "string" ? new Date(`${day}T00:00:00Z`) : day;
   const t = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()));
   t.setUTCDate(t.getUTCDate() + 4 - (t.getUTCDay() || 7));
   const first = new Date(Date.UTC(t.getUTCFullYear(), 0, 1));

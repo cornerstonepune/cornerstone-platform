@@ -2,6 +2,7 @@ import { createHmac } from "node:crypto";
 import { sql, TENANT_SLUG } from "./db";
 import { createIssue, FROM_THE_TOOL, toolIssues } from "./github";
 import { issueBody, issueTitle, KINDS, seenAs, type Note, type NoteKind, type HowOften, type Seen } from "./feedback-words";
+import { schoolZone } from "./school-clock";
 
 // A note from staff, kept first and then sent to GitHub as one issue (goals/feed_report_from_the_tool.yaml). Kept
 // first, so a note is never lost: GitHub not connected leaves it `saved`, GitHub refusing leaves it `failed`, and each
@@ -18,9 +19,9 @@ export type Limits = { perHour: number; maxChars: number; perTry: number };
 
 export async function limits(): Promise<Limits> {
   const [row] = await sql<{ per_hour: number; max_chars: number; per_try: number }[]>`
-    select (select value from threshold where key = 'feedback.max_per_hour')::int as per_hour,
-           (select value from threshold where key = 'feedback.max_chars')::int as max_chars,
-           (select value from threshold where key = 'feedback.send_per_try')::int as per_try`;
+    select (select value::numeric from config where key = 'feedback.max_per_hour')::int as per_hour,
+           (select value::numeric from config where key = 'feedback.max_chars')::int as max_chars,
+           (select value::numeric from config where key = 'feedback.send_per_try')::int as per_try`;
   return { perHour: row?.per_hour ?? 5, maxChars: row?.max_chars ?? 2000, perTry: row?.per_try ?? 5 };
 }
 
@@ -62,7 +63,7 @@ async function send(id: string): Promise<void> {
     returning id, kind, doing, happened, how_often, route, role, classes, browser, created_at`;
   if (!n) return;
   const note: Note = { ...n, howOften: n.how_often, at: new Date(n.created_at) };
-  const made = await createIssue(issueTitle(note), issueBody(note), [FROM_THE_TOOL, KINDS[n.kind].label]);
+  const made = await createIssue(issueTitle(note), issueBody(note, await schoolZone()), [FROM_THE_TOOL, KINDS[n.kind].label]);
   if (typeof made === "object") {
     await sql`update staff_note set status = 'sent', issue_number = ${made.number} where id = ${id}`;
   } else if (made === "failed") {

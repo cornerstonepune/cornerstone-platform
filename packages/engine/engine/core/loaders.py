@@ -8,13 +8,12 @@ registry cannot be trusted as the thing every assessment result joins to.
 import json
 from typing import Any, LiteralString
 
-from engine.core import asks, db, english, question_formats, register, settings, topics, vocabulary
+from engine.core import asks, db, english, history, question_formats, register, settings, topics, vocabulary
 
 SEED = settings.SEED
 
 FILLED_TABLES = (
     "tenant",
-    "domain",
     "registry_skill",
     "milestone",
     "learning_objective",
@@ -28,7 +27,6 @@ FILLED_TABLES = (
     "case_dimension",
     "taxonomy_case",
     "prompt",
-    "threshold",
     "config",
     "skill",
     "skill_level",
@@ -74,10 +72,7 @@ def _registry(conn: db.Conn, t: db.Id) -> None:
 
     # The database keeps the first write of a curriculum record under whoever made it; the loader says it is the seed,
     # so the K2 upload can tell the system's words from a person's (the label is a setting, beside the upload's own).
-    conn.execute(
-        "select set_config('app.changed_by', %s, true)",
-        (json.loads((settings.SEED / "k2_sheet.json").read_text())["seed_label"],),
-    )
+    history.by(conn, json.loads((settings.SEED / "k2_sheet.json").read_text())["seed_label"])
 
     # 11k rows: `executemany` pipelines them, one statement per table instead of one round trip
     # per row. Loading the whole map takes seconds that way and minutes the other way, and the
@@ -86,16 +81,11 @@ def _registry(conn: db.Conn, t: db.Id) -> None:
         if rows:
             conn.cursor().executemany(sql, rows)
 
+    domain_names = {d["code"]: d["name"] for d in reg["domains"]}
     many(
-        "insert into domain (tenant_id, code, name) values (%s,%s,%s)"
-        " on conflict (tenant_id, code) do update set name=excluded.name, updated_at=now()",
-        [(t, d["code"], d["name"]) for d in reg["domains"]],
-    )
-
-    many(
-        "insert into registry_skill (tenant_id, code, domain, strand, name, description, source,"
-        " skill_type, pillar, ncf, cg, authored_by) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-        " on conflict (tenant_id, code) do update set domain=excluded.domain,"
+        "insert into registry_skill (tenant_id, code, domain, domain_name, strand, name, description, source,"
+        " skill_type, pillar, ncf, cg, authored_by) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+        " on conflict (tenant_id, code) do update set domain=excluded.domain, domain_name=excluded.domain_name,"
         " strand=excluded.strand, name=excluded.name, description=excluded.description,"
         " source=excluded.source, skill_type=excluded.skill_type, pillar=excluded.pillar,"
         " ncf=excluded.ncf, cg=excluded.cg, authored_by=excluded.authored_by, updated_at=now()",
@@ -104,6 +94,7 @@ def _registry(conn: db.Conn, t: db.Id) -> None:
                 t,
                 code,
                 code.split(".")[0],
+                domain_names.get(code.split(".")[0]),
                 ".".join(code.split(".")[:2]),
                 k["name"],
                 k.get("desc", ""),
@@ -385,11 +376,11 @@ def load_all() -> dict[str, int]:
 
 
 def load_settings() -> dict[str, int]:
-    """Prompts, thresholds, config and the English samples (rows that approve nothing), upserted as `load_all` does:
+    """Prompts, settings (numbers and the rest, all `config`) and the English samples (rows that approve nothing), upserted as `load_all` does:
     every deploy runs it (`engine load --settings`), so they are live with the code that reads them."""
     with db.connect() as conn:
         t = _tenant(conn)
         settings.load(conn, t)
         english.samples(conn, t)
         conn.commit()
-        return db.counts(conn, ("prompt", "threshold", "config", *english.SAMPLE_TABLES))
+        return db.counts(conn, ("prompt", "config", *english.SAMPLE_TABLES))

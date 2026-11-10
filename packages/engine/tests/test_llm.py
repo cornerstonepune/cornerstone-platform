@@ -26,7 +26,7 @@ SCHEMA = {
 
 
 class Conn:
-    """Enough of a psycopg connection for the adapter: prompt row(s), config, threshold, flow_run
+    """Enough of a psycopg connection for the adapter: prompt row(s), settings, flow_run
     writes. `prompts` maps (purpose, subject) -> row, for the subject-selection tests; omitted,
     every purpose gets the one fixed row regardless of subject, matching the old fake exactly."""
 
@@ -50,6 +50,19 @@ class Conn:
             self.runs.append((sql, params))
         return self
 
+    def fetchall(self):
+        """A setting, as `settings.config` asks for one: `llm.*` from the fake's own fields."""
+        if "from config c" not in self._sql:
+            return []
+        key = self._params["key"]
+        value = {
+            "llm.fallback_models": self.fallback,
+            "llm.structured": self.structured,
+            "llm.prices": self.prices,
+            "llm.daily_budget_inr": self.budget,
+        }.get(key)
+        return [] if value is None else [{"key": key, "value": value}]
+
     def fetchone(self):
         if "from prompt" in self._sql:
             if self.prompts is None:
@@ -61,16 +74,8 @@ class Conn:
                 }
             purpose, subject = self._params[:2]  # then the version, twice
             return self.prompts.get((purpose, subject)) or self.prompts.get((purpose, None))
-        if "from threshold" in self._sql:
-            return {"value": self.budget} if self.budget is not None else None
         if "sum(f.cost_inr)" in self._sql:
             return {"n": self.spent}
-        if "from config" in self._sql and "llm.fallback_models" in self._sql:
-            return {"value": self.fallback}
-        if "from config" in self._sql and "llm.structured" in self._sql:
-            return {"value": self.structured}
-        if "from config" in self._sql and "llm.prices" in self._sql:
-            return {"value": self.prices} if self.prices is not None else None
         if "returning id" in self._sql:
             return {"id": "run1"}
         return None

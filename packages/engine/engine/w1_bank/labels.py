@@ -12,6 +12,7 @@ import json
 from engine.assess import skills as S
 from engine.assess import tags as T
 from engine.assess.items import Item
+from engine.core import settings
 from engine.w1_bank import cases
 
 RULE_KEYS = {
@@ -24,9 +25,7 @@ RULE_KEYS = {
 
 
 def rules(conn):
-    rows = {
-        r["key"]: r["value"] for r in conn.execute("select key, value from config where key like 'skills.%'")
-    }
+    rows = settings.every(conn, "skills.")
     missing = [key for key in RULE_KEYS.values() if key not in rows]
     if missing:
         raise RuntimeError(f"config has no {', '.join(missing)} — run `engine load`")

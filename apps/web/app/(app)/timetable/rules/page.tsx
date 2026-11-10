@@ -1,7 +1,8 @@
 import Link from "@/components/link";
-import { PageShell } from "@/components/page-shell";
+import { Screen } from "@/components/app-frame";
 import { requireStaff } from "@/lib/auth";
 import { EngineDown } from "@/lib/engine";
+import { schoolZone } from "@/lib/school-clock";
 import { type Block, type Edit, type Fixed, type Limit, type Rules, blockWhen, day, DAYS, rulesOf, standing } from "@/lib/timetable-rules";
 import { changeRule } from "./actions";
 import "../timetable.css";
@@ -9,7 +10,7 @@ import "../timetable.css";
 type Props = { searchParams: Promise<Record<string, string | undefined>> };
 
 const name = (code: string) => code.replace(/_/g, " ").replace(/^./, (c) => c.toUpperCase());
-const when = (iso: string) => new Date(iso).toLocaleString("en-IN", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit", timeZone: "Asia/Kolkata" });
+const when = (iso: string, zone: string) => new Date(iso).toLocaleString("en-IN", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit", timeZone: zone });
 
 function said(e: Edit): string {
   const a = (e.after ?? e.before ?? {}) as Record<string, unknown>;
@@ -165,6 +166,7 @@ function FixedSlots({ rules }: { rules: Rules }) {
 export default async function RulesPage({ searchParams }: Props) {
   const me = await requireStaff();
   const q = await searchParams;
+  const zone = await schoolZone();
   let rules: Rules | null = null;
   let down: string | null = null;
   try {
@@ -174,7 +176,7 @@ export default async function RulesPage({ searchParams }: Props) {
     down = e.message;
   }
   return (
-    <PageShell
+    <Screen
       stage="Timetable"
       title="Timetable rules"
       purpose="Period times, blocked days, fixed slots and subject limits, kept as rows with who changed them."
@@ -209,7 +211,7 @@ export default async function RulesPage({ searchParams }: Props) {
                 ) : (
                   <ul className="tt-list">
                     {rules.history.slice(0, 8).map((e) => (
-                      <li key={e.id}><span className="tt-note">{when(e.at)}</span><span className="grow">{said(e)}</span></li>
+                      <li key={e.id}><span className="tt-note">{when(e.at, zone)}</span><span className="grow">{said(e)}</span></li>
                     ))}
                   </ul>
                 )}
@@ -218,6 +220,6 @@ export default async function RulesPage({ searchParams }: Props) {
           </>
         )}
       </div>
-    </PageShell>
+    </Screen>
   );
 }

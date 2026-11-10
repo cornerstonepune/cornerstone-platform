@@ -92,7 +92,7 @@ def rehome(conn):
             (s["code"], hardest, s["rung_code"], s["version"], r["id"]),
         )
         conn.execute(
-            "insert into item_feedback (tenant_id, item_id, actor, verdict, note) values (%s,%s,%s,'retire',%s)",
+            "insert into approval (tenant_id, kind, target, decision, by, reason) values (%s, 'item', %s::text, 'retire', %s, %s)",
             (r["tenant_id"], r["id"], ACTOR, UNLEVELLED),
         )
     old_papers = _old_papers(conn, skills, case_matches)
@@ -103,7 +103,6 @@ def rehome(conn):
         " where source = 'library' and skill_set_code = any(%s)",
         (old,),
     )
-    conn.execute("delete from skill_set_version where code = any(%s)", (old,))
     removed_sets = [
         r["code"] for r in conn.execute("delete from skill where code = any(%s) returning code", (old,))
     ]
