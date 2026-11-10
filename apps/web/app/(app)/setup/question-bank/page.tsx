@@ -54,12 +54,11 @@ export default async function QuestionBank({ searchParams }: { searchParams: Pro
       label: "Question",
       value: (it) => it.stem,
       cell: (it) => (
-        <span>
-          <Link href={`${HERE}/${it.item_key}`} data-question-row="" className="block" {...(it === rows[0] ? { "data-ux": "action" } : {})}>
-            <Question it={it} />
-          </Link>
+        // the key is inside the link: a column sum or a drawn question prints no words, and a link with nothing in it is a control no one can see or name
+        <Link href={`${HERE}/${it.item_key}`} data-question-row="" className="block" {...(it === rows[0] ? { "data-ux": "action" } : {})}>
+          <Question it={it} />
           <span className="num block text-[13px] text-[var(--ink-muted)]">{it.item_key}</span>
-        </span>
+        </Link>
       ),
     },
     { key: "skill", label: "Skill", value: (it) => it.skill_set_name ?? "", width: "13rem" },

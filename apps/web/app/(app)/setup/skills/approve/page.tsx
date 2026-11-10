@@ -22,8 +22,8 @@ type Q = Record<string, string | undefined>;
 const HERE = "/setup/skills/approve";
 const RAIL: Edge[] = [{ screen: "curriculum", label: "Curriculum", icon: "objective" }];
 
-// Skills to approve: every skill whose levels wait for a person, read and approved one row at a time (Nimish: "NO bulk
-// Approve them button; every approval separate"). The count of what waits is this screen's eyebrow and is shown nowhere
+// Skills to approve: every skill whose levels wait for a person, read and approved one row at a time (Nimish: no bulk
+// button over the rows; every approval is separate). The count of what waits is this screen's eyebrow and is shown nowhere
 // else. The queries and the approval are the old page's, unchanged; the page is the frame and the blocks.
 export default async function SkillsToApprove({ searchParams }: { searchParams: Promise<Q> }) {
   const me = await requireStaff();
