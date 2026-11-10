@@ -77,7 +77,15 @@ def test_1_a_pull_request_marked_ready_runs_the_full_suite_and_so_does_each_push
     assert {"opened", "synchronize", "reopened"} <= set(TRIGGERS["pull_request"]["types"])
 
 
-@pytest.mark.parametrize("files", [DOCS[:1], DOCS, ["STATE.md", "docs/athena/learnings.md"]])
+@pytest.mark.parametrize(
+    "files",
+    [
+        DOCS[:1],
+        DOCS,
+        ["STATE.md", "docs/athena/learnings.md"],
+        ["docs/frontend/wireframes/staff.html", "docs/notes/x.md"],
+    ],
+)
 def test_2_a_pull_request_of_docs_alone_skips_the_engine_and_the_browser(files):
     assert jobs(files=files) == FAST
 
