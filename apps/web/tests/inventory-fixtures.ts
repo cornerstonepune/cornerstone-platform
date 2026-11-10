@@ -26,9 +26,38 @@ export async function inventoryRows(sql: Sql): Promise<Rows> {
   // a class the educator does not hold, with Sr. Nos 13 and 14 that the educator's class has no child for
   const otherNames = FAKE_CHILDREN.slice(12, 26) as unknown as string[];
   const other = await aClass(sql, OTHER, "K2", otherNames);
+  await seedSeen(sql, cls?.id ?? "");
   const [{ week }] = await sql<{ week: string }[]>`select to_char(now(), 'IYYY-"W"IW') as week`;
   const assessment = { key: ["focus", SECTION, week, ""].join("~"), roll: "1" };
   return { assessment, section: SECTION, classId: cls?.id ?? "", children, rolls, other, otherNames };
+}
+
+/** What the Children screens need to show something: two skills, three children seen on them (one secure, one practising, one just
+ *  begun) and twelve observations for the first, so a child's timeline has a second page. Made once; observations are append-only. */
+async function seedSeen(sql: Sql, classId: string) {
+  const [{ n }] = await sql<{ n: number }[]>`select count(*)::int as n from activity_observation where class_id = ${classId}`;
+  if (n > 0 || !classId) return;
+  // the observed picture is K2's: the fixture class is that grade whatever grade it was first made in
+  await sql`update school_class set grade_code = 'K2' where id = ${classId}`;
+  const [{ tenant }] = await sql<{ tenant: string }[]>`select id as tenant from tenant order by created_at limit 1`;
+  const [{ staff }] = await sql<{ staff: string }[]>`select staff_id::text as staff from pii.staff where email = ${EDUCATOR.email}`;
+  const skills = await sql<{ code: string }[]>`select code from registry_skill where tenant_id = ${tenant} order by code limit 2`;
+  await sql`insert into activity (tenant_id, code, band, strand, name, sheet_no) values (${tenant}, 'ACT-U70-1', 'K2', 'Maths', 'Sorting by size', '') on conflict (tenant_id, code) do nothing`;
+  for (const k of skills) await sql`insert into activity_skill (tenant_id, activity_code, skill_code) values (${tenant}, 'ACT-U70-1', ${k.code}) on conflict do nothing`;
+  const seen = async (roll: string, level: number, daysAgo: number) => {
+    const [c] = await sql<{ id: string }[]>`select id from child_now where class_id = ${classId} and roll_no = ${roll}`;
+    const at = new Date(Date.now() - daysAgo * 86_400_000);
+    const [o] = await sql<{ id: string }[]>`
+      insert into activity_observation (tenant_id, confirmation_id, activity_code, child_id, class_id, outcome, entry_mode, route, expected_level, reached_level, observed_at, observed_by, confirmed_by)
+      values (${tenant}, gen_random_uuid(), 'ACT-U70-1', ${c.id}, ${classId}, 'as_expected', 'individual', 'form', 2, ${level}, ${at}, ${staff}, ${staff}) returning id`;
+    for (const k of skills)
+      await sql`insert into evidence_event (tenant_id, child_id, skill_code, channel, observed_at, confirmed_by, kind, mark, seen_by, place, source, observation_id)
+        values (${tenant}, ${c.id}, ${k.code}, 'educator', ${at}, ${staff}, 'observed', ${level === 3 ? "yes" : level === 2 ? "sometimes" : "not_yet"}, ${staff}, 'class', 'u70 fixture', ${o.id})`;
+    await sql`select rebuild_child_observed_state(${c.id})`;
+  };
+  for (let i = 0; i < 12; i++) await seen("1", 3, 60 - i * 3);
+  await seen("2", 2, 6);
+  await seen("3", 1, 4);
 }
 
 /** A new browser context signed in as the educator or the coordinator, the way the site signs anyone in. */
@@ -45,6 +74,11 @@ export async function signedInAs(browser: Browser, who: "educator" | "coordinato
 /** The concrete address of a screen: its route with each [param] filled from the rows. A param with no fixture is a failure, so a new
  *  slice adds its own here before its screens can be covered. */
 export function addressOf(route: string, rows: Rows, over: Record<string, string> = {}): string {
+  const path = fill(route, rows, over);
+  // the Children table opens on the fixture class: the full table holds every class's children, whatever other specs left behind
+  return route === "/children" ? `${path}?cls=${rows.classId}` : path;
+}
+function fill(route: string, rows: Rows, over: Record<string, string>): string {
   const first = Object.values(rows.children)[0] ?? "";
   const given: Record<string, string> = { class: rows.classId, section: rows.section, roll: rows.assessment.roll, id: first, key: rows.assessment.key, ...over };
   const path = route.replace(/\[(\w+)\]/g, (_, k: string) => {
