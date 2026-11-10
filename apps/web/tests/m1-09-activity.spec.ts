@@ -54,7 +54,6 @@ test("the page shows the school's words, drafted steps as bullets and how to thi
   const steps = page.locator('[data-part="steps"]');
   await expect(steps.locator(".pp-origin")).toHaveText("Drafted, check me");
   await expect(page.locator('details[data-fold="steps"] .pp-steps li')).toHaveText(STEPS);
-  const thinking = page.locator('[data-part="thinking"]');
   const how = page.locator('details[data-fold="thinking"]');
   await expect(how).toContainText(THINKING.idea);
   await expect(how.locator("mark")).toHaveText("spider");
