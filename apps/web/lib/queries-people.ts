@@ -84,19 +84,25 @@ export async function topics(scope: Scope = EVERY_CLASS): Promise<Topic[]> {
   });
 }
 
+/** This year's row of each class, one a class, carrying its words on skills (`school_class.taught`): the left side of
+ *  `skill_taught_in`, to join to. `skill_taught_in` and `taught_in` cannot be inlined (they pin their search path), so a query
+ *  that asked them once per topic per class per skill cost every page about a second once thirty classes were on the copy
+ *  (CI, 10 Nov 2026, u71). Read as a join, with `skillIsTaught`, the same answer is one pass. */
+export const classWords = () => sql`
+  select distinct on (sc.tenant_id, sc.label) sc.tenant_id, sc.label as section, sc.taught
+  from school_class sc join academic_year y on y.id = sc.academic_year_id
+  order by sc.tenant_id, sc.label, y.starts_on desc`;
+
+/** Whether the skill `s` is taught in the class row `cls` (from `classWords`, left-joined): the class's own word, else the
+ *  school's (`skill.taught`), else not taught: `skill_taught_in`'s rule, as an expression. */
+export const skillIsTaught = () => sql`coalesce((cls.taught -> s.code ->> 'taught')::boolean, s.taught, false)`;
+
 /** The topics that some class of the scope has not been taught, each with those classes: all the menu's count needs of
- *  `topics` (`tasksFor`, on every page). A class's word on a skill is its own (this year's `school_class.taught`), else the
- *  school's (`skill.taught`), else not taught: `skill_taught_in`, read here as a join. `topics` asks that function once per
- *  topic per class per skill (it cannot be inlined: it pins its search path), and so cost every page about a second once
- *  thirty classes were on the copy (CI, 10 Nov 2026, u71). A topic with no skill is taught in no class. */
+ *  `topics` (`tasksFor`, on every page). A topic with no skill is taught in no class. */
 export async function untaughtTopics(scope: Scope = EVERY_CLASS): Promise<{ code: string; name: string; subject: string; sections: string[] }[]> {
   const classes = await classesOf(scope);
   return sql<{ code: string; name: string; subject: string; sections: string[] }[]>`
-    with cls as (
-      select distinct on (sc.tenant_id, sc.label) sc.tenant_id, sc.label as section, sc.taught
-      from school_class sc join academic_year y on y.id = sc.academic_year_id
-      where sc.label = any(${classes}::text[])
-      order by sc.tenant_id, sc.label, y.starts_on desc),
+    with cls as (${classWords()}),
     k as (
       select tn.tenant_id, c.section
       from (select distinct tenant_id from topic) tn, unnest(${classes}::text[]) as c(section))
@@ -106,8 +112,7 @@ export async function untaughtTopics(scope: Scope = EVERY_CLASS): Promise<{ code
     left join cls on cls.tenant_id = k.tenant_id and cls.section = k.section
     where not exists (
       select 1 from skill s
-      where s.tenant_id = t.tenant_id and s.topic_code = t.code
-        and coalesce((cls.taught -> s.code ->> 'taught')::boolean, s.taught, false))
+      where s.tenant_id = t.tenant_id and s.topic_code = t.code and ${skillIsTaught()})
     group by t.code, t.name, t.subject_code, t.ord
     order by t.ord`;
 }

@@ -3,7 +3,7 @@ import { sql } from "./db";
 import type { Session } from "./auth";
 import { decidable } from "./decides";
 import { grades } from "./queries";
-import { asksWaiting, untaughtTopics } from "./queries-people";
+import { asksWaiting, classWords, skillIsTaught, untaughtTopics } from "./queries-people";
 import { homeByClass } from "./queries-make";
 import { checkQueue } from "./queries-read";
 import { classPacksWaiting, reportsWaiting } from "./queries-today";
@@ -66,10 +66,12 @@ export const tasksFor = cache(async (me: Session): Promise<Task[]> => {
     may("reports") ? reportsWaiting(scope) : Promise.resolve([]),
     untaughtTopics(scope),
     sql<{ topic: string; topic_name: string; subject: string; section: string }[]>`
+      with cls as (${classWords()})
       select t.code as topic, t.name as topic_name, t.subject_code as subject, k.section
       from topic t
       cross join (select distinct section from child_now where active and ${inScope(scope, sql`section`)}) k
-      where taught_in(t.tenant_id, t.code, k.section)
+      left join cls on cls.tenant_id = t.tenant_id and cls.section = k.section
+      where exists (select 1 from skill s where s.tenant_id = t.tenant_id and s.topic_code = t.code and ${skillIsTaught()})
         and not exists (
           select 1 from sheet_instance si
           join sheet_template st on st.id = si.sheet_template_id
