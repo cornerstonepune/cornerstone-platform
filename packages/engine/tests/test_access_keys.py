@@ -201,13 +201,13 @@ def test_whoever_sees_a_child_through_a_paper_they_put_in_sees_that_childs_class
     tpl = _one(
         c,
         "insert into sheet_template (tenant_id, band, variant, week, item_ids, key, source) values"
-        " (%s, 'K2', 1, '2026-W45', '{}', '{}', 'generated') returning id",
+        " (%s, 'K2', 1, '2026-11-02', '{}', '{}', 'generated') returning id",
         s["tenant"],
     )
     sheet = _one(
         c,
         "insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, print_status, week,"
-        " approved_by, approved_at) values (%s, 'CS' || substr(md5(random()::text), 1, 6), %s, %s, 'printed', 'W1',"
+        " approved_by, approved_at) values (%s, 'CS' || substr(md5(random()::text), 1, 6), %s, %s, 'printed', '2026-11-02',"
         " 'cp27', now()) returning id",
         s["tenant"], tpl, s["child"]["X"],
     )  # fmt: skip
