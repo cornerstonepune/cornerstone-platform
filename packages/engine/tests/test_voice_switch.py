@@ -94,3 +94,24 @@ def test_the_command_turns_a_switch_and_prints_no_email(conn, monkeypatch):
     assert refused.exit_code != 0 and "--ref" in refused.output
     wrong = CliRunner().invoke(app, ["read", "voice", "switch", "lights", "on", "--by", k["email"]])
     assert wrong.exit_code != 0
+
+
+def test_the_timetable_and_curriculum_screens_go_on_by_the_same_signed_command(conn):
+    k = a_k2_class(conn)
+    for which, key in (
+        ("timetable", "educator.timetable_enabled"),
+        ("curriculum", "curriculum.screens_enabled"),
+    ):
+        conn.execute("delete from config where key = %s", (key,))
+        said = voice_switch.switch(conn, which, True, k["email"])
+        assert settings.config(conn, key, False) is True and k["email"] not in said
+    logged = [
+        r["action"]
+        for r in conn.execute(
+            "select action from access_log where actor = %s order by occurred_at, id", (str(k["staff"]),)
+        ).fetchall()
+    ]
+    assert logged == ["educator.timetable_enabled on", "curriculum.screens_enabled on"]
+    with pytest.raises(ValueError, match="--by must be the email you sign in with"):
+        voice_switch.switch(conn, "timetable", False, "nobody@example.test")
+    assert settings.config(conn, "educator.timetable_enabled", False) is True
