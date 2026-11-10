@@ -79,6 +79,12 @@ export const STATES = {
   notDone: { tone: "quiet", words: "not done", icon: STATUS_ICONS.quiet },
   holiday: { tone: "quiet", words: "holiday", icon: "frozen" },
   overdue: { tone: "act", words: "overdue", icon: "late" },
+  // what a child showed on an activity (observation_outcome); the screens pass the school's own words
+  outcomeAbove: { tone: "ok", words: "above", icon: "above" },
+  outcomeAsExpected: { tone: "ok", words: "as expected", icon: "as-expected" },
+  outcomeBelow: { tone: "wait", words: "below", icon: "below" },
+  outcomeNotWilling: { tone: "wait", words: "not willing", icon: "not-willing" },
+  outcomeAbsent: { tone: "quiet", words: "absent", icon: "absent" },
 } as const satisfies Record<string, StateRow>;
 export type State = keyof typeof STATES;
 
