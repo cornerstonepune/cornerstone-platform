@@ -98,6 +98,9 @@ test("the question bank is one number wherever it is named", async ({ page }) =>
     where i.source = 'generated' and i.status = 'active' and s.difficulty ? i.difficulty`;
   const words = (n: number) => n.toLocaleString("en-IN");
 
+  await page.goto("/workflows");
+  await expect(page.locator('[data-measure="N2"]')).toContainText(words(bank));
+
   await page.goto("/library");
   await expect(page.getByRole("main")).toContainText(`${words(taught)} questions ready to print`);
   await expect(page.getByRole("main"), "a part names the whole").toContainText(`of the bank's ${words(bank)}`);

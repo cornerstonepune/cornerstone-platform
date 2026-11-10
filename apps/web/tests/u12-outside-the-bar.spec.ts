@@ -8,6 +8,7 @@ import { readFileSync } from "node:fs";
 import path from "node:path";
 import postgres from "postgres";
 import { guideFor, sectionFor } from "../lib/guide-path";
+import { SIGNED_IN } from "../playwright.config";
 import { aPerson } from "./rows";
 
 const INVENTORY = JSON.parse(readFileSync(path.resolve(__dirname, "../../../docs/frontend/screens.json"), "utf8")) as {
@@ -25,7 +26,6 @@ test("each old address answers 308 to its new one", async ({ request }) => {
     ["/account/password", "/login?view=forgot"],
     ["/guide/papers-to-approve", "/guide"],
     ["/guide/workflows", "/guide"],
-    ["/workflows", "/guide"],
   ];
   for (const [from, to] of folds) {
     const res = await request.get(from, { maxRedirects: 0 });
@@ -124,4 +124,24 @@ test("report a problem warns against a child's name and sends one note", async (
   await page.goto("/feedback?from=%2Ftoday");
   await expect(page.getByText("Please do not type a child's name, a parent's name or a phone number here.")).toBeVisible();
   await expect(page.getByLabel("Where (the page you came from)")).toHaveValue("/today");
+});
+
+test("the help reads at phone width with no sideways scroll", async ({ browser }) => {
+  const context = await browser.newContext({ viewport: { width: 400, height: 800 }, storageState: SIGNED_IN });
+  const page = await context.newPage();
+  await page.goto("/guide");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Start here");
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  await context.close();
+});
+
+test("each I want to link opens its screen", async ({ page }) => {
+  await page.goto("/guide");
+  const hrefs = await page.locator("main a[data-job]").evaluateAll((as) => as.map((a) => a.getAttribute("href")!));
+  expect(hrefs.length).toBeGreaterThan(0);
+  for (const href of hrefs) {
+    const screen = INVENTORY.screens.find((s) => s.route === href)!;
+    await page.goto(href);
+    await expect(page.getByRole("heading", { level: 1 }), href).toHaveText(screen.title);
+  }
 });

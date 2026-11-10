@@ -35,7 +35,7 @@ test.beforeAll(async ({ browser }) => {
     // a page that opens on the person's own grade is compared at "Every grade", its one tap
     "/today", "/", "/papers", "/growth", "/asks", "/library?grade=all", "/worksheets?grade=all", "/worksheets/taxonomy", "/skill-sets/approve",
     `/skill-sets/${draft}`, "/capture", "/capture/check", "/make", `/make/${OTHER}`, "/papers/approve", "/growth/reports",
-    `/growth/class/${OTHER}`, `/growth/${other.Kavi}`, `/growth/${other.Kavi}/report`,
+    `/growth/class/${OTHER}`, `/growth/${other.Kavi}`, `/growth/${other.Kavi}/report`, "/workflows",
   ];
   educator = await asEducator(browser);
 });
@@ -112,7 +112,7 @@ async function offered(page: Page, at: string, name: string): Promise<{ refused:
 const NAMES = [
   "/today", "/", "/papers", "/growth", "/asks", "/library", "/worksheets", "/worksheets/taxonomy", "/skill-sets/approve",
   "a skill waiting", "/capture", "/capture/check", "/make", "/make of another class", "/papers/approve", "/growth/reports",
-  "another class's growth", "a child of another class", "that child's report",
+  "another class's growth", "a child of another class", "that child's report", "/workflows",
 ];
 const walked: string[] = [];
 test.describe("an educator reaches every page and every action the coordinator does", () => {
@@ -144,6 +144,7 @@ test("an educator takes a decision once the coordinator's alone: approving a ski
   try {
     await educator.goto("/today");
     await expect(educator.getByRole("main")).toContainText("Skills to approve");
+    await expect(educator.locator("[data-frame]").getByRole("link", { name: "How it works" }), "the engineering map is theirs too").toBeVisible();
     await educator.goto(`/skill-sets/${waiting.code}`);
     await expect(educator.getByRole("button", { name: /^Approve, as / })).toBeVisible();
     await educator.goto("/skill-sets/approve");

@@ -166,6 +166,7 @@ test("an educator not mapped to a class sees the rows of no class a coordinator 
   await page.goto("/today");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("What needs doing");
   const coordinator = await rows(page);
+  await expect(page.locator("[data-frame]").getByRole("link", { name: "How it works" }).first()).toBeVisible();
 
   await aPerson(sql, EDUCATOR);
   await signInAs(page, EDUCATOR.email);
@@ -174,6 +175,7 @@ test("an educator not mapped to a class sees the rows of no class a coordinator 
   const school = ["skill", "ask"];
   expect(await rows(page)).toEqual(coordinator.filter((r) => school.includes(r.kind)));
   await expect(page.getByText(/For others|For you|No one on the staff list/)).toHaveCount(0);
+  await expect(page.locator("[data-frame]").getByRole("link", { name: "How it works" }).first()).toBeVisible();
 });
 
 test("weeks and classes on What needs doing are said in words, not codes", async ({ page }) => {

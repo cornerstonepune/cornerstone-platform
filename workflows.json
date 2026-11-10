@@ -202,6 +202,7 @@
       "/skill-sets/[code]": ["filter", "shell", "status", "table", "taglist"],
       "/skill-sets/[code]/edit": ["shell", "taglist"],
       "/skill-sets/approve": ["filter", "purpose", "shell", "status", "table", "taglist"],
+      "/workflows": ["purpose", "shell", "status"],
       "/worksheets": ["filter", "shell", "table", "taglist"],
       "/worksheets/[qr]": ["filter", "shell", "status", "table", "taglist"],
       "/worksheets/taxonomy": ["filter", "shell", "status", "table", "taglist"]

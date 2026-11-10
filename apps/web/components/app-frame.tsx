@@ -3,7 +3,7 @@ import Link from "@/components/link";
 import { BrandMark } from "./brand-mark";
 import { BottomDoors, DoorPages, HelpLink, TopDoors } from "./frame/doors";
 import { ActingAsSwitch, AccountLink, Person } from "./frame/person";
-import { ReportLink } from "./frame/foot-links";
+import { MapLink, ReportLink } from "./frame/foot-links";
 import { SearchBox } from "./frame/search-box";
 import { WalkProvider, type FrameDoor } from "./frame/walk";
 import { Body, PageHeader, classesSaid } from "./parts";
@@ -70,6 +70,7 @@ export async function AppFrame({ me, waiting, children }: { me: Session; waiting
         <footer className="mx-auto w-full max-w-[1560px] px-[var(--space-3)] py-[var(--space-3)] text-[length:var(--text-label)] md:px-[var(--space-4)] print:hidden">
           <span className="flex flex-wrap gap-x-[var(--space-4)]">
             <ReportLink />
+            {mayUse(me, "the_map") ? <MapLink /> : null}
           </span>
         </footer>
         <BottomDoors />
