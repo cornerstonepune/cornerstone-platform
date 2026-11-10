@@ -120,6 +120,21 @@ RUNS = {
         "commands": [["engine", "curriculum", "materials", "--stage", "draft", "--by", BY]],
     },
     "review": {"spends": False, "commands": [["engine", "curriculum", "review"]]},
+    # the screens go on by a logged, signed command, never by hand on live (10 Nov, the founder: all screens on)
+    "switch_status": {"spends": False, "commands": [["engine", "read", "voice", "status"]]},
+    "switch_screens_on": {
+        "spends": False,
+        "commands": [
+            ["engine", "read", "voice", "switch", "screens", "on", "--by", BY],
+            ["engine", "read", "voice", "switch", "timetable", "on", "--by", BY],
+            ["engine", "read", "voice", "switch", "curriculum", "on", "--by", BY],
+        ],
+    },
+    # a child's voice reaches a speech service once this is on: its own run, so it is never part of another
+    "switch_recording_on": {
+        "spends": False,
+        "commands": [["engine", "read", "voice", "switch", "recording", "on", "--by", BY]],
+    },
 }
 
 

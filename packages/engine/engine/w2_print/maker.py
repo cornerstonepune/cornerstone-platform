@@ -107,10 +107,13 @@ def _plan(conn, kids, section, week, kind, way, ask, changed, draw=0) -> dict:
     return {"section": section, "week": week, "kind": kind, "way": way, "papers": papers, "refused": refused}
 
 
-def make(conn, section, children, week, kind, way, by, ask=None, changed=None, draw=0, seen=None) -> dict:
+def make(
+    conn, section, children, week, kind, way, by, ask=None, changed=None, draw=0, seen=None, approve=True
+) -> dict:
     """`by` approves every paper `plan` shows, and each prints with its own code. Refused whole, naming each child
     whose paper cannot be made, rather than printing some of the class, or when the papers are no longer the `draw`
-    the educator saw (`seen`, `seen.check`)."""
+    the educator saw (`seen`, `seen.check`). With `approve` false the papers are made and wait: approved by no one,
+    given to no one, until `edit_paper.approve`."""
     if not by:
         raise ValueError("a paper is approved in a person's name")
     # one batch at a time for a child: two educators' clicks together cannot print a child's paper at the same instant
@@ -121,10 +124,17 @@ def make(conn, section, children, week, kind, way, by, ask=None, changed=None, d
     shown.check(p["papers"], seen)
     with sync_playwright() as pw:
         made = [
-            focus_paper.print_paper(conn, x["child_id"], week, by, kind, x, HOW[x["chosen"]], pw)
+            focus_paper.print_paper(
+                conn, x["child_id"], week, by, kind, x, HOW[x["chosen"]], pw, waiting=not approve
+            )
             for x in p["papers"]
         ]
-    return {"qrs": [m["qr"] for m in made], "papers": len(made), "pages": sum(m["pages"] for m in made)}
+    return {
+        "qrs": [m["qr"] for m in made],
+        "papers": len(made),
+        "pages": sum(m["pages"] for m in made),
+        "approved": approve,
+    }
 
 
 def pdf(conn, qrs: list) -> bytes:

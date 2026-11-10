@@ -3684,7 +3684,19 @@
         {
           "t": "button",
           "label": "Send",
-          "effect": "a staff_note row and a GitHub issue; the page says it reached the team and links back"
+          "effect": "a staff_note row and a GitHub issue; the page says it reached the team and links back",
+          "drive": {
+            "fill": {
+              "What happened, or what you would like": "Inventory check: the page reached the team"
+            },
+            "click": "Send",
+            "expect": {
+              "text": [
+                "Thanks, it reached the team."
+              ],
+              "check": "feedback_note_sent"
+            }
+          }
         }
       ],
       "rail": [],

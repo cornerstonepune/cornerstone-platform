@@ -99,11 +99,12 @@ def _write(
         obs = db.one(
             conn,
             "insert into activity_observation (tenant_id, confirmation_id, note_id, activity_code, child_id, class_id,"
-            " outcome, entry_mode, route, expected_level, reached_level, observed_at, observed_by, confirmed_by)"
-            " select tenant_id, %s, %s, %s, %s, id, %s, %s, %s, %s, %s, %s, %s, %s from school_class where id = %s"
+            " outcome, entry_mode, route, expected_level, reached_level, observed_at, observed_by, confirmed_by, session_id)"
+            " select tenant_id, %s, %s, %s, %s, id, %s, %s, %s, %s, %s, %s, %s, %s,"
+            " (select session_id from pii.educator_note where id = %s) from school_class where id = %s"
             " returning id, tenant_id",
             (confirmation, note_id, final.activity, child, outcome, mode, route, final.level, reached, observed_at,
-             staff, staff, class_id),
+             staff, staff, note_id, class_id),
         )  # fmt: skip
         if reached is not None:
             mark = _mark(conn, reached)

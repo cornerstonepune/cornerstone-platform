@@ -3,7 +3,8 @@
 // so it proves the same thing on a database built from the repository as on a copy of live.
 import { createHmac } from "node:crypto";
 import type { Browser, BrowserContext } from "@playwright/test";
-import type { Sql } from "postgres";
+import postgres, { type Sql } from "postgres";
+import { issuesMade } from "./github-server";
 import { SIGNED_IN } from "../playwright.config";
 import { aClass, aPerson, personAsStored } from "./rows";
 import { FAKE_CHILDREN } from "./fake-names";
@@ -53,4 +54,32 @@ export function addressOf(route: string, rows: Rows, over: Record<string, string
 export const sessionFor = (email: string, secret = process.env.E2E_AUTH_SECRET!) => {
   const body = `${Buffer.from(email).toString("base64url")}.${Date.now() + 3_600_000}`;
   return `${body}.${createHmac("sha256", secret).update(body).digest("hex")}`;
+};
+
+/** The rows a stateful control needs in place before it is pressed, by the name an element's `drive.fixture` gives (tests/inventory/drivers.ts). */
+export const FIXTURES: Record<string, () => Promise<void>> = {};
+/** What a control must have done to the rows, by the name an element's `drive.expect.check` gives: the problems, [] when it holds. */
+export const CHECKS: Record<string, () => Promise<string[]>> = {
+  // Report a problem, Send: each note the inventory sent is one staff_note row and one issue on the run's own GitHub, whose body holds no email
+  feedback_note_sent: async () => {
+    const mark = "Inventory check: the page reached the team";
+    const sql = postgres(process.env.DATABASE_URL!, { max: 1 });
+    try {
+      const wait = Date.now() + 20_000;
+      let notes: { status: string }[] = [];
+      do {
+        notes = await sql<{ status: string }[]>`select status from staff_note where happened = ${mark}`;
+        if (notes.length && notes.every((n) => n.status === "sent")) break;
+        await new Promise((r) => setTimeout(r, 500));
+      } while (Date.now() < wait);
+      const issues = issuesMade().filter((i) => i.body.includes(mark));
+      const out: string[] = [];
+      if (!notes.length) out.push("no staff_note row was written");
+      if (issues.length !== notes.length) out.push(`${notes.length} notes but ${issues.length} issues`);
+      if (issues.some((i) => /[^\s@]+@[^\s@]+\.[a-z]{2,}/i.test(i.body))) out.push("an issue body holds an email address");
+      return out;
+    } finally {
+      await sql.end();
+    }
+  },
 };

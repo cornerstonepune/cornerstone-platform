@@ -4,7 +4,7 @@ import { UploadScans } from "../capture/upload-scans";
 
 // Read an assessment (goals/asm_assessments_page.yaml): one drop zone, the Google Drive link, and one button. What the
 // engine said about the last file is one line above it; what each file came to is on its assessment's row.
-export function ReadBox({ read, why, pages, reading }: { read?: string; why?: string; pages?: string; reading: boolean }) {
+export function ReadBox({ read, why, pages, reading, from = "/papers" }: { read?: string; why?: string; pages?: string; reading: boolean; from?: string }) {
   const n = Number(pages) || "";
   const said = {
     started: `Reading ${n} pages. They appear in the list as they are read — a minute or two.`,
@@ -20,7 +20,7 @@ export function ReadBox({ read, why, pages, reading }: { read?: string; why?: st
       {said ? <Notice tone={read === "started" || read === "given" || read === "again" ? "neem" : "terracotta"}>{said}</Notice> : null}
       <UploadScans reading={reading} />
       <form action={readScan} className="flex flex-wrap items-center gap-2">
-        <input type="hidden" name="from" value="/papers" />
+        <input type="hidden" name="from" value={from} />
         <input
           type="url"
           name="url"
