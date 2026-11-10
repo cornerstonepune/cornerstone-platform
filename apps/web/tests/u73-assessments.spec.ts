@@ -79,6 +79,8 @@ test("the seven steps, their words and the queries' names are the committed ones
 
 test("every row of Assessments is named topic · skill · level · kind · class · day, and no screen has an approve-all control (8, 9)", async ({ page }) => {
   await page.goto(`/children/assessments?view=table&class=${SECTION}`);
+  // the page streams: its rows are read once they are there
+  await expect(page.getByRole("table", { name: "Every assessment" }).locator("tbody tr").first()).toBeVisible();
   const names = await page.getByRole("table", { name: "Every assessment" }).locator("tbody tr td:first-child a").allInnerTexts();
   expect(names.length).toBeGreaterThanOrEqual(2);
   for (const n of names) expect(n).toMatch(NAME);
@@ -93,12 +95,14 @@ test("each tile's number equals the rows behind it, and each lane's cards the ta
   await page.goto(`/children/assessments?view=table&class=${SECTION}`);
   const tile = async (word: string) => Number(await page.locator("[data-block=AttentionStrip] a").filter({ hasText: word }).locator(".b-n").innerText());
   const rows = page.getByRole("table", { name: "Every assessment" }).locator("tbody tr");
+  await expect(rows.first()).toBeVisible(); // the page streams: its rows are read once they are there
   const next = await rows.locator('td[data-label="Next"] a').allInnerTexts();
   const waits = await rows.locator('td[data-label="Waits for"]').allInnerTexts();
   expect(await tile("do now")).toBe(waits.filter((w) => /answers? to judge/i.test(w)).length);
   expect(await tile("this week")).toBe(next.filter((n) => /^(Approve|Sign off)/.test(n)).length);
   expect(await tile("done")).toBe(waits.filter((w) => /results in/i.test(w)).length);
   await page.goto(`/children/assessments?view=board&class=${SECTION}`);
+  await expect(page.locator("[data-lane]").first()).toBeVisible();
   const lanes = await page.locator("[data-lane] .b-count").allInnerTexts();
   expect(lanes.map(Number).reduce((a, b) => a + b, 0)).toBe(next.length);
 });
