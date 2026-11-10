@@ -1,6 +1,6 @@
 import Link from "@/components/link";
 import { Details } from "@/components/details";
-import { PageShell } from "@/components/page-shell";
+import { Screen } from "@/components/app-frame";
 import { requireStaff } from "@/lib/auth";
 import { mayUse } from "@/lib/access";
 import { BLOCKS } from "@/lib/blocks";
@@ -20,7 +20,7 @@ export default async function BlocksPage({ searchParams }: Props) {
   const q = await searchParams;
   const first = BLOCKS[0].name;
   return (
-    <PageShell
+    <Screen
       stage="Setup · for the people who build the site"
       title="The blocks"
       purpose="Every part the site is built from, with sample data and its words. Open one to see how it behaves."
@@ -35,7 +35,7 @@ export default async function BlocksPage({ searchParams }: Props) {
         <Legend />
         <section aria-label="The blocks, one fold each" className="b-folds" style={{ display: "grid", gap: "var(--space-3)" }}>
           {BLOCKS.map((b) => {
-            const sample = sampleOf(b.name, q);
+            const sample = sampleOf(b.name, q, me);
             return (
               <Details key={b.name} name={b.name} id={`fold-${b.name}`} open={q.open === b.name} summary={b.name}>
                 <p className="b-muted">{b.contract}</p>
@@ -47,6 +47,6 @@ export default async function BlocksPage({ searchParams }: Props) {
           })}
         </section>
       </div>
-    </PageShell>
+    </Screen>
   );
 }

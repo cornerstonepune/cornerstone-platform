@@ -7,8 +7,9 @@ Branch `ui-2-blocks` (from `ui-14-tokens-fonts`), issue #517. Scope: `specs/UI-2
 
 Every block of `screens.json` `blocks` except AppFrame, BrandMark (and the bar search) is a file `components/<kebab>.tsx`
 with `data-block`; the gallery is `/setup/blocks`, linked from Setup's details view (`/?details=1`), coordinator only.
-Waiting on UI-13 (AppFrame, BrandMark): tests 1 and 11 fail until main with UI-13 is merged and the gallery's two samples
-use the real components (today AppFrame's fold says it is built in UI-13, BrandMark's shows the lockup file).
+UI-13 (AppFrame, BrandMark) is merged in: the gallery's two samples are the real components. AppFrame's root and
+BrandMark's `<picture>` carry `data-block`, so tests 1 and 11 hold. The AppFrame sample is the real frame inside a box with
+`contain: layout`, so its phone tab bar stays in the sample. The gallery page is a `Screen` (the old `PageShell` went with UI-13).
 
 ## Mechanical choices
 
@@ -23,6 +24,7 @@ use the real components (today AppFrame's fold says it is built in UI-13, BrandM
 | Chart geometry follows the kit's numbers: Spark x 10–290, y 54 (least) to 18 (greatest); Trend x 40–580 by date, y = 100 − 30 × level; LevelBars width = share of children counted; StackBar flex = count. | "Drawn to scale from its data". |
 | The gallery reads the block list from `docs/frontend/screens.json` (`lib/blocks.ts`) and the legend from `STATES`, `ACTIONS` and `design-system/tokens.json`. Folds are native `<details>`, opened by `?open=<Name>` (a sample's own links and the filter keep their fold open). | Done when 11 and 13. |
 | `mayUse(me, "blocks")` is coordinator-only; for an educator the page answers with Next's not-found page (the page streams, so the status is 200). | Done when 12. |
+| The inventory's BrandMark rule (`tests/inventory/brand.ts`) counts the page's own logo only (`img:not([data-sample] *)`); the gallery shows a second one as a sample. | One logo per page is still checked; the sample is not the page's. |
 | Sample names are the fake-names list (alliterative animals, spice surnames). | The repository is public. |
 
 ## Lessons

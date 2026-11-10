@@ -1,3 +1,6 @@
+import { AppFrame } from "@/components/app-frame";
+import { BrandMark } from "@/components/brand-mark";
+import type { Session } from "@/lib/auth";
 import { AttentionStrip } from "@/components/attention-strip";
 import { Cards } from "@/components/cards";
 import { CaptureBar } from "@/components/capture-bar";
@@ -31,7 +34,7 @@ const CLASSES = [
   { name: "K2 Blue", children: 23, state: "done" as State, note: "" },
 ];
 
-export function sampleOf(name: string, q: Record<string, string | undefined>): React.ReactNode | null {
+export function sampleOf(name: string, q: Record<string, string | undefined>, me: Session): React.ReactNode | null {
   switch (name) {
     case "AttentionStrip":
       return <AttentionStrip tiles={[
@@ -131,9 +134,15 @@ export function sampleOf(name: string, q: Record<string, string | undefined>): R
         </div>
       );
     case "BrandMark":
+      return <BrandMark size="large" />;
+    case "AppFrame":
+      // the real frame, as the pages wear it; `contain: layout` keeps its phone tab bar (fixed to the screen) inside the sample
       return (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img src="/brand/Cornerstone-logo-lockup-colour.svg" alt="Cornerstone Gurukul" height={72} style={{ height: 72 }} />
+        <div style={{ contain: "layout", overflow: "hidden", border: "1px solid var(--line)" }}>
+          <AppFrame me={me} waiting={0}>
+            <p className="b-muted" style={{ padding: "var(--space-3)" }}>A page sits here, under the bar.</p>
+          </AppFrame>
+        </div>
       );
     default:
       return null;

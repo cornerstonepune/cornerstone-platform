@@ -59,7 +59,6 @@ import {
   Camera,
   CircleDashed,
   ClipboardCheck,
-  Eye,
   Hash,
   MessagesSquare,
   MoveRight,

@@ -38,7 +38,7 @@ export async function AppFrame({ me, waiting, children }: { me: Session; waiting
   const doors = doorsFor(me, acting, waiting);
   return (
     <WalkProvider doors={doors}>
-      <div data-frame className="flex min-h-dvh flex-col bg-[var(--ground)] pb-[var(--space-7)] text-[var(--ink)] min-[701px]:pb-0">
+      <div data-block="AppFrame" data-frame className="flex min-h-dvh flex-col bg-[var(--ground)] pb-[var(--space-7)] text-[var(--ink)] min-[701px]:pb-0">
         <header data-bar className="relative z-30 border-b border-[var(--line)] bg-[var(--panel)] print:hidden">
           <div className="mx-auto flex h-16 w-full max-w-[1560px] items-center gap-[var(--space-3)] px-[var(--space-3)] min-[701px]:gap-[var(--space-4)] md:px-[var(--space-4)]">
             <Link href="/today" prefetch className="flex shrink-0 items-center no-underline">
