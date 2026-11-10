@@ -47,6 +47,7 @@ DOCS_PREFIXES = (
     "docs/brainstorms/",
     "docs/drafts/",
     "docs/superpowers/",
+    "docs/frontend/wireframes/",  # drawings and their own checker (check.mjs); nothing in CI reads them
 )
 DOCS_FILES = (
     "HANDOFF.md",

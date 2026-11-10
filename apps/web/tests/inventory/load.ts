@@ -4,7 +4,10 @@
 import { readFileSync } from "node:fs";
 import path from "node:path";
 
-export type Element = { t: string; label: string; to?: string; href?: string; text?: string; external?: string; for?: "educator" | "coordinator"; note?: string; effect?: string };
+/** `data`: the controls that carry this attribute (a graph node, a table row's link) are this element, however many there are. `when`: the control is not on the page at rest. `peek`: after a child is chosen; `filtered`: once a filter is on (the chips and Clear);
+ *  `paged`: only when the rows pass one page. The checker brings the page into that state before it asks for the control. */
+export type When = "peek" | "filtered" | "paged";
+export type Element = { t: string; label: string; to?: string; href?: string; text?: string; external?: string; for?: "educator" | "coordinator"; note?: string; effect?: string; when?: When; data?: string; roles?: ("educator" | "coordinator")[] };
 export type Screen = {
   id: string;
   route: string;
@@ -38,3 +41,9 @@ export const titleMatches = (title: string, h1: string) => {
   const re = title.replace(/[.*+?^$()|\\]/g, "\\$&").replace(/\[[^\]]*\]|\{[^}]*\}|…/g, ".+");
   return new RegExp(`^${re}$`).test(h1.trim());
 };
+
+/** The screens whose controls may be drawn in this run: those of a slice in `merged_slices` and those the run covers. A control whose
+ *  target is none of them is not required (it is not drawn, so it is not a dead link) and is not driven; one that is drawn anyway by
+ *  its label is accepted as the element's own, never counted as extra. */
+export const builtScreens = (inv: Inventory, env: Record<string, string | undefined> = process.env) =>
+  new Set([...inv.slices.filter((s) => inv.merged_slices.includes(s.id)).flatMap((s) => s.screens), ...covered(inv, env)]);
