@@ -82,7 +82,7 @@ test("the menu is the teacher's week, and says where they are", async ({ page })
   // four doors (lib/menu.ts); the one count of what waits follows the first name
   await expect(menu.getByRole("link")).toHaveText([/^Today/, /^Timetable/, /^Children/, /^Setup/]);
   for (const [label, heading] of [
-    ["Setup", "Curriculum"],
+    ["Setup", "Setup"],
     ["Children", "Children"],
     ["Today", "What needs doing"],
   ]) {

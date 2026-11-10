@@ -1069,15 +1069,15 @@ Done when (on top of the ten generic checks):
 #### Staff and classes `/setup/staff`
 Who: coordinator · Phase: Core · Backend: CP-1 · CP-3 · Old page today: yes · Slice: UI-5
 Eyebrow: This fortnight
-Purpose: Who teaches which class, and three numbers the database can stand behind per class. No ranking: the school decides what they mean.
+Purpose: Who teaches which class, and whole counts the database can stand behind. No score, no ranking: the school decides what they mean.
 Blocks, in order:
-- **DataTable**: role · class · sessions done of planned · notes late · reader accuracy; each row opens the person's grants
+- **DataTable**: role · class · sessions done of planned · notes confirmed · notes late · lines accepted / changed / removed; each row opens the person's grants
 - **Details**: a person's grants: role, class, subject, from, to; Add a grant
 Rail (Connected to): Fortnight 9 · Timetable · Classes and children
 Main action: Add a grant · Next step: Classes and children
 Data: staff, staff_role_grant, role; session states; educator_note statuses; note_claim decisions
 Empty: none · Phone: the table scrolls sideways in its own box
-Every control on the screen (7), and what the test does with each:
+Every control on the screen (9), and what the test does with each:
 - **row** each staff row: opens that person's grants fold
 - **fold** a person's grants
 - **button** Add a grant: a form: role (rows), class, subject, from; Save writes a staff_role_grant row; the trigger's checks show as messages (needs a class, holds it twice)
@@ -1085,6 +1085,8 @@ Every control on the screen (7), and what the test does with each:
 - **link** rail: Fortnight 9 → Fortnight 9 (`/timetable/fortnight/[n]`)
 - **link** rail: Timetable → Timetable (`/timetable`)
 - **link** rail: Classes and children → Classes and children (`/setup/classes`)
+- **filter** Role: narrows the rows to one role
+- **filter** Find a person (search): narrows the rows to a name
 Done when (on top of the ten generic checks):
 - no sort, rank, ordinal or colour grading on the three numbers; the table cannot be sorted by them
 - a grant edit is a new row or a valid_to, never a delete (row count never drops)
@@ -1104,15 +1106,17 @@ Main action: Move a child · Next step: Staff
 Data: school_class, enrolment, change_log (a move is a closed enrolment, a new one and a change_log row), names read from pii by child_id at render, never stored in these tables
 Empty: none · Phone: the table scrolls sideways in its own box
 Folds in: /school
-Every control on the screen (8), and what the test does with each:
+Every control on the screen (10), and what the test does with each:
 - **row** each class row: opens that class's children table below
 - **child_name** each child row (the name beside the Sr. No., so a person moving a child knows who it is)
-- **button** Move (a child row): a picker of classes and a date; Save closes the enrolment, opens a new one and writes a change_log row; the child appears in the new class
+- **button** Move (a child row): opens a picker of classes and a date; Save closes the enrolment, opens a new one and writes a change_log row; the child appears in the new class
 - **fold** change log
 - **link** a class's picture → Class picture (`/children/[class]`)
 - **link** rail: Staff → Staff and classes (`/setup/staff`)
 - **link** rail: Class picture → Class picture (`/children/[class]`)
 - **link** rail: the fortnight → Fortnight 9 (`/timetable/fortnight/[n]`)
+- **filter** Grade: narrows the classes to one grade
+- **filter** Find a class (search): narrows the classes to a name
 Done when (on top of the ten generic checks):
 - a move closes the enrolment, opens a new one, writes a change_log row and deletes nothing
 - each child row shows the name beside the Sr. No., read from pii by child_id; the address and the change log's stored text carry no name (DOM scan)
