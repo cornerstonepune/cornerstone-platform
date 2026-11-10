@@ -25,7 +25,8 @@ const back = (formData: FormData) => {
 export async function readScan(formData: FormData): Promise<void> {
   const me = await deciding("papers");
   // back to the page it was read from: Papers, or the scans and the reader's accuracy (goals/u9-papers.yaml)
-  const page = formData.get("from") === "/papers" ? "/papers" : "/capture";
+  const from = String(formData.get("from") ?? "");
+  const page = from === "/papers" || from === "/children/assessments" ? from : "/capture";
   const url = String(formData.get("url") ?? "")
     .trim()
     .slice(0, 400);
@@ -39,6 +40,7 @@ export async function readScan(formData: FormData): Promise<void> {
     const { pages } = (await res.json()) as { pages: number };
     revalidatePath("/capture");
     revalidatePath("/papers");
+    revalidatePath("/children/assessments");
     redirect(`${page}?read=started&pages=${Number(pages) || 0}#read-scan`);
   } catch (e) {
     if (!(e instanceof EngineDown)) throw e;
@@ -51,7 +53,8 @@ export async function readScan(formData: FormData): Promise<void> {
  *  read as nobody's — the engine never guesses a page's child. The engine says in words why it will not. */
 export async function givePage(formData: FormData): Promise<void> {
   const me = await deciding("papers");
-  const page = formData.get("from") === "/papers" ? "/papers" : "/capture";
+  const from = String(formData.get("from") ?? "");
+  const page = from === "/papers" || from === "/children/assessments" ? from : "/capture";
   const run = String(formData.get("run") ?? "");
   const child = String(formData.get("child") ?? "");
   const n = Number(formData.get("page"));
@@ -78,7 +81,8 @@ export async function givePage(formData: FormData): Promise<void> {
  *  — the file is the one the engine keeps — and says in words why it will not (still being read, no longer kept). */
 export async function readAgain(formData: FormData): Promise<void> {
   const me = await deciding("papers");
-  const page = formData.get("from") === "/papers" ? "/papers" : "/capture";
+  const from = String(formData.get("from") ?? "");
+  const page = from === "/papers" || from === "/children/assessments" ? from : "/capture";
   const run = String(formData.get("run") ?? "");
   if (!UUID.test(run)) redirect(`${page}#read-scan`);
   await mustSee(me, "papers", [{ run }]);

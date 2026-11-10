@@ -137,8 +137,9 @@ export function Screen({
   stage: string;
   title: string;
   purpose: string;
-  action: ReactNode;
-  next: To;
+  /** The one main action; a screen whose main action is one of its own controls marks that control `data-ux="action"` and passes none. */
+  action?: ReactNode;
+  next?: To | null;
   details?: To;
   rail?: ReactNode;
   children: ReactNode;
@@ -149,7 +150,7 @@ export function Screen({
       <Body>
         <div className={rail ? "grid gap-[var(--space-4)] min-[1000px]:grid-cols-[minmax(0,1fr)_320px]" : undefined}>
           <div className="min-w-0">
-            <div className="mb-4 flex flex-wrap items-center gap-3" data-ux="action">
+            <div className={action || details ? "mb-4 flex flex-wrap items-center gap-3" : undefined} data-ux={action ? "action" : undefined}>
               {action}
               {details ? (
                 <Link href={details.href} className="ml-auto text-[13px]" data-ux="details">
@@ -158,11 +159,13 @@ export function Screen({
               ) : null}
             </div>
             {children}
-            <nav className="mt-6 border-t border-[var(--line)] pt-4" aria-label="Next step">
-              <Link href={next.href} className="chip" data-ux="next">
-                {next.label} →
-              </Link>
-            </nav>
+            {next ? (
+              <nav className="mt-6 border-t border-[var(--line)] pt-4" aria-label="Next step">
+                <Link href={next.href} className="chip" data-ux="next">
+                  {next.label} →
+                </Link>
+              </nav>
+            ) : null}
           </div>
           {rail}
         </div>
