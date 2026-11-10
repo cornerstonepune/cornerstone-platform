@@ -13,6 +13,9 @@ import { schoolToday } from "@/lib/school-clock";
 import type { Column } from "@/lib/ux-rules";
 import { MoveButton } from "./move-button";
 
+// A class is read whole, like the class grid (docs/ux-rules.md rule 3): the coordinator finds the child to move by Sr. No. without paging.
+const CLASS_ROWS = 40;
+
 type Props = { searchParams: Promise<Record<string, string | undefined>> };
 
 // Classes and children (docs/frontend/screens.json `classes`, UI-5). Each class of this year with its grade, its children and
@@ -71,7 +74,7 @@ export default async function ClassesPage({ searchParams }: Props) {
           <h2 className="mb-2 text-[16px]">
             {open.label}: {open.children} children
           </h2>
-          <DataTable label={`${open.label} children`} columns={kid} rows={children} rowKey={(c) => c.id} more={{ page: Number(q.page) || 1, href: (n: number) => `/setup/classes?class=${open.id}&page=${n}` }} />
+          <DataTable label={`${open.label} children`} columns={kid} rows={children} rowKey={(c) => c.id} limit={CLASS_ROWS} more={{ page: Number(q.page) || 1, href: (n: number) => `/setup/classes?class=${open.id}&page=${n}` }} />
         </section>
       ) : (
         <p className="note mt-2">No class matches these filters.</p>
