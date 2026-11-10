@@ -7,7 +7,7 @@ jobs:
   probe:
     name: probe ${{ matrix.name }}
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     strategy:
       fail-fast: false
       matrix:
@@ -47,13 +47,33 @@ jobs:
       - run: >-
           psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -c "alter role app_web password 'ci-web'"
           -c "alter role app_engine password 'ci-engine'"
-      - name: u71's timing test and the probe, twice over
+      - name: the whole of browser shard 3, so the copy holds what it holds when u71 runs
+        working-directory: apps/web
+        continue-on-error: true
+        env:
+          TEST_WEB_DATABASE_URL: postgresql://app_web:ci-web@127.0.0.1:5432/postgres
+          TEST_ENGINE_DATABASE_URL: postgresql://app_engine:ci-engine@127.0.0.1:5432/postgres
+        run: npx playwright test --shard=3/3 --retries=0 --trace off --reporter=line 2>&1 | grep -E "u71 \||passed|failed|flaky" || true
+      - name: the probe on that copy, with every statement over 30 ms logged
         working-directory: apps/web
         env:
           TEST_WEB_DATABASE_URL: postgresql://app_web:ci-web@127.0.0.1:5432/postgres
           TEST_ENGINE_DATABASE_URL: postgresql://app_engine:ci-engine@127.0.0.1:5432/postgres
         run: |
-          for i in 1 2; do
-            echo "=== pass $i on ${{ matrix.name }} ($(git rev-parse --short HEAD))"
-            npx playwright test u71-results-by-topic u99-probe --grep "a class of 40|probe:" --workers=1 --retries=0 --trace off --reporter=line 2>&1 | grep -E "probe \||u71 \||passed|failed" || true
-          done
+          psql "$DATABASE_URL" -c "select count(distinct section) as classes, count(*) as children from child_now where active"
+          psql "$DATABASE_URL" -At -c "alter system set log_min_duration_statement = 30" -c "select pg_reload_conf()"
+          LOG="$RUNNER_TEMP/postgres/log"; MARK=$(wc -c <"$LOG")
+          npx playwright test u99-probe --workers=1 --retries=0 --trace off --reporter=line 2>&1 | grep -E "probe \||passed|failed" || true
+          echo "--- statements over 30 ms during the probe (top 25 by time)"
+          tail -c +"$MARK" "$LOG" | python3 -c "
+          import re,sys
+          t=sys.stdin.read()
+          parts=re.split(r'(?=\d{4}-\d\d-\d\d [\d:.]+ \w+ \[\d+\] LOG:  duration: )',t)
+          rows=[]
+          for p in parts:
+              m=re.search(r'duration: ([\d.]+) ms',p)
+              if m: rows.append((float(m.group(1)),' '.join(p.split())[:420]))
+          rows.sort(reverse=True)
+          print(len(rows),'statements')
+          for d,q in rows[:25]: print(f'{d:8.1f} ms | {q[60:]}')
+          "
