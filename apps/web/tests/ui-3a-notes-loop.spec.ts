@@ -154,3 +154,14 @@ test("Notes: the coordinator sees the notes of every class of the campus", async
   await page.goto("/notes?view=table");
   await expect(page.locator(`a[href="/notes/${note}"]`).first()).toBeVisible();
 });
+
+test("Record: Add a photo hangs the photo on the lesson's note, with the rule for photos beside it", async ({ page }) => {
+  await page.goto(`/record?class=${klass}&session=${lesson}`);
+  await expect(page.locator("[data-add-photo] [data-photo-rule]")).toHaveText("Photograph the work or the board, never a child.");
+  // a 1 x 1 PNG: the engine looks at the file's first bytes, not its name
+  const png = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEgAF/QualzQAAAABJRU5ErkJggg==", "base64");
+  await page.locator("[data-add-photo] input[type=file]").setInputFiles({ name: "board.png", mimeType: "image/png", buffer: png });
+  await expect(page.getByText("Photo added to this lesson's note.")).toBeVisible();
+  const [row] = await sql<{ n: number }[]>`select coalesce(sum(array_length(photo_keys, 1)), 0)::int as n from pii.educator_note where session_id = ${lesson}`;
+  expect(row.n).toBeGreaterThanOrEqual(1);
+});
