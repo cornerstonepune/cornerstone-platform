@@ -14,6 +14,7 @@ import pytest
 from engine.core import db, english
 from engine.w1_bank import english_edit as ed
 from engine.w1_bank import english_form as ef
+from tests.rows import a_waiting_type, an_approved_type
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs the local copy (bin/testdb)")
 BY = "Ayush (English)"
@@ -167,11 +168,7 @@ def bare_level(conn):
 def test_a_kind_is_added_to_a_level_only_with_three_samples_that_pass(conn):
     code, level = bare_level(conn)
     kind = "ENG.WRITE_WORD"
-    conn.execute(
-        "insert into question_type_approval (tenant_id, question_type, approved_by) select tenant_id, code, 'Achal'"
-        " from question_type where code = %s on conflict do nothing",
-        (kind,),
-    )
+    an_approved_type(conn, kind, "a coordinator")
     conn.execute(
         "update skill set level_approved = jsonb_build_object(%s::text, jsonb_build_object('by', 'Achal',"
         " 'at', now())) where code = %s",
@@ -204,7 +201,7 @@ def test_a_kind_is_added_to_a_level_only_with_three_samples_that_pass(conn):
 
 def test_only_an_approved_kind_is_added(conn):
     code, level = bare_level(conn)
-    conn.execute("delete from question_type_approval where question_type = 'ENG.WRITE_WORD'")
+    a_waiting_type(conn, "ENG.WRITE_WORD")
     got = ed.add_kind(conn, code, level, "ENG.WRITE_WORD", [], BY)
     assert not got["saved"] and "approved" in got["why"]
 

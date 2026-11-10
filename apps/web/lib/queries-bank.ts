@@ -203,7 +203,7 @@ export async function printedPaper(qr: string): Promise<PrintedPaper | undefined
               and w.skill_set_code = st.skill_set_code and w.difficulty = st.difficulty) as worksheets,
            (select count(*)::int from item i where i.status = 'active' and i.source = 'generated'
               and i.skill_set_code = st.skill_set_code and i.difficulty = st.difficulty) as pool,
-           (select t.value::int from threshold t where t.key = 'exposure.days') as window_days,
+           (select t.value::int from config t where t.key = 'exposure.days') as window_days,
            (select n.qr_code from sheet_instance n where si.kind = 'focus' and n.kind = 'focus' and n.child_id = si.child_id
               and n.week = si.week and n.created_at > si.created_at and n.print_status <> 'void'
             order by n.created_at desc limit 1) as replaced_by
@@ -278,8 +278,9 @@ export async function questionPage(key: string): Promise<QuestionPage | undefine
     from item i
     join skill r on r.tenant_id = i.tenant_id and r.rung_code = i.rung_code
     left join skill_level l on l.tenant_id = i.tenant_id and l.skill_code = i.skill_set_code and l.difficulty = i.difficulty
-    left join lateral (select actor, note from item_feedback
-                       where item_id = i.id and verdict = 'retire' order by created_at desc limit 1) f on true
+    left join lateral (select by as actor, coalesce(reason, '') as note from approval
+                       where tenant_id = i.tenant_id and kind = 'item' and target = i.id::text and decision = 'retire'
+                       order by created_at desc, seq desc limit 1) f on true
     where i.item_key = current_item_key(${key}) and i.source = 'generated'`; // a key it had before leads to it (ADR 0053)
   return rows[0];
 }

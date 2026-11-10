@@ -19,10 +19,7 @@ GROUPS = ("to_confirm", "fix_this", "left_unconfirmed", "being_read")  # a note 
 
 
 def _cfg(conn: db.Conn) -> dict:
-    rows = conn.execute(
-        "select key, value from config where key in ('voice.confirm_within_hours', 'school.time_zone', 'k2.reads')"
-    ).fetchall()
-    got = {r["key"]: r["value"] for r in rows}
+    got = settings.many(conn, ["voice.confirm_within_hours", "school.time_zone", "k2.reads"])
     return {
         "hours": int(got["voice.confirm_within_hours"]),
         "zone": got["school.time_zone"],

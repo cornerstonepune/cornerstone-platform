@@ -3,7 +3,7 @@ import { hashPassword, scryptCost } from "./auth";
 import { sql } from "./db";
 import { closeLinks } from "./password-links";
 
-// What makes a new password good enough (goals/auth-email-password.yaml). The length is a threshold row and the list of
+// What makes a new password good enough (goals/auth-email-password.yaml). The length is a setting and the list of
 // the commonest passwords is a seed file, so neither is a number or a list inside code (rule 1). Three rules, no more:
 // Nimish, 26 Oct 2026, "keep it simple" — no character classes, no expiry, no history.
 const COMMON = new Set(common.passwords.map((p) => p.toLowerCase()));
@@ -11,7 +11,7 @@ const COMMON = new Set(common.passwords.map((p) => p.toLowerCase()));
 /** Why this password cannot be used, in the words the person reads, or null when it can. */
 export async function passwordProblem(password: string, email: string): Promise<string | null> {
   const [row] = await sql<{ least: number }[]>`
-    select (select value from threshold where key = 'password.min_length')::int as least`;
+    select (select value::numeric from config where key = 'password.min_length')::int as least`;
   const least = row?.least ?? 10;
   if (password.length < least) return `Use at least ${least} characters.`;
   if (password.trim().toLowerCase() === email.trim().toLowerCase()) {

@@ -15,7 +15,7 @@ import pymupdf
 import pytest
 
 from engine.assess import graph
-from engine.core import db
+from engine.core import db, settings
 from engine.w2_print import focus_paper, maker, shelf
 
 WEEK = "T3W1-maker-test"
@@ -218,12 +218,12 @@ def test_a_paper_short_of_fresh_questions_is_made_with_those_seen_longest_ago(co
 
 
 def test_a_question_given_before_the_window_is_fresh_again_and_one_given_inside_it_is_a_repeat(conn, kids):
-    """SPEC: across weeks, a child is not given a question they saw in the last `exposure.days` days — the threshold row
+    """SPEC: across weeks, a child is not given a question they saw in the last `exposure.days` days — the setting
     the week's assembly reads (ADR 0011 let a level hold fewer than fifty questions on that window). Neha, 2026-10-16:
     Grade 1's 13 children had been given all but 4 of Equal groups at Medium, a level of 20 questions, and one paper for
     all was refused for good, however long ago they had been given them."""
     picked = [kids["weak"], kids["strong"], kids["new"]]
-    days = int(conn.execute("select value from threshold where key = 'exposure.days'").fetchone()["value"])
+    days = settings.exposure_days(conn)
     _give(conn, kids["weak"], "Easy", 0, None)  # every Easy question, to one of the three
     ask = [{"skill_set": "SUB.3D3D", "level": "Easy", "n": 6}]
 

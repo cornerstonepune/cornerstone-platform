@@ -10,10 +10,10 @@ from engine.w1_bank.k2_check import CHECK, DRAFT, SPLIT, VERSIONS
 
 def drafting_settings(conn: db.Conn) -> dict[str, float]:
     """The drafting run's operational numbers (config row k2.drafting)."""
-    row = db.one(
-        conn, "select value from config where key = 'k2.drafting'"
-    )  # a missing row is a failed deploy
-    return {k: float(v) for k, v in row["value"].items()}
+    found = settings.config(conn, "k2.drafting")
+    if found is None:  # a missing row is a failed deploy
+        raise LookupError("no k2.drafting setting: `engine load --settings` loads it")
+    return {k: float(v) for k, v in found.items()}
 
 
 def _models(conn: db.Conn) -> dict[str, str]:
@@ -59,9 +59,7 @@ def _sent_back(conn: db.Conn, floor: int) -> tuple[float, int]:
 def forecast(conn: db.Conn, stage: str, pages: int, texts: int = 0, reused: int = 0) -> str:
     t = drafting_settings(conn)
     size, floor = int(t["batch_pages"]), int(t.get("measured_min_calls", 5))
-    prices = (conn.execute("select value from config where key = 'llm.prices'").fetchone() or {"value": {}})[
-        "value"
-    ]
+    prices = settings.config(conn, "llm.prices", {})
     models, how = _models(conn), []
 
     def inr(purpose: str, n: int, tin: str, tout: str) -> float:

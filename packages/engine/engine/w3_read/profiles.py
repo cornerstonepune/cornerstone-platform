@@ -13,6 +13,8 @@ import json
 import re
 from collections import Counter
 
+from engine.core import settings
+
 FLOORS = (70, 80, 90)
 NO_FLOOR = 95  # no level at which this child's readings were 95% right: every reading goes to a person
 MIN_CHECKS = 10  # checks before a child's floor is her own rather than the default
@@ -194,8 +196,7 @@ def kind_trust(conn):
 
 def window(conn):
     """How many checks a kind's trust is measured over (`marking.agreement_window`)."""
-    row = conn.execute("select value from threshold where key = 'marking.agreement_window'").fetchone()
-    return int(row["value"]) if row else 50
+    return int(settings.threshold(conn, "marking.agreement_window", 50))
 
 
 def report(conn):
@@ -273,8 +274,7 @@ def signed_off(conn):
 
 def rebuild(conn, child_ids=None):
     """Every checked child's notebook, written; returns how many. The caller commits."""
-    row = conn.execute("select value from threshold where key = 'read.route_above_overturn'").fetchone()
-    route_above = float(row["value"]) if row else 0.25
+    route_above = settings.threshold(conn, "read.route_above_overturn", 0.25)
     by_child = {}
     rows = [r for c in child_ids for r in checked_rows(conn, c)] if child_ids else checked_rows(conn)
     for r in rows:

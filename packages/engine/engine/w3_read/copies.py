@@ -17,7 +17,7 @@ from typing import NamedTuple
 
 import pymupdf
 
-from engine.core import db, roster
+from engine.core import db, roster, settings
 from engine.w3_read import checked, legacy, marking, placing, printed_paper, render_pdf, sorting, whose_paper
 
 # Where the school's scans live, on this Mac and on the server alike (`deploy/compose.server.yml` mounts only this):
@@ -64,8 +64,7 @@ def _replaces(conn, capture_id, scan):
 
 
 def _margin(conn):
-    row = conn.execute("select value from threshold where key = 'read.page_margin'").fetchone()
-    return float(row["value"]) if row else 1.25
+    return settings.threshold(conn, "read.page_margin", 1.25)
 
 
 def _misplaced(conn, cut, held) -> tuple[str | None, int]:

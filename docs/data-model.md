@@ -36,3 +36,14 @@ full list of tables is `specs/CP-27/target-tables.md`.
 
 Records that are never edited (a correction is a new row): `evidence_event`, `activity_observation`, `approval`,
 `change_log`. Nothing else needs that guard.
+
+**How `approval` is used (CP-27 group 3).** One row per decision: `kind` and `target` say what (a level is
+`skill_code difficulty`, a way of asking its code, a report, a paper, a link or a question its id, a class card
+`section week`, a level to review `skill difficulty scope_kind scope`), `decision` says which (`approved`, `sent_back`
+with its reason, `withdrawn`; a question's `retire` or `keep`; a level to review `looked_at`; a class card `confirmed`),
+`detail` what it was decided on (a card as seen, the counts a level was looked at on), `seq` the order. A paper is
+drawn only of an approved way of asking (`drawable_item`); a report reaches a parent after two people approve it
+(`approval_list`, `approval_checked`). Until group 4 a level's, a report's, a paper's and a link's approval are also a
+stamp on their own row (`skill.level_approved` → `skill_level.confirmed_*`, `parent_note.approved_by`,
+`sheet_instance.approved_*`, `skill_prerequisite.confirmed_*`); one trigger function, `internal.approval_from_stamp`,
+writes the matching `approval` row, so new code reads `approval` or `approval_list`, never a stamp.

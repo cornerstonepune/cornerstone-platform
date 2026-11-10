@@ -9,26 +9,17 @@ goal: >
 # "each subject's page shows each kind's stage" is the `kind_stage` view the page reads; the page belongs to the UI
 # sessions (screen follow-up in the PR). Marking keeps reading `kind_trust` until a subject's numbers differ (PR).
 says:
-  - words: "validation rules per subject and kind: New (every answer to a person), Learning, Trusted, Falls back"
-    proved_by: "packages/engine/tests/test_validation_stages.py::test_the_four_stages_are_rows"
-  - words: "validation rules per subject and kind: New (every answer to a person), Learning, Trusted, Falls back"
-    proved_by: "packages/engine/tests/test_validation_stages.py::test_a_kind_goes_new_learning_trusted_and_falls_back"
-  - words: "every number a row"
-    proved_by: "packages/engine/tests/test_validation_stages.py::test_every_number_is_a_row"
-  - words: "every number a row"
-    proved_by: "packages/engine/tests/test_validation_stages.py::test_a_rule_out_of_range_is_refused"
+  # CP-27 (#534, approved 9 Nov 2026) retired `validation_stage`, `validation_rule` and the `kind_stage` view: no page,
+  # command or rule ever read them (marking trusts a kind through `kind_trust`, whose two numbers are the settings
+  # marking.agreement_window and marking.agreement_gate). Their rows are kept in the schema `retired`.
   - words: "grown from `kind_trust` (ADR 0060)"
-    proved_by: "packages/engine/tests/test_validation_stages.py::test_every_subject_starts_with_the_numbers_kind_trust_reads"
-  - words: "grown from `kind_trust` (ADR 0060)"
-    proved_by: "packages/engine/tests/test_validation_stages.py::test_a_stage_agrees_with_kind_trust_under_the_same_numbers"
-  - words: "nothing will change for any of the past assessments, scoring etc. right?"
-    proved_by: "packages/engine/tests/test_validation_stages.py::test_past_results_are_the_same_before_and_after"
+    proved_by: "packages/engine/tests/test_profiles.py::test_kind_trust_is_the_last_fifty_checks_of_each_kind_against_the_gate"
 manual:
   - "Actions → rehearse update-live, on this branch: the migration runs on a copy of live after live's rows arrive; `engine past` prints the same before and after, and the copy comes back clean."
 scenarios: []
 criteria:
   - name: each kind's stage, every number a row
-    run: cd packages/engine && uv run pytest -q -p no:cacheprovider tests/test_validation_stages.py tests/test_profiles.py tests/test_rules.py
+    run: cd packages/engine && uv run pytest -q -p no:cacheprovider tests/test_profiles.py tests/test_rules.py
     expect: "passed"
   - name: nothing else moved — the engine's whole suite
     run: cd packages/engine && uv run pytest -q -p no:cacheprovider

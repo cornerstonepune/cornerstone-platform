@@ -12,6 +12,7 @@ import { mkdirSync } from "node:fs";
 import path from "node:path";
 import { expect, test, type Browser, type Page } from "@playwright/test";
 import postgres from "postgres";
+import { aWaitingWay } from "./rows";
 
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 const EDUCATOR = { email: "e0-educator@cornerstone.test", name: "E0 Educator", role: "educator", classes: [] as string[] };
@@ -48,7 +49,7 @@ test.beforeAll(async () => {
 
 /** English stays a draft: what a test approved is withdrawn. */
 async function withdraw() {
-  await sql`delete from question_type_approval where question_type = ${way.code}`;
+  await aWaitingWay(sql, way.code);
   await sql`update skill set level_approved = '{}'::jsonb where code = ${skill.code}`;
 }
 
@@ -114,7 +115,8 @@ test("an educator reads an English skill's levels, kinds and mistakes and approv
   await ways.locator(`tr[data-way="${way.code}"]`).getByRole("button", { name: `Approve “${way.words}”` }).click();
   await expect(page.getByText(`Approved “${way.words}”, in your name.`)).toBeVisible();
   await expect(ways.locator(`tr[data-way="${way.code}"]`)).toContainText(`Approved · ${EDUCATOR.name}`);
-  const [a] = await sql<{ by: string; at: Date }[]>`select approved_by as by, approved_at as at from question_type_approval where question_type = ${way.code}`;
+  const [a] = await sql<{ by: string; at: Date }[]>`
+    select first_by as by, first_at as at from approval_list where kind = 'question_type' and target = ${way.code}`;
   expect(a.by).toBe(EDUCATOR.name);
   expect(Date.now() - a.at.getTime()).toBeLessThan(10 * 60_000);
   await shot(page, "3-approved");

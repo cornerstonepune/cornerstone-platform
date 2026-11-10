@@ -170,3 +170,30 @@ def test_the_reason_a_parent_report_was_sent_back_is_seen_by_that_childs_class_a
     assert _seen(s, "X", "approval", mine + " and kind = 'skill_level'") == 1
     assert _seen(s, "all", "approval", mine) == 3
     assert _seen(s, None, "approval", mine) == 0
+
+
+def test_a_class_card_confirmed_is_seen_by_that_class_and_a_way_of_asking_approved_by_all(school):
+    """CP-27: a class card an educator confirmed is a row of the one approval list, with the card as they saw it (child
+    ids) in `detail`: it is seen by whoever sees that class, like a parent report's approval, not by every educator. A
+    way of asking or a question flagged is the school's, seen by all of it, as its own table was."""
+    s, c = school, school["c"]
+    for who, section in (("X", "P"), ("Y", "Q")):
+        c.execute(
+            "insert into approval (tenant_id, kind, target, decision, by, detail) values (%s, 'class_card', %s,"
+            " 'confirmed', 'cp4 keys', jsonb_build_object('section', %s::text, 'week', '2026-W45', 'card',"
+            " jsonb_build_object('children', jsonb_build_array(%s::text))))",
+            (s["tenant"], f"{section} 2026-W45", section, str(s["child"][who])),
+        )
+    c.execute(
+        "insert into approval (tenant_id, kind, target, decision, by, reason) values (%s, 'question_type', 'CP27.KEYS',"
+        " 'sent_back', 'cp4 keys', 'reason')",
+        (s["tenant"],),
+    )
+    mine = f"tenant_id = '{s['tenant']}'"
+    assert _seen(s, "X", "approval", mine + " and kind = 'class_card' and detail ->> 'section' = 'P'") == 1
+    assert _seen(s, "X", "approval", mine + " and kind = 'class_card' and detail ->> 'section' = 'Q'") == 0
+    assert _seen(s, "Y", "approval", mine + " and kind = 'class_card'") == 1
+    assert _seen(s, "all", "approval", mine + " and kind = 'class_card'") == 2
+    assert _seen(s, None, "approval", mine) == 0
+    for who in ("X", "Y", "all"):
+        assert _seen(s, who, "approval", mine + " and kind = 'question_type'") == 1

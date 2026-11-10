@@ -65,10 +65,10 @@ def state(conn, p: dict) -> tuple[str, str]:
 
 
 def limits(conn) -> tuple[int, int]:
-    """The fewest and most questions a paper may hold: the `assessment.*_questions` threshold rows."""
+    """The fewest and most questions a paper may hold: the `assessment.*_questions` settings."""
     low, high = (settings.threshold(conn, k, float("nan")) for k in LIMITS)
     if low != low or high != high:  # NaN: a row is missing, and no number is made up for it
-        raise LookupError(f"the threshold rows {' and '.join(LIMITS)} are needed")
+        raise LookupError(f"the settings {' and '.join(LIMITS)} are needed")
     return int(low), int(high)
 
 

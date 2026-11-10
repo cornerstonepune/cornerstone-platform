@@ -12,7 +12,7 @@ from typing import cast
 import typer
 
 from engine.adapters import llm_budget
-from engine.core import db
+from engine.core import db, settings
 from engine.w1_bank import k2_gold, map_ledger
 from engine.w1_bank.k2_format import render
 from engine.w1_bank.k2_upload import curriculum_app
@@ -73,11 +73,7 @@ def summary(conn: db.Conn, tenant: db.Id, stage: str) -> dict:
     pages = [p for p in _pages(conn, tenant, stage) if len(p["proposal"].get("checks") or []) >= 2]
     n = len(pages)
     rate = next(iter((llm_budget.campaigns(conn) or {"-": {"inr_per_usd": 88}}).values()))["inr_per_usd"]
-    limit = float(
-        db.one(conn, "select value from config where key = 'k2.drafting'")["value"].get(
-            "report_usd_per_page_limit", 0.02
-        )
-    )
+    limit = float(settings.config(conn, "k2.drafting", {}).get("report_usd_per_page_limit", 0.02))
 
     def spent(flow: str) -> float:
         got = conn.execute(

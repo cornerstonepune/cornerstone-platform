@@ -19,7 +19,7 @@ from engine.assess import misconceptions as M
 from engine.assess import words as W
 from engine.core import db
 from engine.w1_bank import bank, inventory, labels, question, story_keys
-from tests.rows import a_child, drawn, tenant
+from tests.rows import a_child, a_retired_question, drawn, tenant
 
 SEED = pathlib.Path(__file__).resolve().parents[3] / "supabase" / "seed"
 SETS = {s["code"]: s for s in json.loads((SEED / "skill_sets.json").read_text())["skill_sets"]}
@@ -171,10 +171,7 @@ def _stored(conn, it, retired=False, code="SUB.2D2D"):
     assert bank._insert(conn, tenant(conn), it, code, "Advance")
     row = conn.execute("select id from item where item_key = %s", (it.item_id,)).fetchone()
     if retired:
-        conn.execute(
-            "insert into item_feedback (tenant_id, item_id, actor, verdict, note) values (%s,%s,'test','retire','')",
-            (tenant(conn), row["id"]),
-        )
+        a_retired_question(conn, row["id"], "test")
     return row["id"]
 
 

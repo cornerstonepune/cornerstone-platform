@@ -13,14 +13,12 @@ import psycopg
 import pytest
 
 from engine.checks import levels as check
-from engine.core import db, levels, loaders
+from engine.core import db, history, levels
 from engine.w1_bank import spec
 from engine.w2_print import shelf
-from tests.rows import data_steps
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
 
-MIGRATION = db.REPO_ROOT / "supabase" / "migrations" / "20261123090000_the_levels_are_rows.sql"
 SKILL = "SUB.2D2D"
 # The readers moved to the rows; the writers stay on the blob, kept equal by the trigger (ADR 0087).
 MOVED = [
@@ -158,8 +156,7 @@ def test_a_change_to_the_blob_is_a_change_to_the_rows_whoever_writes_it(conn):
 
 def test_a_level_keeps_its_own_version_history(conn):
     """A change to what one level asks files that level's previous version, and only that level's: its neighbours keep
-    their version. The history the skill kept before is carried onto each level, and the migration run twice changes
-    nothing."""
+    their version. The words before are kept in the history log (CP-27: they were skill_level_version)."""
     before = {
         r["difficulty"]: r["version"]
         for r in conn.execute("select difficulty, version from skill_level where skill_code = %s", (SKILL,))
@@ -174,37 +171,17 @@ def test_a_level_keeps_its_own_version_history(conn):
         for r in conn.execute("select difficulty, version from skill_level where skill_code = %s", (SKILL,))
     }
     assert after == {**before, "Medium": before["Medium"] + 1}
-    filed = conn.execute(
-        "select looks_like, rule from skill_level_version where skill_code = %s and difficulty = 'Medium'"
-        " and version = %s",
-        (SKILL, before["Medium"]),
-    ).fetchone()
-    assert filed == {"looks_like": old["looks_like"], "rule": old["rule"]}
-    t = loaders._tenant(conn)
-    rows = conn.execute(
-        "select count(*) as n from skill_level_version where tenant_id = %s", (t,)
-    ).fetchone()["n"]
-    conn.execute(data_steps(MIGRATION))
+    [filed] = history.of(conn, "skill_level", f"{SKILL} Medium")
+    assert filed["op"] == "update" and filed["before"]["version"] == before["Medium"]
     assert (
-        conn.execute("select count(*) as n from skill_level_version where tenant_id = %s", (t,)).fetchone()[
-            "n"
-        ]
-        == rows
+        filed["before"]["looks_like"] == old["looks_like"]
+        and filed["after"]["looks_like"] == "Changed words."
     )
-    # the migration's first run on a database whose skills have a history: each level's carried onto it
-    conn.execute("delete from skill_level_version")
-    conn.execute("delete from skill_level")
-    conn.execute(data_steps(MIGRATION))
-    assert {
-        r["difficulty"]: r["version"]
-        for r in conn.execute("select difficulty, version from skill_level where skill_code = %s", (SKILL,))
-    } == after
-    carried = conn.execute(
-        "select looks_like, rule from skill_level_version where skill_code = %s and difficulty = 'Medium'"
-        " and version = %s",
-        (SKILL, before["Medium"]),
-    ).fetchone()
-    assert carried == {"looks_like": old["looks_like"], "rule": old["rule"]}
+    assert {k: v for k, v in filed["before"].items() if k != "version"} == {
+        k: old[k] for k in filed["before"] if k != "version"
+    }, "the OLD words are what is filed"
+    for level in set(before) - {"Medium"}:
+        assert history.of(conn, "skill_level", f"{SKILL} {level}") == [], "a neighbour's history is untouched"
     assert check.compare(conn, draws=0)["disagree"] == []
 
 

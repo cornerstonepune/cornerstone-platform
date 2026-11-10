@@ -2,7 +2,7 @@
 # Acceptance proofs for UI-1. Written BEFORE the product code, by a different agent.
 # After `athena lock UI-1` this file, spec.md and proofs/ cannot be edited.
 # One `check` per "Done when" line, same numbering. Each check must be a real command.
-source "$ATHENA_ROOT/.claude/athena/bin/checklib.sh"
+source "$ATHENA_ROOT/bin/checklib.sh"
 cd "$ATHENA_ROOT"
 
 # All four go through proofs/harness.py (stdlib Python; see its docstring). Fake data only: the browser part uses the

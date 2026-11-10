@@ -180,7 +180,7 @@ def test_a_state_reworded_in_its_row_is_reworded_on_the_paper(conn):
     conn.execute(
         "update child_state set why = 'still short of {next_sheet.promote_at}' where code = %s", (code,)
     )
-    conn.execute("update threshold set value = 0.75 where key = 'next_sheet.promote_at'")
+    settings.put(conn, "next_sheet.promote_at", 0.75)
     assert focus_paper.reasons(conn)[code] == "still short of three in four"
 
 

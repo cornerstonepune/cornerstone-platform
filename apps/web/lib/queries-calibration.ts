@@ -4,7 +4,7 @@ import type { Scope } from "./scope";
 // Levels to review (goals/cal_levels_to_review.yaml): for each skill and level, for a grade and for one class, how many
 // children were assessed, how many are secure, and what that says. The counting is the database's (`level_calibration`,
 // ring B: a pure function of the confirmed evidence, using the graph's own rule); the 80 percent and the 8 children are
-// rows of `threshold`. This file only reads, and says the counts in words. Nothing here changes a level.
+// settings (`config` rows). This file only reads, and says the counts in words. Nothing here changes a level.
 
 export type Verdict = "too_few" | "review" | "fine";
 
@@ -68,15 +68,16 @@ export function saidOf(r: LevelRow): string {
   return `${r.secure} of ${r.assessed} children are secure at ${r.difficulty}, under ${Math.round(r.share * 100)}%: no change suggested.`;
 }
 
-/** "I've looked at this": one row, with the counts the database holds now (never counts a form sent), added to and never
- *  changed. Returns false when the level has no such figures for the scope. */
+/** "I've looked at this": one row of the one approval list, with the counts the database holds now (never counts a form
+ *  sent), added to and never changed. Returns false when the level has no such figures for the scope. */
 export async function recordLookedAt(
   by: string,
   what: { kind: "grade" | "class"; scope: string; skill: string; difficulty: string },
 ): Promise<boolean> {
   const rows = await sql`
-    insert into calibration_review (tenant_id, skill_code, difficulty, scope_kind, scope_value, assessed, secure, reviewed_by)
-    select l.tenant_id, l.skill_code, l.difficulty, l.scope_kind, l.scope_value, l.assessed, l.secure, ${by}
+    insert into approval (tenant_id, kind, target, decision, by, detail)
+    select l.tenant_id, 'calibration', concat_ws(' ', l.skill_code, l.difficulty, l.scope_kind, l.scope_value), 'looked_at',
+           ${by}, (select to_jsonb(c) from (select l.assessed, l.secure) c)
     from level_calibration l
     where l.scope_kind = ${what.kind} and l.scope_value = ${what.scope} and l.skill_code = ${what.skill}
       and l.difficulty = ${what.difficulty}

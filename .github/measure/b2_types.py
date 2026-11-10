@@ -26,10 +26,13 @@ def type_of(r):
 
 
 with db.connect() as c:
+    # approvals read through the approval list, which keeps its shape while CP-27 moves where approvals are kept
     ok = {
         (r["code"], r["level"]): r["ok"]
         for r in c.execute(
-            "select s.code, d.key as level, s.level_approved ? d.key as ok from skill s, jsonb_each(s.difficulty) d"
+            "select s.code, d.key as level, a.target is not null as ok"
+            " from skill s cross join jsonb_each(s.difficulty) d left join approval_list a on a.tenant_id = s.tenant_id"
+            " and a.kind = 'skill_level' and a.state = 'approved' and a.target = s.code || ' ' || d.key"
         )
     }
     rows = c.execute(
@@ -51,7 +54,7 @@ with db.connect() as c:
     closing = shelf.closing(c)
     b2 = c.execute("select to_regclass('public.question_type') is not null as built").fetchone()["built"] and c.execute(
         "select (select count(*) from question_type)::int as types,"
-        " (select count(*) from question_type_approval)::int as approved,"
+        " (select count(*) from approval_list where kind = 'question_type' and state = 'approved')::int as approved,"
         " (select count(*) from skill_level_question_type)::int as links,"
         " (select count(*) from item where status = 'active' and source = 'generated')::int as active,"
         " (select count(*) from drawable_item where source = 'generated')::int as drawable"

@@ -6,8 +6,11 @@ from engine.core import db
 from engine.w2_print import shelf
 
 with db.connect() as c:
+    # approvals read through the approval list, which keeps its shape while CP-27 moves where approvals are kept
     levels = c.execute(
-        "select s.code, d.key as level, s.level_approved ? d.key as ok, s.status from skill s, jsonb_each(s.difficulty) d"
+        "select s.code, d.key as level, a.target is not null as ok, s.status"
+        " from skill s cross join jsonb_each(s.difficulty) d left join approval_list a on a.tenant_id = s.tenant_id"
+        " and a.kind = 'skill_level' and a.state = 'approved' and a.target = s.code || ' ' || d.key"
     ).fetchall()
     ok = {(r["code"], r["level"]): r["ok"] for r in levels}
     kinds = c.execute(

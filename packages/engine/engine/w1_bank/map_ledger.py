@@ -14,7 +14,7 @@ import uuid
 from psycopg.rows import DictRow
 from psycopg.types.json import Jsonb
 
-from engine.core import db
+from engine.core import db, history, settings
 from engine.w1_bank.k2_format import LISTS, render
 from engine.w1_bank.k2_gaps import column
 from engine.w1_bank.map_agents import Proposal
@@ -22,9 +22,8 @@ from engine.w1_bank.map_check import LEVELS
 
 
 def rules(conn: db.Conn) -> dict[str, float]:
-    """The `map.*` threshold rows, by their name after `map.`."""
-    rows = conn.execute("select key, value from threshold where starts_with(key, 'map.')").fetchall()
-    return {r["key"].removeprefix("map."): float(r["value"]) for r in rows}
+    """The `map.*` settings, by their name after `map.`."""
+    return settings.numbers(conn, "map.")
 
 
 def record(conn: db.Conn, tenant: db.Id, made: list[Proposal], staff: db.Id) -> uuid.UUID:
@@ -56,15 +55,20 @@ def record(conn: db.Conn, tenant: db.Id, made: list[Proposal], staff: db.Id) -> 
     return run
 
 
+# The kinds a curriculum mapping makes a link from (`_link`): the only ones this ledger's commands read. The one proposal
+# list holds other kinds too (CP-27 group 3: the bank's), which are never listed, settled or applied here.
+MAPPING = ("skill", "objective", "levels", "lo_skill", "page_part", "material", "skill_offer")
+
+
 def standing(conn: db.Conn, tenant: db.Id, status: str | None = None) -> list[DictRow]:
-    """Each proposal with where it stands now (its newest row's status), oldest first; only those at `status` if
-    one is named."""
+    """Each curriculum mapping proposal with where it stands now (its newest row's status), oldest first; only those
+    at `status` if one is named."""
     return conn.execute(
         "select p.*, n.status as now from curriculum_proposal p join lateral (select status from curriculum_proposal"
         " x where x.tenant_id = p.tenant_id and (x.id = p.id or x.about = p.id) order by x.created_at desc, x.id"
-        " limit 1) n on true where p.tenant_id = %s and p.about is null and (%s::text is null or n.status = %s)"
-        " order by p.created_at, p.id",
-        (tenant, status, status),
+        " limit 1) n on true where p.tenant_id = %s and p.about is null and p.kind = any(%s)"
+        " and (%s::text is null or n.status = %s) order by p.created_at, p.id",
+        (tenant, list(MAPPING), status, status),
     ).fetchall()
 
 
@@ -99,8 +103,8 @@ def stopped(conn: db.Conn, tenant: db.Id, at_most: float, least: float) -> froze
     rows = conn.execute(
         "select p.kind, count(*) as n, count(*) filter (where d.status = 'rejected') as no from curriculum_proposal p"
         " join curriculum_proposal d on d.about = p.id and d.status in ('approved', 'rejected')"
-        " where p.tenant_id = %s and p.reason = 'audit sample' group by p.kind",
-        (tenant,),
+        " where p.tenant_id = %s and p.kind = any(%s) and p.reason = 'audit sample' group by p.kind",
+        (tenant, list(MAPPING)),
     ).fetchall()
     return frozenset(r["kind"] for r in rows if r["n"] >= least and r["no"] / r["n"] > at_most)
 
@@ -132,7 +136,7 @@ def settle(conn: db.Conn, tenant: db.Id, about: db.Id, yes: bool, staff: db.Id, 
 
 
 def changed_by(conn: db.Conn, who: str) -> None:
-    conn.execute("select set_config('app.changed_by', %s, true)", (who,))
+    history.by(conn, who)
 
 
 def _link(conn: db.Conn, tenant: db.Id, p: DictRow, only: set[str] | None = None) -> str:
@@ -166,6 +170,8 @@ def _link(conn: db.Conn, tenant: db.Id, p: DictRow, only: set[str] | None = None
         return _page_part(conn, tenant, p, only)
     if p["kind"] == "material":
         return _material(conn, tenant, p)
+    if p["kind"] != "levels":  # `standing` reads only the mapping kinds; any other is never made a link here
+        raise ValueError(f"{p['kind']} is not a curriculum mapping")
     for f, text in sorted(body["levels"].items()):
         if f not in LEVELS:  # the checks refused it; a column name never comes from a reply
             raise ValueError(f"{f} is not a level")
