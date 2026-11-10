@@ -3,9 +3,8 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { requireStaffEditor } from "@/lib/auth";
-import { sql, TENANT_SLUG } from "@/lib/db";
-import { sendFirstLink } from "@/lib/password-actions";
-import { rolesHeld } from "@/lib/queries-staff";
+import { sql } from "@/lib/db";
+import { addStaff } from "@/lib/staff-add";
 import { staffList } from "@/lib/queries";
 
 // A coordinator says which classes a member of staff teaches (goals/uxn2-staff-and-school.yaml): what
@@ -62,16 +61,8 @@ export async function setSubjects(formData: FormData): Promise<void> {
 // `password_link.first_days` days. Their classes and subjects are chosen afterwards, on their row.
 export async function addPerson(formData: FormData): Promise<void> {
   await requireStaffEditor();
-  const email = String(formData.get("email") ?? "").trim().toLowerCase();
-  const name = String(formData.get("name") ?? "").trim();
-  const role = String(formData.get("role") ?? "").trim();
-  if (!name || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) redirect("/staff?of=new&refused=email");
-  if (!(await rolesHeld()).includes(role)) redirect("/staff?of=new&refused=role");
-  // one statement, and it does nothing at all if that email is already on the list: two coordinators adding at once
-  // cannot write one person over the other (`staff_add`; someone taken off before is put back, with their own id)
-  const [done] = await sql<{ added: boolean }[]>`select public.staff_add(${TENANT_SLUG}, ${email}, ${name}, ${role}) as added`;
-  if (!done?.added) redirect("/staff?of=new&refused=already");
-  await sendFirstLink(email);
+  const done = await addStaff(formData);
+  if (!done.added) redirect(`/staff?of=new&refused=${done.why}`);
   revalidatePath("/", "layout");
-  redirect(`/staff?of=new&saved=${encodeURIComponent(name)}`);
+  redirect(`/staff?of=new&saved=${encodeURIComponent(String(formData.get("name") ?? "").trim())}`);
 }

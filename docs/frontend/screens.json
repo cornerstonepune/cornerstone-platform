@@ -3522,6 +3522,11 @@
           "label": "Find a person (search)",
           "effect": "narrows the rows to a name",
           "text": "Search the list"
+        },
+        {
+          "t": "button",
+          "label": "Add a person",
+          "effect": "opens a form: name, school email and role; Add and send a link puts the person on the list with no password and emails them a link to set their own"
         }
       ],
       "rail": [

@@ -250,11 +250,12 @@ test("a new member of staff added on the Staff page has no password and is sent 
   const email = `new-${randomUUID().slice(0, 8)}@cornerstone.test`;
   try {
     await signedIn(page, coordinator, PASSWORD);
-    await page.goto("/staff");
-    await page.locator("summary", { hasText: "Add a member of staff" }).click();
-    await page.getByLabel("Name").fill("Newly added");
-    await page.getByLabel("School email").fill(email);
-    await page.getByRole("button", { name: "Add and send a link" }).click();
+    await page.goto("/setup/staff"); // Staff and classes (UI-5): the old /staff page's Add a member of staff is Add a person here
+    await page.getByRole("button", { name: "Add a person" }).click();
+    const form = page.getByRole("form", { name: "Add a person" });
+    await form.getByLabel("Name").fill("Newly added");
+    await form.getByLabel("School email").fill(email);
+    await form.getByRole("button", { name: "Add and send a link" }).click();
     await expect(page.getByRole("main")).toContainText("a link to set their own password is on its way");
     // nobody typed a password: the row holds none
     expect((await personAsStored(sql, email))?.password ?? null).toBeNull();

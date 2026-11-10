@@ -1077,7 +1077,7 @@ Rail (Connected to): Fortnight 9 · Timetable · Classes and children
 Main action: Add a grant · Next step: Classes and children
 Data: staff, staff_role_grant, role; session states; educator_note statuses; note_claim decisions
 Empty: none · Phone: the table scrolls sideways in its own box
-Every control on the screen (9), and what the test does with each:
+Every control on the screen (10), and what the test does with each:
 - **row** each staff row: opens that person's grants fold
 - **fold** a person's grants
 - **button** Add a grant: a form: role (rows), class, subject, from; Save writes a staff_role_grant row; the trigger's checks show as messages (needs a class, holds it twice)
@@ -1087,6 +1087,7 @@ Every control on the screen (9), and what the test does with each:
 - **link** rail: Classes and children → Classes and children (`/setup/classes`)
 - **filter** Role: narrows the rows to one role
 - **filter** Find a person (search): narrows the rows to a name
+- **button** Add a person: opens a form: name, school email and role; Add and send a link puts the person on the list with no password and emails them a link to set their own
 Done when (on top of the ten generic checks):
 - no sort, rank, ordinal or colour grading on the three numbers; the table cannot be sorted by them
 - a grant edit is a new row or a valid_to, never a delete (row count never drops)

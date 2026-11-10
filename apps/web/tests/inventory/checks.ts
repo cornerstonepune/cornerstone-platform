@@ -216,7 +216,7 @@ async function effect(page: Page, s: Screen, e: Element): Promise<Problems> {
     await btn.click();
     if ((await btn.getAttribute("aria-expanded")) !== "true") out.push(`${s.id}: “${e.label}” does not say it is open (aria-expanded)`);
     const form = page.locator("main form").filter({ has: page.locator("select, input:not([type=hidden])") }).last();
-    if (!(await form.count()) || !(await form.getByRole("button", { name: /save/i }).count())) out.push(`${s.id}: “${e.label}” opened no form with a field and a Save`);
+    if (!(await form.count()) || !(await form.locator("button[type=submit], input[type=submit]").count())) out.push(`${s.id}: “${e.label}” opened no form with a field and a button to send it`);
     else if (!(await form.locator("select, input:not([type=hidden])").first().evaluate((f) => ((f as HTMLInputElement).labels?.length ?? 0) > 0))) out.push(`${s.id}: the form “${e.label}” opens has a field with no label`);
     await btn.click();
     if ((await btn.getAttribute("aria-expanded")) !== "false") out.push(`${s.id}: “${e.label}” did not close on a second press`);
