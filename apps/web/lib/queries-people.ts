@@ -34,6 +34,11 @@ export type Topic = { code: string; name: string; subject: string; taught: boole
 export async function topics(scope: Scope = EVERY_CLASS): Promise<Topic[]> {
   const classes = await classesOf(scope);
   const rows = await sql<{ code: string; name: string; subject: string; skills: { code: string; name: string }[]; classes: { section: string; skills: SkillTaught[] }[] }[]>`
+    -- each class's grade once (class_band), not once per level: left inline, the planner asked it again for every level
+    -- of every skill of every topic of every class (CI, 10 Nov 2026: 1.4 s a page)
+    with k as materialized (
+      select tn.tenant_id, c.section, class_band(tn.tenant_id, c.section) as band
+      from (select distinct tenant_id from topic) tn, unnest(${classes}::text[]) as c(section))
     select t.code, t.name, t.subject_code as subject,
            coalesce((select json_agg(json_build_object('code', s.code, 'name', s.name) order by s.code) from skill s
                      where s.tenant_id = t.tenant_id and s.topic_code = t.code), '[]'::json) as skills,
@@ -51,8 +56,7 @@ export async function topics(scope: Scope = EVERY_CLASS): Promise<Topic[]> {
                         where sc.tenant_id = s.tenant_id and sc.label = k.section
                         order by y.starts_on desc limit 1) cw on true
                       where s.tenant_id = t.tenant_id and s.topic_code = t.code)) order by k.section), '[]')
-            from (select c.section, class_band(t.tenant_id, c.section) as band
-                  from unnest(${classes}::text[]) as c(section)) k) as classes
+            from k where k.tenant_id = t.tenant_id) as classes
     from topic t
     order by t.ord`;
   return rows.map((t) => {
