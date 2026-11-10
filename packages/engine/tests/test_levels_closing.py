@@ -12,6 +12,7 @@ import pytest
 
 from engine.core import db
 from engine.w2_print import cli_week, shelf
+from tests.rows import a_child_in
 from tests.test_cli import run
 
 BY = "F1G Coordinator"
@@ -28,9 +29,7 @@ def conn():
 
 def _class(conn, section, band):
     tenant = conn.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()["id"]
-    conn.execute(
-        "insert into child (tenant_id, roll_no, section, band) values (%s,'1',%s,%s)", (tenant, section, band)
-    )
+    a_child_in(conn, section, band, "1", tenant)
 
 
 def test_each_class_is_told_the_levels_its_papers_would_lose(conn):

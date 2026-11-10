@@ -22,14 +22,17 @@ from engine.core import db
 
 # What each part reads; the checksum takes the rows in order. A child's state leaves out when it was last computed, which every rebuild of
 # the graph moves; what it says about the child is the rest. The evidence is every column a record held before C2 gave it
-# a kind, a mark, who saw it, where and its source: a past row's are what must not move.
+# a kind, a mark, who saw it, where and its source: a past row's are what must not move. Who confirmed a record or an
+# answer is kept as whether one is confirmed, not as the text: CP-27 group 4 rewrites a name or an email there to a member
+# of staff's id, and that rewrite touches the row's clock (`updated_at`, left out); neither says anything new about what
+# a child did, and whether it counts (`confirmed_by is not null`, what the graph reads) still moves the fingerprint.
 PARTS: dict[str, LiteralString] = {
     "evidence": "select row(id, tenant_id, child_id, skill_code, rung_code, correct, misconception_codes, channel,"
-    " item_result_id, observed_at, stored_at, confirmed_by, created_at, updated_at)::text as r from evidence_event",
+    " item_result_id, observed_at, stored_at, confirmed_by is not null, created_at)::text as r from evidence_event",
     "states": "select concat_ws('|', child_id, skill_code, rung_code, state, n_events, n_correct,"
     " repeating_misconception, last_seen) as r from child_skill_state",
     "scored": "select concat_ws('|', id, capture_id, item_id, rid, raw_read, status, misconception_codes,"
-    " working_shown, state, confirmed_by, confirmed_at) as r from item_result",
+    " working_shown, state, confirmed_by is not null, confirmed_at) as r from item_result",
 }
 
 # What a migration of the curriculum's tables must leave as it was (C1 on): the questions and the skills' levels. Read

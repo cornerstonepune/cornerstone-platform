@@ -6,11 +6,11 @@ import sys
 import uuid
 from pathlib import Path
 
-from psycopg.types.json import Jsonb
-
 sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "specs" / "CP-7" / "proofs"))
 import cp7_world  # noqa: E402
 from cp7_world import LINES, NOT_APPROVER, real_date, refused  # noqa: E402
+
+from tests import rows  # noqa: E402
 
 conn, world = cp7_world.conn, cp7_world.world  # the proofs' fixtures, under the names pytest looks up
 
@@ -24,14 +24,10 @@ def waiting(world):
 
 def new_signin_id(world, who: str) -> str:
     """Give `who` a sign-in list entry id that is not their staff id; CP-3's trigger moves `staff.signin_id` to it."""
-    entries = world.setting("app.staff")
     fresh = str(uuid.uuid4())
-    for e in entries:
+    for e in rows.signin_list(world.c, world.t):
         if e["id"] == world.staff[who]:
-            e["id"] = fresh
-    world.c.execute(
-        "update config set value = %s where tenant_id = %s and key = 'app.staff'", (Jsonb(entries), world.t)
-    )
+            rows.a_person(world.c, **{**e, "id": fresh}, tenant=world.t)
     return fresh
 
 

@@ -20,14 +20,20 @@ Names are the design's contract (specs/CP-7/design.md, "Data", "Rules", "Refusal
 """
 
 import datetime as dt
+import sys
 import uuid
 from contextlib import contextmanager
+from pathlib import Path
 
 import psycopg
 import pytest
 from psycopg.types.json import Jsonb
 
 from engine.core import db
+
+# the engine tests' own rows (CP-27 group 4: who signs in), by their folder: a package named `tests` is installed too
+sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "packages" / "engine" / "tests"))
+import rows  # noqa: E402
 
 WHO = f"staff:{uuid.uuid4()}"  # app.changed_by: a staff id, never a name (rule 6)
 YEAR = "2031-32"
@@ -92,7 +98,7 @@ class World:
             conn.execute("insert into fortnight_cycle (tenant_id, fortnight_id, state) values (%s, %s, 'planning')"
                          " on conflict (fortnight_id) do nothing", (self.t, self.fn[n]))
 
-        self.staff, entries = {}, []
+        self.staff = {}
         for who, role, klass in (("approver", "coordinator", None), ("other", "class_teacher", self.a)):
             sid = _val(conn, "insert into staff (tenant_id, campus_id, active) values (%s, %s, true) returning id",
                        (self.t, campus))
@@ -102,9 +108,7 @@ class World:
             conn.execute("insert into staff_role_grant (tenant_id, staff_id, role_code, school_class_id, valid_from,"
                          " granted_by) values (%s, %s, %s, %s, current_date, 'cp7 proof')", (self.t, sid, role, klass))
             self.staff[who] = str(sid)
-            entries.append({"id": str(sid), "email": email, "name": "Fake Person", "role": "educator"})
-        conn.execute("insert into config (tenant_id, key, value) values (%s, 'app.staff', %s)"
-                     " on conflict (tenant_id, key) do update set value = excluded.value", (self.t, Jsonb(entries)))
+            rows.a_person(conn, email, "Fake Person", "educator", tenant=self.t, id=str(sid))
         # The fixture's exception: 2031-32 lists Fortnight 10 (kept beside the default 2026-27 entry).
         conn.execute("update config set value = value || %s where tenant_id = %s and key = 'fortnight.no_roll_forward'",
                      (Jsonb({YEAR: [10]}), self.t))

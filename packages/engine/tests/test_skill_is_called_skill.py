@@ -11,6 +11,7 @@ import pytest
 from engine.assess import graph
 from engine.checks import past
 from engine.core import db
+from tests.rows import a_child_in
 from tests.test_rung_folded import _files_reading, _kind
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
@@ -48,10 +49,7 @@ def test_past_results_are_the_same_before_and_after(conn):
     """Nimish: "nothing will change for any of the past assessments, scoring etc. right?". The evidence (count and
     checksum), every child's states and every scored answer are the same before and after the migration, run again."""
     tenant = conn.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()["id"]
-    child = conn.execute(
-        "insert into child (tenant_id, roll_no, section, band) values (%s, '1', 'SKILLTEST', 'G3') returning id",
-        (tenant,),
-    ).fetchone()["id"]
+    child = a_child_in(conn, "SKILLTEST", "G3", "1", tenant)
     conn.execute(
         "insert into evidence_event (tenant_id, child_id, skill_code, rung_code, correct, channel, observed_at,"
         " confirmed_by, misconception_codes) values (%s, %s, 'NUM.OPS.01', 'R45', false, 'item', now(), 'test', '{}')",

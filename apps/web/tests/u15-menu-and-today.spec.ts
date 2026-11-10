@@ -11,6 +11,7 @@ import { createHmac } from "node:crypto";
 import postgres from "postgres";
 import { isoWeek, weekWords } from "../lib/week";
 import { ENGINE_PORT } from "../playwright.config";
+import { aPerson, forgetPerson } from "./rows";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -62,7 +63,7 @@ async function clearUp() {
   await sql`delete from prescription where child_id in (select id from child where section = ${SECTION})`;
   await sql`delete from sheet_instance where section = ${SECTION}`;
   await sql`delete from parent_note where child_id in (select id from child where section = ${SECTION})`;
-  await sql`update config set value = (select coalesce(jsonb_agg(s), '[]') from jsonb_array_elements(value) s where s ->> 'email' <> ${EDUCATOR.email}) where key = 'app.staff'`;
+  await forgetPerson(sql, EDUCATOR.email);
 }
 
 /** A signed-in session for someone on the staff list, as the gate checks it (global-setup.ts makes the coordinator's). */
@@ -168,7 +169,7 @@ test("an educator not mapped to a class sees the rows of no class a coordinator 
   const coordinator = await rows(page);
   await expect(page.locator("[data-frame]").getByRole("link", { name: "How it works" }).first()).toBeVisible();
 
-  await sql`update config set value = value || ${sql.json([EDUCATOR])} where key = 'app.staff'`;
+  await aPerson(sql, EDUCATOR);
   await signInAs(page, EDUCATOR.email);
   await page.goto("/today");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("What needs doing");

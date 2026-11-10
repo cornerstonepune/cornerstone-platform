@@ -17,7 +17,7 @@ from engine.assess import draw, graph
 from engine.checks import links, past
 from engine.core import db, settings, topics
 from engine.w1_bank import cases, kinds, spec
-from tests.rows import data_steps
+from tests.rows import a_child_in, data_steps
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
 
@@ -289,10 +289,7 @@ def test_past_results_are_the_same_before_and_after(conn):
     checksum), every child's states and every scored answer are the same before and after B3's migration, run again on
     a database that has them; and the fingerprint does see a change, so its sameness means something."""
     tenant = conn.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()["id"]
-    child = conn.execute(
-        "insert into child (tenant_id, roll_no, section, band) values (%s, '1', 'LINKTEST', 'G3') returning id",
-        (tenant,),
-    ).fetchone()["id"]
+    child = a_child_in(conn, "LINKTEST", "G3", "1", tenant)
     add = (
         "insert into evidence_event (tenant_id, child_id, skill_code, rung_code, correct, channel, observed_at,"
         " confirmed_by, misconception_codes) values (%s, %s, 'NUM.OPS.01', 'R45', %s, 'item', now(), 'test', %s)"

@@ -9,6 +9,7 @@ import psycopg
 import pytest
 
 from engine.core import db
+from tests import rows
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
 
@@ -35,7 +36,6 @@ def _build(c):
         t,
     )
     s = {"tenant": t, "entry": {}, "child": {}, "cls": {}}
-    entries = []
     for who, section in (("X", "P"), ("Y", "Q"), ("all", None)):
         if section:
             cls = _one(
@@ -69,12 +69,7 @@ def _build(c):
             " values (%s, %s, %s, %s, current_date - 30, 'cp4 keys')",
             (t, staff, "coordinator" if who == "all" else "class_teacher", s["cls"].get(who)),
         )
-        s["entry"][who] = str(uuid.uuid4())
-        entries.append({"id": s["entry"][who], "email": email, "name": "Keys person", "role": "educator"})
-    c.execute(
-        "insert into config (tenant_id, key, value) values (%s, 'app.staff', %s)",
-        (t, psycopg.types.json.Jsonb(entries)),
-    )
+        s["entry"][who] = rows.a_person(c, email, "Keys person", "educator", tenant=t)["ask_as"]
     return {"c": c, **s}
 
 

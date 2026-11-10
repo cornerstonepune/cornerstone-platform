@@ -11,6 +11,7 @@ from fastapi.testclient import TestClient
 from engine.api import deps
 from engine.api.app import app
 from engine.core import db
+from tests.rows import a_child_in
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
 
@@ -215,9 +216,7 @@ def test_a_weeks_declaration_is_proposed_confirmed_and_read_back_over_http(clien
 
     tenant = conn.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()["id"]
     section = f"T{uuid.uuid4().hex[:5]}"
-    conn.execute(
-        "insert into child (tenant_id, roll_no, section, band) values (%s,'1',%s,'G2')", (tenant, section)
-    )
+    a_child_in(conn, section, "G2", "1", tenant)
     monkeypatch.setattr(
         week_note.jev,
         "decide_yes_no",

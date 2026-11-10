@@ -7,9 +7,10 @@
  * made in the local copy and taken off at the end.
  */
 import { expect, test, type Page } from "@playwright/test";
-import { randomBytes, randomUUID, scryptSync } from "node:crypto";
+import { randomUUID } from "node:crypto";
 import postgres from "postgres";
 import { linkIn, mailFor, MAIL_WAIT_MS } from "./mail-server";
+import { aPerson, forgetPerson, personAsStored } from "./rows";
 
 // One connection, closed by the driver as soon as it is idle: a client held open across a whole file is ended by the
 // first failure's teardown, and every test after it then reads "CONNECTION_ENDED" instead of its own result.
@@ -19,14 +20,7 @@ const PASSWORD = "a-long-enough-one-1";
 /** A member of staff of this test's own, with a password already set (as `engine set-password` sets one). */
 async function staffMember(password: string | null = PASSWORD, role = "educator"): Promise<string> {
   const email = `pw-${randomUUID().slice(0, 8)}@cornerstone.test`;
-  const salt = randomBytes(16).toString("hex");
-  const person = {
-    email,
-    name: "Password test",
-    role,
-    ...(password ? { password: `scrypt$${salt}$${scryptSync(password, salt, 64).toString("hex")}` } : {}),
-  };
-  await sql`update config set value = value || ${sql.json([person])} where key = 'app.staff'`;
+  await aPerson(sql, { email, name: "Password test", role, ...(password ? { password } : {}) });
   return email;
 }
 
@@ -36,9 +30,7 @@ test.beforeEach(async () => {
 });
 
 async function forget(email: string): Promise<void> {
-  await sql`
-    update config set value = (select jsonb_agg(p) from jsonb_array_elements(value) p
-      where p ->> 'email' <> ${email}) where key = 'app.staff'`;
+  await forgetPerson(sql, email);
   await sql`delete from password_link where email = ${email}`;
   await sql`delete from password_ask where email = ${email}`;
 }
@@ -265,10 +257,7 @@ test("a new member of staff added on the Staff page has no password and is sent 
     await page.getByRole("button", { name: "Add and send a link" }).click();
     await expect(page.getByRole("main")).toContainText("a link to set their own password is on its way");
     // nobody typed a password: the row holds none
-    const [row] = await sql<{ n: number }[]>`
-      select count(*)::int as n from jsonb_array_elements((select value from config where key = 'app.staff')) p
-      where p ->> 'email' = ${email} and p ? 'password'`;
-    expect(row.n).toBe(0);
+    expect((await personAsStored(sql, email))?.password ?? null).toBeNull();
 
     await page.context().clearCookies();
     await page.goto(await linkSentTo(email));

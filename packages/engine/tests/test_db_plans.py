@@ -11,6 +11,7 @@ runner, where `/growth` said "This page could not load" (main's browser job on 3
 import pytest
 
 from engine.core import db
+from tests.rows import a_child_in
 
 
 @pytest.fixture
@@ -82,10 +83,7 @@ def test_a_classs_answers_are_read_from_its_own_children_not_from_every_answer_i
     ]
     skill = conn.execute("select code from registry_skill limit 1").fetchone()["code"]
     for section, answers in (("PLAN-A", 3), ("PLAN-B", 600)):
-        child = conn.execute(
-            "insert into child (tenant_id, roll_no, section, band) values (%s, '1', %s, 'G2') returning id",
-            (tenant, section),
-        ).fetchone()["id"]
+        child = a_child_in(conn, section, "G2", "1", tenant)
         conn.execute(
             "insert into evidence_event (tenant_id, child_id, skill_code, rung_code, correct, channel, observed_at,"
             " confirmed_by) select %s, %s, %s, %s, true, 'item', now(), 'plan test' from generate_series(1, %s)",

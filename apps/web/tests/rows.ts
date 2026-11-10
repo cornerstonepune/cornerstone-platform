@@ -192,3 +192,71 @@ export function daysAgo(of: string[], i: number): number {
   const later = of.slice(i + 1).filter((k) => k === of[i]).length;
   return 3 * later;
 }
+
+// ---------------------------------------------------------------------------------------------------------------------
+// The people who sign in, as a browser test needs them (CP-27 group 4, step 4-prep): the one place that knows where the
+// sign-in list is kept, so the step that moves it changes these bodies and no spec. Today the list is the `config` row
+// `app.staff` (a JSON list, an entry per person; the database gives each entry an `id`, what the website signs a person
+// in as). Group 4a keeps it on `staff` / `pii.staff` instead; a spec never names either. The engine tests' own are
+// `a_person`, `forget_person`, `teaches` and `signin_list` in packages/engine/tests/rows.py.
+
+/** A member of staff as a spec puts one on: `password` is typed (hashed here as the sign-in checks it, at node's default
+ *  cost), `hash` is one already made, kept as it is. */
+export type Person = {
+  email: string;
+  name?: string;
+  role?: string;
+  classes?: string[];
+  subjects?: string[];
+  password?: string;
+  hash?: string;
+};
+
+/** `p` is someone the sign-in knows, exactly as given: an entry already there for the email is replaced, keeping the id
+ *  it signs in as. → the id the website signs them in as. */
+export async function aPerson(sql: Sql, p: Person): Promise<{ id: string }> {
+  const { password, hash, ...rest } = p;
+  const { randomBytes, scryptSync } = await import("node:crypto");
+  const salt = randomBytes(16).toString("hex");
+  const made = hash ?? (password ? `scrypt$${salt}$${scryptSync(password, salt, 64).toString("hex")}` : undefined);
+  const entry = { ...rest, ...(made ? { password: made } : {}) };
+  await sql`
+    update config set value = (select coalesce(jsonb_agg(s), '[]'::jsonb) from jsonb_array_elements(value) s
+                               where s ->> 'email' <> ${p.email})
+      || jsonb_build_array(${sql.json(entry)}::jsonb || coalesce((select jsonb_build_object('id', s -> 'id')
+           from jsonb_array_elements(value) s where s ->> 'email' = ${p.email} and s ? 'id' limit 1), '{}'::jsonb))
+    where key = 'app.staff'`;
+  const [me] = await sql<{ id: string }[]>`
+    select s ->> 'id' as id from config, jsonb_array_elements(value) s
+    where key = 'app.staff' and s ->> 'email' = ${p.email}`;
+  return { id: me.id };
+}
+
+/** `email` is no longer someone the sign-in knows; everyone else is as they were. */
+export async function forgetPerson(sql: Sql, email: string): Promise<void> {
+  await sql`
+    update config set value = (select coalesce(jsonb_agg(s), '[]'::jsonb) from jsonb_array_elements(value) s
+                               where s ->> 'email' <> ${email})
+    where key = 'app.staff'`;
+}
+
+/** `email` teaches `classes` (class labels) and nothing else of them changes, as the Staff page saves a person. */
+export async function teaches(sql: Sql, email: string, classes: string[]): Promise<void> {
+  await sql`
+    update config set value = (select jsonb_agg(case when s ->> 'email' = ${email}
+                                                     then jsonb_set(s, '{classes}', ${sql.json(classes)}) else s end
+                                                order by n)
+                               from jsonb_array_elements(value) with ordinality as e(s, n))
+    where key = 'app.staff'`;
+}
+
+export type Stored = { name: string; role: string; classes: string[] | null; subjects: string[] | null; password: string | null };
+
+/** A person as the sign-in keeps them, or undefined: `password` is the hash, null while they have none. */
+export async function personAsStored(sql: Sql, email: string): Promise<Stored | undefined> {
+  const [me] = await sql<Stored[]>`
+    select s ->> 'name' as name, s ->> 'role' as role, s -> 'classes' as classes, s -> 'subjects' as subjects,
+           s ->> 'password' as password
+    from config, jsonb_array_elements(value) s where key = 'app.staff' and s ->> 'email' = ${email}`;
+  return me;
+}

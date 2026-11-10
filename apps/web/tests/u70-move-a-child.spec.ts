@@ -9,7 +9,7 @@
 import { expect, test, type Browser } from "@playwright/test";
 import { createHmac } from "node:crypto";
 import postgres from "postgres";
-import { aClass } from "./rows";
+import { aClass, aPerson } from "./rows";
 
 test.use({ viewport: { width: 1440, height: 900 } });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -107,7 +107,7 @@ test("a roll number that is taken is said in words and nothing changes", async (
 
 const TEACHER = { email: `mv-teacher-${RUN.toLowerCase()}@cornerstone.test`, name: "Mv Teacher", role: "educator", classes: [FROM], subjects: ["NUM"] };
 async function asTeacher(browser: Browser) {
-  await sql`update config set value = value || ${sql.json([TEACHER])} where key = 'app.staff' and not value @> ${sql.json([{ email: TEACHER.email }])}`;
+  await aPerson(sql, TEACHER);
   const body = `${Buffer.from(TEACHER.email).toString("base64url")}.${Date.now() + 3_600_000}`;
   const mac = createHmac("sha256", process.env.E2E_AUTH_SECRET!).update(body).digest("hex");
   const context = await browser.newContext({ baseURL: "http://localhost:3100", viewport: { width: 1440, height: 900 } });

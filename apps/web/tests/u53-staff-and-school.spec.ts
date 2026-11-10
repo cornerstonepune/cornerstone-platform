@@ -5,7 +5,7 @@
  */
 import { expect, test } from "@playwright/test";
 import postgres from "postgres";
-import { aClass } from "./rows";
+import { aClass, aPerson, forgetPerson, personAsStored, teaches as teachesClasses } from "./rows";
 
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 const CLASS = "UXN2-CLASS";
@@ -13,7 +13,7 @@ const PERSON = {
   email: "uxn2.ayush@cornerstone.test",
   name: "Ayush Test",
   role: "educator",
-  password: "scrypt$keep$me",
+  hash: "scrypt$keep$me",
   classes: [] as string[],
 };
 
@@ -21,23 +21,17 @@ test.use({ viewport: { width: 1440, height: 900 } });
 
 test.beforeAll(async () => {
   await aClass(sql, CLASS, "G3", ["Uma", "Vik"]);
-  await sql`update config set value = value || ${sql.json([PERSON])} where key = 'app.staff' and not value @> ${sql.json([{ email: PERSON.email }])}`;
+  await aPerson(sql, PERSON);
 });
 test.afterAll(async () => {
-  await sql`update config set value = (select coalesce(jsonb_agg(p), '[]'::jsonb) from jsonb_array_elements(value) p where p ->> 'email' <> ${PERSON.email}) where key = 'app.staff'`;
+  await forgetPerson(sql, PERSON.email);
   await sql.end();
 });
 
 // each test starts from the person's classes as it says, so any one runs alone
-const teaches = (classes: string[]) =>
-  sql`update config set value = (select jsonb_agg(case when p ->> 'email' = ${PERSON.email} then jsonb_set(p, '{classes}', ${sql.json(classes)}) else p end) from jsonb_array_elements(value) p) where key = 'app.staff'`;
+const teaches = (classes: string[]) => teachesClasses(sql, PERSON.email, classes);
 
-const classesOf = async () =>
-  (
-    await sql<
-      { c: string[] }[]
-    >`select p -> 'classes' as c from config, jsonb_array_elements(value) p where key = 'app.staff' and p ->> 'email' = ${PERSON.email}`
-  )[0].c;
+const classesOf = async () => (await personAsStored(sql, PERSON.email))?.classes;
 
 test("a coordinator ticks a person's classes on the Staff page and the list keeps them, and the rest of the person", async ({
   page,
@@ -54,10 +48,9 @@ test("a coordinator ticks a person's classes on the Staff page and the list keep
     "Ayush Test’s classes are saved",
   );
   expect(await classesOf()).toEqual([CLASS]);
-  const [kept] = await sql<
-    { password: string; role: string }[]
-  >`select p ->> 'password' as password, p ->> 'role' as role from config, jsonb_array_elements(value) p where key = 'app.staff' and p ->> 'email' = ${PERSON.email}`;
-  expect(kept).toEqual({ password: PERSON.password, role: "educator" });
+  const stored = await personAsStored(sql, PERSON.email);
+  const kept = { password: stored?.password, role: stored?.role };
+  expect(kept).toEqual({ password: PERSON.hash, role: "educator" });
   // no password hash is ever on the page
   expect(await page.content()).not.toContain("scrypt$");
   await expect(

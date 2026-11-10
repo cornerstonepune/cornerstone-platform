@@ -17,7 +17,7 @@ from engine.checks import past
 from engine.core import db, settings
 from engine.w2_print import shelf
 from engine.w3_read import voice_confirm
-from tests.rows import data_steps
+from tests.rows import a_child_in, data_steps
 from tests.voice_rows import a_k2_class, a_note
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
@@ -204,10 +204,7 @@ def test_evidence_count_and_checksum_equal_before_and_after(conn):
     checksum), every child's states and every scored answer are the same before and after the migration, run again on a
     database that has them; and the fingerprint does see a change, so its sameness means something."""
     tenant = conn.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()["id"]
-    child = conn.execute(
-        "insert into child (tenant_id, roll_no, section, band) values (%s, '1', 'RUNGTEST', 'G3') returning id",
-        (tenant,),
-    ).fetchone()["id"]
+    child = a_child_in(conn, "RUNGTEST", "G3", "1", tenant)
     add = (
         "insert into evidence_event (tenant_id, child_id, skill_code, rung_code, correct, channel, observed_at,"
         " confirmed_by, misconception_codes) values (%s, %s, 'NUM.OPS.01', 'R45', %s, 'item', now(), 'test', '{}')"

@@ -9,6 +9,7 @@ from fastapi.testclient import TestClient
 from engine.api import deps
 from engine.api.app import app
 from engine.core import db
+from tests.rows import a_child_in
 
 pytestmark = [
     pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)"),
@@ -39,15 +40,7 @@ def client(conn, monkeypatch):
 @pytest.fixture
 def kids(conn):
     tenant = conn.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()["id"]
-    return [
-        str(
-            conn.execute(
-                "insert into child (tenant_id, roll_no, section, band) values (%s,%s,%s,'G2') returning id",
-                (tenant, roll, SECTION),
-            ).fetchone()["id"]
-        )
-        for roll in ("1", "2")
-    ]
+    return [str(a_child_in(conn, SECTION, "G2", roll, tenant)) for roll in ("1", "2")]
 
 
 def _batch(kids, **more):
