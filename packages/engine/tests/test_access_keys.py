@@ -189,3 +189,36 @@ def test_a_class_card_confirmed_is_seen_by_that_class_and_a_way_of_asking_approv
     assert _seen(s, None, "approval", mine) == 0
     for who in ("X", "Y", "all"):
         assert _seen(s, who, "approval", mine + " and kind = 'question_type'") == 1
+
+
+def test_whoever_sees_a_child_through_a_paper_they_put_in_sees_that_childs_class(school):
+    """A child's class is their enrolment since CP-27 group 4. Keyed by class, the enrolment of another class's child was
+    hidden from the educator who put in that child's paper, who saw the child with no class (u68, 10 Nov 2026); before,
+    the class was a column of the child. Whoever sees a child sees their enrolment."""
+    s, c = school, school["c"]
+    xs_child = f"id = '{s['child']['X']}' and section = 'P'"
+    assert _seen(s, "Y", "child_now", xs_child) == 0  # another class's child: not seen
+    tpl = _one(
+        c,
+        "insert into sheet_template (tenant_id, band, variant, week, item_ids, key, source) values"
+        " (%s, 'K2', 1, '2026-W45', '{}', '{}', 'generated') returning id",
+        s["tenant"],
+    )
+    sheet = _one(
+        c,
+        "insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, print_status, week,"
+        " approved_by, approved_at) values (%s, 'CS' || substr(md5(random()::text), 1, 6), %s, %s, 'printed', 'W1',"
+        " 'cp27', now()) returning id",
+        s["tenant"], tpl, s["child"]["X"],
+    )  # fmt: skip
+    c.execute(
+        "insert into capture (tenant_id, path, sheet_instance_id, status, uploaded_by)"
+        " values (%s, 'cp27/k.pdf', %s, 'processed', %s)",
+        (s["tenant"], sheet, s["entry"]["Y"]),
+    )
+    assert _seen(s, "Y", "child_now", xs_child) == 1  # the child of the paper Y put in, in their own class
+    assert (
+        _seen(s, "Y", "enrolment", f"class_id = '{s['cls']['X']}'") == 1
+    )  # that child's enrolment, no other
+    assert _seen(s, "X", "child_now", xs_child) == 1
+    assert _seen(s, "all", "child_now", xs_child) == 1
