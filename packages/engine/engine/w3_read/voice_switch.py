@@ -1,4 +1,5 @@
-"""The K2 voice-note switches, turned by a command that names who turned them (task M1-04): never by hand on live.
+"""The K2 voice-note switches, and the two screen switches that go on with them (`timetable`, `curriculum`), turned by a
+command that names who turned them (task M1-04): never by hand on live.
 
 `voice.screens_enabled` shows the K2 educator What needs doing's K2 rows, the form and Confirm. `voice.recording_enabled`
 lets her record and hear a note back, on top of the screens. `voice.sarvam_no_retention_confirmed` records that
@@ -13,6 +14,8 @@ KEYS = {
     "screens": "voice.screens_enabled",
     "recording": "voice.recording_enabled",
     "sarvam": "voice.sarvam_no_retention_confirmed",
+    "timetable": "educator.timetable_enabled",  # the educator's timetable and materials screens (D-076)
+    "curriculum": "curriculum.screens_enabled",  # the curriculum screens (M1-13)
 }
 NO_REFERENCE = (
     "not recorded: give --ref, the reference of Sarvam's written confirmation that the school's workspace keeps no"
