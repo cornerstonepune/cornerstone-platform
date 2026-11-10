@@ -105,6 +105,7 @@ export default async function QuestionScreen({ params, searchParams }: Props) {
         <form action={correctItem} className="mb-4 grid max-w-[640px] gap-3" data-block="Form">
           <h2 className="text-[16px]">Correct the wording</h2>
           <input type="hidden" name="item_key" value={it.item_key} />
+          <input type="hidden" name="base" value={BANK} />
           <label className="field">
             <span className="label">The wording (required)</span>
             <textarea className="textarea min-h-[90px]" name="stem" defaultValue={it.stem} maxLength={600} required />
@@ -121,6 +122,7 @@ export default async function QuestionScreen({ params, searchParams }: Props) {
         <form action={flagItem} className="mb-4 grid max-w-[640px] gap-3" data-block="Form">
           <h2 className="text-[16px]">Remove it</h2>
           <input type="hidden" name="item_key" value={it.item_key} />
+          <input type="hidden" name="base" value={BANK} />
           <input type="hidden" name="back" value={`${BANK}/${it.item_key}`} />
           <label className="field">
             <span className="label">Reason for removal (required)</span>
