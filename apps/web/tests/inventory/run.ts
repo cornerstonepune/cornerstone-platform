@@ -33,10 +33,10 @@ export async function auditScreen(browser: Browser, s: Screen, role: "educator" 
         out.push(...(await keyboard(page, s)));
         // the controls that exist only in a state: a child chosen, a filter on, a second page
         for (const state of [...new Set(s.elements.filter((x) => forRole(x, role) && x.when).map((x) => x.when as When))]) {
-          await page.goto(address, { waitUntil: "domcontentloaded" });
+          await page.goto(address, { waitUntil: "networkidle" });
           out.push(...(await completeness(page, s, c, state)));
         }
-        await page.goto(address, { waitUntil: "domcontentloaded" });
+        await page.goto(address, { waitUntil: "networkidle" });
       }
       if (width >= 1000) {
         out.push(...(await words(page, s, c, hosts)));
@@ -44,7 +44,7 @@ export async function auditScreen(browser: Browser, s: Screen, role: "educator" 
         for (const v of axe.violations.filter((x) => x.impact === "serious" || x.impact === "critical")) out.push(`${s.id}: axe ${v.impact}: ${v.id} (${v.nodes.length} nodes)`);
         for (const e of s.elements.filter((x) => forRole(x, role))) {
           out.push(...(await drive(page, s, e, c, byId)));
-          if (page.url() !== `http://localhost:3100${address}`) await page.goto(address, { waitUntil: "domcontentloaded" });
+          if (page.url() !== `http://localhost:3100${address}`) await page.goto(address, { waitUntil: "networkidle" });
         }
       } else if (s.phone_gate) out.push(...(await touch(page, s)));
     } finally {
