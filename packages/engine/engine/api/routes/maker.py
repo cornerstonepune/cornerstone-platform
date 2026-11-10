@@ -37,6 +37,7 @@ class MakeBatch(Batch):
     by: str
     once: str  # the form's own token: the same form sent twice makes its papers once
     seen: str  # the papers the educator saw (`seen.of`): they print only as they were shown
+    approve: bool = True  # false: the papers are made and wait for the approval step (`edit_paper.approve`)
 
 
 def _args(b: Batch) -> tuple:
@@ -61,13 +62,24 @@ def papers_make(
     body: MakeBatch, conn=Depends(get_conn, scope="function"), tenant_id: str = Depends(get_tenant_id)
 ) -> dict:
     """`by` approves the papers the plan showed, and each prints with its own code; refused whole, naming each child
-    whose paper cannot be made."""
+    whose paper cannot be made. With `approve` false the papers are only made, in `by`'s name, and wait for approval."""
     request = body.model_dump(mode="json")
     section, children, week, kind, way, ask, changed = _args(body)
 
     def run():
         return maker.make(
-            conn, section, children, week, kind, way, body.by, ask, changed, body.draw, body.seen
+            conn,
+            section,
+            children,
+            week,
+            kind,
+            way,
+            body.by,
+            ask,
+            changed,
+            body.draw,
+            body.seen,
+            body.approve,
         )
 
     try:

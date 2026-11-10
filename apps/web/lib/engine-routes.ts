@@ -96,7 +96,7 @@ export type EngineRoutes = {
   "POST /paper/{qr}/remove": { by: string; item_id: string; at?: number | null };
   "POST /papers/absent": { qr: string; away: boolean; by: string };
   "POST /papers/given": { qrs: string[]; on: string; by: string };
-  "POST /papers/make": { section: string; week: string; kind: string; way: string; children: string[]; areas?: { skill_set: string; level: string; n: number }[]; changed?: Record<string, { skill_set: string; level: string; n?: number | null }[]>; draw?: number; by: string; once: string; seen: string };
+  "POST /papers/make": { section: string; week: string; kind: string; way: string; children: string[]; areas?: { skill_set: string; level: string; n: number }[]; changed?: Record<string, { skill_set: string; level: string; n?: number | null }[]>; draw?: number; by: string; once: string; seen: string; approve?: boolean };
   "POST /papers/plan": { section: string; week: string; kind: string; way: string; children: string[]; areas?: { skill_set: string; level: string; n: number }[]; changed?: Record<string, { skill_set: string; level: string; n?: number | null }[]>; draw?: number };
   "POST /read/file": { url: string; actor: string; again?: boolean };
   "POST /read/run/{run_id}/again": { by: string };
