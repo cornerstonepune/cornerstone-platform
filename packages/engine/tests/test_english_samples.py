@@ -12,6 +12,7 @@ import os
 import pytest
 
 from engine.core import db, english, loaders
+from tests.rows import approvals_so_far, forget_approvals
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs the local copy (bin/testdb)")
 
@@ -76,6 +77,7 @@ def test_a_sample_is_stored_whole(conn):
 
 def test_a_load_leaves_an_approved_level_as_it_was(conn):
     s = samples()[0]
+    since = approvals_so_far(conn)
     conn.execute(
         "update skill_level set confirmed_by = 'An Educator', confirmed_at = '2026-10-23' where skill_code = %s"
         " and difficulty = %s",
@@ -97,6 +99,7 @@ def test_a_load_leaves_an_approved_level_as_it_was(conn):
             "update skill_level set confirmed_by = null, confirmed_at = null where skill_code = %s and difficulty = %s",
             (s["skill_code"], s["difficulty"]),
         )
+        forget_approvals(conn, since)  # the approval and its withdrawal, rows of the one list (CP-27)
         conn.commit()
 
 

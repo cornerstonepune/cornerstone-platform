@@ -169,18 +169,18 @@ export async function approveLevel(formData: FormData): Promise<void> {
   redirect(done.length ? `/skill-sets/${code}?level_approved=${level}#levels` : `/skill-sets/${code}?approved=0#levels`);
 }
 
-/** A named person approves one way of asking (`question_type_approval`): once, for every skill and level that uses it —
- *  the paper-maker draws only approved ones. Approving it again changes nothing, and the first approval keeps its name
- *  and date (goals/e0-english-in-the-system.yaml). */
+/** A named person approves one way of asking (a row of the one approval list, `approval`, CP-27): once, for every skill
+ *  and level that uses it — the paper-maker draws only approved ones. Approving it again changes nothing, and the first
+ *  approval keeps its name and date (goals/e0-english-in-the-system.yaml). */
 export async function approveWay(formData: FormData): Promise<void> {
   const me = await deciding("skills");
   const way = String(formData.get("way") ?? "");
   const back = String(formData.get("back") ?? "");
   if (!CODE.test(way) || !CODE.test(back)) redirect("/");
   await sql`
-    insert into question_type_approval (tenant_id, question_type, approved_by)
-    select tenant_id, code, ${me.name}::text from question_type where code = ${way}
-    on conflict (tenant_id, question_type) do nothing`;
+    insert into approval (tenant_id, kind, target, decision, by)
+    select tenant_id, kind, target, 'approved', ${me.name}::text from approval_list
+    where kind = 'question_type' and target = ${way} and first_by is null`;
   revalidatePath(`/skill-sets/${back}`);
   redirect(`/skill-sets/${back}?way_approved=${way}#ways`);
 }

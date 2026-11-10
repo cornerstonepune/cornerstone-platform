@@ -17,7 +17,7 @@ import psycopg
 import pytest
 
 from engine.core import db, settings
-from tests.rows import a_registry_skill, tenant
+from tests.rows import a_level_looked_at, a_registry_skill, tenant
 
 REPO = Path(__file__).resolve().parents[3]
 GRADE = "G10"  # a grade no school class is in, so a grade's count here is the test's own
@@ -242,10 +242,8 @@ def test_the_system_only_suggests_no_level_is_changed():
         section = _a_class(c, skill, 9)
         got = _row(c, "class", section, skill)
         assert got["verdict"] == "review"
-        c.execute(
-            "insert into calibration_review (tenant_id, skill_code, difficulty, scope_kind, scope_value, assessed, secure,"
-            " reviewed_by) values (%s, %s, %s, 'class', %s, %s, %s, 'tester@example.org')",
-            (tenant(c), skill["code"], LEVEL, section, got["assessed"], got["secure"]),
+        a_level_looked_at(
+            c, skill["code"], LEVEL, "class", section, got["assessed"], got["secure"], "tester@example.org"
         )
         assert snapshot() == before
         c.rollback()
@@ -297,16 +295,17 @@ def test_a_review_hides_a_suggestion_until_the_numbers_move_and_is_only_ever_add
         section = _a_class(c, skill, 9)
         got = _row(c, "class", section, skill)
         assert got["looked_at"] is None
-        c.execute(
-            "insert into calibration_review (tenant_id, skill_code, difficulty, scope_kind, scope_value, assessed, secure,"
-            " reviewed_by) values (%s, %s, %s, 'class', %s, %s, %s, 'tester@example.org')",
-            (tenant(c), skill["code"], LEVEL, section, got["assessed"], got["secure"]),
+        a_level_looked_at(
+            c, skill["code"], LEVEL, "class", section, got["assessed"], got["secure"], "tester@example.org"
         )
         assert _row(c, "class", section, skill)["looked_at"] is not None  # hidden: nothing has moved
         for _ in range(int(settings.threshold(c, "calibration.review_again_children", 0))):
             _a_child_at(c, section, skill, LEVEL, SECURE)
         assert _row(c, "class", section, skill)["looked_at"] is None  # the numbers moved: it is asked again
-        for change in ("update calibration_review set reviewed_by = 'x'", "delete from calibration_review"):
+        for change in (
+            "update approval set by = 'x' where kind = 'calibration'",
+            "delete from approval where kind = 'calibration'",
+        ):
             with pytest.raises(psycopg.Error):
                 with c.transaction():
                     c.execute(change)

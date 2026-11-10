@@ -35,7 +35,7 @@ says:
   - words: "nothing will change for any of the past assessments, scoring etc. right?"
     proved_by: "packages/engine/tests/test_question_types.py::test_past_results_are_the_same_before_and_after"
   - words: "nothing will change for any of the past assessments, scoring etc. right?"
-    proved_by: "packages/engine/tests/test_question_types.py::test_every_type_already_in_use_starts_approved"
+    proved_by: "packages/engine/tests/test_question_types.py::test_every_type_in_use_is_approved_and_every_level_with_questions_can_make_a_paper"
 manual:
   - "Actions → rehearse update-live, on this branch: the migration runs on a copy of live after live's rows arrive; `engine past` prints the same evidence count and checksum, children's states and scored answers before and after; every format live holds is a row of `question_type`, every one starts approved, and the copy comes back clean."
 scenarios: []

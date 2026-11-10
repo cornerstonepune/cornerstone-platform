@@ -45,12 +45,13 @@ test.afterAll(async () => {
   // A correction's note is "Corrected as <key>: <reason>", so match the mark anywhere in it, and take
   // back the corrected question a test made before bringing the original back.
   const marked = `%${MARK}%`;
-  await sql`delete from item where corrected_from in (select item_id from item_feedback where note like ${marked})`;
+  await sql`delete from item where corrected_from in (
+    select target::uuid from approval where kind = 'item' and reason like ${marked})`;
   await sql`update item set status = 'active' where id in (
-    select item_id from item_feedback where note like ${marked})`;
+    select target::uuid from approval where kind = 'item' and reason like ${marked})`;
   await forgetFlags(sql, marked);
   const [{ leaked }] = await sql<{ leaked: number }[]>`
-    select count(*)::int as leaked from item_feedback where note like ${marked}`;
+    select count(*)::int as leaked from approval where kind = 'item' and reason like ${marked}`;
   const [{ retired }] = await sql<{ retired: number }[]>`
     select count(*)::int as retired from item where status = 'retired'`;
   await sql.end();
@@ -288,20 +289,20 @@ test("removing a question retires it in the database and it stops being offered"
     await expect
       .poll(async () => {
         const [{ n }] = await sql<{ n: number }[]>`
-          select count(*)::int as n from item_feedback where note = ${MARK} and verdict = 'retire'`;
+          select count(*)::int as n from approval where kind = 'item' and reason = ${MARK} and decision = 'retire'`;
         return n;
       })
       .toBeGreaterThan(0);
     // … and the database trigger retires the question, so it can never print again.
     const [retired] = await sql<{ status: string; actor: string }[]>`
-      select i.status, f.actor from item i join item_feedback f on f.item_id = i.id
-      where f.note = ${MARK} limit 1`;
+      select i.status, f.by as actor from item i join approval f on f.kind = 'item' and f.target = i.id::text
+      where f.reason = ${MARK} limit 1`;
     expect(retired.status).toBe("retired");
     expect(retired.actor).toBeTruthy();
   } finally {
     for (const [i, d] of levels.entries()) await restoreLibrary(sql, "SUB.2D2D", d, worksheets[i]);
     await sql`update item set status = 'active' where id in (
-      select item_id from item_feedback where note = ${MARK})`;
+      select target::uuid from approval where kind = 'item' and reason = ${MARK})`;
     await forgetFlags(sql, MARK); // no wildcard in it: the flags whose note is the mark
   }
 });

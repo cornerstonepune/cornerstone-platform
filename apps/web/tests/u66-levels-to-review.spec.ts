@@ -129,7 +129,9 @@ test("I've looked at this hides the suggestion for that grade and only adds a ro
   const before = async () => ({
     levels: (await sql`select md5(string_agg(x::text, '|' order by x::text)) as m from skill_level x`)[0].m,
     blob: (await sql`select md5(string_agg(difficulty::text, '|' order by code)) as m from skill`)[0].m,
-    reviews: Number((await sql`select count(*) as n from calibration_review where scope_value = ${BIG}`)[0].n),
+    reviews: Number(
+      (await sql`select count(*) as n from approval where kind = 'calibration' and target like ${`% class ${BIG}`}`)[0].n,
+    ),
   });
   const was = await before();
   await page.goto(ofClass(BIG));
@@ -142,7 +144,9 @@ test("I've looked at this hides the suggestion for that grade and only adds a ro
   expect(now.levels, "no level changed").toBe(was.levels);
   expect(now.blob, "no skill's levels changed").toBe(was.blob);
   // the row is only ever added to: the database refuses a change
-  await expect(sql`update calibration_review set reviewed_by = 'x' where scope_value = ${BIG}`).rejects.toThrow(/append-only/);
+  await expect(
+    sql`update approval set by = 'x' where kind = 'calibration' and target like ${`% class ${BIG}`}`,
+  ).rejects.toThrow(/append-only/);
 });
 
 test("an educator sees only the classes in their own scope", async ({ browser }) => {

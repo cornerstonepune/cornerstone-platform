@@ -174,7 +174,7 @@ not printed. The word problems read like a teacher wrote them.
 Steps 1–6 exist as engine code behind a CLI (`engine bank fill | recheck | flag | sheet`,
 `engine eval item_generate`); the HTTP wrapper and the library screen do not. The skill-set spec
 is a `skill_set` row (four seeded as drafts for Neha and Achal), the school philosophy is a
-`config` row, the prompt is a `prompt` row, and a staff flag is an `item_feedback` row whose
+`config` row, the prompt is a `prompt` row, and a staff flag is an `approval` row (kind `item`) whose
 trigger retires the item. `ladder.py` and `blueprints.py` are still Python dictionaries for the
 deterministic generators (a rule-1 violation, unchanged) — the prompt path does not read them.
 
