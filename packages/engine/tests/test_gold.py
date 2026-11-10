@@ -11,6 +11,7 @@ from engine.adapters import llm, ocr
 from engine.assess import graph
 from engine.core import db
 from engine.w3_read import gold, legacy, marking
+from tests.rows import a_child_in
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
 
@@ -35,10 +36,7 @@ def conn():
 @pytest.fixture
 def child(conn):
     tenant = conn.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()["id"]
-    cid = conn.execute(
-        "insert into child (tenant_id, roll_no, section, band) values (%s,'1','TESTSEC','G3') returning id",
-        (tenant,),
-    ).fetchone()["id"]
+    cid = a_child_in(conn, "TESTSEC", "G3", "1", tenant)
     conn.execute(
         "insert into pii.child (tenant_id, child_id, first_name) values (%s,%s,'Goldtest')", (tenant, cid)
     )

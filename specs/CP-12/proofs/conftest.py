@@ -48,7 +48,6 @@ import psycopg
 import pytest
 from engine.core import db
 from psycopg.pq import TransactionStatus
-from psycopg.types.json import Jsonb
 
 ROOT = Path(os.environ.get("ATHENA_ROOT", Path(__file__).resolve().parents[3]))
 MIGRATIONS = sorted((ROOT / "supabase" / "migrations").glob("*.sql"))
@@ -313,16 +312,8 @@ def _staff(c, t, campus, klass):
         c.execute("insert into staff_role_grant (tenant_id, staff_id, role_code, school_class_id, valid_from,"
                   " granted_by) values (%s, %s, %s, %s, '2026-01-01', 'proof')", (t, sid, role, on_class))
         out.append({"id": sid, "email": email})
-    # CP-3's sign-in list: each person's entry id is their staff id, so `current_staff()` resolves through
-    # `staff.signin_id` (CP-7's world does the same).
-    c.execute("insert into config (tenant_id, key, value) values (%s, 'app.staff', %s)"
-              " on conflict (tenant_id, key) do update set value = excluded.value",
-              (t, Jsonb([{"id": str(p["id"]), "email": p["email"], "name": "Proof Person", "role": "educator"}
-                         for p in out])))
-    if _one(c, "select signin_id from staff where id = %s", (out[0]["id"],))["signin_id"] is None:
-        c.execute("select internal.rebuild_staff_signin()")
-    if _one(c, "select signin_id from staff where id = %s", (out[0]["id"],))["signin_id"] is None:
-        pytest.fail("the coordinator has no staff.signin_id after writing config `app.staff` (CP-3's sign-in list)")
+    # the website signs each person in as their staff id (CP-27 group 4: the sign-in list is the staff tables), so
+    # `current_staff()` is the person with nothing more to link
     return out
 
 

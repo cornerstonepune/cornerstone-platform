@@ -22,8 +22,8 @@ test("the bank says in plain words what it is, with the database's own numbers",
              where i.status = 'active' and i.source = 'generated' and s.difficulty ? i.difficulty) as bank,
            (select count(*)::int from item i join skill s on s.code = i.skill_set_code where i.status = 'active' and i.source = 'generated'
               and s.difficulty ? i.difficulty
-              and exists (select 1 from child k where k.tenant_id = s.tenant_id and k.active and skill_taught_in(s.tenant_id, s.code, k.section))) as active,
-           (select count(*)::int from skill s where exists (select 1 from child k where k.tenant_id = s.tenant_id and k.active and skill_taught_in(s.tenant_id, s.code, k.section))) as skills`;
+              and exists (select 1 from child_now k where k.tenant_id = s.tenant_id and k.active and skill_taught_in(s.tenant_id, s.code, k.section))) as active,
+           (select count(*)::int from skill s where exists (select 1 from child_now k where k.tenant_id = s.tenant_id and k.active and skill_taught_in(s.tenant_id, s.code, k.section))) as skills`;
   await page.goto("/library");
   const about = page.getByRole("region", { name: "What the bank is" }).or(page.locator("section.panel", { hasText: "What the bank is" }));
   await expect(about.first()).toContainText(`${bank.toLocaleString("en-IN")} today`);

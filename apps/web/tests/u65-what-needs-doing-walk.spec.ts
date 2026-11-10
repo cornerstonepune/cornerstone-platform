@@ -10,7 +10,7 @@ import { createHmac } from "node:crypto";
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import postgres from "postgres";
-import { aClass, aReadPaper, aWaitingSkill } from "./rows";
+import { aClass, aReadPaper, aWaitingSkill, aPerson } from "./rows";
 import { TODO_GROUPS } from "../lib/todo";
 
 test.use({ viewport: { width: 1440, height: 900 } });
@@ -32,12 +32,10 @@ test.beforeAll(async () => {
     reads: [{ status: "correct", read: "1" }, { status: "needs_teacher", read: "7" }],
   });
   restore = await aWaitingSkill(sql, SKILL);
-  await sql`
-    update config set value = value || ${sql.json([EDUCATOR])}
-    where key = 'app.staff' and not value @> ${sql.json([{ email: EDUCATOR.email }])}`;
+  await aPerson(sql, EDUCATOR);
 });
 test.afterAll(async () => {
-  await sql`delete from class_skill where section = ${SECTION}`; // what the test marked taught: no other spec finds a topic taught
+  await sql`update school_class set taught = '{}' where label = ${SECTION}`; // what the test marked taught: no other spec finds a topic taught
   await restore?.();
   await sql.end();
 });
@@ -160,14 +158,12 @@ test("the queue-shrinking trend is off What needs doing, its data and function k
 
 test("Teaching is not in the menu and its old address opens What needs doing", async ({ page }) => {
   await open(page, "/today");
-  const top = page.getByRole("navigation", { name: "Sections" }).getByRole("link");
+  const top = page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" }).getByRole("link");
   const names = (await top.allInnerTexts()).map((n) => n.replace(/\s*\d[\d,]*$/, "").trim());
   expect(names).not.toContain("Teaching");
   test.info().annotations.push({ type: "top-level menu items", description: `${names.length}: ${names.join(", ")}` });
-  expect(names).toEqual(["What needs doing", "Assessments", "Results", "Setup"]);
-  await page.getByRole("button", { name: "Menu" }).click();
-  await expect(page.getByRole("dialog", { name: "Menu" }).getByRole("link", { name: "Teaching" })).toHaveCount(0);
-  await page.keyboard.press("Escape");
+  expect(names).toEqual(["Today", "Timetable", "Children", "Setup"]);
+  await expect(page.locator("[data-bar]").first().getByRole("link", { name: "Teaching" })).toHaveCount(0);
   for (const old of ["/taught", "/taught?subject=NUM", "/taught?topic=MUL"]) {
     await page.goto(old);
     await expect(page, old).toHaveURL(/\/today(\?|$)/);
@@ -194,7 +190,7 @@ test("What needs doing opens in under a second, as the other pages do", async ({
   console.log("load time ms", JSON.stringify(times));
   // On the seeded copy, one second (Nimish: nothing slow). Once the other specs have filled the copy with test classes every
   // page pays the menu's count alike (the layout's one query set), so there the page is held to being no slower than the rest.
-  const [{ classes }] = await sql<{ classes: number }[]>`select count(distinct section)::int as classes from child where active`;
+  const [{ classes }] = await sql<{ classes: number }[]>`select count(distinct section)::int as classes from child_now where active`;
   const others = Math.max(...Object.entries(times).filter(([u]) => u !== "/today").map(([, ms]) => ms));
   if (classes < 30) expect(times["/today"], "a seeded copy").toBeLessThan(1000);
   expect(times["/today"], "no slower than the slowest other page").toBeLessThanOrEqual(others * 1.25);

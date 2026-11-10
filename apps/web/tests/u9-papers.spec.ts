@@ -13,6 +13,7 @@
  * - an earlier paper read, one answer still waiting for a person (scanned);
  * - a class assessment read and signed off, one of two right (signed off).
  */
+import { aChildIn } from "./rows";
 import { expect, type Page, test } from "@playwright/test";
 import postgres from "postgres";
 
@@ -26,10 +27,9 @@ const papers: Record<"made" | "printed" | "scanned" | "signed", Paper> = {} as n
 let kids: Record<string, string> = {};
 
 async function child(tenant: string, roll: string, name: string) {
-  const [had] = await sql<{ id: string }[]>`select id from child where section = ${SECTION} and roll_no = ${roll}`;
+  const [had] = await sql<{ id: string }[]>`select id from child_now where section = ${SECTION} and roll_no = ${roll}`;
   if (had) return had.id;
-  const [{ id }] = await sql<{ id: string }[]>`
-    insert into child (tenant_id, roll_no, section, band) values (${tenant}, ${roll}, ${SECTION}, 'G2') returning id`;
+  const [{ id }] = [{ id: await aChildIn(sql, SECTION, "G2", roll) }];
   await sql`insert into pii.child (tenant_id, child_id, first_name) values (${tenant}, ${id}, ${name})`;
   return id;
 }
@@ -159,10 +159,13 @@ test("every paper is one row, what it is, whose, and where it stands, filtered b
 
 test("one Assessments in the menu for marking and making, and a row opens the paper where its work is", async ({ page }) => {
   await page.goto("/papers");
-  const menu = page.getByRole("navigation", { name: "Sections" });
-  await expect(menu.getByRole("link", { name: "Assessments" })).toHaveAttribute("aria-current", "page");
-  await expect(menu.getByRole("link", { name: "Marking" })).toHaveCount(0);
-  await expect(menu.getByRole("link", { name: "Make papers" })).toHaveCount(0);
+  // Assessments is one page of the Children door: the door is lit, the page is marked in its row, and there is no Marking or Make papers
+  const menu = page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" });
+  const pagesRow = page.getByRole("navigation", { name: "Pages in this section" });
+  await expect(menu.getByRole("link", { name: "Children" })).toHaveAttribute("aria-current", "page");
+  await expect(pagesRow.getByRole("link", { name: "Assessments", exact: true })).toHaveAttribute("aria-current", "page");
+  await expect(pagesRow.getByRole("link", { name: "Marking" })).toHaveCount(0);
+  await expect(pagesRow.getByRole("link", { name: "Make papers" })).toHaveCount(0);
   // making, reading a scan and the queue of answers to check are all here
   await expect(page.getByRole("region", { name: "Make an assessment" }).getByRole("link", { name: /^For a class/ })).toHaveAttribute("href", /^\/papers\/make\?/);
   await expect(page.getByRole("region", { name: "Read an assessment" })).toBeVisible();
@@ -170,7 +173,8 @@ test("one Assessments in the menu for marking and making, and a row opens the pa
   // the pages it merged are still Assessments
   for (const path of ["/make"]) {
     await page.goto(path);
-    await expect(menu.getByRole("link", { name: "Assessments" })).toHaveAttribute("aria-current", "page");
+    await expect(menu.getByRole("link", { name: "Children" })).toHaveAttribute("aria-current", "page");
+    await expect(pagesRow.getByRole("link", { name: "Assessments", exact: true })).toHaveAttribute("aria-current", "page");
   }
 
   // a scanned paper opens to check its answers; one not yet scanned opens as printed: a copy's child is its link

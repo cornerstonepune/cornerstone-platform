@@ -16,6 +16,7 @@ import pytest
 
 from engine.core import db, settings
 from engine.core.staff import staff_hash
+from tests import rows
 from tests.test_cli import run
 
 needs_db = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
@@ -26,7 +27,7 @@ HEADER = "name,email,role,subjects,classes"
 
 def _staff():
     with db.connect() as conn:
-        return conn.execute("select value from config where key = 'app.staff'").fetchone()["value"]
+        return rows.signin_list(conn)
 
 
 def _file(tmp_path, *lines, name="staff.csv"):
@@ -51,18 +52,14 @@ def school():
     """Two classes with a child in each, the staff list as it was put back afterwards, and nothing else changed."""
     with db.connect() as conn:
         tenant = conn.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()["id"]
-        was = conn.execute("select value from config where key = 'app.staff'").fetchone()["value"]
-        for section in SECTIONS:
-            conn.execute(
-                "insert into child (tenant_id, roll_no, section, band) values (%s, '1', %s, 'G2')"
-                " on conflict (tenant_id, section, roll_no) do update set active = true",
-                (tenant, section),
-            )
+        was = rows.signin_list(conn)
+        made = [rows.a_child_in(conn, section, "G2", "1", tenant) for section in SECTIONS]
         conn.commit()
     yield SECTIONS
     with db.connect() as conn:
-        conn.execute("update child set active = false where section = any(%s)", (list(SECTIONS),))
-        conn.execute("update config set value = %s where key = 'app.staff'", (json.dumps(was),))
+        conn.execute("update child set active = false where id = any(%s)", (made,))
+        conn.execute("update enrolment set to_date = from_date where child_id = any(%s)", (made,))
+        rows.signin_list_is(conn, was)
         conn.commit()
 
 
@@ -242,9 +239,8 @@ def test_apply_adds_updates_leaves_the_others_and_a_second_run_changes_nothing(t
                 "classes": ["SL-ONE"],
             }
         ]
-        conn.execute(
-            "update config set value = value || %s::jsonb where key = 'app.staff'", (json.dumps(others),)
-        )
+        for person in others:
+            rows.a_person(conn, **person)
         conn.commit()
     untouched = [s for s in _staff() if s["email"] == "other@example.test"]
     path = _file(
@@ -295,14 +291,19 @@ def test_a_person_who_already_has_a_password_keeps_it_and_is_given_none(tmp_path
                 "classes": [],
             }
         ]
-        conn.execute(
-            "update config set value = value || %s::jsonb where key = 'app.staff'", (json.dumps(had),)
-        )
+        for person in had:
+            rows.a_person(conn, **person)
         conn.commit()
+    [was] = [s for s in _staff() if s["email"] == "old@example.test"]
     r = _load(_file(tmp_path, HEADER, "Old Hand,old@example.test,educator,NUM,SL-ONE"), "--apply")
     assert r.exit_code == 0 and "Give each person" not in r.output_plain
     [me] = [s for s in _staff() if s["email"] == "old@example.test"]
-    assert me["password"] == kept and me["password_set_at"] == "2026-10-01" and me["classes"] == ["SL-ONE"]
+    assert (
+        me["password"] == kept
+        and me["password_set_at"] == was["password_set_at"]
+        and me["classes"] == ["SL-ONE"]
+    )
+    assert was["password_set_at"].startswith("2026-10-01")
 
 
 @needs_db

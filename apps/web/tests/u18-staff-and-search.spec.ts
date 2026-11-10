@@ -7,33 +7,27 @@
  *
  * The class is the test's own (tests/rows.ts), made once and kept; the educator is taken off the list after.
  */
-import { scryptSync } from "node:crypto";
 import { expect, test } from "@playwright/test";
 import postgres from "postgres";
-import { aClass } from "./rows";
+import { aClass, aPerson, forgetPerson } from "./rows";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 const SECTION = "U18-TEST";
 const EDUCATOR = { email: "u18-educator@cornerstone.test", name: "U18 Educator", role: "educator", classes: [SECTION] };
 const PASSWORD = "u18-a-long-test-password";
-const SALT = "00112233445566778899aabbccddeeff";
 
 test.beforeAll(async () => {
   await aClass(sql, SECTION, "G2", ["Zorawar", "Mehrunissa"]);
 });
 test.afterAll(async () => {
-  await sql`
-    update config set value = (select coalesce(jsonb_agg(s), '[]'::jsonb) from jsonb_array_elements(value) s
-                               where s ->> 'email' <> ${EDUCATOR.email})
-    where key = 'app.staff'`;
+  await forgetPerson(sql, EDUCATOR.email);
   await sql.end();
 });
 
 test("an educator put on the staff list signs in, and a decision carries their name", async ({ browser }) => {
   // on the list as `engine staff add` puts them: the hash is the one the sign-in checks (packages/engine/tests/test_cli.py)
-  const password = `scrypt$${SALT}$${scryptSync(PASSWORD, SALT, 64).toString("hex")}`;
-  await sql`update config set value = value || ${sql.json([{ ...EDUCATOR, password }])} where key = 'app.staff'`;
+  await aPerson(sql, { ...EDUCATOR, password: PASSWORD });
   const [topic] = await sql<{ name: string; taught: boolean }[]>`select name, taught_in(tenant_id, code, null) as taught from topic where code = 'DIV'`;
   expect(topic.taught, "division waits for an educator's word").toBe(false);
 
@@ -53,11 +47,11 @@ test("an educator put on the staff list signs in, and a decision carries their n
     await row.getByRole("button", { name: "Mark as taught" }).click();
     await expect(page.getByRole("main")).toContainText(`${topic.name} is taught in ${SECTION} now`);
     const [now] = await sql<{ taught: boolean; taught_by: string | null }[]>`
-      select bool_and(taught) as taught, min(taught_by) as taught_by from class_skill where section = ${SECTION} and skill_set_code in (select code from skill where topic_code = 'DIV')`;
+      select bool_and(taught) as taught, min(taught_by) as taught_by from (select sc.tenant_id, sc.label as section, w.key as skill_set_code, (w.value ->> 'taught')::boolean as taught, w.value ->> 'by' as taught_by from school_class sc cross join jsonb_each(sc.taught) w) class_skill where section = ${SECTION} and skill_set_code in (select code from skill where topic_code = 'DIV')`;
     expect(now).toEqual({ taught: true, taught_by: EDUCATOR.name });
   } finally {
     await context.close();
-    await sql`delete from class_skill where section = ${SECTION}`;
+    await sql`update school_class set taught = '{}' where label = ${SECTION}`;
   }
 });
 
@@ -65,7 +59,7 @@ test("an educator put on the staff list signs in, and a decision carries their n
 // child by name or roll without the name entering an address (s41-subject-class-and-today.spec.ts), so the page has one way.
 test("Children has no second box to find a child: the bar at the top finds them", async ({ page }) => {
   await page.goto("/growth");
-  await expect(page.getByRole("search", { name: "Find a child or paper" }).getByRole("searchbox")).toBeVisible();
+  await expect(page.getByRole("search", { name: "Find a child or paper" }).getByRole("combobox")).toBeVisible();
   await expect(page.getByRole("searchbox", { name: "Find a child" })).toHaveCount(0);
   await expect(page.getByRole("main").getByRole("searchbox")).toHaveCount(0);
 });

@@ -6,7 +6,6 @@ website asks of everything it shows; these hold the rule itself, the staff ids i
 new upload records.
 """
 
-import json
 import os
 import uuid
 from pathlib import Path
@@ -15,9 +14,12 @@ import pytest
 
 from engine.core import db
 from engine.w3_read import inbox
-from tests.rows import a_read_paper, forget_paper, tenant
+from tests.rows import a_person, a_read_paper, forget_paper, forget_person, teaches, tenant
 
-pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
+pytestmark = [
+    pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)"),
+    pytest.mark.usefixtures("forgets_what_it_commits"),
+]
 
 ME = str(uuid.uuid4())
 SOMEONE = str(uuid.uuid4())
@@ -57,40 +59,28 @@ def person():
     """A member of staff of the test's own, taken off the list again after."""
     email = f"who-sees-{uuid.uuid4().hex[:6]}@cornerstone.test"
     with db.connect() as conn:
-        conn.execute(
-            "update config set value = value || %s::jsonb where key = 'app.staff'",
-            (json.dumps([{"email": email, "name": "Who Sees", "role": "educator", "classes": []}]),),
-        )
+        a_person(conn, email, "Who Sees", "educator", classes=[])
         conn.commit()
     yield email
     with db.connect() as conn:
-        conn.execute(
-            "update config set value = (select coalesce(jsonb_agg(s), '[]'::jsonb) from jsonb_array_elements(value) s"
-            " where s ->> 'email' <> %s) where key = 'app.staff'",
-            (email,),
-        )
+        forget_person(conn, email)
         conn.commit()
 
 
 def test_every_member_of_staff_has_an_id_that_a_rewrite_of_the_list_keeps(person):
     with db.connect() as conn:
-        first = conn.execute("select staff_id(%s) as id", (person.upper(),)).fetchone()["id"]
+        first = conn.execute("select staff_of_email(%s) as id", (person.upper(),)).fetchone()["id"]
         assert first is not None
         # the website writes the whole list back when a class is changed: the id stays
-        conn.execute(
-            "update config set value = (select jsonb_agg(case when s ->> 'email' = %s"
-            ' then s || \'{"classes": ["2A"]}\'::jsonb else s end) from jsonb_array_elements(value) s)'
-            " where key = 'app.staff'",
-            (person,),
-        )
-        assert conn.execute("select staff_id(%s) as id", (person,)).fetchone()["id"] == first
-        assert conn.execute("select staff_id('nobody@cornerstone.test') as id").fetchone()["id"] is None
+        teaches(conn, person, ["2A"])
+        assert conn.execute("select staff_of_email(%s) as id", (person,)).fetchone()["id"] == first
+        assert conn.execute("select staff_of_email('nobody@cornerstone.test') as id").fetchone()["id"] is None
 
 
 def test_a_paper_is_seen_by_its_class_and_by_whoever_put_it_in():
     with db.connect() as conn:
         paper = a_read_paper(conn, [{"status": "correct", "read": "35"}])
-        section = conn.execute("select section from child where id = %s", (paper["child"],)).fetchone()[
+        section = conn.execute("select section from child_now where id = %s", (paper["child"],)).fetchone()[
             "section"
         ]
         sheet = conn.execute(
@@ -106,8 +96,9 @@ def test_a_paper_is_seen_by_its_class_and_by_whoever_put_it_in():
 
         assert sees([section]) == {"s": True, "c": True}
         assert sees(["SOME-OTHER-CLASS"]) == {"s": False, "c": False}
-        conn.execute("update capture set uploaded_by = %s where id = %s", (ME, paper["capture"]))
-        assert sees(["SOME-OTHER-CLASS"]) == {"s": True, "c": True}
+        me = a_person(conn, f"who-sees-{uuid.uuid4().hex[:6]}@cornerstone.test", "Who Sees")["ask_as"]
+        conn.execute("update capture set uploaded_by = %s where id = %s", (me, paper["capture"]))
+        assert sees(["SOME-OTHER-CLASS"], me) == {"s": True, "c": True}
         assert sees(["SOME-OTHER-CLASS"], SOMEONE) == {"s": False, "c": False}
         conn.rollback()
 
@@ -133,7 +124,7 @@ def test_an_upload_records_who_put_it_in_and_a_reading_again_keeps_it(person, mo
         strange = inbox.start(t, tmp_path / f"x-{name}", "nobody@cornerstone.test", pages=1)
         runs.append(strange)
         with db.connect() as conn:
-            me = conn.execute("select staff_id(%s) as id", (person,)).fetchone()["id"]
+            me = conn.execute("select staff_of_email(%s) as id", (person,)).fetchone()["id"]
             by = {
                 r["id"]: r["uploaded_by"]
                 for r in conn.execute(

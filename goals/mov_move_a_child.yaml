@@ -24,7 +24,7 @@ says:
 - words: I just wanted to confirm that we are getting this data in a structured way. It's not like some hard-coded backend.
   proved_by: packages/engine/tests/test_child_move.py::test_the_history_is_append_only_and_holds_no_name
 - words: I just wanted to confirm that we are getting this data in a structured way. It's not like some hard-coded backend.
-  proved_by: packages/engine/tests/test_child_move.py::test_the_history_table_has_row_security_and_the_web_role_reads_it_and_adds_only_through_the_function
+  proved_by: packages/engine/tests/test_child_move.py::test_the_history_has_row_security_and_the_web_role_reads_it_and_moves_only_through_the_function
 - words: If the roll number is taken in that class, say so in words and change nothing.
   proved_by: packages/engine/tests/test_child_move.py::test_a_taken_roll_number_says_so_and_changes_nothing
 - words: If the roll number is taken in that class, say so in words and change nothing.
@@ -45,7 +45,7 @@ says:
   proved_by: packages/engine/tests/test_child_move.py::test_a_move_withdraws_what_was_not_yet_made_and_leaves_every_paper_made_as_it_is
 - words: After a change, whatever is derived from the child's grade or class is brought up to date by the existing path (the
     derived rings are rebuilt from the truth; do not copy numbers by hand).
-  proved_by: packages/engine/tests/test_child_move.py::test_a_move_clears_the_stored_class_card_of_both_classes_and_the_card_is_rebuilt_from_the_graph
+  proved_by: packages/engine/tests/test_child_move.py::test_after_a_move_the_card_of_both_classes_is_built_from_the_class_the_child_is_in_now
 - words: 'The roster loader must not undo the change silently: make it also say when a roster file would move a child back
     to a grade that was changed here.'
   proved_by: packages/engine/tests/test_roster.py::test_a_list_that_would_undo_a_grade_changed_on_the_site_is_told_so_and_leaves_it

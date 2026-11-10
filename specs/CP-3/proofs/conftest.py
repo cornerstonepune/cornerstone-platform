@@ -7,7 +7,8 @@ neither, the proofs fail; they never skip. DATABASE_URL (the live database) is n
 
 Everything a test writes is fake (example.test emails, "Fake" names) and is rolled back at the end of the test.
 Queries "as the website" run as a throwaway login that is a member of app_web, with the identity set exactly as the
-website sets it: set_config('app.staff_id', <sign-in list entry id>, true) inside the transaction.
+website sets it: set_config('app.staff_id', <the person's staff id>, true) inside the transaction (the sign-in list is
+the staff tables since CP-27 group 4; it was a sign-in list entry's own id).
 """
 
 import glob
@@ -135,8 +136,7 @@ class School:
         self.y = one(c, cls, (self.t, campus, year, grade, "PY"))
         self.kids = {self.x: [], self.y: []}
         for n, k in enumerate([self.x, self.x, self.y], start=1):
-            child = one(c, "insert into child (tenant_id, roll_no, band, section) values (%s, %s, 'G1', %s) "
-                           "returning id", (self.t, f"P{n}", "PX" if k == self.x else "PY"))
+            child = one(c, "insert into child (tenant_id, band) values (%s, 'G1') returning id", (self.t,))
             c.execute("insert into pii.child (tenant_id, child_id, first_name) values (%s, %s, 'Fake')",
                       (self.t, child))
             c.execute("insert into enrolment (tenant_id, child_id, class_id, roll_no, from_date, recorded_by) "
@@ -157,13 +157,10 @@ class School:
         self.grant("late", "assistant", self.x, start=1)
         self.grant("ended", "assistant", self.x, start=-30, end=0)
 
-        # the sign-in list (config app.staff): its trigger gives each entry the id the website sets
-        names = list(self.staff) + ["unmatched"]
-        c.execute("insert into config (tenant_id, key, value) values (%s, 'app.staff', %s)",
-                  (self.t, psycopg.types.json.Jsonb(
-                      [{"email": self.email(w, tag), "name": "Fake Person", "role": "educator"} for w in names])))
-        for e in one(c, "select value from config where tenant_id = %s and key = 'app.staff'", (self.t,)):
-            self.entry[e["email"].split(".")[0]] = e["id"]
+        # the id the website signs each person in as: their staff id (CP-27 group 4); "unmatched" is an id no member of
+        # staff has
+        c.execute("update staff set role_code = 'educator' where tenant_id = %s", (self.t,))
+        self.entry = {**self.staff, "unmatched": uuid.uuid4()}
 
         decision = "accepted"  # a claim kept as read: no kept_as needed
         self.note = {}
@@ -190,8 +187,8 @@ class School:
             (self.t, self.staff[who], role, cls, self.today, start, self.today, end))
 
     def seen(self, who, sql, params=()):
-        """count(*) of `sql` as the website login, with `who`'s sign-in entry id (None: no identity; a str that is
-        not a name of this school is set as it is)."""
+        """count(*) of `sql` as the website login, with `who`'s staff id (None: no identity; a str that is not a name
+        of this school is set as it is)."""
         c = self.c
         c.execute("savepoint as_web")
         try:

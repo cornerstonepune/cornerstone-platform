@@ -18,6 +18,7 @@ import pytest
 
 from engine.core import db, loaders, settings
 from engine.w2_print import shelf, week_note
+from tests import rows
 
 NEEDS_DB = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
 
@@ -175,7 +176,7 @@ def test_every_grade_a_row_holds_is_a_key_into_grade(conn):
     t = loaders._tenant(conn)
     for bad in (
         "update skill set grade = 'G11' where rung_code = 'R11'",
-        f"insert into child (tenant_id, roll_no, section, band) values ('{t}', '1', 'B0B', 'Grade 3')",
+        f"insert into child (tenant_id, band) values ('{t}', 'Grade 3')",
     ):
         with pytest.raises(psycopg.errors.ForeignKeyViolation), conn.transaction():
             conn.execute(bad)
@@ -206,10 +207,7 @@ def test_reasoning_is_grade_2(conn):
 
 
 def _child(conn, tenant, section, band):
-    conn.execute(
-        "insert into child (tenant_id, roll_no, section, band) values (%s, %s, %s, %s)",
-        (tenant, uuid.uuid4().hex[:6], section, band),
-    )
+    rows.a_child_in(conn, section, band, uuid.uuid4().hex[:6], tenant)
 
 
 @NEEDS_DB

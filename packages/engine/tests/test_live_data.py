@@ -10,6 +10,7 @@ import pytest
 from engine.checks import live_data
 from engine.core import db
 from tests import rows
+from tests.rows import a_child_in
 
 
 def test_a_migration_is_unapplied_until_its_version_is_recorded():
@@ -33,10 +34,7 @@ def _answer_on(conn, rung):
     )
     tenant = tenant.fetchone()["id"]
     rows.a_registry_skill(conn, tenant)  # evidence names a registry skill of its school (C2)
-    child = conn.execute(
-        "insert into child (tenant_id, roll_no, band, section) values (%s, '1', 'G2', 'G2') returning id",
-        (tenant,),
-    ).fetchone()["id"]
+    child = a_child_in(conn, "G2", "G2", "1", tenant)
     conn.execute(
         "insert into evidence_event (tenant_id, child_id, skill_code, rung_code, correct, channel, observed_at,"
         " confirmed_by) values (%s, %s, 'NUM.OPS.01', %s, true, 'teacher_override', now(), 'a person')",
@@ -57,10 +55,7 @@ def test_an_answer_on_a_skill_whose_topic_is_not_taught_is_kept_and_noted_not_fa
     ).fetchone()
     if not row:
         pytest.skip("needs the seed loaded on the copy")
-    child = conn.execute(
-        "insert into child (tenant_id, roll_no, band, section) values (%s, '1', 'G2', 'HIDDENTEST') returning id",
-        (row["tenant_id"],),
-    ).fetchone()["id"]
+    child = a_child_in(conn, "HIDDENTEST", "G2", "1", row["tenant_id"])
     conn.execute(
         "insert into evidence_event (tenant_id, child_id, skill_code, rung_code, correct, channel, observed_at,"
         " confirmed_by) values (%s, %s, 'NUM.OPS.03', %s, true, 'teacher_override', now(), 'a person')",

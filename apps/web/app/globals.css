@@ -115,6 +115,11 @@ h3 {
   a {
     color: var(--link);
   }
+  /* Keyboard focus is always visible: a ring of 2 px in the focus token on anything focusable (docs/ux-rules.md, the keyboard check). */
+  :focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: 2px;
+  }
   @media (hover: hover) and (pointer: fine) {
     a:hover {
       color: var(--ink);
@@ -178,7 +183,7 @@ h3 {
   font-size: 11px;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--ink-55);
+  color: var(--ink-muted);
   font-weight: 600;
 }
 .fact {
@@ -509,4 +514,15 @@ table.grid.steady tr.under td {
   min-width: 0;
   max-width: 100%;
   overflow-x: auto;
+}
+
+/* The old screens' faint text (text-basalt/35 … /55, an ink at a fraction of its strength) measured 3.9:1 on white, under the 4.5:1 of
+   docs/design-tokens-contrast.md and axe's color-contrast. Each reads as the one muted ink until the screen is rebuilt on the tokens. */
+@layer utilities {
+  .text-basalt\/35,
+  .text-basalt\/45,
+  .text-basalt\/50,
+  .text-basalt\/55 {
+    color: var(--ink-muted);
+  }
 }

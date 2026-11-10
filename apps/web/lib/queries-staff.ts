@@ -2,7 +2,7 @@ import { sql } from "./db";
 import { staffList, type Staff } from "./queries";
 
 // Who teaches which class, read for the Staff and School pages (goals/uxn2-staff-and-school.yaml). A person's password
-// hash lives in the same list and never leaves it: only the name, email, role and classes are read here.
+// hash comes with the list (`staffList`) and never leaves the server: only the name, email, role and classes are read here.
 export type Person = {
   email: string;
   name: string;
@@ -32,8 +32,8 @@ export async function people(): Promise<Person[]> {
 export async function classLines(): Promise<ClassLine[]> {
   const rows = await sql<{ section: string; band: string; children: number }[]>`
     select c.section, c.band, count(*)::int as children
-    from child c left join grade g on g.tenant_id = c.tenant_id and g.code = c.band
-    where c.active group by c.section, c.band, g.ord order by g.ord, c.section`;
+    from child_now c left join grade g on g.tenant_id = c.tenant_id and g.code = c.band
+    where c.active and c.section is not null group by c.section, c.band, g.ord order by g.ord, c.section`;
   const staff = await people();
   return rows.map((r) => ({
     ...r,

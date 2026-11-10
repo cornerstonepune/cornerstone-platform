@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Body, PageHeader } from "./shell";
+import { Body, PageHeader } from "./parts";
 
 /** What an educator reads for a paper, scan or answer they do not see (goals/own_who_sees_answers.yaml). */
 export const PAPER_NOT_YOURS = "This paper belongs to another class. Nothing of it is shown, and nothing was changed.";

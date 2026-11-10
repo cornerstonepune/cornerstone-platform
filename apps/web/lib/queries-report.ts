@@ -30,7 +30,7 @@ export type MapNode = {
  *  ladder. */
 export async function skillMap(id: string): Promise<MapNode[]> {
   return sql<MapNode[]>`
-    with me as (select band from child where id = ${id}::uuid),
+    with me as (select band from child_now where id = ${id}::uuid),
     st as (
       select s.rung_code,
              (array_agg(s.state order by cs.ord))[1] as state
@@ -57,7 +57,7 @@ export async function skillMap(id: string): Promise<MapNode[]> {
            coalesce(sig.wrong_working, 0) as wrong_working, coalesce(sig.blank, 0) as blank
     from skill ss
     join topic t on t.tenant_id = ss.tenant_id and t.code = ss.topic_code
-      and ${skillTaughtIn(sql`ss.tenant_id`, sql`ss.code`, sql`(select section from child where id = ${id}::uuid)`)}
+      and ${skillTaughtIn(sql`ss.tenant_id`, sql`ss.code`, sql`(select section from child_now where id = ${id}::uuid)`)}
     join grade g on g.tenant_id = ss.tenant_id and g.code = ss.grade
     left join st on st.rung_code = ss.rung_code
     left join sig on sig.rung_code = ss.rung_code

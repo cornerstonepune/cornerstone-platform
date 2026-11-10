@@ -8,6 +8,7 @@
  *
  * The child is the test's own, made once with checked answers and kept (evidence is append-only); its papers are removed.
  */
+import { aChildIn } from "./rows";
 import { expect, test, type Page } from "@playwright/test";
 import postgres from "postgres";
 import { TEST_STAFF } from "./global-setup";
@@ -17,11 +18,10 @@ const SECTION = "P5-REVIEW";
 const REVIEW = /\/papers\/review\/(CS[0-9A-F]{6})$/;
 
 async function testChild(): Promise<string> {
-  const [had] = await sql<{ id: string }[]>`select id from child where section = ${SECTION} and roll_no = '1'`;
+  const [had] = await sql<{ id: string }[]>`select id from child_now where section = ${SECTION} and roll_no = '1'`;
   if (had) return had.id;
   const [{ tenant_id }] = await sql<{ tenant_id: string }[]>`select id as tenant_id from tenant limit 1`;
-  const [{ id }] = await sql<{ id: string }[]>`
-    insert into child (tenant_id, roll_no, section, band) values (${tenant_id}, '1', ${SECTION}, 'G3') returning id`;
+  const [{ id }] = [{ id: await aChildIn(sql, SECTION, "G3", "1") }];
   await sql`insert into pii.child (tenant_id, child_id, first_name) values (${tenant_id}, ${id}, 'Review')`;
   // 3-digit − 3-digit: 2 of 8, the smaller digit taken from the larger four times — the home paper's one area
   const answers: [string, string, boolean, string[]][] = [
@@ -145,9 +145,12 @@ test("an approved paper edited goes back to waiting, a printed one is read-only,
   expect(kinds.length).toBeGreaterThan(1);
   const stopped = kinds[0];
   const [{ tenant_id }] = await sql<{ tenant_id: string }[]>`select id as tenant_id from tenant limit 1`;
+  // a stop stands on the level's own row for the kind (CP-27 3C)
   const kindRow = (on: boolean) => sql`
-    insert into skill_level_kind_stop (tenant_id, skill_code, difficulty, question_type, stopped, changed_by)
-    values (${tenant_id}, ${a.skill}, ${a.level}, ${stopped.code}, ${on}, 'e2e')`;
+    update skill_level_question_type set stopped_at = case when ${on}::boolean then now() end,
+      stopped_by = case when ${on}::boolean then 'e2e' end
+    where tenant_id = ${tenant_id} and skill_code = ${a.skill} and difficulty = ${a.level}
+      and question_type = ${stopped.code}`;
   await kindRow(true);
   try {
     await page.goto(`/papers/review/${qr}?topic=${a.topic}&skill=${a.skill}&level=${a.level}`);
@@ -155,7 +158,7 @@ test("an approved paper edited goes back to waiting, a printed one is read-only,
     await expect(bank.locator(`select[name="q"]`)).toBeVisible();
     await expect(bank.locator("option", { hasText: stopped.words })).toHaveCount(0);
   } finally {
-    await kindRow(false); // started again: a stop is never deleted, a restart is its own row
+    await kindRow(false); // started again: the stop cleared on its row
   }
 
   // printed: its print opened, it is shown read-only and says how to change it

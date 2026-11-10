@@ -141,8 +141,7 @@ def school(c) -> uuid.UUID:
 
 
 def child(c, t, band="G2") -> uuid.UUID:
-    return c.execute("insert into child (tenant_id, roll_no, section, band) values (%s, '1', %s, %s) returning id",
-                     (t, f"P-{uuid.uuid4().hex[:6]}", band)).fetchone()[0]
+    return c.execute("insert into child (tenant_id, band) values (%s, %s) returning id", (t, band)).fetchone()[0]
 
 
 def at(day: int) -> dt.datetime:

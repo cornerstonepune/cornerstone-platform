@@ -67,7 +67,7 @@ def _read_copies(path, names, section, actor):
         rolls = {
             str(r["id"]): r["roll_no"]
             for r in conn.execute(
-                "select id, roll_no from child where id = any(%s)",
+                "select id, roll_no from child_now where id = any(%s)",
                 ([c["child_id"] for c in done if c["child_id"]],),
             )
         }

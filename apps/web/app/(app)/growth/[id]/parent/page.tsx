@@ -3,7 +3,7 @@
 // before answers were signed off since says so, and is written again rather than approved.
 import Link from "@/components/link";
 import { notFound } from "next/navigation";
-import { Body, Notice, PageHeader } from "@/components/shell";
+import { Body, Notice, PageHeader } from "@/components/parts";
 import { requireStaff } from "@/lib/auth";
 import { NotYours } from "@/components/not-yours";
 import { childSection, isMine } from "@/lib/scope";

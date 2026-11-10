@@ -3,14 +3,14 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { requireStaffEditor } from "@/lib/auth";
-import { sql } from "@/lib/db";
+import { sql, TENANT_SLUG } from "@/lib/db";
 import { sendFirstLink } from "@/lib/password-actions";
 import { rolesHeld } from "@/lib/queries-staff";
-import type { Staff } from "@/lib/queries";
+import { staffList } from "@/lib/queries";
 
 // A coordinator says which classes a member of staff teaches (goals/uxn2-staff-and-school.yaml): what
 // `engine staff classes <email> G2 G3` does, from the website. The classes named must be classes a child still in school
-// is in, or nothing changes; the person's other fields, their password hash among them, are kept as they are.
+// is in, or nothing changes; only the person's classes are written (`staff.classes`), nothing else of theirs.
 export async function setClasses(formData: FormData): Promise<void> {
   await requireStaffEditor();
   const email = String(formData.get("email") ?? "")
@@ -28,22 +28,15 @@ export async function setClasses(formData: FormData): Promise<void> {
     (
       await sql<
         { section: string }[]
-      >`select distinct section from child where active`
+      >`select distinct section from child_now where active and section is not null`
     ).map((r) => r.section),
   );
   const missing = wanted.filter((c) => !there.has(c));
   if (missing.length)
     redirect(`/staff?refused=${encodeURIComponent(missing.join(", "))}`);
-  const [row] = await sql<
-    { value: Staff[] }[]
-  >`select value from config where key = 'app.staff'`;
-  const people = row?.value ?? [];
-  const person = people.find((p) => p.email.toLowerCase() === email);
+  const person = (await staffList()).find((p) => p.email.toLowerCase() === email);
   if (!person) redirect("/staff");
-  const next = people.map((p) =>
-    p === person ? { ...p, classes: wanted } : p,
-  );
-  await sql`update config set value = ${sql.json(next)} where key = 'app.staff'`;
+  await sql`update staff set classes = ${wanted}::text[] where id = ${person.id ?? null}::uuid`;
   revalidatePath("/", "layout");
   redirect(`/staff?saved=${encodeURIComponent(person.name)}`);
 }
@@ -57,12 +50,9 @@ export async function setSubjects(formData: FormData): Promise<void> {
   const there = new Set((await sql<{ code: string }[]>`select code from subject`).map((r) => r.code));
   const missing = wanted.filter((c) => !there.has(c));
   if (missing.length) redirect(`/staff?of=subjects&refused=${encodeURIComponent(missing.join(", "))}`);
-  const [row] = await sql<{ value: Staff[] }[]>`select value from config where key = 'app.staff'`;
-  const people = row?.value ?? [];
-  const person = people.find((p) => p.email.toLowerCase() === email);
+  const person = (await staffList()).find((p) => p.email.toLowerCase() === email);
   if (!person) redirect("/staff");
-  const next = people.map((p) => (p === person ? { ...p, subjects: wanted } : p));
-  await sql`update config set value = ${sql.json(next)} where key = 'app.staff'`;
+  await sql`update staff set subjects = ${wanted}::text[] where id = ${person.id ?? null}::uuid`;
   revalidatePath("/", "layout");
   redirect(`/staff?of=subjects&saved=${encodeURIComponent(person.name)}`);
 }
@@ -78,12 +68,9 @@ export async function addPerson(formData: FormData): Promise<void> {
   if (!name || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) redirect("/staff?of=new&refused=email");
   if (!(await rolesHeld()).includes(role)) redirect("/staff?of=new&refused=role");
   // one statement, and it does nothing at all if that email is already on the list: two coordinators adding at once
-  // cannot write one person over the other (lib/db.ts: nothing may be stacked, so nothing is read and written back)
-  const person = { email, name, role, classes: [] as string[] };
-  const done = await sql`
-    update config set value = value || ${sql.json([person])}
-    where key = 'app.staff' and not value @> ${sql.json([{ email }])}`;
-  if (done.count === 0) redirect("/staff?of=new&refused=already");
+  // cannot write one person over the other (`staff_add`; someone taken off before is put back, with their own id)
+  const [done] = await sql<{ added: boolean }[]>`select public.staff_add(${TENANT_SLUG}, ${email}, ${name}, ${role}) as added`;
+  if (!done?.added) redirect("/staff?of=new&refused=already");
   await sendFirstLink(email);
   revalidatePath("/", "layout");
   redirect(`/staff?of=new&saved=${encodeURIComponent(name)}`);

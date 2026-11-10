@@ -9,10 +9,9 @@
  * too few to say anything; Asha has a home assessment this week and the class a week's practice paper. Every page is read
  * once a person at 400 px, as the class's educator and as the coordinator, and each sentence is checked on what was read.
  */
-import { scryptSync } from "node:crypto";
 import { expect, test, type Browser, type Page } from "@playwright/test";
 import postgres from "postgres";
-import { aClass, aReadPaper } from "./rows";
+import { aClass, aReadPaper, aPerson, forgetPerson } from "./rows";
 import { SIGNED_IN } from "../playwright.config";
 import { isoWeek } from "../lib/week";
 
@@ -22,7 +21,6 @@ const THIS = isoWeek();
 const QR = { asha: "CS43A001", home: "CS43A0F1", spare: "CS43C001" };
 const EDUCATOR = { email: "u43-educator@cornerstone.test", name: "U43 Educator", role: "educator", classes: [SECTION] };
 const PASSWORD = "u43-a-long-test-password";
-const SALT = "00112233445566778899aabbccddeeff";
 const PHONE = { width: 400, height: 800 };
 
 /** What one page showed at 400 px. */
@@ -32,7 +30,7 @@ const seen: Record<"educator" | "coordinator", Seen[]> = { educator: [], coordin
 test.beforeAll(async ({ browser }) => {
   test.setTimeout(600_000);
   const kids = await aClass(sql, SECTION, "G2", ["Asha", "Bina"]);
-  const [{ tenant }] = await sql<{ tenant: string }[]>`select tenant_id as tenant from child where id = ${kids.Asha}`;
+  const [{ tenant }] = await sql<{ tenant: string }[]>`select tenant_id as tenant from child_now where id = ${kids.Asha}`;
   const [skill] = await sql<{ code: string; rung: string; set: string }[]>`
     select ss.registry_codes[1] as code, ss.rung_code as rung, ss.code as set from skill ss
     where ss.grade = 'G2' and cardinality(ss.registry_codes) > 0 order by ss.ladder_order, ss.code limit 1`;
@@ -74,11 +72,7 @@ test.beforeAll(async ({ browser }) => {
   await sql`
     insert into sheet_instance (tenant_id, qr_code, sheet_template_id, section, week, kind, print_status)
     values (${tenant}, ${QR.spare}, ${ws.id}, ${SECTION}, to_date(${THIS}, 'IYYY-"W"IW'), 'practice', 'new')`;
-  const password = `scrypt$${SALT}$${scryptSync(PASSWORD, SALT, 64).toString("hex")}`;
-  await sql`
-    update config set value = (select coalesce(jsonb_agg(s), '[]'::jsonb) from jsonb_array_elements(value) s
-                               where s ->> 'email' <> ${EDUCATOR.email}) || ${sql.json([{ ...EDUCATOR, password }])}
-    where key = 'app.staff'`;
+  await aPerson(sql, { ...EDUCATOR, password: PASSWORD });
   const [read] = await sql<{ id: string }[]>`select id from sheet_instance where qr_code = ${QR.asha}`;
   const [item] = await sql<{ item_key: string }[]>`select item_key from item where id = ${ws.item_ids[0]}`;
   const pages = [
@@ -121,10 +115,7 @@ test.beforeAll(async ({ browser }) => {
 test.afterAll(async () => {
   // this week's papers go; the class and its read paper stay (evidence is append-only)
   await sql`delete from sheet_instance where qr_code in ${sql([QR.home, QR.spare])}`;
-  await sql`
-    update config set value = (select coalesce(jsonb_agg(s), '[]'::jsonb) from jsonb_array_elements(value) s
-                               where s ->> 'email' <> ${EDUCATOR.email})
-    where key = 'app.staff'`;
+  await forgetPerson(sql, EDUCATOR.email);
   await sql.end();
 });
 
@@ -184,8 +175,11 @@ function found(re: RegExp): string[] {
   );
 }
 
+// The title keeps the words of goals/ux7-phone-and-words.yaml. Since UI-13 the frame above a heading is the 64 px bar, the door's
+// row of pages and the trail (docs/ux-rules.md, rules 7 and 11), so the heading's limit on a phone is 240 px, as in s41.
+const HEADING_TOP = 240;
 test("on a phone, every page's heading is in the top 120 px", () => {
-  const low = everyPage().filter((s) => s.heading == null || s.heading > 120).map((s) => `${s.as} ${s.path}: ${Math.round(s.heading ?? -1)} px`);
+  const low = everyPage().filter((s) => s.heading == null || s.heading > HEADING_TOP).map((s) => `${s.as} ${s.path}: ${Math.round(s.heading ?? -1)} px`);
   expect(low).toEqual([]);
 });
 

@@ -7,17 +7,15 @@
  *   answers waiting for a person; Bina, with nothing yet;
  * - U50-QUIET: Cara and Dev, with nothing yet — so nothing in their table has a number to show.
  */
-import { scryptSync } from "node:crypto";
 import { expect, test, type Browser, type Page } from "@playwright/test";
 import postgres from "postgres";
-import { aClass, aReadPaper } from "./rows";
+import { aClass, aReadPaper, aPerson, forgetPerson } from "./rows";
 
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 const BUSY = "U50-BUSY";
 const QUIET = "U50-QUIET";
 const EDUCATOR = { email: "u50-educator@cornerstone.test", name: "U50 Educator", role: "educator", classes: [BUSY, QUIET] };
 const PASSWORD = "u50-a-long-test-password";
-const SALT = "00112233445566778899aabbccddeeff";
 let kids: Record<string, string> = {};
 
 test.beforeAll(async () => {
@@ -46,17 +44,10 @@ test.beforeAll(async () => {
     items: w.item_ids.slice(0, 3),
     reads: [{ status: "needs_teacher", read: "41" }, { status: "needs_teacher", read: "7" }, { status: "correct", read: "12" }],
   });
-  const password = `scrypt$${SALT}$${scryptSync(PASSWORD, SALT, 64).toString("hex")}`;
-  await sql`
-    update config set value = (select coalesce(jsonb_agg(s), '[]'::jsonb) from jsonb_array_elements(value) s
-                               where s ->> 'email' <> ${EDUCATOR.email}) || ${sql.json([{ ...EDUCATOR, password }])}
-    where key = 'app.staff'`;
+  await aPerson(sql, { ...EDUCATOR, password: PASSWORD });
 });
 test.afterAll(async () => {
-  await sql`
-    update config set value = (select coalesce(jsonb_agg(s), '[]'::jsonb) from jsonb_array_elements(value) s
-                               where s ->> 'email' <> ${EDUCATOR.email})
-    where key = 'app.staff'`;
+  await forgetPerson(sql, EDUCATOR.email);
   await sql.end();
 });
 
@@ -132,10 +123,10 @@ test("in the menu only Today carries a count", async ({ browser }) => {
   const page = await asEducator(browser);
   for (const path of ["/today", "/", "/growth"]) {
     await page.goto(path);
-    const menu = page.getByRole("navigation", { name: "Sections" });
+    const menu = page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" });
     // Asha's waiting answers make Assessments and Today non-zero, so a count elsewhere would show
-    await expect(menu.getByRole("link", { name: /^What needs doing/ }).getByTestId("waiting")).toBeVisible();
-    for (const tab of ["Teaching", "Assessments", "Results", "Setup"]) {
+    await expect(menu.getByRole("link", { name: /^Today/ }).getByTestId("waiting")).toBeVisible();
+    for (const tab of ["Timetable", "Children", "Setup"]) {
       await expect(menu.getByRole("link", { name: new RegExp(`^${tab}\\b`) }).getByTestId("waiting"), `${tab} on ${path}`).toHaveCount(0);
     }
     await expect(menu.getByTestId("waiting")).toHaveCount(1);

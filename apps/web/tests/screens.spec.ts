@@ -33,7 +33,7 @@ test.beforeAll(async () => {
     await sql`
       insert into evidence_event (tenant_id, child_id, skill_code, rung_code, correct, misconception_codes, channel,
                                   observed_at, confirmed_by)
-      select tenant_id, id, 'NUM.OPS.01', 'R22', true, '{}', 'item', now(), 'e2e' from child where id = ${kavya}`;
+      select tenant_id, id, 'NUM.OPS.01', 'R22', true, '{}', 'item', now(), 'e2e' from child_now where id = ${kavya}`;
   }
   await sql`select rebuild_child_skill_state(${kavya}::uuid)`;
   const w = await aWorksheet(sql, {
@@ -67,13 +67,16 @@ for (const { name, width, height } of SIZES) {
 
 test("every section is reachable from the menu", async ({ page }) => {
   await page.goto("/");
-  const groups = page.getByRole("navigation", { name: "Sections" });
-  for (const label of ["What needs doing", "Assessments", "Results", "Setup"]) await expect(groups.getByRole("link", { name: label })).toBeVisible();
-  // and every page of every group from the three-line button
-  await page.getByRole("button", { name: "Menu" }).click();
-  const panel = page.getByRole("dialog", { name: "Menu" });
-  for (const label of ["Papers to approve", "Upload papers", "Check answers", "Class results", "Curriculum", "Question bank", "Staff", "School"]) {
-    await expect(panel.getByRole("link", { name: label, exact: true })).toBeVisible();
+  const groups = page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" });
+  for (const label of ["Today", "Timetable", "Children", "Setup"]) await expect(groups.getByRole("link", { name: label })).toBeVisible();
+  // and every page of a door from the row of pages under the bar
+  for (const [door, labels] of [
+    ["Children", ["Papers to approve", "Upload papers", "Check answers", "Class results"]],
+    ["Setup", ["Curriculum", "Question bank", "Staff", "School"]],
+  ] as const) {
+    await groups.getByRole("link", { name: door }).click();
+    const row = page.getByRole("navigation", { name: "Pages in this section" });
+    for (const label of labels) await expect(row.getByRole("link", { name: label, exact: true })).toBeVisible();
   }
 });
 
@@ -91,7 +94,7 @@ test("a menu item stays readable while the pointer is on it", async ({ page }) =
 test("the menu marks where you are", async ({ page }) => {
   // the question bank is a page of Setup: the group and its tab are both marked
   await page.goto("/library");
-  await expect(page.getByRole("navigation", { name: "Sections" }).getByRole("link", { name: "Setup" })).toHaveAttribute("aria-current", "page");
+  await expect(page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" }).getByRole("link", { name: "Setup" })).toHaveAttribute("aria-current", "page");
   await expect(page.getByRole("navigation", { name: "Pages in this section" }).getByRole("link", { name: "Question bank" })).toHaveAttribute("aria-current", "page");
 });
 

@@ -12,7 +12,7 @@
  */
 import { expect, test } from "@playwright/test";
 import postgres from "postgres";
-import { daysAgo } from "./rows";
+import { aChildIn, daysAgo } from "./rows";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -44,13 +44,12 @@ const ids: Record<string, string> = {};
 test.beforeAll(async () => {
   const [{ id: tenant }] = await sql<{ id: string }[]>`select id from tenant limit 1`;
   for (const c of CHILDREN) {
-    const [had] = await sql<{ id: string }[]>`select id from child where section = ${SECTION} and roll_no = ${c.roll}`;
+    const [had] = await sql<{ id: string }[]>`select id from child_now where section = ${SECTION} and roll_no = ${c.roll}`;
     if (had) {
       ids[c.name] = had.id;
       continue;
     }
-    const [{ id }] = await sql<{ id: string }[]>`
-      insert into child (tenant_id, roll_no, section, band) values (${tenant}, ${c.roll}, ${SECTION}, 'G2') returning id`;
+    const [{ id }] = [{ id: await aChildIn(sql, SECTION, "G2", c.roll) }];
     await sql`insert into pii.child (tenant_id, child_id, first_name) values (${tenant}, ${id}, ${c.name})`;
     const of = c.answers.map(([skill, rung]) => `${skill}|${rung}`);
     for (const [i, [skill, rung, right, mistakes]] of c.answers.entries()) {

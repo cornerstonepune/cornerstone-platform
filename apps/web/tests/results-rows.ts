@@ -13,7 +13,7 @@ import { existsSync, mkdirSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import type postgres from "postgres";
-import { aClass, aReadPaper, type Read } from "./rows";
+import { aClass, aPerson, aReadPaper, type Read } from "./rows";
 
 export const A = "U71-A";
 export const B = "U71-B";
@@ -39,10 +39,7 @@ export async function aResultsClass(sql: postgres.Sql) {
   }
   const kids = await aClass(sql, A, "G2", ["Asha", "Bina", "Chetan"]);
   const others = await aClass(sql, B, "G2", ["Om"]);
-  await sql`update config set value = (select coalesce(jsonb_agg(s), '[]'::jsonb) from jsonb_array_elements(value) s
-                                       where not (s ->> 'email' = any(${[MINE.email, OTHER.email]})))
-            where key = 'app.staff'`;
-  await sql`update config set value = value || ${sql.json([MINE, OTHER])} where key = 'app.staff'`;
+  for (const person of [MINE, OTHER]) await aPerson(sql, person);
   // the class assessment, and another worksheet of the same skill and level for the home assessments
   const [ws, home] = await sql<{ id: string; item_ids: string[] }[]>`
     select id, item_ids from sheet_template

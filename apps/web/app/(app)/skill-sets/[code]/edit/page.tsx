@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "@/components/link";
-import { Body, Notice, PageHeader, Panel } from "@/components/shell";
+import { Body, Notice, PageHeader, Panel } from "@/components/parts";
 import { deadline } from "@/lib/deadline";
 import { levelsOf, skillSet } from "@/lib/queries";
 import { saveWords } from "../actions";

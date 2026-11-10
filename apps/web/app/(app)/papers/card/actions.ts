@@ -40,7 +40,7 @@ export async function givenOn(form: FormData): Promise<void> {
   const qrs = form.getAll("qr").map(String).filter((q) => /^CS[0-9A-F]{6}$/i.test(q));
   // only papers of the classes the card names, and only those the person sees: the engine checks they are papers at all
   const rows = qrs.length ? await sql<{ qr: string }[]>`
-    select si.qr_code as qr from sheet_instance si left join child c on c.id = si.child_id
+    select si.qr_code as qr from sheet_instance si left join child_now c on c.id = si.child_id
     where si.qr_code = any(${qrs}) and coalesce(si.section, c.section) = ${String(form.get("class") ?? "")}
       and ${seesSheet(me, sql`si.id`)}` : [];
   if (rows.length < qrs.length) redirect("/refused?kind=papers&paper=1");

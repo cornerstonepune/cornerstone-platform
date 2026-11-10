@@ -55,7 +55,7 @@ export async function across(actor: string, me: Who): Promise<Across> {
              count(*)::int as answers, count(distinct k.id)::int as papers,
              to_char(min(k.created_at) at time zone (select value #>> '{}' from config where key = 'school.time_zone'), 'YYYY-MM-DD') as oldest
       from item_result r join capture k on k.id = r.capture_id and k.superseded_by is null
-      join sheet_instance si on si.id = k.sheet_instance_id left join child ch on ch.id = si.child_id
+      join sheet_instance si on si.id = k.sheet_instance_id left join child_now ch on ch.id = si.child_id
       where r.status in ('unreadable', 'needs_teacher') and coalesce(si.section, ch.section) is not null
         and ${seesSheet(me, sql`si.id`)}
         and k.created_at < now() - make_interval(hours => (select value::numeric from config where key = 'across.check_overdue_hours')::int)
@@ -69,7 +69,7 @@ export async function across(actor: string, me: Who): Promise<Across> {
                coalesce((select max((g.request ->> 'on')::date) from flow_run g
                          where g.flow = 'given' and g.request -> 'qrs' ? si.qr_code),
                         (coalesce(si.printed_at, si.approved_at) at time zone (select value #>> '{}' from config where key = 'school.time_zone'))::date) as since
-        from sheet_instance si join child ch on ch.id = si.child_id and ch.active
+        from sheet_instance si join child_now ch on ch.id = si.child_id and ch.active
         join sheet_template t on t.id = si.sheet_template_id
         left join skill ss on ss.tenant_id = t.tenant_id and ss.code = t.skill_set_code
         where si.print_status in ('printed', 'with_teacher') and ${seesSheet(me, sql`si.id`)}
@@ -95,7 +95,7 @@ export async function across(actor: string, me: Who): Promise<Across> {
       many as (select child_id, array_agg(subject_code order by subject_code) as codes from red group by 1 having count(*) >= 2)
       select c.id as child_id, c.section, class_band(c.tenant_id, c.section) as band, c.roll_no, n.first_name as name,
              array(select coalesce(su.label, su.name) from subject su where su.tenant_id = c.tenant_id and su.code = any(m.codes) order by su.code) as subjects
-      from many m join child c on c.id = m.child_id and c.active and ${seesClass(me, sql`c.section`)}, lateral pii.read_child(c.id, ${actor}) n
+      from many m join child_now c on c.id = m.child_id and c.active and ${seesClass(me, sql`c.section`)}, lateral pii.read_child(c.id, ${actor}) n
       order by grade_ord(c.tenant_id, class_band(c.tenant_id, c.section)), c.section, roll_order(c.roll_no), c.roll_no`,
     sql<{ subjects: number }[]>`
       select count(distinct t.subject_code)::int as subjects from child_skill_state s

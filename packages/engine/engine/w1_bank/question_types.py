@@ -62,7 +62,8 @@ def waiting(conn: db.Conn, skill: str, level: str) -> list[str]:
         r["question_type"]
         for r in conn.execute(
             "select l.question_type from skill_level_question_type l where l.tenant_id = %s and l.skill_code = %s"
-            " and l.difficulty = %s and not exists (select 1 from approval_list a where a.tenant_id = l.tenant_id"
+            " and l.difficulty = %s and l.removed_at is null"
+            " and not exists (select 1 from approval_list a where a.tenant_id = l.tenant_id"
             "   and a.kind = 'question_type' and a.target = l.question_type and a.first_by is not null) order by 1",
             (_tenant(conn), skill, level),
         )
@@ -99,7 +100,7 @@ def show(ctx: typer.Context) -> None:
     with db.connect() as conn:
         rows = conn.execute(
             "select t.code, t.words, (select count(*) from skill_level_question_type l where l.tenant_id = t.tenant_id"
-            "   and l.question_type = t.code)::int as levels, a.first_by as approved_by"
+            "   and l.question_type = t.code and l.removed_at is null)::int as levels, a.first_by as approved_by"
             " from question_type t left join approval_list a on a.tenant_id = t.tenant_id and a.kind = 'question_type'"
             "   and a.target = t.code"
             " where t.tenant_id = %s order by t.code",

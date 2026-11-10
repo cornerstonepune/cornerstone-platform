@@ -6,10 +6,9 @@
  * The run is written as the engine writes one (`inbox.read`: each copy's line on `flow_run.result`, by the child's id,
  * never a name), for a class of the test's own. Another class's educator does not see it.
  */
-import { scryptSync } from "node:crypto";
 import { expect, test, type Page } from "@playwright/test";
 import postgres from "postgres";
-import { aClass } from "./rows";
+import { aClass, aPerson, forgetPerson } from "./rows";
 
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 const CLASS = "U41-G3";
@@ -17,15 +16,12 @@ const OTHER = "U41-G3B";
 const FILE = "U41 scan.pdf";
 const EDUCATOR = { email: "u41-educator@cornerstone.test", name: "U41 Educator", role: "educator", classes: [OTHER] };
 const PASSWORD = "u41-a-long-test-password";
-const SALT = "00112233445566778899aabbccddeeff";
-const others = sql`(select coalesce(jsonb_agg(s), '[]'::jsonb) from jsonb_array_elements(value) s where s ->> 'email' <> ${EDUCATOR.email})`;
 let run = "";
 
 test.beforeAll(async () => {
   const kids = await aClass(sql, CLASS, "G3", ["Ana", "Bo"]);
   await aClass(sql, OTHER, "G3", ["Cy", "Di"]);
-  const password = `scrypt$${SALT}$${scryptSync(PASSWORD, SALT, 64).toString("hex")}`;
-  await sql`update config set value = ${others} || ${sql.json([{ ...EDUCATOR, password }])} where key = 'app.staff'`;
+  await aPerson(sql, { ...EDUCATOR, password: PASSWORD });
   const copies = [
     { copy: 1, pages: [2], code: "CS41A001", child_id: kids.Ana, answers: 9, missing: [1], twice: [],
       lacks: ["page 1 of 2 is not in this file: scan it and send it to be read"], notes: [] },
@@ -40,7 +36,7 @@ test.beforeAll(async () => {
 });
 test.afterAll(async () => {
   await sql`delete from flow_run where id = ${run}::uuid`;
-  await sql`update config set value = ${others} where key = 'app.staff'`;
+  await forgetPerson(sql, EDUCATOR.email);
   await sql.end();
 });
 

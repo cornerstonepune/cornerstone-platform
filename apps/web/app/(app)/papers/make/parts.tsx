@@ -1,5 +1,5 @@
 import Link from "@/components/link";
-import { Panel, Pill } from "@/components/shell";
+import { Panel, Pill } from "@/components/parts";
 import type { SkillSet } from "@/lib/queries";
 import { batchQuery, KINDS, repeatWords, type Batch, type MakerPlan, type PlannedPaper } from "@/lib/maker";
 import { DifferentQuestions, Questions as AreaQuestions } from "@/components/questions";

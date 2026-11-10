@@ -5,7 +5,7 @@ import Link from "@/components/link";
 import { notFound } from "next/navigation";
 import { DataTable } from "@/components/data-table";
 import { StatusChip, type State } from "@/components/status-chip";
-import { Body, PageHeader, Panel } from "@/components/shell";
+import { Body, PageHeader, Panel } from "@/components/parts";
 import type { Column } from "@/lib/ux-rules";
 import type { PaperRow } from "@/lib/queries-read";
 import { PapersTable, groupState, nextStep, standing, standingColumns, type Standing } from "./parts";

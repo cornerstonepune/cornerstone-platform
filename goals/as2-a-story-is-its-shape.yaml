@@ -33,7 +33,7 @@ says:
   - words: "a good test as to how our flow works"
     proved_by: packages/engine/tests/test_copies.py::test_a_copy_printed_before_a_story_was_keyed_again_reads_its_boxes_by_the_key_it_has_now
   - words: "same process"
-    proved_by: packages/engine/tests/test_story_keys.py::test_a_question_whose_key_never_changed_can_be_deleted_and_one_whose_key_did_cannot
+    proved_by: packages/engine/tests/test_story_keys.py::test_a_key_change_is_a_row_of_the_one_history_log_and_leads_an_old_key_to_its_question
   - words: "same process"
     proved_by: packages/engine/tests/test_update_live.py::test_the_rehearsal_runs_what_update_live_runs_in_its_order
   - words: "same process"

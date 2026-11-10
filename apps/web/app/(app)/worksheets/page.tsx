@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { Body, PageHeader } from "@/components/shell";
+import { Body, PageHeader } from "@/components/parts";
 import { Library } from "./library";
 import { requireStaff } from "@/lib/auth";
 import { ownClasses, scopeOf } from "@/lib/scope";

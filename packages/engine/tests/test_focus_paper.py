@@ -16,6 +16,7 @@ from engine.assess.items import Item
 from engine.core import db
 from engine.w1_bank import labels
 from engine.w2_print import focus_paper, shelf
+from tests.rows import a_child_in
 
 WEEK = "2091-W08"  # a week of its own (weeks are dates since CP-27)
 
@@ -34,10 +35,7 @@ def child(conn):
     """A Grade 3 child whose checked papers show: 3-digit − 3-digit mostly wrong, taking the smaller digit from
     the larger again and again; 2-digit + 2-digit 5 of 8; 2-digit + 1-digit all right."""
     tenant = conn.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()["id"]
-    cid = conn.execute(
-        "insert into child (tenant_id, roll_no, section, band) values (%s,'1','FOCUSTEST','G3') returning id",
-        (tenant,),
-    ).fetchone()["id"]
+    cid = a_child_in(conn, "FOCUSTEST", "G3", "1", tenant)
     answers = (
         [("NUM.OPS.02", "R31", False, ["M_SMALL_FROM_LARGE"])] * 4
         + [("NUM.OPS.02", "R31", False, [])] * 2
@@ -243,10 +241,7 @@ def test_a_request_that_cannot_be_made_is_refused_in_words_and_a_short_bank_repe
 
 def test_a_child_who_lags_nowhere_is_stretched_on_their_strongest_skill(conn):
     tenant = conn.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()["id"]
-    cid = conn.execute(
-        "insert into child (tenant_id, roll_no, section, band) values (%s,'2','FOCUSTEST','G2') returning id",
-        (tenant,),
-    ).fetchone()["id"]
+    cid = a_child_in(conn, "FOCUSTEST", "G2", "2", tenant)
     # ten right, three days apart, the last today: secure and re-checked (goals/gr1-state-from-recent-evidence.yaml).
     # Answers with no question name no level, so none is above them: secure, and the stretch for secure is Hard
     for i in range(10):

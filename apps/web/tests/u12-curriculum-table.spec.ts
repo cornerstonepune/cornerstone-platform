@@ -75,7 +75,7 @@ test("every row has the same columns, and every number is the database's own", a
     where s.code = 'ADD.2D2D'`;
   const g2 = levels.filter((l) => l.grade === "G2");
   const [{ kids }] = await sql<{ kids: number }[]>`
-    select count(distinct s.child_id)::int as kids from child_skill_state s join child c on c.id = s.child_id and c.active
+    select count(distinct s.child_id)::int as kids from child_skill_state s join child_now c on c.id = s.child_id and c.active
     join skill ss on ss.tenant_id = s.tenant_id and ss.rung_code = s.rung_code where ss.code = 'ADD.2D2D' and s.n_events > 0`;
   const cells = table(page).locator('tr[data-row="G2/ADD.2D2D"] td');
   await expect(cells.nth(1)).toHaveText(n(g2.reduce((a, l) => a + l.questions, 0)));
@@ -93,7 +93,7 @@ test("every row has the same columns, and every number is the database's own", a
     select s.code,
            (select count(*)::int from item i where i.skill_set_code = s.code and i.status = 'active'
              and coalesce(s.level_band ->> i.difficulty, s.grade) = 'G2' and s.difficulty ? i.difficulty) as questions,
-           exists (select 1 from child_skill_state k join child c on c.id = k.child_id and c.active
+           exists (select 1 from child_skill_state k join child_now c on c.id = k.child_id and c.active
                    where k.rung_code = s.rung_code and k.n_events > 0) as assessed
     from skill s
     join topic t on t.tenant_id = s.tenant_id and t.code = s.topic_code

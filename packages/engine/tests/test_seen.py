@@ -12,6 +12,7 @@ import pytest
 from engine.assess import graph
 from engine.core import db
 from engine.w2_print import focus_paper, maker, seen
+from tests.rows import a_child_in
 
 WEEK = "2091-W06"  # a week of its own (weeks are dates since CP-27)
 SECTION = "SEENTEST"
@@ -32,10 +33,7 @@ def conn():
 
 def _child(conn, roll, answers=()):
     tenant = conn.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()["id"]
-    cid = conn.execute(
-        "insert into child (tenant_id, roll_no, section, band) values (%s,%s,%s,'G3') returning id",
-        (tenant, roll, SECTION),
-    ).fetchone()["id"]
+    cid = a_child_in(conn, SECTION, "G3", roll, tenant)
     for skill, rung, right, mistakes in answers:
         conn.execute(
             "insert into evidence_event (tenant_id, child_id, skill_code, rung_code, correct, misconception_codes,"

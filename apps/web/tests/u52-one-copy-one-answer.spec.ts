@@ -11,12 +11,11 @@
  * - Dev's copy read, every answer wrong.
  * What each screen counts is read back and recomputed here from the rows, not taken from the screen.
  */
-import { scryptSync } from "node:crypto";
 import { mkdirSync } from "node:fs";
 import path from "node:path";
 import { expect, test, type Browser, type Page } from "@playwright/test";
 import postgres from "postgres";
-import { aClass, aReadPaper } from "./rows";
+import { aClass, aReadPaper, aPerson, forgetPerson } from "./rows";
 import { isoWeek } from "../lib/week";
 
 // with SHOTS set the tests run apart, so a picture is kept of each screen even where an earlier check fails
@@ -27,14 +26,13 @@ const THIS = isoWeek();
 const QR = { asha: "CS520A01", ashaTwin: "CS520A02", bina: "CS520B01", chetan: "CS520C01", dev: "CS520D01" };
 const EDUCATOR = { email: "u52-educator@cornerstone.test", name: "U52 Educator", role: "educator", classes: [SECTION] };
 const PASSWORD = "u52-a-long-test-password";
-const SALT = "00112233445566778899aabbccddeeff";
 let kids: Record<string, string> = {};
 let skill = "";
 let ashaCapture = "";
 
 test.beforeAll(async () => {
   kids = await aClass(sql, SECTION, "G2", ["Asha", "Bina", "Chetan", "Dev"]);
-  const [{ tenant }] = await sql<{ tenant: string }[]>`select tenant_id as tenant from child where id = ${kids.Asha}`;
+  const [{ tenant }] = await sql<{ tenant: string }[]>`select tenant_id as tenant from child_now where id = ${kids.Asha}`;
   // a skill whose questions test two registry skills each, with two library worksheets
   const ws = await sql<{ id: string; item_ids: string[]; skill: string }[]>`
     select t.id, t.item_ids, t.skill_set_code as skill from sheet_template t
@@ -95,17 +93,10 @@ test.beforeAll(async () => {
   });
   for (const qr of [QR.asha, QR.bina, QR.dev]) await onThePack(qr);
   await sql`select confirm_results(${kids.Asha}::uuid, 'u52', ${asha.capture}::uuid)`;
-  const password = `scrypt$${SALT}$${scryptSync(PASSWORD, SALT, 64).toString("hex")}`;
-  await sql`
-    update config set value = (select coalesce(jsonb_agg(s), '[]'::jsonb) from jsonb_array_elements(value) s
-                               where s ->> 'email' <> ${EDUCATOR.email}) || ${sql.json([{ ...EDUCATOR, password }])}
-    where key = 'app.staff'`;
+  await aPerson(sql, { ...EDUCATOR, password: PASSWORD });
 });
 test.afterAll(async () => {
-  await sql`
-    update config set value = (select coalesce(jsonb_agg(s), '[]'::jsonb) from jsonb_array_elements(value) s
-                               where s ->> 'email' <> ${EDUCATOR.email})
-    where key = 'app.staff'`;
+  await forgetPerson(sql, EDUCATOR.email);
   await sql.end();
 });
 

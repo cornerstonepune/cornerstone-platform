@@ -14,6 +14,7 @@ import pathlib
 import pytest
 
 from engine.core import db, english, loaders, references, settings
+from tests import rows
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
 
@@ -51,21 +52,13 @@ def test_load_config_keeps_a_password_set_in_the_app():
     no one could sign in. A row the app owns is seeded once and then left alone (`seed_once`)."""
     with db.connect() as conn:
         tenant = loaders._tenant(conn)
-        staff = conn.execute("select value from config where key = 'app.staff'").fetchone()["value"]
         # the seed's list is empty (goals/ui4a-staff-and-search.yaml): someone `engine staff add` put on it
-        staff.append(
-            {
-                "email": "kept@cornerstone.test",
-                "name": "Kept",
-                "role": "educator",
-                "password": "scrypt$test$hash",
-            }
-        )
-        conn.execute("update config set value = %s where key = 'app.staff'", (json.dumps(staff),))
+        rows.a_person(conn, "kept@cornerstone.test", "Kept", "educator", password="scrypt$test$hash")
+        staff = rows.signin_list(conn)
 
         settings.load_config(conn, tenant)
 
-        after = conn.execute("select value from config where key = 'app.staff'").fetchone()["value"]
+        after = rows.signin_list(conn)
         # each person is given an id as they are put on the list (goals/own_who_sees_answers.yaml); nothing else changes
         assert all(p.get("id") for p in after)
         no_id = lambda people: [{k: v for k, v in p.items() if k != "id"} for p in people]  # noqa: E731

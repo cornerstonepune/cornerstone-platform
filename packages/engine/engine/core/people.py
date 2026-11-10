@@ -4,8 +4,8 @@ Two loaders, one rule for both. A dry run reads, compares and prints what it wou
 it all in one transaction, and only if no row is refused. Running either twice changes nothing the second time. Neither
 prints a name, an email, a phone number or a birthday: a report says line numbers and roll numbers.
 
-`import_staff` copies the website's sign-in list (`config` key app.staff, left exactly as it is, password hashes and all)
-into `staff`, `pii.staff` and a dated grant of the person's role. `enrol_k2` reads the school's Children List (number,
+`import_staff` gives each person on the staff list (`staff` / `pii.staff`, the one list since CP-27 group 4) a dated
+grant of their role when it is held for the whole campus and they hold none. `enrol_k2` reads the school's Children List (number,
 name, birthday), makes the K2 campus-year-class when it is not there, and enrols each child with the number as their roll
 number. A child is made new unless `match_existing` says a child already sitting at that roll number in K2 is the same
 person; a child's evidence, answers and state are never read or written here.
@@ -62,56 +62,34 @@ def parse_birthday(text: str, today: date) -> date:
 
 
 def import_staff(conn: db.Conn, by: str, apply: bool) -> Report:
-    """Copy each entry of the sign-in list into the staff tables. An entry already there (same email) is left. A role
-    held for the whole campus is granted from today; a role held for a class or a child (the list's `specialist`) needs
-    that class or child, so the person is added and the role is left to be set there. `config` is read, never written.
-    `by` is the signer's email; grants carry their staff id, looked up once the staff rows exist (signer.py)."""
+    """Grant each person on the staff list their role. A role held for the whole campus is granted from today, once; a
+    role held for a class or a child (the list's `specialist`) needs that class or child, so it is left to be set there.
+    `by` is the signer's email; grants carry their staff id (signer.py)."""
     out = Report()
     tenant = _tenant(conn)
     entries = signin_list(conn)
-    if not signer.first_import_ok(conn, by, entries):
-        out.refuse(signer.REFUSED_FIRST)
+    if by.strip() and signer.lookup(conn, by) is None:
+        out.refuse(signer.REFUSED)
         return out
-    grants: list[tuple[Any, str]] = []  # written last, when the signer is surely a member of staff
     scope = {
         r["code"]: r["scope"]
         for r in conn.execute("select code, scope from role where tenant_id = %s", (tenant,)).fetchall()
     }
-    campus = db.one(conn, "select id from campus where tenant_id = %s", (tenant,))["id"]
+    grants: list[tuple[Any, str]] = []
     for n, entry in enumerate(entries, start=1):
-        email, role = str(entry["email"]).strip().lower(), str(entry["role"])
-        if role not in scope:
-            out.refuse(f"entry {n}: the role {role!r} is not a role (roles: {', '.join(sorted(scope))})")
-            continue
-        here = conn.execute(
-            "select staff_id from pii.staff where tenant_id = %s and email = %s", (tenant, email)
-        ).fetchone()
-        staff_id = here["staff_id"] if here else None
-        campus_wide = scope[role] == "campus"
-        if staff_id is None:
-            out.count("staff added")
-            how = (
-                f"grant {role}" if campus_wide else f"{role} is held for a {scope[role]}: set it there later"
-            )
-            out.lines.append(f"  entry {n}: would add a member of staff; {how}")
-            if not campus_wide:
-                out.count("roles left to set")
-        holds = (
-            staff_id is not None
-            and conn.execute(
-                "select 1 from staff_role_grant where staff_id = %s and role_code = %s and valid_to is null",
-                (staff_id, role),
-            ).fetchone()
-        )
-        if staff_id is not None and campus_wide and not holds:
-            out.count("roles granted")
-            out.lines.append(f"  entry {n}: already on the list; would grant {role}")
-        elif staff_id is not None:
+        role = str(entry["role"])
+        if scope[role] != "campus":
+            out.count("roles left to set")
+            out.lines.append(f"  person {n}: {role} is held for a {scope[role]}: set it there")
+        elif conn.execute(
+            "select 1 from staff_role_grant where staff_id = %s and role_code = %s and valid_to is null",
+            (entry["id"], role),
+        ).fetchone():
             out.count("already there")
-        if apply and not out.refused:
-            grants += write.stage(
-                conn, tenant, campus, entry, staff_id, role if campus_wide and not holds else ""
-            )
+        else:
+            out.count("roles granted")
+            out.lines.append(f"  person {n}: would grant {role}")
+            grants.append((entry["id"], role))
     if apply and not out.refused:
         write.grant_all(conn, tenant, grants, signer.resolve(conn, by))
     return out
@@ -216,11 +194,11 @@ def _class_ids(
         out.count("classes added")
         if not apply:
             return None
-        c = db.one(
+        c = db.one(  # its label is what its children are called by: the grade (K2), as they always were
             conn,
-            "insert into school_class (tenant_id, campus_id, academic_year_id, grade_code, section)"
-            " values (%s,%s,%s,%s,%s) returning id",
-            (tenant, campus[0]["id"], y["id"], grade, letter),
+            "insert into school_class (tenant_id, campus_id, academic_year_id, grade_code, section, label)"
+            " values (%s,%s,%s,%s,%s,%s) returning id",
+            (tenant, campus[0]["id"], y["id"], grade, letter, grade),
         )
     return c["id"]
 
@@ -261,7 +239,7 @@ def enrol_k2(
     plan: list[tuple[Row, Any, str]] = []  # the row, its existing child (or None), what to do
     for r in rows:
         child = conn.execute(
-            "select id from child where tenant_id = %s and section = %s and roll_no = %s",
+            "select id from child_now where tenant_id = %s and section = %s and roll_no = %s",
             (tenant, grade, r.roll),
         ).fetchone()
         if child is None:
@@ -291,9 +269,7 @@ def enrol_k2(
         for r, child_id, what in plan:
             if what == "new":
                 child_id = db.one(
-                    conn,
-                    "insert into child (tenant_id, roll_no, band, section) values (%s,%s,%s,%s) returning id",
-                    (tenant, r.roll, grade, grade),
+                    conn, "insert into child (tenant_id, band) values (%s,%s) returning id", (tenant, grade)
                 )["id"]
                 conn.execute(
                     "insert into pii.child (tenant_id, child_id, first_name, last_name, birthday) values (%s,%s,%s,%s,%s)",

@@ -1,7 +1,7 @@
 import Link from "@/components/link";
 import { DataTable } from "@/components/data-table";
 import { FilterBar } from "@/components/filter-bar";
-import { PageShell } from "@/components/page-shell";
+import { Screen } from "@/components/app-frame";
 import { requireStaff } from "@/lib/auth";
 import { activities, mustBeOn, PAGE_SIZE, sections, SLOT_WORDS, SLOTS, type Row } from "@/lib/curriculum-screens";
 import type { Column } from "@/lib/ux-rules";
@@ -30,7 +30,7 @@ export default async function Browse({ searchParams }: { searchParams: Promise<R
   if (page !== asked) ({ rows, total } = await activities(section, text, page)); // a page past the end shows the last
   const href = (p: number) => `/curriculum/browse?${new URLSearchParams({ ...(section ? { section } : {}), ...(text ? { q: text } : {}), page: String(p) })}`;
   return (
-    <PageShell
+    <Screen
       stage="Curriculum"
       title="Curriculum browser"
       purpose="Every K2 activity by section, and how much of each page is filled in."
@@ -76,6 +76,6 @@ export default async function Browse({ searchParams }: { searchParams: Promise<R
           <DataTable label="Activities" columns={COLUMNS} rows={rows} rowKey={(r) => r.code} more={{ page, href, of: total }} extras={{ attrs: (r) => ({ "data-row": r.code }) }} />
         )}
       </Chrome>
-    </PageShell>
+    </Screen>
   );
 }

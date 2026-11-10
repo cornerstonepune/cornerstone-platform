@@ -73,7 +73,7 @@ const paperRows = (where: ReturnType<typeof sql>, actor: string) => sql<PaperRow
          coalesce(t.code, t.batch_id, t.key ->> 'title', si.qr_code) as worksheet
   from sheet_instance si
   join sheet_template t on t.id = si.sheet_template_id
-  join child ch on ch.id = si.child_id, lateral pii.read_child(si.child_id, ${actor}) p
+  join child_now ch on ch.id = si.child_id, lateral pii.read_child(si.child_id, ${actor}) p
   where ${where}
   order by t.key ->> 'date' desc nulls last, p.first_name`;
 
@@ -340,7 +340,7 @@ export async function checkQueue(me: Who): Promise<QueueEntry[]> {
     join item i on i.id = l.item_id
     join sheet_instance si on si.id = l.sheet_instance_id
     join sheet_template t on t.id = si.sheet_template_id
-    join child ch on ch.id = si.child_id
+    join child_now ch on ch.id = si.child_id
     where ${seesSheet(me, sql`si.id`)}
     -- one assessment at a time, the one waiting longest first, its papers in roll order (Nimish, 26 Oct 2026: "everyone
     -- checks the assessment by the last upload that they do")

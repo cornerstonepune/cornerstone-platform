@@ -7,17 +7,15 @@
  * Two Grade 2 classes of the test's own, made once and kept (evidence is append-only): Asha in the educator's class and
  * Kavi in the other, each with checked answers on the same Grade 2 skill. The educator teaches the first only.
  */
-import { scryptSync } from "node:crypto";
 import { expect, test, type Browser, type Page } from "@playwright/test";
 import postgres from "postgres";
-import { aClass } from "./rows";
+import { aClass, aPerson, forgetPerson } from "./rows";
 
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 const MINE = "U42-MINE";
 const OTHER = "U42-OTHER";
 const EDUCATOR = { email: "u42-educator@cornerstone.test", name: "U42 Educator", role: "educator", classes: [MINE] };
 const PASSWORD = "u42-a-long-test-password";
-const SALT = "00112233445566778899aabbccddeeff";
 // the class's grade, and a skill of it the test's children answered
 let grade = { code: "", name: "" };
 let skill = { code: "", rung: "" };
@@ -26,12 +24,12 @@ test.beforeAll(async () => {
   const mine = await aClass(sql, MINE, "G2", ["Asha"]);
   const other = await aClass(sql, OTHER, "G2", ["Kavi"]);
   [grade] = await sql<{ code: string; name: string }[]>`
-    select g.code, g.name from grade g join child c on c.tenant_id = g.tenant_id and g.code = class_band(c.tenant_id, c.section)
+    select g.code, g.name from grade g join child_now c on c.tenant_id = g.tenant_id and g.code = class_band(c.tenant_id, c.section)
     where c.id = ${mine.Asha}`;
   [skill] = await sql<{ code: string; rung: string }[]>`
     select s.registry_codes[1] as code, s.rung_code as rung from skill s
     where s.grade = ${grade.code} and cardinality(s.registry_codes) > 0 order by s.ladder_order limit 1`;
-  const [{ tenant }] = await sql<{ tenant: string }[]>`select tenant_id as tenant from child where id = ${mine.Asha}`;
+  const [{ tenant }] = await sql<{ tenant: string }[]>`select tenant_id as tenant from child_now where id = ${mine.Asha}`;
   for (const id of [mine.Asha, other.Kavi]) {
     const [{ n }] = await sql<{ n: number }[]>`select count(*)::int as n from evidence_event where child_id = ${id}`;
     if (n) continue;
@@ -43,17 +41,10 @@ test.beforeAll(async () => {
     }
     await sql`select rebuild_child_skill_state(${id}::uuid)`;
   }
-  const password = `scrypt$${SALT}$${scryptSync(PASSWORD, SALT, 64).toString("hex")}`;
-  await sql`
-    update config set value = (select coalesce(jsonb_agg(s), '[]'::jsonb) from jsonb_array_elements(value) s
-                               where s ->> 'email' <> ${EDUCATOR.email}) || ${sql.json([{ ...EDUCATOR, password }])}
-    where key = 'app.staff'`;
+  await aPerson(sql, { ...EDUCATOR, password: PASSWORD });
 });
 test.afterAll(async () => {
-  await sql`
-    update config set value = (select coalesce(jsonb_agg(s), '[]'::jsonb) from jsonb_array_elements(value) s
-                               where s ->> 'email' <> ${EDUCATOR.email})
-    where key = 'app.staff'`;
+  await forgetPerson(sql, EDUCATOR.email);
   await sql.end();
 });
 

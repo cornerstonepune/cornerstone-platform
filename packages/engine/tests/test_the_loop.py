@@ -27,6 +27,7 @@ from engine.w2_print import focus_paper, handout
 from engine.w3_read import boxes, copies, marking, second_reader
 from engine.w4_close import card, parent_facts
 from engine.w4_close.report import _hint
+from tests.rows import a_child_in
 from tests.test_each_answer import _wrote
 from tests.test_sorting import _scanned as _scanned_file
 
@@ -177,10 +178,7 @@ def _planted_to_repeat(conn, ids, slots, after=None):
 def _a_child(conn, section, band):
     """A child of the grade the level is for: a child's next paper is drawn from the levels of their own grade."""
     tenant = conn.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()["id"]
-    child = conn.execute(
-        "insert into child (tenant_id, roll_no, band, section) values (%s, '7', %s, %s) returning id",
-        (tenant, band, section),
-    ).fetchone()["id"]
+    child = a_child_in(conn, section, band, "7", tenant)
     conn.execute(
         "insert into pii.child (tenant_id, child_id, first_name) values (%s,%s,'Mira')", (tenant, child)
     )

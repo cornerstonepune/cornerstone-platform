@@ -1,5 +1,5 @@
 import Link from "@/components/link";
-import { Notice } from "@/components/shell";
+import { Notice } from "@/components/parts";
 import { engineGet } from "@/lib/engine";
 import type { Difficulty, SkillSet } from "@/lib/queries";
 import { type SampleRow, sampleChoices, sampleCount, type WaysRow } from "@/lib/queries-skills";

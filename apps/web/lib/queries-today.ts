@@ -12,7 +12,7 @@ export type Report = { child_id: string; band: string; section: string; roll_no:
 export async function classPacksWaiting(scope: Scope = EVERY_CLASS): Promise<Pack[]> {
   return sql<Pack[]>`
       select c.section, class_band(c.tenant_id, c.section) as band, ${weekOf("si")} as week, si.kind, count(*)::int as n
-      from sheet_instance si join child c on c.id = si.child_id
+      from sheet_instance si join child_now c on c.id = si.child_id
       where si.print_status = 'new' and si.kind in ('practice', 'assessment') and ${inScope(scope, sql`c.section`)}
       group by c.tenant_id, c.section, si.week, si.kind
       order by si.week desc, c.section, si.kind`;
@@ -22,7 +22,7 @@ export async function classPacksWaiting(scope: Scope = EVERY_CLASS): Promise<Pac
 export async function reportsWaiting(scope: Scope = EVERY_CLASS): Promise<Report[]> {
   return sql<Report[]>`
     select c.id as child_id, c.band, c.section, c.roll_no
-    from child c
+    from child_now c
     join lateral (select n.approved_by from parent_note n where n.child_id = c.id and n.body like '{"facts"%'
                   order by n.created_at desc limit 1) n on true
     where c.active and n.approved_by is null and ${inScope(scope, sql`c.section`)}
@@ -44,7 +44,7 @@ export async function queueByWeek(scope: Scope = EVERY_CLASS): Promise<Week[]> {
            count(*) filter (where s.standing = 'person')::int as person,
            count(*) filter (where s.standing = 'waiting')::int as waiting
     from answer_standing s join item_result r on r.id = s.item_result_id join capture c on c.id = r.capture_id
-    join sheet_instance si on si.id = c.sheet_instance_id left join child ch on ch.id = si.child_id
+    join sheet_instance si on si.id = c.sheet_instance_id left join child_now ch on ch.id = si.child_id
     where ${inScope(scope, sql`coalesce(si.section, ch.section)`)}
     group by 1 order by 1 desc limit 8`;
 }

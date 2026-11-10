@@ -2,16 +2,18 @@
 Nimish, 2026-10-26: "the educator also, today, does not want certain types of questions. They should be able to delete
 those kinds of questions from the bank itself."
 
-Answers already given to a question must stay readable (rule 4), so a stop deletes nothing. It is a row of
-`skill_level_kind_stop`, never changed, and `drawable_item` leaves the kind out at that level: no new paper draws it, and
-every past paper keeps its questions and their meaning. An approved paper not yet given that holds one goes back for
-approval, never changed silently, and is named. The level's approval is withdrawn, as any edit of it does. A restart is
-another row. `touches` says what a stop would touch before anything is written.
+Answers already given to a question must stay readable (rule 4), so a stop deletes nothing. It stands on the level's
+own row for the kind (`skill_level_question_type.stopped_at`, `stopped_by`; the view `kind_stopped`), which the bank's
+links keep while it stands, and `drawable_item` leaves the kind out at that level: no new paper draws it, and every past
+paper keeps its questions and their meaning. An approved paper not yet given that holds one goes back for approval,
+never changed silently, and is named. The level's approval is withdrawn, as any edit of it does. A restart clears it.
+Each stop and restart, with the papers it sent back, is a row of the one history log (CP-27 3C). `touches` says what a
+stop would touch before anything is written.
 """
 
 from typing import Any
 
-from engine.core import db, settings
+from engine.core import db, history, settings
 from engine.w1_bank import english_edit
 
 # The papers a stop touches: of these questions, not void
@@ -40,6 +42,7 @@ def _levels(conn: db.Conn, code: str, kind: str, level: str | None) -> list[str]
             "select x.difficulty from skill_level_question_type x"
             " join difficulty d on d.tenant_id = x.tenant_id and d.code = x.difficulty"
             " where x.skill_code = %s and x.question_type = %s and (%s::text is null or x.difficulty = %s)"
+            "   and x.removed_at is null"
             " order by d.ord",
             (code, kind, level, level),
         )
@@ -144,8 +147,18 @@ def start(conn: db.Conn, code: str, kind: str, by: str, level: str | None = None
 
 
 def _row(conn, tenant, code, level, kind, stopped, by, withdrawn) -> None:
+    """The kind stopped (or started again) at the level, on its own row; the change and the papers it sent back kept."""
     conn.execute(
-        "insert into skill_level_kind_stop (tenant_id, skill_code, difficulty, question_type, stopped, withdrawn,"
-        " changed_by) values (%s, %s, %s, %s, %s, %s, %s)",
-        (tenant, code, level, kind, stopped, withdrawn, by.strip()),
+        "update skill_level_question_type set stopped_at = case when %(stop)s then clock_timestamp() end,"
+        " stopped_by = case when %(stop)s then %(by)s end"
+        " where tenant_id = %(t)s and skill_code = %(code)s and difficulty = %(level)s and question_type = %(kind)s",
+        {"stop": stopped, "by": by.strip(), "t": tenant, "code": code, "level": level, "kind": kind},
+    )
+    history.keep(
+        conn,
+        tenant,
+        ("skill_level_question_type", f"{code} {level} {kind}", "stop_kind" if stopped else "start_kind"),
+        None,
+        {"stopped": stopped, "withdrawn": withdrawn},
+        by.strip(),
     )

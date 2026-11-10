@@ -61,8 +61,8 @@ def load_thresholds(conn: db.Conn, t: db.Id) -> None:
 
 
 def load_config(conn: db.Conn, t: db.Id) -> None:
-    """A row marked `seed_once` belongs to the app after its first load — `app.staff` holds the
-    password hashes `engine set-password` writes, and re-seeding it took every one of them away."""
+    """A row marked `seed_once` belongs to the app after its first load: a load writes it once and then leaves it (the
+    sign-in list was such a row until CP-27 group 4; re-seeding it once took every password away)."""
     for c in seed("config.json", "config"):
         on_conflict = (
             "do nothing"

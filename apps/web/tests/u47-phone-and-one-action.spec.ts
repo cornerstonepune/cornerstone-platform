@@ -8,10 +8,9 @@
  * colour, so a home assessment is proposed for her, and a read paper with an answer waiting; the class has a practice
  * paper this week, planned. Every page is read as the class's educator and as the coordinator.
  */
-import { scryptSync } from "node:crypto";
 import { expect, test, type Browser, type Page } from "@playwright/test";
 import postgres from "postgres";
-import { aClass, aReadPaper } from "./rows";
+import { aClass, aReadPaper, aPerson, forgetPerson } from "./rows";
 import { SIGNED_IN } from "../playwright.config";
 import { isoWeek } from "../lib/week";
 
@@ -21,14 +20,13 @@ const THIS = isoWeek();
 const QR = { read: "CS47A001", practice: "CS47A0P1" };
 const EDUCATOR = { email: "u47-educator@cornerstone.test", name: "U47 Educator", role: "educator", classes: [SECTION] };
 const PASSWORD = "u47-a-long-test-password";
-const SALT = "47112233445566778899aabbccddeeff";
 const PHONE = { width: 390, height: 844 };
 let kids: Record<string, string>;
 let sheet: string;
 
 test.beforeAll(async () => {
   kids = await aClass(sql, SECTION, "G2", ["Asha", "Bina"]);
-  const [{ tenant }] = await sql<{ tenant: string }[]>`select tenant_id as tenant from child where id = ${kids.Asha}`;
+  const [{ tenant }] = await sql<{ tenant: string }[]>`select tenant_id as tenant from child_now where id = ${kids.Asha}`;
   const [skill] = await sql<{ code: string; rung: string }[]>`
     select ss.registry_codes[1] as code, ss.rung_code as rung from skill ss where ss.code = 'ADD.2D2D'`;
   const [{ n }] = await sql<{ n: number }[]>`select count(*)::int as n from evidence_event where child_id = ${kids.Asha}`;
@@ -59,19 +57,12 @@ test.beforeAll(async () => {
   await sql`
     insert into prescription (tenant_id, child_id, week, kind, rule_fired, skill_set_code, difficulty, sheet_instance_id)
     values (${tenant}, ${kids.Asha}, to_date(${THIS}, 'IYYY-"W"IW'), 'practice', 'band_default', 'ADD.2D2D', 'Medium', ${practice})`;
-  const password = `scrypt$${SALT}$${scryptSync(PASSWORD, SALT, 64).toString("hex")}`;
-  await sql`
-    update config set value = (select coalesce(jsonb_agg(s), '[]'::jsonb) from jsonb_array_elements(value) s
-                               where s ->> 'email' <> ${EDUCATOR.email}) || ${sql.json([{ ...EDUCATOR, password }])}
-    where key = 'app.staff'`;
+  await aPerson(sql, { ...EDUCATOR, password: PASSWORD });
 });
 test.afterAll(async () => {
   await sql`delete from prescription where child_id = ${kids.Asha} and week = to_date(${THIS}, 'IYYY-"W"IW') and kind = 'practice'`;
   await sql`delete from sheet_instance where qr_code = ${QR.practice}`;
-  await sql`
-    update config set value = (select coalesce(jsonb_agg(s), '[]'::jsonb) from jsonb_array_elements(value) s
-                               where s ->> 'email' <> ${EDUCATOR.email})
-    where key = 'app.staff'`;
+  await forgetPerson(sql, EDUCATOR.email);
   await sql.end();
 });
 

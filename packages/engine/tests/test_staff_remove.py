@@ -6,7 +6,6 @@ as the same kind of text (no @).
 """
 
 import copy
-import json
 import os
 import re
 import threading
@@ -15,8 +14,10 @@ import time
 import pytest
 
 from engine.core import db
+from tests import rows
 from tests.test_cli import run
 
+pytestmark = pytest.mark.usefixtures("forgets_what_it_commits")
 needs_db = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
 HASH = "scrypt$16384$00112233445566778899aabbccddeeff$" + "ab" * 64
 BOSS = {
@@ -35,19 +36,18 @@ TEACHER = {
     "subjects": ["NUM"],
 }
 SPARE = {**BOSS, "email": "spare@example.test", "name": "Made Up Spare"}
-PLACEHOLDER = {**BOSS, "email": "your-email-test", "name": "Placeholder Test"}  # no @, as the one on live
 NO_PASSWORD = {**BOSS, "email": "waiting@example.test", "name": "Made Up Waiting", "password": ""}
 OTHERS = [BOSS, TEACHER]
 
 
 def _staff():
     with db.connect() as conn:
-        return conn.execute("select value from config where key = 'app.staff'").fetchone()["value"]
+        return rows.signin_list(conn)
 
 
 def _put(people):
     with db.connect() as conn:
-        conn.execute("update config set value = %s where key = 'app.staff'", (json.dumps(people),))
+        rows.signin_list_is(conn, people)
         conn.commit()
 
 
@@ -106,19 +106,21 @@ def test_every_refusal_is_said_in_words_and_one_refusal_stops_the_whole_apply(li
 
 
 @needs_db
-def test_the_placeholder_with_no_at_sign_is_removed_by_the_command_and_leaves_everyone_else_as_they_were(
-    list_of,
-):
-    # the case that started this: an entry whose "email" is just text, so the loader's email-shape check must not apply
-    list_of([PLACEHOLDER, BOSS, TEACHER])
-    others = copy.deepcopy(
-        _staff()[1:]
-    )  # as the database holds them (it gives each person an id on the way in)
-    r = _remove("YOUR-EMAIL-TEST", "--apply")
+def test_a_person_taken_off_is_kept_inactive_with_no_password_and_everyone_else_is_as_they_were(list_of):
+    """A person is never deleted (CP-27 group 4): what names them by id still does. They can no longer sign in."""
+    list_of([SPARE, BOSS, TEACHER])
+    others = copy.deepcopy(_staff()[1:])
+    r = _remove("SPARE@example.test", "--apply")
     assert r.exit_code == 0, r.output_plain
-    assert "would remove" not in r.output_plain and "Placeholder Test" in r.output_plain
+    assert "would remove" not in r.output_plain and "Made Up Spare" in r.output_plain
     assert _staff() == others, "everyone not named must be exactly as they were, in the same order"
-    again = _remove("your-email-test", "--apply")
+    with db.connect() as conn:
+        kept = conn.execute(
+            "select s.active, p.password_hash from pii.staff p join staff s on s.id = p.staff_id where p.email = %s",
+            ("spare@example.test",),
+        ).fetchall()
+    assert kept == [{"active": False, "password_hash": None}]
+    again = _remove("spare@example.test", "--apply")
     assert "is not on the staff list" in again.output_plain and again.exit_code != 0
 
 
@@ -132,13 +134,11 @@ def test_apply_holds_the_staff_list_and_removes_in_one_transaction(list_of, monk
     result: list = []
     done = threading.Thread(target=lambda: result.append(_remove("teacher@example.test", "--apply")))
     with db.connect() as site:
-        site.execute("select 1 from config where key = 'app.staff' for update")
+        site.execute("select 1 from staff for update")
         done.start()
         time.sleep(1.5)
         assert done.is_alive(), "apply did not wait for the lock on the staff list"
-        site.execute(
-            "update config set value = value || %s::jsonb where key = 'app.staff'", (json.dumps([late]),)
-        )
+        rows.a_person(site, **late)
         site.commit()
     done.join(20)
     assert result and result[0].exit_code == 0, result and result[0].output_plain
@@ -148,10 +148,10 @@ def test_apply_holds_the_staff_list_and_removes_in_one_transaction(list_of, monk
     list_of([BOSS, TEACHER, SPARE])
     before = _staff()
 
-    def boom(conn, people):
+    def boom(conn, email):
         raise RuntimeError("the database went away")
 
-    monkeypatch.setattr("engine.core.staff_remove.save", boom)
+    monkeypatch.setattr("engine.core.staff_remove.take_off", boom)
     r = _remove("teacher@example.test", "spare@example.test", "--apply")
     assert r.exit_code != 0
     assert _staff() == before
@@ -214,7 +214,7 @@ def test_the_website_decides_a_session_by_the_staff_list_on_every_request():
     # the list is read afresh (react's cache() lasts one request); no module-level copy of it anywhere in lib
     queries = (web / "queries.ts").read_text()
     staff_list = queries.split("export async function staffList", 1)[1].split("\n}", 1)[0]
-    assert "select value from config where key = 'app.staff'" in staff_list
+    assert "public.staff_list(" in staff_list
 
 
 def test_help_says_what_it_does_and_does_not_do_with_a_made_up_example():

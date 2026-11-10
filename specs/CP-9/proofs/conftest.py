@@ -168,9 +168,7 @@ def tenant(conn):
 
 
 def a_child(conn, t):
-    child = conn.execute(
-        "insert into child (tenant_id, roll_no, section, band) values (%s, '1', %s, 'G2') returning id",
-        (t, f"CP9-{uuid.uuid4().hex[:6].upper()}")).fetchone()["id"]
+    child = conn.execute("insert into child (tenant_id, band) values (%s, 'G2') returning id", (t,)).fetchone()["id"]
     conn.execute("insert into pii.child (tenant_id, child_id, first_name) values (%s, %s, 'Placeholder')", (t, child))
     return child
 

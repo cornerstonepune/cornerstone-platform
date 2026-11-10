@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "@/components/link";
 import { EmptyState } from "@/components/empty-state";
-import { PageShell } from "@/components/page-shell";
+import { Screen } from "@/components/app-frame";
 import { requireStaff } from "@/lib/auth";
 import { StatusChip } from "@/components/status-chip";
 import { ICON_SIZE, Icon, type IconName, MARK_ICON } from "@/lib/icons";
@@ -33,7 +33,7 @@ export default async function ConfirmNote({ params }: { params: Promise<{ id: st
   const zone = await schoolZone();
   const heard = new Date(draft.received_at).toLocaleString("en-IN", { timeZone: zone, day: "numeric", month: "short", hour: "2-digit", minute: "2-digit", hour12: false });
   return (
-    <PageShell
+    <Screen
       stage={W.back}
       title={W.confirm.title}
       purpose={W.confirm.purpose}
@@ -52,7 +52,7 @@ export default async function ConfirmNote({ params }: { params: Promise<{ id: st
         {my.recording ? <audio controls preload="none" src={`/api/voice/${id}`} aria-label={W.confirm.play} className="h-9 max-w-full" /> : null}
       </div>
       <Body draft={draft} klass={klass} grade={c?.grade} form={form} />
-    </PageShell>
+    </Screen>
   );
 }
 

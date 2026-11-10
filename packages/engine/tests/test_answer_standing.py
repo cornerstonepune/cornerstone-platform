@@ -9,6 +9,7 @@ import os
 import pytest
 
 from engine.core import db
+from tests.rows import a_child_in
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
 
@@ -24,10 +25,7 @@ def conn():
 def paper(conn):
     """One child's read paper holding one answer of each kind; returns its sheet and the answers by name."""
     tenant = conn.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()["id"]
-    child = conn.execute(
-        "insert into child (tenant_id, roll_no, section, band) values (%s,'1','STANDINGTEST','G2') returning id",
-        (tenant,),
-    ).fetchone()["id"]
+    child = a_child_in(conn, "STANDINGTEST", "G2", "1", tenant)
     items = [
         r["id"] for r in conn.execute("select id from item where status = 'active' order by item_key limit 5")
     ]

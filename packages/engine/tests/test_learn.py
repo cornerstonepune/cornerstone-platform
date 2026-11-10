@@ -11,7 +11,8 @@ import pytest
 
 from engine.assess import items
 from engine.core import db
-from engine.w1_bank import learn
+from engine.w1_bank import learn, story_keys
+from tests.rows import a_member_of_staff
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
 
@@ -94,17 +95,53 @@ def test_a_question_far_off_its_level_is_proposed_once_and_a_person_removes_or_k
     assert got[easy]["evidence"]["n"] == 20 and got[easy]["evidence"]["difficulty"] == "Hard"
     assert [p["subject"] for p in learn.refresh(conn)].count(easy) == 1, "proposed once, not on every refresh"
 
-    kept = learn.decide(conn, got[hard]["id"], "keep", "neha", "a hard one on purpose")
+    _, neha = a_member_of_staff(conn)
+    _, achal = a_member_of_staff(conn)
+    kept = learn.decide(conn, got[hard]["id"], "keep", neha, "a hard one on purpose")
     assert kept["verdict"] == "keep"
     assert (
         conn.execute("select status from item where item_key = %s", (hard,)).fetchone()["status"] == "active"
     )
-    removed = learn.decide(conn, got[easy]["id"], "remove", "neha", "too easy for Hard")
+    removed = learn.decide(conn, got[easy]["id"], "remove", neha, "too easy for Hard")
     assert removed["verdict"] == "remove"
     assert (
         conn.execute("select status from item where item_key = %s", (easy,)).fetchone()["status"] != "active"
     )
     with pytest.raises(ValueError, match="already decided"):
-        learn.decide(conn, got[easy]["id"], "keep", "achal", "")
+        learn.decide(conn, got[easy]["id"], "keep", achal, "")
     open_now = {p["subject"] for p in learn.refresh(conn)}
     assert easy not in open_now and hard not in open_now, "a decided proposal is not proposed again"
+
+
+def test_a_decision_is_a_member_of_staffs_and_one_by_anyone_else_changes_nothing(conn):
+    """Who decided is a member of staff, by their id, found from the sign-in email the website sends (CP-27: the one
+    proposal list keeps a person's answer by staff id, never a typed name). An email no member of staff signs in with
+    is refused, and the proposal stays open."""
+    tenant = _tenant(conn)
+    easy = _question(conn, tenant)
+    _answered(conn, tenant, easy, ["correct"] * 20)
+    proposal = next(p for p in learn.refresh(conn) if p["subject"] == easy)
+    for nobody in ("neha", "nobody@school.invalid"):
+        with pytest.raises(ValueError, match="member of staff"):
+            learn.decide(conn, proposal["id"], "remove", nobody, "too easy")
+    assert (
+        conn.execute("select status from item where item_key = %s", (easy,)).fetchone()["status"] == "active"
+    )
+    assert easy in {p["subject"] for p in learn.refresh(conn)}, "still waiting for a person"
+    staff, email = a_member_of_staff(conn)
+    assert learn.decide(conn, proposal["id"], "remove", email.upper(), "too easy")["staff_id"] == str(staff)
+
+
+def test_a_proposal_made_under_a_questions_old_key_is_not_made_again_after_a_rekey(conn):
+    """A question re-keyed (ADR 0053) is the same question: a proposal made under the key it had then still counts, so
+    the bank does not propose it a second time."""
+    tenant = _tenant(conn)
+    key = _question(conn, tenant)
+    _answered(conn, tenant, key, ["correct"] * 20)
+    assert key in {p["subject"] for p in learn.refresh(conn)}
+    item = conn.execute("select id from item where item_key = %s", (key,)).fetchone()["id"]
+    new_key = key + "-NEW"
+    conn.execute("update item set item_key = %s where id = %s", (new_key, item))
+    story_keys.kept(conn, tenant, item, key, new_key, "a test")
+    subjects = [p["subject"] for p in learn.refresh(conn)]
+    assert new_key not in subjects and subjects.count(key) == 1

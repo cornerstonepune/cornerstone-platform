@@ -1,6 +1,6 @@
 """The educator's site is held to its rules (docs/ux-rules.md, goals/uxf-ux-foundation.yaml).
 
-A page either keeps the rules by being built on the shared blocks (`PageShell`, `DataTable`), or is named in
+A page either keeps the rules by being built on the shared blocks (`Screen`, `DataTable`), or is named in
 `workflows.json` under `ux.frozen`, with the rules it still breaks. The list only shrinks: a page that keeps a rule
 must leave it (so it cannot grow back unseen), a page not on it must keep every rule, and CI's ratchet refuses a
 commit that adds to it (`engine ratchet`). The rendered rules (a table past the row limit, an empty column, a count
@@ -38,7 +38,7 @@ def pages():
 
 def broken(src):
     out = set()
-    if "<PageShell" not in src:
+    if "<Screen" not in src:
         out.add("shell")
     if any(len(m) > PURPOSE_MAX for m in re.findall(r'\b(?:sub|purpose)="([^"]*)"', src)):
         out.add("purpose")
@@ -57,10 +57,10 @@ def broken(src):
 
 
 def test_every_page_has_a_main_action_and_a_next_step_or_is_on_the_list():
-    """`PageShell` takes `action` and `next` as required props, so a page built on it has both."""
+    """`Screen` takes `action` and `next` as required props, so a page built on it has both."""
     bad = [r for r, s in pages().items() if "shell" in broken(s) and "shell" not in UX["frozen"].get(r, [])]
     assert not bad, (
-        f"build these on PageShell (a main action, a next-step link), or name them in ux.frozen: {bad}"
+        f"build these on Screen (components/app-frame.tsx) (a main action, a next-step link), or name them in ux.frozen: {bad}"
     )
 
 
@@ -96,21 +96,21 @@ def test_a_status_chip_always_draws_its_icon_with_its_word():
     assert tones <= {"ok", "wait", "act", "quiet"}, f"states map to green, amber, red or quiet only: {tones}"
 
 
-def test_the_top_bar_controls_are_full_size_and_the_search_is_compact():
-    """Class and Subject: at least 40 px tall, 15 px text. The student search: about 240 px, never a strip."""
+def test_the_bar_is_sized_from_the_rules_and_the_search_is_compact():
+    """The bar is 64 px high; every control in it is at least a tap tall; the student search is about 240 px, never a strip."""
     rules = (WEB / "lib/ux-rules.ts").read_text()
     least = int(re.search(r"TOP_BAR_MIN_PX = (\d+)", rules)[1])
-    text = int(re.search(r"TOP_BAR_TEXT_PX = (\d+)", rules)[1])
+    height = int(re.search(r"BAR_HEIGHT_PX = (\d+)", rules)[1])
     search = int(re.search(r"SEARCH_PX = (\d+)", rules)[1])
-    assert least >= 40 and text >= 15 and 200 <= search <= 280
-    bar = (WEB / "components/top-bar.tsx").read_text()
-    assert f"min-h-[{least}px]" in bar and f"text-[{text}px]" in bar, (
-        "the selectors must be sized from the rules"
+    assert least >= 44 and height == 64 and 200 <= search <= 280
+    frame = (WEB / "components/app-frame.tsx").read_text()
+    assert "h-16" in frame, "the bar is 64 px (h-16) high"
+    box = (WEB / "components/frame/search-box.tsx").read_text()
+    assert "min-h-[var(--tap)]" in box and f"min-[701px]:w-[{search}px]" in box, (
+        "the search is sized from the rules"
     )
-    # a bare flex-1 stretches the field across the bar; one behind a breakpoint (the phone) is not the desktop's strip
-    bare_flex = re.search(r"(?<![\w:-])flex-1", bar.split("function Search")[1])
-    assert f"w-[{search}px]" in bar and not bare_flex, "the search is a field, not a strip"
-    assert "max-w-[88px]" not in bar and "max-w-[118px]" not in bar, "the selectors may not be squeezed"
+    # a bare flex-1 stretches the field across the bar; one behind the phone breakpoint is not the desktop's strip
+    assert not re.search(r"(?<![\w:\]-])flex-1", box), "the search is a field, not a strip"
 
 
 def test_a_filter_bar_has_every_part_the_pages_rely_on():

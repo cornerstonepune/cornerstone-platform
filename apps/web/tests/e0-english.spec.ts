@@ -7,17 +7,15 @@
  * on the Curriculum page and its skill page, approves a level and one way of asking in their own name, and the record
  * keeps the name and the date. Everything the test approves is withdrawn afterwards, so English stays a draft.
  */
-import { scryptSync } from "node:crypto";
 import { mkdirSync } from "node:fs";
 import path from "node:path";
 import { expect, test, type Browser, type Page } from "@playwright/test";
 import postgres from "postgres";
-import { aWaitingWay } from "./rows";
+import { aWaitingWay, aPerson, forgetPerson } from "./rows";
 
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 const EDUCATOR = { email: "e0-educator@cornerstone.test", name: "E0 Educator", role: "educator", classes: [] as string[] };
 const PASSWORD = "e0-a-long-test-password";
-const SALT = "00112233445566778899aabbccddeeff";
 const SHOTS = process.env.E0_SHOTS;
 
 let skill = { code: "", name: "", objective: "", easy: "", open: "", mistake: "" };
@@ -40,11 +38,7 @@ test.beforeAll(async () => {
     where k.skill_code = ${skill.code} and q.code = 'ENG.SHORT_ANSWER'`;
   way = w;
   await withdraw();
-  const password = `scrypt$${SALT}$${scryptSync(PASSWORD, SALT, 64).toString("hex")}`;
-  await sql`
-    update config set value = (select coalesce(jsonb_agg(s), '[]'::jsonb) from jsonb_array_elements(value) s
-                               where s ->> 'email' <> ${EDUCATOR.email}) || ${sql.json([{ ...EDUCATOR, password }])}
-    where key = 'app.staff'`;
+  await aPerson(sql, { ...EDUCATOR, password: PASSWORD });
 });
 
 /** English stays a draft: what a test approved is withdrawn. */
@@ -55,10 +49,7 @@ async function withdraw() {
 
 test.afterAll(async () => {
   await withdraw();
-  await sql`
-    update config set value = (select coalesce(jsonb_agg(s), '[]'::jsonb) from jsonb_array_elements(value) s
-                               where s ->> 'email' <> ${EDUCATOR.email})
-    where key = 'app.staff'`;
+  await forgetPerson(sql, EDUCATOR.email);
   await sql.end();
 });
 

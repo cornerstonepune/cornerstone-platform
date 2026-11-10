@@ -227,8 +227,8 @@ class School:
         self.children = {}  # (section, roll) -> child id
         for sec, klass in self.classes.items():
             for roll, first in zip(("1", "2", "3", "4", "5"), CHILD_NAMES):
-                child = c.execute("insert into child (tenant_id, roll_no, section, band) values (%s, %s, %s, 'K2')"
-                                  " returning id", (self.t, roll, f"P{sec}{tag}")).fetchone()["id"]
+                child = c.execute("insert into child (tenant_id, band) values (%s, 'K2') returning id",
+                                  (self.t,)).fetchone()["id"]
                 c.execute("insert into pii.child (tenant_id, child_id, first_name) values (%s, %s, %s)",
                           (self.t, child, first))
                 c.execute("insert into enrolment (tenant_id, child_id, class_id, roll_no, from_date, recorded_by)"

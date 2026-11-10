@@ -177,19 +177,13 @@ def test_a_new_item_is_a_catalogue_entry_with_no_home_and_no_value_waiting_for_a
     code = ml.propose_item(conn, s["tenant"], "Feather duster", "piece", s["staff"])
     row = conn.execute("select * from material_item where code = %s", (code,)).fetchone()
     assert (row["name"], row["home"], row["unit_value"]) == ("Feather duster", None, None)
-    waiting = conn.execute(
-        "select state, who from material_item_proposal where material_code = %s", (code,)
-    ).fetchall()
-    assert [(w["state"], w["who"]) for w in waiting] == [("needs_person", s["staff"])]
+    waiting = [w for w in ml.waiting_items(conn, s["tenant"]) if w["code"] == code]
+    assert [(w["name"], w["proposed_by"]) for w in waiting] == [("Feather duster", s["staff"])]
+    assert waiting[0]["proposed_at"] is not None
     assert (
         ml.propose_item(conn, s["tenant"], "  feather DUSTER ", "piece", s["staff"]) == code
     )  # the same, not a second
-    assert (
-        conn.execute(
-            "select count(*) as n from material_item_proposal where material_code = %s", (code,)
-        ).fetchone()["n"]
-        == 1
-    )
+    assert [w["code"] for w in ml.waiting_items(conn, s["tenant"])].count(code) == 1
 
 
 def test_a_line_names_its_activity_by_id_code_and_name(conn, s):

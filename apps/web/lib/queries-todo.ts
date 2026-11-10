@@ -26,7 +26,7 @@ const paperRefs = (ids: string[]) =>
                t.code as topic, t.name as topic_name, t.subject_code as subject
         from sheet_instance si
         join sheet_template st on st.id = si.sheet_template_id
-        left join child ch on ch.id = si.child_id
+        left join child_now ch on ch.id = si.child_id
         left join skill s on s.tenant_id = st.tenant_id and s.code = st.skill_set_code
         left join topic t on t.tenant_id = s.tenant_id and t.code = s.topic_code
         where si.id = any(${ids}::uuid[])`
@@ -56,7 +56,7 @@ export const tasksFor = cache(async (me: Session): Promise<Task[]> => {
     may("papers")
       ? sql<{ id: string; n: number }[]>`
           select si.id::text, count(*) filter (where r.state = 'candidate')::int as n
-          from sheet_instance si left join child ch on ch.id = si.child_id
+          from sheet_instance si left join child_now ch on ch.id = si.child_id
           join capture c on c.sheet_instance_id = si.id and c.superseded_by is null
           join item_result r on r.capture_id = c.id
           where ${seesSheet(me, sql`si.id`)}
@@ -68,14 +68,14 @@ export const tasksFor = cache(async (me: Session): Promise<Task[]> => {
     sql<{ topic: string; topic_name: string; subject: string; section: string }[]>`
       select t.code as topic, t.name as topic_name, t.subject_code as subject, k.section
       from topic t
-      cross join (select distinct section from child where active and ${inScope(scope, sql`section`)}) k
+      cross join (select distinct section from child_now where active and ${inScope(scope, sql`section`)}) k
       where taught_in(t.tenant_id, t.code, k.section)
         and not exists (
           select 1 from sheet_instance si
           join sheet_template st on st.id = si.sheet_template_id
           join skill s on s.tenant_id = st.tenant_id and s.code = st.skill_set_code
           where s.topic_code = t.code and si.kind = 'assessment' and si.print_status <> 'void'
-            and coalesce(si.section, (select ch.section from child ch where ch.id = si.child_id)) = k.section)
+            and coalesce(si.section, (select ch.section from child_now ch where ch.id = si.child_id)) = k.section)
       order by t.ord, k.section`,
     asksWaiting(),
     sql<{ n: number }[]>`

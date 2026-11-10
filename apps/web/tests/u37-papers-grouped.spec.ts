@@ -10,10 +10,9 @@
  *   Esha joined after the week was planned;
  * - a week long past, a class practice: Asha's copy with the children.
  */
-import { scryptSync } from "node:crypto";
 import { expect, test, type Browser, type Page } from "@playwright/test";
 import postgres from "postgres";
-import { aClass, aReadPaper } from "./rows";
+import { aClass, aReadPaper, aPerson, forgetPerson } from "./rows";
 import { isoWeek, weekWords } from "../lib/week";
 
 test.describe.configure({ mode: "serial" });
@@ -25,13 +24,12 @@ const QR = { asha: "CS370A01", bina: "CS370B02", chetan: "CS370C03", spare: "CS3
 const WHY = "has sat every worksheet at Hard (4)";
 const EDUCATOR = { email: "u37-educator@cornerstone.test", name: "U37 Educator", role: "educator", classes: [SECTION] };
 const PASSWORD = "u37-a-long-test-password";
-const SALT = "00112233445566778899aabbccddeeff";
 let kids: Record<string, string> = {};
 let skill = "";
 
 test.beforeAll(async () => {
   kids = await aClass(sql, SECTION, "G2", ["Asha", "Bina", "Chetan", "Dev", "Esha"]);
-  const [{ tenant }] = await sql<{ tenant: string }[]>`select tenant_id as tenant from child where id = ${kids.Asha}`;
+  const [{ tenant }] = await sql<{ tenant: string }[]>`select tenant_id as tenant from child_now where id = ${kids.Asha}`;
   // one skill's worksheets from the library, at two levels
   const ws = await sql<{ id: string; item_ids: string[]; skill: string; level: string }[]>`
     select id, item_ids, skill_set_code as skill, difficulty as level from sheet_template
@@ -77,17 +75,10 @@ test.beforeAll(async () => {
               ${qr ? await sheet(qr) : null}, ${qr ? null : WHY}, now() - interval '1 day')`;
   }
   await sql`update child set created_at = now() where id = ${kids.Esha}`;
-  const password = `scrypt$${SALT}$${scryptSync(PASSWORD, SALT, 64).toString("hex")}`;
-  await sql`
-    update config set value = (select coalesce(jsonb_agg(s), '[]'::jsonb) from jsonb_array_elements(value) s
-                               where s ->> 'email' <> ${EDUCATOR.email}) || ${sql.json([{ ...EDUCATOR, password }])}
-    where key = 'app.staff'`;
+  await aPerson(sql, { ...EDUCATOR, password: PASSWORD });
 });
 test.afterAll(async () => {
-  await sql`
-    update config set value = (select coalesce(jsonb_agg(s), '[]'::jsonb) from jsonb_array_elements(value) s
-                               where s ->> 'email' <> ${EDUCATOR.email})
-    where key = 'app.staff'`;
+  await forgetPerson(sql, EDUCATOR.email);
   await sql.end();
 });
 

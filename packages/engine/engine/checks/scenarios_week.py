@@ -5,7 +5,7 @@ caller's transaction, and rolls it back. Nothing here mocks the engine: the prop
 the rows the real path writes, which is the only way to catch what the parts' own tests cannot.
 """
 
-from engine.core import db, settings
+from engine.core import db, roster, settings
 from engine.w2_print import assemble, pack, prescribe
 
 SECTION = "GOALSEC"
@@ -16,18 +16,25 @@ SET = "SUB.2D2D"
 def _children(conn, n, band="G2"):
     """A section of its own, so no scenario can touch the school's real roster."""
     tenant = conn.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()["id"]
-    conn.execute("delete from child where section = %s", (SECTION,))
+    # whoever an earlier scenario left in the section has left it (a child is never deleted)
+    conn.execute(
+        "update child set active = false where id in (select e.child_id from enrolment e join school_class sc"
+        " on sc.id = e.class_id where sc.label = %s and e.to_date is null)",
+        (SECTION,),
+    )
+    conn.execute(
+        "update enrolment set to_date = from_date where to_date is null"
+        " and class_id in (select id from school_class where label = %s)",
+        (SECTION,),
+    )
     ids = []
     for i in range(1, n + 1):
-        row = conn.execute(
-            "insert into child (tenant_id, roll_no, section, band) values (%s,%s,%s,%s) returning id",
-            (tenant, str(i), SECTION, band),
-        ).fetchone()
+        child = roster.a_child(conn, tenant, SECTION, band, str(i), "engine goal (a scenario)")
         conn.execute(
             "insert into pii.child (tenant_id, child_id, first_name) values (%s,%s,%s)",
-            (tenant, row["id"], f"Child {i}"),
+            (tenant, child, f"Child {i}"),
         )
-        ids.append(row["id"])
+        ids.append(child)
     return ids
 
 

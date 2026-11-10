@@ -22,6 +22,7 @@ from engine.assess.pick import Sheet
 from engine.assess.render import render_sheet
 from engine.core import db
 from engine.w3_read import render_pdf, sorting
+from tests.rows import a_child_in
 
 
 def test_pages_group_by_their_code_and_a_page_with_none_is_a_paper_of_its_own():
@@ -147,10 +148,7 @@ def test_a_code_the_database_printed_names_its_child_and_paper_and_one_it_did_no
         "insert into tenant (slug, name) values (%s, 't') returning id", (f"t-{uuid.uuid4()}",)
     )
     tenant = tenant.fetchone()["id"]
-    child = conn.execute(
-        "insert into child (tenant_id, roll_no, band, section) values (%s, '7', 'G2', 'G2') returning id",
-        (tenant,),
-    ).fetchone()["id"]
+    child = a_child_in(conn, "G2", "G2", "7", tenant)
     template = conn.execute(
         "insert into sheet_template (tenant_id, band, level, week, key) values (%s, 'G2', 'L0', '2026-09-28', %s)"
         " returning id",

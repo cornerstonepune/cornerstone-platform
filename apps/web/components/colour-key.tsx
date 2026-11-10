@@ -1,4 +1,4 @@
-import { TONE_BG } from "@/components/shell";
+import { TONE_BG } from "@/components/parts";
 import type { ColourRules } from "@/lib/colours";
 import { RAG_TONE, type Rag } from "@/lib/rag";
 import type { States } from "@/lib/states";

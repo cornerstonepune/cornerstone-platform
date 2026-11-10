@@ -85,7 +85,7 @@ export async function lastScans(me: Session, n = 5): Promise<Scan[]> {
   const ids = [...new Set(runs.flatMap((r) => [...r.copies.flatMap((c) => (c.child_id ? [c.child_id] : [])), ...r.given.map((g) => g.child_id)]))];
   const kids = new Map(
     (ids.length ? await sql<{ id: string; section: string; roll_no: string }[]>`
-      select id, section, roll_no from child where id = any(${ids}::uuid[])` : []).map((k) => [k.id, k]),
+      select id, section, roll_no from child_now where id = any(${ids}::uuid[])` : []).map((k) => [k.id, k]),
   );
   const captures = [...new Set(runs.flatMap((r) => r.copies.flatMap((c) => (c.capture_id ? [c.capture_id] : []))))];
   const seenCaptures = new Set(

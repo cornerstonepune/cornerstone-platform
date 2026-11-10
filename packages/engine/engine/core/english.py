@@ -149,16 +149,14 @@ def skills(conn: db.Conn, t: db.Id) -> None:
 def level_kinds(conn: db.Conn, t: db.Id) -> None:
     """Which kinds each level uses. Written after the kinds, because writing a kind clears every level's links to be
     made again from the bank, which holds no English question (they come back on every load). A kind a person took
-    from a level stays taken (`skill_level_kind_change`, goals/edt_edit_samples_and_kinds.yaml)."""
+    from a level stays taken: its row stays, marked (`removed_at`, goals/edt_edit_samples_and_kinds.yaml), and a row
+    that is there is left as it is."""
     conn.execute(
         "insert into skill_level_question_type (tenant_id, skill_code, difficulty, question_type)"
         " select %s, x.skill_code, x.difficulty, x.question_type from jsonb_to_recordset(%s::jsonb)"
         "   x(skill_code text, difficulty text, question_type text)"
-        " where not coalesce((select not c.added from skill_level_kind_change c where c.tenant_id = %s"
-        "   and c.skill_code = x.skill_code and c.difficulty = x.difficulty and c.question_type = x.question_type"
-        "   order by c.created_at desc, c.id desc limit 1), false)"
         " on conflict (tenant_id, skill_code, difficulty, question_type) do nothing",
-        (t, json.dumps(seed("skill_level_question_type.json", "skill_level_question_types")), t),
+        (t, json.dumps(seed("skill_level_question_type.json", "skill_level_question_types"))),
     )
 
 

@@ -10,7 +10,7 @@
 import { createHmac } from "node:crypto";
 import { expect, test, type Browser, type Page } from "@playwright/test";
 import postgres from "postgres";
-import { aClass, aReadPaper } from "./rows";
+import { aClass, aPerson, aReadPaper, forgetPerson } from "./rows";
 
 test.describe.configure({ mode: "serial" });
 test.use({ viewport: { width: 1440, height: 900 } });
@@ -27,17 +27,11 @@ let crossed: Paper; // Neha's class, put in by Achal
 let hers: Paper; // Neha's class, put in by nobody known
 let run: string;
 
-const offList = (emails: string[]) => sql`
-  update config set value = (select coalesce(jsonb_agg(s), '[]'::jsonb) from jsonb_array_elements(value) s
-                             where not (s ->> 'email' = any(${emails})))
-  where key = 'app.staff'`;
-
 test.beforeAll(async () => {
   const a = await aClass(sql, A, "G2", ["Asha"]);
   const n = await aClass(sql, N, "G2", ["Neel", "Nita"]);
-  await offList([ACHAL.email, NEHA.email]);
-  await sql`update config set value = value || ${sql.json([ACHAL, NEHA])} where key = 'app.staff'`;
-  const [{ achal }] = await sql<{ achal: string }[]>`select staff_id(${ACHAL.email}) as achal`;
+  const { id: achal } = await aPerson(sql, ACHAL);
+  await aPerson(sql, NEHA);
   const [ws] = await sql<{ id: string; item_ids: string[] }[]>`
     select id, item_ids from sheet_template
     where source = 'library' and retired_at is null and skill_set_code = 'ADD.2D2D' and difficulty = 'Medium' order by code limit 1`;
@@ -68,7 +62,7 @@ test.beforeAll(async () => {
 });
 test.afterAll(async () => {
   await sql`delete from flow_run where id = ${run}::uuid`;
-  await offList([ACHAL.email, NEHA.email]);
+  for (const person of [ACHAL, NEHA]) await forgetPerson(sql, person.email);
   await sql.end();
 });
 
@@ -91,7 +85,7 @@ const number = (t: string | null) => Number((t ?? "").replace(/\D/g, "") || 0);
 /** The figures a person is shown, each beside the list it counts. */
 async function figures(page: Page) {
   await open(page, "/today");
-  const menu = page.getByRole("navigation", { name: "Sections" }).getByRole("link", { name: /^What needs doing/ }).getByTestId("waiting");
+  const menu = page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" }).getByRole("link", { name: /^Today/ }).getByTestId("waiting");
   const badge = (await menu.count()) ? number(await menu.innerText()) : 0;
   const todo = (await page.locator("[data-todo]").evaluateAll((els) => els.map((e) => Number(e.getAttribute("data-todo"))))).reduce((x, y) => x + y, 0);
   await open(page, "/papers");

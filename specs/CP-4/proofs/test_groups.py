@@ -17,13 +17,19 @@ How it runs, on the throwaway database (never a live one), in one transaction th
   that is not "allow everyone" and that tests the table's key column.
 """
 
+import sys
 import uuid
+from pathlib import Path
 
 import psycopg
 import pytest
 from psycopg import sql
 
 from conftest import opening_policies
+
+# the engine tests' own rows (CP-27 group 4: who signs in), by their folder: a package named `tests` is installed too
+sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "packages" / "engine" / "tests"))
+from rows import a_person  # noqa: E402
 
 FAKE = {"uuid": "gen_random_uuid()", "text": "'cp4'", "character varying": "'cp4'", "integer": "0",
         "smallint": "0", "bigint": "0", "numeric": "0", "real": "0", "double precision": "0", "boolean": "false",
@@ -62,7 +68,7 @@ def _chain(c, tenant, cls, section, staff_id, template, seeded):
         seeded.setdefault(table, {"X": set(), "Y": set()})[cls["tag"]].add(rid)
         return rid
 
-    child = put("public.child", roll_no="1", band="G1", section=section, active=True)
+    child = put("public.child", band="G1", active=True)
     put("pii.child", child_id=child, first_name="Proof")
     put("public.enrolment", child_id=child, class_id=cls["id"], roll_no="1",
         from_date=sql.SQL("current_date - 30"), recorded_by="cp4 proof")
@@ -99,9 +105,9 @@ def _build_school(c):
     year = ins(c, "public.academic_year", tenant_id=tenant, label="2026-27",
                starts_on=sql.SQL("current_date - 100"), ends_on=sql.SQL("current_date + 200"))
     classes = {t: {"tag": t, "id": ins(c, "public.school_class", tenant_id=tenant, campus_id=campus,
-                                       academic_year_id=year, grade_code="K9", section=s)}
+                                       academic_year_id=year, grade_code="K9", section=s, label=s)}
                for t, s in (("X", "P"), ("Y", "Q"), ("Z", "R"))}
-    people, entries = {}, []
+    people = {}
     for who in ("X", "Y", "Z", "all"):
         staff = ins(c, "public.staff", tenant_id=tenant, campus_id=campus, active=True)
         email = f"cp4-{who.lower()}-{tag}@example.test"
@@ -110,14 +116,12 @@ def _build_school(c):
             role_code=all_role if who == "all" else own_role,
             school_class_id=None if who == "all" else classes[who]["id"],
             valid_from=sql.SQL("current_date - 30"), granted_by="cp4 proof")
-        entry = str(uuid.uuid4())
-        entries.append({"id": entry, "email": email, "name": f"Proof person {who}",
-                        "role": "coordinator" if who == "all" else "educator"})
+        entry = a_person(c, email, f"Proof person {who}", "coordinator" if who == "all" else "educator",
+                         tenant=tenant, id=str(uuid.uuid4()))["ask_as"]
         people[who] = {"staff": staff, "entry": entry}
-    for key, value in (("school.time_zone", "Asia/Kolkata"), ("app.staff", entries)):
-        c.execute("insert into config (tenant_id, key, value) values (%s, %s, %s) "
-                  "on conflict (tenant_id, key) do update set value = excluded.value",
-                  (tenant, key, psycopg.types.json.Jsonb(value)))
+    c.execute("insert into config (tenant_id, key, value) values (%s, %s, %s) "
+              "on conflict (tenant_id, key) do update set value = excluded.value",
+              (tenant, "school.time_zone", psycopg.types.json.Jsonb("Asia/Kolkata")))
     template = ins(c, "public.sheet_template", tenant_id=tenant, band="G1", source="generated", week="2026-11-02")  # a week is a date (CP-27)
     seeded = {}
     for t, s in (("X", "P"), ("Y", "Q")):

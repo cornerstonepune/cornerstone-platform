@@ -11,6 +11,7 @@ runner, where `/growth` said "This page could not load" (main's browser job on 3
 import pytest
 
 from engine.core import db
+from tests.rows import a_child_in
 
 
 @pytest.fixture
@@ -82,10 +83,7 @@ def test_a_classs_answers_are_read_from_its_own_children_not_from_every_answer_i
     ]
     skill = conn.execute("select code from registry_skill limit 1").fetchone()["code"]
     for section, answers in (("PLAN-A", 3), ("PLAN-B", 600)):
-        child = conn.execute(
-            "insert into child (tenant_id, roll_no, section, band) values (%s, '1', %s, 'G2') returning id",
-            (tenant, section),
-        ).fetchone()["id"]
+        child = a_child_in(conn, section, "G2", "1", tenant)
         conn.execute(
             "insert into evidence_event (tenant_id, child_id, skill_code, rung_code, correct, channel, observed_at,"
             " confirmed_by) select %s, %s, %s, %s, true, 'item', now(), 'plan test' from generate_series(1, %s)",
@@ -97,7 +95,7 @@ def test_a_classs_answers_are_read_from_its_own_children_not_from_every_answer_i
     )  # the question is what the query can reach, not what a tiny table costs
     asked = (
         "select a.child_id from answer_placed a where a.confirmed_by is not null and a.child_id"
-        " {} (select id from child where active and section = 'PLAN-A'{})"
+        " {} (select id from child_now where active and section = 'PLAN-A'{})"
     )
     narrowed = _plan_analyzed(conn, asked.format("= any(array", ")"))
     assert _rows_read(narrowed, "evidence_event") <= 3, "only the class's own three answers are read"

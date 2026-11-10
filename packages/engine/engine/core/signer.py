@@ -7,17 +7,11 @@ two columns and must never find a person's name or email in them. A signer who m
 words that do not repeat what was typed. Nothing here prints an email.
 """
 
-from typing import Any
-
 from engine.core import db
 
 REFUSED = (
     "--by must be the email you sign in with, of a member of staff already on the staff tables"
-    " (`engine staff import` puts them there)"
-)
-REFUSED_FIRST = (
-    "--by must be the email you sign in with: a member of staff already on the staff tables, or on the website's"
-    " sign-in list (the first `engine staff import` makes them)"
+    " (the staff list: `engine staff add` puts them there)"
 )
 
 
@@ -33,14 +27,3 @@ def resolve(conn: db.Conn, email: str) -> str:
     if who is None:
         raise ValueError(REFUSED)
     return who
-
-
-def first_import_ok(conn: db.Conn, email: str, sign_in_list: list[dict[str, Any]]) -> bool:
-    """`engine staff import` is how the first staff exist, so its signer may be on the website's sign-in list and not on
-    the staff tables yet; the id is looked up after the run has made them. No `--by` (a dry run) is nobody to check."""
-    mine = email.strip().lower()
-    return (
-        not mine
-        or lookup(conn, mine) is not None
-        or mine in {str(e["email"]).strip().lower() for e in sign_in_list}
-    )

@@ -16,6 +16,7 @@ import pytest
 from engine.core import db
 from engine.w4_close import parent_report as P
 from engine.w4_close import report
+from tests.rows import a_child_in
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
 NAME = "Riaparentreport"
@@ -31,10 +32,7 @@ def conn():
 @pytest.fixture
 def child(conn):
     t = conn.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()["id"]
-    kid = conn.execute(
-        "insert into child (tenant_id, roll_no, section, band) values (%s, '1', 'PR-TEST', 'G2') returning id",
-        (t,),
-    ).fetchone()["id"]
+    kid = a_child_in(conn, "PR-TEST", "G2", "1", t)
     conn.execute(
         "insert into pii.child (tenant_id, child_id, first_name) values (%s, %s, %s)", (t, kid, NAME)
     )
@@ -737,10 +735,7 @@ def test_one_answer_to_a_question_of_two_skills_counts_once(conn):
         " where status = 'active' and source = 'generated' and cardinality(skill_codes) > 1 order by item_key limit 1"
     ).fetchone()
     assert item, "the bank holds no question of two skills"
-    kid = conn.execute(
-        "insert into child (tenant_id, roll_no, section, band) values (%s, '1', 'ONE-ANSWER', 'G2') returning id",
-        (t,),
-    ).fetchone()["id"]
+    kid = a_child_in(conn, "ONE-ANSWER", "G2", "1", t)
     conn.execute("insert into pii.child (tenant_id, child_id, first_name) values (%s, %s, 'Onea')", (t, kid))
     tpl = conn.execute(
         "insert into sheet_template (tenant_id, band, child_id, week) values (%s, 'G2', %s, '2026-09-28') returning id",

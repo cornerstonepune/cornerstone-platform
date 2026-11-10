@@ -5,7 +5,7 @@ placed on each load — unlike its words, which belong to the educators once loa
 has is removed, with every class's word on it, so no page names an empty topic.
 
 Whether a skill has been taught is said skill by skill: the school's word (`skill_set.taught`, from the file's
-`taught` list) and each class's (`class_skill`); the rule is the database's `skill_taught_in`. The file decides the
+`taught` list) and each class's (`school_class.taught`); the rule is the database's `skill_taught_in`. The file decides the
 school's word only until a person says it: a load never switches back what a person switched (goals/ny1-needs-you.yaml,
 goals/t1-topics-are-operations.yaml)."""
 

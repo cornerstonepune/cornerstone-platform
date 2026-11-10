@@ -8,10 +8,9 @@
  * reader could not settle; Bina has a home assessment this week. In U44-OTHER, Chetan has two answers waiting. The
  * educator teaches U44-MINE only. What each page says is checked against those rows, never against the page's own query.
  */
-import { scryptSync } from "node:crypto";
 import { expect, test, type Browser, type Page } from "@playwright/test";
 import postgres from "postgres";
-import { aClass, aReadPaper } from "./rows";
+import { aClass, aReadPaper, aPerson, forgetPerson } from "./rows";
 import { isoWeek } from "../lib/week";
 import { queueByWeek } from "../lib/queries-today";
 
@@ -22,12 +21,11 @@ const THIS = isoWeek();
 const QR = { signed: "CS44A001", waiting: "CS44A002", other: "CS44C001", home: "CS44B0F1" };
 const EDUCATOR = { email: "u44-educator@cornerstone.test", name: "U44 Educator", role: "educator", classes: [MINE] };
 const PASSWORD = "u44-a-long-test-password";
-const SALT = "44112233445566778899aabbccddeeff";
 
 test.beforeAll(async () => {
   const mine = await aClass(sql, MINE, "G2", ["Asha", "Bina"]);
   const other = await aClass(sql, OTHER, "G2", ["Chetan"]);
-  const [{ tenant }] = await sql<{ tenant: string }[]>`select tenant_id as tenant from child where id = ${mine.Asha}`;
+  const [{ tenant }] = await sql<{ tenant: string }[]>`select tenant_id as tenant from child_now where id = ${mine.Asha}`;
   // two library worksheets of 2-digit + 2-digit at Medium, whose level the school files under Grade 2
   const ws = await sql<{ id: string; item_ids: string[] }[]>`
     select st.id, st.item_ids from sheet_template st join skill_level l on l.skill_code = st.skill_set_code and l.difficulty = st.difficulty
@@ -56,18 +54,11 @@ test.beforeAll(async () => {
   await sql`
     insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, week, kind, print_status)
     values (${tenant}, ${QR.home}, ${ws[0].id}, ${mine.Bina}, to_date(${THIS}, 'IYYY-"W"IW'), 'focus', 'new')`;
-  const password = `scrypt$${SALT}$${scryptSync(PASSWORD, SALT, 64).toString("hex")}`;
-  await sql`
-    update config set value = (select coalesce(jsonb_agg(s), '[]'::jsonb) from jsonb_array_elements(value) s
-                               where s ->> 'email' <> ${EDUCATOR.email}) || ${sql.json([{ ...EDUCATOR, password }])}
-    where key = 'app.staff'`;
+  await aPerson(sql, { ...EDUCATOR, password: PASSWORD });
 });
 test.afterAll(async () => {
   await sql`delete from sheet_instance where qr_code = ${QR.home}`;
-  await sql`
-    update config set value = (select coalesce(jsonb_agg(s), '[]'::jsonb) from jsonb_array_elements(value) s
-                               where s ->> 'email' <> ${EDUCATOR.email})
-    where key = 'app.staff'`;
+  await forgetPerson(sql, EDUCATOR.email);
   await sql.end();
 });
 

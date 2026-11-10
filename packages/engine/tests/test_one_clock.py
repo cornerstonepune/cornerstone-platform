@@ -112,11 +112,7 @@ def _class(conn, t):
         " values (%s, %s, %s, 'G3', %s) returning id",
         (t, campus, year, section),
     )["id"]
-    child = db.one(
-        conn,
-        "insert into child (tenant_id, roll_no, section, band) values (%s, '1', %s, 'G3') returning id",
-        (t, section),
-    )["id"]
+    child = db.one(conn, "insert into child (tenant_id, band) values (%s, 'G3') returning id", (t,))["id"]
     conn.execute(
         "insert into enrolment (tenant_id, child_id, class_id, roll_no, from_date, recorded_by)"
         " values (%s, %s, %s, '1', '2033-06-01', 'test')",
@@ -147,12 +143,9 @@ def test_a_hand_check_with_no_date_is_dated_by_the_schools_clock(conn):
     t = rows.tenant(conn)
     _, _, child = _class(conn, t)
     nightly.hand_check(conn, child, "S1", "G3", "secure", "test")
-    row = db.one(
-        conn,
-        "select checked_on, internal.school_day(tenant_id, now()) as school_today from hand_check where child_id = %s",
-        (child,),
-    )
-    assert row["checked_on"] == row["school_today"] == settings.school_today(conn)
+    (row,) = nightly.hand_checks(conn, child)
+    school_today = db.one(conn, "select internal.school_day(%s, now()) as d", (t,))["d"]
+    assert row["checked_on"] == school_today == settings.school_today(conn)
     assert not re.search(
         r"current_date", db.one(conn, "select pg_get_functiondef('public.move_child'::regproc) as f")["f"]
     )

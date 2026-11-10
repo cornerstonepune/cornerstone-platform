@@ -1,12 +1,10 @@
-"""What the locked CP-7 proofs cannot see (the verifier's findings of 9 Nov): who is asking is the SIGN-IN entry, which
-is not the staff id (CP-3), a grant ends on `valid_to` without holding on it, and a holiday has no lessons. The proofs'
+"""What the locked CP-7 proofs cannot see (the verifier's findings of 9 Nov): who is asking is the member of staff's
+own id (since CP-27 group 4; it was the sign-in entry's), a grant ends on `valid_to` without holding on it, and a holiday has no lessons. The proofs'
 fake school and helpers (specs/CP-7/proofs/cp7_world.py) are reused as they are."""
 
 import sys
 import uuid
 from pathlib import Path
-
-from psycopg.types.json import Jsonb
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[3] / "specs" / "CP-7" / "proofs"))
 import cp7_world  # noqa: E402
@@ -22,27 +20,13 @@ def waiting(world):
     return world.draft(world.a, 9)
 
 
-def new_signin_id(world, who: str) -> str:
-    """Give `who` a sign-in list entry id that is not their staff id; CP-3's trigger moves `staff.signin_id` to it."""
-    entries = world.setting("app.staff")
-    fresh = str(uuid.uuid4())
-    for e in entries:
-        if e["id"] == world.staff[who]:
-            e["id"] = fresh
-    world.c.execute(
-        "update config set value = %s where tenant_id = %s and key = 'app.staff'", (Jsonb(entries), world.t)
-    )
-    return fresh
-
-
-def test_the_sign_in_entry_not_the_staff_id_decides_who_approves(world):
+def test_the_signed_in_staff_id_decides_who_approves(world):
+    """Who is asking is the member of staff's own id (CP-27 group 4: the sign-in list is the staff tables): the
+    approver's id approves; someone else's, or an id that is no member of staff, does not."""
     plan = waiting(world)
-    coordinator, teacher = new_signin_id(world, "approver"), new_signin_id(world, "other")
-    refused(
-        world.approve, plan, who=world.staff["approver"], stem=NOT_APPROVER, code="42501"
-    )  # a staff id is no identity
-    refused(world.approve, plan, who=teacher, stem=NOT_APPROVER, code="42501")
-    world.approve(plan, who=coordinator)
+    refused(world.approve, plan, who=str(uuid.uuid4()), stem=NOT_APPROVER, code="42501")  # no member of staff
+    refused(world.approve, plan, who=world.staff["other"], stem=NOT_APPROVER, code="42501")
+    world.approve(plan, who=world.staff["approver"])
     assert world.plan(plan)["state"] == "approved"
 
 

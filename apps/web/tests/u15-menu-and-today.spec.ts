@@ -11,13 +11,14 @@ import { createHmac } from "node:crypto";
 import postgres from "postgres";
 import { isoWeek, weekWords } from "../lib/week";
 import { ENGINE_PORT } from "../playwright.config";
+import { aChildIn, aPerson, forgetPerson } from "./rows";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 const SECTION = "UI1-TEST";
 const WEEK = isoWeek();
 const EDUCATOR = { email: "ui1-educator@cornerstone.test", name: "UI1 educator", role: "educator" };
-const GROUPS = ["What needs doing", "Assessments", "Results", "Setup"];
+const GROUPS = ["Today", "Timetable", "Children", "Setup"];
 
 async function engine(path: string, body: object) {
   const r = await fetch(`http://127.0.0.1:${ENGINE_PORT}${path}`, {
@@ -37,10 +38,9 @@ async function engine(path: string, body: object) {
  *  the report made again each run, since the clean-up takes it away and the child stays. */
 async function testChild(): Promise<string> {
   const [{ tenant_id }] = await sql<{ tenant_id: string }[]>`select id as tenant_id from tenant limit 1`;
-  let [child] = await sql<{ id: string }[]>`select id from child where section = ${SECTION} and roll_no = '1'`;
+  let [child] = await sql<{ id: string }[]>`select id from child_now where section = ${SECTION} and roll_no = '1'`;
   if (!child) {
-    [child] = await sql<{ id: string }[]>`
-      insert into child (tenant_id, roll_no, section, band) values (${tenant_id}, '1', ${SECTION}, 'G2') returning id`;
+    [child] = [{ id: await aChildIn(sql, SECTION, "G2", "1") }];
     await sql`insert into pii.child (tenant_id, child_id, first_name) values (${tenant_id}, ${child.id}, 'Uione')`;
     for (const right of [false, false, false, false, true, true]) {
       await sql`
@@ -58,11 +58,11 @@ async function testChild(): Promise<string> {
 }
 
 async function clearUp() {
-  await sql`delete from item_exposure where week = to_date(${WEEK}, 'IYYY-"W"IW') and child_id in (select id from child where section = ${SECTION})`;
-  await sql`delete from prescription where child_id in (select id from child where section = ${SECTION})`;
+  await sql`delete from item_exposure where week = to_date(${WEEK}, 'IYYY-"W"IW') and child_id in (select id from child_now where section = ${SECTION})`;
+  await sql`delete from prescription where child_id in (select id from child_now where section = ${SECTION})`;
   await sql`delete from sheet_instance where section = ${SECTION}`;
-  await sql`delete from parent_note where child_id in (select id from child where section = ${SECTION})`;
-  await sql`update config set value = (select coalesce(jsonb_agg(s), '[]') from jsonb_array_elements(value) s where s ->> 'email' <> ${EDUCATOR.email}) where key = 'app.staff'`;
+  await sql`delete from parent_note where child_id in (select id from child_now where section = ${SECTION})`;
+  await forgetPerson(sql, EDUCATOR.email);
 }
 
 /** A signed-in session for someone on the staff list, as the gate checks it (global-setup.ts makes the coordinator's). */
@@ -87,7 +87,7 @@ async function rows(page: Page) {
 
 /** The count the group "What needs doing" carries, 0 when it carries none. */
 async function badge(page: Page): Promise<number> {
-  const n = page.getByRole("navigation", { name: "Sections" }).getByRole("link", { name: /^What needs doing/ }).getByTestId("waiting");
+  const n = page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" }).getByRole("link", { name: /^Today/ }).getByTestId("waiting");
   return (await n.count()) ? Number((await n.innerText()).replace(/\D/g, "")) : 0;
 }
 
@@ -104,14 +104,14 @@ test.afterAll(async () => {
 
 test("the menu is four groups, and only What needs doing carries the count of what waits", async ({ page }) => {
   await page.goto("/today");
-  const menu = page.getByRole("navigation", { name: "Sections" });
+  const menu = page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" });
   const names = await menu.getByRole("link").allInnerTexts();
   expect(names.map((n) => n.replace(/\s*\d[\d,]*$/, "").trim())).toEqual(GROUPS);
   await expect(menu.getByTestId("waiting"), "one count, on one group").toHaveCount(1);
   // the count is what the sections of the page add up to (red and amber; what can wait is said apart)
   const todo = (await page.locator("[data-todo]").evaluateAll((els) => els.map((e) => Number(e.getAttribute("data-todo")))));
   expect(await badge(page), "the group's count is the page's").toBe(todo.reduce((a, b) => a + b, 0));
-  for (const [group, heading] of [["Setup", "Curriculum"], ["Assessments", "Assessments"], ["Results", "Class results"], ["What needs doing", "What needs doing"]]) {
+  for (const [group, heading] of [["Setup", "Curriculum"], ["Children", "Children"], ["Today", "What needs doing"]]) {
     await menu.getByRole("link", { name: new RegExp(`^${group}\\b`) }).click();
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(heading);
     await expect(menu.getByRole("link", { name: new RegExp(`^${group}\\b`) })).toHaveAttribute("aria-current", "page");
@@ -144,7 +144,7 @@ test("What needs doing lists everything that waits as rows, and each row's butto
 
   // a topic not taught is a green row, "when ready": the school's choice, never counted as waiting
   await page.goto("/today?kind=taught");
-  const [{ off }] = await sql<{ off: number }[]>`select count(*)::int as off from topic t where not exists (select 1 from child k where k.tenant_id = t.tenant_id and k.active and taught_in(t.tenant_id, t.code, k.section))`;
+  const [{ off }] = await sql<{ off: number }[]>`select count(*)::int as off from topic t where not exists (select 1 from child_now k where k.tenant_id = t.tenant_id and k.active and taught_in(t.tenant_id, t.code, k.section))`;
   const taught = await rows(page);
   expect(taught.every((r) => r.state === "whenReady"), "marking a topic taught is never red or amber").toBe(true);
   expect(taught.length > 0 || off === 0).toBe(true);
@@ -166,18 +166,16 @@ test("an educator not mapped to a class sees the rows of no class a coordinator 
   await page.goto("/today");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("What needs doing");
   const coordinator = await rows(page);
-  await page.getByRole("button", { name: "Menu" }).click();
-  await expect(page.getByRole("dialog", { name: "Menu" }).getByRole("link", { name: "How it works" })).toBeVisible();
+  await expect(page.locator("[data-frame]").getByRole("link", { name: "How it works" }).first()).toBeVisible();
 
-  await sql`update config set value = value || ${sql.json([EDUCATOR])} where key = 'app.staff'`;
+  await aPerson(sql, EDUCATOR);
   await signInAs(page, EDUCATOR.email);
   await page.goto("/today");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("What needs doing");
   const school = ["skill", "ask"];
   expect(await rows(page)).toEqual(coordinator.filter((r) => school.includes(r.kind)));
   await expect(page.getByText(/For others|For you|No one on the staff list/)).toHaveCount(0);
-  await page.getByRole("button", { name: "Menu" }).click();
-  await expect(page.getByRole("dialog", { name: "Menu" }).getByRole("link", { name: "How it works" })).toBeVisible();
+  await expect(page.locator("[data-frame]").getByRole("link", { name: "How it works" }).first()).toBeVisible();
 });
 
 test("weeks and classes on What needs doing are said in words, not codes", async ({ page }) => {

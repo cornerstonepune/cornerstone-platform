@@ -9,6 +9,7 @@ import pytest
 
 from engine.core import db
 from engine.w2_print import assemble, prescribe
+from tests.rows import a_child_in
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
 
@@ -28,10 +29,7 @@ def children(conn):
     tenant = conn.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()["id"]
     ids = []
     for roll, name in (("1", "Aarav"), ("2", "Riya"), ("3", "Meera")):
-        cid = conn.execute(
-            "insert into child (tenant_id, roll_no, section, band) values (%s,%s,%s,'G2') returning id",
-            (tenant, roll, SECTION),
-        ).fetchone()["id"]
+        cid = a_child_in(conn, SECTION, "G2", roll, tenant)
         conn.execute(
             "insert into pii.child (tenant_id, child_id, first_name) values (%s,%s,%s)", (tenant, cid, name)
         )

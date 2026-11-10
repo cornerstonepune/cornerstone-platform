@@ -17,7 +17,7 @@ export const taughtIn = (tenant: Fragment, topic: Fragment, section: Fragment | 
 export const taughtFor = (scope: Scope, tenant: Fragment, topic: Fragment) =>
   scope.classes
     ? sql`exists (select 1 from unnest(${scope.classes}::text[]) as k(section) where taught_in(${tenant}, ${topic}, k.section))`
-    : sql`exists (select 1 from child k where k.tenant_id = ${tenant} and k.active and taught_in(${tenant}, ${topic}, k.section))`;
+    : sql`exists (select 1 from child_now k where k.tenant_id = ${tenant} and k.active and taught_in(${tenant}, ${topic}, k.section))`;
 
 /** This skill taught in this class. `tenant` and `skill` are the row's own columns. */
 export const skillTaughtIn = (tenant: Fragment, skill: Fragment, section: Fragment | string) =>
@@ -27,12 +27,12 @@ export const skillTaughtIn = (tenant: Fragment, skill: Fragment, section: Fragme
 export const skillTaughtFor = (scope: Scope, tenant: Fragment, skill: Fragment) =>
   scope.classes
     ? sql`exists (select 1 from unnest(${scope.classes}::text[]) as k(section) where skill_taught_in(${tenant}, ${skill}, k.section))`
-    : sql`exists (select 1 from child k where k.tenant_id = ${tenant} and k.active and skill_taught_in(${tenant}, ${skill}, k.section))`;
+    : sql`exists (select 1 from child_now k where k.tenant_id = ${tenant} and k.active and skill_taught_in(${tenant}, ${skill}, k.section))`;
 
 /** The classes a scope shows, in order: an educator's own, or every class with a child on the roll. */
 export async function classesOf(scope: Scope): Promise<string[]> {
   if (scope.classes) return [...scope.classes].sort();
-  const rows = await sql<{ section: string }[]>`select distinct section from child where active order by section`;
+  const rows = await sql<{ section: string }[]>`select distinct section from child_now where active order by section`;
   return rows.map((r) => r.section);
 }
 
@@ -43,7 +43,7 @@ export async function taughtByGrade(scope: Scope): Promise<(band: string, skill:
     sql<{ band: string; skill: string; taught: boolean }[]>`
       select k.band, s.code as skill, bool_or(skill_taught_in(s.tenant_id, s.code, k.section)) as taught
       from skill s
-      cross join (select distinct section, band from child where active and ${inScope(scope, sql`section`)}) k
+      cross join (select distinct section, band from child_now where active and ${inScope(scope, sql`section`)}) k
       group by 1, 2`,
     sql<{ code: string; taught: boolean }[]>`select code, skill_taught_in(tenant_id, code, null) as taught from skill`,
   ]);
@@ -58,7 +58,7 @@ export async function untaughtByGrade(scope: Scope): Promise<(band: string, skil
   const rows = await sql<{ band: string; skill: string; sections: string[] }[]>`
     select k.band, s.code as skill, array_agg(k.section order by k.section) as sections
     from skill s
-    cross join (select distinct section, band from child where active and ${inScope(scope, sql`section`)}) k
+    cross join (select distinct section, band from child_now where active and ${inScope(scope, sql`section`)}) k
     where not skill_taught_in(s.tenant_id, s.code, k.section)
     group by 1, 2`;
   const by = new Map(rows.map((r) => [`${r.band}|${r.skill}`, r.sections]));

@@ -68,13 +68,12 @@ test.afterAll(async () => {
 test("a teacher can reach every section from the menu, and the menu says where they are", async ({ page }) => {
   await page.goto("/");
   const sections = [
-    ["What needs doing", "What needs doing"],
+    ["Today", "What needs doing"],
     ["Setup", "Curriculum"],
-    ["Assessments", "Assessments"],
-    ["Results", "Class results"],
+    ["Children", "Children"],
   ];
   for (const [label, heading] of sections) {
-    const group = page.getByRole("navigation", { name: "Sections" }).getByRole("link", { name: new RegExp(`^${label}\\b`) });
+    const group = page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" }).getByRole("link", { name: new RegExp(`^${label}\\b`) });
     await group.click();
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(heading);
     await expect(group).toHaveAttribute(
@@ -150,7 +149,7 @@ test("approving a skill records who did it, by name", async ({ page }) => {
 
 test("the bank's grid holds exactly what the database holds, and a cell opens those questions", async ({ page }) => {
   const [{ total, n, name }] = await sql<{ total: number; n: number; name: string }[]>`
-    select (select count(*)::int from item where status = 'active' and source = 'generated' and exists (select 1 from skill s where s.code = item.skill_set_code and exists (select 1 from child k where k.tenant_id = s.tenant_id and k.active and skill_taught_in(s.tenant_id, s.code, k.section)))) as total,
+    select (select count(*)::int from item where status = 'active' and source = 'generated' and exists (select 1 from skill s where s.code = item.skill_set_code and exists (select 1 from child_now k where k.tenant_id = s.tenant_id and k.active and skill_taught_in(s.tenant_id, s.code, k.section)))) as total,
            (select count(*)::int from item where status = 'active' and source = 'generated'
               and skill_set_code = 'SUB.2D2D' and difficulty = 'Hard') as n,
            (select name from skill where code = 'SUB.2D2D') as name`;
@@ -179,7 +178,7 @@ test("every question in the list shows its answer and opens its own page", async
 // from either says undefined or NaN.
 test("every kind of question in the bank is drawn with its own numbers", async ({ page }) => {
   const kinds = await sql<{ fmt: string }[]>`
-    select distinct fmt from item where status = 'active' and source = 'generated' and exists (select 1 from skill s where s.code = item.skill_set_code and exists (select 1 from child k where k.tenant_id = s.tenant_id and k.active and skill_taught_in(s.tenant_id, s.code, k.section))) order by fmt`;
+    select distinct fmt from item where status = 'active' and source = 'generated' and exists (select 1 from skill s where s.code = item.skill_set_code and exists (select 1 from child_now k where k.tenant_id = s.tenant_id and k.active and skill_taught_in(s.tenant_id, s.code, k.section))) order by fmt`;
   for (const { fmt } of kinds) {
     await page.goto(`/library?fmt=${fmt}`);
     const question = page.locator("#questions tbody tr").first().locator("td").first();

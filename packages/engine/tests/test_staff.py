@@ -14,6 +14,7 @@ import pytest
 
 from engine.core import db, settings
 from engine.core.staff import staff_hash
+from tests import rows
 from tests.test_cli import run
 
 pytestmark = pytest.mark.usefixtures("forgets_what_it_commits")
@@ -26,7 +27,7 @@ needs_db = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATAB
 
 def _staff():
     with db.connect() as conn:
-        return conn.execute("select value from config where key = 'app.staff'").fetchone()["value"]
+        return rows.signin_list(conn)
 
 
 def _add(monkeypatch, *args, typed=(PASSWORD, PASSWORD)):
@@ -40,11 +41,7 @@ def clean():
     """The staff list as it was: whatever a test added is taken off again."""
     yield
     with db.connect() as conn:
-        conn.execute(
-            "update config set value = (select coalesce(jsonb_agg(s), '[]'::jsonb) from jsonb_array_elements(value) s"
-            " where s ->> 'email' <> %s) where key = 'app.staff'",
-            (EMAIL,),
-        )
+        rows.forget_person(conn, EMAIL)
         conn.commit()
 
 
@@ -89,11 +86,11 @@ def test_a_person_already_on_the_list_a_role_no_one_holds_or_a_short_password_is
 
 
 def test_the_staff_list_is_not_in_the_public_repository():
-    """The seed's staff list is empty: who signs in is the database's to hold, put there by `engine staff add`, so an
-    educator's email never enters the repository."""
-    rows = {r["key"]: r for r in json.loads(SEED.read_text())["config"]}
-    assert rows["app.staff"]["value"] == []
-    assert rows["app.staff"]["seed_once"] is True, "a list the app owns is seeded once and then left alone"
+    """The seed holds no staff list: who signs in is the database's to hold (`staff`, `pii.staff`), put there by
+    `engine staff add`, so an educator's email never enters the repository."""
+    seeds = "".join(p.read_text() for p in SEED.parent.glob("*.json"))
+    assert "app.staff" not in {r["key"] for r in json.loads(SEED.read_text())["config"]}
+    assert "@cornerstone" not in seeds and "password_hash" not in seeds
 
 
 # ---- F1a: each educator names the classes they teach (goals/f1a-each-educator-has-classes.yaml, ADR 0073 D1)
@@ -107,16 +104,12 @@ def two_classes():
     is never deleted (their answers are append-only), so the classes' children leave school after, as a child does."""
     with db.connect() as conn:
         tenant = conn.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()["id"]
-        for section in CLASSES:
-            conn.execute(
-                "insert into child (tenant_id, roll_no, section, band) values (%s, '1', %s, 'G2')"
-                " on conflict (tenant_id, section, roll_no) do update set active = true",
-                (tenant, section),
-            )
+        made = [rows.a_child_in(conn, section, "G2", "1", tenant) for section in CLASSES]
         conn.commit()
     yield CLASSES
     with db.connect() as conn:
-        conn.execute("update child set active = false where section = any(%s)", (list(CLASSES),))
+        conn.execute("update child set active = false where id = any(%s)", (made,))
+        conn.execute("update enrolment set to_date = from_date where child_id = any(%s)", (made,))
         conn.commit()
 
 

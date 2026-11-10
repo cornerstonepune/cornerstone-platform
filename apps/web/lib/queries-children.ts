@@ -49,7 +49,7 @@ export async function childTable(actor: string, topic: string | null = null, sco
       from child_skill_state s
       join child_state cs on cs.tenant_id = s.tenant_id and cs.code = s.state
       join skill ss on ss.tenant_id = s.tenant_id and ss.rung_code = s.rung_code
-      join child sc on sc.id = s.child_id
+      join child_now sc on sc.id = s.child_id
       join topic t on t.tenant_id = ss.tenant_id and t.code = ss.topic_code
         and ${skillTaughtIn(sql`ss.tenant_id`, sql`ss.code`, sql`sc.section`)} ${topic ? sql`and t.code = ${topic}` : sql``}
       group by s.child_id, s.rung_code, ss.name
@@ -79,7 +79,7 @@ export async function childTable(actor: string, topic: string | null = null, sco
                       order by k2.created_at desc limit 1)
                and k.superseded_by is null) as last_score,
            ${reportState(sql`c.id`)} as report
-    from child c, lateral pii.read_child(c.id, ${actor}) p
+    from child_now c, lateral pii.read_child(c.id, ${actor}) p
     where c.active and ${inScope(scope, sql`c.section`)}
     order by grade_ord(c.tenant_id, c.band), c.section, roll_order(c.roll_no), c.roll_no`;
 }
@@ -106,7 +106,7 @@ export type Unanswered = { code: string; name: string; levels: string[]; topic_c
 /** A class's children in roll order, each name read through pii.read_child, which logs who asked. */
 export async function classRoll(section: string, actor: string): Promise<{ id: string; roll_no: string; first_name: string }[]> {
   return sql<{ id: string; roll_no: string; first_name: string }[]>`
-    select c.id, c.roll_no, p.first_name from child c, lateral pii.read_child(c.id, ${actor}) p
+    select c.id, c.roll_no, p.first_name from child_now c, lateral pii.read_child(c.id, ${actor}) p
     where c.active and c.section = ${section}
     order by roll_order(c.roll_no), c.roll_no`;
 }
@@ -133,7 +133,7 @@ export async function classGrid(
     sql<Step[]>`
       select distinct s.skill_code, ss.name as skill_name, ss.rung_code, ss.name as descriptor, t.code as topic_code, t.name as topic_name,
              ss.code as skill_set, ${levelsUsedBy(sql`class_band(ss.tenant_id, ${section})`)} as levels, t.ord, ss.ladder_order
-      from child_skill_state s join child c on c.id = s.child_id
+      from child_skill_state s join child_now c on c.id = s.child_id
       join skill ss on ss.tenant_id = s.tenant_id and ss.rung_code = s.rung_code and s.skill_code = any(ss.registry_codes)
       join topic t on t.tenant_id = ss.tenant_id and t.code = ss.topic_code and ${skillTaughtIn(sql`ss.tenant_id`, sql`ss.code`, section)}
       where c.section = ${section} and c.active and s.n_events > 0
@@ -141,17 +141,17 @@ export async function classGrid(
     classRoll(section, actor),
     sql<{ child_id: string; skill_code: string; rung_code: string; state: string; n_events: number; n_correct: number }[]>`
       select s.child_id, s.skill_code, s.rung_code, s.state, s.n_events, s.n_correct
-      from child_skill_state s join child c on c.id = s.child_id where c.section = ${section} and c.active`,
+      from child_skill_state s join child_now c on c.id = s.child_id where c.section = ${section} and c.active`,
     sql<Unanswered[]>`
       select ss.code, ss.name, ${levelsUsedBy(sql`class_band(ss.tenant_id, ${section})`)} as levels, t.code as topic_code from skill ss
       join topic t on t.tenant_id = ss.tenant_id and t.code = ss.topic_code and ${skillTaughtIn(sql`ss.tenant_id`, sql`ss.code`, section)}
-      where ss.grade in (select band from child where section = ${section} and active)
-        and not exists (select 1 from child_skill_state s join child c on c.id = s.child_id
+      where ss.grade in (select band from child_now where section = ${section} and active)
+        and not exists (select 1 from child_skill_state s join child_now c on c.id = s.child_id
                         where c.section = ${section} and c.active and s.rung_code = ss.rung_code and s.n_events > 0)
       order by t.ord, ss.ladder_order nulls last`,
     // the class's grade: the database's one rule, which the engine asks too (goals/ux2-one-count-one-thing.yaml)
     sql<{ band: string }[]>`
-      select class_band(tenant_id, section) as band from child where section = ${section} and active limit 1`,
+      select class_band(tenant_id, section) as band from child_now where section = ${section} and active limit 1`,
   ]);
   return {
     steps,
@@ -188,15 +188,15 @@ export type ChildSkill = {
 export async function childSkills(id: string): Promise<ChildSkill[]> {
   return sql<ChildSkill[]>`
     select ss.code, ss.name, t.name as topic, t.code as topic_code, ss.rung_code, s.skill_code, sk.name as skill_name, s.state,
-           ${levelsUsedBy(sql`(select band from child where id = ${id}::uuid)`)} as levels,
+           ${levelsUsedBy(sql`(select band from child_now where id = ${id}::uuid)`)} as levels,
            coalesce(s.n_events, 0)::int as n_events, coalesce(s.n_correct, 0)::int as n_correct,
            s.repeating_misconception, s.last_seen
     from skill ss
     join topic t on t.tenant_id = ss.tenant_id and t.code = ss.topic_code
-      and ${skillTaughtIn(sql`ss.tenant_id`, sql`ss.code`, sql`(select section from child where id = ${id}::uuid)`)}
+      and ${skillTaughtIn(sql`ss.tenant_id`, sql`ss.code`, sql`(select section from child_now where id = ${id}::uuid)`)}
     left join child_skill_state s on s.child_id = ${id}::uuid and s.rung_code = ss.rung_code and s.skill_code = any(ss.registry_codes)
     left join registry_skill sk on sk.tenant_id = ss.tenant_id and sk.code = s.skill_code
-    where ss.grade = (select band from child where id = ${id}::uuid) or s.n_events > 0
+    where ss.grade = (select band from child_now where id = ${id}::uuid) or s.n_events > 0
     order by t.ord, ss.ladder_order nulls last, ss.code, s.skill_code`;
 }
 
@@ -264,7 +264,7 @@ export function firstStep(
 export async function classLatest(section: string): Promise<string[]> {
   const rows = await sql<{ code: string }[]>`
     select ss.code from child_skill_state s
-    join child c on c.id = s.child_id and c.section = ${section}
+    join child_now c on c.id = s.child_id and c.section = ${section}
     join skill ss on ss.tenant_id = s.tenant_id and ss.rung_code = s.rung_code
     where s.n_events > 0
     group by ss.code order by max(s.last_seen) desc, ss.code`;

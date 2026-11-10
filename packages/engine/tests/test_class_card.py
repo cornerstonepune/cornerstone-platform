@@ -9,6 +9,7 @@ import pytest
 from engine.assess import focus
 from engine.core import db
 from engine.w4_close import card
+from tests import rows
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
 
@@ -25,13 +26,7 @@ def section(conn):
     """Five children in one Grade 2 section; the fifth has no checked paper."""
     tenant = conn.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()["id"]
     name = f"T{uuid.uuid4().hex[:5]}"
-    kids = [
-        conn.execute(
-            "insert into child (tenant_id, roll_no, section, band) values (%s,%s,%s,'G2') returning id",
-            (tenant, str(i), name),
-        ).fetchone()["id"]
-        for i in range(1, 6)
-    ]
+    kids = [rows.a_child_in(conn, name, "G2", str(i), tenant) for i in range(1, 6)]
 
     def state(child, skill, rung, st, n, right, mistake=None):
         conn.execute(
@@ -94,18 +89,15 @@ def test_the_card_names_each_childs_home_area_as_w2_would_make_it(conn, section,
     assert got[a]["home"] is None and got[a]["why"]
 
 
-def test_the_card_is_kept_as_the_weeks_rows_and_confirmed_once_by_name(conn, section):
+def test_the_card_is_built_from_the_graph_each_time_and_confirmed_once_by_name(conn, section):
+    """The card is never stored (CP-27 group 4: `class_card` only copied what the graph says): built twice it is the
+    same card; what an educator confirmed is kept as they saw it."""
     name, (a, b, c, d, e) = section
     built = card.build(conn, name)
-    assert card.store(conn, name, "2026-W40", built) == 2
-    assert card.store(conn, name, "2026-W40", built) == 2, "rebuilding replaces the week's rows"
-    rows = conn.execute(
-        "select rung_code, move_up, reteach, groups from class_card where section = %s and week = '2026-09-28'",
-        (name,),
-    ).fetchall()
-    r24 = next(r for r in rows if r["rung_code"] == "R24")
-    assert [str(x) for x in r24["move_up"]] == [a] and set(r24["reteach"]["M_SMALL_FROM_LARGE"]) == {b, c}
-    assert len(rows) == 2 and r24["groups"]["emerging"] == [d]
+    assert card.build(conn, name) == built
+    r24 = next(s for s in built["skills"] if s["rung"] == "R24")["groups"]
+    assert r24["move_up"] == [a] and set(r24["reteach"]["M_SMALL_FROM_LARGE"]["children"]) == {b, c}
+    assert len(built["skills"]) == 2 and r24["emerging"] == [d]
 
     with pytest.raises(ValueError, match="names the educator"):
         card.confirm(conn, name, "2026-W40", "", built)

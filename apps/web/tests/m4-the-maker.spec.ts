@@ -10,7 +10,7 @@
 import { expect, test, type Page } from "@playwright/test";
 import postgres from "postgres";
 import { TEST_STAFF } from "./global-setup";
-import { aLine } from "./rows";
+import { aChildIn, aLine } from "./rows";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -35,13 +35,12 @@ async function testClass(): Promise<Record<string, string>> {
   const [{ tenant_id }] = await sql<{ tenant_id: string }[]>`select id as tenant_id from tenant limit 1`;
   const ids: Record<string, string> = {};
   for (const c of CHILDREN) {
-    const [had] = await sql<{ id: string }[]>`select id from child where section = ${SECTION} and roll_no = ${c.roll}`;
+    const [had] = await sql<{ id: string }[]>`select id from child_now where section = ${SECTION} and roll_no = ${c.roll}`;
     if (had) {
       ids[c.name] = had.id;
       continue;
     }
-    const [{ id }] = await sql<{ id: string }[]>`
-      insert into child (tenant_id, roll_no, section, band) values (${tenant_id}, ${c.roll}, ${SECTION}, 'G2') returning id`;
+    const [{ id }] = [{ id: await aChildIn(sql, SECTION, "G2", c.roll) }];
     await sql`insert into pii.child (tenant_id, child_id, first_name) values (${tenant_id}, ${id}, ${c.name})`;
     for (const [skill, rung, right, mistakes] of c.answers) {
       await sql`
@@ -56,7 +55,7 @@ async function testClass(): Promise<Record<string, string>> {
 }
 
 async function clearUp() {
-  const children = sql`select id from child where section = ${SECTION}`;
+  const children = sql`select id from child_now where section = ${SECTION}`;
   await sql`delete from item_exposure where child_id in (${children})`;
   await sql`delete from sheet_instance where child_id in (${children})`;
   await sql`delete from sheet_template where child_id in (${children})`;

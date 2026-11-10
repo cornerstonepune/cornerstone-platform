@@ -20,7 +20,7 @@ let addName = "";
 
 test.beforeAll(async () => {
   const kids = await aClass(sql, SECTION, "G2", ["Asha"]);
-  const [{ tenant }] = await sql<{ tenant: string }[]>`select tenant_id as tenant from child where id = ${kids.Asha}`;
+  const [{ tenant }] = await sql<{ tenant: string }[]>`select tenant_id as tenant from child_now where id = ${kids.Asha}`;
   const sheet = async (topic: string) => {
     const [w] = await sql<{ id: string; skill: string }[]>`
       select t.id, t.skill_set_code as skill from sheet_template t join skill s on s.tenant_id = t.tenant_id and s.code = t.skill_set_code

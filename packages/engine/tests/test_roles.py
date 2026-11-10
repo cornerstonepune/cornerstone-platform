@@ -12,6 +12,7 @@ import psycopg
 import pytest
 
 from engine.core import db, roster
+from tests import rows
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
 
@@ -68,6 +69,9 @@ WEB_CALLS = {
     "skill_taught_in",  # whether a class has been taught a skill: the one rule (goals/t1-topics-are-operations.yaml)
     "move_child",  # a coordinator's change of a child's grade or class, and its history row (goals/mov_move_a_child.yaml)
     "say_taught",  # a person's word that a class has (or has not) been taught a topic or one skill of it
+    "staff_list",  # the staff list as sign-in reads it, before anyone is known to be asking (CP-27 group 4)
+    "staff_set_password",  # a person's new password and when it was set: their open sessions end (CP-27 group 4)
+    "staff_add",  # a coordinator puts a person on the staff list, with no password yet (CP-27 group 4)
     "checks_to_trust",
     "skill_levels",  # a skill's levels as one object, built from their rows (goals/b1-levels-are-rows.yaml)
     "graph_state_of",  # the graph's one rule for a state, which the `child_level_state` view calls as the website (goals/cal_levels_to_review.yaml)
@@ -111,7 +115,8 @@ def _ledgers(conn):
     return _names(
         conn,
         "select distinct t.relnamespace::regnamespace || '.' || t.relname as name from pg_trigger g"
-        " join pg_class t on t.oid = g.tgrelid where g.tgfoid = 'internal.forbid_change'::regproc order by 1",
+        " join pg_class t on t.oid = g.tgrelid where g.tgfoid = 'internal.forbid_change'::regproc"
+        " and g.tgtype & 1 = 0 order by 1",  # a statement's: the whole table (a row's guards some rows, CP-27)
     )
 
 
@@ -148,7 +153,9 @@ def test_no_service_can_change_remove_or_empty_a_ledger_row(conn):
     """An append-only ledger (a table `internal.forbid_change` guards) is read and added to, never changed, removed or
     emptied — by grant, not by its trigger alone. A ledger made later is held the moment its trigger is."""
     ledgers = _ledgers(conn)
-    assert {"public.evidence_event", "public.bank_decision", "public.key_correction"} <= set(ledgers), ledgers
+    assert {"public.evidence_event", "public.curriculum_proposal", "public.change_log"} <= set(ledgers), (
+        ledgers
+    )
     for role in ROLES:
         held = [
             f"{t} {w}" for t in ledgers for w in ("UPDATE", "DELETE", "TRUNCATE") if _can(conn, role, t, w)
@@ -205,11 +212,7 @@ def test_finding_a_child_by_name_is_logged_like_any_read(conn):
     `pii.find_child`, which writes the lookup to `access_log` as a read."""
     tenant = db.one(conn, "select id from tenant where slug = %s", (db.tenant_slug(),))["id"]
     section, actor = f"ROLES-{uuid.uuid4().hex[:6]}", f"test-{uuid.uuid4().hex[:6]}"
-    kid = db.one(
-        conn,
-        "insert into child (tenant_id, roll_no, section, band) values (%s, '1', %s, 'G2') returning id",
-        (tenant, section),
-    )["id"]
+    kid = rows.a_child_in(conn, section, "G2", "1", tenant)
     conn.execute(
         "insert into pii.child (tenant_id, child_id, first_name) values (%s, %s, 'Zoya')", (tenant, kid)
     )

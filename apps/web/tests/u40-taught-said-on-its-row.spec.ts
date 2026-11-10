@@ -6,30 +6,26 @@
  * in the school's rows; the test takes back what it says. The coordinator sees every class, so a row offers a choice of
  * them; an educator with one class is offered that class alone, in one button.
  */
-import { scryptSync } from "node:crypto";
 import { expect, test, type Browser, type Page } from "@playwright/test";
 import postgres from "postgres";
-import { aClass } from "./rows";
+import { aClass, aPerson, forgetPerson } from "./rows";
 
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 const CLASS = "U40-G2";
 const OTHER = "U40-G2B";
 const EDUCATOR = { email: "u40-educator@cornerstone.test", name: "U40 Educator", role: "educator", classes: [CLASS] };
 const PASSWORD = "u40-a-long-test-password";
-const SALT = "00112233445566778899aabbccddeeff";
-const others = sql`(select coalesce(jsonb_agg(s), '[]'::jsonb) from jsonb_array_elements(value) s where s ->> 'email' <> ${EDUCATOR.email})`;
 
 test.beforeAll(async () => {
   await aClass(sql, CLASS, "G2", ["Om", "Pia"]);
   await aClass(sql, OTHER, "G2", ["Raj", "Sia"]);
-  const password = `scrypt$${SALT}$${scryptSync(PASSWORD, SALT, 64).toString("hex")}`;
-  await sql`update config set value = ${others} || ${sql.json([{ ...EDUCATOR, password }])} where key = 'app.staff'`;
+  await aPerson(sql, { ...EDUCATOR, password: PASSWORD });
 });
 test.afterEach(async () => {
-  await sql`delete from class_skill where section in (${CLASS}, ${OTHER})`;
+  await sql`update school_class set taught = '{}' where label in (${CLASS}, ${OTHER})`;
 });
 test.afterAll(async () => {
-  await sql`update config set value = ${others} where key = 'app.staff'`;
+  await forgetPerson(sql, EDUCATOR.email);
   await sql.end();
 });
 
@@ -63,7 +59,7 @@ test("a skill not taught yet is said taught from its own row, for one class", as
   await row.getByRole("button", { name: "Say it is taught" }).click();
   await expect(page.getByRole("main")).toContainText(`${name} is taught in ${CLASS} now`);
   const said = await sql<{ section: string; skill: string; taught: boolean }[]>`
-    select section, skill_set_code as skill, taught from class_skill where section in (${CLASS}, ${OTHER})`;
+    select section, skill_set_code as skill, taught from (select sc.tenant_id, sc.label as section, w.key as skill_set_code, (w.value ->> 'taught')::boolean as taught, w.value ->> 'by' as taught_by from school_class sc cross join jsonb_each(sc.taught) w) class_skill where section in (${CLASS}, ${OTHER})`;
   expect(said, "that one skill, for that one class").toEqual([{ section: CLASS, skill: "MUL.THREE", taught: true }]);
 });
 
@@ -75,7 +71,7 @@ test("a topic not taught yet is said taught from its own row, every skill in it"
   await row.getByRole("button", { name: `Say it is taught in ${CLASS}` }).click();
   await expect(page.getByRole("main")).toContainText(`is taught in ${CLASS} now`);
   const said = await sql<{ skill: string }[]>`
-    select skill_set_code as skill from class_skill where section = ${CLASS} and taught order by 1`;
+    select skill_set_code as skill from (select sc.tenant_id, sc.label as section, w.key as skill_set_code, (w.value ->> 'taught')::boolean as taught, w.value ->> 'by' as taught_by from school_class sc cross join jsonb_each(sc.taught) w) class_skill where section = ${CLASS} and taught order by 1`;
   const every = await sql<{ code: string }[]>`select code from skill where topic_code = 'FACTORS' order by 1`;
   expect(said.map((r) => r.skill)).toEqual(every.map((r) => r.code));
   await page.context().close();

@@ -11,6 +11,8 @@ from fastapi.testclient import TestClient
 from engine.api import deps
 from engine.api.app import app
 from engine.core import db, weeks
+from tests import rows
+from tests.rows import a_child_in
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
 
@@ -40,12 +42,13 @@ def client(conn, monkeypatch):
 @pytest.fixture
 def children(conn):
     tenant = conn.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()["id"]
-    conn.execute("delete from child where section = %s", (SECTION,))
+    conn.execute(  # whoever an earlier run left in the class has left it (a child is never deleted)
+        "update enrolment set to_date = from_date where to_date is null"
+        " and class_id in (select id from school_class where label = %s)",
+        (SECTION,),
+    )
     for i in (1, 2):
-        row = conn.execute(
-            "insert into child (tenant_id, roll_no, section, band) values (%s,%s,%s,'G2') returning id",
-            (tenant, str(i), SECTION),
-        ).fetchone()
+        row = {"id": rows.a_child_in(conn, SECTION, "G2", str(i), tenant)}
         conn.execute(
             "insert into pii.child (tenant_id, child_id, first_name) values (%s,%s,%s)",
             (tenant, row["id"], f"Api {i}"),
@@ -216,9 +219,7 @@ def test_a_weeks_declaration_is_proposed_confirmed_and_read_back_over_http(clien
 
     tenant = conn.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()["id"]
     section = f"T{uuid.uuid4().hex[:5]}"
-    conn.execute(
-        "insert into child (tenant_id, roll_no, section, band) values (%s,'1',%s,'G2')", (tenant, section)
-    )
+    a_child_in(conn, section, "G2", "1", tenant)
     monkeypatch.setattr(
         week_note.jev,
         "decide_yes_no",

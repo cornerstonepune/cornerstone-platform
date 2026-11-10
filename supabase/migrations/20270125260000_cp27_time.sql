@@ -49,7 +49,6 @@ begin
     select 'prescription' as t, week as w from prescription where week is not null and pg_temp.cp27_week(week) is null
     union all select 'parent_note', week from parent_note where week is not null and pg_temp.cp27_week(week) is null
     union all select 'item_exposure', week from item_exposure where week is not null and pg_temp.cp27_week(week) is null
-    union all select 'class_card', week from class_card where week is not null and pg_temp.cp27_week(week) is null
   ) x;
   if bad is not null then
     raise exception 'CP-27: week labels that are no ISO week, with nowhere to keep them: %', left(bad, 500);
@@ -262,8 +261,7 @@ create temp table cp27_weeks_before as
   union all select 'sheet_instance', id, week from sheet_instance where week is not null
   union all select 'prescription', id, week from prescription where week is not null
   union all select 'parent_note', id, week from parent_note where week is not null
-  union all select 'item_exposure', id, week from item_exposure where week is not null
-  union all select 'class_card', id, week from class_card where week is not null;
+  union all select 'item_exposure', id, week from item_exposure where week is not null;
 
 -- a paper's label that is no week stays with the paper (a legacy paper's key already holds it as its own `week`)
 alter table sheet_template disable trigger touch_updated_at;
@@ -283,7 +281,6 @@ alter table sheet_instance enable trigger touch_updated_at;
 alter table prescription alter column week type date using pg_temp.cp27_week(week);
 alter table parent_note alter column week type date using pg_temp.cp27_week(week);
 alter table item_exposure alter column week type date using pg_temp.cp27_week(week);
-alter table class_card alter column week type date using pg_temp.cp27_week(week);
 
 -- a child moved mid-week: the week's papers from this Monday on (it compared the text label before)
 do $$
@@ -645,8 +642,7 @@ begin
                      when 'sheet_instance' then (select week from sheet_instance where id = b.id)
                      when 'prescription' then (select week from prescription where id = b.id)
                      when 'parent_note' then (select week from parent_note where id = b.id)
-                     when 'item_exposure' then (select week from item_exposure where id = b.id)
-                     when 'class_card' then (select week from class_card where id = b.id) end);
+                     when 'item_exposure' then (select week from item_exposure where id = b.id) end);
   n_tag := (select count(*) from cp27_weeks_before b where pg_temp.cp27_week(b.week) is null and b.week =
             case b.t when 'sheet_template' then (select key ->> 'week' from sheet_template where id = b.id and week is null)
                      when 'sheet_instance' then (select key ->> 'week' from sheet_instance where id = b.id and week is null) end);

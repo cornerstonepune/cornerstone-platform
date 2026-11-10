@@ -13,7 +13,7 @@ goal: >
 # Placeholder people only (ann@example.test, "Placeholder Ann"); the test database only; nothing touches live.
 says:
   - words: "Names stay in pii (CLAUDE.md rule 6)"
-    proved_by: "packages/engine/tests/test_people_signer.py::test_the_first_staff_import_is_signed_by_an_email_on_the_sign_in_list_and_stores_the_staff_id"
+    proved_by: "packages/engine/tests/test_people_signer.py::test_the_staff_import_is_signed_by_an_email_on_the_staff_list_and_stores_the_staff_id"
   - words: "Names stay in pii (CLAUDE.md rule 6)"
     proved_by: "packages/engine/tests/test_people_signer.py::test_enrolment_is_signed_by_the_staff_id_of_the_email"
   - words: "Names stay in pii (CLAUDE.md rule 6)"
@@ -21,7 +21,7 @@ says:
   - words: "Names stay in pii (CLAUDE.md rule 6)"
     proved_by: "packages/engine/tests/test_people_signer.py::test_the_staff_import_refuses_a_signer_who_is_not_on_the_list_and_writes_nothing"
   - words: "Names stay in pii (CLAUDE.md rule 6)"
-    proved_by: "packages/engine/tests/test_people_signer.py::test_only_the_staff_import_may_name_a_signer_before_the_staff_exist"
+    proved_by: "packages/engine/tests/test_people_signer.py::test_a_signer_on_the_staff_list_signs_an_enrolment_with_no_import_first"
   - words: "Names stay in pii (CLAUDE.md rule 6)"
     proved_by: "packages/engine/tests/test_people_signer.py::test_a_second_run_signed_by_the_same_email_adds_nothing"
   - words: "Names stay in pii (CLAUDE.md rule 6)"

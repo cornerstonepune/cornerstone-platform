@@ -29,7 +29,7 @@ const paper = (qr: string, child: string | null, printedDaysAgo: number) => sql`
 
 test.beforeAll(async () => {
   kids = await aClass(sql, SECTION, "G3", ["Asha", "Bina", "Chetan"]);
-  [{ tenant }] = await sql<{ tenant: string }[]>`select tenant_id as tenant from child where id = ${kids.Asha}`;
+  [{ tenant }] = await sql<{ tenant: string }[]>`select tenant_id as tenant from child_now where id = ${kids.Asha}`;
   [ws] = await sql<{ id: string; item_ids: string[]; title: string; copy: string }[]>`
     select t.id, t.item_ids, s.name as title, s.name || ' · ' || t.difficulty as copy
     from sheet_template t join skill s on s.code = t.skill_set_code
@@ -72,7 +72,7 @@ test("answers waiting for a person over 48 hours are overdue", async ({ page }) 
   // an answer read today is not overdue: the class's count is only what was read over 48 hours ago
   const [{ n }] = await sql<{ n: number }[]>`
     select count(*)::int as n from item_result r join capture k on k.id = r.capture_id and k.superseded_by is null
-    join sheet_instance si on si.id = k.sheet_instance_id left join child ch on ch.id = si.child_id
+    join sheet_instance si on si.id = k.sheet_instance_id left join child_now ch on ch.id = si.child_id
     where r.status in ('unreadable', 'needs_teacher') and coalesce(si.section, ch.section) = ${SECTION}
       and k.created_at < now() - interval '48 hours'`;
   await expect(line).toContainText(`${n} ${n === 1 ? "answer" : "answers"} on`);

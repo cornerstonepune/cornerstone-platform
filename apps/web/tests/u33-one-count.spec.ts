@@ -22,7 +22,7 @@ const qr = () => `CS${randomBytes(3).toString("hex").toUpperCase()}`;
 const number = (s: string) => Number(s.replace(/[^\d]/g, "")) || 0;
 
 async function clearUp() {
-  await sql`delete from prescription where week = to_date(${WEEK}, 'IYYY-"W"IW') and child_id in (select id from child where section = ${CLASS})`;
+  await sql`delete from prescription where week = to_date(${WEEK}, 'IYYY-"W"IW') and child_id in (select id from child_now where section = ${CLASS})`;
   await sql`delete from sheet_instance where section = ${CLASS} and week = to_date(${WEEK}, 'IYYY-"W"IW')`;
 }
 
@@ -54,7 +54,7 @@ test.afterAll(async () => {
 const ours = (page: Page) => page.getByRole("table").locator("tbody tr").filter({ hasText: CLASS });
 
 test("a class paper carries its class's grade, a spare copy too", async ({ page }) => {
-  const [{ band }] = await sql<{ band: string }[]>`select class_band(tenant_id, ${CLASS}) as band from child where section = ${CLASS} limit 1`;
+  const [{ band }] = await sql<{ band: string }[]>`select class_band(tenant_id, ${CLASS}) as band from child_now where section = ${CLASS} limit 1`;
   expect(band, "the class's grade, the database's one rule").toBe("G2");
   await page.goto(`/papers?class=${CLASS}`);
   await expect(ours(page)).toHaveCount(1);
@@ -92,7 +92,7 @@ test("the question bank is one number wherever it is named", async ({ page }) =>
   // the questions the engine can draw: made by it, active, of a skill at one of that skill's levels
   const [{ bank, taught }] = await sql<{ bank: number; taught: number }[]>`
     select count(*)::int as bank,
-           count(*) filter (where exists (select 1 from child k where k.tenant_id = s.tenant_id and k.active
+           count(*) filter (where exists (select 1 from child_now k where k.tenant_id = s.tenant_id and k.active
                                           and skill_taught_in(s.tenant_id, s.code, k.section)))::int as taught
     from item i join skill s on s.tenant_id = i.tenant_id and s.code = i.skill_set_code
     where i.source = 'generated' and i.status = 'active' and s.difficulty ? i.difficulty`;

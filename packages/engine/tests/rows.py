@@ -7,6 +7,8 @@ import re
 import uuid
 
 from engine.core import db
+from engine.w1_bank import review
+from engine.w3_read import gold
 
 
 def drawn(make):
@@ -35,18 +37,68 @@ def a_registry_skill(conn, tenant, code="NUM.OPS.01"):
     return code
 
 
-def a_child(conn, section=None):
-    """A Grade 2 child in a section of its own, on the roster as every child is: `child` and its `pii` row."""
+def a_child(conn, section=None, enrolled=True):
+    """A Grade 2 child in a section of its own, on the roster as every child is: `child` and its `pii` row. With
+    `enrolled=False`, in no class yet: for a test that enrols the child in a class of its own."""
     t = tenant(conn)
     section = section or f"ROWS-{uuid.uuid4().hex[:6].upper()}"
-    child = conn.execute(
-        "insert into child (tenant_id, roll_no, section, band) values (%s, '1', %s, 'G2') returning id",
-        (t, section),
-    ).fetchone()["id"]
+    child = (
+        a_child_in(conn, section, "G2", "1", t)
+        if enrolled
+        else _only(
+            conn.execute(
+                "insert into child (tenant_id, band) values (%s, 'G2') returning id", (t,)
+            ).fetchone()
+        )
+    )
     conn.execute(
         "insert into pii.child (tenant_id, child_id, first_name) values (%s, %s, 'Rowstest')", (t, child)
     )
     return child
+
+
+def a_member_of_staff(conn, email=None, active=True):
+    """A member of staff of the school with a sign-in email (a placeholder, never a person's): (their id, the email).
+    What a person's decision names is the id the engine finds from the email the website sends (`signer.lookup`)."""
+    t = tenant(conn)
+    email = email or f"staff-{uuid.uuid4().hex[:8]}@school.invalid"
+    campus = conn.execute("select id from campus where tenant_id = %s limit 1", (t,)).fetchone()["id"]
+    sid = conn.execute(
+        "insert into staff (tenant_id, campus_id, active) values (%s, %s, %s) returning id",
+        (t, campus, active),
+    ).fetchone()["id"]
+    conn.execute(
+        "insert into pii.staff (tenant_id, staff_id, name, email) values (%s, %s, 'A placeholder', %s)",
+        (t, sid, email),
+    )
+    return sid, email
+
+
+def a_bank_proposal(conn, kind, subject, direction="easier", evidence=None):
+    """A proposal of the question bank as `learn` makes one (a question far off its level, `mislevelled`; a mistake
+    learned from children's answers, `new_mistake`): a row of the one proposal list, waiting for a person. Its id."""
+    return conn.execute(
+        "insert into curriculum_proposal (tenant_id, run_id, kind, subject_code, proposal, status, proposer, machine)"
+        " values (%s, gen_random_uuid(), %s, %s, jsonb_build_object('direction', %s::text, 'evidence', %s::jsonb),"
+        " 'needs_person', 'code', 'code:' || %s) returning id",
+        (tenant(conn), kind, subject, direction, json.dumps(evidence or {}), kind),
+    ).fetchone()["id"]
+
+
+def a_question_review(
+    conn, ref, skill="SUB.2D2D", level="Advance", reviewer="language_review", verdict="pass"
+):
+    """A reviewer model's verdict on a question (`ref` its key) or on a level's rule (`template:<skill>:<level>`),
+    stored as `review` stores one."""
+    review.record(conn, reviewer, skill, level, [{"ref": ref, "verdict": verdict}], {})
+
+
+def a_report_finding(conn, child, ref, skill="NUM.OPS.02", verdict="faulty", words="a test finding"):
+    """A finding transcribed from an educator's report for one child, about the question `ref`, stored as `gold.load`
+    stores one: not yet confirmed."""
+    gold.record(
+        conn, tenant(conn), child, {"verdict": verdict, "skill": skill, "item": ref, "words": words}, "test"
+    )
 
 
 WAITED = {
@@ -241,3 +293,192 @@ def an_approved_paper(conn, template, child, by, status="printed"):
         " select tenant_id, %s, id, %s, %s, %s from sheet_template where id = %s returning id",
         ("CS" + uuid.uuid4().hex.upper(), child, status, by, template),
     ).fetchone()["id"]
+
+
+# ---------------------------------------------------------------------------------------------------------------------
+# The people who sign in, as a test needs them (CP-27 group 4): the one place that knows where the sign-in list is kept.
+# Since group 4 it is the staff tables: `staff` (active, role, classes, subjects) and `pii.staff` (name, email, the
+# password hash and when it was set); the website signs a person in as their `staff.id`. A test never names either.
+# Without `tenant`, the tests' own school.
+
+PERSON = (
+    "select s.id, p.email, p.name, s.role_code as role, p.password_hash as password, p.password_set_at,"
+    " s.classes, s.subjects from staff s join pii.staff p on p.staff_id = s.id"
+)
+
+
+def _school(conn, tenant):
+    return tenant or _only(
+        conn.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()
+    )
+
+
+def _as_dict(row, cols=("id", "email", "name", "role", "password", "password_set_at", "classes", "subjects")):
+    """A person as plain values (as the old list's JSON held them): the id and the time as text."""
+    d = dict(row) if isinstance(row, dict) else dict(zip(cols, row, strict=True))
+    return {
+        **d,
+        "id": str(d["id"]),
+        "password_set_at": d["password_set_at"] and d["password_set_at"].isoformat(),
+    }
+
+
+def _only(row):
+    """The one column a row holds, whether the connection gives rows as dicts (the engine's) or tuples (some proofs')."""
+    return None if row is None else (row[0] if isinstance(row, tuple) else next(iter(row.values())))
+
+
+def signin_list(conn, tenant=None):
+    """Everyone the sign-in knows, in the order they were put on, each as kept: id (what the website signs them in as),
+    email, name, role, password (the hash, if they have one), password_set_at, classes, subjects."""
+    found = conn.execute(
+        f"{PERSON} where s.tenant_id = %s and s.active and s.role_code is not null order by s.created_at, s.id",
+        (_school(conn, tenant),),
+    ).fetchall()
+    return [_as_dict(r) for r in found]
+
+
+def signin_list_is(conn, people, tenant=None):
+    """The sign-in knows exactly `people` (dicts as `signin_list` gives them), and no one else: for a test that sets the
+    whole list it needs and puts back the one it found. The caller commits, if it must."""
+    t = _school(conn, tenant)
+    keep = {str(p["email"]).strip().lower() for p in people}
+    for gone in [p for p in signin_list(conn, t) if p["email"] not in keep]:
+        forget_person(conn, gone["email"], t)
+    for p in people:  # put on in the order given, as the list is read (`created_at`)
+        me = a_person(conn, **{k: v for k, v in p.items() if k != "id"}, tenant=t)
+        conn.execute("update staff set created_at = clock_timestamp() where id = %s", (me["ask_as"],))
+
+
+def a_person(conn, email, name="Placeholder Person", role="educator", *, tenant=None, **kept):
+    """A member of staff the sign-in knows, exactly as given: `email`, `name`, `role` and what else is `kept` of them
+    (`password`, the hash; `password_set_at`, `classes`, `subjects`, an `id` for someone new). Someone already there
+    with the email (on the list or taken off it) is that person, put back as given. → {"email", "ask_as"}: `ask_as` is
+    what the website sets in `app.staff_id` when they sign in (`asking_as`). The caller commits, if it must."""
+    t = _school(conn, tenant)
+    email = str(email).strip().lower()
+    had = _only(
+        conn.execute(
+            "select staff_id from pii.staff where tenant_id = %s and email = %s", (t, email)
+        ).fetchone()
+    )
+    values = (role, list(kept.get("classes") or []), list(kept.get("subjects") or []))
+    if had is None:
+        had = _only(
+            conn.execute(
+                "insert into staff (id, tenant_id, campus_id, role_code, classes, subjects)"
+                " values (coalesce(%s::uuid, gen_random_uuid()), %s,"
+                " (select id from campus where tenant_id = %s order by created_at limit 1), %s, %s, %s) returning id",
+                (kept.get("id"), t, t, *values),
+            ).fetchone()
+        )
+        conn.execute(
+            "insert into pii.staff (tenant_id, staff_id, name, email, password_hash, password_set_at)"
+            " values (%s, %s, %s, %s, %s, %s)",
+            (t, had, name, email, kept.get("password") or None, kept.get("password_set_at")),
+        )
+    else:
+        conn.execute(  # someone taken off and put back is put on the list again, last
+            "update staff set role_code = %s, classes = %s, subjects = %s,"
+            " created_at = case when active then created_at else clock_timestamp() end, active = true where id = %s",
+            (*values, had),
+        )
+        conn.execute(
+            "update pii.staff set name = %s, password_hash = %s, password_set_at = %s where staff_id = %s",
+            (name, kept.get("password") or None, kept.get("password_set_at"), had),
+        )
+    return {"email": email, "ask_as": str(had)}
+
+
+def forget_person(conn, email, tenant=None):
+    """`email` is no longer someone the sign-in knows (taken off as `engine staff remove` takes a person off: inactive,
+    no password); everyone else is as they were. The caller commits, if it must."""
+    conn.execute(
+        "update pii.staff set password_hash = null, password_set_at = null where tenant_id = %s and email = %s",
+        (_school(conn, tenant), str(email).strip().lower()),
+    )
+    conn.execute(
+        "update staff set active = false where id in (select staff_id from pii.staff where tenant_id = %s and email = %s)",
+        (_school(conn, tenant), str(email).strip().lower()),
+    )
+
+
+def teaches(conn, email, classes, tenant=None):
+    """`email` teaches `classes` (class labels) and nothing else of them changes, as the staff page saves a person."""
+    conn.execute(
+        "update staff set classes = %s where id in (select staff_id from pii.staff where tenant_id = %s and email = %s)",
+        (list(classes), _school(conn, tenant), str(email).strip().lower()),
+    )
+
+
+def asking_as(conn, person):
+    """The rest of this transaction asks as `person` (what `a_person` gave), as the website does for a signed-in
+    request."""
+    conn.execute("select set_config('app.staff_id', %s, true)", (person["ask_as"],))
+
+
+# ---------------------------------------------------------------------------------------------------------------------
+# A child in a class, as a test needs one (CP-27 group 4): the one place that knows where a child's class and roll number
+# are kept. Since group 4 they are the child's open `enrolment` in a `school_class` of this school year, the class found
+# by its label (`school_class.label`, what pages call the section); `child_now` reads them back.
+
+
+def this_year(conn, school=None):
+    """The school year of today (April to March, as `engine enrol k2` makes one), made when there is none. → its id.
+    Read first and made only when missing: a year is a row every test's classes share, and an upsert would hold it."""
+    t = school or tenant(conn)
+    day = "(select internal.school_day(%s, now()))"
+    found = conn.execute(
+        f"select id from academic_year where tenant_id = %s and {day} between starts_on and ends_on"
+        " order by starts_on desc limit 1",
+        (t, t),
+    ).fetchone()
+    if found:
+        return _only(found)
+    conn.execute(
+        f"with s as (select make_date(extract(year from {day} - interval '3 months')::int, 4, 1) as s)"
+        " insert into academic_year (tenant_id, label, starts_on, ends_on)"
+        " select %s, to_char(s, 'YYYY') || '-' || to_char(s + interval '1 year', 'YY'), s,"
+        " (s + interval '1 year' - interval '1 day')::date from s on conflict (tenant_id, label) do nothing",
+        (t, t),
+    )
+    return this_year(conn, t)
+
+
+def a_class(conn, label, band="G2", school=None):
+    """The class labelled `label` in this school year (made as `engine enrol k2` makes one, with the year if there is
+    none), of grade `band` when it is made. → its id."""
+    t = school or tenant(conn)
+    year = this_year(conn, t)
+    found = conn.execute(
+        "select id from school_class where tenant_id = %s and academic_year_id = %s and label = %s",
+        (t, year, label),
+    ).fetchone()
+    if found:
+        return _only(found)
+    return _only(
+        conn.execute(
+            "insert into school_class (tenant_id, campus_id, academic_year_id, grade_code, section, label)"
+            " values (%s, (select id from campus where tenant_id = %s order by created_at limit 1), %s, %s, %s, %s)"
+            " returning id",
+            (t, t, year, band, label, label),
+        ).fetchone()
+    )
+
+
+def a_child_in(conn, section, band="G2", roll="1", school=None):
+    """A child at roll number `roll` of the class labelled `section`, in grade `band`, of `school` (the tests' own school
+    when none is given): the child row and their open enrolment, from the year's start. → the child's id. A name, if
+    the test needs one, is its own `pii.child` row. A roll already held in the class is refused (UniqueViolation)."""
+    t = school or tenant(conn)
+    cls = a_class(conn, section, band, t)
+    child = _only(
+        conn.execute("insert into child (tenant_id, band) values (%s, %s) returning id", (t, band)).fetchone()
+    )
+    conn.execute(
+        "insert into enrolment (tenant_id, child_id, class_id, roll_no, from_date, recorded_by)"
+        " select %s, %s, %s, %s, y.starts_on, 'tests.rows' from school_class c join academic_year y"
+        " on y.id = c.academic_year_id where c.id = %s",
+        (t, child, cls, roll, cls),
+    )
+    return child

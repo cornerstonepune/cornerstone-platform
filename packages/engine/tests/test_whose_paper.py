@@ -9,8 +9,9 @@ import pymupdf
 import pytest
 import segno
 
-from engine.core import db
+from engine.core import db, history
 from engine.w3_read import whose_paper as W
+from tests import rows
 
 
 @pytest.fixture
@@ -40,10 +41,7 @@ def _pdf(path, pages):
 def _copy(conn, folder, k, code, pages, texts, section="TESTWHOSE"):
     """A child, their paper printed with `code`, and the copy `k` of the scan cut from `texts`."""
     tenant = conn.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()["id"]
-    child = conn.execute(
-        "insert into child (tenant_id, roll_no, section, band) values (%s,%s,%s,'G1') returning id",
-        (tenant, str(k), section),
-    ).fetchone()["id"]
+    child = rows.a_child_in(conn, section, "G1", str(k), tenant)
     template = conn.execute(
         "insert into sheet_template (tenant_id, band, week) values (%s,'G1','2026-09-28') returning id",
         (tenant,),
@@ -84,8 +82,24 @@ def test_the_same_picture_on_two_childrens_copies_is_a_notice_and_yes_waits_for_
     assert W.may_confirm(W.choose(conn, b, 1, "theirs", "Aseem"))
     assert not W.may_confirm(
         W.choose(conn, b, 1, "not_theirs", "Aseem")
-    )  # a changed mind is a new row, the latest stands
-    assert conn.execute("select count(*) n from page_choice where capture_id = %s", (b,)).fetchone()["n"] == 2
+    )  # a changed mind stands in its place, and the first choice is kept in the history log
+    kept = history.of(conn, "capture", str(b))
+    assert [(h["op"], h["origin"]) for h in kept] == [("choose_page", "Aseem")] * 2
+    assert [h["after"]["1"]["choice"] for h in kept] == ["theirs", "not_theirs"]
+    assert kept[0]["before"] is None and kept[1]["before"]["1"]["choice"] == "theirs"
+
+
+def test_a_choice_is_the_pages_own_and_another_page_of_the_copy_still_waits(conn, tmp_path):
+    folder = tmp_path / "scan-e"
+    _copy(conn, folder, 1, "CS00000A", 2, ["CS00000A", "page two of copy one"])
+    b = _copy(
+        conn, folder, 2, "CS00000B", 2, ["CS00000A", "page two of copy one"]
+    )  # both pages copy 1's photographs
+    assert not W.may_confirm(W.proof(conn, b, 1)) and not W.may_confirm(W.proof(conn, b, 2))
+    chosen = W.choose(conn, b, 2, "theirs", "Aseem")
+    assert W.may_confirm(chosen) and chosen["chosen_by"] == "Aseem"
+    assert not W.may_confirm(W.proof(conn, b, 1)), "page 1 has no choice yet"
+    assert W.proof(conn, b, 1)["choice"] is None
 
 
 def test_a_page_with_another_childs_code_is_a_notice(conn, tmp_path):

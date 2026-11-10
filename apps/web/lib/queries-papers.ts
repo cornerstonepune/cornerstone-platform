@@ -155,9 +155,9 @@ export const papersCte = () => sql`
            coalesce(tk.topics, '{}'::text[]) as topics, coalesce(tk.skill_names, '{}'::text[]) as skill_names
     from sheet_instance si
     join sheet_template t on t.id = si.sheet_template_id
-    left join child ch on ch.id = si.child_id
+    left join child_now ch on ch.id = si.child_id
     left join (select k.tenant_id, k.section, class_band(k.tenant_id, k.section) as band
-               from (select distinct tenant_id, section from child where active) k) cls
+               from (select distinct tenant_id, section from child_now where active) k) cls
       on cls.tenant_id = si.tenant_id and cls.section = coalesce(si.section, ch.section)
     left join skill ss on ss.tenant_id = t.tenant_id and ss.code = t.skill_set_code
     -- a paper drawn for one child (a home assessment, a paper an educator chose) names no skill set of its own: its
@@ -232,7 +232,7 @@ export async function paperList(
       limit ${LIMIT + 1}
     ),
     names as (
-      select c.id, n.first_name from child c, lateral pii.read_child(c.id, ${actor}) n
+      select c.id, n.first_name from child_now c, lateral pii.read_child(c.id, ${actor}) n
       where c.id in (select child_id from shown where child_id is not null)
     )
     select s.id, s.qr, s.kind, s.title, s.section, s.band, s.child_id, names.first_name as child, s.roll_no, s.level,
@@ -247,7 +247,7 @@ export async function paperFilters(me: Who): Promise<{ options: { classes: strin
   const [classes, weeks] = await Promise.all([
     sql<{ section: string }[]>`
       select distinct coalesce(si.section, c.section) as section from sheet_instance si
-      left join child c on c.id = si.child_id
+      left join child_now c on c.id = si.child_id
       where si.print_status <> 'void' and coalesce(si.section, c.section) is not null
         and ${seesSheet(me, sql`si.id`)} order by 1`,
     sql<{ week: string }[]>`

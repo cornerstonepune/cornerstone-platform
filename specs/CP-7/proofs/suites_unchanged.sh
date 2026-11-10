@@ -32,7 +32,7 @@ removed=$( { grep -hoE "alter table public\.[a-z_]+ set schema retired|^drop tab
 for f in "${files[@]}"; do [ -f "$f" ] || { echo "named suite missing: $f"; exit 1; }; done
 # each passage (diff hunk) that removes or rewrites lines must name one of them in what it removes
 # a passage that wrote a week label into a `week` column CP-27 made a date (group 5: "no table has a text week column")
-dated="insert into (prescription|sheet_instance|sheet_template|parent_note|item_exposure|class_card) \\([^)]*week"
+dated="insert into (prescription|sheet_instance|sheet_template|parent_note|item_exposure) \\([^)]*week"
 changed=$(git diff -U0 -M "$base" -- "${files[@]}" | awk -v gone="(^|[^a-z_])(${removed:-^$})([^a-z_]|$)" -v dated="$dated" '
   function done_hunk() { if (minus > 0 && !named) print file " (" minus " lines removed or rewritten at line " at ")" }
   /^\+\+\+ / { done_hunk(); minus = 0; file = substr($2, 3); next }

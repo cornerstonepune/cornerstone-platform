@@ -133,7 +133,7 @@
       "who": "code; a model for one sentence; the teacher confirms",
       "built": "partly",
       "takes": ["child_skill_state"],
-      "gives": ["class_card", "parent_note"],
+      "gives": ["approval", "parent_note"],
       "files": ["engine/w4_close/card.py", "engine/w4_close/cli_card.py"],
       "commands": ["engine card build", "engine card confirm"],
       "screens": ["/home"],
