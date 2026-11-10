@@ -1,5 +1,5 @@
 import Link from "@/components/link";
-import { PageShell } from "@/components/page-shell";
+import { Screen } from "@/components/app-frame";
 import { requireStaff } from "@/lib/auth";
 import { EngineDown } from "@/lib/engine";
 import { schoolZone } from "@/lib/school-clock";
@@ -176,7 +176,7 @@ export default async function RulesPage({ searchParams }: Props) {
     down = e.message;
   }
   return (
-    <PageShell
+    <Screen
       stage="Timetable"
       title="Timetable rules"
       purpose="Period times, blocked days, fixed slots and subject limits, kept as rows with who changed them."
@@ -220,6 +220,6 @@ export default async function RulesPage({ searchParams }: Props) {
           </>
         )}
       </div>
-    </PageShell>
+    </Screen>
   );
 }

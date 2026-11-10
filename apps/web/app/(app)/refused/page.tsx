@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Body, PageHeader } from "@/components/shell";
+import { Body, PageHeader } from "@/components/parts";
 import { requireStaff } from "@/lib/auth";
 import { decidersOf, KIND_WORDS, type Kind } from "@/lib/decides";
 import { ROLE_WORDS } from "@/lib/queries-people";

@@ -83,32 +83,30 @@ async function asEducator(browser: import("@playwright/test").Browser) {
   return { context, page: await context.newPage() };
 }
 
-const GROUP_NAMES = ["What needs doing", "Assessments", "Results", "Setup"];
+const DOORS = ["Today", "Timetable", "Children", "Setup"];
 
-/** The top navigation: the mark, the four groups on one bar, a menu button, and no sidebar. */
-async function theTopBar(page: Page) {
-  await expect(page.locator("header img[data-brand-mark]"), "the new logo mark").toBeVisible();
-  expect(await page.locator("aside").count(), "no left sidebar").toBe(0);
-  const groups = page.getByRole("navigation", { name: "Sections" });
-  expect((await groups.getByRole("link").allInnerTexts()).map((n) => n.replace(/\s*\d[\d,]*$/, "").trim())).toEqual(GROUP_NAMES);
+/** The frame (UI-13): the school's mark, the doors on one bar (Setup shown while `mayUse(me, "setup")`), and no sidebar. */
+async function theBar(page: Page, doors: string[]) {
+  await expect(page.locator("header picture[data-brand-mark] img"), "the school's logo").toBeVisible();
+  expect(await page.locator("aside:not([data-rail])").count(), "no left sidebar").toBe(0);
+  const groups = page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" });
+  expect((await groups.getByRole("link").allInnerTexts()).map((n) => n.replace(/\s*\d[\d,]*$/, "").trim())).toEqual(doors);
   const bar = await groups.boundingBox();
-  expect(bar && bar.y < 60, "the groups are in the bar at the top").toBe(true);
+  expect(bar && bar.y < 64, "the doors are in the bar at the top").toBe(true);
   const main = await page.getByRole("main").boundingBox();
   expect(main && main.x < 100, "the content starts at the left, no gutter for a menu").toBe(true);
-  await expect(page.getByRole("button", { name: "Menu" })).toBeVisible();
 }
 
 test("an educator with one class and one subject: top menu, only hers, no Class or Subject boxes, no approve-all", async ({ browser }) => {
   const { context, page } = await asEducator(browser);
   await open(page, "/today", /What needs doing/);
-  await theTopBar(page);
+  await theBar(page, DOORS);
   await expect(page.locator("#bar-subject, #bar-class, [data-viewing]"), "no universal Class or Subject selector").toHaveCount(0);
-  // the menu button opens every group with its pages, and sign out
-  await page.getByRole("button", { name: "Menu" }).click();
-  const panel = page.getByRole("dialog", { name: "Menu" });
-  for (const name of ["Papers to approve", "Check answers", "Class results", "Skills to approve", "Staff"]) await expect(panel.getByRole("link", { name }), name).toBeVisible();
-  await expect(panel.getByRole("button", { name: "Sign out" })).toBeVisible();
-  await page.keyboard.press("Escape");
+  // the bar carries sign out; the door's row of pages has the rest
+  await expect(page.locator("[data-bar]").first().getByRole("button", { name: "Sign out" })).toBeVisible();
+  await page.goto("/papers");
+  for (const name of ["Papers to approve", "Check answers", "Class results"]) await expect(page.getByRole("navigation", { name: "Pages in this section" }).getByRole("link", { name }), name).toBeVisible();
+  await page.goto("/today");
   // What needs doing: groups, each folded into a table of red/amber/green rows, one action on each row that opens that item
   await page.locator("details[data-group]").evaluateAll((els) => els.forEach((e) => ((e as HTMLDetailsElement).open = true)));
   const rows = page.locator(".data-table tbody tr[data-kind]");
@@ -134,11 +132,11 @@ test("an educator with one class and one subject: top menu, only hers, no Class 
 
 test("an admin: the same top menu, and no Viewing control", async ({ page }) => {
   await open(page, "/today", /What needs doing/);
-  await theTopBar(page);
+  await theBar(page, DOORS);
   await expect(page.locator("[data-viewing], #bar-subject, #bar-class")).toHaveCount(0);
-  // a group's other pages are tabs, not more items on the bar
+  // a door's other pages are a row under the bar, not more items on it
   await page.goto("/papers");
-  await expect(page.getByRole("navigation", { name: "Pages in this section" }).getByRole("link")).toHaveText(["Assessments", "Papers to approve", "Upload papers", "Check answers"]);
+  await expect(page.getByRole("navigation", { name: "Pages in this section" }).getByRole("link")).toHaveText(["Children", "Assessments", "Papers to approve", "Upload papers", "Check answers", "Class results", "Parent reports", "Across classes"]);
 });
 
 /** The page opened, with nothing broken on it. */

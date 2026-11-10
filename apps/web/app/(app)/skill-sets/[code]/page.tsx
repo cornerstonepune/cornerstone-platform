@@ -3,7 +3,7 @@ import Link from "@/components/link";
 import { sheetWords } from "../../worksheets/[qr]/library-sheet";
 import { Answers, kindWords, mistakeOf, Question } from "@/components/question";
 import { questionKinds } from "@/lib/question-types";
-import { Body, Notice, PageHeader, Panel, Pill } from "@/components/shell";
+import { Body, Notice, PageHeader, Panel, Pill } from "@/components/parts";
 import { deadline } from "@/lib/deadline";
 import { levels } from "@/lib/levels";
 import {

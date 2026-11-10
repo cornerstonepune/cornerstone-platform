@@ -1,7 +1,6 @@
 import Link from "@/components/link";
 import { ChildStateChip } from "@/components/child-state-chip";
-import { Crumbs } from "@/components/educator/crumbs";
-import { PageShell } from "@/components/page-shell";
+import { Screen } from "@/components/app-frame";
 import { Notice } from "../../notice";
 import { requireStaff } from "@/lib/auth";
 import { Icon } from "@/lib/icons";
@@ -15,16 +14,15 @@ export default async function TheChild({ params }: { params: Promise<{ class: st
   const { class: classId, roll } = await params;
   const got = await childPage(me.email, classId, roll);
   return (
-    <PageShell
+    <Screen
       stage="Class picture"
       title={`Sr. No. ${roll}${got.ok ? ` · ${got.value.class}` : ""}`}
       purpose="Where this child is on each skill, what is ready next, and how the child has moved over the months."
       action={<Link href={`/k2/${classId}`} className="btn secondary inline-flex items-center gap-1.5"><Icon name="class" />Class picture</Link>}
       next={{ href: `/k2/${classId}`, label: "Back to the class picture" }}
     >
-      <Crumbs trail={[{ label: "Children", href: "/k2" }, { label: got.ok ? got.value.class : "Class", href: `/k2/${classId}` }, { label: `Sr. No. ${roll}` }]} />
       {got.ok ? <Child p={got.value} /> : <Notice flush>{got.message}</Notice>}
-    </PageShell>
+    </Screen>
   );
 }
 

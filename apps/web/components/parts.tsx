@@ -1,86 +1,15 @@
 import type { ReactNode } from "react";
-import Link from "next/link";
-import { GroupNav, GroupTabs, MenuButton } from "./nav";
-import { ReportLink, Search } from "./top-bar";
-import { Logo } from "./logo";
-import { signOut } from "@/lib/auth-actions";
 import type { Session } from "@/lib/auth";
-import { mayUse } from "@/lib/access";
-import { GROUPS } from "@/lib/menu";
+import { Trail } from "./trail";
 
-// The shell of every page (goals/nav_teacher_scope_and_todo.yaml). Nimish, 24 Oct 2026: "the menu is being shown on just the
-// left side. I think we can use the whole space of the screen. The menu can be on the top, or it can be a small button
-// with three lines that opens the menu." One slim bar: the mark, the four groups (lib/menu.ts), then the search
-// and the menu button. A group's other pages are tabs under the
-// bar. The groups carry one count, on the first: what waits (lib/todo.ts `waitingCount`). Nothing here names a subject.
-export function Shell({ me, waiting, grades, children }: { me: Session; waiting: number; grades: string; children: ReactNode }) {
-  const setup = mayUse(me, "setup");
-  const groups = GROUPS.filter((g) => !g.setup || setup);
-  const counts = { doing: waiting || undefined };
-  return (
-    <div className="flex min-h-dvh flex-col">
-      <header className="relative z-30 bg-basalt text-lime print:hidden">
-        <div className="mx-auto flex min-h-14 w-full max-w-[1560px] items-center gap-3 px-4 py-1 md:gap-5 md:px-8">
-          <Link href="/today" className="flex shrink-0 items-center gap-[10px] text-lime no-underline hover:text-lime" aria-label="cornerstone, home">
-            <Logo size={28} />
-            <span className="font-heading text-[19px] max-sm:hidden">cornerstone</span>
-          </Link>
-          <GroupNav groups={groups} counts={counts} />
-          <div className="ml-auto flex min-w-0 items-center gap-2 md:gap-3">
-            <ReportLink />
-            <Search />
-            <MenuButton counts={counts}>
-              <Account me={me} grades={grades} />
-            </MenuButton>
-          </div>
-        </div>
-      </header>
-      <GroupTabs />
-      <main className="mx-auto flex w-full min-w-0 max-w-[1560px] flex-1 flex-col">{children}</main>
-    </div>
-  );
-}
+// The small parts a page is made of: the page's head and body, a panel, a pill, a tile, a notice. (They lived in the old shell's file.)
 
-function Account({ me, grades }: { me: Session; grades: string }) {
-  return (
-    <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-[13px] text-basalt/75">
-      {/* the engineering map is the coordinator's: an educator's menu holds the school's work alone */}
-      {mayUse(me, "the_map") ? (
-        <Link href="/workflows" className="inline-flex min-h-11 items-center">
-          How it works
-        </Link>
-      ) : null}
-      <Link href="/guide" className="inline-flex min-h-11 items-center">
-        Guide
-      </Link>
-      <span className="label">{grades}</span>
-      <div role="group" aria-label="Signed in" className="ml-auto flex items-center gap-4">
-        <span className="truncate" title={me.email}>
-          {me.name} · {classesSaid(me)}
-        </span>
-        {me.devBypass ? (
-          <span className="pill pill-terracotta">dev bypass</span>
-        ) : (
-          <Link href="/account/password" className="inline-flex min-h-11 items-center">
-            Change password
-          </Link>
-        )}
-        {me.devBypass ? null : (
-          <form action={signOut}>
-            <button className="min-h-11 cursor-pointer underline-offset-2 hover:underline" type="submit">
-              Sign out
-            </button>
-          </form>
-        )}
-      </div>
-    </div>
-  );
-}
-
+/** The head of a page: the trail (the door, then the thing), the eyebrow, the one h1, the purpose line. */
 export function PageHeader({ stage, title, sub }: { stage: string; title: string; sub: string }) {
   return (
-    <header className="border-b border-basalt/12 px-5 pt-3 pb-[18px] md:px-9 md:pt-6">
-      <div className="label mb-1 truncate !text-monsoon !tracking-[0.08em] md:mb-2 md:whitespace-normal" data-testid="stage">
+    <header className="border-b border-[var(--line)] px-5 pt-3 pb-[18px] md:px-9 md:pt-4">
+      <Trail thing={title} />
+      <div className="mb-1 truncate text-[length:var(--text-eyebrow)] font-medium tracking-[0.08em] text-[var(--ink-muted)] uppercase md:mb-2 md:whitespace-normal" data-testid="stage">
         {stage}
       </div>
       <h1 className="text-[22px] leading-tight md:text-[26px]">{title}</h1>

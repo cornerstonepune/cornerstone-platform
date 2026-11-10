@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "revision": "Wireframe revision 1 (Nimish, 9 Nov 2026, issue #546): one more generous spacing scale",
+  "supersedes": "the space-1 to space-7 of tokens.json (4, 8, 16, 24, 32, 48, 64), in the wireframe kit and in DESIGN.md. tokens.json is untouched on purpose: apps/web/design-system/tokens.json must stay byte for byte equal to it (specs/UI-14), and this revision changes no app code. When the site adopts revision 1, a builder copies these values into tokens.json `spacing` and runs `node apps/web/scripts/tokens.mjs`; this file is then deleted and kit.mjs reads tokens.json again.",
+  "tokens": [
+    { "name": "space-0", "value": "4px", "usage": "The hairline: between the segments of a bar, the cells of a heat grid, the days of a strip, a tab and its neighbour. Never between two things a person reads." },
+    { "name": "space-1", "value": "6px", "usage": "Between an icon and its word, inside a chip, between a title and its second line." },
+    { "name": "space-2", "value": "12px", "usage": "Between rows in a list, between chips and squares, inside a row's padding." },
+    { "name": "space-3", "value": "20px", "usage": "Inside a card; between cards in a row; the side gutter on a phone." },
+    { "name": "space-4", "value": "32px", "usage": "Between blocks of a page; the main column's padding; between groups of children." },
+    { "name": "space-5", "value": "48px", "usage": "Above a new section; between the main column and the rail." },
+    { "name": "space-6", "value": "64px", "usage": "Between the title block and the first block of work." },
+    { "name": "space-7", "value": "96px", "usage": "Page bottom." }
+  ]
+}

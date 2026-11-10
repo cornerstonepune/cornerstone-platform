@@ -1,6 +1,6 @@
 import Link from "@/components/link";
 import { FilterBar } from "@/components/filter-bar";
-import { PageShell } from "@/components/page-shell";
+import { Screen } from "@/components/app-frame";
 import { ScansTable } from "../capture/scans-table";
 import { requireStaff } from "@/lib/auth";
 import { choices } from "@/lib/choices";
@@ -176,7 +176,7 @@ export default async function PapersPage({ searchParams }: Props) {
   const trouble = scans.some((s) => s.status === "error" || s.noCode.length || s.lines.length);
 
   return (
-    <PageShell
+    <Screen
       stage="Assessments"
       title="Assessments"
       purpose="Make or read an assessment, then follow each one from created to results in. Its row has the next thing to do."
@@ -360,6 +360,6 @@ export default async function PapersPage({ searchParams }: Props) {
           printed codes belong to. Home assessments wait for your approval, one row at a time.
         </p>
       </details>
-    </PageShell>
+    </Screen>
   );
 }

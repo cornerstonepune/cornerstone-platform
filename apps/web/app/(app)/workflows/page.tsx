@@ -1,5 +1,5 @@
 import Link from "@/components/link";
-import { Body, PageHeader, Panel, Pill, Tile } from "@/components/shell";
+import { Body, PageHeader, Panel, Pill, Tile } from "@/components/parts";
 import { requireStaff } from "@/lib/auth";
 import { deadline } from "@/lib/deadline";
 import { HANDOVERS, SHARED, STEPS, WORKFLOWS, handsOnTo, measures, type Measure, type Step } from "@/lib/workflows";

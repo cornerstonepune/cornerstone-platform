@@ -2,8 +2,8 @@ import Link from "@/components/link";
 import { Count } from "@/components/count";
 import { EmptyState } from "@/components/empty-state";
 import { FilterBar } from "@/components/filter-bar";
-import { PageShell } from "@/components/page-shell";
-import { Bar, Notice, Panel } from "@/components/shell";
+import { Screen } from "@/components/app-frame";
+import { Bar, Notice, Panel } from "@/components/parts";
 import { StatusChip } from "@/components/status-chip";
 import { requireStaff } from "@/lib/auth";
 import { sees } from "@/lib/reach";
@@ -133,7 +133,7 @@ export default async function CheckAnswers({ searchParams }: Props) {
 
   const says = entry?.spot ? (a?.read ?? "") : (a?.guess ?? "");
   return (
-    <PageShell
+    <Screen
       stage="Check answers"
       title="Check answers"
       purpose="Every answer the engine was not sure of, one at a time, with the child's own writing. Say what the child wrote; the engine marks it."
@@ -313,6 +313,6 @@ export default async function CheckAnswers({ searchParams }: Props) {
           {rows.length === 0 ? <p className="note mt-2">Nothing matches these filters.</p> : null}
         </section>
       ) : null}
-    </PageShell>
+    </Screen>
   );
 }

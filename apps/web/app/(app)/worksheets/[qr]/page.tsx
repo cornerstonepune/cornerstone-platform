@@ -3,7 +3,7 @@ import Link from "@/components/link";
 import { notFound, redirect } from "next/navigation";
 import { Answers, kindWords, Mistakes, Question } from "@/components/question";
 import { questionKinds } from "@/lib/question-types";
-import { Body, PageHeader, Panel, Pill } from "@/components/shell";
+import { Body, PageHeader, Panel, Pill } from "@/components/parts";
 import { RULE_WORDS } from "@/lib/queries";
 import { KIND_WORDS } from "@/lib/queries-papers";
 import { sql } from "@/lib/db";

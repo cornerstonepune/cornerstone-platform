@@ -41,9 +41,9 @@ const issuesWith = (m: string) => issuesMade().filter((i) => i.body.includes(m))
 test("the report button is on the top bar of every signed-in page", async ({ page }) => {
   for (const at of ["/today", "/papers", "/growth"]) {
     await page.goto(at);
-    await expect(page.locator("header").getByRole("link", { name: "Report a problem or suggest something" })).toBeVisible();
+    await expect(page.locator("[data-frame]").getByRole("link", { name: "Report a problem or suggest something" })).toBeVisible();
   }
-  await page.locator("header").getByRole("link", { name: "Report a problem or suggest something" }).click();
+  await page.locator("[data-frame]").getByRole("link", { name: "Report a problem or suggest something" }).click();
   await expect(page).toHaveURL(/\/feedback\?from=%2Fgrowth/);
   await expect(page.getByRole("heading", { name: "Report a problem or suggest something" })).toBeVisible();
   await expect(page.getByText("Please do not type a child's name, a parent's name or a phone number here.")).toBeVisible();

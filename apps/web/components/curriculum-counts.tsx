@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "@/components/link";
-import { Pill } from "@/components/shell";
+import { Pill } from "@/components/parts";
 import type { CurriculumRow } from "@/lib/queries-curriculum";
 import { switchTopic } from "@/app/(app)/topic-actions";
 

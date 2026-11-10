@@ -1,5 +1,5 @@
 import Link from "@/components/link";
-import { PageShell } from "@/components/page-shell";
+import { Screen } from "@/components/app-frame";
 import { requireStaff } from "@/lib/auth";
 import { workScope } from "@/lib/reach";
 import { papersToApprove, readerReport } from "@/lib/queries-read";
@@ -54,7 +54,7 @@ export default async function MarkingPage({ searchParams }: Props) {
   const readerView: ReaderView = READER_VIEWS.some(([v]) => v === q.reader) ? (q.reader as ReaderView) : "day";
 
   return (
-    <PageShell
+    <Screen
       stage="Upload papers"
       title="Upload papers"
       purpose="Papers in, and where every answer on them stands: settled by the engine, checked by a person, or still waiting."
@@ -103,6 +103,6 @@ export default async function MarkingPage({ searchParams }: Props) {
             <ReaderPanel r={reader} view={readerView} page={Math.max(1, Math.floor(Number(q.rpage)) || 1)} keep={{ ...here, page: undefined }} />
           </details>
         </div>
-    </PageShell>
+    </Screen>
   );
 }

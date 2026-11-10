@@ -41,10 +41,10 @@ test("an educator signs in and the menu says the classes they teach", async ({ b
     await page.getByLabel("Password").fill(PASSWORD);
     await page.getByRole("button", { name: /sign in/i }).click();
     await expect(page).toHaveURL(/\/today$/);
-    // who is signed in, and whose classes, is in the menu the three-line button opens
-    const who = page.getByRole("dialog", { name: "Menu" }).getByRole("group", { name: "Signed in" });
-    await page.getByRole("button", { name: "Menu" }).click();
-    await expect(who).toContainText(EDUCATOR.name);
+    // who is signed in is in the bar, and whose classes are on the account page the name opens
+    await expect(page.locator("[data-bar]").first()).toContainText(EDUCATOR.name);
+    await page.locator("[data-bar]").first().locator('a[href="/account/password"]').click();
+    const who = page.getByRole("main");
     await expect(who).toContainText(`Teaches ${SECTION}`);
 
     // a person with no class yet is told so, never shown an empty site in silence
@@ -54,7 +54,6 @@ test("an educator signs in and the menu says the classes they teach", async ({ b
                                  from jsonb_array_elements(value) s)
       where key = 'app.staff'`;
     await page.reload();
-    await page.getByRole("button", { name: "Menu" }).click();
     await expect(who).toContainText("No class yet");
   } finally {
     await context.close();
@@ -63,6 +62,6 @@ test("an educator signs in and the menu says the classes they teach", async ({ b
 
 test("the coordinator's classes are every class", async ({ page }) => {
   await page.goto("/today");
-  await page.getByRole("button", { name: "Menu" }).click();
-  await expect(page.getByRole("dialog", { name: "Menu" }).getByRole("group", { name: "Signed in" })).toContainText("Every class");
+  await page.locator("[data-bar]").first().locator('a[href="/account/password"]').click();
+  await expect(page.getByTestId("who")).toContainText("Every class");
 });

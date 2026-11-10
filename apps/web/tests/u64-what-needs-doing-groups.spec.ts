@@ -7,7 +7,7 @@ import { expect, test } from "@playwright/test";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { buildTasks, KINDS, sectionsOf, TODO_GROUPS, type Kind, type Sources } from "../lib/todo";
-import { GROUPS, groupOf, locate } from "../lib/menu";
+import { GROUPS, doorOf, locate } from "../lib/menu";
 
 const SRC: Sources = {
   skills: [{ code: "NUM.OPS.01", name: "Add within 20", subject: "NUM", topic: "ADDSUB", topicName: "Addition", gradeWords: "Grade 1", levels: 4 }],
@@ -61,13 +61,13 @@ test("every group's home and every row's link names a page that exists", () => {
 });
 
 test("a group's home is a page of the menu, and a row opens a page of the group that does that work", () => {
-  for (const g of TODO_GROUPS) expect(locate(g.home)?.group, g.home).toBeDefined();
-  for (const t of tasks) expect(locate(t.href.split(/[?#]/)[0])?.group, t.href).toBeDefined();
+  for (const g of TODO_GROUPS) expect(locate(g.home)?.door, g.home).toBeDefined();
+  for (const t of tasks) expect(locate(t.href.split(/[?#]/)[0])?.door, t.href).toBeDefined();
 });
 
 test("Teaching is not in the menu, and nothing links to its address", () => {
   expect(GROUPS.map((g) => g.label)).not.toContain("Teaching");
-  expect(groupOf("/taught")).toBeUndefined();
+  expect(doorOf("/taught")).toBeUndefined();
   const links: string[] = [];
   const walk = (dir: string) =>
     readdirSync(dir, { withFileTypes: true }).forEach((d) => {
@@ -83,8 +83,8 @@ test("Teaching is not in the menu, and nothing links to its address", () => {
 
 test("the top bar has no Viewing control and nothing keeps its choice", () => {
   const read = (f: string) => readFileSync(path.resolve(__dirname, "..", f), "utf8");
-  expect(read("components/top-bar.tsx")).not.toMatch(/Viewing|data-viewing|bar-class|bar-subject/);
-  expect(read("components/shell.tsx")).not.toMatch(/Viewing|isBroad/);
+  expect(read("components/frame/search-box.tsx")).not.toMatch(/Viewing|data-viewing|bar-class|bar-subject/);
+  expect(read("components/app-frame.tsx")).not.toMatch(/Viewing|isBroad/);
   expect(read("lib/auth-actions.ts")).not.toMatch(/export async function choose/);
   expect(read("lib/auth.ts")).not.toMatch(/cs_classes|cs_subject/);
 });

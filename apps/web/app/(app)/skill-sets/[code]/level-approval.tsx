@@ -1,4 +1,4 @@
-import { Pill } from "@/components/shell";
+import { Pill } from "@/components/parts";
 import type { Difficulty, SkillSet } from "@/lib/queries";
 import { approveLevel } from "./actions";
 import { dateWords } from "@/lib/week";
