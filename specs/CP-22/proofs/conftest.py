@@ -41,6 +41,7 @@ from psycopg import sql
 from psycopg.pq import TransactionStatus
 
 from engine.core import db
+from engine.w2_print import materials_list
 
 ROOT = Path(os.environ.get("ATHENA_ROOT", Path(__file__).resolve().parents[3]))
 MIGRATIONS = sorted((ROOT / "supabase" / "migrations").glob("*.sql"))
@@ -459,8 +460,7 @@ def materials(c, w, session_ids, *, from_on=None, to_on=None, state="draft", per
         line = _one(c, "insert into materials_line (tenant_id, list_id, material_code, unit, quantity, needed_on,"
                        " source) values (%s, %s, %s, 'piece', 1, %s, 'educator') returning id",
                     (w["tenant"], lst, code, on))["id"]
-        c.execute("insert into materials_line_source (line_id, session_id, activity_code, on_date, quantity)"
-                  " values (%s, %s, 'ACT-PROOF', %s, 1)", (line, sid, on))
+        c.execute(materials_list.ADD_SOURCE, (line, sid, "ACT-PROOF", on, 1))  # its lessons: the line's (CP-27 g6)
         out[sid] = line
     return out
 

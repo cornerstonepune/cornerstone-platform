@@ -14,7 +14,7 @@ from typing import Any
 from engine.core import db
 from engine.w2_print import educator_gate as gate
 from engine.w2_print import fortnight_cycle as fc
-from engine.w2_print import tt_clash
+from engine.w2_print import materials_list, tt_clash
 from engine.w2_print.tt_clash import Refused
 from engine.w2_print.tt_live_plan import Plan, _materials
 
@@ -134,9 +134,7 @@ def _swap(conn: db.Conn, a: Place, b: Place) -> None:
         "select line_id, session_id, activity_code, quantity from materials_line_source where session_id = any(%s)",
         (ids,),
     ).fetchall()
-    conn.execute(
-        "delete from materials_line_source where session_id = any(%s)", (ids,)
-    )  # it has no updated_at
+    materials_list.drop_sources(conn, ids)
     if len(going) == 1:
         s, to = going[0]
         conn.execute(
@@ -156,8 +154,7 @@ def _swap(conn: db.Conn, a: Place, b: Place) -> None:
     day_of = {s["id"]: to.date for s, to in going}
     for r in links:
         conn.execute(
-            "insert into materials_line_source (line_id, session_id, activity_code, on_date, quantity)"
-            " values (%s, %s, %s, %s, %s)",
+            materials_list.ADD_SOURCE,
             (r["line_id"], r["session_id"], r["activity_code"], day_of[r["session_id"]], r["quantity"]),
         )
     for r in (

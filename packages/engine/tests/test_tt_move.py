@@ -10,7 +10,7 @@ import pytest
 
 from engine.core import db
 from engine.w2_print import fortnight_cycle as fc
-from engine.w2_print import tt_clash, tt_move
+from engine.w2_print import materials_list, tt_clash, tt_move
 from tests import tt_hand_world as tw
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
@@ -194,11 +194,7 @@ def _line(c, w, sessions, *, state="draft", from_on=MON, to_on=tw.START + dt.tim
         (w["tenant"], lst, code, MON),
     )["id"]
     for sid in sessions:
-        c.execute(
-            "insert into materials_line_source (line_id, session_id, activity_code, on_date, quantity)"
-            " values (%s, %s, 'ACT-TEST', %s, 1)",
-            (line, sid, MON),
-        )
+        c.execute(materials_list.ADD_SOURCE, (line, sid, "ACT-TEST", MON, 1))
     return line
 
 

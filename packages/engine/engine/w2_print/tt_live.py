@@ -15,6 +15,7 @@ from typing import Any
 from engine.core import db, settings
 from engine.w2_print import educator_gate as gate
 from engine.w2_print import fortnight_cycle as fc
+from engine.w2_print import materials_list
 from engine.w2_print import tt_generate as gen
 from engine.w2_print import tt_live_plan as sessions_plan
 from engine.w2_print import tt_need as need
@@ -202,8 +203,7 @@ def _write(conn: db.Conn, i: need.Inputs, layer: list[tuple], plan: Plan, days: 
             ],
         )  # fmt: skip
         cur.executemany(
-            "insert into materials_line_source (line_id, session_id, activity_code, on_date, quantity)"
-            " values (%s, %s, %s, %s, %s)",
+            materials_list.ADD_SOURCE,
             [
                 (r["line_id"], r["session_id"], r["activity_code"],
                  new_date.get((r["line_id"], r["session_id"]), old_date[(r["line_id"], r["session_id"])]), r["quantity"])
