@@ -158,3 +158,21 @@ test("an element for many controls takes them all, by its data attribute or by '
   s.elements.pop();
   expect((await completeness(page, s, ctx(inv))).join("\n")).toContain("extra control — “What it said”");
 });
+
+test("a control with a declared drive is pressed, and what a person sees after is held to what the element says", async ({ browser }) => {
+  const inv = mini();
+  const button = inv.screens.find((x) => x.id === "password")!.elements.find((x) => x.t === "button")!;
+  // pressing it with nothing typed leaves the person on the same page, asking for the fields: a pass
+  button.drive = { expect: { url: "^/account/password", text: ["password"] } };
+  expect(await audit(browser, inv, "password"), "a drive that holds").toEqual([]);
+  // the same press, held to something that does not happen, fails and says which control and what was not shown
+  button.drive = { expect: { text: ["a sentence the page never says"], gone: ["password"] } };
+  const problems = (await audit(browser, inv, "password")).join("\n");
+  expect(problems).toContain("“Save the new password” did not show “a sentence the page never says” afterwards");
+  expect(problems).toContain("“Save the new password” still shows “password” afterwards");
+  // a drive that names a fixture or a field that is not there is a problem named, never a pass
+  button.drive = { fixture: "nothing-of-the-kind", expect: {} };
+  expect((await audit(browser, inv, "password")).join("\n")).toContain("names the fixture “nothing-of-the-kind”");
+  button.drive = { fill: { "No such field": "x" }, expect: {} };
+  expect((await audit(browser, inv, "password")).join("\n")).toContain("no field “No such field”");
+});
