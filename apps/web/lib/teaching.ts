@@ -5,11 +5,12 @@ import type { Session } from "./auth";
 import { sql } from "./db";
 import { PART_KEYS, type PagePart } from "./page-part";
 import { seesClass } from "./reach";
+import { schoolZone } from "./school-clock";
 
 export type Me = Pick<Session, "email" | "role" | "classes" | "subjects" | "id">;
-export type Look = "secure" | "practising" | "emerging";
-/** A state's look from its colour alone: green secure, amber practising, any other seen state emerging. */
-export const lookOfColour = (colour: string): Look => (colour === "green" ? "secure" : colour === "amber" ? "practising" : "emerging");
+/** How a seen state looks, by the colour of its `child_state` row alone (no state is named in code): green, amber, or any other. */
+export type Look = "green" | "amber" | "other";
+export const lookOfColour = (colour: string): Look => (colour === "green" ? "green" : colour === "amber" ? "amber" : "other");
 
 // built when asked, never at import: `next build` loads every route with no database
 const current = () => sql`not exists (select 1 from activity_observation s where s.supersedes = o.id)`;
@@ -24,13 +25,14 @@ export type ActivityFacts = {
 };
 
 export async function activityFacts(me: Me, code: string): Promise<ActivityFacts> {
+  const zone = await schoolZone();
   const objectives = await sql<{ code: string; title: string }[]>`
     select l.code, l.title from activity_objective a join learning_objective l on l.tenant_id = a.tenant_id and l.code = a.lo_code
     where a.activity_code = ${code} order by a.ord`;
   const own = await sql<{ id: string; section: string }[]>`select c.id, c.label as section from school_class c where ${seesClass(me, sql`c.label`)}`;
   const ids = own.map((c) => c.id);
   const rows = await sql<{ class_id: string; day: string; child_id: string; outcome: string; level: number | null; at: string }[]>`
-    select o.class_id, (o.observed_at at time zone 'Asia/Kolkata')::date::text as day, o.child_id, o.outcome, o.reached_level as level, o.observed_at::text as at
+    select o.class_id, (o.observed_at at time zone ${zone})::date::text as day, o.child_id, o.outcome, o.reached_level as level, o.observed_at::text as at
     from activity_observation o where o.activity_code = ${code} and o.class_id = any(${ids}::uuid[]) and ${current()}`;
   const latest = rows.reduce<{ class_id: string; day: string; at: string } | null>((m, r) => (!m || r.at > m.at ? r : m), null);
   const sitting = latest ? rows.filter((r) => r.class_id === latest.class_id && r.day === latest.day && r.level !== null) : [];
@@ -56,6 +58,7 @@ export type ObjectiveActivity = { code: string; name: string; strand: string; ba
 export type ObjectivePage = { code: string; title: string; band: string; subject: string; skills: ObjectiveSkill[]; activities: ObjectiveActivity[] };
 
 export async function objectiveOf(me: Me, code: string): Promise<ObjectivePage | null> {
+  const zone = await schoolZone();
   const [lo] = await sql<{ code: string; title: string; band: string; subject: string }[]>`select code, title, band, subject from learning_objective where code = ${code}`;
   if (!lo) return null;
   const skills = await sql<{ code: string; name: string }[]>`
@@ -68,7 +71,7 @@ export async function objectiveOf(me: Me, code: string): Promise<ObjectivePage |
   const own = await sql<{ id: string }[]>`select c.id from school_class c where ${seesClass(me, sql`c.label`)}`;
   const activities = await sql<ObjectiveActivity[]>`
     select a.code, a.name, a.strand, a.band,
-      (select (max(o.observed_at) at time zone 'Asia/Kolkata')::date::text from activity_observation o
+      (select (max(o.observed_at) at time zone ${zone})::date::text from activity_observation o
         where o.activity_code = a.code and o.class_id = any(${own.map((c) => c.id)}::uuid[]) and ${current()}) as last
     from activity_objective x join activity a on a.tenant_id = x.tenant_id and a.code = x.activity_code
     where x.lo_code = ${code} order by x.ord, a.name`;
@@ -77,7 +80,7 @@ export async function objectiveOf(me: Me, code: string): Promise<ObjectivePage |
 
 // ---- Skill ---------------------------------------------------------------------------------------------------------
 
-export type Kid = { id: string; roll: string; name: string; look: Look | "unseen"; words: string };
+export type Kid = { id: string; roll: string; name: string; look: Look | "unseen" };
 export type SkillPage = {
   code: string;
   name: string;
@@ -95,6 +98,7 @@ export type SkillPage = {
 };
 
 export async function skillOf(me: Me, code: string, classId: string | undefined): Promise<SkillPage | null> {
+  const zone = await schoolZone();
   const [rs] = await sql<{ code: string; name: string; domain: string | null }[]>`select code, name, domain from registry_skill where code = ${code}`;
   if (!rs) return null;
   const classes = await sql<{ id: string; section: string }[]>`select c.id, c.label as section from school_class c where ${seesClass(me, sql`c.label`)} order by c.label`;
@@ -107,17 +111,17 @@ export async function skillOf(me: Me, code: string, classId: string | undefined)
       where c.class_id = ${cls.id}::uuid and c.active`;
     // a class that has observed states (K2) is read on those; otherwise on the written ones. Each statement names its kind.
     const ids = children.map((c) => c.id);
-    type StateRow = { child_id: string; colour: string; words: string };
+    type StateRow = { child_id: string; colour: string };
     let states = await sql<StateRow[]>`
-      select s.child_id, cs.colour, cs.words from child_skill_state s join child_state cs on cs.tenant_id = s.tenant_id and cs.code = s.state
+      select s.child_id, cs.colour from child_skill_state s join child_state cs on cs.tenant_id = s.tenant_id and cs.code = s.state
       where s.kind = 'observed' and s.skill_code = ${code} and s.child_id = any(${ids}::uuid[])`;
     if (!states.length)
       states = await sql<StateRow[]>`
-        select s.child_id, cs.colour, cs.words from child_skill_state s join child_state cs on cs.tenant_id = s.tenant_id and cs.code = s.state
+        select s.child_id, cs.colour from child_skill_state s join child_state cs on cs.tenant_id = s.tenant_id and cs.code = s.state
         where s.kind = 'written' and s.skill_code = ${code} and s.child_id = any(${ids}::uuid[])`;
     for (const c of children) {
       const s = states.find((x) => x.child_id === c.id);
-      kids.push({ ...c, look: s ? lookOfColour(s.colour) : "unseen", words: s ? s.words : "Not seen yet" });
+      kids.push({ ...c, look: s ? lookOfColour(s.colour) : "unseen" });
     }
     kids.sort((a, b) => Number(a.roll) - Number(b.roll));
   }
@@ -130,7 +134,7 @@ export async function skillOf(me: Me, code: string, classId: string | undefined)
   const levels = await sql<{ difficulty: string; looks_like: string }[]>`
     select l.difficulty, l.looks_like from skill_level l join skill k on k.tenant_id = l.tenant_id and k.code = l.skill_code
     where ${code} = any(k.registry_codes) and coalesce(l.looks_like, '') <> '' order by l.difficulty`;
-  const [run] = await sql<{ at: string }[]>`select (finished_at at time zone 'Asia/Kolkata')::text as at from flow_run where flow = 'graph_nightly' and finished_at is not null order by finished_at desc limit 1`;
+  const [run] = await sql<{ at: string }[]>`select (finished_at at time zone ${zone})::text as at from flow_run where flow = 'graph_nightly' and finished_at is not null order by finished_at desc limit 1`;
   return { code: rs.code, name: rs.name, domain: rs.domain ?? "", classes, cls, kids, objectives, after, next, levels, rebuilt: run?.at ?? null };
 }
 

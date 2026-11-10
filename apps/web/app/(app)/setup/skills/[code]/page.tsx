@@ -7,7 +7,7 @@ import { FilterBar } from "@/components/filter-bar";
 import { Rail, Screen, type Edge } from "@/components/app-frame";
 import { Spark } from "@/components/spark";
 import { StackBar } from "@/components/stack-bar";
-import { STATES } from "@/components/status-chip";
+import { EMERGING, PRACTISING, SECURE, STATES, type State } from "@/components/status-chip";
 import type { IconName } from "@/lib/icons";
 import { requireStaff } from "@/lib/auth";
 import { openTo } from "@/lib/educator/data";
@@ -17,13 +17,15 @@ import { skillOf, type Kid } from "@/lib/teaching";
 // One skill (UI-3c): where a class stands on it, from confirmed notes and papers. A child not seen on it is not seen, nothing
 // more. The grid is the class picture's, one skill at a time; a prerequisite or a next skill is drawn only when a person
 // confirmed the link (skill_link_confirmed); the spark draws only fortnights that were recorded.
-const LOOK: Record<Kid["look"], { cell: CellLook; icon: IconName; label: string; state: "secure" | "practising" | "emerging" | "notSeenYet" }> = {
-  secure: { cell: "ok", icon: STATES.secure.icon, label: "Secure", state: "secure" },
-  practising: { cell: "wait", icon: STATES.practising.icon, label: "Practising", state: "practising" },
-  emerging: { cell: "quiet", icon: STATES.emerging.icon, label: "Emerging", state: "emerging" },
-  unseen: { cell: "unseen", icon: STATES.notSeenYet.icon, label: "Not seen yet", state: "notSeenYet" },
+// A seen state looks as its colour says; its words and icon are the status chip's own. The icons and the keys of the stack bar
+// are the status chip's own growth constants, so no state is named here.
+const LOOK: Record<Kid["look"], { cell: CellLook; icon: IconName; state: State }> = {
+  green: { cell: "ok", icon: STATES[SECURE].icon, state: SECURE },
+  amber: { cell: "wait", icon: STATES[PRACTISING].icon, state: PRACTISING },
+  other: { cell: "quiet", icon: STATES[EMERGING].icon, state: EMERGING },
+  unseen: { cell: "unseen", icon: STATES.notSeenYet.icon, state: "notSeenYet" },
 };
-const ORDER: Kid["look"][] = ["secure", "practising", "emerging", "unseen"];
+const ORDER: Kid["look"][] = ["green", "amber", "other", "unseen"];
 const initials = (n: string) => n.split(/\s+/).map((w) => w.charAt(0)).join("").slice(0, 2).toUpperCase();
 
 export default async function SkillScreen({ params, searchParams }: { params: Promise<{ code: string }>; searchParams: Promise<Record<string, string | undefined>> }) {
@@ -34,7 +36,7 @@ export default async function SkillScreen({ params, searchParams }: { params: Pr
   if (!s) notFound();
   const href = (c: string) => screenHref("skill", { code: c }) ?? `/setup/skills/${encodeURIComponent(c)}`;
   const counts = ORDER.map((k) => ({ look: k, n: s.kids.filter((x) => x.look === k).length }));
-  const cell = (k: Kid): GridCell => ({ key: k.id, no: k.roll.padStart(2, "0"), initials: initials(k.name), name: k.name, look: LOOK[k.look].cell, icon: LOOK[k.look].icon, words: LOOK[k.look].label, label: `${k.roll} ${k.name}, ${LOOK[k.look].label}` });
+  const cell = (k: Kid): GridCell => ({ key: k.id, no: k.roll.padStart(2, "0"), initials: initials(k.name), name: k.name, look: LOOK[k.look].cell, icon: LOOK[k.look].icon, words: STATES[LOOK[k.look].state].words, label: `${k.roll} ${k.name}, ${STATES[LOOK[k.look].state].words}` });
   const by = q.by === "class" && me.role === "coordinator" ? "class" : "state";
   const edges: Edge[] = [
     ...(s.cls ? [{ screen: "picture", params: { class: s.cls.id }, label: "The class picture", icon: "class" } as Edge] : []),
@@ -72,7 +74,7 @@ export default async function SkillScreen({ params, searchParams }: { params: Pr
               <h2 className="text-[length:var(--text-title-small)]">Secure, fortnight by fortnight</h2>
               <Spark values={[]} label="Secure" empty="No fortnights recorded yet" />
             </section>
-            {(by === "class" ? [{ key: s.cls.section, title: s.cls.section, kids: s.kids }] : counts.map((c) => ({ key: c.look, title: LOOK[c.look].label, kids: s.kids.filter((k) => k.look === c.look) }))).map((g) =>
+            {(by === "class" ? [{ key: s.cls.section, title: s.cls.section, kids: s.kids }] : counts.map((c) => ({ key: c.look, title: STATES[LOOK[c.look].state].words, kids: s.kids.filter((k) => k.look === c.look) }))).map((g) =>
               g.kids.length ? (
                 <section key={g.key} aria-label={`${g.title}, ${g.kids.length} children`} data-group={g.key}>
                   <h3 className="mb-[var(--space-1)]">
