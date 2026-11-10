@@ -102,11 +102,9 @@ def todo(conn: db.Conn, email: str) -> dict:
     return {"groups": groups}
 
 
-def coordinator(conn: db.Conn, email: str) -> dict:
-    """Only what needs a decision, red first: notes with a problem, then notes left unconfirmed, as rows; and as counts
-    the confirmations made on a later day than the activity, the children and the class-days with nothing observed
-    this week; and the sessions that happened this week with no plan line, or marked unplanned."""
-    cfg = _cfg(conn)
+def require_coordinator(conn: db.Conn, email: str, cfg: dict | None = None) -> tuple[str, str]:
+    """(her staff id, her campus) once she is shown to hold a coordinator role (`k2.reads`); refused otherwise."""
+    cfg = cfg or _cfg(conn)
     staff = voice_intake.staff_of(conn, email)
     today = settings.school_today(conn)
     me = db.one(
@@ -118,13 +116,18 @@ def coordinator(conn: db.Conn, email: str) -> dict:
     )
     if not me["ok"]:
         raise Refused("This page is for the coordinators.", 403)
-    rows = [
-        r
-        for r in _notes(conn, cfg, None, str(me["campus_id"]))
-        if r["state"] in ("fix_this", "left_unconfirmed")
-    ]
+    return str(staff), str(me["campus_id"])
+
+
+def coordinator(conn: db.Conn, email: str) -> dict:
+    """Only what needs a decision, red first: notes with a problem, then notes left unconfirmed, as rows; and as counts
+    the confirmations made on a later day than the activity, the children and the class-days with nothing observed
+    this week; and the sessions that happened this week with no plan line, or marked unplanned."""
+    cfg = _cfg(conn)
+    _, campus = require_coordinator(conn, email, cfg)
+    rows = [r for r in _notes(conn, cfg, None, campus) if r["state"] in ("fix_this", "left_unconfirmed")]
     rows.sort(key=lambda r: (r["state"] != "fix_this", -r["age_hours"]))  # red first, each oldest first
-    return {"rows": rows, "counts": _counts(conn, cfg, str(me["campus_id"]))}
+    return {"rows": rows, "counts": _counts(conn, cfg, campus)}
 
 
 def _counts(conn: db.Conn, cfg: dict, campus: str) -> dict:
