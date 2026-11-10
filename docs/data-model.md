@@ -124,5 +124,10 @@ ISO week (`core/weeks.py`: `2026-W40` is 2026-09-28); an old paper's own label (
   a materials note a person must read is a `curriculum_proposal` (`materials_note`), their answer a later row;
 - whose words each part of a K2 page is, an assessment's chosen name and a person's change to a materials line or an
   item are `change_log` rows; `activity_part_source` is a view of the newest mark;
+- a parent report's lines are `parent_note.lines` ([{id, words, evidence: [evidence ids]}], CP-19); a line's approvals are
+  `approval` rows of kind `report_line` (target `<report id>:<line id>`: an educator of the child's class, then a
+  coordinator). The one trigger on `parent_note` holds a line to this child's confirmed evidence in its period, and a
+  send to consent on record plus two approvals of every line; a lesson's photos are `educator_note.photo_keys` (keys into
+  the private store, cleared with the recordings);
 - worked out when asked, never stored: a question's attempts and share right (the view `item_stat`), a level's samples
   (`engine links`), a child's reading notebook (`profiles.current`), a materials list's reminders.
