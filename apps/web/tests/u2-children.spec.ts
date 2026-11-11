@@ -14,6 +14,7 @@ import { ENGINE_PORT } from "../playwright.config";
 import { isoWeek } from "../lib/week";
 import { TEST_STAFF } from "./global-setup";
 import { aChildIn, daysAgo } from "./rows";
+import { voiceSwitch } from "./k2-rows";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -104,6 +105,8 @@ async function clearUp() {
 let ids: Record<string, string> = {};
 test.beforeAll(async () => {
   ids = await testClass();
+  // the class picture is behind the educator switch (UI-3b), as u21-class-by-topic switches it on for itself
+  await voiceSwitch(sql, true);
   await clearUp();
   // the class's own paper for the week, proposed by the engine and not yet approved
   await engine("/week/prescribe", { section: SECTION, week: WEEK, skill_set: "SUB.2D2D" });

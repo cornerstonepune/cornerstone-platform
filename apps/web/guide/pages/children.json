@@ -1,33 +1,29 @@
 {
-  "menu": "/growth",
+  "menu": "/children",
   "forWhat": [
-    "One class, topic by topic: how many children are {colour:green}, {colour:amber} or {colour:red} in each. Open a topic for its skills, and a skill for its children.",
+    "Your children in one table, and each class as a picture. A class opens topic by topic: how many children are {colour:green}, {colour:amber} or {colour:red} in each. Open a topic for its skills, and a skill for its children.",
     "Everything here comes from checked answers only."
   ],
   "layout": [
     {
       "area": "Title and main button",
-      "shows": "[[Make an assessment]]."
+      "shows": "[[Class picture grid]] opens the class picture."
     },
     {
       "area": "Filter row",
-      "shows": "Class, opening on your own class. Subject too, when the class has more than one."
+      "shows": "Search by name or Sr. No., then class, needs attention and how the table is grouped."
     },
     {
-      "area": "Topics",
-      "shows": "A row per topic, grouped by subject. Each row counts the children by where they stand, in words, with a thin bar, and says when the topic was last assessed. A topic is folded until you open it."
+      "area": "The table",
+      "shows": "A row per child: how they are doing, when last seen, and notes waiting. A name opens the child."
     },
     {
-      "area": "An opened topic",
-      "shows": "Its papers by kind: the class assessment, home assessments and for how many children, practice. Then its skills, each with how many children are at each level."
+      "area": "The class picture",
+      "shows": "Its tabs: [[Picture]], [[By topic]] and [[Matrix]]. [[Show as a table]] goes back to the table, on that class."
     },
     {
-      "area": "An opened skill",
-      "shows": "Its children, those who need you first: level, state, answers and when last assessed. A child with answers still waiting says so, with a link."
-    },
-    {
-      "area": "Under the topics",
-      "shows": "[[Each child against each topic]] and [[Every child, one by one]] open the class in the older views."
+      "area": "By topic",
+      "shows": "A row per topic, grouped by subject. Each row counts the children by where they stand, in words. A topic is folded until you open it. An opened topic shows its skills, and an opened skill its children, those who need you first."
     },
     {
       "area": "Details",
@@ -39,7 +35,7 @@
       "id": "a-topic",
       "title": "See how the class is doing in a topic",
       "steps": [
-        "Open Class results. It opens on your class; choose another in the filter row.",
+        "Open Children and press [[Class picture grid]], then [[By topic]]. Choose another class from the table's class filter.",
         "Each topic row counts the children: {colour:green}, {colour:amber}, {colour:red}, {colour:grey}, and not assessed yet. A child is counted once, by the skill of the topic they are weakest on.",
         "Press the topic's name to open it. Press a skill's name to see its children.",
         "Press the name again to fold it."
@@ -49,7 +45,7 @@
       "id": "a-child",
       "title": "See how a child is doing",
       "steps": [
-        "Open a skill and press the child's name, or open a child from anywhere their name shows.",
+        "Press the child's name in the table, or in an opened skill, or anywhere their name shows.",
         "[[What their answers show]] is a row per topic: the level of the newest question they answered, their last paper's answers in it, their state, and their strongest or weakest skill in plain words.",
         "Press a topic to open it: its skills, each opening to the answers behind it, and its papers.",
         "On a paper, press [[See the child’s page]] to see what the child wrote, here on the page.",

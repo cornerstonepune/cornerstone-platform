@@ -10,6 +10,7 @@ import { expect, test, type Browser } from "@playwright/test";
 import { createHmac } from "node:crypto";
 import postgres from "postgres";
 import { aClass, aPerson } from "./rows";
+import { voiceSwitch } from "./k2-rows";
 
 test.use({ viewport: { width: 1440, height: 900 } });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -23,6 +24,8 @@ test.beforeAll(async () => {
   [{ id: tenant }] = await sql<{ id: string }[]>`select id from tenant limit 1`;
   Object.assign(kids, await aClass(sql, FROM, "G3", ["Ann", "Bea", "Cai", "Dev", "Eli", "Fay"]));
   Object.assign(kids, await aClass(sql, TO, "G4", ["Gus", "Hal"]));
+  // the class picture is behind the educator switch (UI-3b), as u21-class-by-topic switches it on for itself
+  await voiceSwitch(sql, true);
 });
 test.afterAll(async () => {
   await sql.end();
@@ -106,7 +109,7 @@ test("a roll number that is taken is said in words and nothing changes", async (
   expect(await moves(kids.Dev)).toEqual([]);
 });
 
-const TEACHER = { email: `mv-teacher-${RUN.toLowerCase()}@cornerstone.test`, name: "Mv Teacher", role: "educator", classes: [FROM], subjects: ["NUM"] };
+const TEACHER = { email: `mv-teacher-${RUN.toLowerCase()}@cornerstone.test`, name: "Mv Educator", role: "educator", classes: [FROM], subjects: ["NUM"] };
 async function asTeacher(browser: Browser) {
   await aPerson(sql, TEACHER);
   const body = `${Buffer.from(TEACHER.email).toString("base64url")}.${Date.now() + 3_600_000}`;

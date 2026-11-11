@@ -1,6 +1,7 @@
 import { expect, test } from "@playwright/test";
 import postgres from "postgres";
 import { aClass, aReadPaper, aWorksheet } from "./rows";
+import { voiceSwitch } from "./k2-rows";
 
 // Every screen must render its heading at a laptop and at a phone, with no console error and no
 // sideways scroll. A teacher on a phone in a corridor is a real case.
@@ -14,7 +15,8 @@ const ROUTES: [string, string][] = [
   ["/papers/make", "Make papers"],
   ["/papers/approve", "Assessments"],
   ["/capture", "Upload papers"],
-  ["/growth", "Class results"],
+  // Class results moved (UI-3i, #684): /growth opens the By topic tab of the class picture
+  ["/growth", "Class picture"],
   ["/home", "Home Assignments"],
 ];
 
@@ -29,6 +31,8 @@ const sql = postgres(process.env.DATABASE_URL!, { max: 1 });
 let kavya = "";
 test.beforeAll(async () => {
   ({ Kavya: kavya } = await aClass(sql, "SCREENS-TEST", "G2", ["Kavya"]));
+  // the class picture is behind the educator switch (UI-3b), as u21-class-by-topic switches it on for itself
+  await voiceSwitch(sql, true);
   const [{ n }] = await sql<{ n: number }[]>`select count(*)::int as n from evidence_event where child_id = ${kavya}`;
   for (let i = n; i < 4; i++) {
     await sql`
@@ -72,7 +76,7 @@ test("every section is reachable from the menu", async ({ page }) => {
   for (const label of ["Today", "Timetable", "Children", "Setup"]) await expect(groups.getByRole("link", { name: label })).toBeVisible();
   // and every page of a door from the row of pages under the bar
   for (const [door, labels] of [
-    ["Children", ["Papers to approve", "Upload papers", "Check answers", "Class results"]],
+    ["Children", ["Children", "Papers to approve", "Upload papers", "Check answers"]],
     ["Setup", ["Curriculum", "Question bank", "Staff", "School"]],
   ] as const) {
     await groups.getByRole("link", { name: door }).click();
@@ -102,9 +106,13 @@ test("the menu marks where you are", async ({ page }) => {
 // A child's page reads in the school's own words: no rung, skill-set or mistake code reaches a teacher, and every skill
 // with answers opens to the work behind it.
 test("a child's page is in words, with the answers behind each skill", async ({ page }) => {
-  await page.goto("/growth/class/SCREENS-TEST");
-  // a child's name opens them; the class opens on its topics, whose headings open a topic (goals/ui4b2-class-by-topic.yaml)
-  await page.getByRole("table").first().locator("tbody").getByRole("link").first().click();
+  // the class's results by topic are the By topic tab of its class picture (UI-3i, #684): a topic opens to its skills, a skill to
+  // its children, and a child's name opens their page (goals/ui4b2-class-by-topic.yaml)
+  await page.goto("/growth?class=SCREENS-TEST");
+  await expect(page).toHaveURL(/\/children\/[0-9a-f-]{36}\?view=topic$/);
+  await page.locator("tr[data-topic]").first().getByRole("link").first().click();
+  await page.locator("tr[data-skill]").first().getByRole("link").first().click();
+  await page.locator("tr[data-child]").first().getByRole("link").first().click();
   await expect(page).toHaveURL(/\/growth\/[0-9a-f-]{36}$/);
   const shown = page.getByRole("region", { name: "What their answers show" });
   await expect(shown).toBeVisible();

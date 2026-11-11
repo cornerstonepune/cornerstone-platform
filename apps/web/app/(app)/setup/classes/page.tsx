@@ -14,7 +14,7 @@ import type { Column } from "@/lib/ux-rules";
 import { MoveButton } from "./move-button";
 
 // A school's classes, and a class's children, are read whole (docs/ux-rules.md rule 3, as for the class grid): the coordinator finds the class or the child to move without paging.
-const CLASS_ROWS = 40;
+// Every class shows: a cap here once drew a "Later →" that led back to the same first page, so the classes past it could not be reached.
 // A class's children are shown whole too, in two groups (the wireframe's): those who moved in this year, then those here since it began.
 const WHOLE_CLASS = 200;
 const MOVED_IN = "Moved in this year";
@@ -84,7 +84,7 @@ export default async function ClassesPage({ searchParams }: Props) {
         filters={[{ name: "grade", label: "Grade", value: q.grade, all: "Every grade", options: grades }]}
         search={{ name: "q", value: q.q, placeholder: "Find a class or an educator" }}
       />
-      <DataTable label="Classes" columns={columns} rows={shown} rowKey={(c) => c.id} limit={CLASS_ROWS} more={{ page: 1, href: () => "/setup/classes" }} />
+      <DataTable label="Classes" columns={columns} rows={shown} rowKey={(c) => c.id} limit={Math.max(1, shown.length)} more={{ page: 1, href: () => "/setup/classes" }} />
       {open ? (
         <section aria-label={`${open.label}: its children`} className="mt-6">
           <h2 className="mb-2 text-[16px]">
