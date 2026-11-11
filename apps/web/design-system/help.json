@@ -1265,7 +1265,19 @@
       "purpose": "Every activity and skill of every grade, with its levels and how much of each page is filled in. Open one to read it.",
       "does": [
         {
-          "label": "grade · subject · topic · status",
+          "label": "Grade",
+          "says": ""
+        },
+        {
+          "label": "Subject",
+          "says": ""
+        },
+        {
+          "label": "Topic",
+          "says": ""
+        },
+        {
+          "label": "Status",
           "says": ""
         },
         {
@@ -1281,7 +1293,7 @@
           "says": "Opens the skill's name."
         },
         {
-          "label": "Drafts to check",
+          "label": "Check the drafted parts",
           "says": "the first activity with a drafted part"
         },
         {
@@ -1319,11 +1331,19 @@
       "purpose": "Read each skill's levels and approve them one at a time. What a wrong answer counts against is shown beside it.",
       "does": [
         {
-          "label": "grade · subject",
+          "label": "Grade",
           "says": ""
         },
         {
-          "label": "Skills / Levels to review",
+          "label": "Subject",
+          "says": ""
+        },
+        {
+          "label": "Skills",
+          "says": "the first list; the address carries the tab"
+        },
+        {
+          "label": "Levels to review",
           "says": "the second list is the levels most children are secure at; the address carries the tab"
         },
         {
@@ -1361,7 +1381,15 @@
           "says": ""
         },
         {
-          "label": "grade · skill · difficulty",
+          "label": "Grade",
+          "says": ""
+        },
+        {
+          "label": "Skill",
+          "says": ""
+        },
+        {
+          "label": "Difficulty",
           "says": ""
         },
         {
@@ -1370,7 +1398,7 @@
         },
         {
           "label": "each question row",
-          "says": "Opens the question as it prints."
+          "says": "Opens {the question as it prints}."
         },
         {
           "label": "page: Later →",
@@ -1388,7 +1416,7 @@
     },
     {
       "id": "question",
-      "title": "the question as it prints",
+      "title": "{the question as it prints}",
       "eyebrow": "Numeracy · Easy",
       "group": "Setup",
       "route": "/setup/question-bank/[key]",
@@ -1399,28 +1427,32 @@
           "says": ""
         },
         {
-          "label": "the wording",
-          "says": "required when correcting"
-        },
-        {
-          "label": "Correct the wording",
-          "says": "a new item version; change_log keeps the old key; the page shows the new wording and 'corrected by'"
-        },
-        {
-          "label": "reason for removal",
-          "says": "required"
-        },
-        {
-          "label": "Remove",
-          "says": "the item is retired with the reason, never deleted; the chip reads 'removed'"
-        },
-        {
           "label": "rail: the skill",
           "says": "Opens the skill's name."
         },
         {
           "label": "rail: the bank",
           "says": "Opens Question bank."
+        },
+        {
+          "label": "the wording",
+          "says": "required when correcting"
+        },
+        {
+          "label": "what was wrong",
+          "says": "required when correcting: the engine refuses a correction with no reason"
+        },
+        {
+          "label": "reason for removal",
+          "says": "required"
+        },
+        {
+          "label": "Correct the wording",
+          "says": "a new item version; the old one stays, readable, and points to the new; the page shows the new wording"
+        },
+        {
+          "label": "Remove",
+          "says": "the item is retired with the reason, never deleted; the chip reads 'removed'"
         }
       ]
     },
@@ -1467,6 +1499,10 @@
         {
           "label": "Find a person (search)",
           "says": "narrows the rows to a name"
+        },
+        {
+          "label": "Add a person",
+          "says": "opens a form: name, school email and role; Add and send a link puts the person on the list with no password and emails them a link to set their own"
         }
       ]
     },

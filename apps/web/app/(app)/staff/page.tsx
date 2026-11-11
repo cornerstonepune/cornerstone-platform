@@ -4,18 +4,12 @@ import { Screen } from "@/components/app-frame";
 import { Notice } from "@/components/parts";
 import { requireStaff } from "@/lib/auth";
 import { choices } from "@/lib/choices";
+import { NOT_ADDED } from "@/lib/staff-add";
 import { classLines, people, rolesHeld } from "@/lib/queries-staff";
 import { AddPerson } from "./add-person";
 import { StaffTable } from "./staff-table";
 
 type Props = { searchParams: Promise<Record<string, string | undefined>> };
-
-// Why nobody was added, in the words the coordinator reads.
-const NOT_ADDED: Record<string, string> = {
-  email: "a name and a school email are both needed",
-  role: "that role is not one the school names",
-  already: "that email is already on the staff list",
-};
 
 // Staff (goals/uxn2-staff-and-school.yaml). Nimish, 2026-10-22: "the staff table of who teaches which class and subject
 // is edited on a Staff page, not by commands." A table: person, role, classes; the coordinator opens a row's classes,
