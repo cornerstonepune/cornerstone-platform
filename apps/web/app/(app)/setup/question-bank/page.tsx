@@ -5,7 +5,7 @@ import { EmptyState } from "@/components/empty-state";
 import { FilterBar } from "@/components/filter-bar";
 import { KeyValue } from "@/components/key-value";
 import { Rail, Screen } from "@/components/app-frame";
-import { Question, kindWords } from "@/components/question";
+import { Answers, Question, kindWords } from "@/components/question";
 import { StatusChip } from "@/components/status-chip";
 import { requireStaff } from "@/lib/auth";
 import { deadline } from "@/lib/deadline";
@@ -37,11 +37,19 @@ export default async function QuestionBank({ searchParams }: { searchParams: Pro
   const skills = grid.filter((r) => inGrade(r) && Object.values(r.counts).some(Boolean));
   const set = skills.some((r) => r.code === q.skill) ? q.skill : undefined;
   const difficulty = lv.order.includes(q.difficulty ?? "") ? q.difficulty : undefined;
+  // what each dropdown says it holds: a skill's questions at the levels of the grade shown, a level's across the skills shown
+  const levelsOfGrade = (r: BankRow) => lv.order.filter((d) => !grade || gradeOf(r, d) === grade);
+  const inSkill = (r: BankRow) => !set || r.code === set;
+  const skillCount = (r: BankRow) => levelsOfGrade(r).reduce((a, d) => a + (r.counts[d] ?? 0), 0);
+  const levelCount = (d: string) => skills.filter(inSkill).reduce((a, r) => a + (levelsOfGrade(r).includes(d) ? (r.counts[d] ?? 0) : 0), 0);
+  const kinds = [...new Set(skills.filter(inSkill).flatMap((r) => r.fmts))].map((f): [string, string] => [f, kindWords(words, f)]).sort((a, b) => a[1].localeCompare(b[1]));
+  const fmt = kinds.some(([f]) => f === q.fmt) ? q.fmt : undefined;
   const find = q.q?.trim().slice(0, 80) || undefined;
+  const status = q.status === "retired" ? "retired" : undefined;
   const page = Math.max(1, Math.trunc(Number(q.page)) || 1);
-  const filter = { set, difficulty, find, scope, grades: grade ? [grade] : undefined };
+  const filter = { set, difficulty, fmt, status, find, scope, grades: grade ? [grade] : undefined };
   const [total, rows] = await deadline(Promise.all([itemCount(filter), items(filter, PER_PAGE, (page - 1) * PER_PAGE)]));
-  const keep = { grade: q.grade === "all" ? "all" : grade, skill: set, difficulty, q: find };
+  const keep = { grade: q.grade === "all" ? "all" : grade, skill: set, difficulty, fmt, status, q: find };
   const href = (p: number) => {
     const s = new URLSearchParams(Object.entries({ ...keep, page: p > 1 ? String(p) : undefined }).flatMap(([k, v]) => (v ? [[k, v]] : [])));
     return s.size ? `${HERE}?${s}` : HERE;
@@ -62,6 +70,7 @@ export default async function QuestionBank({ searchParams }: { searchParams: Pro
         </Link>
       ),
     },
+    { key: "answer", label: "Answer", value: (it) => it.responses.map((r) => r.answer).filter(Boolean).join(" "), cell: (it) => <Answers it={it} />, width: "9rem" },
     { key: "skill", label: "Skill", value: (it) => it.skill_set_name ?? "", width: "13rem" },
     { key: "level", label: "Level", value: (it) => it.difficulty ?? "", width: "6rem" },
     { key: "kind", label: "Kind", value: (it) => kindWords(words, it.fmt), width: "10rem" },
@@ -100,8 +109,10 @@ export default async function QuestionBank({ searchParams }: { searchParams: Pro
         action={HERE}
         filters={[
           { name: "grade", label: "Grade", value: grade, all: "Every grade", options: gradeChoices },
-          { name: "skill", label: "Skill", value: set, all: "All skills taught", options: skills.map((r): [string, string] => [r.code, r.name]) },
-          { name: "difficulty", label: "Difficulty", value: difficulty, all: "All", options: lv.order.map((d): [string, string] => [d, d]) },
+          { name: "skill", label: "Skill", value: set, all: "All skills taught", options: skills.map((r): [string, string] => [r.code, `${r.name} (${n(skillCount(r))})`]) },
+          { name: "difficulty", label: "Difficulty", value: difficulty, all: "All", options: lv.order.map((d): [string, string] => [d, `${d} (${n(levelCount(d))})`]) },
+          { name: "fmt", label: "Kind", value: fmt, all: "Any kind", options: kinds },
+          { name: "status", label: "Status", value: status, all: "Ready to print", options: [["retired", "Removed"]] },
         ]}
         search={{ name: "q", value: find, placeholder: "Words or code" }}
         keep={{ ...(q.grade === "all" ? { grade: "all" } : {}) }}

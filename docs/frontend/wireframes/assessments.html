@@ -75,7 +75,7 @@
             <label class="sel">Stage <select data-el="10" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><option>All</option><option>Created</option><option>Approved</option><option>Printed</option><option>Uploaded</option><option>Read</option><option>Checked</option><option>Results in</option></select></label>
           </div>
           <div class="toolbar">
-            <div class="seg" role="tablist" aria-label="View"><a role="tab" data-el="19" aria-selected="true" href="#board"><i class="ic s" data-icon="board"></i>Board</a><a role="tab" data-el="20" aria-selected="false" href="#table"><i class="ic s" data-icon="table"></i>Table</a></div>
+            <div class="seg" role="tablist" aria-label="View"><a role="tab" data-el="19" aria-selected="true" href="#board"><i class="ic s" data-icon="board"></i>Board</a><a role="tab" data-el="20" aria-selected="false" href="#table"><i class="ic s" data-icon="table"></i>Table</a><a role="tab" data-el="23" aria-selected="false" href="#topic"><i class="ic s" data-icon="table"></i>By topic</a><a role="tab" data-el="24" aria-selected="false" href="#reading"><i class="ic s" data-icon="table"></i>Reading</a></div>
           </div>
           <h2 class="title-small">Board: who has the paper</h2>
           <div class="kanban" data-block="KanbanBoard" style="--lanes: 4">
@@ -117,7 +117,7 @@
               <thead><tr><th>Assessment</th><th>Class</th><th class="n">Papers back</th><th class="st">Waits for</th><th class="st">Next</th></tr></thead>
               <tbody>
               <tr>
-                <td><a data-el="11" href="#assessment" data-source="topic.name skill.name sheet_template.difficulty sheet_instance.kind grade.name sheet_instance.created_at">Subtraction · Exchange and regroup · Hard · Assessment · Grade 4 · 9-Nov-2026</a></td>
+                <td><a data-el="11" href="#assessment" data-source="topic.name skill.name sheet_template.difficulty sheet_instance.kind grade.name sheet_instance.created_at">Subtraction · Exchange and regroup · Hard · Assessment · Grade 4 · 9-Nov-2026</a><form class="toolbar"><input data-el="25" type="text" aria-label="Name this assessment" value="Subtraction · Exchange and regroup · Hard · Assessment · Grade 4 · 9-Nov-2026"><button data-el="26" type="submit" class="btn press">Save the name</button></form></td>
                 <td data-source="grade.name school_class.section">Grade 4</td>
                 <td class="n" data-source="capture.sheet_instance_id capture.status">23 of 23</td>
                 <td class="st" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="chip" data-state="late"><i class="ic s" data-icon="late"></i>3 answers to judge</span></td>
@@ -186,6 +186,25 @@
                 <td class="st" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Results in</span></td>
                 <td class="st"><a class="btn press" data-el="12" href="#assessment">See results</a></td>
               </tr>
+              </tbody>
+            </table>
+          </div>
+          <h2 class="title-small">By topic: every topic a row, closed until opened</h2>
+          <div class="table-box" data-block="DataTable">
+            <table class="table">
+              <thead><tr><th>Topic</th><th>Subject</th><th class="n">Assessments</th><th class="n">Waiting on you</th></tr></thead>
+              <tbody>
+              <tr><td><a data-el="27" href="#assessments">▸ Subtraction</a></td><td>Maths</td><td class="n">3</td><td class="n">1</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <h2 class="title-small">Reading: how the reader is doing, and the files read lately</h2>
+          <div class="toolbar"><select data-el="10" aria-label="Show"><option>By day</option><option>By kind of question</option><option>By how sure it was</option></select><span class="caption">Papers read on 9-Nov-2026: 41 answers checked, the reader right on 93%.</span></div>
+          <div class="table-box" data-block="DataTable">
+            <table class="table">
+              <thead><tr><th>File</th><th>Read on</th><th class="n">Copies read</th><th class="st">Status</th><th class="st"></th></tr></thead>
+              <tbody>
+              <tr><td>Grade 4 subtraction scan.pdf</td><td>9-Nov-2026</td><td class="n">23</td><td class="st"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>done</span></td><td class="st"><button data-el="28" type="button" class="btn press">Read again</button></td></tr>
               </tbody>
             </table>
           </div>
@@ -280,7 +299,7 @@
             <label class="sel">Stage <select data-el="10" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><option>All</option><option>Created</option><option>Approved</option><option>Printed</option><option>Uploaded</option><option>Read</option><option>Checked</option><option>Results in</option></select></label>
           </div>
           <div class="toolbar">
-            <div class="seg" role="tablist" aria-label="View"><a role="tab" data-el="19" aria-selected="true" href="#board"><i class="ic s" data-icon="board"></i>Board</a><a role="tab" data-el="20" aria-selected="false" href="#table"><i class="ic s" data-icon="table"></i>Table</a></div>
+            <div class="seg" role="tablist" aria-label="View"><a role="tab" data-el="19" aria-selected="true" href="#board"><i class="ic s" data-icon="board"></i>Board</a><a role="tab" data-el="20" aria-selected="false" href="#table"><i class="ic s" data-icon="table"></i>Table</a><a role="tab" data-el="23" aria-selected="false" href="#topic"><i class="ic s" data-icon="table"></i>By topic</a><a role="tab" data-el="24" aria-selected="false" href="#reading"><i class="ic s" data-icon="table"></i>Reading</a></div>
           </div>
           <h2 class="title-small">Board: who has the paper</h2>
           <div class="kanban" data-block="KanbanBoard" style="--lanes: 4">
@@ -322,7 +341,7 @@
               <thead><tr><th>Assessment</th><th>Class</th><th class="n">Papers back</th><th class="st">Waits for</th><th class="st">Next</th></tr></thead>
               <tbody>
               <tr>
-                <td><a data-el="11" href="#assessment" data-source="topic.name skill.name sheet_template.difficulty sheet_instance.kind grade.name sheet_instance.created_at">Subtraction · Exchange and regroup · Hard · Assessment · Grade 4 · 9-Nov-2026</a></td>
+                <td><a data-el="11" href="#assessment" data-source="topic.name skill.name sheet_template.difficulty sheet_instance.kind grade.name sheet_instance.created_at">Subtraction · Exchange and regroup · Hard · Assessment · Grade 4 · 9-Nov-2026</a><form class="toolbar"><input data-el="25" type="text" aria-label="Name this assessment" value="Subtraction · Exchange and regroup · Hard · Assessment · Grade 4 · 9-Nov-2026"><button data-el="26" type="submit" class="btn press">Save the name</button></form></td>
                 <td data-source="grade.name school_class.section">Grade 4</td>
                 <td class="n" data-source="capture.sheet_instance_id capture.status">23 of 23</td>
                 <td class="st" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="chip" data-state="late"><i class="ic s" data-icon="late"></i>3 answers to judge</span></td>
@@ -391,6 +410,25 @@
                 <td class="st" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Results in</span></td>
                 <td class="st"><a class="btn press" data-el="12" href="#assessment">See results</a></td>
               </tr>
+              </tbody>
+            </table>
+          </div>
+          <h2 class="title-small">By topic: every topic a row, closed until opened</h2>
+          <div class="table-box" data-block="DataTable">
+            <table class="table">
+              <thead><tr><th>Topic</th><th>Subject</th><th class="n">Assessments</th><th class="n">Waiting on you</th></tr></thead>
+              <tbody>
+              <tr><td><a data-el="27" href="#assessments">▸ Subtraction</a></td><td>Maths</td><td class="n">3</td><td class="n">1</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <h2 class="title-small">Reading: how the reader is doing, and the files read lately</h2>
+          <div class="toolbar"><select data-el="10" aria-label="Show"><option>By day</option><option>By kind of question</option><option>By how sure it was</option></select><span class="caption">Papers read on 9-Nov-2026: 41 answers checked, the reader right on 93%.</span></div>
+          <div class="table-box" data-block="DataTable">
+            <table class="table">
+              <thead><tr><th>File</th><th>Read on</th><th class="n">Copies read</th><th class="st">Status</th><th class="st"></th></tr></thead>
+              <tbody>
+              <tr><td>Grade 4 subtraction scan.pdf</td><td>9-Nov-2026</td><td class="n">23</td><td class="st"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>done</span></td><td class="st"><button data-el="28" type="button" class="btn press">Read again</button></td></tr>
               </tbody>
             </table>
           </div>
