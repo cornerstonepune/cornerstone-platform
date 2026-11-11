@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # The checks that hold the code to its map and every promise to a command (ADR 0033): the engine's layout
 # against workflows.json, every goal line a command or one of Nimish's sentences with its test, no baseline loosened
-# since the last commit, the type checker's verdict, the website's list of the engine's routes, lint, and the wireframes
+# since the last commit, the type checker's verdict, the website's list of the engine's routes, lint, that every browser spec is run by a
+# Playwright project (tests/test_playwright_projects.py), and the wireframes
 # against the list of controls each screen has (docs/frontend/wireframes/check.mjs: a screen's elements changed without
 # its drawing redrawn was red on main for days, because nothing ran it).
 # Fast and with no database, so it runs every time rather than when someone remembers:
@@ -27,7 +28,7 @@ run() {
   cd "$engine" &&
     DATABASE_URL= TEST_DATABASE_URL= .venv/bin/python -m pytest tests/test_layout.py tests/test_promises.py tests/test_ratchet.py \
       tests/test_types.py tests/test_contract.py tests/test_migration_order.py tests/test_grades.py tests/test_school_words.py \
-      tests/test_check_db_url.py \
+      tests/test_check_db_url.py tests/test_playwright_projects.py \
       -q -p no:cacheprovider -o addopts= &&
     .venv/bin/ruff check engine tests -q &&
     .venv/bin/ruff format --check engine tests -q
