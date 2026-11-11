@@ -60,8 +60,8 @@ async function where(fd: FormData): Promise<{ code: string; level: string; kind:
 
 function done(code: string, level: string, said: string): never {
   revalidatePath("/");
-  revalidatePath(`/skill-sets/${code}`);
-  redirect(`/skill-sets/${code}?changed=${encodeURIComponent(said)}&at=${level}#level-${level}`);
+  revalidatePath(`/setup/skill-sets/${code}`);
+  redirect(`/setup/skill-sets/${code}?changed=${encodeURIComponent(said)}&at=${level}#level-${level}`);
 }
 
 const unreachable = (e: unknown, fd: FormData): SampleState => ({
@@ -97,7 +97,7 @@ async function taking<P extends PostPath>(
   } catch (e) {
     why = e instanceof EngineDown ? e.message : "The engine could not be reached. Nothing was changed.";
   }
-  if (why) redirect(`/skill-sets/${code}?refused=${encodeURIComponent(why)}&at=${level}#level-${level}`);
+  if (why) redirect(`/setup/skill-sets/${code}?refused=${encodeURIComponent(why)}&at=${level}#level-${level}`);
   done(code, level, said);
 }
 

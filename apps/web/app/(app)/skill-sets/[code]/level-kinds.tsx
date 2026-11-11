@@ -43,7 +43,7 @@ export function LevelKinds({ code, level, ways, choices, adding }: Props) {
         ))}
       </ul>
       {offered.length ? (
-        <form method="get" action={`/skill-sets/${code}`} className="flex flex-wrap items-center gap-2">
+        <form method="get" action={`/setup/skill-sets/${code}`} className="flex flex-wrap items-center gap-2">
           <label className="sr-only" htmlFor={`addkind-${level}`}>
             Add a kind of question to {level}
           </label>

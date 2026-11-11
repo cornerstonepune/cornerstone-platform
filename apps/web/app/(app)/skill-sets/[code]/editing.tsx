@@ -3,7 +3,7 @@ import { Notice } from "@/components/parts";
 import { engineGet } from "@/lib/engine";
 import type { Difficulty, SkillSet } from "@/lib/queries";
 import { type SampleRow, sampleChoices, sampleCount, type WaysRow } from "@/lib/queries-skills";
-import { LevelApproval } from "./level-approval";
+import { LevelApproval } from "../../setup/skill-sets/[code]/level-approval";
 import { LevelKinds } from "./level-kinds";
 import { type Editing, LevelSamples } from "./samples";
 import type { SampleInitial } from "./sample-shape";

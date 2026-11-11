@@ -30,12 +30,12 @@ async function asking(path: Parameters<typeof engineSend>[0], body: Parameters<t
 }
 
 function back(code: string, level: string, n: number, a: Answer): never {
-  revalidatePath(`/skill-sets/${code}`);
-  if (!a.made) redirect(`/skill-sets/${code}?refused=${encodeURIComponent(a.why || "No question was made.")}&at=${level}#level-${level}`);
+  revalidatePath(`/setup/skill-sets/${code}`);
+  if (!a.made) redirect(`/setup/skill-sets/${code}?refused=${encodeURIComponent(a.why || "No question was made.")}&at=${level}#level-${level}`);
   const said = new URLSearchParams({ made: String(a.kept ?? 0), asked: String(n), at: level });
   if (a.returned !== undefined) said.set("returned", String(a.returned));
   if (a.thrown?.length) said.set("thrown", a.thrown.map((t) => `${t.n}× ${t.why}`).join(" · "));
-  redirect(`/skill-sets/${code}?${said}#level-${level}`);
+  redirect(`/setup/skill-sets/${code}?${said}#level-${level}`);
 }
 
 export async function moreEnglish(fd: FormData): Promise<void> {

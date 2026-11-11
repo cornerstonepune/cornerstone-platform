@@ -305,6 +305,7 @@ Rail (Connected to): The activity · its learning objectives · Materials · Its
 Main action: Record a note · Next step: the next period
 Data: session → plan_entry → activity (+activity_material, activity_objective); activity_observation of this activity for this class, last session (the five outcome words are a config list)
 Empty: A fixed part of the day: 'Nothing to record here' · Phone: actions first, then the fold; the record button fills the width
+Folds in: /educator/period/[id]
 Every control on the screen (15), and what the test does with each:
 - **link** Record a note → Record a note (`/record`) (opens Record with this period's session preselected)
 - **link** Type the marks instead → Record a note (`/record`) (opens Record on its typing path, session preselected)
@@ -995,27 +996,43 @@ Done when (on top of the ten generic checks):
 - a coordinator changes a level's sentence and the change is logged with who and why, taking only that level out of approved; an educator is shown the sentences and no way to change them
 
 
-#### the skill set's name `/setup/skill-sets/[code]`
+#### the skill set's outcome (what the child can do) `/setup/skill-sets/[code]`
 Who: both · Phase: Core · Backend: none · Old page today: part (/skill-sets/[code]) · Slice: UI-3
-Eyebrow: Skill set · Grades 1 to 4
-Purpose: A skill set is what the school teaches and tests together, from one to four grades. It points at the skills the system reads a child on; it never scores a child itself.
+Eyebrow: Curriculum · Skill set · Grade 3 · Skill 4 of 21
+Purpose: What this skill looks like at each level, each with a real question from the bank, the kinds of question, and the mistakes it watches for.
 Blocks, in order:
-- **Cards**: each skill it covers: name, link
-- **Details**: each level in a sentence
-Rail (Connected to): each skill · Question bank for this skill set
+- **Cards**: each registry skill it covers: name, link
+- **Cards**: which grade each level belongs to (coordinator) · each level: its sentence, approval, a real question from the bank, more like this
+- **Details**: Kinds of question · Stop using a kind · Mistakes it watches for · Worksheets by level
+Rail (Connected to): each skill it covers · Question bank
 Main action: a skill · Next step: the question bank
-Data: skill (the skill set: code, name, registry_codes), skill_level, registry_skill
+Data: skill (code, name, learning_objective, difficulty, level_band, level_approved, registry_codes), skill_level, registry_skill, item (a real question per level), question_type, misconception, worksheet
 Empty: No registry skill linked yet: shown, no invention · Phone: cards stack in one column
 Folds in: /skill-sets/[code]
-Every control on the screen (4), and what the test does with each:
+Every control on the screen (15), and what the test does with each:
 - **link** Open the skill (each card) → the skill's name (`/setup/skills/[code]`)
-- **fold** Each level in a sentence
+- **link** For example: a real question (each level) → {the question as it prints} (`/setup/question-bank/[key]`)
+- **field** Which grade each level belongs to [coordinator only; absent and refused for others] (a choice of the school's grades for each level)
+- **button** Save the grades: each level's grade is saved with who and when; the page says Saved [coordinator only; absent and refused for others]
+- **button** Approve this level (each level): that level's words are approved in the person's name; the other levels still wait [coordinator only; absent and refused for others]
+- **button** Approve a way of asking (English): that way of asking is approved in the person's name [coordinator only; absent and refused for others]
+- **link** Change a sample (English) → the skill set's outcome (what the child can do) (`/setup/skill-sets/[code]`) [coordinator only; absent and refused for others] (opens the sample's own form in place; the address carries it)
+- **button** More like this (each level): questions like the example are made and checked by code; the page says how many [coordinator only; absent and refused for others]
+- **link** Stop using a kind (each kind, each level) → the skill set's outcome (what the child can do) (`/setup/skill-sets/[code]`) [coordinator only; absent and refused for others] (asks which level, then stops it; the address carries the choice)
+- **button** Approve the skill: the skill is approved in the person's name [coordinator only; absent and refused for others]
+- **link** Worksheets: a level → the skill set's outcome (what the child can do) (`/setup/skill-sets/[code]`) (shows that level's worksheets; the address carries it)
 - **link** rail: each skill → the skill's name (`/setup/skills/[code]`)
-- **link** rail: Question bank for this skill set → Question bank (`/setup/question-bank`)
+- **link** rail: Question bank → Question bank (`/setup/question-bank`)
+- **fold** Kinds of question
+- **fold** How it is asked (English)
 Done when (on top of the ten generic checks):
 - the screen is keyed by the skill set's code, not by a registry skill's code
 - each registry skill the set points at is a card that opens the skill screen; a set with none says so and invents nothing
-- the level sentences sit in a fold, closed on load
+- each level shows its sentence, its approval and a real question from the bank (or says there is none); a coordinator approves one level and the others still wait
+- a coordinator saves which grade each level belongs to; an educator is shown the grades and no way to change them
+- an English skill shows how each level is asked and its sample questions; a coordinator approves a way of asking and changes a sample
+- a coordinator asks for more questions like a level's example, and stops a kind of question at one level or at every level
+- the old address /skill-sets/<code> answers 308 to this one, query kept
 
 
 #### Curriculum `/setup/curriculum`
@@ -1038,7 +1055,7 @@ Every control on the screen (22), and what the test does with each:
 - **filter** Status
 - **filter** search (matches names and codes, never children)
 - **row** an activity row → the activity's name (`/setup/activities/[code]`)
-- **row** a skill row → the skill set's name (`/setup/skill-sets/[code]`)
+- **row** a skill row → the skill set's outcome (what the child can do) (`/setup/skill-sets/[code]`)
 - **link** Check the drafted parts → the activity's name (`/setup/activities/[code]`) (the first activity with a drafted part)
 - **button** Yes (an offer): the skill is linked to the activity; the offer closes [coordinator only; absent and refused for others]
 - **button** No (an offer): the offer closes; nothing is linked [coordinator only; absent and refused for others]
@@ -1080,7 +1097,7 @@ Every control on the screen (12), and what the test does with each:
 - **filter** Taught (taught or not yet: a skill nobody teaches can be approved before its topic is switched on)
 - **tab** Skills (the first list; the address carries the tab)
 - **tab** Levels to review (the second list is the levels most children are secure at; the address carries the tab)
-- **link** a skill's name → the skill set's name (`/setup/skill-sets/[code]`)
+- **link** a skill's name → the skill set's outcome (what the child can do) (`/setup/skill-sets/[code]`)
 - **button** Approve (a row): level_approved set for that skill with who; the row leaves the list; the eyebrow's count drops by one [coordinator only; absent and refused for others]
 - **fold** What a wrong answer counts against
 - **button** Approve this table as written: the table of what a wrong answer counts against is approved as shown, once, with who; a changed table waits again [coordinator only; absent and refused for others]
@@ -1365,7 +1382,7 @@ What the test does with each kind of control:
 | UI-14 Tokens, fonts and the existing parts on them | One source of colour, type, shape, elevation and motion for the whole site, in the look Nimish chose on 9 Nov 2026 (the rich draft, B). tokens.css is generated from tokens.json; every colour literal in the app is replaced by a token, including in the blocks that exist today (StatusChip, DataTable, FilterBar, EmptyState, Count) and in the shadcn files from UI-1; the fonts are self-hosted. No page changes shape in this slice. | none (infrastructure) | UI-1, and PR #528 (the logo pack) merged |
 | UI-13 The frame and the inventory test | One navigation for the whole site: the top bar with the school's logo, its four doors, search, acting-as, help and sign out, the trail and the rail (AppFrame), replacing the four shells and the K2 side menu; every existing page reachable from the bar; docs/ux-rules.md brought in line; and the inventory test that reads screens.json and drives every screen like a person, proved here on a small inventory of pages that already exist. | none (infrastructure) | UI-14 |
 | UI-2 The blocks | The school's new blocks of SPEC §5, built once, each with sample data on a staff-only gallery screen (`blocks`) and screenshots in both themes; every chart drawn to scale from its data. AppFrame is built in UI-13 and the existing blocks moved onto the tokens in UI-1. | The blocks | UI-13 |
-| UI-3 Node pages: the K2 walk | Period, record, confirm, notes, children, class picture, child, activity, objective and skill as node pages on the blocks, each walking to its neighbours through the rail and back through the trail; the old routes redirect. | the session's name, Record a note, Confirm what the reader heard, Notes, Children, Class picture, Where this child is, the activity's name, the objective's title, the skill's name, the skill set's name | UI-2; the K2 switch (a config row) on for the pages behind it |
+| UI-3 Node pages: the K2 walk | Period, record, confirm, notes, children, class picture, child, activity, objective and skill as node pages on the blocks, each walking to its neighbours through the rail and back through the trail; the old routes redirect. | the session's name, Record a note, Confirm what the reader heard, Notes, Children, Class picture, Where this child is, the activity's name, the objective's title, the skill's name, the skill set's outcome (what the child can do) | UI-2; the K2 switch (a config row) on for the pages behind it |
 | UI-4 Node pages: assessments | Assessments, one assessment and one child's paper as node pages on the blocks; the seven old assessment pages and Class results fold in; the queries and the seven steps are unchanged. | Assessments, {the built name}, Check the answers | UI-2 |
 | UI-5 The coordinator's views: staff, classes and setup | Staff and grants, classes and children and the Setup home; the small writes that exist today (a grant, a child move) through their own rows. Search is the bar's typeahead (UI-13); there is no results page. | Staff and classes, Classes and children, Setup | UI-2 for the views; CP-1 merged for moving a child |
 | UI-6 Timetable, rules and the fortnight's actions | The timetable's day, week and fortnight views and the timetable rules, the fortnight node with Approve and Go live, the draft from the rules with its unmet rules, and moves by hand with clashes accepted by the coordinator only. Until this merges the bar's Timetable door opens the page that exists today. | Timetable, Timetable rules, Fortnight 9, Draft from the rules, Moves by hand | CP-6, CP-11, CP-12 and CP-22 merged |

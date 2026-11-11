@@ -52,6 +52,7 @@ const NOT_BY_CLICK: Record<string, string> = {
   "/setup/activities/[code]": "a link of a period or of the materials list, which need a timetable's rows",
   "/setup/objectives/[code]": "a link of an activity, which needs a timetable's rows",
   "/setup/skills/[code]": "a link of an objective, which needs a timetable's rows",
+  "/setup/skill-sets/[code]": "a skill's row on Curriculum or Skills to approve (their links still name the old address, which answers 308 to this one)",
   "/record": "opened from a period or from Notes, both of which need a K2 class the test database does not hold with the voice switch on",
   "/period/[id]": "a link of a day of the timetable, which needs a timetable's rows",
   "/notes/[id]": "a card or a row of Notes, which needs a recorded note",

@@ -51,8 +51,8 @@ MOVED = [
     "apps/web/app/(app)/worksheets/page.tsx",
     "apps/web/app/(app)/worksheets/[qr]/page.tsx",
     "apps/web/app/(app)/papers/approve/page.tsx",
-    "apps/web/app/(app)/skill-sets/[code]/page.tsx",
-    "apps/web/app/(app)/skill-sets/[code]/level-approval.tsx",
+    "apps/web/app/(app)/setup/skill-sets/[code]/page.tsx",
+    "apps/web/app/(app)/setup/skill-sets/[code]/level-approval.tsx",
 ]
 # a read of the blob: its levels selected, walked or asked after; its grades; its approvals; a skill selected whole
 BLOB = re.compile(

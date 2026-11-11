@@ -20,7 +20,7 @@ test("a Grade 10 skill shows on the curriculum page, under Grade 10, after Grade
   const [before] = await sql<{ level_band: Record<string, string> }[]>`select level_band from skill where code = 'SUB.3D3D'`;
   try {
     // Achal moves a level to Grade 10 on the skill's own page: the grades offered are the table's
-    await page.goto("/skill-sets/SUB.3D3D");
+    await page.goto("/setup/skill-sets/SUB.3D3D");
     const grades = page.getByRole("region", { name: "Which grade each level belongs to" });
     await grades.getByLabel("Advance").selectOption({ label: "Grade 10" });
     await grades.getByRole("button", { name: "Save the grades" }).click();
