@@ -142,7 +142,7 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
     { key: "for", label: "For", value: (a) => ROLE_WORDS[a.for_role] ?? a.for_role, width: "9rem" },
     { key: "drafted", label: "What was drafted", value: (a) => a.drafted },
     { key: "why", label: "Why", value: (a) => a.why ?? "" },
-    { key: "link", label: "", value: (a) => (a.link ? "read" : ""), cell: (a) => (a.link ? <a href={a.link} target="_blank" rel="noreferrer" data-ask-link>Read it in full<span className="sr-only"> ({a.question})</span></a> : null), width: "7rem" },
+    { key: "link", label: "", value: (a) => (a.link ? "read" : ""), cell: (a) => (a.link ? <a href={a.link} target="_blank" rel="noreferrer" data-ask-link>Read it in full<span className="sr-only"> ({a.code})</span></a> : null), width: "7rem" },
     {
       key: "answer",
       label: "",
@@ -155,17 +155,17 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
               <input type="hidden" name="code" value={a.code} />
               <input type="hidden" name="answer" value="agreed" />
               <input type="hidden" name="back" value={`${at(page, opage)}#asks`} />
-              <button type="submit" className="btn" data-ask-agree>Agree as drafted<span className="sr-only"> ({a.question}), as {me.name}</span></button>
+              <button type="submit" className="btn" data-ask-agree>Agree as drafted<span className="sr-only"> ({a.code}), as {me.name}</span></button>
             </form>
             <form action={answerAsk} className="grid gap-1">
               <input type="hidden" name="code" value={a.code} />
               <input type="hidden" name="answer" value="corrected" />
               <input type="hidden" name="back" value={`${at(page, opage)}#asks`} />
               <label className="grid gap-1 text-[13px]">
-                <span>What it should say<span className="sr-only"> ({a.question})</span></span>
+                <span>What it should say<span className="sr-only"> ({a.code})</span></span>
                 <textarea name="correction" rows={2} className="border border-[var(--line)] p-2" data-ask-correction />
               </label>
-              <button type="submit" className="btn secondary" data-ask-correct>Correct it<span className="sr-only"> ({a.question}), as {me.name}</span></button>
+              <button type="submit" className="btn secondary" data-ask-correct>Correct it<span className="sr-only"> ({a.code}), as {me.name}</span></button>
             </form>
           </div>
         ) : null,

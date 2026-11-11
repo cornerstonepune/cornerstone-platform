@@ -322,15 +322,15 @@ test.describe("Curriculum: questions to answer", () => {
       }
       throw new Error(`no question “${q}” among those waiting`);
     };
-    const name = (verb: string, q: string) => `${verb} (${q}), as ${TEST_STAFF.name}`;
-    await (await find(asked[0].question)).getByRole("button", { name: name("Agree as drafted", asked[0].question) }).click();
+    const name = (verb: string, code: string) => `${verb} (${code}), as ${TEST_STAFF.name}`;
+    await (await find(asked[0].question)).getByRole("button", { name: name("Agree as drafted", asked[0].code) }).click();
     await expect(page.locator("main [data-ask]").filter({ hasText: asked[0].question })).toHaveCount(0);
     // an empty correction is refused with a word, and answers nothing
-    await (await find(asked[1].question)).getByRole("button", { name: name("Correct it", asked[1].question) }).click();
+    await (await find(asked[1].question)).getByRole("button", { name: name("Correct it", asked[1].code) }).click();
     await expect(page.getByRole("status").filter({ hasText: "A correction needs its words" })).toBeVisible();
     const mine = await find(asked[1].question);
     await mine.getByLabel("What it should say").fill("A remainder is written in words first, then with r from Grade 3");
-    await mine.getByRole("button", { name: name("Correct it", asked[1].question) }).click();
+    await mine.getByRole("button", { name: name("Correct it", asked[1].code) }).click();
     await page.getByText(/^Read the \d+ answered$/).click();
     const answered = page.locator("[data-asks]");
     await expect(answered).toContainText(asked[0].question);
