@@ -2723,6 +2723,14 @@
           "note": "on a printed copy; the same button then reads Back: count as missing",
           "text": "Away: hold it",
           "data": "data-away"
+        },
+        {
+          "t": "link",
+          "label": "Edit this paper",
+          "to": "paper",
+          "note": "a home assessment's copy not yet printed: its questions, remove, add, approve",
+          "text": "Edit this paper",
+          "data": "data-edit-paper"
         }
       ],
       "rail": [
@@ -2857,6 +2865,30 @@
           "t": "link",
           "label": "rail: the next paper to check",
           "to": "paper"
+        },
+        {
+          "t": "button",
+          "label": "Approve this home assessment",
+          "note": "a copy waiting for approval: approved in the educator's name, this one only",
+          "text": "Approve this home assessment",
+          "data": "data-approve-paper",
+          "pending": "needs a home paper the engine made for a child (a library worksheet cannot be edited); proved against real engine-made papers in u76-edit-a-paper"
+        },
+        {
+          "t": "button",
+          "label": "Remove (a question)",
+          "note": "asks once when the removal costs something (the approval, or the last question of a skill); the paper is made again with a new code",
+          "text": "Remove",
+          "data": "data-remove-question",
+          "pending": "needs a home paper the engine made for a child (a library worksheet cannot be edited); proved against real engine-made papers in u76-edit-a-paper"
+        },
+        {
+          "t": "filter",
+          "label": "bank: topic · skill · level · kind · question",
+          "note": "each choice narrows the next; the chosen question is seen before Add",
+          "text": "Topic",
+          "data": "data-filter",
+          "pending": "needs a home paper the engine made for a child (a library worksheet cannot be edited); proved against real engine-made papers in u76-edit-a-paper"
         }
       ],
       "rail": [

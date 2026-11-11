@@ -56,7 +56,7 @@ export async function Body({ draft, klass, grade, form, send, done, typed }: { d
         <h2 className="mb-2 text-[16px]">{W.confirm.heard}</h2>
         <Heard draft={draft} />
       </section>
-      <Board start={fromDraft(draft)} enrolled={draft.enrolled} klass={klass} activities={[...activities]} today={today} draft={draft} button={W.confirm.button} send={send} lines={draft.lines.filter((l) => l.said && (MARKS as readonly string[]).includes(l.section) && l.numbers.length)} />
+      <Board start={fromDraft(draft)} enrolled={draft.enrolled} klass={klass} activities={[...activities]} today={today} draft={draft} button={W.confirm.button} send={send} lines={draft.lines.filter((l) => (MARKS as readonly string[]).includes(l.section) && l.numbers.length)} />
     </div>
   );
 }
