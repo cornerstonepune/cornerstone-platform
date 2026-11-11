@@ -10,7 +10,7 @@ import type { Day, Period } from "@/lib/educator/types";
 import { nowAtSchool, schoolToday } from "@/lib/school-clock";
 import { classPicture } from "@/lib/k2-reads";
 import { DOORS, open } from "@/lib/today-doors";
-import { myDay, myNotes, type TodoRow } from "@/lib/today-data";
+import { myDay, myNotes, sessionsOf, type TodoRow } from "@/lib/today-data";
 import { dayWords, fortnightWords, litPeriod, many, periodRow, periodsDone } from "@/lib/today";
 import { classWords } from "@/lib/voice-types";
 
@@ -38,7 +38,8 @@ export async function EducatorToday({ me, view, day: asked }: { me: Session; vie
   const lit = day?.day === today ? litPeriod(periods, now) : null;
   const { done, planned } = periodsDone(periods);
   const classId = day?.class.id ?? "";
-  const href = (p: Period) => open(DOORS.period(p.period_id, classId, day!.day)) ?? "#";
+  const sessions = day && classId ? await sessionsOf(classId, day.day) : {};
+  const href = (p: Period) => open(DOORS.period(p.period_id, classId, day!.day, sessions[p.period_id])) ?? "#";
   const tiles: Attention[] = [
     { state: "doNow", n: late.length, sentence: "Notes left unconfirmed past the time they may wait", href: late[0] ? open(DOORS.confirm(late[0].note_id)) : null },
     { state: "doSoon", n: soon.length, sentence: "Notes waiting for you to confirm", href: soon.length ? open(DOORS.notes()) : null },
@@ -55,7 +56,7 @@ export async function EducatorToday({ me, view, day: asked }: { me: Session; vie
   const cards = await cardsFor(me.email, cls, classId, [...late, ...soon]);
   const edges = [
     { screen: "timetable", label: "This fortnight", icon: "fortnight" as const, fallback: "/educator/week" },
-    { screen: "materials", label: "Materials", icon: "checklist" as const, fallback: "/educator/materials" },
+    { screen: "materials", label: "Materials", icon: "checklist" as const, fallback: "/timetable/materials" },
   ];
   return (
     <Screen stage={stage} title="Today" purpose="Your periods in order. Tap one for what to teach, how, and what to lay out. After it, record a note." action={action} next={{ href: open(DOORS.timetable()) ?? "/educator/week", label: "Timetable" }} rail={<div className="[&_[data-rail]_ul]:gap-2"><Rail edges={edges} /></div>}>

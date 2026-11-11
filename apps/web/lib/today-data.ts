@@ -48,3 +48,11 @@ export const schoolNotes = async (me: Pick<Session, "email">) => {
   const got = await ask<{ rows: CoordinatorRow[]; counts: Record<string, number> }>("/k2/coordinator", { actor: me.email });
   return got.ok ? got.value : null;
 };
+
+/** The id of each lesson (a session) of a class on a day, by its period: the engine's day names the period, and the page for one lesson is the session's. */
+export async function sessionsOf(classId: string, day: string): Promise<Record<string, string>> {
+  const rows = await sql<{ id: string; period_id: string }[]>`
+    select s.id::text, s.period_id::text from session s join school_day d on d.id = s.school_day_id
+    where s.school_class_id = ${classId} and d.on_date = ${day}`;
+  return Object.fromEntries(rows.map((r) => [r.period_id, r.id]));
+}

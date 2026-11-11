@@ -9,13 +9,15 @@ export const open = (d: Door): string | null => screenHref(d.screen, d.params) ?
 const q = (o: Record<string, string>) => new URLSearchParams(o).toString();
 
 export const DOORS = {
-  confirm: (id: string): Door => ({ screen: "confirm", params: { id }, live: `/voice/notes/${encodeURIComponent(id)}` }),
-  notes: (): Door => ({ screen: "notes", live: "/today?open=notes" }),
-  picture: (classId: string): Door => ({ screen: "picture", params: { class: classId }, live: `/k2/${encodeURIComponent(classId)}` }),
-  period: (id: string, classId: string, day: string): Door => ({ screen: "period", params: { id }, live: `/educator/period/${encodeURIComponent(id)}?${q({ class: classId, day })}` }),
+  confirm: (id: string): Door => ({ screen: "confirm", params: { id }, live: `/notes/${encodeURIComponent(id)}` }),
+  notes: (): Door => ({ screen: "notes", live: "/notes" }),
+  picture: (classId: string): Door => ({ screen: "picture", params: { class: classId }, live: `/children/${encodeURIComponent(classId)}` }),
+  /** `session`: the lesson's own id when it has one (the new page is a session's); a part of the day with none opens the old period page by its period. */
+  period: (id: string, classId: string, day: string, session?: string): Door =>
+    session ? { screen: "period", params: { id: session }, live: `/period/${encodeURIComponent(session)}` } : { screen: "period", params: { id }, live: `/educator/period/${encodeURIComponent(id)}?${q({ class: classId, day })}` },
   timetable: (): Door => ({ screen: "timetable", live: "/educator/week" }),
-  materials: (): Door => ({ screen: "materials", live: "/educator/materials" }),
-  staff: (): Door => ({ screen: "staff", live: "/staff" }),
+  materials: (): Door => ({ screen: "materials", live: "/timetable/materials" }),
+  staff: (): Door => ({ screen: "staff", live: "/setup/staff" }),
   moves: (): Door => ({ screen: "moves", live: null }),
   draft: (): Door => ({ screen: "draft", live: null }),
   fortnight: (n: number): Door => ({ screen: "fortnight", params: { n: String(n) }, live: null }),

@@ -26,7 +26,7 @@ A door is the new screen when its slice is in `merged_slices` (`lib/built.ts`), 
 else nothing. On main now none of these targets is built. Unbuilt, with the old page used meanwhile:
 | Door | Target (PR) | Meanwhile |
 |---|---|---|
-| do now tile, note cards, Confirm the first | confirm `/notes/[id]` (UI-3a #571) | `/voice/notes/[id]` |
+| do now tile, note cards, Confirm the first | confirm `/notes/[id]` (UI-3a, merged; not yet in `merged_slices`) | `/notes/[id]` direct |
 | this week tile | notes `/notes` (#571) | `/today?open=notes` |
 | done tile, Class picture | picture `/children/[class]` (UI-3b #570) | `/k2/[class]` |
 | period rows and cards | period `/period/[id]` (#571) | `/educator/period/[id]` |
