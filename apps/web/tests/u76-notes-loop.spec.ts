@@ -15,6 +15,11 @@ let klass: string;
 let staff: string;
 let lesson: string;
 
+// Confirm redirects to the next waiting note or Notes, and a note's own address is already /notes/<id>: the address says nothing about
+// whether the write has finished, so a test waits for the note itself to be confirmed.
+const confirmed = (note: string) =>
+  expect.poll(async () => (await sql<{ status: string }[]>`select status from pii.educator_note where id = ${note}`)[0].status).toBe("confirmed");
+
 const TODAY = sql`(now() at time zone (select value #>> '{}' from config where key = 'school.time_zone'))::date`;
 
 test.beforeAll(async () => {
@@ -58,9 +63,10 @@ test("Record: at 400 px the Start button is the full width and at least 56 px ta
   const p = await c.newPage();
   await p.goto(`/record?class=${klass}`);
   const box = (await p.locator("[data-record]").boundingBox())!;
-  const main = (await p.locator("main").boundingBox())!;
+  // "full width" is the whole row of the screen's one action (the page's gutters are the page's, not the button's)
+  const row = (await p.locator("[data-ux=action]").boundingBox())!;
   expect(box.height).toBeGreaterThanOrEqual(56);
-  expect(box.width).toBeGreaterThanOrEqual(main.width - 2 * 16 - 2);
+  expect(box.width).toBeGreaterThanOrEqual(row.width - 1);
   await c.close();
 });
 
@@ -82,7 +88,7 @@ test("Confirm: one activity_observation per marked child, none for an unmarked c
   await page.goto(`/notes/${note}`);
   await expect(page.getByRole("button", { name: "Confirm this note" })).toHaveCount(1);
   await page.getByRole("button", { name: "Confirm this note" }).click();
-  await expect(page).toHaveURL(/\/notes(\/[0-9a-f-]{36})?$/);
+  await confirmed(note);
   const rows = await sql<{ child: string; cid: string }[]>`select child_id::text as child, confirmation_id::text as cid from activity_observation where note_id = ${note}`;
   expect(rows).toHaveLength(2);
   expect(new Set(rows.map((r) => r.cid)).size).toBe(1);
@@ -110,7 +116,7 @@ test("Notes: a correction writes a superseding row with a reason and never updat
   const note = await aK2Note(sql, { klass, staff }, "Activity 904, level 2. Above 3.");
   await page.goto(`/notes/${note}`);
   await page.getByRole("button", { name: "Confirm this note" }).click();
-  await page.waitForURL(/\/notes/);
+  await confirmed(note);
   const [first] = await sql<{ id: string; outcome: string }[]>`select id::text, outcome from activity_observation where note_id = ${note} and outcome = 'above' limit 1`;
   await page.goto(`/notes/${note}`);
   await page.locator("select[name=observation]").selectOption(first.id);
@@ -126,8 +132,8 @@ test("Notes: tapping a child opens ChildPeek with the history, Escape closes it 
   const note = await aK2Note(sql, { klass, staff }, "Activity 904, level 2. Above 3.");
   await page.goto(`/notes/${note}`);
   await page.getByRole("button", { name: "Confirm this note" }).click();
-  await page.waitForURL(/\/notes/);
-  await page.goto(`/notes?class=${klass}&view=table`);
+  await confirmed(note);
+  await page.goto(`/notes?class=${klass}&state=confirmed&view=table`); // confirmed ones sort last of all, behind every late and waiting note: filter to them, newest first
   const chip = page.locator("[data-peek-open]").first();
   await chip.click();
   const peek = page.locator("[data-block=ChildPeek]");
@@ -195,7 +201,7 @@ test("Confirm: a square opens the mark picker, and the mark it sets is the squar
   await expect(page.locator("[data-roll='3']")).toHaveAttribute("data-cell-mark", "below");
   await expect(page.locator("[data-block=ChildPeek]")).toHaveCount(0); // a square changes the mark and never opens the peek
   await page.getByRole("button", { name: "Confirm this note" }).click();
-  await page.waitForURL(/\/notes/);
+  await confirmed(note);
   const [claim] = await sql<{ decision: string }[]>`select decision from pii.note_claim where note_id = ${note} and section = 'above'`;
   expect(claim.decision).toBe("changed");
 });
@@ -209,7 +215,7 @@ test("Confirm: the × on a claim line takes the line out, its squares return to 
   await expect(page.locator("[data-roll='3']")).toHaveAttribute("data-cell-mark", "none");
   await expect(page.locator("[data-roll='5']")).toHaveAttribute("data-cell-mark", "below");
   await page.getByRole("button", { name: "Confirm this note" }).click();
-  await page.waitForURL(/\/notes/);
+  await confirmed(note);
   const [claim] = await sql<{ decision: string }[]>`select decision from pii.note_claim where note_id = ${note} and section = 'above'`;
   expect(claim.decision).toBe("removed");
   expect((await sql<{ n: number }[]>`select count(*)::int as n from activity_observation where note_id = ${note}`)[0].n).toBe(1);
