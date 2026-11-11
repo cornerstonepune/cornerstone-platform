@@ -9,7 +9,7 @@
 import { randomBytes } from "node:crypto";
 import { expect, test } from "@playwright/test";
 import postgres from "postgres";
-import { assessmentHref } from "../lib/assessment-ui";
+import { assessmentHref, paperHref } from "../lib/assessment-ui";
 import { isoWeek } from "../lib/week";
 import { aClass, aReadPaper } from "./rows";
 
@@ -88,4 +88,32 @@ test("a spare copy is listed with no name on it", async ({ page }) => {
   await expect(rows.first()).toContainText("To approve");
   // the spare is not one of the children's copies: the screen counts three children's papers
   await expect(page.getByTestId("in")).toHaveText(/of 3 in/);
+});
+
+test("the approval ledger names the first pack's approver and the second pack waits for approval", async ({ page }) => {
+  await page.goto(assessmentHref(key));
+  const ledger = page.getByRole("region", { name: "The approval ledger" });
+  const packs = ledger.locator("[data-pack]");
+  await expect(packs).toHaveCount(2);
+  await expect(packs.nth(0)).toContainText("First pack");
+  await expect(packs.nth(0)).toContainText(/approved \d{2}-[A-Z][a-z]{2}-\d{4}/);
+  await expect(packs.nth(0)).toContainText("By u76");
+  await expect(packs.nth(1)).toContainText("Second pack");
+  await expect(packs.nth(1)).toContainText("waits for you");
+  // the card that approves it says how many copies it is and which children they are for (Sr. No., never a name)
+  const card = page.getByRole("region", { name: "This pack" });
+  await expect(card.getByRole("heading")).toContainText("The second pack: 1 new copy");
+  await expect(card).toContainText(/Made on \d{2}-[A-Z][a-z]{2}-\d{4} for Sr\. No\. 3\./);
+});
+
+test("what it asks says how many children sit each level", async ({ page }) => {
+  await page.goto(assessmentHref(key));
+  await expect(page.getByRole("region", { name: "What it asks" })).toContainText("Hard for 3 children");
+});
+
+test("a read paper says which scan it came from", async ({ page }) => {
+  await page.goto(paperHref(key, "2"));
+  const scan = page.getByRole("region", { name: "This scan" });
+  await expect(scan).toContainText(QR.bina);
+  await expect(scan.locator("dt")).toHaveText(["Sheet", "QR", "Scanned", "Pages"]);
 });

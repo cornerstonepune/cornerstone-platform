@@ -116,3 +116,27 @@ is never listed. Spare copies (no child on them) are listed apart with their sta
 The focus paper ("next paper for this child") is made from the child's own page, which is not an assessments page and stays. After approval it
 lands on the old review address until PR 4, when that address becomes a 308 to the paper screen; the specs that read the code from that
 address (`s11-focus-paper`, `p4-preview-before-print`, `u2-children`, `p5-review-a-paper`) move with it.
+
+### PR 3 (and the wireframe gaps): the paper screen takes the old Marking tools
+
+On the assessment screen: the approval ledger (rail card: each pack, who approved it and when, and the pack still waiting), the second pack's heading
+and "Made on … for Sr. No. …", and "What it asks" saying the topic and how many children sit each level. On the paper screen: "This scan" (rail:
+sheet, whether the code read is the copy's own, when scanned, pages), the question outlined on the page picture, previous and next paper of the
+child, the answer walk ("Next answer to judge"), per-skill lanes, and for the answer picked in the table the old card's tools: the right answer
+(change it for every child), the mistake to name (shortlist, another, none), whose page it is (the same photograph on two copies holds the save back
+until a person says), judge Right/Wrong/Blank, and the correction of a signed-off answer. A question goes by its slot ("4a"), as before.
+
+| Old spec | Assertion | New place |
+|---|---|---|
+| `s26-right-answer` 1, 2 | the right answer is shown as stored; change it for every child, code refuses a key the sum contradicts | `u77-paper-tools.spec.ts` |
+| (no browser spec; engine-proved) | name the mistake: one press, kept on the answer, a row of the history log | `u77-paper-tools.spec.ts` |
+| `s44-whose-paper` 2 | the page's own proof: crop outlined, printed code, copy and page | `u78-whose-paper.spec.ts` |
+| `s44-whose-paper` 3 | a paper walked answer by answer | `u78-whose-paper.spec.ts` (the old queue's "next answer of this paper") |
+| `s44-whose-paper` 4 | the same photograph on two copies: notice, save waits, the choice is a history row | `u78-whose-paper.spec.ts` |
+| `asm2-checking`, `s4-validation-queue` (previous / next paper, lanes) | the child's papers in order; what the paper says by skill | `u78-whose-paper.spec.ts` (last test) |
+
+Gaps, said plainly: "Capture here: Photo" waits for the engine's photo route (nothing in apps/web can honestly take a photo until it exists);
+"Connected to" second lines and icons are the shared frame's (UI-7 frame plan), not these screens'; the scan's "By" (who put the file in) has no
+column on `capture`, so it is not drawn; the level's one-line description in "What it asks" has no row to read it from here. After sign-off the
+old queue (`/capture/check`) and the old Marking page (`/capture/[id]`) still stand until PR 4, which turns them into 308s to these screens; the
+focus paper keeps landing on the old review address until then.

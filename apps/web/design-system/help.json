@@ -620,6 +620,15 @@
         },
         {
           "label": "Open the child"
+        },
+        {
+          "label": "Picture"
+        },
+        {
+          "label": "By topic"
+        },
+        {
+          "label": "Matrix"
         }
       ]
     },
@@ -888,6 +897,30 @@
         },
         {
           "label": "bank: topic · skill · level · kind · question"
+        },
+        {
+          "label": "Change it for every child"
+        },
+        {
+          "label": "Name the mistake (the likeliest, none of these, another)"
+        },
+        {
+          "label": "This page is this child's / Not this child's"
+        },
+        {
+          "label": "Next answer to judge"
+        },
+        {
+          "label": "Previous paper / Next paper (this child's)"
+        },
+        {
+          "label": "a skill's answer chip"
+        },
+        {
+          "label": "Right / Wrong / Blank (judge)"
+        },
+        {
+          "label": "the right answer, for every child"
         }
       ]
     },

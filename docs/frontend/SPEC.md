@@ -662,7 +662,7 @@ Main action: a child · Next step: the skill
 Data: child_skill_state (kind 'observed' for K2, 'written' for grades 1–4) for the class by skill; flow_run (the nightly graph run's row) finished_at for the date; evidence_event for clusters
 Empty: No child seen yet: the grid of dashed squares with 'not seen yet, nothing more' · Phone: 3 columns of squares (a name and a state word do not fit a 44 px square; SPEC §2 rule 10)
 Folds in: /growth (Class results), /growth/class/[section]
-Every control on the screen (14), and what the test does with each:
+Every control on the screen (17), and what the test does with each:
 - **filter** skill
 - **filter** domain
 - **peek** each square (and each child chip in a cluster): opens ChildPeek for that child
@@ -677,6 +677,9 @@ Every control on the screen (14), and what the test does with each:
 - **filter** group by (state on this skill / class; a heading and a count per group)
 - **button** peek: Close: closes ChildPeek; focus returns to the child that opened it
 - **link** peek: Open the child → Where this child is (`/children/[class]/[roll]`) (the one way from a list to the child's own page)
+- **tab** Picture (the class picture; the three views of a class are tabs of this screen (UI-3e, carrying /growth and /growth/class/[section]))
+- **tab** By topic (topics as rows: who is secure, practising or needs help; a topic opens its skills, a skill its children)
+- **tab** Matrix (each child against each topic; a topic opens its skills)
 Done when (on top of the ten generic checks):
 - each square shows the Sr. No. and the child's name read from pii by child_id, and no photo (DOM scan)
 - the stack bar's counts equal the squares by state
@@ -836,7 +839,7 @@ Main action: Say what the child wrote · Next step: the next paper
 Data: capture.pages, item_result with status and confidence, key, misconception tags
 Empty: Nothing left to judge on this paper: Sign it off · Phone: image above, answers below
 Folds in: /capture/check, /capture/[id]
-Every control on the screen (12), and what the test does with each:
+Every control on the screen (20), and what the test does with each:
 - **row** each answer row: the page scrolls to that answer and outlines it
 - **field** what the child wrote (for the answer in focus; required when judging)
 - **button** Say what the child wrote: a read_correction row; the engine marks it right / wrong / blank; the chip updates; the next judge answer comes into focus
@@ -849,6 +852,14 @@ Every control on the screen (12), and what the test does with each:
 - **button** Approve this home assessment (a copy waiting for approval: approved in the educator's name, this one only)
 - **button** Remove (a question) (asks once when the removal costs something (the approval, or the last question of a skill); the paper is made again with a new code)
 - **filter** bank: topic · skill · level · kind · question (each choice narrows the next; the chosen question is seen before Add)
+- **button** Change it for every child (under 'Is the right answer wrong?'; code refuses a key the sum contradicts and says why; otherwise every child's answer to the question is marked again)
+- **button** Name the mistake (the likeliest, none of these, another) (for a wrong answer no named mistake explains; kept against the reading and reaches the evidence at sign-off)
+- **button** This page is this child's / Not this child's (where the same photograph is on two copies; saving what the child wrote waits for this)
+- **link** Next answer to judge (the next answer for a person, in the order they sit on the page)
+- **link** Previous paper / Next paper (this child's) (the child's other papers, oldest first, each on its own paper screen)
+- **link** a skill's answer chip (what this paper says by skill; each answer one tap away)
+- **button** Right / Wrong / Blank (judge) (for the few answers code cannot mark; only a person can say which)
+- **field** the right answer, for every child (inside the fold 'Is the right answer wrong?')
 Done when (on top of the ten generic checks):
 - right, wrong and blank are three different chips and three counts; a wrong-with-working reason is shown with its wrong chip
 - a person's answer writes a read_correction row and never overwrites the engine's read
