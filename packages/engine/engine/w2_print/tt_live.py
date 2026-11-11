@@ -36,6 +36,30 @@ class Report:
     plan: Plan
     dry: bool
     discarded: bool
+    added: int = 0  # lessons the draft had that no session took: new lessons
+
+    def changes(self) -> dict:
+        """What the site shows after a go-live: every session moved and every lesson removed, as ids, subjects and dates
+        (no person), the new lessons as a number, and each date's counts as `lines()` words them."""
+        return {
+            "number": self.number, "starts_on": self.starts_on, "ends_on": self.ends_on, "dry": self.dry,
+            "discarded": self.discarded, "added": self.added,
+            "moved": [
+                {"session": str(s["id"]), "subject": s["subject_code"], "from_date": s["on_date"], "to_date": day,
+                 "to_period": period}
+                for s, (day, period) in self.plan.moves
+            ],
+            "removed": [
+                {"session": str(s["id"]), "subject": s["subject_code"], "date": s["on_date"]} for s in self.plan.removed
+            ],
+            "days": [
+                {"date": d, "lessons": self.lessons.get(d, 0),
+                 "moved_here": sum(1 for _, (day, _p) in self.plan.moves if day == d),
+                 "removed": sum(1 for s in self.plan.removed if s["on_date"] == d)}
+                for d in self.dates
+            ],
+            "lines_without_lesson": [s["line"] or s["text"] for s in self.plan.removed if s["line"] or s["text"]],
+        }  # fmt: skip
 
     def lines(self) -> list[str]:
         head = "trial run: nothing was written" if self.dry else "went live"
@@ -246,7 +270,15 @@ def go_live(
         d = dt.date.fromisoformat(e["date"])
         lessons[d] = lessons.get(d, 0) + 1
     report = Report(
-        number, fn["starts_on"], fn["ends_on"], [d.date for d in i.days], lessons, plan, dry, changed
+        number,
+        fn["starts_on"],
+        fn["ends_on"],
+        [d.date for d in i.days],
+        lessons,
+        plan,
+        dry,
+        changed,
+        len(new),
     )
     if dry:
         return report
