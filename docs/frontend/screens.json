@@ -571,7 +571,7 @@
           "label": "each heat-grid cell",
           "to": "timetable",
           "note": "opens that class's day",
-          "pending": "built: the school's counts come from CP-28's /k2/today-school (backend draft #619); this control is drawn once that route is on main and the inventory has fixtures for it (clashes, drafts, materials lines, last week)"
+          "pending": "built: a cell opens that class's day on the timetable; drawn only with last week's rows from CP-28 (#635/#619), so it waits on that route being on main and a fixture with a taught class"
         },
         {
           "t": "row",
@@ -886,7 +886,8 @@
       ],
       "phone_gate": true,
       "folds": [
-        "/voice/record"
+        "/voice/record",
+        "/voice/form"
       ],
       "rest": {
         "fixture": "voice-rest",
@@ -1015,6 +1016,9 @@
         "tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page"
       ],
       "phone_gate": true,
+      "folds": [
+        "/voice/notes/[id]"
+      ],
       "rest": {
         "fixture": "voice-rest",
         "after": "voice-gone"
@@ -2677,6 +2681,47 @@
             "after": "name-undone"
           },
           "data": "data-rename-save"
+        },
+        {
+          "t": "field",
+          "label": "Why the level changes (a row, before print)",
+          "note": "required; kept with the override and who made it",
+          "text": "Why Sr. No.",
+          "data": "data-level-reason"
+        },
+        {
+          "t": "button",
+          "label": "Change this child",
+          "text": "Change this child",
+          "data": "data-level-save",
+          "note": "the level and the reason are kept as an override on this child's prescription; nothing else moves (proved in u76-assessment-controls: it needs a week the engine prescribed)"
+        },
+        {
+          "t": "field",
+          "label": "Day it was given (printed papers)",
+          "note": "defaults to the day it was last said, else today; never later than today",
+          "text": "Day it was given"
+        },
+        {
+          "t": "button",
+          "label": "Given on",
+          "effect": "the day is kept by the engine as a row of its own, with who said it; the screen says it was given",
+          "text": "Given on",
+          "data": "data-given-save",
+          "drive": {
+            "expect": {
+              "text": [
+                "said by"
+              ]
+            }
+          }
+        },
+        {
+          "t": "button",
+          "label": "Away: hold it for later",
+          "note": "on a printed copy; the same button then reads Back: count as missing",
+          "text": "Away: hold it",
+          "data": "data-away"
         }
       ],
       "rail": [
@@ -3025,9 +3070,9 @@
           "effect": "the part is emptied and marked; the proposal is rejected"
         },
         {
-          "t": "upload",
-          "label": "capture: Photo",
-          "effect": "a photo of the set-up attaches to the activity"
+          "t": "link",
+          "label": "capture: Voice note",
+          "to": "record"
         },
         {
           "t": "link",
@@ -3057,7 +3102,7 @@
         "the fortnights it is in"
       ],
       "capture": [
-        "photo"
+        "voice"
       ],
       "main": "Keep / Edit a drafted part (curriculum team) · Open the period (educator)",
       "next": "an objective",
@@ -3071,8 +3116,7 @@
       ],
       "done_when": [
         "a drafted part carries the 'drafted' badge until Keep, Edit or Send back; an educator sees the badge but not the three buttons",
-        "every edit writes a change_log row with who",
-        "a photo attaches to the activity, never to a child"
+        "every edit writes a change_log row with who"
       ]
     },
     {

@@ -2,14 +2,13 @@
 // after Nimish reads the screens without touching a page. The words a child's mark is said with come from the engine's
 // template (supabase/seed/voice_template.json) only where the engine sends them; the rest are here.
 export const W = {
-  groups: { record: "Record a note", form: "Fill the form", notes: "Notes to confirm" },
+  groups: { record: "Record a note", typed: "Type the marks", notes: "Notes to confirm" },
   kinds: { record: "Record a note", note: "Confirm a note" },
   toConfirm: (n: number) => `${n} to confirm`,
   record: {
     title: "Record a note",
     purpose: "Say the activity number, then who did above, below, not willing or absent.",
     say: "Say: Activity 12. Above 3, 7. Below 5. Absent 9. The rest did as expected.",
-    sayActivity: (n: string) => `Say: Activity ${n}. Above … Below … Absent … The rest did as expected.`,
     start: "Record",
     stop: "Stop",
     send: "Send",
@@ -17,20 +16,12 @@ export const W = {
     sending: "Sending…",
     recording: "Recording",
     whichClass: "Which class?",
-    noMic: "The phone did not let us record. Use the form, or allow the microphone in settings.",
+    noMic: "The phone did not let us record. Type the marks, or allow the microphone in settings.",
     notSent: "Not sent. Try again.",
-    nothing: "Nothing heard. Record again or use the form.",
+    nothing: "Nothing heard. Record again or type the marks.",
     leaving: "This note is not sent yet. Leave anyway?",
   },
-  useForm: "Use the form instead",
-  fillForm: "Fill the form",
-  form: {
-    title: "Fill the form",
-    purpose: "Pick a mark, then tap the children. Save is your confirmation.",
-    save: "Save",
-    notSaved: "Not saved. Try again.",
-    recordInstead: "Record a note instead",
-  },
+  typeMarks: "Type the marks",
   confirm: {
     title: "Confirm this note",
     purpose: "What you said is on the left; the children it names are on the right. Fix anything red.",
@@ -44,7 +35,6 @@ export const W = {
     done: "Confirmed",
     expired: "Not confirmed within 48 hours, so it is not evidence.",
     play: "Play your note",
-    noAudio: "Your recording is not on the server.",
     notSaved: "Not saved. Try again.",
   },
   activity: {

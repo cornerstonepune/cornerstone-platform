@@ -324,6 +324,7 @@ export async function drive(page: Page, s: Screen, e: Element, c: Ctx, byId: Map
     if (!(await sw.getAttribute("aria-checked"))) out.push(`${s.id}: the switch “${e.label}” does not speak its state (aria-checked)`);
   } else if (e.t === "field") {
     const f = page.locator("main").getByLabel(needle(e)).first();
+    await f.waitFor({ timeout: 10_000 }).catch(() => undefined); // the page streams: a field is drawn after the shell
     if (!(await f.count())) out.push(`${s.id}: the field “${e.label}” has no label`);
   }
   return out;
