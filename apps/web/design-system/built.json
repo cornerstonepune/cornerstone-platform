@@ -1,7 +1,8 @@
 {
   "merged_slices": [
     "UI-5",
-    "UI-12"
+    "UI-12",
+    "UI-11"
   ],
   "screens": {
     "today-educator": {
@@ -94,19 +95,19 @@
     },
     "curriculum": {
       "route": "/setup/curriculum",
-      "built": false
+      "built": true
     },
     "skills-approve": {
       "route": "/setup/skills/approve",
-      "built": false
+      "built": true
     },
     "bank": {
       "route": "/setup/question-bank",
-      "built": false
+      "built": true
     },
     "question": {
       "route": "/setup/question-bank/[key]",
-      "built": false
+      "built": true
     },
     "staff": {
       "route": "/setup/staff",

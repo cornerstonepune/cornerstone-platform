@@ -51,5 +51,8 @@ export async function answerOffer(form: FormData): Promise<void> {
   await mustBeOn(me.email);
   await enginePost("/curriculum/offers/answer", { actor: me.email, id: field(form, "id"), yes: form.get("do") === "yes" });
   revalidatePath("/curriculum/offers");
-  redirect("/curriculum/offers");
+  revalidatePath("/setup/curriculum");
+  // the screen that asked, under its own choices; else the old offers page
+  const back = field(form, "back");
+  redirect(/^\/setup\/curriculum(\?[\w=&.%-]*)?$/.test(back) ? back : "/curriculum/offers");
 }
