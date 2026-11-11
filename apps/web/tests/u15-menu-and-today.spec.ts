@@ -156,7 +156,7 @@ test("What needs doing lists everything that waits as rows, and each row's butto
   await expect(report).toHaveCount(1);
   await expect(report).toContainText("Grade 2");
   await report.getByRole("link").click();
-  await expect(page).toHaveURL(new RegExp(`/growth/reports\\?class=${SECTION}`));
+  await expect(page).toHaveURL(new RegExp(`/children/reports\\?class=${SECTION}`));
   await expect(page.getByText("This page could not load")).toHaveCount(0);
 });
 

@@ -550,26 +550,29 @@
         {
           "t": "link",
           "label": "do now tile",
-          "to": "moves"
+          "to": "moves",
+          "text": "left unconfirmed"
         },
         {
           "t": "link",
           "label": "this week tile",
           "to": "fortnight",
-          "pending": "the school's counts are not readable by the web yet (clashes not accepted, drafts to approve, materials lines without a quantity, last week's sessions by class and day, consent on file, next week's new activities): asked of the orchestrator on 10 Nov"
+          "pending": "built: the school's counts come from CP-28's /k2/today-school (backend draft #619); this control is drawn once that route is on main and the inventory has fixtures for it (clashes, drafts, materials lines, last week)",
+          "text": "drafts to approve"
         },
         {
           "t": "link",
           "label": "sessions done tile",
           "to": "staff",
-          "pending": "the school's counts are not readable by the web yet (clashes not accepted, drafts to approve, materials lines without a quantity, last week's sessions by class and day, consent on file, next week's new activities): asked of the orchestrator on 10 Nov"
+          "pending": "built: the school's counts come from CP-28's /k2/today-school (backend draft #619); this control is drawn once that route is on main and the inventory has fixtures for it (clashes, drafts, materials lines, last week)",
+          "text": "planned last week"
         },
         {
           "t": "cell",
           "label": "each heat-grid cell",
           "to": "timetable",
           "note": "opens that class's day",
-          "pending": "the school's counts are not readable by the web yet (clashes not accepted, drafts to approve, materials lines without a quantity, last week's sessions by class and day, consent on file, next week's new activities): asked of the orchestrator on 10 Nov"
+          "pending": "built: a cell opens that class's day on the timetable; drawn only with last week's rows from CP-28 (#635/#619), so it waits on that route being on main and a fixture with a taught class"
         },
         {
           "t": "row",
@@ -578,7 +581,8 @@
           "roles": [
             "coordinator"
           ],
-          "pending": "the school's counts are not readable by the web yet (clashes not accepted, drafts to approve, materials lines without a quantity, last week's sessions by class and day, consent on file, next week's new activities): asked of the orchestrator on 10 Nov"
+          "pending": "built: the school's counts come from CP-28's /k2/today-school (backend draft #619); this control is drawn once that route is on main and the inventory has fixtures for it (clashes, drafts, materials lines, last week)",
+          "text": "the clashes"
         },
         {
           "t": "row",
@@ -587,30 +591,34 @@
           "roles": [
             "coordinator"
           ],
-          "pending": "the school's counts are not readable by the web yet (clashes not accepted, drafts to approve, materials lines without a quantity, last week's sessions by class and day, consent on file, next week's new activities): asked of the orchestrator on 10 Nov"
+          "pending": "built: the school's counts come from CP-28's /k2/today-school (backend draft #619); this control is drawn once that route is on main and the inventory has fixtures for it (clashes, drafts, materials lines, last week)",
+          "text": "the drafts"
         },
         {
           "t": "row",
           "label": "late notes row",
-          "to": "notes"
+          "to": "notes",
+          "text": "the notes"
         },
         {
           "t": "row",
           "label": "sessions not done row",
           "to": "staff",
-          "pending": "the school's counts are not readable by the web yet (clashes not accepted, drafts to approve, materials lines without a quantity, last week's sessions by class and day, consent on file, next week's new activities): asked of the orchestrator on 10 Nov"
+          "pending": "built: the school's counts come from CP-28's /k2/today-school (backend draft #619); this control is drawn once that route is on main and the inventory has fixtures for it (clashes, drafts, materials lines, last week)",
+          "text": "open staff and classes"
         },
         {
           "t": "row",
           "label": "materials row",
           "to": "materials",
-          "pending": "the school's counts are not readable by the web yet (clashes not accepted, drafts to approve, materials lines without a quantity, last week's sessions by class and day, consent on file, next week's new activities): asked of the orchestrator on 10 Nov"
+          "pending": "built: the school's counts come from CP-28's /k2/today-school (backend draft #619); this control is drawn once that route is on main and the inventory has fixtures for it (clashes, drafts, materials lines, last week)",
+          "text": "the materials"
         },
         {
           "t": "link",
           "label": "each new activity next week",
           "to": "activity",
-          "pending": "the school's counts are not readable by the web yet (clashes not accepted, drafts to approve, materials lines without a quantity, last week's sessions by class and day, consent on file, next week's new activities): asked of the orchestrator on 10 Nov"
+          "pending": "built: the school's counts come from CP-28's /k2/today-school (backend draft #619); this control is drawn once that route is on main and the inventory has fixtures for it (clashes, drafts, materials lines, last week)"
         },
         {
           "t": "link",
@@ -3018,9 +3026,9 @@
           "effect": "the part is emptied and marked; the proposal is rejected"
         },
         {
-          "t": "upload",
-          "label": "capture: Photo",
-          "effect": "a photo of the set-up attaches to the activity"
+          "t": "link",
+          "label": "capture: Voice note",
+          "to": "record"
         },
         {
           "t": "link",
@@ -3050,7 +3058,7 @@
         "the fortnights it is in"
       ],
       "capture": [
-        "photo"
+        "voice"
       ],
       "main": "Keep / Edit a drafted part (curriculum team) · Open the period (educator)",
       "next": "an objective",
@@ -3064,8 +3072,7 @@
       ],
       "done_when": [
         "a drafted part carries the 'drafted' badge until Keep, Edit or Send back; an educator sees the badge but not the three buttons",
-        "every edit writes a change_log row with who",
-        "a photo attaches to the activity, never to a child"
+        "every edit writes a change_log row with who"
       ]
     },
     {

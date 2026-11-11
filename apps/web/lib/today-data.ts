@@ -6,6 +6,7 @@ import type { Day } from "./educator/types";
 import type { Session } from "./auth";
 import { sql } from "./db";
 import { reachOf } from "./reach";
+import { tiles as schoolTiles, type School } from "./today-school";
 
 /** Which version of Today a person gets: the one for everything, or the one for their own classes. Decided by what the person's
  *  group reaches (`reachOf`, the database's one rule), never by naming a role. */
@@ -21,7 +22,7 @@ export type TodoRow = { note_id: string; activity: string | null; activity_name:
 export type Todo = { groups: Record<"to_confirm" | "fix_this" | "left_unconfirmed" | "being_read", { count: number; rows: TodoRow[] }> };
 export type CoordinatorRow = TodoRow & { class: string };
 
-async function ask<T>(path: "/k2/todo" | "/k2/coordinator" | "/timetable/day", body: Record<string, unknown>): Promise<{ ok: true; value: T } | { ok: false; status: number }> {
+async function ask<T>(path: "/k2/todo" | "/k2/coordinator" | "/k2/today-school" | "/timetable/day", body: Record<string, unknown>): Promise<{ ok: true; value: T } | { ok: false; status: number }> {
   try {
     const res = await engineSend(path, body as never);
     return res.ok ? { ok: true, value: (await res.json()) as T } : { ok: false, status: res.status };
@@ -57,6 +58,35 @@ export async function sessionsOf(classId: string, day: string): Promise<Record<s
   return Object.fromEntries(rows.map((r) => [r.period_id, r.id]));
 }
 
+/** The school's counts (CP-28's /k2/today-school): clashes, drafts, late notes, materials, last week, next week, readiness. Null when the engine does not give
+ *  them (the route is not deployed yet, or the person is not a coordinator): the screen then shows what it can read elsewhere. */
+export const schoolCounts = async (me: Pick<Session, "email">) => {
+  const got = await ask<School>("/k2/today-school", { actor: me.email });
+  return got.ok ? got.value : null;
+};
+
+/** The id of each class by grade and section as the engine's counts name them: a cell of last week's grid opens that class's day. */
+export async function classIds(): Promise<Record<string, string>> {
+  const rows = await sql<{ id: string; grade: string; section: string | null }[]>`select id::text, grade_code as grade, section from school_class`;
+  return Object.fromEntries(rows.map((r) => [`${r.grade}|${r.section ?? ""}`, r.id]));
+}
+
+export type Happening = { day: string; what: string };
+/** What is different about the days from `from` for seven days: a day that is not a teaching day (a holiday, changed timing) with its note, and a fortnight that begins. */
+export async function nextWeekEvents(from: string): Promise<Happening[]> {
+  const [days, fortnights] = await Promise.all([
+    sql<{ day: string; kind: string; note: string | null }[]>`
+      select distinct on_date::text as day, kind, note from school_day
+      where on_date between ${from}::date and ${from}::date + 6 and kind <> 'teaching' order by day`,
+    sql<{ day: string; number: number | null }[]>`
+      select starts_on::text as day, number from fortnight where starts_on between ${from}::date and ${from}::date + 6 and kind = 'teaching'`,
+  ]);
+  return [
+    ...days.map((d) => ({ day: d.day, what: d.kind === "holiday" ? `Holiday${d.note ? `: ${d.note}` : ""}` : d.kind === "changed_timing" ? `Changed timing${d.note ? `: ${d.note}` : ""}` : `No school day on record${d.note ? `: ${d.note}` : ""}` })),
+    ...fortnights.map((f) => ({ day: f.day, what: f.number ? `Fortnight ${f.number} begins` : "A fortnight begins" })),
+  ].sort((a, b) => a.day.localeCompare(b.day));
+}
+
 /** The two figures of the strip that are notes, from her groups: left unconfirmed (do now), and still waiting within their time (this week). The page and the badge both use these. */
 export const noteFigures = (t: Todo | null) => ({
   late: t?.groups.left_unconfirmed.count ?? 0,
@@ -64,9 +94,15 @@ export const noteFigures = (t: Todo | null) => ({
 });
 
 /** The one count on the site, the badge on the bar's Today door: the strip's do-now plus this-week (the two never overlap), computed once per request.
- *  An educator's are her notes; the school's are the notes left unconfirmed across the classes (the rest of the school's figures join it with their rows). */
+ *  An educator's are her notes; the school's are its strip's two tiles (clashes, late notes, drafts, materials lines). */
 export const todayBadge = cache(async (me: Session): Promise<number> => {
   if (await schoolVersion(me)) {
+    // the school's strip: clashes and late notes (do now) plus drafts and materials lines (this week)
+    const counts = await schoolCounts(me);
+    if (counts) {
+      const t = schoolTiles(counts);
+      return t.doNow + t.soon;
+    }
     const got = await schoolNotes(me);
     return got ? got.rows.filter((r) => r.state === "left_unconfirmed").length : 0;
   }

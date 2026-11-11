@@ -1171,8 +1171,8 @@
           "says": "the part is emptied and marked; the proposal is rejected"
         },
         {
-          "label": "capture: Photo",
-          "says": "a photo of the set-up attaches to the activity"
+          "label": "capture: Voice note",
+          "says": "Opens Record a note."
         },
         {
           "label": "rail: each objective",

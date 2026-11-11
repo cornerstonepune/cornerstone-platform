@@ -36,7 +36,7 @@ async function testChild(): Promise<string> {
   if (had) return had.id;
   const [{ tenant_id }] = await sql<{ tenant_id: string }[]>`select id as tenant_id from tenant limit 1`;
   const [{ id }] = [{ id: await aChildIn(sql, SECTION, "G2", "1") }];
-  await sql`insert into pii.child (tenant_id, child_id, first_name) values (${tenant_id}, ${id}, 'Today')`;
+  await sql`insert into pii.child (tenant_id, child_id, first_name) values (${tenant_id}, ${id}, 'Tamsin')`;
   for (const right of [false, false, false, false, true, true]) {
     await sql`
       insert into evidence_event (tenant_id, child_id, skill_code, rung_code, correct, channel, observed_at, confirmed_by)

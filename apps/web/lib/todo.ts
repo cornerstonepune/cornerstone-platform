@@ -91,7 +91,7 @@ export function buildTasks(src: Sources, subjectLabel: (code: string | null) => 
   for (const p of src.signoff) add("signoff", p.paper, p, [p.section, p.code], count(p.n, "answer"), `/capture/${p.paper}`, "Sign it off", p.section, [p.section]);
   for (const p of src.packs)
     add("classpaper", `${p.section}|${p.week}|${p.kind}`, p, [p.gradeWords, p.section, KIND_WORDS[p.kind] ?? p.kind, p.weekWords], count(p.n, "paper"), `/papers/approve?section=${encodeURIComponent(p.section)}&week=${encodeURIComponent(p.week)}&kind=${p.kind}`, "Open the papers", p.section, [p.section]);
-  for (const r of src.reports) add("report", r.section, none, [r.gradeWords, r.section], count(r.n, "report"), `/growth/reports?class=${encodeURIComponent(r.section)}`, "Read the reports", r.section, [r.section]);
+  for (const r of src.reports) add("report", r.section, none, [r.gradeWords, r.section], count(r.n, "report"), `/children/reports?class=${encodeURIComponent(r.section)}`, "Read the reports", r.section, [r.section]);
   for (const t of src.untaught)
     add("taught", t.topic, { subject: t.subject, topic: t.topic, topicName: t.topicName }, [t.sections.length > 3 ? `${t.sections.length} classes` : t.sections.join(", ")], count(t.sections.length, "class", "classes"), `/?topic=${encodeURIComponent(t.topic)}`, "Mark as taught", t.topicName, t.sections);
   for (const g of src.generate)
@@ -162,7 +162,7 @@ export const TODO_GROUPS: readonly Group[] = [
   { key: "scans", title: "Papers to read again", of: ["scan", "scans"], kinds: ["empty"], home: "/capture" },
   { key: "answers", title: "Answers to check", of: ["paper", "papers"], kinds: ["check", "signoff"], home: "/capture/check" },
   { key: "home", title: "Home assessments to approve", of: ["class", "classes"], kinds: ["home"], home: "/make" },
-  { key: "reports", title: "Parent reports to approve", of: ["class", "classes"], kinds: ["report"], home: "/growth/reports" },
+  { key: "reports", title: "Parent reports to approve", of: ["class", "classes"], kinds: ["report"], home: "/children/reports" },
 ];
 
 export type Section = { group: Group; title: string; tasks: Task[]; state: State; next: Task };
