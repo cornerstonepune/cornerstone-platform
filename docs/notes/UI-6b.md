@@ -47,3 +47,10 @@ Where each old behaviour lands (every old assertion moves, none dropped):
 Day heads open their day; Today; a cell opens `/period/<its session id>`; Done / Late / Do now chips on work and none ahead; holidays named in words under
 the grid; the class picker for an educator with two classes. Next: move the old calendar specs' assertions onto these views, then 308 and delete the old pages.
 `FortnightGrid` gained an optional `dayHrefs` (no visible change without it). The block-gallery screenshots fail on this machine on any branch (fonts); CI draws the baselines.
+
+
+## Retirement, step 2 (branch `ui-6b-retire`, on top of #633): stepping and the 404s (`u76-timetable-steps.spec.ts`, 5 tests, run twice)
+- Previous / next day (weekends skipped) and previous / next week; a day named in the address chooses the fortnight, so stepping crosses a fortnight's edge.
+- Found on the way: the Timetable picked a fortnight by date alone; when two academic years have a fortnight on the same day it could show the wrong one. A named class now keeps the fortnight in its own year (`fortnightAt(day, classId)`).
+- "Switched off, not found" is true for an educator; the staff preview (a coordinator, while a class has lessons today) may look. The old test did not meet that case because no class had lessons that day.
+- Moved so far from `m1-09-calendar`: not-a-date 404, switched-off 404, the day stepping with the weekend skipped and the holiday message. Still to move: times as ranges, the colour legend, the counts line, the next-period aside, the Now line, week stacking on a phone, today's column, the period page's parts (UI-3's `/period/[id]`).

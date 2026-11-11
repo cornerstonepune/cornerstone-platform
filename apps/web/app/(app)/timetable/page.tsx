@@ -8,7 +8,7 @@ import { FilterBar } from "@/components/filter-bar";
 import { FortnightGrid } from "@/components/fortnight-grid";
 import { ViewToggle } from "@/components/kanban-board";
 import { requireStaff } from "@/lib/auth";
-import { nowAtSchool, shortDate } from "@/lib/educator/clock";
+import { mondayOf, nowAtSchool, schoolDay, shortDate } from "@/lib/educator/clock";
 import { weekOf } from "@/lib/educator/data";
 import { isDay } from "@/lib/educator/period";
 import { dateWords } from "@/lib/week";
@@ -35,9 +35,11 @@ export default async function TimetablePage({ searchParams }: Props) {
   const coordinator = await isCoordinator();
   const today = await schoolToday();
   if (q.day !== undefined && !isDay(q.day)) notFound();
-  const here = await fortnightAt(today);
+  // a day named in the address decides the fortnight it is shown in (stepping across a fortnight's edge); otherwise today does
+  const named = q.day && isDay(q.day) ? q.day : undefined;
+  const here = await fortnightAt(named ?? today, q.class);
   const asked = /^\d+$/.test(q.fn ?? "") ? await fortnightNumber(Number(q.fn)) : null;
-  const fn = asked ?? (q.when === "next" && here ? await fortnightAfter(here) : here);
+  const fn = asked ?? (!named && q.when === "next" && here ? await fortnightAfter(here) : here);
   const view: View = (VIEWS as readonly string[]).includes(q.view ?? "") ? (q.view as View) : "fortnight";
   const keep = (extra: Record<string, string | undefined> = {}) => {
     const p = new URLSearchParams();
@@ -111,6 +113,12 @@ export default async function TimetablePage({ searchParams }: Props) {
             { key: "fortnight", label: "Fortnight", icon: "fortnight", href: keep({ view: "fortnight" }) },
           ]}
         />
+        {view !== "fortnight" ? (
+          <>
+            <Link href={keep({ view, fn: undefined, day: view === "day" ? schoolDay(focus, -1) : mondayOf(focus, -1) })} className="chip" data-step="back">{view === "day" ? "Previous day" : "Previous week"}</Link>
+            <Link href={keep({ view, fn: undefined, day: view === "day" ? schoolDay(focus, 1) : mondayOf(focus, 1) })} className="chip" data-step="on">{view === "day" ? "Next day" : "Next week"}</Link>
+          </>
+        ) : null}
         <Link href={keep({ view: "day", day: today })} className="chip" data-today-link>Today</Link>
       </div>
       {open ? <p className="tt-note" data-clashes={open}>{open} clash{open === 1 ? "" : "es"} not accepted yet: red below.</p> : null}

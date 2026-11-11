@@ -19,8 +19,10 @@ const FN = () => sql`select f.id, f.number, f.starts_on::text as starts_on, f.en
   from fortnight f where f.kind = 'teaching'`;
 
 /** The teaching fortnight holding `day`, or the first one after it when none does (a holiday between). */
-export async function fortnightAt(day: string): Promise<Fn | null> {
-  const [r] = await sql<Fn[]>`${FN()} and f.ends_on >= ${day}::date order by f.starts_on limit 1`;
+export async function fortnightAt(day: string, classId?: string): Promise<Fn | null> {
+  // a class belongs to one academic year, so a named class keeps the fortnight in its own year
+  const mine = classId && /^[0-9a-f-]{36}$/i.test(classId) ? sql`and f.academic_year_id = (select academic_year_id from school_class where id = ${classId})` : sql``;
+  const [r] = await sql<Fn[]>`${FN()} ${mine} and f.ends_on >= ${day}::date order by f.starts_on limit 1`;
   return r ?? null;
 }
 export async function fortnightAfter(f: Fn): Promise<Fn | null> {
