@@ -142,7 +142,9 @@ jobs:
           mkdir -p "$OUT"
           ( ../../bin/testdb fresh "$DATABASE_URL" >"$RUNNER_TEMP/testdb.log" 2>&1; echo $? >"$RUNNER_TEMP/testdb.rc" ) &
       # A paper is printed through Chromium (assess/render.py); the test that scans printed papers needs it.
-      - run: uv run playwright install --with-deps chromium
+      # the runners' Ubuntu mirror sometimes cannot be reached (apt "Temporary failure resolving"): try the install up to three times;
+      # a third failure still fails the step, so nothing is skipped
+      - run: for try in 1 2 3; do uv run playwright install --with-deps chromium && exit 0; echo "install failed (try $try of 3)"; sleep 20; done; exit 1
       # The timetable generator (M1-14b): FET's command-line program, the package the engine image installs too.
       - run: sudo apt-get update -qq && sudo apt-get install -y --no-install-recommends fet && fet-cl --version | head -1
       # The digit reader's models (ADR 0035, ~135 MB): test_digits and test_boxes run the real reader.
@@ -204,7 +206,9 @@ jobs:
       - run: uv sync --extra dev
       - name: the test database, started
         run: ( ../../bin/testdb fresh "$DATABASE_URL" >"$RUNNER_TEMP/testdb.log" 2>&1; echo $? >"$RUNNER_TEMP/testdb.rc" ) &
-      - run: uv run playwright install --with-deps chromium
+      # the runners' Ubuntu mirror sometimes cannot be reached (apt "Temporary failure resolving"): try the install up to three times;
+      # a third failure still fails the step, so nothing is skipped
+      - run: for try in 1 2 3; do uv run playwright install --with-deps chromium && exit 0; echo "install failed (try $try of 3)"; sleep 20; done; exit 1
       - name: the test database, built
         run: |
           while [ ! -f "$RUNNER_TEMP/testdb.rc" ]; do sleep 2; done
@@ -318,13 +322,17 @@ jobs:
       - name: the test database, started
         run: ( bin/testdb fresh "$DATABASE_URL" >"$RUNNER_TEMP/testdb.log" 2>&1; echo $? >"$RUNNER_TEMP/testdb.rc" ) &
       # the engine prints a paper through Chromium (assess/render.py)
-      - run: uv run playwright install --with-deps chromium
+      # the runners' Ubuntu mirror sometimes cannot be reached (apt "Temporary failure resolving"): try the install up to three times;
+      # a third failure still fails the step, so nothing is skipped
+      - run: for try in 1 2 3; do uv run playwright install --with-deps chromium && exit 0; echo "install failed (try $try of 3)"; sleep 20; done; exit 1
         working-directory: packages/engine
       - uses: actions/setup-node@v4
         with: { node-version: 24, cache: npm, cache-dependency-path: apps/web/package-lock.json }
       - run: npm ci
         working-directory: apps/web
-      - run: npx playwright install --with-deps chromium
+      # the runners' Ubuntu mirror sometimes cannot be reached (apt "Temporary failure resolving"): try the install up to three times;
+      # a third failure still fails the step, so nothing is skipped
+      - run: for try in 1 2 3; do npx playwright install --with-deps chromium && exit 0; echo "install failed (try $try of 3)"; sleep 20; done; exit 1
         working-directory: apps/web
       - name: the test database, built
         run: |
