@@ -3346,6 +3346,69 @@
         },
         {
           "t": "link",
+          "label": "Questions to answer: Read them",
+          "text": "Read them",
+          "to": "curriculum",
+          "note": "the card jumps to the table of questions; it is drawn only while a question waits"
+        },
+        {
+          "t": "link",
+          "label": "Read it in full (a question)",
+          "text": "Read it in full",
+          "note": "opens the full draft in a new tab",
+          "when": "@ask-with-link",
+          "newTab": true
+        },
+        {
+          "t": "button",
+          "label": "Agree as drafted (a question)",
+          "data": "data-ask-agree",
+          "effect": "the question is answered 'agreed' in the person's name; it leaves the waiting list",
+          "drive": {
+            "click": "Agree as drafted",
+            "expect": {
+              "check": "ask-answered"
+            }
+          }
+        },
+        {
+          "t": "field",
+          "label": "what it should say (a question)",
+          "data": "data-ask-correction",
+          "text": "What it should say"
+        },
+        {
+          "t": "button",
+          "label": "Correct it (a question)",
+          "data": "data-ask-correct",
+          "effect": "the question is answered 'corrected' with the person's words and name; it leaves the waiting list",
+          "drive": {
+            "fill": {
+              "What it should say": "Say it in the school's own words."
+            },
+            "click": "Correct it",
+            "expect": {
+              "check": "another-ask-answered"
+            }
+          }
+        },
+        {
+          "t": "fold",
+          "label": "the answered questions",
+          "text": "answered",
+          "when": "@asks-answered",
+          "note": "drawn once a question has been answered: who answered, when and what they said"
+        },
+        {
+          "t": "link",
+          "label": "questions page: Later →",
+          "text": "Later →",
+          "to": "curriculum",
+          "when": "paged",
+          "note": "the questions table pages on its own, ten a page"
+        },
+        {
+          "t": "link",
           "label": "rail: Skills to approve",
           "to": "skills-approve"
         },
@@ -3369,7 +3432,7 @@
       "capture": [],
       "main": "Check the drafted parts",
       "next": "an activity",
-      "data": "activity, skill, skill_level, change_log and curriculum_proposal (the source of each part), curriculum_proposal",
+      "data": "activity, skill, skill_level, change_log and curriculum_proposal, ask (the source of each part), curriculum_proposal",
       "empty": "none",
       "phone": "the table scrolls sideways in its own box",
       "folds": [

@@ -33,9 +33,57 @@ export async function correctedPair(sql: Sql, words: string): Promise<{ old: str
 }
 
 
-/** More offers than a page, and the table of what a wrong answer counts against waiting for approval; returns the offers waiting. */
+const openAsksIn = async (sql: Sql) => Number((await sql<{ n: string }[]>`select count(*)::text as n from ask where answer is null`)[0].n);
+let offersAtStart = Infinity;
+let asksAtStart = Infinity;
+/** More offers than a page, every question to answer waiting, and the table of what a wrong answer counts against waiting for approval. */
 export async function seedSetupContent(sql: Sql, skills: string[]) {
   await moreOffers(sql, skills);
   await sql`update config set value = '{}'::jsonb where key = 'skills.charges_by_kind.approved'`;
-  return openOffersIn(sql);
+  await sql`update ask set answer = null, correction = null, answered_by = null, answered_at = null where answer is not null`;
+  offersAtStart = await openOffersIn(sql);
+  asksAtStart = await openAsksIn(sql);
 }
+
+type Aside = <T>(f: (sql: Sql) => Promise<T>) => Promise<T>;
+type Settles = <T>(read: () => Promise<T>, ok: (v: T) => boolean) => Promise<T>;
+/** What a press on these screens must have done to the rows, by the name an element's `drive.expect.check` gives (see CHECKS in inventory-fixtures.ts). */
+export const setupContentChecks = (aside: Aside, settles: Settles): Record<string, () => Promise<string[]>> => {
+  const fewer = (open: (sql: Sql) => Promise<number>, start: () => number, what: string) => async (k: number) => {
+    const n = await settles(() => aside(open), (v) => v <= start() - k);
+    return n <= start() - k ? [] : [`${n} ${what} wait after ${k} answered, of ${start()}`];
+  };
+  const offers = fewer(openOffersIn, () => offersAtStart, "offers");
+  const asks = fewer(openAsksIn, () => asksAtStart, "questions");
+  return {
+    "offer-answered": () => offers(1),
+    "another-offer-answered": () => offers(2),
+    "ask-answered": () => asks(1),
+    "another-ask-answered": () => asks(2),
+    "charges-approved": async () => {
+      const by = await settles(() => aside(async (sql) => (await sql<{ by: string | null }[]>`select value ->> 'by' as by from config where key = 'skills.charges_by_kind.approved'`)[0]?.by ?? null), (v) => v !== null);
+      return by ? [] : ["the table of what a wrong answer counts against is still waiting for approval"];
+    },
+  };
+};
+
+/** Other states of the Curriculum screen, by the name an element's `when: "@name"` gives: an address after the rows are put in that state.
+ *  A change to the questions waiting moves the count the checks above measure from by the same amount, so a drive's check still means "this press". */
+export const setupContentAddresses = (aside: Aside): Record<string, () => Promise<string>> => {
+  const put = (change: (sql: Sql) => Promise<unknown>) => async () => {
+    await aside(async (sql) => {
+      const before = await openAsksIn(sql);
+      await change(sql);
+      asksAtStart += (await openAsksIn(sql)) - before;
+    });
+    return "/setup/curriculum";
+  };
+  return {
+    // one question answered, so the folded list of answered questions is drawn
+    "asks-answered": put((sql) => sql`
+      update ask set answer = 'agreed', answered_by = 'Inventory Educator', answered_at = now()
+      where code = (select code from ask where link is null and answer is null order by ord desc, code desc limit 1)`),
+    // the question that carries a link to its full draft waiting (the first one answered by an earlier press is put back)
+    "ask-with-link": put((sql) => sql`update ask set answer = null, correction = null, answered_by = null, answered_at = null where link is not null`),
+  };
+};

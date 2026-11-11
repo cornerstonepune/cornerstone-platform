@@ -991,10 +991,10 @@ Blocks, in order:
 - **Cards**: Drafts to check (count, link) · Offers waiting (skills offered to activities: Yes / No per row)
 Rail (Connected to): Skills to approve · Question bank · Drafts to check · Offers
 Main action: Check the drafted parts · Next step: an activity
-Data: activity, skill, skill_level, change_log and curriculum_proposal (the source of each part), curriculum_proposal
+Data: activity, skill, skill_level, change_log and curriculum_proposal, ask (the source of each part), curriculum_proposal
 Empty: none · Phone: the table scrolls sideways in its own box
 Folds in: /, /curriculum/browse, /curriculum/fill, /curriculum/offers, /asks
-Every control on the screen (15), and what the test does with each:
+Every control on the screen (22), and what the test does with each:
 - **filter** Grade
 - **filter** Subject
 - **filter** Topic
@@ -1007,6 +1007,13 @@ Every control on the screen (15), and what the test does with each:
 - **button** No (an offer): the offer closes; nothing is linked [coordinator only; absent and refused for others]
 - **link** page: Later → → Curriculum (`/setup/curriculum`)
 - **link** offers page: Later → → Curriculum (`/setup/curriculum`) [coordinator only; absent and refused for others] (the offers table pages on its own, ten a page, and keeps the page of the list)
+- **link** Questions to answer: Read them → Curriculum (`/setup/curriculum`) (the card jumps to the table of questions; it is drawn only while a question waits)
+- **link** Read it in full (a question) (opens the full draft in a new tab)
+- **button** Agree as drafted (a question): the question is answered 'agreed' in the person's name; it leaves the waiting list
+- **field** what it should say (a question)
+- **button** Correct it (a question): the question is answered 'corrected' with the person's words and name; it leaves the waiting list
+- **fold** the answered questions (drawn once a question has been answered: who answered, when and what they said)
+- **link** questions page: Later → → Curriculum (`/setup/curriculum`) (the questions table pages on its own, ten a page)
 - **link** rail: Skills to approve → Skills to approve (`/setup/skills/approve`)
 - **link** rail: Question bank → Question bank (`/setup/question-bank`)
 - **link** rail: Drafts to check → the activity's name (`/setup/activities/[code]`)

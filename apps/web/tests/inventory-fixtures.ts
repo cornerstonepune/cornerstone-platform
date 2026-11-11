@@ -9,7 +9,7 @@ import { SIGNED_IN } from "../playwright.config";
 import { aClass, aPerson, aReadPaper, aTaughtClass, personAsStored } from "./rows";
 import { curriculumRows, gate, offers } from "./m1-13-rows";
 import { FAKE_CHILDREN } from "./fake-names";
-import { correctedPair, openOffersIn, seedSetupContent } from "./inventory-setup-content";
+import { correctedPair, seedSetupContent, setupContentAddresses, setupContentChecks } from "./inventory-setup-content";
 import { seedTeaching, type Teaching } from "./inventory-teaching";
 import { markCorrected, typedNoteWritten, VOICE, voiceGone, voiceRest } from "./inventory-voice";
 
@@ -20,8 +20,6 @@ export const OTHER = "U70B";
 
 /** The count of skills waiting when the run began: an approval must take it below this (a run that is tried again starts lower, and the check still holds). */
 let waitingAtStart = Infinity;
-/** The offers waiting when the run began (twelve): an answer must take the count below this, and the next below that. */
-let offersAtStart = Infinity;
 const QUESTION_WORDS = "Read the question and write your answer.";
 const questionKey = async (sql: Sql) => (await sql<{ item_key: string }[]>`select item_key from item where fmt = 'word_1step' and source = 'generated' order by created_at, item_key limit 1`)[0].item_key;
 
@@ -51,7 +49,7 @@ export async function inventoryRows(sql: Sql): Promise<Rows> {
   // other specs name 22 children "Placeholder" (tests/k2-rows.ts): an activity of that name would be read by the words check as a child's name on the page
   await sql`update activity set name = replace(name, 'Placeholder', 'Sample') where code like 'ACT-K2-M113-%'`;
   await offers(sql, skills);
-  offersAtStart = await seedSetupContent(sql, skills);
+  await seedSetupContent(sql, skills);
   waitingAtStart = Number((await sql<{ n: string }[]>`select count(*)::text as n from skill where status <> 'ratified'`)[0].n);
   await sql`update item set status = 'active', stem = ${QUESTION_WORDS} where item_key = (select item_key from item where fmt = 'word_1step' and source = 'generated' order by created_at, item_key limit 1)`;
   const [q] = await sql<{ item_key: string }[]>`select item_key from item where fmt = 'word_1step' and source = 'generated' order by created_at, item_key limit 1`;
@@ -140,12 +138,7 @@ export const FIXTURES: Record<string, () => Promise<void>> = {
 export const CHECKS: Record<string, () => Promise<string[]>> = {
   // Setup content (UI-11). A press on a server action returns before its work is done (the engine rebuilds worksheets when a question changes),
   // so each check waits for the rows.
-  "offer-answered": () => offersAnswered(1),
-  "another-offer-answered": () => offersAnswered(2),
-  "charges-approved": async () => {
-    const ok = await settles(() => aside(async (sql) => (await sql<{ by: string | null }[]>`select value ->> 'by' as by from config where key = 'skills.charges_by_kind.approved'`)[0]?.by ?? null), (v) => v !== null);
-    return ok ? [] : ["the table of what a wrong answer counts against is still waiting for approval"];
-  },
+  ...setupContentChecks(aside, settles),
   "one-skill-approved": async () => {
     const n = await settles(draftSkills, (v) => v < waitingAtStart);
     return n < waitingAtStart ? [] : [`${n} skills wait after an approval, as before (${waitingAtStart})`];
@@ -289,6 +282,7 @@ export async function anAssessment(sql: Sql, children: Record<string, string>): 
 
 /** Other addresses of a screen, by name, where the rows are in another state (`when: "@name"`): filled by `anAssessment`. */
 export const ADDRESSES: Record<string, () => Promise<string>> = {
+  ...setupContentAddresses(aside),
   // the inventory's question after a correction: the old one removed (it says so and opens the corrected one), and the corrected one (it opens the original)
   "removed-question": () => aside(async (sql) => `/setup/question-bank/${(await correctedPair(sql, QUESTION_WORDS)).old}`),
   "corrected-question": () => aside(async (sql) => `/setup/question-bank/${(await correctedPair(sql, QUESTION_WORDS)).fresh}`),
@@ -298,14 +292,14 @@ const checkedCopies = async (sql: Sql) =>
       select 1 from capture c join item_result r on r.capture_id = c.id where c.sheet_instance_id = sheet_instance.id and c.superseded_by is null and r.state = 'candidate')`)[0].n;
 let before = 0;
 const own = () => postgres(process.env.DATABASE_URL!, { max: 1 });
-const aside = async <T>(f: (sql: Sql) => Promise<T>) => {
+async function aside<T>(f: (sql: Sql) => Promise<T>): Promise<T> {
   const sql = own();
   try {
     return await f(sql);
   } finally {
     await sql.end();
   }
-};
+}
 /** The copies read and settled as they were made: the engine marks every answer again from what was read each time a person types a reading (`again.trusted`),
  *  and holds a right answer for a person until its kind has earned trust, so a copy meant to wait only for its sign-off must be put back before it is looked for. */
 const settle = (sql: Sql) =>
@@ -367,11 +361,6 @@ FIXTURES["assessments-gone"] = () =>
     await sql`update sheet_instance set print_status = 'void' where qr_code like ${`CS${RUN}%`}`;
   });
 
-const openOffers = () => aside(openOffersIn);
-const offersAnswered = async (k: number) => {
-  const n = await settles(openOffers, (v) => v <= offersAtStart - k);
-  return n <= offersAtStart - k ? [] : [`${n} offers wait after ${k} answered, of ${offersAtStart}`];
-};
 const draftSkills = () => aside(async (sql) => Number((await sql<{ n: string }[]>`select count(*)::text as n from skill where status <> 'ratified'`)[0].n));
 async function settles<T>(read: () => Promise<T>, ok: (v: T) => boolean): Promise<T> {
   let v = await read();

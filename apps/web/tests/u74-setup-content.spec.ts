@@ -8,6 +8,7 @@ import postgres from "postgres";
 import { aTaughtClass } from "./rows";
 import { clearOffers, code as k2code, curriculumRows, gate, offers } from "./m1-13-rows";
 import { moreOffers } from "./inventory-setup-content";
+import { TEST_STAFF } from "./global-setup";
 
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 let skills: string[] = [];
@@ -298,5 +299,49 @@ test.describe("the question as it prints", () => {
     expect(after).toBe(before);
     const [row] = await sql<{ status: string }[]>`select status from item where id = ${it.id}`;
     expect(row.status).toBe("retired");
+  });
+});
+
+test.describe("Curriculum: questions to answer", () => {
+  const CODES = ["MD.A2", "MD.A3"];
+  const reset = () => sql`update ask set answer = null, correction = null, answered_by = null, answered_at = null where code = any(${CODES})`;
+  test.beforeEach(reset);
+  test.afterEach(reset);
+
+  test("a question drafted for a person is agreed or corrected in their own words, in the name of who answers", async ({ page }) => {
+    const asked = await sql<{ code: string; question: string }[]>`select code, question from ask where code = any(${CODES}) order by code`;
+    expect(asked.map((a) => a.code)).toEqual(CODES);
+    const [{ n: before }] = await sql<{ n: number }[]>`select count(*)::int as n from ask where answer is null`;
+    const row = (q: string) => page.locator("main [data-ask]").filter({ hasText: q });
+    // they are among the questions waiting, ten a page: the page that holds one is found by paging (the table streams in after the load event)
+    const find = async (q: string) => {
+      for (let p = 1; p <= 3; p++) {
+        await page.goto(`/setup/curriculum?apage=${p}#asks`);
+        await page.locator("main [data-ask]").first().waitFor();
+        if (await row(q).count()) return row(q);
+      }
+      throw new Error(`no question “${q}” among those waiting`);
+    };
+    const name = (verb: string, q: string) => `${verb} (${q}), as ${TEST_STAFF.name}`;
+    await (await find(asked[0].question)).getByRole("button", { name: name("Agree as drafted", asked[0].question) }).click();
+    await expect(page.locator("main [data-ask]").filter({ hasText: asked[0].question })).toHaveCount(0);
+    // an empty correction is refused with a word, and answers nothing
+    await (await find(asked[1].question)).getByRole("button", { name: name("Correct it", asked[1].question) }).click();
+    await expect(page.getByRole("status").filter({ hasText: "A correction needs its words" })).toBeVisible();
+    const mine = await find(asked[1].question);
+    await mine.getByLabel("What it should say").fill("A remainder is written in words first, then with r from Grade 3");
+    await mine.getByRole("button", { name: name("Correct it", asked[1].question) }).click();
+    await page.getByText(/^Read the \d+ answered$/).click();
+    const answered = page.locator("[data-asks]");
+    await expect(answered).toContainText(asked[0].question);
+    await expect(answered).toContainText("A remainder is written in words first, then with r from Grade 3");
+    const rows = await sql<{ code: string; answer: string; correction: string | null; answered_by: string }[]>`
+      select code, answer, correction, answered_by from ask where code = any(${CODES}) order by code`;
+    expect(rows).toEqual([
+      { code: "MD.A2", answer: "agreed", correction: null, answered_by: TEST_STAFF.name },
+      { code: "MD.A3", answer: "corrected", correction: "A remainder is written in words first, then with r from Grade 3", answered_by: TEST_STAFF.name },
+    ]);
+    const [{ n: after }] = await sql<{ n: number }[]>`select count(*)::int as n from ask where answer is null`;
+    expect(after).toBe(before - 2);
   });
 });
