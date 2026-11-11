@@ -71,7 +71,7 @@ def history(
         HISTORY_SQL, {"child": here["child_id"], "before": before, "limit": max(1, min(int(limit), MAX))}
     ).fetchall()
     who = [r["who"] if r["who"] and STAFF_ID.match(r["who"]) else None for r in rows]
-    names = _names(conn, {w for w in who if w})
+    names = _names(conn, {w for w in who if w}, email)
     return {
         "class": f"{where['grade_code']} {where['section']}",
         "roll_no": roll_no,
@@ -88,12 +88,13 @@ def history(
     }
 
 
-def _names(conn: db.Conn, staff_ids: set[str]) -> dict[str, str]:
-    """Display name of each staff id, nothing else of the person (no email, no totals): the one field that names."""
-    if not staff_ids:
-        return {}
-    got = conn.execute(
-        "select staff_id::text as id, name from pii.staff where staff_id = any(%s::uuid[])",
-        (sorted(staff_ids),),
-    ).fetchall()
-    return {r["id"]: r["name"] for r in got}
+def _names(conn: db.Conn, staff_ids: set[str], actor: str) -> dict[str, str]:
+    """Display name of each staff id and nothing else of the person (no email, no phone, no totals): the one field
+    that names. Read only through `pii.read_staff`, which writes who asked to `access_log` (the engine may not read
+    `pii.staff` itself)."""
+    names = {}
+    for sid in sorted(staff_ids):
+        row = conn.execute("select name from pii.read_staff(%s, %s)", (sid, actor)).fetchone()
+        if row:
+            names[sid] = row["name"]
+    return names

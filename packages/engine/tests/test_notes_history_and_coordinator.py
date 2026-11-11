@@ -141,6 +141,10 @@ def test_an_entry_names_who_by_display_name_only_and_only_by_name_carries_a_pers
         rest = repr({key: v for key, v in e.items() if key != "by_name"})
         assert "Placeholder Educator" not in rest and k["email"] not in repr(e)
         assert e["by_name"] is None or e["who"] is not None, "a name only where there is a staff id"
+    logged = conn.execute(
+        "select count(*) n from access_log where actor = %s and action = 'read_pii_staff'", (k["email"],)
+    ).fetchone()["n"]
+    assert logged >= 1, "a staff name is read through pii.read_staff, which logs who asked"
 
 
 def test_evidence_made_by_an_observation_is_not_listed_twice(conn):
