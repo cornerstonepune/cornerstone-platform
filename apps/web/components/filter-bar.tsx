@@ -51,9 +51,9 @@ export function FilterBar({
       <form ref={form} action={action} method="get" role="search" className="flex flex-wrap items-center gap-2">
         {Object.entries(keep).map(([k, v]) => (v ? <input key={k} type="hidden" name={k} value={v} /> : null))}
         {filters.map((f) => (
-          <label key={f.name} className="flex items-center gap-2 text-[13px] text-[var(--ink-muted)]">
+          <label key={f.name} className="flex max-w-full min-w-0 items-center gap-2 text-[13px] text-[var(--ink-muted)]">
             <span>{f.label}</span>
-            <select data-filter="" name={f.name} defaultValue={f.value ?? ""} onChange={() => form.current?.requestSubmit()} className={`select ${control} !w-auto`}>
+            <select data-filter="" name={f.name} defaultValue={f.value ?? ""} onChange={() => form.current?.requestSubmit()} className={`select ${control} !w-auto max-w-full min-w-0`}>
               {f.required ? null : <option value="">{f.all}</option>}
               {f.options.map(([v, words]) => (
                 <option key={v} value={v}>

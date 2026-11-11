@@ -1,8 +1,9 @@
 import { KindTile, type Kind } from "./kind-tile";
 
 /** Two to three panels side by side, each with a header tinted in its kind's colour (kind tile and title), a few lines and
- *  one link. */
-export function Cards({ cards }: { cards: readonly { kind: Kind; title: string; line: string; href: string; link: string }[] }) {
+ *  one link. A card may hold more than a line (`body`: a picture, a short table) and may have no link when it only shows. */
+export type Card = { kind: Kind; title: string; line?: string; body?: React.ReactNode; href?: string; link?: string };
+export function Cards({ cards }: { cards: readonly Card[] }) {
   return (
     <div data-block="Cards" className="b-cards">
       {cards.slice(0, 3).map((c) => (
@@ -12,8 +13,9 @@ export function Cards({ cards }: { cards: readonly { kind: Kind; title: string; 
             {c.title}
           </div>
           <div className="b-card-b">
-            <span className="b-muted">{c.line}</span>
-            <a href={c.href}>{c.link}</a>
+            {c.line ? <span className="b-muted">{c.line}</span> : null}
+            {c.body}
+            {c.href && c.link ? <a href={c.href}>{c.link}</a> : null}
           </div>
         </article>
       ))}

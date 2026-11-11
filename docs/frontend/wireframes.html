@@ -1,0 +1,645 @@
+<title>School OS wireframes</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,600&display=swap">
+<style>
+:root { --bg:#fff; --surface:#f7f7f5; --ink:#1c1b19; --muted:#5e5a52; --line:#e4e3df; --strong:#8a8984; --accent:#b8562f; --accent-bg:rgba(184,86,47,.08); --ok:#4a5435; --sans:"Source Sans 3",system-ui,sans-serif; --serif:"Source Serif 4",Georgia,serif; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { color-scheme:dark; --bg:#171614; --surface:#1f1e1b; --ink:#ece9e2; --muted:#a09e97; --line:#2d2c28; --strong:#8e8c86; --accent:#e0855c; --accent-bg:rgba(224,133,92,.12); --ok:#a9b88a; } }
+:root[data-theme="dark"] { color-scheme:dark; --bg:#171614; --surface:#1f1e1b; --ink:#ece9e2; --muted:#a09e97; --line:#2d2c28; --strong:#8e8c86; --accent:#e0855c; --accent-bg:rgba(224,133,92,.12); --ok:#a9b88a; }
+* { box-sizing:border-box; } body { margin:0; background:var(--bg); color:var(--ink); font:14px/1.5 var(--sans); }
+.wrap { max-width:1200px; margin:0 auto; padding-block:32px 80px; padding-left:max(16px,env(safe-area-inset-left,0px)); padding-right:max(16px,env(safe-area-inset-right,0px)); display:grid; gap:28px; }
+h1 { font:600 2rem/1.2 var(--serif); margin:0; } .lede { color:var(--muted); max-width:80ch; margin:6px 0 0; }
+h2 { font:600 1.4rem var(--serif); margin:24px 0 0; border-bottom:1px solid var(--line); padding-bottom:6px; }
+.toc { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; font-size:13px; } .toc-g { display:grid; gap:3px; align-content:start; } .toc-g b { margin-bottom:3px; } .toc a { color:var(--muted); text-decoration:none; } .toc a:hover { color:var(--ink); text-decoration:underline; }
+.grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(560px,1fr)); gap:20px; }
+.wf { border:1px solid var(--strong); background:var(--bg); display:grid; grid-template-rows:auto auto auto 1fr auto auto; font-size:12px; }
+.wf header { display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; padding:6px 10px; background:var(--surface); border-bottom:1px solid var(--line); color:var(--muted); } .route { font-weight:600; color:var(--ink); font-family:ui-monospace,monospace; }
+.bar { display:flex; gap:10px; align-items:center; padding:6px 10px; border-bottom:1px solid var(--line); font-weight:600; } .bar b { width:8px; height:8px; background:var(--accent); display:inline-block; } .bar .g { font-weight:500; color:var(--muted); padding:2px 0; border-bottom:2px solid transparent; } .bar .g.on { color:var(--ink); border-color:var(--accent); } .bar .search { margin-left:auto; font-style:normal; color:var(--muted); border:1px solid var(--strong); padding:2px 8px; font-weight:400; }
+.trail { padding:4px 10px; background:var(--surface); border-bottom:1px solid var(--line); color:var(--muted); }
+.body { display:grid; grid-template-columns:1fr 160px; min-height:260px; } .main { padding:10px 12px; display:grid; gap:6px; align-content:start; }
+.eyebrow { font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); font-weight:600; } .main h3 { margin:0; font:600 18px/1.2 var(--serif); } .purpose { margin:0; color:var(--muted); }
+.action { display:inline-block; justify-self:start; padding:5px 10px; background:var(--ink); color:var(--bg); font-weight:600; }
+.block { display:grid; grid-template-columns:110px 1fr; gap:8px; padding:7px 9px; border:1px dashed var(--strong); background:repeating-linear-gradient(45deg,transparent 0 6px,var(--surface) 6px 12px); } .tag { font-weight:600; color:var(--accent); }
+.next { color:var(--accent); font-weight:500; }
+.rail { border-left:1px solid var(--line); background:var(--surface); padding:10px; display:grid; gap:4px; align-content:start; } .rail h4 { margin:4px 0 2px; font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); } .rail div { border:1px solid var(--line); background:var(--bg); padding:3px 6px; } .rail .none { border-style:dashed; color:var(--muted); } .rail .cap { border-color:var(--accent); background:var(--accent-bg); }
+.controls { border-top:1px solid var(--line); } .controls summary { cursor:pointer; padding:7px 10px; font-weight:600; color:var(--ink); background:var(--surface); } .controls ul { margin:0; padding:8px 10px 8px 26px; display:grid; gap:3px; } .controls li b { color:var(--accent); } .controls .to { color:var(--ok); } .controls .eff { color:var(--muted); } .controls .role { color:var(--accent); font-weight:600; }
+.wf footer { border-top:1px solid var(--line); padding:8px 10px; display:grid; gap:3px; color:var(--muted); font-size:11.5px; } .wf footer b { color:var(--ink); }
+@media (max-width:640px) { .grid { grid-template-columns:1fr; } .body { grid-template-columns:1fr; } .rail { border-left:0; border-top:1px solid var(--line); } }
+</style>
+<div class="wrap">
+  <header><div class="eyebrow">Cornerstone · frontend specification · wireframes · 09-Nov-2026</div><h1>Every screen of the school's site</h1>
+  <p class="lede">34 screens behind four doors, 366 controls in all. Each frame shows the top bar with its door lit, the trail, the title block, the one main action, the blocks in order (what each shows and from where), the rail of connections and capture buttons, then every control with what the test does when it clicks it, and the data, the empty state, the phone, the old pages that fold in, and what must be true before it is done. Generated from <code>docs/frontend/screens.json</code>; the written specification is <code>docs/frontend/SPEC.md</code>, the scopes <code>docs/frontend/scopes.md</code>.</p></header>
+  <nav class="toc"><div class="toc-g"><b>Today</b><a href="#today-educator">Today</a><a href="#today-coordinator">Today, the school</a><a href="#period">the session's name</a><a href="#record">Record a note</a><a href="#confirm">Confirm what the reader heard</a></div><div class="toc-g"><b>Timetable</b><a href="#timetable">Timetable</a><a href="#fortnight">Fortnight 9</a><a href="#draft">Draft from the rules</a><a href="#moves">Moves by hand</a><a href="#rules">Timetable rules</a><a href="#materials">Materials, this fortnight</a></div><div class="toc-g"><b>Children</b><a href="#notes">Notes</a><a href="#children">Children</a><a href="#picture">Class picture</a><a href="#child">Where this child is</a><a href="#assessments">Assessments</a><a href="#assessment">{the built name}</a><a href="#paper">Check the answers</a><a href="#reports">Reports</a></div><div class="toc-g"><b>Setup</b><a href="#activity">the activity's name</a><a href="#objective">the objective's title</a><a href="#skill">the skill's name</a><a href="#skillset">the skill set's name</a><a href="#curriculum">Curriculum</a><a href="#skills-approve">Skills to approve</a><a href="#bank">Question bank</a><a href="#question">{the question as it prints}</a><a href="#staff">Staff and classes</a><a href="#classes">Classes and children</a><a href="#setup">Setup</a><a href="#blocks">The blocks</a></div><div class="toc-g"><b>Outside the bar</b><a href="#login">Sign in</a><a href="#help">Start here</a><a href="#feedback">Report a problem or suggest something</a></div></nav>
+  <section><h2>Today</h2><div class="grid">
+<article class="wf" id="today-educator">
+  <header><span class="route">/today/new</span><span class="meta">educator · Core · CP-8, CP-10 · exists: part</span></header>
+  <div class="bar"><b></b>Cornerstone <span class="g on">Today</span><span class="g">Timetable</span><span class="g">Children</span><span class="g">Setup</span><i class="search">Sr. No. or activity</i></div>
+  <div class="trail">‹ Back › … › <strong>Today</strong></div>
+  <div class="body">
+    <div class="main">
+      <div class="eyebrow">Wednesday 18-Nov · K2 Red · Fortnight 9, week A</div>
+      <h3>Today</h3>
+      <p class="purpose">Your periods in order. Tap one for what to teach, how, and what to lay out. After it, record a note.</p>
+      <div class="action">▶ the current period</div>
+      <div class="block"><span class="tag">AttentionStrip</span><span>do now = notes unconfirmed past 48 h; this week = notes waiting to confirm that are younger than 48 h (the two never overlap); done = periods finished of planned, children seen this fortnight</span></div><div class="block"><span class="tag">KanbanBoard</span><span>what waits on me, by Table | Board toggle: Do now (notes past 48 h) · This week (notes waiting, younger than 48 h) · Done (periods taught and confirmed today); the List is the periods below</span></div><div class="block"><span class="tag">PeriodRow</span><span>one per session of the day, from `session` for my class; fixed parts of the day included, greyed</span></div><div class="block"><span class="tag">Cards</span><span>Notes to confirm (count, oldest) · Your class (children not seen this fortnight on the skill being taught)</span></div><div class="block"><span class="tag">ChildPeek</span><span>the child chosen from 'Your class'</span></div>
+      <div class="next">→ Timetable</div>
+    </div>
+    <aside class="rail"><h4>Connected to</h4><div>This fortnight</div><div>Materials</div><h4>Capture here</h4><div class="none">not here</div></aside>
+  </div>
+  <details class="controls"><summary>Every control (16) and what the test does with it</summary><ul><li><b>link</b> do now tile <span class="to">→ Confirm what the reader heard</span></li><li><b>link</b> this week tile <span class="to">→ Notes</span></li><li><b>link</b> done today tile <span class="to">→ Class picture</span></li><li><b>row</b> each period row <span class="to">→ the session's name</span></li><li><b>link</b> Confirm the first <span class="to">→ Confirm what the reader heard</span></li><li><b>link</b> Class picture <span class="to">→ Class picture</span></li><li><b>link</b> rail: This fortnight <span class="to">→ Timetable</span></li><li><b>link</b> rail: Materials <span class="to">→ Materials, this fortnight</span></li><li><b>tab</b> Board</li><li><b>tab</b> List</li><li><b>row</b> each note card on the board <span class="to">→ Confirm what the reader heard</span></li><li><b>row</b> each period card on the board <span class="to">→ the session's name</span></li><li><b>peek</b> each Sr. No. in Your class <span class="eff">opens ChildPeek for that child</span></li><li><b>button</b> peek: Close <span class="eff">closes ChildPeek; focus returns to the child that opened it</span></li><li><b>link</b> peek: Open the child <span class="to">→ Where this child is</span></li><li><b>child_name</b> the name in the peek</li></ul></details>
+  <footer><div><b>Data:</b> session × plan_entry × activity for my class on this school_day; pii.educator_note status counts and ages (note status words are a config list); child_skill_state not-seen per child on the skill being taught (an open enrolment with no state row)</div><div><b>Empty:</b> No sessions today (a holiday or no timetable live): say which, link to the fortnight · <b>Phone:</b> same order; the strip stacks; the record button is one tap from the period</div><div><b>Folds in:</b> /today (What needs doing), /educator (K2 Today)</div><div><b>Done when:</b> an educator sees only sessions of classes their grant names (the access fixture's second educator sees a different list); each tile's number equals the count of rows the tile opens; the lit row is the session whose period contains the current time; before 08:30 none is lit; each board lane's card count equals the tile of the same name; a lane with no card says so in words; tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page</div></footer>
+</article>
+<article class="wf" id="today-coordinator">
+  <header><span class="route">/today/new</span><span class="meta">coordinator · Core · CP-6, CP-12, CP-22, CP-10 · exists: no</span></header>
+  <div class="bar"><b></b>Cornerstone <span class="g on">Today</span><span class="g">Timetable</span><span class="g">Children</span><span class="g">Setup</span><i class="search">Sr. No. or activity</i></div>
+  <div class="trail">‹ Back › … › <strong>Today, the school</strong></div>
+  <div class="body">
+    <div class="main">
+      <div class="eyebrow">Wednesday 18-Nov · every class</div>
+      <h3>Today, the school</h3>
+      <p class="purpose">What waits on you, each with its own button. Then the week ahead.</p>
+      <div class="action">▶ the first red row</div>
+      <div class="block"><span class="tag">AttentionStrip</span><span>do now = clashes not accepted + notes unconfirmed past 48 h across classes; this week = drafts to approve, materials lines without quantity; done = sessions done of planned last week</span></div><div class="block"><span class="tag">HeatGrid</span><span>last week, class × day</span></div><div class="block"><span class="tag">DataTable</span><span>the waiting rows: clash, draft, late notes, sessions not done, materials; each row's own button</span></div><div class="block"><span class="tag">Cards</span><span>Next week (events from school_day and fortnight) · New activities next week (plan_entry not taught before) · Does the system have what it needs (activities with steps/levels, materials with quantities, consent on file)</span></div>
+      <div class="next">→ Fortnight</div>
+    </div>
+    <aside class="rail"><h4>Connected to</h4><div>Fortnight 9</div><div>Staff and classes</div><div>Timetable</div><h4>Capture here</h4><div class="none">not here</div></aside>
+  </div>
+  <details class="controls"><summary>Every control (13) and what the test does with it</summary><ul><li><b>link</b> do now tile <span class="to">→ Moves by hand</span></li><li><b>link</b> this week tile <span class="to">→ Fortnight 9</span></li><li><b>link</b> sessions done tile <span class="to">→ Staff and classes</span></li><li><b>cell</b> each heat-grid cell <span class="to">→ Timetable</span></li><li><b>row</b> clash row <span class="to">→ Moves by hand</span> <span class="role">coordinator only</span></li><li><b>row</b> draft row <span class="to">→ Draft from the rules</span> <span class="role">coordinator only</span></li><li><b>row</b> late notes row <span class="to">→ Notes</span></li><li><b>row</b> sessions not done row <span class="to">→ Staff and classes</span></li><li><b>row</b> materials row <span class="to">→ Materials, this fortnight</span></li><li><b>link</b> each new activity next week <span class="to">→ the activity's name</span></li><li><b>link</b> rail: Fortnight 9 <span class="to">→ Fortnight 9</span></li><li><b>link</b> rail: Staff and classes <span class="to">→ Staff and classes</span></li><li><b>link</b> rail: Timetable <span class="to">→ Timetable</span></li></ul></details>
+  <footer><div><b>Data:</b> fortnight state; timetable clashes; sessions by state last week; educator_note status by class; materials_line without quantity; consent counts</div><div><b>Empty:</b> Nothing waits on you: say so in one line, keep the heat grid and next week · <b>Phone:</b> strip stacks; heat grid scrolls sideways in its own box</div><div><b>Done when:</b> only the 'everything' group sees this version; an educator at /today sees the educator's; each waiting row leads to the screen that does the work and the work is listed there; no ranking of people anywhere on the page; the heat grid has one cell per class per teaching day and a dashed cell per holiday</div></footer>
+</article>
+<article class="wf" id="period">
+  <header><span class="route">/period/[id]</span><span class="meta">educator · Core · CP-8 · exists: yes (/educator/period)</span></header>
+  <div class="bar"><b></b>Cornerstone <span class="g on">Today</span><span class="g">Timetable</span><span class="g">Children</span><span class="g">Setup</span><i class="search">Sr. No. or activity</i></div>
+  <div class="trail">‹ Back › … › <strong>the session's name</strong></div>
+  <div class="body">
+    <div class="main">
+      <div class="eyebrow">Period · 09:15 · K2 Red · Numeracy</div>
+      <h3>the session's name</h3>
+      <p class="purpose">the activity's objective in one line</p>
+      <div class="action">▶ Record a note</div>
+      <div class="block"><span class="tag">Cards</span><span>actions: Record a note (main) · Type the marks · Open the activity</span></div><div class="block"><span class="tag">StackBar</span><span>last time this activity ran: above / as expected / below / not willing / absent, with the children below or not willing named by Sr. No.</span></div><div class="block"><span class="tag">Details</span><span>The steps, short (open) · Lay out (materials with quantities) · Watch for (the thinking)</span></div>
+      <div class="next">→ the next period</div>
+    </div>
+    <aside class="rail"><h4>Connected to</h4><div>The activity</div><div>its learning objectives</div><div>Materials</div><div>Its place in the fortnight</div><div>The class</div><h4>Capture here</h4><div class="none">not here</div></aside>
+  </div>
+  <details class="controls"><summary>Every control (15) and what the test does with it</summary><ul><li><b>link</b> Record a note <span class="to">→ Record a note</span></li><li><b>link</b> Type the marks instead <span class="to">→ Record a note</span></li><li><b>link</b> Open the activity <span class="to">→ the activity's name</span></li><li><b>peek</b> each Sr. No. named under the last-time bar <span class="eff">opens ChildPeek for that child</span></li><li><b>fold</b> The steps, short</li><li><b>fold</b> Lay out</li><li><b>fold</b> Watch for</li><li><b>link</b> rail: The activity <span class="to">→ the activity's name</span></li><li><b>link</b> rail: each learning objective <span class="to">→ the objective's title</span></li><li><b>link</b> rail: Materials <span class="to">→ Materials, this fortnight</span></li><li><b>link</b> rail: Its place in the fortnight <span class="to">→ Timetable</span></li><li><b>link</b> rail: The class <span class="to">→ Class picture</span></li><li><b>button</b> peek: Close <span class="eff">closes ChildPeek; focus returns to the child that opened it</span></li><li><b>link</b> peek: Open the child <span class="to">→ Where this child is</span></li><li><b>child_name</b> the name in the peek</li></ul></details>
+  <footer><div><b>Data:</b> session → plan_entry → activity (+activity_material, activity_objective); activity_observation of this activity for this class, last session (the five outcome words are a config list)</div><div><b>Empty:</b> A fixed part of the day: 'Nothing to record here' · <b>Phone:</b> actions first, then the fold; the record button fills the width</div><div><b>Done when:</b> a period with no activity shows no capture controls and the words 'Nothing to record here'; the last-time bar's segments sum to the number of children named in the last session's observations; the steps fold is open on load and the others closed; tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page</div></footer>
+</article>
+<article class="wf" id="record">
+  <header><span class="route">/record</span><span class="meta">educator · Core · CP-10 · exists: yes (/voice/record)</span></header>
+  <div class="bar"><b></b>Cornerstone <span class="g on">Today</span><span class="g">Timetable</span><span class="g">Children</span><span class="g">Setup</span><i class="search">Sr. No. or activity</i></div>
+  <div class="trail">‹ Back › … › <strong>Record a note</strong></div>
+  <div class="body">
+    <div class="main">
+      <div class="eyebrow">K2 Red · the session's name</div>
+      <h3>Record a note</h3>
+      <p class="purpose">Say what happened and who, by Sr. number. The reader turns it into marks; you confirm them, one note at a time.</p>
+      <div class="action">▶ Start recording</div>
+      <div class="block"><span class="tag">CaptureBar</span><span>Start recording (main) · Add a photo · Type the marks; while recording: Stop, Send; after: 'sent, the reader is listening'</span></div><div class="block"><span class="tag">KeyValue</span><span>activity · class · time; audio and transcript kept 48 h on the private side, then deleted</span></div>
+      <div class="next">→ Notes to confirm</div>
+    </div>
+    <aside class="rail"><h4>Connected to</h4><div>The period (when a session is chosen)</div><div>The activity</div><div>The class</div><h4>Capture here</h4><div class="cap">voice note</div><div class="cap">photo</div></aside>
+  </div>
+  <details class="controls"><summary>Every control (9) and what the test does with it</summary><ul><li><b>field</b> Which period</li><li><b>button</b> Start recording <span class="eff">microphone permission asked; the button becomes Stop; a timer counts</span></li><li><b>button</b> Stop <span class="eff">recording ends; Send and Record again appear</span></li><li><b>button</b> Send <span class="eff">one pii.educator_note row with the session id, status received; the page says 'sent, the reader is listening' and links to Notes</span></li><li><b>upload</b> Add a photo <span class="eff">jpg/png/heic accepted; the photo attaches to the session, never to a child</span></li><li><b>button</b> Type the marks <span class="eff">creates the empty note for the chosen session and class in this step and opens it on the confirm screen</span></li><li><b>link</b> rail: The period <span class="to">→ the session's name</span></li><li><b>link</b> rail: The activity <span class="to">→ the activity's name</span></li><li><b>link</b> rail: The class <span class="to">→ Class picture</span></li></ul></details>
+  <footer><div><b>Data:</b> the session; pii.educator_note insert via the engine; config: note retention</div><div><b>Empty:</b> none · <b>Phone:</b> this is the phone screen: one button, the activity already known</div><div><b>Folds in:</b> /voice/record</div><div><b>Done when:</b> Send writes exactly one educator_note with this session's id and nothing in activity_observation; at 400 px the Start button is the full width and at least 56 px tall; a denied microphone shows the typed path as the main action instead of an error</div></footer>
+</article>
+<article class="wf" id="confirm">
+  <header><span class="route">/notes/[id]</span><span class="meta">educator · Core · CP-9, CP-10 · exists: yes (/voice/notes/[id])</span></header>
+  <div class="bar"><b></b>Cornerstone <span class="g on">Today</span><span class="g">Timetable</span><span class="g">Children</span><span class="g">Setup</span><i class="search">Sr. No. or activity</i></div>
+  <div class="trail">‹ Back › … › <strong>Confirm what the reader heard</strong></div>
+  <div class="body">
+    <div class="main">
+      <div class="eyebrow">K2 Red · note of 09:15 · Counting to 20</div>
+      <h3>Confirm what the reader heard</h3>
+      <p class="purpose">Left, your words line by line. Right, the class already marked from them. Nothing is ticked for you; 'the rest did as expected' is one switch. Confirm is for this note only.</p>
+      <div class="action">▶ Confirm this note</div>
+      <div class="block"><span class="tag">Cards</span><span>You said: each claim line with its words → Sr. No.s and the mark as a chip; problems the reader flagged pinned on top in red</span></div><div class="block"><span class="tag">ClassGrid</span><span>the class marked from the note; corner marks ▲ ▼ ✋ ○; tap a square to change a mark</span></div><div class="block"><span class="tag">Form</span><span>'the rest did as expected' switch · Confirm this note (main)</span></div>
+      <div class="next">→ the next note waiting</div>
+    </div>
+    <aside class="rail"><h4>Connected to</h4><div>The period</div><div>The activity</div><div>The class</div><h4>Capture here</h4><div class="none">not here</div></aside>
+  </div>
+  <details class="controls"><summary>Every control (12) and what the test does with it</summary><ul><li><b>button</b> each claim line's × (remove) <span class="eff">the claim is marked removed; its children's squares return to unmarked; recorded as her decision</span></li><li><b>cell</b> each square <span class="eff">opens the mark picker: above / below / not willing / absent / clear (&quot;as expected&quot; is the one switch for the rest: the engine records an individual child's mark in four lists); the square's corner mark changes; the claim it came from is marked changed</span></li><li><b>switch</b> the rest did as expected <span class="eff">every unmarked present child gets as-expected with entry mode group; off removes them</span></li><li><b>button</b> Confirm this note <span class="eff">one activity_observation per marked child with one confirmation_id; the note's status becomes confirmed; lands on the next waiting note or Notes</span></li><li><b>button</b> Correct this note <span class="eff">a confirmed note only: writes a superseding note row; the old row is never edited</span></li><li><b>link</b> rail: The period <span class="to">→ the session's name</span></li><li><b>link</b> rail: The activity <span class="to">→ the activity's name</span></li><li><b>link</b> rail: The class <span class="to">→ Class picture</span></li><li><b>child_name</b> each square and each claim line</li><li><b>peek</b> each child's name on a claim line <span class="eff">opens ChildPeek for that child</span></li><li><b>button</b> peek: Close <span class="eff">closes ChildPeek; focus returns to the child that opened it</span></li><li><b>link</b> peek: Open the child <span class="to">→ Where this child is</span></li></ul></details>
+  <footer><div><b>Data:</b> pii.educator_note + draft claims from the engine (pii.note_claim: flag, outcome, entry_mode, child_id, set when the note is read); activity_observation written at confirm, one row per child, confirmation_id</div><div><b>Empty:</b> No note waiting: link to Record · <b>Phone:</b> the grid first, then her words; Confirm fixed at the bottom</div><div><b>Done when:</b> Confirm writes one activity_observation per marked child, none for an unmarked child, all with one confirmation_id; a changed or removed claim is kept as changed/removed in note_claim (reader accuracy); no control confirms more than one note; a child's square is never red, whatever the mark; a child's name on a claim line opens ChildPeek; a square still changes the mark and never opens the peek; tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page</div></footer>
+</article></div></section><section><h2>Timetable</h2><div class="grid">
+<article class="wf" id="timetable">
+  <header><span class="route">/timetable</span><span class="meta">everyone · Core · CP-22 · exists: part (/educator/week)</span></header>
+  <div class="bar"><b></b>Cornerstone <span class="g">Today</span><span class="g on">Timetable</span><span class="g">Children</span><span class="g">Setup</span><i class="search">Sr. No. or activity</i></div>
+  <div class="trail">‹ Back › … › <strong>Timetable</strong></div>
+  <div class="body">
+    <div class="main">
+      <div class="eyebrow">K2 Red</div>
+      <h3>Timetable</h3>
+      <p class="purpose">The fortnight is the unit. Week A and week B, each period a block; a moved period is marked, a clash is red until the coordinator accepts it.</p>
+      <div class="action">▶ Open today</div>
+      <div class="block"><span class="tag">FilterBar</span><span>class (coordinator only) · Day / Week / Fortnight view · this / next fortnight</span></div><div class="block"><span class="tag">FortnightGrid</span><span>from the timetable_rule rows in force + the dated session rows; subject colours; moved/clash outlines; a cell is the period's link</span></div><div class="block"><span class="tag">Cards</span><span>Fortnight 9: state · Materials for this fortnight</span></div>
+      <div class="next">→ Fortnight</div>
+    </div>
+    <aside class="rail"><h4>Connected to</h4><div>Fortnight 9</div><div>Materials</div><div>Today's period</div><div>Rules (coordinator)</div><h4>Capture here</h4><div class="none">not here</div></aside>
+  </div>
+  <details class="controls"><summary>Every control (11) and what the test does with it</summary><ul><li><b>filter</b> class <span class="role">coordinator only</span></li><li><b>tab</b> Day / Week / Fortnight</li><li><b>filter</b> this / next fortnight</li><li><b>cell</b> each grid cell <span class="to">→ the session's name</span></li><li><b>fold</b> a moved cell's details (who, why, when)</li><li><b>link</b> Fortnight 9 card <span class="to">→ Fortnight 9</span></li><li><b>link</b> Materials card <span class="to">→ Materials, this fortnight</span></li><li><b>link</b> rail: Fortnight 9 <span class="to">→ Fortnight 9</span></li><li><b>link</b> rail: Materials <span class="to">→ Materials, this fortnight</span></li><li><b>link</b> rail: Today's period <span class="to">→ the session's name</span></li><li><b>link</b> rail: Rules <span class="to">→ Timetable rules</span> <span class="role">coordinator only</span></li></ul></details>
+  <footer><div><b>Data:</b> timetable_rule rows (kind slot) valid today; session for the fortnight's days; period times; school_day kinds</div><div><b>Empty:</b> No timetable live for this class: coordinator sees 'Make a draft' · <b>Phone:</b> Day view by default; week scrolls sideways in its box</div><div><b>Folds in:</b> /educator (day), /educator/week</div><div><b>Done when:</b> a hand move shows an amber outline and its details name who and why; an educator never sees an accept-clash control; a clash cell is red for both roles; the grid's cells equal the session rows for the day shown (count and names)</div></footer>
+</article>
+<article class="wf" id="fortnight">
+  <header><span class="route">/timetable/fortnight/[n]</span><span class="meta">everyone · Core · CP-6, CP-22 · exists: no</span></header>
+  <div class="bar"><b></b>Cornerstone <span class="g">Today</span><span class="g on">Timetable</span><span class="g">Children</span><span class="g">Setup</span><i class="search">Sr. No. or activity</i></div>
+  <div class="trail">‹ Back › … › <strong>Fortnight 9</strong></div>
+  <div class="body">
+    <div class="main">
+      <div class="eyebrow">16-Nov to 27-Nov</div>
+      <h3>Fortnight 9</h3>
+      <p class="purpose">Its state, its plan lines, and what changed when the draft went live. Frozen once it starts; a move after that is a hand move, kept with who made it.</p>
+      <div class="action">▶ Approve / Go live (coordinator) · Open the grid (educator)</div>
+      <div class="block"><span class="tag">Stepper</span><span>drafted · approved · live · frozen</span></div><div class="block"><span class="tag">Cards</span><span>State (chip + who/when) · Plan lines (plan_entry, each an activity link) · Hand moves (who, why, when)</span></div><div class="block"><span class="tag">DataTable</span><span>coordinator: what changed at go-live, session by session</span></div><div class="block"><span class="tag">Form</span><span>coordinator: Approve · Go live (main, one at a time)</span></div>
+      <div class="next">→ Timetable</div>
+    </div>
+    <aside class="rail"><h4>Connected to</h4><div>The grid</div><div>every activity in the plan</div><div>Materials</div><div>Draft (coordinator)</div><h4>Capture here</h4><div class="none">not here</div></aside>
+  </div>
+  <details class="controls"><summary>Every control (8) and what the test does with it</summary><ul><li><b>link</b> each plan line <span class="to">→ the activity's name</span></li><li><b>link</b> each hand move <span class="to">→ Moves by hand</span> <span class="role">coordinator only</span></li><li><b>button</b> Approve <span class="eff">approval row written; the stepper moves to approved; Go live appears; Approve disappears</span> <span class="role">coordinator only</span></li><li><b>button</b> Go live <span class="eff">sessions updated in place; the what-changed table fills; the stepper moves to live</span> <span class="role">coordinator only</span></li><li><b>link</b> rail: The grid <span class="to">→ Timetable</span></li><li><b>link</b> rail: each activity in the plan <span class="to">→ the activity's name</span></li><li><b>link</b> rail: Materials <span class="to">→ Materials, this fortnight</span></li><li><b>link</b> rail: Draft <span class="to">→ Draft from the rules</span> <span class="role">coordinator only</span></li></ul></details>
+  <footer><div><b>Data:</b> fortnight + fortnight.state (CP-6; each step's yes is an approval row); plan_entry; session diffs at go-live (CP-22); approval ledger</div><div><b>Empty:</b> No plan lines yet: link to the planner upload · <b>Phone:</b> stepper wraps to two rows</div><div><b>Done when:</b> Approve and Go live exist for the 'everything' group only and their requests are refused for others; a frozen fortnight shows no Approve, Go live or edit control; the what-changed table lists every session the go-live updated, and nothing else</div></footer>
+</article>
+<article class="wf" id="draft">
+  <header><span class="route">/timetable/draft</span><span class="meta">coordinator · Core · CP-11 · exists: no</span></header>
+  <div class="bar"><b></b>Cornerstone <span class="g">Today</span><span class="g on">Timetable</span><span class="g">Children</span><span class="g">Setup</span><i class="search">Sr. No. or activity</i></div>
+  <div class="trail">‹ Back › … › <strong>Draft from the rules</strong></div>
+  <div class="body">
+    <div class="main">
+      <div class="eyebrow">Fortnight 10 · from the rules</div>
+      <h3>Draft from the rules</h3>
+      <p class="purpose">One command makes a draft from the period times, blocked days, fixed slots and limits. Rules it could not meet are listed in words.</p>
+      <div class="action">▶ Make a draft</div>
+      <div class="block"><span class="tag">Form</span><span>Make a draft (main) · which fortnight</span></div><div class="block"><span class="tag">FortnightGrid</span><span>the draft, every class, tabs per class</span></div><div class="block"><span class="tag">DataTable</span><span>rules not met: the rule in the school's words · where · what the draft did instead</span></div><div class="block"><span class="tag">Cards</span><span>Next: hand moves · then Approve on the fortnight</span></div>
+      <div class="next">→ Moves by hand</div>
+    </div>
+    <aside class="rail"><h4>Connected to</h4><div>Rules</div><div>Fortnight 10</div><div>Moves by hand</div><h4>Capture here</h4><div class="none">not here</div></aside>
+  </div>
+  <details class="controls"><summary>Every control (9) and what the test does with it</summary><ul><li><b>field</b> which fortnight</li><li><b>button</b> Make a draft <span class="eff">the engine command runs; the grid fills with the draft; unmet rules list; a live fortnight is untouched</span></li><li><b>tab</b> each class</li><li><b>cell</b> each grid cell <span class="to">→ the session's name</span></li><li><b>link</b> each unmet rule's rule name <span class="to">→ Timetable rules</span></li><li><b>link</b> Next: hand moves <span class="to">→ Moves by hand</span></li><li><b>link</b> rail: Rules <span class="to">→ Timetable rules</span></li><li><b>link</b> rail: Fortnight 10 <span class="to">→ Fortnight 9</span></li><li><b>link</b> rail: Moves by hand <span class="to">→ Moves by hand</span></li></ul></details>
+  <footer><div><b>Data:</b> engine command (FET) → draft slots; unmet rules report</div><div><b>Empty:</b> No rules for this grade yet: link to Rules · <b>Phone:</b> read-only; the button is desktop</div><div><b>Done when:</b> the draft shown equals the slots the generator wrote (count and cells); every unmet rule row names a rule row that exists; Make a draft never changes a live fortnight's sessions (count unchanged before and after)</div></footer>
+</article>
+<article class="wf" id="moves">
+  <header><span class="route">/timetable/moves</span><span class="meta">coordinator · Core · CP-12 · exists: no</span></header>
+  <div class="bar"><b></b>Cornerstone <span class="g">Today</span><span class="g on">Timetable</span><span class="g">Children</span><span class="g">Setup</span><i class="search">Sr. No. or activity</i></div>
+  <div class="trail">‹ Back › … › <strong>Moves by hand</strong></div>
+  <div class="body">
+    <div class="main">
+      <div class="eyebrow">Fortnight 10 · draft</div>
+      <h3>Moves by hand</h3>
+      <p class="purpose">Move a period; the clash it makes shows at once; only the coordinator accepts one, with a reason.</p>
+      <div class="action">▶ Accept the clash</div>
+      <div class="block"><span class="tag">FortnightGrid</span><span>drag or pick-and-place; a moved cell amber; a clash red</span></div><div class="block"><span class="tag">DataTable</span><span>moves made: what · from · to · who · why · clash accepted?</span></div><div class="block"><span class="tag">Form</span><span>accept this clash: reason (required) · Accept</span></div>
+      <div class="next">→ Fortnight: Approve</div>
+    </div>
+    <aside class="rail"><h4>Connected to</h4><div>Fortnight 10</div><div>The grid</div><div>Rules</div><h4>Capture here</h4><div class="none">not here</div></aside>
+  </div>
+  <details class="controls"><summary>Every control (7) and what the test does with it</summary><ul><li><b>cell</b> pick a cell, then a target cell <span class="eff">the session moves; the source and target cells redraw; a clash shows red; a move row appears with who</span></li><li><b>button</b> Undo the last move <span class="eff">the move is reversed as a new move row, never deleted</span></li><li><b>field</b> reason</li><li><b>button</b> Accept the clash <span class="eff">the clash is marked accepted with the reason and who; the cell's outline turns amber</span></li><li><b>link</b> rail: Fortnight 10 <span class="to">→ Fortnight 9</span></li><li><b>link</b> rail: The grid <span class="to">→ Timetable</span></li><li><b>link</b> rail: Rules <span class="to">→ Timetable rules</span></li></ul></details>
+  <footer><div><b>Data:</b> session moves kept with staff id and reason; clash detection from the engine</div><div><b>Empty:</b> No moves yet · <b>Phone:</b> read-only</div><div><b>Done when:</b> a move changes only its own fortnight's sessions; as educator the page is read-only: no pick, no Accept, and the requests are refused; every move is listed with who made it and when, and an undo is a new row</div></footer>
+</article>
+<article class="wf" id="rules">
+  <header><span class="route">/timetable/rules</span><span class="meta">coordinator · Core · CP-11 · exists: yes</span></header>
+  <div class="bar"><b></b>Cornerstone <span class="g">Today</span><span class="g on">Timetable</span><span class="g">Children</span><span class="g">Setup</span><i class="search">Sr. No. or activity</i></div>
+  <div class="trail">‹ Back › … › <strong>Timetable rules</strong></div>
+  <div class="body">
+    <div class="main">
+      <div class="eyebrow">Every grade</div>
+      <h3>Timetable rules</h3>
+      <p class="purpose">Period times, blocked days, fixed slots and subject limits, kept as rows with who changed them.</p>
+      <div class="action">▶ Add a rule</div>
+      <div class="block"><span class="tag">FilterBar</span><span>grade · kind</span></div><div class="block"><span class="tag">DataTable</span><span>rule · grade · value · changed by · when; each row its own Edit</span></div><div class="block"><span class="tag">Details</span><span>history of edits (change_log)</span></div>
+      <div class="next">→ Draft</div>
+    </div>
+    <aside class="rail"><h4>Connected to</h4><div>Draft from the rules</div><div>Timetable</div><h4>Capture here</h4><div class="none">not here</div></aside>
+  </div>
+  <details class="controls"><summary>Every control (7) and what the test does with it</summary><ul><li><b>filter</b> grade</li><li><b>filter</b> kind</li><li><b>button</b> Edit (a row) <span class="eff">the row's value becomes a field; Save writes a change_log row with who and when; Cancel restores</span></li><li><b>button</b> Add a rule <span class="eff">a new row form; Save adds the rule and its edit row</span></li><li><b>fold</b> History of edits</li><li><b>link</b> rail: Draft from the rules <span class="to">→ Draft from the rules</span></li><li><b>link</b> rail: Timetable <span class="to">→ Timetable</span></li></ul></details>
+  <footer><div><b>Data:</b> period, timetable_rule (kind block or limit), change_log for each edit</div><div><b>Empty:</b> No rules yet: 'Add the period times first' · <b>Phone:</b> the table scrolls sideways in its own box</div><div><b>Done when:</b> the page sits under Timetable in the menu, not Setup; every edit shows who and when, and the history fold lists it</div></footer>
+</article>
+<article class="wf" id="materials">
+  <header><span class="route">/timetable/materials</span><span class="meta">everyone · Later · CP-17, CP-18 · exists: yes (/educator/materials)</span></header>
+  <div class="bar"><b></b>Cornerstone <span class="g">Today</span><span class="g on">Timetable</span><span class="g">Children</span><span class="g">Setup</span><i class="search">Sr. No. or activity</i></div>
+  <div class="trail">‹ Back › … › <strong>Materials, this fortnight</strong></div>
+  <div class="body">
+    <div class="main">
+      <div class="eyebrow">K2 Red · Fortnight 9</div>
+      <h3>Materials, this fortnight</h3>
+      <p class="purpose">Built from the activities in the plan. Each line knows which activity needs it. Set a quantity, remove a line, add from the catalogue.</p>
+      <div class="action">▶ Fill the quantities</div>
+      <div class="block"><span class="tag">FilterBar</span><span>day · week · fortnight</span></div><div class="block"><span class="tag">DataTable</span><span>item · quantity (editable) · for which activity (link) · source</span></div><div class="block"><span class="tag">Cards</span><span>School list (coordinator) · Notes to read (notes the system could not match to an item)</span></div>
+      <div class="next">→ Fortnight 9</div>
+    </div>
+    <aside class="rail"><h4>Connected to</h4><div>every activity in the plan</div><div>Fortnight 9</div><h4>Capture here</h4><div class="cap">photo</div></aside>
+  </div>
+  <details class="controls"><summary>Every control (10) and what the test does with it</summary><ul><li><b>filter</b> day / week / fortnight</li><li><b>field</b> quantity (each line) <span class="eff">a number; saving writes materials_line_edit with who; the amber 'to confirm' chip clears</span></li><li><b>button</b> Remove (each line) <span class="eff">the line is marked removed with who, never deleted</span></li><li><b>button</b> Add from the catalogue <span class="eff">a picker of material_item; never free text</span></li><li><b>link</b> each line's activity <span class="to">→ the activity's name</span></li><li><b>tab</b> My class / School list <span class="role">coordinator only</span></li><li><b>filter</b> Notes to read</li><li><b>link</b> rail: each activity in the plan <span class="to">→ the activity's name</span></li><li><b>link</b> rail: Fortnight 9 <span class="to">→ Fortnight 9</span></li><li><b>upload</b> capture: Photo <span class="eff">a photo attaches to the list, never to a child</span></li></ul></details>
+  <footer><div><b>Data:</b> materials_list, materials_line, activity_material, material_item</div><div><b>Empty:</b> No plan lines with materials · <b>Phone:</b> the table scrolls sideways in its own box</div><div><b>Done when:</b> a line with no quantity carries the amber 'to confirm' chip; approval (CP-17) exists only for the signed-in educator's own class and is refused for another</div></footer>
+</article></div></section><section><h2>Children</h2><div class="grid">
+<article class="wf" id="notes">
+  <header><span class="route">/notes</span><span class="meta">everyone · Core · CP-9, CP-10 · exists: no</span></header>
+  <div class="bar"><b></b>Cornerstone <span class="g">Today</span><span class="g">Timetable</span><span class="g on">Children</span><span class="g">Setup</span><i class="search">Sr. No. or activity</i></div>
+  <div class="trail">‹ Back › … › <strong>Notes</strong></div>
+  <div class="body">
+    <div class="main">
+      <div class="eyebrow">K2 Red · this fortnight</div>
+      <h3>Notes</h3>
+      <p class="purpose">Every note of your classes: waiting, confirmed, left unconfirmed. Open one to confirm it or to correct a confirmed one.</p>
+      <div class="action">▶ Confirm the oldest</div>
+      <div class="block"><span class="tag">FilterBar</span><span>class · state · week</span></div><div class="block"><span class="tag">KanbanBoard</span><span>the notes as lanes by Table | Board toggle: To confirm (late ones first, red; a note still being read or left unconfirmed sits here too) · Confirmed; each card a note</span></div><div class="block"><span class="tag">DataTable</span><span>when · activity · by voice/form · state chip · children named · its button (Confirm / Open / Correct)</span></div><div class="block"><span class="tag">ChildPeek</span><span>the child chosen from the children-named column</span></div>
+      <div class="next">→ Class picture</div>
+    </div>
+    <aside class="rail"><h4>Connected to</h4><div>Record a note</div><div>Class picture</div><div>Today</div><h4>Capture here</h4><div class="cap">voice note</div></aside>
+  </div>
+  <details class="controls"><summary>Every control (19) and what the test does with it</summary><ul><li><b>filter</b> class <span class="role">coordinator only</span></li><li><b>filter</b> state</li><li><b>filter</b> week</li><li><b>peek</b> each child named in a note <span class="eff">opens ChildPeek for that child; a name is read from pii by child_id (pii.note_claim.child_id), the chip shows the Sr. No. and the name</span></li><li><b>button</b> × on a filter chip <span class="eff">removes that filter from the address</span></li><li><b>button</b> Clear <span class="eff">removes every filter</span></li><li><b>row</b> Confirm (a waiting note) <span class="to">→ Confirm what the reader heard</span></li><li><b>row</b> Open (a confirmed note) <span class="to">→ Confirm what the reader heard</span></li><li><b>link</b> page: Later → <span class="to">→ Notes</span></li><li><b>link</b> rail: Record a note <span class="to">→ Record a note</span></li><li><b>link</b> rail: Class picture <span class="to">→ Class picture</span></li><li><b>link</b> rail: Today <span class="to">→ Today</span></li><li><b>link</b> capture: Voice note <span class="to">→ Record a note</span></li><li><b>tab</b> Board</li><li><b>tab</b> Table</li><li><b>row</b> each card on the board <span class="to">→ Confirm what the reader heard</span></li><li><b>button</b> peek: Close <span class="eff">closes ChildPeek; focus returns to the child that opened it</span></li><li><b>link</b> peek: Open the child <span class="to">→ Where this child is</span></li><li><b>child_name</b> the name in the peek</li></ul></details>
+  <footer><div><b>Data:</b> pii.educator_note joined to activity_observation counts; pii.educator_note.status (the words are a config list); pii.educator_note.route (by voice / form); pii.note_claim.child_id for the children named</div><div><b>Empty:</b> No notes yet this fortnight: link to Record · <b>Phone:</b> the table scrolls sideways in its own box</div><div><b>Done when:</b> a correction writes a superseding row with a reason and never updates the old one; the coordinator sees every class, an educator their own (access fixture); a note left unconfirmed past 48 hours carries the red 'late' chip and sorts first; each board lane's card count equals the rows of the table in that state; tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page</div></footer>
+</article>
+<article class="wf" id="children">
+  <header><span class="route">/children</span><span class="meta">everyone · Core · CP-13 · exists: part (/k2)</span></header>
+  <div class="bar"><b></b>Cornerstone <span class="g">Today</span><span class="g">Timetable</span><span class="g on">Children</span><span class="g">Setup</span><i class="search">Sr. No. or activity</i></div>
+  <div class="trail">‹ Back › … › <strong>Children</strong></div>
+  <div class="body">
+    <div class="main">
+      <div class="eyebrow">Your classes</div>
+      <h3>Children</h3>
+      <p class="purpose">Your children in one table: how each is doing, last seen, notes waiting. Search, filter, open a child.</p>
+      <div class="action">▶ Class picture grid</div>
+      <div class="block"><span class="tag">FilterBar</span><span>search by name or Sr. No. · class (coordinator) · needs attention · group by (none · class · how they are doing · needs attention)</span></div><div class="block"><span class="tag">DataTable</span><span>Sr. No. · name (opens ChildPeek) · class (only when several) · how they are doing (stacked bar of secure / practising / not seen skills) · last seen · notes waiting · absences noted, last 7 school days; with a group heading and count when grouped</span></div><div class="block"><span class="tag">ChildPeek</span><span>the child chosen in the table: recent history, newest first</span></div>
+      <div class="next">→ a child</div>
+    </div>
+    <aside class="rail"><h4>Connected to</h4><div>Assessments</div><div>Notes</div><h4>Capture here</h4><div class="none">not here</div></aside>
+  </div>
+  <details class="controls"><summary>Every control (14) and what the test does with it</summary><ul><li><b>filter</b> search by name or Sr. No.</li><li><b>filter</b> class <span class="role">coordinator only</span></li><li><b>filter</b> needs attention</li><li><b>button</b> × on a filter chip <span class="eff">removes that filter from the address</span></li><li><b>button</b> Clear <span class="eff">removes every filter and the search</span></li><li><b>peek</b> each child <span class="eff">opens ChildPeek for that child (the Sr. No. and name are the button)</span></li><li><b>child_name</b> the name column and the peek's name</li><li><b>link</b> Class picture grid <span class="to">→ Class picture</span></li><li><b>link</b> rail: Assessments <span class="to">→ Assessments</span></li><li><b>link</b> rail: Notes <span class="to">→ Notes</span></li><li><b>link</b> page: Later → <span class="to">→ Children</span></li><li><b>filter</b> group by</li><li><b>button</b> peek: Close <span class="eff">closes ChildPeek; focus returns to the child that opened it</span></li><li><b>link</b> peek: Open the child <span class="to">→ Where this child is</span></li></ul></details>
+  <footer><div><b>Data:</b> school_class, enrolment, pii.child, child_skill_state counts per child, pii.educator_note waiting per child (pii.note_claim.child_id), activity_observation with outcome 'absent' over session (absences noted, last 7 school days that had a confirmed lesson for the class); the peek: see ChildPeek</div><div><b>Empty:</b> No class linked to you: 'The coordinator links you to the classes you teach'; no match: 'No child matches' with Clear · <b>Phone:</b> the table scrolls sideways in its own box</div><div><b>Done when:</b> for a signed-in educator the table lists their own children; a coordinator sees every class, with a class filter; the class column and the class filter appear only when the person has several classes; the how-they-are-doing bar's segments are secure, practising and not seen, and sum to the child's skill count; never a red segment; searching a Sr. No. or part of a name narrows the rows and writes itself into the address; a reload keeps it; the absences-noted column shows the last 7 school days that had a confirmed lesson for the class: a noted absence is a grey 'absent' cell with its word, a day with no confirmed lesson is blank and never reads 'present'; the column head says 'absences noted'; tapping a row opens ChildPeek for that child; the peek's 'Open the child' lands on the child; the toggle opens the class picture grid and the picture's toggle returns here; grouping by class, by how they are doing or by needs attention puts a heading and a count over each group, the counts sum to the rows, and a child is in exactly one group; groups are computed, never stored; tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page</div></footer>
+</article>
+<article class="wf" id="picture">
+  <header><span class="route">/children/[class]</span><span class="meta">everyone · Core · CP-13, CP-9 · exists: yes (/k2/[class])</span></header>
+  <div class="bar"><b></b>Cornerstone <span class="g">Today</span><span class="g">Timetable</span><span class="g on">Children</span><span class="g">Setup</span><i class="search">Sr. No. or activity</i></div>
+  <div class="trail">‹ Back › … › <strong>Class picture</strong></div>
+  <div class="body">
+    <div class="main">
+      <div class="eyebrow">K2 Red · 24 children</div>
+      <h3>Class picture</h3>
+      <p class="purpose">Each square a child by Sr. No., shown on one skill at a time. Tap a child. Change the skill from the rail.</p>
+      <div class="action">▶ a child</div>
+      <div class="block"><span class="tag">FilterBar</span><span>skill (the skills anyone was seen on) · domain · group by (state on this skill · class)</span></div><div class="block"><span class="tag">ClassGrid</span><span>state on the chosen skill; not seen = dashed; tap = open ChildPeek; with a group heading and count when grouped</span></div><div class="block"><span class="tag">StackBar</span><span>the class on this skill with counts</span></div><div class="block"><span class="tag">Spark</span><span>secure over six fortnights</span></div><div class="block"><span class="tag">Cards</span><span>Clusters: children who share a place on this topic (for example secure here, ready for the next skill), each with its count and its children as chips that open ChildPeek</span></div><div class="block"><span class="tag">ChildPeek</span><span>the child chosen in the grid</span></div>
+      <div class="next">→ the skill</div>
+    </div>
+    <aside class="rail"><h4>Connected to</h4><div>Show: each skill seen</div><div>a child</div><div>Record a note</div><div>Assessments (grades 1–4: Class results folds here)</div><h4>Capture here</h4><div class="cap">voice note</div><div class="cap">photo</div></aside>
+  </div>
+  <details class="controls"><summary>Every control (14) and what the test does with it</summary><ul><li><b>filter</b> skill</li><li><b>filter</b> domain</li><li><b>peek</b> each square (and each child chip in a cluster) <span class="eff">opens ChildPeek for that child</span></li><li><b>child_name</b> each square</li><li><b>link</b> rail: Show: each skill seen <span class="to">→ Class picture</span></li><li><b>link</b> rail: a child <span class="to">→ Where this child is</span></li><li><b>link</b> rail: Record a note <span class="to">→ Record a note</span></li><li><b>link</b> rail: Assessments <span class="to">→ Assessments</span></li><li><b>link</b> capture: Voice note <span class="to">→ Record a note</span></li><li><b>link</b> capture: Photo <span class="to">→ Record a note</span></li><li><b>link</b> Show as a table <span class="to">→ Children</span></li><li><b>filter</b> group by</li><li><b>button</b> peek: Close <span class="eff">closes ChildPeek; focus returns to the child that opened it</span></li><li><b>link</b> peek: Open the child <span class="to">→ Where this child is</span></li></ul></details>
+  <footer><div><b>Data:</b> child_skill_state (kind 'observed' for K2, 'written' for grades 1–4) for the class by skill; flow_run (the nightly graph run's row) finished_at for the date; evidence_event for clusters</div><div><b>Empty:</b> No child seen yet: the grid of dashed squares with 'not seen yet, nothing more' · <b>Phone:</b> 3 columns of squares (a name and a state word do not fit a 44 px square; SPEC §2 rule 10)</div><div><b>Folds in:</b> /growth (Class results), /growth/class/[section]</div><div><b>Done when:</b> each square shows the Sr. No. and the child's name read from pii by child_id, and no photo (DOM scan); the stack bar's counts equal the squares by state; the squares are in Sr. No. order, 8 per row at 1440, 3 at 400; an empty square's title reads 'not seen yet', never 'not secure'; grouping by state puts a heading and a count over each group; the counts sum to the squares and equal the stack bar; a child is in exactly one group; a cluster's count equals the chips in it; clusters are computed by code from child_skill_state and evidence_event, never by a model, and a child may be in several clusters; tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page</div></footer>
+</article>
+<article class="wf" id="child">
+  <header><span class="route">/children/[class]/[roll]</span><span class="meta">everyone · Core · CP-13, CP-14 · exists: part (/k2/[class]/[roll], /growth/[id])</span></header>
+  <div class="bar"><b></b>Cornerstone <span class="g">Today</span><span class="g">Timetable</span><span class="g on">Children</span><span class="g">Setup</span><i class="search">Sr. No. or activity</i></div>
+  <div class="trail">‹ Back › … › <strong>Where this child is</strong></div>
+  <div class="body">
+    <div class="main">
+      <div class="eyebrow">K2 Red · Sr. No. 12 · the child's name</div>
+      <h3>Where this child is</h3>
+      <p class="purpose">Each skill this child was seen on, coloured by how secure it is and sized by how often. Every mark opens the note or paper behind it.</p>
+      <div class="action">▶ Add a note</div>
+      <div class="block"><span class="tag">ChildGraph</span><span>the ChildGraph: the child at the centre, a ring per domain, a node per skill seen (state tint, state word, size by times seen); notes and papers both feed it</span></div><div class="block"><span class="tag">Trend</span><span>level per sitting on the skill chosen</span></div><div class="block"><span class="tag">Timeline</span><span>every observation and paper result, newest last; details: observed by (role), confirmed by, clocks, route, counts toward secure?</span></div><div class="block"><span class="tag">DataTable</span><span>skill · state · named days · last seen · ready next (CP-14, confirmed links only)</span></div>
+      <div class="next">→ the class</div>
+    </div>
+    <aside class="rail"><h4>Connected to</h4><div>each skill</div><div>Back to the class</div><div>Add a note about this child</div><div>Reports (Next)</div><h4>Capture here</h4><div class="cap">voice note</div><div class="cap">photo</div></aside>
+  </div>
+  <details class="controls"><summary>Every control (14) and what the test does with it</summary><ul><li><b>child_name</b> the page header</li><li><b>link</b> each graph node <span class="to">→ the skill's name</span></li><li><b>filter</b> skill for the trend</li><li><b>fold</b> details on each timeline entry</li><li><b>link</b> a timeline entry's activity <span class="to">→ the activity's name</span></li><li><b>link</b> a timeline entry's paper <span class="to">→ Check the answers</span></li><li><b>link</b> each skill row <span class="to">→ the skill's name</span></li><li><b>link</b> page: more entries <span class="to">→ Where this child is</span></li><li><b>link</b> rail: each skill <span class="to">→ the skill's name</span></li><li><b>link</b> rail: Back to the class <span class="to">→ Class picture</span></li><li><b>link</b> rail: Add a note about this child <span class="to">→ Record a note</span></li><li><b>link</b> rail: Reports <span class="to">→ Reports</span></li><li><b>link</b> capture: Voice note <span class="to">→ Record a note</span></li><li><b>link</b> capture: Photo <span class="to">→ Record a note</span></li></ul></details>
+  <footer><div><b>Data:</b> child_skill_state (kind observed for K2, written for grades 1–4, with named_days); activity_observation (+note words); evidence_event / item_result for papers; skill_link_confirmed (a view over activity_skill and approval)</div><div><b>Empty:</b> Not seen yet on any skill: the graph is the child alone with 'not seen yet' · <b>Phone:</b> the graph is replaced by the list of skills (name, times seen, state chip), then the trend, then the timeline</div><div><b>Folds in:</b> /growth/[id], /k2/[class]/[roll]</div><div><b>Done when:</b> a paper's result and a voice note appear on one timeline in date order; a correction shows as a new entry that names the entry it replaces; the header shows the child's name beside the Sr. No., read from pii by child_id; the address is by Sr. No. and carries no name; no photo (DOM scan); the graph's node count equals the skills the child was seen on, and each node's state equals the table's; a table equivalent sits beside the graph: the DataTable lists the same skills with the same state words and times seen, the graph's SVG has role=img and an aria-label that names the counts by state, and axe reports no violation on it; keyboard order: Tab reaches the graph's nodes one by one, in the order of the table's rows (domain, then skill), each with a visible focus ring and each opening that skill; no node is reachable by pointer only, and every node's link target is at least 44 × 44 px; on a phone (400 px) the graph is not drawn: the list of skills shows each skill's name, times seen and its state chip (icon + word), each row a link of at least 44 px height, in the same order as the table</div></footer>
+</article>
+<article class="wf" id="assessments">
+  <header><span class="route">/children/assessments</span><span class="meta">everyone · Core · exists: yes (/papers, /capture)</span></header>
+  <div class="bar"><b></b>Cornerstone <span class="g">Today</span><span class="g">Timetable</span><span class="g on">Children</span><span class="g">Setup</span><i class="search">Sr. No. or activity</i></div>
+  <div class="trail">‹ Back › … › <strong>Assessments</strong></div>
+  <div class="body">
+    <div class="main">
+      <div class="eyebrow">Grades 1 to 4 · your classes</div>
+      <h3>Assessments</h3>
+      <p class="purpose">Each one goes through seven steps. Its row shows the step it waits at and the one thing to do next.</p>
+      <div class="action">▶ Check answers</div>
+      <div class="block"><span class="tag">AttentionStrip</span><span>do now = answers for you to judge; this week = packs to approve, papers to sign off; done = results in</span></div><div class="block"><span class="tag">Cards</span><span>Make an assessment (for a class · for each child · for one child · a ready-made worksheet) · Read an assessment (DropZone)</span></div><div class="block"><span class="tag">FilterBar</span><span>class · topic · subject · kind · week · stage</span></div><div class="block"><span class="tag">DataTable</span><span>assessment (built name) · class · papers back · waits for (chip) · next</span></div><div class="block"><span class="tag">KanbanBoard</span><span>the assessments as lanes by Table | Board toggle, the seven steps grouped by who has the paper: To approve and print (Created, Approved) · With the children (Printed) · To read and check (Uploaded, Read, Checked) · Results in; each card an assessment, its next action beside it</span></div>
+      <div class="next">→ an assessment</div>
+    </div>
+    <aside class="rail"><h4>Connected to</h4><div>Answers to check</div><div>Pack to approve</div><div>A child with results in</div><div>The skills tested</div><div>Question bank</div><h4>Capture here</h4><div class="cap">photo</div></aside>
+  </div>
+  <details class="controls"><summary>Every control (29) and what the test does with it</summary><ul><li><b>link</b> do now tile <span class="to">→ Check the answers</span></li><li><b>link</b> this week tile <span class="to">→ {the built name}</span></li><li><b>link</b> results in tile <span class="to">→ {the built name}</span></li><li><b>button</b> Make: For a class <span class="to">→ {the built name}</span> <span class="eff">creates the assessment at step Created, then opens it</span></li><li><b>button</b> Make: For each child <span class="to">→ {the built name}</span> <span class="eff">creates the assessment at step Created, then opens it</span></li><li><b>button</b> Make: For one child <span class="to">→ {the built name}</span> <span class="eff">creates the assessment at step Created, then opens it</span></li><li><b>button</b> Make: A ready-made worksheet <span class="to">→ {the built name}</span> <span class="eff">creates the assessment at step Created, then opens it</span></li><li><b>upload</b> Read: choose scans or drop them <span class="eff">pdf/jpg/png/heic; the QR names the sheet; a paper appears at Uploaded; a file with no QR shows 'could not find the QR' and nothing is written</span></li><li><b>field</b> a Google Drive link</li><li><b>button</b> Read it <span class="eff">the Drive file is fetched and read as above</span></li><li><b>filter</b> class · topic · subject · kind · week · stage (and, on Reading, Show: by day, by kind of question, by how sure)</li><li><b>row</b> each assessment row <span class="to">→ {the built name}</span></li><li><b>link</b> each row's next action <span class="to">→ {the built name}</span></li><li><b>link</b> rail: Answers to check <span class="to">→ Check the answers</span></li><li><b>link</b> rail: Pack to approve <span class="to">→ {the built name}</span></li><li><b>link</b> rail: A child with results in <span class="to">→ Where this child is</span></li><li><b>link</b> rail: The skills tested <span class="to">→ the skill's name</span></li><li><b>link</b> rail: Question bank <span class="to">→ Question bank</span></li><li><b>upload</b> capture: Photo <span class="eff">same as Read</span></li><li><b>tab</b> Board</li><li><b>tab</b> Table</li><li><b>row</b> each card on the board <span class="to">→ {the built name}</span></li><li><b>link</b> page: Later → <span class="to">→ Assessments</span></li><li><b>tab</b> By topic</li><li><b>tab</b> Reading</li><li><b>field</b> rename: name this assessment</li><li><b>button</b> Save the name <span class="eff">the name is the educator's own and is kept as a row of the history log, the older names stay</span></li><li><b>link</b> each topic <span class="to">→ Assessments</span></li><li><b>button</b> Read again <span class="eff">the file is read again with the reader as it now is; the page says in words when the engine no longer keeps it</span></li></ul></details>
+  <footer><div><b>Data:</b> existing queries-papers (assessmentList, paperList), STEP_WORDS, STATUS_WORDS</div><div><b>Empty:</b> No assessments yet: Make one · <b>Phone:</b> the table scrolls sideways in its own box; the drop zone becomes 'take photos'</div><div><b>Folds in:</b> /papers, /papers/make, /capture, /capture/[id]</div><div><b>Done when:</b> the four old pages answer 308 to this one or to the Assessment node; every row's name is built topic · skill · level · kind · class · day (regex); no approve-all control anywhere; each tile's number equals the rows behind it; each board lane's card count equals the table rows at the lane's steps</div></footer>
+</article>
+<article class="wf" id="assessment">
+  <header><span class="route">/children/assessments/[key]</span><span class="meta">everyone · Core · exists: part (/papers/approve, /papers/card)</span></header>
+  <div class="bar"><b></b>Cornerstone <span class="g">Today</span><span class="g">Timetable</span><span class="g on">Children</span><span class="g">Setup</span><i class="search">Sr. No. or activity</i></div>
+  <div class="trail">‹ Back › … › <strong>{the built name}</strong></div>
+  <div class="body">
+    <div class="main">
+      <div class="eyebrow">Grade 1 · 22 papers</div>
+      <h3>{the built name}</h3>
+      <p class="purpose">Where this assessment stands, and each child's copy. A copy is its own row with its own action; there is no button over all of them.</p>
+      <div class="action">▶ the step's action</div>
+      <div class="block"><span class="tag">Stepper</span><span>Created · Approved · Printed · Uploaded · Read · Checked · Results in</span></div><div class="block"><span class="tag">Cards</span><span>The papers (StackBar: settled / to check / not back) · What it asks (skills, levels; link to the skill)</span></div><div class="block"><span class="tag">DataTable</span><span>Sr. No. · level (Easy/Medium/Hard/Advance) · answers settled · state · its action (Check this paper / Sign it off / The child / Change the level before print)</span></div><div class="block"><span class="tag">Form</span><span>at the approve step: Approve the pack (main), then Print</span></div>
+      <div class="next">→ Assessments</div>
+    </div>
+    <aside class="rail"><h4>Connected to</h4><div>a child's paper</div><div>the skills</div><div>the class picture</div><div>all assessments</div><div>the printed pack</div><h4>Capture here</h4><div class="cap">photo</div></aside>
+  </div>
+  <details class="controls"><summary>Every control (16) and what the test does with it</summary><ul><li><b>link</b> Open the skill <span class="to">→ the skill's name</span></li><li><b>field</b> Change the level (a row, before print) <span class="eff">Easy / Medium / Hard / Advance; the row's reason updates; kept as an override with who</span></li><li><b>button</b> Approve the pack <span class="eff">approval row for this pack only; the stepper moves to Approved; Print appears; the rows' Change the level disappears</span></li><li><b>button</b> Print <span class="eff">the pack PDF opens in a new tab; the stepper moves to Printed</span></li><li><b>row</b> Check this paper <span class="to">→ Check the answers</span></li><li><b>button</b> Sign it off (a row) <span class="eff">the paper's results are confirmed; its chip becomes results in</span></li><li><b>row</b> The child <span class="to">→ Where this child is</span></li><li><b>link</b> page: Later → <span class="to">→ {the built name}</span></li><li><b>link</b> rail: a child's paper <span class="to">→ Check the answers</span></li><li><b>link</b> rail: the skills <span class="to">→ the skill's name</span></li><li><b>link</b> rail: the class picture <span class="to">→ Class picture</span></li><li><b>link</b> rail: all assessments <span class="to">→ Assessments</span></li><li><b>button</b> rail: the printed pack <span class="to">→ {the built name}</span></li><li><b>upload</b> capture: Photo <span class="eff">a scan of this assessment's paper; the QR must belong to it, else a message</span></li><li><b>field</b> rename: name this assessment</li><li><b>button</b> Save the name <span class="eff">the name is the educator's own and is kept as a row of the history log, the older names stay</span></li></ul></details>
+  <footer><div><b>Data:</b> sheet/paper rows, counts per step (Counts), prescriptions and reasons, approval ledger</div><div><b>Empty:</b> No copies yet · <b>Phone:</b> stepper wraps; the table scrolls sideways in its own box</div><div><b>Folds in:</b> /papers/approve, /papers/card, /papers/review/[qr]</div><div><b>Done when:</b> Approve acts on this pack only; no control acts on more than one pack or more than one row; the stepper's amber step equals the status word in the list; a replaced copy shows 'replaced by a newer one' and no action; the papers bar's three counts sum to the number of copies</div></footer>
+</article>
+<article class="wf" id="paper">
+  <header><span class="route">/children/assessments/[key]/[roll]</span><span class="meta">everyone · Core · exists: yes (/capture/check, /capture/[id])</span></header>
+  <div class="bar"><b></b>Cornerstone <span class="g">Today</span><span class="g">Timetable</span><span class="g on">Children</span><span class="g">Setup</span><i class="search">Sr. No. or activity</i></div>
+  <div class="trail">‹ Back › … › <strong>Check the answers</strong></div>
+  <div class="body">
+    <div class="main">
+      <div class="eyebrow">Grade 1 · Sr. No. 7 · Easy</div>
+      <h3>Check the answers</h3>
+      <p class="purpose">The page as photographed, and each answer as the engine read it. Say what the child wrote where it was unsure; the engine marks it.</p>
+      <div class="action">▶ Say what the child wrote</div>
+      <div class="block"><span class="tag">PageImage</span><span>the scan, zoomable, the answer in focus outlined</span></div><div class="block"><span class="tag">DataTable</span><span>question · read as · mark chip (right / wrong / blank / for you to judge) · the wrong-with-working reason</span></div><div class="block"><span class="tag">Form</span><span>Say what the child wrote (main) · Sign this paper off (when nothing is left to judge)</span></div>
+      <div class="next">→ the next paper</div>
+    </div>
+    <aside class="rail"><h4>Connected to</h4><div>This child</div><div>The skill</div><div>The assessment</div><div>the next paper to check</div><h4>Capture here</h4><div class="none">not here</div></aside>
+  </div>
+  <details class="controls"><summary>Every control (9) and what the test does with it</summary><ul><li><b>row</b> each answer row <span class="eff">the page scrolls to that answer and outlines it</span></li><li><b>field</b> what the child wrote</li><li><b>button</b> Say what the child wrote <span class="eff">a read_correction row; the engine marks it right / wrong / blank; the chip updates; the next judge answer comes into focus</span></li><li><b>button</b> Blank (the child wrote nothing) <span class="eff">the answer is marked blank, never wrong</span></li><li><b>button</b> Sign this paper off <span class="eff">appears only when nothing is left to judge; confirms the results; lands on the assessment</span></li><li><b>link</b> rail: This child <span class="to">→ Where this child is</span></li><li><b>link</b> rail: The skill <span class="to">→ the skill's name</span></li><li><b>link</b> rail: The assessment <span class="to">→ {the built name}</span></li><li><b>link</b> rail: the next paper to check <span class="to">→ Check the answers</span></li></ul></details>
+  <footer><div><b>Data:</b> capture.pages, item_result with status and confidence, key, misconception tags</div><div><b>Empty:</b> Nothing left to judge on this paper: Sign it off · <b>Phone:</b> image above, answers below</div><div><b>Folds in:</b> /capture/check, /capture/[id]</div><div><b>Done when:</b> right, wrong and blank are three different chips and three counts; a wrong-with-working reason is shown with its wrong chip; a person's answer writes a read_correction row and never overwrites the engine's read; Sign off is absent while any answer is 'for you to judge', and acts on one paper</div></footer>
+</article>
+<article class="wf" id="reports">
+  <header><span class="route">/children/reports</span><span class="meta">everyone · Next · CP-19 · exists: part (/growth/reports)</span></header>
+  <div class="bar"><b></b>Cornerstone <span class="g">Today</span><span class="g">Timetable</span><span class="g on">Children</span><span class="g">Setup</span><i class="search">Sr. No. or activity</i></div>
+  <div class="trail">‹ Back › … › <strong>Reports</strong></div>
+  <div class="body">
+    <div class="main">
+      <div class="eyebrow">Grade 1 · this term</div>
+      <h3>Reports</h3>
+      <p class="purpose">Each child's report, line by line, in the educator's words. Two approvals per line, consent on file, then sent. Nothing goes out otherwise.</p>
+      <div class="action">▶ Approve my lines</div>
+      <div class="block"><span class="tag">FilterBar</span><span>class · state</span></div><div class="block"><span class="tag">DataTable</span><span>child (Sr. No.) · lines drafted · educator approved · coordinator approved · consent · sent; each row its own action</span></div><div class="block"><span class="tag">Details</span><span>a line: the system's state beside the educator's words</span></div>
+      <div class="next">→ the coordinator's list</div>
+    </div>
+    <aside class="rail"><h4>Connected to</h4><div>the child</div><div>the class picture</div><div>Consent (Setup)</div><h4>Capture here</h4><div class="none">not here</div></aside>
+  </div>
+  <details class="controls"><summary>Every control (11) and what the test does with it</summary><ul><li><b>filter</b> class · state</li><li><b>child_name</b> each report row</li><li><b>fold</b> each child's lines</li><li><b>field</b> a line's words <span class="eff">the educator edits her words; the system's state beside it is read-only</span></li><li><b>button</b> Approve (educator, a line) <span class="eff">educator approval row; the line's chip moves to 'to approve (coordinator)'</span></li><li><b>button</b> Approve (coordinator, a line) <span class="eff">coordinator approval row</span> <span class="role">coordinator only</span></li><li><b>button</b> Send (a child) <span class="eff">only with both approvals on every line and consent on file; otherwise absent and refused</span> <span class="role">coordinator only</span></li><li><b>button</b> Preview the parent's copy <span class="eff">opens the parent's copy as a PDF in a new tab</span></li><li><b>link</b> rail: the child <span class="to">→ Where this child is</span></li><li><b>link</b> rail: the class picture <span class="to">→ Class picture</span></li><li><b>link</b> rail: Consent <span class="to">→ Classes and children</span></li></ul></details>
+  <footer><div><b>Data:</b> report_item, approval (two kinds), consent</div><div><b>Empty:</b> No report lines drafted yet · <b>Phone:</b> the table scrolls sideways in its own box</div><div><b>Done when:</b> nothing is sent without both approvals and consent (each missing case refused); the parent's copy contains 'educator' and the four level words only, no rung or code (regex over the PDF text)</div></footer>
+</article></div></section><section><h2>Setup</h2><div class="grid">
+<article class="wf" id="activity">
+  <header><span class="route">/setup/activities/[code]</span><span class="meta">everyone · Core · CP-8, CP-15 · exists: yes (/educator/activity/[code], /curriculum/fill/[code])</span></header>
+  <div class="bar"><b></b>Cornerstone <span class="g">Today</span><span class="g">Timetable</span><span class="g">Children</span><span class="g on">Setup</span><i class="search">Sr. No. or activity</i></div>
+  <div class="trail">‹ Back › … › <strong>the activity's name</strong></div>
+  <div class="body">
+    <div class="main">
+      <div class="eyebrow">Activity 112 · Numeracy</div>
+      <h3>the activity's name</h3>
+      <p class="purpose">the objective</p>
+      <div class="action">▶ Keep / Edit a drafted part (curriculum team) · Open the period (educator)</div>
+      <div class="block"><span class="tag">KeyValue</span><span>levels 0–3 as four cells, the school's words</span></div><div class="block"><span class="tag">LevelBars</span><span>where the class sat last time, by level</span></div><div class="block"><span class="tag">Details</span><span>Steps (open) · How to think about it · Materials</span></div><div class="block"><span class="tag">Cards</span><span>Builds toward: objectives (links) · Where each part came from (school / drafted / person) with Keep · Edit · Send back on a drafted part</span></div>
+      <div class="next">→ an objective</div>
+    </div>
+    <aside class="rail"><h4>Connected to</h4><div>each objective</div><div>each material</div><div>next taught (a period)</div><div>the fortnights it is in</div><h4>Capture here</h4><div class="cap">photo</div></aside>
+  </div>
+  <details class="controls"><summary>Every control (13) and what the test does with it</summary><ul><li><b>fold</b> Steps</li><li><b>fold</b> How to think about it</li><li><b>fold</b> Materials</li><li><b>link</b> each objective <span class="to">→ the objective's title</span></li><li><b>link</b> each material <span class="to">→ Materials, this fortnight</span></li><li><b>button</b> Keep (a drafted part) <span class="eff">the part's source becomes person (a change_log row with who); the 'drafted' badge goes</span> <span class="role">coordinator only</span></li><li><b>button</b> Edit (a part) <span class="eff">the part becomes a field; Save writes a change_log row; the source becomes person</span> <span class="role">coordinator only</span></li><li><b>button</b> Send back (a drafted part) <span class="eff">the part is emptied and marked; the proposal is rejected</span> <span class="role">coordinator only</span></li><li><b>upload</b> capture: Photo <span class="eff">a photo of the set-up attaches to the activity</span></li><li><b>link</b> rail: each objective <span class="to">→ the objective's title</span></li><li><b>link</b> rail: each material <span class="to">→ Materials, this fortnight</span></li><li><b>link</b> rail: next taught <span class="to">→ the session's name</span></li><li><b>link</b> rail: the fortnights it is in <span class="to">→ Fortnight 9</span></li></ul></details>
+  <footer><div><b>Data:</b> activity (+steps, thinking, levels, materials), activity_objective, activity_material, change_log (origin: upload = school, proposal = drafted, person = person) and curriculum_proposal for the source of each part, change_log for each edit</div><div><b>Empty:</b> a part with no text: shown empty and marked, never invented · <b>Phone:</b> levels as a 2×2</div><div><b>Folds in:</b> /educator/activity/[code], /curriculum/fill/[code], /curriculum/fill/walk</div><div><b>Done when:</b> a drafted part carries the 'drafted' badge until Keep, Edit or Send back; an educator sees the badge but not the three buttons; every edit writes a change_log row with who; a photo attaches to the activity, never to a child</div></footer>
+</article>
+<article class="wf" id="objective">
+  <header><span class="route">/setup/objectives/[code]</span><span class="meta">everyone · Core · exists: no</span></header>
+  <div class="bar"><b></b>Cornerstone <span class="g">Today</span><span class="g">Timetable</span><span class="g">Children</span><span class="g on">Setup</span><i class="search">Sr. No. or activity</i></div>
+  <div class="trail">‹ Back › … › <strong>the objective's title</strong></div>
+  <div class="body">
+    <div class="main">
+      <div class="eyebrow">Learning objective · K2 · Numeracy</div>
+      <h3>the objective's title</h3>
+      <p class="purpose">An objective names the skills it builds. The system reads a child's state on those skills; it never scores the objective itself.</p>
+      <div class="action">▶ a skill</div>
+      <div class="block"><span class="tag">Cards</span><span>each skill: name, prerequisite confirmed?, link</span></div><div class="block"><span class="tag">DataTable</span><span>activities that build toward it</span></div>
+      <div class="next">→ an activity</div>
+    </div>
+    <aside class="rail"><h4>Connected to</h4><div>each skill</div><div>each activity</div><h4>Capture here</h4><div class="none">not here</div></aside>
+  </div>
+  <details class="controls"><summary>Every control (4) and what the test does with it</summary><ul><li><b>link</b> Open the skill (each card) <span class="to">→ the skill's name</span></li><li><b>row</b> each activity row <span class="to">→ the activity's name</span></li><li><b>link</b> rail: each skill <span class="to">→ the skill's name</span></li><li><b>link</b> rail: each activity <span class="to">→ the activity's name</span></li></ul></details>
+  <footer><div><b>Data:</b> learning_objective, learning_objective_skill, activity_objective</div><div><b>Empty:</b> No skill linked yet: shown, no invention · <b>Phone:</b> the table scrolls sideways in its own box</div><div><b>Done when:</b> no number, percentage or state is shown for the objective itself (DOM scan)</div></footer>
+</article>
+<article class="wf" id="skill">
+  <header><span class="route">/setup/skills/[code]</span><span class="meta">everyone · Core · CP-13, CP-14 · exists: part (/skill-sets/[code])</span></header>
+  <div class="bar"><b></b>Cornerstone <span class="g">Today</span><span class="g">Timetable</span><span class="g">Children</span><span class="g on">Setup</span><i class="search">Sr. No. or activity</i></div>
+  <div class="trail">‹ Back › … › <strong>the skill's name</strong></div>
+  <div class="body">
+    <div class="main">
+      <div class="eyebrow">Skill · Numeracy</div>
+      <h3>the skill's name</h3>
+      <p class="purpose">Where the class stands on this skill, from confirmed notes and papers. A child not seen on it is not seen, nothing more.</p>
+      <div class="action">▶ a child</div>
+      <div class="block"><span class="tag">Cards</span><span>The class now (StackBar) · Secure, fortnight by fortnight (Spark) · Clusters: children who share a place on this skill, each with its count and its children as chips</span></div><div class="block"><span class="tag">ClassGrid</span><span>the class on this skill; tap a child to open ChildPeek; groups by state or class, each with a count</span></div><div class="block"><span class="tag">Cards</span><span>Comes after (confirmed links) · Ready next (confirmed links) · 'only links a person confirmed are read'</span></div><div class="block"><span class="tag">Details</span><span>for grades 1–4: each level in a sentence, kinds of question, mistakes it watches for (today's skill-set page)</span></div><div class="block"><span class="tag">ChildPeek</span><span>the child chosen in the grid</span></div>
+      <div class="next">→ the next skill</div>
+    </div>
+    <aside class="rail"><h4>Connected to</h4><div>the class picture on this skill</div><div>its objectives</div><div>after / next skills</div><div>Question bank for this skill</div><h4>Capture here</h4><div class="none">not here</div></aside>
+  </div>
+  <details class="controls"><summary>Every control (16) and what the test does with it</summary><ul><li><b>filter</b> class <span class="role">coordinator only</span></li><li><b>peek</b> each square (and each child chip in a cluster) <span class="eff">opens ChildPeek for that child</span></li><li><b>child_name</b> each square</li><li><b>link</b> Comes after: each skill <span class="to">→ the skill's name</span></li><li><b>link</b> Ready next: each skill <span class="to">→ the skill's name</span></li><li><b>fold</b> Each level in a sentence</li><li><b>fold</b> Kinds of question</li><li><b>fold</b> Mistakes it watches for</li><li><b>button</b> Change a level's sentence <span class="eff">a field; Save writes a skill_level_version row</span> <span class="role">coordinator only</span></li><li><b>link</b> rail: the class picture on this skill <span class="to">→ Class picture</span></li><li><b>link</b> rail: its objectives <span class="to">→ the objective's title</span></li><li><b>link</b> rail: after / next skills <span class="to">→ the skill's name</span></li><li><b>link</b> rail: Question bank for this skill <span class="to">→ Question bank</span></li><li><b>filter</b> group by</li><li><b>button</b> peek: Close <span class="eff">closes ChildPeek; focus returns to the child that opened it</span></li><li><b>link</b> peek: Open the child <span class="to">→ Where this child is</span></li></ul></details>
+  <footer><div><b>Data:</b> child_skill_state (kind 'observed' / 'written') by skill; skill_link_confirmed (a view over activity_skill and approval); skill_level; misconception; flow_run result for the six-fortnight spark; evidence_event for clusters</div><div><b>Empty:</b> nobody seen on it yet · <b>Phone:</b> grid of 3 columns of squares (SPEC §2 rule 10)</div><div><b>Folds in:</b> /skill-sets/[code], /skill-sets/[code]/edit</div><div><b>Done when:</b> a prerequisite or next skill is shown only when its link is confirmed (a proposed link in the fixture does not appear); the spark's last value equals the grid's secure count; the grid's squares equal the class's enrolment in Sr. No. order; grouping by state puts a heading and a count over each group and the counts sum to the squares; a cluster's count equals the chips in it; clusters are computed by code, never by a model; tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page</div></footer>
+</article>
+<article class="wf" id="skillset">
+  <header><span class="route">/setup/skill-sets/[code]</span><span class="meta">everyone · Core · exists: part (/skill-sets/[code])</span></header>
+  <div class="bar"><b></b>Cornerstone <span class="g">Today</span><span class="g">Timetable</span><span class="g">Children</span><span class="g on">Setup</span><i class="search">Sr. No. or activity</i></div>
+  <div class="trail">‹ Back › … › <strong>the skill set's name</strong></div>
+  <div class="body">
+    <div class="main">
+      <div class="eyebrow">Skill set · Grades 1 to 4</div>
+      <h3>the skill set's name</h3>
+      <p class="purpose">A skill set is what the school teaches and tests together, from one to four grades. It points at the skills the system reads a child on; it never scores a child itself.</p>
+      <div class="action">▶ a skill</div>
+      <div class="block"><span class="tag">Cards</span><span>each skill it covers: name, link</span></div><div class="block"><span class="tag">Details</span><span>each level in a sentence</span></div>
+      <div class="next">→ the question bank</div>
+    </div>
+    <aside class="rail"><h4>Connected to</h4><div>each skill</div><div>Question bank for this skill set</div><h4>Capture here</h4><div class="none">not here</div></aside>
+  </div>
+  <details class="controls"><summary>Every control (4) and what the test does with it</summary><ul><li><b>link</b> Open the skill (each card) <span class="to">→ the skill's name</span></li><li><b>fold</b> Each level in a sentence</li><li><b>link</b> rail: each skill <span class="to">→ the skill's name</span></li><li><b>link</b> rail: Question bank for this skill set <span class="to">→ Question bank</span></li></ul></details>
+  <footer><div><b>Data:</b> skill (the skill set: code, name, registry_codes), skill_level, registry_skill</div><div><b>Empty:</b> No registry skill linked yet: shown, no invention · <b>Phone:</b> cards stack in one column</div><div><b>Folds in:</b> /skill-sets/[code]</div><div><b>Done when:</b> the screen is keyed by the skill set's code, not by a registry skill's code; each registry skill the set points at is a card that opens the skill screen; a set with none says so and invents nothing; the level sentences sit in a fold, closed on load</div></footer>
+</article>
+<article class="wf" id="curriculum">
+  <header><span class="route">/setup/curriculum</span><span class="meta">everyone · Core · CP-15 · exists: yes (/, /curriculum/browse, /curriculum/fill)</span></header>
+  <div class="bar"><b></b>Cornerstone <span class="g">Today</span><span class="g">Timetable</span><span class="g">Children</span><span class="g on">Setup</span><i class="search">Sr. No. or activity</i></div>
+  <div class="trail">‹ Back › … › <strong>Curriculum</strong></div>
+  <div class="body">
+    <div class="main">
+      <div class="eyebrow">Every grade</div>
+      <h3>Curriculum</h3>
+      <p class="purpose">Every activity and skill of every grade, with its levels and how much of each page is filled in. Open one to read it.</p>
+      <div class="action">▶ Check the drafted parts</div>
+      <div class="block"><span class="tag">FilterBar</span><span>grade · subject · topic · status · search</span></div><div class="block"><span class="tag">DataTable</span><span>activity or skill · grade · subject · topic · levels · filled (school / drafted / person / empty) · status chip</span></div><div class="block"><span class="tag">Cards</span><span>Drafts to check (count, link) · Offers waiting (skills offered to activities: Yes / No per row)</span></div>
+      <div class="next">→ an activity</div>
+    </div>
+    <aside class="rail"><h4>Connected to</h4><div>Skills to approve</div><div>Question bank</div><div>Drafts to check</div><div>Offers</div><h4>Capture here</h4><div class="none">not here</div></aside>
+  </div>
+  <details class="controls"><summary>Every control (15) and what the test does with it</summary><ul><li><b>filter</b> Grade</li><li><b>filter</b> Subject</li><li><b>filter</b> Topic</li><li><b>filter</b> Status</li><li><b>filter</b> search</li><li><b>row</b> an activity row <span class="to">→ the activity's name</span></li><li><b>row</b> a skill row <span class="to">→ the skill's name</span></li><li><b>link</b> Check the drafted parts <span class="to">→ the activity's name</span></li><li><b>button</b> Yes (an offer) <span class="eff">the skill is linked to the activity; the offer closes</span> <span class="role">coordinator only</span></li><li><b>button</b> No (an offer) <span class="eff">the offer closes; nothing is linked</span> <span class="role">coordinator only</span></li><li><b>link</b> page: Later → <span class="to">→ Curriculum</span></li><li><b>link</b> offers page: Later → <span class="to">→ Curriculum</span> <span class="role">coordinator only</span></li><li><b>link</b> rail: Skills to approve <span class="to">→ Skills to approve</span></li><li><b>link</b> rail: Question bank <span class="to">→ Question bank</span></li><li><b>link</b> rail: Drafts to check <span class="to">→ the activity's name</span></li></ul></details>
+  <footer><div><b>Data:</b> activity, skill, skill_level, change_log and curriculum_proposal (the source of each part), curriculum_proposal</div><div><b>Empty:</b> none · <b>Phone:</b> the table scrolls sideways in its own box</div><div><b>Folds in:</b> /, /curriculum/browse, /curriculum/fill, /curriculum/offers, /asks</div><div><b>Done when:</b> one list carries activities (K2) and skills (grades 1–4) under one filter row; Curriculum shows no count of skills to approve; that number is the eyebrow of Skills to approve and appears nowhere else; Yes / No act on one offer each; no control acts on all offers</div></footer>
+</article>
+<article class="wf" id="skills-approve">
+  <header><span class="route">/setup/skills/approve</span><span class="meta">coordinator · Core · exists: yes</span></header>
+  <div class="bar"><b></b>Cornerstone <span class="g">Today</span><span class="g">Timetable</span><span class="g">Children</span><span class="g on">Setup</span><i class="search">Sr. No. or activity</i></div>
+  <div class="trail">‹ Back › … › <strong>Skills to approve</strong></div>
+  <div class="body">
+    <div class="main">
+      <div class="eyebrow">109 waiting</div>
+      <h3>Skills to approve</h3>
+      <p class="purpose">Read each skill's levels and approve them one at a time. What a wrong answer counts against is shown beside it.</p>
+      <div class="action">▶ Read and approve the first</div>
+      <div class="block"><span class="tag">FilterBar</span><span>grade · subject</span></div><div class="block"><span class="tag">DataTable</span><span>skill · grade · levels · its own Approve</span></div><div class="block"><span class="tag">Details</span><span>What a wrong answer counts against</span></div>
+      <div class="next">→ Curriculum</div>
+    </div>
+    <aside class="rail"><h4>Connected to</h4><div>Curriculum</div><h4>Capture here</h4><div class="none">not here</div></aside>
+  </div>
+  <details class="controls"><summary>Every control (12) and what the test does with it</summary><ul><li><b>filter</b> Grade</li><li><b>filter</b> Subject</li><li><b>filter</b> Topic</li><li><b>filter</b> Taught</li><li><b>tab</b> Skills</li><li><b>tab</b> Levels to review</li><li><b>link</b> a skill's name <span class="to">→ the skill's name</span></li><li><b>button</b> Approve (a row) <span class="eff">level_approved set for that skill with who; the row leaves the list; the eyebrow's count drops by one</span> <span class="role">coordinator only</span></li><li><b>fold</b> What a wrong answer counts against</li><li><b>button</b> Approve this table as written <span class="eff">the table of what a wrong answer counts against is approved as shown, once, with who; a changed table waits again</span> <span class="role">coordinator only</span></li><li><b>link</b> page: Later → <span class="to">→ Skills to approve</span></li><li><b>link</b> rail: Curriculum <span class="to">→ Curriculum</span></li></ul></details>
+  <footer><div><b>Data:</b> skill.level_approved, skill_level, approval (kind calibration)</div><div><b>Empty:</b> Nothing to approve · <b>Phone:</b> the table scrolls sideways in its own box</div><div><b>Folds in:</b> /skill-sets/approve, /skill-sets/levels</div><div><b>Done when:</b> approval is per row; no control approves more than one; the eyebrow count equals the rows across all pages, and it is the only place the number is shown</div></footer>
+</article>
+<article class="wf" id="bank">
+  <header><span class="route">/setup/question-bank</span><span class="meta">everyone · Core · exists: yes (/library)</span></header>
+  <div class="bar"><b></b>Cornerstone <span class="g">Today</span><span class="g">Timetable</span><span class="g">Children</span><span class="g on">Setup</span><i class="search">Sr. No. or activity</i></div>
+  <div class="trail">‹ Back › … › <strong>Question bank</strong></div>
+  <div class="body">
+    <div class="main">
+      <div class="eyebrow">Grades 1 to 4</div>
+      <h3>Question bank</h3>
+      <p class="purpose">What is in the bank for the skills taught in your classes, by level. Open a question to read it as it prints.</p>
+      <div class="action">▶ Open a question</div>
+      <div class="block"><span class="tag">Cards</span><span>What the bank is · What is in the bank (ready / removed counts)</span></div><div class="block"><span class="tag">FilterBar</span><span>grade · skill · difficulty · search</span></div><div class="block"><span class="tag">DataTable</span><span>question · skill · level · kind · status</span></div>
+      <div class="next">→ Curriculum</div>
+    </div>
+    <aside class="rail"><h4>Connected to</h4><div>a skill</div><h4>Capture here</h4><div class="none">not here</div></aside>
+  </div>
+  <details class="controls"><summary>Every control (11) and what the test does with it</summary><ul><li><b>fold</b> What the bank is</li><li><b>filter</b> Grade</li><li><b>filter</b> Skill</li><li><b>filter</b> Difficulty</li><li><b>filter</b> Kind</li><li><b>filter</b> Status</li><li><b>filter</b> search</li><li><b>row</b> each question row <span class="to">→ {the question as it prints}</span></li><li><b>link</b> page: Later → <span class="to">→ Question bank</span></li><li><b>fold</b> Statistics (counts and worksheets by taxonomy)</li><li><b>link</b> rail: a skill <span class="to">→ the skill's name</span></li></ul></details>
+  <footer><div><b>Data:</b> item, item_stat (a view over item_result), curriculum_proposal with its decision as an approval row</div><div><b>Empty:</b> No questions for this skill yet · <b>Phone:</b> the table scrolls sideways in its own box</div><div><b>Folds in:</b> /library, /worksheets, /worksheets/taxonomy</div><div><b>Done when:</b> statistics and taxonomy sit behind the details link, not on the first view (rule 8); the table shows ten rows then pages</div></footer>
+</article>
+<article class="wf" id="question">
+  <header><span class="route">/setup/question-bank/[key]</span><span class="meta">everyone · Core · exists: yes (/library/[key])</span></header>
+  <div class="bar"><b></b>Cornerstone <span class="g">Today</span><span class="g">Timetable</span><span class="g">Children</span><span class="g on">Setup</span><i class="search">Sr. No. or activity</i></div>
+  <div class="trail">‹ Back › … › <strong>{the question as it prints}</strong></div>
+  <div class="body">
+    <div class="main">
+      <div class="eyebrow">Numeracy · Easy</div>
+      <h3>{the question as it prints}</h3>
+      <p class="purpose">The question, its answer, the wrong answers it catches, and where it came from. Correct the wording or remove it.</p>
+      <div class="action">▶ Correct the wording</div>
+      <div class="block"><span class="tag">Cards</span><span>As it prints · Answer · Wrong answers it catches</span></div><div class="block"><span class="tag">Details</span><span>About it (source, versions)</span></div><div class="block"><span class="tag">Form</span><span>Correct the wording · Remove (with reason)</span></div>
+      <div class="next">→ the bank</div>
+    </div>
+    <aside class="rail"><h4>Connected to</h4><div>the skill</div><div>the bank</div><h4>Capture here</h4><div class="none">not here</div></aside>
+  </div>
+  <details class="controls"><summary>Every control (10) and what the test does with it</summary><ul><li><b>fold</b> About it</li><li><b>link</b> the corrected question <span class="to">→ {the question as it prints}</span></li><li><b>link</b> the original wording <span class="to">→ {the question as it prints}</span></li><li><b>link</b> rail: the skill <span class="to">→ the skill's name</span></li><li><b>link</b> rail: the bank <span class="to">→ Question bank</span></li><li><b>field</b> the wording <span class="role">coordinator only</span></li><li><b>field</b> what was wrong <span class="role">coordinator only</span></li><li><b>field</b> reason for removal <span class="role">coordinator only</span></li><li><b>button</b> Correct the wording <span class="eff">a new item version; the old one stays, readable, and points to the new; the page shows the new wording</span> <span class="role">coordinator only</span></li><li><b>button</b> Remove <span class="eff">the item is retired with the reason, never deleted; the chip reads 'removed'</span> <span class="role">coordinator only</span></li></ul></details>
+  <footer><div><b>Data:</b> item, item.key (the current key), item.review (the reviewer model's latest verdict), change_log (key history)</div><div><b>Empty:</b> none · <b>Phone:</b> stacked</div><div><b>Done when:</b> a correction keeps the old key in change_log and the old version readable; Remove retires, never deletes (row count unchanged)</div></footer>
+</article>
+<article class="wf" id="staff">
+  <header><span class="route">/setup/staff</span><span class="meta">coordinator · Core · CP-1, CP-3 · exists: yes</span></header>
+  <div class="bar"><b></b>Cornerstone <span class="g">Today</span><span class="g">Timetable</span><span class="g">Children</span><span class="g on">Setup</span><i class="search">Sr. No. or activity</i></div>
+  <div class="trail">‹ Back › … › <strong>Staff and classes</strong></div>
+  <div class="body">
+    <div class="main">
+      <div class="eyebrow">This fortnight</div>
+      <h3>Staff and classes</h3>
+      <p class="purpose">Who teaches which class, and whole counts the database can stand behind. No score, no ranking: the school decides what they mean.</p>
+      <div class="action">▶ Add a grant</div>
+      <div class="block"><span class="tag">DataTable</span><span>role · class · sessions done of planned · notes confirmed · notes late · lines accepted / changed / removed; each row opens the person's grants</span></div><div class="block"><span class="tag">Details</span><span>a person's grants: role, class, subject, from, to; Add a grant</span></div>
+      <div class="next">→ Classes and children</div>
+    </div>
+    <aside class="rail"><h4>Connected to</h4><div>Fortnight 9</div><div>Timetable</div><div>Classes and children</div><h4>Capture here</h4><div class="none">not here</div></aside>
+  </div>
+  <details class="controls"><summary>Every control (10) and what the test does with it</summary><ul><li><b>row</b> each staff row <span class="eff">opens that person's grants fold</span></li><li><b>fold</b> a person's grants</li><li><b>button</b> Add a grant <span class="eff">opens a form: role, class, and a subject for a role held for a subject; Save the grant gives it from today, and the grant table's own words (a second class educator, a clash) show under the form</span></li><li><b>button</b> End a grant <span class="eff">valid_to is set to today on that grant; the row stays on the list, marked Ended, and nothing is deleted</span></li><li><b>link</b> rail: Fortnight 9 <span class="to">→ Fortnight 9</span></li><li><b>link</b> rail: Timetable <span class="to">→ Timetable</span></li><li><b>link</b> rail: Classes and children <span class="to">→ Classes and children</span></li><li><b>filter</b> Role <span class="eff">narrows the rows to one role</span></li><li><b>filter</b> Find a person (search) <span class="eff">narrows the rows to a name</span></li><li><b>button</b> Add a person <span class="eff">opens a form: name, school email and role; Add and send a link puts the person on the list with no password and emails them a link to set their own</span></li></ul></details>
+  <footer><div><b>Data:</b> staff, staff_role_grant, role; session states; educator_note statuses; note_claim decisions</div><div><b>Empty:</b> none · <b>Phone:</b> the table scrolls sideways in its own box</div><div><b>Done when:</b> no sort, rank, ordinal or colour grading on the three numbers; the table cannot be sorted by them; a grant edit is a new row or a valid_to, never a delete (row count never drops); no staff name appears unless the viewer is in the everything group (names are pii)</div></footer>
+</article>
+<article class="wf" id="classes">
+  <header><span class="route">/setup/classes</span><span class="meta">coordinator · Core · CP-1 · exists: part (/school)</span></header>
+  <div class="bar"><b></b>Cornerstone <span class="g">Today</span><span class="g">Timetable</span><span class="g">Children</span><span class="g on">Setup</span><i class="search">Sr. No. or activity</i></div>
+  <div class="trail">‹ Back › … › <strong>Classes and children</strong></div>
+  <div class="body">
+    <div class="main">
+      <div class="eyebrow">The school</div>
+      <h3>Classes and children</h3>
+      <p class="purpose">Each class, its grade, its children by Sr. No., and who teaches it. Move a child to another class; every change is kept with who made it.</p>
+      <div class="action">▶ Move a child</div>
+      <div class="block"><span class="tag">DataTable</span><span>class · grade · children · educators; open a class</span></div><div class="block"><span class="tag">DataTable</span><span>a class: Sr. No. · since · moved from; Move (its own action)</span></div><div class="block"><span class="tag">Details</span><span>change log (change_log, enrolment)</span></div>
+      <div class="next">→ Staff</div>
+    </div>
+    <aside class="rail"><h4>Connected to</h4><div>Staff</div><div>Class picture</div><div>the fortnight</div><h4>Capture here</h4><div class="none">not here</div></aside>
+  </div>
+  <details class="controls"><summary>Every control (10) and what the test does with it</summary><ul><li><b>row</b> each class row <span class="eff">opens that class's children table below</span></li><li><b>child_name</b> each child row</li><li><b>button</b> Move (a child row) <span class="eff">opens a picker of classes and a date; Save closes the enrolment, opens a new one and writes a change_log row; the child appears in the new class</span></li><li><b>fold</b> change log</li><li><b>link</b> a class's picture <span class="to">→ Class picture</span></li><li><b>link</b> rail: Staff <span class="to">→ Staff and classes</span></li><li><b>link</b> rail: Class picture <span class="to">→ Class picture</span></li><li><b>link</b> rail: the fortnight <span class="to">→ Fortnight 9</span></li><li><b>filter</b> Grade <span class="eff">narrows the classes to one grade</span></li><li><b>filter</b> Find a class (search) <span class="eff">narrows the classes to a name</span></li></ul></details>
+  <footer><div><b>Data:</b> school_class, enrolment, change_log (a move is a closed enrolment, a new one and a change_log row), names read from pii by child_id at render, never stored in these tables</div><div><b>Empty:</b> none · <b>Phone:</b> the table scrolls sideways in its own box</div><div><b>Folds in:</b> /school</div><div><b>Done when:</b> a move closes the enrolment, opens a new one, writes a change_log row and deletes nothing; each child row shows the name beside the Sr. No., read from pii by child_id; the address and the change log's stored text carry no name (DOM scan); the change log lists the move with who and when</div></footer>
+</article>
+<article class="wf" id="setup">
+  <header><span class="route">/setup</span><span class="meta">everyone · Core · exists: part</span></header>
+  <div class="bar"><b></b>Cornerstone <span class="g">Today</span><span class="g">Timetable</span><span class="g">Children</span><span class="g on">Setup</span><i class="search">Sr. No. or activity</i></div>
+  <div class="trail">‹ Back › … › <strong>Setup</strong></div>
+  <div class="body">
+    <div class="main">
+      <div class="eyebrow">Changed rarely</div>
+      <h3>Setup</h3>
+      <p class="purpose">The curriculum, the skills, the question bank, staff, classes and the school. Statistics and old scans sit behind details links.</p>
+      <div class="action">▶ Curriculum</div>
+      <div class="block"><span class="tag">Cards</span><span>Curriculum · Skills to approve (count) · Question bank · Staff · Classes and children · School (campus, academic year, fortnights)</span></div>
+      <div class="next">→ none</div>
+    </div>
+    <aside class="rail"><h4>Connected to</h4><div class="none">none</div><h4>Capture here</h4><div class="none">not here</div></aside>
+  </div>
+  <details class="controls"><summary>Every control (6) and what the test does with it</summary><ul><li><b>link</b> Curriculum <span class="to">→ Curriculum</span></li><li><b>link</b> Skills to approve <span class="to">→ Skills to approve</span> <span class="role">coordinator only</span></li><li><b>link</b> Question bank <span class="to">→ Question bank</span></li><li><b>link</b> Staff <span class="to">→ Staff and classes</span> <span class="role">coordinator only</span></li><li><b>link</b> Classes and children <span class="to">→ Classes and children</span> <span class="role">coordinator only</span></li><li><b>link</b> details: the blocks gallery <span class="to">→ The blocks</span></li></ul></details>
+  <footer><div><b>Data:</b> counts</div><div><b>Empty:</b> none · <b>Phone:</b> one column</div><div><b>Done when:</b> every setup page is reachable in two clicks from the bar; an educator sees only the cards their group may open</div></footer>
+</article>
+<article class="wf" id="blocks">
+  <header><span class="route">/setup/blocks</span><span class="meta">coordinator · Core · exists: no</span></header>
+  <div class="bar"><b></b>Cornerstone <span class="g">Today</span><span class="g">Timetable</span><span class="g">Children</span><span class="g on">Setup</span><i class="search">Sr. No. or activity</i></div>
+  <div class="trail">‹ Back › … › <strong>The blocks</strong></div>
+  <div class="body">
+    <div class="main">
+      <div class="eyebrow">Setup · for the people who build the site</div>
+      <h3>The blocks</h3>
+      <p class="purpose">Every part the site is built from, with sample data and its words. Open one to see how it behaves.</p>
+      <div class="action">▶ Open the first block</div>
+      <div class="block"><span class="tag">Details</span><span>one fold per block in screens.json `blocks`: the live component on sample data, its states, the words it uses</span></div>
+      <div class="next">→ Setup</div>
+    </div>
+    <aside class="rail"><h4>Connected to</h4><div class="none">none</div><h4>Capture here</h4><div class="none">not here</div></aside>
+  </div>
+  <details class="controls"><summary>Every control (1) and what the test does with it</summary><ul><li><b>fold</b> each block's sample</li></ul></details>
+  <footer><div><b>Data:</b> screens.json `blocks`; sample data lives in the page, never a database row</div><div><b>Empty:</b> never empty: the list is the block list · <b>Phone:</b> one column</div><div><b>Folds in:</b> </div><div><b>Done when:</b> there is one fold per entry of `blocks`, and a block with no sample fails the test; the page is absent for an educator and linked only from Setup's details link; its first section is the legend: every state with its icon, word and colour, every action with its tile, every kind of thing with its tile, the subjects and the shapes, all read from STATES and tokens.json, nothing typed; the legend shows the four logo files with where each is used and the rules (no recolour, dark ground uses the tile, clear space a quarter of the mark, no stretch, rotate or shadow)</div></footer>
+</article></div></section><section><h2>Outside the bar</h2><div class="grid">
+<article class="wf" id="login">
+  <header><span class="route">/login</span><span class="meta">everyone · Core · CP-2 · exists: yes</span></header>
+  <div class="bar"><b></b>Cornerstone <span class="g">Today</span><span class="g">Timetable</span><span class="g">Children</span><span class="g">Setup</span><i class="search">Sr. No. or activity</i></div>
+  <div class="trail">‹ Back › … › <strong>Sign in</strong></div>
+  <div class="body">
+    <div class="main">
+      <div class="eyebrow">Staff only</div>
+      <h3>Sign in</h3>
+      <p class="purpose">School email and password. Forgot it: a link by email, set by its owner.</p>
+      <div class="action">▶ Sign in</div>
+      <div class="block"><span class="tag">BrandMark</span><span>the large lockup above the form; the dark-ground lockup in dark</span></div><div class="block"><span class="tag">Form</span><span>school email · password · Sign in (main) · Forgot your password?</span></div>
+      <div class="next">→ Today</div>
+    </div>
+    <aside class="rail"><h4>Connected to</h4><div class="none">none</div><h4>Capture here</h4><div class="none">not here</div></aside>
+  </div>
+  <details class="controls"><summary>Every control (4) and what the test does with it</summary><ul><li><b>field</b> School email</li><li><b>field</b> Password</li><li><b>button</b> Sign in <span class="eff">lands on Today for the person's group; a wrong password shows one message and counts a sign_in_failure; after the limit the form says to wait</span></li><li><b>tab</b> Sign in / Forgot your password?</li></ul></details>
+  <footer><div><b>Data:</b> auth; sign_in_failure; password_link</div><div><b>Empty:</b> none · <b>Phone:</b> centred form</div><div><b>Folds in:</b> /login/forgot, /login/new-password, /account/password</div><div><b>Done when:</b> lands on Today for the person's group; no development bypass in production; a used password link is refused the second time</div></footer>
+</article>
+<article class="wf" id="help">
+  <header><span class="route">/guide</span><span class="meta">everyone · Core · exists: yes</span></header>
+  <div class="bar"><b></b>Cornerstone <span class="g">Today</span><span class="g">Timetable</span><span class="g">Children</span><span class="g">Setup</span><i class="search">Sr. No. or activity</i></div>
+  <div class="trail">‹ Back › … › <strong>Start here</strong></div>
+  <div class="body">
+    <div class="main">
+      <div class="eyebrow">Start here</div>
+      <h3>Start here</h3>
+      <p class="purpose">What each page is for, the usual jobs, and what each button does; the school's steps in four stages. Reached from the ? on every page.</p>
+      <div class="action">▶ the page you came from</div>
+      <div class="block"><span class="tag">Cards</span><span>I want to… (jobs → pages)</span></div><div class="block"><span class="tag">Details</span><span>one per page: what it is for, what you see where, what each button does</span></div>
+      <div class="next">→ none</div>
+    </div>
+    <aside class="rail"><h4>Connected to</h4><div class="none">none</div><h4>Capture here</h4><div class="none">not here</div></aside>
+  </div>
+  <details class="controls"><summary>Every control (3) and what the test does with it</summary><ul><li><b>link</b> each job <span class="to">→ Today</span></li><li><b>fold</b> each page's section</li><li><b>link</b> ? on any page <span class="to">→ Start here</span></li></ul></details>
+  <footer><div><b>Data:</b> static, generated from screens.json</div><div><b>Empty:</b> none · <b>Phone:</b> stacked</div><div><b>Folds in:</b> /guide/[slug], /guide/workflows, /workflows</div><div><b>Done when:</b> every page's ? opens its own section; the sections are generated from screens.json so a new screen gets its help without a hand edit</div></footer>
+</article>
+<article class="wf" id="feedback">
+  <header><span class="route">/feedback</span><span class="meta">everyone · Core · exists: yes</span></header>
+  <div class="bar"><b></b>Cornerstone <span class="g">Today</span><span class="g">Timetable</span><span class="g">Children</span><span class="g">Setup</span><i class="search">Sr. No. or activity</i></div>
+  <div class="trail">‹ Back › … › <strong>Report a problem or suggest something</strong></div>
+  <div class="body">
+    <div class="main">
+      <div class="eyebrow">To the team</div>
+      <h3>Report a problem or suggest something</h3>
+      <p class="purpose">Tell us what is broken, what you would like, or ask a question. It reaches the team, who decide what is built.</p>
+      <div class="action">▶ Send</div>
+      <div class="block"><span class="tag">Form</span><span>what · where (the page you were on, prefilled) · Send</span></div>
+      <div class="next">→ back to the page</div>
+    </div>
+    <aside class="rail"><h4>Connected to</h4><div class="none">none</div><h4>Capture here</h4><div class="cap">photo</div></aside>
+  </div>
+  <details class="controls"><summary>Every control (4) and what the test does with it</summary><ul><li><b>field</b> what</li><li><b>field</b> where</li><li><b>upload</b> capture: a screenshot <span class="eff">png/jpg attached to the note</span></li><li><b>button</b> Send <span class="eff">a staff_note row and a GitHub issue; the page says it reached the team and links back</span></li></ul></details>
+  <footer><div><b>Data:</b> staff_note → GitHub issue</div><div><b>Empty:</b> none · <b>Phone:</b> full form</div><div><b>Done when:</b> Send writes one staff_note and one issue; the issue body carries no child's name: the page warns not to type one, and a screenshot is kept on the private side, linked by id, never attached to the public GitHub issue (names now appear on some screens and the repository is public)</div></footer>
+</article></div></section>
+</div>
