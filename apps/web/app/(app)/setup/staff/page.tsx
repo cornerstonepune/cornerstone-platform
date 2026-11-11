@@ -50,7 +50,7 @@ export default async function StaffPage({ searchParams }: Props) {
     <Screen
       stage={`This fortnight${facts.now ? ` · Fortnight ${facts.now.number ?? ""}, ${shortDate(facts.now.from)} to ${shortDate(facts.now.to)}` : ""} · ${all.length} staff`}
       title="Staff and classes"
-      purpose="Who teaches which class, and whole counts the database can stand behind. No score, no ranking: the school decides what they mean."
+      purpose="Who teaches which class, and whole counts you can rely on. No score, no ranking: the school decides what they mean."
       action={<p className="m-0 text-[14px]">Open a person to see what they hold.</p>}
       next={{ href: screenHref("classes") ?? "/school", label: "Classes and children" }}
       rail={<Rail edges={[{ screen: "fortnight", label: "Fortnight", icon: "week" }, { screen: "timetable", label: "Timetable", icon: "week" }, { screen: "classes", label: "Classes and children", icon: "class" }]} />}

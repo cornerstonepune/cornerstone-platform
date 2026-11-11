@@ -13,8 +13,10 @@ import { aPerson } from "./rows";
 
 const INVENTORY = JSON.parse(readFileSync(path.resolve(__dirname, "../../../docs/frontend/screens.json"), "utf8")) as {
   merged_slices: string[];
-  screens: { id: string; route: string; title: string }[];
+  screens: { id: string; route: string; title: string; purpose: string; elements: { t: string; label: string; help?: string }[] }[];
 };
+type Help = { sections: { id: string; title: string; purpose: string; does: { label: string; says?: string }[] }[] };
+const HELP = JSON.parse(readFileSync(path.resolve(__dirname, "../design-system/help.json"), "utf8")) as Help;
 const sql = postgres(process.env.DATABASE_URL!, { max: 1 });
 test.afterAll(() => sql.end());
 
@@ -154,5 +156,46 @@ test("each I want to link opens its screen", async ({ page }) => {
     const screen = INVENTORY.screens.find((s) => s.route === href)!;
     await page.goto(href);
     await expect(page.getByRole("heading", { level: 1 }), href).toHaveText(screen.title);
+  }
+});
+
+// The guide's words, held to the school's words (the old packages/engine/tests/test_guide.py, which read apps/web/guide/*.json, ported to
+// the help that is generated from screens.json). The same jargon list, the same longest sentence, no em dash; and no table, block or file
+// name, since the help is read by an educator.
+const JARGON = /\b(ring|rings|evidence_event|evidence event|RLS|migration|migrations|rung|rungs|taxonomy|borrow|borrowing|teacher|teachers|LLM|OCR|API|Jev|prompt|seed|schema|ADR|SQL|JSON|database|threshold|thresholds|query|delve|leverage|seamless|robust|elevate|unlock|empower|streamline|holistic)\b/i;
+const BUILDER = /[a-z]+_[a-z]+|\w+\.\w+\(|\.json\b|\b[A-Z][a-z]+[A-Z][a-z]+\b/;
+const LONGEST_SENTENCE = 30;
+const textsOf = (s: Help["sections"][number]) => [s.title, s.purpose, ...s.does.flatMap((d) => [d.label, d.says ?? ""])].filter(Boolean);
+
+test("the help uses the school's words and short sentences", async () => {
+  const bad: string[] = [];
+  for (const s of HELP.sections)
+    for (const t of textsOf(s)) {
+      const jargon = t.match(JARGON);
+      if (jargon) bad.push(`${s.id}: “${jargon[0]}” in “${t.slice(0, 80)}”`);
+      if (BUILDER.test(t)) bad.push(`${s.id}: a table, block or file name in “${t.slice(0, 80)}”`);
+      if (t.includes("—")) bad.push(`${s.id}: an em dash in “${t.slice(0, 80)}”`);
+      for (const sentence of t.split(/(?<=[.!?])\s+/)) if (sentence.split(/\s+/).length > LONGEST_SENTENCE) bad.push(`${s.id}: a sentence of ${sentence.split(/\s+/).length} words: “${sentence.slice(0, 80)}”`);
+    }
+  expect(bad, bad.join("\n")).toEqual([]);
+});
+
+test("the checker sees what it should: the jargon list and the builder shapes catch their examples", async () => {
+  for (const w of ["the database", "a teacher", "the taxonomy", "a prompt"]) expect(JARGON.test(w), w).toBe(true);
+  for (const w of ["staff_note", "ChildPeek", "screens.json", "pii.note_claim()"]) expect(BUILDER.test(w), w).toBe(true);
+  for (const w of ["Who teaches which class", "Open the child", "Sr. No."]) expect(JARGON.test(w) || BUILDER.test(w), w).toBe(false);
+});
+
+test("every control the help names is a control of that screen, and its words are the inventory's", async () => {
+  const seen = (label: string) => label.replace(/^(rail|page|peek|capture|next step|details):\s*/i, "");
+  expect(HELP.sections.map((s) => s.id)).toEqual(INVENTORY.screens.map((s) => s.id));
+  for (const section of HELP.sections) {
+    const screen = INVENTORY.screens.find((s) => s.id === section.id)!;
+    expect(section.title, section.id).toBe(screen.title);
+    expect(section.purpose, section.id).toBe(screen.purpose);
+    const controls = screen.elements.filter((e) => e.t !== "child_name");
+    expect(section.does.map((d) => d.label), section.id).toEqual(controls.map((e) => seen(e.label)));
+    // what the help says of a control is a sentence the inventory wrote for the school (`help`), never the builder's `effect` or `note`
+    for (const [i, d] of section.does.entries()) expect(d.says, `${section.id}: ${d.label}`).toBe(controls[i].help);
   }
 });

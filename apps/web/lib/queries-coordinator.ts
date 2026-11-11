@@ -7,9 +7,9 @@ import { staffList } from "./queries";
 // `pii.child`, read through the accessor that logs who asked (rule 6). Nothing here writes; the writes are `actions.ts` beside
 // each page, and every one of them is a function of the database or an insert of a new row, never a delete.
 
-const school = () => sql`(select id from tenant where slug = ${TENANT_SLUG})`;
+export const school = () => sql`(select id from tenant where slug = ${TENANT_SLUG})`;
 // the school's day today, in the school's own zone (the same line `lib/move-child.ts` uses), never the server's
-const today = () => sql`(now() at time zone (select value #>> '{}' from config where key = 'school.time_zone'))::date`;
+export const today = () => sql`(now() at time zone (select value #>> '{}' from config where key = 'school.time_zone'))::date`;
 
 /** Whether the signed-in person is in the group that reads every staff row (the database's own rule, `public.my_reach`). */
 export async function namesMayShow(): Promise<boolean> {
@@ -251,27 +251,6 @@ export async function grantChanges(limit = 5): Promise<Change[]> {
     return r.op === "give"
       ? { id: r.id, line: `${who}: ${what}, from ${shortDate(r.from ?? r.at)}`, note: `Added by ${by}`, at: r.at }
       : { id: r.id, line: `${who}: ${what}, ended ${shortDate(r.at)}`, note: `Ended by ${by} · nothing deleted`, at: r.at };
-  });
-}
-
-/** What changed lately in Setup, newest first, in words: a child moved class, a grant added or ended. The two kinds the change log
- *  holds for Setup's pages; each line names who did it and when. */
-export async function changedLately(limit = 5): Promise<Change[]> {
-  const rows = await sql<{ id: string; table: string; op: string; roll: string | null; from: string | null; to: string | null; staff: string | null; role: string | null; class: string | null; by: string | null; at: string }[]>`
-    select l.id::text, l.table_name as "table", l.op, coalesce(l.after ->> 'roll_no', l.before ->> 'roll_no') as roll, l.before ->> 'section' as "from", l.after ->> 'section' as "to",
-           l.after ->> 'staff_id' as staff, r.label as role, l.after ->> 'class' as class, l.staff_id::text as by, ${onDay()} as at
-    from change_log l
-    left join role r on r.tenant_id = l.tenant_id and r.code = l.after ->> 'role'
-    where l.tenant_id = ${school()} and ((l.table_name = 'child' and l.op = 'move') or (l.table_name = 'staff_role_grant' and l.op in ('give', 'end')))
-    order by l.at desc, l.id limit ${limit}`;
-  const names = new Map((await staffList()).map((p) => [p.id, p.name]));
-  return rows.map((r) => {
-    const by = (r.by && names.get(r.by)) || "the school";
-    const line =
-      r.table === "child"
-        ? `A child moved class: Sr. No. ${r.roll ?? ""}, ${r.from ?? ""} to ${r.to ?? ""}`
-        : `A grant ${r.op === "give" ? "added" : "ended"}: ${(r.staff && names.get(r.staff)) || "a member of staff"}, ${r.class ?? "every class"}${r.role ? `, ${r.role}` : ""}`;
-    return { id: r.id, line, note: `By ${by}`, at: r.at };
   });
 }
 

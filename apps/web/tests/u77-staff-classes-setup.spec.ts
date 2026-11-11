@@ -1,10 +1,9 @@
 /**
- * U77 (UI-5) — Staff and classes, Classes and children and Setup as their wireframes draw them (docs/frontend/wireframes/{staff,classes,setup}.html).
+ * U77 (UI-5) — Staff and classes and Classes and children as their wireframes draw them (docs/frontend/wireframes/{staff,classes}.html).
  * One test for each thing the wireframes show that the first builds did not:
  *   1 Staff: each role group's heading says how many people it holds
  *   2 Staff: "Last changes to grants" lists the latest gives and ends, newest first, with who did it
  *   3 Classes: each class has its Class picture link; a class's children are in two groups, moved in this year first
- *   4 Setup: the School card (campus, year) and "Changed lately" (the move and the grant, in words, newest first)
  * Rows are the test's own (two classes with a random label, a person, children named from tests/fake-names.ts), made once per run.
  */
 import { expect, test } from "@playwright/test";
@@ -87,15 +86,4 @@ test("3. each class has its Class picture link, and its children are in two grou
   expect(heads.map((h) => h.replace(/\s+/g, " ").trim())).toEqual(["Moved in this year 1", "Here since the year began 2"]);
   await expect(page.getByRole("table", { name: `${TO} children · Moved in this year` })).toContainText(MOVER);
   await expect(page.getByRole("table", { name: `${TO} children · Here since the year began` })).not.toContainText(MOVER);
-});
-
-test("4. Setup shows the School card and, as “Changed lately”, the move and the grant in words, newest first", async ({ page }) => {
-  await page.goto("/setup", { waitUntil: "networkidle" });
-  const school = page.locator("[data-block=Cards] article", { has: page.getByText("School", { exact: true }) });
-  await expect(school).toContainText("Campus ");
-  await expect(school).toContainText("Year ");
-  const lately = page.getByRole("region", { name: "Changed lately" }).getByRole("listitem");
-  await expect(lately.first()).toContainText(`A child moved class: Sr. No. 9, ${FROM} to ${TO}`);
-  await expect(lately.nth(1)).toContainText("A grant ended: Changes Person");
-  await expect(lately.nth(2)).toContainText("A grant added: Changes Person");
 });

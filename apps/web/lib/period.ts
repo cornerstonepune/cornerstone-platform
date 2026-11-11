@@ -1,4 +1,5 @@
 import { sql } from "./db";
+import { seesClass } from "./reach";
 
 // One period of one class on one day, as the Period screen (UI-3a) reads it: the session, its plan entry's activity, and what
 // the class last showed on that activity (the outcomes of the last day it was observed). The class is checked by the page against
@@ -7,8 +8,11 @@ export type SessionRow = {
   id: string;
   class_id: string;
   section: string;
+  grade: string;
   day: string;
+  period_id: string;
   starts_at: string;
+  ends_at: string;
   subject: string | null;
   kind: string;
   text: string;
@@ -17,7 +21,7 @@ export type SessionRow = {
 
 export async function sessionOf(id: string): Promise<SessionRow | null> {
   const [r] = await sql<(Omit<SessionRow, "activity"> & { code: string | null; aname: string | null })[]>`
-    select s.id, s.school_class_id as class_id, sc.label as section, d.on_date::text as day, to_char(p.starts_at, 'HH24:MI') as starts_at,
+    select s.id, s.school_class_id as class_id, sc.label as section, sc.grade_code as grade, p.id::text as period_id, d.on_date::text as day, to_char(p.starts_at, 'HH24:MI') as starts_at, to_char(p.ends_at, 'HH24:MI') as ends_at,
            coalesce(su.label, su.name) as subject, s.kind, s.text, a.code, a.name as aname
     from session s
     join school_class sc on sc.id = s.school_class_id
@@ -75,4 +79,26 @@ export async function seenOn(classId: string, activity: string): Promise<{ seen:
             where o.class_id = ${classId} and o.activity_code = ${activity} and not exists (select 1 from activity_observation s where s.supersedes = o.id)) as seen,
            (select count(*)::int from child_now where class_id = ${classId} and active) as total`;
   return r;
+}
+
+/** The session of a class on a day in a period, when there is one (an empty slot, a lesson moved away, has none). */
+export async function sessionAt(classId: string, day: string, periodId: string): Promise<string | null> {
+  const [r] = await sql<{ id: string }[]>`
+    select s.id::text as id from session s join school_day d on d.id = s.school_day_id
+    where s.school_class_id = ${classId} and d.on_date = ${day}::date and s.period_id = ${periodId}`;
+  return r?.id ?? null;
+}
+
+/** A period as the school names it, and the class's own words, for the page of a slot with no lesson in it; null when either is not found. */
+export async function slotOf(classId: string, periodId: string): Promise<{ section: string; grade: string; starts_at: string; label: string } | null> {
+  const [r] = await sql<{ section: string; grade: string; starts_at: string; label: string }[]>`
+    select c.label as section, c.grade_code as grade, to_char(p.starts_at, 'HH24:MI') as starts_at, p.label
+    from school_class c, period p where c.id = ${classId} and p.id = ${periodId}`;
+  return r ?? null;
+}
+
+/** Whether the person may see what is of this class (the same rule as every other screen: `staff_sees`). */
+export async function mayRead(me: Parameters<typeof seesClass>[0], section: string): Promise<boolean> {
+  const [r] = await sql<{ ok: boolean }[]>`select ${seesClass(me, sql`${section}`)} as ok`;
+  return !!r?.ok;
 }

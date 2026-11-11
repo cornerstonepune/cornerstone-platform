@@ -70,3 +70,11 @@ Seven of its tests failed on a fresh database. Real, and fixed at their cause: t
 - **Period** loads and has its structure; what it still lacks of its wireframe is data (steps, last time) and the rail's icons and second lines, which are the frame's.
 - Not done here: the period-page link repoint and the old page's deletion (waits for #633 and #651, which own the pages that link to it); the child panel on every screen (UI-7c).
 - The spec's Add a photo test cleared its own note first: a note keeps at most 6 photos and the lesson's note outlives a run.
+
+### The old period page retired (`/educator/period/[id]`)
+- Every link (Your day, This week, the timetable, Moves, the Today doors) goes to `/period/[id]`; `/educator/period/<id>?class=&day=` answers 308 to it, class and day carried.
+- `/period/[id]` takes a lesson's id, or a **period's** id with `?class=&day=`: that is the lesson if there is one (a redirect), else a read-only "No lesson here" page (a slot a lesson was moved out of, as the backend found for 15 of 273 cells). **Opening an empty slot no longer creates anything**; it never did on the new page, and the old one only read.
+- It opens exactly when the timetable is open to the person (`openTo`, as the old page did), with or without voice notes: Record and Type the marks show only when voice is on and the class is hers.
+- Carried across from the old page: the time range, the period's own name (from the timetable), the school's words, the planner's lines (a fold, open), the count strip, the activity and its link (which returns to the day).
+- Changed by the wireframe, and so in the old page's spec (`m1-09-calendar.spec.ts`, "any block opens its period"): the page's title is its **activity** ("Insects"), where the old page's was the period's name ("Academic 2 General Awareness"), which is now the header line with the time range; the trail follows the title. Each fact is still asserted.
+- Not run here: the calendar's own tests ("Today is the day as a calendar", "This week is a grid", the two "switched off" tests); they fail on untouched main in the local test database too (the tester previews, and the K2 timetable rows differ), and CI runs them on its own.
