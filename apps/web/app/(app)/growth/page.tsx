@@ -1,4 +1,6 @@
 import Link from "@/components/link";
+import { permanentRedirect } from "next/navigation";
+import { sql } from "@/lib/db";
 import { FilterBar } from "@/components/filter-bar";
 import { Screen } from "@/components/app-frame";
 import { NotYours } from "@/components/not-yours";
@@ -13,12 +15,11 @@ import { childStates } from "@/lib/states";
 import { deadline } from "@/lib/deadline";
 import { classTopics } from "@/lib/queries-results";
 import { NOT_ASSESSED } from "@/components/standing";
-import { ChildrenView } from "./children-view";
 import { TopicsTable, type Open } from "./by-topic";
 
 type Props = { searchParams: Promise<Record<string, string | undefined>> };
 
-// What only the children-by-child view read: an address carrying one is a bookmark of it, and still opens it.
+// What only the old children-by-child view read: an address carrying one is a bookmark of it, and now goes to Children.
 const CHILDREN_VIEW = ["sort", "status", "grade", "page", "cpage"];
 
 // Class results (goals/res_results_by_topic.yaml). Nimish, 24 Oct 2026: "The unit of reference is the topic: Subject, then
@@ -27,7 +28,11 @@ const CHILDREN_VIEW = ["sort", "status", "grade", "page", "cpage"];
 export default async function ClassResults({ searchParams }: Props) {
   const me = await requireStaff();
   const q = await searchParams;
-  if (q.view === "children" || CHILDREN_VIEW.some((k) => q[k])) return <ChildrenView me={me} q={q} />;
+  // the old list of children is the Children screen now (UI-3b): an old bookmark of it goes there, to the class it named
+  if (q.view === "children" || CHILDREN_VIEW.some((k) => q[k])) {
+    const [cls] = q.class ? await sql<{ id: string }[]>`select id from school_class where label = ${q.class} limit 1` : [];
+    permanentRedirect(cls ? `/children?cls=${cls.id}` : "/children");
+  }
   const [reach, own] = await deadline(Promise.all([reachOf(me), workScope(me)]));
   if (q.class && !isMine(reach, q.class)) return <NotYours what={`Class ${q.class}`} />;
   const [classes, mine] = await deadline(Promise.all([classesOf(reach), classesOf(own)]));
