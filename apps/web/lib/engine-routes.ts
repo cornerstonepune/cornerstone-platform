@@ -119,6 +119,7 @@ export type EngineRoutes = {
   "POST /timetable/clash/accept": { actor: string; key: string; reason: string };
   "POST /timetable/day": { actor: string; class_id?: string | null; day?: string | null; week_of?: string | null; period_id?: string | null };
   "POST /timetable/generate": { actor: string; grade: string; section: string; year: string; fortnight: number };
+  "POST /timetable/go-live": { actor: string; grade: string; section: string; year: string; fortnight: number; run_id?: string | null; reason?: string | null; discard_changes?: boolean; dry?: boolean };
   "POST /timetable/link": { actor: string; fortnight?: number | null; band?: string | null; apply?: boolean };
   "POST /timetable/move": { actor: string; grade: string; section: string; year: string; from_date: string; from_period: number; to_date: string; to_period: number; reason?: string | null };
   "POST /timetable/open": { actor: string; class_id?: string | null; day?: string | null; week_of?: string | null; period_id?: string | null };
