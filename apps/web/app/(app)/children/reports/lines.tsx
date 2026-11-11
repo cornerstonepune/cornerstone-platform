@@ -34,7 +34,7 @@ export function Lines({ r, lines, facts, sent, me, coordinator }: { r: ReportsRo
           <input type="hidden" name="line_id" value={l.id} />
           <div className="flex flex-wrap items-center gap-2">
             <span className="b-muted">The system&rsquo;s state, read only</span>
-            <StatusChip state={fact?.state ?? "notSeenYet"} />
+            <StatusChip state={fact?.look ?? "notSeenYet"} words={fact?.look ? (fact.words ?? undefined) : undefined} />
           </div>
           <label className="grid gap-1">
             <span className="b-muted">{l.thin ? "Rests on few pieces of evidence" : "Rests on the child's own dated evidence"}</span>

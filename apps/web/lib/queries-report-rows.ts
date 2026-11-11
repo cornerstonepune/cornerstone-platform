@@ -1,6 +1,7 @@
 import { sql } from "./db";
 import { inScope, type Scope } from "./scope";
 import { reportState, reportWords, type ReportState } from "./queries-reports";
+import { lookOfColour, type Look } from "./looks";
 
 // The Reports screen's rows (UI-8): every active child in the viewer's classes, in class and Sr. No. order, with the state of their
 // newest parent report, whether an educator has approved it, and the consent on file. Order is by class and roll only: nothing here
@@ -90,17 +91,20 @@ export async function seesConsent(): Promise<boolean> {
   return !!r?.all;
 }
 
-export type LineFact = { name: string | null; state: "secure" | "practising" | "emerging" | "notSeenYet" };
+/** The skill a line is about (its name) and the school's own look and words for the system's state of it, read from the rows (`child_state`), never named here. */
+export type LineFact = { name: string | null; look: Look | null; words: string | null };
 
-/** For the lines of one child opened: each piece of evidence a line cites → the skill it is about (its name) and the system's state of that
- *  skill for this child, which the line card shows beside the educator's words, read only. */
+/** For the lines of one child opened: each piece of evidence a line cites → the skill it is about and the system's state of that skill for this
+ *  child, which the line card shows beside the educator's words, read only. A report reads the written states, never the observed ones. */
 export async function lineFacts(child: string, evidence: readonly string[]): Promise<Map<string, LineFact>> {
   if (!evidence.length) return new Map();
-  const rows = await sql<{ id: string; name: string | null; state: string | null }[]>`
+  const rows = await sql<{ id: string; name: string | null; colour: string | null; words: string | null }[]>`
     select e.id::text as id,
-           (select s.name from skill s where s.code = e.skill_code order by s.updated_at desc limit 1) as name,
-           (select k.state from child_skill_state k where k.child_id = e.child_id and k.skill_code = e.skill_code order by k.computed_at desc limit 1) as state
+           (select rs.name from registry_skill rs where rs.tenant_id = e.tenant_id and rs.code = e.skill_code) as name,
+           (select cs.colour from child_skill_state k join child_state cs on cs.tenant_id = k.tenant_id and cs.code = k.state
+             where k.child_id = e.child_id and k.skill_code = e.skill_code and k.kind = 'written' order by k.computed_at desc limit 1) as colour,
+           (select cs.words from child_skill_state k join child_state cs on cs.tenant_id = k.tenant_id and cs.code = k.state
+             where k.child_id = e.child_id and k.skill_code = e.skill_code and k.kind = 'written' order by k.computed_at desc limit 1) as words
     from evidence_event e where e.child_id = ${child} and e.id = any(${evidence as string[]}::uuid[])`;
-  const known = ["secure", "practising", "emerging"] as const;
-  return new Map(rows.map((r) => [r.id, { name: r.name, state: (known as readonly string[]).includes(r.state ?? "") ? (r.state as LineFact["state"]) : "notSeenYet" }]));
+  return new Map(rows.map((r) => [r.id, { name: r.name, look: r.colour ? lookOfColour(r.colour) : null, words: r.words }]));
 }
