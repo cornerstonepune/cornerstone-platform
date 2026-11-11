@@ -62,7 +62,7 @@ test("Period: a period that has an activity opens for the educator, with its act
     insert into period (tenant_id, grade_code, ord, starts_at, ends_at, label, fixed) values (${t}, 'K2', 92, '03:42', '04:12', 'UI-3a with an activity', false)
     on conflict (tenant_id, grade_code, starts_at) do update set label = excluded.label returning id`;
   const [{ id: session }] = await sql<{ id: string }[]>`
-    insert into session (tenant_id, school_class_id, school_day_id, period_id, kind, text, plan_entry_id) values (${t}, ${klass}, ${day}, ${period}, 'lesson', 'Sorting', ${entry})
+    insert into session (tenant_id, school_class_id, school_day_id, period_id, kind, text, plan_entry_id) values (${t}, ${klass}, ${day}, ${period}, 'subject', 'Sorting', ${entry})
     on conflict (school_class_id, school_day_id, period_id) do update set plan_entry_id = excluded.plan_entry_id returning id`;
   await page.goto(`/period/${session}`);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Placeholder sorting activity");
