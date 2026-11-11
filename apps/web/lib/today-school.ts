@@ -21,7 +21,7 @@ const CELL: Record<Cell["state"], State> = { done: "done", moved: "moved", not_d
 
 /** Last week as the heat grid: a column for each day any class has, a row for each class in the order the engine lists them, one cell
  *  for each class and day. A day a class has no cell for is a holiday for it as for the rest; nothing is dropped. */
-export function heat(cells: readonly Cell[]): { days: string[]; rows: { label: string; cells: State[] }[] } {
+export function heat(cells: readonly Cell[], href?: (c: Cell) => string | null): { days: string[]; rows: { label: string; cells: State[]; hrefs?: (string | null)[] }[] } {
   const days = [...new Set(cells.map((c) => c.day))].sort();
   const order: string[] = [];
   const by = new Map<string, Map<string, Cell>>();
@@ -34,7 +34,7 @@ export function heat(cells: readonly Cell[]): { days: string[]; rows: { label: s
     by.get(k)!.set(c.day, c);
   }
   const word = (d: string) => new Date(`${d}T00:00:00Z`).toLocaleDateString("en-GB", { weekday: "short", day: "numeric", timeZone: "UTC" });
-  return { days: days.map(word), rows: order.map((label) => ({ label, cells: days.map((d) => CELL[by.get(label)!.get(d)?.state ?? "holiday"]) })) };
+  return { days: days.map(word), rows: order.map((label) => ({ label, cells: days.map((d) => CELL[by.get(label)!.get(d)?.state ?? "holiday"]), ...(href ? { hrefs: days.map((d) => { const c = by.get(label)!.get(d); return c ? href(c) : null; }) } : {}) })) };
 }
 
 export type Wait = { key: "clash" | "draft" | "late" | "undone" | "materials"; state: State; what: string; n: number; many: string; go: string };
