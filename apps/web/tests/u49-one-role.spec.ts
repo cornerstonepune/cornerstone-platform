@@ -147,7 +147,7 @@ test("an educator takes a decision once the coordinator's alone: approving a ski
   try {
     await educator.goto("/setup/needs-doing");
     await expect(educator.getByRole("main")).toContainText("Skills to approve");
-    await expect(educator.locator("[data-frame]").getByRole("link", { name: "How it works" }), "the engineering map is theirs too").toBeVisible();
+    await expect(educator.getByRole("contentinfo").getByRole("link", { name: "How it works" }), "the engineering map is theirs too").toBeVisible();
     await educator.goto(`/skill-sets/${waiting.code}`);
     await expect(educator.getByRole("button", { name: /^Approve, as / })).toBeVisible();
     await educator.goto("/skill-sets/approve");
