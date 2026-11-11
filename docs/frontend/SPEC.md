@@ -1155,6 +1155,28 @@ Done when (on top of the ten generic checks):
 - the change log lists the move with who and when
 
 
+#### How it works `/setup/how-it-works`
+Who: both · Phase: Core · Backend: none · Old page today: yes (/workflows) · Slice: UI-5
+Eyebrow: The engine
+Purpose: The twelve steps agreed with the school: what each does, what it hands on, what it has made so far, and which work for one subject only.
+Blocks, in order:
+- **Tile**: how many steps work, are partly built, are not built, work for one subject only
+- **Details**: each step's files, commands and screens
+Rail (Connected to): none
+Main action: Setup · Next step: Setup
+Data: workflows.json (the map the engine's code is held to), with each step's live number from the database
+Empty: none · Phone: one column; the cards stack
+Folds in: /workflows
+Every control on the screen (3), and what the test does with each:
+- **link** Setup → Setup (`/setup`)
+- **link** each step it hands on to (jumps to that step on the same page)
+- **fold** each step's files, commands and screens
+Done when (on top of the ten generic checks):
+- every step of the map is drawn in its workflow, with what it is doing now and where it hands on
+- a step's number is the database's own, read now; a step the map says is not built has no number
+- the map fits a phone
+
+
 #### Setup `/setup`
 Who: both · Phase: Core · Backend: none · Old page today: part · Slice: UI-5
 Eyebrow: Changed rarely
@@ -1315,7 +1337,7 @@ What the test does with each kind of control:
 | UI-2 The blocks | The school's new blocks of SPEC §5, built once, each with sample data on a staff-only gallery screen (`blocks`) and screenshots in both themes; every chart drawn to scale from its data. AppFrame is built in UI-13 and the existing blocks moved onto the tokens in UI-1. | The blocks | UI-13 |
 | UI-3 Node pages: the K2 walk | Period, record, confirm, notes, children, class picture, child, activity, objective and skill as node pages on the blocks, each walking to its neighbours through the rail and back through the trail; the old routes redirect. | the session's name, Record a note, Confirm what the reader heard, Notes, Children, Class picture, Where this child is, the activity's name, the objective's title, the skill's name, the skill set's name | UI-2; the K2 switch (a config row) on for the pages behind it |
 | UI-4 Node pages: assessments | Assessments, one assessment and one child's paper as node pages on the blocks; the seven old assessment pages and Class results fold in; the queries and the seven steps are unchanged. | Assessments, {the built name}, Check the answers | UI-2 |
-| UI-5 The coordinator's views: staff, classes and setup | Staff and grants, classes and children and the Setup home; the small writes that exist today (a grant, a child move) through their own rows. Search is the bar's typeahead (UI-13); there is no results page. | Staff and classes, Classes and children, Setup | UI-2 for the views; CP-1 merged for moving a child |
+| UI-5 The coordinator's views: staff, classes and setup | Staff and grants, classes and children and the Setup home; the small writes that exist today (a grant, a child move) through their own rows. Search is the bar's typeahead (UI-13); there is no results page. | Staff and classes, Classes and children, Setup, How it works | UI-2 for the views; CP-1 merged for moving a child |
 | UI-6 Timetable, rules and the fortnight's actions | The timetable's day, week and fortnight views and the timetable rules, the fortnight node with Approve and Go live, the draft from the rules with its unmet rules, and moves by hand with clashes accepted by the coordinator only. Until this merges the bar's Timetable door opens the page that exists today. | Timetable, Timetable rules, Fortnight 9, Draft from the rules, Moves by hand | CP-6, CP-11, CP-12 and CP-22 merged |
 | UI-7 Today, both kinds | The educator's Today (the day, the attention strip, notes to confirm, the class) and the coordinator's Today (what waits, last week's heat grid, next week), composed from the blocks over the queries that exist; What needs doing folds in and its count moves to Setup where it belongs. | Today, Today, the school | UI-3 and UI-5; UI-6 for the coordinator's clash and draft rows (rows for a backend not yet merged simply do not appear) |
 | UI-8 Reports | Each child's report, line by line, in the educator's words: two approvals per line, consent on file, then sent. The parent's copy says educator, Easy / Medium / Hard / Advance, no rung and no code. | Reports | CP-19 merged (Next) |

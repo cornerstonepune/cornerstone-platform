@@ -26,6 +26,7 @@ test("each old address answers 308 to its new one", async ({ request }) => {
     ["/account/password", "/login?view=forgot"],
     ["/guide/papers-to-approve", "/guide"],
     ["/guide/workflows", "/guide"],
+    ["/workflows", "/setup/how-it-works"],
   ];
   for (const [from, to] of folds) {
     const res = await request.get(from, { maxRedirects: 0 });

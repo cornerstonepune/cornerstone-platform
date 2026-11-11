@@ -1,6 +1,9 @@
 import Link from "@/components/link";
-import { Body, PageHeader, Panel, Pill, Tile } from "@/components/parts";
+import { Screen } from "@/components/app-frame";
+import { Panel, Tile } from "@/components/parts";
+import { StatusChip, type State } from "@/components/status-chip";
 import { requireStaff } from "@/lib/auth";
+import { screenHref } from "@/lib/built";
 import { deadline } from "@/lib/deadline";
 import { HANDOVERS, SHARED, STEPS, WORKFLOWS, handsOnTo, measures, type Measure, type Step } from "@/lib/workflows";
 import { dateWords } from "@/lib/week";
@@ -8,10 +11,10 @@ import { dateWords } from "@/lib/week";
 // Nimish, 2026-09-22: "a frontend representation … that shows each of the steps as a proper workflow,
 // what is working, and how things are connected." Drawn from `workflows.json`, the map the engine's code
 // is held to by `tests/test_layout.py`, with each step's live number from the database.
-const BUILT: Record<Step["built"], { tone: "neem" | "bamboo" | "monsoon"; words: string }> = {
-  live: { tone: "neem", words: "working" },
-  partly: { tone: "bamboo", words: "partly built" },
-  "not built": { tone: "monsoon", words: "not built yet" },
+const BUILT: Record<Step["built"], { state: State; words: string }> = {
+  live: { state: "done", words: "working" },
+  partly: { state: "waiting", words: "partly built" },
+  "not built": { state: "notYet", words: "not built yet" },
 };
 const byNumber = (a: Step, b: Step) => Number(a.code.slice(1)) - Number(b.code.slice(1));
 
@@ -21,18 +24,23 @@ export default async function HowItWorks() {
   const count = (b: Step["built"]) => STEPS.filter((s) => s.built === b).length;
 
   return (
-    <>
-      <PageHeader
-        stage="The engine"
-        title="How it works"
-        sub="The twelve steps agreed with the school, as four workflows: what each step does, what it hands to the next, what it has produced so far, and whether it works for any subject or only maths."
-      />
-      <Body>
+    <Screen
+      stage="The engine"
+      title="How it works"
+      purpose="The twelve steps agreed with the school: what each does, what it hands on, what it has made so far, and which work for one subject only."
+      action={
+        <Link href={screenHref("setup") ?? "/"} className="btn">
+          Setup
+        </Link>
+      }
+      next={{ href: screenHref("setup") ?? "/", label: "Setup" }}
+    >
+      <div>
         <div className="mb-[18px] grid grid-cols-2 gap-[10px] md:grid-cols-4">
           <Tile tone="neem" n={count("live")} words="steps working" />
           <Tile tone="bamboo" n={count("partly")} words="steps partly built" />
           <Tile tone="monsoon" n={count("not built")} words="steps not built yet" />
-          <Tile tone="terracotta" n={STEPS.filter((s) => !s.subject.any).length} words="steps that are maths only today" />
+          <Tile tone="terracotta" n={STEPS.filter((s) => !s.subject.any).length} words="steps that work for one subject only today" />
         </div>
 
         <div className="grid min-w-0 gap-[18px]">
@@ -61,7 +69,7 @@ export default async function HowItWorks() {
               {SHARED.map((p) => (
                 <li key={p.code}>
                   <b>{p.name}</b> <span className="fact text-[12px] text-basalt/55">{p.folder}</span> — {p.does}
-                  {!p.subject.any ? <span className="text-basalt/70"> Maths only: {p.subject.note}</span> : null}
+                  {!p.subject.any ? <span className="text-basalt/70"> One subject only: {p.subject.note}</span> : null}
                 </li>
               ))}
             </ul>
@@ -80,8 +88,8 @@ export default async function HowItWorks() {
             </ul>
           </Panel>
         </div>
-      </Body>
-    </>
+      </div>
+    </Screen>
   );
 }
 
@@ -95,8 +103,8 @@ function StepCard({ s, m }: { s: Step; m: Measure | undefined }) {
         <h3 id={`step-${s.code}`} className="text-[16px]">
           {s.name}
         </h3>
-        <Pill tone={built.tone}>{built.words}</Pill>
-        <Pill tone={s.subject.any ? "neem" : "bamboo"}>{s.subject.any ? "any subject" : "maths only"}</Pill>
+        <StatusChip state={built.state} words={built.words} />
+        <StatusChip state={s.subject.any ? "done" : "waiting"} words={s.subject.any ? "any subject" : "one subject only"} />
       </div>
       <p className="mt-2 text-[14px] leading-snug">{s.does}</p>
       <p className="mt-1 text-[12.5px] text-basalt/65">Who: {s.who}</p>
@@ -117,7 +125,7 @@ function StepCard({ s, m }: { s: Step; m: Measure | undefined }) {
           {next.map((n, i) => (
             <span key={n.code}>
               {i ? ", " : ""}
-              <a href={`#${n.code}`}>
+              <a href={`#${n.code}`} data-handon>
                 {n.code} {n.name}
               </a>
             </span>
@@ -127,7 +135,7 @@ function StepCard({ s, m }: { s: Step; m: Measure | undefined }) {
       {!s.subject.any || s.built !== "live" ? <p className="mt-2 text-[12.5px] text-basalt/70">{s.subject.note}</p> : null}
       {s.files.length || s.commands.length || s.screens.length ? (
         <details className="mt-3 text-[12.5px]">
-          <summary className="cursor-pointer text-basalt/75">Files, commands and screens</summary>
+          <summary className="cursor-pointer text-basalt/75" data-files>Files, commands and screens</summary>
           <ul className="mt-2 grid gap-1">
             {s.files.map((f) => (
               <li key={f} className="fact">

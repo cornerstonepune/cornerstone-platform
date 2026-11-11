@@ -213,7 +213,8 @@
       "screens": [
         "staff",
         "classes",
-        "setup"
+        "setup",
+        "map"
       ],
       "done_when": [
         "Every screen of this slice passes the ten generic checks and every element in its list behaves as its kind says, as educator and as coordinator.",
@@ -3880,6 +3881,62 @@
         "a move closes the enrolment, opens a new one, writes a change_log row and deletes nothing",
         "each child row shows the name beside the Sr. No., read from pii by child_id; the address and the change log's stored text carry no name (DOM scan)",
         "the change log lists the move with who and when"
+      ]
+    },
+    {
+      "id": "map",
+      "route": "/setup/how-it-works",
+      "group": "Setup",
+      "who": "both",
+      "phase": "Core",
+      "backend": [],
+      "exists": "yes (/workflows)",
+      "eyebrow": "The engine",
+      "title": "How it works",
+      "purpose": "The twelve steps agreed with the school: what each does, what it hands on, what it has made so far, and which work for one subject only.",
+      "blocks": [
+        [
+          "Tile",
+          "how many steps work, are partly built, are not built, work for one subject only"
+        ],
+        [
+          "Details",
+          "each step's files, commands and screens"
+        ]
+      ],
+      "elements": [
+        {
+          "t": "link",
+          "label": "Setup",
+          "to": "setup"
+        },
+        {
+          "t": "link",
+          "label": "each step it hands on to",
+          "data": "data-handon",
+          "note": "jumps to that step on the same page"
+        },
+        {
+          "t": "fold",
+          "label": "each step's files, commands and screens",
+          "data": "data-files",
+          "text": "Files, commands and screens"
+        }
+      ],
+      "rail": [],
+      "capture": [],
+      "main": "Setup",
+      "next": "Setup",
+      "data": "workflows.json (the map the engine's code is held to), with each step's live number from the database",
+      "empty": "none",
+      "phone": "one column; the cards stack",
+      "folds": [
+        "/workflows"
+      ],
+      "done_when": [
+        "every step of the map is drawn in its workflow, with what it is doing now and where it hands on",
+        "a step's number is the database's own, read now; a step the map says is not built has no number",
+        "the map fits a phone"
       ]
     },
     {
