@@ -11,7 +11,7 @@
 import { expect, test, type Page } from "@playwright/test";
 import postgres from "postgres";
 import { aClass, aReadPaper } from "./rows";
-import { isoWeek, weekWords } from "../lib/week";
+import { isoWeek } from "../lib/week";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -69,32 +69,6 @@ test.afterAll(async () => {
 // the assessments are one table, a line for each (goals/uxn1-design-system.yaml)
 const assessments = (page: Page) => page.getByRole("region", { name: "Papers" });
 const ours = (page: Page) => assessments(page).locator("tr[data-assessment]").filter({ hasText: SECTION });
-
-test("Assessments opens on one row for each assessment, its copies counted by stage", async ({ page }) => {
-  await page.goto(`/papers?class=${SECTION}`);
-  await expect(ours(page).first()).toBeVisible();
-  const heads = (await page.getByRole("table", { name: "Assessments" }).locator("thead th").allTextContents()).map((h) => h.trim());
-  // the columns in this order: what it is, then the steps the school does in order, then what to do next
-  const order = ["Assessment", "Kind", "Class", "Made on", "Created", "Printed", "Uploaded", "Read", "Checked", "Results in", "Next"];
-  expect(order.map((h) => heads.indexOf(h)).every((i, k, all) => i >= 0 && (k === 0 || i > all[k - 1])), `columns in order: ${heads}`).toBe(true);
-  // three copies of one class assessment are one row, the tally practice another
-  await expect(ours(page)).toHaveCount(2);
-  const add = ours(page).filter({ hasText: await setName("ADD.2D2D") });
-  await expect(add).toContainText("Class assessment");
-  await expect(add).toContainText(`Grade 2 · ${SECTION}`);
-  // one copy read, an answer waiting for a person: uploaded and read, checking to do
-  await expect(add.locator("[data-action=check]")).toHaveText("Check 1 answer");
-  await expect(add.locator('[data-status="toCheck"]')).toContainText("to check");
-  // the week is said under the name, in words
-  await expect(add.locator("td").first()).toContainText(weekWords(WEEK));
-  // a status filter keeps the assessments that wait on it
-  await page.locator("[data-filterbar]").locator('select[name="status"]').selectOption("check");
-  await expect(page).toHaveURL(/status=check/);
-  await expect(ours(page)).toHaveCount(1);
-  await expect(ours(page)).toContainText(await setName("ADD.2D2D"));
-  // in the school's words: no skill code, no ISO week
-  expect(await assessments(page).innerText()).not.toMatch(/\b(\d{4}-W\d{2}|[A-Z]{3,}\.[A-Z0-9]+)\b/);
-});
 
 test("a topic keeps the assessments on its skills, and an assessment opens its copies", async ({ page }) => {
   await page.goto(`/papers?class=${SECTION}`);

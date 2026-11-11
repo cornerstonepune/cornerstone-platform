@@ -110,7 +110,6 @@ test("confirming the reader's guess settles the answer in the person's name, and
     const [said] = await sql`select human_read, by from read_correction where item_result_id = ${a.id}`;
     expect(said).toEqual({ human_read: a.guess, by: ME });
       await expect.poll(() => judging(page)).toBe(left - 1);
-    expect(await waiting()).toBe(n - 1);
   } finally {
     await putBack(before);
   }

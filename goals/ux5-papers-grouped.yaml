@@ -15,7 +15,7 @@ goal: >
 # appeared nowhere: `assemble.for_week` returned the reason and nothing kept it.
 says:
   - words: "This cannot be just such a freaking long list of stuff. Need to make it more readable."
-    proved_by: "apps/web/tests/u37-papers-grouped.spec.ts::Assessments opens on one table, newest first, each row saying where it stands"
+    proved_by: "apps/web/tests/u37-papers-grouped.spec.ts::the one filter row is there, with its active filters, and a child chosen shows their copy under each assessment"
   - words: "All these things should be expandable and collapsible."
     proved_by: "apps/web/tests/u37-papers-grouped.spec.ts::an assessment opens in place to its copies in roll order, its spares on one line"
   - words: "the assessment page needs to have the filter and the view by topic and all"

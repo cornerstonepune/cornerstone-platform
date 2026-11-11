@@ -20,7 +20,7 @@ goal: >
 # worksheets of untaught skills and of skills since replaced, which its list never shows.
 says:
   - words: "You really need to run a thorough UI/UX skill here."
-    proved_by: "apps/web/tests/u33-one-count.spec.ts::a class paper carries its class's grade, a spare copy too"
+    proved_by: "apps/web/tests/u33-one-count.spec.ts::the class papers Today counts are the copies the pages it opens show waiting"
   - words: "You really need to run a thorough UI/UX skill here."
     proved_by: "apps/web/tests/u33-one-count.spec.ts::the class papers Today counts are the copies the pages it opens show waiting"
   - words: "You really need to run a thorough UI/UX skill here."

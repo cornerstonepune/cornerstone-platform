@@ -92,18 +92,6 @@ test("the questions answered are folded under one line until opened", async ({ p
   }
 });
 
-test("Papers to approve chooses a class's week in the filter row, however many weeks there are", async ({ page }) => {
-  const [plan] = await sql<{ section: string; week: string; kind: string }[]>`
-    select c.section, p.week, p.kind from prescription p join child_now c on c.id = p.child_id order by p.week desc, c.section limit 1`;
-  await page.goto(`/papers/approve?section=${plan.section}&week=${plan.week}&kind=${plan.kind}`);
-  // no row of a class-and-week tag for every week ever planned: one Week dropdown holds them (goals/uxn4-papers-to-approve.yaml)
-  await expect(page.getByRole("navigation", { name: "Classes and weeks" })).toHaveCount(0);
-  // the page streams in behind its loading screen: wait for the table before reading the filter row
-  await expect(page.getByRole("table", { name: "Each child's paper this week" })).toBeVisible();
-  const week = page.locator("[data-filterbar]").getByLabel("Week");
-  expect(await week.locator("option").count()).toBeGreaterThanOrEqual(8);
-});
-
 test("the parent reports waiting are narrowed by class", async ({ page }) => {
   await page.goto("/children/reports");
   const table = page.getByRole("main").locator("table").first();

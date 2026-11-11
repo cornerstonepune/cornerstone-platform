@@ -13,13 +13,13 @@ says:
   - words: "You can at least make sure that the number of the question that you want me to validate and the zoom view are matching."
     proved_by: "apps/web/tests/u50-the-picture-is-the-question.spec.ts::the question's own number and printed words head the picture"
   - words: "You can at least make sure that the number of the question that you want me to validate and the zoom view are matching."
-    proved_by: "apps/web/tests/u50-the-picture-is-the-question.spec.ts::a box another question shares is not shown: the whole page and the plain line instead"
+    proved_by: "apps/web/tests/u50-the-picture-is-the-question.spec.ts::a box another question shares is not outlined: the page and the plain line instead"
   - words: "You can at least make sure that the number of the question that you want me to validate and the zoom view are matching."
-    proved_by: "apps/web/tests/u50-the-picture-is-the-question.spec.ts::a region found by words, here another question's, is never shown as this question's"
+    proved_by: "apps/web/tests/u50-the-picture-is-the-question.spec.ts::a region found by words, here another question's, is never outlined as this question's"
   - words: "For some questions, the whole page image is shown in the zoom view, which I can't even read properly."
-    proved_by: "apps/web/tests/u50-the-picture-is-the-question.spec.ts::an answer with no box shows the whole page, and a click opens it to full size to scroll about in"
+    proved_by: "apps/web/tests/u50-the-picture-is-the-question.spec.ts::an answer with no box shows the whole page, and a click opens it to full size"
   - words: "You can at least make sure that the number of the question that you want me to validate and the zoom view are matching."
-    proved_by: "apps/web/tests/u50-the-picture-is-the-question.spec.ts::no two answers of a page are shown the same part of it"
+    proved_by: "apps/web/tests/u50-the-picture-is-the-question.spec.ts::no two answers of a page are outlined in the same part of it"
 manual:
   - "After deploy, on /capture/check: open a waiting answer of the 22 Oct Grade 1 file; its heading names the question, and where no box is its own the page opens whole with the plain line and enlarges on a click."
 scenarios: []

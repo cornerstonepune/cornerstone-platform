@@ -121,3 +121,26 @@ test("a child's papers are walked from paper to paper, oldest first, and a paper
   await page.locator("[data-next-paper]").click();
   await expect(page.getByLabel("This child's papers")).toContainText("Paper 2 of 2 for this child");
 });
+
+test("the Yes button is in the answer box, under the sentence it answers", async ({ page }) => {
+  await openPaper(page, "U78-TEST", "1", "U78-TEST");
+  const box = panel(page);
+  const yes = box.getByRole("button", { name: "Yes, the child wrote 7" });
+  await expect(yes).toBeVisible();
+  await expect(box.getByRole("button", { name: "Say what the child wrote" })).toBeVisible();
+  await expect(box.getByRole("button", { name: "Blank (the child wrote nothing)" })).toBeVisible();
+  const [said, button] = [await box.locator("p").first().boundingBox(), await yes.boundingBox()];
+  expect(button!.y).toBeGreaterThan(said!.y);
+});
+
+test("signing a paper off settles its answers in the person's name, and the copy moves to Results in", async ({ page }) => {
+  // Devi's copy, alone in a class of her own: every answer settled, nothing to judge
+  await page.goto(`/children/assessments?class=U78-ALONE&view=table`);
+  await page.locator("a[data-assessment-row]").first().click();
+  const copy = page.locator("tr", { has: page.locator("td", { hasText: /^1$/ }) });
+  await copy.getByRole("button", { name: "Sign it off" }).click();
+  await expect(page.getByRole("region", { name: /^Results in/ })).toBeVisible();
+  const [{ n }] = await sql<{ n: number }[]>`
+    select count(*)::int as n from item_result r join capture c on c.id = r.capture_id where c.id = ${made.CSB00004.capture} and r.state = 'confirmed'`;
+  expect(n).toBe(3);
+});

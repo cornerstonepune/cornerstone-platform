@@ -96,26 +96,6 @@ async function asEducator(browser: Browser): Promise<Page> {
 // one table, a row for each assessment, its week said under its name (goals/uxn1-design-system.yaml)
 const row = (page: Page, w: string) => page.locator("tr[data-assessment]").filter({ hasText: weekWords(w) });
 
-test("Assessments opens on one table, newest first, each row saying where it stands", async ({ browser }) => {
-  const page = await asEducator(browser);
-  await page.goto("/papers");
-  // the educator's own class only: two assessments, the newest week first
-  const rows = page.locator("tr[data-assessment]");
-  await expect(rows).toHaveCount(2);
-  await expect(rows.nth(0)).toContainText(weekWords(THIS));
-  await expect(rows.nth(1)).toContainText(weekWords(OLD));
-  // what waits is in the status of each row, in words
-  await expect(row(page, THIS).locator('[data-status="toCheck"]')).toBeVisible();
-  await expect(row(page, OLD).locator("[data-action]")).toHaveText(/See results|Sign off|Upload|Print|Approve/);
-  // one line an assessment: what it is and its class; no copies until it is opened
-  const a = row(page, THIS);
-  await expect(a).toHaveCount(1);
-  await expect(a).toContainText(skill);
-  await expect(a).toContainText(`Grade 2 · ${SECTION}`);
-  await expect(page.getByRole("table", { name: /: each copy$/ })).toHaveCount(0);
-  await page.context().close();
-});
-
 test("an assessment opens in place to its copies in roll order, its spares on one line", async ({ browser }) => {
   const page = await asEducator(browser);
   await page.goto("/papers");

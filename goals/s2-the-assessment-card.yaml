@@ -21,7 +21,7 @@ says:
   - words: "the assessment as one card moving Made → approved for print → Given → Papers in → Read → Checked → Signed off → Results"
     proved_by: "apps/web/tests/s42-the-assessment-card.spec.ts::the card moves from Made to Results, always showing its next step"
   - words: "the system proposes each child's paper and the educator may change it"
-    proved_by: "apps/web/tests/s42-the-assessment-card.spec.ts::at Made the card shows each child's proposed paper and opens the place to change it"
+    proved_by: "apps/web/tests/s42-the-assessment-card.spec.ts::each child's paper has its status chip, and a place in the filter row narrows the table"
   - words: "an educator presses \"Given on\"; an upload without it is still accepted"
     proved_by: "apps/web/tests/s42-the-assessment-card.spec.ts::papers put in without Given on are read, and the card says it was given"
   - words: "a page to retake flagged at once; an absent child's paper carried; papers printed but never returned listed"
