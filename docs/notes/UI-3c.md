@@ -156,3 +156,15 @@ coordinator, a form to change it (server action `changeWords`, engine key server
 approved. The engine's gate decides who may write; the page shows the form to a coordinator. Note the key: the route takes the
 skill SET's code (`skill.code`), which `skillOf` now carries on each level row. screens.json `skill` gains the fold "Earlier
 sentences"; the wireframe drops its data-gap. Tests 21 to 23 (`u73-level-words.spec.ts`, split from the teaching spec for the 400-line ceiling).
+
+## Unfinished when work stopped (2026-11-11)
+
+- **#666** (Skill set screen): needs the orchestrator's GO, then main merged in and one clean CI run. Its last full run died on the runner's package mirrors (`playwright install`), not on a test.
+- **Activity / Objective / Skill pages to their wireframes**: built and committed on the local branch `ui-3c-wireframes` (37551d18, e1f245c7) but never pushed, and no PR is open. It follows `docs/screens/compare-2026-11-11/FINDINGS.md`. It needs main merged in once #666 lands, the generated docs rebuilt, and the affected specs run before it becomes one PR. Because the branch was never pushed, it is lost if this container is reclaimed.
+- `/skill-sets/[code]/edit` (skill name, description, outcome): no new home yet.
+- Inventory-run (u70) drives for the new controls on the activity, objective, skill and skill-set screens.
+- The skill-set page's long panels are not folded.
+- Skill "group by class" for coordinators.
+- The shared tab row (UI-7's).
+- UI-11b's approve-row links still use `screenHref("skillset")`.
+- Old routes `curriculum/fill`, `educator/period`, `educator/materials` belong to UI-11, UI-3a and UI-9.
