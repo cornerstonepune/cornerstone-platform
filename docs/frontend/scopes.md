@@ -184,17 +184,16 @@ Period, record, confirm, notes, children, class picture, child, activity, object
 46. Where this child is: on a phone (400 px) the graph is not drawn: the list of skills shows each skill's name, times seen and its state chip (icon + word), each row a link of at least 44 px height, in the same order as the table
 47. the activity's name: a drafted part carries the 'drafted' badge until Keep, Edit or Send back; an educator sees the badge but not the three buttons
 48. the activity's name: every edit writes a change_log row with who
-49. the activity's name: a photo attaches to the activity, never to a child
-50. the objective's title: no number, percentage or state is shown for the objective itself (DOM scan)
-51. the skill's name: a prerequisite or next skill is shown only when its link is confirmed (a proposed link in the fixture does not appear)
-52. the skill's name: the spark's last value equals the grid's secure count
-53. the skill's name: the grid's squares equal the class's enrolment in Sr. No. order
-54. the skill's name: grouping by state puts a heading and a count over each group and the counts sum to the squares
-55. the skill's name: a cluster's count equals the chips in it; clusters are computed by code, never by a model
-56. the skill's name: tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page
-57. the skill set's name: the screen is keyed by the skill set's code, not by a registry skill's code
-58. the skill set's name: each registry skill the set points at is a card that opens the skill screen; a set with none says so and invents nothing
-59. the skill set's name: the level sentences sit in a fold, closed on load
+49. the objective's title: no number, percentage or state is shown for the objective itself (DOM scan)
+50. the skill's name: a prerequisite or next skill is shown only when its link is confirmed (a proposed link in the fixture does not appear)
+51. the skill's name: the spark's last value equals the grid's secure count
+52. the skill's name: the grid's squares equal the class's enrolment in Sr. No. order
+53. the skill's name: grouping by state puts a heading and a count over each group and the counts sum to the squares
+54. the skill's name: a cluster's count equals the chips in it; clusters are computed by code, never by a model
+55. the skill's name: tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page
+56. the skill set's name: the screen is keyed by the skill set's code, not by a registry skill's code
+57. the skill set's name: each registry skill the set points at is a card that opens the skill screen; a set with none says so and invents nothing
+58. the skill set's name: the level sentences sit in a fold, closed on load
 
 ### Out of scope
 

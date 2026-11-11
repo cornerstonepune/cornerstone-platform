@@ -10,7 +10,7 @@ import { schoolToday } from "@/lib/school-clock";
 import { StatusChip } from "@/components/status-chip";
 import { dayWords, many } from "@/lib/today";
 import { DOORS, open, type Door } from "@/lib/today-doors";
-import { schoolCounts, schoolNotes } from "@/lib/today-data";
+import { classIds, nextWeekEvents, schoolCounts, schoolNotes } from "@/lib/today-data";
 import { heat, readiness, tiles as counts, waiting, type School, type Wait } from "@/lib/today-school";
 import type { Column } from "@/lib/ux-rules";
 
@@ -40,9 +40,18 @@ export async function SchoolToday({ me }: { me: Session }) {
         { state: "done", n: t.done, sentence: `Lessons done of ${t.planned} planned last week`, href: open(DOORS.staff()) },
       ]
     : [{ state: "doNow", n: left, sentence: "Notes left unconfirmed across the classes", href: left ? open(DOORS.notes()) : null }];
-  const grid = s ? heat(s.last_week.cells) : null;
+  const base = open(DOORS.timetable());
+  const ids = s ? await classIds() : {};
+  const happening = s ? await nextWeekEvents(s.next_week.from) : [];
+  // a cell opens that class's day on the timetable, where the timetable screen is the one that answers (not the old week page)
+  const grid = s ? heat(s.last_week.cells, (c) => (base?.startsWith("/timetable") && ids[`${c.grade}|${c.section ?? ""}`] ? `${base}?${new URLSearchParams({ class: ids[`${c.grade}|${c.section ?? ""}`], view: "day", day: c.day })}` : null)) : null;
   const cards = s
     ? [
+        { kind: "period" as const, title: "Next week", body: happening.length ? (
+          <ul className="grid gap-1">
+            {happening.map((h) => <li key={h.day + h.what}><b>{dayWords(h.day)}</b> · {h.what}</li>)}
+          </ul>
+        ) : <span className="b-muted">No holiday, changed timing or new fortnight next week.</span> },
         ...(s.next_week.new_activities.length
           ? [{ kind: "activity" as const, title: "New activities next week", body: (
               <ul className="grid gap-1">
