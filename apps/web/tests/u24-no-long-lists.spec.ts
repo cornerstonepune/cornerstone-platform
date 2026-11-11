@@ -69,7 +69,7 @@ test("a child's page shows their newest papers and opens every one of them on As
 
 test("Today names the first five classes waiting and opens the rest", async ({ page }) => {
   // a table of ten rows at most: the rest are said and one click away (goals/nav_teacher_scope_and_todo.yaml)
-  await page.goto("/today?kind=classpaper");
+  await page.goto("/setup/needs-doing?kind=classpaper");
   const rows = page.locator("tr[data-kind=classpaper]");
   expect(await rows.count()).toBeLessThanOrEqual(10);
   const all = Number((await page.locator("details[data-group=classpapers] [data-group-count]").innerText()).replace(/\D/g, ""));

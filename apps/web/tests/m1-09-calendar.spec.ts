@@ -34,10 +34,13 @@ test("a day in the address that is not a date is not found, never an error", asy
 
 test("while the timetable is switched off Today, This week and a period are not found", async ({ page }) => {
   await timetableSwitch(sql, false);
-  for (const href of ["/educator", "/educator/week", "/educator/period/00000000-0000-0000-0000-000000000000"]) {
-    await page.goto(href);
-    await expect(page.getByText("This page could not be found.")).toBeVisible();
-  }
+  // a period has no tab: not found. Your day and This week are tabs of the menu, so they never lead to "not found": they send her to Today and Timetable
+  await page.goto("/period/00000000-0000-0000-0000-000000000000");
+  await expect(page.getByText("This page could not be found.")).toBeVisible();
+  await page.goto("/educator");
+  await expect(page).toHaveURL(/\/today$/);
+  await page.goto("/educator/week");
+  await expect(page).toHaveURL(/\/timetable$/);
 });
 
 test("Today is the day as a calendar: every period a block in time order, its time as time, the school's words, a chip only on work", async ({ page }) => {
@@ -106,8 +109,10 @@ test("any block opens its period: the time, the school's words, the planner's li
   await timetableSwitch(sql, true);
   await page.goto(`/educator?class=${klass}&day=${MONDAY}`);
   await page.locator('[data-period]').filter({ hasText: "General Awareness" }).click();
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Academic 2 General Awareness");
-  await expect(page.locator('[data-ux="action"]')).toContainText("10:20–10:40");
+  // the period page (UI-3a): its title is its activity, and the period's own name and time are its header line
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Insects");
+  await expect(page.getByText("Academic 2 General Awareness").first()).toBeVisible();
+  await expect(page.getByText("10:20–10:40")).toBeVisible();
   await expect(page.locator('[data-part="school-words"]')).toContainText("Insects");
   await expect(page.locator('[data-part="activity"]')).toContainText("Insects");
   await expect(page.locator('[data-part="planner"] li').first()).toBeVisible();
@@ -116,7 +121,7 @@ test("any block opens its period: the time, the school's words, the planner's li
   await displayFaceOnlyLarge(page);
   await shoot(page, "3-period");
   // the trail is the door and the thing; the page's own next step is the day it came from
-  await expect(page.getByRole("navigation", { name: "Where you are" })).toContainText("Academic 2 General Awareness");
+  await expect(page.getByRole("navigation", { name: "Where you are" })).toContainText("Insects");
   await page.locator('[data-ux="next"]').click();
   await expect(page).toHaveURL(/\/educator\?class=.*day=2026-11-23/);
 });

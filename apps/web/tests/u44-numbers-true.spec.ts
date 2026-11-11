@@ -76,7 +76,7 @@ const num = (s: string | null) => Number((s ?? "").replace(/[^\d]/g, "") || 0);
 
 test("Today's queue counts the educator's own classes, as the line above it does", async ({ browser }) => {
   const page = await asEducator(browser);
-  await page.goto("/today?kind=check");
+  await page.goto("/setup/needs-doing?kind=check");
   const toCheck = (await page.locator("tr[data-kind=check] td[data-label=\"How many\"]").allTextContents()).reduce((n, s) => n + num(s), 0);
   // the educator's one waiting answer is Asha's; Chetan's two are another class's
   expect(toCheck).toBe(1);

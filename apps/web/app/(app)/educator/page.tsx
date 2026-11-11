@@ -7,9 +7,9 @@ import { ChipTag, Legend, Pill } from "@/components/educator/tags";
 import { requireStaff } from "@/lib/auth";
 import { chipOf, countdown, nowAt } from "@/lib/educator/chip";
 import { longDate, nowAtSchool, schoolDay, whenIs } from "@/lib/educator/clock";
-import { dayOf } from "@/lib/educator/data";
+import { dayOrNull } from "@/lib/educator/data";
 import { blankWords, isBlank, isDay, isLesson, timeOf } from "@/lib/educator/period";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import type { Day } from "@/lib/educator/types";
 import { E } from "@/lib/educator/words";
 import { schoolToday } from "@/lib/voice-page";
@@ -22,7 +22,8 @@ export default async function TodayPage({ searchParams }: { searchParams: Promis
   const [today, now] = await Promise.all([schoolToday(), nowAtSchool()]);
   if (q.day !== undefined && !isDay(q.day)) notFound();
   const asked = q.go === "tomorrow" ? schoolDay(q.day ?? today, 1) : (q.day ?? today);
-  const d = await dayOf(me, { class_id: q.class, day: asked });
+  const d = await dayOrNull(me, { class_id: q.class, day: asked });
+  if (!d) redirect("/today"); // not open to her (switch off, no class held, nothing live): Today says so in words, not a 404
   const at = (day: string) => `/educator?class=${d.class.id}&day=${day}`;
   return (
     <Screen
@@ -46,7 +47,7 @@ function DayCalendar({ d, today, now }: { d: Day; today: string; now: string }) 
   const lessons = d.periods.filter(isLesson);
   const next = work.find((w) => w.chip === "doNow") ?? (when === "past" ? undefined : work.find((w) => isLesson(w.p) && (when === "future" || w.p.starts_at > now)));
   const line = when === "today" ? nowAt(periods, now) : null;
-  const href = (id: string) => `/educator/period/${id}?class=${d.class.id}&day=${d.day}`;
+  const href = (id: string) => `/period/${id}?class=${d.class.id}&day=${d.day}`;
   const first = (ps: typeof d.periods) => (ps[0] ? `#p-${ps[0].period_id}` : undefined);
   const breaks = d.periods.filter((p) => p.kind === "fixed");
   const acts = d.periods.filter((p) => p.activity);

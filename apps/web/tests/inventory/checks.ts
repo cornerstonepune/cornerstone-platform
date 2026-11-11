@@ -282,6 +282,14 @@ export async function drive(page: Page, s: Screen, e: Element, c: Ctx, byId: Map
   if (["link", "row", "cell"].includes(e.t)) {
     await find().waitFor({ timeout: 10_000 }).catch(() => undefined); // rows stream in after the shell
     if (!(await find().count())) return [`${s.id}: cannot drive “${e.label}”: no such link`];
+    if (e.newTab) {
+      // a link that opens in a new tab (another site): it must open one, and the other site is not what is under test (CI does not reach it)
+      const popup = page.waitForEvent("popup", { timeout: 4_000 }).catch(() => null);
+      await find().click();
+      const opened = await popup;
+      if (opened) await opened.close();
+      return opened ? out : [`${s.id}: “${e.label}” did not open a new tab`];
+    }
     // a link to the page one is on changes no address, whichever link it is (the first class row may be the class already open): what it points at
     // is read from the link itself unless the inventory says. A link that points elsewhere must still change the address, or it is a dead link.
     const pointsAt = new URL(e.href ?? (await find().getAttribute("href")) ?? "", here);
@@ -293,7 +301,8 @@ export async function drive(page: Page, s: Screen, e: Element, c: Ctx, byId: Map
     const h1 = (await page.locator("h1").allInnerTexts())[0] ?? "";
     const target = e.to ? byId.get(e.to) : undefined;
     if (e.to && !target) out.push(`${s.id}: “${e.label}” targets ${e.to}, which is not in the inventory`);
-    else if (target && !titleMatches(target.title, h1)) out.push(`${s.id}: “${e.label}” did not land on ${e.to}: its h1 is “${h1}”, expected “${target.title}” (a dead link)`);
+    // two screens on one address (Today: the educator's and the school's) are two versions of it: the page shows the one that is the person's
+    else if (target && ![target, ...[...byId.values()].filter((x) => x.id !== target.id && x.route === target.route)].some((x) => titleMatches(x.title, h1))) out.push(`${s.id}: “${e.label}” did not land on ${e.to}: its h1 is “${h1}”, expected “${target.title}” (a dead link)`);
     else if (e.external && !h1) out.push(`${s.id}: “${e.label}” opens ${e.external} and it shows no heading (a dead link)`);
     if (!same) {
       await page.goBack();

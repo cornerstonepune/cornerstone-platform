@@ -98,14 +98,14 @@ async function theBar(page: Page, doors: string[]) {
 
 test("an educator with one class and one subject: top menu, only hers, no Class or Subject boxes, no approve-all", async ({ browser }) => {
   const { context, page } = await asEducator(browser);
-  await open(page, "/today", /What needs doing/);
+  await open(page, "/setup/needs-doing", /What needs doing/);
   await theBar(page, DOORS);
   await expect(page.locator("#bar-subject, #bar-class, [data-viewing]"), "no universal Class or Subject selector").toHaveCount(0);
   // the bar carries sign out; the door's row of pages has the rest
   await expect(page.locator("[data-bar]").first().getByRole("button", { name: "Sign out" })).toBeVisible();
   await page.goto("/papers");
-  for (const name of ["Assessments", "Upload papers", "Class results"]) await expect(page.getByRole("navigation", { name: "Pages in this section" }).getByRole("link", { name }), name).toBeVisible();
-  await page.goto("/today");
+  for (const name of ["Assessments", "Upload papers", "Parent reports"]) await expect(page.getByRole("navigation", { name: "Pages in this section" }).getByRole("link", { name }), name).toBeVisible();
+  await page.goto("/setup/needs-doing");
   // What needs doing: groups, each folded into a table of red/amber/green rows, one action on each row that opens that item
   await page.locator("details[data-group]").evaluateAll((els) => els.forEach((e) => ((e as HTMLDetailsElement).open = true)));
   const rows = page.locator(".data-table tbody tr[data-kind]");
@@ -130,12 +130,12 @@ test("an educator with one class and one subject: top menu, only hers, no Class 
 });
 
 test("an admin: the same top menu, and no Viewing control", async ({ page }) => {
-  await open(page, "/today", /What needs doing/);
+  await open(page, "/setup/needs-doing", /What needs doing/);
   await theBar(page, DOORS);
   await expect(page.locator("[data-viewing], #bar-subject, #bar-class")).toHaveCount(0);
   // a door's other pages are a row under the bar, not more items on it
   await page.goto("/papers");
-  await expect(page.getByRole("navigation", { name: "Pages in this section" }).getByRole("link")).toHaveText(["Children", "Assessments", "Upload papers", "Class results", "Parent reports", "Across classes"]);
+  await expect(page.getByRole("navigation", { name: "Pages in this section" }).getByRole("link")).toHaveText(["Children", "Assessments", "Upload papers", "Parent reports", "Across classes"]);
 });
 
 /** The page opened, with nothing broken on it. */
@@ -200,9 +200,9 @@ async function wholePage(page: Page, path: string, title: RegExp, { filter = tru
 }
 
 test("What needs doing opens, and its first action leads on", async ({ page }) => {
-  await open(page, "/today", /What needs doing/);
+  await open(page, "/setup/needs-doing", /What needs doing/);
   await expect(page.locator("[data-ux=action] a, [data-ux=action] button").first()).toBeVisible();
-  await tablesRead(page, "/today");
+  await tablesRead(page, "/setup/needs-doing");
   await expect(page.locator("[data-filterbar]").first()).toBeVisible();
 });
 
@@ -236,10 +236,10 @@ test("Class results, its class and a child", async ({ page }) => {
   await voiceSwitch(sql, true);
   // a class's topics, a topic opened (goals/res_results_by_topic.yaml); this class has nothing signed off yet, so its
   // skills are named once as not assessed. Its children, one by one, each in a status chip, and a child opened.
-  await wholePage(page, `/growth?class=${SECTION}`, /Class results/, { chips: false });
+  await wholePage(page, `/growth?class=${SECTION}`, /Class picture/, { chips: false, filter: false });
   await page.locator("tr[data-topic]").first().getByRole("link").first().click();
   await expect(page.getByText("This page could not load")).toHaveCount(0);
-  await page.getByRole("link", { name: "Every child, one by one →" }).click();
+  await page.getByRole("link", { name: "Show as a table" }).click();
   // the old list of children is the Children screen (UI-3b): a child opens from its peek
   await expect(page).toHaveURL(/\/children\?cls=[0-9a-f-]{36}$/);
   await page.getByRole("button", { name: /Bina/ }).first().click();
@@ -272,12 +272,12 @@ test("Curriculum, Maths then English, and Staff and School", async ({ page }) =>
   await expect(page.getByRole("heading", { level: 1 }).first()).toHaveText(/Curriculum/);
   await expect(page.getByText("This page could not load")).toHaveCount(0);
   await tablesRead(page, "/ (English)");
-  await wholePage(page, "/staff", /Staff/, { filter: false });
+  await wholePage(page, "/setup/staff", /Staff and classes/);
   await wholePage(page, "/setup/classes", /Classes and children/, { filter: false });
 });
 
 test("the flow is one chain: each page's next step opens the following page", async ({ page }) => {
-  const chain = ["/today", "/capture", "/growth"];
+  const chain = ["/setup/needs-doing", "/capture"];
   for (const path of chain) {
     await page.goto(path);
     await expect(page.getByText("This page could not load"), path).toHaveCount(0);

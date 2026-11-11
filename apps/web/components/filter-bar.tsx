@@ -17,6 +17,8 @@ export type Filter = {
   options: readonly (readonly [string, string])[];
   /** Always one of the options (a page of one class at a time): no "all" choice, and nothing to take off. */
   required?: boolean;
+  /** The value is the page's own starting choice (a grade the page opens on), not one the person made: it keeps its "all" choice and shows no chip. */
+  starting?: boolean;
 };
 
 export function FilterBar({
@@ -34,7 +36,7 @@ export function FilterBar({
 }) {
   const form = useRef<HTMLFormElement>(null);
   const on = [
-    ...filters.flatMap((f) => (f.value && !f.required ? [{ name: f.name, label: `${f.label}: ${f.options.find(([v]) => v === f.value)?.[1] ?? f.value}` }] : [])),
+    ...filters.flatMap((f) => (f.value && !f.required && !f.starting ? [{ name: f.name, label: `${f.label}: ${f.options.find(([v]) => v === f.value)?.[1] ?? f.value}` }] : [])),
     ...(search?.value ? [{ name: search.name, label: `Search: “${search.value}”` }] : []),
   ];
   const href = (without: string[]) => {

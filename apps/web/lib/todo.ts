@@ -85,7 +85,7 @@ export function buildTasks(src: Sources, subjectLabel: (code: string | null) => 
       href,
       action,
     });
-  for (const s of src.skills) add("skill", s.code, s, [s.gradeWords, s.name], count(s.levels, "level"), `/skill-sets/${s.code}`, "Read and approve", s.name);
+  for (const s of src.skills) add("skill", s.code, s, [s.gradeWords, s.name], count(s.levels, "level"), `/setup/skill-sets/${s.code}`, "Read and approve", s.name);
   for (const h of src.home) add("home", h.section, none, [h.gradeWords, h.section], count(h.proposed, "child", "children"), `/make/${encodeURIComponent(h.section)}`, "Open the class", h.section, [h.section]);
   for (const c of src.check) add("check", c.paper, c, [c.section, c.code], count(c.n, "answer"), `/capture/check?id=${c.first}`, "Check this paper", c.code, [c.section]);
   for (const p of src.signoff) add("signoff", p.paper, p, [p.section, p.code], count(p.n, "answer"), `/capture/${p.paper}`, "Sign it off", p.section, [p.section]);

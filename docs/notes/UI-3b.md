@@ -72,3 +72,23 @@ Deleted with it: `growth/children-view.tsx`, `growth/tables.tsx`. Kept in place 
 Old specs that opened the list were moved to Children where an assertion still holds, and retired where the old column or control has no
 equal on the new screen. Not carried over, for the orchestrator to place: the per-child "Needs help on" topic names, the "Parent report"
 column and its sort, the class table's counts of answers and parent reports waiting, the "Against every skill" link on the list.
+
+## UI-3h (the class picture and the child's page as their wireframes)
+
+Picture: the rail names each skill with how many children were seen on it (and says which is shown); the clusters are the wireframe's four, worked out by code and never by a
+model: secure and ready for the next skill; practising close to secure (only when the school sets `children.close_to_secure_seen`, since no number is assumed in code);
+emerging seen only once; not seen here but practising a skill a person confirmed as linked. "Seen" is now counted from the confirmed observations (days), not read off
+`named_days`, which counts only the days that opened secure. Child: the "Rebuilt" caption, the skills by state with how often seen, three cards in whole counts (counts by
+state with Sr. No. and since when; last seen by skill; notes confirmed, papers read, corrections, newest entry) and "Skill by skill" (named days, last seen, ready next).
+The three view tabs of the class (Picture, By topic, Matrix) are listed in `docs/frontend/screens.json` as controls of the picture screen.
+
+## Left unfinished (work stopped, token budget)
+
+- #684 itself: CI run was cancelled after runner network faults (Chromium apt downloads timed out); it needs one re-run, then merge on green.
+- `/growth/[id]` (old child page) and `growth/actions.ts` stay until their panels have homes: focus paper (UI-4), parent report (UI-8), move child to another class, answers sign-off.
+- Six-fortnight Spark line stays empty (the nightly run records no class counts).
+- "Close to secure" group needs the school's number (`children.close_to_secure_seen`, not seeded).
+- Rail "Notes" is plain text until the Notes screen exists.
+- Removable "Needs attention" filter chip / Clear button not drawn.
+- By topic and Matrix tables are the old hand-built tables, not DataTable.
+- `u49-one-role` on `/today` fails (educator not shown the coordinator's notes buttons); belongs to Today, unverified against main.

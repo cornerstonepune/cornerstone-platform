@@ -14,7 +14,7 @@ export type When = "peek" | "filtered" | "paged" | `?${string}` | `@${string}`;
  *  are there (`text`) or gone (`gone`), and a named check of the rows (`check`, in `CHECKS`); `after` names a fixture that puts the rows back as
  *  they were, so the next screen, the next person and the next press find the page as it rests. Nothing declared is skipped. */
 export type Drive = { fixture?: string; after?: string; fill?: Record<string, string>; click?: string; expect: { popup?: boolean; url?: string; text?: string[]; gone?: string[]; check?: string } };
-export type Element = { drive?: Drive; t: string; label: string; to?: string; href?: string; text?: string; external?: string; for?: "educator" | "coordinator"; note?: string; effect?: string; when?: When; data?: string; pending?: string; roles?: ("educator" | "coordinator")[] };
+export type Element = { drive?: Drive; t: string; label: string; to?: string; href?: string; text?: string; external?: string; newTab?: boolean; for?: "educator" | "coordinator"; note?: string; effect?: string; when?: When; data?: string; pending?: string; roles?: ("educator" | "coordinator")[] };
 export type Screen = {
   id: string;
   route: string;

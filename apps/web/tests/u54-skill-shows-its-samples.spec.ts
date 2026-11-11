@@ -59,7 +59,7 @@ async function shot(page: Page, name: string) {
 test("an English skill opened from Approve the skills shows each level's samples by kind, with the right answer and named mistakes", async ({ page }) => {
   await page.goto("/skill-sets/approve");
   await page.locator(`[data-row="${skill.code}"]`).getByRole("rowheader").getByRole("link", { name: skill.name }).click();
-  await expect(page).toHaveURL(new RegExp(`/skill-sets/${skill.code}$`));
+  await expect(page).toHaveURL(new RegExp(`/setup/skill-sets/${skill.code}$`));
 
   const levels = [...new Set(samples.map((s) => s.difficulty))];
   expect(levels.length).toBeGreaterThan(0);
@@ -91,7 +91,7 @@ test("an English skill opened from Approve the skills shows each level's samples
 });
 
 test("a kind a person reads says so, and shows what a person reads the answer against", async ({ page }) => {
-  await page.goto(`/skill-sets/${skill.code}`);
+  await page.goto(`/setup/skill-sets/${skill.code}`);
   const open = samples.find((s) => s.open)!;
   const kind = page.getByRole("region", { name: open.difficulty, exact: true }).locator(`section[data-kind="${open.kind}"]`);
   await expect(kind).toContainText("a person reads every answer");
@@ -108,7 +108,7 @@ test("a skill with no sample questions says so in words", async ({ page }) => {
   const rows = await sql`select * from english_sample where skill_code = ${skill.code}`;
   await sql`delete from english_sample where skill_code = ${skill.code}`;
   try {
-    await page.goto(`/skill-sets/${skill.code}`);
+    await page.goto(`/setup/skill-sets/${skill.code}`);
     const d = samples[0].difficulty;
     await expect(page.getByRole("region", { name: d, exact: true })).toContainText("No sample questions yet.");
     await expect(page.locator("li[data-sample]")).toHaveCount(0);

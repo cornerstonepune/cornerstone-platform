@@ -141,7 +141,7 @@ Period, record, confirm, notes, children, class picture, child, activity, object
 3. The journey `e2e/an-educators-tuesday.spec.ts` passes: Today → the lit period → Type the marks → a note written with one activity_observation per named child and none for a child not mentioned → Confirm → Class picture shows the change → the child → the skill → trail back to Today; axe at each step; at 1440 and 400.
 4. A correction from Notes writes a superseding activity_observation row and never updates the old one (database assertion).
 5. The period → note link: a note confirmed from a period carries that session's id, and the period page lists its notes. This line waits for CP-25 (to be scoped: `activity_observation.session_id` is free today); the slice starts and merges without it, and the line is proved when CP-25 lands.
-6. Every one of the 135 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
+6. Every one of the 149 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
 7. the session's name: a period with no activity shows no capture controls and the words 'Nothing to record here'
 8. the session's name: the last-time bar's segments sum to the number of children named in the last session's observations
 9. the session's name: the steps fold is open on load and the others closed
@@ -192,9 +192,13 @@ Period, record, confirm, notes, children, class picture, child, activity, object
 54. the skill's name: a cluster's count equals the chips in it; clusters are computed by code, never by a model
 55. the skill's name: tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page
 56. the skill's name: a coordinator changes a level's sentence and the change is logged with who and why, taking only that level out of approved; an educator is shown the sentences and no way to change them
-57. the skill set's name: the screen is keyed by the skill set's code, not by a registry skill's code
-58. the skill set's name: each registry skill the set points at is a card that opens the skill screen; a set with none says so and invents nothing
-59. the skill set's name: the level sentences sit in a fold, closed on load
+57. the skill set's outcome (what the child can do): the screen is keyed by the skill set's code, not by a registry skill's code
+58. the skill set's outcome (what the child can do): each registry skill the set points at is a card that opens the skill screen; a set with none says so and invents nothing
+59. the skill set's outcome (what the child can do): each level shows its sentence, its approval and a real question from the bank (or says there is none); a coordinator approves one level and the others still wait
+60. the skill set's outcome (what the child can do): a coordinator saves which grade each level belongs to; an educator is shown the grades and no way to change them
+61. the skill set's outcome (what the child can do): an English skill shows how each level is asked and its sample questions; a coordinator approves a way of asking and changes a sample
+62. the skill set's outcome (what the child can do): a coordinator asks for more questions like a level's example, and stops a kind of question at one level or at every level
+63. the skill set's outcome (what the child can do): the old address /skill-sets/<code> answers 308 to this one, query kept
 
 ### Out of scope
 
@@ -288,23 +292,24 @@ The timetable's day, week and fortnight views and the timetable rules, the fortn
 3. The plan routes the backend exposes (the fortnight move, the timetable link apply and the timetable generate routes) check only that the actor is on the staff list, so the website checks the coordinator group itself before calling each: an educator's request to each is answered 403 by the web layer (test, one per route).
 4. Go live updates sessions in place and lists every changed session on the fortnight page; a hand move after freeze is kept with who and why and shows amber on the grid (database and DOM).
 5. The journey `e2e/the-coordinators-fortnight.spec.ts` passes: Today (coordinator) → the red clash row → Moves → accept with a reason → Fortnight → Approve → Go live → Timetable shows the change as educator; axe at each step.
-6. Every one of the 45 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
+6. Every one of the 46 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
 7. Timetable: a hand move shows an amber outline and its details name who and why
 8. Timetable: an educator never sees an accept-clash control; a clash cell is red for both roles
 9. Timetable: the grid's cells equal the session rows for the day shown (count and names)
 10. Timetable: a period running now carries Do now, a recorded one Done, one over and not recorded Late, and no period still to come has a chip
 11. Timetable: a holiday day is named in words under the grid
-12. Timetable rules: the page sits under Timetable in the menu, not Setup
-13. Timetable rules: every edit shows who and when, and the history fold lists it
-14. Fortnight 9: Approve and Go live exist for the 'everything' group only and their requests are refused for others
-15. Fortnight 9: a frozen fortnight shows no Approve, Go live or edit control
-16. Fortnight 9: the what-changed table lists every session the go-live updated, and nothing else
-17. Draft from the rules: the draft shown equals the slots the generator wrote (count and cells)
-18. Draft from the rules: every unmet rule row names a rule row that exists
-19. Draft from the rules: Make a draft never changes a live fortnight's sessions (count unchanged before and after)
-20. Moves by hand: a move changes only its own fortnight's sessions
-21. Moves by hand: as educator the page is read-only: no pick, no Accept, and the requests are refused
-22. Moves by hand: every move is listed with who made it and when, and an undo is a new row
+12. Timetable: stepping to the next or previous school day skips the weekend and crosses into the next or earlier fortnight
+13. Timetable rules: the page sits under Timetable in the menu, not Setup
+14. Timetable rules: every edit shows who and when, and the history fold lists it
+15. Fortnight 9: Approve and Go live exist for the 'everything' group only and their requests are refused for others
+16. Fortnight 9: a frozen fortnight shows no Approve, Go live or edit control
+17. Fortnight 9: the what-changed table lists every session the go-live updated, and nothing else
+18. Draft from the rules: the draft shown equals the slots the generator wrote (count and cells)
+19. Draft from the rules: every unmet rule row names a rule row that exists
+20. Draft from the rules: Make a draft never changes a live fortnight's sessions (count unchanged before and after)
+21. Moves by hand: a move changes only its own fortnight's sessions
+22. Moves by hand: as educator the page is read-only: no pick, no Accept, and the requests are refused
+23. Moves by hand: every move is listed with who made it and when, and an undo is a new row
 
 ### Out of scope
 
@@ -412,7 +417,7 @@ The four existing Setup pages that carry content rather than people, rebuilt on 
 2. Every old route listed under `folds` for these screens answers 308 to the new address.
 3. No approve-all control exists on any of these screens (Skills to approve and the offers act on one row each).
 4. The skills-to-approve count is the eyebrow of Skills to approve and appears on no card, tile, badge or other page.
-5. Every one of the 48 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
+5. Every one of the 55 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
 6. Curriculum: one list carries activities (K2) and skills (grades 1–4) under one filter row
 7. Curriculum: Curriculum shows no count of skills to approve; that number is the eyebrow of Skills to approve and appears nowhere else
 8. Curriculum: Yes / No act on one offer each; no control acts on all offers
@@ -447,13 +452,16 @@ Sign in (with forgot and new password), the help pages and the feedback form, re
 4. After sign in the person lands on `/today` once `UI-7` is in `merged_slices`, and on the existing home page until then (test reads `merged_slices`); sign in uses the bare frame.
 5. A used password link is refused the second time, and no development bypass exists in a production build (the existing gate tests kept).
 6. Sign in shows the large `lockup-colour` (`lockup-for-dark-backgrounds` in dark) above the form with its clear space, and the help pages carry the lockup in their head; the BrandMark tests of UI-13 pass on both.
-7. Every one of the 11 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
+7. Every one of the 15 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
 8. Sign in: lands on Today for the person's group
 9. Sign in: no development bypass in production
 10. Sign in: a used password link is refused the second time
 11. Start here: every page's ? opens its own section
 12. Start here: the sections are generated from screens.json so a new screen gets its help without a hand edit
 13. Report a problem or suggest something: Send writes one staff_note and one issue; the issue body carries no child's name: the page warns not to type one, and a screenshot is kept on the private side, linked by id, never attached to the public GitHub issue (names now appear on some screens and the repository is public)
+14. How it works: every step of the map is drawn in its workflow, with what it is doing now and where it hands on
+15. How it works: a step's number is the database's own, read now; a step the map says is not built has no number
+16. How it works: the map fits a phone
 
 ### Out of scope
 

@@ -1,9 +1,13 @@
 import { notFound } from "next/navigation";
 import Link from "@/components/link";
-import { sheetWords } from "../../worksheets/[qr]/library-sheet";
-import { Answers, kindWords, mistakeOf, Question } from "@/components/question";
+import { Answers, mistakeOf, Question } from "@/components/question";
 import { questionKinds } from "@/lib/question-types";
-import { Body, Notice, PageHeader, Panel, Pill } from "@/components/parts";
+import { Notice, Panel, Pill } from "@/components/parts";
+import { Cards } from "@/components/cards";
+import { EmptyState } from "@/components/empty-state";
+import { Rail, Screen, type Edge } from "@/components/app-frame";
+import { screenHref } from "@/lib/built";
+import { sql } from "@/lib/db";
 import { deadline } from "@/lib/deadline";
 import { levels } from "@/lib/levels";
 import {
@@ -15,17 +19,17 @@ import {
 import { mistakeBook } from "@/lib/queries-bank";
 import { levelExamples, openedAt, skillKinds, skillMistakes, skillSamples, skillWatches, skillWays } from "@/lib/queries-skills";
 import { worksheets } from "@/lib/queries-worksheets";
-import { kindsInWords } from "../../worksheets/library";
-import { approveSkills } from "./actions";
+import { approveSkills } from "../../../skill-sets/[code]/actions";
 import { requireStaff } from "@/lib/auth";
 import { scopeOf } from "@/lib/scope";
 import { mayDecide } from "@/lib/decides";
+import { KindsPanel, MistakesList, WorksheetsPanel, type Mistaken } from "./below";
 import { LevelApproval } from "./level-approval";
-import { GradesPanel } from "./grades-panel";
-import { Watched, WaysPanel } from "./ways";
-import { KindStops } from "./kind-stops";
-import { MathsMore } from "./more-like-this";
-import { Changed, editingOf, EnglishLevel, MadeByCode, SentenceLink } from "./editing";
+import { GradesPanel } from "../../../skill-sets/[code]/grades-panel";
+import { Watched, WaysPanel } from "../../../skill-sets/[code]/ways";
+import { KindStops } from "../../../skill-sets/[code]/kind-stops";
+import { MathsMore } from "../../../skill-sets/[code]/more-like-this";
+import { Changed, editingOf, EnglishLevel, MadeByCode, SentenceLink } from "../../../skill-sets/[code]/editing";
 import { dateWords } from "@/lib/week";
 
 type Props = {
@@ -75,7 +79,7 @@ export default async function SkillPage({ params, searchParams }: Props) {
   const editing = bankless && mayChange ? await deadline(editingOf(s.code, q)) : null;
   const mistakes = caught
     .map((m) => ({ ...m, said: mistakeOf(book, m.code, op) }))
-    .filter((m) => m.said);
+    .filter((m): m is Mistaken => !!m.said);
 
   // approve or change the words: at the top, or for a skill read from its samples (English), under them, so the
   // approver reads first (goals/smp_skill_shows_its_samples.yaml)
@@ -91,7 +95,7 @@ export default async function SkillPage({ params, searchParams }: Props) {
           <Pill tone="bamboo">Waiting for approval</Pill>
           <input type="hidden" name="code" value={s.code} />
           <input type="hidden" name="version" value={s.version} /><input type="hidden" name="opened" value={opened} />
-          <input type="hidden" name="back" value={`/skill-sets/${s.code}`} />
+          <input type="hidden" name="back" value={`/setup/skill-sets/${s.code}`} />
           <button className="btn" type="submit">
             Approve, as {me.name}
           </button>
@@ -104,14 +108,23 @@ export default async function SkillPage({ params, searchParams }: Props) {
     </>
   );
 
+  // the registry skills this set points at: each opens the skill screen (where a class stands on it); none says so
+  const covers = s.skill_codes.length
+    ? await sql<{ code: string; name: string }[]>`select code, name from registry_skill where code = any(${s.skill_codes}::text[]) order by name`
+    : [];
+  const edges: Edge[] = [
+    ...covers.map((k): Edge => ({ screen: "skill", params: { code: k.code }, label: k.name, icon: "skill" })),
+    { screen: "bank", label: "Question bank", icon: "assessment" },
+  ];
   return (
-    <>
-      <PageHeader
-        stage={`Curriculum · ${g.name(s.band)} · ${s.taught ? `Skill ${sets.indexOf(s) + 1} of ${sets.length}` : "Not taught yet"} · ${s.name}`}
-        title={s.learning_objective}
-        sub={bankless ? "What this skill looks like at each level, with sample questions, how it is asked, and the mistakes to watch for." : "What this skill looks like at each level, each with a real question from the bank, the mistakes its questions are built to catch, and its worksheets."}
-      />
-      <Body>
+    <Screen
+      stage={`Curriculum · Skill set · ${g.name(s.band)} · ${s.taught ? `Skill ${sets.indexOf(s) + 1} of ${sets.length}` : "Not taught yet"} · ${s.name}`}
+      title={s.learning_objective}
+      purpose={bankless ? "What this skill looks like at each level, with sample questions, how it is asked, and the mistakes to watch for." : "What this skill looks like at each level, each with a real question from the bank, the kinds of question, and the mistakes it watches for."}
+      next={{ href: "/setup/curriculum", label: "Curriculum" }}
+      rail={<Rail edges={edges} />}
+    >
+      <div className="grid gap-[var(--space-3)]">
         <Changed q={q} />
         {q.saved ? (
           <Notice tone="neem">Saved. The new words wait for approval before they are the skill&rsquo;s words.</Notice>
@@ -129,15 +142,12 @@ export default async function SkillPage({ params, searchParams }: Props) {
         {s.taught ? null : (
           <Notice tone="terracotta">
             Not taught yet: no class you see has been taught {s.topic_name ?? "its topic"}, so this skill is on none of
-            their pages or papers. Read and approve it now; <Link href="/today?open=taught">say a class has been taught it</Link>{" "}
+            their pages or papers. Read and approve it now; <Link href="/setup/needs-doing?open=taught">say a class has been taught it</Link>{" "}
             when one has.
           </Notice>
         )}
 
         <div id="means" className="mb-[18px] flex scroll-mt-6 flex-wrap items-center gap-3">
-          <Link href="/" className="chip">
-            ← Curriculum
-          </Link>
           {bankless && s.status !== "ratified" ? (
             <Link href="#decide" className="chip">Read the sample questions, then approve ↓</Link>
           ) : (
@@ -154,6 +164,17 @@ export default async function SkillPage({ params, searchParams }: Props) {
             <Link key={words} href={href} className="chip">{words}</Link>
           ))}
         </nav>
+
+        <section aria-label="Skills it covers" id="covers" className="grid gap-[var(--space-2)]">
+          <h2 className="text-[length:var(--text-title-small)]">Skills it covers</h2>
+          {covers.length ? (
+            Array.from({ length: Math.ceil(covers.length / 3) }, (_, i) => covers.slice(i * 3, i * 3 + 3)).map((row) => (
+              <Cards key={row[0].code} cards={row.map((k) => ({ kind: "skill" as const, title: k.name, line: "Where each class stands on it.", href: screenHref("skill", { code: k.code }) ?? `/setup/skills/${encodeURIComponent(k.code)}`, link: "Open the skill" }))} />
+            ))
+          ) : (
+            <EmptyState>No registry skill is linked to this skill set yet. The curriculum team links them; nothing is guessed here.</EmptyState>
+          )}
+        </section>
 
         <div className="grid gap-[18px]">
           <GradesPanel s={s} grades={g} saved={Boolean(q.grades)} />
@@ -206,7 +227,7 @@ export default async function SkillPage({ params, searchParams }: Props) {
                       {" · "}
                       {s.worksheets[d] ? (
                         <Link
-                          href={`/skill-sets/${s.code}?level=${d}#worksheets`}
+                          href={`/setup/skill-sets/${s.code}?level=${d}#worksheets`}
                         >
                           {s.worksheets[d]} worksheets
                         </Link>
@@ -230,40 +251,7 @@ export default async function SkillPage({ params, searchParams }: Props) {
           {bankless ? (
             <WaysPanel ways={ways} code={s.code} mayApprove={mayApprove} />
           ) : (
-          <Panel
-            title="Kinds of question"
-            aside={`${kinds.length} ${kinds.length === 1 ? "kind" : "kinds"}`}
-          >
-            <div className="overflow-x-auto">
-              <table className="grid" aria-label="Kinds of question">
-                <thead>
-                  <tr>
-                    <th>Kind</th>
-                    <th>For example</th>
-                    <th className="num">Questions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {kinds.map((k) => (
-                    <tr key={k.fmt}>
-                      <td className="whitespace-nowrap">
-                        {kindWords(words, k.fmt)}
-                      </td>
-                      <td>
-                        <Link
-                          href={`/library/${k.item_key}`}
-                          className="text-basalt no-underline"
-                        >
-                          <Question it={k} />
-                        </Link>
-                      </td>
-                      <td className="num">{k.n}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </Panel>
+            <KindsPanel kinds={kinds} words={words} />
           )}
           <KindStops code={s.code} ways={ways} levels={levelsOf(s)} q={q} mayChange={mayChange} />
           <Panel
@@ -273,128 +261,20 @@ export default async function SkillPage({ params, searchParams }: Props) {
           >
             {bankless ? (
               <Watched watched={watched} />
-            ) : mistakes.length ? (
-              <>
-                <ul className="grid gap-3">
-                  {mistakes.slice(0, 6).map((m) => (
-                    <Mistake
-                      key={m.code}
-                      name={m.said!.name}
-                      example={m.said!.description}
-                      n={m.n}
-                    />
-                  ))}
-                </ul>
-                {mistakes.length > 6 ? (
-                  <details className="mt-3">
-                    <summary className="cursor-pointer text-[13.5px]">
-                      {mistakes.length - 6} more mistakes
-                    </summary>
-                    <ul className="mt-3 grid gap-3">
-                      {mistakes.slice(6).map((m) => (
-                        <Mistake
-                          key={m.code}
-                          name={m.said!.name}
-                          example={m.said!.description}
-                          n={m.n}
-                        />
-                      ))}
-                    </ul>
-                  </details>
-                ) : null}
-              </>
             ) : (
-              <p className="note">
-                This skill is marked by a person reading the child&rsquo;s
-                words, so no wrong answer names a mistake on its own.
-              </p>
+              <MistakesList mistakes={mistakes} />
             )}
           </Panel>
 
-          {bankless ? null : <section id="worksheets" className="scroll-mt-6">
-            <Panel
-              title="Worksheets"
-              aside={`${shown.length} ${shownLevel ? `at ${shownLevel}` : "at every level"}`}
-            >
-              <div
-                className="mb-3 flex flex-wrap items-center gap-2"
-                aria-label="Show worksheets for"
-              >
-                <Link
-                  href={`/skill-sets/${s.code}?level=all#worksheets`}
-                  className={`chip ${shownLevel ? "" : "on"}`}
-                >
-                  Every level
-                </Link>
-                {levelsOf(s).map((d) => (
-                  <Link
-                    key={d}
-                    href={`/skill-sets/${s.code}?level=${d}#worksheets`}
-                    className={`chip ${shownLevel === d ? "on" : ""}`}
-                  >
-                    {d} · {s.worksheets[d] ?? 0}
-                  </Link>
-                ))}
-              </div>
-              {shown.length ? (
-                <div className="overflow-x-auto">
-                  <table
-                    className="grid"
-                    aria-label="Worksheets for this skill"
-                  >
-                    <thead>
-                      <tr>
-                        <th>Worksheet</th>
-                        <th className="num">Level</th>
-                        <th>Its twelve questions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {shown.map((w) => (
-                        <tr key={w.code}>
-                          <td className="whitespace-nowrap">
-                            {/* named by its level and number; the code printed on the sheet beside it */}
-                            <Link href={`/worksheets/${w.code}`}>
-                              {w.difficulty} · {sheetWords(w.code)}
-                            </Link>{" "}
-                            <span className="fact text-[11px] text-basalt/45">{w.code}</span>
-                          </td>
-                          <td className="num">{w.difficulty}</td>
-                          <td className="text-[12.5px] text-basalt/70">
-                            {kindsInWords(w.kinds, words)}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              ) : (
-                <p className="note">
-                  No worksheets at this level: it holds too few questions to
-                  fill one.
-                </p>
-              )}
-            </Panel>
-          </section>}
+          {bankless ? null : <WorksheetsPanel s={s} shown={shown} shownLevel={shownLevel} words={words} />}
         </div>
 
         <p className="fact mt-[18px] text-[11px] text-basalt/50">
           {s.code} · {s.rung_code} · version {s.version} · last changed{" "}
           {dateWords(s.updated_at)}
         </p>
-      </Body>
-    </>
+      </div>
+    </Screen>
   );
 }
 
-function Mistake({ name, example, n }: { name: string; example: string | null; n: number }) {
-  return (
-    <li className="grid gap-[2px] text-[13.5px]">
-      <span>{name}</span>
-      {example ? <span className="text-basalt/70">{example}</span> : null}
-      <span className="note">
-        caught by {n} {n === 1 ? "question" : "questions"}
-      </span>
-    </li>
-  );
-}

@@ -22,7 +22,9 @@ export default async function Guide({ searchParams }: Props) {
   const from = q.from?.startsWith("/") ? q.from : "/";
   const fromId = sectionFor(from);
   const came = SECTIONS.find((s) => s.id === fromId);
-  const jobs = SECTIONS.filter((s) => s.id !== "help" && s.id !== "login" && isBuilt(s.id) && screenHref(s.id));
+  const jobs = SECTIONS.filter((s) => s.id !== "help" && s.id !== "login" && isBuilt(s.id) && screenHref(s.id))
+    // two versions of one address (Today) are one job
+    .filter((s, i, all) => all.findIndex((x) => screenHref(x.id) === screenHref(s.id)) === i);
   return (
     <Screen
       stage="Start here"
@@ -79,7 +81,7 @@ export default async function Guide({ searchParams }: Props) {
             <KeyValue
               rows={[
                 { label: "What it is for", value: s.purpose },
-                { label: "What each control does", value: s.does.map((d) => (d.says ? `${d.label}: ${d.says}` : d.label)).join(" · ") },
+                { label: "On this page", value: s.does.map((d) => ("says" in d ? `${d.label}: ${d.says}` : d.label)).join(" · ") },
               ]}
             />
             </div>

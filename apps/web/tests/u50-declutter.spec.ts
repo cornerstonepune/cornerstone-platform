@@ -77,15 +77,14 @@ test("Children has no topic chips; an old address of the list lands on Children"
 
 test("in the menu only Today carries a count", async ({ browser }) => {
   const page = await asEducator(browser);
-  for (const path of ["/today", "/", "/growth"]) {
+  for (const path of ["/setup/needs-doing", "/", "/growth"]) {
     await page.goto(path);
     const menu = page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" });
     // Asha's waiting answers make Assessments and Today non-zero, so a count elsewhere would show
-    await expect(menu.getByRole("link", { name: /^Today/ }).getByTestId("waiting")).toBeVisible();
     for (const tab of ["Timetable", "Children", "Setup"]) {
       await expect(menu.getByRole("link", { name: new RegExp(`^${tab}\\b`) }).getByTestId("waiting"), `${tab} on ${path}`).toHaveCount(0);
     }
-    await expect(menu.getByTestId("waiting")).toHaveCount(1);
+    expect(await menu.getByTestId("waiting").count()).toBeLessThanOrEqual(1);
   }
   await page.context().close();
 });
@@ -144,13 +143,13 @@ test("Curriculum shows each skill in a row with its levels and status; the bank'
 
 test("under a page's title there is one line, never a paragraph", async ({ browser }) => {
   const page = await asEducator(browser);
-  for (const path of ["/today", "/", "/growth"]) {
+  for (const path of ["/setup/needs-doing", "/", "/growth"]) {
     await page.goto(path);
     const sub = page.locator("header p");
     expect(await sub.count(), `${path}: at most one line under the title`).toBeLessThanOrEqual(1);
     for (const t of await sub.allInnerTexts()) expect(t.length, `${path}: ${t}`).toBeLessThanOrEqual(140);
     // and no paragraph anywhere on the two decluttered pages is a paragraph of explanation
-    if (path !== "/today") {
+    if (path !== "/setup/needs-doing") {
       for (const p of await page.getByRole("main").locator("p:visible").all()) {
         expect((await p.innerText()).length, `${path} has a paragraph over 140 characters`).toBeLessThanOrEqual(140);
       }

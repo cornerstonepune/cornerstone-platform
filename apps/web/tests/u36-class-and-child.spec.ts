@@ -73,8 +73,9 @@ async function offScreen(scope: Locator, width: number): Promise<string[]> {
 
 test("a class shows its standing once: by topic, or one topic's skills in its place", async ({ page }) => {
   await page.goto(`/growth/class/${SECTION}`);
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText(SECTION);
-  await expect(page.getByRole("main").locator("header")).toContainText("Grade 2");
+  await expect(page).toHaveURL(/\/children\/[0-9a-f-]{36}\?view=matrix$/);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Class picture");
+  await expect(page.getByRole("main")).toContainText(SECTION);
   // by topic: the one table of where each child stands
   const byTopic = page.getByRole("table", { name: `${SECTION}: each child on each topic` });
   await expect(byTopic).toBeVisible();

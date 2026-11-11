@@ -54,7 +54,7 @@ export default async function EditSkillWords({ params, searchParams }: Props) {
             <button className="btn" type="submit">
               Save the words
             </button>
-            <Link href={`/skill-sets/${s.code}`} className="chip">
+            <Link href={`/setup/skill-sets/${s.code}`} className="chip">
               Cancel
             </Link>
             <span className="note">

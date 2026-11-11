@@ -50,7 +50,7 @@ test.describe("what needs doing", () => {
       expect(t.href, t.id).toMatch(/^\//);
       expect(t.action, t.id).not.toMatch(/\b(all|them|these|every)\b/i);
     }
-    expect(tasks.find((t) => t.id === "skill:NUM.OPS.02")?.href).toBe("/skill-sets/NUM.OPS.02");
+    expect(tasks.find((t) => t.id === "skill:NUM.OPS.02")?.href).toBe("/setup/skill-sets/NUM.OPS.02");
     expect(tasks.find((t) => t.kind === "check")?.href).toBe("/capture/check?id=r1");
     expect(tasks.find((t) => t.kind === "signoff")?.href).toBe("/capture/p2");
   });
@@ -131,7 +131,7 @@ test.describe("the menu", () => {
     expect(doorOf("/taught")).toBeUndefined();
     expect(doorOf("/growth/class/2B")?.label).toBe("Children");
     expect(pagesOf(doorOf("/children/assessments")).map((t) => t.label)).toContain("Assessments");
-    expect(pagesOf(doorOf("/today")).length).toBeGreaterThan(0);
+    expect(pagesOf(doorOf("/setup/needs-doing")).length).toBeGreaterThan(0);
   });
 });
 

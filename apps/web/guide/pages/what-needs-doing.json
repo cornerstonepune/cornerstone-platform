@@ -1,5 +1,5 @@
 {
-  "menu": "/today",
+  "menu": "/setup/needs-doing",
   "forWhat": [
     "The first page you see. It lists the kinds of work waiting on you, in the order the week runs.",
     "Each kind of work is one line with its count and the next thing to do. Open a line to see its rows. Each row has its own button."

@@ -33,9 +33,9 @@ test.beforeAll(async ({ browser }) => {
   const [{ code: draft }] = await sql<{ code: string }[]>`select code from skill order by status = 'ratified', code limit 1`;
   pages = [
     // a page that opens on the person's own grade is compared at "Every grade", its one tap
-    "/today", "/", "/children/assessments", "/growth", "/asks", "/library?grade=all", "/worksheets?grade=all", "/worksheets/taxonomy", "/skill-sets/approve",
+    "/setup/needs-doing", "/", "/children/assessments", "/growth", "/asks", "/library?grade=all", "/worksheets?grade=all", "/worksheets/taxonomy", "/skill-sets/approve",
     `/skill-sets/${draft}`, "/capture", "/make", `/make/${OTHER}`, "/children/assessments?status=print", "/children/reports",
-    `/growth/class/${OTHER}`, `/growth/${other.Kavi}`, `/growth/${other.Kavi}/report`, "/workflows",
+    `/growth/class/${OTHER}`, `/growth/${other.Kavi}`, `/growth/${other.Kavi}/report`, "/setup/how-it-works",
   ];
   educator = await asEducator(browser);
 });
@@ -110,9 +110,9 @@ async function offered(page: Page, at: string, name: string): Promise<{ refused:
 // two people are read one after the other, never together: the page's counts are heavy and two at once ran the
 // database past its eight seconds. The names are the pages' own, the addresses those made in `beforeAll`.
 const NAMES = [
-  "/today", "/", "/children/assessments", "/growth", "/asks", "/library", "/worksheets", "/worksheets/taxonomy", "/skill-sets/approve",
+  "/setup/needs-doing", "/", "/children/assessments", "/growth", "/asks", "/library", "/worksheets", "/worksheets/taxonomy", "/skill-sets/approve",
   "a skill waiting", "/capture", "/make", "/make of another class", "/children/assessments?status=print", "/children/reports",
-  "another class's growth", "a child of another class", "that child's report", "/workflows",
+  "another class's growth", "a child of another class", "that child's report", "/setup/how-it-works",
 ];
 const walked: string[] = [];
 test.describe("an educator reaches every page and every action the coordinator does", () => {
@@ -145,9 +145,9 @@ test("an educator takes a decision once the coordinator's alone: approving a ski
   const putBack = await aWaitingSkill(sql, waiting.code);
   const educator = await asEducator(browser);
   try {
-    await educator.goto("/today");
+    await educator.goto("/setup/needs-doing");
     await expect(educator.getByRole("main")).toContainText("Skills to approve");
-    await expect(educator.locator("[data-frame]").getByRole("link", { name: "How it works" }), "the engineering map is theirs too").toBeVisible();
+    await expect(educator.getByRole("contentinfo").getByRole("link", { name: "How it works" }), "the engineering map is theirs too").toBeVisible();
     await educator.goto(`/skill-sets/${waiting.code}`);
     await expect(educator.getByRole("button", { name: /^Approve, as / })).toBeVisible();
     await educator.goto("/skill-sets/approve");

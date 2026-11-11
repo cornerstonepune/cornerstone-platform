@@ -54,7 +54,7 @@ test.afterAll(async () => {
 const ours = (page: Page) => page.getByRole("table").locator("tbody tr").filter({ hasText: CLASS });
 
 test("the class papers Today counts are the copies the pages it opens show waiting", async ({ page }) => {
-  await page.goto(`/today?kind=classpaper&class=${CLASS}`);
+  await page.goto(`/setup/needs-doing?kind=classpaper&class=${CLASS}`);
   const item = page.locator("tr[data-kind=classpaper]").filter({ hasText: `${CLASS} · class practice` });
   await expect(item).toContainText("2 papers");
 
@@ -68,7 +68,7 @@ test("the class papers Today counts are the copies the pages it opens show waiti
 
   // the approve page Today's line opens: two copies to approve, the spare among the spare copies, the button counting
   // them as Today does (goals/ux5-papers-grouped.yaml)
-  await page.goto(`/today?kind=classpaper&class=${CLASS}`);
+  await page.goto(`/setup/needs-doing?kind=classpaper&class=${CLASS}`);
   await page.locator("tr[data-kind=classpaper]").filter({ hasText: `${CLASS} · class practice` }).getByRole("link").click();
   // (the spare is a row of the pack's table, named as one: goals/uxn4-papers-to-approve.yaml)
   await expect(page.getByRole("main").locator("tbody").getByText("to approve", { exact: true })).toHaveCount(3);
@@ -86,7 +86,7 @@ test("the question bank is one number wherever it is named", async ({ page }) =>
     where i.source = 'generated' and i.status = 'active' and s.difficulty ? i.difficulty`;
   const words = (n: number) => n.toLocaleString("en-IN");
 
-  await page.goto("/workflows");
+  await page.goto("/setup/how-it-works");
   await expect(page.locator('[data-measure="N2"]')).toContainText(words(bank));
 
   await page.goto("/library");

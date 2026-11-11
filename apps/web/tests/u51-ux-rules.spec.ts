@@ -122,7 +122,7 @@ async function breaks(page: Page): Promise<string[]> {
 }
 
 const ROUTES = (): [string, string][] => [
-  ["/today", "/today"],
+  ["/setup/needs-doing", "/setup/needs-doing"],
   ["/", "/"],
   ["/library", "/library"],
   ["/worksheets", "/worksheets"],
@@ -143,7 +143,7 @@ const ROUTES = (): [string, string][] => [
   ["/children/reports", "/children/reports"],
   ["/asks", "/asks"],
   ["/home", "/home"],
-  ["/workflows", "/workflows"],
+  ["/setup/how-it-works", "/setup/how-it-works"],
 ];
 
 test("every page keeps the rules, or is named as still breaking them, and only those", async ({ browser }) => {
@@ -218,7 +218,7 @@ const DESKTOP = { width: 1440, height: 900 };
 
 test("the top bar: the menu button is full-size, the student search is a compact field", async ({ browser }) => {
   const page = await (await browser.newContext({ storageState: SIGNED_IN, viewport: DESKTOP })).newPage();
-  for (const url of ["/today", "/children/assessments", "/growth", "/"]) {
+  for (const url of ["/setup/needs-doing", "/children/assessments", "/growth", "/"]) {
     await open(page, url);
     expect((await page.locator("[data-bar]").first().locator("div").first().boundingBox())!.height, `${url}: the bar`).toBe(BAR_HEIGHT_PX);
     for (const door of await page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" }).getByRole("link").all())

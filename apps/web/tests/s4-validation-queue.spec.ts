@@ -37,7 +37,6 @@ test.beforeAll(async () => {
     code: "S4-A", title: "S4 paper", date: "2026-09-01", band: "G2", week: "S4-TEST",
     items: [...sums.map((expr, i) => ({ n: i + 1, page: 1, expr, question: expr })), { n: 9, page: 1, kind: "text", rung: "X1", question: "Which place did you regroup?" }],
   });
-  // a second assessment, so one child has papers at two addresses (a copy twinned at one address is an extra, not a way on)
   const w2 = await aWorksheet(sql, {
     code: "S4-B", title: "S4 second paper", date: "2026-09-02", band: "G2", week: "S4-TEST",
     items: sums.slice(0, 4).map((expr, i) => ({ n: i + 1, page: 1, expr, question: expr })),
@@ -158,8 +157,7 @@ test("judging one answer settles that answer only — nothing else on the paper 
   }
 });
 
-// ADR 0029: a wrong or a blank on the engine's reading alone waits for a person. It is a reading to
-// confirm, not a judgement to make, so it is asked the way a guess is and settles in one click.
+// ADR 0029: a wrong or a blank on the engine's reading alone waits for a person: a reading to confirm, settled in one click.
 for (const held of [
   { kind: "wrong", why: "read as a wrong answer%", says: "a wrong answer. Every wrong answer is checked by a person before it counts.", status: "wrong" },
   { kind: "blank", why: "read as blank%", says: "The reader found nothing written here. Every blank is checked by a person before it counts.", status: "blank" },
@@ -254,7 +252,7 @@ test("a sheet shows its score as soon as nothing on it waits", async ({ page }) 
 // Nimish, 2026-09-22: "go student by student and within student — choose an assessment and then look at
 // all questions within that". A child's page lists the papers read; each opens and steps to the next.
 test("a child's papers open from their page, and each steps to the child's next paper", async ({ page }) => {
-  // a child's papers on two different assessments, oldest first (two copies of one assessment share an address: the second is an extra, not a way on)
+  // a child's papers on two different assessments, oldest first (twin copies share an address)
   const [c] = await sql<{ child_id: string; first: string; second: string; n: number }[]>`
     with one as (
       select distinct on (si.child_id, si.sheet_template_id) si.child_id, si.id::text as id, t.key ->> 'date' as d, si.created_at
@@ -391,7 +389,7 @@ test("Capture & Mark says how the reader is doing, with the database's own numbe
 });
 
 test("the old queue's address opens the paper screen, which fits a phone", async ({ page }) => {
-  await page.goto("/today");
+  await page.goto("/setup/needs-doing");
   await page.getByRole("heading", { level: 1, name: "What needs doing" }).waitFor();
   const [a] = await sql<{ id: string }[]>`select r.id ${LIVE} and r.status = 'unreadable' and r.state = 'candidate' order by r.id limit 1`;
   await page.setViewportSize({ width: 400, height: 860 });

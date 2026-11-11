@@ -56,6 +56,7 @@ export async function pagesOf(paperIds: string[]): Promise<Map<string, { capture
 /** Who approved each copy of an assessment and on what day, and the day each was made: what the approval ledger and the second pack say. */
 export async function packFacts(ids: string[]): Promise<{ id: string; roll: string | null; approved_by: string | null; approved_on: string | null; made_on: string }[]> {
   if (!ids.length) return [];
+  // the days are the school's, by its clock (config `school.time_zone`), never a zone written here
   const zone = await schoolZone();
   return sql`
     select si.id, c.roll_no as roll, si.approved_by, to_char(si.approved_at at time zone ${zone}, 'YYYY-MM-DD') as approved_on,

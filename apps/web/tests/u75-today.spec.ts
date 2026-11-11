@@ -6,7 +6,7 @@
 import { expect, test, type Browser } from "@playwright/test";
 import postgres from "postgres";
 import { loadFortnight10, timetableSwitch } from "./educator-screens";
-import { SECTION, k2Class } from "./k2-rows";
+import { SECTION, aK2Note, k2Class, voiceSwitch } from "./k2-rows";
 import { sessionFor, signedInAs } from "./inventory-fixtures";
 import { aPerson, personAsStored } from "./rows";
 import type { Period } from "../lib/educator/types";
@@ -79,11 +79,11 @@ test.describe("the page", () => {
   });
 
   test("the coordinator is given the school's Today, the educator the educator's, and neither is given the other's", async ({ page, browser }) => {
-    await page.goto("/today/new");
+    await page.goto("/today");
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("Today, the school");
     const mine = await signedInAs(browser, "educator", { width: 1440, height: 900 });
     const p = await mine.newPage();
-    await p.goto("/today/new");
+    await p.goto("/today");
     await expect(p.getByRole("heading", { level: 1 })).toHaveText("Today");
     await mine.close();
   });
@@ -91,14 +91,14 @@ test.describe("the page", () => {
   test("an educator sees the periods of the class their grant names, in time order; the other educator sees none of them", async ({ browser }) => {
     const mine = await as(browser, TEACHER.email);
     const p = await mine.newPage();
-    await p.goto(`/today/new?day=${MONDAY}`);
+    await p.goto(`/today?day=${MONDAY}`);
     const times = await p.locator("[data-block=PeriodRow] .b-t").allTextContents();
     expect(times.length).toBeGreaterThan(0);
     expect([...times].sort()).toEqual(times);
     await mine.close();
     const other = await as(browser, OTHER.email);
     const q = await other.newPage();
-    await q.goto(`/today/new?day=${MONDAY}`);
+    await q.goto(`/today?day=${MONDAY}`);
     await expect(q.locator("[data-block=PeriodRow]")).toHaveCount(0);
     await expect(q.getByText(/No (sessions|timetable)/)).toBeVisible();
     await other.close();
@@ -107,7 +107,7 @@ test.describe("the page", () => {
   test("the tiles and the board's lanes count the same rows, and an empty lane says so in words", async ({ browser }) => {
     const mine = await as(browser, TEACHER.email);
     const p = await mine.newPage();
-    await p.goto(`/today/new?view=board&day=${MONDAY}`);
+    await p.goto(`/today?view=board&day=${MONDAY}`);
     for (const [lane, state] of [["doNow", "do now"], ["doSoon", "this week"], ["done", "done"]] as const) {
       const n = Number(await p.locator(`[data-lane="${lane}"] .b-count`).innerText());
       const tile = Number(await p.locator(".b-att", { hasText: new RegExp(`^\\d+\\s*${state}`, "i") }).locator(".b-n").innerText());
@@ -118,13 +118,35 @@ test.describe("the page", () => {
     await mine.close();
   });
 
+  test("the bar's one count is the strip's do-now plus this-week, and a note of hers is in it", async ({ browser }) => {
+    const [mine] = await sql<{ staff_id: string; class_id: string }[]>`
+      select p.staff_id, g.school_class_id as class_id from pii.staff p join staff_role_grant g on g.staff_id = p.staff_id where p.email = ${TEACHER.email} and g.school_class_id is not null limit 1`;
+    await voiceSwitch(sql, true);
+    const note = await aK2Note(sql, { klass: mine.class_id, staff: mine.staff_id }, "u75 a note to confirm");
+    try {
+      const ctx = await as(browser, TEACHER.email);
+      const p = await ctx.newPage();
+      await p.goto("/today");
+      const strip = await p.locator(".b-att").evaluateAll((els) => els.filter((e) => /do now|this week/i.test(e.textContent ?? "")).map((e) => Number((e.querySelector(".b-n")?.textContent ?? "0").trim())));
+      const badge = p.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" }).getByRole("link", { name: /^Today/ }).getByTestId("waiting");
+      expect(strip.reduce((a, b) => a + b, 0)).toBeGreaterThan(0);
+      expect(Number((await badge.innerText()).replace(/\D/g, ""))).toBe(strip.reduce((a, b) => a + b, 0));
+      // no other door carries a count
+      await expect(p.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" }).getByTestId("waiting")).toHaveCount(1);
+      await ctx.close();
+    } finally {
+      await sql`update pii.educator_note set status = 'confirmed' where id = ${note}`;
+      await voiceSwitch(sql, false);
+    }
+  });
+
   test("neither Today shows a count of skills to approve, and the school's names no person's rank", async ({ page, browser }) => {
-    await page.goto("/today/new");
+    await page.goto("/today");
     await expect(page.locator("main")).not.toContainText(/skills? to approve/i);
     await expect(page.locator("main")).not.toContainText(/\b(rank|ranking|score|leaderboard|top|bottom)\b/i);
     const mine = await signedInAs(browser, "educator", { width: 1440, height: 900 });
     const p = await mine.newPage();
-    await p.goto("/today/new");
+    await p.goto("/today");
     await expect(p.locator("main")).not.toContainText(/skills? to approve/i);
     await mine.close();
   });
