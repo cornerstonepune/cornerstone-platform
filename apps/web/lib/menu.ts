@@ -47,12 +47,11 @@ export const GROUPS: readonly Door[] = [
     icon: "child",
     screen: "children",
     pages: [
-      { label: "Children", href: "/children", match: ["/children", "/k2"], guide: false },
+      { label: "Children", href: "/children", match: ["/children", "/k2", "/growth"], guide: false },
       { href: "/papers", label: "Assessments", match: ["/papers", "/children/assessments", "/make", "/home", "/worksheets/CS"] },
       { href: "/papers/approve", label: "Papers to approve", match: ["/papers/approve"] },
       { href: "/capture", label: "Upload papers", match: ["/capture"] },
       { href: "/capture/check", label: "Check answers", match: ["/capture/check"] },
-      { href: "/growth", label: "Class results", match: ["/growth"] },
       { href: "/children/reports", label: "Parent reports", match: ["/children/reports"] },
       { href: "/across", label: "Across classes", match: ["/across"] },
     ],

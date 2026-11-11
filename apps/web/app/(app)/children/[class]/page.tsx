@@ -34,7 +34,7 @@ export default async function Picture({ params, searchParams }: { params: Promis
     { key: "topic", label: "By topic", icon: "table" as const, href: `/children/${classId}?view=topic` },
     { key: "matrix", label: "Matrix", icon: "table" as const, href: `/children/${classId}?view=matrix` },
   ];
-  if (sp.view === "topic" || sp.view === "matrix") return <ClassViews me={me} classId={classId} section={p.section} view={sp.view} q={sp as Record<string, string | undefined>} toggle={<ViewToggle current={sp.view} views={views} />} />;
+  if (sp.view === "topic" || sp.view === "matrix") return <ClassViews me={me} classId={classId} section={p.section} count={p.kids.length} view={sp.view} q={sp as Record<string, string | undefined>} toggle={<ViewToggle current={sp.view} views={views} />} />;
   const domains = [...new Set(p.skills.map((s) => s.domain).filter(Boolean))].sort();
   const domain = domains.includes(sp.domain ?? "") ? sp.domain : undefined;
   const skills = p.skills.filter((s) => !domain || s.domain === domain);

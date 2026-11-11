@@ -117,12 +117,11 @@ test.afterAll(async () => {
 test("each grade opens on its classes, and a class is its children against every step in red, amber, green or grey", async ({
   page,
 }) => {
-  // the class's children against every step: reached from Class results ("Each child against each topic →"); the old list of
-  // children it was once reached from is the Children screen now (UI-3b), which has no such grid
-  await page.goto(`/growth?class=${SECTION}`);
-  await page.getByRole("link", { name: "Each child against each topic →" }).click();
-  await expect(page).toHaveURL(`/growth/class/${SECTION}`);
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText(SECTION);
+  // the class's children against every step is the Matrix tab of the class picture; the old address of it goes there
+  await page.goto(`/growth/class/${SECTION}`);
+  await expect(page).toHaveURL(/\/children\/[0-9a-f-]{36}\?view=matrix$/);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Class picture");
+  await expect(page.locator("main")).toContainText(SECTION);
 
   // the columns, a topic opened at a time (goals/ux4-class-and-child.yaml), are the taught skills someone in the class
   // has a checked answer on — never a column nobody answered
