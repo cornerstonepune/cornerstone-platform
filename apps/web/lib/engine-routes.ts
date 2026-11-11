@@ -69,6 +69,7 @@ export type EngineRoutes = {
   "POST /k2/classes": { actor: string };
   "POST /k2/coordinator": { actor: string };
   "POST /k2/picture": { actor: string; class_id: string };
+  "POST /k2/today-school": { actor: string };
   "POST /k2/todo": { actor: string };
   "POST /mark": { child_id: string };
   "POST /materials/build": { actor: string; class_id: string; period: "day" | "week" | "fortnight"; from: string; to: string; group_by?: "day" | "week" | "fortnight" | null };
