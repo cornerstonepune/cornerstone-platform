@@ -74,7 +74,8 @@ test.describe("Skills to approve", () => {
 
   test("approval is per row: every Approve button names one skill, and no control approves more", async ({ page }) => {
     await page.goto("/setup/skills/approve");
-    const buttons = page.locator("main button", { hasText: /approve/i });
+    // the one table of what a wrong answer counts against has its own button (tested below): it is not a skill's
+    const buttons = page.locator("main button:not([data-approve-table])", { hasText: /approve/i });
     const n = await buttons.count();
     expect(n).toBeLessThanOrEqual(10);
     for (let i = 0; i < n; i++) await expect(buttons.nth(i)).toHaveAccessibleName(/^Approve .+/);
