@@ -20,6 +20,8 @@ const nextConfig: NextConfig = {
     { source: "/login/new-password", destination: "/login?view=new-password", permanent: true },
     { source: "/account/password", destination: "/login?view=forgot", permanent: true },
     { source: "/guide/:path+", destination: "/guide", permanent: true },
+    // The old Parent reports list folded into Reports (UI-8e): the old address answers 308 to the new one, its ?class= kept.
+    { source: "/growth/reports", destination: "/children/reports", permanent: true },
     // The K2 pictures folded into Children (UI-3b): the old addresses answer 308 to the new ones.
     { source: "/k2", destination: "/children", permanent: true },
     { source: "/k2/:class", destination: "/children/:class", permanent: true },

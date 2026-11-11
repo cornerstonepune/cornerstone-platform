@@ -47,7 +47,6 @@ const NOT_BY_CLICK: Record<string, string> = {
   "/papers/card": "opened by a button of the paper's own form",
   "/children/assessments/[key]": "a link on an assessment's row, which needs an assessment of the class (tests/u73-assessments.spec.ts opens it with rows)",
   "/children/assessments/[key]/[roll]": "a child's copy on that assessment (tests/u73-assessments.spec.ts opens it with rows)",
-  "/children/reports": "ships beside the old Parent reports page (UI-8); the menu moves to it with UI-8b, when the old pages fold, because tests/u60 pins the menu's exact items",
   "/make/[section]/week": "opened by the make form's choice of a class and a week",
   "/skill-sets/[code]/edit": "opened from a skill's own page (click four)",
   "/voice/notes/[id]": "where recording a note sends the educator",
