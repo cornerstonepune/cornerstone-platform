@@ -397,6 +397,10 @@
           "says": "Day by default at 400 px"
         },
         {
+          "label": "Previous / next day or week",
+          "says": "Day view steps a school day (weekends skipped), Week view a week; the fortnight follows the day"
+        },
+        {
           "label": "Today",
           "says": "opens today in the Day view"
         },

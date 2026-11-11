@@ -19,8 +19,10 @@ const FN = () => sql`select f.id, f.number, f.starts_on::text as starts_on, f.en
   from fortnight f where f.kind = 'teaching'`;
 
 /** The teaching fortnight holding `day`, or the first one after it when none does (a holiday between). */
-export async function fortnightAt(day: string): Promise<Fn | null> {
-  const [r] = await sql<Fn[]>`${FN()} and f.ends_on >= ${day}::date order by f.starts_on limit 1`;
+export async function fortnightAt(day: string, classId?: string): Promise<Fn | null> {
+  // a class belongs to one academic year, so a named class keeps the fortnight in its own year
+  const mine = classId && /^[0-9a-f-]{36}$/i.test(classId) ? sql`and f.academic_year_id = (select academic_year_id from school_class where id = ${classId})` : sql``;
+  const [r] = await sql<Fn[]>`${FN()} ${mine} and f.ends_on >= ${day}::date order by f.starts_on limit 1`;
   return r ?? null;
 }
 export async function fortnightAfter(f: Fn): Promise<Fn | null> {
@@ -40,6 +42,15 @@ export const subjectLooks = cache(async (): Promise<Looks> => {
   return r?.value && typeof r.value === "object" ? r.value : {};
 });
 export const subjectLook = (looks: Looks, code: string | null): Exclude<Subject, "fixed"> => (code && looks[code]) || "arts";
+
+export type FnRow = Fn & { moves: number };
+/** Every teaching fortnight of the academic year `f` belongs to, oldest first, each with how many hand moves it has had. */
+export async function fortnightsOfYear(f: Fn): Promise<FnRow[]> {
+  return sql<FnRow[]>`
+    select g.id, g.number, g.starts_on::text as starts_on, g.ends_on::text as ends_on, g.state,
+           (select count(*)::int from change_log c where c.table_name = 'session' and c.op = 'move' and split_part(c.row_id, ' ', 2) = g.id::text) as moves
+    from fortnight g where g.kind = 'teaching' and g.academic_year_id = (select academic_year_id from fortnight where id = ${f.id}) order by g.starts_on`;
+}
 
 export type Move = { id: string; fortnight_id: string; class_id: string; from: string; to: string; who: string; why: string | null; at: string; undo: boolean };
 
