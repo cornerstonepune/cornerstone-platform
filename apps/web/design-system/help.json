@@ -309,31 +309,19 @@
       "purpose": "The fortnight is the unit. Week A and week B, each period a block; a moved period is marked, a clash is red until the coordinator accepts it.",
       "does": [
         {
-<<<<<<< HEAD
           "label": "class"
-=======
-          "label": "class",
-          "says": "the coordinator always; an educator only when she holds more than one class"
->>>>>>> origin/main
         },
         {
           "label": "Day / Week / Fortnight"
         },
         {
-<<<<<<< HEAD
+          "label": "Today"
+        },
+        {
+          "label": "each day head"
+        },
+        {
           "label": "this / next fortnight"
-=======
-          "label": "Today",
-          "says": "opens today in the Day view"
-        },
-        {
-          "label": "each day head",
-          "says": "opens that day in the Day view; earlier and later days are reached the same way"
-        },
-        {
-          "label": "this / next fortnight",
-          "says": ""
->>>>>>> origin/main
         },
         {
           "label": "each grid cell"
@@ -379,16 +367,10 @@
           "label": "Approve"
         },
         {
-<<<<<<< HEAD
-          "label": "Go live"
-=======
-          "label": "reason",
-          "says": "needed once the fortnight is frozen; the engine says so in words when it is missing"
+          "label": "reason"
         },
         {
-          "label": "Go live",
-          "says": "every class's placed draft goes live and the sessions are updated in place; the what-changed table lists every session it moved or removed, and nothing else"
->>>>>>> origin/main
+          "label": "Go live"
         },
         {
           "label": "The grid"
