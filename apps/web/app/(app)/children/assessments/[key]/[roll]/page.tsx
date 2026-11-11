@@ -71,7 +71,9 @@ export default async function PaperPage({ params, searchParams }: Props) {
   const scan = await deadline(scanFacts(sheet.id));
   const pick = answers.find((x) => x.id === q.answer) ?? answers.find((x) => markOf(x) === "judge");
   const none = Promise.resolve(undefined);
-  const [names, skills, siblings, unnamed, keys, proof] = await deadline(
+  // the answer in view is the one picked, else the first to judge, else the first: its page's photograph is asked for alongside the rest
+  const seen = pick ?? answers[0];
+  const [names, skills, siblings, unnamed, keys, proof, lost] = await deadline(
     Promise.all([
       misconceptionNames(),
       setSkills(),
@@ -79,6 +81,7 @@ export default async function PaperPage({ params, searchParams }: Props) {
       pick ? unnamedOn(pick.capture_id) : none,
       pick ? keysOn(pick.capture_id) : none,
       pick ? proofOf(pick.capture_id, pick.file_page) : none,
+      seen ? pageLost(seen.capture_id, seen.page ?? 1) : none,
     ]),
   );
   const marks = answers.map((a) => ({ a, m: markOf(a) }));
@@ -121,8 +124,6 @@ export default async function PaperPage({ params, searchParams }: Props) {
       ),
     },
   ];
-  const shown = focus?.a ?? answers[0];
-  const lost = shown ? await deadline(pageLost(shown.capture_id, shown.page ?? 1)) : undefined;
   const src = lost ? undefined : focus ? `/api/scan/${focus.a.capture_id}/${focus.a.file_page}` : answers[0] ? `/api/scan/${answers[0].capture_id}/${answers[0].file_page}` : undefined;
   // the answers still for you to judge, after the one in view, in the order they sit on the page: the way on, so a paper is walked answer by answer
   const others = judging.filter((x) => marks.indexOf(x) > marks.findIndex((m) => m.a.id === focus?.a.id));
@@ -188,9 +189,9 @@ export default async function PaperPage({ params, searchParams }: Props) {
       ) : (
         <div className="b-split">
           {lost ? (
-            <figure data-page-not-found={shown?.page ?? 1} className="b-card">
+            <figure data-page-not-found={seen?.page ?? 1} className="b-card">
               <p>{lost}</p>
-              <figcaption className="b-muted">Its answers wait for you. Scan page {shown?.page ?? 1} again and send it to be read.</figcaption>
+              <figcaption className="b-muted">Its answers wait for you. Scan page {seen?.page ?? 1} again and send it to be read.</figcaption>
             </figure>
           ) : (
           <PageImage src={src} box={outlined ? focus?.a.box : null} caption={!focus ? "The child's page as photographed" : outlined ? `The child's page as photographed. Question ${qLabel(focus.a, marks.indexOf(focus))} is outlined.` : `We could not find question ${qLabel(focus.a, marks.indexOf(focus))} on this page: it is somewhere on this page.`} />
