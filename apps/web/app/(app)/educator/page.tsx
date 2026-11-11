@@ -7,9 +7,9 @@ import { ChipTag, Legend, Pill } from "@/components/educator/tags";
 import { requireStaff } from "@/lib/auth";
 import { chipOf, countdown, nowAt } from "@/lib/educator/chip";
 import { longDate, nowAtSchool, schoolDay, whenIs } from "@/lib/educator/clock";
-import { dayOf } from "@/lib/educator/data";
+import { dayOrNull } from "@/lib/educator/data";
 import { blankWords, isBlank, isDay, isLesson, timeOf } from "@/lib/educator/period";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import type { Day } from "@/lib/educator/types";
 import { E } from "@/lib/educator/words";
 import { schoolToday } from "@/lib/voice-page";
@@ -22,7 +22,8 @@ export default async function TodayPage({ searchParams }: { searchParams: Promis
   const [today, now] = await Promise.all([schoolToday(), nowAtSchool()]);
   if (q.day !== undefined && !isDay(q.day)) notFound();
   const asked = q.go === "tomorrow" ? schoolDay(q.day ?? today, 1) : (q.day ?? today);
-  const d = await dayOf(me, { class_id: q.class, day: asked });
+  const d = await dayOrNull(me, { class_id: q.class, day: asked });
+  if (!d) redirect("/today"); // not open to her (switch off, no class held, nothing live): Today says so in words, not a 404
   const at = (day: string) => `/educator?class=${d.class.id}&day=${day}`;
   return (
     <Screen

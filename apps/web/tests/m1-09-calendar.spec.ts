@@ -34,10 +34,13 @@ test("a day in the address that is not a date is not found, never an error", asy
 
 test("while the timetable is switched off Today, This week and a period are not found", async ({ page }) => {
   await timetableSwitch(sql, false);
-  for (const href of ["/educator", "/educator/week", "/period/00000000-0000-0000-0000-000000000000"]) {
-    await page.goto(href);
-    await expect(page.getByText("This page could not be found.")).toBeVisible();
-  }
+  // a period has no tab: not found. Your day and This week are tabs of the menu, so they never lead to "not found": they send her to Today and Timetable
+  await page.goto("/period/00000000-0000-0000-0000-000000000000");
+  await expect(page.getByText("This page could not be found.")).toBeVisible();
+  await page.goto("/educator");
+  await expect(page).toHaveURL(/\/today$/);
+  await page.goto("/educator/week");
+  await expect(page).toHaveURL(/\/timetable$/);
 });
 
 test("Today is the day as a calendar: every period a block in time order, its time as time, the school's words, a chip only on work", async ({ page }) => {
