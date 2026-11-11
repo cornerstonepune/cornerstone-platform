@@ -111,7 +111,7 @@ export function DoorPages() {
         <ul className="mx-auto flex w-full max-w-[1560px] flex-wrap gap-x-[var(--space-4)] px-[var(--space-3)] md:px-[var(--space-4)]">
           {headings.map((h) => (
             <li key={h} className="flex flex-wrap items-center">
-              <span className="pr-[var(--space-1)] text-[length:var(--text-label)] uppercase tracking-wide text-[var(--ink-muted)]">{h}</span>
+              <span className="pr-[var(--space-1)] text-[length:var(--text-label)] leading-6 uppercase tracking-wide text-[var(--ink-muted)]">{h}</span>
               <ul className="flex flex-wrap gap-[var(--space-1)]" aria-label={h}>
                 {pages
                   .filter((p) => p.group === h)
