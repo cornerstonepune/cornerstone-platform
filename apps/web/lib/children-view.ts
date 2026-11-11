@@ -132,6 +132,23 @@ export function clustersOf(places: readonly Place[]): Cluster[] {
   ];
 }
 
+/** One child's place on the chosen skill, for the class picture's clusters (the wireframe's four). `seen` is the named days (or events)
+ *  behind the child's state on the skill; `relatedPractising` is practising on a skill a person confirmed as linked to it. */
+export type PicturePlace = { id: string; look: Look | null; readyNext: boolean; seen: number | null; relatedPractising: boolean };
+
+/** The class picture's clusters (docs/frontend/wireframes/picture.html), worked out here from the graph's rows and never by a model; a
+ *  child may be in several. "Close to secure" needs the school's own number of times seen (`closeSeen`, the setting
+ *  `children.close_to_secure_seen`); without it that cluster is not drawn, since no number is assumed here. */
+export function pictureClusters(places: readonly PicturePlace[], closeSeen: number | null): Cluster[] {
+  const pick = (f: (p: PicturePlace) => boolean) => places.filter(f).map((p) => p.id);
+  return [
+    { key: "ready", words: "Secure here, ready for the next skill", ids: pick((p) => p.look === SECURE && p.readyNext) },
+    ...(closeSeen === null ? [] : [{ key: "close", words: "Practising, close to secure", ids: pick((p) => p.look === PRACTISING && (p.seen ?? 0) >= closeSeen) }]),
+    { key: "once", words: "Emerging, seen only once", ids: pick((p) => p.look === EMERGING && p.seen === 1) },
+    { key: "related", words: "Not seen here, practising a related skill", ids: pick((p) => p.look === null && p.relatedPractising) },
+  ];
+}
+
 /** The picture's squares grouped by their state on the skill: a child is in exactly one group, the counts sum to the squares. */
 export const LOOK_ORDER = [SECURE, PRACTISING, EMERGING, UNSEEN] as const;
 export type PictureLook = Bucket;

@@ -84,3 +84,33 @@ function entryOf(o: Seen, who: (id: string | null) => string): Entry {
     ? { kind: "note", title, line: `Voice note · confirmed by ${who(o.confirmed_by)}`, at: o.at, when, more }
     : { kind: "activity", title, line: `Observed in the period · ${who(o.confirmed_by)}`, at: o.at, when, more };
 }
+
+export type Summary = { notes: number; papers: number; corrections: number; newest: string | null; since: string | null; of: number };
+
+/** The child's page in whole counts: notes confirmed, papers read, corrections, the newest entry, the class size and since when the child is in it.
+ *  Counts only; nothing here scores or ranks a child. */
+export async function summaryOf(childId: string, classId: string): Promise<Summary> {
+  const [o] = await sql<{ notes: number; corrections: number; newest: string | null }[]>`
+    select count(distinct note_id) filter (where note_id is not null and confirmed_by is not null)::int as notes,
+           count(*) filter (where supersedes is not null)::int as corrections,
+           max(observed_at)::date::text as newest
+    from activity_observation where child_id = ${childId}::uuid`;
+  const [p] = await sql<{ papers: number; newest: string | null }[]>`
+    select count(distinct k.id)::int as papers, max(r.confirmed_at)::date::text as newest
+    from sheet_instance si join capture k on k.sheet_instance_id = si.id and k.superseded_by is null
+    join item_result r on r.capture_id = k.id and r.confirmed_at is not null
+    where si.child_id = ${childId}::uuid`;
+  const [e] = await sql<{ since: string | null; n: number }[]>`
+    select (select from_date::text from enrolment where child_id = ${childId}::uuid and class_id = ${classId}::uuid and to_date is null order by from_date desc limit 1) as since,
+           (select count(*)::int from child_now where class_id = ${classId}::uuid and active) as n`;
+  const newest = [o.newest, p.newest].filter((d): d is string => d !== null).sort().pop() ?? null;
+  return { notes: o.notes, papers: p.papers, corrections: o.corrections, newest, since: e.since, of: e.n };
+}
+
+/** When the nightly graph run last finished, in the school's time zone, as "yyyy-mm-dd hh:mm": the date the child's page and the class picture say they were rebuilt. */
+export async function rebuiltAt(): Promise<string | null> {
+  const [r] = await sql<{ at: string | null }[]>`
+    select (select (finished_at at time zone coalesce((select value #>> '{}' from config where key = 'school.time_zone'), 'UTC'))::text
+            from flow_run where flow = 'graph_nightly' and finished_at is not null order by finished_at desc limit 1) as at`;
+  return r.at ? r.at.slice(0, 16) : null;
+}
