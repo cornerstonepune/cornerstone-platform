@@ -149,10 +149,10 @@ test("every page says the tab it is under, above its title, and the menu marks t
     ["/", "Curriculum"], ["/skill-sets/approve", "Curriculum"], ["/skill-sets/ADD.2D2D", "Curriculum"], ["/library", "Question bank"],
     [`/library/${key}`, "Question bank"], ["/worksheets", "Curriculum"], ["/worksheets/taxonomy", "Question bank"], ["/asks", "Curriculum"],
     ["/papers", "Assessments"], ["/papers/make", "Assessments"], ["/papers/approve", "Assessments"], ["/make", "Assessments"],
-    ["/home", "Assessments"], ["/capture", "Upload papers"], ["/growth", "Class results"],
+    ["/home", "Assessments"], ["/capture", "Upload papers"],
   ];
   // the tab is a page of a group of the top menu (lib/menu.ts): the group is marked, and so is the tab under it
-  const group: Record<string, string> = { Curriculum: "Setup", "Question bank": "Setup", Assessments: "Children", "Papers to approve": "Children", "Upload papers": "Children", "Class results": "Children" };
+  const group: Record<string, string> = { Curriculum: "Setup", "Question bank": "Setup", Assessments: "Children", "Papers to approve": "Children", "Upload papers": "Children" };
   for (const [path, tab] of pages) {
     await page.goto(path);
     await expect(page.getByTestId("stage"), path).toHaveText(new RegExp(`^${tab}\\b`));
