@@ -72,6 +72,7 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
     {
       key: "name",
       label: "Activity or skill",
+      width: "16rem", // a name is read whole: the other columns together leave it at least this much of a 1024 px page
       value: (r) => r.name,
       cell: (r) => (
         <span className="flex items-center gap-2">
@@ -80,15 +81,15 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
         </span>
       ),
     },
-    { key: "grade", label: "Grade", value: (r) => r.grade, width: "7rem" },
-    { key: "subject", label: "Subject", value: (r) => r.subject, width: "9rem" },
-    { key: "topic", label: "Topic", value: (r) => r.topic, width: "11rem" },
-    { key: "levels", label: "Levels", value: (r) => r.levels, num: true, width: "5rem" },
+    { key: "grade", label: "Grade", value: (r) => r.grade, width: "5.5rem" },
+    { key: "subject", label: "Subject", value: (r) => r.subject, width: "7.5rem" },
+    { key: "topic", label: "Topic", value: (r) => r.topic, width: "9rem" },
+    { key: "levels", label: "Levels", value: (r) => r.levels, num: true, width: "4rem" },
     {
       key: "filled",
       label: "Filled",
       value: (r) => (r.kind === "skill" ? `${r.fill.school} of ${r.levels} levels approved` : [part(r.fill.school, "school"), part(r.fill.drafted, "drafted"), part(r.fill.person, "person"), part(r.fill.empty, "empty")].filter(Boolean).join(" · ")),
-      width: "15rem",
+      width: "12rem",
     },
     {
       key: "status",
@@ -103,7 +104,7 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
           <StatusChip state="done" words="complete" />
         ),
       status: true,
-      width: "12rem",
+      width: "9.5rem",
     },
   ];
 

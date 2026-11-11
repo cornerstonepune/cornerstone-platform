@@ -2,6 +2,7 @@ import { sql } from "./db";
 import { PART_KEYS } from "./page-part";
 import { screensGrade } from "./curriculum-screens";
 import { levelsOf, skillSets, type Grades } from "./queries";
+import { skillSetHref } from "./skill-set-href";
 import type { Scope } from "./scope";
 
 // Curriculum (UI-11): one list of what the school teaches. K2 is taught by activities, grades 1 to 4 by skills; each row is
@@ -77,7 +78,7 @@ async function skillRows(grades: Grades, scope: Scope, kBand: string): Promise<C
         levels: levels.length,
         fill: { school: approved, drafted: levels.length - approved, person: 0, empty: 0 },
         status: approved === levels.length ? ("complete" as const) : ("waiting" as const),
-        href: `/setup/skills/${s.code}`,
+        href: skillSetHref(s.code),
       };
     });
 }

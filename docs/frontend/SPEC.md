@@ -1014,7 +1014,7 @@ Every control on the screen (22), and what the test does with each:
 - **filter** Status
 - **filter** search (matches names and codes, never children)
 - **row** an activity row → the activity's name (`/setup/activities/[code]`)
-- **row** a skill row → the skill's name (`/setup/skills/[code]`)
+- **row** a skill row → the skill set's name (`/setup/skill-sets/[code]`)
 - **link** Check the drafted parts → the activity's name (`/setup/activities/[code]`) (the first activity with a drafted part)
 - **button** Yes (an offer): the skill is linked to the activity; the offer closes [coordinator only; absent and refused for others]
 - **button** No (an offer): the offer closes; nothing is linked [coordinator only; absent and refused for others]
@@ -1056,7 +1056,7 @@ Every control on the screen (12), and what the test does with each:
 - **filter** Taught (taught or not yet: a skill nobody teaches can be approved before its topic is switched on)
 - **tab** Skills (the first list; the address carries the tab)
 - **tab** Levels to review (the second list is the levels most children are secure at; the address carries the tab)
-- **link** a skill's name → the skill's name (`/setup/skills/[code]`)
+- **link** a skill's name → the skill set's name (`/setup/skill-sets/[code]`)
 - **button** Approve (a row): level_approved set for that skill with who; the row leaves the list; the eyebrow's count drops by one [coordinator only; absent and refused for others]
 - **fold** What a wrong answer counts against
 - **button** Approve this table as written: the table of what a wrong answer counts against is approved as shown, once, with who; a changed table waits again [coordinator only; absent and refused for others]
@@ -1190,15 +1190,15 @@ Purpose: The curriculum, the skills, the question bank, staff, classes and the s
 Blocks, in order:
 - **Cards**: Curriculum · Skills to approve (count) · Question bank · Staff · Classes and children · School (campus, academic year, fortnights)
 Rail (Connected to): none
-Main action: Curriculum · Next step: none
+Main action: Open the curriculum · Next step: none
 Data: counts
 Empty: none · Phone: one column
 Every control on the screen (6), and what the test does with each:
-- **link** Curriculum → Curriculum (`/setup/curriculum`)
-- **link** Skills to approve → Skills to approve (`/setup/skills/approve`) [coordinator only; absent and refused for others]
-- **link** Question bank → Question bank (`/setup/question-bank`)
-- **link** Staff → Staff and classes (`/setup/staff`) [coordinator only; absent and refused for others]
-- **link** Classes and children → Classes and children (`/setup/classes`) [coordinator only; absent and refused for others]
+- **link** Open the curriculum → Curriculum (`/setup/curriculum`)
+- **link** Open Skills to approve → Skills to approve (`/setup/skills/approve`) [coordinator only; absent and refused for others]
+- **link** Open Question bank → Question bank (`/setup/question-bank`)
+- **link** Open Staff → Staff and classes (`/setup/staff`) [coordinator only; absent and refused for others]
+- **link** Open Classes and children → Classes and children (`/setup/classes`) [coordinator only; absent and refused for others]
 - **link** details: the blocks gallery → The blocks (`/setup/blocks`) (/setup/blocks, staff only)
 Done when (on top of the ten generic checks):
 - every setup page is reachable in two clicks from the bar
