@@ -162,6 +162,9 @@
   .b-pimg { position: relative; aspect-ratio: 1 / 1.414; max-width: 320px; margin: 0; border-radius: var(--radius-card); background: var(--surface); box-shadow: var(--shadow-card); display: grid; place-items: center; color: var(--ink-muted); }
   .b-pimg .b-qr { position: absolute; top: 12px; right: 12px; width: 40px; height: 40px; border-radius: 4px; background: repeating-conic-gradient(var(--ink) 0 25%, var(--ground) 0 50%) 0 0 / 10px 10px; }
   .b-pimg img { width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius-card); }
+  .b-pimg:has(img) { display: block; aspect-ratio: auto; }
+  .b-pimg img { height: auto; display: block; }
+  .b-pimg .b-box { position: absolute; border: 2px solid var(--terracotta); border-radius: 2px; pointer-events: none; }
   .b-empty { display: grid; justify-items: start; gap: var(--space-2); padding: var(--space-4); border-radius: var(--radius-card); background: var(--surface); }
 
   /* ---------- Form, KeyValue ---------- */
@@ -207,7 +210,7 @@
   .b-kcard [data-status] { grid-column: 2; justify-self: start; }
   .b-lane-empty { padding: var(--space-3) var(--space-2); color: var(--ink-muted); font-size: var(--text-label); }
   .b-nchips { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
-  .b-nchip { display: inline-flex; align-items: center; gap: var(--space-1); min-height: var(--tap); padding: 0 var(--space-2); border: 0; border-radius: var(--radius-pill); background: var(--kind-child-bg); color: var(--kind-child); font-size: var(--text-label); font-weight: 600; cursor: pointer; }
+  .b-nchip { display: inline-flex; align-items: center; gap: var(--space-1); min-height: var(--tap); padding: 0 var(--space-2); border: 0; border-radius: var(--radius-pill); background: var(--cb, var(--kind-child-bg)); color: var(--c, var(--kind-child)); font-size: var(--text-label); font-weight: 600; cursor: pointer; }
   .b-nchip .b-no { font-weight: 400; color: var(--ink-muted); }
   .b-peek { display: grid; gap: var(--space-3); padding: var(--space-3); border-radius: var(--radius-card); background: var(--panel); box-shadow: var(--shadow-card), inset 0 3px 0 var(--kind-child); }
   .b-peek-h { display: flex; align-items: center; gap: var(--space-2); }

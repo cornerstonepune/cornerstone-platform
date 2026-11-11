@@ -785,6 +785,18 @@
         {
           "label": "peek: Open the child",
           "says": "the one way from a list to the child's own page"
+        },
+        {
+          "label": "Picture",
+          "says": "the class picture; the three views of a class are tabs of this screen (UI-3e, carrying /growth and /growth/class/[section])"
+        },
+        {
+          "label": "By topic",
+          "says": "topics as rows: who is secure, practising or needs help; a topic opens its skills, a skill its children"
+        },
+        {
+          "label": "Matrix",
+          "says": "each child against each topic; a topic opens its skills"
         }
       ]
     },
@@ -1129,6 +1141,38 @@
         {
           "label": "bank: topic · skill · level · kind · question",
           "says": "each choice narrows the next; the chosen question is seen before Add"
+        },
+        {
+          "label": "Change it for every child",
+          "says": "under 'Is the right answer wrong?'; code refuses a key the sum contradicts and says why; otherwise every child's answer to the question is marked again"
+        },
+        {
+          "label": "Name the mistake (the likeliest, none of these, another)",
+          "says": "for a wrong answer no named mistake explains; kept against the reading and reaches the evidence at sign-off"
+        },
+        {
+          "label": "This page is this child's / Not this child's",
+          "says": "where the same photograph is on two copies; saving what the child wrote waits for this"
+        },
+        {
+          "label": "Next answer to judge",
+          "says": "the next answer for a person, in the order they sit on the page"
+        },
+        {
+          "label": "Previous paper / Next paper (this child's)",
+          "says": "the child's other papers, oldest first, each on its own paper screen"
+        },
+        {
+          "label": "a skill's answer chip",
+          "says": "what this paper says by skill; each answer one tap away"
+        },
+        {
+          "label": "Right / Wrong / Blank (judge)",
+          "says": "for the few answers code cannot mark; only a person can say which"
+        },
+        {
+          "label": "the right answer, for every child",
+          "says": "inside the fold 'Is the right answer wrong?'"
         }
       ]
     },

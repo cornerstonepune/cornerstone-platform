@@ -2072,6 +2072,24 @@
           "to": "child",
           "note": "the one way from a list to the child's own page",
           "when": "peek"
+        },
+        {
+          "t": "tab",
+          "label": "Picture",
+          "note": "the class picture; the three views of a class are tabs of this screen (UI-3e, carrying /growth and /growth/class/[section])",
+          "text": "Picture"
+        },
+        {
+          "t": "tab",
+          "label": "By topic",
+          "note": "topics as rows: who is secure, practising or needs help; a topic opens its skills, a skill its children",
+          "text": "By topic"
+        },
+        {
+          "t": "tab",
+          "label": "Matrix",
+          "note": "each child against each topic; a topic opens its skills",
+          "text": "Matrix"
         }
       ],
       "rail": [
@@ -2831,7 +2849,7 @@
           "t": "row",
           "label": "each answer row",
           "effect": "the page scrolls to that answer and outlines it",
-          "data": "data-answer"
+          "data": "data-answer-open"
         },
         {
           "t": "field",
@@ -2859,7 +2877,7 @@
           "t": "button",
           "label": "Blank (the child wrote nothing)",
           "effect": "the answer is marked blank, never wrong",
-          "text": "Blank",
+          "text": "Blank (the child wrote nothing)",
           "drive": {
             "fixture": "answer-to-judge",
             "click": "Blank",
@@ -2926,6 +2944,70 @@
           "text": "Topic",
           "data": "data-filter",
           "pending": "needs a home paper the engine made for a child (a library worksheet cannot be edited); proved against real engine-made papers in u76-edit-a-paper"
+        },
+        {
+          "t": "button",
+          "label": "Change it for every child",
+          "note": "under 'Is the right answer wrong?'; code refuses a key the sum contradicts and says why; otherwise every child's answer to the question is marked again",
+          "text": "Change it for every child",
+          "data": "data-change-key",
+          "pending": "proved in u77-paper-tools and u78-whose-paper against papers whose reads carry the doubt the control answers; the shared inventory fixture has none"
+        },
+        {
+          "t": "button",
+          "label": "Name the mistake (the likeliest, none of these, another)",
+          "note": "for a wrong answer no named mistake explains; kept against the reading and reaches the evidence at sign-off",
+          "text": "None of these",
+          "data": "data-name-mistake",
+          "pending": "proved in u77-paper-tools and u78-whose-paper against papers whose reads carry the doubt the control answers; the shared inventory fixture has none"
+        },
+        {
+          "t": "button",
+          "label": "This page is this child's / Not this child's",
+          "note": "where the same photograph is on two copies; saving what the child wrote waits for this",
+          "text": "This page is this child",
+          "data": "data-choose-page",
+          "pending": "proved in u77-paper-tools and u78-whose-paper against papers whose reads carry the doubt the control answers; the shared inventory fixture has none"
+        },
+        {
+          "t": "link",
+          "label": "Next answer to judge",
+          "note": "the next answer for a person, in the order they sit on the page",
+          "text": "Next answer to judge",
+          "data": "data-next-answer",
+          "pending": "proved in u77-paper-tools and u78-whose-paper against papers whose reads carry the doubt the control answers; the shared inventory fixture has none"
+        },
+        {
+          "t": "link",
+          "label": "Previous paper / Next paper (this child's)",
+          "note": "the child's other papers, oldest first, each on its own paper screen",
+          "text": "Previous paper",
+          "data": "data-prev-paper",
+          "pending": "proved in u77-paper-tools and u78-whose-paper against papers whose reads carry the doubt the control answers; the shared inventory fixture has none"
+        },
+        {
+          "t": "link",
+          "label": "a skill's answer chip",
+          "note": "what this paper says by skill; each answer one tap away",
+          "text": "For you to judge",
+          "data": "data-lane-answer",
+          "pending": "proved in u77-paper-tools and u78-whose-paper against papers whose reads carry the doubt the control answers; the shared inventory fixture has none"
+        },
+        {
+          "t": "button",
+          "label": "Right / Wrong / Blank (judge)",
+          "note": "for the few answers code cannot mark; only a person can say which",
+          "text": "Right",
+          "data": "data-judge",
+          "pending": "proved in u77-paper-tools and u78-whose-paper against papers whose reads carry the doubt the control answers; the shared inventory fixture has none"
+        },
+        {
+          "t": "field",
+          "label": "the right answer, for every child",
+          "note": "inside the fold 'Is the right answer wrong?'",
+          "text": "The right answer is",
+          "data": "data-change-key-field",
+          "pending": "proved in u77-paper-tools and u78-whose-paper against papers whose reads carry the doubt the control answers; the shared inventory fixture has none"
         }
       ],
       "rail": [

@@ -50,6 +50,8 @@ export type Row = {
   lastSeen: string | null;
   /** Notes waiting on the child; null where it is not known (the engine did not answer for the class). */
   waiting: number | null;
+  /** The skill the child most needs help on, by name only (no mistake, no count), or none. */
+  helpOn: string | null;
   strip: Day[];
 };
 
@@ -108,7 +110,8 @@ export function groupRows(rows: readonly Row[], by: Group, today: string, days: 
 export const lastSeenWords = (iso: string | null, today: string) => {
   if (iso === null) return "not yet";
   const n = daysSince(iso, today);
-  return n <= 0 ? "today" : n === 1 ? "yesterday" : n < 7 ? `${n} days ago` : dateWords(iso);
+  // the weekday inside the last week (the wireframe says "Mon"), the date beyond it
+  return n <= 0 ? "today" : n < 7 ? WEEKDAY[new Date(`${iso}T12:00:00Z`).getUTCDay()].slice(0, 3) : dateWords(iso);
 };
 
 /** The initials of a name, for the disc: first letters of the first two words. */
@@ -126,6 +129,23 @@ export function clustersOf(places: readonly Place[]): Cluster[] {
     { key: "working", words: "Practising here", ids: pick((p) => p.look === PRACTISING) },
     { key: "unseen", words: "Not seen on this skill yet", ids: pick((p) => p.look === null) },
     { key: "attention", words: "Not seen for two weeks or more", ids: pick((p) => p.attention) },
+  ];
+}
+
+/** One child's place on the chosen skill, for the class picture's clusters (the wireframe's four). `seen` is the named days (or events)
+ *  behind the child's state on the skill; `relatedPractising` is practising on a skill a person confirmed as linked to it. */
+export type PicturePlace = { id: string; look: Look | null; readyNext: boolean; seen: number | null; relatedPractising: boolean };
+
+/** The class picture's clusters (docs/frontend/wireframes/picture.html), worked out here from the graph's rows and never by a model; a
+ *  child may be in several. "Close to secure" needs the school's own number of times seen (`closeSeen`, the setting
+ *  `children.close_to_secure_seen`); without it that cluster is not drawn, since no number is assumed here. */
+export function pictureClusters(places: readonly PicturePlace[], closeSeen: number | null): Cluster[] {
+  const pick = (f: (p: PicturePlace) => boolean) => places.filter(f).map((p) => p.id);
+  return [
+    { key: "ready", words: "Secure here, ready for the next skill", ids: pick((p) => p.look === SECURE && p.readyNext) },
+    ...(closeSeen === null ? [] : [{ key: "close", words: "Practising, close to secure", ids: pick((p) => p.look === PRACTISING && (p.seen ?? 0) >= closeSeen) }]),
+    { key: "once", words: "Emerging, seen only once", ids: pick((p) => p.look === EMERGING && p.seen === 1) },
+    { key: "related", words: "Not seen here, practising a related skill", ids: pick((p) => p.look === null && p.relatedPractising) },
   ];
 }
 
