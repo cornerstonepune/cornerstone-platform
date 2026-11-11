@@ -4,6 +4,8 @@ import { staffList, type Staff } from "./queries";
 // Who teaches which class, read for the Staff and School pages (goals/uxn2-staff-and-school.yaml). A person's password
 // hash comes with the list (`staffList`) and never leaves the server: only the name, email, role and classes are read here.
 export type Person = {
+  /** The staff id: the name opens that person on Staff and classes (`/setup/staff?person=`). */
+  id?: string;
   email: string;
   name: string;
   role: string;
@@ -14,6 +16,7 @@ export type Person = {
 
 export async function people(): Promise<Person[]> {
   return (await staffList()).map((s) => ({
+    id: s.id,
     email: s.email,
     name: s.name,
     role: s.role,

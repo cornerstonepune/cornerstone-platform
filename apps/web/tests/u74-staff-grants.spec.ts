@@ -155,10 +155,13 @@ test("7. no name or email is in the address, before or after a grant is given or
   for (const bad of [TWO.name, TWO.email, "grants person", "@"]) expect(url).not.toContain(bad.toLowerCase());
 });
 
-test("8. the old Staff page only reads: no form, no Save, no Add, and it says where to change", async ({ page }) => {
+test("8. the old Staff page only reads: no form, no Save, no Add, a name opens the person on Staff and classes, and it says where to change", async ({ page }) => {
   await page.goto("/staff?role=educator&q=grants%20person", { waitUntil: "networkidle" });
   await expect(page.locator("[data-filterbar]")).toBeVisible();
-  await expect(page.getByRole("table", { name: "Staff" }).locator(`tr[data-person="${ONE.email}"]`)).toBeVisible();
+  const row = page.getByRole("table", { name: "Staff" }).locator(`tr[data-person="${ONE.email}"]`);
+  await expect(row).toBeVisible();
+  // a name opens that person where the change is made
+  await expect(row.getByRole("link", { name: "Grants Person One" })).toHaveAttribute("href", /^\/setup\/staff\?person=[0-9a-f-]{36}/);
   const main = page.locator("main");
   await expect(main.locator("form:not([data-filterbar] form)").filter({ hasNot: page.locator("[type=search]") })).toHaveCount(0);
   await expect(main.getByRole("button", { name: /^(Save|Add a member)/ })).toHaveCount(0);

@@ -1,4 +1,5 @@
 import { DataTable } from "@/components/data-table";
+import Link from "@/components/link";
 import type { Person } from "@/lib/queries-staff";
 import type { Column } from "@/lib/ux-rules";
 import type { Subject as SubjectLine } from "@/lib/viewing";
@@ -23,7 +24,7 @@ export function StaffTable({
       value: (p) => p.name,
       cell: (p) => (
         <>
-          <div>{p.name}</div>
+          <div>{p.id ? <Link href={`/setup/staff?person=${p.id}#grants`}>{p.name}</Link> : p.name}</div>
           <div className="text-[12px] text-basalt/60">{p.email}</div>
         </>
       ),
