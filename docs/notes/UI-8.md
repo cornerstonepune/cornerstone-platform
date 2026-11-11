@@ -18,7 +18,7 @@ Built: `/children/reports` (FilterBar class and state; DataTable child · class 
 | button: Preview the parent's copy | no PDF route of a parent's copy; its 'educator'/level-words/lockup tests (Done when 3, 4, 7 of the scope) come with it |
 | link: rail: the child | `child` screen not built, so not drawn (never a dead link) |
 
-## Retiring /growth/reports (draft list, 11 Nov 2026; for after Batch 1, which carries #601)
+## Retiring /growth/reports (draft list, 11 Nov 2026; Batch 1 with #601 has merged, so the lines, two approvals and Send are on the new screen)
 
 Owner: UI-8. Nothing here is built. The old pages stay live until every row of "Missing" is carried across or decided away, and each old spec moves with equal assertions, never dropped or loosened.
 
