@@ -15,6 +15,6 @@ Main 7cbe096, run 43062444569: the failures below were read in its logs before a
 ## Handoff
 - Live risk, not fixed here (product call): with `voice.screens_enabled` off, `/growth` (Class results) now lands on "Children are shown once the school has switched the educator screens on".
 - `apps/web/guide/**` is read only by `test_guide.py`; its deletion is planned in `UI-12.md` §3 with backend sign-off.
-- Found, outside #689's list, not changed: `u70-inventory` `staff · coordinator · 1440` fails between 18:30 and 24:00 UTC. The app ends a grant on
-  the school's day; `CHECKS["grant-ended"]` (`tests/inventory-fixtures.ts`) compares it with the database's UTC `current_date`. Seen locally
-  at 19:18 UTC: `valid_to` 2026-11-12, `current_date` 2026-11-11. Main's full run in that window will be red on it.
+- `u70-inventory` `staff · coordinator · 1440` (taken in at the orchestrator's request): failed from 18:30 to 24:00 UTC. The app ends a grant on the
+  school's day, and `CHECKS["grant-ended"]` and the grant fixture compared it with the database's UTC `current_date` (seen at 19:18 UTC: `valid_to` 2026-11-12,
+  `current_date` 2026-11-11). Both now read the school's day from `school.time_zone` through `dayIn` (`lib/school-clock.ts`). Passed at 19:21 UTC.
