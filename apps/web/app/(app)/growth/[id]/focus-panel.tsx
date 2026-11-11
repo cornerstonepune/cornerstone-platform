@@ -8,6 +8,8 @@
 import Link from "@/components/link";
 import { Panel, Pill } from "@/components/parts";
 import { sql } from "@/lib/db";
+import { requireStaff } from "@/lib/auth";
+import { paperScreenOf } from "@/lib/queries-assessment-extras";
 import { EngineDown, engineGet } from "@/lib/engine";
 import { schoolWeek } from "@/lib/school-clock";
 import { seeHref } from "@/lib/next-paper";
@@ -39,7 +41,9 @@ async function windowDays(): Promise<number> {
 
 export async function FocusPanel({ childId, name, staff, draw }: { childId: string; name: string; staff: Record<string, string>; draw: number }) {
   const week = await schoolWeek();
-  const [p, days] = await Promise.all([plan(childId, week, draw), windowDays()]);
+  const [p, days, me] = await Promise.all([plan(childId, week, draw), windowDays(), requireStaff()]);
+  // this week's paper opens its own screen under Assessments (the paper)
+  const approvedAt = typeof p !== "string" && p.approved ? ((await paperScreenOf({ qr: p.approved.qr }, me))?.href ?? "/children/assessments") : null;
   return (
     <Panel title={TITLE} label={TITLE} aside={typeof p === "string" ? undefined : `${p.n} questions`}>
       {typeof p === "string" ? null : p.approved ? (
@@ -48,7 +52,7 @@ export async function FocusPanel({ childId, name, staff, draw }: { childId: stri
             {p.approved.approved_by
               ? `Approved by ${staff[p.approved.approved_by] ?? p.approved.approved_by}${p.approved.approved_at ? ` on ${fmtDate(p.approved.approved_at)}` : ""}`
               : "Changed and waiting for approval"}
-            : this week&rsquo;s home assessment, <Link href={`/papers/review/${p.approved.qr}`}>{p.approved.qr}</Link>. Review,
+            : this week&rsquo;s home assessment, <Link href={approvedAt ?? "/children/assessments"}>{p.approved.qr}</Link>. Review,
             change and print it from its page, or make a new one below.
           </p>
           {p.approved.replaced.length ? (

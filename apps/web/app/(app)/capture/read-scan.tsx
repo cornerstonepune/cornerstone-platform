@@ -8,7 +8,7 @@ import { UploadScans } from "./upload-scans";
 // it has answered, so the notice says it has started; the papers appear above as they are read. What the engine would
 // not take, in its own words. Under it, the last files read, what each held and came to, and what each lacks: a page
 // with no code, a page not in the file, a page in it twice, a copy not read (goals/l11-a-scan-is-read-whole.yaml).
-export function ReadScan({ from, read, why, pages, scans = [] }: { from: "/papers" | "/capture"; read?: string; why?: string; pages?: string; scans?: Scan[] }) {
+export function ReadScan({ from, read, why, pages, scans = [] }: { from: "/capture"; read?: string; why?: string; pages?: string; scans?: Scan[] }) {
   const said = {
     started: `Reading ${Number(pages) || ""} pages. The papers appear here as they are read — a minute or two.`,
     refused: `The engine would not take that: ${why ?? ""}`,

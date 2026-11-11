@@ -31,8 +31,8 @@ const SRC: Sources = {
     { code: "ENG.READ.01", name: "Read a passage", subject: "ENG", topic: "ENG.READ", topicName: "Reading", gradeWords: "Grade 1", levels: 3 },
   ],
   home: [{ section: "2B", gradeWords: "Grade 2", proposed: 12 }],
-  check: [{ paper: "p1", first: "r1", code: "CSAAAAAA", section: "2B", n: 5, subject: "NUM", topic: "MUL", topicName: "Multiplication" }],
-  signoff: [{ paper: "p2", code: "CSBBBBBB", section: "2B", n: 3, subject: "NUM", topic: "MUL", topicName: "Multiplication" }],
+  check: [{ paper: "p1", first: "r1", code: "CSAAAAAA", section: "2B", n: 5, subject: "NUM", topic: "MUL", topicName: "Multiplication", screen: "/children/assessments/k1/7" }],
+  signoff: [{ paper: "p2", code: "CSBBBBBB", section: "2B", n: 3, subject: "NUM", topic: "MUL", topicName: "Multiplication", screen: "/children/assessments/k2/9" }],
   packs: [],
   untaught: [{ topic: "DIV", topicName: "Division", subject: "NUM", sections: ["2B", "2C"] }],
   generate: [{ topic: "MUL", topicName: "Multiplication", subject: "NUM", section: "2B" }],
@@ -51,8 +51,13 @@ test.describe("what needs doing", () => {
       expect(t.action, t.id).not.toMatch(/\b(all|them|these|every)\b/i);
     }
     expect(tasks.find((t) => t.id === "skill:NUM.OPS.02")?.href).toBe("/setup/skill-sets/NUM.OPS.02");
-    expect(tasks.find((t) => t.kind === "check")?.href).toBe("/capture/check?id=r1");
-    expect(tasks.find((t) => t.kind === "signoff")?.href).toBe("/capture/p2");
+    // a paper's task opens that paper's own screen, the answer to check in view
+    expect(tasks.find((t) => t.kind === "check")?.href).toBe("/children/assessments/k1/7?answer=r1#a-r1");
+    expect(tasks.find((t) => t.kind === "signoff")?.href).toBe("/children/assessments/k2/9");
+    // a copy that is no child's own has no paper screen: its task opens the list, never an address that is gone
+    const lone = buildTasks({ ...SRC, check: [{ ...SRC.check[0], screen: null }], signoff: [{ ...SRC.signoff[0], screen: null }] }, label);
+    expect(lone.find((t) => t.kind === "check")?.href).toBe("/children/assessments?status=check");
+    expect(lone.find((t) => t.kind === "signoff")?.href).toBe("/children/assessments");
   });
   test("red first, then amber, then green; every task is one of the school's named kinds", () => {
     const ranks = tasks.map((t) => KINDS[t.kind].rank);

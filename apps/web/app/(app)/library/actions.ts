@@ -27,7 +27,6 @@ export async function flagItem(formData: FormData): Promise<void> {
   }
   revalidatePath("/library");
   revalidatePath("/setup/question-bank");
-  revalidatePath("/worksheets");
   revalidatePath("/");
   redirect(next);
 }
@@ -81,6 +80,5 @@ export async function decideProposal(formData: FormData): Promise<void> {
     next = `/library?error=${encodeURIComponent(e instanceof EngineDown ? e.message : "The engine could not be reached. Nothing was changed.")}`;
   }
   revalidatePath("/library");
-  revalidatePath("/worksheets");
   redirect(next);
 }

@@ -204,7 +204,7 @@ export default async function SkillPage({ params, searchParams }: Props) {
                       <div className="grid gap-1 bg-chalk p-2 text-[13.5px]">
                         <span className="label">For example</span>
                         <Link
-                          href={`/library/${it.item_key}`}
+                          href={`/setup/question-bank/${it.item_key}`}
                           className="text-basalt no-underline"
                         >
                           <Question it={it} />

@@ -153,7 +153,7 @@ function CaseRow({ c }: { c: TaxonomyCase }) {
 function HeldAt({ h }: { h: Held }) {
   return (
     <div className="mb-1">
-      <Link href={`/worksheets?set=${h.set}&level=${h.level}#library`}>
+      <Link href={`/setup/skill-sets/${h.set}`}>
         {h.name} · {h.level}
       </Link>{" "}
       <span className="text-basalt/62">

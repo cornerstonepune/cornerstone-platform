@@ -44,19 +44,6 @@ export async function worksheets(f: WorksheetFilter, limit: number, offset: numb
     limit ${limit} offset ${offset}`;
 }
 
-export async function worksheetCount(f: WorksheetFilter): Promise<number> {
-  const [{ n }] = await sql<{ n: number }[]>`select count(*)::int as n from sheet_template t where ${live(f)}`;
-  return n;
-}
-
-/** The library: every live worksheet of a skill, taught or not — the number the workflow map names too. */
-export async function libraryTotal(): Promise<number> {
-  const [{ n }] = await sql<{ n: number }[]>`
-    select count(*)::int as n from sheet_template t join skill s on s.tenant_id = t.tenant_id and s.code = t.skill_set_code
-    where t.source = 'library' and t.retired_at is null`;
-  return n;
-}
-
 export type LibraryWorksheet = {
   code: string;
   skill_set_code: string;

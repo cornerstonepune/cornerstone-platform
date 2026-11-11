@@ -10,6 +10,7 @@ import { sql } from "./db";
 import { ownBox } from "./own-box";
 import { seesSheet, type Who } from "./reach";
 import { paperName, setKeySql, weekSql } from "./queries-papers";
+import { paperScreensOf } from "./queries-assessment-extras";
 
 // ---- the approval queue. One row per paper a child sat, and every answer on it.
 //
@@ -19,6 +20,8 @@ import { paperName, setKeySql, weekSql } from "./queries-papers";
 
 export type PaperRow = {
   id: string;
+  /** The paper's own screen (Assessments, the paper): set by `papersToApprove`; null for a copy that is no child's own. */
+  screen?: string | null;
   child_id: string;
   first_name: string;
   section: string;
@@ -80,11 +83,14 @@ const paperRows = (where: ReturnType<typeof sql>, actor: string) => sql<PaperRow
 // Every paper that has been read. Names come through pii.read_child, which logs who asked
 // (rule 6) — a queue of papers is still a list of children.
 export async function papersToApprove(actor: string, me: Who): Promise<PaperRow[]> {
-  return paperRows(
+  const rows = await paperRows(
     sql`exists (select 1 from capture c where c.sheet_instance_id = si.id and c.superseded_by is null)
         and ${seesSheet(me, sql`si.id`)}`,
     actor,
   );
+  // each paper opens its own screen under Assessments (the paper, `/children/assessments/[key]/[roll]`)
+  const screens = await paperScreensOf(rows.map((r) => r.id), me);
+  return rows.map((r) => ({ ...r, screen: screens.get(r.id) ?? null }));
 }
 
 export async function paperHeader(id: string, actor: string): Promise<PaperRow | undefined> {

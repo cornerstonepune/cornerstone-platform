@@ -79,7 +79,7 @@ test("What needs doing carries Record a note and Notes to confirm, and a row ope
   await notes.locator(`a[data-action=note][href="/notes/${note}"]`).click();
   await expect(page).toHaveURL(new RegExp(`/notes/${note}$`));
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Confirm what the reader heard");
-  await page.goto("/today?open=record");
+  await page.goto("/setup/needs-doing?open=record");
   await expect(page.locator(`a[href="/record?class=${klass}"]`).first()).toBeVisible();
   await shoot(page, "1-today");
 });

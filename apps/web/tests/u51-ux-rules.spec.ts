@@ -177,7 +177,7 @@ test("the K2 voice-note pages keep every rule while voice notes are switched on"
   try {
     const wrong: string[] = [];
     for (const [route, url] of [
-      ["/today", "/today?open=notes"],
+      ["/setup/needs-doing", "/setup/needs-doing?open=notes"],
       ["/record", `/record?class=${k.klass}`],
       ["/notes/[id]", `/notes/${note}`],
     ]) {
@@ -189,7 +189,7 @@ test("the K2 voice-note pages keep every rule while voice notes are switched on"
     // with recording off (D-065) Record, which then offers only typing, and What needs doing keep the rules too
     await voiceSwitch(sql, true, false);
     for (const [route, url] of [
-      ["/today", "/today?open=record"],
+      ["/setup/needs-doing", "/setup/needs-doing?open=record"],
       ["/record", `/record?class=${k.klass}`],
     ]) {
       await open(page, url);

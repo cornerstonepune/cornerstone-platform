@@ -18,7 +18,7 @@ export async function readScan(formData: FormData): Promise<void> {
   const me = await deciding("papers");
   // back to the page it was read from: Papers, or the scans and the reader's accuracy (goals/u9-papers.yaml)
   const from = String(formData.get("from") ?? "");
-  const page = from === "/papers" || from === "/children/assessments" ? from : "/capture";
+  const page = from === "/children/assessments" ? from : "/capture";
   const url = String(formData.get("url") ?? "")
     .trim()
     .slice(0, 400);
@@ -46,7 +46,7 @@ export async function readScan(formData: FormData): Promise<void> {
 export async function givePage(formData: FormData): Promise<void> {
   const me = await deciding("papers");
   const from = String(formData.get("from") ?? "");
-  const page = from === "/papers" || from === "/children/assessments" ? from : "/capture";
+  const page = from === "/children/assessments" ? from : "/capture";
   const run = String(formData.get("run") ?? "");
   const child = String(formData.get("child") ?? "");
   const n = Number(formData.get("page"));
@@ -74,7 +74,7 @@ export async function givePage(formData: FormData): Promise<void> {
 export async function readAgain(formData: FormData): Promise<void> {
   const me = await deciding("papers");
   const from = String(formData.get("from") ?? "");
-  const page = from === "/papers" || from === "/children/assessments" ? from : "/capture";
+  const page = from === "/children/assessments" ? from : "/capture";
   const run = String(formData.get("run") ?? "");
   if (!UUID.test(run)) redirect(`${page}#read-scan`);
   await mustSee(me, "papers", [{ run }]);

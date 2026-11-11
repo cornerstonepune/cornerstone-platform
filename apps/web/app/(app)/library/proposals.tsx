@@ -62,7 +62,7 @@ export async function Proposals() {
               {rows.map((p) => (
                 <tr key={p.id}>
                   <td>
-                    <Link href={`/library/${p.subject}`}>{p.subject}</Link>
+                    <Link href={`/setup/question-bank/${p.subject}`}>{p.subject}</Link>
                   </td>
                   <td className="num">{p.evidence.difficulty}</td>
                   <td className="num">

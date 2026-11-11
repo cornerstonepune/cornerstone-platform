@@ -83,7 +83,7 @@ export default async function MakePapers({ searchParams }: Props) {
         <h2 className="label mb-2">Class papers · {packs.length} waiting for you</h2>
         {packs.length ? <PacksTable rows={packs} page={Math.max(1, Math.floor(Number(q.ppage)) || 1)} pageHref={(n) => `/make?${new URLSearchParams({ ...Object.fromEntries(Object.entries(f).filter(([, v]) => v)), ppage: String(n) })}`} /> : <p className="note">Nothing waiting.</p>}
         <p className="mt-3 text-[13px]">
-          <Link href="/worksheets">Every class&rsquo;s papers, week by week →</Link>
+          <Link href="/children/assessments">Every class&rsquo;s papers, week by week →</Link>
         </p>
       </section>
     </Screen>

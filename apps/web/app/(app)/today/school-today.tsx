@@ -28,9 +28,11 @@ const COLUMNS: Column<Wait>[] = [
 
 export async function SchoolToday({ me }: { me: Session }) {
   const [today, full] = await Promise.all([schoolToday(), schoolCounts(me)]);
-  const notes = full ? null : await schoolNotes(me);
-  const s: School | null = full;
-  const left = notes ? notes.rows.filter((r) => r.state === "left_unconfirmed").length : 0;
+  // the counts, else the late notes alone (the counts' route refused or not deployed), else in words why nothing could be read: never "nothing waits" when nothing is known
+  const notes = full.ok ? null : await schoolNotes(me);
+  const s: School | null = full.ok ? full.value : null;
+  const unread = !s && notes && !notes.ok ? (full.ok || !full.down ? notes : full) : null;
+  const left = notes?.ok ? notes.value.rows.filter((r) => r.state === "left_unconfirmed").length : 0;
   const rows: Wait[] = s ? waiting(s) : left ? [{ key: "late", go: "Open the notes", state: "late", what: "Notes left unconfirmed", n: left, many: many(left, "note") }] : [];
   const t = s ? counts(s) : null;
   const strip: Attention[] = t
@@ -39,7 +41,9 @@ export async function SchoolToday({ me }: { me: Session }) {
         { state: "doSoon", n: t.soon, sentence: "Drafts to approve and materials lines with no quantity", href: t.soon ? open(s!.drafts.count ? DOORS.fortnight(s!.drafts.rows[0].fortnight) : DOORS.materials()) : null },
         { state: "done", n: t.done, sentence: `Lessons done of ${t.planned} planned last week`, href: open(DOORS.staff()) },
       ]
-    : [{ state: "doNow", n: left, sentence: "Notes left unconfirmed across the classes", href: left ? open(DOORS.notes()) : null }];
+    : unread
+      ? []
+      : [{ state: "doNow", n: left, sentence: "Notes left unconfirmed across the classes", href: left ? open(DOORS.notes()) : null }];
   const base = open(DOORS.timetable());
   const ids = s ? await classIds() : {};
   const happening = s ? await nextWeekEvents(s.next_week.from) : [];
@@ -75,10 +79,10 @@ export async function SchoolToday({ me }: { me: Session }) {
     { screen: "timetable", label: "Timetable", icon: "week" as const, fallback: "/timetable" },
   ].filter((e) => e.screen !== "fortnight" || s?.drafts.rows[0]);
   return (
-    <Screen stage={`${dayWords(today)} · every class`} title="Today, the school" purpose="What waits on you, each with its own button. Then the week ahead." action={<p className="font-medium">{rows.length ? `${rows.length === 1 ? "One kind of work waits" : `${rows.length} kinds of work wait`} on you.` : "Nothing waits on you."}</p>} next={{ href: open(DOORS.timetable()) ?? "/timetable", label: "Timetable" }} rail={<div className="[&_[data-rail]_ul]:gap-2"><Rail edges={edges} /></div>}>
-      <AttentionStrip tiles={strip} />
+    <Screen stage={`${dayWords(today)} · every class`} title="Today, the school" purpose="What waits on you, each with its own button. Then the week ahead." action={<p className="font-medium">{unread ? "What waits on you could not be read just now." : rows.length ? `${rows.length === 1 ? "One kind of work waits" : `${rows.length} kinds of work wait`} on you.` : "Nothing waits on you."}</p>} next={{ href: open(DOORS.timetable()) ?? "/timetable", label: "Timetable" }} rail={<div className="[&_[data-rail]_ul]:gap-2"><Rail edges={edges} /></div>}>
+      {strip.length ? <AttentionStrip tiles={strip} /> : null}
       <div className="my-4">
-        {rows.length ? <DataTable label="What waits on you" columns={COLUMNS} rows={rows} rowKey={(r) => r.key} more={{ page: 1, href: () => "/today" }} /> : <EmptyState>Nothing waits on you.</EmptyState>}
+        {unread ? <EmptyState>{unread.down ? `What waits on you could not be read just now. ${unread.words}` : unread.words}</EmptyState> : rows.length ? <DataTable label="What waits on you" columns={COLUMNS} rows={rows} rowKey={(r) => r.key} more={{ page: 1, href: () => "/today" }} /> : <EmptyState>Nothing waits on you.</EmptyState>}
       </div>
       {grid ? (
         <section className="my-4" aria-label="Last week">

@@ -183,7 +183,7 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
               <button type="submit" data-signoff="" className={`btn ${main ? "" : "secondary"}`} data-ux={main}>Sign it off</button>
             </form>
           );
-        if (grp === "results") return <Link href={p.child_id ? `/growth/${p.child_id}` : "/growth"} className="btn secondary" data-child-link="">The child</Link>;
+        if (grp === "results") return <Link href={p.child_id ? `/growth/${p.child_id}` : "/children"} className="btn secondary" data-child-link="">The child</Link>;
         if (grp === "made")
           return kind === "focus" && p.roll_no ? (
             <Link href={paperHref(key, p.roll_no)} className="btn secondary" data-edit-paper="">Edit this paper</Link>
@@ -210,7 +210,7 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
       stage={`${a.band ? g.name(a.band) : "Assessment"} · ${live.length} papers`}
       title={named.name}
       purpose="Where this assessment stands, and each child's copy. A copy is its own row with its own action; there is no button over all of them."
-      next={{ href: "/growth", label: "Class results" }}
+      next={{ href: "/children", label: "Children" }}
       // with nothing of its own to press, the one main action is the way back to the list
       action={mainId ? undefined : <Link href="/children/assessments" className="btn">All assessments</Link>}
       rail={

@@ -69,7 +69,7 @@ export default async function MarkingPage({ searchParams }: Props) {
           </Link>
         )
       }
-      next={{ href: "/growth", label: "Class results" }}
+      next={{ href: "/children", label: "Children" }}
     >
         {/* the upload box at the top (goals/s2-the-assessment-card.yaml) */}
         <div className="mb-[18px] grid min-w-0">

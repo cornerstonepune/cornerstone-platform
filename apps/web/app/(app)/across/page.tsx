@@ -8,6 +8,7 @@ import { StatusChip } from "@/components/status-chip";
 import { STAGE_STATE } from "@/lib/assessment-ui";
 import { requireStaff } from "@/lib/auth";
 import { deadline } from "@/lib/deadline";
+import { sql } from "@/lib/db";
 import { classWords } from "@/lib/needs-you";
 import { grades } from "@/lib/queries";
 import { across, stageOrder } from "@/lib/queries-across";
@@ -20,7 +21,9 @@ import { dateWords, weekWords } from "@/lib/week";
 // elsewhere, since it is the page across them.
 export default async function AcrossPage() {
   const me = await requireStaff();
-  const [a, g] = await deadline(Promise.all([across(me.email, me), grades()]));
+  const [a, g, classes] = await deadline(Promise.all([across(me.email, me), grades(), sql<{ id: string; label: string }[]>`select id::text, label from school_class`]));
+  // a class's group opens its picture under Children, on the class against its topics
+  const ids: Record<string, string> = Object.fromEntries(classes.map((c) => [c.label, c.id]));
   const cls = (band: string, section: string) => classWords(g, band, section);
   return (
     <Screen
@@ -32,7 +35,7 @@ export default async function AcrossPage() {
           Check answers
         </Link>
       }
-      next={{ href: "/growth", label: "Children" }}
+      next={{ href: "/children", label: "Children" }}
     >
       <div className="grid min-w-0 gap-[18px]">
         <Panel title="Each class and subject" label="Each class and subject" aside="its newest assessment">
@@ -41,7 +44,7 @@ export default async function AcrossPage() {
               label="Each class and subject"
               rows={a.stages}
               rowKey={(s) => `${s.section}|${s.subject}`}
-              more={{ by: (s) => cls(s.band, s.section), href: (name: string) => `/growth/class/${encodeURIComponent(a.stages.find((s) => cls(s.band, s.section) === name)?.section ?? "")}` }}
+              more={{ by: (s) => cls(s.band, s.section), href: (name: string) => { const id = ids[a.stages.find((s) => cls(s.band, s.section) === name)?.section ?? ""]; return id ? `/children/${id}?view=matrix` : "/children"; } }}
               columns={[
                 { key: "subject", label: "Subject", value: (s) => s.subject, keep: true },
                 {

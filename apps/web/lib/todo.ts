@@ -50,8 +50,9 @@ export type Task = {
 export type Sources = {
   skills: (Ref & { code: string; name: string; gradeWords: string; levels: number })[];
   home: { section: string; gradeWords: string; proposed: number }[];
-  check: (Ref & { paper: string; first: string; code: string; section: string; n: number })[];
-  signoff: (Ref & { paper: string; code: string; section: string; n: number })[];
+  /** `screen`: the paper's own screen under Assessments; null for a copy that is no child's own (the list then). */
+  check: (Ref & { paper: string; first: string; code: string; section: string; n: number; screen?: string | null })[];
+  signoff: (Ref & { paper: string; code: string; section: string; n: number; screen?: string | null })[];
   packs: (Ref & { section: string; gradeWords: string; week: string; weekWords: string; kind: string; n: number })[];
   untaught: { topic: string; topicName: string; subject: string | null; sections: string[] }[];
   generate: { topic: string; topicName: string; subject: string | null; section: string }[];
@@ -87,8 +88,8 @@ export function buildTasks(src: Sources, subjectLabel: (code: string | null) => 
     });
   for (const s of src.skills) add("skill", s.code, s, [s.gradeWords, s.name], count(s.levels, "level"), `/setup/skill-sets/${s.code}`, "Read and approve", s.name);
   for (const h of src.home) add("home", h.section, none, [h.gradeWords, h.section], count(h.proposed, "child", "children"), `/make/${encodeURIComponent(h.section)}`, "Open the class", h.section, [h.section]);
-  for (const c of src.check) add("check", c.paper, c, [c.section, c.code], count(c.n, "answer"), `/capture/check?id=${c.first}`, "Check this paper", c.code, [c.section]);
-  for (const p of src.signoff) add("signoff", p.paper, p, [p.section, p.code], count(p.n, "answer"), `/capture/${p.paper}`, "Sign it off", p.section, [p.section]);
+  for (const c of src.check) add("check", c.paper, c, [c.section, c.code], count(c.n, "answer"), c.screen ? `${c.screen}?answer=${c.first}#a-${c.first}` : "/children/assessments?status=check", "Check this paper", c.code, [c.section]);
+  for (const p of src.signoff) add("signoff", p.paper, p, [p.section, p.code], count(p.n, "answer"), p.screen ?? "/children/assessments", "Sign it off", p.section, [p.section]);
   for (const p of src.packs)
     add("classpaper", `${p.section}|${p.week}|${p.kind}`, p, [p.gradeWords, p.section, KIND_WORDS[p.kind] ?? p.kind, p.weekWords], count(p.n, "paper"), `/children/assessments?class=${encodeURIComponent(p.section)}&week=${encodeURIComponent(p.week)}&kind=${p.kind}`, "Open the papers", p.section, [p.section]);
   for (const r of src.reports) add("report", r.section, none, [r.gradeWords, r.section], count(r.n, "report"), `/children/reports?class=${encodeURIComponent(r.section)}`, "Read the reports", r.section, [r.section]);
@@ -106,7 +107,7 @@ export function buildTasks(src: Sources, subjectLabel: (code: string | null) => 
     add("note", n.id, none, [where, heardAt(n.received_at, src.zone)], "1 note", `/notes/${n.id}`, n.status === "received" ? W.confirm.reading : W.confirm.button, where, where ? [where] : []);
     if (n.status === "received") out[out.length - 1].state = "reading";
   }
-  if (src.asks) add("ask", "drafted", none, [], count(src.asks, "question"), "/asks", "Open the questions", "Questions to answer");
+  if (src.asks) add("ask", "drafted", none, [], count(src.asks, "question"), "/setup/curriculum#asks", "Open the questions", "Questions to answer");
   if (src.empty) add("empty", "scans", none, [], count(src.empty, "scan"), "/capture#nothing-came-back", "Look at the scans", "Upload papers");
   return out.sort((a, b) => KINDS[a.kind].rank - KINDS[b.kind].rank || (a.subject ?? "~").localeCompare(b.subject ?? "~") || (a.topicName ?? "").localeCompare(b.topicName ?? "") || a.where.localeCompare(b.where, "en", { numeric: true }));
 }
@@ -152,10 +153,10 @@ export type Group = {
 };
 export const TODO_GROUPS: readonly Group[] = [
   // K2 first: a note is recorded after the activity and confirmed the same day (shown only while voice notes are on)
-  { key: "record", title: W.groups.record, of: ["class", "classes"], kinds: ["record"], home: "/today?open=record", titleOf: (ts) => (ts.every((t) => t.action === W.typeMarks) ? W.groups.typed : W.groups.record) },
-  { key: "notes", title: W.groups.notes, of: ["to confirm", "to confirm"], kinds: ["note"], home: "/today?open=notes" },
-  { key: "skills", title: "Skills to approve", of: ["skill", "skills"], kinds: ["skill"], home: "/skill-sets/approve" },
-  { key: "asks", title: "Questions to answer", of: ["question", "questions"], kinds: ["ask"], home: "/asks" },
+  { key: "record", title: W.groups.record, of: ["class", "classes"], kinds: ["record"], home: "/setup/needs-doing?open=record", titleOf: (ts) => (ts.every((t) => t.action === W.typeMarks) ? W.groups.typed : W.groups.record) },
+  { key: "notes", title: W.groups.notes, of: ["to confirm", "to confirm"], kinds: ["note"], home: "/notes" },
+  { key: "skills", title: "Skills to approve", of: ["skill", "skills"], kinds: ["skill"], home: "/setup/skills/approve" },
+  { key: "asks", title: "Questions to answer", of: ["question", "questions"], kinds: ["ask"], home: "/setup/curriculum#asks" },
   { key: "taught", title: "Topics to mark as taught", of: ["topic", "topics"], kinds: ["taught"], home: "/" },
   { key: "generate", title: "Assessments to make", of: ["assessment", "assessments"], kinds: ["generate"], home: "/children/assessments?make=class" },
   { key: "classpapers", title: "Class papers to approve", of: ["class paper", "class papers"], kinds: ["classpaper"], home: "/children/assessments?status=print" },

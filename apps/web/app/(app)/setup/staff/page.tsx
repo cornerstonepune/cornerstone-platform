@@ -52,7 +52,7 @@ export default async function StaffPage({ searchParams }: Props) {
       title="Staff and classes"
       purpose="Who teaches which class, and whole counts you can rely on. No score, no ranking: the school decides what they mean."
       action={<p className="m-0 text-[14px]">Open a person to see what they hold.</p>}
-      next={{ href: screenHref("classes") ?? "/school", label: "Classes and children" }}
+      next={{ href: screenHref("classes") ?? "/setup/classes", label: "Classes and children" }}
       rail={<Rail edges={[{ screen: "fortnight", label: "Fortnight", icon: "week" }, { screen: "timetable", label: "Timetable", icon: "week" }, { screen: "classes", label: "Classes and children", icon: "class" }]} />}
     >
       {q.added ? (

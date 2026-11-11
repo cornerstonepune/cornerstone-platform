@@ -173,7 +173,7 @@ export default async function LibraryPage({ searchParams }: Props) {
               </table>
             </div>
             <p className="note mt-3">
-              Each paper is drawn from one cell. <Link href="/worksheets">See a real paper with its QR code →</Link>
+              Each paper is drawn from one cell. <Link href="/children/assessments">See a real paper with its QR code →</Link>
             </p>
           </Panel>
         ) : null}
@@ -246,7 +246,7 @@ export default async function LibraryPage({ searchParams }: Props) {
                     {rows.map((it) => (
                       <tr key={it.item_key}>
                         <td className="min-w-[240px] max-w-[460px]">
-                          <Link href={`/library/${it.item_key}`} className="block text-basalt hover:text-terracotta">
+                          <Link href={`/setup/question-bank/${it.item_key}`} className="block text-basalt hover:text-terracotta">
                             <Question it={it} />
                           </Link>
                           {caption(it) ? <span className="note mt-[6px] block">{caption(it)}</span> : null}
@@ -269,7 +269,7 @@ export default async function LibraryPage({ searchParams }: Props) {
                           )}
                         </td>
                         <td className="num">
-                          <Link href={`/library/${it.item_key}`} className="whitespace-nowrap text-[12.5px]" tabIndex={-1} aria-hidden>
+                          <Link href={`/setup/question-bank/${it.item_key}`} className="whitespace-nowrap text-[12.5px]" tabIndex={-1} aria-hidden>
                             Open →
                           </Link>
                         </td>

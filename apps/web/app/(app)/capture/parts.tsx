@@ -81,8 +81,11 @@ export const groupState = (s: Standing): State => (s.waiting ? "toCheck" : s.toS
 /** What a child's papers need next (goals/ux5b-make-and-marking.yaml): the answers waiting for a person, then a paper
  *  to sign off — on the one paper that holds them, or across their papers when several do; a paper that came back with
  *  nothing read is looked at; else nothing, every paper signed off. */
+/** Where one paper opens: its own screen under Assessments, else the Assessments list (a copy that is no child's own). */
+export const paperAt = (p: PaperRow) => p.screen ?? "/children/assessments";
+
 export function nextStep(rows: PaperRow[]): { words: string; href: string } | null {
-  const at = (some: PaperRow[]) => (some.length === 1 ? `/capture/${some[0].id}` : `/capture?child=${some[0].child_id}`);
+  const at = (some: PaperRow[]) => (some.length === 1 ? paperAt(some[0]) : `/capture?child=${some[0].child_id}`);
   const waiting = rows.filter((p) => p.n_waiting > 0);
   if (waiting.length) return { words: `Check ${many(standing(waiting).waiting, "answer")} →`, href: at(waiting) };
   const sign = rows.filter((p) => p.n_results > 0 && p.n_candidate > 0);
@@ -112,7 +115,7 @@ export function PapersTable({ rows, withChild = false, label, page = 1, pageHref
           </>
         ) }]
       : []),
-    { key: "paper", label: "Paper", value: (p) => p.title ?? p.paper, cell: (p) => <Link href={`/capture/${p.id}`}>{p.title ?? p.paper}</Link> },
+    { key: "paper", label: "Paper", value: (p) => p.title ?? p.paper, cell: (p) => <Link href={paperAt(p)}>{p.title ?? p.paper}</Link> },
     { key: "sat", label: "Sat", num: true, width: "8rem", value: (p) => fmtDate(p.date), cell: (p) => <span className="fact whitespace-nowrap">{fmtDate(p.date)}</span> },
     { key: "answers", label: "Answers", num: true, width: "5.5rem", value: (p) => p.n_results },
     { key: "engine", label: "By the engine", num: true, width: "6rem", value: (p) => p.n_engine },

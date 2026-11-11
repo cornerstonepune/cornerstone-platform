@@ -8,7 +8,7 @@ import { StatusChip, type State } from "@/components/status-chip";
 import { Body, PageHeader, Panel } from "@/components/parts";
 import type { Column } from "@/lib/ux-rules";
 import type { PaperRow } from "@/lib/queries-read";
-import { PapersTable, groupState, nextStep, standing, standingColumns, type Standing } from "./parts";
+import { PapersTable, groupState, nextStep, paperAt, standing, standingColumns, type Standing } from "./parts";
 
 // as the database orders a roll (`roll_order`): by its first number, a roll with none last
 const roll = (r: string) => Number(r.match(/\d{1,9}/)?.[0] ?? Number.MAX_SAFE_INTEGER);
@@ -66,7 +66,7 @@ export function ByChild({ papers, section, page, pageHref }: { papers: PaperRow[
       label: "Paper",
       // several papers are opened from the child's name, which lists them
       value: (k) => (k.rows.length === 1 ? (k.first.title ?? k.first.paper) : `${k.rows.length} papers`),
-      cell: (k) => (k.rows.length === 1 ? <Link href={`/capture/${k.first.id}`}>{k.first.title ?? k.first.paper}</Link> : `${k.rows.length} papers`),
+      cell: (k) => (k.rows.length === 1 ? <Link href={paperAt(k.first)}>{k.first.title ?? k.first.paper}</Link> : `${k.rows.length} papers`),
     },
     { key: "waiting", label: "Waiting", num: true, width: "6rem", value: (k) => standing(k.rows).waiting },
     { key: "state", label: "Status", status: true, width: "11rem", value: (k) => STEP_STATE(k.rows).state, cell: (k) => <StatusChip {...STEP_STATE(k.rows)} /> },

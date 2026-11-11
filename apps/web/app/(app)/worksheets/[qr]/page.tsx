@@ -108,7 +108,7 @@ export default async function PaperPage({ params }: Props) {
                     <tr key={it.item_key}>
                       <td className="num">{i + 1}</td>
                       <td className="min-w-[200px] max-w-[420px]">
-                        <Link href={`/library/${it.item_key}`} className="block text-basalt hover:text-terracotta">
+                        <Link href={`/setup/question-bank/${it.item_key}`} className="block text-basalt hover:text-terracotta">
                           <Question it={it} />
                         </Link>
                       </td>
@@ -117,7 +117,7 @@ export default async function PaperPage({ params }: Props) {
                         <Answers it={it} />
                       </td>
                       <td className="min-w-[200px] max-w-[340px]">
-                        <Mistakes it={it} book={book} more={`/library/${it.item_key}`} />
+                        <Mistakes it={it} book={book} more={`/setup/question-bank/${it.item_key}`} />
                       </td>
                     </tr>
                   ))}
