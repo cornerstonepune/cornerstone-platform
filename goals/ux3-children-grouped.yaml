@@ -17,11 +17,11 @@ says:
   - words: "It should be teacher-specific and all of those things."
     proved_by: "apps/web/tests/u35-children-grouped.spec.ts::an educator sees their own class as a table of its children, and no other"
   - words: "All these things should be expandable and collapsible."
-    proved_by: "apps/web/tests/u35-children-grouped.spec.ts::the coordinator sees every class in one table, says what waits in each, and opens it with a click"
+    proved_by: "apps/web/tests/u35-children-grouped.spec.ts::the coordinator sees every class in one table and can narrow it to one"
   - words: "They should have the right set of columns which are important."
-    proved_by: "apps/web/tests/u35-children-grouped.spec.ts::a class's table has the columns that matter, children who need help first"
+    proved_by: "apps/web/tests/u72-children.spec.ts::3 · the bar's segments are secure, practising and not seen, sum to the skill count, and none is red"
   - words: "Most of the pages just have a long list for no reason."
-    proved_by: "apps/web/tests/u35-children-grouped.spec.ts::the colour key is one line, and at 400 px nothing scrolls sideways"
+    proved_by: "apps/web/tests/u35-children-grouped.spec.ts::at 400 px nothing scrolls sideways and the child is on screen"
 manual: []
 scenarios: []
 criteria:

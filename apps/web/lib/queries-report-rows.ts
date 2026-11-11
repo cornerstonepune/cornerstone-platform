@@ -1,6 +1,7 @@
 import { sql } from "./db";
 import { inScope, type Scope } from "./scope";
 import { reportState, reportWords, type ReportState } from "./queries-reports";
+import { lookOfColour, type Look } from "./looks";
 
 // The Reports screen's rows (UI-8): every active child in the viewer's classes, in class and Sr. No. order, with the state of their
 // newest parent report, whether an educator has approved it, and the consent on file. Order is by class and roll only: nothing here
@@ -18,11 +19,22 @@ export type ReportsRow = {
   note_id: string | null;
   lines: { drafted: number; educator: number; coordinator: number };
   sent_at: string | null;
+  /** The words of each line, in order (read-only here; they are written on the line cards). */
+  line_words: string[];
   /** null when the viewer may not read consent (the school's access rule: the coordinator alone sees it), so no word is guessed. */
   consent: Consent | null;
   /** The report's words as the engine kept them, with [child] not yet filled in; null when none is written. */
   words: { summary: string; can_do: string[]; working_on: string[]; at_home: string[]; next_at_school: string | null } | null;
 };
+
+// Where a report stands by its lines (CP-19): drafted until every line has an educator's approval, educator approved until every line has
+// the coordinator's too, then ready to send, then sent. A report with no lines has no stage of its own ("none"): its old whole-report
+// state (`STATE_OF`) is what it shows. Whole counts of lines and reports, never of people.
+export type Stage = "drafted" | "educator" | "coordinator" | "sent" | "none";
+export const STAGES = ["drafted", "educator", "coordinator", "sent", "none"] as const satisfies readonly Stage[];
+export const STAGE_WORDS: Record<Stage, string> = { drafted: "Drafted", educator: "Educator approved", coordinator: "Coordinator approved, ready to send", sent: "Sent", none: "No lines yet" };
+export const totalLines = (r: Pick<ReportsRow, "lines">) => r.lines.drafted + r.lines.educator + r.lines.coordinator;
+export const stageOf = (r: ReportsRow): Stage => (r.sent_at ? "sent" : totalLines(r) === 0 ? "none" : r.lines.drafted > 0 ? "drafted" : r.lines.educator > 0 ? "educator" : "coordinator");
 
 export const STATE_OF = (r: ReportsRow) => reportWords(r.report).short;
 export const REPORT_STATES = ["out of date", "to approve", "to write", "approved", "nothing yet"] as const;
@@ -33,6 +45,7 @@ export async function reportsRows(actor: string, scope: Scope): Promise<ReportsR
            (select case when (select public.my_reach('consent')) = 'none' then null else coalesce((select cn.decision from consent_now cn where cn.child_id = c.id), 'none') end) as consent,
            (select n.body from parent_note n where n.child_id = c.id and n.body like '{"facts"%' order by n.created_at desc limit 1) as draft,
            nn.id::text as note_id, nn.sent_at::text as sent_at,
+           coalesce((select jsonb_agg(l ->> 'words') from jsonb_array_elements(coalesce(nn.lines, '[]'::jsonb)) l), '[]'::jsonb) as line_words,
            coalesce(ln.drafted, 0)::int as drafted, coalesce(ln.educator, 0)::int as educator, coalesce(ln.coordinator, 0)::int as coordinator
     from child_now c, lateral pii.read_child(c.id, ${actor}) p
     left join lateral (select n.id, n.sent_at, n.lines from parent_note n where n.child_id = c.id and n.body like '{"facts"%' order by n.created_at desc limit 1) nn on true
@@ -76,4 +89,22 @@ function wordsOf(body: string | null, name: string): ReportsRow["words"] {
 export async function seesConsent(): Promise<boolean> {
   const [r] = await sql<{ all: boolean }[]>`select public.my_reach('consent') = 'all' as all`;
   return !!r?.all;
+}
+
+/** The skill a line is about (its name) and the school's own look and words for the system's state of it, read from the rows (`child_state`), never named here. */
+export type LineFact = { name: string | null; look: Look | null; words: string | null };
+
+/** For the lines of one child opened: each piece of evidence a line cites → the skill it is about and the system's state of that skill for this
+ *  child, which the line card shows beside the educator's words, read only. A report reads the written states, never the observed ones. */
+export async function lineFacts(child: string, evidence: readonly string[]): Promise<Map<string, LineFact>> {
+  if (!evidence.length) return new Map();
+  const rows = await sql<{ id: string; name: string | null; colour: string | null; words: string | null }[]>`
+    select e.id::text as id,
+           (select rs.name from registry_skill rs where rs.tenant_id = e.tenant_id and rs.code = e.skill_code) as name,
+           (select cs.colour from child_skill_state k join child_state cs on cs.tenant_id = k.tenant_id and cs.code = k.state
+             where k.child_id = e.child_id and k.skill_code = e.skill_code and k.kind = 'written' order by k.computed_at desc limit 1) as colour,
+           (select cs.words from child_skill_state k join child_state cs on cs.tenant_id = k.tenant_id and cs.code = k.state
+             where k.child_id = e.child_id and k.skill_code = e.skill_code and k.kind = 'written' order by k.computed_at desc limit 1) as words
+    from evidence_event e where e.child_id = ${child} and e.id = any(${evidence as string[]}::uuid[])`;
+  return new Map(rows.map((r) => [r.id, { name: r.name, look: r.colour ? lookOfColour(r.colour) : null, words: r.words }]));
 }

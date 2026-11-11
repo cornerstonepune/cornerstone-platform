@@ -82,3 +82,61 @@ Left for the rest of PR 2: the children with no paper and why, spares as a row, 
 
 One change of words: the new screen names a copy by its Sr. No. only, so a test that found a row by a child's name (the old card showed
 names) finds it by Sr. No. here.
+
+## UI-4b PR 2, part 2 (branch `ui-4b-3`): a home assessment's paper before it prints, on the paper screen
+
+A not-yet-printed copy of a home assessment (`focus` kind) now has its questions on its paper screen: each drawn as it prints, Remove on each
+(asks once when it costs something: the approval, or the last question of a skill), the bank's dropdowns (topic, skill, level, kind, question,
+with the choice seen before Add), Add at a place, and "Approve this home assessment" for this copy only. The assessment screen's made rows say
+"Edit this paper". A copy is addressed by its Sr. No., so an edit (which makes the paper again with a new code) does not move the address. A
+printed one is shown read-only with the engine's own words.
+
+| Old spec | Assertion | New place |
+|---|---|---|
+| `p5-review-a-paper` 1 | remove asks once and withdraws the approval; add through the dropdowns; each edit a history row; approve this one | `u76-edit-a-paper.spec.ts` |
+| `p5-review-a-paper` 2 | a stopped kind is not offered; a printed paper is read-only and says how to change it | `u76-edit-a-paper.spec.ts` |
+
+Not in the inventory: the three paper-screen controls are `pending` there, because the shared fixture's copies are library worksheets, which the
+engine will not edit; the two specs above use papers the engine made. The bank's dropdowns write their choice under `e…` names (`etopic`, `eskill`,
+`elevel`, `ekind`, `eq`), so they never meet the paper's own address parts.
+
+Still to do in step 2: the children with no paper and why, the spares as a row, and the focus paper ("next paper for this child"), which today lands
+on the old review page (`approveNextPaper`).
+
+### PR 2, part 3: children with no paper, and spare copies
+
+The assessment screen now lists every child of a home or class assessment week who has no paper, by Sr. No., with the reason the plan kept
+("has sat every worksheet at Hard (4)") or "joined the class after this week was planned" / "not on this week's plan". A child who holds a copy
+is never listed. Spare copies (no child on them) are listed apart with their state, and are not counted among the children's papers.
+
+| Old spec | Assertion | New place |
+|---|---|---|
+| `u37-papers-grouped` 1 | children with no paper and why; spares listed with no name | `u76-no-paper-and-spares.spec.ts` |
+
+The focus paper ("next paper for this child") is made from the child's own page, which is not an assessments page and stays. After approval it
+lands on the old review address until PR 4, when that address becomes a 308 to the paper screen; the specs that read the code from that
+address (`s11-focus-paper`, `p4-preview-before-print`, `u2-children`, `p5-review-a-paper`) move with it.
+
+### PR 3 (and the wireframe gaps): the paper screen takes the old Marking tools
+
+On the assessment screen: the approval ledger (rail card: each pack, who approved it and when, and the pack still waiting), the second pack's heading
+and "Made on … for Sr. No. …", and "What it asks" saying the topic and how many children sit each level. On the paper screen: "This scan" (rail:
+sheet, whether the code read is the copy's own, when scanned, pages), the question outlined on the page picture, previous and next paper of the
+child, the answer walk ("Next answer to judge"), per-skill lanes, and for the answer picked in the table the old card's tools: the right answer
+(change it for every child), the mistake to name (shortlist, another, none), whose page it is (the same photograph on two copies holds the save back
+until a person says), judge Right/Wrong/Blank, and the correction of a signed-off answer. A question goes by its slot ("4a"), as before.
+
+| Old spec | Assertion | New place |
+|---|---|---|
+| `s26-right-answer` 1, 2 | the right answer is shown as stored; change it for every child, code refuses a key the sum contradicts | `u77-paper-tools.spec.ts` |
+| (no browser spec; engine-proved) | name the mistake: one press, kept on the answer, a row of the history log | `u77-paper-tools.spec.ts` |
+| `s44-whose-paper` 2 | the page's own proof: crop outlined, printed code, copy and page | `u78-whose-paper.spec.ts` |
+| `s44-whose-paper` 3 | a paper walked answer by answer | `u78-whose-paper.spec.ts` (the old queue's "next answer of this paper") |
+| `s44-whose-paper` 4 | the same photograph on two copies: notice, save waits, the choice is a history row | `u78-whose-paper.spec.ts` |
+| `asm2-checking`, `s4-validation-queue` (previous / next paper, lanes) | the child's papers in order; what the paper says by skill | `u78-whose-paper.spec.ts` (last test) |
+
+Gaps, said plainly: "Capture here: Photo" waits for the engine's photo route (nothing in apps/web can honestly take a photo until it exists);
+"Connected to" second lines and icons are the shared frame's (UI-7 frame plan), not these screens'; the scan's "By" (who put the file in) has no
+column on `capture`, so it is not drawn; the level's one-line description in "What it asks" has no row to read it from here. After sign-off the
+old queue (`/capture/check`) and the old Marking page (`/capture/[id]`) still stand until PR 4, which turns them into 308s to these screens; the
+focus paper keeps landing on the old review address until then.

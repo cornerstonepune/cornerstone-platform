@@ -67,3 +67,12 @@ export async function sessionsOfDay(classId: string, day: string): Promise<DaySe
     where s.school_class_id = ${classId} and d.on_date = ${day}::date and s.kind <> 'fixed'
     order by p.starts_at`;
 }
+
+/** How many of the class's children have been seen on this activity (a mark replaced by a correction counts once), and how many are on the roll. */
+export async function seenOn(classId: string, activity: string): Promise<{ seen: number; total: number }> {
+  const [r] = await sql<{ seen: number; total: number }[]>`
+    select (select count(distinct o.child_id)::int from activity_observation o
+            where o.class_id = ${classId} and o.activity_code = ${activity} and not exists (select 1 from activity_observation s where s.supersedes = o.id)) as seen,
+           (select count(*)::int from child_now where class_id = ${classId} and active) as total`;
+  return r;
+}

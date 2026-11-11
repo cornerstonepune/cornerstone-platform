@@ -1,4 +1,5 @@
 import Link from "@/components/link";
+import { Cards } from "@/components/cards";
 import { DataTable } from "@/components/data-table";
 import { EmptyState } from "@/components/empty-state";
 import { FilterBar } from "@/components/filter-bar";
@@ -137,6 +138,48 @@ export default async function Notes({ searchParams }: { searchParams: Promise<{ 
             ]}
           />
         )}
+        {all.length ? (
+          <Cards
+            cards={[
+              {
+                kind: "note",
+                title: "Notes by state",
+                body: (
+                  <ul className="grid gap-1" data-summary="state">
+                    {Object.entries(STATES).map(([k, words]) => (
+                      <li key={k}>
+                        {all.filter((n) => group(n) === k).length} {words.toLowerCase()}
+                      </li>
+                    ))}
+                  </ul>
+                ),
+              },
+              {
+                kind: "child",
+                title: "Notes by class",
+                body: (
+                  <ul className="grid gap-1" data-summary="class">
+                    {everyClass.map(([id, words]) => (
+                      <li key={id}>
+                        {words} · {all.filter((n) => n.class_id === id).length} {all.filter((n) => n.class_id === id).length === 1 ? "note" : "notes"}
+                      </li>
+                    ))}
+                  </ul>
+                ),
+              },
+              {
+                kind: "activity",
+                title: "How they came in",
+                body: (
+                  <ul className="grid gap-1" data-summary="how">
+                    <li>By voice · {all.filter((n) => !n.typed).length} {all.filter((n) => !n.typed).length === 1 ? "note" : "notes"}</li>
+                    <li>By form · {all.filter((n) => n.typed).length} {all.filter((n) => n.typed).length === 1 ? "note" : "notes"}</li>
+                  </ul>
+                ),
+              },
+            ]}
+          />
+        ) : null}
       </Screen>
     </PeekHost>
   );
