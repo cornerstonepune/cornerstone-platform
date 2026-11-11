@@ -70,7 +70,7 @@ test("5. GROUPS are exactly Today, Timetable, Children, Setup, and every route b
   expect(doorOf("/timetable/rules")?.key).toBe("timetable");
   // the pages outside the bar: help, feedback, the password, the refusal page
   const outside = routes().filter((r) => !doorOf(r.replace(/\[[^\]]+\]/g, "x")));
-  expect(outside.sort()).toEqual(["/account/password", "/feedback", "/guide", "/guide/[slug]", "/guide/workflows", "/refused"].sort());
+  expect(outside.sort()).toEqual(["/feedback", "/guide", "/refused"].sort());
 });
 
 test("5. each route is reached by clicking from the bar in at most three clicks", async ({ playwright }) => {

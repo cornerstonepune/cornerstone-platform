@@ -63,7 +63,8 @@
     "Themes: a screenshot in light at 1440 is committed as the baseline; the `blocks` screen and the journey steps are also committed in dark. Text contrast is measured by the token-pair script (UI-14) and by axe, not by sampling every page."
   ],
   "merged_slices": [
-    "UI-5"
+    "UI-5",
+    "UI-12"
   ],
   "slices": [
     {
@@ -3841,17 +3842,21 @@
           "t": "link",
           "label": "each job",
           "to": "today-educator",
-          "note": "the jobs are generated from screens.json: each names its own screen, and the test follows every one"
+          "note": "the jobs are generated from screens.json: each names its own screen, and the test follows every one",
+          "data": "data-job"
         },
         {
           "t": "fold",
-          "label": "each page's section"
+          "label": "each page's section",
+          "data": "data-section",
+          "text": "Sign in"
         },
         {
           "t": "link",
           "label": "? on any page",
           "to": "help",
-          "note": "opens this page at that page's section"
+          "note": "opens this page at that page's section",
+          "text": "its section"
         }
       ],
       "rail": [],
@@ -3902,12 +3907,25 @@
         {
           "t": "upload",
           "label": "capture: a screenshot",
-          "effect": "png/jpg attached to the note"
+          "effect": "png/jpg attached to the note",
+          "pending": "needs backend storage (issue #551)"
         },
         {
           "t": "button",
           "label": "Send",
-          "effect": "a staff_note row and a GitHub issue; the page says it reached the team and links back"
+          "effect": "a staff_note row and a GitHub issue; the page says it reached the team and links back",
+          "drive": {
+            "fill": {
+              "What happened, or what you would like": "Inventory check: the page reached the team"
+            },
+            "click": "Send",
+            "expect": {
+              "text": [
+                "Thanks, it reached the team."
+              ],
+              "check": "feedback_note_sent"
+            }
+          }
         }
       ],
       "rail": [],

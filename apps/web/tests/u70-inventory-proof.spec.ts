@@ -41,9 +41,9 @@ test("a control the inventory lists and the page lacks fails, naming the control
 
 test("a link that lands on the wrong screen fails as a dead link, naming both headings", async ({ browser }) => {
   const inv = mini();
-  inv.screens[0].elements[0] = { t: "link", label: "Check answers", href: "/capture/check", to: "password" };
+  inv.screens[0].elements[0] = { t: "link", label: "Check answers", href: "/capture/check", to: "feedback" };
   const problems = await audit(browser, inv, "across");
-  expect(problems.join("\n")).toMatch(/“Check answers” did not land on password: its h1 is “Check answers”, expected “Change password” \(a dead link\)/);
+  expect(problems.join("\n")).toMatch(/“Check answers” did not land on feedback: its h1 is “Check answers”, expected “Report a problem or suggest something” \(a dead link\)/);
 });
 
 test("a child's name that is not in tests/fake-names.ts fails, naming the name", async ({ browser }) => {
@@ -162,20 +162,20 @@ test("an element for many controls takes them all, by its data attribute or by '
 test("a control with a declared drive is pressed, and what a person sees after is held to what the element says", async ({ browser }) => {
   test.setTimeout(300_000); // five audits of a page, each signing in afresh
   const inv = mini();
-  const button = inv.screens.find((x) => x.id === "password")!.elements.find((x) => x.t === "button")!;
-  // pressing it with nothing typed leaves the person on the same page, asking for the fields: a pass
-  button.drive = { expect: { url: "^/account/password", text: ["password"] } };
-  expect(await audit(browser, inv, "password"), "a drive that holds").toEqual([]);
+  const button = inv.screens.find((x) => x.id === "feedback")!.elements.find((x) => x.t === "button")!;
+  // pressing it with nothing typed leaves the person on the same page, asking for the field: a pass
+  button.drive = { expect: { url: "^/feedback", text: ["report a problem"] } };
+  expect(await audit(browser, inv, "feedback"), "a drive that holds").toEqual([]);
   // the same press, held to something that does not happen, fails and says which control and what was not shown
-  button.drive = { expect: { text: ["a sentence the page never says"], gone: ["password"] } };
-  const problems = (await audit(browser, inv, "password")).join("\n");
-  expect(problems).toContain("“Save the new password” did not show “a sentence the page never says” afterwards");
-  expect(problems).toContain("“Save the new password” still shows “password” afterwards");
+  button.drive = { expect: { text: ["a sentence the page never says"], gone: ["report a problem"] } };
+  const problems = (await audit(browser, inv, "feedback")).join("\n");
+  expect(problems).toContain("“Send” did not show “a sentence the page never says” afterwards");
+  expect(problems).toContain("“Send” still shows “report a problem” afterwards");
   // a drive that names a fixture or a field that is not there is a problem named, never a pass
   button.drive = { fixture: "nothing-of-the-kind", expect: {} };
-  expect((await audit(browser, inv, "password")).join("\n")).toContain("names the fixture “nothing-of-the-kind”");
+  expect((await audit(browser, inv, "feedback")).join("\n")).toContain("names the fixture “nothing-of-the-kind”");
   button.drive = { fill: { "No such field": "x" }, expect: {} };
-  expect((await audit(browser, inv, "password")).join("\n")).toContain("no field “No such field”");
+  expect((await audit(browser, inv, "feedback")).join("\n")).toContain("no field “No such field”");
 });
 
 // ---- UI-5b: the keyboard check. It must still fail a control Tab cannot reach and a page that traps focus, however long the page is;
