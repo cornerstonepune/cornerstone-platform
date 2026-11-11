@@ -32,8 +32,12 @@ test.beforeAll(async () => {
   two = (await aPerson(sql, TWO)).id;
 });
 test.afterAll(async () => {
-  // a grant is never deleted: whatever this file gave is ended, so the people and classes of later specs are as they were
-  await sql`update staff_role_grant set valid_to = current_date where staff_id in (${one}::uuid, ${two}::uuid) and (valid_to is null or valid_to > current_date)`;
+  // a grant is never deleted: whatever this file gave is ended, so the people and classes of later specs are as they were. Ended on the
+  // school's day, never the server's: a grant given "from today" is dated by the school's clock, which runs 5½ hours ahead of the
+  // server's UTC, so between midnight and 05:30 at school `current_date` fell before its start and the end broke valid_to >= valid_from
+  // (main's run 43094652851). A grant that starts later still is ended on its first day.
+  const day = await today();
+  await sql`update staff_role_grant set valid_to = greatest(valid_from, ${day}::date) where staff_id in (${one}::uuid, ${two}::uuid) and (valid_to is null or valid_to > ${day}::date)`;
   await forgetPerson(sql, ONE.email);
   await forgetPerson(sql, TWO.email);
   await sql.end();

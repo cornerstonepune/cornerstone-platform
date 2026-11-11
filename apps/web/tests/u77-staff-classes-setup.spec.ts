@@ -41,7 +41,10 @@ test.beforeAll(async () => {
   [{ id: toId }] = await sql<{ id: string }[]>`select id from school_class where label = ${TO} order by created_at limit 1`;
 });
 test.afterAll(async () => {
-  await sql`update staff_role_grant set valid_to = current_date where staff_id = ${person}::uuid and (valid_to is null or valid_to > current_date)`;
+  // ended on the school's day, never the server's UTC `current_date`: between midnight and 05:30 at school that is the day before a grant
+  // given "from today" begins, and the end broke valid_to >= valid_from (main's run 43094652851, u74 test 9 the same)
+  const [{ day }] = await sql<{ day: string }[]>`select (now() at time zone (select value #>> '{}' from config where key = 'school.time_zone'))::date::text as day`;
+  await sql`update staff_role_grant set valid_to = greatest(valid_from, ${day}::date) where staff_id = ${person}::uuid and (valid_to is null or valid_to > ${day}::date)`;
   await forgetPerson(sql, PERSON.email);
   await sql.end();
 });
