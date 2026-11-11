@@ -5,11 +5,14 @@
 // (the lockup on a bar, the mark alone on a phone), so the file served is always one of the four.
 const F = (name: string) => `/brand/Cornerstone-logo-${name}.svg`;
 
+import { BAR_LOGO_PX } from "@/lib/ux-rules";
+
 export const BRAND_NAME = "Cornerstone Gurukul";
 
-/** `bar`: 40 px high, the lockup, the mark alone at 700 px or less. `large`: the sign-in page's, 72 px high, the lockup. */
+/** `bar`: 48 px high in the 72 px bar (the wireframes' bar height; 48 is the most that keeps a quarter of its height clear above and
+ *  below), the lockup, the mark alone at 700 px or less. `large`: the sign-in page's, 72 px high, the lockup. */
 export function BrandMark({ size = "bar" }: { size?: "bar" | "large" }) {
-  const height = size === "bar" ? 40 : 72;
+  const height = size === "bar" ? BAR_LOGO_PX : 72;
   return (
     <picture data-block="BrandMark" data-brand-mark className="block leading-none">
       {size === "bar" ? <source media="(max-width: 700px) and (prefers-color-scheme: dark)" srcSet={F("mark-on-white-tile")} /> : null}
