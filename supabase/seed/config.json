@@ -494,8 +494,8 @@
     },
     {
       "key": "timetable.subject_looks",
-      "description": "How the timetable grid draws a subject: numeracy, language or arts (subject code to look). A subject not listed is drawn as arts. The timetable screen reads it; the engine does not use it.",
-      "value": {"NUM": "numeracy", "ENG": "language"},
+      "description": "How the timetable grid draws a subject: numeracy, language or arts (the timetable's subject code to look, as `session.subject_code` holds it). A subject not listed is drawn as arts. The timetable screen reads it; the engine does not use it.",
+      "value": {"math": "numeracy", "english": "language", "hindi": "language", "phonics": "language", "reading": "language", "story": "language", "rhymes": "language", "rhymes_dance": "language"},
       "seed_once": true
     },
     {
