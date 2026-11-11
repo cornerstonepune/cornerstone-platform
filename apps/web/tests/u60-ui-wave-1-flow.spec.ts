@@ -256,7 +256,11 @@ test("Class results, its class and a child", async ({ page }) => {
 
 test("the Assessment card, opened from its row", async ({ page }) => {
   await page.goto(`/papers?class=${SECTION}`);
-  await page.locator("tr[data-assessment]").getByRole("link").first().click();
+  // a list with one assessment opens it by itself, and a click on its name would then close it: open it only if it is shut
+  const toggle = page.locator("tr[data-assessment] a[aria-expanded]").first();
+  await expect(toggle).toBeVisible();
+  if ((await toggle.getAttribute("aria-expanded")) !== "true") await toggle.click();
+  await expect(toggle).toHaveAttribute("aria-expanded", "true");
   const card = page.getByRole("link", { name: /Open its card/ });
   await expect(card).toBeVisible();
   await card.click();

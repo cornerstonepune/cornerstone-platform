@@ -27,7 +27,7 @@ const SOURCE = { school: "The school's plan", educator: "Added by the educator" 
 type Q = { class?: string; day?: string; span?: string; tab?: string; show?: string; page?: string };
 type Row = MaterialLine & { day: string };
 
-const activityHref = (code: string) => screenHref("activity", { code }) ?? `/educator/activity/${encodeURIComponent(code)}?back=/timetable/materials`;
+const activityHref = (code: string) => screenHref("activity", { code }) ?? `/setup/activities/${encodeURIComponent(code)}?back=/timetable/materials`;
 const qty = (l: { quantity: number | null; unit: string }) => (l.quantity === null ? W.noQty : `${l.quantity} ${l.unit}`);
 
 const LINES: Column<Row>[] = [

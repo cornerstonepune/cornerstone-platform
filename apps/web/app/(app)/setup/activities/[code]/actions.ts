@@ -13,7 +13,7 @@ type Me = Awaited<ReturnType<typeof requireStaff>>;
 async function answer(me: Me, path: "/curriculum/page/confirm" | "/curriculum/page/revert" | "/curriculum/page/edit", body: Record<string, unknown>, code: string) {
   const res = await engineSend(path, { actor: me.email, ...body } as never);
   if (!res.ok && res.status !== 409) throw new EngineDown(`The engine refused that (${res.status}).`);
-  revalidatePath(`/educator/activity/${code}`);
+  revalidatePath(`/setup/activities/${code}`);
 }
 
 export async function keep(f: FormData): Promise<void> {
