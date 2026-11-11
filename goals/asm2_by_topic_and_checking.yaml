@@ -31,7 +31,7 @@ manual:
 scenarios: []
 criteria:
   - name: the logic, the new screens and every spec that touches Assessments or Check answers
-    run: cd apps/web && npx playwright test tests/asm2-by-topic.spec.ts tests/u79-checking-by-assessment.spec.ts tests/u62-assessment-steps.spec.ts tests/u63-assessments-page.spec.ts tests/p6-check-is-quick.spec.ts tests/u51-ux-rules.spec.ts tests/s4-validation-queue.spec.ts tests/s44-whose-paper.spec.ts tests/u9-papers.spec.ts tests/u22-assessments-readable.spec.ts tests/u37-papers-grouped.spec.ts tests/u16-assessments.spec.ts tests/s42-the-assessment-card.spec.ts
+    run: cd apps/web && npx playwright test tests/asm2-by-topic.spec.ts tests/u79-checking-by-assessment.spec.ts tests/u62-assessment-steps.spec.ts tests/u81-assessments-list.spec.ts tests/p6-check-is-quick.spec.ts tests/u51-ux-rules.spec.ts tests/s4-validation-queue.spec.ts tests/s44-whose-paper.spec.ts tests/u9-papers.spec.ts tests/u22-assessments-readable.spec.ts tests/u37-papers-grouped.spec.ts tests/u16-assessments.spec.ts tests/s42-the-assessment-card.spec.ts
     expect: "passed"
   - name: the website's types and lint
     run: cd apps/web && npx tsc --noEmit && npx eslint --max-warnings 0 && echo "types and lint clean"

@@ -146,7 +146,7 @@ test("every page says the tab it is under, above its title, and the menu marks t
   const pages: [string, string][] = [
     ["/", "Curriculum"], ["/skill-sets/approve", "Curriculum"], ["/skill-sets/ADD.2D2D", "Curriculum"], ["/library", "Question bank"],
     [`/library/${key}`, "Question bank"], ["/worksheets", "Curriculum"], ["/worksheets/taxonomy", "Question bank"], ["/asks", "Curriculum"],
-    ["/papers", "Assessments"], ["/papers/make", "Assessments"], ["/papers/approve", "Assessments"], ["/make", "Assessments"],
+    ["/make", "Assessments"],
     ["/home", "Assessments"], ["/capture", "Upload papers"], ["/growth", "Class results"],
   ];
   // the tab is a page of a group of the top menu (lib/menu.ts): the group is marked, and so is the tab under it
@@ -166,6 +166,6 @@ test("a class's papers are approved under Assessments, and Worksheets is the lib
   await expect(page.getByRole("table", { name: "Each child's paper this week" })).toHaveCount(0);
   // a class's week, asked for at its old address, opens where it is approved now
   await page.goto("/worksheets?section=NO-SUCH&week=2026-W41&kind=practice");
-  await expect(page).toHaveURL(/\/papers\/approve\?section=NO-SUCH&week=2026-W41&kind=practice/);
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Papers to approve");
+  await expect(page).toHaveURL(/\/children\/assessments\?week=2026-W41&kind=practice&class=NO-SUCH/);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Assessments");
 });
