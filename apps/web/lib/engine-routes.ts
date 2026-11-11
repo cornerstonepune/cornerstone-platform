@@ -52,6 +52,8 @@ export type EngineRoutes = {
   "POST /child/{child_id}/parent-report/{note_id}/edit": { by: string; draft: Record<string, unknown> };
   "POST /children/find": { section: string; first_name: string; actor: string };
   "POST /commit": { child_id: string; by: string };
+  "POST /curriculum/level-words": { actor: string; skill: string; level: string; words: string; reason?: string | null };
+  "POST /curriculum/level-words/history": { actor: string; skill: string; level: string };
   "POST /curriculum/offers/answer": { actor: string; id: string; yes: boolean; why?: string };
   "POST /curriculum/offers/list": { actor: string };
   "POST /curriculum/page/confirm": { actor: string; code: string; part: string };
@@ -59,6 +61,8 @@ export type EngineRoutes = {
   "POST /curriculum/page/gate": { actor: string };
   "POST /curriculum/page/read": { actor: string; code: string };
   "POST /curriculum/page/revert": { actor: string; code: string; part: string };
+  "POST /feedback/screenshot": null;
+  "POST /feedback/screenshot/get": { note_id: string };
   "POST /fortnight/move": { actor: string; fortnight_id: string; to_state: string };
   "POST /fortnight/state": { actor: string; fortnight_id: string };
   "POST /graph/nightly": null;
@@ -69,6 +73,7 @@ export type EngineRoutes = {
   "POST /k2/classes": { actor: string };
   "POST /k2/coordinator": { actor: string };
   "POST /k2/picture": { actor: string; class_id: string };
+  "POST /k2/today-school": { actor: string };
   "POST /k2/todo": { actor: string };
   "POST /mark": { child_id: string };
   "POST /materials/build": { actor: string; class_id: string; period: "day" | "week" | "fortnight"; from: string; to: string; group_by?: "day" | "week" | "fortnight" | null };
@@ -119,6 +124,7 @@ export type EngineRoutes = {
   "POST /timetable/clash/accept": { actor: string; key: string; reason: string };
   "POST /timetable/day": { actor: string; class_id?: string | null; day?: string | null; week_of?: string | null; period_id?: string | null };
   "POST /timetable/generate": { actor: string; grade: string; section: string; year: string; fortnight: number };
+  "POST /timetable/go-live": { actor: string; grade: string; section: string; year: string; fortnight: number; run_id?: string | null; reason?: string | null; discard_changes?: boolean; dry?: boolean };
   "POST /timetable/link": { actor: string; fortnight?: number | null; band?: string | null; apply?: boolean };
   "POST /timetable/move": { actor: string; grade: string; section: string; year: string; from_date: string; from_period: number; to_date: string; to_period: number; reason?: string | null };
   "POST /timetable/open": { actor: string; class_id?: string | null; day?: string | null; week_of?: string | null; period_id?: string | null };

@@ -2,7 +2,6 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
 import { Icon } from "@/lib/icons";
 import { W } from "@/lib/voice-words";
 import { recordTicket } from "../actions";
@@ -13,7 +12,7 @@ type Stage = "idle" | "recording" | "recorded" | "sending";
 const EXT: [RegExp, string][] = [[/webm/, ".webm"], [/mp4|aac/, ".m4a"], [/ogg/, ".ogg"], [/wav/, ".wav"]];
 const MIN_BYTES = 1200; // shorter than this is silence: nothing to read
 
-export function Recorder({ classId, say, form, sessionId, goto, typed }: { classId: string; say: string; form: string; sessionId?: string; goto?: (noteId: string) => string; typed?: React.ReactNode }) {
+export function Recorder({ classId, say, sessionId, opens, typed }: { classId: string; say: string; sessionId?: string; opens: string; typed: React.ReactNode }) {
   const router = useRouter();
   const [stage, setStage] = useState<Stage>("idle");
   const [clip, setClip] = useState<Blob | null>(null);
@@ -77,7 +76,7 @@ export function Recorder({ classId, say, form, sessionId, goto, typed }: { class
       return;
     }
     setClip(null);
-    router.push(goto ? goto(got.note_id) : `/voice/notes/${got.note_id}`);
+    router.push(`${opens}/${got.note_id}`);
   }
 
   return (
@@ -116,11 +115,7 @@ export function Recorder({ classId, say, form, sessionId, goto, typed }: { class
       {said ? (
         <p role="alert" className="grid gap-2 text-[15px] text-terracotta">
           {said}
-          {typed ?? (
-            <Link href={form} className="btn secondary w-fit">
-              {W.useForm}
-            </Link>
-          )}
+          {typed}
         </p>
       ) : null}
     </section>

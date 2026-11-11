@@ -15,8 +15,60 @@ Issue #520. Branch `ui-5-coordinator`. Built from the approved wireframes `staff
 - `/staff` (add a person, classes, subjects) is not in any `folds`, so it stays and keeps the menu's Staff item; the Setup card opens `/setup/staff`.
 
 ## Waiting on the backend (comments on #551)
-1. `app_web` cannot read `pii.educator_note` / `pii.note_claim`: needs a counts-only view or function for notes confirmed, late, and lines accepted / changed / removed per person.
+1. ~~Per-person note counts~~ — done: backend #600's `POST /reports/counts`, shown on `/setup/staff` by #606 (notes confirmed, notes late = left unconfirmed, lines accepted / changed / removed; whole numbers, hidden when empty).
 2. `app_web` cannot write `staff_role_grant` (select only): **Add a grant** and **End a grant** need `grant_role` and `end_grant` security-definer functions. Both elements are `pending` in `screens.json`; remove `pending` and draw the controls when they land.
 
 ## Proof
 `tests/u73-coordinator-pages.spec.ts` (one test per Done-when line the inventory does not carry) and `tests/u70-inventory.spec.ts` (all three screens, both roles where they apply, 1440 and 400). Run locally against a database built from the migrations; the bar test needs the engine API and was left to CI.
+
+## Retirement plan for the old Setup and School pages (decision #599, 10 Nov 2026)
+
+Rule of #599: the old route answers **308** to the new address, then the old page, its components, queries and styles are deleted; a spec is deleted only when the same assertion lives on the new screen, otherwise it is moved. A removal that would cost the school a function it has today is raised before it is done. Nothing here changes a table or a migration.
+
+### Done
+- **`/school`** (#576): answers 308 to `/setup/classes`; its page is deleted. Specs repointed with the same assertions: `u53` ("School shows each class…"), `u60`, `p6`, `u13-frame`. The menu item "School" opens `/setup/classes`.
+
+### The old `/staff` page (not yet retired)
+Files: `app/(app)/staff/{page,staff-table,add-person}.tsx`, `app/(app)/staff/actions.ts`, `lib/queries-staff.ts` (`people`, `classLines`; `rolesHeld` is used by Add a person), `guide/pages/staff.json`, the menu item "Staff" (`lib/menu.ts` → `/staff`), `lib/auth.ts` `requireStaffEditor` (sends a refused person to `/staff?denied=1`).
+
+| # | Control on the old page | What it does today | New home | Status |
+|---|---|---|---|---|
+| 1 | Filter row: Role, "Find a person" | narrows the people | `/setup/staff` has both | **done** (#576) |
+| 2 | Table: Person, Role, Classes they teach, Subjects they teach | lists staff with their `staff.classes` / `staff.subjects` | `/setup/staff`: name, role, class (from grants), sessions, counts | **done** (display) |
+| 3 | **Add a member of staff** (name, school email, role; "Add and send a link") | `public.staff_add`, then a first-time password link by email; refuses a bad email, an unknown role, an email already on the list | no home in `screens.json` yet: a fold "Add a person" under the table on `/setup/staff` (not the main action; the main action stays Add a grant). `staff_add` and the link email already exist | **done** (#612: button and form on `/setup/staff`, spec moved at equal assertions) |
+| 4 | **Classes they teach**: tick classes, "Save the classes" | writes `staff.classes`; refuses a class no child is in | Add a grant / End a grant (`staff_role_grant`) | **built in #628 (draft)** against backend #616's routes; released with #615/#616, migrate first. Scope decided in #590 (see below) |
+| 5 | **Subjects they teach**: tick subjects, "Save the subjects" | writes `staff.subjects` | the same grants (a grant names its subject) | **built in #628**, same as 4 |
+| 6 | Notices: saved, "only the coordinators can change the staff list", refused | words after a save | the grant form's own messages (`needs_class`, `needs_subject`, `already_holds`, `one_per_class`, `core_teacher`, `wrong_scope`) | in #628: the engine's own words, shown in the form |
+| 7 | Links "See the school's classes" and the next step | navigation | `/setup/classes` (already) | done |
+
+**Finding that decides the order.** Every page's "a person sees their own" reads `staff.classes` and `staff.subjects` (`lib/scope.ts`, `lib/reach.ts`), and the old `/staff` editor is the only thing that writes them; grants are read only by `public.my_reach` and the access groups. Retiring rows 4 and 5 therefore needed one decision. **Decided (#590, backend): grants become the one source of scope** (no new table), after a data backfill from the old columns; backend #615 makes the sign-in read grants. Until #615 is live the old page keeps reading the columns and is read-only (#628).
+
+### Specs to move, at equal assertions
+| Spec (today) | Assertion | Moves to |
+|---|---|---|
+| `u53-staff-and-school` test 1: "a coordinator ticks a person's classes … the list keeps them, and the rest of the person" | the write lands; the person's password hash and role are untouched; no `scrypt$` in the page | `u74` test 1 (#628): a grant row is written, the person's password and role are unchanged, the page never shows a hash |
+| `u53` test 2: "a class no child is in refuses everything, and the filter row finds a person" | an unknown class changes nothing; the filter row finds a person | both in `u74-staff-grants` (#628): the filter row (test 9) and a class not on the list refused with nothing changed (test 5) |
+| `u53` test 3 (School) | class, grade, children, educators | already on `/setup/classes` (#576) |
+| `gate-password`: "a new member of staff added on the Staff page has no password and is sent a first-time link" | no password row; a first-time link is sent | **moved in #612**, same assertions |
+| `u67-guide`: help from the Staff page opens its guide | the "?" opens the page's guide | repoint `/staff` to `/setup/staff` when the menu item moves; `guide/pages/staff.json` (`menu`, text, quoted buttons) rewritten with it (`test_guide.py` holds the quoted buttons) |
+| `u60-ui-wave-1-flow`: `wholePage("/staff", /Staff/)` | the page passes the whole-page checks | `/setup/staff`, `/Staff and classes/` |
+| `u13-route-walk` / `u53-the-menu` | the door and page a route belongs to | the menu entry `/staff` becomes `/setup/staff` |
+
+### Order
+1. **A. Add a person** on `/setup/staff` (row 3), with its spec moved. **Done (#612).**
+2. **B. Backend:** the grants routes (#616, engine routes; no database function was needed) and the sign-in reading grants (#615). **In review.**
+3. **C. Grants on `/setup/staff`:** Add a grant / End a grant, the `u53` tests moved, the old editor made read-only. **#628, draft**, released with B. Still to do here: point the menu, guide page and `requireStaffEditor` at `/setup/staff`.
+4. **D. Retire (after #615 is live):** `/staff` answers 308 to `/setup/staff`; delete the page, `staff-table`, `add-person`, `actions.ts` (setClasses / setSubjects / addPerson), the unused parts of `lib/queries-staff.ts`, and `guide/pages/staff.json`'s old text. The `test_layout` map stays in step.
+
+### Other old Setup pages still routed (not UI-5's; owner from `screens.json`)
+| Old route(s) | New screen | Slice |
+|---|---|---|
+| `/`, `/curriculum/browse`, `/curriculum/fill`, `/curriculum/offers`, `/asks` | `/setup/curriculum` | UI-11 |
+| `/skill-sets/approve`, `/skill-sets/levels` | `/setup/skills/approve` | UI-11 |
+| `/library`, `/worksheets`, `/worksheets/taxonomy` | `/setup/question-bank` | UI-11 |
+| `/library/[key]` | `/setup/question-bank/[key]` | UI-11 |
+| `/educator/activity/[code]`, `/curriculum/fill/[code]`, `/curriculum/fill/walk` | `/setup/activities/[code]` | UI-3 |
+| `/skill-sets/[code]`, `/skill-sets/[code]/edit` | `/setup/skills/[code]` | UI-3 |
+| `/guide/[slug]`, `/guide/workflows`, `/workflows` | `/guide` (help) | UI-12 |
+
+The Setup home (`/setup`) and the Setup door already open the new frame. Until UI-11 merges, `/setup` links Curriculum, Skills to approve and Question bank to these old pages by their old addresses (`lib/built.ts` falls back), so no card is a dead link; when UI-11 merges those links switch to the new screens by themselves.
