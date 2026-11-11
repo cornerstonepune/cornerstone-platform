@@ -5,6 +5,8 @@ import { EmptyState } from "@/components/empty-state";
 import { FilterBar } from "@/components/filter-bar";
 import { KindTile } from "@/components/kind-tile";
 import { Screen, Rail, type Edge } from "@/components/app-frame";
+import { Timeline } from "@/components/timeline";
+import { changedLately } from "@/lib/setup-overview";
 import { kindWords } from "@/components/question";
 import { requireStaff } from "@/lib/auth";
 import { mayDecide } from "@/lib/decides";
@@ -30,8 +32,8 @@ export default async function SkillsToApprove({ searchParams }: { searchParams: 
   const me = await requireStaff();
   const q = await searchParams;
   const tab = q.tab === "levels" ? "levels" : "skills";
-  const [sets, charges, mayApprove, school, { words }, opened] = await deadline(
-    Promise.all([skillSets({ untaught: true, scope: scopeOf(me) }), chargesTable(), mayDecide(me, "skills"), schoolGrades(), questionKinds(), openedAt()]),
+  const [sets, charges, mayApprove, school, { words }, opened, lately] = await deadline(
+    Promise.all([skillSets({ untaught: true, scope: scopeOf(me) }), chargesTable(), mayDecide(me, "skills"), schoolGrades(), questionKinds(), openedAt(), changedLately(3, "skill")]),
   );
   const waiting = sets.filter((s) => s.status !== "ratified");
   const gradeOptions = school.list.filter((g) => waiting.some((x) => x.band === g.code)).map((g): [string, string] => [g.code, g.name]);
@@ -51,13 +53,17 @@ export default async function SkillsToApprove({ searchParams }: { searchParams: 
   const count = (except: "grade" | "subject" | "topic" | "taught", test: (x: SkillSet) => boolean) => waiting.filter((x) => keeps(x, except) && test(x)).length;
   const rows = waiting
     .filter((x) => keeps(x))
-    .sort((a, b) => order(a) - order(b) || (a.topic_ord ?? 0) - (b.topic_ord ?? 0) || a.name.localeCompare(b.name));
+    .sort((a, b) => (a.subject_name ?? "").localeCompare(b.subject_name ?? "") || order(a) - order(b) || (a.topic_ord ?? 0) - (b.topic_ord ?? 0) || a.name.localeCompare(b.name));
   const page = Math.max(1, Math.trunc(Number(q.page)) || 1);
   const back = (p: number) => {
     const s = new URLSearchParams(Object.entries({ grade, subject, topic, taught, page: p > 1 ? String(p) : undefined }).flatMap(([k, v]) => (v ? [[k, v]] : [])));
     return s.size ? `${HERE}?${s}` : HERE;
   };
-  const first = rows[(Math.min(page, Math.max(1, Math.ceil(rows.length / 10))) - 1) * 10];
+  const pages = Math.max(1, Math.ceil(rows.length / 10));
+  const shown = Math.min(page, pages);
+  const onPage = rows.slice((shown - 1) * 10, shown * 10);
+  const first = onPage[0];
+  const bySubject = [...Map.groupBy(onPage, (x) => x.subject_name ?? "Other")];
 
   const columns: Column<SkillSet>[] = [
     {
@@ -79,10 +85,11 @@ export default async function SkillsToApprove({ searchParams }: { searchParams: 
       label: "Its levels",
       value: (x) => levelsOf(x).join(" "),
       cell: (x) => (
-        <dl className="grid gap-1 text-[13px] md:grid-cols-[72px_1fr]">
+        // each level a box of its own, named, in the order Easy, Medium, Hard, Advance
+        <dl className="grid grid-cols-2 gap-2 text-[13px] min-[1100px]:grid-cols-4" data-levels="">
           {levelsOf(x).map((d) => (
-            <div key={d} className="contents">
-              <dt className="label pt-[2px]">{d}</dt>
+            <div key={d} className="rounded-[var(--radius-card)] bg-[var(--panel)] p-2">
+              <dt className="label pb-[2px]">{d}</dt>
               <dd>{x.difficulty[d]?.words}</dd>
             </div>
           ))}
@@ -117,7 +124,12 @@ export default async function SkillsToApprove({ searchParams }: { searchParams: 
       title="Skills to approve"
       purpose="Read each skill's levels and approve them one at a time. What a wrong answer counts against is shown beside it."
       next={{ href: "/setup/curriculum", label: "Curriculum" }}
-      rail={<Rail edges={RAIL} />}
+      rail={
+        <Rail
+          edges={RAIL}
+          boxes={lately.length ? [{ title: "Approved lately", body: <Timeline entries={lately.map((c) => ({ kind: c.kind, title: c.title, line: `By ${c.by}`, when: c.at }))} /> }] : []}
+        />
+      }
       action={tab === "levels" || !first || !mayApprove ? <p className="text-[14px]">{tab === "levels" ? "Levels most children are secure at." : "Read, then approve one at a time."}</p> : undefined}
     >
       <nav role="tablist" aria-label="List" className="mb-3 flex gap-2">
@@ -145,7 +157,25 @@ export default async function SkillsToApprove({ searchParams }: { searchParams: 
           {rows.length === 0 ? (
             <EmptyState next={{ href: "/setup/curriculum", label: "Curriculum" }}>Nothing to approve</EmptyState>
           ) : (
-            <DataTable label="Skills waiting for approval" columns={columns} rows={rows} rowKey={(x) => x.code} more={{ page, href: back }} extras={{ attrs: (x) => ({ "data-row": x.code }) }} />
+            // the rows by subject, each subject its own table headed by its name and how many wait; ten rows a page across them
+            <div className="grid gap-4" data-block="DataTable">
+              {bySubject.map(([name, group]) => (
+                <section key={name} aria-label={name} data-subject={name}>
+                  <h2 className="mb-1 flex items-center gap-2 text-[15px]">
+                    {name}
+                    <span className="b-count b-num">{rows.filter((x) => (x.subject_name ?? "Other") === name).length}</span>
+                  </h2>
+                  <DataTable label={`Skills waiting for approval · ${name}`} columns={columns} rows={group} rowKey={(x) => x.code} more={{ page: 1, href: back }} extras={{ attrs: (x) => ({ "data-row": x.code }) }} />
+                </section>
+              ))}
+              {pages > 1 ? (
+                <nav className="flex items-center gap-3 text-[13px]" aria-label="Skills waiting for approval pages">
+                  {shown > 1 ? <Link href={back(shown - 1)} className="chip">← Earlier</Link> : null}
+                  <span>Page {shown} of {pages}</span>
+                  {shown < pages ? <Link href={back(shown + 1)} className="chip">Later →</Link> : null}
+                </nav>
+              ) : null}
+            </div>
           )}
         </>
       )}

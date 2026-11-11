@@ -3,7 +3,10 @@ import { DataTable } from "@/components/data-table";
 import { Details } from "@/components/details";
 import { EmptyState } from "@/components/empty-state";
 import { FilterBar } from "@/components/filter-bar";
-import { KeyValue } from "@/components/key-value";
+import { Cards } from "@/components/cards";
+import { LevelBars } from "@/components/level-bars";
+import { Timeline } from "@/components/timeline";
+import { changedLately } from "@/lib/setup-overview";
 import { Rail, Screen } from "@/components/app-frame";
 import { Answers, Question, kindWords } from "@/components/question";
 import { StatusChip } from "@/components/status-chip";
@@ -27,12 +30,12 @@ export default async function QuestionBank({ searchParams }: { searchParams: Pro
   const me = await requireStaff();
   const q = await searchParams;
   const scope = scopeOf(me);
-  const [mine, g, lv, { words }] = await deadline(Promise.all([gradesOf(ownClasses(me)), grades(), levels(), questionKinds()]));
+  const [mine, g, lv, { words }, lately] = await deadline(Promise.all([gradesOf(ownClasses(me)), grades(), levels(), questionKinds(), changedLately(3, "assessment")]));
   const grid = await deadline(bankGrid(scope));
   const totals = await deadline(bankTotals(scope));
   // a grade filter; a person with classes of their own opens on their grade
   const gradeChoices = g.list.filter((x) => grid.some((r) => r.band === x.code)).map((x): [string, string] => [x.code, x.name]);
-  const grade = gradeChoices.some(([c]) => c === q.grade) ? q.grade : q.grade === "all" ? undefined : mine.find((b) => gradeChoices.some(([c]) => c === b));
+  const grade = gradeChoices.some(([c]) => c === q.grade) ? q.grade : q.grade === "all" ? undefined : (mine.find((b) => gradeChoices.some(([c]) => c === b)) ?? gradeChoices[0]?.[0]);
   const inGrade = (r: BankRow) => !grade || lv.order.some((d) => gradeOf(r, d) === grade);
   const skills = grid.filter((r) => inGrade(r) && Object.values(r.counts).some(Boolean));
   const set = skills.some((r) => r.code === q.skill) ? q.skill : undefined;
@@ -94,17 +97,42 @@ export default async function QuestionBank({ searchParams }: { searchParams: Pro
       stage={`Grades 1 to 4 · ${n(totals.active)} ready`}
       title="Question bank"
       purpose="What is in the bank for the skills taught in your classes, by level. Open a question to read it as it prints."
-      rail={<Rail edges={set ? [{ screen: "skill", params: { code: set }, label: "The skill", icon: "skill" }] : []} />}
+      rail={
+        <Rail
+          edges={set ? [{ screen: "skill", params: { code: set }, label: "The skill", icon: "skill" }] : []}
+          boxes={lately.length ? [{ title: "Changed lately", body: <Timeline entries={lately.map((c) => ({ kind: c.kind, title: c.title, line: `By ${c.by}`, when: c.at }))} /> }] : []}
+        />
+      }
       next={{ href: "/setup/curriculum", label: "Curriculum" }}
     >
-      <div className="mb-4 grid gap-3">
-        <Details summary="Read what the bank is" name="what-the-bank-is">
-          <p className="text-[14px]">
-            Every question a paper can print. The engine makes each question from its skill&rsquo;s rule for that level, and a computer checks every answer before it is kept. A removed question is kept with its reason and never printed again. {n(totals.active)} are ready for the skills taught, {n(totals.retired)} removed.
-          </p>
-        </Details>
-        <KeyValue rows={byLevel.map((l) => ({ label: l.d, value: n(l.n), num: true }))} />
-      </div>
+      <Cards
+        cards={[
+          {
+            kind: "assessment",
+            title: "What the bank is",
+            body: (
+              <Details summary="Read what the bank is" name="what-the-bank-is">
+                <p className="text-[14px]">
+                  Every question a paper can print. The engine makes each question from its skill&rsquo;s rule for that level, and a computer checks every answer before it is kept. A removed question is kept with its reason and never printed again. {n(totals.active)} are ready for the skills taught, {n(totals.retired)} removed.
+                </p>
+              </Details>
+            ),
+          },
+          {
+            kind: "assessment",
+            title: "What is in the bank",
+            body: (
+              <div className="grid gap-2">
+                <span className="flex flex-wrap gap-2">
+                  <StatusChip state="done" words={`${n(totals.active)} ready`} />
+                  <StatusChip state="stopped" words={`${n(totals.retired)} removed`} />
+                </span>
+                <LevelBars levels={byLevel.map((l, i) => ({ level: i, n: l.n, label: l.d }))} />
+              </div>
+            ),
+          },
+        ]}
+      />
       <FilterBar
         action={HERE}
         filters={[

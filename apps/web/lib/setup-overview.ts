@@ -39,22 +39,37 @@ export async function setupOverview(email: string): Promise<SetupOverview> {
   };
 }
 
-export type Change = { kind: "skill" | "child" | "assessment" | "period"; title: string; by: string; at: string };
+export type Change = { kind: "skill" | "child" | "assessment"; title: string; by: string; at: string; when: number };
 
-/** The last set-up changes, newest first, from the one history log (`change_log`): who made each and when. */
-export async function changedLately(limit = 4): Promise<Change[]> {
-  const rows = await sql<{ table_name: string; op: string; row_id: string; after: Record<string, string> | null; staff_id: string | null; origin: string | null; day: string }[]>`
-    select table_name, op, row_id, after, staff_id::text, origin, to_char(at at time zone (select value #>> '{}' from config where key = 'school.time_zone'), 'YYYY-MM-DD') as day
-    from change_log
-    where tenant_id = ${school()} and table_name in ('skill_level', 'child', 'item', 'staff_role_grant')
-    order by at desc, id limit ${limit}`;
+const DIFFICULTIES = ["Easy", "Medium", "Hard", "Advance"];
+
+/** The last set-up changes, newest first: a skill's level approved or sent back and a question removed or corrected (the
+ *  `approval` log), and a child moved to another class (`change_log`). Who made each and when. `only` narrows it to one kind. */
+export async function changedLately(limit = 4, only?: Change["kind"]): Promise<Change[]> {
+  const zone = sql`(select value #>> '{}' from config where key = 'school.time_zone')`;
+  const [approvals, moves] = await Promise.all([
+    only === "child"
+      ? []
+      : sql<{ kind: string; decision: string; target: string; by: string; reason: string | null; name: string | null; day: string; at: Date }[]>`
+          select a.kind, a.decision, a.target, a."by", a.reason, sk.name, to_char(a.created_at at time zone ${zone}, 'YYYY-MM-DD') as day, a.created_at as at
+          from approval a left join skill sk on sk.tenant_id = a.tenant_id and a.kind = 'skill_level' and sk.code = split_part(a.target, ' ', 1)
+          where a.tenant_id = ${school()} and a.kind in ('skill_level', 'item') ${only === "skill" ? sql`and a.kind = 'skill_level'` : only === "assessment" ? sql`and a.kind = 'item'` : sql``}
+          order by a.created_at desc limit ${limit}`,
+    only && only !== "child"
+      ? []
+      : sql<{ row_id: string; after: Record<string, string> | null; staff_id: string | null; origin: string | null; day: string; at: Date }[]>`
+          select row_id, after, staff_id::text, origin, to_char(at at time zone ${zone}, 'YYYY-MM-DD') as day, at
+          from change_log where tenant_id = ${school()} and table_name = 'child' and op = 'move' order by at desc limit ${limit}`,
+  ]);
   const names = new Map((await staffList()).map((p) => [p.id, p.name]));
-  return rows.map((r) => {
-    const by = (r.staff_id && names.get(r.staff_id)) || r.origin || "";
-    const at = when(r.day);
-    if (r.table_name === "child") return { kind: "child", title: `A child moved class: ${r.row_id}`, by, at };
-    if (r.table_name === "item") return { kind: "assessment", title: "A question's wording corrected", by, at };
-    if (r.table_name === "staff_role_grant") return { kind: "period", title: `A grant ${r.op === "delete" ? "ended" : "added"}`, by, at };
-    return { kind: "skill", title: `Skill levels ${r.op === "approve" ? "approved" : "changed"}: ${r.row_id}`, by, at };
-  });
+  const made: Change[] = [
+    ...approvals.map((r): Change => {
+      if (r.kind === "item") return { kind: "assessment", title: r.reason?.startsWith("Corrected") ? "A question's wording corrected" : "A question removed", by: r.by, at: when(r.day), when: +r.at };
+      const level = DIFFICULTIES.find((d) => r.target.endsWith(` ${d}`));
+      const what = `${r.name ?? r.target.split(" ")[0]}${level ? ` · ${level}` : ""}`;
+      return { kind: "skill", title: `${r.decision === "approved" ? "Skill level approved" : "A level sent back"}: ${what}`, by: r.by, at: when(r.day), when: +r.at };
+    }),
+    ...moves.map((r): Change => ({ kind: "child", title: `A child moved class: Sr. No. ${r.row_id}${r.after?.section ? ` to ${r.after.section}` : ""}`, by: (r.staff_id && names.get(r.staff_id)) || r.origin || "", at: when(r.day), when: +r.at })),
+  ];
+  return made.sort((a, b) => b.when - a.when).slice(0, limit);
 }

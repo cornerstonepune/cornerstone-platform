@@ -4,13 +4,16 @@ import { DataTable } from "@/components/data-table";
 import { Details } from "@/components/details";
 import { EmptyState } from "@/components/empty-state";
 import { FilterBar } from "@/components/filter-bar";
+import { KanbanBoard, type Lane } from "@/components/kanban-board";
+import { KeyValue } from "@/components/key-value";
 import { KindTile } from "@/components/kind-tile";
 import { Rail, Screen, type Edge } from "@/components/app-frame";
 import { StatusChip } from "@/components/status-chip";
 import { requireStaff } from "@/lib/auth";
 import { deadline } from "@/lib/deadline";
 import { curriculumRows, type CRow } from "@/lib/curriculum-rows";
-import { gateFor, linked, readOffers, waiting } from "@/lib/curriculum-screens";
+import { curriculumBoard } from "@/lib/curriculum-board";
+import { gap, gateFor, linked, readOffers, waiting } from "@/lib/curriculum-screens";
 import { grades as schoolGrades } from "@/lib/queries";
 import { asks, ROLE_WORDS, type Ask } from "@/lib/queries-people";
 import { dateWords } from "@/lib/week";
@@ -37,7 +40,7 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
   const gate = await gateFor(me.email);
   const reviews = gate?.reviews ?? false;
   const q = await searchParams;
-  const [school, drafts, offers, allAsks] = await deadline(Promise.all([schoolGrades(), gate ? waiting() : Promise.resolve([]), gate ? readOffers(me.email).catch(() => []) : Promise.resolve([]), asks()]));
+  const [school, drafts, offers, allAsks, board, fill] = await deadline(Promise.all([schoolGrades(), gate ? waiting() : Promise.resolve([]), gate ? readOffers(me.email).catch(() => []) : Promise.resolve([]), asks(), gate ? curriculumBoard() : Promise.resolve(null), gate ? gap() : Promise.resolve([])]));
   const all = await deadline(curriculumRows(school, scopeOf(me), gate !== null));
 
   const pick = (v: string | undefined, ok: Iterable<string>) => (v && [...ok].includes(v) ? v : undefined);
@@ -110,6 +113,18 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
 
   // a question is drafted for a role: its own role answers it, and the coordinator may answer any (the engine checks it again)
   const mayAnswer = (a: Ask) => me.role === a.for_role || me.role === "coordinator";
+  // where the words came from: every part of every activity, by whose it is (the school's documents, a person, drafted and
+  // checked, drafted and waiting, empty), as a share of all the parts
+  const parts = fill.reduce((t, g) => t + g.school + g.drafted + g.person + g.empty, 0);
+  const share = (n: number) => `${parts ? Math.round((n * 100) / parts) : 0}%`;
+  const sum = (k: "school" | "drafted" | "person" | "empty") => fill.reduce((t, g) => t + g[k], 0);
+  const lanes: Lane[] = board
+    ? [
+        { key: "toCheck", label: "Drafted, to check", state: "toConfirm", count: board.toCheck.count, empty: "No drafted part waits.", cards: board.toCheck.cards.map((c) => ({ key: c.code, kind: "activity", title: c.name, sub: c.parts, href: `/setup/activities/${c.code}`, state: "toConfirm", words: "to check", attrs: { "data-activity-row": "" } })) },
+        { key: "checked", label: "Checked by a person", state: "done", count: board.checked.count, empty: "No part has been checked yet.", cards: board.checked.cards.map((c) => ({ key: c.code, kind: "activity", title: c.name, sub: c.parts, href: `/setup/activities/${c.code}`, state: "done", words: "checked", attrs: { "data-activity-row": "" } })) },
+        { key: "empty", label: "Empty, nobody has written it", state: "toDo", count: board.empty.count, empty: "No part is empty.", cards: board.empty.cards.map((c) => ({ key: c.code, kind: "activity", title: c.name, sub: c.parts, href: `/setup/activities/${c.code}`, state: "toDo", words: "empty", attrs: { "data-activity-row": "" } })) },
+      ]
+    : [];
   const firstDraft = drafts[0];
   const draftHref = firstDraft ? `/setup/activities/${firstDraft.code}` : null;
   // every offer is reachable: ten a page, the page the person is on kept in the address
@@ -181,7 +196,30 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
       purpose="Every activity and skill of every grade, with its levels and how much of each page is filled in. Open one to read it."
       next={{ href: "/setup/skills/approve", label: "Skills to approve" }}
       action={draftHref ? <Link href={draftHref} className="btn">Check the drafted parts</Link> : <p className="text-[14px]">No drafted parts wait for a person.</p>}
-      rail={<Rail edges={RAIL} />}
+      rail={
+        <Rail
+          edges={RAIL}
+          boxes={
+            gate && parts
+              ? [
+                  {
+                    title: "Where the words came from",
+                    body: (
+                      <KeyValue
+                        rows={[
+                          { label: "The school's documents", value: share(sum("school")), num: true },
+                          { label: "A person", value: share(sum("person")), num: true },
+                          { label: "Drafted", value: share(sum("drafted")), num: true },
+                          { label: "Empty", value: share(sum("empty")), num: true },
+                        ]}
+                      />
+                    ),
+                  },
+                ]
+              : []
+          }
+        />
+      }
     >
       <Cards
         cards={[
@@ -204,6 +242,12 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
       ) : (
         <DataTable label="Activities and skills" columns={columns} rows={rows} rowKey={(r) => `${r.kind}:${r.code}`} more={{ page, href }} extras={{ attrs: (r) => ({ "data-row": r.code }) }} />
       )}
+      {lanes.length ? (
+        <section className="mt-6" aria-label="The drafted parts, as a board">
+          <h2 className="mb-2 text-[16px]">The drafted parts, as a board</h2>
+          <KanbanBoard lanes={lanes} />
+        </section>
+      ) : null}
       {shownOffers.length ? (
         <section className="mt-6" aria-label="Offers waiting" data-offers>
           <h2 className="mb-2 text-[16px]">Offers waiting</h2>
