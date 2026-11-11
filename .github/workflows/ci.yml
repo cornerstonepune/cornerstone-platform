@@ -81,6 +81,9 @@ jobs:
       - uses: actions/checkout@v4
         with: { fetch-depth: 0 }
       - uses: astral-sh/setup-uv@v5
+      # node, for the wireframe check that bin/check runs (docs/frontend/wireframes/check.mjs, no packages to install)
+      - uses: actions/setup-node@v4
+        with: { node-version: 24 }
       # The server builds with `uv sync --frozen`, which installs the lockfile and nothing else. A
       # lock missing boto3 passed every check here (a fresh resolve found it) and the deployed
       # engine could not start. The lock must match pyproject.toml, or the build is refused.

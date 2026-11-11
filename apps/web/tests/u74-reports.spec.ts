@@ -123,3 +123,16 @@ test("CP-19: with both approvals on every line, Send appears only when consent i
   await expect(page.getByText("No consent is on record for this child", { exact: false })).toBeVisible();
   await expect(page.getByRole("button", { name: /^send$/i })).toHaveCount(0);
 });
+
+test("the line of counts says how many reports are out of date, to approve and to write for the class, and each count is the rows behind it (carried from the old list)", async ({ page }) => {
+  await page.goto(`/children/reports?class=${rows.section}`);
+  const line = page.getByLabel("Reports by state");
+  await expect(line).toBeVisible();
+  const counts = Object.fromEntries([...(await line.innerText()).matchAll(/(\d+) (out of date|to approve|to write)/g)].map((m) => [m[2], Number(m[1])]));
+  expect(Object.keys(counts).sort()).toEqual(["out of date", "to approve", "to write"]);
+  for (const [state, n] of Object.entries(counts)) {
+    await page.goto(`/children/reports?class=${rows.section}&state=${encodeURIComponent(state)}`);
+    if (n === 0) await expect(page.getByText("No report lines drafted yet")).toBeVisible();
+    else expect((await rowsOf(page)).length).toBe(Math.min(10, n));
+  }
+});
