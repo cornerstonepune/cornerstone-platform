@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useMemo, useState, useSyncExternalStore } from "react";
 import { DataTable } from "@/components/data-table";
 import type { Column } from "@/lib/ux-rules";
 import { dateWords } from "@/lib/week";
@@ -22,20 +22,36 @@ const COLUMNS: Column<Row>[] = [
   { key: "to", label: "To", width: "9rem", value: (r) => r.to },
 ];
 
+// The answer is kept in this browser's session storage; it is read as an external store (never set inside an effect), so the server and the
+// first client render both show none and the kept answer appears once the browser has it.
+const listeners = new Set<() => void>();
+const kept = (key: string): string | null => {
+  try {
+    return sessionStorage.getItem(key);
+  } catch {
+    return null; // no storage: the table shows only straight after Go live
+  }
+};
+const keep = (key: string, value: string) => {
+  try {
+    sessionStorage.setItem(key, value);
+    listeners.forEach((l) => l());
+  } catch {
+    /* see above */
+  }
+};
+const watch = (l: () => void) => {
+  listeners.add(l);
+  return () => void listeners.delete(l);
+};
+
 export function GoLive({ number, subjects, can }: { number: number; subjects: Record<string, string>; can: boolean }) {
   const key = `golive-${number}`;
-  const [done, setDone] = useState<Done | null>(null);
+  const [fresh, setFresh] = useState<Done | null>(null);
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
-
-  useEffect(() => {
-    try {
-      const kept = sessionStorage.getItem(key);
-      if (kept) setDone(JSON.parse(kept) as Done);
-    } catch {
-      /* no storage: the table shows only straight after Go live */
-    }
-  }, [key]);
+  const stored = useSyncExternalStore(watch, () => kept(key), () => null);
+  const done = useMemo(() => fresh ?? (stored ? (JSON.parse(stored) as Done) : null), [fresh, stored]);
 
   async function go(form: FormData) {
     setBusy(true);
@@ -53,12 +69,8 @@ export function GoLive({ number, subjects, can }: { number: number; subjects: Re
         ...report.removed.map((r): Row => ({ key: r.session, klass, what: "Removed", subject: name(r.subject), from: dateWords(r.date), to: "" })),
       ]);
       const result: Done = { rows, added: (body.reports ?? []).reduce((n, r) => n + r.report.added, 0), classes: body.reports?.length ?? 0, refused: body.refused ?? [] };
-      setDone(result);
-      try {
-        sessionStorage.setItem(key, JSON.stringify(result));
-      } catch {
-        /* see above */
-      }
+      setFresh(result);
+      keep(key, JSON.stringify(result));
     } finally {
       setBusy(false);
     }
