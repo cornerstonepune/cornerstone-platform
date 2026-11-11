@@ -1,4 +1,4 @@
-import { edit, keep, sendBack } from "@/app/(app)/educator/activity/[code]/actions";
+import { edit, keep, sendBack } from "@/app/(app)/setup/activities/[code]/actions";
 import { Icon } from "@/lib/icons";
 import type { PagePart } from "@/lib/page-part";
 import { E } from "@/lib/educator/words";

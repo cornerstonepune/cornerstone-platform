@@ -8,12 +8,13 @@ import { issuesMade } from "./github-server";
 import { SIGNED_IN } from "../playwright.config";
 import { aClass, aPerson, aReadPaper, personAsStored } from "./rows";
 import { FAKE_CHILDREN } from "./fake-names";
+import { seedTeaching, type Teaching } from "./inventory-teaching";
 
 export const SECTION = "U70A";
 export const EDUCATOR = { email: "u70-educator@cornerstone.test", name: "Inventory Educator", role: "educator", classes: [SECTION], subjects: ["NUM"] };
 
 export const OTHER = "U70B";
-export type Rows = { assessment: { key: string; roll: string }; section: string; classId: string; children: Record<string, string>; rolls: Record<string, string>; other: Record<string, string>; otherNames: string[] };
+export type Rows = { assessment: { key: string; roll: string }; section: string; classId: string; children: Record<string, string>; rolls: Record<string, string>; other: Record<string, string>; otherNames: string[]; teaching: Teaching };
 
 /** The educator (one class, one subject) and a class of fake children with Sr. Nos 1..n. Made once; a second run finds them. */
 export async function inventoryRows(sql: Sql): Promise<Rows> {
@@ -27,9 +28,10 @@ export async function inventoryRows(sql: Sql): Promise<Rows> {
   const otherNames = FAKE_CHILDREN.slice(12, 26) as unknown as string[];
   const other = await aClass(sql, OTHER, "K2", otherNames);
   await seedSeen(sql, cls?.id ?? "");
+  const teaching = await seedTeaching(sql, cls?.id ?? "", EDUCATOR.email);
   const [{ week }] = await sql<{ week: string }[]>`select to_char(now(), 'IYYY-"W"IW') as week`;
   const assessment = { key: ["focus", SECTION, week, ""].join("~"), roll: "1" };
-  return { assessment, section: SECTION, classId: cls?.id ?? "", children, rolls, other, otherNames };
+  return { assessment, section: SECTION, classId: cls?.id ?? "", children, rolls, other, otherNames, teaching };
 }
 
 /** What the Children screens need to show something: two skills, three children seen on them (one secure, one practising, one just
@@ -82,7 +84,9 @@ function fill(route: string, rows: Rows, over: Record<string, string>): string {
   const first = Object.values(rows.children)[0] ?? "";
   // the voice screens: a note waiting for the inventory educator, and a lesson of today (made by FIXTURES["voice-rest"])
   const voice = route === "/notes/[id]" ? { id: NOTE } : route === "/period/[id]" ? { id: LESSON } : {};
-  const given: Record<string, string> = { class: rows.classId, section: rows.section, roll: rows.assessment.roll, id: first, key: rows.assessment.key, ...voice, ...over };
+  // the teaching screens' [code] is an activity's, an objective's or a skill's by the route it sits in
+  const code = route.includes("/activities/") ? rows.teaching.activity : route.includes("/objectives/") ? rows.teaching.objective : rows.teaching.skill;
+  const given: Record<string, string> = { class: rows.classId, section: rows.section, roll: rows.assessment.roll, id: first, code, key: rows.assessment.key, ...voice, ...over };
   const path = route.replace(/\[(\w+)\]/g, (_, k: string) => {
     if (!(k in given)) throw new Error(`tests/inventory/fixtures.ts has no fixture for [${k}] of ${route}: add one built from the test's own rows`);
     return encodeURIComponent(given[k]);

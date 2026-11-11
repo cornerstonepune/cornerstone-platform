@@ -119,16 +119,16 @@ test("6. the trail is two levels (the door, then the thing); an Activity opened 
   await trail.getByRole("link", { name: "Children" }).click();
   await expect(page.locator("h1")).toHaveText("Children");
   // opened cold: the route's own door
-  await page.goto("/educator/activity/NO-SUCH");
+  await page.goto("/setup/activities/NO-SUCH");
   await expect(page.locator("[data-bar] [data-door][aria-current=page]").first()).toHaveText(/^Setup/);
   // opened from Today: Today stays lit
   await walk(page);
   await page.evaluate(() => {
-    const a = Object.assign(document.createElement("a"), { href: "/educator/activity/NO-SUCH", textContent: "an activity" });
+    const a = Object.assign(document.createElement("a"), { href: "/setup/activities/NO-SUCH", textContent: "an activity" });
     document.querySelector("main")!.append(a);
   });
   await page.getByRole("link", { name: "an activity" }).click();
-  await page.waitForURL(/activity/);
+  await page.waitForURL(/activities/);
   await expect(page.locator("[data-bar] [data-door][aria-current=page]").first()).toHaveText(/^Today/);
 });
 
