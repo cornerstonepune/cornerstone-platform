@@ -3,7 +3,7 @@
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { after } from "next/server";
-import { requireStaff, signInFailed, signInRefused, startSession, verifyStaff } from "./auth";
+import { requireStaff, startSession } from "./auth";
 import { sendMail } from "./mail";
 import { passwordProblem, setPassword } from "./password";
 import { askedTooOften, emailFor, LINK_COOKIE, makeLink, recordAsk, sayMail, spend, tokenHash } from "./password-links";
@@ -71,7 +71,7 @@ export async function askForLink(formData: FormData): Promise<void> {
       sendAfterAnswering(email, token, "reset", from(head), "an hour");
     }
   }
-  redirect("/login/forgot?sent=1");
+  redirect("/login?view=forgot&sent=1");
 }
 
 /** The link emailed to a new member of staff, sent as the Staff page adds them. Every function a "use server" module
@@ -87,34 +87,15 @@ export async function setNewPassword(formData: FormData): Promise<void> {
   const jar = await cookies();
   const token = jar.get(LINK_COOKIE)?.value ?? "";
   const email = await emailFor(token);
-  if (!email) redirect("/login/new-password?error=gone");
+  if (!email) redirect("/login?view=new-password&error=gone");
   const password = String(formData.get("password") ?? "");
-  if (password !== String(formData.get("again") ?? "")) redirect("/login/new-password?error=match");
+  if (password !== String(formData.get("again") ?? "")) redirect("/login?view=new-password&error=match");
   const problem = await passwordProblem(password, email);
-  if (problem) redirect(`/login/new-password?problem=${encodeURIComponent(problem)}`);
+  if (problem) redirect(`/login?view=new-password&problem=${encodeURIComponent(problem)}`);
   await spend(token);
   // ends every session of theirs open anywhere, this link's own among them, before a new one is given out
   await setPassword(email, password);
   jar.delete(LINK_COOKIE);
   await startSession(email);
   redirect("/today");
-}
-
-export async function changeMyPassword(formData: FormData): Promise<void> {
-  const me = await requireStaff();
-  // the current password is guessed no more freely here than on the sign-in page: the same count, the same window
-  if (await signInRefused(me.email)) redirect("/account/password?error=wait");
-  const current = String(formData.get("current") ?? "");
-  if (!(await verifyStaff(me.email, current))) {
-    await signInFailed(me.email);
-    redirect("/account/password?error=current");
-  }
-  const password = String(formData.get("password") ?? "");
-  if (password !== String(formData.get("again") ?? "")) redirect("/account/password?error=match");
-  const problem = await passwordProblem(password, me.email);
-  if (problem) redirect(`/account/password?problem=${encodeURIComponent(problem)}`);
-  await setPassword(me.email, password);
-  // their other browsers are signed out; this one is given a cookie signed after the password, so it stays signed in
-  await startSession(me.email);
-  redirect("/account/password?saved=1");
 }

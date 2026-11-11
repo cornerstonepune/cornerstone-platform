@@ -25,10 +25,8 @@ test.afterAll(async () => {
 
 const mark = () => `marker${randomBytes(4).toString("hex")}`;
 
-async function write(page: Page, happened: string, kind = "Something is broken") {
-  await page.getByLabel(kind).check();
-  await page.getByLabel("What were you doing?").fill("Printing the class papers");
-  await page.getByLabel("What did you expect, and what happened?").fill(happened);
+async function write(page: Page, happened: string) {
+  await page.getByLabel("What happened, or what you would like").fill(happened);
   await page.getByRole("button", { name: "Send" }).click();
 }
 
@@ -55,18 +53,18 @@ test("a phone number is refused, then the note is saved, the person is thanked, 
   await write(page, `Nothing came out ${m}. Call me on 98765 43210`);
   await expect(page.getByRole("status")).toHaveText("That looks like a name or a phone number; please take it out");
   // the words stay, so the person only takes the number out
-  await expect(page.getByLabel("What did you expect, and what happened?")).toHaveValue(/98765 43210/);
+  await expect(page.getByLabel("What happened, or what you would like")).toHaveValue(/98765 43210/);
   expect(await noteOf(m)).toBeUndefined();
-  await page.getByLabel("What did you expect, and what happened?").fill(`Nothing came out ${m}.`);
+  await page.getByLabel("What happened, or what you would like").fill(`Nothing came out ${m}.`);
   await page.getByRole("button", { name: "Send" }).click();
-  await expect(page.getByRole("status")).toHaveText("Thanks, we have your note.");
+  await expect(page.getByRole("status")).toHaveText("Thanks, it reached the team.");
 
   const saved = await noteOf(m);
   expect(saved.route).toBe("/growth/[id]");
   expect(saved.role).toBe("coordinator");
   await expect.poll(() => issuesWith(m).length).toBe(1);
   const [issue] = issuesWith(m);
-  expect(issue.labels.sort()).toEqual(["bug", "from-the-tool"]);
+  expect(issue.labels.sort()).toEqual(["from-the-tool", "question"]);
   expect(issue.title).toBe(`Nothing came out ${m}.`);
   expect(issue.body).toContain("a coordinator");
   expect(issue.body).not.toMatch(/e2e@cornerstone\.test|End-to-end test|[^\s@]+@[^\s@]+\.[a-z]{2,}/);
@@ -78,8 +76,8 @@ test("a note GitHub refused is kept, the person is thanked, and it is sent on th
   const m = mark();
   githubDown();
   await page.goto("/feedback?from=%2Fpapers");
-  await write(page, `The approve button did nothing ${m}`, "I would like something new");
-  await expect(page.getByRole("status")).toHaveText("Thanks, we have your note.");
+  await write(page, `The approve button did nothing ${m}`);
+  await expect(page.getByRole("status")).toHaveText("Thanks, it reached the team.");
   await expect.poll(async () => (await noteOf(m))?.status).toBe("failed");
   expect(issuesWith(m)).toHaveLength(0);
   githubUp();
@@ -88,13 +86,13 @@ test("a note GitHub refused is kept, the person is thanked, and it is sent on th
   await page.goto("/feedback");
   await expect.poll(async () => (await noteOf(m)).status).toBe("sent");
   expect(issuesWith(m)).toHaveLength(1);
-  expect(issuesWith(m)[0].labels.sort()).toEqual(["feature", "from-the-tool"]);
+  expect(issuesWith(m)[0].labels.sort()).toEqual(["from-the-tool", "question"]);
 });
 
 test("your reports say received, taken up and done from the issue", async ({ page }) => {
   const m = mark();
   await page.goto("/feedback");
-  await write(page, `Can the class list sort by roll number ${m}`, "A question");
+  await write(page, `Can the class list sort by roll number ${m}`);
   await expect.poll(async () => (await noteOf(m))?.status).toBe("sent");
   const number = (await noteOf(m)).issue_number!;
   const row = () => page.getByRole("row").filter({ hasText: m });
@@ -113,7 +111,7 @@ test("past the hourly limit a note is refused in words", async ({ page }) => {
   const m = mark();
   await page.goto("/feedback");
   await write(page, `The first one ${m}`);
-  await expect(page.getByRole("status")).toHaveText("Thanks, we have your note.");
+  await expect(page.getByRole("status")).toHaveText("Thanks, it reached the team.");
   // one note an hour, and this person has just sent one, so the next is one too many
   const lifted = await aSetting(sql, LIMIT, 1);
   try {
@@ -131,7 +129,7 @@ test("a signed-out request cannot send a note", async ({ browser }) => {
   await page.goto("/feedback");
   await expect(page).toHaveURL(/\/login/);
   const m = mark();
-  const res = await context.request.post("/feedback", { form: { kind: "bug", doing: "x", happened: m }, maxRedirects: 0 });
+  const res = await context.request.post("/feedback", { form: { what: m }, maxRedirects: 0 });
   expect([303, 307, 308, 401]).toContain(res.status());
   expect(await noteOf(m)).toBeUndefined();
   await context.close();

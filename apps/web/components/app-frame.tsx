@@ -6,7 +6,7 @@ import { ActingAsSwitch, AccountLink, Person } from "./frame/person";
 import { MapLink, ReportLink } from "./frame/foot-links";
 import { SearchBox } from "./frame/search-box";
 import { WalkProvider, type FrameDoor } from "./frame/walk";
-import { Body, PageHeader } from "./parts";
+import { Body, PageHeader, classesSaid } from "./parts";
 import { Icon } from "@/lib/icons";
 import { signOut } from "@/lib/auth-actions";
 import type { Session } from "@/lib/auth";
@@ -48,7 +48,7 @@ export async function AppFrame({ me, waiting, children }: { me: Session; waiting
             <div className="ml-auto flex min-w-0 items-center gap-[var(--space-2)] max-[700px]:flex-1 max-[700px]:justify-end">
               <SearchBox />
               <Person name={me.name}>
-                <AccountLink name={me.name} />
+                <AccountLink name={me.name} classes={classesSaid(me)} />
                 {me.role === "coordinator" ? <ActingAsSwitch on={acting} /> : null}
                 <HelpLink />
                 {me.devBypass ? (

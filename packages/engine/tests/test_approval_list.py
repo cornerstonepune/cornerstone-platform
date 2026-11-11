@@ -132,6 +132,14 @@ def test_a_second_approval_before_anything_reaches_a_parent(conn):
         "second_by": "a coordinator",
         "sent_back_because": None,
     }
+    # CP-19: a report is also sent only with the child's consent on record
+    with pytest.raises(psycopg.errors.CheckViolation, match="consent"), conn.transaction():
+        conn.execute("update parent_note set sent_at = now() where id = %s", (note,))
+    conn.execute(
+        "insert into consent (tenant_id, child_id, decision, given_by, how, recorded_by)"
+        " select tenant_id, child_id, 'given', 'mother', 'a signed form', 'the coordinator' from parent_note where id = %s",
+        (note,),
+    )
     conn.execute("update parent_note set sent_at = now() where id = %s", (note,))
     assert _entry(conn, "parent_note", str(note))["state"] == "approved"
 

@@ -20,7 +20,7 @@ export const GROUPS: readonly Door[] = [
     icon: "today",
     screen: "today-educator",
     pages: [
-      { href: "/today", label: "What needs doing", match: ["/today", "/voice"] },
+      { href: "/today", label: "What needs doing", match: ["/today", "/voice", "/notes", "/record", "/period"] },
       { label: "Your day", href: "/educator", match: ["/educator"], guide: false },
       { label: "Today, new look", href: "/today/new", match: ["/today/new"], guide: false },
     ],
@@ -40,11 +40,11 @@ export const GROUPS: readonly Door[] = [
   {
     key: "children",
     label: "Children",
-    href: "/k2",
+    href: "/children",
     icon: "child",
     screen: "children",
     pages: [
-      { label: "Children", href: "/k2", match: ["/k2"], guide: false },
+      { label: "Children", href: "/children", match: ["/children", "/k2"], guide: false },
       { href: "/papers", label: "Assessments", match: ["/papers", "/children/assessments", "/make", "/home", "/worksheets/CS"] },
       { href: "/papers/approve", label: "Papers to approve", match: ["/papers/approve"] },
       { href: "/capture", label: "Upload papers", match: ["/capture"] },

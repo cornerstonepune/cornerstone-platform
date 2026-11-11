@@ -40,25 +40,24 @@ test.afterAll(async () => {
 
 test("while the timetable is switched off an activity's page is not found", async ({ page }) => {
   await timetableSwitch(sql, false);
-  await page.goto(`/educator/activity/${CODE}`);
+  await page.goto(`/setup/activities/${CODE}`);
   await expect(page.getByText("This page could not be found.")).toBeVisible();
 });
 
 test("the page shows the school's words, drafted steps as bullets and how to think as an idea with slips, each draft marked check me", async ({ page }) => {
   await timetableSwitch(sql, true);
-  await page.goto(`/educator/activity/${CODE}`);
+  await page.goto(`/setup/activities/${CODE}`);
   await expect(page.getByRole("heading", { level: 1, name: "Insects" })).toBeVisible();
   const objective = page.locator('[data-part="objective"]');
   await expect(objective.locator(".pp-origin")).toHaveText("The school's words");
   await expect(objective.getByRole("button")).toHaveCount(0); // the school's words are never answered
   const steps = page.locator('[data-part="steps"]');
   await expect(steps.locator(".pp-origin")).toHaveText("Drafted, check me");
-  await expect(steps.locator(".pp-steps li")).toHaveText(STEPS);
-  const thinking = page.locator('[data-part="thinking"]');
-  await expect(thinking).toContainText(THINKING.idea);
-  await expect(thinking.locator("mark")).toHaveText("spider");
-  for (const n of [0, 1, 2, 3]) await expect(page.getByRole("heading", { name: `Level ${n}` })).toBeVisible();
-  await expect(page.locator("[data-summary]")).toContainText("2 parts to check");
+  await expect(page.locator('details[data-fold="steps"] .pp-steps li')).toHaveText(STEPS);
+  const how = page.locator('details[data-fold="thinking"]');
+  await expect(how).toContainText(THINKING.idea);
+  await expect(how.locator("mark")).toHaveText("spider");
+  await expect(page.locator("[data-levels] dt")).toHaveText(["Level 0", "Level 1", "Level 2", "Level 3"]);
   // no person is ever named on the page: not the member of staff who kept a part, not a child
   const [{ names }] = await sql<{ names: string[] }[]>`select coalesce(array_agg(name), '{}') as names from pii.staff`;
   const body = await page.locator("main").innerText();
@@ -69,7 +68,7 @@ test("the page shows the school's words, drafted steps as bullets and how to thi
 
 test("Keep makes a draft a person's, Edit puts her words in its place, and Send back empties it", async ({ page }) => {
   await timetableSwitch(sql, true);
-  await page.goto(`/educator/activity/${CODE}`);
+  await page.goto(`/setup/activities/${CODE}`);
   const steps = page.locator('[data-part="steps"]');
   await steps.getByRole("button", { name: "Keep" }).click();
   await expect(steps.locator(".pp-origin")).toHaveText("Kept by a person");
@@ -79,7 +78,7 @@ test("Keep makes a draft a person's, Edit puts her words in its place, and Send 
   await thinking.getByText("Edit").click();
   await thinking.locator('input[name="idea"]').fill("Placeholder idea, in her words.");
   await thinking.getByRole("button", { name: "Save" }).click();
-  await expect(thinking).toContainText("Placeholder idea, in her words.");
+  await expect(page.locator('details[data-fold="thinking"]')).toContainText("Placeholder idea, in her words.");
   await expect(thinking.locator(".pp-origin")).toHaveText("Kept by a person");
 
   await sql`
@@ -88,7 +87,7 @@ test("Keep makes a draft a person's, Edit puts her words in its place, and Send 
     from activity where code = ${CODE}`;
   await page.reload();
   await steps.getByRole("button", { name: "Send back" }).click();
-  await expect(steps).toContainText("Nothing written yet.");
+  await expect(steps).toContainText("Empty");
   await expect(steps.locator(".pp-origin")).toHaveCount(0);
 });
 
@@ -102,7 +101,7 @@ test("a period whose line names an activity opens its page, and back returns to 
   await page.goto(`/educator/period/${p.period}?class=${p.klass}&day=${p.day}`);
   await page.locator("[data-open-activity]").click();
   await expect(page.getByRole("heading", { level: 1, name: "Insects" })).toBeVisible();
-  await expect(page).toHaveURL(/\/educator\/activity\/ACT-K2-0348/);
+  await expect(page).toHaveURL(/\/setup\/activities\/ACT-K2-0348/);
   await page.locator('[data-ux="next"]').click();
   await expect(page).toHaveURL(new RegExp(`/educator\\?class=${p.klass}&day=${p.day}`));
 });

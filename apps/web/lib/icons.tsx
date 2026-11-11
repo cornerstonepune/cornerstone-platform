@@ -1,4 +1,5 @@
 import {
+  Package,
   ArrowBigDown,
   ArrowBigUp,
   ArrowRight,
@@ -124,6 +125,7 @@ export const ICONS = {
   activity: Blocks,
   skill: Puzzle,
   objective: Target,
+  materials: Package,
   note: StickyNote,
   audio: AudioLines,
   heard: Ear,

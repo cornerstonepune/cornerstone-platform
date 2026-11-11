@@ -11,6 +11,7 @@ import { expect, test } from "@playwright/test";
 import postgres from "postgres";
 import { FAKE_FIRST_NAMES, FAKE_NAMES } from "./fake-names";
 import { inventoryRows, type Rows } from "./inventory-fixtures";
+import { voiceSwitch } from "./k2-rows";
 import { covered, loadInventory } from "./inventory/load";
 import { auditScreen } from "./inventory/run";
 import { driveBar } from "./inventory/bar";
@@ -21,6 +22,7 @@ const sql = postgres(process.env.DATABASE_URL!, { max: 1 });
 let rows: Rows;
 let names: string[] = [];
 test.beforeAll(async () => {
+  await voiceSwitch(sql, true); // the K2 switch is on for the screens behind it (UI-3 waits_for)
   rows = await inventoryRows(sql);
   names = (await sql<{ first_name: string }[]>`select distinct first_name from pii.child where length(first_name) > 2`).map((r) => r.first_name);
 });
@@ -37,6 +39,7 @@ const rolesOf = (who: string, route: string) => {
 const pending = inv.screens.filter((s) => !run.has(s.id));
 test(`the inventory report: ${pending.length} of ${inv.screens.length} screens pending, ${inv.screens.length - pending.length} run`, () => {
   for (const s of pending) test.info().annotations.push({ type: "pending", description: `${s.id} (${s.route}): its slice is not in merged_slices` });
+  for (const s of inv.screens) for (const e of s.elements) if (e.pending && run.has(s.id)) test.info().annotations.push({ type: "pending", description: `${s.id}: ${e.label} (${e.pending})` });
   console.log(`inventory: ${inv.screens.length - pending.length} screens run, ${pending.length} pending: ${pending.map((s) => s.id).join(", ")}`);
   // every screen belongs to a slice (the inventory's own rule), so a screen is run or pending and never lost
   const inSlice = new Set(inv.slices.flatMap((x) => x.screens));

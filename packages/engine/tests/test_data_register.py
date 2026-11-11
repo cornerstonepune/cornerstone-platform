@@ -67,6 +67,7 @@ PII_COLUMN_WORDS = {
     "pii.child.birthday": "date of birth",
     "pii.educator_note.sentence": "the one sentence she confirms from each",
     "pii.educator_note.session_id": "which lesson each note was about",
+    "pii.educator_note.photo_keys": "photos of the work or the board for a lesson, never of a child",
 }
 
 

@@ -8,7 +8,7 @@
       "id": "MINI",
       "screens": [
         "across",
-        "password"
+        "feedback"
       ]
     }
   ],
@@ -38,38 +38,28 @@
       "phone_gate": false
     },
     {
-      "id": "password",
-      "route": "/account/password",
+      "id": "feedback",
+      "route": "/feedback",
       "group": "Outside the bar",
       "who": "both",
-      "title": "Change password",
+      "title": "Report a problem or suggest something",
       "elements": [
         {
           "t": "field",
-          "label": "Your current password"
+          "label": "What happened"
         },
         {
           "t": "field",
-          "label": "New password"
-        },
-        {
-          "t": "field",
-          "label": "The same password again"
+          "label": "Where"
         },
         {
           "t": "button",
-          "label": "Save the new password",
-          "text": "Save the new password"
+          "label": "Send",
+          "text": "Send"
         },
         {
           "t": "link",
-          "label": "What needs doing →",
-          "href": "/today",
-          "external": "/today"
-        },
-        {
-          "t": "link",
-          "label": "next step: What needs doing",
+          "label": "next step: Back to the page you came from",
           "href": "/today",
           "external": "/today"
         }

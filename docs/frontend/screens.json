@@ -63,7 +63,8 @@
     "Themes: a screenshot in light at 1440 is committed as the baseline; the `blocks` screen and the journey steps are also committed in dark. Text contrast is measured by the token-pair script (UI-14) and by axe, not by sampling every page."
   ],
   "merged_slices": [
-    "UI-5"
+    "UI-5",
+    "UI-12"
   ],
   "slices": [
     {
@@ -1745,12 +1746,16 @@
         {
           "t": "button",
           "label": "× on a filter chip",
-          "effect": "removes that filter from the address"
+          "effect": "removes that filter from the address",
+          "text": "Remove filter",
+          "when": "filtered",
+          "data": "data-chip"
         },
         {
           "t": "button",
           "label": "Clear",
-          "effect": "removes every filter and the search"
+          "effect": "removes every filter and the search",
+          "when": "filtered"
         },
         {
           "t": "peek",
@@ -1782,7 +1787,8 @@
           "t": "link",
           "label": "page: Later →",
           "to": "children",
-          "note": "the next ten rows; the address carries the page"
+          "note": "the next ten rows; the address carries the page",
+          "when": "paged"
         },
         {
           "t": "filter",
@@ -1792,13 +1798,15 @@
         {
           "t": "button",
           "label": "peek: Close",
-          "effect": "closes ChildPeek; focus returns to the child that opened it"
+          "effect": "closes ChildPeek; focus returns to the child that opened it",
+          "when": "peek"
         },
         {
           "t": "link",
           "label": "peek: Open the child",
           "to": "child",
-          "note": "the one way from a list to the child's own page"
+          "note": "the one way from a list to the child's own page",
+          "when": "peek"
         }
       ],
       "rail": [
@@ -1885,7 +1893,8 @@
           "t": "link",
           "label": "rail: Show: each skill seen",
           "to": "picture",
-          "note": "same screen, the skill filter changes"
+          "note": "same screen, the skill filter changes",
+          "data": "data-show"
         },
         {
           "t": "link",
@@ -1926,13 +1935,15 @@
         {
           "t": "button",
           "label": "peek: Close",
-          "effect": "closes ChildPeek; focus returns to the child that opened it"
+          "effect": "closes ChildPeek; focus returns to the child that opened it",
+          "when": "peek"
         },
         {
           "t": "link",
           "label": "peek: Open the child",
           "to": "child",
-          "note": "the one way from a list to the child's own page"
+          "note": "the one way from a list to the child's own page",
+          "when": "peek"
         }
       ],
       "rail": [
@@ -2005,16 +2016,19 @@
         {
           "t": "link",
           "label": "each graph node",
-          "to": "skill"
+          "to": "skill",
+          "data": "data-node"
         },
         {
           "t": "filter",
           "label": "skill for the trend",
-          "note": "the trend redraws; the address carries it"
+          "note": "the trend redraws; the address carries it",
+          "text": "Skill"
         },
         {
           "t": "fold",
-          "label": "details on each timeline entry"
+          "label": "details on each timeline entry",
+          "text": "What it said"
         },
         {
           "t": "link",
@@ -2029,13 +2043,16 @@
         {
           "t": "link",
           "label": "each skill row",
-          "to": "skill"
+          "to": "skill",
+          "data": "data-skill-row"
         },
         {
           "t": "link",
           "label": "page: more entries",
           "to": "child",
-          "note": "older entries, ten at a time"
+          "note": "older entries, ten at a time",
+          "text": "Older entries",
+          "when": "paged"
         },
         {
           "t": "link",
@@ -3800,17 +3817,21 @@
           "t": "link",
           "label": "each job",
           "to": "today-educator",
-          "note": "the jobs are generated from screens.json: each names its own screen, and the test follows every one"
+          "note": "the jobs are generated from screens.json: each names its own screen, and the test follows every one",
+          "data": "data-job"
         },
         {
           "t": "fold",
-          "label": "each page's section"
+          "label": "each page's section",
+          "data": "data-section",
+          "text": "Sign in"
         },
         {
           "t": "link",
           "label": "? on any page",
           "to": "help",
-          "note": "opens this page at that page's section"
+          "note": "opens this page at that page's section",
+          "text": "its section"
         }
       ],
       "rail": [],
@@ -3861,12 +3882,25 @@
         {
           "t": "upload",
           "label": "capture: a screenshot",
-          "effect": "png/jpg attached to the note"
+          "effect": "png/jpg attached to the note",
+          "pending": "needs backend storage (issue #551)"
         },
         {
           "t": "button",
           "label": "Send",
-          "effect": "a staff_note row and a GitHub issue; the page says it reached the team and links back"
+          "effect": "a staff_note row and a GitHub issue; the page says it reached the team and links back",
+          "drive": {
+            "fill": {
+              "What happened, or what you would like": "Inventory check: the page reached the team"
+            },
+            "click": "Send",
+            "expect": {
+              "text": [
+                "Thanks, it reached the team."
+              ],
+              "check": "feedback_note_sent"
+            }
+          }
         }
       ],
       "rail": [],
