@@ -1,6 +1,7 @@
 import { cache } from "react";
 import { sql } from "./db";
 import { stateWords } from "./fortnight-words";
+import { dateWords } from "./week";
 import { EngineDown, engineSend } from "./engine";
 import type { Subject } from "@/components/period-row";
 
@@ -137,10 +138,10 @@ export function liveIds(rows: readonly PlanRow[], today: string, on: boolean): S
 
 /** The words the coordinator reads about a fortnight: its state in the school's words, and what educators see of it. With the
  *  switch on the engine shows educators every fortnight with lessons, so a planning one says so rather than claim it is hidden. */
-export function liveWords(state: string, w: { on: boolean; live: boolean; lessons: number }): string {
+export function liveWords(state: string, w: { on: boolean; live: boolean; lessons: number; from?: string }): string {
   const s = stateWords(state);
   if (!w.on) return `${s}: not live yet`;
-  if (w.live) return `${s}: live, educators see it`;
+  if (w.live) return `${s}: live, educators see it${w.from ? ` from ${dateWords(w.from)}` : ""}`;
   return w.lessons ? `${s}: planning, educators can already open it` : `${s}: planning, nothing placed yet`;
 }
 
@@ -154,4 +155,11 @@ export async function yearFor(f: Fn, classId: string): Promise<PlanRow[]> {
              where s.school_class_id = ${classId} and d.on_date between g.starts_on and g.ends_on) as lessons,
            exists (select 1 from approval a where a.kind = 'timetable_live' and a.target = ${classId} || ' ' || g.id::text) as live
     from fortnight g where g.kind = 'teaching' and g.academic_year_id = (select academic_year_id from fortnight where id = ${f.id}) order by g.starts_on`;
+}
+
+/** Whether `day` is a school holiday, or no school day at all on record (the vacation and the days before a term): the Timetable
+ *  then says the school is on holiday rather than only that no fortnight runs. Read only. */
+export async function noSchoolOn(day: string): Promise<boolean> {
+  const [r] = await sql<{ kind: string | null }[]>`select (select kind from school_day where on_date = ${day}::date limit 1) as kind`;
+  return !r?.kind || r.kind === "holiday";
 }

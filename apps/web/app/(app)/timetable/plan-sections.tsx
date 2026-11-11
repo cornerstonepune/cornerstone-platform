@@ -25,7 +25,7 @@ export function PlanSections({ rows, on, live, today, shown, classId, grid }: { 
           <ul className="tt-list">
             {isLive.map((r) => (
               <li key={r.id} data-live-fortnight={r.number}>
-                <strong>Fortnight {r.number}</strong>, {span(r)} · {liveWords(r.state, { on: true, live: true, lessons: r.lessons })} · {lessons(r.lessons)} · {links(r)}
+                <strong>Fortnight {r.number}</strong>, {span(r)} · {liveWords(r.state, { on: true, live: true, lessons: r.lessons, from: r.starts_on > today ? r.starts_on : undefined })} · {lessons(r.lessons)} · {links(r)}
               </li>
             ))}
           </ul>

@@ -21,7 +21,7 @@ import { stateWords } from "@/lib/fortnight-words";
 import { sql } from "@/lib/db";
 import { gridOf, moveInto } from "@/lib/timetable-grid";
 import { subjectsAgainstRule, type SubjectRow } from "@/lib/timetable-subjects";
-import { classesOf, subjectLooks, clashesOf, fortnightAfter, fortnightAt, fortnightNumber, fortnightsOfYear, isCoordinator, liveIds, liveWords, movesOf, switchedOn, yearFor, type Fn } from "@/lib/timetable-ui";
+import { classesOf, subjectLooks, clashesOf, fortnightAfter, fortnightAt, fortnightNumber, fortnightsOfYear, isCoordinator, liveIds, liveWords, movesOf, noSchoolOn, switchedOn, yearFor, type Fn } from "@/lib/timetable-ui";
 import { schoolToday } from "@/lib/voice-page";
 import { DayOnPhone } from "./day-on-phone";
 import { PlanSections } from "./plan-sections";
@@ -78,7 +78,14 @@ export default async function TimetablePage({ searchParams }: Props) {
   const on = await switchedOn();
   const plan = coordinator && classId ? await yearFor(fn, classId) : [];
   const live = liveIds(plan, today, on);
-  const said = liveWords(fn.state, { on, live: live.has(fn.id), lessons: plan.find((r) => r.id === fn.id)?.lessons ?? 0 });
+  const said = liveWords(fn.state, { on, live: live.has(fn.id), lessons: plan.find((r) => r.id === fn.id)?.lessons ?? 0, from: fn.starts_on > today ? fn.starts_on : undefined });
+  // no fortnight runs today (the vacation, or the days before the first): the page opens on the next one and says so
+  const ahead = !q.fn && !q.day && q.when !== "next" && today < fn.starts_on;
+  const aheadLine = ahead ? (
+    <p className="tt-note" data-no-fortnight-today>
+      {(await noSchoolOn(today)) ? "School is on holiday" : "No fortnight runs today"}; Fortnight {fn.number} starts on {dateWords(fn.starts_on)}.
+    </p>
+  ) : null;
   const moveHref = `/timetable/moves?${new URLSearchParams({ fn: String(fn.number), ...(classId ? { class: classId } : {}) })}`;
   const choose = coordinator ? await coordinatorFilters(fn, all, classId) : null;
   const sections = coordinator ? <PlanSections rows={plan} on={on} live={live} today={today} shown={fn.number} classId={classId} grid={(n) => `${HERE}?${new URLSearchParams({ ...(classId ? { class: classId } : {}), fn: String(n), view })}`} /> : null;
@@ -97,6 +104,7 @@ export default async function TimetablePage({ searchParams }: Props) {
     return (
       <Screen stage={`Fortnight ${fn.number}`} title="Timetable" purpose="Every fortnight, in any state, read-only: what is placed, and whether educators see it yet." next={{ href: `/timetable/fortnight/${fn.number}`, label: `Fortnight ${fn.number}` }}>
         {sections}
+        {aheadLine}
         <p className="tt-note" data-fortnight-state={fn.state}>{said}</p>
         {choose ? <FilterBar action={HERE} keep={{ view }} filters={choose} /> : null}
         <EmptyState next={{ href: `/timetable/fortnight/${fn.number}`, label: `Open Fortnight ${fn.number}` }}>
@@ -120,6 +128,7 @@ export default async function TimetablePage({ searchParams }: Props) {
     days: shown,
     clashes,
     at: { today, now },
+    move: coordinator ? (day, p) => `/timetable/moves?${new URLSearchParams({ fn: String(fn.number), class: klass.id, from: `${day}~${p}` })}` : undefined,
     href: (day, p) => (sessionAt.has(`${day}|${p}`) ? `/period/${sessionAt.get(`${day}|${p}`)}` : `/period/${p}?class=${klass.id}&day=${day}`),
   });
   const lessons = grid.rows.some((r) => "cells" in r && r.cells.some((c) => c));
@@ -170,9 +179,7 @@ export default async function TimetablePage({ searchParams }: Props) {
     >
       <DayOnPhone chosen={(VIEWS as readonly string[]).includes(q.view ?? "")} />
       {sections}
-      {!q.fn && !q.day && q.when !== "next" && today < fn.starts_on ? (
-        <p className="tt-note" data-no-fortnight-today>No fortnight runs today. Fortnight {fn.number} starts on {dateWords(fn.starts_on)}.</p>
-      ) : null}
+      {aheadLine}
       {coordinator ? <p className="tt-note" data-fortnight-state={fn.state}>Fortnight {fn.number}, shown below · {said}</p> : null}
       <FilterBar
         action={HERE}

@@ -109,10 +109,21 @@ test("the coordinator opens a fortnight still in planning: its grid, its state i
   await expect(page.getByRole("button", { name: /go live/i })).toHaveCount(0);
   // Move lessons opens the existing Moves by hand on this fortnight and class (the engine asks a reason past planning)
   await expect(page.locator("[data-move-lessons]").first()).toHaveAttribute("href", `/timetable/moves?fn=${PLANNED}&class=${f.klass}`);
+  // and every lesson in the grid has its own Move, opening Moves by hand with that lesson picked (its day and period)
+  await expect(page.locator(`${GRID} [data-move-lesson]`)).toHaveCount(lessons);
+  const one = page.locator(`${GRID} [data-move-lesson]`).first();
+  expect(await one.getAttribute("href")).toMatch(new RegExp(`^/timetable/moves\\?fn=${PLANNED}&class=${f.klass}&from=\\d{4}-\\d\\d-\\d\\d(~|%7E)[0-9a-f-]{36}$`));
+  await one.click();
+  await expect(page.getByRole("heading", { name: "Moves by hand", level: 1 })).toBeVisible();
+  await expect(page.getByText(NOT_FOUND)).toHaveCount(0);
   await page.context().close();
 });
 
+// As live is: the lessons are session rows loaded from the school's sheet, with no timetable_live approval row (CP-27: the timetable
+// of a date is its lessons), and the switch is on; so the fortnight educators open on is Live.
 test("with the switch on (as live today): the fortnight under way is Live, the later ones are Planning, and each says what educators see", async ({ browser }) => {
+  const [{ n: approvals }] = await sql<{ n: number }[]>`select count(*)::int as n from approval where kind = 'timetable_live' and target like ${`${f.klass} %`}`;
+  expect(approvals, "the fixture's lessons are loaded rows, never a draft put live").toBe(0);
   await timetableSwitch(sql, true);
   try {
     const page = await as(browser, COORDINATOR.email);
@@ -131,6 +142,7 @@ test("with the switch on (as live today): the fortnight under way is Live, the l
     await edu.goto(`/timetable?class=${f.klass}&fn=7401`);
     await expect(edu.locator("[data-block=FortnightGrid]")).toBeVisible();
     await expect(edu.locator("[data-move-lessons]")).toHaveCount(0);
+    await expect(edu.locator("[data-move-lesson]")).toHaveCount(0);
     await expect(edu.locator("[data-section=planning]")).toHaveCount(0);
     await edu.context().close();
   } finally {
