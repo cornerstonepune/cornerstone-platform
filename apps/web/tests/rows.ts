@@ -134,6 +134,10 @@ export async function aWorksheet(sql: Sql, w: Worksheet): Promise<{ template: st
  *  from (`boxes.read_page`; a reading by words has a region and no count). */
 export type Read = {
   status: string; read?: string; why?: string; guess?: string; checkedBy?: string; box?: number[]; boxes?: number;
+  /** The reading is the question's own answer, as a child who got it right wrote it: what the engine (or a person) reads on a right answer.
+   *  A `correct` row whose reading is not the key is one the engine could not have made: the next re-mark from what was read (`again.remark`,
+   *  run each time a person types a reading) says so and changes it. With `checkedBy` it is a right answer a person has checked. */
+  key?: boolean;
 };
 
 /** One child's copy of a worksheet, scanned and read, an answer per entry of `reads` in question order. A paper read
@@ -162,7 +166,9 @@ export async function aReadPaper(
   await sql`update capture set superseded_by = ${capture} where sheet_instance_id = ${sheet} and id <> ${capture}
             and superseded_by is null`;
   const results: string[] = [];
-  for (const [i, r] of p.reads.entries()) {
+  for (const [i, r0] of p.reads.entries()) {
+    const [own] = r0.key ? await sql<{ answer: string }[]>`select responses -> 0 ->> 'answer' as answer from item where id = ${p.items[i]}` : [];
+    const r = r0.key ? { ...r0, read: own.answer } : r0;
     const raw = JSON.stringify({
       child_answer: r.read ?? "",
       answer_state: r.read ? "written" : "blank",

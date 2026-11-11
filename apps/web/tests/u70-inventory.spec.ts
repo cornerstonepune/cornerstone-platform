@@ -30,7 +30,11 @@ test.afterAll(async () => {
   await sql.end();
 });
 
-const rolesOf = (who: string) => (who === "educator" ? ["educator", "coordinator"] : who === "coordinator" ? ["coordinator"] : ["educator", "coordinator"]) as ("educator" | "coordinator")[];
+const rolesOf = (who: string, route: string) => {
+  // two screens on one address are two versions of it (Today): each is held to its own role, the other version being the other screen
+  if ((who === "educator" || who === "coordinator") && inv.screens.filter((x) => x.route === route).length > 1) return [who] as ("educator" | "coordinator")[];
+  return (who === "educator" ? ["educator", "coordinator"] : who === "coordinator" ? ["coordinator"] : ["educator", "coordinator"]) as ("educator" | "coordinator")[];
+};
 
 const pending = inv.screens.filter((s) => !run.has(s.id));
 test(`the inventory report: ${pending.length} of ${inv.screens.length} screens pending, ${inv.screens.length - pending.length} run`, () => {
@@ -44,7 +48,7 @@ test(`the inventory report: ${pending.length} of ${inv.screens.length} screens p
 
 for (const s of inv.screens) {
   if (!run.has(s.id)) continue;
-  for (const role of rolesOf(s.who))
+  for (const role of rolesOf(s.who, s.route))
     for (const width of [1440, 400])
       test(`${s.id} · ${role} · ${width}`, async ({ browser }) => {
         test.setTimeout(180_000);

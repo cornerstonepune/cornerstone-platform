@@ -20,14 +20,15 @@ export const READER_VIEWS = [
 ] as const;
 export type ReaderView = "day" | (typeof READER_VIEWS)[number][0];
 
-export function ReaderTable({ r, words, view, page, keep }: { r: ReaderReport; words: Record<string, string>; view: ReaderView; page: number; keep: Record<string, string | undefined> }) {
+/** `base`: the page the table is on (the filter and the pager write their state into its address); the upload page by default. */
+export function ReaderTable({ r, words, view, page, keep, base = "/capture" }: { r: ReaderReport; words: Record<string, string>; view: ReaderView; page: number; keep: Record<string, string | undefined>; base?: string }) {
   // days come newest first; each day's move is against the day read before it
   const days = r.days.map((d, i) => {
     const now = share(d.right, d.stood_behind);
     const before = r.days[i + 1] ? share(r.days[i + 1].right, r.days[i + 1].stood_behind) : null;
     return { ...d, now, moved: now === null || before === null ? null : now - before };
   });
-  const href = (n: number) => `/capture?${new URLSearchParams({ ...Object.fromEntries(Object.entries(keep).filter(([, v]) => v) as [string, string][]), reader: view, rpage: String(n) })}`;
+  const href = (n: number) => `${base}?${new URLSearchParams({ ...Object.fromEntries(Object.entries(keep).filter(([, v]) => v) as [string, string][]), reader: view, rpage: String(n) })}`;
   const label = "How the reader is doing";
   type Day = (typeof days)[number];
   const dayCols: Column<Day>[] = [
@@ -82,7 +83,7 @@ export function ReaderTable({ r, words, view, page, keep }: { r: ReaderReport; w
   ];
   return (
     <div className="mt-4">
-      <FilterBar action="/capture" keep={keep} filters={[{ name: "reader", label: "Show", value: view === "day" ? undefined : view, all: "By day", options: READER_VIEWS }]} />
+      <FilterBar action={base} keep={keep} filters={[{ name: "reader", label: "Show", value: view === "day" ? undefined : view, all: "By day", options: READER_VIEWS }]} />
       {view === "sure" ? (
         <p className="note mb-2">
           An answer stands on its own only when the reader is at least {Math.round(r.floor)}% sure; below that a person checks it. When the

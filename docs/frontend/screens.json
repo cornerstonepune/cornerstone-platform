@@ -365,7 +365,7 @@
   "screens": [
     {
       "id": "today-educator",
-      "route": "/today",
+      "route": "/today/new",
       "group": "Today",
       "who": "educator",
       "phase": "Core",
@@ -465,23 +465,27 @@
         {
           "t": "peek",
           "label": "each Sr. No. in Your class",
-          "effect": "opens ChildPeek for that child"
+          "effect": "opens ChildPeek for that child",
+          "pending": "UI-3b (#570) and UI-3c (#577) are on main: the children list and its peek are built in a follow-up (UI-7c) that reuses their peek and the activity-to-skill link, not a copy"
         },
         {
           "t": "button",
           "label": "peek: Close",
-          "effect": "closes ChildPeek; focus returns to the child that opened it"
+          "effect": "closes ChildPeek; focus returns to the child that opened it",
+          "pending": "UI-3b (#570) and UI-3c (#577) are on main: the children list and its peek are built in a follow-up (UI-7c) that reuses their peek and the activity-to-skill link, not a copy"
         },
         {
           "t": "link",
           "label": "peek: Open the child",
           "to": "child",
-          "note": "the one way from a list to the child's own page"
+          "note": "the one way from a list to the child's own page",
+          "pending": "UI-3b (#570) and UI-3c (#577) are on main: the children list and its peek are built in a follow-up (UI-7c) that reuses their peek and the activity-to-skill link, not a copy"
         },
         {
           "t": "child_name",
           "label": "the name in the peek",
-          "note": "the child's name beside the Sr. No., read from pii by child_id"
+          "note": "the child's name beside the Sr. No., read from pii by child_id",
+          "pending": "UI-3b (#570) and UI-3c (#577) are on main: the children list and its peek are built in a follow-up (UI-7c) that reuses their peek and the activity-to-skill link, not a copy"
         }
       ],
       "rail": [
@@ -509,7 +513,7 @@
     },
     {
       "id": "today-coordinator",
-      "route": "/today",
+      "route": "/today/new",
       "group": "Today",
       "who": "coordinator",
       "phase": "Core",
@@ -550,18 +554,21 @@
         {
           "t": "link",
           "label": "this week tile",
-          "to": "fortnight"
+          "to": "fortnight",
+          "pending": "the school's counts are not readable by the web yet (clashes not accepted, drafts to approve, materials lines without a quantity, last week's sessions by class and day, consent on file, next week's new activities): asked of the orchestrator on 10 Nov"
         },
         {
           "t": "link",
           "label": "sessions done tile",
-          "to": "staff"
+          "to": "staff",
+          "pending": "the school's counts are not readable by the web yet (clashes not accepted, drafts to approve, materials lines without a quantity, last week's sessions by class and day, consent on file, next week's new activities): asked of the orchestrator on 10 Nov"
         },
         {
           "t": "cell",
           "label": "each heat-grid cell",
           "to": "timetable",
-          "note": "opens that class's day"
+          "note": "opens that class's day",
+          "pending": "the school's counts are not readable by the web yet (clashes not accepted, drafts to approve, materials lines without a quantity, last week's sessions by class and day, consent on file, next week's new activities): asked of the orchestrator on 10 Nov"
         },
         {
           "t": "row",
@@ -569,7 +576,8 @@
           "to": "moves",
           "roles": [
             "coordinator"
-          ]
+          ],
+          "pending": "the school's counts are not readable by the web yet (clashes not accepted, drafts to approve, materials lines without a quantity, last week's sessions by class and day, consent on file, next week's new activities): asked of the orchestrator on 10 Nov"
         },
         {
           "t": "row",
@@ -577,7 +585,8 @@
           "to": "draft",
           "roles": [
             "coordinator"
-          ]
+          ],
+          "pending": "the school's counts are not readable by the web yet (clashes not accepted, drafts to approve, materials lines without a quantity, last week's sessions by class and day, consent on file, next week's new activities): asked of the orchestrator on 10 Nov"
         },
         {
           "t": "row",
@@ -587,17 +596,20 @@
         {
           "t": "row",
           "label": "sessions not done row",
-          "to": "staff"
+          "to": "staff",
+          "pending": "the school's counts are not readable by the web yet (clashes not accepted, drafts to approve, materials lines without a quantity, last week's sessions by class and day, consent on file, next week's new activities): asked of the orchestrator on 10 Nov"
         },
         {
           "t": "row",
           "label": "materials row",
-          "to": "materials"
+          "to": "materials",
+          "pending": "the school's counts are not readable by the web yet (clashes not accepted, drafts to approve, materials lines without a quantity, last week's sessions by class and day, consent on file, next week's new activities): asked of the orchestrator on 10 Nov"
         },
         {
           "t": "link",
           "label": "each new activity next week",
-          "to": "activity"
+          "to": "activity",
+          "pending": "the school's counts are not readable by the web yet (clashes not accepted, drafts to approve, materials lines without a quantity, last week's sessions by class and day, consent on file, next week's new activities): asked of the orchestrator on 10 Nov"
         },
         {
           "t": "link",
@@ -910,7 +922,7 @@
         {
           "t": "cell",
           "label": "each square",
-          "effect": "opens the mark picker: above / as expected / below / not willing / absent / clear; the square's corner mark changes; the claim it came from is marked changed"
+          "effect": "opens the mark picker: above / below / not willing / absent / clear (\"as expected\" is the one switch for the rest: the engine records an individual child's mark in four lists); the square's corner mark changes; the claim it came from is marked changed"
         },
         {
           "t": "switch",
@@ -2316,7 +2328,7 @@
         },
         {
           "t": "filter",
-          "label": "class · topic · subject · kind · week · stage",
+          "label": "class · topic · subject · kind · week · stage (and, on Reading, Show: by day, by kind of question, by how sure)",
           "text": "Class",
           "data": "data-filter"
         },
@@ -2391,6 +2403,69 @@
           "text": "Later",
           "when": "?view=table",
           "note": "the next ten assessments"
+        },
+        {
+          "t": "tab",
+          "label": "By topic",
+          "note": "every topic a row with its count, closed until opened; the address carries the topic",
+          "text": "By topic"
+        },
+        {
+          "t": "tab",
+          "label": "Reading",
+          "note": "how the reader is doing, and the files read lately",
+          "text": "Reading"
+        },
+        {
+          "t": "field",
+          "label": "rename: name this assessment",
+          "note": "one on each row; the built name shows until a name is chosen",
+          "text": "Name this assessment",
+          "when": "?view=table",
+          "data": "data-rename-name"
+        },
+        {
+          "t": "button",
+          "label": "Save the name",
+          "effect": "the name is the educator's own and is kept as a row of the history log, the older names stay",
+          "text": "Save the name",
+          "when": "?view=table",
+          "drive": {
+            "fill": {
+              "Name this assessment": "Named in the inventory"
+            },
+            "expect": {
+              "text": [
+                "Named in the inventory"
+              ],
+              "check": "assessment-renamed"
+            },
+            "after": "name-undone"
+          },
+          "data": "data-rename-save"
+        },
+        {
+          "t": "link",
+          "label": "each topic",
+          "note": "opens the topic's assessments beneath it",
+          "data": "data-topic-open",
+          "when": "?view=topic",
+          "to": "assessments"
+        },
+        {
+          "t": "button",
+          "label": "Read again",
+          "effect": "the file is read again with the reader as it now is; the page says in words when the engine no longer keeps it",
+          "text": "Read again",
+          "when": "?view=reading",
+          "drive": {
+            "expect": {
+              "url": "read=refused",
+              "text": [
+                "no longer kept by the engine"
+              ]
+            }
+          }
         }
       ],
       "rail": [
@@ -2568,6 +2643,32 @@
           "t": "upload",
           "label": "capture: Photo",
           "effect": "a scan of this assessment's paper; the QR must belong to it, else a message"
+        },
+        {
+          "t": "field",
+          "label": "rename: name this assessment",
+          "note": "the built name shows until a name is chosen",
+          "text": "Name this assessment",
+          "data": "data-rename-name"
+        },
+        {
+          "t": "button",
+          "label": "Save the name",
+          "effect": "the name is the educator's own and is kept as a row of the history log, the older names stay",
+          "text": "Save the name",
+          "drive": {
+            "fill": {
+              "Name this assessment": "Named in the inventory"
+            },
+            "expect": {
+              "text": [
+                "Named in the inventory"
+              ],
+              "check": "assessment-renamed"
+            },
+            "after": "name-undone"
+          },
+          "data": "data-rename-save"
         }
       ],
       "rail": [

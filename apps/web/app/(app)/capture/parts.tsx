@@ -138,7 +138,7 @@ export function PapersTable({ rows, withChild = false, label, page = 1, pageHref
 // so it is never narrowed to a person's classes, and it says so beside their own counts (goals/ux8a-numbers-true.yaml).
 const pct = (a: number, b: number) => (b ? `${Math.round((100 * a) / b)}%` : "—");
 
-export async function ReaderPanel({ r, view, page, keep }: { r: ReaderReport; view: ReaderView; page: number; keep: Record<string, string | undefined> }) {
+export async function ReaderPanel({ r, view, page, keep, base }: { r: ReaderReport; view: ReaderView; page: number; keep: Record<string, string | undefined>; base?: string }) {
   const { words } = await questionKinds();
   const read = r.days.filter((d) => d.stood_behind > 0); // newest first
   const [latest, first] = [read[0], read[read.length - 1]];
@@ -153,7 +153,7 @@ export async function ReaderPanel({ r, view, page, keep }: { r: ReaderReport; vi
         Every check you make teaches it how that child writes; a kind of question is settled by the reader alone only once it has matched you{" "}
         {Math.round(r.bar * 100)}% of the time over the last {r.window} checks. By kind of question says how many more right checks each still needs.
       </p>
-      {r.days.length || r.kinds.length || r.bands.length ? <ReaderTable r={r} words={words} view={view} page={page} keep={keep} /> : null}
+      {r.days.length || r.kinds.length || r.bands.length ? <ReaderTable r={r} words={words} view={view} page={page} keep={keep} base={base} /> : null}
     </Panel>
   );
 }
