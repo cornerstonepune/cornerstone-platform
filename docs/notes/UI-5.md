@@ -89,3 +89,12 @@ Branch `ui-5h-staff-classes-setup` (after #628 and #657).
 - **Classes** (wireframe `classes`): a Class picture link on each class row (drawn once the picture screen is built, like every link to an unbuilt screen); a class's children in two groups, "Moved in this year" first, then "Here since the year began", each with its count; the change log line reads `By <name> · 11-Nov`. The change log keeps the time of the change, not an effective date, so no "from" date is shown (it would repeat the same day).
 - **Setup** (wireframe `setup`): a School card (campus, this academic year, fortnights by kind as the rows name them) and "Changed lately" (a child moved class, a grant added or ended; these are the two kinds the change log holds for Setup's pages). **Not done:** the Curriculum and Question bank count lines of the wireframe's cards (`212 activities`, `3,140 ready`): they need counts from tables this slice does not own.
 - Tests: `u77-staff-classes-setup` (4). `.note` (12 px grey) fails the contrast check on these screens, so the new small lines use the muted ink the tabs use.
+
+## Unfinished in UI-5 (11 Nov 2026, work stopped; one short list)
+1. **#670 itself**: needs main merged in (only generated files conflict: `help.json`, `wireframes.html`; regenerate with `node docs/frontend/build-spec.mjs`, `node apps/web/scripts/tokens.mjs`), the affected specs run on a fresh database, then merged on green. Held for the orchestrator's GO.
+2. **Delete `requireStaffEditor`** from `lib/auth.ts` once backend drops its line from `test_web_gate`; nothing calls it.
+3. **Setup cards**: the Curriculum and Question bank cards lack the wireframe's count lines (`212 activities`, `3,140 ready`, `14 drafted parts`); "Changed lately" shows only child moves and grant changes (the change log holds no skill-approval or question-wording rows for Setup).
+4. **Classes**: the Class picture link shows once the picture screen (UI-3b) is built; the change log has no effective date, so no "from 3-Nov".
+5. **Staff wireframe details not built**: a "What the counts are" explainer, role labels carrying the subject (`Subject educator (Arts)`), a "From" date and a "Held twice" message in the Add a grant form (a grant starts today only, by the engine's rule).
+6. **Axe, moderate (not blocking)**: a grouped table's group heading is an `h3` straight after the page `h1` (heading order); the shared `DataTable` grouping needs an `h2`.
+7. The old `staff.classes` / `staff.subjects` columns stay (decision); nothing in the site writes them.
