@@ -176,7 +176,8 @@ test("one Assessments in the menu for marking and making, and a row opens the pa
   for (const path of ["/make"]) {
     await page.goto(path);
     await expect(menu.getByRole("link", { name: "Children" })).toHaveAttribute("aria-current", "page");
-    await expect(pagesRow.getByRole("link", { name: "Assessments", exact: true })).toHaveAttribute("aria-current", "page");
+    await expect((await doorPages(page)).getByRole("link", { name: "Assessments", exact: true })).toHaveAttribute("aria-current", "page");
+    await page.keyboard.press("Escape");
   }
 
   // a scanned paper opens to check its answers; one not yet scanned opens as printed: a copy's child is its link
