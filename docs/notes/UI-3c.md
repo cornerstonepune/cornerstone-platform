@@ -133,3 +133,18 @@ Test 19 in `u73-teaching-pages.spec.ts`: each cluster's count equals its chips; 
 Per #599: the activity screen's `capture: Photo` upload is gone from screens.json and the wireframe (no store for a set-up photo;
 photos are taken on Record, #609). Its capture bar now links to Record (`capture: Voice note`), as the notes screen does. Page: the
 rail draws the link. Test 20. Test 13 now switches `voice.screens_enabled` on for itself (the peek's history route needs it) and restores it.
+
+## The Skill set screen (ui-3c-skillset-screen)
+`/setup/skill-sets/[code]` ([code] = the skill SET, `skill.code`) in the frame: `Screen`, the trail, a rail of the registry skills it
+covers and the question bank, a "Skills it covers" Cards block (each opens the skill screen; none says so). Under it the six functions
+the old page carried, unchanged in behaviour: a real question per level, a grade per level, approving a level, approving a way of
+asking and editing English samples (`ways`, `editing`, `samples`), more like this, stopping a kind. The kinds and worksheets tables are the
+site's `DataTable`; the mistakes and worksheets live in `below.tsx` (the page stays under the 400-line ceiling).
+`/skill-sets/<code>` answers 308 to it (query kept); `approve`, `levels` and `/edit` stay. The parts and their server actions still
+live in `app/(app)/skill-sets/[code]/` because `packages/engine/tests/test_skill_level.py` names `page.tsx` and `level-approval.tsx` there by
+path and this work may not edit the engine; the old `page.tsx` is now a redirect stub that still asks who is asking
+(`test_web_gate`). Moving them is a one-line change to that test plus a `git mv`, for whoever owns the engine tests.
+The stage keeps "Curriculum ·" ahead of "Skill set" (u17 asserts the tab). The title is the skill's outcome (`learning_objective`),
+which s2 asserts as the h1; the wireframe says so. Specs: the six functions' specs (u28, u34, e0, u54, u55, u64, u65) now open the new
+address; `u73-skill-set.spec.ts` proves the cards, the empty words and the 308. Not done: the inventory run for `skillset`
+(drives for each control), same as activity, objective and skill.

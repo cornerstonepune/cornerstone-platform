@@ -1290,27 +1290,71 @@
     },
     {
       "id": "skillset",
-      "title": "the skill set's name",
-      "eyebrow": "Skill set · Grades 1 to 4",
+      "title": "the skill set's outcome (what the child can do)",
+      "eyebrow": "Curriculum · Skill set · Grade 3 · Skill 4 of 21",
       "group": "Setup",
       "route": "/setup/skill-sets/[code]",
-      "purpose": "A skill set is what the school teaches and tests together, from one to four grades. It points at the skills the system reads a child on; it never scores a child itself.",
+      "purpose": "What this skill looks like at each level, each with a real question from the bank, the kinds of question, and the mistakes it watches for.",
       "does": [
         {
           "label": "Open the skill (each card)",
           "says": "Opens the skill's name."
         },
         {
-          "label": "Each level in a sentence",
-          "says": ""
+          "label": "For example: a real question (each level)",
+          "says": "Opens {the question as it prints}."
+        },
+        {
+          "label": "Which grade each level belongs to",
+          "says": "a choice of the school's grades for each level"
+        },
+        {
+          "label": "Save the grades",
+          "says": "each level's grade is saved with who and when; the page says Saved"
+        },
+        {
+          "label": "Approve this level (each level)",
+          "says": "that level's words are approved in the person's name; the other levels still wait"
+        },
+        {
+          "label": "Approve a way of asking (English)",
+          "says": "that way of asking is approved in the person's name"
+        },
+        {
+          "label": "Change a sample (English)",
+          "says": "opens the sample's own form in place; the address carries it"
+        },
+        {
+          "label": "More like this (each level)",
+          "says": "questions like the example are made and checked by code; the page says how many"
+        },
+        {
+          "label": "Stop using a kind (each kind, each level)",
+          "says": "asks which level, then stops it; the address carries the choice"
+        },
+        {
+          "label": "Approve the skill",
+          "says": "the skill is approved in the person's name"
+        },
+        {
+          "label": "Worksheets: a level",
+          "says": "shows that level's worksheets; the address carries it"
         },
         {
           "label": "rail: each skill",
           "says": "Opens the skill's name."
         },
         {
-          "label": "rail: Question bank for this skill set",
+          "label": "rail: Question bank",
           "says": "Opens Question bank."
+        },
+        {
+          "label": "Kinds of question",
+          "says": ""
+        },
+        {
+          "label": "How it is asked (English)",
+          "says": ""
         }
       ]
     },

@@ -107,7 +107,7 @@ function Opened({ editing, level, kind, of }: { editing: NonNullable<Editing>; l
   if (ord && editing.start) return <SampleForm {...where} ord={ord} start={editing.start} />;
   if (editing.open === slot(level, kind, "new")) return <SampleForm {...where} ord={null} start={BLANK} />;
   return (
-    <Link href={`/skill-sets/${editing.code}?edit=${slot(level, kind, "new")}#level-${level}`} className="chip justify-self-start">
+    <Link href={`/setup/skill-sets/${editing.code}?edit=${slot(level, kind, "new")}#level-${level}`} className="chip justify-self-start">
       Add a sample
     </Link>
   );
@@ -150,7 +150,7 @@ function Sample({ s, editing, removable }: { s: SampleRow; editing: Editing; rem
       ) : null}
       {editing ? (
         <div className="flex flex-wrap items-center gap-2 border-t border-basalt/12 pt-2">
-          <Link href={`/skill-sets/${editing.code}?edit=${here}#level-${s.difficulty}`} className="chip" aria-label={`Edit sample ${s.ord}`}>
+          <Link href={`/setup/skill-sets/${editing.code}?edit=${here}#level-${s.difficulty}`} className="chip" aria-label={`Edit sample ${s.ord}`}>
             Edit
           </Link>
           {removable ? (
