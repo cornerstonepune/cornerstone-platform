@@ -2681,6 +2681,47 @@
             "after": "name-undone"
           },
           "data": "data-rename-save"
+        },
+        {
+          "t": "field",
+          "label": "Why the level changes (a row, before print)",
+          "note": "required; kept with the override and who made it",
+          "text": "Why Sr. No.",
+          "data": "data-level-reason"
+        },
+        {
+          "t": "button",
+          "label": "Change this child",
+          "text": "Change this child",
+          "data": "data-level-save",
+          "note": "the level and the reason are kept as an override on this child's prescription; nothing else moves (proved in u76-assessment-controls: it needs a week the engine prescribed)"
+        },
+        {
+          "t": "field",
+          "label": "Day it was given (printed papers)",
+          "note": "defaults to the day it was last said, else today; never later than today",
+          "text": "Day it was given"
+        },
+        {
+          "t": "button",
+          "label": "Given on",
+          "effect": "the day is kept by the engine as a row of its own, with who said it; the screen says it was given",
+          "text": "Given on",
+          "data": "data-given-save",
+          "drive": {
+            "expect": {
+              "text": [
+                "said by"
+              ]
+            }
+          }
+        },
+        {
+          "t": "button",
+          "label": "Away: hold it for later",
+          "note": "on a printed copy; the same button then reads Back: count as missing",
+          "text": "Away: hold it",
+          "data": "data-away"
         }
       ],
       "rail": [
