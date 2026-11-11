@@ -45,6 +45,11 @@ export default async function ReportsScreen({ searchParams }: Props) {
   const got = open ? await engineSend("/reports/lines", { actor: me.email, note_id: open.note_id! }).catch(() => null) : null;
   const staged = got?.ok ? ((await got.json()) as { lines: StagedLine[]; sent_at: string | null }) : null;
 
+  // the one main action: the first report with lines waiting to be approved (the first approval is an educator's, the second a
+  // coordinator's), else the first report; the next step is the list of what needs doing
+  const openHref = (id: string) => `${HERE}?${new URLSearchParams({ ...(f.class ? { class: f.class } : {}), ...(f.state ? { state: f.state } : {}), open: id })}`;
+  const toApprove = rows.find((r) => r.note_id && (r.lines.drafted > 0 || (coordinator && r.lines.educator > 0))) ?? rows.find((r) => r.note_id) ?? rows[0];
+
   const columns: Column<ReportsRow>[] = [
     { key: "child", label: "Child", value: (r) => `${r.first_name} · Sr. No. ${r.roll_no}`, cell: (r) => <Link href={`/growth/${r.child_id}/parent`}>{r.first_name} · Sr. No. {r.roll_no}</Link> },
     { key: "class", label: "Class", width: "7rem", value: (r) => classWords(g, r.band, r.section) },
@@ -61,6 +66,12 @@ export default async function ReportsScreen({ searchParams }: Props) {
       stage="Children · this term"
       title="Reports"
       purpose="Each child's report, in the educator's words. Nothing goes out until it is approved and consent is on file."
+      action={
+        <Link href={toApprove ? openHref(toApprove.child_id) : "/today"} className="btn">
+          Approve lines
+        </Link>
+      }
+      next={{ href: "/today", label: "What needs doing" }}
       rail={
         <Rail
           edges={[

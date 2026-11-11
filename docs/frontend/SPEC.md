@@ -1134,8 +1134,8 @@ Empty: none · Phone: the table scrolls sideways in its own box
 Every control on the screen (10), and what the test does with each:
 - **row** each staff row: opens that person's grants fold
 - **fold** a person's grants
-- **button** Add a grant: a form: role (rows), class, subject, from; Save writes a staff_role_grant row; the trigger's checks show as messages (needs a class, holds it twice)
-- **button** End a grant: valid_to set to today on that grant; nothing deleted
+- **button** Add a grant: opens a form: role, class, and a subject for a role held for a subject; Save the grant gives it from today, and the grant table's own words (a second class educator, a clash) show under the form
+- **button** End a grant: valid_to is set to today on that grant; the row stays on the list, marked Ended, and nothing is deleted
 - **link** rail: Fortnight 9 → Fortnight 9 (`/timetable/fortnight/[n]`)
 - **link** rail: Timetable → Timetable (`/timetable`)
 - **link** rail: Classes and children → Classes and children (`/setup/classes`)

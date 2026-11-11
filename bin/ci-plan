@@ -18,8 +18,10 @@ Now a change starts what it can break and no more:
   a ready pull request with a path under SENSITIVE (the engine, the schema, the seed, the map, the gates, this file)
                                             everything.
   files from DOCS_* alone                   the checks that need no database.
-  files from DOCS_* and apps/web alone      the website's job and the browser tests, and one runner for the engine's tests
-                                            that read the website (they need the database; see web_tests).
+  files from DOCS_* and apps/web alone      the checks that need no database, and the website's types, lint and build. The
+                                            browser tests and the engine's tests that read the website (they need the database)
+                                            run on main, before deploy, not before the merge (Nimish, 2026-11-11: a break is
+                                            then found after the merge, and the author fixes main first).
   anything else, or anything this cannot read  everything. The default is the full suite, never the quick one.
 """
 
@@ -120,7 +122,7 @@ def decide(event, draft, files):
     if docs:
         return {**FAST, "reason": "documents alone: the checks that need no database"}
     if all(is_docs(p) or is_web(p) for p in paths):
-        return dict(engine=False, web=True, browser=True, web_reads=True, reason="the website alone: its job, the browser tests, and the engine tests that read it")
+        return {**FAST, "web": True, "reason": "the website alone: the checks that need no database, and its types, lint and build; the browser and engine tests run on main"}
     other = next(p for p in paths if not (is_docs(p) or is_web(p)))
     return {**FULL, "reason": f"{other} is on no quick list: everything"}
 

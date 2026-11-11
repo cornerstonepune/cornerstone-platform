@@ -3941,15 +3941,26 @@
         {
           "t": "button",
           "label": "Add a grant",
-          "effect": "a form: role (rows), class, subject, from; Save writes a staff_role_grant row; the trigger's checks show as messages (needs a class, holds it twice)",
-          "pending": "backend: public.grant_role and public.end_grant (comment on #551); app_web cannot write staff_role_grant"
+          "effect": "opens a form: role, class, and a subject for a role held for a subject; Save the grant gives it from today, and the grant table's own words (a second class educator, a clash) show under the form",
+          "data": "data-grant-add",
+          "when": "@grants"
         },
         {
           "t": "button",
           "label": "End a grant",
-          "effect": "valid_to set to today on that grant; nothing deleted",
-          "data": "data-end-grant",
-          "pending": "backend: public.grant_role and public.end_grant (comment on #551); app_web cannot write staff_role_grant"
+          "effect": "valid_to is set to today on that grant; the row stays on the list, marked Ended, and nothing is deleted",
+          "data": "data-grant-end",
+          "when": "@grants",
+          "drive": {
+            "fixture": "grant-to-end",
+            "click": "End a grant",
+            "expect": {
+              "text": [
+                "Ended"
+              ],
+              "check": "grant-ended"
+            }
+          }
         },
         {
           "t": "link",
