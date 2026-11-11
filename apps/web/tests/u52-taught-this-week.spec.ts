@@ -5,6 +5,16 @@
  * address opens it.
  */
 import { expect, test } from "@playwright/test";
+import postgres from "postgres";
+import { aClass } from "./rows";
+
+// What waits to be marked taught is a class's topics: a fresh copy has no class, and CI splits the specs across runners, so
+// the spec makes its own rather than lean on one that ran before it
+const sql = postgres(process.env.DATABASE_URL!, { max: 1 });
+test.beforeAll(async () => {
+  await aClass(sql, "U52-CLASS", "G2", ["Asha"]);
+});
+test.afterAll(async () => sql.end());
 
 test("a topic waiting to be marked taught is a row with its own button, in the group that opens Curriculum", async ({ page }) => {
   await page.goto("/today?kind=taught");

@@ -7,6 +7,10 @@ import { NotYours } from "@/components/not-yours";
 import { requireStaff } from "@/lib/auth";
 import { screenHref } from "@/lib/built";
 import { grantsOf, namesMayShow, staffLines, type StaffLine } from "@/lib/queries-coordinator";
+import { rolesHeld } from "@/lib/queries-staff";
+import { NOT_ADDED } from "@/lib/staff-add";
+import { Notice } from "@/components/parts";
+import { AddPerson } from "./add-person";
 import type { Column } from "@/lib/ux-rules";
 
 type Props = { searchParams: Promise<Record<string, string | undefined>> };
@@ -23,7 +27,7 @@ export default async function StaffPage({ searchParams }: Props) {
   const text = q.q?.trim().toLowerCase();
   const shown = all.filter((p) => (!q.role || p.roleLabel === q.role) && (!text || `${p.name} ${p.email}`.toLowerCase().includes(text)));
   const open = shown.find((p) => p.id === q.person) ?? shown[0];
-  const grants = open ? await grantsOf(open.id) : [];
+  const [grants, givable] = await Promise.all([open ? grantsOf(open.id) : Promise.resolve([]), rolesHeld()]);
   const roles = [...new Set(all.map((p) => p.roleLabel))];
   const columns: Column<StaffLine>[] = [
     { key: "name", label: "Name", width: "14rem", keep: true, value: (p) => p.name, cell: (p) => <Link href={`/setup/staff?person=${p.id}#grants`} data-staff-row aria-current={open?.id === p.id ? "true" : undefined}>{p.name}</Link> },
@@ -43,6 +47,13 @@ export default async function StaffPage({ searchParams }: Props) {
       next={{ href: screenHref("classes") ?? "/school", label: "Classes and children" }}
       rail={<Rail edges={[{ screen: "fortnight", label: "Fortnight", icon: "week" }, { screen: "timetable", label: "Timetable", icon: "week" }, { screen: "classes", label: "Classes and children", icon: "class" }]} />}
     >
+      {q.added ? (
+        <Notice tone="neem">
+          The new member of staff is on the staff list, and a link to set their own password is on its way to their email. It works once and lasts seven days. Their classes and subjects come from their grants.
+        </Notice>
+      ) : null}
+      {q.refused ? <Notice tone="terracotta">Nobody was added: {NOT_ADDED[q.refused] ?? "that cannot be saved"}.</Notice> : null}
+      {q.denied ? <Notice tone="terracotta">Nothing changed: only the coordinators can change the staff list.</Notice> : null}
       {answered ? null : <p className="note mb-2">The note counts are not available right now.</p>}
       <FilterBar
         action="/setup/staff"
@@ -50,6 +61,7 @@ export default async function StaffPage({ searchParams }: Props) {
         search={{ name: "q", value: q.q, placeholder: "Find a person" }}
       />
       <DataTable label="Staff" columns={columns} rows={shown} rowKey={(p) => p.id} more={{ by: (p) => p.roleLabel.replace(/ \(.*\)$/, "") }} />
+      <AddPerson roles={givable} />
       {open ? (
         <div className="mt-6" id="grants">
           <Details summary={`${open.name}'s grants`} name="grants" open={Boolean(q.person)}>
