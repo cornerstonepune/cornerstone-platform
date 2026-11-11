@@ -1257,6 +1257,32 @@
       ]
     },
     {
+      "id": "skillset",
+      "title": "the skill set's name",
+      "eyebrow": "Skill set · Grades 1 to 4",
+      "group": "Setup",
+      "route": "/setup/skill-sets/[code]",
+      "purpose": "A skill set is what the school teaches and tests together, from one to four grades. It points at the skills the system reads a child on; it never scores a child itself.",
+      "does": [
+        {
+          "label": "Open the skill (each card)",
+          "says": "Opens the skill's name."
+        },
+        {
+          "label": "Each level in a sentence",
+          "says": ""
+        },
+        {
+          "label": "rail: each skill",
+          "says": "Opens the skill's name."
+        },
+        {
+          "label": "rail: Question bank for this skill set",
+          "says": "Opens Question bank."
+        }
+      ]
+    },
+    {
       "id": "curriculum",
       "title": "Curriculum",
       "eyebrow": "Every grade",
