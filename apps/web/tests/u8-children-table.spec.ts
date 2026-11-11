@@ -93,7 +93,7 @@ test("each class is a table of its children in the school's words, and a name is
     select count(*)::int as n from access_log where child_id = ${ids.Asha} and actor = ${TEST_STAFF.email}`;
   const [{ id: classId }] = await sql<{ id: string }[]>`select class_id as id from child_now where id = ${ids.Asha}`;
   await page.goto(`/children?cls=${classId}`);
-  const table = page.getByRole("main").getByRole("table", { name: /^Children/ });
+  const table = page.locator("[data-block=ChildrenGroups]"); // the groups, whatever they are
   await expect(table.getByRole("button", { name: /Asha/ })).toBeVisible();
   await expect(table.getByRole("button", { name: /Bina/ })).toBeVisible();
   await expect(table.getByRole("button", { name: /Chetan/ })).toBeVisible();
