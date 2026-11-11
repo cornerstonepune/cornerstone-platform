@@ -27,9 +27,10 @@ export function Bar({ c }: { c: Counts }) {
   );
 }
 
-/** Notes waiting on a child: a count to confirm, "none", or, where the engine could not say, a dashed "not available yet". */
+/** Notes waiting on a child: a count to confirm or "none". Where the person has no count of their own (a class they do not hold, or
+ *  the engine did not answer) the cell is empty, and the column goes when no row has one: a placeholder is not shown. */
 function Waiting({ n }: { n: number | null }) {
-  if (n === null) return <span className="b-pending text-[13px]" title="Not available yet">not available yet</span>;
+  if (n === null) return null;
   return n > 0 ? <StatusChip state="toConfirm" words={`${n} to confirm`} compact /> : <span className="b-muted text-[13px]">none</span>;
 }
 
@@ -63,7 +64,7 @@ function columns(showClass: boolean, today: string): Column<Row>[] {
     { key: "doing", label: "How they are doing", keep: true, value: (r) => countWords(r.counts), cell: (r) => <Bar c={r.counts} /> },
     { key: "help", label: "Needs help on", value: (r) => r.helpOn, cell: (r) => (r.helpOn ? <span>{r.helpOn}</span> : null) },
     { key: "seen", label: "Last seen", keep: true, value: (r) => lastSeenWords(r.lastSeen, today) },
-    { key: "waiting", label: "Notes waiting", keep: true, status: true, value: (r) => (r.waiting === null ? "not available yet" : r.waiting), cell: (r) => <Waiting n={r.waiting} /> },
+    { key: "waiting", label: "Notes waiting", status: true, value: (r) => r.waiting, cell: (r) => <Waiting n={r.waiting} /> },
     { key: "absences", label: "Absences noted", keep: true, status: true, value: (r) => noted(r.strip), cell: (r) => <Strip r={r} /> },
   ];
 }

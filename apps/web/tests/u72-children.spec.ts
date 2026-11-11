@@ -355,7 +355,7 @@ test("with the educator switch off the three screens say so, show no child, and 
   }
 });
 
-test("notes waiting: the engine's count for a child, none where nothing waits, and not available where the engine cannot say", async ({ browser, page }) => {
+test("notes waiting: the engine's count for a child, none where nothing waits, and no placeholder where the person has no count", async ({ browser, page }) => {
   await sql`insert into activity (tenant_id, code, band, strand, name, sheet_no) values (${tenant}, 'ACT-U72-912', 'K2', 'Maths', 'Counting in tens', '912') on conflict (tenant_id, code) do nothing`;
   for (const k of skills) await sql`insert into activity_skill (tenant_id, activity_code, skill_code) values (${tenant}, 'ACT-U72-912', ${k.code}) on conflict do nothing`;
   const note = await aK2Note(sql, { klass: classA, staff }, "Activity 912. Above 2.", "drafted");
@@ -367,9 +367,11 @@ test("notes waiting: the engine's count for a child, none where nothing waits, a
     await expect(row(NAMES_A[1])).toContainText("1 to confirm");
     await expect(row(NAMES_A[0])).toContainText("none");
     await mine.close();
-    // the coordinator holds no class, so the engine will not count another person's notes: not available, never a guess
+    // the coordinator holds no class, so the engine will not count another person's notes: no count and no placeholder, never a guess
     await page.goto(`/children?cls=${classA}`);
-    await expect(page.locator("tbody tr").first()).toContainText("not available yet");
+    await expect(page.locator("tbody tr").first()).toBeVisible();
+    await expect(page.getByRole("columnheader", { name: "Notes waiting" })).toHaveCount(0);
+    await expect(page.locator("main")).not.toContainText("not available");
   } finally {
     await sql`update pii.educator_note set status = 'left_unconfirmed' where id = ${note}::uuid`;
   }

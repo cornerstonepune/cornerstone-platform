@@ -134,7 +134,7 @@ export async function screensOn(): Promise<boolean> {
 export const SWITCHED_OFF = "Voice notes are not switched on.";
 
 /** Notes waiting on each child, by class, as the engine counts them for the person's own notes (`POST /voice/class-notes`). A class
- *  the engine would not answer for (not held, switch off, engine down) is left out, so its children read "not available". */
+ *  the engine would not answer for (not held, switch off, engine down) is left out, so its children have no count (an empty cell, never a placeholder). */
 async function waitingByChild(me: Me, classIds: string[]): Promise<Map<string, Map<string, number>>> {
   const out = new Map<string, Map<string, number>>();
   await Promise.all(
