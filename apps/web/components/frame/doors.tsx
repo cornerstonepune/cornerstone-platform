@@ -139,8 +139,9 @@ export function DoorPages() {
         onClick={() => setOpenAt(shut ? path : null)}
         className="inline-flex min-h-[var(--tap)] items-center gap-[var(--space-1)] rounded-[var(--radius-control)] px-[var(--space-2)] text-[length:var(--text-label)] font-medium text-[var(--ink)] hover:bg-[var(--surface)]"
       >
+        {/* the site's fold marker, first, as every fold draws it: ▸ folded, ▾ open */}
+        <span aria-hidden="true">{shut ? "▸" : "▾"}</span>
         {door?.label} pages
-        <span aria-hidden="true">{shut ? "▾" : "▴"}</span>
       </button>
       <div
         id="door-pages"
