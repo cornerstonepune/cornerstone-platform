@@ -339,7 +339,7 @@ Rail (Connected to): The period (when a session is chosen) · The activity · Th
 Main action: Start recording · Next step: Notes to confirm
 Data: the session; pii.educator_note insert via the engine; config: note retention
 Empty: none · Phone: this is the phone screen: one button, the activity already known
-Folds in: /voice/record
+Folds in: /voice/record, /voice/form
 Every control on the screen (9), and what the test does with each:
 - **field** Which period (preselected when opened from a period, a class or a child; otherwise today's periods for the person's classes; required before Start recording or Type the marks)
 - **button** Start recording: microphone permission asked; the button becomes Stop; a timer counts
@@ -368,6 +368,7 @@ Rail (Connected to): The period · The activity · The class
 Main action: Confirm this note · Next step: the next note waiting
 Data: pii.educator_note + draft claims from the engine (pii.note_claim: flag, outcome, entry_mode, child_id, set when the note is read); activity_observation written at confirm, one row per child, confirmation_id
 Empty: No note waiting: link to Record · Phone: the grid first, then her words; Confirm fixed at the bottom
+Folds in: /voice/notes/[id]
 Every control on the screen (12), and what the test does with each:
 - **button** each claim line's × (remove): the claim is marked removed; its children's squares return to unmarked; recorded as her decision
 - **cell** each square: opens the mark picker: above / below / not willing / absent / clear ("as expected" is the one switch for the rest: the engine records an individual child's mark in four lists); the square's corner mark changes; the claim it came from is marked changed
@@ -792,7 +793,7 @@ Main action: the step's action · Next step: Assessments
 Data: sheet/paper rows, counts per step (Counts), prescriptions and reasons, approval ledger
 Empty: No copies yet · Phone: stepper wraps; the table scrolls sideways in its own box
 Folds in: /papers/approve, /papers/card, /papers/review/[qr]
-Every control on the screen (16), and what the test does with each:
+Every control on the screen (21), and what the test does with each:
 - **link** Open the skill → the skill's name (`/setup/skills/[code]`)
 - **field** Change the level (a row, before print): Easy / Medium / Hard / Advance; the row's reason updates; kept as an override with who
 - **button** Approve the pack: approval row for this pack only; the stepper moves to Approved; Print appears; the rows' Change the level disappears
@@ -809,6 +810,11 @@ Every control on the screen (16), and what the test does with each:
 - **upload** capture: Photo: a scan of this assessment's paper; the QR must belong to it, else a message
 - **field** rename: name this assessment (the built name shows until a name is chosen)
 - **button** Save the name: the name is the educator's own and is kept as a row of the history log, the older names stay
+- **field** Why the level changes (a row, before print) (required; kept with the override and who made it)
+- **button** Change this child (the level and the reason are kept as an override on this child's prescription; nothing else moves (proved in u76-assessment-controls: it needs a week the engine prescribed))
+- **field** Day it was given (printed papers) (defaults to the day it was last said, else today; never later than today)
+- **button** Given on: the day is kept by the engine as a row of its own, with who said it; the screen says it was given
+- **button** Away: hold it for later (on a printed copy; the same button then reads Back: count as missing)
 Done when (on top of the ten generic checks):
 - Approve acts on this pack only; no control acts on more than one pack or more than one row
 - the stepper's amber step equals the status word in the list

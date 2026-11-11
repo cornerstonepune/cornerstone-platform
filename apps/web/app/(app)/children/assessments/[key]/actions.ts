@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { deciding, mustBeMine, mustSee } from "@/lib/decides";
 import { requireStaff } from "@/lib/auth";
 import { sql } from "@/lib/db";
+import { seesSheet } from "@/lib/reach";
 import { EngineDown, engineSend, markWhatTrustSettles } from "@/lib/engine";
 import { levels } from "@/lib/levels";
 import { assessmentHref } from "@/lib/assessment-ui";
@@ -48,18 +49,20 @@ export async function changeLevel(f: FormData): Promise<void> {
   const key = keyOf(f);
   const sheet = String(f.get("sheet") ?? "");
   const difficulty = String(f.get("difficulty") ?? "");
+  const reason = String(f.get("reason") ?? "").trim().slice(0, 300);
   const me = await deciding("class_papers");
   if (!UUID.test(sheet)) redirect(assessmentHref(key));
   const [p] = await sql<{ id: string }[]>`select id from prescription where sheet_instance_id = ${sheet}::uuid limit 1`;
   if (!p) redirect(assessmentHref(key));
   await mustBeMine(me, "class_papers", [await prescriptionSection(p.id)]);
   if (!(await levels()).order.includes(difficulty)) redirect(assessmentHref(key));
+  if (!reason) go(key, "Say why the level changes; nothing was changed.");
   await sql`
     update prescription set difficulty = ${difficulty}, rule_fired = 'override', override_by = ${me.email},
-      override_reason = 'changed on the assessment before print', updated_at = now()
+      override_reason = ${reason}, updated_at = now()
     where id = ${p.id}::uuid`;
   revalidatePath(assessmentHref(key));
-  go(key);
+  go(key, `Changed to ${difficulty}.`);
 }
 
 /** One paper signed off: every answer on it becomes evidence in the signer's name. This paper only. */
@@ -111,4 +114,43 @@ export async function renameThisAssessment(f: FormData): Promise<void> {
     redirect(q.toString() ? `/children/assessments?${q}` : "/children/assessments");
   }
   go(key, said);
+}
+
+/** What the educator says about the papers once printed: the day they were given out, kept by the engine as a row of its own (w2_print/given.py). */
+async function say(key: string, go_: () => Promise<Response>): Promise<never> {
+  let said = "";
+  try {
+    const res = await go_();
+    if (!res.ok) said = ((await res.json().catch(() => ({}))) as { detail?: string }).detail ?? "the engine would not take it";
+  } catch (e) {
+    if (!(e instanceof EngineDown)) throw e;
+    said = "the engine is not answering; nothing was kept";
+  }
+  revalidatePath(assessmentHref(key));
+  return go(key, said.slice(0, 200) || undefined);
+}
+
+/** The day this assessment's papers were given out. Only papers of this assessment's class that the person sees: the engine checks they are papers at all. */
+export async function givenOnThis(f: FormData): Promise<void> {
+  const key = keyOf(f);
+  const me = await deciding("papers");
+  const on = String(f.get("on") ?? "");
+  const qrs = f.getAll("qr").map(String).filter((q) => /^CS[0-9A-F]{6}$/i.test(q));
+  const section = key.split("~")[1] ?? "";
+  const rows = qrs.length
+    ? await sql<{ qr: string }[]>`
+        select si.qr_code as qr from sheet_instance si left join child_now c on c.id = si.child_id
+        where si.qr_code = any(${qrs}) and coalesce(si.section, c.section) = ${section} and ${seesSheet(me, sql`si.id`)}`
+    : [];
+  if (rows.length < qrs.length) redirect("/refused?kind=papers&paper=1");
+  await say(key, () => engineSend("/papers/given", { qrs: rows.map((r) => r.qr), on, by: me.email }));
+}
+
+/** A child who was away: their paper is held for later, not counted missing (or back again). One paper. */
+export async function awayThis(f: FormData): Promise<void> {
+  const key = keyOf(f);
+  const me = await deciding("papers");
+  const qr = String(f.get("qr") ?? "");
+  await mustSee(me, "papers", [{ qr }]);
+  await say(key, () => engineSend("/papers/absent", { qr, away: f.get("away") === "yes", by: me.email }));
 }

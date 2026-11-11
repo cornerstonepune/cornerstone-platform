@@ -1043,6 +1043,26 @@
         {
           "label": "Save the name",
           "says": "the name is the educator's own and is kept as a row of the history log, the older names stay"
+        },
+        {
+          "label": "Why the level changes (a row, before print)",
+          "says": "required; kept with the override and who made it"
+        },
+        {
+          "label": "Change this child",
+          "says": "the level and the reason are kept as an override on this child's prescription; nothing else moves (proved in u76-assessment-controls: it needs a week the engine prescribed)"
+        },
+        {
+          "label": "Day it was given (printed papers)",
+          "says": "defaults to the day it was last said, else today; never later than today"
+        },
+        {
+          "label": "Given on",
+          "says": "the day is kept by the engine as a row of its own, with who said it; the screen says it was given"
+        },
+        {
+          "label": "Away: hold it for later",
+          "says": "on a printed copy; the same button then reads Back: count as missing"
         }
       ]
     },
