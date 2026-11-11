@@ -40,6 +40,7 @@ export default async function Picture({ params, searchParams }: { params: Promis
   const skills = p.skills.filter((s) => !domain || s.domain === domain);
   const skill = skills.find((s) => s.code === sp.skill) ?? skills[0];
   const grouped = sp.group !== "class";
+  const seenWords = (s: { code: string; seen: number }) => (s.code === skill?.code ? "the skill shown" : `${s.seen} ${s.seen === 1 ? "child" : "children"} seen`);
   const kids = [...p.kids].sort(byRoll);
   const counts = (await childrenTable({ ...me, email: me.email })).counts[classId] ?? { answers: 0, reports: 0 };
   const stateOn = (id: string): Look | null => (skill ? (p.cells.get(id)?.get(skill.code)?.look ?? null) : null);
@@ -93,9 +94,9 @@ export default async function Picture({ params, searchParams }: { params: Promis
                 <ul className="grid gap-[var(--space-1)]">
                   {skills.map((s) => (
                     <li key={s.code}>
-                      <Link href={q({ skill: s.code })} data-show aria-label={`Show: ${s.name}`} aria-current={s.code === skill?.code ? "true" : undefined} className="flex min-h-[var(--tap)] items-center text-[var(--link)] underline">
-                        {s.name}
-                        <span className="b-muted ml-2 text-[13px]">{s.code === skill?.code ? "the skill shown" : `${s.seen} ${s.seen === 1 ? "child" : "children"} seen`}</span>
+                      <Link href={q({ skill: s.code })} data-show aria-label={`Show: ${s.name} ${seenWords(s)}`} aria-current={s.code === skill?.code ? "true" : undefined} className="flex min-h-[var(--tap)] items-center text-[var(--link)] underline">
+                        {s.name}{" "}
+                        <span className="b-muted ml-2 text-[13px]">{seenWords(s)}</span>
                       </Link>
                     </li>
                   ))}

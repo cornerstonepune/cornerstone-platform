@@ -7,6 +7,12 @@ import { attentionDays, stateRows, type Me } from "./children-reads";
 import { SECURE, lookOfColour, type Look } from "./looks";
 export type { Look };
 
+/** How many times a child was seen on a skill: the days a confirmed observation of it was made (the K2 graph), or the answers behind it (the written
+ *  graph). Counted from the evidence, not read off the state row, whose `named_days` counts only the days that opened secure. */
+const seenSql = () => sql`case when s.kind = 'observed'
+  then (select count(distinct e.observed_at::date) from evidence_event e where e.child_id = s.child_id and e.skill_code = s.skill_code and e.kind = 'observed' and e.confirmed_by is not null)
+  else coalesce(s.n_events, 0) end::int`;
+
 export type Kid = { id: string; roll: string; name: string };
 export type Skill = { code: string; name: string; domain: string; seen: number };
 export type Cell = { look: Look; words: string; lastSeen: string | null; seen: number };
@@ -44,7 +50,7 @@ export async function pictureOf(me: Me, classId: string): Promise<Picture | null
     from child_now c cross join lateral pii.read_child(c.id, ${me.email}) n
     where c.class_id = ${classId}::uuid and c.active`;
   const rows = await sql<{ child_id: string; skill_code: string; name: string; domain: string | null; colour: string; words: string; kind: string; seen: number; last_seen: string | null }[]>`
-    select s.child_id, s.skill_code, rs.name, rs.domain, cs.colour, cs.words, s.kind, coalesce(s.named_days, s.n_events, 0)::int as seen, (s.last_seen at time zone ${zone})::date::text as last_seen
+    select s.child_id, s.skill_code, rs.name, rs.domain, cs.colour, cs.words, s.kind, ${seenSql()} as seen, (s.last_seen at time zone ${zone})::date::text as last_seen
     from (${stateRows(kids.map((k) => k.id))}) s join child_state cs on cs.tenant_id = s.tenant_id and cs.code = s.state
     join registry_skill rs on rs.tenant_id = s.tenant_id and rs.code = s.skill_code`;
   const kind = rows.some((r) => r.kind === "observed") ? "observed" : "written";
@@ -91,7 +97,7 @@ export type ChildSkill = { code: string; name: string; domain: string; look: Loo
 /** One child's skills in domain then skill order, each with the times it was seen (named days for observed, events for written). */
 export async function skillsOfChild(childId: string): Promise<ChildSkill[]> {
   const rows = await sql<{ skill_code: string; name: string; domain: string | null; colour: string; words: string; kind: string; seen: number; last_seen: string | null }[]>`
-    select s.skill_code, rs.name, rs.domain, cs.colour, cs.words, s.kind, coalesce(s.named_days, s.n_events, 0)::int as seen, s.last_seen::date::text as last_seen
+    select s.skill_code, rs.name, rs.domain, cs.colour, cs.words, s.kind, ${seenSql()} as seen, s.last_seen::date::text as last_seen
     from (${stateRows([childId])}) s join child_state cs on cs.tenant_id = s.tenant_id and cs.code = s.state
     join registry_skill rs on rs.tenant_id = s.tenant_id and rs.code = s.skill_code`;
   const kind = rows.some((r) => r.kind === "observed") ? "observed" : "written";
