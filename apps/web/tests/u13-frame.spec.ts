@@ -9,6 +9,7 @@ import postgres from "postgres";
 import { FAKE_CHILDREN } from "./fake-names";
 import { inventoryRows, signedInAs, type Rows } from "./inventory-fixtures";
 import { brandRules } from "./inventory/brand";
+import { addressToLookIn, type Seen } from "./u13-address";
 
 const WEB = path.resolve(__dirname, "..");
 const sql = postgres(process.env.DATABASE_URL!, { max: 1 });
@@ -132,11 +133,21 @@ test("6. the trail is two levels (the door, then the thing); an Activity opened 
   await expect(page.locator("[data-bar] [data-door][aria-current=page]").first()).toHaveText(/^Today/);
 });
 
+test("8a. the address check looks at page and data requests only: a page request carrying the term fails it, a static file name does not", () => {
+  const page = { url: "http://localhost:3100/children?q=13", type: "document" };
+  const data = { url: "http://localhost:3100/today?_rsc=1&q=13", type: "fetch" };
+  const asset = { url: "http://localhost:3100/_next/static/chunks/ci13tyxr.js", type: "script" };
+  expect(addressToLookIn(page)).toContain("13");
+  expect(addressToLookIn(data)).toContain("13");
+  expect(addressToLookIn(asset)).not.toContain("13");
+  expect(addressToLookIn({ url: "http://localhost:3100/growth/0a13b2c4-1313-4313-8313-131313131313", type: "document" })).not.toContain("13");
+});
+
 test("8. search is a typeahead: an educator's Sr. No. and fake name find their own class only, five at most, the term only in a POST body", async ({ browser, playwright }) => {
   const person = await (await signedInAs(browser, "educator", { width: 1440, height: 900 })).newPage();
-  const seen: { url: string; method: string; body: string | null }[] = [];
+  const seen: Seen[] = [];
   const logs: string[] = [];
-  person.on("request", (r) => seen.push({ url: r.url(), method: r.method(), body: r.postData() }));
+  person.on("request", (r) => seen.push({ url: r.url(), method: r.method(), body: r.postData(), type: r.resourceType() }));
   person.on("console", (m) => logs.push(m.text()));
   await person.goto("/today");
   const box = person.locator("[data-bar]").first().getByRole("combobox");
@@ -164,8 +175,8 @@ test("8. search is a typeahead: an educator's Sr. No. and fake name find their o
   for (const term of ["1", "13", outside, first]) {
     for (const r of seen) {
       if (term.length < 2) continue;
-      // an id in an address is random hex, which can hold any number: the term is looked for in what is left of the address
-      expect(r.url.replace(/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/g, ""), `address of ${r.method} request`).not.toContain(term);
+      // only an address that can carry what was typed is looked at (a page, a fetch, an XHR); a hashed build file name is not one
+      expect(addressToLookIn(r), `address of ${r.method} ${r.type} request`).not.toContain(term);
       if (r.body?.includes(term)) expect(`${r.method} ${new URL(r.url).pathname}`).toBe("POST /api/search");
     }
     expect(logs.join("\n")).not.toContain(term.length > 1 ? term : "\u0000");
