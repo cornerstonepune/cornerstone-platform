@@ -2068,6 +2068,24 @@
           "to": "child",
           "note": "the one way from a list to the child's own page",
           "when": "peek"
+        },
+        {
+          "t": "tab",
+          "label": "Picture",
+          "note": "the class picture; the three views of a class are tabs of this screen (UI-3e, carrying /growth and /growth/class/[section])",
+          "text": "Picture"
+        },
+        {
+          "t": "tab",
+          "label": "By topic",
+          "note": "topics as rows: who is secure, practising or needs help; a topic opens its skills, a skill its children",
+          "text": "By topic"
+        },
+        {
+          "t": "tab",
+          "label": "Matrix",
+          "note": "each child against each topic; a topic opens its skills",
+          "text": "Matrix"
         }
       ],
       "rail": [
@@ -3867,7 +3885,7 @@
         },
         {
           "t": "fold",
-          "label": "Statistics (counts and worksheets by taxonomy)"
+          "label": "Statistics (counts and worksheets by topic)"
         },
         {
           "t": "link",
@@ -4045,7 +4063,7 @@
       "exists": "yes",
       "eyebrow": "This fortnight",
       "title": "Staff and classes",
-      "purpose": "Who teaches which class, and whole counts the database can stand behind. No score, no ranking: the school decides what they mean.",
+      "purpose": "Who teaches which class, and whole counts you can rely on. No score, no ranking: the school decides what they mean.",
       "blocks": [
         [
           "DataTable",
