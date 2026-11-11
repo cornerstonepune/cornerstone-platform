@@ -4126,12 +4126,12 @@
       "elements": [
         {
           "t": "link",
-          "label": "Curriculum",
+          "label": "Open the curriculum",
           "to": "curriculum"
         },
         {
           "t": "link",
-          "label": "Skills to approve",
+          "label": "Open Skills to approve",
           "to": "skills-approve",
           "roles": [
             "coordinator"
@@ -4139,12 +4139,12 @@
         },
         {
           "t": "link",
-          "label": "Question bank",
+          "label": "Open Question bank",
           "to": "bank"
         },
         {
           "t": "link",
-          "label": "Staff",
+          "label": "Open Staff",
           "to": "staff",
           "roles": [
             "coordinator"
@@ -4152,7 +4152,7 @@
         },
         {
           "t": "link",
-          "label": "Classes and children",
+          "label": "Open Classes and children",
           "to": "classes",
           "roles": [
             "coordinator"
@@ -4167,7 +4167,7 @@
       ],
       "rail": [],
       "capture": [],
-      "main": "Curriculum",
+      "main": "Open the curriculum",
       "next": "none",
       "data": "counts",
       "empty": "none",

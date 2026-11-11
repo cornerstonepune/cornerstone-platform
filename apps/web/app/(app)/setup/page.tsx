@@ -1,6 +1,5 @@
 import { Cards } from "@/components/cards";
 import { Rail, Screen } from "@/components/app-frame";
-import Link from "@/components/link";
 import { KeyValue } from "@/components/key-value";
 import { Timeline } from "@/components/timeline";
 import { mayUse } from "@/lib/access";
@@ -29,6 +28,7 @@ export default async function SetupPage() {
       body: o.waiting.drafted ? <strong>{n(o.waiting.drafted)} drafted parts to check</strong> : null,
       href: curriculum,
       link: "Open the curriculum",
+      primary: true,
       show: true,
     },
     { kind: "skill" as const, title: "Skills to approve", line: "Read each skill's levels; approve one at a time. How many wait is shown on that page only.", href: screenHref("skills-approve") ?? "/skill-sets/approve", link: "Open Skills to approve", show: coordinator },
@@ -56,11 +56,6 @@ export default async function SetupPage() {
       stage="Changed rarely"
       title="Setup"
       purpose="The curriculum, the skills, the question bank, staff, classes and the school. Statistics and old scans sit behind details links."
-      action={
-        <Link href={curriculum} className="btn">
-          Curriculum
-        </Link>
-      }
       next={{ href: curriculum, label: "Curriculum" }}
       details={mayUse(me, "blocks") ? { href: "/setup/blocks", label: "The blocks gallery" } : undefined}
       rail={
