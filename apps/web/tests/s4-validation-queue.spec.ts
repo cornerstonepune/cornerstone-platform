@@ -285,7 +285,7 @@ test("Capture & Mark lists students by class; a student lists their papers; a pa
     group by si.child_id order by si.child_id::text limit 1`;
   // a class opened by name is a table of its children, paged (goals/uxn8-marking.yaml)
   await page.goto(`/capture?class=${encodeURIComponent(c.section)}`);
-  const link = page.locator(`a[href="/capture?child=${c.child}"]`);
+  const link = page.locator(`td[data-label="Child"] a[href="/capture?child=${c.child}"]`); // the name, not its "Check n answers →"
   while (!(await link.count())) await page.getByRole("link", { name: /^Later/ }).click();
   await link.click();
   await expect(page).toHaveURL(new RegExp(`child=${c.child}$`));

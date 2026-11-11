@@ -112,12 +112,13 @@ test("an assessment opens to its copies, each in the group of where it stands, i
   // the steps the school does, in order, over the copies; each copy a row with its Sr. No. and level (names stay off it)
   const steps = page.locator('[data-block="Stepper"]');
   for (const h of ["Created", "Printed", "Uploaded", "Read", "Checked", "Results in"]) await expect(steps).toContainText(h);
+  // three copies: Bina's read with an answer for a person first, Asha's with the children, Chetan's to approve (the tables
+  // stream in after the steps: counted, and so waited for, before their headings are read)
+  const copies = page.locator('section[aria-label$=" copies"]:not([data-spares]) tbody tr');
+  await expect(copies).toHaveCount(3);
   const heads = (await page.getByRole("table", { name: "Answers to judge" }).locator("thead th").allTextContents()).map((h) => h.trim());
   expect(heads[0]).toBe("Sr. No.");
   expect(heads).toContain("Level");
-  // three copies: Bina's read with an answer for a person first, Asha's with the children, Chetan's to approve
-  const copies = page.locator('section[aria-label$=" copies"]:not([data-spares]) tbody tr');
-  await expect(copies).toHaveCount(3);
   const judge = group(page, "Answers to judge").locator("tbody tr");
   await expect(judge).toHaveCount(1);
   await expect(judge.locator('td[data-label="Sr. No."]')).toHaveText("2");

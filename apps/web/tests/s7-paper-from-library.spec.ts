@@ -95,6 +95,7 @@ test("a spare is listed with the week it was printed for", async ({ page }) => {
   // spares are rows of the pack's own table of spare copies, on the screen of the week's pack, which says its week
   await openPack(page);
   await expect(page.getByRole("region", { name: "What it asks" })).toContainText(weekWords(WEEK));
+  await expect(spareRows(page)).toHaveCount(spares.length); // the table streams in after the page's head: read it once it is there
   const seen = (await spareRows(page).allInnerTexts()).join("\n");
   for (const s of spares) expect(seen).toContain(s.qr_code);
 });
@@ -238,6 +239,7 @@ test("approving the pack marks the papers printed", async ({ page }) => {
 
 test("spare copies are listed and carry no child's name", async ({ page }) => {
   await openPack(page);
+  await expect(spareRows(page).first()).toBeVisible(); // the table streams in after the page's head: read it once it is there
   const shown = (await spareRows(page).allInnerTexts()).join("\n").match(/\bCS[0-9A-F]{6}\b/g) ?? [];
   expect(shown.length).toBeGreaterThan(0);
   // every copy listed as a spare is one made for no child

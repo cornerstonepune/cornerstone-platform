@@ -251,7 +251,12 @@ test("Class results, its class and a child", async ({ page }) => {
 
 test("the assessment screen, opened from its row", async ({ page }) => {
   await page.goto(`/children/assessments?class=${SECTION}&view=table`);
-  await page.locator("a[data-assessment-row]").first().click();
+  const row = page.locator("a[data-assessment-row]").first();
+  const href = (await row.getAttribute("href"))!;
+  await row.click();
+  // the assessment's own screen, its copies drawn, before its tables are read (not the list still on screen)
+  await expect(page).toHaveURL(new RegExp(`${href.replace(/[.?]/g, "\\$&")}$`));
+  await expect(page.locator('section[aria-label$=" copies"]:not([data-spares]) table').first()).toBeVisible();
   await expect(page.getByText("This page could not load")).toHaveCount(0);
   await tablesRead(page, "assessment");
   await statusesSaid(page, "assessment");

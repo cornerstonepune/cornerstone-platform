@@ -110,6 +110,7 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
         ...planned[1].filter((c) => !copies.some((p) => p.roll_no === c.roll_no && p.stage !== "replaced")).map((c) => ({ roll: c.roll_no ?? "", why: c.later ? "joined the class after this week was planned" : "not on this week's plan" })),
       ].sort((x, y) => Number(x.roll) - Number(y.roll) || x.roll.localeCompare(y.roll))
     : [];
+  const [classOf] = noPaper.length && section ? (await sql<{ id: string }[]>`select id::text from school_class where label = ${section} limit 1`).map((c) => c.id) : [];
   const reasons = new Map(
     (
       await sql<{ sheet: string; rule: string; by: string | null; why: string | null }[]>`
@@ -148,7 +149,8 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
   const mainId = toApprove ? "approve" : printed && qrs.length ? "print" : shown.find((s) => s.grp.key === "judge" || s.grp.key === "check" || s.grp.key === "signoff")?.p.id;
 
   const columns = (grp: Group): Column<PaperListRow>[] => [
-    { key: "roll", label: "Sr. No.", num: true, width: "6rem", value: (p) => p.roll_no },
+    // each copy opens its own paper from its Sr. No., whatever its group: no row is a dead end (a copy being read, or replaced, has no other way in)
+    { key: "roll", label: "Sr. No.", num: true, width: "6rem", value: (p) => p.roll_no, cell: (p) => (p.roll_no ? <Link href={paperHref(key, p.roll_no)}>{p.roll_no}</Link> : null) },
     { key: "score", label: "Score", num: true, width: "8rem", value: (p) => (p.scored ? `${p.right} of ${p.scored}` : null), cell: (p) => <Score p={p} /> },
     {
       key: "level",
@@ -317,7 +319,8 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
           <DataTable
             label="Children with no paper"
             columns={[
-              { key: "roll", label: "Sr. No.", num: true, width: "6rem", value: (r: (typeof noPaper)[number]) => r.roll },
+              // the row opens the child, where a paper of her own is made: a row of this table is never a dead end
+              { key: "roll", label: "Sr. No.", num: true, width: "6rem", value: (r: (typeof noPaper)[number]) => r.roll, cell: (r: (typeof noPaper)[number]) => (classOf && r.roll ? <Link href={`/children/${classOf}/${encodeURIComponent(r.roll)}`}>{r.roll}</Link> : r.roll) },
               { key: "why", label: "Why", value: (r: (typeof noPaper)[number]) => r.why },
               { key: "state", label: "State", status: true, width: "10rem", value: () => "No paper", cell: () => <StatusChip state="noPaper" words="No paper" /> },
             ]}
@@ -336,7 +339,7 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
             label="Spare copies"
             columns={[
               { key: "level", label: "Level", width: "10rem", value: (r: (typeof spares)[number]) => r.difficulty },
-              { key: "paper", label: "Paper", value: (r: (typeof spares)[number]) => r.qr_code },
+              { key: "paper", label: "Paper", value: (r: (typeof spares)[number]) => r.qr_code, cell: (r: (typeof spares)[number]) => <Link href={`/worksheets/${r.qr_code}`}>{r.qr_code}</Link> },
               { key: "state", label: "State", status: true, width: "10rem", value: (r: (typeof spares)[number]) => r.print_status, cell: (r: (typeof spares)[number]) => <StatusChip state={r.print_status === "new" ? "toApprove" : "done"} words={r.print_status === "new" ? "To approve" : "Printed"} /> },
             ]}
             rows={spares}
