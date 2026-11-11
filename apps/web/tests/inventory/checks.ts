@@ -264,7 +264,9 @@ export async function drive(page: Page, s: Screen, e: Element, c: Ctx, byId: Map
     if (why) return [`${s.id}: cannot bring the page to “${e.when}” to drive “${e.label}”: ${why}`];
   }
   const here = page.url();
-  const find = () => (e.data ? page.locator(`main a[${e.data}]`).first() : e.href ? page.locator("main").locator(`a[href="${e.href}"]`).first() : page.locator("main a").filter({ hasText: needle(e) }).first());
+  // the door's pages (folded at the end of the trail) are the frame's, never the screen's link of the same name
+  const own = "main a:not([data-door-pages] a)";
+  const find = () => (e.data ? page.locator(`${own}[${e.data}]`).first() : e.href ? page.locator(`${own}[href="${e.href}"]`).first() : page.locator(own).filter({ hasText: needle(e) }).first());
   if (e.t === "peek") {
     const opener = page.locator("main [data-peek-open]").first();
     await opener.waitFor({ timeout: 10_000 }).catch(() => undefined);
