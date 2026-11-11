@@ -50,7 +50,6 @@ const NOT_BY_CLICK: Record<string, string> = {
   "/children/reports": "ships beside the old Parent reports page (UI-8); the menu moves to it with UI-8b, when the old pages fold, because tests/u60 pins the menu's exact items",
   "/make/[section]/week": "opened by the make form's choice of a class and a week",
   "/skill-sets/[code]/edit": "opened from a skill's own page (click four)",
-  "/voice/notes/[id]": "where recording a note sends the educator",
   "/setup/activities/[code]": "a link of a period or of the materials list, which need a timetable's rows",
   "/setup/objectives/[code]": "a link of an activity, which needs a timetable's rows",
   "/setup/skills/[code]": "a link of an objective, which needs a timetable's rows",

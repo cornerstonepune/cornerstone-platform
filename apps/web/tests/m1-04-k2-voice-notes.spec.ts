@@ -1,8 +1,9 @@
 /**
  * M1-04 — the K2 voice-note screens (goals/m1-04-k2-screens.yaml). Nimish, 3 Nov 2026: "All parts should just function
  * like a well-oiled machine, right?" What needs doing carries Record a note and Notes to confirm; Record sends her
- * recording to the engine; Confirm shows what she said beside the class already marked, red problems first; the form
- * is paint mode and its Save is her confirmation. All of it behind voice.screens_enabled.
+ * recording to the engine; Confirm shows what she said beside the class already marked, red problems first; the typed
+ * path (the old form) is "Type the marks" on Record, and Confirm on the note it makes is her confirmation. All of it
+ * behind voice.screens_enabled. Moved to the screens of UI-3a (Record, Notes, Confirm); the old addresses answer 308.
  *
  * Placeholder rows only: a K2 class of the test's own ("M104"), 22 children known by Sr. No. alone, two activities
  * numbered 904 and 907, and the signed-in tester on the staff list with a grant for that class. Notes are made as the
@@ -26,9 +27,9 @@ let klass: string;
 let staff: string;
 
 const observations = (note: string) => sql<{ n: number }[]>`select count(*)::int as n from activity_observation where note_id = ${note}`;
-const formRows = (since: Date) => sql<{ outcome: string; n: number }[]>`
-  select outcome, count(*)::int as n from activity_observation o join school_class c on c.id = o.class_id
-  where c.id = ${klass} and o.route = 'form' and o.stored_at >= ${since} group by outcome order by outcome`;
+const marksOf = (note: string) => sql<{ outcome: string; n: number }[]>`
+  select outcome, count(*)::int as n from activity_observation where note_id = ${note} group by outcome order by outcome`;
+const noteIn = (url: string) => url.split("/").pop()!;
 
 async function shoot(page: Page, name: string) {
   for (const [size, at] of [["1280", DESKTOP], ["390", PHONE]] as const) {
@@ -58,7 +59,7 @@ test("while voice notes are switched off no K2 group shows and every K2 address 
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("What needs doing");
   await expect(page.locator("[data-group=record], [data-group=notes]")).toHaveCount(0);
   // a page streams, so its status is 200 and it says so (as tests/s7-paper-from-library.spec.ts reads one); the recording is 404
-  for (const url of [`/voice/record?class=${klass}`, `/voice/form?class=${klass}`, `/voice/notes/${note}`]) {
+  for (const url of [`/record?class=${klass}`, `/notes/${note}`, `/voice/record?class=${klass}`, `/voice/form?class=${klass}`, `/voice/notes/${note}`]) {
     await page.goto(url);
     await expect(page.getByText("This page could not be found."), url).toBeVisible();
   }
@@ -75,11 +76,11 @@ test("What needs doing carries Record a note and Notes to confirm, and a row ope
   await expect(notes.locator("[data-group-count]")).toHaveText("1 to confirm");
   await expect(notes.locator("[data-status=toConfirm]").first()).toBeVisible();
   await notes.locator("summary").click();
-  await notes.locator(`a[data-action=note][href="/voice/notes/${note}"]`).click();
-  await expect(page).toHaveURL(new RegExp(`/voice/notes/${note}$`));
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Confirm this note");
+  await notes.locator(`a[data-action=note][href="/notes/${note}"]`).click();
+  await expect(page).toHaveURL(new RegExp(`/notes/${note}$`));
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Confirm what the reader heard");
   await page.goto("/today?open=record");
-  await expect(page.locator(`a[href="/voice/record?class=${klass}"]`).first()).toBeVisible();
+  await expect(page.locator(`a[href="/record?class=${klass}"]`).first()).toBeVisible();
   await shoot(page, "1-today");
 });
 
@@ -108,7 +109,7 @@ test("the board's rules: a stranger, a child in two lists, no activity, a future
 
 test("Confirm shows what she said beside the class already marked, red problems first, the button off until each is fixed, then writes her observations", async ({ page }) => {
   const note = await aK2Note(sql, { klass, staff }, "Activity 904, level 2. Above 3. Below 31. Absent 3. The rest did as expected.");
-  await page.goto(`/voice/notes/${note}`);
+  await page.goto(`/notes/${note}`);
   const heard = page.locator("[data-heard]");
   await expect(heard.locator("[data-line=above]")).toContainText("Above 3");
   await expect(heard.locator("[data-line=below]")).toContainText("Below 31");
@@ -129,37 +130,38 @@ test("Confirm shows what she said beside the class already marked, red problems 
   await expect(confirm).toBeEnabled();
   await shoot(page, "4-confirm-ready");
   await confirm.click();
-  await expect(page).toHaveURL(/\/today\?open=notes/);
+  await expect(page).toHaveURL(/\/notes(\/[0-9a-f-]{36})?$/);
   expect((await observations(note))[0].n).toBe(22);
-  await page.goto(`/voice/notes/${note}`);
+  await page.goto(`/notes/${note}`);
   await expect(page.locator("main")).toContainText("Confirmed");
 });
 
 test("the form is paint mode: nothing ticked, the rest off, and Save under the count line writes the observations", async ({ page }) => {
-  const since = new Date();
-  await page.goto(`/voice/form?class=${klass}`);
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("Fill the form");
+  await page.goto(`/record?class=${klass}`);
+  await page.getByRole("button", { name: "Type the marks" }).first().click();
+  await expect(page).toHaveURL(/\/notes\/[0-9a-f-]{36}$/);
+  const note = noteIn(page.url());
   await expect(page.locator("[data-cell-mark=none]")).toHaveCount(ROLLS.length);
   await expect(page.locator("[data-rest]")).toHaveAttribute("aria-checked", "false");
   await expect(page.locator("[data-count-line]")).toHaveText("0 named; the other 22 not seen");
-  const save = page.getByRole("button", { name: "Save", exact: true });
+  const save = page.getByRole("button", { name: "Confirm this note", exact: true });
   await expect(save).toBeDisabled();
   await shoot(page, "5-form-empty");
   await page.locator("[data-activity-search]").fill("907");
   await page.getByRole("button", { name: "907 · Placeholder counting activity" }).click();
   await page.getByRole("group", { name: "Level expected" }).getByRole("button", { name: "2" }).click();
-  await page.locator("[data-mark-pick=below]").click();
   await page.locator("[data-roll='4']").click();
-  await page.locator("[data-mark-pick=absent]").click();
+  await page.locator("[data-pick=below]").click();
   await page.locator("[data-roll='6']").click();
+  await page.locator("[data-pick=absent]").click();
   await expect(page.locator("[data-count-line]")).toHaveText("2 named; the other 20 not seen");
   await page.locator("[data-rest]").click();
   await expect(page.locator("[data-count-line]")).toHaveText("1 below, 1 absent, 20 as expected = 22");
   await expect(save).toBeEnabled();
   await shoot(page, "6-form-filled");
   await save.click();
-  await expect(page).toHaveURL(/\/today\?open=notes/);
-  expect(await formRows(since)).toEqual([
+  await expect(page).toHaveURL(/\/notes(\/[0-9a-f-]{36})?$/);
+  expect(await marksOf(note)).toEqual([
     { outcome: "absent", n: 1 },
     { outcome: "as_expected", n: 20 },
     { outcome: "below", n: 1 },
@@ -172,12 +174,12 @@ test("Record sends her recording and opens the note being read; a refused microp
     navigator.mediaDevices.getUserMedia = () => Promise.reject(new DOMException("denied", "NotAllowedError"));
   });
   const no = await refused.newPage();
-  await no.goto(`/voice/record?class=${klass}`);
+  await no.goto(`/record?class=${klass}`);
   await expect(no.getByRole("heading", { level: 1 })).toContainText("Record a note");
   await shoot(no, "2-record");
   await no.locator("[data-record]").click();
-  await expect(no.locator("p[role=alert]")).toContainText("The phone did not let us record. Use the form, or allow the microphone in settings.");
-  await expect(no.locator("p[role=alert]").getByRole("link", { name: "Use the form instead" })).toHaveAttribute("href", `/voice/form?class=${klass}`);
+  await expect(no.locator("p[role=alert]")).toContainText("The phone did not let us record. Type the marks, or allow the microphone in settings.");
+  await expect(no.locator("p[role=alert]").getByRole("button", { name: "Type the marks" })).toBeVisible();
   await refused.close();
 
   const allowed = await browser.newContext({ storageState: SIGNED_IN, viewport: DESKTOP });
@@ -196,13 +198,13 @@ test("Record sends her recording and opens the note being read; a refused microp
     (window as unknown as { MediaRecorder: unknown }).MediaRecorder = FakeRecorder;
   });
   const yes = await allowed.newPage();
-  await yes.goto(`/voice/record?class=${klass}`);
+  await yes.goto(`/record?class=${klass}`);
   await yes.locator("[data-record]").click();
   await expect(yes.locator("[data-stop]")).toBeVisible();
   await yes.locator("[data-stop]").click();
   await expect(yes.locator("[data-playback]")).toBeVisible();
   await yes.locator("[data-send]").click();
-  await expect(yes).toHaveURL(/\/voice\/notes\/[0-9a-f-]{36}$/);
+  await expect(yes).toHaveURL(/\/notes\/[0-9a-f-]{36}$/);
   await expect(yes.locator("[data-reading]")).toContainText("Reading your note");
   const sent = yes.url().split("/").pop()!;
   const [row] = await sql<{ status: string; staff_id: string }[]>`select status, staff_id::text from pii.educator_note where id = ${sent}`;
@@ -216,41 +218,41 @@ test("with recording off, the K2 educator fills the form: no Record, no micropho
   const note = await aK2Note(sql, { klass, staff }, "Activity 904. Above 3. The rest did as expected.");
   await page.goto("/today?open=record");
   const row = page.locator("[data-group=record]");
-  await expect(row.locator(`a[href="/voice/form?class=${klass}"]`).first()).toBeVisible();
-  await expect(page.locator('a[href^="/voice/record"]')).toHaveCount(0);
-  await page.goto(`/voice/record?class=${klass}`);
-  await expect(page.getByText("This page could not be found.")).toBeVisible();
-  await page.goto(`/voice/form?class=${klass}`);
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("Fill the form");
+  await expect(row.locator(`a[href="/record?class=${klass}"]`).first()).toHaveText(/Type the marks/);
+  await page.goto(`/record?class=${klass}`);
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("Record a note");
+  await expect(page.locator("[data-record]")).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "Type the marks" }).first()).toBeVisible();
   await expect(page.locator("main [data-icon=record]")).toHaveCount(0);
-  await page.goto(`/voice/notes/${note}`);
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Confirm this note");
+  await page.goto(`/notes/${note}`);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Confirm what the reader heard");
   await expect(page.locator("main audio")).toHaveCount(0);
   expect((await page.request.get(`/api/voice/${note}`)).status()).toBe(404);
 });
 
 test("an activity the K2 sheet left without a number is found by its name and saved", async ({ page }) => {
-  const since = new Date();
-  await page.goto(`/voice/form?class=${klass}`);
+  await page.goto(`/record?class=${klass}`);
+  await page.getByRole("button", { name: "Type the marks" }).first().click();
+  await expect(page).toHaveURL(/\/notes\/[0-9a-f-]{36}$/);
+  const note = noteIn(page.url());
   await page.locator("[data-activity-search]").fill("unnumbered");
   await page.getByRole("button", { name: "Placeholder unnumbered activity", exact: true }).click();
   await expect(page.locator("[data-activity]")).toHaveAttribute("data-activity", "ACT-K2-M104-NONE");
   await page.getByRole("group", { name: "Level expected" }).getByRole("button", { name: "2" }).click();
-  await page.locator("[data-mark-pick=above]").click();
   await page.locator("[data-roll='2']").click();
-  await page.getByRole("button", { name: "Save", exact: true }).click();
-  await expect(page).toHaveURL(/\/today\?open=notes/);
+  await page.locator("[data-pick=above]").click();
+  await page.getByRole("button", { name: "Confirm this note", exact: true }).click();
+  await expect(page).toHaveURL(/\/notes(\/[0-9a-f-]{36})?$/);
   const [{ n }] = await sql<{ n: number }[]>`
-    select count(*)::int as n from activity_observation where class_id = ${klass} and route = 'form'
-      and activity_code = 'ACT-K2-M104-NONE' and stored_at >= ${since}`;
+    select count(*)::int as n from activity_observation where note_id = ${note} and activity_code = 'ACT-K2-M104-NONE'`;
   expect(n).toBe(1);
 });
 
 test("a note that could not be read, or where nothing was heard, sends her to the form", async ({ page }) => {
-  for (const [words, said] of [["mumble mumble.", "We could not read this note."], ["", "Nothing heard. Record again or use the form."]]) {
-    await page.goto(`/voice/notes/${await aK2Note(sql, { klass, staff }, words)}`);
+  for (const [words, said] of [["mumble mumble.", "We could not read this note."], ["", "Nothing heard. Record again or type the marks."]]) {
+    await page.goto(`/notes/${await aK2Note(sql, { klass, staff }, words)}`);
     await expect(page.locator("[data-could-not]")).toContainText(said);
-    await expect(page.locator("[data-to-form]")).toHaveAttribute("href", `/voice/form?class=${klass}`);
+    await expect(page.locator("[data-to-form]")).toHaveAttribute("href", `/record?class=${klass}`);
     if (words) await shoot(page, "8-could-not-read");
   }
 });
