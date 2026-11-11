@@ -36,7 +36,10 @@ def cleanup() -> None:
             typer.echo(str(e), err=True)
             raise typer.Exit(1) from e
         conn.commit()  # what was cleaned stays cleaned, even when some recording could not be deleted
-    typer.echo(f"notes cleaned: {got['recordings']}; files with no note deleted: {got['no_note']}")
+    typer.echo(
+        f"notes cleaned: {got['recordings']}; files with no note deleted: {got['no_note']};"
+        f" screenshots expired: {got.get('screenshots', 0)}"
+    )
     if got["stuck"]:
         typer.echo(f"{got['stuck']} recordings could not be deleted; they are tried again", err=True)
         raise typer.Exit(1)

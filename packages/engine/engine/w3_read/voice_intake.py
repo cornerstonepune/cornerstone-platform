@@ -15,7 +15,7 @@ from dataclasses import dataclass, field
 
 from engine.adapters import speech
 from engine.core import db, settings
-from engine.w3_read import voice_day, voice_note, voice_store
+from engine.w3_read import feedback_shot, voice_day, voice_note, voice_store
 
 LISTS = ("above", "below", "not_willing", "absent")  # the template's sections that name children
 
@@ -302,4 +302,5 @@ def cleanup(conn: db.Conn) -> dict[str, int]:
         "no_note": orphans,
         "left_unconfirmed": left,
         "stuck": stuck,
+        "screenshots": feedback_shot.expire(conn),  # a report's screenshot, kept for its own days (CP-30)
     }

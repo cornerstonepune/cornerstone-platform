@@ -1,4 +1,4 @@
-"""The timetable by hand (CP-12): move or swap a lesson, accept a clash. Only wiring: the checks and the writing are
+"""The timetable by hand (CP-12): move or swap a lesson, accept a clash; and put a draft live (CP-29). Only wiring: the checks and the writing are
 `tt_move`'s and `tt_clash`'s, the same the commands call (docs/backend-plan.md: a keyed route beside each command).
 From the site with the engine's key and the person's email as `actor`; a sign-in not on the staff list is refused (403)
 and nothing is written. These are the staff's planning screens, so the educator switch does not gate them."""
@@ -11,7 +11,7 @@ from pydantic import BaseModel
 from engine.api.deps import get_conn, require_engine_key
 from engine.w2_print import educator_gate as gate
 from engine.w2_print import fortnight_cycle as fc
-from engine.w2_print import tt_clash, tt_move
+from engine.w2_print import tt_clash, tt_live, tt_move, tt_need
 from engine.w3_read import voice_intake, voice_store
 
 keyed = APIRouter(dependencies=[Depends(require_engine_key)])
@@ -33,6 +33,18 @@ class Accept(BaseModel):
     actor: str
     key: str
     reason: str
+
+
+class GoLive(BaseModel):
+    actor: str
+    grade: str
+    section: str
+    year: str
+    fortnight: int
+    run_id: str | None = None  # the draft; the newest placed one when left out
+    reason: str | None = None
+    discard_changes: bool = False
+    dry: bool = False
 
 
 def _staff(conn, email: str):
@@ -61,3 +73,30 @@ def accept(body: Accept, conn=Depends(get_conn, scope="function")):
         return tt_clash.accept(conn, body.key, who=staff, reason=body.reason, today=gate.school_today(conn))
     except tt_clash.Refused as no:
         raise HTTPException(status_code=409, detail=str(no)) from no
+
+
+@keyed.post("/timetable/go-live")
+def go_live(body: GoLive, conn=Depends(get_conn, scope="function")):
+    """CP-22's go-live as a route: the same checks, then what changed. A refusal is a 409 and writes nothing."""
+    staff = _staff(conn, body.actor)
+    try:
+        i = tt_need.load(conn, body.grade, body.section, body.year, body.fortnight)
+        run = body.run_id or _newest_placed(conn, i)
+        report = tt_live.go_live(
+            conn, body.grade, body.section, body.year, body.fortnight, run_id=run, who=staff,
+            reason=body.reason, discard=body.discard_changes, dry=body.dry,
+        )  # fmt: skip
+    except (tt_live.Refused, tt_need.NoSuchFortnight, fc.CycleError) as no:
+        raise HTTPException(status_code=409, detail=str(no)) from no
+    return report.changes()
+
+
+def _newest_placed(conn, i) -> str:
+    got = conn.execute(
+        "select id from timetable_run where school_class_id = %s and fortnight_id = %s and outcome = 'placed'"
+        " order by created_at desc, id desc limit 1",
+        (i.class_id, i.fortnight_id),
+    ).fetchone()
+    if got is None:
+        raise tt_live.Refused("no placed draft for this class and fortnight.")
+    return str(got["id"])
