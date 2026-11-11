@@ -28,7 +28,7 @@ export default async function AcrossPage() {
       title="Across every class"
       purpose="Where each class's newest assessment stands, answers waiting too long, papers not back, and children needing help in two subjects."
       action={
-        <Link href="/children/assessments?status=scanned" className="btn">
+        <Link href="/children/assessments?status=check" className="btn">
           Check answers
         </Link>
       }
@@ -81,7 +81,7 @@ export default async function AcrossPage() {
                 <li key={o.section} data-class={o.section}>
                   <strong>{cls(o.band, o.section)}</strong>: <Count of="overdue-answers" n={o.answers} /> {o.answers === 1 ? "answer" : "answers"} on{" "}
                   {o.papers} {o.papers === 1 ? "paper" : "papers"} waiting for a person, the oldest read {dateWords(o.oldest)}.{" "}
-                  <Link href="/children/assessments?status=scanned">Check them →</Link>
+                  <Link href="/children/assessments?status=check">Check them →</Link>
                 </li>
               ))}
             </ul>

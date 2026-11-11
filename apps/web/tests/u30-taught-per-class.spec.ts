@@ -83,7 +83,7 @@ test("make papers says which skills a class has not been taught, and still offer
     // since L7 an educator may choose any skill (ADR 0081, Nimish, 2026-10-16); the line says which one the class
     // has not been taught
     const models = async (cls: string) => {
-      await page.goto(`/papers/make?class=${cls}&kind=assessment&way=same`);
+      await page.goto(`/children/assessments?make=class&class=${cls}&kind=assessment&way=same`);
       await page.getByLabel("Topic 1").selectOption("MUL");
       return page.getByLabel("Skill 1").locator('option[value="MUL.MODELS"]').textContent();
     };

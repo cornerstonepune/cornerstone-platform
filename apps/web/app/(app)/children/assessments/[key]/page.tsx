@@ -131,8 +131,8 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
   const settled = live.filter((p) => p.stage === "signed off").length;
   const toCheck = live.filter((p) => p.stage === "checked" || p.stage === "scanned").length;
   const notBack = live.filter((p) => p.stage === "made" || p.stage === "printed").length;
-  const toApprove = counts.home && counts.by.made > 0;
-  const toPrint = !counts.home && counts.by.made > 0;
+  // nothing prints before the pack is approved (the engine refuses it): a class's papers are approved on this screen too, in the signer's name
+  const toApprove = counts.by.made > 0;
   const printed = live.length > 0 && counts.by.made === 0;
   const qrs = live.filter((p) => p.stage === "made" || p.stage === "printed").map((p) => p.qr);
   // printed and not yet back: what the day "Given on" is said for (with the spares, which are given out too)
@@ -144,7 +144,7 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
   const ordered = GROUPS.flatMap((grp) => copies.filter((p) => groupOf(p) === grp.key).map((p) => ({ p, grp })));
   const shown = ordered.slice((page - 1) * PAGE, page * PAGE);
   const later = ordered.length > page * PAGE;
-  const mainId = toApprove ? "approve" : toPrint ? "print" : shown.find((s) => s.grp.key !== "replaced" && s.grp.key !== "children" && s.grp.key !== "read")?.p.id;
+  const mainId = toApprove ? "approve" : printed ? "print" : shown.find((s) => s.grp.key !== "replaced" && s.grp.key !== "children" && s.grp.key !== "read")?.p.id;
 
   const columns = (grp: Group): Column<PaperListRow>[] => [
     { key: "roll", label: "Sr. No.", num: true, width: "6rem", value: (p) => p.roll_no },
@@ -229,16 +229,14 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
       <p className="b-caption my-2">
         {wait.words}. {wait.action.label}.
       </p>
-      {toApprove || toPrint || printed ? (
+      {toApprove || printed ? (
         <section className="b-card my-4" data-kind="assessment" aria-label="This pack">
           <h2 className="b-card-h"><KindTile kind="assessment" /> {second?.words === "waits for you" ? `The ${second.name.toLowerCase()}: ${second.rolls.length} new ${second.rolls.length === 1 ? "copy" : "copies"}` : toApprove ? "This pack" : "The pack"}</h2>
           <p>
             {second?.words === "waits for you" ? `${madeWords(second)} ` : ""}
             {toApprove
               ? `Nothing prints without your approval. This approves ${approvesWords(live.filter((p) => p.stage === "made").length, sparesWaiting) || "nothing more"}, this pack only.`
-              : toPrint
-                ? "The pack is ready to print."
-                : "The pack is printed."}
+              : "The pack is printed."}
           </p>
           <div className="flex flex-wrap items-center gap-2">
             {toApprove ? (

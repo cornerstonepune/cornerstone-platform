@@ -34,7 +34,7 @@ test.beforeAll(async ({ browser }) => {
   pages = [
     // a page that opens on the person's own grade is compared at "Every grade", its one tap
     "/today", "/", "/children/assessments", "/growth", "/asks", "/library?grade=all", "/worksheets?grade=all", "/worksheets/taxonomy", "/skill-sets/approve",
-    `/skill-sets/${draft}`, "/capture", "/make", `/make/${OTHER}`, "/children/assessments?status=made", "/children/reports",
+    `/skill-sets/${draft}`, "/capture", "/make", `/make/${OTHER}`, "/children/assessments?status=print", "/children/reports",
     `/growth/class/${OTHER}`, `/growth/${other.Kavi}`, `/growth/${other.Kavi}/report`, "/workflows",
   ];
   educator = await asEducator(browser);
@@ -111,7 +111,7 @@ async function offered(page: Page, at: string, name: string): Promise<{ refused:
 // database past its eight seconds. The names are the pages' own, the addresses those made in `beforeAll`.
 const NAMES = [
   "/today", "/", "/children/assessments", "/growth", "/asks", "/library", "/worksheets", "/worksheets/taxonomy", "/skill-sets/approve",
-  "a skill waiting", "/capture", "/make", "/make of another class", "/children/assessments?status=made", "/children/reports",
+  "a skill waiting", "/capture", "/make", "/make of another class", "/children/assessments?status=print", "/children/reports",
   "another class's growth", "a child of another class", "that child's report", "/workflows",
 ];
 const walked: string[] = [];

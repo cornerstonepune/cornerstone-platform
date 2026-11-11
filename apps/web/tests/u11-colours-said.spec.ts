@@ -123,13 +123,13 @@ test("a grey or empty skill has the check that would place the child, and one cl
   await expect(sub).not.toContainText("Chetan");
 
   await add.getByRole("link", { name: "Make this check →" }).click();
-  await expect(page).toHaveURL(/\/papers\/make\?/);
+  await expect(page).toHaveURL(/\/children\/assessments\?make=/);
   const plan = page.getByRole("table", { name: "Each child's paper" });
   await expect(plan.locator("tbody tr")).toHaveCount(3);
   await expect(plan.locator(`tr[data-child="${ids.Bina}"]`)).toContainText(`2-digit + 2-digit · ${r.g2} · ${r.check} questions`);
   await expect(plan.locator(`tr[data-child="${ids.Chetan}"]`)).toContainText(`2-digit + 2-digit · ${r.g2} · ${r.check} questions`);
   await expect(page.getByRole("radio", { name: /Class assessment/ })).toBeChecked();
-  await expect(page.getByRole("button", { name: "Make and approve 3 class assessment papers" })).toBeEnabled();
+  await expect(page.getByRole("button", { name: "Make 3 class assessment papers" })).toBeEnabled();
 
   // a child's own page: the same check, for them alone
   await page.goto(`/growth/${ids.Bina}`);
