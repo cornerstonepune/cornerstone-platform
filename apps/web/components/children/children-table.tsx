@@ -7,6 +7,10 @@ import { STATES, StatusChip } from "@/components/status-chip";
 import { lastSeenWords, noted, stripWords, type Counts, type Row } from "@/lib/children-view";
 import type { Column } from "@/lib/ux-rules";
 import { PeekChip } from "./peek";
+import { PRACTISING, SECURE, UNSEEN } from "@/lib/looks";
+
+/** The wireframe's state of a group by how they are doing, which tints its heading and the name pills in it. */
+const GROUP_STATE: Record<string, "ok" | "wait" | "unseen"> = { [SECURE]: "ok", [PRACTISING]: "wait", [UNSEEN]: "unseen" };
 
 export type Section = { key: string; words: string; total: number; rows: Row[] };
 
@@ -84,9 +88,9 @@ export function ClassCountsLine({ section, counts }: { section?: string; counts:
 export function ChildrenTable({ sections, grouped, showClass, today, page, hrefOf }: { sections: readonly Section[]; grouped: boolean; showClass: boolean; today: string; page: { n: number; pages: number }; hrefOf: Record<number, string> }) {
   const cols = columns(showClass, today);
   return (
-    <div className={grouped ? "b-groups" : undefined}>
+    <div className={grouped ? "b-groups" : undefined} data-block="ChildrenGroups">
       {sections.map((s) => (
-        <section key={s.key} className="b-grp" aria-label={`${s.words}, ${s.total} ${s.total === 1 ? "child" : "children"}`} data-group={s.key}>
+        <section key={s.key} className="b-grp" data-state={grouped ? GROUP_STATE[s.key] : undefined} aria-label={`${s.words}, ${s.total} ${s.total === 1 ? "child" : "children"}`} data-group={s.key}>
           {grouped ? (
             <h3 className="b-grp-h">
               {s.words} <span className="b-count" data-count={s.key}>{s.total}</span>

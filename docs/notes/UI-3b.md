@@ -54,3 +54,12 @@ Not done yet: redirecting `/growth` and `/growth/class/[section]`, which about 3
 3. A class's header counts (`ClassCountsLine`): whole numbers of answers waiting for a person and parent reports waiting, on Children when one class is in view and on the class picture. Never a score, a rank or a per-child number.
 4. "Against every skill →" on the child's page, leading to the class's Matrix view (UI-3e).
 Both reads come from the existing `childTable` (`lib/queries-children.ts`); no new table, migration or config row.
+
+## UI-3g (Children brought to the wireframe, `docs/frontend/wireframes/children.html`)
+
+Grouped by how they are doing by default ("None" is the explicit one table in Sr. No. order; `group=none` in the address); each group tinted by its state, which tints the
+name pills in it (the `--c`/`--cb` the wireframe's `.nchip` reads). Two cards under the table: "The whole class, all skills" (the sum of every child's counts in view,
+as one stack bar and its counts) and "Needing attention" (the children not seen for two weeks, by Sr. No., as name pills). The rail: Notes with how many wait to be
+confirmed (a link once the Notes screen is built) and "Latest notes, any child" (who a note names, to confirm or confirmed, by voice or by form, who recorded it, the
+day; never a note's words), from the engine's own notes reads. Last seen reads as the weekday inside the last week, as the wireframe does.
+Ranking check: nothing ranks a child. Groups are categories (the wireframe's order: secure, practising, not seen yet), the attention card lists by Sr. No., every number is a whole count.

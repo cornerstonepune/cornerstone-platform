@@ -6,6 +6,8 @@ import { seesClass, workScope, type Who } from "./reach";
 import { childTable } from "./queries-children";
 import { reportWaits } from "./queries-reports";
 import { EngineDown, engineSend } from "./engine";
+import { childrenByIds, classNotes, coordinatorNotes, type ClassNote } from "./notes-loop";
+import { dateWords } from "./week";
 import { countsOf, stripOf, type Row } from "./children-view";
 
 export type Me = Who & { email: string };
@@ -150,4 +152,26 @@ async function waitingByChild(me: Me, classIds: string[]): Promise<Map<string, M
     }),
   );
   return out;
+}
+
+export type LatestNote = { id: string; who: string; state: "to_confirm" | "confirmed"; how: "By voice" | "By form"; by: string | null; at: string };
+
+/** The rail's notes: how many wait to be confirmed and the latest few, any child, from the engine's own reads (an educator's notes of
+ *  the classes they hold; the coordinator's every class). Nothing of a note's words, only who it names, how it came and when. Null where
+ *  the engine did not answer: the rail then draws no notes. */
+export async function latestNotes(me: Me & { name?: string; role?: string }, held: string[]): Promise<{ toConfirm: number; latest: LatestNote[] } | null> {
+  try {
+    const lists: ClassNote[][] = me.role === "coordinator" ? [(await coordinatorNotes(me))?.notes ?? []] : await Promise.all(held.map(async (id) => (await classNotes(me, id))?.notes ?? []));
+    const notes = lists.flat();
+    const names = await childrenByIds(me as Parameters<typeof childrenByIds>[0], [...new Set(notes.flatMap((n) => n.children))]);
+    const shown = notes
+      .filter((n) => n.state === "to_confirm" || n.state === "confirmed")
+      .sort((a, b) => b.received_at.localeCompare(a.received_at))
+      .slice(0, 3)
+      .map((n): LatestNote => ({ id: n.note_id, who: n.children.map((c) => names[c]?.name).find(Boolean) ?? "A class note", state: n.state as "to_confirm" | "confirmed", how: n.typed ? "By form" : "By voice", by: me.role === "coordinator" ? null : (me.name ?? null), at: dateWords(n.received_at.slice(0, 10)).slice(0, 6) }));
+    return { toConfirm: notes.filter((n) => n.state === "to_confirm").length, latest: shown };
+  } catch (e) {
+    if (e instanceof EngineDown) return null;
+    throw e;
+  }
 }

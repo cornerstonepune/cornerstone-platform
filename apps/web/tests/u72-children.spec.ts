@@ -7,6 +7,7 @@ import { expect, test, type Browser, type BrowserContext, type Page } from "@pla
 import AxeBuilder from "@axe-core/playwright";
 import postgres from "postgres";
 import { FAKE_CHILDREN } from "./fake-names";
+import { TABLE_ROW_LIMIT } from "../lib/ux-rules";
 import { sessionFor } from "./inventory-fixtures";
 import { aClass, aPerson, personAsStored } from "./rows";
 import { aK2Note, voiceSwitch } from "./k2-rows";
@@ -91,17 +92,19 @@ async function asEducator(browser: Browser, width = 1440): Promise<BrowserContex
   await context.addCookies([{ name: "cs_staff", value: sessionFor(EDUCATOR.email), domain: "localhost", path: "/", httpOnly: true, secure: false, sameSite: "Lax" }]);
   return context;
 }
+// the children's table; a child may also be named in the "Needing attention" card, so a name is looked for in the table
+const tableOf = (page: Page) => page.locator('table[aria-label^="Children"]');
 const rowsOf = (page: Page) => page.locator('table[aria-label^="Children"] tbody tr');
 
 test("1 · an educator's table lists their own children; a coordinator sees every class, with a class filter", async ({ browser, page }) => {
   const mine = await asEducator(browser);
   const p = await mine.newPage();
   await p.goto("/children");
-  await expect(p.getByRole("button", { name: new RegExp(NAMES_A[0]) })).toBeVisible();
+  await expect(tableOf(p).getByRole("button", { name: new RegExp(NAMES_A[0]) })).toBeVisible();
   await expect(p.locator("main")).not.toContainText(NAMES_B[0]);
   await mine.close();
   await page.goto("/children?cls=" + classB);
-  await expect(page.getByRole("button", { name: new RegExp(NAMES_B[0]) })).toBeVisible();
+  await expect(tableOf(page).getByRole("button", { name: new RegExp(NAMES_B[0]) })).toBeVisible();
   await expect(page.getByLabel(/^Class/)).toBeVisible();
 });
 
@@ -136,7 +139,7 @@ test("4 · searching narrows the rows and writes itself into the address; a relo
   await expect(rowsOf(page)).toHaveCount(1);
   await page.getByRole("searchbox").fill("4");
   await page.getByRole("searchbox").press("Enter");
-  await expect(page.getByRole("button", { name: new RegExp(NAMES_A[3]) })).toBeVisible();
+  await expect(tableOf(page).getByRole("button", { name: new RegExp(NAMES_A[3]) })).toBeVisible();
 });
 
 test("5 · absences noted: a grey cell with its word, a day with no lesson blank, never present", async ({ page }) => {
@@ -153,7 +156,7 @@ test("5 · absences noted: a grey cell with its word, a day with no lesson blank
 
 test("6 · a name opens the peek, 'Open the child' lands on the child, the toggle goes to the picture and back", async ({ page }) => {
   await page.goto(`/children?cls=${classA}`);
-  await page.getByRole("button", { name: new RegExp(NAMES_A[0]) }).click();
+  await tableOf(page).getByRole("button", { name: new RegExp(NAMES_A[0]) }).click();
   await expect(page.locator("[data-block=ChildPeek]")).toBeVisible();
   await page.getByRole("link", { name: "Open the child" }).click();
   await expect(page).toHaveURL(new RegExp(`/children/${classA}/1$`));
@@ -179,7 +182,7 @@ test("7 · grouping puts a heading and a count over each group; counts sum to th
 
 test("8 · the peek is newest first with who and when; Escape closes it and focus returns", async ({ page }) => {
   await page.goto(`/children?cls=${classA}`);
-  const opener = page.getByRole("button", { name: new RegExp(NAMES_A[0]) });
+  const opener = tableOf(page).getByRole("button", { name: new RegExp(NAMES_A[0]) });
   await opener.focus();
   await opener.click();
   const peek = page.locator("[data-block=ChildPeek]");
@@ -333,7 +336,7 @@ test("the old K2 addresses answer 308 to the new ones", async ({ request }) => {
 test("axe finds nothing serious or critical on the three screens, with the peek open", async ({ page }) => {
   for (const url of [`/children?cls=${classA}`, `/children/${classA}`, `/children/${classA}/1`]) {
     await page.goto(url);
-    if (url.startsWith("/children?")) await page.getByRole("button", { name: new RegExp(NAMES_A[0]) }).click();
+    if (url.startsWith("/children?")) await tableOf(page).getByRole("button", { name: new RegExp(NAMES_A[0]) }).click();
     const found = (await new AxeBuilder({ page }).analyze()).violations.filter((v) => v.impact === "serious" || v.impact === "critical");
     expect(found.map((v) => `${v.id} (${v.nodes.length})`), url).toEqual([]);
   }
@@ -366,6 +369,11 @@ test("notes waiting: the engine's count for a child, none where nothing waits, a
     const row = (n: string) => p.locator("tbody tr").filter({ has: p.getByRole("button", { name: new RegExp(n) }) });
     await expect(row(NAMES_A[1])).toContainText("1 to confirm");
     await expect(row(NAMES_A[0])).toContainText("none");
+    // and the rail (the wireframe's): the count to confirm beside Notes, and the latest notes with who they name and how they came
+    await expect(p.locator("[data-notes-count]")).toContainText("Notes · 1 to confirm");
+    await expect(p.locator("[data-latest-notes]")).toContainText(NAMES_A[1]);
+    await expect(p.locator("[data-latest-notes]")).toContainText("to confirm");
+    await expect(p.locator("[data-latest-notes]")).toContainText(/By (voice|form)/);
     await mine.close();
     // the coordinator holds no class, so the engine will not count another person's notes: no count and no placeholder, never a guess
     await page.goto(`/children?cls=${classA}`);
@@ -390,4 +398,45 @@ test("a child not seen for the school's window needs attention, by the setting a
   } finally {
     await sql`update config set value = ${sql.json(was.value as never)} where key = 'children.attention_days'`;
   }
+});
+
+test("wireframe · grouped by how they are doing by default, tinted by the group's state; None is one table", async ({ page }) => {
+  await page.goto(`/children?cls=${classA}`);
+  const groups = page.locator("[data-group]");
+  expect(await groups.count()).toBeGreaterThan(1);
+  // a group's heading carries its count; the counts sum to the children; a group is tinted by its state
+  const counts = await page.locator(".b-grp-h [data-count]").allInnerTexts();
+  expect(counts.map(Number).reduce((a, b) => a + b, 0)).toBe(NAMES_A.length);
+  for (const g of await groups.all()) expect(["ok", "wait", "unseen"]).toContain(await g.getAttribute("data-state"));
+  await expect(page.getByText("Grouped by how they are doing.")).toBeVisible();
+  await expect(page.getByLabel("Group by")).toHaveValue("doing");
+  await page.goto(`/children?cls=${classA}&group=none`);
+  await expect(page.locator("[data-group]")).toHaveCount(1);
+  await expect(page.locator(".b-grp-h [data-count]")).toHaveCount(0);
+  await expect(rowsOf(page)).toHaveCount(Math.min(NAMES_A.length, TABLE_ROW_LIMIT));
+});
+
+test("wireframe · the whole-class card is the sum of the rows, and Needing attention names the children not seen for two weeks", async ({ page }) => {
+  const sum = { secure: 0, practising: 0, unseen: 0 };
+  // the rows are paged; the card is the whole class, so the rows of every page are summed
+  for (const at of [`/children?cls=${classA}&group=none`, `/children?cls=${classA}&group=none&page=2`]) {
+    await page.goto(at);
+    for (const d of await page.locator("[data-doing]").evaluateAll((els) => els.map((e) => e.getAttribute("data-doing")!))) {
+      const [a, b, c] = d.split("/").map(Number);
+      sum.secure += a;
+      sum.practising += b;
+      sum.unseen += c;
+    }
+  }
+  await page.goto(`/children?cls=${classA}&group=none`);
+  const card = page.locator(".b-card", { hasText: "The whole class, all skills" });
+  await expect(card.getByRole("img")).toHaveAttribute("aria-label", new RegExp(`${sum.secure} secure.*${sum.practising} practising.*${sum.unseen} not seen yet`));
+  // no red segment, no score: whole counts
+  await expect(card).not.toContainText(/%|rank|score/i);
+  const attention = page.locator(".b-card", { hasText: "Needing attention" });
+  const n = Number((await attention.locator(".b-card-h").innerText()).match(/(\d+)/)![1]);
+  const listed = await attention.locator("[data-attention-list] li").count();
+  expect(listed).toBe(Math.min(n, 12));
+  await page.goto(`/children?cls=${classA}&group=attention&show=attention`);
+  await expect(page.locator(".b-grp-h [data-count]").first()).toHaveText(String(n));
 });
