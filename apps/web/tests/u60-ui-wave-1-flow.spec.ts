@@ -287,7 +287,7 @@ test("Curriculum, Maths then English, and Staff and School", async ({ page }) =>
   await expect(page.getByRole("heading", { level: 1 }).first()).toHaveText(/Curriculum/);
   await expect(page.getByText("This page could not load")).toHaveCount(0);
   await tablesRead(page, "/ (English)");
-  await wholePage(page, "/staff", /Staff/, { filter: false });
+  await wholePage(page, "/setup/staff", /Staff and classes/);
   await wholePage(page, "/setup/classes", /Classes and children/, { filter: false });
 });
 

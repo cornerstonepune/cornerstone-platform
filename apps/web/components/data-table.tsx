@@ -32,6 +32,7 @@ export function DataTable<T>({
   extras,
   sort,
   dense,
+  counted,
 }: {
   label: string;
   columns: readonly Column<T>[];
@@ -43,6 +44,8 @@ export function DataTable<T>({
   sort?: Sort;
   /** Less room beside each cell, for a table of many narrow columns (the steps of an assessment). */
   dense?: boolean;
+  /** A grouped table: each group's heading carries how many rows it holds (Class educator 4). */
+  counted?: boolean;
 }) {
   const cols = visibleColumns(columns, rows);
   if ("by" in more) {
@@ -51,7 +54,15 @@ export function DataTable<T>({
       <div className="grid gap-4" data-block="DataTable">
         {groupRows(rows, by).map((g) => (
           <section key={g.name} aria-label={g.name}>
-            <h3 className="mb-1 text-[14px]">{g.name}</h3>
+            <h3 className="mb-1 text-[14px]">
+              {g.name}
+              {counted ? (
+                <>
+                  {" "}
+                  <span className="text-[var(--ink-muted)]">{g.rows.length}</span>
+                </>
+              ) : null}
+            </h3>
             <Grid label={`${label} · ${g.name}`} cols={cols} rows={g.rows.slice(0, limit)} rowKey={rowKey} extras={extras} sort={sort} dense={dense} />
             {g.rows.length > limit ? (
               <p className="note mt-1">
