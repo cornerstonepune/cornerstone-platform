@@ -47,7 +47,6 @@ const NOT_BY_CLICK: Record<string, string> = {
   "/papers/card": "opened by a button of the paper's own form",
   "/children/assessments/[key]": "a link on an assessment's row, which needs an assessment of the class (tests/u73-assessments.spec.ts opens it with rows)",
   "/children/assessments/[key]/[roll]": "a child's copy on that assessment (tests/u73-assessments.spec.ts opens it with rows)",
-  "/children/reports": "ships beside the old Parent reports page (UI-8); the menu moves to it with UI-8b, when the old pages fold, because tests/u60 pins the menu's exact items",
   "/make/[section]/week": "opened by the make form's choice of a class and a week",
   "/skill-sets/[code]/edit": "opened from a skill's own page (click four)",
   "/setup/activities/[code]": "a link of a period or of the materials list, which need a timetable's rows",
@@ -61,6 +60,7 @@ const NOT_BY_CLICK: Record<string, string> = {
   "/timetable/fortnight/[n]": "a link of the timetable page's Fortnight card and of the timetable's rail, which need a fortnight's rows (tests/u74-timetable.spec.ts opens it with rows)",
   "/timetable/moves": "the draft page's Next card and a hand move on the fortnight page, which need a fortnight's rows (tests/u74-timetable.spec.ts opens it with rows)",
   "/educator/period/[id]": "a link of a day of the timetable, which needs a timetable's rows",
+  "/growth/[id]": "a child's name on a class's page: the class list is click two, a class's page click three, so a child's page is click four. It only counted as reached while the static page /growth/reports (which matches the pattern /growth/[^/]+) was in the app",
   "/growth/[id]/parent": "a link on a child's page (click four)",
   "/growth/[id]/report": "a link on a child's page (click four)",
 };

@@ -19,6 +19,7 @@ export async function namesMayShow(): Promise<boolean> {
 
 export type Grant = {
   id: string;
+  roleCode: string;
   roleLabel: string;
   className: string | null;
   subject: string | null;
@@ -116,8 +117,8 @@ export async function staffLines(actor: string): Promise<{ lines: StaffLine[]; a
 
 /** One person's grants, the newest first: what they hold, from when to when, and who gave it. A grant is read, never edited. */
 export async function grantsOf(staffId: string): Promise<Grant[]> {
-  const rows = await sql<{ id: string; role_label: string; class: string | null; subject: string | null; from: string; to: string | null; by: string; open: boolean }[]>`
-    select g.id::text, r.label as role_label, sc.label as class, coalesce(sj.label, sj.name) as subject,
+  const rows = await sql<{ id: string; role_code: string; role_label: string; class: string | null; subject: string | null; from: string; to: string | null; by: string; open: boolean }[]>`
+    select g.id::text, g.role_code, r.label as role_label, sc.label as class, coalesce(sj.label, sj.name) as subject,
            to_char(g.valid_from, 'YYYY-MM-DD') as "from", to_char(g.valid_to, 'YYYY-MM-DD') as "to", g.granted_by as by,
            (g.valid_from <= ${today()} and (g.valid_to is null or g.valid_to > ${today()})) as open
     from staff_role_grant g
@@ -126,7 +127,7 @@ export async function grantsOf(staffId: string): Promise<Grant[]> {
     left join subject sj on sj.tenant_id = g.tenant_id and sj.code = g.subject_code
     where g.tenant_id = ${school()} and g.staff_id = ${staffId}::uuid
     order by g.valid_from desc, g.created_at desc`;
-  return rows.map((r) => ({ id: r.id, roleLabel: r.role_label, className: r.class, subject: r.subject, from: r.from, to: r.to, by: r.by, open: r.open }));
+  return rows.map((r) => ({ id: r.id, roleCode: r.role_code, roleLabel: r.role_label, className: r.class, subject: r.subject, from: r.from, to: r.to, by: r.by, open: r.open }));
 }
 
 export type ClassLine = { id: string; label: string; grade: string; gradeCode: string; children: number; educators: string[] };
