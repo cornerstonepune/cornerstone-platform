@@ -293,6 +293,22 @@ test("15 · an educator is shown only their own classes; a coordinator picks fro
   expect(options).toEqual(expect.arrayContaining([A, B]));
 });
 
+test("19 · a cluster's count equals the chips in it, and the unseen cluster equals the grid's not-seen group", async ({ browser }) => {
+  const edu = await asEducator(browser);
+  const p = await edu.newPage();
+  await p.goto(skillUrl(0));
+  const clusters = p.locator("[data-cluster]");
+  expect(await clusters.count()).toBeGreaterThan(0);
+  for (const c of await clusters.all()) {
+    const n = Number(await c.locator("[data-count]").innerText());
+    expect(await c.locator("li").count(), await c.innerText()).toBe(n);
+  }
+  const unseen = Number(await p.locator("[data-cluster=unseen] [data-count]").innerText());
+  const group = p.locator("section[data-group=unseen] [data-count]");
+  expect(unseen).toBe((await group.count()) ? Number(await group.innerText()) : 0);
+  await edu.close();
+});
+
 test("16 · while the educator screens are switched off, an educator is shown not found; a coordinator who reviews is not", async ({ browser, page }) => {
   await sql`update config set value = 'false'::jsonb where key = 'educator.timetable_enabled'`;
   try {

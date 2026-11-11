@@ -80,6 +80,36 @@ export function paint(w: Work, roll: string, mark: MarkKey | "clear"): Work {
   return { ...w, marks, settled };
 }
 
+/** Set one child's mark to the chosen one (the picker: it does not take the same mark off, as painting does); "clear" takes it off. */
+export function setMark(w: Work, roll: string, mark: MarkKey | "clear"): Work {
+  const marks = { ...w.marks };
+  if (mark === "clear") delete marks[roll];
+  else marks[roll] = [mark];
+  return { ...w, marks, settled: mark === "clear" || w.settled.includes(mark) ? w.settled : [...w.settled, mark] };
+}
+
+/** Take a whole claim line out: every child it named loses that mark (a child with no other mark returns to unmarked), and the line's own
+ *  trouble is settled. The engine keeps it as removed (`pii.note_claim.decision`) because the list it was read as is now empty. */
+export function removeLine(w: Work, section: MarkKey): Work {
+  const marks: Marks = {};
+  for (const [roll, ms] of Object.entries(w.marks)) {
+    const kept = ms.filter((m) => m !== section);
+    if (kept.length) marks[roll] = kept;
+  }
+  return { ...w, marks, settled: w.settled.includes(section) ? w.settled : [...w.settled, section] };
+}
+
+/** Put a removed line back: its children carry its mark again, as the draft read it. */
+export function putBack(w: Work, line: DraftLine): Work {
+  if (!isMark(line.section)) return w;
+  const marks = { ...w.marks };
+  for (const n of line.numbers) {
+    const had = (marks[String(n)] ??= []);
+    if (!had.includes(line.section)) had.push(line.section);
+  }
+  return { ...w, marks };
+}
+
 /** #31's mark moved onto the child she taps (a number heard that is not in the class). */
 export function moveTo(w: Work, from: string, to: string): Work {
   const marks = { ...w.marks };
