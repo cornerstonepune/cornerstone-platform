@@ -13,7 +13,8 @@ import { SwitchedOff } from "@/components/children/switched-off";
 import { requireStaff } from "@/lib/auth";
 import { screensOn } from "@/lib/children-reads";
 import { screenHref } from "@/lib/built";
-import { childOf, historyOf } from "@/lib/children-peek";
+import { childOf, historyOf, rebuiltAt, summaryOf } from "@/lib/children-peek";
+import { Cards } from "@/components/cards";
 import { sittingsOf, skillsOfChild, type ChildSkill } from "@/lib/children-picture";
 import { initialsOf } from "@/lib/children-view";
 import { childEvidence, misconceptionNames } from "@/lib/queries";
@@ -37,6 +38,7 @@ export default async function TheChild({ params, searchParams }: { params: Promi
   const skill = skills.find((s) => s.code === sp.skill) ?? skills[0];
   const sittings = skill ? await sittingsOf(child.id, skill.code) : [];
   const [evidence, mistakes] = await Promise.all([childEvidence(child.id), misconceptionNames(child.id)]);
+  const [summary, rebuilt] = await Promise.all([summaryOf(child.id, classId), rebuiltAt()]);
   const answersPage = Math.max(1, Number.parseInt(sp.answers ?? "1", 10) || 1);
   const newest = await historyOf(child.id, PAGE + 1, sp.before && !Number.isNaN(Date.parse(sp.before)) ? sp.before : null);
   const entries = newest.slice(0, PAGE);
@@ -48,6 +50,45 @@ export default async function TheChild({ params, searchParams }: { params: Promi
   const by = { secure: 0, practising: 0, emerging: 0 };
   for (const s of skills) by[s.look]++;
   const label = `${skills.length} ${skills.length === 1 ? "skill" : "skills"} seen: ${by.secure} secure, ${by.practising} practising, ${by.emerging} emerging`;
+  const lastSeen = [...skills].filter((s) => s.lastSeen).sort((a, b) => b.lastSeen!.localeCompare(a.lastSeen!));
+  const cards = [
+    {
+      kind: "child" as const,
+      title: "Counts by state",
+      line: `${by.secure} secure · ${by.practising} practising · ${by.emerging} emerging`,
+      body: (
+        <span className="b-caption">
+          {skills.length} {skills.length === 1 ? "skill" : "skills"} seen in all · Sr. No. {child.roll_no} of {summary.of} in {child.section}
+          {summary.since ? `, since ${dateWords(summary.since)}` : ""}
+        </span>
+      ),
+    },
+    {
+      kind: "child" as const,
+      title: "Last seen, by skill",
+      body: lastSeen.length === 0 ? <span className="b-muted">Not seen yet</span> : (
+        <ul className="grid gap-1 text-[13px]" data-last-seen>
+          {lastSeen.map((s) => (
+            <li key={s.code}>
+              {s.name} <span className="b-muted">· {dateWords(s.lastSeen)}</span>
+            </li>
+          ))}
+        </ul>
+      ),
+    },
+    {
+      kind: "note" as const,
+      title: "Notes and papers",
+      body: (
+        <ul className="grid gap-1 text-[13px]" data-notes-papers>
+          <li>Notes confirmed · {summary.notes}</li>
+          <li>Papers read · {summary.papers}</li>
+          <li>Corrections · {summary.corrections}</li>
+          <li>Newest entry · {summary.newest ? dateWords(summary.newest) : "none yet"}</li>
+        </ul>
+      ),
+    },
+  ];
   const note = screenHref("record") ?? "/voice";
   return (
     <Screen
@@ -74,7 +115,14 @@ export default async function TheChild({ params, searchParams }: { params: Promi
         <>
           <ChildGraph initials={initialsOf(name)} skills={graph} label={label} table={false} />
           <h2 className="mt-4 mb-2 text-[18px]">Skills, in domain order</h2>
+          {rebuilt ? <p className="b-caption mb-2">Rebuilt {rebuilt.replace("T", " ")}, from confirmed notes and papers</p> : null}
           <DataTable<ChildSkill> label="Where this child is on each skill" columns={columns(href)} rows={skills} rowKey={(s) => s.code} more={{ page: 1, href: () => "" }} limit={skills.length} />
+          <p className="mt-2 text-[13px]">
+            <Link href={`/children/${classId}?view=matrix`} data-all-skills>Against every skill →</Link>
+          </p>
+          <div className="mt-4">
+            <Cards cards={cards} />
+          </div>
           <h2 className="mt-4 mb-2 text-[18px]">Level by sitting</h2>
           <FilterBar action={`/children/${classId}/${encodeURIComponent(roll)}`} filters={[{ name: "skill", label: "Skill", value: skill?.code, all: "", required: true, options: skills.map((s) => [s.code, s.name] as const) }]} />
           <Trend sittings={sittings} empty="No sitting with a level named yet" />
@@ -86,6 +134,13 @@ export default async function TheChild({ params, searchParams }: { params: Promi
         <p className="mt-2">
           <Link data-more href={`/children/${classId}/${encodeURIComponent(roll)}?${new URLSearchParams({ ...(skill ? { skill: skill.code } : {}), before: older })}`}>Older entries</Link>
         </p>
+      ) : null}
+      {skills.length > 0 ? (
+        <>
+          <h2 className="mt-4 mb-2 text-[18px]">Skill by skill</h2>
+          <DataTable<ChildSkill> label="Skill by skill" columns={bySkill()} rows={skills} rowKey={(s) => s.code} more={{ page: 1, href: () => "" }} limit={skills.length} />
+          <p className="b-caption mt-2">Ready next shows only links a person confirmed.</p>
+        </>
       ) : null}
       <h2 className="mt-4 mb-2 text-[18px]">Answers</h2>
       <Answers
@@ -103,8 +158,16 @@ function columns(href: (code: string) => string): Column<ChildSkill>[] {
   return [
     { key: "skill", label: "Skill", keep: true, value: (s) => s.name, cell: (s) => <Link href={href(s.code)} data-skill-row className="inline-flex min-h-[var(--tap)] items-center">{s.name}</Link> },
     { key: "state", label: "State", keep: true, status: true, value: (s) => s.words, cell: (s) => <StatusChip state={s.look} round /> },
-    { key: "days", label: "Times seen", keep: true, num: true, value: (s) => s.seen },
-    { key: "seen", label: "Last seen", keep: true, value: (s) => (s.lastSeen ? dateWords(s.lastSeen) : "not yet") },
+    { key: "seen", label: "Seen", keep: true, num: true, value: (s) => s.seen },
+  ];
+}
+
+/** "Skill by skill": the named days behind each skill, when it was last seen and what a person confirmed as next after it. */
+function bySkill(): Column<ChildSkill>[] {
+  return [
+    { key: "skill", label: "Skill", keep: true, value: (s) => s.name },
+    { key: "days", label: "Named days", keep: true, num: true, value: (s) => s.seen },
+    { key: "last", label: "Last seen", keep: true, value: (s) => (s.lastSeen ? dateWords(s.lastSeen) : "not yet") },
     { key: "next", label: "Ready next", keep: true, value: (s) => s.readyNext.join(", ") || "nothing confirmed yet" },
   ];
 }

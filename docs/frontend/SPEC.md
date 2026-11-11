@@ -406,9 +406,11 @@ Main action: Open today · Next step: Fortnight
 Data: timetable_rule rows (kind slot) valid today; session for the fortnight's days; period times; school_day kinds
 Empty: No timetable live for this class: coordinator sees 'Make a draft' · Phone: Day view by default; week scrolls sideways in its box
 Folds in: /educator (day), /educator/week
-Every control on the screen (11), and what the test does with each:
-- **filter** class [coordinator only; absent and refused for others]
+Every control on the screen (13), and what the test does with each:
+- **filter** class (the coordinator always; an educator only when she holds more than one class)
 - **tab** Day / Week / Fortnight (Day by default at 400 px)
+- **link** Today → Timetable (`/timetable`) (opens today in the Day view)
+- **link** each day head → Timetable (`/timetable`) (opens that day in the Day view; earlier and later days are reached the same way)
 - **filter** this / next fortnight
 - **cell** each grid cell → the session's name (`/period/[id]`)
 - **fold** a moved cell's details (who, why, when) (opens on click, tap or Enter; never by hover alone)
@@ -422,6 +424,8 @@ Done when (on top of the ten generic checks):
 - a hand move shows an amber outline and its details name who and why
 - an educator never sees an accept-clash control; a clash cell is red for both roles
 - the grid's cells equal the session rows for the day shown (count and names)
+- a period running now carries Do now, a recorded one Done, one over and not recorded Late, and no period still to come has a chip
+- a holiday day is named in words under the grid
 
 
 #### Fortnight 9 `/timetable/fortnight/[n]`
@@ -437,11 +441,12 @@ Rail (Connected to): The grid · every activity in the plan · Materials · Draf
 Main action: Approve / Go live (coordinator) · Open the grid (educator) · Next step: Timetable
 Data: fortnight + fortnight.state (CP-6; each step's yes is an approval row); plan_entry; session diffs at go-live (CP-22); approval ledger
 Empty: No plan lines yet: link to the planner upload · Phone: stepper wraps to two rows
-Every control on the screen (8), and what the test does with each:
+Every control on the screen (9), and what the test does with each:
 - **link** each plan line → the activity's name (`/setup/activities/[code]`)
 - **link** each hand move → Moves by hand (`/timetable/moves`) [coordinator only; absent and refused for others]
 - **button** Approve: approval row written; the stepper moves to approved; Go live appears; Approve disappears [coordinator only; absent and refused for others]
-- **button** Go live: sessions updated in place; the what-changed table fills; the stepper moves to live [coordinator only; absent and refused for others]
+- **field** reason [coordinator only; absent and refused for others] (needed once the fortnight is frozen; the engine says so in words when it is missing)
+- **button** Go live: every class's placed draft goes live and the sessions are updated in place; the what-changed table lists every session it moved or removed, and nothing else [coordinator only; absent and refused for others]
 - **link** rail: The grid → Timetable (`/timetable`)
 - **link** rail: each activity in the plan → the activity's name (`/setup/activities/[code]`)
 - **link** rail: Materials → Materials, this fortnight (`/timetable/materials`)
@@ -657,7 +662,7 @@ Main action: a child · Next step: the skill
 Data: child_skill_state (kind 'observed' for K2, 'written' for grades 1–4) for the class by skill; flow_run (the nightly graph run's row) finished_at for the date; evidence_event for clusters
 Empty: No child seen yet: the grid of dashed squares with 'not seen yet, nothing more' · Phone: 3 columns of squares (a name and a state word do not fit a 44 px square; SPEC §2 rule 10)
 Folds in: /growth (Class results), /growth/class/[section]
-Every control on the screen (14), and what the test does with each:
+Every control on the screen (17), and what the test does with each:
 - **filter** skill
 - **filter** domain
 - **peek** each square (and each child chip in a cluster): opens ChildPeek for that child
@@ -672,6 +677,9 @@ Every control on the screen (14), and what the test does with each:
 - **filter** group by (state on this skill / class; a heading and a count per group)
 - **button** peek: Close: closes ChildPeek; focus returns to the child that opened it
 - **link** peek: Open the child → Where this child is (`/children/[class]/[roll]`) (the one way from a list to the child's own page)
+- **tab** Picture (the class picture; the three views of a class are tabs of this screen (UI-3e, carrying /growth and /growth/class/[section]))
+- **tab** By topic (topics as rows: who is secure, practising or needs help; a topic opens its skills, a skill its children)
+- **tab** Matrix (each child against each topic; a topic opens its skills)
 Done when (on top of the ten generic checks):
 - each square shows the Sr. No. and the child's name read from pii by child_id, and no photo (DOM scan)
 - the stack bar's counts equal the squares by state
@@ -831,7 +839,7 @@ Main action: Say what the child wrote · Next step: the next paper
 Data: capture.pages, item_result with status and confidence, key, misconception tags
 Empty: Nothing left to judge on this paper: Sign it off · Phone: image above, answers below
 Folds in: /capture/check, /capture/[id]
-Every control on the screen (12), and what the test does with each:
+Every control on the screen (20), and what the test does with each:
 - **row** each answer row: the page scrolls to that answer and outlines it
 - **field** what the child wrote (for the answer in focus; required when judging)
 - **button** Say what the child wrote: a read_correction row; the engine marks it right / wrong / blank; the chip updates; the next judge answer comes into focus
@@ -844,6 +852,14 @@ Every control on the screen (12), and what the test does with each:
 - **button** Approve this home assessment (a copy waiting for approval: approved in the educator's name, this one only)
 - **button** Remove (a question) (asks once when the removal costs something (the approval, or the last question of a skill); the paper is made again with a new code)
 - **filter** bank: topic · skill · level · kind · question (each choice narrows the next; the chosen question is seen before Add)
+- **button** Change it for every child (under 'Is the right answer wrong?'; code refuses a key the sum contradicts and says why; otherwise every child's answer to the question is marked again)
+- **button** Name the mistake (the likeliest, none of these, another) (for a wrong answer no named mistake explains; kept against the reading and reaches the evidence at sign-off)
+- **button** This page is this child's / Not this child's (where the same photograph is on two copies; saving what the child wrote waits for this)
+- **link** Next answer to judge (the next answer for a person, in the order they sit on the page)
+- **link** Previous paper / Next paper (this child's) (the child's other papers, oldest first, each on its own paper screen)
+- **link** a skill's answer chip (what this paper says by skill; each answer one tap away)
+- **button** Right / Wrong / Blank (judge) (for the few answers code cannot mark; only a person can say which)
+- **field** the right answer, for every child (inside the fold 'Is the right answer wrong?')
 Done when (on top of the ten generic checks):
 - right, wrong and blank are three different chips and three counts; a wrong-with-working reason is shown with its wrong chip
 - a person's answer writes a read_correction row and never overwrites the engine's read
@@ -1105,7 +1121,7 @@ Every control on the screen (11), and what the test does with each:
 - **filter** search
 - **row** each question row → {the question as it prints} (`/setup/question-bank/[key]`)
 - **link** page: Later → → Question bank (`/setup/question-bank`)
-- **fold** Statistics (counts and worksheets by taxonomy)
+- **fold** Statistics (counts and worksheets by topic)
 - **link** rail: a skill → the skill's name (`/setup/skills/[code]`)
 Done when (on top of the ten generic checks):
 - statistics and taxonomy sit behind the details link, not on the first view (rule 8)
@@ -1143,7 +1159,7 @@ Done when (on top of the ten generic checks):
 #### Staff and classes `/setup/staff`
 Who: coordinator · Phase: Core · Backend: CP-1 · CP-3 · Old page today: yes · Slice: UI-5
 Eyebrow: This fortnight
-Purpose: Who teaches which class, and whole counts the database can stand behind. No score, no ranking: the school decides what they mean.
+Purpose: Who teaches which class, and whole counts you can rely on. No score, no ranking: the school decides what they mean.
 Blocks, in order:
 - **DataTable**: role · class · sessions done of planned · notes confirmed · notes late · lines accepted / changed / removed; each row opens the person's grants
 - **Details**: a person's grants: role, class, subject, from, to; Add a grant

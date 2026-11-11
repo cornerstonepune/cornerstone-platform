@@ -70,6 +70,14 @@ export const childrenByIds = cache(async (me: Pick<Session, "email" | "role" | "
   );
 });
 
+/** The class's children by Sr. No. (no leading zero): initials and name, for the squares of the confirm board. Read through the same audited
+ *  function as every other name (`pii.read_child`), and only for the children a person may see. */
+export const rosterOf = cache(async (me: Pick<Session, "email" | "role" | "classes" | "subjects" | "id">, classId: string): Promise<Record<string, { name: string; initials: string }>> => {
+  const ids = await sql<{ id: string; roll_no: string }[]>`select id::text, roll_no from child_now where class_id = ${classId} and active`;
+  const named = await childrenByIds(me, ids.map((r) => r.id));
+  return Object.fromEntries(ids.flatMap((r) => (named[r.id] ? [[String(Number(r.roll_no)), { name: named[r.id].name, initials: named[r.id].initials }] as const] : [])));
+});
+
 /** The activities' names by code. */
 export async function activityNames(codes: string[]): Promise<Record<string, string>> {
   const list = [...new Set(codes.filter(Boolean))];
