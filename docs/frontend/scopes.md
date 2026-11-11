@@ -219,7 +219,7 @@ Assessments, one assessment and one child's paper as node pages on the blocks; t
 3. `lib/assessment-steps.ts` STEPS and STEP_WORDS and `lib/queries-papers.ts` exported names are unchanged (a test imports them and compares to the committed list).
 4. The journey `e2e/a-paper-comes-back.spec.ts` passes: make a class assessment → approve the pack (per pack, the pack-level button; no all-packs button exists on any screen: `u62` kept) → upload a fixture scan → the paper shows right / wrong / blank / for you to judge with the fixture's counts → say what the child wrote for the one to judge → sign off → the child's timeline shows the paper result beside a voice note; axe at each step.
 5. No approve-all control exists on any screen (the `ux.approveAll` list in workflows.json is empty at the end of this slice).
-6. Every one of the 72 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
+6. Every one of the 73 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
 7. Assessments: the four old pages answer 308 to this one or to the Assessment node
 8. Assessments: every row's name is built topic · skill · level · kind · class · day (regex)
 9. Assessments: no approve-all control anywhere

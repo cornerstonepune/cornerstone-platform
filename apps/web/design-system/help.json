@@ -1161,6 +1161,10 @@
         {
           "label": "Yes, the child wrote … (the reader's guess, or the spot-check)",
           "says": "one press confirms what the reader thinks the child wrote; held back until a person says whose page it is"
+        },
+        {
+          "label": "Open the page at full size",
+          "says": "the picture is a link to the page as photographed, at its own size, in a new tab"
         }
       ]
     },

@@ -49,7 +49,7 @@ test("a scan's missing and doubled pages are said under Read a scan, by roll num
     `${CLASS} · roll 2: page 1 is in the file twice (pages 3 and 9): page 9 is read`,
     "Copy 3 (page 11): not read — no code could be read on the page",
   ];
-  for (const at of ["/capture", "/papers"]) {
+  for (const at of ["/capture", "/children/assessments?view=reading"]) {
     await page.goto(at);
     await expect(lacks(page), `on ${at}`).toHaveText(said);
     const panel = page.getByRole("region", { name: "Read a scan" });

@@ -163,8 +163,8 @@ test("on a phone, what needs doing is on the row: an assessment's stage, and why
   await expect(why).toBeVisible();
   const box = await why.boundingBox();
   expect(box!.x + box!.width, "the reason sits inside the screen").toBeLessThanOrEqual(PHONE.width);
-  await open(page, "/papers");
-  const stage = page.locator("[data-testid=stage-on-row]").first();
+  await open(page, "/children/assessments?view=table");
+  const stage = page.locator("tr[data-assessment] td[data-label='Waits for']").first();
   await expect(stage).toBeVisible();
   const s = await stage.boundingBox();
   expect(s!.x + s!.width, "where an assessment stands sits inside the screen").toBeLessThanOrEqual(PHONE.width);

@@ -121,6 +121,8 @@ export default async function PaperPage({ params, searchParams }: Props) {
   // the answers still for you to judge, after the one in view, in the order they sit on the page: the way on, so a paper is walked answer by answer
   const others = judging.filter((x) => marks.indexOf(x) > marks.findIndex((m) => m.a.id === focus?.a.id));
   const nextJudge = others.length ? { href: `${paperHref(key, roll)}?answer=${others[0].a.id}#a-${others[0].a.id}`, left: others.length } : undefined;
+  // the region is outlined only where it is the question's own: a box another question shares, or none, says so in words instead
+  const outlined = focus?.a.box?.length === 4 && focus.a.answer_state !== "not_found";
   const nothingLeft = judging.length === 0 && answers.length > 0;
 
   return (
@@ -178,7 +180,7 @@ export default async function PaperPage({ params, searchParams }: Props) {
         <EmptyState>Nothing has been read from this paper yet. When the scan is read, each answer appears here.</EmptyState>
       ) : (
         <div className="b-split">
-          <PageImage src={src} box={focus?.a.answer_state !== "not_found" ? focus?.a.box : null} caption={focus ? `The child's page as photographed. Question ${qLabel(focus.a, marks.indexOf(focus))} is outlined.` : "The child's page as photographed"} />
+          <PageImage src={src} box={outlined ? focus?.a.box : null} caption={!focus ? "The child's page as photographed" : outlined ? `The child's page as photographed. Question ${qLabel(focus.a, marks.indexOf(focus))} is outlined.` : `We could not find question ${qLabel(focus.a, marks.indexOf(focus))} on this page: it is somewhere on this page.`} />
           <DataTable label="The answers" columns={columns} rows={marks} rowKey={(x) => x.a.id} more={{ page: 1, href: () => paperHref(key, roll) }} />
         </div>
       )}

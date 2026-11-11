@@ -17,7 +17,7 @@ criteria:
     run: cd packages/engine && .venv/bin/python -m pytest tests/test_ux_rules.py tests/test_ratchet.py tests/test_layout.py -q -p no:cacheprovider -o addopts=
     expect: "passed"
   - name: the check pages, rendered
-    run: cd apps/web && npx playwright test tests/u51-ux-rules.spec.ts tests/u3-marking.spec.ts tests/s26-right-answer.spec.ts tests/u45-papers-named.spec.ts --reporter=line --workers=1
+    run: cd apps/web && npx playwright test tests/u51-ux-rules.spec.ts tests/u3-marking.spec.ts tests/u77-paper-tools.spec.ts tests/u45-papers-named.spec.ts --reporter=line --workers=1
     expect: "passed"
   - name: every page still holds
     run: cd apps/web && npx playwright test --reporter=line --workers=1
