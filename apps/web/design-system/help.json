@@ -1391,6 +1391,34 @@
           "says": "the offers table pages on its own, ten a page, and keeps the page of the list"
         },
         {
+          "label": "Questions to answer: Read them",
+          "says": "the card jumps to the table of questions; it is drawn only while a question waits"
+        },
+        {
+          "label": "Read it in full (a question)",
+          "says": "opens the full draft in a new tab"
+        },
+        {
+          "label": "Agree as drafted (a question)",
+          "says": "the question is answered 'agreed' in the person's name; it leaves the waiting list"
+        },
+        {
+          "label": "what it should say (a question)",
+          "says": ""
+        },
+        {
+          "label": "Correct it (a question)",
+          "says": "the question is answered 'corrected' with the person's words and name; it leaves the waiting list"
+        },
+        {
+          "label": "the answered questions",
+          "says": "drawn once a question has been answered: who answered, when and what they said"
+        },
+        {
+          "label": "questions page: Later →",
+          "says": "the questions table pages on its own, ten a page"
+        },
+        {
           "label": "rail: Skills to approve",
           "says": "Opens Skills to approve."
         },
