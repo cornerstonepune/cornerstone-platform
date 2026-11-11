@@ -35,30 +35,30 @@ Files: `app/(app)/staff/{page,staff-table,add-person}.tsx`, `app/(app)/staff/act
 |---|---|---|---|---|
 | 1 | Filter row: Role, "Find a person" | narrows the people | `/setup/staff` has both | **done** (#576) |
 | 2 | Table: Person, Role, Classes they teach, Subjects they teach | lists staff with their `staff.classes` / `staff.subjects` | `/setup/staff`: name, role, class (from grants), sessions, counts | **done** (display) |
-| 3 | **Add a member of staff** (name, school email, role; "Add and send a link") | `public.staff_add`, then a first-time password link by email; refuses a bad email, an unknown role, an email already on the list | no home in `screens.json` yet: a fold "Add a person" under the table on `/setup/staff` (not the main action; the main action stays Add a grant). `staff_add` and the link email already exist | **carry across, frontend only, can start now** (one PR: inventory element + wireframe + page + move the spec below) |
-| 4 | **Classes they teach**: tick classes, "Save the classes" | writes `staff.classes`; refuses a class no child is in | Add a grant / End a grant (`staff_role_grant`) | **needs backend: `grant_role` / `end_grant`**, and see the scope finding below |
-| 5 | **Subjects they teach**: tick subjects, "Save the subjects" | writes `staff.subjects` | the same grants (a grant names its subject) | **needs backend**, same as 4 |
-| 6 | Notices: saved, "only the coordinators can change the staff list", refused | words after a save | the grant form's own messages (`needs_class`, `needs_subject`, `already_holds`, `one_per_class`, `core_teacher`, `wrong_scope`) | with 4 |
+| 3 | **Add a member of staff** (name, school email, role; "Add and send a link") | `public.staff_add`, then a first-time password link by email; refuses a bad email, an unknown role, an email already on the list | no home in `screens.json` yet: a fold "Add a person" under the table on `/setup/staff` (not the main action; the main action stays Add a grant). `staff_add` and the link email already exist | **done** (#612: button and form on `/setup/staff`, spec moved at equal assertions) |
+| 4 | **Classes they teach**: tick classes, "Save the classes" | writes `staff.classes`; refuses a class no child is in | Add a grant / End a grant (`staff_role_grant`) | **built in #628 (draft)** against backend #616's routes; released with #615/#616, migrate first. Scope decided in #590 (see below) |
+| 5 | **Subjects they teach**: tick subjects, "Save the subjects" | writes `staff.subjects` | the same grants (a grant names its subject) | **built in #628**, same as 4 |
+| 6 | Notices: saved, "only the coordinators can change the staff list", refused | words after a save | the grant form's own messages (`needs_class`, `needs_subject`, `already_holds`, `one_per_class`, `core_teacher`, `wrong_scope`) | in #628: the engine's own words, shown in the form |
 | 7 | Links "See the school's classes" and the next step | navigation | `/setup/classes` (already) | done |
 
-**Finding that decides the order.** Every page's "a person sees their own" reads `staff.classes` and `staff.subjects` (`lib/scope.ts`, `lib/reach.ts`), and the old `/staff` editor is the only thing that writes them; grants are read only by `public.my_reach` and the access groups. Retiring rows 4 and 5 therefore needs one decision for the backend and the orchestrator, before the page can go: either (a) the columns are derived from grants (a view or a trigger on `staff_role_grant`), or (b) `lib/scope.ts` and `lib/reach.ts` read the grants (through `my_ids`). Without it, ending a grant would change nothing an educator sees.
+**Finding that decides the order.** Every page's "a person sees their own" reads `staff.classes` and `staff.subjects` (`lib/scope.ts`, `lib/reach.ts`), and the old `/staff` editor is the only thing that writes them; grants are read only by `public.my_reach` and the access groups. Retiring rows 4 and 5 therefore needed one decision. **Decided (#590, backend): grants become the one source of scope** (no new table), after a data backfill from the old columns; backend #615 makes the sign-in read grants. Until #615 is live the old page keeps reading the columns and is read-only (#628).
 
 ### Specs to move, at equal assertions
 | Spec (today) | Assertion | Moves to |
 |---|---|---|
-| `u53-staff-and-school` test 1: "a coordinator ticks a person's classes … the list keeps them, and the rest of the person" | the write lands; the person's password hash and role are untouched; no `scrypt$` in the page | `/setup/staff` grant test: a grant row is written, the person's other data is unchanged, the page never shows a hash. The **no hash in the page** half can move now (a read-only test on `/setup/staff`). |
-| `u53` test 2: "a class no child is in refuses everything, and the filter row finds a person" | an unknown class changes nothing; the filter row finds a person | the filter half: now, on `/setup/staff` (not yet tested there); the refusal half: with grants (the trigger already refuses what the form cannot offer) |
+| `u53-staff-and-school` test 1: "a coordinator ticks a person's classes … the list keeps them, and the rest of the person" | the write lands; the person's password hash and role are untouched; no `scrypt$` in the page | `u74` test 1 (#628): a grant row is written, the person's password and role are unchanged, the page never shows a hash |
+| `u53` test 2: "a class no child is in refuses everything, and the filter row finds a person" | an unknown class changes nothing; the filter row finds a person | both in `u74-staff-grants` (#628): the filter row (test 9) and a class not on the list refused with nothing changed (test 5) |
 | `u53` test 3 (School) | class, grade, children, educators | already on `/setup/classes` (#576) |
-| `gate-password`: "a new member of staff added on the Staff page has no password and is sent a first-time link" | no password row; a first-time link is sent | with row 3, on `/setup/staff`, same assertions |
+| `gate-password`: "a new member of staff added on the Staff page has no password and is sent a first-time link" | no password row; a first-time link is sent | **moved in #612**, same assertions |
 | `u67-guide`: help from the Staff page opens its guide | the "?" opens the page's guide | repoint `/staff` to `/setup/staff` when the menu item moves; `guide/pages/staff.json` (`menu`, text, quoted buttons) rewritten with it (`test_guide.py` holds the quoted buttons) |
 | `u60-ui-wave-1-flow`: `wholePage("/staff", /Staff/)` | the page passes the whole-page checks | `/setup/staff`, `/Staff and classes/` |
 | `u13-route-walk` / `u53-the-menu` | the door and page a route belongs to | the menu entry `/staff` becomes `/setup/staff` |
 
 ### Order
-1. **A. Add a person** on `/setup/staff` (row 3), with its spec moved. Frontend only; no backend needed.
-2. **B. Backend:** `grant_role` / `end_grant` (comment on #551) and the scope decision above.
-3. **C. Grants on `/setup/staff`:** Add a grant / End a grant (remove `pending` in `screens.json`, draw the controls), move the `u53` tests, point the menu, guide page and `requireStaffEditor` at `/setup/staff`.
-4. **D. Retire:** `/staff` answers 308 to `/setup/staff`; delete the page, `staff-table`, `add-person`, `actions.ts` (setClasses / setSubjects / addPerson), the unused parts of `lib/queries-staff.ts`, and `guide/pages/staff.json`'s old text. The `test_layout` map stays in step.
+1. **A. Add a person** on `/setup/staff` (row 3), with its spec moved. **Done (#612).**
+2. **B. Backend:** the grants routes (#616, engine routes; no database function was needed) and the sign-in reading grants (#615). **In review.**
+3. **C. Grants on `/setup/staff`:** Add a grant / End a grant, the `u53` tests moved, the old editor made read-only. **#628, draft**, released with B. Still to do here: point the menu, guide page and `requireStaffEditor` at `/setup/staff`.
+4. **D. Retire (after #615 is live):** `/staff` answers 308 to `/setup/staff`; delete the page, `staff-table`, `add-person`, `actions.ts` (setClasses / setSubjects / addPerson), the unused parts of `lib/queries-staff.ts`, and `guide/pages/staff.json`'s old text. The `test_layout` map stays in step.
 
 ### Other old Setup pages still routed (not UI-5's; owner from `screens.json`)
 | Old route(s) | New screen | Slice |
