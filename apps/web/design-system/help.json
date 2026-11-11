@@ -1051,6 +1051,10 @@
         {
           "label": "Away: hold it for later",
           "says": "on a printed copy; the same button then reads Back: count as missing"
+        },
+        {
+          "label": "Edit this paper",
+          "says": "a home assessment's copy not yet printed: its questions, remove, add, approve"
         }
       ]
     },
@@ -1097,6 +1101,18 @@
         {
           "label": "rail: the next paper to check",
           "says": "Opens Check the answers."
+        },
+        {
+          "label": "Approve this home assessment",
+          "says": "a copy waiting for approval: approved in the educator's name, this one only"
+        },
+        {
+          "label": "Remove (a question)",
+          "says": "asks once when the removal costs something (the approval, or the last question of a skill); the paper is made again with a new code"
+        },
+        {
+          "label": "bank: topic · skill · level · kind · question",
+          "says": "each choice narrows the next; the chosen question is seen before Add"
         }
       ]
     },
@@ -1276,7 +1292,7 @@
         },
         {
           "label": "Change a level's sentence",
-          "says": "a field; Save writes a skill_level_version row"
+          "says": "a field for the sentence and an optional reason; Save changes that level's words, takes that level out of approved and keeps who and why (the engine's level-words route)"
         },
         {
           "label": "rail: the class picture on this skill",
@@ -1305,6 +1321,10 @@
         {
           "label": "peek: Open the child",
           "says": "the one way from a list to the child's own page"
+        },
+        {
+          "label": "Earlier sentences (each level)",
+          "says": "each earlier sentence with who and when, newest first; coordinator"
         }
       ]
     },

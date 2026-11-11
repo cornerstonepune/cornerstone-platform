@@ -37,7 +37,7 @@ export function TypeMarks({ classId, sessionId, main }: { classId: string; sessi
       <button
         type="button"
         disabled={pending}
-        className={main ? "btn min-h-14 w-full justify-center" : "btn secondary min-h-14 w-full justify-center min-[700px]:w-auto"}
+        className={main ? "btn !min-h-14 w-full justify-center" : "btn secondary !min-h-14 w-full justify-center min-[700px]:w-auto"}
         data-typed
         onClick={() =>
           go(async () => {
@@ -76,7 +76,7 @@ export function AddPhoto({ classId, sessionId }: { classId: string; sessionId?: 
     });
   return (
     <div className="grid gap-2" data-add-photo>
-      <label className="btn secondary min-h-14 w-full cursor-pointer justify-center gap-2 min-[700px]:w-auto">
+      <label className="btn secondary !min-h-14 w-full cursor-pointer justify-center gap-2 min-[700px]:w-auto">
         <Icon name="photo" size={ICON_SIZE.row} />
         Add a photo
         <input type="file" accept="image/jpeg,image/png,image/heic" className="sr-only" disabled={pending} onChange={(e) => e.target.files?.[0] && send(e.target.files[0])} />
