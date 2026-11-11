@@ -13,6 +13,7 @@ import { deadline } from "@/lib/deadline";
 import { levels } from "@/lib/levels";
 import { grades, RULE_WORDS } from "@/lib/queries";
 import { assessmentList, paperList, type PaperListRow } from "@/lib/queries-papers";
+import { ExtraCopies, Score } from "./score";
 import { chosenNames } from "@/lib/queries-assessment-extras";
 import { topicNamesOf } from "@/lib/queries-by-topic";
 import { STEP_WORDS, stepCells, type Counts } from "@/lib/assessment-steps";
@@ -148,6 +149,7 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
 
   const columns = (grp: Group): Column<PaperListRow>[] => [
     { key: "roll", label: "Sr. No.", num: true, width: "6rem", value: (p) => p.roll_no },
+    { key: "score", label: "Score", num: true, width: "8rem", value: (p) => (p.scored ? `${p.right} of ${p.scored}` : null), cell: (p) => <Score p={p} /> },
     {
       key: "level",
       label: "Level",
@@ -324,6 +326,7 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
           />
         </section>
       ) : null}
+      <ExtraCopies extras={copiesAll.rows.filter((p) => p.extra)} keyOf={key} />
       {spares.length ? (
         <section aria-label="Spare copies" className="mb-4" data-spares>
           <h2 className="mb-2">Spare copies <span className="b-muted">{spares.length}</span></h2>
