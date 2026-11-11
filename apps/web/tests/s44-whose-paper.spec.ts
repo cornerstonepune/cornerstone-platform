@@ -12,6 +12,7 @@ import path from "node:path";
 import { expect, test } from "@playwright/test";
 import postgres from "postgres";
 import { aClass, aReadPaper, aWorksheet } from "./rows";
+import { voiceSwitch } from "./k2-rows";
 
 test.describe.configure({ mode: "serial" });
 test.use({ viewport: { width: 1440, height: 900 } });
@@ -34,10 +35,12 @@ doc = pymupdf.open(); page = doc.new_page(); page.insert_image(page.rect, stream
 
 type Ids = { sheet: string; capture: string; results: string[] };
 const made: Record<string, Ids> = {};
+const kidsById: Record<string, string> = {};
 
 test.beforeAll(async () => {
   const kids = await aClass(sql, "S44-TEST", "G1", ["Mahishmati", "Bina", "Chitra", "Esha"]);
   const alone = await aClass(sql, "S44-ALONE", "G1", ["Devi"]);
+  Object.assign(kidsById, kids, alone);
   const sums = ["4 + 3", "5 + 2", "6 + 3"];
   const sheet = (code: string, week: string) =>
     aWorksheet(sql, {
@@ -142,13 +145,18 @@ test("signing a paper off says the score recorded, and the last paper of an asse
   // the score is where an educator looks: the assessment's row, and its card
   await page.goto("/papers/card?class=S44-ALONE&week=S44-ALONE&kind=earlier");
   await expect(page.getByText("2 of 3").first()).toBeVisible();
-  // and on the Children page, which used to show learning gaps and nothing of the paper just signed off
-  // (a class chosen in the filter row lists all its children, each row with the score of its last paper)
-  await page.goto("/growth?view=children&class=S44-TEST");
-  const row = (who: string) => page.getByRole("row").filter({ has: page.getByRole("link", { name: who, exact: true }) });
-  await expect(row("Chitra")).toContainText("3 of 3 right");
-  // a child with no paper signed off has no score, not "0 of 0"
-  await expect(row("Bina")).not.toContainText("right");
-  await page.goto("/growth?view=children&class=S44-ALONE");
-  await expect(row("Devi")).toContainText("2 of 3 right");
+  // and on the child's own page (Children, UI-3b), whose timeline holds the paper just signed off: its score in three signals
+  // (this was the old Children list's "3 of 3 right" column; the list now shows how each child is doing, the paper is on the child)
+  await voiceSwitch(sql, true);
+  const pageOf = async (id: string) => {
+    const [c] = await sql<{ class_id: string; roll_no: string }[]>`select class_id, roll_no from child_now where id = ${id}`;
+    return `/children/${c.class_id}/${c.roll_no}`;
+  };
+  await page.goto(await pageOf(kidsById.Chitra));
+  await expect(page.locator("[data-block=Timeline]")).toContainText("3 right, 0 wrong, 0 wrong with working, 0 blank");
+  // a child with no paper signed off has no paper on the timeline, not "0 right"
+  await page.goto(await pageOf(kidsById.Bina));
+  await expect(page.locator("main")).not.toContainText("Paper, sheet");
+  await page.goto(await pageOf(kidsById.Devi));
+  await expect(page.locator("[data-block=Timeline]")).toContainText("2 right, 0 wrong, 1 wrong with working, 0 blank");
 });

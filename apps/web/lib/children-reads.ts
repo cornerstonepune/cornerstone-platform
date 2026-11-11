@@ -2,8 +2,12 @@
 // Who sees what is the database's `staff_sees` (lib/reach.ts); a child's name is read through `pii.read_child`, which logs who
 // asked. Nothing here decides a state: the graph's `child_skill_state` rows and the school's `child_state` colours are read.
 import { sql } from "./db";
-import { seesClass, type Who } from "./reach";
+import { seesClass, workScope, type Who } from "./reach";
+import { childTable } from "./queries-children";
+import { reportWaits } from "./queries-reports";
 import { EngineDown, engineSend } from "./engine";
+import { childrenByIds, classNotes, coordinatorNotes, type ClassNote } from "./notes-loop";
+import { dateWords } from "./week";
 import { countsOf, stripOf, type Row } from "./children-view";
 
 export type Me = Who & { email: string };
@@ -25,7 +29,10 @@ export const stateRows = (ids: readonly string[]) => sql`
   union all
   select * from child_skill_state where kind = 'written' and child_id = any(${ids as string[]}::uuid[])`;
 
-export type Table = { today: string; days: number; rows: Row[]; classes: { id: string; section: string }[] };
+/** Whole counts for a class's header: answers waiting for a person and parent reports waiting. Never a score, a rank or a per-child number. */
+export type ClassCounts = { answers: number; reports: number };
+
+export type Table = { today: string; days: number; rows: Row[]; classes: { id: string; section: string }[]; counts: Record<string, ClassCounts> };
 
 type Base = { id: string; class_id: string; section: string; roll_no: string; first_name: string | null; last_name: string | null };
 type State = { child_id: string; skill_code: string; colour: string; kind: string; last_seen: string | null };
@@ -42,7 +49,7 @@ export async function childrenTable(me: Me): Promise<Table> {
     from child_now c cross join lateral pii.read_child(c.id, ${me.email}) n
     where c.active and c.class_id is not null and ${seesClass(me, sql`c.section`)}`;
   const window = await attentionDays();
-  if (kids.length === 0) return { today, days: window, rows: [], classes: [] };
+  if (kids.length === 0) return { today, days: window, rows: [], classes: [], counts: {} };
   const ids = kids.map((k) => k.id);
   const classIds = [...new Set(kids.map((k) => k.class_id))];
   const states = await sql<State[]>`
@@ -81,6 +88,9 @@ export async function childrenTable(me: Me): Promise<Table> {
     skillsOf.set(k.class_id, set);
   }
   const waiting = await waitingByChild(me, [...new Set(kids.filter((k) => me.classes?.includes(k.section)).map((k) => k.class_id))]);
+  // what the older child list showed and this one now carries: the skill a child most needs help on, and the answers and parent
+  // reports waiting (`queries-children.childTable`, the one read of both)
+  const old = new Map((await childTable(me.email, null, await workScope(me))).map((r) => [r.id, r]));
   const rows: Row[] = kids.map((k) => {
     const mine = seen(k);
     const last = mine.map((s) => s.last_seen).filter((d): d is string => d !== null).sort().pop() ?? null;
@@ -96,11 +106,19 @@ export async function childrenTable(me: Me): Promise<Table> {
       ),
       lastSeen: last,
       waiting: waiting.has(k.class_id) ? (waiting.get(k.class_id)!.get(k.id) ?? 0) : null,
+      helpOn: old.get(k.id)?.help?.name ?? null,
       strip: stripOf(daysOf.get(k.class_id) ?? [], new Set((absentOf.get(k.id) ?? []).map((a) => a.date))),
     };
   });
   const classes = [...new Map(kids.map((k) => [k.class_id, k.section])).entries()].map(([id, section]) => ({ id, section })).sort((a, b) => a.section.localeCompare(b.section, "en", { numeric: true }));
-  return { today, days: window, rows, classes };
+  const counts: Record<string, ClassCounts> = {};
+  for (const k of kids) {
+    const o = old.get(k.id);
+    const c = (counts[k.class_id] ??= { answers: 0, reports: 0 });
+    c.answers += o?.waiting ?? 0;
+    c.reports += o && reportWaits(o.report) ? 1 : 0;
+  }
+  return { today, days: window, rows, classes, counts };
 }
 
 function groupBy<T>(xs: readonly T[], key: (x: T) => string): Map<string, T[]> {
@@ -118,7 +136,7 @@ export async function screensOn(): Promise<boolean> {
 export const SWITCHED_OFF = "Voice notes are not switched on.";
 
 /** Notes waiting on each child, by class, as the engine counts them for the person's own notes (`POST /voice/class-notes`). A class
- *  the engine would not answer for (not held, switch off, engine down) is left out, so its children read "not available". */
+ *  the engine would not answer for (not held, switch off, engine down) is left out, so its children have no count (an empty cell, never a placeholder). */
 async function waitingByChild(me: Me, classIds: string[]): Promise<Map<string, Map<string, number>>> {
   const out = new Map<string, Map<string, number>>();
   await Promise.all(
@@ -134,4 +152,26 @@ async function waitingByChild(me: Me, classIds: string[]): Promise<Map<string, M
     }),
   );
   return out;
+}
+
+export type LatestNote = { id: string; who: string; state: "to_confirm" | "confirmed"; how: "By voice" | "By form"; by: string | null; at: string };
+
+/** The rail's notes: how many wait to be confirmed and the latest few, any child, from the engine's own reads (an educator's notes of
+ *  the classes they hold; the coordinator's every class). Nothing of a note's words, only who it names, how it came and when. Null where
+ *  the engine did not answer: the rail then draws no notes. */
+export async function latestNotes(me: Me & { name?: string; role?: string }, held: string[]): Promise<{ toConfirm: number; latest: LatestNote[] } | null> {
+  try {
+    const lists: ClassNote[][] = me.role === "coordinator" ? [(await coordinatorNotes(me))?.notes ?? []] : await Promise.all(held.map(async (id) => (await classNotes(me, id))?.notes ?? []));
+    const notes = lists.flat();
+    const names = await childrenByIds(me as Parameters<typeof childrenByIds>[0], [...new Set(notes.flatMap((n) => n.children))]);
+    const shown = notes
+      .filter((n) => n.state === "to_confirm" || n.state === "confirmed")
+      .sort((a, b) => b.received_at.localeCompare(a.received_at))
+      .slice(0, 3)
+      .map((n): LatestNote => ({ id: n.note_id, who: n.children.map((c) => names[c]?.name).find(Boolean) ?? "A class note", state: n.state as "to_confirm" | "confirmed", how: n.typed ? "By form" : "By voice", by: me.role === "coordinator" ? null : (me.name ?? null), at: dateWords(n.received_at.slice(0, 10)).slice(0, 6) }));
+    return { toConfirm: notes.filter((n) => n.state === "to_confirm").length, latest: shown };
+  } catch (e) {
+    if (e instanceof EngineDown) return null;
+    throw e;
+  }
 }

@@ -9,11 +9,11 @@ goal: >
 # their own entries in ux.frozen).
 says:
   - words: "A class's table has the columns that matter, children who need help first"
-    proved_by: "apps/web/tests/u35-children-grouped.spec.ts::a class's table has the columns that matter, children who need help first"
+    proved_by: "apps/web/tests/u72-children.spec.ts::3 · the bar's segments are secure, practising and not seen, sum to the skill count, and none is red"
   - words: "for teachers, in most of the places, can we use tables instead of a lot of places where the tags ... are never aligned"
-    proved_by: "apps/web/tests/u35-children-grouped.spec.ts::the coordinator sees every class in one table, says what waits in each, and opens it with a click"
+    proved_by: "apps/web/tests/u72-children.spec.ts::1 · an educator's table lists their own children; a coordinator sees every class, with a class filter"
   - words: "Use filters wherever possible."
-    proved_by: "apps/web/tests/u8-children-table.spec.ts::a click anywhere on a child's row opens the child, and any column sorts the table"
+    proved_by: "apps/web/tests/u72-children.spec.ts::4 · searching narrows the rows and writes itself into the address; a reload keeps it"
 manual: []
 scenarios: []
 criteria:

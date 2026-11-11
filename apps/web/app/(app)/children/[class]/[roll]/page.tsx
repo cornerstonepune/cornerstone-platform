@@ -74,6 +74,9 @@ export default async function TheChild({ params, searchParams }: { params: Promi
         <>
           <ChildGraph initials={initialsOf(name)} skills={graph} label={label} table={false} />
           <h2 className="mt-4 mb-2 text-[18px]">Skills, in domain order</h2>
+          <p className="mb-2 text-[13px]">
+            <Link href={`/children/${classId}?view=matrix`} data-all-skills>Against every skill →</Link>
+          </p>
           <DataTable<ChildSkill> label="Where this child is on each skill" columns={columns(href)} rows={skills} rowKey={(s) => s.code} more={{ page: 1, href: () => "" }} limit={skills.length} />
           <h2 className="mt-4 mb-2 text-[18px]">Level by sitting</h2>
           <FilterBar action={`/children/${classId}/${encodeURIComponent(roll)}`} filters={[{ name: "skill", label: "Skill", value: skill?.code, all: "", required: true, options: skills.map((s) => [s.code, s.name] as const) }]} />
