@@ -1,7 +1,7 @@
 import Link from "@/components/link";
 import { Screen } from "@/components/app-frame";
 import { Rail } from "@/components/app-frame";
-import { ChildrenTable, type Section } from "@/components/children/children-table";
+import { ChildrenTable, ClassCountsLine, type Section } from "@/components/children/children-table";
 import { PeekPanel, PeekProvider } from "@/components/children/peek";
 import { EmptyState } from "@/components/empty-state";
 import { FilterBar, type Filter } from "@/components/filter-bar";
@@ -48,6 +48,8 @@ export default async function Children({ searchParams }: { searchParams: Promise
   const initial = open ? { classId: open.classId, roll: open.roll, name: open.name, section: open.section, counts: open.counts } : null;
   const first = (f.cls ? t.classes.find((c) => c.id === f.cls) : t.classes[0])?.id;
   const everyone = me.role === "coordinator" || several;
+  // a class's header counts show when one class is in view: chosen in the filter, or the person's only class
+  const oneClass = f.cls ? t.classes.find((c) => c.id === f.cls) : t.classes.length === 1 ? t.classes[0] : undefined;
   return (
     <PeekProvider initial={initial}>
       <Screen
@@ -63,6 +65,7 @@ export default async function Children({ searchParams }: { searchParams: Promise
         ) : (
           <>
             <FilterBar action="/children" filters={filters} search={{ name: "q", value: f.q, placeholder: "Name or Sr. No.", label: "Search by name or Sr. No." }} />
+            {oneClass ? <ClassCountsLine section={oneClass.section} counts={t.counts[oneClass.id] ?? { answers: 0, reports: 0 }} /> : null}
             {rows.length === 0 ? (
               <EmptyState>No child matches. Check the spelling, or <Link href="/children">Clear</Link> the filters.</EmptyState>
             ) : (

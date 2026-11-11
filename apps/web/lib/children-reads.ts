@@ -2,7 +2,9 @@
 // Who sees what is the database's `staff_sees` (lib/reach.ts); a child's name is read through `pii.read_child`, which logs who
 // asked. Nothing here decides a state: the graph's `child_skill_state` rows and the school's `child_state` colours are read.
 import { sql } from "./db";
-import { seesClass, type Who } from "./reach";
+import { seesClass, workScope, type Who } from "./reach";
+import { childTable } from "./queries-children";
+import { reportWaits } from "./queries-reports";
 import { EngineDown, engineSend } from "./engine";
 import { countsOf, stripOf, type Row } from "./children-view";
 
@@ -25,7 +27,10 @@ export const stateRows = (ids: readonly string[]) => sql`
   union all
   select * from child_skill_state where kind = 'written' and child_id = any(${ids as string[]}::uuid[])`;
 
-export type Table = { today: string; days: number; rows: Row[]; classes: { id: string; section: string }[] };
+/** Whole counts for a class's header: answers waiting for a person and parent reports waiting. Never a score, a rank or a per-child number. */
+export type ClassCounts = { answers: number; reports: number };
+
+export type Table = { today: string; days: number; rows: Row[]; classes: { id: string; section: string }[]; counts: Record<string, ClassCounts> };
 
 type Base = { id: string; class_id: string; section: string; roll_no: string; first_name: string | null; last_name: string | null };
 type State = { child_id: string; skill_code: string; colour: string; kind: string; last_seen: string | null };
@@ -42,7 +47,7 @@ export async function childrenTable(me: Me): Promise<Table> {
     from child_now c cross join lateral pii.read_child(c.id, ${me.email}) n
     where c.active and c.class_id is not null and ${seesClass(me, sql`c.section`)}`;
   const window = await attentionDays();
-  if (kids.length === 0) return { today, days: window, rows: [], classes: [] };
+  if (kids.length === 0) return { today, days: window, rows: [], classes: [], counts: {} };
   const ids = kids.map((k) => k.id);
   const classIds = [...new Set(kids.map((k) => k.class_id))];
   const states = await sql<State[]>`
@@ -81,6 +86,9 @@ export async function childrenTable(me: Me): Promise<Table> {
     skillsOf.set(k.class_id, set);
   }
   const waiting = await waitingByChild(me, [...new Set(kids.filter((k) => me.classes?.includes(k.section)).map((k) => k.class_id))]);
+  // what the older child list showed and this one now carries: the skill a child most needs help on, and the answers and parent
+  // reports waiting (`queries-children.childTable`, the one read of both)
+  const old = new Map((await childTable(me.email, null, await workScope(me))).map((r) => [r.id, r]));
   const rows: Row[] = kids.map((k) => {
     const mine = seen(k);
     const last = mine.map((s) => s.last_seen).filter((d): d is string => d !== null).sort().pop() ?? null;
@@ -96,11 +104,19 @@ export async function childrenTable(me: Me): Promise<Table> {
       ),
       lastSeen: last,
       waiting: waiting.has(k.class_id) ? (waiting.get(k.class_id)!.get(k.id) ?? 0) : null,
+      helpOn: old.get(k.id)?.help?.name ?? null,
       strip: stripOf(daysOf.get(k.class_id) ?? [], new Set((absentOf.get(k.id) ?? []).map((a) => a.date))),
     };
   });
   const classes = [...new Map(kids.map((k) => [k.class_id, k.section])).entries()].map(([id, section]) => ({ id, section })).sort((a, b) => a.section.localeCompare(b.section, "en", { numeric: true }));
-  return { today, days: window, rows, classes };
+  const counts: Record<string, ClassCounts> = {};
+  for (const k of kids) {
+    const o = old.get(k.id);
+    const c = (counts[k.class_id] ??= { answers: 0, reports: 0 });
+    c.answers += o?.waiting ?? 0;
+    c.reports += o && reportWaits(o.report) ? 1 : 0;
+  }
+  return { today, days: window, rows, classes, counts };
 }
 
 function groupBy<T>(xs: readonly T[], key: (x: T) => string): Map<string, T[]> {

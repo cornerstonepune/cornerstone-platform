@@ -10,7 +10,8 @@ import { STATES } from "@/components/status-chip";
 import { StackBar } from "@/components/stack-bar";
 import { SwitchedOff } from "@/components/children/switched-off";
 import { requireStaff } from "@/lib/auth";
-import { screensOn } from "@/lib/children-reads";
+import { screensOn, childrenTable } from "@/lib/children-reads";
+import { ClassCountsLine } from "@/components/children/children-table";
 import { pictureOf, type Look } from "@/lib/children-picture";
 import { LOOK_ORDER, byRoll, clustersOf, daysSince, groupByLook, peekParam, type PictureLook } from "@/lib/children-view";
 import { SECURE, UNSEEN, stateOf } from "@/lib/looks";
@@ -32,6 +33,7 @@ export default async function Picture({ params, searchParams }: { params: Promis
   const skill = skills.find((s) => s.code === sp.skill) ?? skills[0];
   const grouped = sp.group !== "class";
   const kids = [...p.kids].sort(byRoll);
+  const counts = (await childrenTable({ ...me, email: me.email })).counts[classId] ?? { answers: 0, reports: 0 };
   const stateOn = (id: string): Look | null => (skill ? (p.cells.get(id)?.get(skill.code)?.look ?? null) : null);
   const chosenOf = (k: (typeof kids)[number]): Chosen => {
     const row = p.cells.get(k.id);
@@ -95,6 +97,7 @@ export default async function Picture({ params, searchParams }: { params: Promis
           </aside>
         }
       >
+        <ClassCountsLine counts={counts} />
         {p.skills.length === 0 ? (
           <>
             <EmptyState>Not seen yet. No child has been seen on a skill, so there is nothing more to show.</EmptyState>

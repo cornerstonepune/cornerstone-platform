@@ -50,6 +50,8 @@ export type Row = {
   lastSeen: string | null;
   /** Notes waiting on the child; null where it is not known (the engine did not answer for the class). */
   waiting: number | null;
+  /** The skill the child most needs help on, by name only (no mistake, no count), or none. */
+  helpOn: string | null;
   strip: Day[];
 };
 

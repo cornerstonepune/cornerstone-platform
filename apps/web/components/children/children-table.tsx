@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "@/components/link";
 import { DataTable } from "@/components/data-table";
 import { ICON_SIZE, Icon } from "@/lib/icons";
 import { STATES, StatusChip } from "@/components/status-chip";
@@ -60,10 +61,22 @@ function columns(showClass: boolean, today: string): Column<Row>[] {
     { key: "who", label: "Sr. No. and name", keep: true, value: (r) => `${r.roll} ${r.name}`, cell: (r) => <PeekChip child={name(r)} /> },
     ...(showClass ? [{ key: "class", label: "Class", keep: true, value: (r: Row) => r.section } satisfies Column<Row>] : []),
     { key: "doing", label: "How they are doing", keep: true, value: (r) => countWords(r.counts), cell: (r) => <Bar c={r.counts} /> },
+    { key: "help", label: "Needs help on", value: (r) => r.helpOn, cell: (r) => (r.helpOn ? <span>{r.helpOn}</span> : null) },
     { key: "seen", label: "Last seen", keep: true, value: (r) => lastSeenWords(r.lastSeen, today) },
     { key: "waiting", label: "Notes waiting", keep: true, status: true, value: (r) => (r.waiting === null ? "not available yet" : r.waiting), cell: (r) => <Waiting n={r.waiting} /> },
     { key: "absences", label: "Absences noted", keep: true, status: true, value: (r) => noted(r.strip), cell: (r) => <Strip r={r} /> },
   ];
+}
+
+/** A class's header counts, in whole numbers and words: answers waiting for a person and parent reports waiting. No score, no rank. */
+export function ClassCountsLine({ section, counts }: { section?: string; counts: { answers: number; reports: number } }) {
+  const n = (c: number, one: string, many: string) => (c === 0 ? `No ${many} waiting` : `${c} ${c === 1 ? one : many} waiting`);
+  return (
+    <p className="b-caption" data-class-counts={section ?? ""}>
+      {section ? <strong>{section}: </strong> : null}
+      {counts.answers > 0 ? <Link href="/capture/check">{n(counts.answers, "answer", "answers")}</Link> : n(0, "answer", "answers")} · {n(counts.reports, "parent report", "parent reports")}
+    </p>
+  );
 }
 
 /** The page's rows, a heading and a count over each group when grouped; the same table, in Sr. No. order, when not. */

@@ -46,3 +46,11 @@ Deleted the three files nothing imports since UI-3b: `lib/k2-reads.ts`, `lib/k2-
 (`components/children/answers.tsx`; the same `childEvidence` read and mark rules as the old `/growth/[id]` answers table): date, question,
 what the child wrote, mark (right / wrong / wrong with working / blank), working shown, mistake matched, skill. Test: `u73-child-answers.spec.ts`.
 Not done yet: redirecting `/growth` and `/growth/class/[section]`, which about 35 older specs still visit.
+
+## UI-3f (the old child list's four things, placed by the orchestrator)
+
+1. "Needs help on": a column on the Children table, the skill a child most needs help on, by name only (the mistake and any count are left out); hidden when nobody in view has one.
+2. Parent report column and sort: no sort on people; the link from a child's row to Reports (`/children/reports?class=`) waits for UI-8's #647.
+3. A class's header counts (`ClassCountsLine`): whole numbers of answers waiting for a person and parent reports waiting, on Children when one class is in view and on the class picture. Never a score, a rank or a per-child number.
+4. "Against every skill →" on the child's page, leading to the class's Matrix view (UI-3e).
+Both reads come from the existing `childTable` (`lib/queries-children.ts`); no new table, migration or config row.
