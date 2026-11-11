@@ -28,6 +28,7 @@ import { assessmentKey } from "../../../papers/assessments-table";
 import { approveThisPack, awayThis, givenOnThis, signOffPaper } from "./actions";
 import { LevelSelect } from "./level-select";
 import { RenameForm } from "../rename-form";
+import { ApprovalLedger, madeWords, packsOf } from "./ledger";
 
 const safeDecode = (v: string) => {
   try {
@@ -119,6 +120,14 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
   void kindLong;
 
   const live = copies.filter((p) => p.stage !== "replaced");
+  const packs = await deadline(packsOf(live.map((p) => p.id)));
+  // "Easy for 8 children, Medium for 12": the school's levels, easiest first, each with the copies at it
+  const levelsSaid = order.order
+    .map((l) => [l, live.filter((p) => p.level === l && p.child_id).length] as const)
+    .filter(([, n]) => n > 0)
+    .map(([l, n]) => `${l} for ${n} ${n === 1 ? "child" : "children"}`)
+    .join(", ");
+  const second = packs.length > 1 ? packs[packs.length - 1] : null;
   const settled = live.filter((p) => p.stage === "signed off").length;
   const toCheck = live.filter((p) => p.stage === "checked" || p.stage === "scanned").length;
   const notBack = live.filter((p) => p.stage === "made" || p.stage === "printed").length;
@@ -201,6 +210,7 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
       purpose="Where this assessment stands, and each child's copy. A copy is its own row with its own action; there is no button over all of them."
       rail={
         <Rail
+          cards={<ApprovalLedger packs={packs} />}
           edges={[
             { screen: "assessments", href: "/children/assessments", label: "All assessments", icon: "assessment" },
             ...(qrs.length ? [{ screen: "assessment", href: `/api/papers/print?${qrs.map((x) => `qr=${x}`).join("&")}`, label: "The printed pack", icon: "assessment" as const, newTab: true }] : []),
@@ -221,8 +231,9 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
       </p>
       {toApprove || toPrint || printed ? (
         <section className="b-card my-4" data-kind="assessment" aria-label="This pack">
-          <h2 className="b-card-h"><KindTile kind="assessment" /> {toApprove ? "This pack" : "The pack"}</h2>
+          <h2 className="b-card-h"><KindTile kind="assessment" /> {second?.words === "waits for you" ? `The ${second.name.toLowerCase()}: ${second.rolls.length} new ${second.rolls.length === 1 ? "copy" : "copies"}` : toApprove ? "This pack" : "The pack"}</h2>
           <p>
+            {second?.words === "waits for you" ? `${madeWords(second)} ` : ""}
             {toApprove
               ? `Nothing prints without your approval. This approves ${approvesWords(live.filter((p) => p.stage === "made").length, sparesWaiting) || "nothing more"}, this pack only.`
               : toPrint
@@ -289,7 +300,8 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
         <section className="b-card" data-kind="skill" aria-label="What it asks">
           <h2 className="b-card-h"><KindTile kind="skill" /> What it asks</h2>
           <span><b>{a.skills.join(", ") || a.title}</b></span>
-          <span className="b-muted">{a.levels.length ? `Levels: ${a.levels.join(", ")}` : ""}</span>
+          <span className="b-muted">{a.topics.map((t) => topicNames.find((x) => x.code === t)?.name ?? t).join(" · ")}</span>
+          <span className="b-muted">{levelsSaid}</span>
           {a.set ? <Link href={`/skill-sets/${a.set}`}>Open the skill</Link> : null}
           {a.week ? <span className="b-muted">{weekWords(a.week)}</span> : null}
           <RenameForm assessmentKey={key} name={named.name} back={assessmentHref(key)} />
