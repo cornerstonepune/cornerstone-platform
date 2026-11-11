@@ -80,22 +80,22 @@ export function Recorder({ classId, say, sessionId, opens, typed }: { classId: s
   }
 
   return (
-    <section className="panel grid max-w-xl gap-4 p-5" aria-label={W.record.title} data-recorder={stage}>
+    <section className="panel grid w-full max-w-xl gap-4 p-5 max-[699px]:!border-0 max-[699px]:!bg-transparent max-[699px]:!p-0" aria-label={W.record.title} data-recorder={stage}>
       <p className="text-[15px] text-basalt/80">{say}</p>
       <div className="flex flex-wrap items-center gap-3">
         {stage === "recording" ? (
-          <button type="button" className="btn min-h-14 gap-2 !px-6 text-[17px]" onClick={() => rec.current?.stop()} data-stop>
+          <button type="button" className="btn !min-h-14 gap-2 !px-6 text-[17px]" onClick={() => rec.current?.stop()} data-stop>
             <Icon name="stop" />
             {W.record.stop}
           </button>
         ) : stage === "idle" ? (
-          <button type="button" className="btn min-h-14 w-full justify-center gap-2 !px-6 text-[17px] min-[700px]:w-auto" onClick={start} data-record>
+          <button type="button" className="btn !min-h-14 w-full justify-center gap-2 !px-6 text-[17px] min-[700px]:w-auto" onClick={start} data-record>
             <Icon name="record" />
             {W.record.start}
           </button>
         ) : (
           <>
-            <button type="button" className="btn min-h-14 gap-2 !px-6 text-[17px]" onClick={send} disabled={stage === "sending"} data-send>
+            <button type="button" className="btn !min-h-14 gap-2 !px-6 text-[17px]" onClick={send} disabled={stage === "sending"} data-send>
               <Icon name="send" />
               {stage === "sending" ? W.record.sending : W.record.send}
             </button>

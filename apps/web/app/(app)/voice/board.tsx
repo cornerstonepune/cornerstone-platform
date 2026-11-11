@@ -2,6 +2,7 @@
 
 import { useMemo, useState, useTransition } from "react";
 import { ClassGrid, type GridCell, type Look } from "@/components/class-grid";
+import type { OutcomeState } from "@/components/outcome-states";
 import { StatusChip } from "@/components/status-chip";
 import { ICON_SIZE, Icon, MARK_ICON } from "@/lib/icons";
 import { activityWords, countLine, findActivities, listsOf, moveTo, problemsOf, putBack, removeLine, setMark as markChild, type Activity, type Draft, type DraftLine, type Problem, type Work } from "@/lib/voice-check";
@@ -12,8 +13,11 @@ import { MARKS, type MarkKey, W } from "@/lib/voice-words";
 // top, each with its fix, and the one button stays off while one remains. A child is a square cell with its Sr. No. and
 // its mark's icon; nothing is ticked for her, and a child not named is never red. Not a table (docs/ux-rules.md, rule 3).
 
+/** The class's children by Sr. No.: what the squares name (the wireframe draws the name and its initials on each). */
+export type Roster = Record<string, { name: string; initials: string }>;
 export type Sent = { activity: string; level: number; day: string; rest: boolean; lists: Record<MarkKey, string[]> };
 
+const CLAIM_STATE = { above: "outcomeAbove", below: "outcomeBelow", not_willing: "outcomeNotWilling", absent: "outcomeAbsent" } as const satisfies Record<MarkKey, OutcomeState>;
 const MARK_LOOK: Record<MarkKey | "as_expected", Look> = { above: "ok", below: "wait", not_willing: "quiet", absent: "quiet", as_expected: "ok" };
 
 export function Board({
@@ -26,6 +30,7 @@ export function Board({
   button,
   send,
   lines = [],
+  roster,
 }: {
   start: Work;
   enrolled: string[];
@@ -37,6 +42,7 @@ export function Board({
   send: (s: Sent) => Promise<{ error: string } | void>;
   /** What she said, line by line, each with its ×. */
   lines?: DraftLine[];
+  roster?: Roster;
 }) {
   const [w, setW] = useState<Work>(start);
   const [fixing, setFixing] = useState<string | null>(null);
@@ -71,26 +77,6 @@ export function Board({
           ))}
         </ol>
       ) : null}
-      {lines.length ? (
-        <section className="panel grid gap-2 p-4" aria-label="What you said, line by line" data-claims>
-          <ol className="grid gap-2">
-            {lines.map((l) => (
-              <li key={l.section} className="flex flex-wrap items-center gap-3" data-claim={l.section} data-removed={gone.includes(l.section) ? "" : undefined}>
-                <span className={`min-w-[10rem] flex-1 text-[15px] ${gone.includes(l.section) ? "line-through opacity-60" : ""}`}>{lineWords(l)}</span>
-                {gone.includes(l.section) ? (
-                  <button type="button" className="btn secondary" onClick={() => (setW(putBack(w, l)), setGone(gone.filter((g) => g !== l.section)))}>
-                    Put back: {lineWords(l)}
-                  </button>
-                ) : (
-                  <button type="button" className="btn secondary" aria-label={`Remove: ${lineWords(l)}`} onClick={() => (setW(removeLine(w, l.section as MarkKey)), setGone([...gone, l.section]))}>
-                    ×
-                  </button>
-                )}
-              </li>
-            ))}
-          </ol>
-        </section>
-      ) : null}
       <section className="panel grid gap-3 p-4" aria-label="The activity">
         <ActivityPicker w={w} setW={setW} activities={activities} />
         <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
@@ -110,7 +96,7 @@ export function Board({
       </section>
       <section className="panel grid gap-3 p-4" aria-label={W.confirm.children}>
         {fixing ? <p className="text-[14px] font-medium text-terracotta">{W.problems.stranger_fix(fixing)}</p> : null}
-        <ClassGrid label={`${klass}, by Sr. No.`} showName={false} onTap={tap} cells={enrolled.map((roll) => cellOf(roll, w.marks[roll], w.rest))} />
+        <ClassGrid label={`${klass}, by Sr. No.`} showName={!!roster} onTap={tap} cells={enrolled.map((roll) => cellOf(roll, w.marks[roll], w.rest, roster?.[roll]))} />
         {picking ? (
           <div className="flex flex-wrap items-center gap-2" role="group" aria-label={`Mark #${picking}`} data-picker={picking} onKeyDown={(e) => e.key === "Escape" && setPicking(null)}>
             {([...MARKS, "clear"] as const).map((m) => (
@@ -132,6 +118,41 @@ export function Board({
           </button>
         </div>
       </section>
+      {lines.length ? (
+        <section className="grid gap-2" aria-label="What you said, line by line" data-claims>
+          <h2 className="text-[16px]">You said</h2>
+          <ol className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+            {lines.map((l) => {
+              const out = gone.includes(l.section);
+              return (
+                <li key={l.section} className={`panel grid content-start gap-2 p-3 ${out ? "opacity-60" : ""}`} data-claim={l.section} data-removed={out ? "" : undefined}>
+                  <p className={`text-[15px] ${out ? "line-through" : ""}`}>&ldquo;{l.words}&rdquo;</p>
+                  <div className="flex flex-wrap items-center gap-2 text-[13px] text-[var(--ink-muted)]">
+                    <span>Read as:</span>
+                    {l.numbers.map((n) => (
+                      <span key={n} className="chip" data-read-as={n}>
+                        {roster?.[String(n)]?.name ?? `#${n}`}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <StatusChip state={CLAIM_STATE[l.section as MarkKey]} round />
+                    {out ? (
+                      <button type="button" className="btn secondary ml-auto" onClick={() => (setW(putBack(w, l)), setGone(gone.filter((g) => g !== l.section)))}>
+                        Put back: {lineWords(l)}
+                      </button>
+                    ) : (
+                      <button type="button" className="btn secondary ml-auto" aria-label={`Remove: ${lineWords(l)}`} onClick={() => (setW(removeLine(w, l.section as MarkKey)), setGone([...gone, l.section]))}>
+                        Remove
+                      </button>
+                    )}
+                  </div>
+                </li>
+              );
+            })}
+          </ol>
+        </section>
+      ) : null}
       <div className="flex flex-wrap items-center gap-3 border-t border-basalt/12 py-3" data-count-strip>
         <span className="text-[15px] font-medium" data-count-line>
           {countLine(w, enrolled)}
@@ -150,10 +171,10 @@ export function Board({
 }
 
 // A child is a square of the class grid: her Sr. No., and her mark's icon and word on the mark's tint; never red.
-function cellOf(roll: string, marks: MarkKey[] | undefined, rest: boolean): GridCell {
+function cellOf(roll: string, marks: MarkKey[] | undefined, rest: boolean, who?: { name: string; initials: string }): GridCell {
   const m: MarkKey | "as_expected" | null = marks?.length ? marks[0] : rest ? "as_expected" : null;
   const words = m ? W.marks[m] : W.notSeen;
-  return { key: roll, no: `#${roll}`, initials: "", name: "", look: m ? MARK_LOOK[m] : "unseen", icon: m ? MARK_ICON[m] : "not-seen", words, label: `#${roll}: ${words}`, attrs: { "data-roll": roll, "data-cell-mark": m ?? "none" } };
+  return { key: roll, no: `#${roll}`, initials: who?.initials ?? "", name: who?.name ?? "", look: m ? MARK_LOOK[m] : "unseen", icon: m ? MARK_ICON[m] : "not-seen", words, label: `#${roll}: ${words}`, attrs: { "data-roll": roll, "data-cell-mark": m ?? "none" } };
 }
 
 function ProblemRow({ p, w, setW, fixing, setFixing }: { p: Problem; w: Work; setW: (w: Work) => void; fixing: string | null; setFixing: (r: string | null) => void }) {
