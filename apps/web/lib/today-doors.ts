@@ -20,5 +20,6 @@ export const DOORS = {
   staff: (): Door => ({ screen: "staff", live: "/setup/staff" }),
   moves: (): Door => ({ screen: "moves", live: null }),
   draft: (): Door => ({ screen: "draft", live: null }),
+  activity: (code: string): Door => ({ screen: "activity", params: { code }, live: `/setup/activities/${encodeURIComponent(code)}` }),
   fortnight: (n: number): Door => ({ screen: "fortnight", params: { n: String(n) }, live: null }),
 };

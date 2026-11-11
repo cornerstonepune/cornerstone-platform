@@ -6,6 +6,7 @@ import type { Day } from "./educator/types";
 import type { Session } from "./auth";
 import { sql } from "./db";
 import { reachOf } from "./reach";
+import type { School } from "./today-school";
 
 /** Which version of Today a person gets: the one for everything, or the one for their own classes. Decided by what the person's
  *  group reaches (`reachOf`, the database's one rule), never by naming a role. */
@@ -21,7 +22,7 @@ export type TodoRow = { note_id: string; activity: string | null; activity_name:
 export type Todo = { groups: Record<"to_confirm" | "fix_this" | "left_unconfirmed" | "being_read", { count: number; rows: TodoRow[] }> };
 export type CoordinatorRow = TodoRow & { class: string };
 
-async function ask<T>(path: "/k2/todo" | "/k2/coordinator" | "/timetable/day", body: Record<string, unknown>): Promise<{ ok: true; value: T } | { ok: false; status: number }> {
+async function ask<T>(path: "/k2/todo" | "/k2/coordinator" | "/k2/today-school" | "/timetable/day", body: Record<string, unknown>): Promise<{ ok: true; value: T } | { ok: false; status: number }> {
   try {
     const res = await engineSend(path, body as never);
     return res.ok ? { ok: true, value: (await res.json()) as T } : { ok: false, status: res.status };
@@ -56,3 +57,10 @@ export async function sessionsOf(classId: string, day: string): Promise<Record<s
     where s.school_class_id = ${classId} and d.on_date = ${day}`;
   return Object.fromEntries(rows.map((r) => [r.period_id, r.id]));
 }
+
+/** The school's counts (CP-28's /k2/today-school): clashes, drafts, late notes, materials, last week, next week, readiness. Null when the engine does not give
+ *  them (the route is not deployed yet, or the person is not a coordinator): the screen then shows what it can read elsewhere. */
+export const schoolCounts = async (me: Pick<Session, "email">) => {
+  const got = await ask<School>("/k2/today-school", { actor: me.email });
+  return got.ok ? got.value : null;
+};
