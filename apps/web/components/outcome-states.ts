@@ -16,3 +16,6 @@ export type OutcomeState = keyof typeof OUTCOME_STATES;
 const BY_CODE = { above: "outcomeAbove", as_expected: "outcomeAsExpected", below: "outcomeBelow", not_willing: "outcomeNotWilling", absent: "outcomeAbsent" } as const satisfies Record<string, OutcomeState>;
 /** The words an outcome is said with ("not willing"); a code this file does not know is shown as it is. */
 export const outcomeWords = (code: string): string => (code in BY_CODE ? OUTCOME_STATES[BY_CODE[code as keyof typeof BY_CODE]].words : code);
+
+/** The state an outcome code is drawn with, or null for a code this file does not know. */
+export const outcomeState = (code: string): OutcomeState | null => (code in BY_CODE ? BY_CODE[code as keyof typeof BY_CODE] : null);

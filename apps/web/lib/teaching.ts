@@ -6,9 +6,10 @@ import { sql } from "./db";
 import { PART_KEYS, type PagePart } from "./page-part";
 import { pictureOf } from "./children-picture";
 import { clustersOf, daysSince, type Cluster, type Counts, type Place } from "./children-view";
-import { SECURE, UNSEEN, type Bucket } from "./looks";
+import { EMERGING, PRACTISING, SECURE, UNSEEN, type Bucket } from "./looks";
 import { seesClass } from "./reach";
 import { schoolZone } from "./school-clock";
+import { fortnightsOf } from "./teaching-plan";
 
 export type Me = Pick<Session, "email" | "role" | "classes" | "subjects" | "id">;
 
@@ -54,8 +55,10 @@ export async function activityFacts(me: Me, code: string): Promise<ActivityFacts
 // ---- Objective -----------------------------------------------------------------------------------------------------
 
 export type ObjectiveSkill = { code: string; name: string; after: string[] };
-export type ObjectiveActivity = { code: string; name: string; strand: string; band: string; last: string | null };
-export type ObjectivePage = { code: string; title: string; band: string; subject: string; skills: ObjectiveSkill[]; activities: ObjectiveActivity[] };
+export type ObjectiveActivity = { code: string; name: string; strand: string; band: string; last: string | null; fortnights: number[] };
+/** How many of the person's children stand where on one skill: the same buckets the class picture draws. */
+export type SeenOnSkill = { code: string; name: string; secure: number; practising: number; emerging: number; unseen: number };
+export type ObjectivePage = { code: string; title: string; band: string; subject: string; skills: ObjectiveSkill[]; activities: ObjectiveActivity[]; seen: SeenOnSkill[] };
 
 export async function objectiveOf(me: Me, code: string): Promise<ObjectivePage | null> {
   const zone = await schoolZone();
@@ -69,13 +72,39 @@ export async function objectiveOf(me: Me, code: string): Promise<ObjectivePage |
     select l.skill_code, r.name from skill_link_confirmed l join registry_skill r on r.tenant_id = l.tenant_id and r.code = l.before_code
     where l.skill_code = any(${skills.map((s) => s.code)}::text[]) order by r.name`;
   const own = await sql<{ id: string }[]>`select c.id from school_class c where ${seesClass(me, sql`c.label`)}`;
-  const activities = await sql<ObjectiveActivity[]>`
+  const activities = await sql<Omit<ObjectiveActivity, "fortnights">[]>`
     select a.code, a.name, a.strand, a.band,
       (select (max(o.observed_at) at time zone ${zone})::date::text from activity_observation o
         where o.activity_code = a.code and o.class_id = any(${own.map((c) => c.id)}::uuid[]) and ${current()}) as last
     from activity_objective x join activity a on a.tenant_id = x.tenant_id and a.code = x.activity_code
     where x.lo_code = ${code} order by x.ord, a.name`;
-  return { ...lo, skills: skills.map((s) => ({ ...s, after: links.filter((l) => l.skill_code === s.code).map((l) => l.name) })), activities };
+  const plan = await fortnightsOf(me, activities.map((a) => a.code));
+  return {
+    ...lo,
+    skills: skills.map((s) => ({ ...s, after: links.filter((l) => l.skill_code === s.code).map((l) => l.name) })),
+    activities: activities.map((a) => ({ ...a, fortnights: (plan.get(a.code) ?? []).map((f) => f.number) })),
+    seen: await seenOn(me, skills),
+  };
+}
+
+/** Where the children of the person's classes stand on each skill, counted from the class picture's own reader (UI-3b), so the numbers
+ *  are the squares of that picture; a child with no row on a skill is not seen on it. */
+async function seenOn(me: Me, skills: { code: string; name: string }[]): Promise<SeenOnSkill[]> {
+  if (!skills.length) return [];
+  const own = await sql<{ id: string }[]>`select c.id from school_class c where ${seesClass(me, sql`c.label`)} order by c.label`;
+  const pics = (await Promise.all(own.map((c) => pictureOf(me, c.id)))).filter((p) => p !== null);
+  return skills.map((s) => {
+    const n = { code: s.code, name: s.name, secure: 0, practising: 0, emerging: 0, unseen: 0 };
+    for (const p of pics)
+      for (const k of p.kids) {
+        const look = p.cells.get(k.id)?.get(s.code)?.look;
+        if (look === SECURE) n.secure++;
+        else if (look === PRACTISING) n.practising++;
+        else if (look === EMERGING) n.emerging++;
+        else n.unseen++;
+      }
+    return n;
+  });
 }
 
 // ---- Skill ---------------------------------------------------------------------------------------------------------

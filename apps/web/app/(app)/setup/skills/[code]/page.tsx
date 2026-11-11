@@ -6,7 +6,9 @@ import { Details } from "@/components/details";
 import { LevelWords, type Earlier } from "@/components/teaching/level-words";
 import { EmptyState } from "@/components/empty-state";
 import { FilterBar } from "@/components/filter-bar";
-import { Rail, Screen, type Edge } from "@/components/app-frame";
+import { Screen } from "@/components/app-frame";
+import { kindWords, mistakeOf } from "@/components/question";
+import { RailAside, TeachingRail, type RailLink } from "@/components/teaching/rail";
 import { Spark } from "@/components/spark";
 import { StackBar } from "@/components/stack-bar";
 import { STATES } from "@/components/status-chip";
@@ -18,6 +20,9 @@ import { screenHref } from "@/lib/built";
 import { LOOK_ORDER, groupByLook, peekParam } from "@/lib/children-view";
 import { stateOf } from "@/lib/looks";
 import { skillOf } from "@/lib/teaching";
+import { whatItAsks } from "@/lib/teaching-skill";
+import { questionKinds } from "@/lib/question-types";
+import { mistakeBook } from "@/lib/queries-bank";
 
 // One skill (UI-3c): where a class stands on it, from confirmed notes and papers. A child not seen on it is not seen, nothing
 // more. The grid and the peek are the class picture's (UI-3b), one skill at a time: a tap on a square opens that child's recent
@@ -36,11 +41,15 @@ export default async function SkillScreen({ params, searchParams }: { params: Pr
   const blocks = groupByLook(squares).map((g) => ({ look: g.look, words: words(g.look), squares: g.cells }));
   const chips = Object.fromEntries(s.kids.map((k, i) => [k.id, squares[i]]));
   const open = squares.find((x) => peekParam(x) === q.peek);
-  const edges: Edge[] = [
-    ...(s.cls ? [{ screen: "picture", params: { class: s.cls.id }, label: "The class picture", icon: "class" } as Edge] : []),
-    ...s.objectives.map((o): Edge => ({ screen: "objective", params: { code: o.code }, label: o.title, icon: "objective" })),
-    ...[...s.after, ...s.next].map((k): Edge => ({ screen: "skill", params: { code: k.code }, label: k.name, icon: "skill" })),
+  const links: RailLink[] = [
+    ...(s.cls ? [{ kind: "child", screen: "picture", params: { class: s.cls.id }, fallback: `/children/${s.cls.id}?skill=${encodeURIComponent(s.code)}`, label: s.cls.section, note: "the class picture on this skill" } satisfies RailLink] : []),
+    ...[...new Map(s.objectives.map((o) => [o.code, o])).values()].slice(0, 6).map((o): RailLink => ({ kind: "objective", screen: "objective", href: screenHref("objective", { code: o.code }) ?? `/setup/objectives/${encodeURIComponent(o.code)}`, label: o.title || o.code, note: "its objective" })),
+    ...s.after.map((k): RailLink => ({ kind: "skill", screen: "skill", href: href(k.code), label: k.name, note: "comes after" })),
+    ...s.next.map((k): RailLink => ({ kind: "skill", screen: "skill", href: href(k.code), label: k.name, note: "ready next" })),
+    { kind: "assessment", screen: "bank", label: "Question bank", note: "for this skill" },
   ];
+  const [asks, { words: kindWordsOf }, book] = await Promise.all([whatItAsks(s.code), questionKinds(), mistakeBook()]);
+  const mistakes = asks.mistakes.map((c) => ({ code: c, said: mistakeOf(book, c) })).filter((m): m is { code: string; said: NonNullable<typeof m.said> } => !!m.said);
   // a coordinator may change a level's sentence and reads its earlier ones; the engine decides who may (a refusal leaves it unchanged)
   const reviews = me.role === "coordinator";
   const names = reviews && s.levels.length ? await staffNames() : new Map<string, string>();
@@ -56,7 +65,15 @@ export default async function SkillScreen({ params, searchParams }: { params: Pr
         }
       }),
     );
-  const links = (list: { code: string; name: string }[], line: string) => list.map((k) => ({ kind: "skill" as const, title: k.name, line, href: href(k.code), link: "Open the skill" }));
+  const list = (items: { code: string; name: string }[]) => (
+    <ul className="m-0 grid list-none gap-[var(--space-1)] p-0">
+      {items.map((k) => (
+        <li key={k.code}>
+          <a href={href(k.code)}>{k.name}</a>
+        </li>
+      ))}
+    </ul>
+  );
   return (
     <PeekProvider initial={open ?? null}>
       <Screen
@@ -66,10 +83,10 @@ export default async function SkillScreen({ params, searchParams }: { params: Pr
         action={<span className="text-[length:var(--text-label)] text-[var(--ink-muted)]">{s.cls ? `${section} · ${s.code}` : s.code}</span>}
         next={{ href: "/today", label: "Today" }}
         rail={
-          <aside aria-label="Rail" data-rail className="grid content-start gap-[var(--space-3)]">
+          <RailAside>
             <PeekPanel />
-            <Rail edges={edges} />
-          </aside>
+            <TeachingRail links={links} />
+          </RailAside>
         }
       >
         <div className="grid gap-[var(--space-3)]">
@@ -83,22 +100,28 @@ export default async function SkillScreen({ params, searchParams }: { params: Pr
             <EmptyState>Nobody is enrolled in this class.</EmptyState>
           ) : (
             <>
-              <StackBar parts={LOOK_ORDER.map((look) => ({ state: stateOf(look), n: s.kids.filter((k) => k.look === look).length }))} />
-              <section aria-label="Secure, fortnight by fortnight">
-                <h2 className="text-[length:var(--text-title-small)]">Secure, fortnight by fortnight</h2>
-                <Spark values={[]} label="Secure" empty="No fortnights recorded yet" />
-              </section>
-              <PictureGrid blocks={blocks} grouped label={`${s.name}`} />
+              <Cards
+                cards={[
+                  { kind: "skill", title: "The class now", body: <StackBar parts={LOOK_ORDER.map((look) => ({ state: stateOf(look), n: s.kids.filter((k) => k.look === look).length }))} /> },
+                  { kind: "skill", title: "Secure, fortnight by fortnight", body: <Spark values={[]} label="Secure" empty="No fortnights recorded yet" /> },
+                ]}
+              />
               <section aria-label="Clusters">
                 <h2 className="text-[length:var(--text-title-small)]">Clusters</h2>
                 <Clusters clusters={s.clusters} kids={chips} />
               </section>
+              <PictureGrid blocks={blocks} grouped label={`${s.name}`} />
             </>
           )}
           {s.after.length || s.next.length ? (
             <>
-              <Cards cards={links(s.after, "Comes before this skill (confirmed).").slice(0, 3)} />
-              <Cards cards={links(s.next, "Ready next (confirmed).").slice(0, 3)} />
+              <Cards
+                cards={[
+                  ...(s.after.length ? [{ kind: "skill" as const, title: "Comes after", line: "This skill builds on these.", body: list(s.after) }] : []),
+                  ...(s.next.length ? [{ kind: "skill" as const, title: "Ready next", line: "A child secure here can try these.", body: list(s.next) }] : []),
+                ]}
+              />
+              <p className="b-caption">Only links a person confirmed are read.</p>
             </>
           ) : (
             <p className="b-caption">Only links a person confirmed are read. None is confirmed for this skill yet.</p>
@@ -110,6 +133,30 @@ export default async function SkillScreen({ params, searchParams }: { params: Pr
                   <LevelWords key={`${l.set}/${l.difficulty}`} code={s.code} set={l.set} level={l.difficulty} words={l.looks_like} earlier={earlier.get(`${l.set}/${l.difficulty}`) ?? []} canChange={reviews} />
                 ))}
               </ul>
+            </Details>
+          ) : null}
+          {asks.kinds.length ? (
+            <Details summary="Kinds of question" name="kinds">
+              <ul className="m-0 grid list-none gap-[var(--space-1)] p-0">
+                {asks.kinds.map((k) => (
+                  <li key={k.fmt}>
+                    {kindWords(kindWordsOf, k.fmt)} <span className="b-muted">· {k.n} questions</span>
+                  </li>
+                ))}
+              </ul>
+            </Details>
+          ) : null}
+          {mistakes.length ? (
+            <Details summary="Mistakes it watches for" name="mistakes">
+              <ul className="m-0 grid list-none gap-[var(--space-2)] p-0">
+                {mistakes.slice(0, 8).map((m) => (
+                  <li key={m.code}>
+                    {m.said.name}
+                    {m.said.description ? <span className="b-muted"> · {m.said.description}</span> : null}
+                  </li>
+                ))}
+              </ul>
+              {mistakes.length > 8 ? <p className="b-caption">{mistakes.length - 8} more mistakes.</p> : null}
             </Details>
           ) : null}
         </div>
