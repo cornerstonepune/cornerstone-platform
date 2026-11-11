@@ -12,11 +12,11 @@ import { SwitchedOff } from "@/components/children/switched-off";
 import { ClassViews } from "@/components/children/class-views";
 import { ViewToggle } from "@/components/kanban-board";
 import { requireStaff } from "@/lib/auth";
-import { screensOn, childrenTable } from "@/lib/children-reads";
+import { screensOn, childrenTable, closeToSecureSeen } from "@/lib/children-reads";
 import { ClassCountsLine } from "@/components/children/children-table";
 import { pictureOf, type Look } from "@/lib/children-picture";
-import { LOOK_ORDER, byRoll, clustersOf, daysSince, groupByLook, peekParam, type PictureLook } from "@/lib/children-view";
-import { SECURE, UNSEEN, stateOf } from "@/lib/looks";
+import { LOOK_ORDER, byRoll, groupByLook, pictureClusters, peekParam, type PictureLook } from "@/lib/children-view";
+import { PRACTISING, SECURE, UNSEEN, stateOf } from "@/lib/looks";
 
 type Q = { skill?: string; domain?: string; group?: string; peek?: string; view?: string; topic?: string; subject?: string; kp?: string };
 
@@ -40,6 +40,7 @@ export default async function Picture({ params, searchParams }: { params: Promis
   const skills = p.skills.filter((s) => !domain || s.domain === domain);
   const skill = skills.find((s) => s.code === sp.skill) ?? skills[0];
   const grouped = sp.group !== "class";
+  const seenWords = (s: { code: string; seen: number }) => (s.code === skill?.code ? "the skill shown" : `${s.seen} ${s.seen === 1 ? "child" : "children"} seen`);
   const kids = [...p.kids].sort(byRoll);
   const counts = (await childrenTable({ ...me, email: me.email })).counts[classId] ?? { answers: 0, reports: 0 };
   const stateOn = (id: string): Look | null => (skill ? (p.cells.get(id)?.get(skill.code)?.look ?? null) : null);
@@ -55,13 +56,18 @@ export default async function Picture({ params, searchParams }: { params: Promis
   const words = (l: PictureLook) => STATES[stateOf(l)].words;
   const blocks: Block[] = grouped ? groupByLook(squares).map((g) => ({ look: g.look, words: words(g.look)[0].toUpperCase() + words(g.look).slice(1), squares: g.cells })) : [{ look: SECURE, words: "Class", squares }];
   const parts = LOOK_ORDER.map((l) => ({ state: stateOf(l), n: squares.filter((s) => s.look === l).length }));
-  const clusters = clustersOf(
-    kids.map((k) => ({
-      id: k.id,
-      look: stateOn(k.id),
-      readyNext: skill ? (p.next.get(skill.code) ?? []).some((n) => !p.cells.get(k.id)?.has(n)) : false,
-      attention: !p.anySeen.get(k.id) || daysSince(p.anySeen.get(k.id)!, p.today) >= p.days,
-    })),
+  const clusters = pictureClusters(
+    kids.map((k) => {
+      const cell = skill ? p.cells.get(k.id)?.get(skill.code) : undefined;
+      return {
+        id: k.id,
+        look: stateOn(k.id),
+        readyNext: skill ? (p.next.get(skill.code) ?? []).some((n) => !p.cells.get(k.id)?.has(n)) : false,
+        seen: cell?.seen ?? null,
+        relatedPractising: !cell && skill ? [...(p.related.get(skill.code) ?? [])].some((r) => p.cells.get(k.id)?.get(r)?.look === PRACTISING) : false,
+      };
+    }),
+    await closeToSecureSeen(),
   );
   const kidChosen = Object.fromEntries(kids.map((k) => [k.id, chosenOf(k)]));
   const open = squares.find((x) => peekParam(x) === sp.peek);
@@ -88,8 +94,9 @@ export default async function Picture({ params, searchParams }: { params: Promis
                 <ul className="grid gap-[var(--space-1)]">
                   {skills.map((s) => (
                     <li key={s.code}>
-                      <Link href={q({ skill: s.code })} data-show aria-label={`Show: ${s.name}`} aria-current={s.code === skill?.code ? "true" : undefined} className="flex min-h-[var(--tap)] items-center text-[var(--link)] underline">
-                        {s.name}
+                      <Link href={q({ skill: s.code })} data-show aria-label={`Show: ${s.name} ${seenWords(s)}`} aria-current={s.code === skill?.code ? "true" : undefined} className="flex min-h-[var(--tap)] items-center text-[var(--link)] underline">
+                        {s.name}{" "}
+                        <span className="b-muted ml-2 text-[13px]">{seenWords(s)}</span>
                       </Link>
                     </li>
                   ))}
