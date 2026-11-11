@@ -9,7 +9,7 @@ One screen listing each child's parent report: where it stands, whether an educa
 ### Done when
 
 1. `/children/reports` opens for an educator and a coordinator; an educator sees only their own classes' children.
-2. Each row shows the child with Sr. No., the class, the report's state, whether an educator approved it, and the consent on file (on file / withdrawn / not recorded).
+2. Each row shows the child with Sr. No., the class, the report's state, whether an educator approved it, and the consent on file (on file / withdrawn: needed / none on record: needed), and a coordinator is told in a line that consent must be on record before a report can be sent.
 3. The class and state filters narrow the rows; no rows shows "No report lines drafted yet".
 4. A child's fold shows the report's words read-only; a child with no report shows "Not written yet" and no words.
 5. The screen never says 'teacher', a rung code, a skill code or 'borrow', and orders rows by class and Sr. No. only.
