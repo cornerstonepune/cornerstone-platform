@@ -6,11 +6,11 @@
   ],
   "screens": {
     "today-educator": {
-      "route": "/today",
+      "route": "/today/new",
       "built": false
     },
     "today-coordinator": {
-      "route": "/today",
+      "route": "/today/new",
       "built": false
     },
     "period": {

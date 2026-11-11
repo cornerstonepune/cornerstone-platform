@@ -34,6 +34,8 @@ async function todo(page: Page, kind: string, by: "many" | "rows" = "many"): Pro
 }
 
 test("Today lists what waits on a person, under the tab where it is done, hidden from no one", async ({ page }) => {
+  // a class of the test's own, so a topic is waiting to be taught whichever spec ran before this one (a shard may start with it)
+  await aClass(sql, CLASS, "G3", ["Mehr", "Neel"]);
   await page.goto("/today");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("What needs doing");
   // the school's two educators are its only layer: no row is filed under someone else's name
