@@ -35,15 +35,25 @@ export default async function SkillsToApprove({ searchParams }: { searchParams: 
   const waiting = sets.filter((s) => s.status !== "ratified");
   const gradeOptions = school.list.filter((g) => waiting.some((x) => x.band === g.code)).map((g): [string, string] => [g.code, g.name]);
   const subjects = [...new Map(waiting.filter((x) => x.subject_code).map((x) => [x.subject_code!, x.subject_name ?? x.subject_code!])).entries()];
+  const topics = [...new Map(waiting.filter((x) => x.topic_code).sort((a, b) => (a.topic_ord ?? 0) - (b.topic_ord ?? 0)).map((x) => [x.topic_code!, x.topic_name ?? x.topic_code!])).entries()];
   const grade = gradeOptions.some(([g]) => g === q.grade) ? q.grade : undefined;
   const subject = subjects.some(([s]) => s === q.subject) ? q.subject : undefined;
+  const topic = topics.some(([t]) => t === q.topic) ? q.topic : undefined;
+  const taught = q.taught === "yes" || q.taught === "no" ? q.taught : undefined;
   const order = (x: SkillSet) => school.list.findIndex((g) => g.code === x.band);
+  // a skill kept by every choice but `except`, so each dropdown counts what the others leave
+  const keeps = (x: SkillSet, except?: "grade" | "subject" | "topic" | "taught") =>
+    (except === "grade" || !grade || x.band === grade) &&
+    (except === "subject" || !subject || x.subject_code === subject) &&
+    (except === "topic" || !topic || x.topic_code === topic) &&
+    (except === "taught" || !taught || x.taught === (taught === "yes"));
+  const count = (except: "grade" | "subject" | "topic" | "taught", test: (x: SkillSet) => boolean) => waiting.filter((x) => keeps(x, except) && test(x)).length;
   const rows = waiting
-    .filter((x) => (!grade || x.band === grade) && (!subject || x.subject_code === subject))
+    .filter((x) => keeps(x))
     .sort((a, b) => order(a) - order(b) || (a.topic_ord ?? 0) - (b.topic_ord ?? 0) || a.name.localeCompare(b.name));
   const page = Math.max(1, Math.trunc(Number(q.page)) || 1);
   const back = (p: number) => {
-    const s = new URLSearchParams(Object.entries({ grade, subject, page: p > 1 ? String(p) : undefined }).flatMap(([k, v]) => (v ? [[k, v]] : [])));
+    const s = new URLSearchParams(Object.entries({ grade, subject, topic, taught, page: p > 1 ? String(p) : undefined }).flatMap(([k, v]) => (v ? [[k, v]] : [])));
     return s.size ? `${HERE}?${s}` : HERE;
   };
   const first = rows[(Math.min(page, Math.max(1, Math.ceil(rows.length / 10))) - 1) * 10];
@@ -125,8 +135,10 @@ export default async function SkillsToApprove({ searchParams }: { searchParams: 
           <FilterBar
             action={HERE}
             filters={[
-              { name: "grade", label: "Grade", value: grade, all: "Every grade", options: gradeOptions },
+              { name: "grade", label: "Grade", value: grade, all: "Every grade", options: gradeOptions.map(([c, w]): [string, string] => [c, `${w} (${count("grade", (x) => x.band === c)})`]) },
               { name: "subject", label: "Subject", value: subject, all: "Every subject", options: subjects },
+              { name: "topic", label: "Topic", value: topic, all: "Every topic", options: topics.map(([c, w]): [string, string] => [c, `${w} (${count("topic", (x) => x.topic_code === c)})`]) },
+              { name: "taught", label: "Taught", value: taught, all: "Taught or not", options: [["yes", `Taught (${count("taught", (x) => x.taught)})`], ["no", `Not taught yet (${count("taught", (x) => !x.taught)})`]] },
             ]}
           />
           {rows.length === 0 ? (
@@ -148,6 +160,19 @@ export default async function SkillsToApprove({ searchParams }: { searchParams: 
               ))}
             </ul>
           </Details>
+          {q.table === "0" ? <p role="status" className="mt-2 text-[13px] text-[var(--ink-muted)]">The table was not approved: it changed since this page was opened. Read it again, then approve.</p> : null}
+          {q.table === "1" ? <p role="status" className="mt-2 text-[13px] text-[var(--ink-muted)]">What a wrong answer counts against is approved, in your name.</p> : null}
+          {charges.waiting && mayApprove ? (
+            // approved on its own: a press meant for some skills never approves it (the table is sent as shown, so a changed table waits again)
+            <form action={approveSkills} className="mt-2">
+              <input type="hidden" name="back" value={back(page)} />
+              <input type="hidden" name="opened" value={opened} />
+              <input type="hidden" name="charges_table" value={JSON.stringify(charges.table)} />
+              <button type="submit" className="btn secondary" data-approve-table="">
+                Approve this table as written, as {me.name}
+              </button>
+            </form>
+          ) : null}
         </div>
       ) : null}
     </Screen>

@@ -3323,7 +3323,7 @@
           "drive": {
             "click": "No",
             "expect": {
-              "check": "no-offer-left"
+              "check": "another-offer-answered"
             }
           }
         },
@@ -3332,6 +3332,17 @@
           "label": "page: Later →",
           "to": "curriculum",
           "when": "paged"
+        },
+        {
+          "t": "link",
+          "label": "offers page: Later →",
+          "text": "Later →",
+          "to": "curriculum",
+          "when": "paged",
+          "note": "the offers table pages on its own, ten a page, and keeps the page of the list",
+          "roles": [
+            "coordinator"
+          ]
         },
         {
           "t": "link",
@@ -3409,6 +3420,15 @@
           "label": "Subject"
         },
         {
+          "t": "filter",
+          "label": "Topic"
+        },
+        {
+          "t": "filter",
+          "label": "Taught",
+          "note": "taught or not yet: a skill nobody teaches can be approved before its topic is switched on"
+        },
+        {
           "t": "tab",
           "label": "Skills",
           "note": "the first list; the address carries the tab"
@@ -3442,6 +3462,21 @@
         {
           "t": "fold",
           "label": "What a wrong answer counts against"
+        },
+        {
+          "t": "button",
+          "label": "Approve this table as written",
+          "roles": [
+            "coordinator"
+          ],
+          "data": "data-approve-table",
+          "effect": "the table of what a wrong answer counts against is approved as shown, once, with who; a changed table waits again",
+          "drive": {
+            "click": "Approve this table as written",
+            "expect": {
+              "check": "charges-approved"
+            }
+          }
         },
         {
           "t": "link",
@@ -3518,6 +3553,15 @@
         },
         {
           "t": "filter",
+          "label": "Kind"
+        },
+        {
+          "t": "filter",
+          "label": "Status",
+          "note": "Ready to print, or Removed: a removed question is kept with its reason and can be read here"
+        },
+        {
+          "t": "filter",
           "label": "search"
         },
         {
@@ -3591,6 +3635,22 @@
           "t": "fold",
           "label": "About it",
           "text": "About it (source, versions)"
+        },
+        {
+          "t": "link",
+          "label": "the corrected question",
+          "to": "question",
+          "text": "Open the corrected question",
+          "when": "@removed-question",
+          "note": "on a removed question that has been corrected"
+        },
+        {
+          "t": "link",
+          "label": "the original wording",
+          "to": "question",
+          "text": "See the original wording",
+          "when": "@corrected-question",
+          "note": "on a corrected question: the old wording, kept and readable"
         },
         {
           "t": "link",

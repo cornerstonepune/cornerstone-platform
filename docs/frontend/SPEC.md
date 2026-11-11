@@ -994,7 +994,7 @@ Main action: Check the drafted parts · Next step: an activity
 Data: activity, skill, skill_level, change_log and curriculum_proposal (the source of each part), curriculum_proposal
 Empty: none · Phone: the table scrolls sideways in its own box
 Folds in: /, /curriculum/browse, /curriculum/fill, /curriculum/offers, /asks
-Every control on the screen (14), and what the test does with each:
+Every control on the screen (15), and what the test does with each:
 - **filter** Grade
 - **filter** Subject
 - **filter** Topic
@@ -1006,6 +1006,7 @@ Every control on the screen (14), and what the test does with each:
 - **button** Yes (an offer): the skill is linked to the activity; the offer closes [coordinator only; absent and refused for others]
 - **button** No (an offer): the offer closes; nothing is linked [coordinator only; absent and refused for others]
 - **link** page: Later → → Curriculum (`/setup/curriculum`)
+- **link** offers page: Later → → Curriculum (`/setup/curriculum`) [coordinator only; absent and refused for others] (the offers table pages on its own, ten a page, and keeps the page of the list)
 - **link** rail: Skills to approve → Skills to approve (`/setup/skills/approve`)
 - **link** rail: Question bank → Question bank (`/setup/question-bank`)
 - **link** rail: Drafts to check → the activity's name (`/setup/activities/[code]`)
@@ -1028,14 +1029,17 @@ Main action: Read and approve the first · Next step: Curriculum
 Data: skill.level_approved, skill_level, approval (kind calibration)
 Empty: Nothing to approve · Phone: the table scrolls sideways in its own box
 Folds in: /skill-sets/approve, /skill-sets/levels
-Every control on the screen (9), and what the test does with each:
+Every control on the screen (12), and what the test does with each:
 - **filter** Grade
 - **filter** Subject
+- **filter** Topic
+- **filter** Taught (taught or not yet: a skill nobody teaches can be approved before its topic is switched on)
 - **tab** Skills (the first list; the address carries the tab)
 - **tab** Levels to review (the second list is the levels most children are secure at; the address carries the tab)
 - **link** a skill's name → the skill's name (`/setup/skills/[code]`)
 - **button** Approve (a row): level_approved set for that skill with who; the row leaves the list; the eyebrow's count drops by one [coordinator only; absent and refused for others]
 - **fold** What a wrong answer counts against
+- **button** Approve this table as written: the table of what a wrong answer counts against is approved as shown, once, with who; a changed table waits again [coordinator only; absent and refused for others]
 - **link** page: Later → → Skills to approve (`/setup/skills/approve`)
 - **link** rail: Curriculum → Curriculum (`/setup/curriculum`)
 Done when (on top of the ten generic checks):
@@ -1056,11 +1060,13 @@ Main action: Open a question · Next step: Curriculum
 Data: item, item_stat (a view over item_result), curriculum_proposal with its decision as an approval row
 Empty: No questions for this skill yet · Phone: the table scrolls sideways in its own box
 Folds in: /library, /worksheets, /worksheets/taxonomy
-Every control on the screen (9), and what the test does with each:
+Every control on the screen (11), and what the test does with each:
 - **fold** What the bank is
 - **filter** Grade
 - **filter** Skill
 - **filter** Difficulty
+- **filter** Kind
+- **filter** Status (Ready to print, or Removed: a removed question is kept with its reason and can be read here)
 - **filter** search
 - **row** each question row → {the question as it prints} (`/setup/question-bank/[key]`)
 - **link** page: Later → → Question bank (`/setup/question-bank`)
@@ -1083,8 +1089,10 @@ Rail (Connected to): the skill · the bank
 Main action: Correct the wording · Next step: the bank
 Data: item, item.key (the current key), item.review (the reviewer model's latest verdict), change_log (key history)
 Empty: none · Phone: stacked
-Every control on the screen (8), and what the test does with each:
+Every control on the screen (10), and what the test does with each:
 - **fold** About it
+- **link** the corrected question → {the question as it prints} (`/setup/question-bank/[key]`) (on a removed question that has been corrected)
+- **link** the original wording → {the question as it prints} (`/setup/question-bank/[key]`) (on a corrected question: the old wording, kept and readable)
 - **link** rail: the skill → the skill's name (`/setup/skills/[code]`)
 - **link** rail: the bank → Question bank (`/setup/question-bank`)
 - **field** the wording [coordinator only; absent and refused for others] (required when correcting)
