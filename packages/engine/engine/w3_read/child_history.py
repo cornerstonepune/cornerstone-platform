@@ -4,6 +4,7 @@ observed, what evidence stands, and the papers the child was given, each with wh
 Codes and ids only, never free text: a note's own sentence is private to its author and the coordinator
 (`k2_picture_reads.PRIVATE`), so a note shows here as its id, and its sentence stays with the child's page. `who` is
 a staff id or nothing: older rows keep an email or a name in their "who" text, and none of it leaves here.
+`by_name` is the display name of that staff id (nothing when `who` is nothing), the only field that names a person.
 
 A child's state is worked out again from this evidence (`engine graph`) and keeps no history of its own, so no "state
 changed" entry exists to list; the evidence is what moved it. Evidence an observation made is shown as that
@@ -69,14 +70,30 @@ def history(
     rows = conn.execute(
         HISTORY_SQL, {"child": here["child_id"], "before": before, "limit": max(1, min(int(limit), MAX))}
     ).fetchall()
+    who = [r["who"] if r["who"] and STAFF_ID.match(r["who"]) else None for r in rows]
+    names = _names(conn, {w for w in who if w})
     return {
         "class": f"{where['grade_code']} {where['section']}",
         "roll_no": roll_no,
         "entries": [
             {
-                "kind": r["kind"], "at": r["at"].isoformat(), "what": r["what"],
-                "who": r["who"] if r["who"] and STAFF_ID.match(r["who"]) else None,
+                "kind": r["kind"],
+                "at": r["at"].isoformat(),
+                "what": r["what"],
+                "who": w,
+                "by_name": names.get(w) if w else None,
             }
-            for r in rows
+            for r, w in zip(rows, who, strict=True)
         ],
-    }  # fmt: skip
+    }
+
+
+def _names(conn: db.Conn, staff_ids: set[str]) -> dict[str, str]:
+    """Display name of each staff id, nothing else of the person (no email, no totals): the one field that names."""
+    if not staff_ids:
+        return {}
+    got = conn.execute(
+        "select staff_id::text as id, name from pii.staff where staff_id = any(%s::uuid[])",
+        (sorted(staff_ids),),
+    ).fetchall()
+    return {r["id"]: r["name"] for r in got}

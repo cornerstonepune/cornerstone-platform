@@ -130,6 +130,19 @@ def test_a_childs_history_is_newest_first_with_who_as_a_staff_id_and_no_free_tex
         }
 
 
+def test_an_entry_names_who_by_display_name_only_and_only_by_name_carries_a_person(conn):
+    k = a_k2_class(conn)
+    _confirmed(conn, k)
+    conn.execute("update pii.staff set name = 'Placeholder Educator' where staff_id = %s", (k["staff"],))
+    entries = ch.history(conn, k["email"], k["class"], "3")["entries"]
+    seen = next(e for e in entries if e["kind"] == "observation")
+    assert seen["by_name"] == "Placeholder Educator"
+    for e in entries:
+        rest = repr({key: v for key, v in e.items() if key != "by_name"})
+        assert "Placeholder Educator" not in rest and k["email"] not in repr(e)
+        assert e["by_name"] is None or e["who"] is not None, "a name only where there is a staff id"
+
+
 def test_evidence_made_by_an_observation_is_not_listed_twice(conn):
     k = a_k2_class(conn)
     _confirmed(conn, k)
