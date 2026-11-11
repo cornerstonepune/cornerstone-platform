@@ -42,7 +42,7 @@ export default async function QuestionScreen({ params, searchParams }: Props) {
   return (
     <Screen
       stage={`${it.skill_set_name ?? "Question"} · ${it.difficulty ?? ""}`}
-      title={short(it.stem)}
+      title={it.stem.trim() ? short(it.stem) : `Question ${it.item_key}`} // a drawn question has no words: its key is its name
       purpose="The question, its answer, the wrong answers it catches, and where it came from. Correct the wording or remove it."
       next={{ href: BANK, label: "Question bank" }}
       action={may && live ? undefined : <p className="text-[14px]">{live ? "Read the question; the coordinator corrects or removes it." : "This question is removed."}</p>}
