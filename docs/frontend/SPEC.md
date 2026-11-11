@@ -958,6 +958,29 @@ Done when (on top of the ten generic checks):
 - tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page
 
 
+#### the skill set's name `/setup/skill-sets/[code]`
+Who: both · Phase: Core · Backend: none · Old page today: part (/skill-sets/[code]) · Slice: UI-3
+Eyebrow: Skill set · Grades 1 to 4
+Purpose: A skill set is what the school teaches and tests together, from one to four grades. It points at the skills the system reads a child on; it never scores a child itself.
+Blocks, in order:
+- **Cards**: each skill it covers: name, link
+- **Details**: each level in a sentence
+Rail (Connected to): each skill · Question bank for this skill set
+Main action: a skill · Next step: the question bank
+Data: skill (the skill set: code, name, registry_codes), skill_level, registry_skill
+Empty: No registry skill linked yet: shown, no invention · Phone: cards stack in one column
+Folds in: /skill-sets/[code]
+Every control on the screen (4), and what the test does with each:
+- **link** Open the skill (each card) → the skill's name (`/setup/skills/[code]`)
+- **fold** Each level in a sentence
+- **link** rail: each skill → the skill's name (`/setup/skills/[code]`)
+- **link** rail: Question bank for this skill set → Question bank (`/setup/question-bank`)
+Done when (on top of the ten generic checks):
+- the screen is keyed by the skill set's code, not by a registry skill's code
+- each registry skill the set points at is a card that opens the skill screen; a set with none says so and invents nothing
+- the level sentences sit in a fold, closed on load
+
+
 #### Curriculum `/setup/curriculum`
 Who: both · Phase: Core · Backend: CP-15 · Old page today: yes (/, /curriculum/browse, /curriculum/fill) · Slice: UI-11
 Eyebrow: Every grade
@@ -1298,7 +1321,7 @@ What the test does with each kind of control:
 | UI-14 Tokens, fonts and the existing parts on them | One source of colour, type, shape, elevation and motion for the whole site, in the look Nimish chose on 9 Nov 2026 (the rich draft, B). tokens.css is generated from tokens.json; every colour literal in the app is replaced by a token, including in the blocks that exist today (StatusChip, DataTable, FilterBar, EmptyState, Count) and in the shadcn files from UI-1; the fonts are self-hosted. No page changes shape in this slice. | none (infrastructure) | UI-1, and PR #528 (the logo pack) merged |
 | UI-13 The frame and the inventory test | One navigation for the whole site: the top bar with the school's logo, its four doors, search, acting-as, help and sign out, the trail and the rail (AppFrame), replacing the four shells and the K2 side menu; every existing page reachable from the bar; docs/ux-rules.md brought in line; and the inventory test that reads screens.json and drives every screen like a person, proved here on a small inventory of pages that already exist. | none (infrastructure) | UI-14 |
 | UI-2 The blocks | The school's new blocks of SPEC §5, built once, each with sample data on a staff-only gallery screen (`blocks`) and screenshots in both themes; every chart drawn to scale from its data. AppFrame is built in UI-13 and the existing blocks moved onto the tokens in UI-1. | The blocks | UI-13 |
-| UI-3 Node pages: the K2 walk | Period, record, confirm, notes, children, class picture, child, activity, objective and skill as node pages on the blocks, each walking to its neighbours through the rail and back through the trail; the old routes redirect. | the session's name, Record a note, Confirm what the reader heard, Notes, Children, Class picture, Where this child is, the activity's name, the objective's title, the skill's name | UI-2; the K2 switch (a config row) on for the pages behind it |
+| UI-3 Node pages: the K2 walk | Period, record, confirm, notes, children, class picture, child, activity, objective and skill as node pages on the blocks, each walking to its neighbours through the rail and back through the trail; the old routes redirect. | the session's name, Record a note, Confirm what the reader heard, Notes, Children, Class picture, Where this child is, the activity's name, the objective's title, the skill's name, the skill set's name | UI-2; the K2 switch (a config row) on for the pages behind it |
 | UI-4 Node pages: assessments | Assessments, one assessment and one child's paper as node pages on the blocks; the seven old assessment pages and Class results fold in; the queries and the seven steps are unchanged. | Assessments, {the built name}, Check the answers | UI-2 |
 | UI-5 The coordinator's views: staff, classes and setup | Staff and grants, classes and children and the Setup home; the small writes that exist today (a grant, a child move) through their own rows. Search is the bar's typeahead (UI-13); there is no results page. | Staff and classes, Classes and children, Setup | UI-2 for the views; CP-1 merged for moving a child |
 | UI-6 Timetable, rules and the fortnight's actions | The timetable's day, week and fortnight views and the timetable rules, the fortnight node with Approve and Go live, the draft from the rules with its unmet rules, and moves by hand with clashes accepted by the coordinator only. Until this merges the bar's Timetable door opens the page that exists today. | Timetable, Timetable rules, Fortnight 9, Draft from the rules, Moves by hand | CP-6, CP-11, CP-12 and CP-22 merged |
