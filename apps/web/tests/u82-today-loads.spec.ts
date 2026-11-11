@@ -18,6 +18,7 @@ import { ENGINE_SLOW } from "../lib/engine";
 import { PAGE_WAIT_MS } from "../lib/deadline";
 import { myDay, myNotes, noteFigures, TODAY_WAIT_MS } from "../lib/today-data";
 import { blankWords } from "../lib/educator/period";
+import { dayWords } from "../lib/today";
 
 const HOLIDAY = "2026-11-11"; // the Diwali vacation, as on live today
 const BUFFER = "2026-11-19"; // Buffer week 2: a school day in no fortnight
@@ -82,7 +83,17 @@ test.describe("the page", () => {
   const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
   const TEACHER = { email: "u82-educator@cornerstone.test", name: "Holiday Educator", role: "educator", classes: [SECTION], subjects: ["NUM"] };
   const NOCLASS = { email: "u82-noclass@cornerstone.test", name: "Classless Educator", role: "educator", classes: ["U82-NONE"], subjects: ["NUM"] };
-  const added: string[] = [];
+  const kept: { t: string; campus: string; day: string; had: { kind: string; note: string | null } | null }[] = [];
+  let klassId = "";
+  /** "Fortnight N starts <day>.": the class's next teaching fortnight after a day, as the database holds it (other specs add fortnights
+   *  to the test's year, so it is read, not assumed to be Fortnight 10). */
+  const nextWords = async (after: string) => {
+    const [f] = await sql<{ number: number; starts_on: string }[]>`
+      select f.number, f.starts_on::text from fortnight f join school_class c on c.tenant_id = f.tenant_id and c.academic_year_id = f.academic_year_id
+      where c.id = ${klassId}::uuid and f.kind = 'teaching' and f.starts_on > ${after}::date order by f.starts_on limit 1`;
+    expect(f, `a fortnight after ${after}`).toBeTruthy();
+    return `Fortnight ${f.number} starts ${dayWords(f.starts_on)}.`;
+  };
 
   test.beforeAll(async () => {
     const { klass } = await k2Class(sql);
@@ -94,15 +105,20 @@ test.describe("the page", () => {
     await sql`insert into staff_role_grant (tenant_id, staff_id, role_code, school_class_id, valid_from, granted_by)
       select ${t}, ${mine.staff_id}, 'cover_educator', ${klass}, '2026-11-01', 'u82 test'
       where not exists (select 1 from staff_role_grant where staff_id = ${mine.staff_id} and school_class_id = ${klass})`;
-    // the vacation and the buffer week as the school's calendar has them: a holiday, and a school day that is in no fortnight
+    // the vacation and the buffer week as the school's calendar has them: a holiday, and a school day that is in no fortnight. Another
+    // spec may have written these days already (CI: 11 Nov as a plain teaching day), so the test sets them and puts back what was there.
     for (const [day, kind, note] of [[HOLIDAY, "holiday", "Diwali Break"], [BUFFER, "teaching", "Buffer Week 2"]]) {
-      const [made] = await sql<{ id: string }[]>`insert into school_day (tenant_id, campus_id, on_date, kind, note) values (${t}, ${campus}, ${day}, ${kind}, ${note})
-        on conflict (tenant_id, campus_id, on_date) do nothing returning id`;
-      if (made) added.push(made.id);
+      const [had] = await sql<{ kind: string; note: string | null }[]>`select kind, note from school_day where tenant_id = ${t} and campus_id = ${campus} and on_date = ${day}`;
+      kept.push({ t, campus, day, had: had ?? null });
+      await sql`insert into school_day (tenant_id, campus_id, on_date, kind, note) values (${t}, ${campus}, ${day}, ${kind}, ${note})
+        on conflict (tenant_id, campus_id, on_date) do update set kind = excluded.kind, note = excluded.note`;
     }
+    klassId = klass;
   });
   test.afterAll(async () => {
-    if (added.length) await sql`delete from school_day where id = any(${added}::uuid[])`;
+    for (const k of kept)
+      if (k.had) await sql`update school_day set kind = ${k.had.kind}, note = ${k.had.note} where tenant_id = ${k.t} and campus_id = ${k.campus} and on_date = ${k.day}`;
+      else await sql`delete from school_day where tenant_id = ${k.t} and campus_id = ${k.campus} and on_date = ${k.day}`;
     await timetableSwitch(sql, false);
     await sql.end();
   });
@@ -129,11 +145,11 @@ test.describe("the page", () => {
     else await expect(badge).toHaveCount(0);
   };
 
-  test("on a holiday in no fortnight, her Today says it is a holiday and when Fortnight 10 starts; no period, no error", async ({ browser }) => {
+  test("on a holiday in no fortnight, her Today says it is a holiday and when the next fortnight starts; no period, no error", async ({ browser }) => {
     const ctx = await as(browser, TEACHER.email);
     const p = await ctx.newPage();
     await opens(p, `/today?day=${HOLIDAY}`, "Today");
-    await expect(p.locator("main")).toContainText("No sessions on this day. Holiday: Diwali Break. Fortnight 10 starts Monday 23-Nov.");
+    await expect(p.locator("main")).toContainText(`No sessions on this day. Holiday: Diwali Break. ${await nextWords(HOLIDAY)}`);
     await expect(p.locator("[data-block=PeriodRow]")).toHaveCount(0);
     await stripAgreesWithBadge(p);
     await ctx.close();
@@ -143,7 +159,7 @@ test.describe("the page", () => {
     const ctx = await as(browser, TEACHER.email);
     const p = await ctx.newPage();
     await opens(p, `/today?day=${BUFFER}`, "Today");
-    await expect(p.locator("main")).toContainText("This day is in no fortnight, so no lesson is planned. Fortnight 10 starts Monday 23-Nov.");
+    await expect(p.locator("main")).toContainText(`Buffer Week 2. This day is in no fortnight, so no lesson is planned. ${await nextWords(BUFFER)}`);
     await expect(p.locator("main")).not.toContainText("No school day on record");
     await ctx.close();
   });
