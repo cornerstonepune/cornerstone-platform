@@ -12,6 +12,7 @@
 import { expect, test, type Page } from "@playwright/test";
 import postgres from "postgres";
 import { aClass, aReadPaper, aPerson } from "./rows";
+import { voiceSwitch } from "./k2-rows";
 import { createHmac } from "node:crypto";
 import { isoWeek } from "../lib/week";
 
@@ -239,19 +240,19 @@ test("Upload papers, Check answers, Marking", async ({ page }) => {
 });
 
 test("Class results, its class and a child", async ({ page }) => {
+  await voiceSwitch(sql, true);
   // a class's topics, a topic opened (goals/res_results_by_topic.yaml); this class has nothing signed off yet, so its
   // skills are named once as not assessed. Its children, one by one, each in a status chip, and a child opened.
   await wholePage(page, `/growth?class=${SECTION}`, /Class results/, { chips: false });
   await page.locator("tr[data-topic]").first().getByRole("link").first().click();
   await expect(page.getByText("This page could not load")).toHaveCount(0);
   await page.getByRole("link", { name: "Every child, one by one →" }).click();
-  await expect(page.locator("[data-status]:visible").first()).toBeVisible();
-  await statusesSaid(page, "/growth?view=children");
-  const child = page.getByRole("link", { name: /Bina/ }).first();
-  await expect(child).toBeVisible();
-  await child.click();
+  // the old list of children is the Children screen (UI-3b): a child opens from its peek
+  await expect(page).toHaveURL(/\/children\?cls=[0-9a-f-]{36}$/);
+  await page.getByRole("button", { name: /Bina/ }).first().click();
+  await page.getByRole("link", { name: "Open the child" }).click();
   await expect(page.getByText("This page could not load")).toHaveCount(0);
-  await expect(page.getByRole("heading", { level: 1 }).first()).toContainText("Bina");
+  await expect(page.locator("main")).toContainText("Bina");
 });
 
 test("the Assessment card, opened from its row", async ({ page }) => {

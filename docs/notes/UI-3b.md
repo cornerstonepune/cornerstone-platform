@@ -20,7 +20,7 @@ in `lib/children-view.ts`. A class is the person's by `staff_sees` (`seesClass`)
 | A class is read on its `observed` rows if any child has them, else its `written` rows. | K2 and grades 1 to 4 share `child_skill_state` (CP-27). |
 | Absences noted: the last 7 teaching `school_day`s up to today for the class's campus; a day is **absent** when the child has a not-superseded `absent` observation that day, **none** when the class had a `session` in state `done` that day, otherwise **no lesson** (blank). | Done when 5; no register, no table (#551). |
 | Needs attention = never seen on any skill, or last seen `children.attention_days` (a setting, 14) or more days ago. With the row absent only a child never seen needs attention; no number is assumed in the code. | Rule 1. The setting came with #569. |
-| Notes waiting per child = the engine's `waiting_by_child` (`POST /voice/class-notes`), asked once per class the person teaches. A class the engine will not answer for (the coordinator holds none, switch off, engine down) shows a dashed "not available yet", never a guess. | #569 / #565. |
+| Notes waiting per child = the engine's `waiting_by_child` (`POST /voice/class-notes`), asked once per class the person teaches. A class the engine will not answer for (the coordinator holds none, switch off, engine down) has no count: an empty cell, and the column goes when no row has one (no placeholder), never a guess. | #569 / #565. |
 | The educator switch (`voice.screens_enabled`) gates the three screens and the peek as it gated the K2 pages; the migrated m1-17 assertion is in `u72`. | Never drop behaviour a test locks. |
 | ChildPeek's history merges `activity_observation` (a voice note when `note_id` is set, else an observation; a correction names the outcome it replaces), a confirmed paper (`item_result` per capture, three signals right / wrong / wrong with working / blank), and the graph's state per skill (`child_skill_state.last_seen`). A note's words are never read. | The five sources of the data gap; `change_log` is not written yet, so a correction is read from `supersedes`. |
 | Outcome words ("as expected") come from the outcome code with underscores removed. | The word list is not a config row on main yet. |
@@ -46,3 +46,29 @@ Deleted the three files nothing imports since UI-3b: `lib/k2-reads.ts`, `lib/k2-
 (`components/children/answers.tsx`; the same `childEvidence` read and mark rules as the old `/growth/[id]` answers table): date, question,
 what the child wrote, mark (right / wrong / wrong with working / blank), working shown, mistake matched, skill. Test: `u73-child-answers.spec.ts`.
 Not done yet: redirecting `/growth` and `/growth/class/[section]`, which about 35 older specs still visit.
+
+## UI-3f (the old child list's four things, placed by the orchestrator)
+
+1. "Needs help on": a column on the Children table, the skill a child most needs help on, by name only (the mistake and any count are left out); hidden when nobody in view has one.
+2. Parent report column and sort: no sort on people; the link from a child's row to Reports (`/children/reports?class=`) waits for UI-8's #647.
+3. A class's header counts (`ClassCountsLine`): whole numbers of answers waiting for a person and parent reports waiting, on Children when one class is in view and on the class picture. Never a score, a rank or a per-child number.
+4. "Against every skill →" on the child's page, leading to the class's Matrix view (UI-3e).
+Both reads come from the existing `childTable` (`lib/queries-children.ts`); no new table, migration or config row.
+
+## UI-3g (Children brought to the wireframe, `docs/frontend/wireframes/children.html`)
+
+Grouped by how they are doing by default ("None" is the explicit one table in Sr. No. order; `group=none` in the address); each group tinted by its state, which tints the
+name pills in it (the `--c`/`--cb` the wireframe's `.nchip` reads). Two cards under the table: "The whole class, all skills" (the sum of every child's counts in view,
+as one stack bar and its counts) and "Needing attention" (the children not seen for two weeks, by Sr. No., as name pills). The rail: Notes with how many wait to be
+confirmed (a link once the Notes screen is built) and "Latest notes, any child" (who a note names, to confirm or confirmed, by voice or by form, who recorded it, the
+day; never a note's words), from the engine's own notes reads. Last seen reads as the weekday inside the last week, as the wireframe does.
+Ranking check: nothing ranks a child. Groups are categories (the wireframe's order: secure, practising, not seen yet), the attention card lists by Sr. No., every number is a whole count.
+
+## UI-3d (the old child list redirects to Children)
+
+`/growth?view=children…` (and the old sort/status/grade/page bookmarks) now answer 308 to `/children`, to the class the old address named.
+Deleted with it: `growth/children-view.tsx`, `growth/tables.tsx`. Kept in place for the screens that will replace them: Class results by topic
+(`/growth`), the child-against-topic grid (`/growth/class/[section]`), parent reports (`/growth/reports`), the old child page (`/growth/[id]`).
+Old specs that opened the list were moved to Children where an assertion still holds, and retired where the old column or control has no
+equal on the new screen. Not carried over, for the orchestrator to place: the per-child "Needs help on" topic names, the "Parent report"
+column and its sort, the class table's counts of answers and parent reports waiting, the "Against every skill" link on the list.

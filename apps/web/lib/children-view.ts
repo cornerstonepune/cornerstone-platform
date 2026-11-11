@@ -50,6 +50,8 @@ export type Row = {
   lastSeen: string | null;
   /** Notes waiting on the child; null where it is not known (the engine did not answer for the class). */
   waiting: number | null;
+  /** The skill the child most needs help on, by name only (no mistake, no count), or none. */
+  helpOn: string | null;
   strip: Day[];
 };
 
@@ -108,7 +110,8 @@ export function groupRows(rows: readonly Row[], by: Group, today: string, days: 
 export const lastSeenWords = (iso: string | null, today: string) => {
   if (iso === null) return "not yet";
   const n = daysSince(iso, today);
-  return n <= 0 ? "today" : n === 1 ? "yesterday" : n < 7 ? `${n} days ago` : dateWords(iso);
+  // the weekday inside the last week (the wireframe says "Mon"), the date beyond it
+  return n <= 0 ? "today" : n < 7 ? WEEKDAY[new Date(`${iso}T12:00:00Z`).getUTCDay()].slice(0, 3) : dateWords(iso);
 };
 
 /** The initials of a name, for the disc: first letters of the first two words. */

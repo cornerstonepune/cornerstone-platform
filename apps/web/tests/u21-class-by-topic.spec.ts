@@ -7,8 +7,9 @@
  * The class is the test's own (tests/rows.ts). Its children's skill states are set here directly — the graph's own
  * rules are proved by the engine's tests; this is how the pages lay them out — and taken away after.
  */
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 import postgres from "postgres";
+import { voiceSwitch } from "./k2-rows";
 import { aClass } from "./rows";
 
 test.describe.configure({ mode: "serial" });
@@ -23,9 +24,6 @@ const STATES: [string, string, string, string, number, number][] = [
   ["Asha", "R34", "NUM.DATA.01", "secure", 8, 8],
   ["Bina", "R21", "NUM.OPS.01", "practising", 5, 3],
 ];
-const nameOf = async (rung: string) =>
-  (await sql<{ name: string }[]>`select name from skill where rung_code = ${rung} and status is distinct from 'retired' limit 1`)[0].name;
-
 test.beforeAll(async () => {
   kids = await aClass(sql, SECTION, "G2", ["Asha", "Bina"]);
   const [{ tenant_id }] = await sql<{ tenant_id: string }[]>`select tenant_id from child_now where id = ${kids.Asha}`;
@@ -41,25 +39,14 @@ test.afterAll(async () => {
   await sql.end();
 });
 
-// a child's "Needs help on" on the Children list, their class opened (goals/ux3-children-grouped.yaml); a table holds
-// only the columns that have something in them (goals/ux10-declutter.yaml), so the cell is found under its heading
-const standing = async (page: Page, who: string) => {
-  const table = page.getByRole("table", { name: `${SECTION}: its children` });
-  const row = table.locator(`tr[data-child="${kids[who]}"]`);
-  await expect(row).toBeVisible();
-  const heads = (await table.locator("thead th").allTextContents()).map((t) => t.trim().replace(/ ▾$/, ""));
-  const help = (await row.locator("td").nth(heads.indexOf("Needs help on")).innerText()).trim();
-  return [help];
-};
-
 // goals/ux10-declutter.yaml, Nimish 2026-10-22: the topic chips on Children are dropped. What the page said by topic it
 // now says across every topic switched on, and a class's own page still reads topic by topic (the next test).
-test("the Children list has no topic chips: it reads every topic switched on, whatever the address says", async ({ page }) => {
+test("the Children list has no topic chips, whatever the address of the old list says", async ({ page }) => {
+  await voiceSwitch(sql, true);
   for (const at of [`/growth?view=children&class=${SECTION}`, `/growth?view=children&class=${SECTION}&topic=DATA`]) {
     await page.goto(at);
+    await expect(page, at).toHaveURL(/\/children\?cls=[0-9a-f-]{36}$/);
     await expect(page.getByRole("navigation", { name: "Topic" }), at).toHaveCount(0);
-    // Asha needs help on addition and subtraction: it shows, though the address asked for Data handling alone
-    expect(await standing(page, "Asha"), at).toEqual([await nameOf("R24")]);
   }
 });
 

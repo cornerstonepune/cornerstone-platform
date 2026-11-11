@@ -106,7 +106,7 @@ test("Papers to approve chooses a class's week in the filter row, however many w
 
 test("the parent reports waiting are narrowed by class", async ({ page }) => {
   await page.goto("/children/reports");
-  const table = page.getByRole("table", { name: "Every child's report" });
+  const table = page.getByRole("main").locator("table").first();
   await expect(table).toBeVisible();
   // the class filter of the Reports screen (the old list's class links folded into it, UI-8e): every class until one is chosen
   const filter = page.locator("[data-filterbar]").getByLabel("Class");
@@ -115,7 +115,7 @@ test("the parent reports waiting are narrowed by class", async ({ page }) => {
   await filter.selectOption(chosen);
   await expect(page).toHaveURL(/[?&]class=/);
   await expect(table).toBeVisible();
-  const cells = await table.locator("tbody tr:not(.under) td:nth-child(2)").allInnerTexts();
+  const cells = await page.getByRole("main").locator("table tbody tr:not(.under) td:nth-child(2)").allInnerTexts();
   expect(cells.length).toBeGreaterThan(0);
   expect(new Set(cells).size).toBe(1);
   expect(cells[0]).toContain(chosen);

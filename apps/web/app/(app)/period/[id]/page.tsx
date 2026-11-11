@@ -6,7 +6,7 @@ import { EmptyState } from "@/components/empty-state";
 import { PeekChip, PeekHost } from "@/components/peek-names";
 import { Rail, Screen, type Edge } from "@/components/app-frame";
 import { StackBar } from "@/components/stack-bar";
-import { outcomeWords, type OutcomeState } from "@/components/outcome-states";
+import { OUTCOME_ORDER, outcomeWords } from "@/components/outcome-states";
 import { requireStaff } from "@/lib/auth";
 import { pageOf } from "@/lib/educator/data";
 import { childrenByIds } from "@/lib/notes-loop";
@@ -19,7 +19,6 @@ import { classWords } from "@/lib/voice-types";
 // the activity), how the class did the last time it ran, and the steps, what to lay out and what to watch for. A fixed part of
 // the day has no activity, so no capture controls: it says "Nothing to record here".
 const UUID = /^[0-9a-f-]{36}$/;
-const OUTCOMES: [string, OutcomeState][] = [["above", "outcomeAbove"], ["as_expected", "outcomeAsExpected"], ["below", "outcomeBelow"], ["not_willing", "outcomeNotWilling"], ["absent", "outcomeAbsent"]];
 
 export default async function Period({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -79,7 +78,7 @@ export default async function Period({ params }: { params: Promise<{ id: string 
               <h2 className="text-[16px]">{last ? `Last time this ran, ${last.day}` : "Last time this ran"}</h2>
               {last ? (
                 <>
-                  <StackBar parts={OUTCOMES.map(([k, state]) => ({ state, n: last.counts[k] ?? 0, words: outcomeWords(k) }))} />
+                  <StackBar parts={OUTCOME_ORDER.map(([k, state]) => ({ state, n: last.counts[k] ?? 0, words: outcomeWords(k) }))} />
                   {last.named.map((n) =>
                     n.children.length ? (
                       <div key={n.outcome} className="grid gap-1" data-named={n.outcome}>

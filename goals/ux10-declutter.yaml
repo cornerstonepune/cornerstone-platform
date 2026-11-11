@@ -17,9 +17,9 @@ goal: >
 # chips; the menu carried a count on 3 items; Curriculum's header paragraph was 241 characters.
 says:
   - words: "Look at the clutter"
-    proved_by: "apps/web/tests/u50-declutter.spec.ts::a class's table holds only the columns that have something in them"
+    proved_by: "apps/web/tests/u72-children.spec.ts::3 · the bar's segments are secure, practising and not seen, sum to the skill count, and none is red"
   - words: "The current frontend is extremely confusing to me"
-    proved_by: "apps/web/tests/u50-declutter.spec.ts::Children leads with the children who need the educator, as a short list"
+    proved_by: "apps/web/tests/u72-children.spec.ts::7 · grouping puts a heading and a count over each group; counts sum to the rows; one group each"
   - words: "make it much, much cleaner"
     proved_by: "apps/web/tests/u50-declutter.spec.ts::under a page's title there is one line, never a paragraph"
   - words: "a red count only on Today in the menu"

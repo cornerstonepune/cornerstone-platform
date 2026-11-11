@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import Link from "@/components/link";
 import { Rail, Screen } from "@/components/app-frame";
 import { Cards } from "@/components/cards";
 import { Details } from "@/components/details";
@@ -7,14 +8,16 @@ import { FilterBar } from "@/components/filter-bar";
 import { FortnightGrid } from "@/components/fortnight-grid";
 import { ViewToggle } from "@/components/kanban-board";
 import { requireStaff } from "@/lib/auth";
-import { shortDate } from "@/lib/educator/clock";
+import { nowAtSchool, shortDate } from "@/lib/educator/clock";
 import { weekOf } from "@/lib/educator/data";
 import { isDay } from "@/lib/educator/period";
 import { dateWords } from "@/lib/week";
 import { stateWords } from "@/lib/fortnight-words";
+import { sql } from "@/lib/db";
 import { gridOf, moveInto } from "@/lib/timetable-grid";
 import { subjectLooks, clashesOf, fortnightAfter, fortnightAt, fortnightNumber, isCoordinator, movesOf } from "@/lib/timetable-ui";
 import { schoolToday } from "@/lib/voice-page";
+import { DayOnPhone } from "./day-on-phone";
 import "./timetable.css";
 
 type Props = { searchParams: Promise<Record<string, string | undefined>> };
@@ -56,11 +59,20 @@ export default async function TimetablePage({ searchParams }: Props) {
   const moves = await movesOf(fn.id);
   const focus = q.day && weeks.some((w) => w.days.some((d) => d.day === q.day)) ? q.day : today >= fn.starts_on && today <= fn.ends_on ? today : fn.starts_on;
   const shown = view === "day" ? [focus] : view === "week" ? weeks.find((w) => w.days.some((d) => d.day === focus))!.days.map((d) => d.day) : undefined;
-  const grid = gridOf(weeks, { looks: await subjectLooks(), days: shown, clashes, href: (day, p) => `/educator/period/${p}?class=${klass.id}&day=${day}` });
+  const now = await nowAtSchool();
+  const sessions = await sql<{ id: string; on_date: string; period_id: string }[]>`
+    select s.id, d.on_date::text as on_date, s.period_id from session s join school_day d on d.id = s.school_day_id
+    where s.school_class_id = ${klass.id} and d.on_date between ${fn.starts_on}::date and ${fn.ends_on}::date`;
+  const sessionAt = new Map(sessions.map((r) => [`${r.on_date}|${r.period_id}`, r.id]));
+  const grid = gridOf(weeks, {
+    looks: await subjectLooks(),
+    days: shown,
+    clashes,
+    at: { today, now },
+    href: (day, p) => (sessionAt.has(`${day}|${p}`) ? `/period/${sessionAt.get(`${day}|${p}`)}` : `/educator/period/${p}?class=${klass.id}&day=${day}`),
+  });
   const lessons = grid.rows.some((r) => "cells" in r && r.cells.some((c) => c));
-  const movedHere = grid.days.flatMap((day, i) =>
-    grid.rows.flatMap((r) => ("cells" in r ? [{ day, cell: r.cells[i], row: r }] : [])).filter((x) => x.cell?.moved).map((x) => ({ ...x, move: moveInto(moves, day, x.cell!.href.split("/period/")[1].split("?")[0]) })),
-  );
+  const movedHere = grid.placed.filter((x) => x.cell.moved).map((x) => ({ day: x.day, cell: x.cell, move: moveInto(moves, x.day, x.periodId) }));
   const open = clashes.filter((c) => !c.accepted).length;
 
   return (
@@ -81,15 +93,16 @@ export default async function TimetablePage({ searchParams }: Props) {
         />
       }
     >
+      <DayOnPhone chosen={(VIEWS as readonly string[]).includes(q.view ?? "")} />
       <FilterBar
         action={HERE}
         keep={{ view, day: q.day, fn: q.fn }}
         filters={[
-          ...(coordinator ? [{ name: "class", label: "Class", value: klass.id, required: true, all: "", options: weeks[0].classes.map((c) => [c.id, `${c.grade} ${c.section}`] as const) }] : []),
+          ...(coordinator || weeks[0].classes.length > 1 ? [{ name: "class", label: "Class", value: klass.id, required: true, all: "", options: weeks[0].classes.map((c) => [c.id, `${c.grade} ${c.section}`] as const) }] : []),
           { name: "when", label: "Fortnight", value: q.when === "next" ? "next" : "this", required: true, all: "", options: [["this", "This fortnight"], ["next", "Next fortnight"]] as const },
         ]}
       />
-      <div className="mb-3">
+      <div className="mb-3 flex flex-wrap items-center gap-3">
         <ViewToggle
           current={view}
           views={[
@@ -98,15 +111,25 @@ export default async function TimetablePage({ searchParams }: Props) {
             { key: "fortnight", label: "Fortnight", icon: "fortnight", href: keep({ view: "fortnight" }) },
           ]}
         />
+        <Link href={keep({ view: "day", day: today })} className="chip" data-today-link>Today</Link>
       </div>
       {open ? <p className="tt-note" data-clashes={open}>{open} clash{open === 1 ? "" : "es"} not accepted yet: red below.</p> : null}
       {lessons ? (
         <div data-view={view} data-day-count={grid.days.length}>
-          <FortnightGrid days={grid.labels} today={shortDate(today)} rows={grid.rows} />
+          <FortnightGrid days={grid.labels} today={shortDate(today)} rows={grid.rows} dayHrefs={grid.days.map((d) => keep({ view: "day", day: d }))} />
         </div>
       ) : (
         <EmptyState next={coordinator ? { href: "/timetable/draft", label: "Make a draft" } : undefined}>No timetable live for this class: nothing is placed in these days.</EmptyState>
       )}
+      {grid.holidays.length ? (
+        <ul className="tt-list" data-holidays>
+          {grid.holidays.map((h) => (
+            <li key={h.day}>
+              <strong>{shortDate(h.day)}</strong>: {h.words}
+            </li>
+          ))}
+        </ul>
+      ) : null}
       {movedHere.length ? (
         <Details summary={`Moved periods (${movedHere.length})`} id="moved">
           <ul className="tt-list">
