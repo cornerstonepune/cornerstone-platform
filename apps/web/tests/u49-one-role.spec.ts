@@ -125,7 +125,10 @@ test.describe("an educator reaches every page and every action the coordinator d
       const mine = await offered(educator, at, EDUCATOR.name);
       // a page's own words may name the coordinator (the map does); a refusal is one the coordinator is not given
       expect(mine.refused, `${at} refuses an educator`).toBe(theirs.refused);
-      expect(theirs.actions.filter((a) => !mine.actions.includes(a)), `on ${at}, offered to the coordinator only`).toEqual([]);
+      // what the school's access rule keeps from an educator by name: consent is the coordinator's alone to see (CP-3: the educators'
+      // group has reach "none" on consent), so the Reports screen draws its Consent column for the coordinator only
+      const KEPT_BY_ACCESS_RULE = at === "/children/reports" ? new Set(["column: Consent"]) : new Set<string>();
+      expect(theirs.actions.filter((a) => !mine.actions.includes(a) && !KEPT_BY_ACCESS_RULE.has(a)), `on ${at}, offered to the coordinator only`).toEqual([]);
       walked.push(name);
     });
   });

@@ -61,6 +61,7 @@ const NOT_BY_CLICK: Record<string, string> = {
   "/timetable/fortnight/[n]": "a link of the timetable page's Fortnight card and of the timetable's rail, which need a fortnight's rows (tests/u74-timetable.spec.ts opens it with rows)",
   "/timetable/moves": "the draft page's Next card and a hand move on the fortnight page, which need a fortnight's rows (tests/u74-timetable.spec.ts opens it with rows)",
   "/educator/period/[id]": "a link of a day of the timetable, which needs a timetable's rows",
+  "/growth/[id]": "a child's name on a class's page: the class list is click two, a class's page click three, so a child's page is click four. It only counted as reached while the static page /growth/reports (which matches the pattern /growth/[^/]+) was in the app",
   "/growth/[id]/parent": "a link on a child's page (click four)",
   "/growth/[id]/report": "a link on a child's page (click four)",
 };
