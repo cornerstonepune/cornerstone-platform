@@ -17,7 +17,9 @@ export async function moreOffers(sql: Sql, skills: string[]) {
 
 /** The question and its correction as the engine leaves them (a new question with `corrected_from`, the old one retired by a flag), made in the rows directly
  *  so that no press is needed to draw the page: the same insert and the same flag as `engine/w1_bank/question.py`. */
-export async function correctedPair(sql: Sql, old: string, words: string): Promise<{ old: string; fresh: string }> {
+export async function correctedPair(sql: Sql, words: string): Promise<{ old: string; fresh: string }> {
+  // another question than the inventory's own, so correcting it leaves the one the question screen is driven on as it was
+  const [{ item_key: old }] = await sql<{ item_key: string }[]>`select item_key from item where fmt = 'word_1step' and source = 'generated' and status = 'active' order by created_at, item_key offset 1 limit 1`;
   const fresh = `FX-${old}`;
   await sql`
     insert into item (tenant_id, item_key, template, rung_code, skill_codes, signal, fmt, stem, spec, responses, tags, case_codes, source, status, skill_set_code, difficulty, eval_type, skill_set_version, generator, corrected_from)
@@ -30,3 +32,10 @@ export async function correctedPair(sql: Sql, old: string, words: string): Promi
   return { old, fresh };
 }
 
+
+/** More offers than a page, and the table of what a wrong answer counts against waiting for approval; returns the offers waiting. */
+export async function seedSetupContent(sql: Sql, skills: string[]) {
+  await moreOffers(sql, skills);
+  await sql`update config set value = '{}'::jsonb where key = 'skills.charges_by_kind.approved'`;
+  return openOffersIn(sql);
+}
