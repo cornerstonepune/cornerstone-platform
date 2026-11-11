@@ -7,6 +7,7 @@ import { KeyValue } from "@/components/key-value";
 import { Rail, Screen } from "@/components/app-frame";
 import { Answers, Question, kindWords } from "@/components/question";
 import { StatusChip } from "@/components/status-chip";
+import { mayDecide } from "@/lib/decides";
 import { requireStaff } from "@/lib/auth";
 import { deadline } from "@/lib/deadline";
 import { levels } from "@/lib/levels";
@@ -15,6 +16,7 @@ import { bankGrid, bankTotals, itemCount, items, type BankRow, type ItemRow } fr
 import { gradeOf, grades } from "@/lib/queries";
 import { gradesOf, ownClasses, scopeOf } from "@/lib/scope";
 import type { Column } from "@/lib/ux-rules";
+import { Proposals } from "./proposals";
 
 type Q = Record<string, string | undefined>;
 const HERE = "/setup/question-bank";
@@ -54,6 +56,14 @@ export default async function QuestionBank({ searchParams }: { searchParams: Pro
     const s = new URLSearchParams(Object.entries({ ...keep, page: p > 1 ? String(p) : undefined }).flatMap(([k, v]) => (v ? [[k, v]] : [])));
     return s.size ? `${HERE}?${s}` : HERE;
   };
+  // the proposals page on their own (fpage, mpage); the questions list keeps its page, and every choice made above
+  const pageOf = (v: string | undefined) => Math.max(1, Math.trunc(Number(v)) || 1);
+  const [fpage, mpage] = [pageOf(q.fpage), pageOf(q.mpage)];
+  const at = (over: Record<string, string | undefined>) => {
+    const s = new URLSearchParams(Object.entries({ ...keep, page: page > 1 ? String(page) : undefined, fpage: fpage > 1 ? String(fpage) : undefined, mpage: mpage > 1 ? String(mpage) : undefined, ...over }).flatMap(([k, v]) => (v ? [[k, v]] : [])));
+    return `${s.size ? `${HERE}?${s}` : HERE}#proposals`;
+  };
+  const mayDecideQuestions = await deadline(mayDecide(me, "questions"));
   const byLevel = lv.order.map((d) => ({ d, n: skills.reduce((a, r) => a + (r.counts[d] ?? 0), 0) }));
 
   const columns: Column<ItemRow>[] = [
@@ -122,6 +132,8 @@ export default async function QuestionBank({ searchParams }: { searchParams: Pro
       ) : (
         <DataTable label="Questions" columns={columns} rows={rows} rowKey={(it) => it.item_key} more={{ page, href, of: total }} extras={{ attrs: (it) => ({ "data-row": it.item_key }) }} />
       )}
+      {q.error ? <p role="alert" className="mt-4 text-[14px]">{q.error}</p> : null}
+      <Proposals may={mayDecideQuestions} back={at({})} pages={{ far: fpage, mistakes: mpage }} hrefs={{ far: (p) => at({ fpage: p > 1 ? String(p) : undefined }), mistakes: (p) => at({ mpage: p > 1 ? String(p) : undefined }) }} />
       <div className="mt-4" id="statistics">
         <Details summary="Statistics (counts and worksheets by taxonomy)" name="statistics">
           <p className="mb-2 text-[13px] text-[var(--ink-muted)]">Questions ready to print, by grade and level.</p>

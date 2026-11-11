@@ -67,20 +67,26 @@ export async function decideProposal(formData: FormData): Promise<void> {
   const me = await deciding("questions");
   const id = String(formData.get("id") ?? "");
   const verdict = VERDICTS.find((v) => v === formData.get("verdict"));
-  if (!/^[0-9a-f-]{36}$/.test(id) || !verdict) redirect("/library");
+  // the page it is decided on (the bank's screen, or this one's old address) is where it comes back to
+  const given = String(formData.get("back") ?? "");
+  const home = /^\/(library|setup\/question-bank)(\?[\w=&.%+-]*)?(#[\w-]*)?$/.test(given) ? given : "/library";
+  const [path, tail = ""] = home.split("#");
+  const withNote = (note: string) => `${path}${path.includes("?") ? "&" : "?"}error=${encodeURIComponent(note)}${tail ? `#${tail}` : ""}`;
+  if (!/^[0-9a-f-]{36}$/.test(id) || !verdict) redirect(home);
   // a mistake adopted is named by the person adopting it; the engine refuses one without a name
   const note = String(formData.get("name") ?? "").trim().slice(0, 300);
-  let next = "/library";
+  let next = home;
   try {
     const res = await engineSend(`/bank/proposal/${id}/decide`, { verdict, by: me.email, note });
     if (!res.ok) {
       const why = ((await res.json().catch(() => ({}))) as { detail?: string }).detail ?? "it could not be decided";
-      next = `/library?error=${encodeURIComponent(`Nothing was changed: ${why}.`)}`;
+      next = withNote(`Nothing was changed: ${why}.`);
     }
   } catch (e) {
-    next = `/library?error=${encodeURIComponent(e instanceof EngineDown ? e.message : "The engine could not be reached. Nothing was changed.")}`;
+    next = withNote(e instanceof EngineDown ? e.message : "The engine could not be reached. Nothing was changed.");
   }
   revalidatePath("/library");
+  revalidatePath("/setup/question-bank");
   revalidatePath("/worksheets");
   redirect(next);
 }

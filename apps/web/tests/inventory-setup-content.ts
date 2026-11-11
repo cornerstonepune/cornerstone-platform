@@ -43,6 +43,37 @@ export async function seedSetupContent(sql: Sql, skills: string[]) {
   await sql`update ask set answer = null, correction = null, answered_by = null, answered_at = null where answer is not null`;
   offersAtStart = await openOffersIn(sql);
   asksAtStart = await openAsksIn(sql);
+  await seedProposals(sql);
+  farAtStart = await openProposalsIn(sql, "mislevelled");
+  mistakesAtStart = await openProposalsIn(sql, "new_mistake");
+}
+const openProposalsIn = async (sql: Sql, kind: string) =>
+  Number((await sql<{ n: string }[]>`select count(*)::text as n from curriculum_proposal p where p.kind = ${kind} and p.about is null and not exists (select 1 from curriculum_proposal d where d.about = p.id)`)[0].n);
+let farAtStart = Infinity;
+let mistakesAtStart = Infinity;
+
+/** What children's answers propose for the bank, as the engine's `learn.refresh` leaves it: two questions far off their level (one to remove,
+ *  one to keep) and two ways of working (one to adopt, one to reject), each waiting for a person. The list of proposals is append-only: a run adds its own, and the checks count from what waits when it begins. */
+export async function seedProposals(sql: Sql): Promise<string[]> {
+  const made: string[] = [];
+  const items = await sql<{ item_key: string; difficulty: string; skill_set_code: string }[]>`
+    select item_key, difficulty, skill_set_code from item where fmt = 'word_1step' and source = 'generated' and status = 'active' order by created_at, item_key offset 2 limit 2`;
+  const [{ id: tenant }] = await sql<{ id: string }[]>`select id from tenant order by created_at limit 1`;
+  const put = async (kind: string, subject: string, direction: string, evidence: object) => {
+    const [{ id }] = await sql<{ id: string }[]>`
+      insert into curriculum_proposal (tenant_id, run_id, kind, subject_code, proposal, status, proposer, machine)
+      values (${tenant}, gen_random_uuid(), ${kind}, ${subject}, ${sql.json({ direction, evidence } as never)}, 'needs_person', 'code', ${`inventory:${kind}`}) returning id`;
+    made.push(id);
+  };
+  for (const it of items) await put("mislevelled", it.item_key, "easier", { n: 30, correct: 29, p_correct: 0.97, difficulty: it.difficulty, skill_set_code: it.skill_set_code });
+  // two rules of working a sum, a different pair each run (an adopted one stays in the vocabulary): the parts are the engine's own (assess/learned_rules.py)
+  const parts = () => ({ op: "+", write: "whole_sum", carry: "none", to: "next", last: "write", turn: "none", align: Math.random() < 0.5 ? "right" : "left" });
+  for (const [rule, wrote] of [[parts(), 1115], [{ ...parts(), write: "larger" }, 49]] as const) {
+    const id = [rule.op, rule.write, rule.carry, rule.to, rule.last, rule.align, rule.turn].join("|");
+    await sql`delete from misconception where code = 'L_' || upper(substr(md5(${id}), 1, 6))`;
+    await put("new_mistake", id, "+", { rule, words: rule.write === "larger" ? "writes the larger digit of each column" : "writes each column's whole total, both digits", examples: [{ op: "+", a: 47, b: 38, wrote, item_key: items[0]?.item_key ?? "" }] });
+  }
+  return made;
 }
 
 type Aside = <T>(f: (sql: Sql) => Promise<T>) => Promise<T>;
@@ -54,10 +85,16 @@ export const setupContentChecks = (aside: Aside, settles: Settles): Record<strin
     return n <= start() - k ? [] : [`${n} ${what} wait after ${k} answered, of ${start()}`];
   };
   const offers = fewer(openOffersIn, () => offersAtStart, "offers");
+  const far = fewer((sql) => openProposalsIn(sql, "mislevelled"), () => farAtStart, "questions proposed for the bank");
+  const mistakes = fewer((sql) => openProposalsIn(sql, "new_mistake"), () => mistakesAtStart, "mistakes proposed");
   const asks = fewer(openAsksIn, () => asksAtStart, "questions");
   return {
     "offer-answered": () => offers(1),
     "another-offer-answered": () => offers(2),
+    "proposal-decided": () => far(1),
+    "another-proposal-decided": () => far(2),
+    "mistake-decided": () => mistakes(1),
+    "another-mistake-decided": () => mistakes(2),
     "ask-answered": () => asks(1),
     "another-ask-answered": () => asks(2),
     "charges-approved": async () => {

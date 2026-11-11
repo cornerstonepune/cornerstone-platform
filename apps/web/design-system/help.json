@@ -1487,6 +1487,26 @@
           "says": ""
         },
         {
+          "label": "Remove from the bank (a proposal)",
+          "says": "the question leaves the bank (retired, never deleted) and its worksheets are rebuilt; the proposal is decided"
+        },
+        {
+          "label": "Keep it (a proposal)",
+          "says": "the question stays; the proposal is decided"
+        },
+        {
+          "label": "its name (a mistake)",
+          "says": ""
+        },
+        {
+          "label": "Adopt it as a mistake (a proposal)",
+          "says": "the named way of working joins the mistakes the engine recognises from now on"
+        },
+        {
+          "label": "Reject (a proposal)",
+          "says": "the way of working stays unknown; the proposal is decided"
+        },
+        {
           "label": "rail: a skill",
           "says": "Opens the skill's name."
         }

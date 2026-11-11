@@ -8,7 +8,7 @@ import { sql } from "@/lib/db";
 
 const CODE = /^[A-Za-z0-9._#-]+$/;
 // where the answer is made from: this screen's old address, or the table on Curriculum
-const BACK = /^\/(asks|setup\/curriculum)[\w/?=&.%#-]*$/;
+const BACK = /^\/(asks|setup\/curriculum)[\w/?=&.%+#-]*$/;
 
 /** A person answers a question the engine drafted, in their own name: agreed as drafted, or corrected in their own
  *  words (goals/ny1-needs-you.yaml). Only a question still waiting is answered, so two people never overwrite each

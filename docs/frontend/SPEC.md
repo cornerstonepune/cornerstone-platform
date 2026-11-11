@@ -1067,7 +1067,7 @@ Main action: Open a question · Next step: Curriculum
 Data: item, item_stat (a view over item_result), curriculum_proposal with its decision as an approval row
 Empty: No questions for this skill yet · Phone: the table scrolls sideways in its own box
 Folds in: /library, /worksheets, /worksheets/taxonomy
-Every control on the screen (11), and what the test does with each:
+Every control on the screen (17), and what the test does with each:
 - **fold** What the bank is
 - **filter** Grade
 - **filter** Skill
@@ -1078,6 +1078,12 @@ Every control on the screen (11), and what the test does with each:
 - **row** each question row → {the question as it prints} (`/setup/question-bank/[key]`)
 - **link** page: Later → → Question bank (`/setup/question-bank`)
 - **fold** Statistics (counts and worksheets by taxonomy)
+- **link** a proposed question → {the question as it prints} (`/setup/question-bank/[key]`) (the question a proposal is about, to read it before deciding)
+- **button** Remove from the bank (a proposal): the question leaves the bank (retired, never deleted) and its worksheets are rebuilt; the proposal is decided
+- **button** Keep it (a proposal): the question stays; the proposal is decided
+- **field** its name (a mistake)
+- **button** Adopt it as a mistake (a proposal): the named way of working joins the mistakes the engine recognises from now on
+- **button** Reject (a proposal): the way of working stays unknown; the proposal is decided
 - **link** rail: a skill → the skill's name (`/setup/skills/[code]`)
 Done when (on top of the ten generic checks):
 - statistics and taxonomy sit behind the details link, not on the first view (rule 8)

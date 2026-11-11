@@ -7,7 +7,7 @@ import { expect, test, type Page } from "@playwright/test";
 import postgres from "postgres";
 import { aTaughtClass } from "./rows";
 import { clearOffers, code as k2code, curriculumRows, gate, offers } from "./m1-13-rows";
-import { moreOffers } from "./inventory-setup-content";
+import { moreOffers, seedProposals } from "./inventory-setup-content";
 import { TEST_STAFF } from "./global-setup";
 
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -343,5 +343,53 @@ test.describe("Curriculum: questions to answer", () => {
     ]);
     const [{ n: after }] = await sql<{ n: number }[]>`select count(*)::int as n from ask where answer is null`;
     expect(after).toBe(before - 2);
+  });
+});
+
+test.describe("Question bank: what children's answers propose", () => {
+  test("a question far off its level is removed (kept in the rows, retired) or kept, and a mistake is adopted by name or rejected", async ({ page }) => {
+    const [far1, far2, mistake1, mistake2] = await seedProposals(sql); // the two questions, then the two mistakes
+    const [{ n: items }] = await sql<{ n: number }[]>`select count(*)::int as n from item`;
+    const subject = async (id: string) => (await sql<{ subject_code: string }[]>`select subject_code from curriculum_proposal where id = ${id}`)[0].subject_code;
+    const open = async (id: string) => (await sql`select 1 from curriculum_proposal p where p.id = ${id} and not exists (select 1 from curriculum_proposal d where d.about = p.id)`).length > 0;
+    // the table is paged, ten a page and the oldest first: the row of one proposal is found by its id
+    const row = async (id: string) => {
+      for (const key of ["fpage", "mpage"]) {
+        for (let n = 1; n <= 6; n++) {
+          await page.goto(`/setup/question-bank?${key}=${n}#proposals`);
+          await page.locator("[data-proposals]").waitFor();
+          const r = page.locator(`[data-proposal="${id}"]`);
+          if (await r.count()) return r;
+        }
+      }
+      throw new Error(`no row for proposal ${id}`);
+    };
+
+    const key1 = await subject(far1);
+    await (await row(far1)).getByRole("button", { name: `Remove from the bank (${key1})` }).click();
+    await expect.poll(() => open(far1)).toBe(false);
+    expect((await sql<{ status: string }[]>`select status from item where item_key = ${key1}`)[0].status).toBe("retired");
+    expect((await sql<{ n: number }[]>`select count(*)::int as n from item`)[0].n).toBe(items); // retired, never deleted
+
+    const key2 = await subject(far2);
+    await (await row(far2)).getByRole("button", { name: `Keep it (${key2})` }).click();
+    await expect.poll(() => open(far2)).toBe(false);
+    expect((await sql<{ status: string }[]>`select status from item where item_key = ${key2}`)[0].status).toBe("active");
+
+    // a mistake is adopted by a name: without one the engine refuses, says so, and nothing changes
+    const adopt = (r: ReturnType<Page["locator"]>) => r.getByRole("button", { name: /^Adopt it as a mistake/ });
+    await adopt(await row(mistake2)).click();
+    await expect(page.locator("main [role=alert]")).toContainText("Nothing was changed");
+    expect(await open(mistake2)).toBe(true);
+    const again = await row(mistake2);
+    await again.getByLabel(/^Its name/).fill("Writes the larger digit");
+    await adopt(again).click();
+    await expect.poll(() => open(mistake2)).toBe(false);
+    const learned = await sql<{ name: string }[]>`select name from misconception where learned_from = ${mistake2}`;
+    expect(learned.map((m) => m.name)).toEqual(["Writes the larger digit"]);
+
+    await (await row(mistake1)).getByRole("button", { name: /^Reject/ }).click();
+    await expect.poll(() => open(mistake1)).toBe(false);
+    expect(await sql`select 1 from misconception where learned_from = ${mistake1}`).toHaveLength(0);
   });
 });

@@ -3645,6 +3645,70 @@
         },
         {
           "t": "link",
+          "label": "a proposed question",
+          "to": "question",
+          "data": "data-proposal-question",
+          "note": "the question a proposal is about, to read it before deciding"
+        },
+        {
+          "t": "button",
+          "label": "Remove from the bank (a proposal)",
+          "data": "data-proposal-remove",
+          "effect": "the question leaves the bank (retired, never deleted) and its worksheets are rebuilt; the proposal is decided",
+          "drive": {
+            "click": "Remove from the bank",
+            "expect": {
+              "check": "proposal-decided"
+            }
+          }
+        },
+        {
+          "t": "button",
+          "label": "Keep it (a proposal)",
+          "data": "data-proposal-keep",
+          "effect": "the question stays; the proposal is decided",
+          "drive": {
+            "click": "Keep it",
+            "expect": {
+              "check": "another-proposal-decided"
+            }
+          }
+        },
+        {
+          "t": "field",
+          "label": "its name (a mistake)",
+          "text": "Its name",
+          "data": "data-proposal-name"
+        },
+        {
+          "t": "button",
+          "label": "Adopt it as a mistake (a proposal)",
+          "data": "data-proposal-adopt",
+          "effect": "the named way of working joins the mistakes the engine recognises from now on",
+          "drive": {
+            "fill": {
+              "Its name": "Adds each column in full"
+            },
+            "click": "Adopt it as a mistake",
+            "expect": {
+              "check": "mistake-decided"
+            }
+          }
+        },
+        {
+          "t": "button",
+          "label": "Reject (a proposal)",
+          "data": "data-proposal-reject",
+          "effect": "the way of working stays unknown; the proposal is decided",
+          "drive": {
+            "click": "Reject",
+            "expect": {
+              "check": "another-mistake-decided"
+            }
+          }
+        },
+        {
+          "t": "link",
           "label": "rail: a skill",
           "to": "skill"
         }
