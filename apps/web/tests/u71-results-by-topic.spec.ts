@@ -47,9 +47,10 @@ const childRow = (page: Page, who: string) => page.locator(`tr[data-child="${kid
 test("class results open on the educator's own class: subjects, then topics, folded, each topic counted in words", async ({ browser }) => {
   const page = await as(browser, MINE.email);
   await page.goto("/growth");
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Class results");
-  // the class is chosen in the page's own filter row, and it opens on the educator's own
-  await expect(page.locator("[data-filterbar]").getByLabel("Class")).toHaveValue(A);
+  // the old address opens the By topic tab of the educator's own class picture
+  await expect(page).toHaveURL(/\/children\/[0-9a-f-]{36}\?view=topic$/);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Class picture");
+  await expect(page.locator("main")).toContainText(A);
   // grouped by subject, then a row per topic
   const [{ subject }] = await sql<{ subject: string }[]>`
     select coalesce(s.label, s.name) as subject from topic t join subject s on s.code = t.subject_code where t.code = ${TOPIC}`;

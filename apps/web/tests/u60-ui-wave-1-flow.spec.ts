@@ -104,7 +104,7 @@ test("an educator with one class and one subject: top menu, only hers, no Class 
   // the bar carries sign out; the door's row of pages has the rest
   await expect(page.locator("[data-bar]").first().getByRole("button", { name: "Sign out" })).toBeVisible();
   await page.goto("/papers");
-  for (const name of ["Papers to approve", "Check answers", "Class results"]) await expect(page.getByRole("navigation", { name: "Pages in this section" }).getByRole("link", { name }), name).toBeVisible();
+  for (const name of ["Papers to approve", "Check answers", "Parent reports"]) await expect(page.getByRole("navigation", { name: "Pages in this section" }).getByRole("link", { name }), name).toBeVisible();
   await page.goto("/today");
   // What needs doing: groups, each folded into a table of red/amber/green rows, one action on each row that opens that item
   await page.locator("details[data-group]").evaluateAll((els) => els.forEach((e) => ((e as HTMLDetailsElement).open = true)));
@@ -135,7 +135,7 @@ test("an admin: the same top menu, and no Viewing control", async ({ page }) => 
   await expect(page.locator("[data-viewing], #bar-subject, #bar-class")).toHaveCount(0);
   // a door's other pages are a row under the bar, not more items on it
   await page.goto("/papers");
-  await expect(page.getByRole("navigation", { name: "Pages in this section" }).getByRole("link")).toHaveText(["Children", "Assessments", "Papers to approve", "Upload papers", "Check answers", "Class results", "Parent reports", "Across classes"]);
+  await expect(page.getByRole("navigation", { name: "Pages in this section" }).getByRole("link")).toHaveText(["Children", "Assessments", "Papers to approve", "Upload papers", "Check answers", "Parent reports", "Across classes"]);
 });
 
 /** The page opened, with nothing broken on it. */
