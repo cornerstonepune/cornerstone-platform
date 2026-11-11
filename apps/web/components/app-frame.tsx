@@ -93,10 +93,11 @@ export function CaptureHere({ children }: { children: ReactNode }) {
 
 /** The rail: a surface box at the right of the main column (below it on a phone) of "Connected to" edges and, where a lesson or a
  *  child is in view, "Capture here". An edge is a screen id: it is drawn only when that screen is built (lib/built.ts). */
-/** `href`: an edge to a screen of the slice being built, whose address the page knows (its screen is not in `merged_slices` yet, so the id alone draws nothing). */
-export type Edge = { screen: string; params?: Record<string, string>; label: string; icon: Parameters<typeof Icon>[0]["name"]; href?: string; newTab?: boolean };
+/** `href`: an edge to a screen of the slice being built, whose address the page knows (its screen is not in `merged_slices` yet, so the id alone draws nothing).
+ *  `fallback`: the address of the page that does this work today, drawn while the screen is not built (an old page that is still live). */
+export type Edge = { screen: string; params?: Record<string, string>; label: string; icon: Parameters<typeof Icon>[0]["name"]; href?: string; newTab?: boolean; fallback?: string };
 export function Rail({ edges = [], capture }: { edges?: Edge[]; capture?: ReactNode }) {
-  const drawn = edges.map((e) => ({ ...e, href: e.href ?? screenHref(e.screen, e.params) })).filter((e): e is typeof e & { href: string } => e.href !== null);
+  const drawn = edges.map((e) => ({ ...e, href: e.href ?? screenHref(e.screen, e.params) ?? e.fallback ?? null })).filter((e): e is typeof e & { href: string } => e.href !== null);
   if (!drawn.length && !capture) return null;
   return (
     <aside aria-label="Rail" data-rail className="grid content-start gap-[var(--space-3)] rounded-[var(--radius-card)] bg-[var(--surface)] p-[var(--space-3)]">

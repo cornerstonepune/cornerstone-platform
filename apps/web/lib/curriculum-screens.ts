@@ -32,8 +32,17 @@ export const mustBeOn = cache(async (email: string): Promise<{ reviews: boolean 
   return (await res.json()) as { reviews: boolean };
 });
 
+/** The same gate, asked softly: null when it is closed to this sign-in, so a screen that holds more than the K2 pages (Curriculum
+ *  also lists the skills) still draws, without the K2 activities, drafts or offers. */
+export const gateFor = cache(async (email: string): Promise<{ reviews: boolean } | null> => {
+  const res = await engineSend("/curriculum/page/gate", { actor: email });
+  if (res.status === 403 || res.status === 404) return null;
+  if (!res.ok) throw new Error(`The engine refused that (${res.status}).`);
+  return (await res.json()) as { reviews: boolean };
+});
+
 /** The grade these screens list: the config row `curriculum.screens_grade` (the code of a row of `grade`). */
-const grade = cache(async () => {
+export const screensGrade = cache(async () => {
   const [row] = await sql<{ v: string | null }[]>`select (select value #>> '{}' from config where key = 'curriculum.screens_grade') as v`;
   if (!row?.v) throw new Error("config curriculum.screens_grade is missing: run engine load");
   return row.v;
@@ -50,7 +59,7 @@ const bar = cache(async (key: string) => {
 export type SectionFill = { section: string; total: number; filled: Record<Slot, number>; share: number; state: State };
 
 export async function sections(): Promise<SectionFill[]> {
-  const band = await grade();
+  const band = await screensGrade();
   const [rows, state] = await Promise.all([
     sql<(Record<Slot, number> & { section: string; total: number })[]>`
       select a.strand as section, count(*)::int as total,
@@ -76,7 +85,7 @@ export type Row = { code: string; name: string; section: string; filled: number;
 
 /** One page of activities, optionally of one section and matching a search of the name or number. */
 export async function activities(section: string, q: string, page: number): Promise<{ rows: Row[]; total: number }> {
-  const [state, band] = await Promise.all([stateOf(), grade()]);
+  const [state, band] = await Promise.all([stateOf(), screensGrade()]);
   const like = `%${q.replace(/[\\%_]/g, "\\$&")}%`;
   const where = sql`a.band = ${band} ${section ? sql`and a.strand = ${section}` : sql``} ${q ? sql`and (a.name ilike ${like} or a.code ilike ${like})` : sql``}`;
   const [[{ n }], rows] = await Promise.all([
@@ -95,7 +104,7 @@ export type Gap = { part: PartKey; school: number; drafted: number; person: numb
 
 /** Each part: whose words fill it. A part with words and no mark is the school's (as the engine reads a page). */
 export const gap = cache(async (): Promise<Gap[]> => {
-  const band = await grade();
+  const band = await screensGrade();
   const rows = await sql<Gap[]>`
     with t as (
       select a.tenant_id, a.code, p.part, btrim(p.txt) as txt
@@ -114,7 +123,7 @@ export type Waiting = { code: string; part: PartKey };
 
 /** The drafted parts waiting for a person (the materials are items, which the page read does not carry: not here), those a checker doubted first, then by activity number and part. */
 export const waiting = cache(async (part?: string): Promise<Waiting[]> => {
-  const band = await grade();
+  const band = await screensGrade();
   return sql<Waiting[]>`
     select s.activity_code as code, s.part
     from activity_part_source s join activity a on a.tenant_id = s.tenant_id and a.code = s.activity_code

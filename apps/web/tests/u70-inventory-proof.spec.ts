@@ -227,3 +227,48 @@ test("a link that points elsewhere and leads nowhere still fails, by never chang
   const s = screen([{ t: "row", label: "each class row", data: "data-row" }]);
   await expect(drive(page, s, s.elements[0], ctx(inv), new Map())).rejects.toThrow(/waitForURL|Timeout/i);
 });
+
+// ---- UI-5e: the "opens a form" driver. It proves the control opens a form in place with a labelled field and a visible, enabled submit
+// control. It does not press the submit (what a submit writes is proved by the screen's own test, or by a declared `drive`), so it cannot
+// tell a submit that does nothing from one that works; what it does refuse is a form with no way to send it, so a dead button drawn as a
+// form cannot pass for a working one.
+const formPage = (form: string) =>
+  `<!doctype html><html><body><main><h1>Proof</h1><div data-ux="action"><a href="/__proof/other" style="outline:2px solid #000">Main action</a></div>
+   <button id="b" type="button" aria-expanded="false">Add a person</button><div id="slot"></div></main>
+   <script>const b=document.getElementById("b"),slot=document.getElementById("slot");let on=false;
+   b.onclick=()=>{on=!on;b.setAttribute("aria-expanded",String(on));slot.innerHTML=on?${JSON.stringify(form)}:"";};</script></body></html>`;
+const openForm = (inv: Inventory) => ({ s: screen([{ t: "button", label: "Add a person", effect: "opens a form: name; Save puts the person on the list" }]), c: ctx(inv) });
+
+test("a button that opens a form with a labelled field and a visible, enabled submit passes, whatever the submit is called", async ({ page }) => {
+  const inv = mini();
+  await serve(page, formPage(`<form><label>Name <input name="n"></label><button type="submit">Add and send a link</button></form>`));
+  const { s, c } = openForm(inv);
+  expect(await drive(page, s, s.elements[0], c, new Map())).toEqual([]);
+  // a button with no type is a submit too
+  await serve(page, formPage(`<form><label>Name <input name="n"></label><button>Go</button></form>`));
+  expect(await drive(page, s, s.elements[0], c, new Map())).toEqual([]);
+});
+
+test("a form with no way to send it fails: no button, a button that only looks like one, a disabled submit, a hidden submit", async ({ page }) => {
+  const inv = mini();
+  const { s, c } = openForm(inv);
+  const cases: Record<string, string> = {
+    "no button at all": `<form><label>Name <input name="n"></label></form>`,
+    "a button that is not a submit": `<form><label>Name <input name="n"></label><button type="button">Add and send a link</button></form>`,
+    "a disabled submit": `<form><label>Name <input name="n"></label><button type="submit" disabled>Add and send a link</button></form>`,
+    "a hidden submit": `<form><label>Name <input name="n"></label><button type="submit" style="display:none">Add and send a link</button></form>`,
+  };
+  for (const [why, form] of Object.entries(cases)) {
+    await serve(page, formPage(form));
+    expect((await drive(page, s, s.elements[0], c, new Map())).join("\n"), why).toContain("opened no form with a field and a button that can send it");
+  }
+});
+
+test("a button that opens no form, or a form whose field has no label, still fails", async ({ page }) => {
+  const inv = mini();
+  const { s, c } = openForm(inv);
+  await serve(page, formPage(`<p>Nothing to fill in here</p>`));
+  expect((await drive(page, s, s.elements[0], c, new Map())).join("\n")).toContain("opened no form with a field");
+  await serve(page, formPage(`<form><input name="n"><button type="submit">Send</button></form>`));
+  expect((await drive(page, s, s.elements[0], c, new Map())).join("\n")).toContain("has a field with no label");
+});

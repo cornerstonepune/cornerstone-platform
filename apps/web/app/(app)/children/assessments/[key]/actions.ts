@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { deciding, mustBeMine, mustSee } from "@/lib/decides";
+import { requireStaff } from "@/lib/auth";
 import { sql } from "@/lib/db";
 import { EngineDown, engineSend, markWhatTrustSettles } from "@/lib/engine";
 import { levels } from "@/lib/levels";
@@ -83,4 +84,31 @@ export async function signOffPaper(f: FormData): Promise<void> {
   revalidatePath("/children/assessments");
   revalidatePath(`/growth/${own.child}`);
   go(key);
+}
+
+/** The assessment's name, given through the engine (a row of the one history log, the older names stay); an empty name changes
+ *  nothing. Back to where the educator was: the list as it was addressed, or this assessment. */
+export async function renameThisAssessment(f: FormData): Promise<void> {
+  const me = await requireStaff();
+  const key = keyOf(f);
+  const name = String(f.get("name") ?? "").trim().slice(0, 120);
+  const back = String(f.get("back") ?? "");
+  let said: string | undefined;
+  if (name) {
+    try {
+      const res = await engineSend("/assessment/name", { key, name, by: me.email });
+      if (!res.ok) said = `The engine refused that (${res.status}). The name was not changed.`;
+    } catch (e) {
+      if (!(e instanceof EngineDown)) throw e;
+      said = "The engine is not answering; the name was not changed.";
+    }
+  }
+  revalidatePath("/children/assessments");
+  if (back.startsWith("/children/assessments?") || back === "/children/assessments") {
+    const q = new URLSearchParams(back.split("?")[1] ?? "");
+    q.delete("said");
+    if (said) q.set("said", said.slice(0, 200));
+    redirect(q.toString() ? `/children/assessments?${q}` : "/children/assessments");
+  }
+  go(key, said);
 }
