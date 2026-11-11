@@ -12,17 +12,17 @@ import { dateWords } from "@/lib/week";
 // inside." Subject, then topic, then skill, then the children: each level folded until it is opened, and each opened by
 // its own address (?topic=, ?skill=), so only what is open is read, one query a level, and a link to it can be sent.
 
-export type Open = { section: string; subject?: string; topic?: string; skill?: string; page: number };
+export type Open = { section: string; /** where the view lives; the old class results page when absent */ base?: { path: string; params: Record<string, string> }; subject?: string; topic?: string; skill?: string; page: number };
 
 /** The address of the class view with some of what is open changed. */
 export function hrefOf(o: Open, change: Partial<Open>): string {
   const n = { ...o, ...change };
-  const q = new URLSearchParams({ class: n.section });
+  const q = new URLSearchParams(n.base ? n.base.params : { class: n.section });
   if (n.subject) q.set("subject", n.subject);
   if (n.topic) q.set("topic", n.topic);
   if (n.topic && n.skill) q.set("skill", n.skill);
   if (n.topic && n.skill && n.page > 1) q.set("kp", String(n.page));
-  return `/growth?${q}${n.skill ? `#skill-${n.skill}` : n.topic ? `#topic-${n.topic}` : ""}`;
+  return `${n.base?.path ?? "/growth"}?${q}${n.skill ? `#skill-${n.skill}` : n.topic ? `#topic-${n.topic}` : ""}`;
 }
 
 /** A row's name as the link that opens it, or folds it again: it says which, to a screen reader as to the eye. */

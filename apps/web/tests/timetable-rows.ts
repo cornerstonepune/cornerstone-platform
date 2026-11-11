@@ -13,19 +13,22 @@ const P = [["U74 P1", "17:01", 91, "NUM"], ["U74 P2", "17:41", 92, "ENG"], ["U74
 
 export type Fixture = { klass: string; staff: string; tenant: string; year: string; here: string; ahead: string; periods: { id: string; ord: number; subject: string }[]; days: string[]; block: string };
 
-export async function timetableRows(sql: Sql): Promise<Fixture> {
+/** `u77` is the Go live specs' own class and fortnights (4 weeks later, no kept draft): a placed draft is kept for good, so it must not
+ *  be the class the UI-6 draft tests read. */
+export async function timetableRows(sql: Sql, which: "u74" | "u77" = "u74"): Promise<Fixture> {
+  const cfg = which === "u77" ? { section: "U77", here: 7411, ahead: 7412, shift: 28 } : { section: SECTION, here: HERE, ahead: AHEAD, shift: 0 };
   // found by its section once made: k2Class looks a class up by the school's K2 year, and this one lives in its own
   const [made] = await sql<{ klass: string; staff: string }[]>`
     select c.id as klass, ps.staff_id as staff from school_class c join academic_year y on y.id = c.academic_year_id, pii.staff ps
-    where c.section = ${SECTION} and y.label = ${YEAR} and ps.email = 'e2e@cornerstone.test' limit 1`;
-  const k = made ?? (await k2Class(sql, SECTION));
+    where c.section = ${cfg.section} and y.label = ${YEAR} and ps.email = 'e2e@cornerstone.test' limit 1`;
+  const k = made ?? (await k2Class(sql, cfg.section));
   const [{ tenant, campus }] = await sql<{ tenant: string; campus: string }[]>`
     select c.tenant_id as tenant, c.campus_id as campus from school_class c where c.id = ${k.klass}`;
   const [{ id: year }] = await sql<{ id: string }[]>`
     insert into academic_year (tenant_id, label, starts_on, ends_on) values (${tenant}, ${YEAR}, '2026-01-01', '2032-03-31')
     on conflict (tenant_id, label) do update set label = excluded.label returning id`;
   await sql`update school_class set academic_year_id = ${year}, grade_code = ${GRADE} where id = ${k.klass}`;
-  const [{ monday }] = await sql<{ monday: string }[]>`select (date_trunc('week', (now() at time zone 'Asia/Kolkata')::date))::date::text as monday`;
+  const [{ monday }] = await sql<{ monday: string }[]>`select (date_trunc('week', (now() at time zone 'Asia/Kolkata')::date)::date + ${cfg.shift}::int)::text as monday`;
   const fortnight = async (number: number, offset: number, state: string) => {
     const [r] = await sql<{ id: string }[]>`
       insert into fortnight (tenant_id, academic_year_id, number, kind, starts_on, ends_on, state)
@@ -33,8 +36,8 @@ export async function timetableRows(sql: Sql): Promise<Fixture> {
       on conflict (tenant_id, academic_year_id, starts_on) do update set number = ${number}, kind = 'teaching', ends_on = excluded.ends_on, state = ${state} returning id`;
     return r.id;
   };
-  const here = await fortnight(HERE, 0, "frozen");
-  const ahead = await fortnight(AHEAD, 14, "aligned");
+  const here = await fortnight(cfg.here, 0, "frozen");
+  const ahead = await fortnight(cfg.ahead, 14, "aligned");
   const periods: Fixture["periods"] = [];
   for (const [label, at, ord, subject] of P) {
     const [p] = await sql<{ id: string }[]>`
@@ -64,8 +67,10 @@ export async function timetableRows(sql: Sql): Promise<Fixture> {
         insert into timetable_rule (tenant_id, school_class_id, kind, period_id, week_code, weekday, cell, subject_code, text, valid_from)
         values (${tenant}, ${k.klass}, 'frame', ${p.id}, ${w}, ${wd}, 'subject', ${p.subject}, ${`${p.subject} lesson`}, ${monday}::date - 30)`;
   let [block] = await sql<{ id: string }[]>`select id from timetable_rule where school_class_id = ${k.klass} and kind = 'block' limit 1`;
-  block ??= (await sql<{ id: string }[]>`
+  if (which === "u74")
+    block ??= (await sql<{ id: string }[]>`
     insert into timetable_rule (tenant_id, school_class_id, kind, weekday, reason) values (${tenant}, ${k.klass}, 'block', 3, 'U74 sports day') returning id`)[0];
+  block ??= { id: "" }; // the Go live class has no blocked day: nothing clashes there
   // a lesson moved by hand in fortnight 7401: Thursday's P1 into Friday's P1, kept with who and why
   const [mv] = await sql<{ n: number }[]>`select count(*)::int as n from change_log where table_name = 'session' and op = 'move' and row_id = ${`${k.klass} ${here}`}`;
   if (mv.n === 0) {
@@ -81,7 +86,7 @@ export async function timetableRows(sql: Sql): Promise<Fixture> {
     insert into plan_entry (tenant_id, school_class_id, fortnight_id, plan_key, ord, text, source)
     values (${tenant}, ${k.klass}, ${here}, 'U74-1', 1, 'Count the red cards', 'u74') on conflict do nothing`;
   const [run] = await sql<{ n: number }[]>`select count(*)::int as n from timetable_run where school_class_id = ${k.klass} and fortnight_id = ${ahead}`;
-  if (run.n === 0) {
+  if (run.n === 0 && which === "u74") {
     const a = days.filter((d) => d >= days[10]);
     const draft = [0, 1].flatMap((i) => periods.slice(0, 2).map((p) => ({ date: a[i], week: "A", period_id: p.id, subject_code: p.subject })));
     await sql`
