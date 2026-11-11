@@ -7,7 +7,7 @@
  * The class is the test's own (tests/rows.ts). Its children's skill states are set here directly — the graph's own
  * rules are proved by the engine's tests; this is how the pages lay them out — and taken away after.
  */
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 import postgres from "postgres";
 import { voiceSwitch } from "./k2-rows";
 import { aClass } from "./rows";
@@ -24,9 +24,6 @@ const STATES: [string, string, string, string, number, number][] = [
   ["Asha", "R34", "NUM.DATA.01", "secure", 8, 8],
   ["Bina", "R21", "NUM.OPS.01", "practising", 5, 3],
 ];
-const nameOf = async (rung: string) =>
-  (await sql<{ name: string }[]>`select name from skill where rung_code = ${rung} and status is distinct from 'retired' limit 1`)[0].name;
-
 test.beforeAll(async () => {
   kids = await aClass(sql, SECTION, "G2", ["Asha", "Bina"]);
   const [{ tenant_id }] = await sql<{ tenant_id: string }[]>`select tenant_id from child_now where id = ${kids.Asha}`;

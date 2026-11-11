@@ -10,7 +10,7 @@
  * - Chetan is secure on one skill, his report approved;
  * - Kavi is in the other class.
  */
-import { expect, test, type Browser, type Locator, type Page } from "@playwright/test";
+import { expect, test, type Browser, type Page } from "@playwright/test";
 import postgres from "postgres";
 import { aClass, aReadPaper, daysAgo, aPerson, forgetPerson } from "./rows";
 import { voiceSwitch } from "./k2-rows";
@@ -21,10 +21,7 @@ const MINE = "U35-MINE";
 const OTHER = "U35-OTHER";
 const EDUCATOR = { email: "u35-educator@cornerstone.test", name: "U35 Educator", role: "educator", classes: [MINE] };
 const PASSWORD = "u35-a-long-test-password";
-// the columns with something in them in this class: nobody is practising, so that column is left out (goals/ux10-declutter.yaml)
-const COLUMNS = ["Roll", "Child", "Needs help on", "Needs help", "Secure", "Waiting on you", "Parent report"];
 let kids: Record<string, string> = {};
-let mistake = "";
 
 test.beforeAll(async () => {
   kids = await aClass(sql, MINE, "G2", ["Asha", "Bina", "Chetan"]);
@@ -65,7 +62,6 @@ test.beforeAll(async () => {
     items: w.item_ids.slice(0, 3),
     reads: [{ status: "needs_teacher", read: "41" }, { status: "needs_teacher", read: "7" }, { status: "correct", read: "12" }],
   });
-  [{ name: mistake }] = await sql<{ name: string }[]>`select mistake_name('M_SMALL_FROM_LARGE', 'NUM.OPS.02') as name`;
   await aPerson(sql, { ...EDUCATOR, password: PASSWORD });
 });
 test.afterAll(async () => {

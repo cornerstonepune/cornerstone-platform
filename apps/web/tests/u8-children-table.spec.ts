@@ -11,7 +11,7 @@
  * - roll 2 has nothing yet;
  * - roll 10 has one secure skill and an approved report.
  */
-import { expect, type Page, test } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 import postgres from "postgres";
 import { TEST_STAFF } from "./global-setup";
 import { aChildIn, daysAgo } from "./rows";
@@ -84,8 +84,6 @@ test.beforeAll(async () => {
   ids = await testClass();
 });
 test.afterAll(async () => sql.end());
-
-const row = (page: Page, name: string) => page.locator(`tbody tr[data-child="${ids[name]}"]`);
 
 // UI-3b: the list of children is the Children screen (tests/u72-children.spec.ts holds its columns, bar, filters and sorting by Sr. No.).
 // What this file kept from the old list: no code reaches an educator, and a name is read the one logged way.
