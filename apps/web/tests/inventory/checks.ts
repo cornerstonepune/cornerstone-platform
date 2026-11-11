@@ -293,7 +293,8 @@ export async function drive(page: Page, s: Screen, e: Element, c: Ctx, byId: Map
     const h1 = (await page.locator("h1").allInnerTexts())[0] ?? "";
     const target = e.to ? byId.get(e.to) : undefined;
     if (e.to && !target) out.push(`${s.id}: “${e.label}” targets ${e.to}, which is not in the inventory`);
-    else if (target && !titleMatches(target.title, h1)) out.push(`${s.id}: “${e.label}” did not land on ${e.to}: its h1 is “${h1}”, expected “${target.title}” (a dead link)`);
+    // two screens on one address (Today: the educator's and the school's) are two versions of it: the page shows the one that is the person's
+    else if (target && ![target, ...[...byId.values()].filter((x) => x.id !== target.id && x.route === target.route)].some((x) => titleMatches(x.title, h1))) out.push(`${s.id}: “${e.label}” did not land on ${e.to}: its h1 is “${h1}”, expected “${target.title}” (a dead link)`);
     else if (e.external && !h1) out.push(`${s.id}: “${e.label}” opens ${e.external} and it shows no heading (a dead link)`);
     if (!same) {
       await page.goBack();
