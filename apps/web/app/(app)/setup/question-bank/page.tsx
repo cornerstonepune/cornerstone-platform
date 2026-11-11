@@ -136,7 +136,7 @@ export default async function QuestionBank({ searchParams }: { searchParams: Pro
       <FilterBar
         action={HERE}
         filters={[
-          { name: "grade", label: "Grade", value: grade, all: "Every grade", options: gradeChoices },
+          { name: "grade", label: "Grade", value: grade, all: "Every grade", options: gradeChoices, starting: !q.grade },
           { name: "skill", label: "Skill", value: set, all: "All skills taught", options: skills.map((r): [string, string] => [r.code, `${r.name} (${n(skillCount(r))})`]) },
           { name: "difficulty", label: "Difficulty", value: difficulty, all: "All", options: lv.order.map((d): [string, string] => [d, `${d} (${n(levelCount(d))})`]) },
           { name: "fmt", label: "Kind", value: fmt, all: "Any kind", options: kinds },
