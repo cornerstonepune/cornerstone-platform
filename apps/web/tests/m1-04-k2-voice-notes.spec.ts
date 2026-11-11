@@ -129,7 +129,7 @@ test("Confirm shows what she said beside the class already marked, red problems 
   await expect(confirm).toBeEnabled();
   await shoot(page, "4-confirm-ready");
   await confirm.click();
-  await expect(page).toHaveURL(/\/today\?open=notes/);
+  await expect(page).toHaveURL(/\/setup\/needs-doing\?open=notes/);
   expect((await observations(note))[0].n).toBe(22);
   await page.goto(`/voice/notes/${note}`);
   await expect(page.locator("main")).toContainText("Confirmed");
@@ -158,7 +158,7 @@ test("the form is paint mode: nothing ticked, the rest off, and Save under the c
   await expect(save).toBeEnabled();
   await shoot(page, "6-form-filled");
   await save.click();
-  await expect(page).toHaveURL(/\/today\?open=notes/);
+  await expect(page).toHaveURL(/\/setup\/needs-doing\?open=notes/);
   expect(await formRows(since)).toEqual([
     { outcome: "absent", n: 1 },
     { outcome: "as_expected", n: 20 },
@@ -239,7 +239,7 @@ test("an activity the K2 sheet left without a number is found by its name and sa
   await page.locator("[data-mark-pick=above]").click();
   await page.locator("[data-roll='2']").click();
   await page.getByRole("button", { name: "Save", exact: true }).click();
-  await expect(page).toHaveURL(/\/today\?open=notes/);
+  await expect(page).toHaveURL(/\/setup\/needs-doing\?open=notes/);
   const [{ n }] = await sql<{ n: number }[]>`
     select count(*)::int as n from activity_observation where class_id = ${klass} and route = 'form'
       and activity_code = 'ACT-K2-M104-NONE' and stored_at >= ${since}`;

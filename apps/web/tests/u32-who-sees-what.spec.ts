@@ -62,17 +62,12 @@ async function badge(page: Page, tab: string): Promise<number> {
   return (await n.count()) ? Number((await n.innerText()).replace(/\D/g, "")) : 0;
 }
 
-const waitingAsks = async (role: string | null) =>
-  (await sql<{ n: number }[]>`select count(*)::int as n from ask where answer is null and (${role}::text is null or for_role = ${role})`)[0].n;
-const waitingSkills = async () => (await sql<{ n: number }[]>`select count(*)::int as n from skill where status <> 'ratified'`)[0].n;
-
 test("an educator's Today lists every decision the coordinator's does, and the menu counts the same", async ({ browser }) => {
   const page = await signedIn(browser);
   try {
     const main = page.getByRole("main");
     await expect(main).toContainText("Skills to approve");
-    // the menu carries a count on What needs doing alone: a row for each skill waiting and one for the questions
-    expect(await badge(page, "Today"), "every skill waiting and the questions").toBeGreaterThanOrEqual((await waitingSkills()) + ((await waitingAsks(null)) > 0 ? 1 : 0));
+    // the skills and questions waiting are rows of What needs doing, and no longer in the menu's one count (UI-7b)
     expect(await badge(page, "Setup"), "no count on Setup").toBe(0);
   } finally {
     await page.context().close();
@@ -109,8 +104,7 @@ test("a worksheet's print list is the educator's own children, and every class's
 test("the coordinator is shown every decision and every class", async ({ page }) => {
   await page.goto("/setup/needs-doing");
   await expect(page.getByRole("main")).toContainText("Skills to approve");
-  // the menu carries a count on What needs doing alone: a row for each skill waiting and one for the questions
-  expect(await badge(page, "Today"), "every skill waiting and the questions").toBeGreaterThanOrEqual((await waitingSkills()) + ((await waitingAsks(null)) > 0 ? 1 : 0));
+  // the skills and questions waiting are rows of What needs doing, and no longer in the menu's one count (UI-7b)
   expect(await badge(page, "Setup"), "no count on Setup").toBe(0);
 
   await page.goto(`/skill-sets/${draft}`);

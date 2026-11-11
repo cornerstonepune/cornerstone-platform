@@ -56,3 +56,20 @@ export async function sessionsOf(classId: string, day: string): Promise<Record<s
     where s.school_class_id = ${classId} and d.on_date = ${day}`;
   return Object.fromEntries(rows.map((r) => [r.period_id, r.id]));
 }
+
+/** The two figures of the strip that are notes, from her groups: left unconfirmed (do now), and still waiting within their time (this week). The page and the badge both use these. */
+export const noteFigures = (t: Todo | null) => ({
+  late: t?.groups.left_unconfirmed.count ?? 0,
+  soon: t ? t.groups.to_confirm.count + t.groups.fix_this.count + t.groups.being_read.count : 0,
+});
+
+/** The one count on the site, the badge on the bar's Today door: the strip's do-now plus this-week (the two never overlap), computed once per request.
+ *  An educator's are her notes; the school's are the notes left unconfirmed across the classes (the rest of the school's figures join it with their rows). */
+export const todayBadge = cache(async (me: Session): Promise<number> => {
+  if (await schoolVersion(me)) {
+    const got = await schoolNotes(me);
+    return got ? got.rows.filter((r) => r.state === "left_unconfirmed").length : 0;
+  }
+  const f = noteFigures(await myNotes(me));
+  return f.late + f.soon;
+});

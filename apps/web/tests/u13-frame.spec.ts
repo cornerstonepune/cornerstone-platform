@@ -149,7 +149,7 @@ test("8. search is a typeahead: an educator's Sr. No. and fake name find their o
   const logs: string[] = [];
   person.on("request", (r) => seen.push({ url: r.url(), method: r.method(), body: r.postData(), type: r.resourceType() }));
   person.on("console", (m) => logs.push(m.text()));
-  await person.goto("/today");
+  await person.goto("/setup/needs-doing");
   const box = person.locator("[data-bar]").first().getByRole("combobox");
   const options = person.getByRole("listbox", { name: "Found" }).getByRole("option");
   const mine = Object.keys(rows.children)[0];

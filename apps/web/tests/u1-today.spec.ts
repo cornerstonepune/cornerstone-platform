@@ -84,7 +84,7 @@ test("the menu is the teacher's week, and says where they are", async ({ page })
   for (const [label, heading] of [
     ["Setup", "Setup"],
     ["Children", "Children"],
-    ["Today", "What needs doing"],
+    ["Today", "Today, the school"],
   ]) {
     await menu.getByRole("link", { name: new RegExp(`^${label}\\b`) }).click();
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(heading);

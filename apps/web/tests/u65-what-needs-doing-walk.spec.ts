@@ -98,8 +98,7 @@ test("What needs doing is a short list of folded groups in the order the work ha
   }
   await expect(page.getByRole("button", { name: /approve (all|them|these|every)/i })).toHaveCount(0);
   await expect(page.getByRole("link", { name: /approve (all|them|these|every)/i })).toHaveCount(0);
-  const count = Number(await page.locator('[data-todo]').first().getAttribute("data-todo"));
-  expect((await page.locator('[data-testid="waiting"]').first().textContent())?.replace(/\D/g, ""), "the menu's figure is the page's").toBe(String(count));
+  // the menu's one count is Today's strip, not this page's (UI-7b): tests/u15-menu-and-today.spec.ts holds it to the strip
 });
 
 test("every group heading and every row opens a page that exists and shows that item", async ({ page }) => {
@@ -140,7 +139,7 @@ test("every group heading and every row opens a page that exists and shows that 
   await expect(row, "a topic waiting to be marked taught").toBeVisible();
   const topic = (await row.getAttribute("data-shows"))!;
   await row.getByRole("button", { name: "Mark as taught" }).click();
-  await expect(her).toHaveURL(/\/today/);
+  await expect(her).toHaveURL(/\/setup\/needs-doing/);
   await expect(her.locator(`tr[data-kind=taught][data-shows="${topic}"]`), "the topic is no longer waiting").toHaveCount(0);
   await context.close();
 });
@@ -166,7 +165,7 @@ test("Teaching is not in the menu and its old address opens What needs doing", a
   await expect(page.locator("[data-bar]").first().getByRole("link", { name: "Teaching" })).toHaveCount(0);
   for (const old of ["/taught", "/taught?subject=NUM", "/taught?topic=MUL"]) {
     await page.goto(old);
-    await expect(page, old).toHaveURL(/\/today(\?|$)/);
+    await expect(page, old).toHaveURL(/\/setup\/needs-doing(\?|$)/);
     await expect(page.getByRole("heading", { level: 1 }).first()).toContainText("What needs doing");
   }
 });
