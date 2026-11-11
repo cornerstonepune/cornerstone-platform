@@ -148,6 +148,12 @@ test("3 · the steps fold is open on load and the others are closed; the four le
   await expect(levels).toHaveText(["Level 0", "Level 1", "Level 2", "Level 3"]);
 });
 
+test("20 · the activity page has no photo upload; its capture bar links to Record", async ({ page }) => {
+  await page.goto(`/setup/activities/${ACT}`);
+  await expect(page.locator("input[type=file]")).toHaveCount(0);
+  await expect(page.locator("[data-rail-part=capture]").getByRole("link", { name: "Voice note" })).toHaveAttribute("href", "/record");
+});
+
 test("4 · a part with no text is shown empty and marked, never invented", async ({ page }) => {
   await page.goto(`/setup/activities/${ACT2}`);
   await expect(page.locator('[data-part="level_3"]')).toContainText("Empty");
@@ -247,6 +253,9 @@ test("12 · grouping by state puts a heading and a count over each group and the
 });
 
 test("13 · tapping a child opens ChildPeek with their history; Escape closes it and focus returns; Open the child lands on their page", async ({ browser }) => {
+  // the peek's history route answers only while the school's voice screens are on; the switch goes back as it was found
+  const [was] = await sql<{ on: boolean }[]>`select (value)::text = 'true' as on from config where key = 'voice.screens_enabled'`;
+  await sql`update config set value = 'true'::jsonb where key = 'voice.screens_enabled'`;
   const edu = await asEducator(browser);
   const p = await edu.newPage();
   await p.goto(skillUrl(0));
@@ -269,6 +278,7 @@ test("13 · tapping a child opens ChildPeek with their history; Escape closes it
   await peek.getByRole("link", { name: /open the child/i }).click();
   await expect(p).toHaveURL(new RegExp(`/children/${classA}/1$`));
   await edu.close();
+  await sql`update config set value = ${was.on ? sql`'true'::jsonb` : sql`'false'::jsonb`} where key = 'voice.screens_enabled'`;
 });
 
 test("14 · the spark draws only recorded fortnights: none yet, so its empty words and no line", async ({ browser }) => {

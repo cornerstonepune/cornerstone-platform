@@ -174,20 +174,19 @@ test("the K2 voice-note pages keep every rule while voice notes are switched on"
     const wrong: string[] = [];
     for (const [route, url] of [
       ["/today", "/today?open=notes"],
-      ["/voice/record", `/voice/record?class=${k.klass}`],
-      ["/voice/form", `/voice/form?class=${k.klass}`],
-      ["/voice/notes/[id]", `/voice/notes/${note}`],
+      ["/record", `/record?class=${k.klass}`],
+      ["/notes/[id]", `/notes/${note}`],
     ]) {
       await open(page, url);
       const found = await breaks(page);
       expect(FROZEN[route], `${route} is a new page: never on ux.frozen`).toBeUndefined();
       if (found.length) wrong.push(`${route}: ${found.join(", ")}`);
     }
-    // with recording off (D-065) the form and What needs doing keep the rules too
+    // with recording off (D-065) Record, which then offers only typing, and What needs doing keep the rules too
     await voiceSwitch(sql, true, false);
     for (const [route, url] of [
       ["/today", "/today?open=record"],
-      ["/voice/form", `/voice/form?class=${k.klass}`],
+      ["/record", `/record?class=${k.klass}`],
     ]) {
       await open(page, url);
       const found = await breaks(page);

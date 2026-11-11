@@ -880,7 +880,7 @@ Blocks, in order:
 - **LevelBars**: where the class sat last time, by level
 - **Details**: Steps (open) · How to think about it · Materials
 - **Cards**: Builds toward: objectives (links) · Where each part came from (school / drafted / person) with Keep · Edit · Send back on a drafted part
-Rail (Connected to): each objective · each material · next taught (a period) · the fortnights it is in · Capture here: photo
+Rail (Connected to): each objective · each material · next taught (a period) · the fortnights it is in · Capture here: voice
 Main action: Keep / Edit a drafted part (curriculum team) · Open the period (educator) · Next step: an objective
 Data: activity (+steps, thinking, levels, materials), activity_objective, activity_material, change_log (origin: upload = school, proposal = drafted, person = person) and curriculum_proposal for the source of each part, change_log for each edit
 Empty: a part with no text: shown empty and marked, never invented · Phone: levels as a 2×2
@@ -894,7 +894,7 @@ Every control on the screen (13), and what the test does with each:
 - **button** Keep (a drafted part): the part's source becomes person (a change_log row with who); the 'drafted' badge goes [coordinator only; absent and refused for others]
 - **button** Edit (a part): the part becomes a field; Save writes a change_log row; the source becomes person [coordinator only; absent and refused for others]
 - **button** Send back (a drafted part): the part is emptied and marked; the proposal is rejected [coordinator only; absent and refused for others]
-- **upload** capture: Photo: a photo of the set-up attaches to the activity
+- **link** capture: Voice note → Record a note (`/record`)
 - **link** rail: each objective → the objective's title (`/setup/objectives/[code]`)
 - **link** rail: each material → Materials, this fortnight (`/timetable/materials`)
 - **link** rail: next taught → the session's name (`/period/[id]`)
@@ -902,7 +902,6 @@ Every control on the screen (13), and what the test does with each:
 Done when (on top of the ten generic checks):
 - a drafted part carries the 'drafted' badge until Keep, Edit or Send back; an educator sees the badge but not the three buttons
 - every edit writes a change_log row with who
-- a photo attaches to the activity, never to a child
 
 
 #### the objective's title `/setup/objectives/[code]`
