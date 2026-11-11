@@ -13,7 +13,7 @@ from pathlib import Path
 import typer
 
 from engine.core import db
-from engine.w3_read import feedback_shot, voice_check, voice_intake, voice_switch
+from engine.w3_read import voice_check, voice_intake, voice_switch
 
 voice_app = typer.Typer(help="K2 voice notes", no_args_is_help=True)
 
@@ -36,10 +36,9 @@ def cleanup() -> None:
             typer.echo(str(e), err=True)
             raise typer.Exit(1) from e
         conn.commit()  # what was cleaned stays cleaned, even when some recording could not be deleted
-    with db.connect() as conn:  # a report's screenshot is kept for its own days (CP-30); counts only
-        shots = feedback_shot.expire(conn)
     typer.echo(
-        f"notes cleaned: {got['recordings']}; files with no note deleted: {got['no_note']}; screenshots expired: {shots}"
+        f"notes cleaned: {got['recordings']}; files with no note deleted: {got['no_note']};"
+        f" screenshots expired: {got.get('screenshots', 0)}"
     )
     if got["stuck"]:
         typer.echo(f"{got['stuck']} recordings could not be deleted; they are tried again", err=True)

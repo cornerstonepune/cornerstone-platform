@@ -104,3 +104,18 @@ def test_5_a_refusal_carries_no_name_or_path(engine):
     client, conn, folder = engine
     r = _send(client, _note(conn), b"x", "secret-name.png")
     assert "secret-name" not in r.text and str(folder) not in r.text
+
+
+def test_4b_the_voice_clean_up_itself_expires_old_screenshots_and_counts_them(engine):
+    from engine.w3_read import voice_intake
+
+    client, conn, folder = engine
+    (folder / "voice").mkdir()  # the recordings folder the clean-up insists on reading
+    old, new = _note(conn), _note(conn)
+    _send(client, old)
+    _send(client, new)
+    (path,) = list(folder.glob(f"feedback/*/{old}.png"))
+    long_ago = time.time() - 31 * 86400
+    os.utime(path, (long_ago, long_ago))
+    assert voice_intake.cleanup(conn)["screenshots"] == 1
+    assert not path.exists() and list(folder.glob(f"feedback/*/{new}.png"))
