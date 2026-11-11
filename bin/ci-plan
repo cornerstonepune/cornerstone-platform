@@ -47,7 +47,7 @@ DOCS_PREFIXES = (
     "docs/brainstorms/",
     "docs/drafts/",
     "docs/superpowers/",
-    "docs/frontend/wireframes/",  # drawings and their own checker (check.mjs); nothing in CI reads them
+    "docs/frontend/wireframes/",  # drawings; their checker (check.mjs) is run by bin/check, which every pull request runs
 )
 DOCS_FILES = (
     "HANDOFF.md",
