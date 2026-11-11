@@ -104,7 +104,7 @@ test("an educator with one class and one subject: top menu, only hers, no Class 
   // the bar carries sign out; the door's row of pages has the rest
   await expect(page.locator("[data-bar]").first().getByRole("button", { name: "Sign out" })).toBeVisible();
   await page.goto("/papers");
-  for (const name of ["Papers to approve", "Check answers", "Class results"]) await expect(page.getByRole("navigation", { name: "Pages in this section" }).getByRole("link", { name }), name).toBeVisible();
+  for (const name of ["Assessments", "Upload papers", "Class results"]) await expect(page.getByRole("navigation", { name: "Pages in this section" }).getByRole("link", { name }), name).toBeVisible();
   await page.goto("/today");
   // What needs doing: groups, each folded into a table of red/amber/green rows, one action on each row that opens that item
   await page.locator("details[data-group]").evaluateAll((els) => els.forEach((e) => ((e as HTMLDetailsElement).open = true)));
@@ -135,7 +135,7 @@ test("an admin: the same top menu, and no Viewing control", async ({ page }) => 
   await expect(page.locator("[data-viewing], #bar-subject, #bar-class")).toHaveCount(0);
   // a door's other pages are a row under the bar, not more items on it
   await page.goto("/papers");
-  await expect(page.getByRole("navigation", { name: "Pages in this section" }).getByRole("link")).toHaveText(["Children", "Assessments", "Papers to approve", "Upload papers", "Check answers", "Class results", "Parent reports", "Across classes"]);
+  await expect(page.getByRole("navigation", { name: "Pages in this section" }).getByRole("link")).toHaveText(["Children", "Assessments", "Upload papers", "Class results", "Parent reports", "Across classes"]);
 });
 
 /** The page opened, with nothing broken on it. */
@@ -207,7 +207,7 @@ test("What needs doing opens, and its first action leads on", async ({ page }) =
 });
 
 test("Assessments: the two blocks on top, one row per assessment, filters", async ({ page }) => {
-  await wholePage(page, "/papers", /Assessments/, { chips: true });
+  await wholePage(page, "/children/assessments?view=table", /Assessments/, { chips: true });
   const box = await page.getByRole("region", { name: "Read an assessment" }).boundingBox();
   const table = await page.locator(".data-table").first().boundingBox();
   expect(box && table && box.y < table.y, "the upload box is above the table").toBe(true);
@@ -219,20 +219,13 @@ test("Assessments: the two blocks on top, one row per assessment, filters", asyn
   await expect(page).not.toHaveURL(/class=/);
 });
 
-test("Papers to approve: one table, the pack's approval the one action", async ({ page }) => {
-  await wholePage(page, `/papers/approve?section=${SECTION}&week=${THIS}&kind=assessment`, /Papers to approve/, { chips: true });
-  await expect(page.locator("[data-ux=action] button")).toBeVisible();
-  await expect(page.locator("[data-ux=next]")).toHaveAttribute("href", "/papers");
-});
-
 test("Print and give: the classes as a table, a class's children as a table", async ({ page }) => {
   await wholePage(page, "/make", /Home assessments/, { chips: true });
   await wholePage(page, `/make/${SECTION}`, /./, { chips: true });
 });
 
-test("Upload papers, Check answers, Marking", async ({ page }) => {
+test("Upload papers, and the papers read", async ({ page }) => {
   await wholePage(page, "/capture", /Upload papers/, { chips: true });
-  await wholePage(page, "/capture/check", /Check answers/, { chips: true });
   // Marking: the papers read, by class, and one child's
   await page.goto(`/capture?by=child&class=${SECTION}`);
   await expect(page.getByText("This page could not load")).toHaveCount(0);
@@ -255,21 +248,12 @@ test("Class results, its class and a child", async ({ page }) => {
   await expect(page.locator("main")).toContainText("Bina");
 });
 
-test("the Assessment card, opened from its row", async ({ page }) => {
-  await page.goto(`/papers?class=${SECTION}`);
-  // a list with one assessment opens it by itself, and a click on its name would then close it: open it only if it is shut
-  const toggle = page.locator("tr[data-assessment] a[aria-expanded]").first();
-  await expect(toggle).toBeVisible();
-  if ((await toggle.getAttribute("aria-expanded")) !== "true") await toggle.click();
-  await expect(toggle).toHaveAttribute("aria-expanded", "true");
-  const card = page.getByRole("link", { name: /Open its card/ });
-  await expect(card).toBeVisible();
-  await card.click();
+test("the assessment screen, opened from its row", async ({ page }) => {
+  await page.goto(`/children/assessments?class=${SECTION}&view=table`);
+  await page.locator("a[data-assessment-row]").first().click();
   await expect(page.getByText("This page could not load")).toHaveCount(0);
-  await expect(page.getByTestId("stage")).toHaveText(/its card/i);
-  await tablesRead(page, "card");
-  await expect(page.locator("[data-filterbar]").first()).toBeVisible();
-  await statusesSaid(page, "card");
+  await tablesRead(page, "assessment");
+  await statusesSaid(page, "assessment");
 });
 
 test("Curriculum, Maths then English, and Staff and School", async ({ page }) => {
@@ -293,7 +277,7 @@ test("Curriculum, Maths then English, and Staff and School", async ({ page }) =>
 });
 
 test("the flow is one chain: each page's next step opens the following page", async ({ page }) => {
-  const chain = ["/today", "/papers/approve", "/papers", "/capture", "/capture/check", "/growth"];
+  const chain = ["/today", "/capture", "/growth"];
   for (const path of chain) {
     await page.goto(path);
     await expect(page.getByText("This page could not load"), path).toHaveCount(0);
