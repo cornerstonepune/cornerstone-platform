@@ -116,9 +116,10 @@ test("an assessment opens to its copies, each in the group of where it stands, i
   // stream in after the steps: counted, and so waited for, before their headings are read)
   const copies = page.locator('section[aria-label$=" copies"]:not([data-spares]) tbody tr');
   await expect(copies).toHaveCount(3);
-  const heads = (await page.getByRole("table", { name: "Answers to judge" }).locator("thead th").allTextContents()).map((h) => h.trim());
-  expect(heads[0]).toBe("Sr. No.");
-  expect(heads).toContain("Level");
+  // asserted (and so waited for), not read at one instant: while the page streams in, the table can stand only in React's hidden holder
+  const heads = page.getByRole("table", { name: "Answers to judge" }).locator("thead th");
+  await expect(heads.first()).toHaveText("Sr. No.");
+  await expect(heads.filter({ hasText: /^Level$/ })).toHaveCount(1);
   const judge = group(page, "Answers to judge").locator("tbody tr");
   await expect(judge).toHaveCount(1);
   await expect(judge.locator('td[data-label="Sr. No."]')).toHaveText("2");

@@ -9,6 +9,7 @@
 import { expect, test, type Browser, type Page } from "@playwright/test";
 import postgres from "postgres";
 import { aClass, aPerson, forgetPerson } from "./rows";
+import { voiceSwitch } from "./k2-rows";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -22,6 +23,8 @@ let other: Record<string, string>;
 const id: Record<string, string> = {};
 
 test.beforeAll(async () => {
+  // the class pictures (Children) are behind the educator screens' switch (UI-3b): on for this file, off again after
+  await voiceSwitch(sql, true);
   await aClass(sql, MINE, "G2", ["Aarav", "Bela"]);
   other = await aClass(sql, OTHER, "G3", ["Chirag", "Dia"]);
   for (const label of [MINE, OTHER]) [{ id: id[label] }] = await sql<{ id: string }[]>`select id from school_class where label = ${label} limit 1`;
@@ -39,6 +42,7 @@ test.beforeAll(async () => {
   }
 });
 test.afterAll(async () => {
+  await voiceSwitch(sql, false);
   for (const person of [LINKED, UNLINKED]) await forgetPerson(sql, person.email);
   await sql.end();
 });
