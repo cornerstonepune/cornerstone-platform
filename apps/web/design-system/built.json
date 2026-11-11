@@ -121,6 +121,10 @@
       "route": "/setup/classes",
       "built": true
     },
+    "map": {
+      "route": "/setup/how-it-works",
+      "built": true
+    },
     "setup": {
       "route": "/setup",
       "built": true

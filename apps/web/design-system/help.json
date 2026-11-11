@@ -1434,6 +1434,28 @@
       ]
     },
     {
+      "id": "map",
+      "title": "How it works",
+      "eyebrow": "The engine",
+      "group": "Setup",
+      "route": "/setup/how-it-works",
+      "purpose": "The twelve steps agreed with the school: what each does, what it hands on, what it has made so far, and which work for one subject only.",
+      "does": [
+        {
+          "label": "Setup"
+        },
+        {
+          "label": "each step it hands on to"
+        },
+        {
+          "label": "each screen a step shows"
+        },
+        {
+          "label": "each step's files and commands"
+        }
+      ]
+    },
+    {
       "id": "setup",
       "title": "Setup",
       "eyebrow": "Changed rarely",

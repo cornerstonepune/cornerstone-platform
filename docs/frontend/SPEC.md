@@ -1225,6 +1225,29 @@ Done when (on top of the ten generic checks):
 - the change log lists the move with who and when
 
 
+#### How it works `/setup/how-it-works`
+Who: both · Phase: Core · Backend: none · Old page today: yes (/workflows) · Slice: UI-12
+Eyebrow: The engine
+Purpose: The twelve steps agreed with the school: what each does, what it hands on, what it has made so far, and which work for one subject only.
+Blocks, in order:
+- **Tile**: how many steps work, are partly built, are not built, work for one subject only
+- **Details**: each step's files and commands
+Rail (Connected to): none
+Main action: Setup · Next step: Setup
+Data: workflows.json (the map the engine's code is held to), with each step's live number from the database
+Empty: none · Phone: one column; the cards stack
+Folds in: /workflows
+Every control on the screen (4), and what the test does with each:
+- **link** Setup → Setup (`/setup`)
+- **link** each step it hands on to (jumps to that step on the same page)
+- **link** each screen a step shows
+- **fold** each step's files and commands
+Done when (on top of the ten generic checks):
+- every step of the map is drawn in its workflow, with what it is doing now and where it hands on
+- a step's number is the database's own, read now; a step the map says is not built has no number
+- the map fits a phone
+
+
 #### Setup `/setup`
 Who: both · Phase: Core · Backend: none · Old page today: part · Slice: UI-5
 Eyebrow: Changed rarely
@@ -1391,5 +1414,5 @@ What the test does with each kind of control:
 | UI-8 Reports | Each child's report, line by line, in the educator's words: two approvals per line, consent on file, then sent. The parent's copy says educator, Easy / Medium / Hard / Advance, no rung and no code. | Reports | CP-19 merged (Next) |
 | UI-9 Materials | The class's materials list for a fortnight, the school's list, the notes the system could not read, and the educator's approval of her own class's list. | Materials, this fortnight | CP-17 and CP-18 merged (Later) |
 | UI-11 Setup content pages: curriculum, skills to approve, question bank, a question | The four existing Setup pages that carry content rather than people, rebuilt on the frame and the blocks: Curriculum (activities and skills under one filter row, with drafts and offers), Skills to approve, the Question bank and one question as it prints. Their queries and their one-row-at-a-time approvals are unchanged; the old routes fold in. | Curriculum, Skills to approve, Question bank, {the question as it prints} | UI-2 |
-| UI-12 The screens outside the bar: sign in, help, report a problem | Sign in (with forgot and new password), the help pages and the feedback form, rebuilt on the tokens and the blocks; help is generated from screens.json so a new screen gets its section without a hand edit; the feedback form keeps names out of the public GitHub issue. | Sign in, Start here, Report a problem or suggest something | UI-13 (lands on Today once UI-7 is merged) |
+| UI-12 The screens outside the bar: sign in, help, report a problem | Sign in (with forgot and new password), the help pages and the feedback form, rebuilt on the tokens and the blocks; help is generated from screens.json so a new screen gets its section without a hand edit; the feedback form keeps names out of the public GitHub issue. | Sign in, Start here, Report a problem or suggest something, How it works | UI-13 (lands on Today once UI-7 is merged) |
 | UI-10 The as-built milestone document | A script that generates docs/frontend/AS-BUILT.md from screens.json plus the last inventory-test run: the milestone document Nimish asked for, so he can see exactly what exists, what each screen's controls are, and what the checks reported. Every slice adds its id to `merged_slices` in screens.json when its proofs pass, so the document is always true. | none (infrastructure) | UI-13 (it can be built early and re-run after every slice) |

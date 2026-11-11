@@ -79,7 +79,7 @@ export const GROUPS: readonly Door[] = [
       { href: "/library", label: "Question bank", match: ["/library", "/worksheets/taxonomy"], group: "Skills and questions" },
       { href: "/setup/staff", label: "Staff", match: ["/setup/staff"], group: "The school" },
       { href: "/setup/classes", label: "School", match: ["/setup/classes", "/school"], group: "The school" },
-      { label: "How it works", href: "/workflows", match: ["/workflows"], guide: false, group: "The school" },
+      { label: "How it works", href: "/setup/how-it-works", match: ["/setup/how-it-works", "/workflows"], guide: false, group: "The school" },
     ],
   },
 ];

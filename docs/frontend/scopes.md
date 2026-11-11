@@ -452,13 +452,16 @@ Sign in (with forgot and new password), the help pages and the feedback form, re
 4. After sign in the person lands on `/today` once `UI-7` is in `merged_slices`, and on the existing home page until then (test reads `merged_slices`); sign in uses the bare frame.
 5. A used password link is refused the second time, and no development bypass exists in a production build (the existing gate tests kept).
 6. Sign in shows the large `lockup-colour` (`lockup-for-dark-backgrounds` in dark) above the form with its clear space, and the help pages carry the lockup in their head; the BrandMark tests of UI-13 pass on both.
-7. Every one of the 11 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
+7. Every one of the 15 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
 8. Sign in: lands on Today for the person's group
 9. Sign in: no development bypass in production
 10. Sign in: a used password link is refused the second time
 11. Start here: every page's ? opens its own section
 12. Start here: the sections are generated from screens.json so a new screen gets its help without a hand edit
 13. Report a problem or suggest something: Send writes one staff_note and one issue; the issue body carries no child's name: the page warns not to type one, and a screenshot is kept on the private side, linked by id, never attached to the public GitHub issue (names now appear on some screens and the repository is public)
+14. How it works: every step of the map is drawn in its workflow, with what it is doing now and where it hands on
+15. How it works: a step's number is the database's own, read now; a step the map says is not built has no number
+16. How it works: the map fits a phone
 
 ### Out of scope
 

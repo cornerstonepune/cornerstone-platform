@@ -28,6 +28,7 @@ test("each old address answers 308 to its new one", async ({ request }) => {
     ["/account/password", "/login?view=forgot"],
     ["/guide/papers-to-approve", "/guide"],
     ["/guide/workflows", "/guide"],
+    ["/workflows", "/setup/how-it-works"],
     // the old Parent reports list folded into Reports (UI-8e)
     ["/growth/reports", "/children/reports"],
     ["/growth/reports?class=2B", "/children/reports?class=2B"],
