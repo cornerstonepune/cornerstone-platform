@@ -189,3 +189,35 @@ test("Notes: an educator's board lanes count the rows of her table in that state
   expect(counts.map(Number).reduce((a, b) => a + b, 0)).toBe(inTable);
   await educator.close();
 });
+
+test("Confirm: a square opens the mark picker, and the mark it sets is the square's; the claim it came from is kept as changed", async ({ page }) => {
+  const note = await aK2Note(sql, { klass, staff }, "Activity 904, level 2. Above 3, 4. Below 5.");
+  await page.goto(`/notes/${note}`);
+  await page.locator("[data-roll='3']").click();
+  const picker = page.locator("[data-picker='3']");
+  await expect(picker).toBeVisible();
+  await expect(picker.locator("[data-pick]")).toHaveText(["Above", "Below", "Not willing", "Absent", "Clear"]);
+  await picker.locator("[data-pick=below]").click();
+  await expect(picker).toHaveCount(0);
+  await expect(page.locator("[data-roll='3']")).toHaveAttribute("data-cell-mark", "below");
+  await expect(page.locator("[data-block=ChildPeek]")).toHaveCount(0); // a square changes the mark and never opens the peek
+  await page.getByRole("button", { name: "Confirm this note" }).click();
+  await page.waitForURL(/\/notes/);
+  const [claim] = await sql<{ decision: string }[]>`select decision from pii.note_claim where note_id = ${note} and section = 'above'`;
+  expect(claim.decision).toBe("changed");
+});
+
+test("Confirm: the × on a claim line takes the line out, its squares return to unmarked, and it is kept as removed", async ({ page }) => {
+  const note = await aK2Note(sql, { klass, staff }, "Activity 904, level 2. Above 3. Below 5.");
+  await page.goto(`/notes/${note}`);
+  await expect(page.locator("[data-roll='3']")).toHaveAttribute("data-cell-mark", "above");
+  await page.getByRole("button", { name: "Remove: Above 3" }).click();
+  await expect(page.locator("[data-claim=above]")).toHaveAttribute("data-removed", "");
+  await expect(page.locator("[data-roll='3']")).toHaveAttribute("data-cell-mark", "none");
+  await expect(page.locator("[data-roll='5']")).toHaveAttribute("data-cell-mark", "below");
+  await page.getByRole("button", { name: "Confirm this note" }).click();
+  await page.waitForURL(/\/notes/);
+  const [claim] = await sql<{ decision: string }[]>`select decision from pii.note_claim where note_id = ${note} and section = 'above'`;
+  expect(claim.decision).toBe("removed");
+  expect((await sql<{ n: number }[]>`select count(*)::int as n from activity_observation where note_id = ${note}`)[0].n).toBe(1);
+});

@@ -930,7 +930,7 @@
         {
           "t": "cell",
           "label": "each square",
-          "effect": "opens the mark picker: above / as expected / below / not willing / absent / clear; the square's corner mark changes; the claim it came from is marked changed"
+          "effect": "opens the mark picker: above / below / not willing / absent / clear (\"as expected\" is the one switch for the rest: the engine records an individual child's mark in four lists); the square's corner mark changes; the claim it came from is marked changed"
         },
         {
           "t": "switch",
@@ -2336,7 +2336,7 @@
         },
         {
           "t": "filter",
-          "label": "class · topic · subject · kind · week · stage",
+          "label": "class · topic · subject · kind · week · stage (and, on Reading, Show: by day, by kind of question, by how sure)",
           "text": "Class",
           "data": "data-filter"
         },
@@ -2411,6 +2411,69 @@
           "text": "Later",
           "when": "?view=table",
           "note": "the next ten assessments"
+        },
+        {
+          "t": "tab",
+          "label": "By topic",
+          "note": "every topic a row with its count, closed until opened; the address carries the topic",
+          "text": "By topic"
+        },
+        {
+          "t": "tab",
+          "label": "Reading",
+          "note": "how the reader is doing, and the files read lately",
+          "text": "Reading"
+        },
+        {
+          "t": "field",
+          "label": "rename: name this assessment",
+          "note": "one on each row; the built name shows until a name is chosen",
+          "text": "Name this assessment",
+          "when": "?view=table",
+          "data": "data-rename-name"
+        },
+        {
+          "t": "button",
+          "label": "Save the name",
+          "effect": "the name is the educator's own and is kept as a row of the history log, the older names stay",
+          "text": "Save the name",
+          "when": "?view=table",
+          "drive": {
+            "fill": {
+              "Name this assessment": "Named in the inventory"
+            },
+            "expect": {
+              "text": [
+                "Named in the inventory"
+              ],
+              "check": "assessment-renamed"
+            },
+            "after": "name-undone"
+          },
+          "data": "data-rename-save"
+        },
+        {
+          "t": "link",
+          "label": "each topic",
+          "note": "opens the topic's assessments beneath it",
+          "data": "data-topic-open",
+          "when": "?view=topic",
+          "to": "assessments"
+        },
+        {
+          "t": "button",
+          "label": "Read again",
+          "effect": "the file is read again with the reader as it now is; the page says in words when the engine no longer keeps it",
+          "text": "Read again",
+          "when": "?view=reading",
+          "drive": {
+            "expect": {
+              "url": "read=refused",
+              "text": [
+                "no longer kept by the engine"
+              ]
+            }
+          }
         }
       ],
       "rail": [
@@ -2588,6 +2651,32 @@
           "t": "upload",
           "label": "capture: Photo",
           "effect": "a scan of this assessment's paper; the QR must belong to it, else a message"
+        },
+        {
+          "t": "field",
+          "label": "rename: name this assessment",
+          "note": "the built name shows until a name is chosen",
+          "text": "Name this assessment",
+          "data": "data-rename-name"
+        },
+        {
+          "t": "button",
+          "label": "Save the name",
+          "effect": "the name is the educator's own and is kept as a row of the history log, the older names stay",
+          "text": "Save the name",
+          "drive": {
+            "fill": {
+              "Name this assessment": "Named in the inventory"
+            },
+            "expect": {
+              "text": [
+                "Named in the inventory"
+              ],
+              "check": "assessment-renamed"
+            },
+            "after": "name-undone"
+          },
+          "data": "data-rename-save"
         }
       ],
       "rail": [
@@ -3343,7 +3432,7 @@
           "drive": {
             "click": "No",
             "expect": {
-              "check": "no-offer-left"
+              "check": "another-offer-answered"
             }
           }
         },
@@ -3352,6 +3441,17 @@
           "label": "page: Later →",
           "to": "curriculum",
           "when": "paged"
+        },
+        {
+          "t": "link",
+          "label": "offers page: Later →",
+          "text": "Later →",
+          "to": "curriculum",
+          "when": "paged",
+          "note": "the offers table pages on its own, ten a page, and keeps the page of the list",
+          "roles": [
+            "coordinator"
+          ]
         },
         {
           "t": "link",
@@ -3429,6 +3529,15 @@
           "label": "Subject"
         },
         {
+          "t": "filter",
+          "label": "Topic"
+        },
+        {
+          "t": "filter",
+          "label": "Taught",
+          "note": "taught or not yet: a skill nobody teaches can be approved before its topic is switched on"
+        },
+        {
           "t": "tab",
           "label": "Skills",
           "note": "the first list; the address carries the tab"
@@ -3462,6 +3571,21 @@
         {
           "t": "fold",
           "label": "What a wrong answer counts against"
+        },
+        {
+          "t": "button",
+          "label": "Approve this table as written",
+          "roles": [
+            "coordinator"
+          ],
+          "data": "data-approve-table",
+          "effect": "the table of what a wrong answer counts against is approved as shown, once, with who; a changed table waits again",
+          "drive": {
+            "click": "Approve this table as written",
+            "expect": {
+              "check": "charges-approved"
+            }
+          }
         },
         {
           "t": "link",
@@ -3538,6 +3662,15 @@
         },
         {
           "t": "filter",
+          "label": "Kind"
+        },
+        {
+          "t": "filter",
+          "label": "Status",
+          "note": "Ready to print, or Removed: a removed question is kept with its reason and can be read here"
+        },
+        {
+          "t": "filter",
           "label": "search"
         },
         {
@@ -3611,6 +3744,22 @@
           "t": "fold",
           "label": "About it",
           "text": "About it (source, versions)"
+        },
+        {
+          "t": "link",
+          "label": "the corrected question",
+          "to": "question",
+          "text": "Open the corrected question",
+          "when": "@removed-question",
+          "note": "on a removed question that has been corrected"
+        },
+        {
+          "t": "link",
+          "label": "the original wording",
+          "to": "question",
+          "text": "See the original wording",
+          "when": "@corrected-question",
+          "note": "on a corrected question: the old wording, kept and readable"
         },
         {
           "t": "link",
