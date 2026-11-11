@@ -555,20 +555,20 @@
           "t": "link",
           "label": "this week tile",
           "to": "fortnight",
-          "pending": "the school's counts are not readable by the web yet (clashes not accepted, drafts to approve, materials lines without a quantity, last week's sessions by class and day, consent on file, next week's new activities): asked of the orchestrator on 10 Nov"
+          "pending": "built: the school's counts come from CP-28's /k2/today-school (backend draft #619); this control is drawn once that route is on main and the inventory has fixtures for it (clashes, drafts, materials lines, last week)"
         },
         {
           "t": "link",
           "label": "sessions done tile",
           "to": "staff",
-          "pending": "the school's counts are not readable by the web yet (clashes not accepted, drafts to approve, materials lines without a quantity, last week's sessions by class and day, consent on file, next week's new activities): asked of the orchestrator on 10 Nov"
+          "pending": "built: the school's counts come from CP-28's /k2/today-school (backend draft #619); this control is drawn once that route is on main and the inventory has fixtures for it (clashes, drafts, materials lines, last week)"
         },
         {
           "t": "cell",
           "label": "each heat-grid cell",
           "to": "timetable",
           "note": "opens that class's day",
-          "pending": "the school's counts are not readable by the web yet (clashes not accepted, drafts to approve, materials lines without a quantity, last week's sessions by class and day, consent on file, next week's new activities): asked of the orchestrator on 10 Nov"
+          "pending": "built: the school's counts come from CP-28's /k2/today-school (backend draft #619); this control is drawn once that route is on main and the inventory has fixtures for it (clashes, drafts, materials lines, last week)"
         },
         {
           "t": "row",
@@ -577,7 +577,7 @@
           "roles": [
             "coordinator"
           ],
-          "pending": "the school's counts are not readable by the web yet (clashes not accepted, drafts to approve, materials lines without a quantity, last week's sessions by class and day, consent on file, next week's new activities): asked of the orchestrator on 10 Nov"
+          "pending": "built: the school's counts come from CP-28's /k2/today-school (backend draft #619); this control is drawn once that route is on main and the inventory has fixtures for it (clashes, drafts, materials lines, last week)"
         },
         {
           "t": "row",
@@ -586,7 +586,7 @@
           "roles": [
             "coordinator"
           ],
-          "pending": "the school's counts are not readable by the web yet (clashes not accepted, drafts to approve, materials lines without a quantity, last week's sessions by class and day, consent on file, next week's new activities): asked of the orchestrator on 10 Nov"
+          "pending": "built: the school's counts come from CP-28's /k2/today-school (backend draft #619); this control is drawn once that route is on main and the inventory has fixtures for it (clashes, drafts, materials lines, last week)"
         },
         {
           "t": "row",
@@ -597,19 +597,19 @@
           "t": "row",
           "label": "sessions not done row",
           "to": "staff",
-          "pending": "the school's counts are not readable by the web yet (clashes not accepted, drafts to approve, materials lines without a quantity, last week's sessions by class and day, consent on file, next week's new activities): asked of the orchestrator on 10 Nov"
+          "pending": "built: the school's counts come from CP-28's /k2/today-school (backend draft #619); this control is drawn once that route is on main and the inventory has fixtures for it (clashes, drafts, materials lines, last week)"
         },
         {
           "t": "row",
           "label": "materials row",
           "to": "materials",
-          "pending": "the school's counts are not readable by the web yet (clashes not accepted, drafts to approve, materials lines without a quantity, last week's sessions by class and day, consent on file, next week's new activities): asked of the orchestrator on 10 Nov"
+          "pending": "built: the school's counts come from CP-28's /k2/today-school (backend draft #619); this control is drawn once that route is on main and the inventory has fixtures for it (clashes, drafts, materials lines, last week)"
         },
         {
           "t": "link",
           "label": "each new activity next week",
           "to": "activity",
-          "pending": "the school's counts are not readable by the web yet (clashes not accepted, drafts to approve, materials lines without a quantity, last week's sessions by class and day, consent on file, next week's new activities): asked of the orchestrator on 10 Nov"
+          "pending": "built: the school's counts come from CP-28's /k2/today-school (backend draft #619); this control is drawn once that route is on main and the inventory has fixtures for it (clashes, drafts, materials lines, last week)"
         },
         {
           "t": "link",
