@@ -149,7 +149,8 @@
   .b-band { grid-column: 2 / -1; display: flex; align-items: center; gap: var(--space-2); min-height: 34px; padding: 0 12px; border-radius: 10px; background: var(--subject-fixed-bg); color: var(--subject-fixed); font-size: var(--text-label); }
 
   /* ---------- CaptureBar, DropZone, PageImage, EmptyState ---------- */
-  .b-capture { display: flex; gap: var(--space-2); }
+  .b-capture { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+  .b-capture-rule { flex-basis: 100%; margin: 0; line-height: 20px; font-size: var(--text-label); color: var(--ink-muted); }
   .b-drop { display: grid; justify-items: center; gap: var(--space-2); padding: var(--space-5); border: 2px dashed var(--line-control); border-radius: var(--radius-card); color: var(--ink-muted); text-align: center; cursor: pointer; }
   .b-drop:focus-within { outline: 2px solid var(--focus); outline-offset: 2px; }
   .b-drop input { position: absolute; width: 1px; height: 1px; opacity: 0; }

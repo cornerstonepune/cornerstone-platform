@@ -154,7 +154,7 @@ def test_nothing_was_added_but_a_password(conn):
     """Nimish, 26 Oct 2026: "No 2FA needed for now, keep it simple." No second factor, no social sign-in, no
     magic-link-only way in, no "remember me": the only new way to reach the site is a password its owner set."""
     pages = {p.name for p in (WEB / "app" / "login").rglob("*") if p.is_dir()}
-    assert pages == {"forgot", "link", "new-password"}, pages
+    assert pages == {"link"}, pages
     source = "\n".join(
         p.read_text()
         for p in (WEB / "lib").glob("*.ts")

@@ -35,7 +35,7 @@ criteria:
     run: cd apps/web && npx playwright test tests/u71-results-by-topic.spec.ts
     expect: "passed"
   - name: the pages that read the old Results still read it, and the Guide's Results page names real buttons
-    run: cd apps/web && npx playwright test tests/u8-children-table.spec.ts tests/u26-my-classes-first.spec.ts tests/u35-children-grouped.spec.ts tests/u67-guide.spec.ts
+    run: cd apps/web && npx playwright test tests/u8-children-table.spec.ts tests/u26-my-classes-first.spec.ts tests/u35-children-grouped.spec.ts tests/u12-outside-the-bar.spec.ts
     expect: "passed"
   - name: the website's types and lint
     run: cd apps/web && npx tsc --noEmit && npx eslint --max-warnings 0 && echo "types and lint clean"

@@ -63,7 +63,9 @@
     "Themes: a screenshot in light at 1440 is committed as the baseline; the `blocks` screen and the journey steps are also committed in dark. Text contrast is measured by the token-pair script (UI-14) and by axe, not by sampling every page."
   ],
   "merged_slices": [
-    "UI-5"
+    "UI-5",
+    "UI-12",
+    "UI-11"
   ],
   "slices": [
     {
@@ -168,7 +170,8 @@
         "child",
         "activity",
         "objective",
-        "skill"
+        "skill",
+        "skillset"
       ],
       "done_when": [
         "Every screen of this slice passes the ten generic checks in `u70-inventory.spec.ts` (run with `SLICE=UI-3`) and every element in its list behaves as its kind says; the slice's last commit adds `UI-3` to `merged_slices` in screens.json.",
@@ -754,7 +757,11 @@
         "the steps fold is open on load and the others closed",
         "tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page"
       ],
-      "phone_gate": true
+      "phone_gate": true,
+      "rest": {
+        "fixture": "voice-rest",
+        "after": "voice-gone"
+      }
     },
     {
       "id": "record",
@@ -788,27 +795,38 @@
         {
           "t": "button",
           "label": "Start recording",
-          "effect": "microphone permission asked; the button becomes Stop; a timer counts"
+          "effect": "microphone permission asked; the button becomes Stop; a timer counts",
+          "pending": "checker cannot drive a microphone or file picker"
         },
         {
           "t": "button",
           "label": "Stop",
-          "effect": "recording ends; Send and Record again appear"
+          "effect": "recording ends; Send and Record again appear",
+          "pending": "checker cannot drive a microphone or file picker"
         },
         {
           "t": "button",
           "label": "Send",
-          "effect": "one pii.educator_note row with the session id, status received; the page says 'sent, the reader is listening' and links to Notes"
+          "effect": "one pii.educator_note row with the session id, status received; the page says 'sent, the reader is listening' and links to Notes",
+          "pending": "checker cannot drive a microphone or file picker"
         },
         {
           "t": "upload",
           "label": "Add a photo",
-          "effect": "jpg/png/heic accepted; the photo attaches to the session, never to a child"
+          "effect": "jpg/png/heic accepted; the photo attaches to the session, never to a child",
+          "pending": "checker cannot drive a microphone or file picker"
         },
         {
           "t": "button",
           "label": "Type the marks",
-          "effect": "creates the empty note for the chosen session and class in this step and opens it on the confirm screen"
+          "effect": "creates the empty note for the chosen session and class in this step and opens it on the confirm screen",
+          "drive": {
+            "click": "Type the marks",
+            "expect": {
+              "url": "^/notes/[0-9a-f-]{36}$",
+              "check": "typed-note-written"
+            }
+          }
         },
         {
           "t": "link",
@@ -849,7 +867,11 @@
       "phone_gate": true,
       "folds": [
         "/voice/record"
-      ]
+      ],
+      "rest": {
+        "fixture": "voice-rest",
+        "after": "voice-gone"
+      }
     },
     {
       "id": "confirm",
@@ -904,7 +926,17 @@
           "t": "button",
           "label": "Correct this note",
           "effect": "a confirmed note only: writes a superseding note row; the old row is never edited",
-          "note": "absent on a waiting note"
+          "note": "absent on a waiting note",
+          "when": "@confirmed-note",
+          "drive": {
+            "fill": {
+              "Why": "I misheard the number"
+            },
+            "click": "Correct this note",
+            "expect": {
+              "check": "mark-corrected"
+            }
+          }
         },
         {
           "t": "link",
@@ -962,7 +994,11 @@
         "a child's name on a claim line opens ChildPeek; a square still changes the mark and never opens the peek",
         "tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page"
       ],
-      "phone_gate": true
+      "phone_gate": true,
+      "rest": {
+        "fixture": "voice-rest",
+        "after": "voice-gone"
+      }
     },
     {
       "id": "notes",
@@ -1117,7 +1153,11 @@
         "a note left unconfirmed past 48 hours carries the red 'late' chip and sorts first",
         "each board lane's card count equals the rows of the table in that state",
         "tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page"
-      ]
+      ],
+      "rest": {
+        "fixture": "voice-rest",
+        "after": "voice-gone"
+      }
     },
     {
       "id": "timetable",
@@ -3091,6 +3131,67 @@
       ]
     },
     {
+      "id": "skillset",
+      "route": "/setup/skill-sets/[code]",
+      "group": "Setup",
+      "who": "both",
+      "phase": "Core",
+      "backend": [],
+      "exists": "part (/skill-sets/[code])",
+      "eyebrow": "Skill set · Grades 1 to 4",
+      "title": "the skill set's name",
+      "purpose": "A skill set is what the school teaches and tests together, from one to four grades. It points at the skills the system reads a child on; it never scores a child itself.",
+      "blocks": [
+        [
+          "Cards",
+          "each skill it covers: name, link"
+        ],
+        [
+          "Details",
+          "each level in a sentence"
+        ]
+      ],
+      "elements": [
+        {
+          "t": "link",
+          "label": "Open the skill (each card)",
+          "to": "skill"
+        },
+        {
+          "t": "fold",
+          "label": "Each level in a sentence"
+        },
+        {
+          "t": "link",
+          "label": "rail: each skill",
+          "to": "skill"
+        },
+        {
+          "t": "link",
+          "label": "rail: Question bank for this skill set",
+          "to": "bank"
+        }
+      ],
+      "rail": [
+        "each skill",
+        "Question bank for this skill set"
+      ],
+      "capture": [],
+      "main": "a skill",
+      "next": "the question bank",
+      "data": "skill (the skill set: code, name, registry_codes), skill_level, registry_skill",
+      "empty": "No registry skill linked yet: shown, no invention",
+      "phone": "cards stack in one column",
+      "folds": [
+        "/skill-sets/[code]"
+      ],
+      "done_when": [
+        "the screen is keyed by the skill set's code, not by a registry skill's code",
+        "each registry skill the set points at is a card that opens the skill screen; a set with none says so and invents nothing",
+        "the level sentences sit in a fold, closed on load"
+      ]
+    },
+    {
       "id": "curriculum",
       "route": "/setup/curriculum",
       "group": "Setup",
@@ -3120,7 +3221,19 @@
       "elements": [
         {
           "t": "filter",
-          "label": "grade · subject · topic · status"
+          "label": "Grade"
+        },
+        {
+          "t": "filter",
+          "label": "Subject"
+        },
+        {
+          "t": "filter",
+          "label": "Topic"
+        },
+        {
+          "t": "filter",
+          "label": "Status"
         },
         {
           "t": "filter",
@@ -3130,16 +3243,18 @@
         {
           "t": "row",
           "label": "an activity row",
-          "to": "activity"
+          "to": "activity",
+          "data": "data-activity-row"
         },
         {
           "t": "row",
           "label": "a skill row",
-          "to": "skill"
+          "to": "skill",
+          "data": "data-skill-row"
         },
         {
           "t": "link",
-          "label": "Drafts to check",
+          "label": "Check the drafted parts",
           "to": "activity",
           "note": "the first activity with a drafted part"
         },
@@ -3149,7 +3264,14 @@
           "roles": [
             "coordinator"
           ],
-          "effect": "the skill is linked to the activity; the offer closes"
+          "data": "data-offer-yes",
+          "effect": "the skill is linked to the activity; the offer closes",
+          "drive": {
+            "click": "Yes",
+            "expect": {
+              "check": "offer-answered"
+            }
+          }
         },
         {
           "t": "button",
@@ -3157,12 +3279,20 @@
           "roles": [
             "coordinator"
           ],
-          "effect": "the offer closes; nothing is linked"
+          "data": "data-offer-no",
+          "effect": "the offer closes; nothing is linked",
+          "drive": {
+            "click": "No",
+            "expect": {
+              "check": "no-offer-left"
+            }
+          }
         },
         {
           "t": "link",
           "label": "page: Later →",
-          "to": "curriculum"
+          "to": "curriculum",
+          "when": "paged"
         },
         {
           "t": "link",
@@ -3233,22 +3363,42 @@
       "elements": [
         {
           "t": "filter",
-          "label": "grade · subject"
+          "label": "Grade"
+        },
+        {
+          "t": "filter",
+          "label": "Subject"
         },
         {
           "t": "tab",
-          "label": "Skills / Levels to review",
+          "label": "Skills",
+          "note": "the first list; the address carries the tab"
+        },
+        {
+          "t": "tab",
+          "label": "Levels to review",
           "note": "the second list is the levels most children are secure at; the address carries the tab"
         },
         {
           "t": "link",
           "label": "a skill's name",
-          "to": "skill"
+          "to": "skill",
+          "data": "data-row-link"
         },
         {
           "t": "button",
           "label": "Approve (a row)",
-          "effect": "level_approved set for that skill with who; the row leaves the list; the eyebrow's count drops by one"
+          "roles": [
+            "coordinator"
+          ],
+          "data": "data-approve",
+          "effect": "level_approved set for that skill with who; the row leaves the list; the eyebrow's count drops by one",
+          "drive": {
+            "click": "Approve",
+            "expect": {
+              "check": "one-skill-approved"
+            }
+          }
         },
         {
           "t": "fold",
@@ -3257,7 +3407,8 @@
         {
           "t": "link",
           "label": "page: Later →",
-          "to": "skills-approve"
+          "to": "skills-approve",
+          "when": "paged"
         },
         {
           "t": "link",
@@ -3311,11 +3462,20 @@
       "elements": [
         {
           "t": "fold",
-          "label": "What the bank is"
+          "label": "What the bank is",
+          "text": "Read what the bank is"
         },
         {
           "t": "filter",
-          "label": "grade · skill · difficulty"
+          "label": "Grade"
+        },
+        {
+          "t": "filter",
+          "label": "Skill"
+        },
+        {
+          "t": "filter",
+          "label": "Difficulty"
         },
         {
           "t": "filter",
@@ -3324,12 +3484,14 @@
         {
           "t": "row",
           "label": "each question row",
-          "to": "question"
+          "to": "question",
+          "data": "data-question-row"
         },
         {
           "t": "link",
           "label": "page: Later →",
-          "to": "bank"
+          "to": "bank",
+          "when": "paged"
         },
         {
           "t": "fold",
@@ -3369,7 +3531,7 @@
       "backend": [],
       "exists": "yes (/library/[key])",
       "eyebrow": "Numeracy · Easy",
-      "title": "the question as it prints",
+      "title": "{the question as it prints}",
       "purpose": "The question, its answer, the wrong answers it catches, and where it came from. Correct the wording or remove it.",
       "blocks": [
         [
@@ -3388,7 +3550,20 @@
       "elements": [
         {
           "t": "fold",
-          "label": "About it"
+          "label": "About it",
+          "text": "About it (source, versions)"
+        },
+        {
+          "t": "link",
+          "label": "rail: the skill",
+          "to": "skill",
+          "text": "The skill"
+        },
+        {
+          "t": "link",
+          "label": "rail: the bank",
+          "to": "bank",
+          "text": "Question bank"
         },
         {
           "t": "field",
@@ -3399,12 +3574,12 @@
           "note": "required when correcting"
         },
         {
-          "t": "button",
-          "label": "Correct the wording",
+          "t": "field",
+          "label": "what was wrong",
           "roles": [
             "coordinator"
           ],
-          "effect": "a new item version; change_log keeps the old key; the page shows the new wording and 'corrected by'"
+          "note": "required when correcting: the engine refuses a correction with no reason"
         },
         {
           "t": "field",
@@ -3416,21 +3591,42 @@
         },
         {
           "t": "button",
+          "label": "Correct the wording",
+          "roles": [
+            "coordinator"
+          ],
+          "data": "data-correct",
+          "effect": "a new item version; the old one stays, readable, and points to the new; the page shows the new wording",
+          "drive": {
+            "fixture": "question-live",
+            "fill": {
+              "the wording": "Read the question again and write your answer.",
+              "what was wrong": "the wording was unclear"
+            },
+            "click": "Correct the wording",
+            "expect": {
+              "check": "question-corrected"
+            }
+          }
+        },
+        {
+          "t": "button",
           "label": "Remove",
           "roles": [
             "coordinator"
           ],
-          "effect": "the item is retired with the reason, never deleted; the chip reads 'removed'"
-        },
-        {
-          "t": "link",
-          "label": "rail: the skill",
-          "to": "skill"
-        },
-        {
-          "t": "link",
-          "label": "rail: the bank",
-          "to": "bank"
+          "data": "data-remove",
+          "effect": "the item is retired with the reason, never deleted; the chip reads 'removed'",
+          "drive": {
+            "fixture": "question-live",
+            "fill": {
+              "reason for removal": "two answers are right"
+            },
+            "click": "Remove",
+            "expect": {
+              "check": "question-removed"
+            }
+          }
         }
       ],
       "rail": [
@@ -3522,6 +3718,11 @@
           "label": "Find a person (search)",
           "effect": "narrows the rows to a name",
           "text": "Search the list"
+        },
+        {
+          "t": "button",
+          "label": "Add a person",
+          "effect": "opens a form: name, school email and role; Add and send a link puts the person on the list with no password and emails them a link to set their own"
         }
       ],
       "rail": [
@@ -3804,17 +4005,21 @@
           "t": "link",
           "label": "each job",
           "to": "today-educator",
-          "note": "the jobs are generated from screens.json: each names its own screen, and the test follows every one"
+          "note": "the jobs are generated from screens.json: each names its own screen, and the test follows every one",
+          "data": "data-job"
         },
         {
           "t": "fold",
-          "label": "each page's section"
+          "label": "each page's section",
+          "data": "data-section",
+          "text": "Sign in"
         },
         {
           "t": "link",
           "label": "? on any page",
           "to": "help",
-          "note": "opens this page at that page's section"
+          "note": "opens this page at that page's section",
+          "text": "its section"
         }
       ],
       "rail": [],
@@ -3865,12 +4070,25 @@
         {
           "t": "upload",
           "label": "capture: a screenshot",
-          "effect": "png/jpg attached to the note"
+          "effect": "png/jpg attached to the note",
+          "pending": "needs backend storage (issue #551)"
         },
         {
           "t": "button",
           "label": "Send",
-          "effect": "a staff_note row and a GitHub issue; the page says it reached the team and links back"
+          "effect": "a staff_note row and a GitHub issue; the page says it reached the team and links back",
+          "drive": {
+            "fill": {
+              "What happened, or what you would like": "Inventory check: the page reached the team"
+            },
+            "click": "Send",
+            "expect": {
+              "text": [
+                "Thanks, it reached the team."
+              ],
+              "check": "feedback_note_sent"
+            }
+          }
         }
       ],
       "rail": [],
