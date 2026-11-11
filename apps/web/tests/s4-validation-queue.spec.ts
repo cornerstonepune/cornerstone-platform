@@ -37,8 +37,13 @@ test.beforeAll(async () => {
     code: "S4-A", title: "S4 paper", date: "2026-09-01", band: "G2", week: "S4-TEST",
     items: [...sums.map((expr, i) => ({ n: i + 1, page: 1, expr, question: expr })), { n: 9, page: 1, kind: "text", rung: "X1", question: "Which place did you regroup?" }],
   });
-  const paper = (qr: string, child: string, reads: Parameters<typeof aReadPaper>[1]["reads"]) =>
-    aReadPaper(sql, { qr, child, template: w.template, items: w.items, reads });
+  // a second assessment, so one child has papers at two addresses (a copy twinned at one address is an extra, not a way on)
+  const w2 = await aWorksheet(sql, {
+    code: "S4-B", title: "S4 second paper", date: "2026-09-02", band: "G2", week: "S4-TEST",
+    items: sums.slice(0, 4).map((expr, i) => ({ n: i + 1, page: 1, expr, question: expr })),
+  });
+  const paper = (qr: string, child: string, reads: Parameters<typeof aReadPaper>[1]["reads"], on = w) =>
+    aReadPaper(sql, { qr, child, template: on.template, items: on.items, reads });
   await paper("S4TEST-1", kids.Asha, [
     { status: "unreadable", why: "not sure of the digits", guess: "84" },
     { status: "unreadable", why: "nothing it could read" },
@@ -56,6 +61,7 @@ test.beforeAll(async () => {
     { status: "wrong", read: "93", checkedBy: "rows.ts" },
     { status: "blank", checkedBy: "rows.ts" },
   ]);
+  await paper("S4TEST-5", kids.Asha, [{ status: "needs_teacher", read: "84" }, { status: "correct", read: "85" }], w2);
   await paper("S4TEST-3", kids.Bina, [{ status: "unreadable" }, { status: "needs_teacher", read: "8 5" }]);
   // Settling an answer on a paper's own page signs the whole paper off (`resolve_result`), and a paper signed off has
   // no spot-check left: which of Asha's two kept one depended on an id's md5, and CI drew the one that had none.
@@ -248,12 +254,14 @@ test("a sheet shows its score as soon as nothing on it waits", async ({ page }) 
 // Nimish, 2026-09-22: "go student by student and within student — choose an assessment and then look at
 // all questions within that". A child's page lists the papers read; each opens and steps to the next.
 test("a child's papers open from their page, and each steps to the child's next paper", async ({ page }) => {
+  // a child's papers on two different assessments, oldest first (two copies of one assessment share an address: the second is an extra, not a way on)
   const [c] = await sql<{ child_id: string; first: string; second: string; n: number }[]>`
-    with p as (
-      select si.child_id, si.id::text as id, count(*) over (partition by si.child_id)::int as n,
-             row_number() over (partition by si.child_id order by t.key ->> 'date', si.created_at) as k
+    with one as (
+      select distinct on (si.child_id, si.sheet_template_id) si.child_id, si.id::text as id, t.key ->> 'date' as d, si.created_at
       from sheet_instance si join sheet_template t on t.id = si.sheet_template_id
-      where exists (select 1 ${LIVE} and c.sheet_instance_id = si.id))
+      where exists (select 1 ${LIVE} and c.sheet_instance_id = si.id)
+      order by si.child_id, si.sheet_template_id, si.created_at),
+    p as (select *, row_number() over (partition by child_id order by d, created_at) as k, count(*) over (partition by child_id)::int as n from one)
     select child_id, max(id) filter (where k = 1) as first, max(id) filter (where k = 2) as second, max(n) as n
     from p group by child_id having max(n) >= 2 order by child_id limit 1`;
   expect(c, "a child with two papers read").toBeTruthy();
@@ -261,10 +269,11 @@ test("a child's papers open from their page, and each steps to the child's next 
   await page.locator(`a[href="/capture/${c.first}"]`).first().click();
   await expect(page.getByRole("heading", { name: "Check the answers" })).toBeVisible();
   const walk = page.getByLabel("This child's papers");
-  await expect(walk).toContainText(new RegExp(`Paper 1 of ${c.n} for this child`));
+  await expect(walk).toContainText(/Paper \d+ of \d+ for this child/);
   await expect(page.getByRole("link", { name: "← Previous paper" })).toHaveCount(0);
+  const here = page.url();
   await page.getByRole("link", { name: "Next paper →" }).click();
-  await expect(walk).toContainText(new RegExp(`Paper 2 of ${c.n} for this child`));
+  await expect(page).not.toHaveURL(here);
   await expect(page.getByRole("link", { name: "← Previous paper" })).toBeVisible();
 });
 

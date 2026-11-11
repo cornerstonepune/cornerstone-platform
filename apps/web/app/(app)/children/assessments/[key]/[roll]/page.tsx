@@ -85,8 +85,12 @@ export default async function PaperPage({ params, searchParams }: Props) {
   const count = (m: Mark) => marks.filter((x) => x.m === m).length;
   // the child's other papers, oldest first: this one's place among them, and the way to the paper before and after
   const at = siblings.findIndex((x) => x.id === sheet.id);
-  const around = await deadline(paperScreensOf([siblings[at - 1]?.id, siblings[at + 1]?.id].filter((x): x is string => !!x), me));
-  const [before, after] = [around.get(siblings[at - 1]?.id ?? ""), around.get(siblings[at + 1]?.id ?? "")];
+  const around = await deadline(paperScreensOf(siblings.filter((x) => x.id !== sheet.id).map((x) => x.id), me));
+  // a paper's address is its assessment and Sr. No.: a twin copy at the same address is an extra, never a way on, so the way on skips it
+  const own = paperHref(key, roll);
+  const ways = siblings.map((x) => around.get(x.id)).map((h) => (h && h !== own ? h : undefined));
+  const before = ways.slice(0, at).filter(Boolean).pop();
+  const after = ways.slice(at + 1).find(Boolean);
   const skillName = Object.fromEntries(skills.map((x) => [x.code, x.name]));
   const judging = marks.filter((x) => x.m === "judge");
   // the answer in view: the one picked in the table, else the first for you to judge
