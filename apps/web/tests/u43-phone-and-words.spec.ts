@@ -104,7 +104,7 @@ test.beforeAll(async ({ browser }) => {
     `/growth/${kids.Asha}/report`,
     `/growth/${kids.Bina}/parent`,
     `/growth/${kids.Bina}`,
-    "/growth/reports",
+    "/children/reports",
   ];
   for (const role of ["educator", "coordinator"] as const) {
     const page = role === "educator" ? await asEducator(browser) : await signedIn(browser);
