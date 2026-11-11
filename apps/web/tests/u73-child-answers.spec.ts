@@ -9,8 +9,8 @@ import { sessionFor } from "./inventory-fixtures";
 import { aClass, aPerson, aReadPaper, personAsStored } from "./rows";
 import { voiceSwitch } from "./k2-rows";
 
-const SECTION = "U73A";
-const EDUCATOR = { email: "u73-educator@cornerstone.test", name: "Asha Almond", role: "educator", classes: [SECTION], subjects: ["NUM"] };
+const SECTION = "U73C";
+const EDUCATOR = { email: "u73-answers-educator@cornerstone.test", name: "Asha Almond", role: "educator", classes: [SECTION], subjects: ["NUM"] };
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 let classId = "";
 let child = "";
@@ -24,7 +24,7 @@ test.beforeAll(async () => {
   const [ws] = await sql<{ id: string; item_ids: string[] }[]>`
     select id, item_ids from sheet_template where source = 'library' and retired_at is null and cardinality(item_ids) >= 3 order by code limit 1`;
   const paper = await aReadPaper(sql, {
-    qr: "CS730A01",
+    qr: "CS730C01",
     child,
     template: ws.id,
     items: ws.item_ids.slice(0, 3),
