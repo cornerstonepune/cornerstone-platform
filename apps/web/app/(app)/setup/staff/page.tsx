@@ -6,11 +6,13 @@ import Link from "@/components/link";
 import { NotYours } from "@/components/not-yours";
 import { requireStaff } from "@/lib/auth";
 import { screenHref } from "@/lib/built";
+import { givable } from "@/lib/grants";
 import { grantsOf, namesMayShow, staffLines, type StaffLine } from "@/lib/queries-coordinator";
 import { rolesHeld } from "@/lib/queries-staff";
 import { NOT_ADDED } from "@/lib/staff-add";
 import { Notice } from "@/components/parts";
 import { AddPerson } from "./add-person";
+import { AddGrant, EndGrant } from "./grant-forms";
 import type { Column } from "@/lib/ux-rules";
 
 type Props = { searchParams: Promise<Record<string, string | undefined>> };
@@ -18,7 +20,7 @@ type Props = { searchParams: Promise<Record<string, string | undefined>> };
 // Staff and classes (docs/frontend/screens.json `staff`, UI-5). Who holds which role for which class, and three numbers per
 // person that the database can stand behind. The rows are in the role's own order then name and cannot be sorted by the
 // numbers (no sort link, no rank, no ordinal, no colour on a number): the school decides what they mean. A person's grants
-// open below the table (?person=<id>); a grant is read here, never edited. Names are `pii`: only the 'everything' group sees them.
+// open below the table (?person=<id>); a grant is given or ended here (the engine's routes), never edited or deleted. Names are `pii`: only the 'everything' group sees them.
 export default async function StaffPage({ searchParams }: Props) {
   const me = await requireStaff();
   if (!(await namesMayShow())) return <NotYours what="Staff" />;
@@ -27,16 +29,22 @@ export default async function StaffPage({ searchParams }: Props) {
   const text = q.q?.trim().toLowerCase();
   const shown = all.filter((p) => (!q.role || p.roleLabel === q.role) && (!text || `${p.name} ${p.email}`.toLowerCase().includes(text)));
   const open = shown.find((p) => p.id === q.person) ?? shown[0];
-  const [grants, givable] = await Promise.all([open ? grantsOf(open.id) : Promise.resolve([]), rolesHeld()]);
+  // a person's grants are changed once the coordinator has opened that person (?person=): the first person's are only listed until then
+  const chosen = Boolean(q.person);
+  const [grants, held, options] = await Promise.all([open ? grantsOf(open.id) : Promise.resolve([]), rolesHeld(), open && chosen ? givable(me.email) : Promise.resolve(null)]);
+  // a grant is signed with the coordinator's staff id (the engine's give), older ones with a word: the name when the list knows the id
+  const names = new Map(all.map((p) => [p.id, p.name]));
+  const byName = (by: string) => names.get(by) ?? (/^[0-9a-f]{8}-/i.test(by) ? "a former member of staff" : by);
+  const endable = new Set(options?.roles.map((r) => r.code));
   const roles = [...new Set(all.map((p) => p.roleLabel))];
   const columns: Column<StaffLine>[] = [
-    { key: "name", label: "Name", width: "14rem", keep: true, value: (p) => p.name, cell: (p) => <Link href={`/setup/staff?person=${p.id}#grants`} data-staff-row aria-current={open?.id === p.id ? "true" : undefined}>{p.name}</Link> },
-    { key: "role", label: "Role", width: "12rem", keep: true, value: (p) => p.roleLabel },
+    { key: "name", label: "Name", width: "11rem", keep: true, value: (p) => p.name, cell: (p) => <Link href={`/setup/staff?person=${p.id}#grants`} data-staff-row aria-current={open?.id === p.id ? "true" : undefined}>{p.name}</Link> },
+    { key: "role", label: "Role", width: "9rem", keep: true, value: (p) => p.roleLabel },
     { key: "class", label: "Class", keep: true, value: (p) => (p.classes ? p.classes.join(", ") : "Every class") },
-    { key: "sessions", label: "Sessions done of planned", width: "11rem", num: true, value: (p) => (p.planned ? `${p.done} of ${p.planned}` : null) },
-    { key: "confirmed", label: "Notes confirmed", width: "8rem", num: true, value: (p) => p.notesConfirmed },
-    { key: "late", label: "Notes late", width: "7rem", num: true, value: (p) => p.notesLate },
-    { key: "lines", label: "Lines accepted / changed / removed", width: "12rem", num: true, value: (p) => (p.lines ? `${p.lines.accepted} / ${p.lines.changed} / ${p.lines.removed}` : null) },
+    { key: "sessions", label: "Sessions done of planned", width: "6.5rem", num: true, value: (p) => (p.planned ? `${p.done} of ${p.planned}` : null) },
+    { key: "confirmed", label: "Notes confirmed", width: "5.5rem", num: true, value: (p) => p.notesConfirmed },
+    { key: "late", label: "Notes late", width: "5rem", num: true, value: (p) => p.notesLate },
+    { key: "lines", label: "Lines accepted / changed / removed", width: "8rem", num: true, value: (p) => (p.lines ? `${p.lines.accepted} / ${p.lines.changed} / ${p.lines.removed}` : null) },
   ];
   return (
     <Screen
@@ -61,18 +69,25 @@ export default async function StaffPage({ searchParams }: Props) {
         search={{ name: "q", value: q.q, placeholder: "Find a person" }}
       />
       <DataTable label="Staff" columns={columns} rows={shown} rowKey={(p) => p.id} more={{ by: (p) => p.roleLabel.replace(/ \(.*\)$/, "") }} />
-      <AddPerson roles={givable} />
+      <AddPerson roles={held} />
       {open ? (
         <div className="mt-6" id="grants">
           <Details summary={`${open.name}'s grants`} name="grants" open={Boolean(q.person)}>
             <ul className="grid gap-2">
               {grants.map((g) => (
                 <li key={g.id}>
-                  {g.roleLabel} · {g.className ?? "every class"} · {g.subject ?? "every subject"} · from {g.from} to {g.to ?? "open"} · granted by {g.by}
+                  {g.roleLabel} · {g.className ?? "every class"} · {g.subject ?? "every subject"} · from {g.from} to {g.to ?? "open"} · granted by {byName(g.by)}
                   {g.open ? null : " · Ended"}
+                  {chosen && g.open && endable.has(g.roleCode) ? (
+                    <>
+                      {" "}
+                      <EndGrant grantId={g.id} what={`${g.roleLabel}, ${g.className ?? "every class"}`} />
+                    </>
+                  ) : null}
                 </li>
               ))}
             </ul>
+            {!chosen ? null : options ? <AddGrant key={open.id} staffId={open.id} options={options} /> : <p className="note mt-2">Changing a grant is not available right now.</p>}
           </Details>
         </div>
       ) : (
