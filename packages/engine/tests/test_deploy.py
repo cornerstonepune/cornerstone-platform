@@ -55,8 +55,9 @@ def test_only_mains_newest_commit_changes_live():
         assert after == [], f"{name} runs {after} even when a newer merge is on main"
 
 
-def test_a_newer_merge_never_cancels_mains_older_ci_run_and_only_mains_newest_commit_goes_live():
-    """Seven merges in a row queued seven runs of the full suite on main and held the website for over an hour (2026-10-22); cancelling
+def test_a_newer_merge_cancels_mains_older_ci_run():  # the name goals/ci1-main-runs-only-its-newest.yaml cites; what it proves changed, below
+    """Not any more (11 Nov 2026): a newer merge no longer cancels main's older run, a newer push to a pull request still does.
+    Seven merges in a row queued seven runs of the full suite on main and held the website for over an hour (2026-10-22); cancelling
     main's older runs instead left about twelve merges whose CI never finished, so none was deployed (11 Nov 2026). Now a pull request's
     newer push cancels its older run and a merge to main waits its turn (GitHub keeps one run waiting): an older merge's CI may finish
     last, and migrate live and deploy engine act only for main's newest commit (above), so it changes nothing."""
