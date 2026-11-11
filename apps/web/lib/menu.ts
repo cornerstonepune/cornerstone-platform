@@ -20,7 +20,7 @@ export const GROUPS: readonly Door[] = [
     icon: "today",
     screen: "today-educator",
     pages: [
-      { href: "/today", label: "What needs doing", match: ["/today", "/voice"] },
+      { href: "/today", label: "What needs doing", match: ["/today", "/voice", "/notes", "/record", "/period"] },
       { label: "Your day", href: "/educator", match: ["/educator"], guide: false },
     ],
   },
@@ -32,7 +32,7 @@ export const GROUPS: readonly Door[] = [
     screen: "timetable",
     pages: [
       { label: "This week", href: "/educator/week", match: ["/educator/week"], guide: false },
-      { label: "Materials", href: "/educator/materials", match: ["/educator/materials"], guide: false },
+      { label: "Materials", href: "/educator/materials", match: ["/educator/materials", "/timetable/materials"], guide: false },
       { label: "Timetable", href: "/timetable", match: ["/timetable"], guide: false },
       { href: "/timetable/rules", label: "Timetable rules", match: ["/timetable/rules"] },
     ],
@@ -40,11 +40,11 @@ export const GROUPS: readonly Door[] = [
   {
     key: "children",
     label: "Children",
-    href: "/k2",
+    href: "/children",
     icon: "child",
     screen: "children",
     pages: [
-      { label: "Children", href: "/k2", match: ["/k2"], guide: false },
+      { label: "Children", href: "/children", match: ["/children", "/k2"], guide: false },
       { href: "/papers", label: "Assessments", match: ["/papers", "/children/assessments", "/make", "/home", "/worksheets/CS"] },
       { href: "/papers/approve", label: "Papers to approve", match: ["/papers/approve"] },
       { href: "/capture", label: "Upload papers", match: ["/capture"] },
@@ -69,8 +69,8 @@ export const GROUPS: readonly Door[] = [
       { label: "Skills offered", href: "/curriculum/offers", match: ["/curriculum/offers"], guide: false },
       { href: "/skill-sets/approve", label: "Skills to approve", match: ["/skill-sets/approve"] },
       { href: "/library", label: "Question bank", match: ["/library", "/worksheets/taxonomy"] },
-      { href: "/staff", label: "Staff", match: ["/staff"] },
-      { href: "/school", label: "School", match: ["/school"] },
+      { href: "/staff", label: "Staff", match: ["/staff", "/setup/staff"] },
+      { href: "/setup/classes", label: "School", match: ["/setup/classes", "/school"] },
       { label: "How it works", href: "/workflows", match: ["/workflows"], guide: false },
     ],
   },

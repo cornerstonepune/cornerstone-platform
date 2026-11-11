@@ -13,7 +13,7 @@ type Stage = "idle" | "recording" | "recorded" | "sending";
 const EXT: [RegExp, string][] = [[/webm/, ".webm"], [/mp4|aac/, ".m4a"], [/ogg/, ".ogg"], [/wav/, ".wav"]];
 const MIN_BYTES = 1200; // shorter than this is silence: nothing to read
 
-export function Recorder({ classId, say, form }: { classId: string; say: string; form: string }) {
+export function Recorder({ classId, say, form, sessionId, goto, typed }: { classId: string; say: string; form: string; sessionId?: string; goto?: (noteId: string) => string; typed?: React.ReactNode }) {
   const router = useRouter();
   const [stage, setStage] = useState<Stage>("idle");
   const [clip, setClip] = useState<Blob | null>(null);
@@ -68,6 +68,7 @@ export function Recorder({ classId, say, form }: { classId: string; say: string;
     const body = new FormData();
     body.append("file", clip, `note${ext}`);
     body.append("class_id", classId);
+    if (sessionId) body.append("session_id", sessionId);
     const res = ticket ? await fetch(ticket.url, { method: "POST", headers: { "X-Upload-Token": ticket.token }, body }).catch(() => null) : null;
     const got = res?.ok ? ((await res.json().catch(() => null)) as { note_id?: string } | null) : null;
     if (!got?.note_id) {
@@ -76,7 +77,7 @@ export function Recorder({ classId, say, form }: { classId: string; say: string;
       return;
     }
     setClip(null);
-    router.push(`/voice/notes/${got.note_id}`);
+    router.push(goto ? goto(got.note_id) : `/voice/notes/${got.note_id}`);
   }
 
   return (
@@ -89,7 +90,7 @@ export function Recorder({ classId, say, form }: { classId: string; say: string;
             {W.record.stop}
           </button>
         ) : stage === "idle" ? (
-          <button type="button" className="btn min-h-14 gap-2 !px-6 text-[17px]" onClick={start} data-record>
+          <button type="button" className="btn min-h-14 w-full justify-center gap-2 !px-6 text-[17px] min-[700px]:w-auto" onClick={start} data-record>
             <Icon name="record" />
             {W.record.start}
           </button>
@@ -115,9 +116,11 @@ export function Recorder({ classId, say, form }: { classId: string; say: string;
       {said ? (
         <p role="alert" className="grid gap-2 text-[15px] text-terracotta">
           {said}
-          <Link href={form} className="btn secondary w-fit">
-            {W.useForm}
-          </Link>
+          {typed ?? (
+            <Link href={form} className="btn secondary w-fit">
+              {W.useForm}
+            </Link>
+          )}
         </p>
       ) : null}
     </section>

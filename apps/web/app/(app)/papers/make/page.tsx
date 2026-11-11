@@ -80,7 +80,8 @@ export default async function Maker({ searchParams }: Props) {
         {get("why")[0] ? <Notice tone="terracotta">{get("why")[0]}</Notice> : null}
         <div className="grid gap-[18px] lg:grid-cols-[minmax(0,400px)_minmax(0,1fr)]">
           <Panel title="Choose">
-            <form id="choose" method="get" action="/papers/make" aria-label="Choose the papers" className="group grid gap-4">
+            <form id="choose" method="get" action={get("make").length ? "/children/assessments" : "/papers/make"} aria-label="Choose the papers" className="group grid gap-4">
+              {get("make").length ? <input type="hidden" name="make" value={get("make")[0]} /> : null}
               <label className="field">
                 <span className="label">Class</span>
                 <select className="select" name="class" defaultValue={cls?.section ?? ""}>
@@ -154,7 +155,7 @@ export default async function Maker({ searchParams }: Props) {
             {planned && "refused" in planned ? (
               <Notice tone="terracotta">{planned.refused}</Notice>
             ) : planned && ready && cls ? (
-              <ThePapers plan={planned.plan} batch={ready} roll={roll} sets={sets} band={cls.band} once={once} />
+              <ThePapers plan={planned.plan} batch={ready} roll={roll} sets={sets} band={cls.band} once={once} created={get("make").length > 0} />
             ) : (
               <Panel title="The papers">
                 <p className="note">

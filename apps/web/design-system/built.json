@@ -1,5 +1,8 @@
 {
-  "merged_slices": [],
+  "merged_slices": [
+    "UI-5",
+    "UI-12"
+  ],
   "screens": {
     "today-educator": {
       "route": "/today",
@@ -107,27 +110,27 @@
     },
     "staff": {
       "route": "/setup/staff",
-      "built": false
+      "built": true
     },
     "classes": {
       "route": "/setup/classes",
-      "built": false
+      "built": true
     },
     "setup": {
       "route": "/setup",
-      "built": false
+      "built": true
     },
     "login": {
       "route": "/login",
-      "built": false
+      "built": true
     },
     "help": {
       "route": "/guide",
-      "built": false
+      "built": true
     },
     "feedback": {
       "route": "/feedback",
-      "built": false
+      "built": true
     },
     "blocks": {
       "route": "/setup/blocks",

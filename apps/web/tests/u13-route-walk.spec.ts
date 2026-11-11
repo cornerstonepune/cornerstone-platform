@@ -40,8 +40,8 @@ test.afterAll(async () => {
  *  period in a timetable, a recorded note, a printed paper), or it is four clicks deep (a child's report). The screens
  *  that replace them (docs/frontend/screens.json) are each reached by the inventory test once built. */
 const NOT_BY_CLICK: Record<string, string> = {
-  "/k2/[class]": "the Children page lists the K2 classes whose timetable is in force today, and the test database has none",
-  "/k2/[class]/[roll]": "a child's square on that class's page",
+  "/children/[class]": "the Children table lists children and opens their peek; the class picture is its toggle, drawn only for a person with a class",
+  "/children/[class]/[roll]": "a child's page, opened from the peek of a child in the table",
   "/refused": "where an action sends a person it refused",
   "/papers/review/[qr]": "where making a paper sends the maker; a link on a child's page once a paper is approved",
   "/papers/card": "opened by a button of the paper's own form",
@@ -50,7 +50,14 @@ const NOT_BY_CLICK: Record<string, string> = {
   "/make/[section]/week": "opened by the make form's choice of a class and a week",
   "/skill-sets/[code]/edit": "opened from a skill's own page (click four)",
   "/voice/notes/[id]": "where recording a note sends the educator",
-  "/educator/activity/[code]": "a link of a period or of the materials list, which need a timetable's rows",
+  "/setup/activities/[code]": "a link of a period or of the materials list, which need a timetable's rows",
+  "/setup/objectives/[code]": "a link of an activity, which needs a timetable's rows",
+  "/setup/skills/[code]": "a link of an objective, which needs a timetable's rows",
+  "/notes": "a page of What needs doing only once the doors are rebuilt; opened from the Notes to confirm group today",
+  "/record": "opened from a period or from Notes, both of which need a K2 class the test database does not hold with the voice switch on",
+  "/period/[id]": "a link of a day of the timetable, which needs a timetable's rows",
+  "/notes/[id]": "a card or a row of Notes, which needs a recorded note",
+  "/timetable/materials": "the menu's Materials still opens the old page, which keeps the controls this one lacks, until UI-9b moves them (tests/u74-materials.spec.ts opens it)",
   "/timetable/fortnight/[n]": "a link of the timetable page's Fortnight card and of the timetable's rail, which need a fortnight's rows (tests/u74-timetable.spec.ts opens it with rows)",
   "/timetable/moves": "the draft page's Next card and a hand move on the fortnight page, which need a fortnight's rows (tests/u74-timetable.spec.ts opens it with rows)",
   "/educator/period/[id]": "a link of a day of the timetable, which needs a timetable's rows",
@@ -67,7 +74,7 @@ test("5. GROUPS are exactly Today, Timetable, Children, Setup, and every route b
   expect(doorOf("/timetable/rules")?.key).toBe("timetable");
   // the pages outside the bar: help, feedback, the password, the refusal page
   const outside = routes().filter((r) => !doorOf(r.replace(/\[[^\]]+\]/g, "x")));
-  expect(outside.sort()).toEqual(["/account/password", "/feedback", "/guide", "/guide/[slug]", "/guide/workflows", "/refused"].sort());
+  expect(outside.sort()).toEqual(["/feedback", "/guide", "/refused"].sort());
 });
 
 test("5. each route is reached by clicking from the bar in at most three clicks", async ({ playwright }) => {
