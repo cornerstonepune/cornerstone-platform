@@ -11,8 +11,10 @@ import { deadline } from "@/lib/deadline";
 import { sees } from "@/lib/reach";
 import { grades } from "@/lib/queries";
 import { paperList } from "@/lib/queries-papers";
+import { scanFacts } from "@/lib/queries-assessment-extras";
 import { paperAnswers, paperHeader, type CaptureAnswer } from "@/lib/queries-read";
 import { assessmentHref, paperHref } from "@/lib/assessment-ui";
+import { dateWords } from "@/lib/week";
 import type { Column } from "@/lib/ux-rules";
 import { signOffPaper } from "../actions";
 import { EditPaper } from "./edit-paper";
@@ -63,6 +65,7 @@ export default async function PaperPage({ params, searchParams }: Props) {
   // a home assessment's copy before it prints has no answers yet, and its questions are the page
   const editing = kind === "focus" && (sheet.stage === "made" || sheet.stage === "printed") && answers.length === 0;
   if (answers.length === 0 && !header && !editing) notFound();
+  const scan = await deadline(scanFacts(sheet.id));
   const marks = answers.map((a) => ({ a, m: markOf(a) }));
   const count = (m: Mark) => marks.filter((x) => x.m === m).length;
   const judging = marks.filter((x) => x.m === "judge");
@@ -103,6 +106,19 @@ export default async function PaperPage({ params, searchParams }: Props) {
       purpose="The page as photographed, and each answer as the engine read it. Say what the child wrote where it was unsure; the engine marks it."
       rail={
         <Rail
+          cards={
+            scan ? (
+              <section aria-label="This scan" data-rail-part="scan">
+                <h2 className="mb-[var(--space-1)] text-[length:var(--text-eyebrow)] text-[var(--ink-muted)] uppercase">This scan</h2>
+                <dl className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-[14px]">
+                  <dt className="b-muted">Sheet</dt><dd>{sheet.qr}</dd>
+                  <dt className="b-muted">QR</dt><dd>{scan.own ? "read, and it belongs to this assessment" : "read, but it is another copy's"}</dd>
+                  <dt className="b-muted">Scanned</dt><dd>{dateWords(scan.on.slice(0, 10))}, {scan.on.slice(11)}</dd>
+                  <dt className="b-muted">Pages</dt><dd>{scan.pages}</dd>
+                </dl>
+              </section>
+            ) : null
+          }
           edges={[
             { screen: "child", params: { id: sheet.child_id ?? "" }, label: "This child", icon: "child" },
             { screen: "skill", params: { code: set ?? "" }, label: "The skill", icon: "skill" },
@@ -123,7 +139,7 @@ export default async function PaperPage({ params, searchParams }: Props) {
         <EmptyState>Nothing has been read from this paper yet. When the scan is read, each answer appears here.</EmptyState>
       ) : (
         <div className="b-split">
-          <PageImage src={src} caption={focus ? `The child's page as photographed. Question ${focus.a.n ?? focus.a.slot} is the one to judge.` : "The child's page as photographed"} />
+          <PageImage src={src} box={focus?.a.answer_state !== "not_found" ? focus?.a.box : null} caption={focus ? `The child's page as photographed. Question ${focus.a.n ?? focus.a.slot} is outlined.` : "The child's page as photographed"} />
           <DataTable label="The answers" columns={columns} rows={marks} rowKey={(x) => x.a.id} more={{ page: 1, href: () => paperHref(key, roll) }} />
         </div>
       )}
