@@ -199,8 +199,19 @@ def test_4_main_the_nightly_run_and_a_run_by_hand_run_everything_whatever_change
     assert jobs(event=event, draft=True, files=files) == FULL
 
 
-def test_4_main_cancels_a_superseded_run_but_never_skips_one_and_the_suite_runs_nightly():
-    assert CI["concurrency"]["cancel-in-progress"] is True
+def cancels(event):
+    """Whether ci.yml's `cancel-in-progress` cancels the older run of the same group when `event` starts a newer one: it is one
+    expression, `github.event_name == '<event>'`, read here as GitHub reads it."""
+    expr = CI["concurrency"]["cancel-in-progress"]
+    assert expr == "${{ github.event_name == 'pull_request' }}", expr
+    return event == re.search(r"github\.event_name == '(\w+)'", expr).group(1)
+
+
+def test_4_a_pull_request_cancels_its_superseded_run_main_never_does_and_no_run_is_skipped_and_the_suite_runs_nightly():
+    assert cancels("pull_request") is True  # a newer push to a pull request replaces its older run
+    assert (
+        cancels("push") is False
+    )  # a merge to main is not cancelled by the next: its CI finishes, then migrate and deploy act for the newest
     assert "github.ref" in CI["concurrency"]["group"]
     assert TRIGGERS["push"]["branches"] == ["main"]
     (nightly,) = TRIGGERS["schedule"]
