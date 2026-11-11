@@ -9,7 +9,7 @@ export type { Look };
 
 export type Kid = { id: string; roll: string; name: string };
 export type Skill = { code: string; name: string; domain: string; seen: number };
-export type Cell = { look: Look; words: string; lastSeen: string | null };
+export type Cell = { look: Look; words: string; lastSeen: string | null; seen: number };
 export type Picture = {
   classId: string;
   section: string;
@@ -22,6 +22,8 @@ export type Picture = {
   /** child id → the skills the child was seen on, any */
   anySeen: Map<string, string | null>;
   next: Map<string, string[]>;
+  /** skill code → the skills a person confirmed as linked to it, either way round */
+  related: Map<string, Set<string>>;
   days: number;
 };
 
@@ -41,8 +43,8 @@ export async function pictureOf(me: Me, classId: string): Promise<Picture | null
     select c.id, c.roll_no as roll, concat_ws(' ', n.first_name, n.last_name) as name
     from child_now c cross join lateral pii.read_child(c.id, ${me.email}) n
     where c.class_id = ${classId}::uuid and c.active`;
-  const rows = await sql<{ child_id: string; skill_code: string; name: string; domain: string | null; colour: string; words: string; kind: string; last_seen: string | null }[]>`
-    select s.child_id, s.skill_code, rs.name, rs.domain, cs.colour, cs.words, s.kind, (s.last_seen at time zone ${zone})::date::text as last_seen
+  const rows = await sql<{ child_id: string; skill_code: string; name: string; domain: string | null; colour: string; words: string; kind: string; seen: number; last_seen: string | null }[]>`
+    select s.child_id, s.skill_code, rs.name, rs.domain, cs.colour, cs.words, s.kind, coalesce(s.named_days, s.n_events, 0)::int as seen, (s.last_seen at time zone ${zone})::date::text as last_seen
     from (${stateRows(kids.map((k) => k.id))}) s join child_state cs on cs.tenant_id = s.tenant_id and cs.code = s.state
     join registry_skill rs on rs.tenant_id = s.tenant_id and rs.code = s.skill_code`;
   const kind = rows.some((r) => r.kind === "observed") ? "observed" : "written";
@@ -52,7 +54,7 @@ export async function pictureOf(me: Me, classId: string): Promise<Picture | null
   const skills = new Map<string, Skill>();
   for (const r of mine) {
     const row = cells.get(r.child_id) ?? new Map<string, Cell>();
-    row.set(r.skill_code, { look: lookOfColour(r.colour), words: r.words, lastSeen: r.last_seen });
+    row.set(r.skill_code, { look: lookOfColour(r.colour), words: r.words, lastSeen: r.last_seen, seen: r.seen });
     cells.set(r.child_id, row);
     const was = anySeen.get(r.child_id) ?? null;
     anySeen.set(r.child_id, r.last_seen && (!was || r.last_seen > was) ? r.last_seen : was);
@@ -62,7 +64,12 @@ export async function pictureOf(me: Me, classId: string): Promise<Picture | null
   }
   const links = await sql<{ before_code: string; skill_code: string }[]>`select before_code, skill_code from skill_link_confirmed`;
   const next = new Map<string, string[]>();
-  for (const l of links) next.set(l.before_code, [...(next.get(l.before_code) ?? []), l.skill_code]);
+  const related = new Map<string, Set<string>>();
+  for (const l of links) {
+    next.set(l.before_code, [...(next.get(l.before_code) ?? []), l.skill_code]);
+    related.set(l.before_code, (related.get(l.before_code) ?? new Set()).add(l.skill_code));
+    related.set(l.skill_code, (related.get(l.skill_code) ?? new Set()).add(l.before_code));
+  }
   const [run] = await sql<{ at: string }[]>`select (finished_at at time zone ${zone})::text as at from flow_run where flow = 'graph_nightly' and finished_at is not null order by finished_at desc limit 1`;
   return {
     classId,
@@ -74,6 +81,7 @@ export async function pictureOf(me: Me, classId: string): Promise<Picture | null
     cells,
     anySeen,
     next,
+    related,
     days: await attentionDays(),
   };
 }
