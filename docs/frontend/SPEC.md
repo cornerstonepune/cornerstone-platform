@@ -339,7 +339,7 @@ Rail (Connected to): The period (when a session is chosen) · The activity · Th
 Main action: Start recording · Next step: Notes to confirm
 Data: the session; pii.educator_note insert via the engine; config: note retention
 Empty: none · Phone: this is the phone screen: one button, the activity already known
-Folds in: /voice/record
+Folds in: /voice/record, /voice/form
 Every control on the screen (9), and what the test does with each:
 - **field** Which period (preselected when opened from a period, a class or a child; otherwise today's periods for the person's classes; required before Start recording or Type the marks)
 - **button** Start recording: microphone permission asked; the button becomes Stop; a timer counts
@@ -368,6 +368,7 @@ Rail (Connected to): The period · The activity · The class
 Main action: Confirm this note · Next step: the next note waiting
 Data: pii.educator_note + draft claims from the engine (pii.note_claim: flag, outcome, entry_mode, child_id, set when the note is read); activity_observation written at confirm, one row per child, confirmation_id
 Empty: No note waiting: link to Record · Phone: the grid first, then her words; Confirm fixed at the bottom
+Folds in: /voice/notes/[id]
 Every control on the screen (12), and what the test does with each:
 - **button** each claim line's × (remove): the claim is marked removed; its children's squares return to unmarked; recorded as her decision
 - **cell** each square: opens the mark picker: above / below / not willing / absent / clear ("as expected" is the one switch for the rest: the engine records an individual child's mark in four lists); the square's corner mark changes; the claim it came from is marked changed
