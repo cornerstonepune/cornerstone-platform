@@ -1,7 +1,7 @@
 // Every word the K2 educator's timetable screens show (M1-09): one file, the school's words, few in each place.
 export const E = {
   area: "Educator",
-  dayKind: { none: "No school day on record.", holiday: "Holiday", undecided: "Not decided yet: the frame's periods only." },
+  dayKind: { none: "No school day on record.", holiday: "Holiday", undecided: "Not decided yet: the frame's periods only.", noFortnight: "This day is in no fortnight, so no lesson is planned.", noLessons: "No lesson is planned for this day.", nextFortnight: "Fortnight {n} starts {day}." },
   counts: {
     periods: ["period", "periods"],
     lessons: ["lesson", "lessons"],

@@ -67,11 +67,11 @@ are in `apps/web/lib/voice-words.ts` and every icon in `apps/web/lib/icons.tsx`,
 |---|---|---|
 | Wednesday | see what waits | Today |
 | Wednesday | say what was taught | What needs doing (a topic is marked taught in its own row) |
-| Thursday, Friday | approve | Papers to approve |
+| Thursday, Friday | approve | Assessments (an assessment's pack, approved on its own screen) |
 | Friday | print, give, follow | Assessments |
 | Monday | papers come back | Upload papers |
-| Monday | settle what the reader was not sure of | Check answers |
-| Monday | read the class | Class results (and a child) |
+| Monday | settle what the reader was not sure of | Assessments (the child's paper: each answer, then sign it off) |
+| Monday | read the class | Children (the class picture, and a child) |
 | Setup, apart | | Curriculum; Question bank |
 
 The menu is four doors on the bar (`apps/web/lib/menu.ts`; the old side menus are gone), and the table above is how the week
@@ -80,10 +80,10 @@ a row under the bar:
 
 | Door | Its pages (the row under the bar) |
 |---|---|
-| Today | What needs doing (a short list of kinds of work, one line each with its count; the address `/today`; carries the one count); Your day |
-| Timetable | This week, Materials, Timetable rules |
-| Children | Children (the class pictures), Assessments, Papers to approve, Upload papers, Check answers, Class results, Parent reports, Across classes |
-| Setup | Curriculum, Skills to approve, Question bank, Staff, School, How it works |
+| Today | Today (`/today`: the periods, the strip of what waits, which carries the one count); Notes |
+| Timetable | Materials, Timetable, Timetable rules |
+| Children | Children (the class pictures), Assessments, Upload papers, Parent reports, Across classes |
+| Setup | What needs doing, Curriculum, All the curriculum, Skills to approve, Bank of questions, Question bank, Staff, School, How it works |
 
 Help, the Guide, Report a problem and the password sit outside the bar: the "?" and the person in the bar, and a link at the foot.
 The lit door and page are marked, no word of the menu names a subject. Held by `apps/web/tests/u53-the-menu.spec.ts`.

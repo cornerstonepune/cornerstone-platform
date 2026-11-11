@@ -115,7 +115,12 @@ function said(headline: string, detail = ""): Response {
 
 /** A POST whose whole answer the caller reads, status and body — for a call where a refusal is
  *  itself the answer, such as the engine saying in words why it would not take a correction. */
-export async function engineSend<P extends PostPath>(path: P, body: BodyOf<P>, waitMs = ENGINE_WAIT_MS): Promise<Response> {
+export async function engineSend<P extends PostPath>(path: P, body: BodyOf<P>): Promise<Response> {
+  return engineSendWithin(path, body, ENGINE_WAIT_MS);
+}
+
+/** The same, giving up after `waitMs`: for a read a page can do without (Today's), so a slow engine is a sentence, not a hung page. */
+export async function engineSendWithin<P extends PostPath>(path: P, body: BodyOf<P>, waitMs: number): Promise<Response> {
   return reached(
     fetch(`${base()}${path}`, {
       method: "POST",

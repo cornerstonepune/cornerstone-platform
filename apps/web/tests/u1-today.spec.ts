@@ -9,6 +9,7 @@ import { aChildIn } from "./rows";
 import { expect, type Page, test } from "@playwright/test";
 import postgres from "postgres";
 import { isoWeek } from "../lib/week";
+import { dayIn } from "../lib/school-clock";
 import { ENGINE_PORT } from "../playwright.config";
 
 test.describe.configure({ mode: "serial" });
@@ -102,13 +103,17 @@ test("today lists everything waiting on a teacher, each with its count and one c
   await pack.getByRole("link").click();
   await expect(page).toHaveURL(new RegExp(`/children/assessments\\?class=${SECTION}&week=${WEEK}&kind=practice`));
 
-  // a child whose checked work gives the engine a home paper to propose — red, amber or green on any skill —
-  // with no home paper approved this week: a row for each class, counting its children
+  // a child whose checked written work gives the engine a home paper to propose — a written skill in a state with enough
+  // answers to say (the `child_state.enough` rows) — with no home paper this week by the school's clock: a row for each
+  // class, counting its children. A K2 observation (kind 'observed') is no written work and proposes no paper: counting it
+  // here made this figure 4 against the page's 1 on a copy of live, where K2 notes are observed (and on CI none are).
+  const [{ zone }] = await sql<{ zone: string }[]>`select value #>> '{}' as zone from config where key = 'school.time_zone'`;
   const [{ n }] = await sql<{ n: number }[]>`
     select count(distinct s.child_id)::int as n from child_skill_state s join child_now c on c.id = s.child_id
-    where c.active and s.state in ('patterned_error', 'emerging', 'practising', 'secure', 'stretch_ready')
+      join child_state cs on cs.tenant_id = s.tenant_id and cs.code = s.state
+    where c.active and s.kind = 'written' and cs.enough
       and not exists (select 1 from sheet_instance si where si.child_id = s.child_id and si.kind = 'focus'
-                      and si.week = to_date(${isoWeek()}, 'IYYY-"W"IW'))`;
+                      and si.week = to_date(${isoWeek(dayIn(zone, new Date()))}, 'IYYY-"W"IW'))`;
   const home = await kind(page, "home");
   expect(home.n).toBe(n);
   if (n) {

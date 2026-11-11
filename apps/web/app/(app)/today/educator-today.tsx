@@ -10,7 +10,8 @@ import type { Day, Period } from "@/lib/educator/types";
 import { nowAtSchool, schoolToday } from "@/lib/school-clock";
 import { sql } from "@/lib/db";
 import { DOORS, open } from "@/lib/today-doors";
-import { myDay, myNotes, noteFigures, sessionsOf, type Read, type TodoRow } from "@/lib/today-data";
+import { myDay, myNotes, nextFortnight, noteFigures, sessionsOf, type Read, type TodoRow } from "@/lib/today-data";
+import { E } from "@/lib/educator/words";
 import { dayWords, fortnightWords, litPeriod, many, periodRow, periodsDone } from "@/lib/today";
 import { classWords } from "@/lib/voice-types";
 
@@ -43,6 +44,8 @@ export async function EducatorToday({ me, view, day: asked }: { me: Session; vie
   const { done, planned } = periodsDone(periods);
   const classId = day?.class.id ?? "";
   const sessions = day && classId ? await sessionsOf(classId, day.day) : {};
+  // a day with no lesson says when lessons start again: the class's next fortnight
+  const coming = day && isBlank(day) && classId ? await nextFortnight(classId, day.day) : null;
   const href = (p: Period) => open(DOORS.period(p.period_id, classId, day!.day, sessions[p.period_id])) ?? "#";
   const tiles: Attention[] = [
     ...(figures
@@ -78,7 +81,7 @@ export async function EducatorToday({ me, view, day: asked }: { me: Session; vie
         <ViewToggle current={view} views={[{ key: "list", label: "List", icon: "table", href: addr(asked ? { day: asked } : {}) }, { key: "board", label: "Board", icon: "board", href: addr({ view: "board", ...(asked ? { day: asked } : {}) }) }]} />
         </div>
       </div>
-      {view === "board" ? <KanbanBoard lanes={lanes} /> : <PeriodsOrNothing got={got} periods={periods} lit={lit} href={href} />}
+      {view === "board" ? <KanbanBoard lanes={lanes} /> : <PeriodsOrNothing got={got} periods={periods} lit={lit} href={href} today={today} coming={coming} />}
       {view === "list" && cards.length ? <Cards cards={cards} /> : null}
     </Screen>
   );
@@ -86,10 +89,13 @@ export async function EducatorToday({ me, view, day: asked }: { me: Session; vie
 
 /** Her periods, or in words why there are none: a holiday or a day with no school, the engine's own reason for not giving her a day
  *  (switched off, no class held), or that it could not be read just now. Never a blank. */
-function PeriodsOrNothing({ got, periods, lit, href }: { got: Read<Day>; periods: Period[]; lit: string | null; href: (p: Period) => string }) {
+function PeriodsOrNothing({ got, periods, lit, href, today, coming }: { got: Read<Day>; periods: Period[]; lit: string | null; href: (p: Period) => string; today: string; coming: { number: number; starts_on: string } | null }) {
   if (!got.ok) return <EmptyState>{got.down ? `Your day could not be read just now. ${got.words}` : got.words}</EmptyState>;
   const day = got.value;
-  if (isBlank(day)) return <EmptyState>No sessions today: {blankWords(day).toLowerCase()}</EmptyState>;
+  if (isBlank(day)) {
+    const next = coming ? ` ${E.dayKind.nextFortnight.replace("{n}", String(coming.number)).replace("{day}", dayWords(coming.starts_on))}` : "";
+    return <EmptyState>{`${day.day === today ? "No sessions today." : "No sessions on this day."} ${blankWords(day)}${next}`}</EmptyState>;
+  }
   return <PeriodRow periods={periods.map((p) => periodRow(p, lit, href(p)))} />;
 }
 

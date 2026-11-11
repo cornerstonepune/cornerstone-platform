@@ -5,7 +5,7 @@
       "the engine",
       "coordinator"
     ],
-    "sees": "The engine drafts each skill as what a child can do, with {levels}. A person reads and approves it once, on [Skills to approve](/guide/skills-to-approve)."
+    "sees": "The engine drafts each skill as what a child can do, with {levels}. A person reads and approves it once, on [Skills to approve](/guide/curriculum#approve-skill)."
   },
   "N2": {
     "name": "The question bank",
@@ -51,7 +51,7 @@
     "who": [
       "educator"
     ],
-    "sees": "You look over the pack and approve it before it prints. See [Papers to approve](/guide/papers-to-approve#approve)."
+    "sees": "You look over the pack and approve it before it prints. See [Assessments](/guide/assessments#approve)."
   },
   "N8": {
     "name": "Papers come back",
@@ -67,14 +67,14 @@
       "the engine",
       "educator"
     ],
-    "sees": "The engine reads each answer and marks it by the answer key. What it is not sure of goes to you on [Check answers](/guide/check-answers#check)."
+    "sees": "The engine reads each answer and marks it by the answer key. What it is not sure of goes to you on the child's paper. See [Assessments](/guide/assessments#check)."
   },
   "N10": {
     "name": "Each child's skills worked out",
     "who": [
       "the engine"
     ],
-    "sees": "A signed off answer counts for every skill it used, and each child's skills are worked out again. See [Children](/guide/children#a-child)."
+    "sees": "A signed off answer counts for every skill it used, and each child's skills are worked out again. See [a child's page](/guide/assessments#a-child)."
   },
   "N11": {
     "name": "Home assessment",
@@ -82,7 +82,7 @@
       "the engine",
       "educator"
     ],
-    "sees": "A home assessment for each child, aimed at what they got wrong. You approve it on the child's page. See [Make a home assessment](/guide/children#home-assessment)."
+    "sees": "A home assessment for each child, aimed at what they got wrong. You approve it on the child's page. See [Make a home assessment](/guide/assessments#home-assessment)."
   },
   "N12": {
     "name": "Reports and planning",

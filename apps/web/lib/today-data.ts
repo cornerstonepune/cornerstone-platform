@@ -1,7 +1,7 @@
 // What Today reads (UI-7), every figure from the engine's own routes, the person's email as `actor`: the engine finds their
 // classes and refuses what is not theirs. A refusal is an answer (the screen says so in words), never a crash.
 import { cache } from "react";
-import { EngineDown, engineSend } from "./engine";
+import { EngineDown, engineSendWithin } from "./engine";
 import type { Day } from "./educator/types";
 import type { Session } from "./auth";
 import { actingAsEducator } from "./acting-view";
@@ -45,7 +45,7 @@ async function refusal(res: Response): Promise<string> {
 
 async function ask<T>(path: "/k2/todo" | "/k2/coordinator" | "/k2/today-school" | "/timetable/day", body: Record<string, unknown>): Promise<Read<T>> {
   try {
-    const res = await engineSend(path, body as never, TODAY_WAIT_MS);
+    const res = await engineSendWithin(path, body as never, TODAY_WAIT_MS);
     return res.ok ? { ok: true, value: (await res.json()) as T } : { ok: false, down: false, words: await refusal(res) };
   } catch (e) {
     if (e instanceof EngineDown) return { ok: false, down: true, words: e.message };
@@ -78,6 +78,15 @@ export async function sessionsOf(classId: string, day: string): Promise<Record<s
     select s.id::text, s.period_id::text from session s join school_day d on d.id = s.school_day_id
     where s.school_class_id = ${classId} and d.on_date = ${day}`;
   return Object.fromEntries(rows.map((r) => [r.period_id, r.id]));
+}
+
+/** The next teaching fortnight of a class's year after a day (its number and first day), for a day outside every fortnight to say
+ *  when lessons start again; null when none is on record. */
+export async function nextFortnight(classId: string, after: string): Promise<{ number: number; starts_on: string } | null> {
+  const [f] = await sql<{ number: number; starts_on: string }[]>`
+    select f.number, f.starts_on::text from fortnight f join school_class c on c.tenant_id = f.tenant_id and c.academic_year_id = f.academic_year_id
+    where c.id = ${classId}::uuid and f.kind = 'teaching' and f.starts_on > ${after}::date order by f.starts_on limit 1`;
+  return f ?? null;
 }
 
 /** The id of each class by grade and section as the engine's counts name them: a cell of last week's grid opens that class's day. */

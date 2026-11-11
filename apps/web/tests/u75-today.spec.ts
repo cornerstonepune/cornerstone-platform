@@ -7,7 +7,7 @@ import { expect, test, type Browser } from "@playwright/test";
 import postgres from "postgres";
 import { loadFortnight10, timetableSwitch } from "./educator-screens";
 import { SECTION, aK2Note, k2Class, voiceSwitch } from "./k2-rows";
-import { sessionFor, signedInAs } from "./inventory-fixtures";
+import { EDUCATOR, sessionFor, signedInAs } from "./inventory-fixtures";
 import { aPerson, personAsStored } from "./rows";
 import type { Period } from "../lib/educator/types";
 import { dayWords, litPeriod, many, periodsDone, splitNotes } from "../lib/today";
@@ -66,7 +66,8 @@ test.describe("the page", () => {
     const { klass } = await k2Class(sql);
     loadFortnight10(SECTION);
     await timetableSwitch(sql, true);
-    for (const p of [TEACHER, OTHER]) if (!(await personAsStored(sql, p.email))) await aPerson(sql, p);
+    // signedInAs("educator") signs in the inventory's educator: made here too, so this spec does not depend on another having run first
+    for (const p of [TEACHER, OTHER, EDUCATOR]) if (!(await personAsStored(sql, p.email))) await aPerson(sql, p);
     const [{ id: tenant }] = await sql<{ id: string }[]>`select id from tenant order by created_at limit 1`;
     const [mine] = await sql<{ staff_id: string }[]>`select staff_id from pii.staff where email = ${TEACHER.email}`;
     await sql`insert into staff_role_grant (tenant_id, staff_id, role_code, school_class_id, valid_from, granted_by)
@@ -100,7 +101,8 @@ test.describe("the page", () => {
     const q = await other.newPage();
     await q.goto(`/today?day=${MONDAY}`);
     await expect(q.locator("[data-block=PeriodRow]")).toHaveCount(0);
-    await expect(q.getByText(/No (sessions|timetable)/)).toBeVisible();
+    // the engine refuses a class she does not hold, and the page says its reason in words
+    await expect(q.locator("main")).toContainText("No class is yours on this day.");
     await other.close();
   });
 
