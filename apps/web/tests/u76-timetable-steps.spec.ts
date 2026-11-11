@@ -1,6 +1,6 @@
 /**
  * U76 (UI-6b) — what the old "Your day" and "This week" pages did that the Timetable now does (issue #599, specs/UI-6b/spec.md): a
- * day that is not a date is not found; switched off, nothing is found; stepping a day or a week, over a weekend and across the
+ * day that is not a date is not found; switched off, an educator reads that nothing is live; stepping a day or a week, over a weekend and across the
  * edge of a fortnight, onto a holiday. The old assertions of m1-09-calendar move here one for one, on the Timetable.
  */
 import { expect, test } from "@playwright/test";
@@ -42,17 +42,21 @@ test("a day in the address that is not a date is not found, never an error", asy
   }
 });
 
-// switched off, only the staff preview (a coordinator, while a class has lessons today) may look; an educator finds nothing
-test("while the timetable is switched off the Timetable and a period are not found to an educator", async ({ browser }) => {
+// switched off, an educator sees nothing of the timetable: the Timetable says so in plain words (issue #691), a period is not found
+test("while the timetable is switched off an educator reads that nothing is live, and a period is not found", async ({ browser }) => {
   const context = await browser.newContext({ baseURL: "http://localhost:3100", viewport: { width: 1440, height: 900 } });
   await context.addCookies([{ name: "cs_staff", value: sessionFor(EDUCATOR.email), domain: "localhost", path: "/", httpOnly: true, secure: false, sameSite: "Lax" }]);
   const page = await context.newPage();
   await timetableSwitch(sql, false);
   try {
-    for (const href of ["/timetable", `/timetable?class=${f.klass}&view=week`, "/period/00000000-0000-0000-0000-000000000000"]) {
+    for (const href of ["/timetable", `/timetable?class=${f.klass}&view=week`]) {
       await page.goto(href);
-      await expect(page.getByText("This page could not be found.")).toBeVisible();
+      await expect(page.getByText("No timetable is live yet. The coordinator makes one live from Setup, Fortnight.")).toBeVisible();
+      await expect(page.locator("[data-block=FortnightGrid]")).toHaveCount(0); // nothing of the plan shows
+      await expect(page.getByText("This page could not be found.")).toHaveCount(0);
     }
+    await page.goto("/period/00000000-0000-0000-0000-000000000000");
+    await expect(page.getByText("This page could not be found.")).toBeVisible();
   } finally {
     await timetableSwitch(sql, true);
   }

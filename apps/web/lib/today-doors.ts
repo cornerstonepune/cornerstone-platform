@@ -15,7 +15,7 @@ export const DOORS = {
   /** `session`: the lesson's own id when it has one (the new page is a session's); a part of the day with none opens the old period page by its period. */
   period: (id: string, classId: string, day: string, session?: string): Door =>
     session ? { screen: "period", params: { id: session }, live: `/period/${encodeURIComponent(session)}` } : { screen: "period", params: { id }, live: `/period/${encodeURIComponent(id)}?${q({ class: classId, day })}` },
-  timetable: (): Door => ({ screen: "timetable", live: "/educator/week" }),
+  timetable: (): Door => ({ screen: "timetable", live: "/timetable" }),
   materials: (): Door => ({ screen: "materials", live: "/timetable/materials" }),
   staff: (): Door => ({ screen: "staff", live: "/setup/staff" }),
   moves: (): Door => ({ screen: "moves", live: null }),

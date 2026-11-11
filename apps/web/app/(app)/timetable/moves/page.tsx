@@ -9,7 +9,7 @@ import { ViewToggle } from "@/components/kanban-board";
 import { requireStaff } from "@/lib/auth";
 import { sql } from "@/lib/db";
 import { shortDate } from "@/lib/educator/clock";
-import { weekOf } from "@/lib/educator/data";
+import { weekOrNull } from "@/lib/educator/data";
 import { gridOf } from "@/lib/timetable-grid";
 import { subjectLooks, clashesOf, fortnightAfter, fortnightAt, fortnightNumber, isCoordinator, movesOf, type Move } from "@/lib/timetable-ui";
 import type { Column } from "@/lib/ux-rules";
@@ -32,7 +32,15 @@ export default async function MovesPage({ searchParams }: Props) {
   const upcoming = here && here.starts_on > today ? here : here ? await fortnightAfter(here) : here;
   const fn = (/^\d+$/.test(q.fn ?? "") ? await fortnightNumber(Number(q.fn)) : null) ?? upcoming;
   if (!fn) return <Screen stage="Moves by hand" title="Moves by hand" purpose="No teaching fortnight is set up ahead." next={{ href: "/timetable", label: "Timetable" }}><EmptyState>No moves yet.</EmptyState></Screen>;
-  const weeks = await Promise.all([fn.starts_on, addDays(fn.starts_on, 7)].map((w) => weekOf(me, { class_id: q.class, week_of: w })));
+  const read = await Promise.all([fn.starts_on, addDays(fn.starts_on, 7)].map((w) => weekOrNull(me, { class_id: q.class, week_of: w })));
+  // the engine does not answer for this class (a class not held while the timetable is switched on): said in words, never "not found"
+  if (read.some((w) => w === null))
+    return (
+      <Screen stage={`Fortnight ${fn.number}`} title="Moves by hand" purpose="Pick a lesson, then the lesson to swap it with." next={{ href: `/timetable?fn=${fn.number}`, label: "Timetable" }}>
+        <EmptyState>The lessons of this class in Fortnight {fn.number} could not be read just now, so none can be moved from here yet.</EmptyState>
+      </Screen>
+    );
+  const weeks = read.filter((w) => w !== null);
   const klass = weeks[0].class;
   const [{ year }] = await sql<{ year: string }[]>`select y.label as year from fortnight f join academic_year y on y.id = f.academic_year_id where f.id = ${fn.id}`;
   const ords = new Map((await sql<{ id: string; ord: number }[]>`select id, ord from period where grade_code = ${klass.grade}`).map((p) => [p.id, p.ord]));

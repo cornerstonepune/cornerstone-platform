@@ -13,8 +13,8 @@ async function read<T, P extends PostPath = PostPath>(path: P, body: BodyOf<P>):
   return (await res.json()) as T;
 }
 
-/** The same read, but a refusal (switched off, a class she does not hold, nothing live) is `null` instead of a 404, for the two pages whose tab
- *  is in the menu: a tab must never lead to "not found" (live, 11 Nov 2026: Your day and This week). The page then sends her to Today or Timetable. */
+/** The same read, but a refusal (switched off, a class she does not hold, nothing live) is `null` instead of a 404, for the Timetable: a door of
+ *  the menu must never lead to "not found" (live, 11 Nov 2026). The page then says in words why there is nothing to show (issue #691). */
 async function readOrNull<T, P extends PostPath = PostPath>(path: P, body: BodyOf<P>): Promise<T | null> {
   const res = await engineSend(path, body);
   if (res.status === 404 || res.status === 403) return null;
@@ -25,7 +25,6 @@ async function readOrNull<T, P extends PostPath = PostPath>(path: P, body: BodyO
 /** Her day (M1-06's /timetable/day): her first class unless she picked one, today unless she picked a day. */
 export const dayOf = (me: Pick<Session, "email">, q: { class_id?: string; day?: string }) => read<Day, "/timetable/day">("/timetable/day", { actor: me.email, ...q });
 
-export const dayOrNull = (me: Pick<Session, "email">, q: { class_id?: string; day?: string }) => readOrNull<Day, "/timetable/day">("/timetable/day", { actor: me.email, ...q });
 export const weekOrNull = (me: Pick<Session, "email">, q: { class_id?: string; week_of?: string }) => readOrNull<Week, "/timetable/week">("/timetable/week", { actor: me.email, ...q });
 
 /** Her week, Monday to Saturday (M1-06's /timetable/week). */

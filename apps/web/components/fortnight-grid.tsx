@@ -3,7 +3,7 @@ import { ICON_SIZE, Icon } from "@/lib/icons";
 import type { Subject } from "./period-row";
 import { StatusChip, type State } from "./status-chip";
 
-export type FCell = { subject: Exclude<Subject, "fixed">; activity: string; href: string; chip?: State; now?: boolean; moved?: boolean; clash?: boolean };
+export type FCell = { subject: Exclude<Subject, "fixed">; activity: string; href: string; /** a Move action beside the lesson (the coordinator only) */ move?: string; chip?: State; now?: boolean; moved?: boolean; clash?: boolean };
 export type FRow = { band: string } | { time: string; cells: readonly (FCell | null)[] };
 const SUBJECT = { numeracy: "Numeracy", language: "Language", arts: "Arts" } as const;
 
@@ -31,11 +31,14 @@ export function FortnightGrid({ days, today, rows, dayHrefs }: { days: readonly 
               <span key={`${i}t`} className="b-tm">{r.time}</span>,
               ...r.cells.map((c, j) =>
                 c ? (
-                  <Link key={`${i}-${j}`} href={c.href} className={`b-cell${c.moved ? " b-moved" : ""}${c.clash ? " b-clash" : ""}`} data-subject={c.subject} data-press aria-current={c.now ? "time" : undefined}>
-                    <span className="b-subj"><Icon name={c.subject} size={ICON_SIZE.table} />{SUBJECT[c.subject]}</span>
-                    <b>{c.activity}</b>
-                    {c.chip ? <StatusChip state={c.chip} onTint round /> : null}
-                  </Link>
+                  c.move ? (
+                    <div key={`${i}-${j}`} className="b-cell-w">
+                      <Cell c={c} />
+                      <Link href={c.move} className="b-move" data-move-lesson aria-label={`Move ${c.activity}`}>Move</Link>
+                    </div>
+                  ) : (
+                    <Cell key={`${i}-${j}`} c={c} />
+                  )
                 ) : <span key={`${i}-${j}`} />,
               ),
             ]
@@ -43,5 +46,15 @@ export function FortnightGrid({ days, today, rows, dayHrefs }: { days: readonly 
         )}
       </div>
     </div>
+  );
+}
+
+function Cell({ c }: { c: FCell }) {
+  return (
+    <Link href={c.href} className={`b-cell${c.moved ? " b-moved" : ""}${c.clash ? " b-clash" : ""}`} data-subject={c.subject} data-press aria-current={c.now ? "time" : undefined}>
+      <span className="b-subj"><Icon name={c.subject} size={ICON_SIZE.table} />{SUBJECT[c.subject]}</span>
+      <b>{c.activity}</b>
+      {c.chip ? <StatusChip state={c.chip} onTint round /> : null}
+    </Link>
   );
 }

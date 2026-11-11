@@ -117,9 +117,12 @@ test("Period: with voice notes off it still opens, and offers no recording", asy
   await expect(page.locator('a[href^="/record"]')).toHaveCount(0);
 });
 
-test("Period: the old address answers 308 to the new one, its class and day carried", async ({ page }) => {
+// Nimish, 11 Nov 2026: "leave everything old behind, no traces of anything old". Nothing printed or sent links the old period address
+// (no engine, n8n or seed text names it), so it no longer answers at all (issue #690 step A).
+test("Period: the old address is gone, with no redirect left behind", async ({ page }) => {
   const [row] = await sql<{ period: string; day: string }[]>`
     select s.period_id::text as period, d.on_date::text as day from session s join school_day d on d.id = s.school_day_id where s.id = ${lesson}`;
-  await page.goto(`/educator/period/${row.period}?class=${klass}&day=${row.day}`);
-  await expect(page).toHaveURL(new RegExp(`/period/${lesson}$`));
+  const res = await page.goto(`/educator/period/${row.period}?class=${klass}&day=${row.day}`);
+  expect(res?.status()).toBe(404);
+  await expect(page).toHaveURL(/\/educator\/period\//);
 });

@@ -103,5 +103,5 @@ test("a period whose line names an activity opens its page, and back returns to 
   await expect(page.getByRole("heading", { level: 1, name: "Insects" })).toBeVisible();
   await expect(page).toHaveURL(/\/setup\/activities\/ACT-K2-0348/);
   await page.locator('[data-ux="next"]').click();
-  await expect(page).toHaveURL(new RegExp(`/educator\\?class=${p.klass}&day=${p.day}`));
+  await expect(page).toHaveURL(new RegExp(`/timetable\\?view=day&class=${p.klass}&day=${p.day}`)); // the day it came from, on the Timetable (the old Your day page is gone)
 });

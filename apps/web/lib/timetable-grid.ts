@@ -14,6 +14,8 @@ export function gridOf(weeks: readonly Week[], show: {
     looks: Looks;
     clashes: readonly Clash[];
     href: (day: string, periodId: string) => string;
+    /** the coordinator's Move action on each lesson: Moves by hand on that fortnight, the lesson picked (none for an educator) */
+    move?: (day: string, periodId: string) => string;
     /** the school's today and now: a period running now is Do now, one recorded is Done, one not recorded and over is Late, none ahead has a chip */
     at?: { today: string; now: string };
   }) {
@@ -26,9 +28,9 @@ export function gridOf(weeks: readonly Week[], show: {
   const rows: FRow[] = starts.map((start) => {
     const at = days.map((d) => d.periods.find((p) => p.starts_at === start) ?? null);
     const label = at.find((p) => p)?.label ?? start;
-    if (at.length && at.every((p) => p === null || p.kind === "fixed")) return { band: at.find((p) => p)?.name ?? label };
+    if (at.length && at.every((p) => p === null || p.kind === "fixed")) return { band: `${at.find((p) => p)?.name ?? label} · ${start.slice(0, 5)}` };
     return {
-      time: `${start.slice(0, 5)} ${label}`,
+      time: `${start.slice(0, 5)}${at.find((p) => p?.ends_at)?.ends_at ? `–${at.find((p) => p?.ends_at)!.ends_at!.slice(0, 5)}` : ""} ${label}`,
       cells: at.map((p, i): FCell | null => {
         if (!p || !isLesson(p)) return null;
         const chip = show.at ? chipOf(p, { now: show.at.now, day: whenIs(days[i].day, show.at.today) }) : null;
@@ -36,6 +38,7 @@ export function gridOf(weeks: readonly Week[], show: {
           subject: subjectLook(show.looks, p.subject),
           activity: p.name,
           href: show.href(days[i].day, p.period_id),
+          move: show.move?.(days[i].day, p.period_id),
           moved: p.state === "moved",
           clash: clashAt(days[i].day, p.period_id),
           chip: chip === "doNow" || chip === "done" || chip === "late" ? chip : undefined,

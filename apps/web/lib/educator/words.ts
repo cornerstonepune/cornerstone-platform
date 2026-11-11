@@ -1,15 +1,7 @@
 // Every word the K2 educator's timetable screens show (M1-09): one file, the school's words, few in each place.
 export const E = {
   area: "Educator",
-  chips: { doNow: "Do now", comingUp: "Coming up", done: "Done", late: "Late" },
-  nav: { label: "Your timetable", timetable: "Timetable", day: "Tomorrow" },
-  today: { title: "Today", purpose: "Your class's day, period by period; tap a period to open it." },
-  week: { title: "This week", purpose: "Your class's week as a calendar; tap any period to open it." },
-  period: { purpose: "What this period is, the school's words for it, and its activity." },
-  day: { previous: "Previous day", next: "Next day", now: "Back to today" },
-  weekNav: { previous: "Previous week", next: "Next week", now: "Back to this week" },
   dayKind: { none: "No school day on record.", holiday: "Holiday", undecided: "Not decided yet: the frame's periods only." },
-  free: "Free",
   counts: {
     periods: ["period", "periods"],
     lessons: ["lesson", "lessons"],
@@ -19,17 +11,6 @@ export const E = {
     holidays: ["holiday", "holidays"],
     lines: ["planner line", "planner lines"],
   },
-  now: "Now",
-  glance: "This day at a glance",
-  nextUp: "Next",
-  nothingLeft: "Nothing more today.",
-  dayOver: "This day is over.",
-  legend: "What the colours mean",
-  schoolWords: "The school's words",
-  planner: "The planner for this subject, this fortnight",
-  activity: "Activity",
-  noPlanner: "The planner gives nothing more for this subject this fortnight.",
-  noActivity: "No activity of the school's list is named for this period.",
   pickClass: "Class",
   page: {
     purpose: "The activity as the school wrote it, and any part drafted for it: keep a draft, change it, or send it back.",
@@ -80,7 +61,4 @@ export const E = {
     neededOn: "Needed on",
     counts: { lines: ["line", "lines"], days: ["day", "days"], noQty: ["without a quantity", "without a quantity"], items: ["item", "items"], toConfirm: ["to confirm", "to confirm"], notes: ["note waiting", "notes waiting"] },
   },
-  frozen: "Frozen",
-  frozenNote: "This month's plan is frozen: read only.",
-  fortnight: (n: number, w: string | null) => `Fortnight ${n}${w ? ` · Week ${w}` : ""}`,
 } as const;
