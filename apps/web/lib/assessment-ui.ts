@@ -2,6 +2,7 @@
 // lane of the board it stands in, the chip that says what it waits for, and the three tiles' counts. Pure: the steps themselves
 // are lib/assessment-steps.ts, and nothing here changes them.
 import type { State } from "@/components/status-chip";
+import type { Stage } from "./queries-papers";
 import { actionOf, type Action, type Counts } from "./assessment-steps";
 
 /** An assessment's address: its key (kind, class, week, set) in one piece. */
@@ -66,4 +67,14 @@ export const STAGE_WORDS: Record<string, string> = {
   check: "Read, to check",
   signoff: "Checked, to sign off",
   results: "Results in",
+};
+
+// A stage as a state of the one chip: what waits on a person is red, what waits on something else amber, done is green.
+export const STAGE_STATE: Record<Stage, State> = {
+  made: "toApprove",
+  printed: "withChildren",
+  scanned: "toCheck",
+  checked: "toSignOff",
+  "signed off": "done",
+  replaced: "replaced",
 };

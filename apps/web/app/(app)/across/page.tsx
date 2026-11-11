@@ -5,7 +5,7 @@ import { EmptyState } from "@/components/empty-state";
 import { Screen } from "@/components/app-frame";
 import { Panel } from "@/components/parts";
 import { StatusChip } from "@/components/status-chip";
-import { STAGE_STATE } from "../papers/copies-table";
+import { STAGE_STATE } from "@/lib/assessment-ui";
 import { requireStaff } from "@/lib/auth";
 import { deadline } from "@/lib/deadline";
 import { classWords } from "@/lib/needs-you";
@@ -28,7 +28,7 @@ export default async function AcrossPage() {
       title="Across every class"
       purpose="Where each class's newest assessment stands, answers waiting too long, papers not back, and children needing help in two subjects."
       action={
-        <Link href="/capture/check" className="btn">
+        <Link href="/children/assessments?status=scanned" className="btn">
           Check answers
         </Link>
       }
@@ -81,7 +81,7 @@ export default async function AcrossPage() {
                 <li key={o.section} data-class={o.section}>
                   <strong>{cls(o.band, o.section)}</strong>: <Count of="overdue-answers" n={o.answers} /> {o.answers === 1 ? "answer" : "answers"} on{" "}
                   {o.papers} {o.papers === 1 ? "paper" : "papers"} waiting for a person, the oldest read {dateWords(o.oldest)}.{" "}
-                  <Link href="/capture/check">Check them →</Link>
+                  <Link href="/children/assessments?status=scanned">Check them →</Link>
                 </li>
               ))}
             </ul>

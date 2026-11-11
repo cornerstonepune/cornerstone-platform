@@ -73,5 +73,5 @@ export function checkHref(section: string, children: string[], areas: Area[]): s
   const q = new URLSearchParams({ class: section, picked: "1", of: section, kind: "assessment", way: "each" });
   for (const c of children) q.append("c", c);
   for (const a of areas) q.append("a", `${a.skill}~${a.level}~${a.n}`);
-  return `/papers/make?${q}`;
+  return `/children/assessments?make=each&${q}`;
 }

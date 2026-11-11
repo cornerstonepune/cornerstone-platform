@@ -2,11 +2,7 @@ import { builtName, nameOf } from "@/lib/assessment-steps";
 import { classWords } from "@/lib/needs-you";
 import type { Grades } from "@/lib/queries";
 import { KIND_WORDS, type AssessmentRow } from "@/lib/queries-papers";
-import {
-  assessmentKey,
-  assessmentTitle,
-  type Named,
-} from "./assessments-table";
+import { assessmentKey, assessmentTitle, type Named } from "./assessment-key";
 
 /** The assessments with the name each is shown by: the educator's own where there is one, else built from the rows its sheets
  *  stand on (`builtName`, lib/assessment-steps.ts). `topicName` says a topic's code in the school's words. */

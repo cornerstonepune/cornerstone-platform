@@ -12,6 +12,9 @@ const nextConfig: NextConfig = {
   // Teaching left the menu on 26 Oct 2026 (goals/nav3_what_needs_doing.yaml): its old address, in a bookmark or a link, opens What needs doing.
   redirects: async () => [
     { source: "/taught", destination: "/today", permanent: false },
+    // The Papers list and its maker folded into Assessments (UI-4): the old addresses answer 308 to the new one, the query kept.
+    { source: "/papers", destination: "/children/assessments", permanent: true },
+    { source: "/papers/make", destination: "/children/assessments", permanent: true },
     // The single-activity pages folded into one (UI-3c): the old addresses answer 308 to the new one.
     { source: "/educator/activity/:code", destination: "/setup/activities/:code", permanent: true },
     { source: "/curriculum/fill/:code((?!walk$)[^/]+)", destination: "/setup/activities/:code", permanent: true },

@@ -95,7 +95,7 @@ export default async function ClassHomePapers({ params, searchParams }: Props) {
       {packsHere.map((p) => (
         <p key={`${p.week}|${p.kind}`} className="mb-3 text-[13.5px]">
           Class papers waiting for you:{" "}
-          <Link href={`/papers/approve?section=${encodeURIComponent(p.section)}&week=${encodeURIComponent(p.week)}&kind=${p.kind}`}>
+          <Link href={`/children/assessments?class=${encodeURIComponent(p.section)}&week=${encodeURIComponent(p.week)}&kind=${p.kind}`}>
             {weekWords(p.week)} · {p.kind === "assessment" ? "class assessment" : "class practice"} — {p.n} {p.n === 1 ? "paper" : "papers"}
           </Link>
         </p>
