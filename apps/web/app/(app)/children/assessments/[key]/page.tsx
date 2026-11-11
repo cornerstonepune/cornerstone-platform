@@ -17,12 +17,14 @@ import { chosenNames } from "@/lib/queries-assessment-extras";
 import { topicNamesOf } from "@/lib/queries-by-topic";
 import { STEP_WORDS, stepCells, type Counts } from "@/lib/assessment-steps";
 import { assessmentHref, paperHref, waitsFor } from "@/lib/assessment-ui";
-import { weekWords } from "@/lib/week";
+import { dateWords, weekWords } from "@/lib/week";
 import type { Column } from "@/lib/ux-rules";
+import { assessmentCard, standing } from "@/lib/queries-card";
+import { schoolToday } from "@/lib/school-clock";
 import { namedRows } from "../../../papers/named";
 import { countsOf } from "../../../papers/step-columns";
 import { assessmentKey } from "../../../papers/assessments-table";
-import { approveThisPack, signOffPaper } from "./actions";
+import { approveThisPack, awayThis, givenOnThis, signOffPaper } from "./actions";
 import { LevelSelect } from "./level-select";
 import { RenameForm } from "../rename-form";
 
@@ -71,9 +73,17 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
   const set = rest.join("~");
   if (!kind || key.split("~").length < 4) notFound();
   const filter = { kind, class: section || undefined, week: week || undefined, set: set || undefined };
-  const [{ rows: found }, copiesAll, g, order, topicNames, chosen] = await deadline(
-    Promise.all([assessmentList(filter, me), paperList(filter, me.email, me, "roll"), grades(), levels(), topicNamesOf(), chosenNames([key])]),
+  const [{ rows: found }, copiesAll, g, order, topicNames, chosen, card] = await deadline(
+    Promise.all([
+      assessmentList(filter, me), paperList(filter, me.email, me, "roll"), grades(), levels(), topicNamesOf(), chosenNames([key]),
+      assessmentCard({ class: section, week, kind, set: set || undefined }, me.email, me),
+    ]),
   );
+  // the educator's word on the card: the day it was given, and the children who were away (held for later, not missing)
+  const away = new Set(card.copies.filter((c) => c.away).map((c) => c.id));
+  const where = standing(card);
+  const rollsSaid = (cs: { roll_no: string | null; qr: string }[]) => cs.map((c) => (c.roll_no ? `roll ${c.roll_no}` : c.qr)).join(", ");
+  const retake = card.copies.filter((c) => c.retake.length);
   const a = found.find((r) => assessmentKey(r) === key);
   if (!a) notFound();
   const [named] = namedRows([a], { g, topicName: (c) => new Map(topicNames.map((t) => [t.code, t.name])).get(c) ?? c, chosen, files: new Map() });
@@ -99,6 +109,9 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
   const toPrint = !counts.home && counts.by.made > 0;
   const printed = live.length > 0 && counts.by.made === 0;
   const qrs = live.filter((p) => p.stage === "made" || p.stage === "printed").map((p) => p.qr);
+  // printed and not yet back: what the day "Given on" is said for (with the spares, which are given out too)
+  const out = live.filter((p) => p.stage === "printed");
+  const today = await schoolToday();
 
   // the page of ten copies, grouped by where each stands; the group counts add up to the ten
   const page = Math.max(1, Math.floor(Number(q.page)) || 1);
@@ -123,7 +136,7 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
       ),
     },
     { key: "settled", label: "Answers settled", num: true, width: "9rem", value: (p) => (p.answers > 0 ? `${p.answers - p.waiting} of ${p.answers}` : grp === "replaced" ? "none" : "none yet") },
-    { key: "state", label: "State", status: true, width: "13rem", value: () => grp, cell: () => <StatusChip state={GROUPS.find((x) => x.key === grp)!.state} words={grp === "judge" ? "Answers to judge" : undefined} /> },
+    { key: "state", label: "State", status: true, width: "13rem", value: () => grp, cell: (p) => <StatusChip state={GROUPS.find((x) => x.key === grp)!.state} words={grp === "judge" ? "Answers to judge" : grp === "children" && away.has(p.id) ? "Away, held for later" : undefined} /> },
     {
       key: "action",
       label: "Action",
@@ -145,6 +158,15 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
         if (grp === "results") return <Link href={p.child_id ? `/growth/${p.child_id}` : "/growth"} className="btn secondary" data-child-link="">The child</Link>;
         if (grp === "made") return <span className="b-muted">Change the level before print</span>;
         if (grp === "replaced") return <span className="b-muted">Replaced by a newer one</span>;
+        if (grp === "children")
+          return (
+            <form action={awayThis}>
+              <input type="hidden" name="key" value={key} />
+              <input type="hidden" name="qr" value={p.qr} />
+              <input type="hidden" name="away" value={away.has(p.id) ? "no" : "yes"} />
+              <button type="submit" data-away="" className="btn secondary">{away.has(p.id) ? "Back: count as missing" : "Away: hold it for later"}</button>
+            </form>
+          );
         return <span className="b-muted">{grp === "read" ? "The engine is reading it" : "With the children"}</span>;
       },
     },
@@ -200,6 +222,22 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
               </a>
             ) : null}
           </div>
+          {out.length ? (
+            <div className="mt-3">
+              <p data-testid="given">{card.given ? `Given on ${dateWords(card.given.on)}, said by ${card.given.by}.` : "Not said to be given yet."}</p>
+              <form action={givenOnThis} className="mt-1 flex flex-wrap items-end gap-2">
+                <input type="hidden" name="key" value={key} />
+                {[...out.map((c) => c.qr), ...card.spares.map((c) => c.qr)].map((qr) => (
+                  <input key={qr} type="hidden" name="qr" value={qr} />
+                ))}
+                <label className="grid gap-1">
+                  <span className="label">Day it was given</span>
+                  <input className="input" type="date" name="on" defaultValue={card.given?.on ?? today} max={today} required />
+                </label>
+                <button type="submit" className="btn secondary" data-given-save="">Given on</button>
+              </form>
+            </div>
+          ) : null}
         </section>
       ) : null}
       <div className="my-4 grid gap-4 lg:grid-cols-2" data-block="Cards">
@@ -213,6 +251,18 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
             ]}
           />
           <p className="b-caption">{settled} + {toCheck} + {notBack} = the {live.length} copies. A copy replaced by a newer one is not counted.</p>
+          {where.n > 0 ? (
+            <p data-testid="in" className="b-caption">
+              {where.inn} of {where.n} in{where.out.length ? ` · missing: ${rollsSaid(where.out)}` : ""}
+              {where.away.length ? ` · away, held for later: ${rollsSaid(where.away)}` : ""}
+            </p>
+          ) : null}
+          {card.reading ? (
+            <p data-testid="reading" className="b-caption">
+              Reading a file now: page {card.reading.pages} of {card.reading.of}
+              {card.reading.minutes ? `, about ${card.reading.minutes} ${card.reading.minutes === 1 ? "minute" : "minutes"} left` : ""}.
+            </p>
+          ) : null}
         </section>
         <section className="b-card" data-kind="skill" aria-label="What it asks">
           <h2 className="b-card-h"><KindTile kind="skill" /> What it asks</h2>
@@ -223,6 +273,18 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
           <RenameForm assessmentKey={key} name={named.name} back={assessmentHref(key)} />
         </section>
       </div>
+      {retake.length ? (
+        <div role="alert" aria-label="To photograph again" className="mb-4 p-3">
+          <p className="font-semibold">To photograph again</p>
+          <ul className="ml-5 list-disc">
+            {retake.map((c) => (
+              <li key={c.qr}>
+                {c.roll_no ? `Roll ${c.roll_no}` : c.qr}: {c.retake.join("; ")}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
       <h2 className="mb-2">Each child&rsquo;s copy</h2>
       {shown.length === 0 ? (
         <EmptyState>No copies yet. The copies appear here, one row each, when the pack is made.</EmptyState>
