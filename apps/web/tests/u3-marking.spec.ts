@@ -191,8 +191,15 @@ test("the queue of answers to check sits inside marking with its count, one clic
   await page.goto("/capture");
   const queue = page.getByRole("region", { name: "Answers to check" });
   await expect(queue.getByTestId("waiting")).toHaveText(String(n));
-  await page.locator("[data-ux=action]").getByRole("link", { name: /^check \d+ answers/i }).click();
-  await expect(page.getByText(`${n} answers left to check`)).toBeVisible();
+  const check = page.locator("[data-ux=action]").getByRole("link", { name: /^check \d+ answers/i });
+  // it opens the assessments with answers to check (the old queue page is retired): each card says how many of its
+  // answers wait to be judged, and together they are the count (opened at the link's own address, the whole page waited for)
+  await expect(check).toHaveAttribute("href", "/children/assessments?status=check");
+  await page.goto((await check.getAttribute("href"))!);
+  const chips = page.locator('[data-block="KanbanBoard"] [data-kcard] [data-block="StatusChip"]');
+  await expect(chips.first()).toBeVisible();
+  const judged = (await chips.allInnerTexts()).reduce((x, t) => x + Number(/(\d+) answers? to judge/.exec(t)?.[1] ?? 0), 0);
+  expect(judged, "the answers the list it opens says wait").toBe(n);
 });
 
 test("a paper shows its score once nothing on it waits", async ({ page }) => {

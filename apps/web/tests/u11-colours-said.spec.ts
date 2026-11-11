@@ -13,6 +13,7 @@
 import { expect, test } from "@playwright/test";
 import postgres from "postgres";
 import { aChildIn, daysAgo } from "./rows";
+import { voiceSwitch } from "./k2-rows";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -47,6 +48,8 @@ const matrix = async (topic?: string) => {
   return `/children/${id}?view=matrix${topic ? `&topic=${topic}` : ""}`;
 };
 test.beforeAll(async () => {
+  // the class picture, whose Matrix and By topic tabs hold the class's colours, is behind the educator switch (UI-3b)
+  await voiceSwitch(sql, true);
   const [{ id: tenant }] = await sql<{ id: string }[]>`select id from tenant limit 1`;
   for (const c of CHILDREN) {
     const [had] = await sql<{ id: string }[]>`select id from child_now where section = ${SECTION} and roll_no = ${c.roll}`;

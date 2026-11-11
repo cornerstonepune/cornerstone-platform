@@ -260,7 +260,8 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
           </div>
           {out.length ? (
             <div className="mt-3">
-              <p data-testid="given">{card.given ? `Given on ${dateWords(card.given.on)}, said by ${card.given.by}.` : "Not said to be given yet."}</p>
+              {/* a paper in says it was given, though no one said the day (the old card's words, kept: `standing` counts it given) */}
+              <p data-testid="given">{card.given ? `Given on ${dateWords(card.given.on)}, said by ${card.given.by}.` : where.inn ? "Papers are in, so it was given; no one said the day." : "Not said to be given yet."}</p>
               <form action={givenOnThis} className="mt-1 flex flex-wrap items-end gap-2">
                 <input type="hidden" name="key" value={key} />
                 {[...out.map((c) => c.qr), ...card.spares.map((c) => c.qr)].map((qr) => (

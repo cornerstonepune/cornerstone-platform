@@ -147,7 +147,11 @@ for (const { name, width, height } of SIZES) {
     await page.locator(`a[href="/capture?child=${kavya}"]`).first().click();
     await expect(page).toHaveURL(/child=/); // the student's own papers, not the list still on screen
     await page.getByRole("table").first().getByRole("link").first().click();
-    await expect(page.getByRole("heading", { level: 1 })).toContainText("·");
+    // the paper opens on its own screen (the old /capture/<sheet> is retired): the h1 says what is done here and the
+    // line above it names which paper, by its grade and Sr. No.
+    await expect(page).toHaveURL(/\/children\/assessments\/[^/]+\/[^/?#]+/);
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("Check the answers");
+    await expect(page.getByTestId("stage")).toContainText(" · Sr. No. ");
     await expect(page.getByRole("heading", { name: "What this paper says, by skill" })).toBeVisible();
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
     expect(overflow, "page must not scroll sideways").toBeLessThanOrEqual(1);

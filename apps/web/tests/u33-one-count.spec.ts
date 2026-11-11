@@ -60,21 +60,33 @@ test("the class papers Today counts are the copies the pages it opens show waiti
   await expect(item).toContainText("2 papers");
 
   // Assessments: the two children's copies wait to be approved; the spare rides with them, counted apart
-  await page.goto(`/children/assessments?class=${CLASS}`);
+  await page.goto(`/children/assessments?class=${CLASS}&view=table`);
   // made, none yet printed: the next thing is to print them (a class's papers are approved as they are printed)
-  await expect(ours(page).locator("[data-action=print]")).toHaveText("Print");
-  await expect(ours(page).locator('[data-status="next"]')).toHaveCount(1);
-  const status = page.locator('[data-filterbar] select[name="status"] option[value="print"]');
-  await expect(status, "the class's assessment waiting to be printed").toHaveText(/^Approved, to print \(1\)$/);
+  await expect(ours(page)).toHaveCount(1);
+  await expect(ours(page).locator('td[data-label="Waits for"]')).toHaveText(/Waits for print/);
+  await expect(ours(page).locator("[data-assessment-next]")).toHaveText("Print");
+  // the stage "Approved, to print" holds the class's one assessment
+  await page.goto(`/children/assessments?class=${CLASS}&view=table&status=print`);
+  await expect(page.locator('[data-filterbar] select[name="status"] option[value="print"]')).toHaveText("Approved, to print");
+  await expect(ours(page), "the class's assessment waiting to be printed").toHaveCount(1);
 
-  // the approve page Today's line opens: two copies to approve, the spare among the spare copies, the button counting
-  // them as Today does (goals/ux5-papers-grouped.yaml)
+  // the papers Today's line opens, and the assessment's own screen: two copies to approve, the spare among the spare
+  // copies, the approval counting them as Today does (goals/ux5-papers-grouped.yaml)
   await page.goto(`/setup/needs-doing?kind=classpaper&class=${CLASS}`);
-  await page.locator("tr[data-kind=classpaper]").filter({ hasText: `${CLASS} · class practice` }).getByRole("link").click();
-  // (the spare is a row of the pack's table, named as one: goals/uxn4-papers-to-approve.yaml)
-  await expect(page.getByRole("main").locator("tbody").getByText("to approve", { exact: true })).toHaveCount(3);
-  await expect(page.getByRole("main").locator("tbody tr").filter({ hasText: "Spare copy" })).toHaveCount(1);
-  await expect(page.getByRole("button", { name: "Approve 2 papers and 1 spare" })).toBeEnabled();
+  // each link followed at its own address, the whole page waited for
+  const line = page.locator("tr[data-kind=classpaper]").filter({ hasText: `${CLASS} · class practice` }).getByRole("link");
+  await expect(line).toHaveAttribute("href", new RegExp(`^/children/assessments\\?class=${CLASS}&`));
+  await page.goto((await line.getAttribute("href"))!);
+  const card = page.locator("[data-kcard]").filter({ hasText: CLASS });
+  await expect(card).toHaveCount(1);
+  await page.goto((await card.getAttribute("href"))!);
+  await expect(page.getByRole("region", { name: "Not printed yet, 2 copies" }).locator("tbody tr")).toHaveCount(2);
+  const spares = page.getByRole("region", { name: "Spare copies" }).locator("tbody tr");
+  await expect(spares).toHaveCount(1);
+  await expect(spares).toContainText("To approve");
+  const pack = page.getByRole("region", { name: "This pack" });
+  await expect(pack).toContainText("This approves 2 papers and 1 spare, this pack only.");
+  await expect(pack.getByRole("button", { name: "Approve the pack" })).toBeEnabled();
 });
 
 test("the question bank is one number wherever it is named", async ({ page }) => {

@@ -250,7 +250,8 @@ test("correcting a question's wording saves a new question and retires the old o
     await form.getByRole("button", { name: "Correct the wording" }).click();
     // Both answers come from the engine, which may still be cutting the scan images earlier tests asked
     // for; give it the time a busy engine takes, not a fixed five seconds.
-    await expect(page.getByRole("alert")).toContainText("Keep every number exactly as it was", { timeout: 15_000 });
+    // (the page's own alert: Next's route announcer is a second role=alert, saying the page's name)
+    await expect(page.getByRole("alert").filter({ hasText: "Keep every number exactly as it was" })).toBeVisible({ timeout: 15_000 });
     const [{ made }] = await sql<{ made: number }[]>`select count(*)::int as made from item where corrected_from = ${q.id}`;
     expect(made, "a refused correction changes nothing").toBe(0);
 

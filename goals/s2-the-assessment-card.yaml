@@ -21,7 +21,7 @@ says:
   - words: "the assessment as one card moving Made → approved for print → Given → Papers in → Read → Checked → Signed off → Results"
     proved_by: "apps/web/tests/s42-the-assessment-card.spec.ts::the card moves from Made to Results, always showing its next step"
   - words: "the system proposes each child's paper and the educator may change it"
-    proved_by: "apps/web/tests/s42-the-assessment-card.spec.ts::each child's paper has its status chip, and a place in the filter row narrows the table"
+    proved_by: "apps/web/tests/s42-the-assessment-card.spec.ts::each child's paper has its status chip"
   - words: "an educator presses \"Given on\"; an upload without it is still accepted"
     proved_by: "apps/web/tests/s42-the-assessment-card.spec.ts::papers put in without Given on are read, and the card says it was given"
   - words: "a page to retake flagged at once; an absent child's paper carried; papers printed but never returned listed"
@@ -31,7 +31,7 @@ says:
   - words: "Read (progress: page n of N, about how long)"
     proved_by: "packages/engine/tests/test_inbox.py::test_the_run_says_how_far_the_reading_has_got_while_it_reads"
   - words: "the upload box at the top, not the bottom"
-    proved_by: "apps/web/tests/s42-the-assessment-card.spec.ts::the upload box is at the top of the card, Assessments and Marking"
+    proved_by: "apps/web/tests/s42-the-assessment-card.spec.ts::the upload box is at the top of Assessments and Marking"
 manual:
   - "Once deployed: on a class's card, press Given on, put in a phone scan of the class's papers, and watch the card say page n of N while it reads."
 scenarios: []

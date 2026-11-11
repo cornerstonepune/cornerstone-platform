@@ -22,11 +22,19 @@ const FILE = "u67-achal-upload.pdf";
 const ACHAL = { email: "u67-achal@cornerstone.test", name: "U67 Achal", role: "educator", classes: [A] };
 const NEHA = { email: "u67-neha@cornerstone.test", name: "U67 Neha", role: "educator", classes: [N] };
 const NOT_YOURS = "This paper belongs to another class";
-/** The paper screen of a paper of another class is not found for her, and names nothing of it. */
+/** The paper screen of a paper of another class is not found for her, said in words, and names nothing of it. (The status
+ *  is 200, not 404: the loading screen streams first (app/(app)/loading.tsx) and Next cannot change a status once sent.) */
 const refused = async (page: Page, url: string, A_: string) => {
-  const res = await page.goto(url);
-  expect(res?.status(), url).toBe(404);
+  await page.goto(url);
+  await expect(page.getByText("This page could not be found."), url).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Check the answers" }), url).toHaveCount(0);
   await expect(page.locator("body")).not.toContainText(A_);
+};
+/** The paper screen opens on the paper itself: its own heading, and no refusal. */
+const opens = async (page: Page, url: string) => {
+  await page.goto(url);
+  await expect(page.getByRole("heading", { name: "Check the answers" }), url).toBeVisible();
+  await expect(page.getByText("This page could not be found."), url).toHaveCount(0);
 };
 type Paper = { sheet: string; capture: string; results: string[]; child: string; screen: string };
 let mine: Paper; // Achal's class, put in by Achal
@@ -85,9 +93,8 @@ async function as(browser: Browser, email: string): Promise<Page> {
 }
 
 async function open(page: Page, url: string) {
-  const res = await page.goto(url);
+  await page.goto(url);
   await expect(page.getByRole("heading", { level: 1 }).first()).toBeVisible();
-  return res;
 }
 
 const number = (t: string | null) => Number((t ?? "").replace(/\D/g, "") || 0);
@@ -173,13 +180,13 @@ test("the educator who uploaded a paper of another class sees it, and the coordi
   await open(achal, "/children/assessments?view=table");
   const classes = await achal.locator("tr[data-assessment]").evaluateAll((els) => els.map((e) => e.getAttribute("data-assessment")!.split("~")[1]));
   expect(classes.sort(), "his class, and the paper of another class he put in").toEqual([A, N]);
-  expect((await open(achal, crossed.screen))?.status(), "the paper of another class he put in opens").toBeLessThan(400);
+  await opens(achal, crossed.screen); // the paper of another class he put in opens
   // a paper of that class he did not put in: not found, and nothing of it named
   await refused(achal, hers.screen, N);
   await open(achal, "/capture");
   await expect(achal.locator("tr", { hasText: FILE }).locator('td[data-label="Copies read"]'), "his file, both its copies").toHaveText("2");
   await achal.context().close();
-  for (const p of [mine, crossed, hers]) expect((await open(page, p.screen))?.status(), p.screen).toBeLessThan(400);
+  for (const p of [mine, crossed, hers]) await opens(page, p.screen);
   for (const section of [A, N]) {
     await open(page, `/children/assessments?view=table&class=${section}`);
     await expect(page.locator("main")).toContainText(section);

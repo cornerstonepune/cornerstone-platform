@@ -4,17 +4,19 @@
  * The hand-out's rules are the engine's own tests (tests/test_paper_from_library.py). This is what a
  * teacher sees, on the copy, for a week the engine builds the way the n8n flow asks it to: the week's
  * list names each child's worksheet, a paper says which worksheet it is and opens that worksheet's own
- * page, and a spare is listed with the week it was printed for. And the week's own screen: every child with a level and
- * a reason, a level changed with its reason, the pack approved, spares with no name (from e2e.spec.ts).
+ * page, and a spare is listed with the week it was printed for. And the week's own screen (the assessment's screen, under
+ * Assessments: the old Papers to approve is retired): every child with a level and a reason, a level changed with its
+ * reason, the pack approved, spares with no name (from e2e.spec.ts).
  *
  * The class is the test's own (tests/rows.ts), four Grade 2 children made once and kept. It was live's "G2" until
  * 2026-10-01, and the week tests read live's "G3" week T2W1, so on any other database they failed or skipped
  * themselves (goals/p1-browser-tests-in-ci.yaml).
  */
-import { expect, test } from "@playwright/test";
+import { expect, test, type Page } from "@playwright/test";
 import postgres from "postgres";
 import { ENGINE_PORT } from "../playwright.config";
 import { aClass } from "./rows";
+import { weekWords } from "../lib/week";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -22,6 +24,17 @@ const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 const SECTION = "S7-TEST";
 const WEEK = "2091-W34"; // an ISO week of its own: a week is a date since CP-27
 const LIST = `/children/assessments?class=${SECTION}&week=${WEEK}&kind=practice`;
+/** The week's pack, opened the way an educator does: its one row on Assessments, under the class, week and kind. */
+async function openPack(page: Page) {
+  await page.goto(`${LIST}&view=table`);
+  const link = page.locator("a[data-assessment-row]");
+  await expect(link).toHaveCount(1);
+  await expect(link).toHaveAttribute("href", /^\/children\/assessments\/practice~/);
+  await page.goto((await link.getAttribute("href"))!); // the link's own address, the whole page waited for
+}
+// each child's copy is a row of the group of where it stands ("Not printed yet, 4 copies"), ten a page; the spares are a table apart
+const copies = (page: Page) => page.locator('section[aria-label$=" copies"]:not([data-spares]) tbody tr');
+const spareRows = (page: Page) => page.getByRole("table", { name: "Spare copies" }).locator("tbody tr");
 
 async function engine(path: string, body: object) {
   const r = await fetch(`http://127.0.0.1:${ENGINE_PORT}${path}`, {
@@ -79,16 +92,11 @@ test("a spare is listed with the week it was printed for", async ({ page }) => {
   const spares = await sql<{ qr_code: string }[]>`
     select qr_code from sheet_instance where section = ${SECTION} and week = to_date(${WEEK}, 'IYYY-"W"IW') and child_id is null`;
   expect(spares.length).toBeGreaterThan(0);
-  // spares are rows of the pack's table (goals/uxn4-papers-to-approve.yaml), after the children: read every page of it
-  await page.goto(LIST);
-  const seen: string[] = [];
-  for (;;) {
-    seen.push(await page.getByRole("table", { name: "Each child's paper this week" }).innerText());
-    const later = page.getByRole("link", { name: /^Later/ });
-    if (!(await later.count())) break;
-    await later.click();
-  }
-  for (const s of spares) expect(seen.join("\n")).toContain(`printed code ${s.qr_code}`);
+  // spares are rows of the pack's own table of spare copies, on the screen of the week's pack, which says its week
+  await openPack(page);
+  await expect(page.getByRole("region", { name: "What it asks" })).toContainText(weekWords(WEEK));
+  const seen = (await spareRows(page).allInnerTexts()).join("\n");
+  for (const s of spares) expect(seen).toContain(s.qr_code);
 });
 
 test("a paper opens from its code: the page as printed, how it was drawn, and its whole key", async ({ page }) => {
@@ -106,8 +114,8 @@ test("a paper opens from its code: the page as printed, how it was drawn, and it
     order by si.created_at limit 1`;
   expect(paper, "a paper of the week, rendered").toBeTruthy();
 
-  await page.goto(`/children/assessments?class=${paper.section}&week=${paper.week}&kind=${paper.kind}`);
-  await page.getByRole("row").filter({ hasText: `printed code ${paper.qr}` }).getByRole("link", { name: "See the paper" }).click();
+  // the paper's own page, by its printed code (the pack's row no longer links it: a copy's row is its Sr. No. and level)
+  await page.goto(`/worksheets/${paper.qr}`);
   await expect(page.getByText(`Printed code ${paper.qr}`)).toBeVisible();
   await expect(page.getByRole("table", { name: "Answer key" }).locator("tbody tr")).toHaveCount(paper.n);
   // a library worksheet says which one it is; a paper generated before the library, the pool it was drawn from
@@ -136,35 +144,25 @@ test("the week's plan shows every child with a level and a reason", async ({ pag
   const [{ n }] = await sql<{ n: number }[]>`
     select count(*)::int as n from prescription p join child_now c on c.id = p.child_id
     where c.section = ${SECTION} and p.week = to_date(${WEEK}, 'IYYY-"W"IW') and p.kind = 'practice'`;
-  await page.goto(LIST);
-  // every page of the pack's table: the children, then the spares (goals/uxn4-papers-to-approve.yaml)
-  const lines: string[] = [];
-  for (;;) {
-    const table = page.getByRole("table", { name: "Each child's paper this week" });
-    await expect(table.locator("tbody tr").first()).toBeVisible();
-    lines.push(...(await table.locator("tbody tr").allInnerTexts()));
-    const later = page.getByRole("link", { name: /^Later/ });
-    if (!(await later.count())) break;
-    await later.click();
-  }
-  const children = lines.filter((l) => !l.includes("Spare copy"));
-  expect(children).toHaveLength(n);
-  for (const row of children) {
-    expect(row).toMatch(/Easy|Medium|Hard|Advance/);
-    expect(row).toMatch(/level|showed|hand/); // every row explains itself
+  await openPack(page);
+  // every child's copy, whatever group it stands in: its level, and the reason under it
+  await expect(copies(page)).toHaveCount(n);
+  for (const row of await copies(page).all()) {
+    const level = row.locator('td[data-label="Level"]');
+    const chosen = (await level.locator("select[data-level]").count()) ? await level.locator("select[data-level]").inputValue() : await level.innerText();
+    expect(chosen).toMatch(/Easy|Medium|Hard|Advance/);
+    expect(await level.locator(".b-muted").innerText()).toMatch(/level|showed|hand/); // every row explains itself
   }
 });
 
 test("every child's paper has its own code, and no two children share questions", async ({ page }) => {
-  await page.goto(LIST);
-  // The page streams in behind its loading screen: wait for the table before reading its cells.
-  const week = page.getByRole("table", { name: "Each child's paper this week" });
-  await expect(week.locator("tbody tr").first()).toBeVisible();
-  const codes = await week.locator("tbody tr td:nth-child(5)").allInnerTexts();
-  // a cell reads "CS1A2B3C · R22-H03": the paper's own code, then the library worksheet it is
-  const real = codes.map((c) => c.match(/\bCS[0-9A-F]{6}\b/)?.[0]).filter((c): c is string => !!c);
+  // each child's copy is printed with a code of its own (the pack's screen names a copy by its Sr. No., not its code)
+  const real = (await papers()).map((r) => r.qr_code);
   expect(real.length).toBeGreaterThan(0);
+  expect(real.every((c) => /^CS[0-9A-F]{6}$/.test(c))).toBe(true);
   expect(new Set(real).size).toBe(real.length);
+  await openPack(page);
+  await expect(copies(page)).toHaveCount(real.length);
 
   const [{ shared }] = await sql<{ shared: number }[]>`
     select count(*)::int as shared from sheet_template a join sheet_template b
@@ -178,11 +176,10 @@ test("changing one child's level writes the reason and survives the next prescri
     select p.id, p.difficulty, p.rule_fired from prescription p join child_now c on c.id = p.child_id
     where c.section = ${SECTION} and p.week = to_date(${WEEK}, 'IYYY-"W"IW') and c.roll_no = '1'`;
   try {
-    await page.goto(LIST);
-    const row = page.getByRole("table", { name: "Each child's paper this week" }).locator("tbody tr").first();
-    await row.getByText("Change level").click();
-    await row.locator('select[name="difficulty"]').selectOption("Easy");
-    await row.locator('input[name="reason"]').fill("she was away all week");
+    await openPack(page);
+    const row = page.locator("form").filter({ has: page.getByLabel("Level for Sr. No. 1", { exact: true }) });
+    await row.getByLabel("Level for Sr. No. 1", { exact: true }).selectOption("Easy");
+    await row.getByLabel("Why Sr. No. 1 changes level", { exact: true }).fill("she was away all week");
     await row.getByRole("button", { name: "Change this child" }).click();
     await expect(page.getByRole("status")).toContainText("Changed");
 
@@ -191,7 +188,7 @@ test("changing one child's level writes the reason and survives the next prescri
     expect(after.difficulty).toBe("Easy");
     expect(after.rule_fired).toBe("override");
     expect(after.override_reason).toBe("she was away all week");
-    await expect(page.getByRole("table", { name: "Each child's paper this week" })).toContainText("she was away all week");
+    await expect(page.locator('section[aria-label$=" copies"]:not([data-spares])')).toContainText("she was away all week");
   } finally {
     await sql`update prescription set difficulty = ${before.difficulty}, rule_fired = ${before.rule_fired},
               override_by = null, override_reason = null where id = ${before.id}`;
@@ -202,10 +199,9 @@ test("a level change with no reason is refused and nothing moves", async ({ page
   const [before] = await sql<{ id: string; difficulty: string }[]>`
     select p.id, p.difficulty from prescription p join child_now c on c.id = p.child_id
     where c.section = ${SECTION} and p.week = to_date(${WEEK}, 'IYYY-"W"IW') and c.roll_no = '2'`;
-  await page.goto(LIST);
-  const row = page.getByRole("table", { name: "Each child's paper this week" }).locator("tbody tr").nth(1);
-  await row.getByText("Change level").click();
-  await row.locator('select[name="difficulty"]').selectOption("Advance");
+  await openPack(page);
+  const row = page.locator("form").filter({ has: page.getByLabel("Level for Sr. No. 2", { exact: true }) });
+  await row.getByLabel("Level for Sr. No. 2", { exact: true }).selectOption("Advance");
   await row.getByRole("button", { name: "Change this child" }).click();
 
   // The browser's own required-field check stops it; the row is untouched either way.
@@ -220,15 +216,18 @@ test("approving the pack marks the papers printed", async ({ page }) => {
     select id, print_status, approved_by, approved_at from sheet_instance
     where section = ${SECTION} and week = to_date(${WEEK}, 'IYYY-"W"IW') and kind = 'practice'`;
   try {
-    await page.goto(LIST);
-    await page.getByRole("button", { name: /^Approve \d+ papers?\b/ }).click();
-    await expect(page.getByRole("status")).toContainText("Approved");
+    await openPack(page);
+    // what one tap approves is said beside it: the children's papers and the spares
+    await expect(page.getByRole("region", { name: "This pack" })).toContainText(/This approves \d+ papers? and \d+ spares?, this pack only\./);
+    await page.getByRole("button", { name: "Approve the pack" }).click();
+    // approved and printed, the copies are with the children and the pack is said printed
+    await expect(page.getByRole("region", { name: "This pack" })).toContainText("The pack is printed.");
 
-    const [{ n }] = await sql<{ n: number }[]>`
-      select count(*)::int as n from sheet_instance
+    const [{ n, children }] = await sql<{ n: number; children: number }[]>`
+      select count(*)::int as n, count(*) filter (where child_id is not null)::int as children from sheet_instance
       where section = ${SECTION} and week = to_date(${WEEK}, 'IYYY-"W"IW') and kind = 'practice' and print_status = 'printed'`;
     expect(n).toBeGreaterThan(0);
-    await expect(page.getByRole("table", { name: "Each child's paper this week" })).toContainText("printed");
+    await expect(page.getByRole("table", { name: "With the children" }).locator("tbody tr")).toHaveCount(children);
   } finally {
     for (const c of codes) {
       await sql`update sheet_instance set print_status = ${c.print_status}, printed_at = null,
@@ -238,17 +237,8 @@ test("approving the pack marks the papers printed", async ({ page }) => {
 });
 
 test("spare copies are listed and carry no child's name", async ({ page }) => {
-  await page.goto(LIST);
-  const spareLines: string[] = [];
-  for (;;) {
-    const table = page.getByRole("table", { name: "Each child's paper this week" });
-    await expect(table.locator("tbody tr").first()).toBeVisible();
-    spareLines.push(...(await table.locator("tbody tr").filter({ hasText: "Spare copy" }).allInnerTexts()));
-    const later = page.getByRole("link", { name: /^Later/ });
-    if (!(await later.count())) break;
-    await later.click();
-  }
-  const shown = spareLines.join("\n").match(/\bCS[0-9A-F]{6}\b/g) ?? [];
+  await openPack(page);
+  const shown = (await spareRows(page).allInnerTexts()).join("\n").match(/\bCS[0-9A-F]{6}\b/g) ?? [];
   expect(shown.length).toBeGreaterThan(0);
   // every copy listed as a spare is one made for no child
   const [{ named }] = await sql<{ named: number }[]>`

@@ -35,8 +35,9 @@ async function onlyThese(run: () => Promise<void>) {
 
 // one table a subject, each named "Skills waiting for approval · <subject>": the rows are every table's
 const rows = (page: Page) => page.getByRole("table", { name: /^Skills waiting for approval/ }).locator("tbody tr");
-const filter = (page: Page, name: string) => page.locator("[data-filterbar]").getByLabel(name, { exact: true });
-const show = (page: Page) => page.locator("[data-filterbar]").getByRole("button", { name: "Show" }).click();
+// a filter is a dropdown named by its label (its own label holds its options' words too, so it is found by its role);
+// choosing one shows the result at once (components/filter-bar.tsx)
+const filter = (page: Page, name: string) => page.locator("[data-filterbar]").getByRole("combobox", { name, exact: true });
 // the rows the page shows once it has loaded: the count is waited for, then each row's skill read
 async function expectRows(page: Page, codes: string[]) {
   await expect(rows(page)).toHaveCount(codes.length);
@@ -74,25 +75,20 @@ test("a grade and a topic narrow the rows, and approving one approves only its r
     await expect(filter(page, "Grade")).toHaveValue("");
     await expectRows(page, DRAFTS);
     await filter(page, "Grade").selectOption({ label: "Grade 2 (2)" });
-    await show(page);
     await expect(page).toHaveURL(/[?&]grade=G2(&|$)/);
     await expectRows(page, ["ADD.2D2D", "SUB.2D2D"]);
 
     // a topic, under every grade: only its skills
     await filter(page, "Grade").selectOption({ value: "" });
-    await show(page);
     await expect(page).not.toHaveURL(/[?&]grade=G2/);
     await expectRows(page, DRAFTS);
     await filter(page, "Topic").selectOption({ label: "Division (1)" });
-    await show(page);
     await expect(page).toHaveURL(/[?&]topic=DIV(&|$)/);
     await expectRows(page, ["DIV.3D1D"]);
     await filter(page, "Topic").selectOption({ value: "" });
-    await show(page);
     await expect(page).not.toHaveURL(/[?&]topic=DIV/);
     // a skill whose topic is not taught yet is the one the Taught choice keeps
     await filter(page, "Taught").selectOption({ label: "Not taught yet (1)" });
-    await show(page);
     await expect(page).toHaveURL(/[?&]taught=no(&|$)/);
     await expectRows(page, ["DIV.3D1D"]);
 
@@ -107,7 +103,9 @@ test("a grade and a topic narrow the rows, and approving one approves only its r
     await expectRows(page, ["SUB.2D2D"]);
     await page.locator('tr[data-row="SUB.2D2D"]').getByRole("button", { name: `Approve ${sub}`, exact: true }).click();
     await expect(page.getByTestId("stage")).toHaveText("2 waiting");
-    await expect(rows(page)).toHaveCount(0);
+    // Grade 2 has none left: its choice goes from the filter row, and the rows are the other grades' two that still wait
+    await expect(filter(page, "Grade").locator("option", { hasText: /^Grade 2/ })).toHaveCount(0);
+    await expectRows(page, ["ADD.1D1D", "DIV.3D1D"]);
     const after = await sql<{ code: string; status: string; ratified_by: string | null }[]>`
       select code, status, ratified_by from skill where code = any(${DRAFTS}) order by code`;
     expect(after).toEqual([

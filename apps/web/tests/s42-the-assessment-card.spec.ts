@@ -1,7 +1,8 @@
 /**
  * S42 — one assessment as one card, Made to Results (goals/s2-the-assessment-card.yaml). Slice S2 of the scope Nimish
  * locked on 2026-10-22: "the assessment as one card moving Made → approved for print → Given → Papers in → Read →
- * Checked → Signed off → Results".
+ * Checked → Signed off → Results". The card is the assessment's own screen now (the old /papers/card is retired): its
+ * steps, each child's copy by its Sr. No. in the group of where it stands, and the one thing to do next.
  *
  * A Grade 2 class of the test's own (made once and kept: evidence is append-only), and each run its own assessments,
  * their printed codes new each run, so the card starts at Made every time: a class practice paper for Asha, Bina and
@@ -14,6 +15,8 @@ import { aClass, aReadPaper } from "./rows";
 import { assessmentHref } from "../lib/assessment-ui";
 
 test.describe.configure({ mode: "serial" });
+// a laptop's width: at 1280 px the copies' Action column runs under the rail (reported; the table and rail are shared blocks)
+test.use({ viewport: { width: 1440, height: 900 } });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 const SECTION = "S42-CLASS";
 const RUN = randomBytes(2).toString("hex").toUpperCase();
@@ -26,7 +29,13 @@ let tenant = "";
 
 // the assessment's own screen: its key is the kind, the class, the week and the skill set
 const card = (kind: string) => assessmentHref([kind, SECTION, week, ws.set].join("~"));
-const at = (page: Page) => page.getByRole("list", { name: "Where it stands" }).locator("[aria-current=step]");
+// the one thing to do next, said under the steps: "1 answer to judge. Check 1 answer."
+const next = (page: Page) => page.locator('[data-block="Stepper"] + p.b-caption');
+const steps = (page: Page) => page.locator('[data-block="Stepper"]');
+// one child's copy by its Sr. No. (names stay off the screen), whichever group it stands in
+const copy = (page: Page, roll: string) =>
+  page.locator('section[aria-label$=" copies"]:not([data-spares]) tbody tr').filter({ has: page.locator('td[data-label="Sr. No."]', { hasText: new RegExp(`^${roll}$`) }) });
+const ROLL = { Asha: "1", Bina: "2", Chetan: "3" };
 
 test.beforeAll(async () => {
   kids = await aClass(sql, SECTION, "G2", ["Asha", "Bina", "Chetan"]);
@@ -56,8 +65,8 @@ test.afterAll(async () => {
   await sql.end();
 });
 
-test("the upload box is at the top of the card, Assessments and Marking", async ({ page }) => {
-  for (const path of [card("practice"), "/children/assessments", "/capture"]) {
+test("the upload box is at the top of Assessments and Marking", async ({ page }) => {
+  for (const path of ["/children/assessments", "/capture"]) {
     await page.goto(path);
     if (path === "/children/assessments") {
       // Assessments: the upload box is one of its two blocks above the list (goals/asm_assessments_page.yaml)
@@ -83,11 +92,10 @@ test("the card moves from Made to Results, always showing its next step", async 
   await sql`update sheet_instance set print_status = 'printed', approved_by = 'e2e', approved_at = now(), printed_at = now()
             where qr_code in ${sql(Object.values(QR))}`;
   await page.goto(card("practice"));
-  await expect(at(page)).toContainText("Given");
+  await expect(next(page)).toHaveText("With the children. Upload.");
   await page.getByLabel("Day it was given").fill(new Date().toLocaleDateString("en-CA", { timeZone: "Asia/Kolkata" }));
   await page.getByRole("button", { name: "Given on" }).click();
   await expect(page.getByTestId("given")).toContainText("Given on");
-  await expect(at(page)).toContainText("Papers in");
   await expect(page.getByTestId("in")).toHaveText(/0 of 3 in · missing: roll 1, roll 2, roll 3/);
 
   const asha = await aReadPaper(sql, { qr: QR.Asha, child: kids.Asha, template: ws.id, items: ws.item_ids.slice(0, 2), reads: [{ status: "correct", read: "1" }, { status: "correct", read: "2" }] });
@@ -95,22 +103,24 @@ test("the card moves from Made to Results, always showing its next step", async 
   await page.reload();
   await expect(page.getByTestId("in")).toHaveText(/2 of 3 in · missing: roll 3/);
   // Chetan was away: his paper is held for later, not missing
-  await page.getByRole("row").filter({ hasText: "Chetan" }).getByRole("button", { name: "Away: hold it for later" }).click();
+  await copy(page, ROLL.Chetan).getByRole("button", { name: "Away: hold it for later" }).click();
   await expect(page.getByTestId("in")).toHaveText(/2 of 3 in · away, held for later: roll 3/);
-  await expect(at(page)).toContainText("Checked");
-  await expect(page.getByRole("link", { name: "Check them →" })).toBeVisible();
+  // an answer waits for a person: checking is next, and Bina's paper opens to be checked
+  await expect(next(page)).toHaveText("1 answer to judge. Check 1 answer.");
+  await expect(copy(page, ROLL.Bina).getByRole("link", { name: "Check this paper" })).toBeVisible();
 
   // a person settles Bina's answer, which signs her paper off; Asha's waits to be signed off
   await sql`select resolve_result(${bina.results[1]}::uuid, 'correct', '{}', 'e2e')`;
   await page.reload();
-  await expect(at(page)).toContainText("Signed off");
-  await expect(page.getByRole("link", { name: "Sign them off →" })).toBeVisible();
+  await expect(next(page)).toHaveText("To sign off. Sign off 1 paper.");
+  await expect(copy(page, ROLL.Asha).getByRole("button", { name: "Sign it off" })).toBeVisible();
   await sql`select confirm_results(${kids.Asha}::uuid, 'e2e', ${asha.capture}::uuid)`;
   await page.reload();
-  await expect(at(page)).toContainText("Results");
-  const asha_row = page.getByRole("row").filter({ hasText: "Asha" });
-  await expect(asha_row).toContainText("2 of 2");
-  await asha_row.getByRole("link", { name: "Asha" }).click();
+  // both papers in are signed off: their results are in (Chetan's, held for later, is still with him)
+  await expect(steps(page)).toContainText("Results in 2 of 3");
+  const asha_row = copy(page, ROLL.Asha);
+  await expect(asha_row.locator('td[data-label="Score"]')).toContainText("2 of 2");
+  await asha_row.getByRole("link", { name: "The child" }).click();
   await expect(page).toHaveURL(new RegExp(`/growth/${kids.Asha}$`));
 });
 
@@ -131,7 +141,7 @@ test("a page to photograph again is flagged, a child away is carried, the papers
   await expect(flag).toContainText("Roll 3: page 2 is not in the file");
   // a paper not back is listed by roll; away, it is carried; back, it is missing again
   await expect(page.getByTestId("in")).toHaveText(/missing: [^·]*roll 3/);
-  const chetan = page.getByRole("row").filter({ hasText: "Chetan" });
+  const chetan = copy(page, ROLL.Chetan);
   await chetan.getByRole("button", { name: "Away: hold it for later" }).click();
   await expect(page.getByTestId("in")).toHaveText(/away, held for later: roll 3/);
   await chetan.getByRole("button", { name: "Back: count as missing" }).click();
@@ -143,7 +153,8 @@ test("papers put in without Given on are read, and the card says it was given", 
   await page.goto(card("assessment"));
   await expect(page.getByTestId("given")).toHaveText("Papers are in, so it was given; no one said the day.");
   await expect(page.getByTestId("in")).toHaveText(/1 of 2 in · missing: roll 2/);
-  await expect(at(page)).toContainText("Papers in");
+  // the paper in is read and settled: signing it off is what is next, while Bina's is still out (above)
+  await expect(next(page)).toHaveText("To sign off. Sign off 1 paper.");
 });
 
 test("while a file is read the card says page n of N and about how long", async ({ page }) => {
@@ -159,23 +170,13 @@ test("while a file is read the card says page n of N and about how long", async 
   }
 });
 
-test("each child's paper has its status chip, and a place in the filter row narrows the table", async ({ page }) => {
+test("each child's paper has its status chip", async ({ page }) => {
   await page.goto(card("practice"));
-  const table = page.getByRole("table", { name: "Each child's paper" });
-  await expect(table).toBeVisible();
+  const rows = page.locator('section[aria-label$=" copies"]:not([data-spares]) tbody tr');
+  await expect(rows.first()).toBeVisible();
   // every row says where it is in the one chip, icon and word
-  const rows = await table.locator("tbody tr").count();
-  expect(rows).toBeGreaterThan(0);
-  await expect(table.locator("tbody [data-status]")).toHaveCount(rows);
-  for (const chip of await table.locator("tbody [data-status]").all()) await expect(chip.locator("svg")).toHaveCount(1);
-  // the filter row offers the places the card's papers are at; one narrows the table to them
-  await expect(page.locator("[data-filterbar]")).toBeVisible();
-  const places = await page.locator("[data-filterbar] select[name=where] option[value]:not([value=''])").evaluateAll((os) => os.map((o) => (o as HTMLOptionElement).value));
-  expect(places.length).toBeGreaterThan(0);
-  await page.goto(`${card("practice")}?where=${encodeURIComponent(places[0])}`);
-  await expect(page.locator("[data-active-filters]")).toContainText("Where it is:");
-  const narrowed = page.getByRole("table", { name: "Each child's paper" });
-  await expect(narrowed).toBeVisible(); // the table streams in after the filter row: count its rows once it is there
-  expect(await narrowed.locator("tbody tr").count()).toBeLessThanOrEqual(rows);
-  expect(await narrowed.locator("tbody tr").count()).toBeGreaterThan(0);
+  const n = await rows.count();
+  expect(n).toBeGreaterThan(0);
+  await expect(rows.locator('td[data-label="State"] [data-status]')).toHaveCount(n);
+  for (const chip of await rows.locator('td[data-label="State"] [data-status]').all()) await expect(chip.locator("svg")).toHaveCount(1);
 });

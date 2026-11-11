@@ -7,6 +7,7 @@
  * There's just one table which very clearly shows how the engine is improving or not".
  */
 import { aChildIn } from "./rows";
+import { voiceSwitch } from "./k2-rows";
 import { expect, type Page, test } from "@playwright/test";
 import postgres from "postgres";
 
@@ -94,6 +95,7 @@ test("every heading sits over its own column, on every page with a table", async
   // the class's results by topic and its children against the topics are tabs of the class picture (UI-3i); the worksheets'
   // tables are on a skill's own page since the Worksheets list went
   const [{ id: classId }] = await sql<{ id: string }[]>`select id from school_class where label = ${grid.section} limit 1`;
+  await voiceSwitch(sql, true); // the class picture is behind the educator switch (UI-3b)
   for (const path of ["/", "/children/assessments?view=table", "/capture", "/children", "/make", "/library", "/setup/skill-sets/ADD.2D2D?level=all", `/children/${classId}?view=topic`, `/children/${classId}?view=matrix`]) {
     await page.goto(path);
     expect(await offColumn(page), path).toEqual([]);
