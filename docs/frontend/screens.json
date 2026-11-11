@@ -663,6 +663,9 @@
         "CP-8"
       ],
       "exists": "yes (/educator/period)",
+      "folds": [
+        "/educator/period/[id]"
+      ],
       "eyebrow": "Period · 09:15 · K2 Red · Numeracy",
       "title": "the session's name",
       "purpose": "the activity's objective in one line",

@@ -43,7 +43,7 @@ export default async function MovesPage({ searchParams }: Props) {
   const stay = (extra: Record<string, string>) => `${HERE}?${new URLSearchParams({ fn: String(fn.number), class: klass.id, ...extra })}`;
   const grid = gridOf(weeks, { looks: await subjectLooks(),
     clashes,
-    href: (day, p) => (!coordinator ? `/educator/period/${p}?class=${klass.id}&day=${day}` : !pick ? stay({ from: `${day}~${p}` }) : stay({ from: pick, to: `${day}~${p}` })),
+    href: (day, p) => (!coordinator ? `/period/${p}?class=${klass.id}&day=${day}` : !pick ? stay({ from: `${day}~${p}` }) : stay({ from: pick, to: `${day}~${p}` })),
   });
   const [toDay, toPeriod] = (q.to ?? "").split("~");
   const ready = coordinator && fromDay && toDay && ords.has(fromPeriod) && ords.has(toPeriod);
