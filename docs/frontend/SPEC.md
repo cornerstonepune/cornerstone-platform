@@ -1177,6 +1177,7 @@ Rail (Connected to): Fortnight 9 · Timetable · Classes and children
 Main action: Add a grant · Next step: Classes and children
 Data: staff, staff_role_grant, role; session states; educator_note statuses; note_claim decisions
 Empty: none · Phone: the table scrolls sideways in its own box
+Folds in: /staff
 Every control on the screen (10), and what the test does with each:
 - **row** each staff row: opens that person's grants fold
 - **fold** a person's grants

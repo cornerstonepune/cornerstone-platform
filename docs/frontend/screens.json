@@ -4316,6 +4316,9 @@
         "no sort, rank, ordinal or colour grading on the three numbers; the table cannot be sorted by them",
         "a grant edit is a new row or a valid_to, never a delete (row count never drops)",
         "no staff name appears unless the viewer is in the everything group (names are pii)"
+      ],
+      "folds": [
+        "/staff"
       ]
     },
     {

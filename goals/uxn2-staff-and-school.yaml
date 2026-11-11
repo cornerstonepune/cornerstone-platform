@@ -9,7 +9,7 @@ says:
   - words: "the staff table of who teaches which class and subject is edited on a Staff page, not by commands"
     proved_by: "apps/web/tests/u74-staff-grants.spec.ts::1. a grant is given from today and listed, the log has it, and the rest of the person is as it was"
   - words: "Use filters wherever possible"
-    proved_by: "apps/web/tests/u74-staff-grants.spec.ts::9. the filter row finds a person, on Staff and classes and on the old Staff page"
+    proved_by: "apps/web/tests/u74-staff-grants.spec.ts::9. the filter row finds a person on Staff and classes"
   - words: "Ayush is a part of Cornerstone. He has the account"
     proved_by: "apps/web/tests/u53-staff-and-school.spec.ts::School shows each class with its grade, its children and who teaches it"
 manual:

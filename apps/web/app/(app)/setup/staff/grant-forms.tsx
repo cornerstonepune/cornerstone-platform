@@ -125,7 +125,7 @@ export function AddGrant({
               />
             </div>
           ) : null}
-          <p className="note m-0 md:col-span-2">
+          <p className="m-0 text-[13px] text-[var(--ink-muted)] md:col-span-2">
             It starts today and stays on the list when it ends.
           </p>
           <button

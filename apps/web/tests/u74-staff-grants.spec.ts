@@ -5,8 +5,8 @@
  *   1 a grant is given from today and listed, and nothing else of the person changes        5 a class that is not on the list is refused, nothing changes
  *   2 a subject role asks for a subject, a class role does not                                6 an educator cannot change grants
  *   3 a clash is answered in the table's own words and stands only with a reason              7 no name or email is in the address
- *   4 ending keeps the row, marks it Ended and is logged                                      8 the old Staff page only reads
- *   9 the filter row finds a person, on Staff and classes and on the old page
+ *   4 ending keeps the row, marks it Ended and is logged                                      8 the old /staff answers 308 to Staff and classes
+ *   9 the filter row finds a person
  * Rows are the test's own (two people and two classes with a random label, children named from tests/fake-names.ts), made once per run.
  */
 import { expect, test, type Page } from "@playwright/test";
@@ -155,24 +155,19 @@ test("7. no name or email is in the address, before or after a grant is given or
   for (const bad of [TWO.name, TWO.email, "grants person", "@"]) expect(url).not.toContain(bad.toLowerCase());
 });
 
-test("8. the old Staff page only reads: no form, no Save, no Add, a name opens the person on Staff and classes, and it says where to change", async ({ page }) => {
-  await page.goto("/staff?role=educator&q=grants%20person", { waitUntil: "networkidle" });
-  await expect(page.locator("[data-filterbar]")).toBeVisible();
-  const row = page.getByRole("table", { name: "Staff" }).locator(`tr[data-person="${ONE.email}"]`);
-  await expect(row).toBeVisible();
-  // a name opens that person where the change is made
-  await expect(row.getByRole("link", { name: "Grants Person One" })).toHaveAttribute("href", /^\/setup\/staff\?person=[0-9a-f-]{36}/);
-  const main = page.locator("main");
-  await expect(main.locator("form:not([data-filterbar] form)").filter({ hasNot: page.locator("[type=search]") })).toHaveCount(0);
-  await expect(main.getByRole("button", { name: /^(Save|Add a member)/ })).toHaveCount(0);
-  await expect(main.getByRole("link", { name: "Staff and classes" })).toHaveAttribute("href", "/setup/staff");
+test("8. the old Staff address answers 308 to Staff and classes, and keeps the filter it was given", async ({ request }) => {
+  for (const [from, to] of [["/staff", "/setup/staff"], ["/staff?q=grants", "/setup/staff?q=grants"]]) {
+    const res = await request.get(from, { maxRedirects: 0 });
+    expect(res.status(), from).toBe(308);
+    const at = new URL(res.headers().location, "http://x");
+    expect(at.pathname + at.search, from).toBe(to);
+  }
 });
 
-test("9. the filter row finds a person, on Staff and classes and on the old Staff page", async ({ page }) => {
-  for (const path of ["/setup/staff", "/staff"]) {
-    await page.goto(`${path}?q=grants%20person%20one`, { waitUntil: "networkidle" });
-    await expect(page.locator("[data-filterbar]")).toBeVisible();
-    await expect(page.locator("main")).toContainText("Grants Person One");
-    await expect(page.locator("main")).not.toContainText("Grants Person Two");
-  }
+test("9. the filter row finds a person on Staff and classes", async ({ page }) => {
+  await page.goto("/setup/staff?q=grants%20person%20one", { waitUntil: "networkidle" });
+  await expect(page.locator("[data-filterbar]")).toBeVisible();
+  const table = page.locator("main [data-block=DataTable]");
+  await expect(table).toContainText("Grants Person One");
+  await expect(table).not.toContainText("Grants Person Two");
 });

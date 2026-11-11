@@ -224,3 +224,52 @@ export async function setupCounts(): Promise<SetupCounts> {
            (select count(*)::int from child where tenant_id = ${school()} and active) as children`;
   return r;
 }
+
+/** A date as the wireframes write it in a line of words: 2-Nov. `YYYY-MM-DD` in, the school's own day. */
+export const shortDate = (d: string) => new Date(`${d}T00:00:00Z`).toLocaleDateString("en-GB", { day: "numeric", month: "short", timeZone: "UTC" }).replace(" ", "-");
+
+const onDay = () => sql`to_char(l.at at time zone (select value #>> '{}' from config where key = 'school.time_zone'), 'YYYY-MM-DD')`;
+
+export type Change = { id: string; line: string; note: string; at: string };
+
+/** The latest changes to grants, newest first: who was given or lost what, and who did it. The change log holds ids and codes; the names
+ *  come from the staff list (pii, the everything group only). Nothing is deleted, so an end is a line of its own. */
+export async function grantChanges(limit = 5): Promise<Change[]> {
+  const rows = await sql<{ id: string; op: string; staff: string | null; role: string | null; class: string | null; subject: string | null; from: string | null; by: string | null; at: string }[]>`
+    select l.id::text, l.op, l.after ->> 'staff_id' as staff, r.label as role, l.after ->> 'class' as class, coalesce(sj.label, sj.name) as subject,
+           l.after ->> 'from' as "from", l.staff_id::text as by, ${onDay()} as at
+    from change_log l
+    left join role r on r.tenant_id = l.tenant_id and r.code = l.after ->> 'role'
+    left join subject sj on sj.tenant_id = l.tenant_id and sj.code = l.after ->> 'subject'
+    where l.tenant_id = ${school()} and l.table_name = 'staff_role_grant' and l.op in ('give', 'end')
+    order by l.at desc, l.id limit ${limit}`;
+  const names = new Map((await staffList()).map((p) => [p.id, p.name]));
+  return rows.map((r) => {
+    const who = (r.staff && names.get(r.staff)) || "A member of staff";
+    const what = [r.role, r.class ?? "every class", r.subject ?? "every subject"].join(", ");
+    const by = (r.by && names.get(r.by)) || "the school";
+    return r.op === "give"
+      ? { id: r.id, line: `${who}: ${what}, from ${shortDate(r.from ?? r.at)}`, note: `Added by ${by}`, at: r.at }
+      : { id: r.id, line: `${who}: ${what}, ended ${shortDate(r.at)}`, note: `Ended by ${by} · nothing deleted`, at: r.at };
+  });
+}
+
+export type SchoolFacts = {
+  campus: string;
+  year: { label: string; from: string; to: string } | null;
+  fortnights: { kind: string; n: number }[];
+  now: { number: number | null; from: string; to: string } | null;
+};
+
+/** The school in a few lines: its campus, this academic year, its fortnights by kind (as the rows name them) and the fortnight we are in. */
+export async function schoolFacts(): Promise<SchoolFacts> {
+  const [campus] = await sql<{ name: string }[]>`select name from campus where tenant_id = ${school()} order by created_at limit 1`;
+  const [year] = await sql<{ id: string; label: string; from: string; to: string }[]>`
+    select id::text, label, to_char(starts_on, 'YYYY-MM-DD') as "from", to_char(ends_on, 'YYYY-MM-DD') as "to"
+    from academic_year where tenant_id = ${school()} and ${today()} between starts_on and ends_on limit 1`;
+  const kinds = year ? await sql<{ kind: string; n: number }[]>`select kind, count(*)::int as n from fortnight where academic_year_id = ${year.id}::uuid group by kind order by min(starts_on)` : [];
+  const [now] = await sql<{ number: number | null; from: string; to: string }[]>`
+    select number, to_char(starts_on, 'YYYY-MM-DD') as "from", to_char(ends_on, 'YYYY-MM-DD') as "to" from fortnight
+    where tenant_id = ${school()} and ${today()} between starts_on and ends_on order by starts_on limit 1`;
+  return { campus: campus?.name ?? "", year: year ? { label: year.label, from: year.from, to: year.to } : null, fortnights: kinds, now: now ?? null };
+}
