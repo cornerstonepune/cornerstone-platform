@@ -84,8 +84,9 @@ const paperRows = (where: ReturnType<typeof sql>, actor: string) => sql<PaperRow
 // (rule 6) — a queue of papers is still a list of children.
 export async function papersToApprove(actor: string, me: Who): Promise<PaperRow[]> {
   const rows = await paperRows(
+    // a voided copy is no paper of the class's (the Assessments list leaves it out too): its answers wait for no one
     sql`exists (select 1 from capture c where c.sheet_instance_id = si.id and c.superseded_by is null)
-        and ${seesSheet(me, sql`si.id`)}`,
+        and si.print_status <> 'void' and ${seesSheet(me, sql`si.id`)}`,
     actor,
   );
   // each paper opens its own screen under Assessments (the paper, `/children/assessments/[key]/[roll]`)
@@ -319,7 +320,9 @@ export async function checkQueue(me: Who): Promise<QueueEntry[]> {
   return sql<QueueEntry[]>`
     with live as (
       select r.id, r.rid, r.status, r.state, r.raw_read, r.item_id, c.sheet_instance_id, c.path, c.created_at as captured
-      from item_result r join capture c on c.id = r.capture_id where c.superseded_by is null
+      from item_result r join capture c on c.id = r.capture_id
+      join sheet_instance vs on vs.id = c.sheet_instance_id and vs.print_status <> 'void' -- a voided copy's answers wait for no one
+      where c.superseded_by is null
     ),
     spot as (
       select distinct on (l.sheet_instance_id) l.id, l.state

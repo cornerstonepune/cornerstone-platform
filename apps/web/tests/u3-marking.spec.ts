@@ -130,7 +130,8 @@ async function counts(where = sql`true`): Promise<Counts> {
            count(*) filter (where ${STANDING} = 'waiting')::int as waiting
     from item_result r join capture c on c.id = r.capture_id join sheet_instance si on si.id = c.sheet_instance_id
     join child_now ch on ch.id = si.child_id join sheet_template t on t.id = si.sheet_template_id
-    where c.superseded_by is null and ${where}`;
+    -- a voided copy is no paper of the class's: Upload papers and the Assessments list both leave it out
+    where c.superseded_by is null and si.print_status <> 'void' and ${where}`;
   return c;
 }
 
@@ -185,8 +186,8 @@ test("by class, by child and by worksheet, each count is where the engine says e
 
 test("the queue of answers to check sits inside marking with its count, one click away", async ({ page }) => {
   const [{ n }] = await sql<{ n: number }[]>`
-    select count(*)::int as n from item_result r join capture c on c.id = r.capture_id
-    where c.superseded_by is null and r.status in ('unreadable', 'needs_teacher')`;
+    select count(*)::int as n from item_result r join capture c on c.id = r.capture_id join sheet_instance si on si.id = c.sheet_instance_id
+    where c.superseded_by is null and si.print_status <> 'void' and r.status in ('unreadable', 'needs_teacher')`;
   expect(n).toBeGreaterThanOrEqual(3);
   await page.goto("/capture");
   const queue = page.getByRole("region", { name: "Answers to check" });
