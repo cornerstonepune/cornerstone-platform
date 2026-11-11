@@ -117,12 +117,12 @@ test("an educator reads an English skill's levels, kinds and mistakes and approv
 test("every member of staff is offered the approval", async ({ page, browser }) => {
   await withdraw(); // the first test approved them
   // the coordinator's session (the project's own)
-  await page.goto(`/skill-sets/${skill.code}`);
+  await page.goto(`/setup/skill-sets/${skill.code}`);
   await expect(page.locator('section[aria-label="Easy"]').getByRole("button", { name: "Approve Easy" })).toBeVisible();
   await expect(page.getByRole("button", { name: `Approve “${way.words}”` })).toBeVisible();
   // and the educator's, who is not the coordinator
   const edu = await asEducator(browser);
-  await edu.goto(`/skill-sets/${skill.code}`);
+  await edu.goto(`/setup/skill-sets/${skill.code}`);
   await expect(edu.locator('section[aria-label="Easy"]').getByRole("button", { name: "Approve Easy" })).toBeVisible();
   await expect(edu.getByRole("button", { name: `Approve “${way.words}”` })).toBeVisible();
   await expect(edu.getByText("Waiting for the coordinator")).toHaveCount(0);

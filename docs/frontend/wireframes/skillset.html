@@ -40,27 +40,43 @@
         <li><i class="ic s" data-icon="trail"></i></li>
         <li><a data-trail href="#skill-sets">Skill sets</a></li>
         <li><i class="ic s" data-icon="trail"></i></li>
-        <li aria-current="page"><span data-source="skill.name">Counting and place value</span></li>
+        <li aria-current="page"><span data-source="skill.name">Reading numbers</span></li>
       </ol>
       <div class="page">
         <main class="main">
           <div class="head">
-            <p class="eyebrow"><i class="ic s" data-icon="skill"></i>Skill set · Grades 1 to 4</p>
-            <h1 class="title" data-source="skill.name">Counting and place value</h1>
-            <p class="purpose">A skill set is what the school teaches and tests together, from one to four grades. It points at the skills the system reads a child on; it never scores a child itself.</p>
+            <p class="eyebrow"><i class="ic s" data-icon="skill"></i>Curriculum · Skill set · <span data-source="skill.grade">Grade 3</span></p>
+            <h1 class="title" data-source="skill.learning_objective">Reads and writes numbers to 1000</h1>
+            <p class="purpose">What this skill looks like at each level, each with a real question from the bank, the kinds of question, and the mistakes it watches for.</p>
           </div>
+          <div class="keyrow"><button class="btn press" data-el="9" type="button" data-source="skill.status skill.ratified_by">Approve the skill</button></div>
           <h2 class="title-small">Skills it covers</h2>
           <div class="cards" data-block="Cards">
-            <article class="card" data-kind="skill"><div class="card-h"><span class="tile"><i class="ic" data-icon="skill"></i></span><span data-source="registry_skill.name skill.registry_codes">Counting by ones</span></div><div class="card-b"><a class="btn press" data-el="0" href="#skill">Open the skill</a></div></article>
-            <article class="card" data-kind="skill"><div class="card-h"><span class="tile"><i class="ic" data-icon="skill"></i></span><span data-source="registry_skill.name skill.registry_codes">Counting in tens</span></div><div class="card-b"><a class="btn press" data-el="0" href="#skill">Open the skill</a></div></article>
-            <article class="card" data-kind="skill"><div class="card-h"><span class="tile"><i class="ic" data-icon="skill"></i></span><span data-source="registry_skill.name skill.registry_codes">Reading big numbers</span></div><div class="card-b"><a class="btn press" data-el="0" href="#skill">Open the skill</a></div></article>
+            <article class="card" data-kind="skill"><div class="card-h"><span class="tile"><i class="ic" data-icon="skill"></i></span><span data-source="registry_skill.name skill.registry_codes">Counting by ones</span></div><div class="card-b"><a class="btn press" data-el="0" href="#skill">Open the skill</a></div></article>\n            <article class="card" data-kind="skill"><div class="card-h"><span class="tile"><i class="ic" data-icon="skill"></i></span><span data-source="registry_skill.name skill.registry_codes">Counting in tens</span></div><div class="card-b"><a class="btn press" data-el="0" href="#skill">Open the skill</a></div></article>
           </div>
-          <details class="details" data-block="Details"><summary data-el="1"><i class="ic s" data-icon="details"></i>Each level in a sentence</summary><div><dl class="kv" data-source="skill_level.difficulty skill_level.looks_like">
-            <dt>Easy</dt><dd>Counts the bundles of ten, with a prompt.</dd>
-            <dt>Medium</dt><dd>Counts in tens up to 50 with bundles.</dd>
-            <dt>Hard</dt><dd>Counts in tens up to 100 and adds loose ones.</dd>
-            <dt>Advance</dt><dd>Says how many without recounting.</dd>
-          </dl></div></details>
+          <h2 class="title-small">Which grade each level belongs to</h2>
+          <div class="filters"><label class="sel">Advance <select data-el="2" data-source="skill.level_band"><option>Grade 3</option><option>Grade 4</option></select></label>
+            <button class="btn press" data-el="3" type="button" data-source="skill.level_band_by skill.level_band_at">Save the grades</button></div>
+          <h2 class="title-small">At each level</h2>
+          <div class="cards" data-block="Cards">
+            <article class="card" data-kind="skill"><div class="card-h"><span class="tile"><i class="ic" data-icon="skill"></i></span>Easy</div><div class="card-b"><span data-source="skill_level.looks_like">Reads three-digit numbers.</span>
+              <a data-el="1" href="#question" data-source="item.item_key item.stem">For example: 3 tens and 4 ones</a>
+              <span class="chip" data-state="ok" data-source="skill.level_approved"><i class="ic s" data-icon="done"></i>Approved</span>
+              <button class="btn press" data-el="4" type="button" data-source="skill.level_approved">Approve this level</button>
+              <button class="btn press" data-el="7" type="button">More like this</button></div></article>
+            <article class="card" data-kind="skill"><div class="card-h"><span class="tile"><i class="ic" data-icon="skill"></i></span>Medium</div><div class="card-b"><span data-source="skill_level.looks_like">Writes three-digit numbers.</span>
+              <a data-el="1" href="#question" data-source="item.item_key item.stem">For example: 3 tens and 4 ones</a>
+              <span class="chip" data-state="ok" data-source="skill.level_approved"><i class="ic s" data-icon="done"></i>Approved</span>
+              <button class="btn press" data-el="4" type="button" data-source="skill.level_approved">Approve this level</button>
+              <button class="btn press" data-el="7" type="button">More like this</button></div></article>
+          </div>
+          <details class="details" data-block="Details"><summary data-el="13"><i class="ic s" data-icon="details"></i>Kinds of question</summary><div><ul data-source="question_type.words"><li>Fill in the missing number</li></ul>
+            <a data-el="8" href="#skillset" data-source="skill_level_question_type.stopped_at skill_level_question_type.stopped_by">Stop using “Fill in the missing number” at Easy</a></div></details>
+          <details class="details" data-block="Details"><summary data-el="14"><i class="ic s" data-icon="details"></i>How it is asked (English)</summary><div>
+            <button class="btn press" data-el="5" type="button" data-source="approval.decision">Approve this way of asking</button>
+            <a data-el="6" href="#skillset" data-source="english_sample.text">Change sample 1</a></div></details>
+          <h2 class="title-small">Worksheets</h2>
+          <div class="filters"><a class="chip" data-el="10" href="#skillset" data-source="item.skill_set_code item.difficulty">Easy · 12</a></div>
           <div class="card">
             <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: no registry skill linked yet</div>
             <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="not-seen"></i><b>No registry skill linked to this skill set yet</b><span class="muted">The curriculum team links them. Nothing is guessed here.</span></div></div>
@@ -70,10 +86,8 @@
           <section class="rail-box">
             <h2>Connected to</h2>
             <ul class="rlist">
-<li><a class="ritem" data-el="2" href="#skill"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><span><span data-source="registry_skill.name">Counting by ones</span><small>a skill it covers</small></span></a></li>
-<li><a class="ritem" data-el="2" href="#skill"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><span><span data-source="registry_skill.name">Counting in tens</span><small>a skill it covers</small></span></a></li>
-<li><a class="ritem" data-el="2" href="#skill"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><span><span data-source="registry_skill.name">Reading big numbers</span><small>a skill it covers</small></span></a></li>
-<li><a class="ritem" data-el="3" href="#bank"><span class="tile" data-kind="assessment"><i class="ic" data-icon="skill"></i></span><span><span data-source="skill.name">Question bank</span><small>for this skill set</small></span></a></li>
+<li><a class="ritem" data-el="11" href="#skill"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><span><span data-source="registry_skill.name">Counting by ones</span><small>a skill it covers</small></span></a></li>\n<li><a class="ritem" data-el="11" href="#skill"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><span><span data-source="registry_skill.name">Counting in tens</span><small>a skill it covers</small></span></a></li>
+<li><a class="ritem" data-el="12" href="#bank"><span class="tile" data-kind="assessment"><i class="ic" data-icon="skill"></i></span><span><span data-source="skill.name">Question bank</span><small>for this skill set</small></span></a></li>
             </ul>
           </section>
         </aside>
@@ -111,27 +125,43 @@
         <li><i class="ic s" data-icon="trail"></i></li>
         <li><a data-trail href="#skill-sets">Skill sets</a></li>
         <li><i class="ic s" data-icon="trail"></i></li>
-        <li aria-current="page"><span data-source="skill.name">Counting and place value</span></li>
+        <li aria-current="page"><span data-source="skill.name">Reading numbers</span></li>
       </ol>
       <div class="page">
         <main class="main">
           <div class="head">
-            <p class="eyebrow"><i class="ic s" data-icon="skill"></i>Skill set · Grades 1 to 4</p>
-            <h1 class="title" data-source="skill.name">Counting and place value</h1>
-            <p class="purpose">A skill set is what the school teaches and tests together, from one to four grades. It points at the skills the system reads a child on; it never scores a child itself.</p>
+            <p class="eyebrow"><i class="ic s" data-icon="skill"></i>Curriculum · Skill set · <span data-source="skill.grade">Grade 3</span></p>
+            <h1 class="title" data-source="skill.learning_objective">Reads and writes numbers to 1000</h1>
+            <p class="purpose">What this skill looks like at each level, each with a real question from the bank, the kinds of question, and the mistakes it watches for.</p>
           </div>
+          <div class="keyrow"><button class="btn press" data-el="9" type="button" data-source="skill.status skill.ratified_by">Approve the skill</button></div>
           <h2 class="title-small">Skills it covers</h2>
           <div class="cards" data-block="Cards">
-            <article class="card" data-kind="skill"><div class="card-h"><span class="tile"><i class="ic" data-icon="skill"></i></span><span data-source="registry_skill.name skill.registry_codes">Counting by ones</span></div><div class="card-b"><a class="btn press" data-el="0" href="#skill">Open the skill</a></div></article>
-            <article class="card" data-kind="skill"><div class="card-h"><span class="tile"><i class="ic" data-icon="skill"></i></span><span data-source="registry_skill.name skill.registry_codes">Counting in tens</span></div><div class="card-b"><a class="btn press" data-el="0" href="#skill">Open the skill</a></div></article>
-            <article class="card" data-kind="skill"><div class="card-h"><span class="tile"><i class="ic" data-icon="skill"></i></span><span data-source="registry_skill.name skill.registry_codes">Reading big numbers</span></div><div class="card-b"><a class="btn press" data-el="0" href="#skill">Open the skill</a></div></article>
+            <article class="card" data-kind="skill"><div class="card-h"><span class="tile"><i class="ic" data-icon="skill"></i></span><span data-source="registry_skill.name skill.registry_codes">Counting by ones</span></div><div class="card-b"><a class="btn press" data-el="0" href="#skill">Open the skill</a></div></article>\n            <article class="card" data-kind="skill"><div class="card-h"><span class="tile"><i class="ic" data-icon="skill"></i></span><span data-source="registry_skill.name skill.registry_codes">Counting in tens</span></div><div class="card-b"><a class="btn press" data-el="0" href="#skill">Open the skill</a></div></article>
           </div>
-          <details class="details" data-block="Details"><summary data-el="1"><i class="ic s" data-icon="details"></i>Each level in a sentence</summary><div><dl class="kv" data-source="skill_level.difficulty skill_level.looks_like">
-            <dt>Easy</dt><dd>Counts the bundles of ten, with a prompt.</dd>
-            <dt>Medium</dt><dd>Counts in tens up to 50 with bundles.</dd>
-            <dt>Hard</dt><dd>Counts in tens up to 100 and adds loose ones.</dd>
-            <dt>Advance</dt><dd>Says how many without recounting.</dd>
-          </dl></div></details>
+          <h2 class="title-small">Which grade each level belongs to</h2>
+          <div class="filters"><label class="sel">Advance <select data-el="2" data-source="skill.level_band"><option>Grade 3</option><option>Grade 4</option></select></label>
+            <button class="btn press" data-el="3" type="button" data-source="skill.level_band_by skill.level_band_at">Save the grades</button></div>
+          <h2 class="title-small">At each level</h2>
+          <div class="cards" data-block="Cards">
+            <article class="card" data-kind="skill"><div class="card-h"><span class="tile"><i class="ic" data-icon="skill"></i></span>Easy</div><div class="card-b"><span data-source="skill_level.looks_like">Reads three-digit numbers.</span>
+              <a data-el="1" href="#question" data-source="item.item_key item.stem">For example: 3 tens and 4 ones</a>
+              <span class="chip" data-state="ok" data-source="skill.level_approved"><i class="ic s" data-icon="done"></i>Approved</span>
+              <button class="btn press" data-el="4" type="button" data-source="skill.level_approved">Approve this level</button>
+              <button class="btn press" data-el="7" type="button">More like this</button></div></article>
+            <article class="card" data-kind="skill"><div class="card-h"><span class="tile"><i class="ic" data-icon="skill"></i></span>Medium</div><div class="card-b"><span data-source="skill_level.looks_like">Writes three-digit numbers.</span>
+              <a data-el="1" href="#question" data-source="item.item_key item.stem">For example: 3 tens and 4 ones</a>
+              <span class="chip" data-state="ok" data-source="skill.level_approved"><i class="ic s" data-icon="done"></i>Approved</span>
+              <button class="btn press" data-el="4" type="button" data-source="skill.level_approved">Approve this level</button>
+              <button class="btn press" data-el="7" type="button">More like this</button></div></article>
+          </div>
+          <details class="details" data-block="Details"><summary data-el="13"><i class="ic s" data-icon="details"></i>Kinds of question</summary><div><ul data-source="question_type.words"><li>Fill in the missing number</li></ul>
+            <a data-el="8" href="#skillset" data-source="skill_level_question_type.stopped_at skill_level_question_type.stopped_by">Stop using “Fill in the missing number” at Easy</a></div></details>
+          <details class="details" data-block="Details"><summary data-el="14"><i class="ic s" data-icon="details"></i>How it is asked (English)</summary><div>
+            <button class="btn press" data-el="5" type="button" data-source="approval.decision">Approve this way of asking</button>
+            <a data-el="6" href="#skillset" data-source="english_sample.text">Change sample 1</a></div></details>
+          <h2 class="title-small">Worksheets</h2>
+          <div class="filters"><a class="chip" data-el="10" href="#skillset" data-source="item.skill_set_code item.difficulty">Easy · 12</a></div>
           <div class="card">
             <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: no registry skill linked yet</div>
             <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="not-seen"></i><b>No registry skill linked to this skill set yet</b><span class="muted">The curriculum team links them. Nothing is guessed here.</span></div></div>
@@ -141,10 +171,8 @@
           <section class="rail-box">
             <h2>Connected to</h2>
             <ul class="rlist">
-<li><a class="ritem" data-el="2" href="#skill"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><span><span data-source="registry_skill.name">Counting by ones</span><small>a skill it covers</small></span></a></li>
-<li><a class="ritem" data-el="2" href="#skill"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><span><span data-source="registry_skill.name">Counting in tens</span><small>a skill it covers</small></span></a></li>
-<li><a class="ritem" data-el="2" href="#skill"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><span><span data-source="registry_skill.name">Reading big numbers</span><small>a skill it covers</small></span></a></li>
-<li><a class="ritem" data-el="3" href="#bank"><span class="tile" data-kind="assessment"><i class="ic" data-icon="skill"></i></span><span><span data-source="skill.name">Question bank</span><small>for this skill set</small></span></a></li>
+<li><a class="ritem" data-el="11" href="#skill"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><span><span data-source="registry_skill.name">Counting by ones</span><small>a skill it covers</small></span></a></li>\n<li><a class="ritem" data-el="11" href="#skill"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><span><span data-source="registry_skill.name">Counting in tens</span><small>a skill it covers</small></span></a></li>
+<li><a class="ritem" data-el="12" href="#bank"><span class="tile" data-kind="assessment"><i class="ic" data-icon="skill"></i></span><span><span data-source="skill.name">Question bank</span><small>for this skill set</small></span></a></li>
             </ul>
           </section>
         </aside>

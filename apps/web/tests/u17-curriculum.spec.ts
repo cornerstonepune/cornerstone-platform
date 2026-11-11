@@ -22,7 +22,7 @@ test.afterAll(async () => {
 test("a skill's page is in five parts, its worksheets one level at a time, and no code on it", async ({ page }) => {
   // a worksheet is listed once its skill is taught in some class: this test has the class, not whatever ran before it in a shard
   await aTaughtClass(sql);
-  await page.goto("/skill-sets/ADD.2D2D");
+  await page.goto("/setup/skill-sets/ADD.2D2D");
   const parts = page.getByRole("navigation", { name: "Parts of this skill" });
   await expect(parts.getByRole("link")).toHaveText(["What it means", "Levels", "Mistakes", "Questions", "Worksheets"]);
   await expect(parts.getByRole("link", { name: "Questions" })).toHaveAttribute("href", /^\/library\?set=ADD\.2D2D/);

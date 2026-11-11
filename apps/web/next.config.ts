@@ -15,6 +15,7 @@ const nextConfig: NextConfig = {
     // The single-activity pages folded into one (UI-3c): the old addresses answer 308 to the new one.
     { source: "/educator/activity/:code", destination: "/setup/activities/:code", permanent: true },
     { source: "/curriculum/fill/:code((?!walk$)[^/]+)", destination: "/setup/activities/:code", permanent: true },
+    { source: "/skill-sets/:code((?!approve$|levels$)[^/]+)", destination: "/setup/skill-sets/:code", permanent: true },
     // The screens folded into sign in and the help (UI-12): the old addresses answer 308 to the new one.
     { source: "/login/forgot", destination: "/login?view=forgot", permanent: true },
     { source: "/login/new-password", destination: "/login?view=new-password", permanent: true },

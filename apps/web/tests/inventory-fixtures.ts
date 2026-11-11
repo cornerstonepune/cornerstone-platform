@@ -106,8 +106,8 @@ function fill(route: string, rows: Rows, over: Record<string, string>): string {
   const first = Object.values(rows.children)[0] ?? "";
   // the voice screens: a note waiting for the inventory educator, and a lesson of today (made by FIXTURES["voice-rest"])
   const voice = route === "/notes/[id]" ? { id: VOICE.note } : route === "/period/[id]" ? { id: VOICE.lesson } : {};
-  // the teaching screens' [code] is an activity's, an objective's or a skill's by the route it sits in
-  const code = route.includes("/activities/") ? rows.teaching.activity : route.includes("/objectives/") ? rows.teaching.objective : rows.teaching.skill;
+  // the teaching screens' [code] is an activity's, an objective's, a skill's or a skill set's by the route it sits in
+  const code = route.includes("/activities/") ? rows.teaching.activity : route.includes("/objectives/") ? rows.teaching.objective : route.includes("/skill-sets/") ? rows.teaching.skillSet : rows.teaching.skill;
   const given: Record<string, string> = { class: rows.classId, section: rows.section, roll: rows.assessment.roll, id: first, code, key: route.includes("/question-bank/") ? rows.questionKey : rows.assessment.key, ...voice, ...over };
   const path = route.replace(/\[(\w+)\]/g, (_, k: string) => {
     if (!(k in given)) throw new Error(`tests/inventory/fixtures.ts has no fixture for [${k}] of ${route}: add one built from the test's own rows`);

@@ -47,7 +47,7 @@ test.afterAll(async () => {
 });
 
 test("an educator stops a kind at a level, is told what it touches first, and switches it back on", async ({ page }) => {
-  await page.goto(`/skill-sets/${k.code}`);
+  await page.goto(`/setup/skill-sets/${k.code}`);
   const row = page.locator(`tr[data-kind="${k.kind}"][data-level="${k.level}"]`);
   await expect(row).toContainText("in use");
   await row.getByRole("link", { name: `Stop using “${k.words}” at ${k.level}` }).click();
