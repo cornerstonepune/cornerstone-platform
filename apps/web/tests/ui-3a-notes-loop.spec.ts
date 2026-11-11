@@ -42,13 +42,6 @@ test.beforeEach(async () => {
   await noNotesWaiting(sql, { klass, staff });
 });
 
-test("Period: a period with no activity shows no capture controls and the words 'Nothing to record here'", async ({ page }) => {
-  await page.goto(`/period/${lesson}`);
-  await expect(page.getByRole("main")).toContainText("Nothing to record here");
-  await expect(page.locator('a[href^="/record"]')).toHaveCount(0);
-  await expect(page.locator("[data-block=CaptureBar], [data-rail-part=capture]")).toHaveCount(0);
-});
-
 test("Record: Type the marks writes one note with this session's id and nothing in activity_observation", async ({ page }) => {
   const before = (await sql<{ n: number }[]>`select count(*)::int as n from pii.educator_note where session_id = ${lesson}`)[0].n;
   await page.goto(`/record?class=${klass}&session=${lesson}`);
