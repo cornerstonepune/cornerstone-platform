@@ -1,5 +1,6 @@
 import { requireStaff } from "@/lib/auth";
 import { AppFrame } from "@/components/app-frame";
+import { deadline } from "@/lib/deadline";
 import { todayBadge } from "@/lib/today-data";
 
 export const dynamic = "force-dynamic";
@@ -8,5 +9,5 @@ export const dynamic = "force-dynamic";
 // count on the site: the badge on the Today door, the strip's do-now plus this-week (lib/today-data.ts `todayBadge`).
 export default async function AppLayout({ children }: LayoutProps<"/">) {
   const me = await requireStaff();
-  return <AppFrame me={me} waiting={await todayBadge(me)}>{children}</AppFrame>;
+  return <AppFrame me={me} waiting={await deadline(todayBadge(me))}>{children}</AppFrame>;
 }
