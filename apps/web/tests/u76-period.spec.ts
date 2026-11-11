@@ -5,6 +5,7 @@
  */
 import { expect, test } from "@playwright/test";
 import postgres from "postgres";
+import { timetableSwitch } from "./educator-screens";
 import { k2Class, noNotesWaiting, voiceSwitch } from "./k2-rows";
 
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -32,14 +33,17 @@ test.beforeAll(async () => {
 });
 test.afterAll(async () => {
   await voiceSwitch(sql, false);
+  await timetableSwitch(sql, false);
   await sql.end();
 });
 test.beforeEach(async () => {
   await voiceSwitch(sql, true);
+  await timetableSwitch(sql, true);
   await noNotesWaiting(sql, { klass, staff });
 });
 
-test("Period: a period that has an activity opens for the educator, with its actions, last time and steps", async ({ page }) => {
+/** A lesson of today with an activity (a plan entry naming it), made once: its session, period and day. */
+async function withActivity(): Promise<{ session: string; period: string; day: string }> {
   const [{ id: t }] = await sql<{ id: string }[]>`select tenant_id as id from school_class where id = ${klass}`;
   const [{ id: campus }] = await sql<{ id: string }[]>`select campus_id as id from school_class where id = ${klass}`;
   const [{ id: year }] = await sql<{ id: string }[]>`select academic_year_id as id from school_class where id = ${klass}`;
@@ -61,6 +65,11 @@ test("Period: a period that has an activity opens for the educator, with its act
   const [{ id: session }] = await sql<{ id: string }[]>`
     insert into session (tenant_id, school_class_id, school_day_id, period_id, kind, text, plan_entry_id) values (${t}, ${klass}, ${day}, ${period}, 'subject', 'Sorting', ${entry})
     on conflict (school_class_id, school_day_id, period_id) do update set plan_entry_id = excluded.plan_entry_id returning id`;
+  return { session, period, day: (await sql<{ d: string }[]>`select ${TODAY}::text as d`)[0].d };
+}
+
+test("Period: a period that has an activity opens for the educator, with its actions, last time and steps", async ({ page }) => {
+  const { session } = await withActivity();
   await page.goto(`/period/${session}`);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Placeholder sorting activity");
   await expect(page.getByRole("link", { name: "Record a note" })).toHaveAttribute("href", `/record?session=${session}`);
@@ -75,4 +84,42 @@ test("Period: a period with no activity shows no capture controls and the words 
   await expect(page.getByRole("main")).toContainText("Nothing to record here");
   await expect(page.locator('a[href^="/record"]')).toHaveCount(0);
   await expect(page.locator("[data-block=CaptureBar], [data-rail-part=capture]")).toHaveCount(0);
+});
+
+test("Period: a period's address with its class and day opens its lesson", async ({ page }) => {
+  const [row] = await sql<{ period: string; day: string }[]>`
+    select s.period_id::text as period, d.on_date::text as day from session s join school_day d on d.id = s.school_day_id where s.id = ${lesson}`;
+  await page.goto(`/period/${row.period}?class=${klass}&day=${row.day}`);
+  await expect(page).toHaveURL(new RegExp(`/period/${lesson}$`));
+  await expect(page.getByRole("main")).toContainText("Nothing to record here");
+});
+
+test("Period: a period with no lesson in it says so, read only, and opening it makes no lesson", async ({ page }) => {
+  const [{ id: t }] = await sql<{ id: string }[]>`select tenant_id as id from school_class where id = ${klass}`;
+  const [{ id: empty }] = await sql<{ id: string }[]>`
+    insert into period (tenant_id, grade_code, ord, starts_at, ends_at, label, fixed) values (${t}, 'K2', 93, '04:20', '04:50', 'UI-3a empty slot', false)
+    on conflict (tenant_id, grade_code, starts_at) do update set label = excluded.label returning id`;
+  const [{ day }] = await sql<{ day: string }[]>`select ${TODAY}::text as day`;
+  const lessons = () => sql<{ n: number }[]>`select count(*)::int as n from session where school_class_id = ${klass}`;
+  const before = (await lessons())[0].n;
+  await page.goto(`/period/${empty}?class=${klass}&day=${day}`);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("No lesson here");
+  await expect(page.locator('a[href^="/record"]')).toHaveCount(0);
+  expect((await lessons())[0].n).toBe(before);
+});
+
+test("Period: with voice notes off it still opens, and offers no recording", async ({ page }) => {
+  const { session } = await withActivity();
+  await voiceSwitch(sql, false);
+  await page.goto(`/period/${session}`);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Placeholder sorting activity");
+  await expect(page.getByRole("link", { name: "Open the activity" })).toBeVisible();
+  await expect(page.locator('a[href^="/record"]')).toHaveCount(0);
+});
+
+test("Period: the old address answers 308 to the new one, its class and day carried", async ({ page }) => {
+  const [row] = await sql<{ period: string; day: string }[]>`
+    select s.period_id::text as period, d.on_date::text as day from session s join school_day d on d.id = s.school_day_id where s.id = ${lesson}`;
+  await page.goto(`/educator/period/${row.period}?class=${klass}&day=${row.day}`);
+  await expect(page).toHaveURL(new RegExp(`/period/${lesson}$`));
 });

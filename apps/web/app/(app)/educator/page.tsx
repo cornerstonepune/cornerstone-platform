@@ -46,7 +46,7 @@ function DayCalendar({ d, today, now }: { d: Day; today: string; now: string }) 
   const lessons = d.periods.filter(isLesson);
   const next = work.find((w) => w.chip === "doNow") ?? (when === "past" ? undefined : work.find((w) => isLesson(w.p) && (when === "future" || w.p.starts_at > now)));
   const line = when === "today" ? nowAt(periods, now) : null;
-  const href = (id: string) => `/educator/period/${id}?class=${d.class.id}&day=${d.day}`;
+  const href = (id: string) => `/period/${id}?class=${d.class.id}&day=${d.day}`;
   const first = (ps: typeof d.periods) => (ps[0] ? `#p-${ps[0].period_id}` : undefined);
   const breaks = d.periods.filter((p) => p.kind === "fixed");
   const acts = d.periods.filter((p) => p.activity);

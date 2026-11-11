@@ -69,7 +69,7 @@ export default async function TimetablePage({ searchParams }: Props) {
     days: shown,
     clashes,
     at: { today, now },
-    href: (day, p) => (sessionAt.has(`${day}|${p}`) ? `/period/${sessionAt.get(`${day}|${p}`)}` : `/educator/period/${p}?class=${klass.id}&day=${day}`),
+    href: (day, p) => (sessionAt.has(`${day}|${p}`) ? `/period/${sessionAt.get(`${day}|${p}`)}` : `/period/${p}?class=${klass.id}&day=${day}`),
   });
   const lessons = grid.rows.some((r) => "cells" in r && r.cells.some((c) => c));
   const movedHere = grid.placed.filter((x) => x.cell.moved).map((x) => ({ day: x.day, cell: x.cell, move: moveInto(moves, x.day, x.periodId) }));
