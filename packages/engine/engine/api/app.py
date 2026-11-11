@@ -17,10 +17,12 @@ from engine.api.routes import (
     capture,
     card,
     children,
+    feedback,
     focus,
     gold,
     graph,
     k2,
+    levels,
     library,
     maker,
     materials,
@@ -77,6 +79,8 @@ app.include_router(timetable.keyed)
 app.include_router(timetable_rules.keyed)
 app.include_router(plan.keyed)
 app.include_router(timetable_hand.keyed)
+app.include_router(feedback.keyed)
+app.include_router(levels.keyed)
 app.include_router(k2.router)
 app.include_router(gold.router)
 app.include_router(offers.router)

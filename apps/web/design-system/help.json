@@ -5,7 +5,7 @@
       "title": "Today",
       "eyebrow": "Wednesday 18-Nov · K2 Red · Fortnight 9, week A",
       "group": "Today",
-      "route": "/today",
+      "route": "/today/new",
       "purpose": "Your periods in order. Tap one for what to teach, how, and what to lay out. After it, record a note.",
       "does": [
         {
@@ -75,7 +75,7 @@
       "title": "Today, the school",
       "eyebrow": "Wednesday 18-Nov · every class",
       "group": "Today",
-      "route": "/today",
+      "route": "/today/new",
       "purpose": "What waits on you, each with its own button. Then the week ahead.",
       "does": [
         {
@@ -258,7 +258,7 @@
         },
         {
           "label": "each square",
-          "says": "opens the mark picker: above / as expected / below / not willing / absent / clear; the square's corner mark changes; the claim it came from is marked changed"
+          "says": "opens the mark picker: above / below / not willing / absent / clear (\"as expected\" is the one switch for the rest: the engine records an individual child's mark in four lists); the square's corner mark changes; the claim it came from is marked changed"
         },
         {
           "label": "the rest did as expected",
@@ -883,7 +883,7 @@
           "says": "the Drive file is fetched and read as above"
         },
         {
-          "label": "class · topic · subject · kind · week · stage",
+          "label": "class · topic · subject · kind · week · stage (and, on Reading, Show: by day, by kind of question, by how sure)",
           "says": ""
         },
         {
@@ -933,6 +933,30 @@
         {
           "label": "page: Later →",
           "says": "the next ten assessments"
+        },
+        {
+          "label": "By topic",
+          "says": "every topic a row with its count, closed until opened; the address carries the topic"
+        },
+        {
+          "label": "Reading",
+          "says": "how the reader is doing, and the files read lately"
+        },
+        {
+          "label": "rename: name this assessment",
+          "says": "one on each row; the built name shows until a name is chosen"
+        },
+        {
+          "label": "Save the name",
+          "says": "the name is the educator's own and is kept as a row of the history log, the older names stay"
+        },
+        {
+          "label": "each topic",
+          "says": "opens the topic's assessments beneath it"
+        },
+        {
+          "label": "Read again",
+          "says": "the file is read again with the reader as it now is; the page says in words when the engine no longer keeps it"
         }
       ]
     },
@@ -999,6 +1023,14 @@
         {
           "label": "capture: Photo",
           "says": "a scan of this assessment's paper; the QR must belong to it, else a message"
+        },
+        {
+          "label": "rename: name this assessment",
+          "says": "the built name shows until a name is chosen"
+        },
+        {
+          "label": "Save the name",
+          "says": "the name is the educator's own and is kept as a row of the history log, the older names stay"
         }
       ]
     },
@@ -1257,6 +1289,32 @@
       ]
     },
     {
+      "id": "skillset",
+      "title": "the skill set's name",
+      "eyebrow": "Skill set · Grades 1 to 4",
+      "group": "Setup",
+      "route": "/setup/skill-sets/[code]",
+      "purpose": "A skill set is what the school teaches and tests together, from one to four grades. It points at the skills the system reads a child on; it never scores a child itself.",
+      "does": [
+        {
+          "label": "Open the skill (each card)",
+          "says": "Opens the skill's name."
+        },
+        {
+          "label": "Each level in a sentence",
+          "says": ""
+        },
+        {
+          "label": "rail: each skill",
+          "says": "Opens the skill's name."
+        },
+        {
+          "label": "rail: Question bank for this skill set",
+          "says": "Opens Question bank."
+        }
+      ]
+    },
+    {
       "id": "curriculum",
       "title": "Curriculum",
       "eyebrow": "Every grade",
@@ -1265,7 +1323,19 @@
       "purpose": "Every activity and skill of every grade, with its levels and how much of each page is filled in. Open one to read it.",
       "does": [
         {
-          "label": "grade · subject · topic · status",
+          "label": "Grade",
+          "says": ""
+        },
+        {
+          "label": "Subject",
+          "says": ""
+        },
+        {
+          "label": "Topic",
+          "says": ""
+        },
+        {
+          "label": "Status",
           "says": ""
         },
         {
@@ -1281,7 +1351,7 @@
           "says": "Opens the skill's name."
         },
         {
-          "label": "Drafts to check",
+          "label": "Check the drafted parts",
           "says": "the first activity with a drafted part"
         },
         {
@@ -1295,6 +1365,10 @@
         {
           "label": "page: Later →",
           "says": "Opens Curriculum."
+        },
+        {
+          "label": "offers page: Later →",
+          "says": "the offers table pages on its own, ten a page, and keeps the page of the list"
         },
         {
           "label": "rail: Skills to approve",
@@ -1319,11 +1393,27 @@
       "purpose": "Read each skill's levels and approve them one at a time. What a wrong answer counts against is shown beside it.",
       "does": [
         {
-          "label": "grade · subject",
+          "label": "Grade",
           "says": ""
         },
         {
-          "label": "Skills / Levels to review",
+          "label": "Subject",
+          "says": ""
+        },
+        {
+          "label": "Topic",
+          "says": ""
+        },
+        {
+          "label": "Taught",
+          "says": "taught or not yet: a skill nobody teaches can be approved before its topic is switched on"
+        },
+        {
+          "label": "Skills",
+          "says": "the first list; the address carries the tab"
+        },
+        {
+          "label": "Levels to review",
           "says": "the second list is the levels most children are secure at; the address carries the tab"
         },
         {
@@ -1337,6 +1427,10 @@
         {
           "label": "What a wrong answer counts against",
           "says": ""
+        },
+        {
+          "label": "Approve this table as written",
+          "says": "the table of what a wrong answer counts against is approved as shown, once, with who; a changed table waits again"
         },
         {
           "label": "page: Later →",
@@ -1361,8 +1455,24 @@
           "says": ""
         },
         {
-          "label": "grade · skill · difficulty",
+          "label": "Grade",
           "says": ""
+        },
+        {
+          "label": "Skill",
+          "says": ""
+        },
+        {
+          "label": "Difficulty",
+          "says": ""
+        },
+        {
+          "label": "Kind",
+          "says": ""
+        },
+        {
+          "label": "Status",
+          "says": "Ready to print, or Removed: a removed question is kept with its reason and can be read here"
         },
         {
           "label": "search",
@@ -1370,7 +1480,7 @@
         },
         {
           "label": "each question row",
-          "says": "Opens the question as it prints."
+          "says": "Opens {the question as it prints}."
         },
         {
           "label": "page: Later →",
@@ -1388,7 +1498,7 @@
     },
     {
       "id": "question",
-      "title": "the question as it prints",
+      "title": "{the question as it prints}",
       "eyebrow": "Numeracy · Easy",
       "group": "Setup",
       "route": "/setup/question-bank/[key]",
@@ -1399,20 +1509,12 @@
           "says": ""
         },
         {
-          "label": "the wording",
-          "says": "required when correcting"
+          "label": "the corrected question",
+          "says": "on a removed question that has been corrected"
         },
         {
-          "label": "Correct the wording",
-          "says": "a new item version; change_log keeps the old key; the page shows the new wording and 'corrected by'"
-        },
-        {
-          "label": "reason for removal",
-          "says": "required"
-        },
-        {
-          "label": "Remove",
-          "says": "the item is retired with the reason, never deleted; the chip reads 'removed'"
+          "label": "the original wording",
+          "says": "on a corrected question: the old wording, kept and readable"
         },
         {
           "label": "rail: the skill",
@@ -1421,6 +1523,26 @@
         {
           "label": "rail: the bank",
           "says": "Opens Question bank."
+        },
+        {
+          "label": "the wording",
+          "says": "required when correcting"
+        },
+        {
+          "label": "what was wrong",
+          "says": "required when correcting: the engine refuses a correction with no reason"
+        },
+        {
+          "label": "reason for removal",
+          "says": "required"
+        },
+        {
+          "label": "Correct the wording",
+          "says": "a new item version; the old one stays, readable, and points to the new; the page shows the new wording"
+        },
+        {
+          "label": "Remove",
+          "says": "the item is retired with the reason, never deleted; the chip reads 'removed'"
         }
       ]
     },
@@ -1467,6 +1589,10 @@
         {
           "label": "Find a person (search)",
           "says": "narrows the rows to a name"
+        },
+        {
+          "label": "Add a person",
+          "says": "opens a form: name, school email and role; Add and send a link puts the person on the list with no password and emails them a link to set their own"
         }
       ]
     },

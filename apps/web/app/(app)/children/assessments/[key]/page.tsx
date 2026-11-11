@@ -24,6 +24,7 @@ import { countsOf } from "../../../papers/step-columns";
 import { assessmentKey } from "../../../papers/assessments-table";
 import { approveThisPack, signOffPaper } from "./actions";
 import { LevelSelect } from "./level-select";
+import { RenameForm } from "../rename-form";
 
 const safeDecode = (v: string) => {
   try {
@@ -219,6 +220,7 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
           <span className="b-muted">{a.levels.length ? `Levels: ${a.levels.join(", ")}` : ""}</span>
           {a.set ? <Link href={`/skill-sets/${a.set}`}>Open the skill</Link> : null}
           {a.week ? <span className="b-muted">{weekWords(a.week)}</span> : null}
+          <RenameForm assessmentKey={key} name={named.name} back={assessmentHref(key)} />
         </section>
       </div>
       <h2 className="mb-2">Each child&rsquo;s copy</h2>
