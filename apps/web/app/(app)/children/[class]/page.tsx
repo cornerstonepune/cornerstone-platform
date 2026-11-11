@@ -70,7 +70,7 @@ export default async function Picture({ params, searchParams }: { params: Promis
         action={<Link href="/children" className="btn secondary">Show as a table</Link>}
         next={{ href: kids[0] ? `/children/${classId}/${encodeURIComponent(kids[0].roll)}` : "/children", label: "A child" }}
         rail={
-          <aside aria-label="Rail" data-rail className="grid content-start gap-[var(--space-3)]">
+          <aside aria-label="Rail" data-rail className="grid content-start gap-[var(--space-4)]">
             <PeekPanel />
             <div className="grid gap-[var(--space-2)] rounded-[var(--radius-card)] bg-[var(--surface)] p-[var(--space-3)]">
               <section aria-label="Show">
@@ -90,8 +90,8 @@ export default async function Picture({ params, searchParams }: { params: Promis
                   A child
                 </Link>
               ) : null}
-              <Rail edges={[{ screen: "record", label: "Record a note", icon: "note" }, { screen: "assessments", label: "Assessments", icon: "assessment" }]} />
             </div>
+            <Rail edges={[{ screen: "record", label: "Record a note", icon: "note" }, { screen: "assessments", label: "Assessments", icon: "assessment" }]} />
           </aside>
         }
       >

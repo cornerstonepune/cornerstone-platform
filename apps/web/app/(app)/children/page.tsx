@@ -77,9 +77,6 @@ export default async function Children({ searchParams }: { searchParams: Promise
 
 function ChildrenRail() {
   return (
-    <div className="grid content-start gap-[var(--space-3)]">
-      <PeekPanel />
-      <Rail edges={[{ screen: "assessments", label: "Assessments", icon: "assessment" }, { screen: "notes", label: "Notes", icon: "note" }]} />
-    </div>
+    <Rail peek={<PeekPanel />} edges={[{ screen: "assessments", label: "Assessments", icon: "assessment" }, { screen: "notes", label: "Notes", icon: "note" }]} />
   );
 }

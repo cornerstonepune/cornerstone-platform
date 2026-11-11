@@ -1,16 +1,18 @@
 import type { ReactNode } from "react";
 import type { Session } from "@/lib/auth";
 import { Trail } from "./trail";
+import { Icon, type IconName } from "@/lib/icons";
 
 // The small parts a page is made of: the page's head and body, a panel, a pill, a tile, a notice. (They lived in the old shell's file.)
 
 /** The head of a page: the trail (the door, then the thing), the eyebrow, the one h1, the purpose line. */
-export function PageHeader({ stage, title, sub }: { stage: string; title: string; sub: string }) {
+export function PageHeader({ stage, title, sub, icon }: { stage: string; title: string; sub: string; icon?: IconName }) {
   return (
     <header className="border-b border-[var(--line)] px-5 pt-3 pb-[18px] md:px-9 md:pt-4">
       <Trail thing={title} />
-      <div className="mb-1 truncate text-[length:var(--text-eyebrow)] font-medium tracking-[0.08em] text-[var(--ink-muted)] uppercase md:mb-2 md:whitespace-normal" data-testid="stage">
-        {stage}
+      <div className="mb-1 flex items-center gap-[var(--space-1)] truncate text-[length:var(--text-eyebrow)] font-medium tracking-[0.08em] text-[var(--ink-muted)] uppercase md:mb-2 md:whitespace-normal" data-testid="stage">
+        {icon ? <Icon name={icon} size={16} /> : null}
+        <span>{stage}</span>
       </div>
       <h1 className="text-[22px] leading-tight md:text-[26px]">{title}</h1>
       <p className="mt-[6px] max-w-[620px] text-[13.5px] leading-[1.5] text-basalt/62">{sub}</p>

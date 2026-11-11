@@ -341,39 +341,48 @@ table.grid.steady tr.under td {
   border-color: var(--state-quiet);
 }
 
+/* The wireframes' buttons (docs/frontend/wireframes/kit.css `.btn`): a rounded filled control with a soft edge, no outline. */
 .chip {
-  display: inline-block;
-  padding: 7px 13px;
-  border: 1px solid var(--ink-30);
-  font-size: 13px;
-  background: var(--chalk);
-  color: var(--basalt);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: var(--tap);
+  padding: 0 var(--space-3);
+  border: 0;
+  border-radius: var(--radius-control);
+  box-shadow: var(--shadow-card);
+  font-size: 15px;
+  font-weight: 600;
+  background: var(--panel);
+  color: var(--ink);
   text-decoration: none;
 }
 @media (hover: hover) and (pointer: fine) {
   .chip:hover {
-    color: var(--ink);
-    border-color: var(--ink);
+    background: var(--surface);
   }
 }
 .chip.on {
   background: var(--action);
   color: var(--action-ink);
-  border-color: var(--action);
+  box-shadow: none;
 }
 
 /* The one loud colour: one primary action per screen. */
 .btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  padding: 10px 18px;
+  min-height: var(--tap);
+  padding: 0 var(--space-3);
   background: var(--action);
   color: var(--action-ink);
   font-family: var(--font-sans);
-  font-size: 13.5px;
-  font-weight: 700;
+  font-size: 15px;
+  font-weight: 600;
   border: none;
+  border-radius: var(--radius-control);
   cursor: pointer;
 }
 @media (hover: hover) and (pointer: fine) {
@@ -382,15 +391,14 @@ table.grid.steady tr.under td {
   }
 }
 .btn.secondary {
-  background: transparent;
+  background: var(--panel);
   color: var(--ink);
-  border: 1px solid var(--ink-30);
-  font-weight: 400;
+  box-shadow: var(--shadow-card);
+  font-weight: 600;
 }
 @media (hover: hover) and (pointer: fine) {
   .btn.secondary:hover {
-    border-color: var(--ink);
-    background: transparent;
+    background: var(--surface);
   }
 }
 .btn:disabled {

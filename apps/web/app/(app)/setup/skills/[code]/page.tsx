@@ -48,10 +48,7 @@ export default async function SkillScreen({ params, searchParams }: { params: Pr
         action={<span className="text-[length:var(--text-label)] text-[var(--ink-muted)]">{s.cls ? `${section} · ${s.code}` : s.code}</span>}
         next={{ href: "/today", label: "Today" }}
         rail={
-          <aside aria-label="Rail" data-rail className="grid content-start gap-[var(--space-3)]">
-            <PeekPanel />
-            <Rail edges={edges} />
-          </aside>
+          <Rail peek={<PeekPanel />} edges={edges} />
         }
       >
         <div className="grid gap-[var(--space-3)]">

@@ -7,7 +7,9 @@ import { MapLink, ReportLink } from "./frame/foot-links";
 import { SearchBox } from "./frame/search-box";
 import { WalkProvider, type FrameDoor } from "./frame/walk";
 import { Body, PageHeader, classesSaid } from "./parts";
-import { Icon } from "@/lib/icons";
+import { Icon, type IconName as Icon_ } from "@/lib/icons";
+import { KeyValue } from "@/components/key-value";
+import type { Kind } from "@/components/kind-tile";
 import { signOut } from "@/lib/auth-actions";
 import type { Session } from "@/lib/auth";
 import { mayUse } from "@/lib/access";
@@ -91,32 +93,71 @@ export function CaptureHere({ children }: { children: ReactNode }) {
   );
 }
 
-/** The rail: a surface box at the right of the main column (below it on a phone) of "Connected to" edges and, where a lesson or a
- *  child is in view, "Capture here". An edge is a screen id: it is drawn only when that screen is built (lib/built.ts). */
+/** The rail, as the wireframes draw it (docs/frontend/wireframes/kit.css `.rail`): at the right of the page (below it on a phone), a stack
+ *  of boxes in this order: the child peek when one is chosen, "Connected to" (each edge a kind tile, its name and a caption saying what
+ *  it is or where it stands), a facts card where the screen has one, and "Capture here" where a lesson or a child is in view. An edge is a
+ *  screen id: it is drawn only when that screen is built (lib/built.ts). */
 /** `href`: an edge to a screen of the slice being built, whose address the page knows (its screen is not in `merged_slices` yet, so the id alone draws nothing).
- *  `fallback`: the address of the page that does this work today, drawn while the screen is not built (an old page that is still live). */
-export type Edge = { screen: string; params?: Record<string, string>; label: string; icon: Parameters<typeof Icon>[0]["name"]; href?: string; newTab?: boolean; fallback?: string };
-export function Rail({ edges = [], capture }: { edges?: Edge[]; capture?: ReactNode }) {
-  const drawn = edges.map((e) => ({ ...e, href: e.href ?? screenHref(e.screen, e.params) ?? e.fallback ?? null })).filter((e): e is typeof e & { href: string } => e.href !== null);
-  if (!drawn.length && !capture) return null;
+ *  `fallback`: the address of the page that does this work today, drawn while the screen is not built (an old page that is still live).
+ *  `line`: the caption under the name ("fortnight 9, week A"); `kind` colours the tile and defaults from the icon. */
+export type Edge = { screen: string; params?: Record<string, string>; label: string; icon: Parameters<typeof Icon>[0]["name"]; href?: string; newTab?: boolean; fallback?: string; line?: string; kind?: Kind };
+
+/** The kind (and so the colour) of an edge's tile when the page names none: what the thing it opens is. */
+const KIND_OF: Partial<Record<Edge["icon"], Kind>> = {
+  class: "child", child: "child", parent: "child", absent: "child",
+  week: "period", fortnight: "period", period: "period", today: "period", table: "period", board: "period", moved: "period", clash: "period", frozen: "period", late: "period",
+  skill: "skill", tree: "skill", sprout: "skill", leaf: "skill", correct: "skill",
+  assessment: "assessment", checklist: "assessment", form: "assessment",
+  activity: "activity", materials: "activity", setup: "activity",
+  objective: "objective",
+  note: "note", record: "note", play: "note",
+};
+const kindOfEdge = (e: Pick<Edge, "icon" | "kind">): Kind => e.kind ?? KIND_OF[e.icon] ?? "period";
+
+const BOX = "rounded-[var(--radius-card)] bg-[var(--surface)] p-[var(--space-3)]";
+
+/** A titled box of label and value rows in the rail (This fortnight, Latest notes, Grants open now). Whole counts and words only. */
+export function RailFacts({ title, rows }: { title: string; rows: readonly { label: string; value: ReactNode }[] }) {
   return (
-    <aside aria-label="Rail" data-rail className="grid content-start gap-[var(--space-3)] rounded-[var(--radius-card)] bg-[var(--surface)] p-[var(--space-3)]">
+    <section aria-label={title} data-rail-part="facts" className={BOX}>
+      <h2 className="mb-[var(--space-1)] text-[length:var(--text-eyebrow)] text-[var(--ink-muted)] uppercase">{title}</h2>
+      <KeyValue rows={rows.map((r) => ({ label: r.label, value: r.value, num: true }))} />
+    </section>
+  );
+}
+
+export function Rail({ edges = [], capture, peek, facts }: { edges?: Edge[]; capture?: ReactNode; peek?: ReactNode; facts?: ReactNode }) {
+  const drawn = edges.map((e) => ({ ...e, href: e.href ?? screenHref(e.screen, e.params) ?? e.fallback ?? null })).filter((e): e is typeof e & { href: string } => e.href !== null);
+  if (!drawn.length && !capture && !peek && !facts) return null;
+  return (
+    <aside aria-label="Rail" data-rail className="grid content-start gap-[var(--space-4)]">
+      {peek}
       {drawn.length ? (
-        <section aria-label="Connected to">
+        <section aria-label="Connected to" className={BOX}>
           <h2 className="mb-[var(--space-1)] text-[length:var(--text-eyebrow)] text-[var(--ink-muted)] uppercase">Connected to</h2>
-          <ul className="grid gap-[var(--space-1)]">
+          <ul className="b-rlist !gap-[var(--space-2)]">
             {drawn.map((e) => (
               <li key={e.href}>
-                <Link href={e.href} {...(e.newTab ? { target: "_blank", rel: "noreferrer" } : {})} className="flex min-h-[var(--tap)] items-center gap-[var(--space-2)] text-[var(--link)] underline">
-                  <Icon name={e.icon} size={20} />
-                  {e.label}
+                <Link href={e.href} {...(e.newTab ? { target: "_blank", rel: "noreferrer" } : {})} className="b-ritem" data-rail-link data-kind={kindOfEdge(e)}>
+                  <span data-block="KindTile" data-kind={kindOfEdge(e)} className="b-tile">
+                    <Icon name={e.icon} size={20} />
+                  </span>
+                  <span>
+                    {e.label}
+                    {e.line ? <small>{e.line}</small> : null}
+                  </span>
                 </Link>
               </li>
             ))}
           </ul>
         </section>
       ) : null}
-      {capture ? <CaptureHere>{capture}</CaptureHere> : null}
+      {facts}
+      {capture ? (
+        <div className={BOX}>
+          <CaptureHere>{capture}</CaptureHere>
+        </div>
+      ) : null}
     </aside>
   );
 }
@@ -128,6 +169,7 @@ export function Rail({ edges = [], capture }: { edges?: Edge[]; capture?: ReactN
  *  `purpose` is held to PURPOSE_MAX by tests/test_ux_rules.py and the rendered test. */
 export function Screen({
   stage,
+  icon,
   title,
   purpose,
   action,
@@ -137,6 +179,8 @@ export function Screen({
   children,
 }: {
   stage: string;
+  /** The icon before the small-caps line, as the wireframes draw it. */
+  icon?: Icon_;
   title: string;
   purpose: string;
   /** The one main action; a screen whose main action is one of its own controls marks that control `data-ux="action"` and passes none. */
@@ -148,7 +192,7 @@ export function Screen({
 }) {
   return (
     <>
-      <PageHeader stage={stage} title={title} sub={purpose} />
+      <PageHeader stage={stage} icon={icon} title={title} sub={purpose} />
       <Body>
         <div className={rail ? "grid gap-[var(--space-4)] min-[1000px]:grid-cols-[minmax(0,1fr)_320px]" : undefined}>
           <div className="min-w-0">
