@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 # The checks that hold the code to its map and every promise to a command (ADR 0033): the engine's layout
 # against workflows.json, every goal line a command or one of Nimish's sentences with its test, no baseline loosened
-# since the last commit, the type checker's verdict, the website's list of the engine's routes, and lint.
+# since the last commit, the type checker's verdict, the website's list of the engine's routes, lint, and the wireframes
+# against the list of controls each screen has (docs/frontend/wireframes/check.mjs: a screen's elements changed without
+# its drawing redrawn was red on main for days, because nothing ran it).
 # Fast and with no database, so it runs every time rather than when someone remembers:
 #   before every commit            .githooks/pre-commit
 #   before Claude Code ends a turn .claude/settings.json (Stop hook) — `--claude` makes a failure block it
@@ -13,7 +15,15 @@ if [ ! -x "$engine/.venv/bin/python" ]; then
   echo "engine is not installed yet: cd $engine && uv sync" >&2
   exit 1
 fi
+# the wireframe check, and its list of data the target tables lack: node alone, no install, no database
+wireframes() {
+  local out
+  out=$(cd "$here" && node docs/frontend/wireframes/check.mjs 2>&1 && node docs/frontend/wireframes/check.mjs --gaps 2>&1) && return 0
+  printf '%s\n' "$out" | grep -E "✗|problem" >&2
+  return 1
+}
 run() {
+  wireframes &&
   cd "$engine" &&
     DATABASE_URL= TEST_DATABASE_URL= .venv/bin/python -m pytest tests/test_layout.py tests/test_promises.py tests/test_ratchet.py \
       tests/test_types.py tests/test_contract.py tests/test_migration_order.py tests/test_grades.py tests/test_school_words.py \
