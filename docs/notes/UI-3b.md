@@ -38,3 +38,12 @@ in `lib/children-view.ts`. A class is the person's by `staff_sees` (`seesClass`)
 ## Not done here
 
 Saved groups, a real register, a name chosen for a group: all out of scope.
+
+## UI-3d (the old child list redirects to Children)
+
+`/growth?view=children…` (and the old sort/status/grade/page bookmarks) now answer 308 to `/children`, to the class the old address named.
+Deleted with it: `growth/children-view.tsx`, `growth/tables.tsx`. Kept in place for the screens that will replace them: Class results by topic
+(`/growth`), the child-against-topic grid (`/growth/class/[section]`), parent reports (`/growth/reports`), the old child page (`/growth/[id]`).
+Old specs that opened the list were moved to Children where an assertion still holds, and retired where the old column or control has no
+equal on the new screen. Not carried over, for the orchestrator to place: the per-child "Needs help on" topic names, the "Parent report"
+column and its sort, the class table's counts of answers and parent reports waiting, the "Against every skill" link on the list.

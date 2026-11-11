@@ -13,6 +13,7 @@
 import { expect, test, type Browser, type Locator, type Page } from "@playwright/test";
 import postgres from "postgres";
 import { aClass, aReadPaper, daysAgo, aPerson, forgetPerson } from "./rows";
+import { voiceSwitch } from "./k2-rows";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -83,90 +84,49 @@ async function asEducator(browser: Browser): Promise<Page> {
   return page;
 }
 
-const table = (page: Page, section: string) => page.getByRole("table", { name: `${section}: its children` });
-const rows = (t: Locator) => t.locator("tbody tr");
+// UI-3b: the list of children is the Children screen (tests/u72-children.spec.ts holds its columns, bar, filters and grouping).
+// Kept from the old list: who sees which class, and nothing scrolls sideways on a phone. The old per-class counts of answers and
+// parent reports waiting, and the colour key, belong to the screens that now hold them (Reports, the child's page).
+const childRows = (page: Page) => page.getByRole("main").locator('table[aria-label^="Children"] tbody tr');
 
 test("an educator sees their own class as a table of its children, and no other", async ({ browser }) => {
   const page = await asEducator(browser);
+  await voiceSwitch(sql, true);
   await page.goto("/growth?view=children");
-  const mine = table(page, MINE);
-  await expect(rows(mine)).toHaveCount(3);
-  // one class is theirs: the classes table has the one row, and the filter row offers no other
-  await expect(page.getByRole("table", { name: "Classes" }).locator("tbody tr")).toHaveCount(1);
-  await expect(page.locator("[data-filterbar] select[name=class] option", { hasText: OTHER })).toHaveCount(0);
+  await expect(page).toHaveURL(/\/children$/);
+  await expect(childRows(page)).toHaveCount(3);
+  // one class is theirs: the filter row offers no class choice, and the other class is nowhere on the page
+  await expect(page.locator("[data-filterbar] select[name=cls]")).toHaveCount(0);
   await expect(page.getByRole("main")).not.toContainText(OTHER);
   await expect(page.getByRole("main")).not.toContainText("Kavi");
   await page.context().close();
 });
 
-test("the coordinator sees every class in one table, says what waits in each, and opens it with a click", async ({ page }) => {
-  await page.goto(`/growth?view=children&class=${MINE}`);
-  const classes = page.getByRole("table", { name: "Classes" });
-  const row = classes.locator("tbody tr").filter({ hasText: MINE });
-  await expect(row).toHaveCount(1);
-  // its one line: three children, one needing help, Asha's two answers waiting, her report out of date
-  const cell = (label: string) => row.locator(`td[data-label="${label}"]`);
-  await expect(cell("Grade")).toHaveText("Grade 2");
-  await expect(cell("Children")).toHaveText("3");
-  await expect(cell("Need help")).toHaveText("1");
-  await expect(cell("Answers waiting")).toHaveText("2");
-  await expect(cell("Parent reports waiting")).toHaveText("1");
-  await expect(row.locator("[data-status=needsHelp]")).toBeVisible();
-  // a class's name opens its children, in place
-  await page.goto("/growth?view=children");
-  // across the classes the children listed are those who need the educator, and none of the other class does: its name is
-  // in the classes table (on its first page or a later one, as many classes as the copy holds), never among them
-  await expect(page.getByRole("region", { name: "Children who need you" }).getByRole("link", { name: OTHER })).toHaveCount(0);
+test("the coordinator sees every class in one table and can narrow it to one", async ({ page }) => {
+  await voiceSwitch(sql, true);
+  await page.goto("/children");
+  const choice = page.locator("[data-filterbar] select[name=cls]");
+  await expect(choice.locator("option", { hasText: MINE })).toHaveCount(1);
+  await expect(choice.locator("option", { hasText: OTHER })).toHaveCount(1);
+  await choice.selectOption({ label: MINE });
+  await expect(page).toHaveURL(/cls=[0-9a-f-]{36}/);
+  await expect(childRows(page)).toHaveCount(3);
+  // the old address of the other class lands on it
   await page.goto(`/growth?view=children&class=${OTHER}`);
-  await expect(page.getByRole("table", { name: "Classes" }).locator("tbody tr")).toHaveCount(1);
-  await page.goto("/growth?view=children");
-  await page.locator("[data-filterbar] select[name=class]").selectOption(MINE);
-  await expect(page).toHaveURL(new RegExp(`class=${MINE}`));
-  await expect(rows(table(page, MINE))).toHaveCount(3);
+  await expect(page).toHaveURL(/\/children\?cls=[0-9a-f-]{36}$/);
+  await expect(page.getByRole("main")).toContainText("Kavi");
+  await expect(page.getByRole("main")).not.toContainText("Asha");
 });
 
-test("a class's table has the columns that matter, children who need help first", async ({ browser }) => {
+test("at 400 px nothing scrolls sideways and the child is on screen", async ({ browser }) => {
   const page = await asEducator(browser);
-  await page.goto("/growth?view=children");
-  const mine = table(page, MINE);
-  // the sorted column carries its marker
-  await expect(mine.locator("thead th")).toHaveText([...COLUMNS, "Status"].map((c) => new RegExp(`^${c}( ▾)?$`)));
-  // Asha first: she needs help; then the roll
-  await expect(rows(mine).first()).toHaveAttribute("data-child", kids.Asha);
-  const asha = rows(mine).first().locator("td");
-  await expect(asha.nth(1)).toHaveText("Asha");
-  await expect(asha.nth(2)).toContainText(mistake);
-  await expect(asha.nth(3)).toHaveText("1");
-  await expect(asha.nth(5)).toHaveText("2");
-  await expect(asha.nth(6)).toContainText(/out of date/i);
-  // a report already approved is nobody's work: the cell is empty
-  const chetan = mine.locator(`tbody tr[data-child="${kids.Chetan}"] td`);
-  await expect(chetan.nth(4)).toHaveText("1");
-  await expect(chetan.nth(6)).toHaveText(/^\s*$/);
-  await page.context().close();
-});
-
-test("the colour key is one line, and at 400 px nothing scrolls sideways", async ({ browser }) => {
-  const page = await asEducator(browser);
+  await voiceSwitch(sql, true);
   await page.setViewportSize({ width: 400, height: 860 });
-  await page.goto("/growth?view=children");
-  // the key is put away behind "Details" (goals/ux10-declutter.yaml); read once the page has streamed in
-  await page.getByText("Details", { exact: true }).click();
-  const key = page.locator("details[data-colour-key]");
-  await expect(key.locator("summary")).toBeVisible();
-  await expect(key).toHaveCount(1);
-  await expect(key).not.toHaveAttribute("open", "");
-  expect((await key.locator("summary").boundingBox())!.height).toBeLessThan(40);
-  await key.locator("summary").click();
-  await expect(key.locator("[data-rag]").first()).toBeVisible();
-
+  await page.goto("/children");
   const wide = await page.evaluate(() => document.documentElement.scrollWidth);
   expect(wide, "the page is no wider than the phone").toBeLessThanOrEqual(400);
-  const mine = table(page, MINE);
-  const row = rows(mine).first();
-  for (const cell of [row.locator("td").nth(1), row.locator("td").nth(2)]) {
-    const box = (await cell.boundingBox())!;
-    expect(box.x + box.width, "the child and what they need help on are on screen").toBeLessThanOrEqual(400);
-  }
+  const first = childRows(page).first();
+  const box = (await first.getByRole("button").first().boundingBox())!;
+  expect(box.x + box.width, "the child is on screen").toBeLessThanOrEqual(400);
   await page.context().close();
 });

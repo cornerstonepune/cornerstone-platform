@@ -57,6 +57,7 @@ export default async function ClassResults({ searchParams }: Props) {
   if (!section) return shell(<EmptyState>You are linked to no class yet. The coordinator links you to the classes you teach.</EmptyState>);
 
   const [topics, states, rules] = await deadline(Promise.all([classTopics(section, me), childStates(), colourRules()]));
+  const [classRow] = await sql<{ id: string }[]>`select id from school_class where label = ${section} limit 1`;
   const subjects = [...new Map(topics.map((t) => [t.subject_code, t.subject])).entries()];
   const subject = subjects.some(([c]) => c === q.subject) ? q.subject : undefined;
   const shown = topics.filter((t) => !subject || t.subject_code === subject);
@@ -85,7 +86,7 @@ export default async function ClassResults({ searchParams }: Props) {
       </section>
       <p className="flex flex-wrap gap-x-5 gap-y-2 text-[13px]">
         <Link href={`/growth/class/${encodeURIComponent(section)}`}>Each child against each topic →</Link>
-        <Link href={`/growth?view=children&class=${encodeURIComponent(section)}`}>Every child, one by one →</Link>
+        <Link href={classRow ? `/children?cls=${classRow.id}` : "/children"}>Every child, one by one →</Link>
       </p>
       {/* how the counts are read, and the key to the colours: put away until asked for */}
       <details className="text-[12px] text-basalt/65">
