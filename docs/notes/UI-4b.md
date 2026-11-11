@@ -82,3 +82,23 @@ Left for the rest of PR 2: the children with no paper and why, spares as a row, 
 
 One change of words: the new screen names a copy by its Sr. No. only, so a test that found a row by a child's name (the old card showed
 names) finds it by Sr. No. here.
+
+## UI-4b PR 2, part 2 (branch `ui-4b-3`): a home assessment's paper before it prints, on the paper screen
+
+A not-yet-printed copy of a home assessment (`focus` kind) now has its questions on its paper screen: each drawn as it prints, Remove on each
+(asks once when it costs something: the approval, or the last question of a skill), the bank's dropdowns (topic, skill, level, kind, question,
+with the choice seen before Add), Add at a place, and "Approve this home assessment" for this copy only. The assessment screen's made rows say
+"Edit this paper". A copy is addressed by its Sr. No., so an edit (which makes the paper again with a new code) does not move the address. A
+printed one is shown read-only with the engine's own words.
+
+| Old spec | Assertion | New place |
+|---|---|---|
+| `p5-review-a-paper` 1 | remove asks once and withdraws the approval; add through the dropdowns; each edit a history row; approve this one | `u76-edit-a-paper.spec.ts` |
+| `p5-review-a-paper` 2 | a stopped kind is not offered; a printed paper is read-only and says how to change it | `u76-edit-a-paper.spec.ts` |
+
+Not in the inventory: the three paper-screen controls are `pending` there, because the shared fixture's copies are library worksheets, which the
+engine will not edit; the two specs above use papers the engine made. The bank's dropdowns write their choice under `e…` names (`etopic`, `eskill`,
+`elevel`, `ekind`, `eq`), so they never meet the paper's own address parts.
+
+Still to do in step 2: the children with no paper and why, the spares as a row, and the focus paper ("next paper for this child"), which today lands
+on the old review page (`approveNextPaper`).

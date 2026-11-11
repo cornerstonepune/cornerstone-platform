@@ -156,7 +156,12 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
             </form>
           );
         if (grp === "results") return <Link href={p.child_id ? `/growth/${p.child_id}` : "/growth"} className="btn secondary" data-child-link="">The child</Link>;
-        if (grp === "made") return <span className="b-muted">Change the level before print</span>;
+        if (grp === "made")
+          return kind === "focus" && p.roll_no ? (
+            <Link href={paperHref(key, p.roll_no)} className="btn secondary" data-edit-paper="">Edit this paper</Link>
+          ) : (
+            <span className="b-muted">Change the level before print</span>
+          );
         if (grp === "replaced") return <span className="b-muted">Replaced by a newer one</span>;
         if (grp === "children")
           return (
