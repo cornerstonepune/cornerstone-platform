@@ -109,10 +109,25 @@ def test_2_the_docs_list_is_explicit_and_holds_nothing_a_test_reads():
         assert jobs(files=[read]) == FULL, read
 
 
-FRONTEND_DOCS = ["docs/frontend/SPEC.md", "docs/frontend/screens.json", "docs/frontend/scopes.md", "docs/frontend/tokens.json"]
+FRONTEND_DOCS = [
+    "docs/frontend/SPEC.md",
+    "docs/frontend/screens.json",
+    "docs/frontend/scopes.md",
+    "docs/frontend/tokens.json",
+]
 
 
-@pytest.mark.parametrize("files", [WEB, WEB[:1], WEB + DOCS, FRONTEND_DOCS, FRONTEND_DOCS + WEB + DOCS, FRONTEND_DOCS + ["specs/UI-6b/spec.md", "docs/frontend/wireframes.html"]])
+@pytest.mark.parametrize(
+    "files",
+    [
+        WEB,
+        WEB[:1],
+        WEB + DOCS,
+        FRONTEND_DOCS,
+        FRONTEND_DOCS + WEB + DOCS,
+        FRONTEND_DOCS + ["specs/UI-6b/spec.md", "docs/frontend/wireframes.html"],
+    ],
+)
 def test_3_a_pull_request_of_the_website_alone_skips_the_engines_shards(files):
     assert jobs(files=files) == WEB_ONLY
 
@@ -120,13 +135,21 @@ def test_3_a_pull_request_of_the_website_alone_skips_the_engines_shards(files):
 def test_3_the_screens_own_documents_are_read_by_no_engine_test():
     """A change to docs/frontend (bar its wireframes, which are documents) skips the engine's shards, so nothing the engine's
     tests or code do may read it; the browser tests do, and they run."""
-    assert plan.reads_of([plan.WEB_DOC_PREFIX], folders=("packages/engine/tests", "packages/engine/engine")) == []
+    assert (
+        plan.reads_of([plan.WEB_DOC_PREFIX], folders=("packages/engine/tests", "packages/engine/engine"))
+        == []
+    )
     # the wireframes stay documents, and the folder's other files are the website's
     assert jobs(files=["docs/frontend/wireframes/staff.html"]) == FAST
     assert jobs(files=["docs/frontend/SPEC.md", "bin/check"]) == FULL
     # a locked proof (specs/CP-*) is read by tests, and a front-end slice's spec (specs/UI-*) by none
     assert jobs(files=["specs/CP-7/proofs/cp7_world.py"]) == FULL
-    assert plan.reads_of(["specs/UI-"], folders=("packages/engine/tests", "packages/engine/engine", "apps/web/tests")) == []
+    assert (
+        plan.reads_of(
+            ["specs/UI-"], folders=("packages/engine/tests", "packages/engine/engine", "apps/web/tests")
+        )
+        == []
+    )
 
 
 @pytest.mark.parametrize("other", ["packages/engine/engine/cli.py", "supabase/migrations/1.sql", "supabase/seed/a.json",
