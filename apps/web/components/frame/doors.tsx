@@ -1,7 +1,7 @@
 "use client";
 
 import NextLink from "next/link";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import Link from "@/components/link";
 import { usePathname } from "next/navigation";
 import { Icon } from "@/lib/icons";
@@ -99,6 +99,9 @@ function PageLink({ page, here }: { page: MenuPage; here: string | undefined }) 
  *  (Setup, thirteen pages) shows them in labelled clusters that wrap onto further lines, so nothing runs off the edge at any width. */
 export function DoorPages() {
   const path = usePathname();
+  // on a phone the grouped pages fold behind one button (the heading must stay near the top); a page of the door closes it again
+  const [openAt, setOpenAt] = useState<string | null>(null);
+  const shut = openAt !== path;
   const { lit } = useWalk();
   const door = GROUPS.find((g) => g.key === lit);
   const pages = pagesOf(door);
@@ -108,7 +111,17 @@ export function DoorPages() {
   if (headings.length)
     return (
       <nav aria-label="Pages in this section" className="border-t border-[var(--line)] print:hidden">
-        <ul className="mx-auto flex w-full max-w-[1560px] flex-wrap gap-x-[var(--space-4)] px-[var(--space-3)] md:px-[var(--space-4)]">
+        <button
+          type="button"
+          aria-expanded={!shut}
+          aria-controls="door-pages"
+          onClick={() => setOpenAt(shut ? path : null)}
+          className="mx-auto flex min-h-[var(--tap)] w-full max-w-[1560px] items-center justify-between bg-transparent px-[var(--space-3)] text-[length:var(--text-label)] text-[var(--ink)] md:hidden"
+        >
+          <span>{door?.label} pages</span>
+          <span aria-hidden="true">{shut ? "▾" : "▴"}</span>
+        </button>
+        <ul id="door-pages" className={`mx-auto w-full max-w-[1560px] flex-wrap gap-x-[var(--space-4)] px-[var(--space-3)] md:flex md:px-[var(--space-4)] ${shut ? "max-md:hidden" : "flex"}`}>
           {headings.map((h) => (
             <li key={h} className="flex flex-wrap items-center">
               <span className="pr-[var(--space-1)] text-[length:var(--text-label)] leading-6 uppercase tracking-wide text-[var(--ink-muted)]">{h}</span>

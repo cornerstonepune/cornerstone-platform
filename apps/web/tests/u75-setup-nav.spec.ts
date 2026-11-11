@@ -9,10 +9,19 @@ import { GROUPS } from "../lib/menu";
 const SETUP = GROUPS.find((g) => g.key === "setup")!;
 
 for (const width of [1440, 400]) {
-  test(`every Setup page is whole, on screen and pressable at ${width} px, in groups`, async ({ page }) => {
+  test(`every Setup page is whole, on screen and pressable at ${width} px, in groups (folded behind one button on a phone)`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });
     await page.goto("/setup/staff", { waitUntil: "networkidle" });
     const row = page.getByRole("navigation", { name: "Pages in this section" });
+    // on a phone the pages fold behind one button (the heading must stay near the top); one press opens them
+    if (width < 700) {
+      const fold = row.getByRole("button", { name: `${SETUP.label} pages` });
+      await expect(fold).toHaveAttribute("aria-expanded", "false");
+      expect((await fold.boundingBox())!.height, "the fold is a big tap").toBeGreaterThanOrEqual(44);
+      await expect(row.getByRole("link")).toHaveCount(0);
+      await fold.click();
+      await expect(fold).toHaveAttribute("aria-expanded", "true");
+    } else await expect(row.getByRole("button")).toBeHidden();
     const links = row.getByRole("link");
     await expect(links).toHaveCount(SETUP.pages.length);
     for (const p of SETUP.pages) await expect(row.getByRole("link", { name: p.label, exact: true }), p.label).toBeVisible();
