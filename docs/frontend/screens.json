@@ -1321,7 +1321,16 @@
           "roles": [
             "coordinator"
           ],
-          "effect": "approval row written; the stepper moves to approved; Go live appears; Approve disappears"
+          "effect": "approval row written; the stepper moves to approved; Go live appears; Approve disappears",
+          "drive": {
+            "click": "Approve",
+            "expect": {
+              "url": "/timetable/fortnight/\\d+",
+              "text": [
+                "Done."
+              ]
+            }
+          }
         },
         {
           "t": "button",
@@ -1413,7 +1422,16 @@
         {
           "t": "button",
           "label": "Make a draft",
-          "effect": "the engine command runs; the grid fills with the draft; unmet rules list; a live fortnight is untouched"
+          "effect": "the engine command runs; the grid fills with the draft; unmet rules list; a live fortnight is untouched",
+          "drive": {
+            "click": "Make a draft",
+            "expect": {
+              "url": "/timetable/draft",
+              "text": [
+                "The draft is made."
+              ]
+            }
+          }
         },
         {
           "t": "tab",
@@ -1505,7 +1523,16 @@
         {
           "t": "button",
           "label": "Undo the last move",
-          "effect": "the move is reversed as a new move row, never deleted"
+          "effect": "the move is reversed as a new move row, never deleted",
+          "drive": {
+            "click": "Undo the last move",
+            "expect": {
+              "url": "/timetable/moves",
+              "text": [
+                "Done."
+              ]
+            }
+          }
         },
         {
           "t": "field",
@@ -1515,7 +1542,19 @@
         {
           "t": "button",
           "label": "Accept the clash",
-          "effect": "the clash is marked accepted with the reason and who; the cell's outline turns amber"
+          "effect": "the clash is marked accepted with the reason and who; the cell's outline turns amber",
+          "drive": {
+            "fill": {
+              "reason": "The school's own decision"
+            },
+            "click": "Accept the clash",
+            "expect": {
+              "url": "/timetable/moves",
+              "text": [
+                "Done."
+              ]
+            }
+          }
         },
         {
           "t": "link",

@@ -59,6 +59,8 @@ const NOT_BY_CLICK: Record<string, string> = {
   "/period/[id]": "a link of a day of the timetable, which needs a timetable's rows",
   "/notes/[id]": "a card or a row of Notes, which needs a recorded note",
   "/timetable/materials": "the menu's Materials still opens the old page, which keeps the controls this one lacks, until UI-9b moves them (tests/u74-materials.spec.ts opens it)",
+  "/timetable/fortnight/[n]": "a link of the timetable page's Fortnight card and of the timetable's rail, which need a fortnight's rows (tests/u74-timetable.spec.ts opens it with rows)",
+  "/timetable/moves": "the draft page's Next card and a hand move on the fortnight page, which need a fortnight's rows (tests/u74-timetable.spec.ts opens it with rows)",
   "/educator/period/[id]": "a link of a day of the timetable, which needs a timetable's rows",
   "/growth/[id]/parent": "a link on a child's page (click four)",
   "/growth/[id]/report": "a link on a child's page (click four)",
