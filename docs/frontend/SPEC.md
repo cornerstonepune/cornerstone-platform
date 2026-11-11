@@ -406,9 +406,10 @@ Main action: Open today · Next step: Fortnight
 Data: timetable_rule rows (kind slot) valid today; session for the fortnight's days; period times; school_day kinds
 Empty: No timetable live for this class: coordinator sees 'Make a draft' · Phone: Day view by default; week scrolls sideways in its box
 Folds in: /educator (day), /educator/week
-Every control on the screen (13), and what the test does with each:
+Every control on the screen (14), and what the test does with each:
 - **filter** class (the coordinator always; an educator only when she holds more than one class)
 - **tab** Day / Week / Fortnight (Day by default at 400 px)
+- **link** Previous / next day or week → Timetable (`/timetable`) (Day view steps a school day (weekends skipped), Week view a week; the fortnight follows the day)
 - **link** Today → Timetable (`/timetable`) (opens today in the Day view)
 - **link** each day head → Timetable (`/timetable`) (opens that day in the Day view; earlier and later days are reached the same way)
 - **filter** this / next fortnight
@@ -426,6 +427,7 @@ Done when (on top of the ten generic checks):
 - the grid's cells equal the session rows for the day shown (count and names)
 - a period running now carries Do now, a recorded one Done, one over and not recorded Late, and no period still to come has a chip
 - a holiday day is named in words under the grid
+- stepping to the next or previous school day skips the weekend and crosses into the next or earlier fortnight
 
 
 #### Fortnight 9 `/timetable/fortnight/[n]`

@@ -315,6 +315,9 @@
           "label": "Day / Week / Fortnight"
         },
         {
+          "label": "Previous / next day or week"
+        },
+        {
           "label": "Today"
         },
         {

@@ -51,3 +51,20 @@ export async function draftGrid(d: Draft, fn: Fn, href: (day: string, periodId: 
   }));
   return { days: all, labels: all.map(shortDate), rows, cells: d.entries.length };
 }
+
+/** What the draft reads for a class (the right-hand "What the draft reads"): the counts of the rows the generator is given. */
+export async function draftReads(classId: string, grade: string, fortnightId: string): Promise<{ label: string; value: string; num: boolean }[]> {
+  const [r] = await sql<{ periods: number; fixed: number; blocks: number; limits: number; plan: number }[]>`
+    select (select count(*)::int from period where grade_code = ${grade} and not fixed) as periods,
+           (select count(*)::int from timetable_rule where school_class_id = ${classId} and kind = 'frame' and cell = 'fixed') as fixed,
+           (select count(*)::int from timetable_rule where school_class_id = ${classId} and kind = 'block') as blocks,
+           (select count(*)::int from timetable_rule where school_class_id = ${classId} and kind = 'limit') as limits,
+           (select count(*)::int from plan_entry where school_class_id = ${classId} and fortnight_id = ${fortnightId}) as plan`;
+  return [
+    { label: "Period times", value: `${r.periods} a day`, num: true },
+    { label: "Fixed slots", value: String(r.fixed), num: true },
+    { label: "Blocked days", value: String(r.blocks), num: true },
+    { label: "Limits", value: String(r.limits), num: true },
+    { label: "Plan lines", value: String(r.plan), num: true },
+  ];
+}

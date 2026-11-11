@@ -199,6 +199,8 @@
   .b-seg [aria-selected="true"] { background: var(--panel); color: var(--ink); box-shadow: var(--shadow-card); }
   .b-count { min-width: 28px; height: 28px; padding: 0 var(--space-2); border-radius: var(--radius-pill); background: var(--cb, var(--surface)); color: var(--c, var(--ink)); font-size: var(--text-label); font-weight: 600; line-height: 28px; text-align: center; margin-left: auto; }
   .b-kanban { display: grid; grid-template-columns: repeat(var(--lanes, 3), minmax(220px, 1fr)); gap: var(--space-3); align-items: start; overflow-x: auto; padding-bottom: var(--space-1); }
+  /* more than four lanes, wide enough for all of them: the lanes share the width instead of scrolling one out of sight */
+  @media (min-width: 1100px) { .b-kanban.b-many { grid-template-columns: repeat(var(--lanes), minmax(0, 1fr)); } }
   .b-lane { display: grid; gap: var(--space-2); align-content: start; min-width: 0; padding: var(--space-2); border-radius: var(--radius-card); background: var(--surface); }
   .b-lane-h { display: flex; align-items: center; gap: var(--space-1); margin: 0; padding: var(--space-1) var(--space-1) var(--space-1) var(--space-2); font-size: var(--text-body); font-weight: 600; color: var(--c, var(--ink)); }
   .b-lane-b { display: grid; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
