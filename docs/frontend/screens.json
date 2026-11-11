@@ -213,8 +213,7 @@
       "screens": [
         "staff",
         "classes",
-        "setup",
-        "map"
+        "setup"
       ],
       "done_when": [
         "Every screen of this slice passes the ten generic checks and every element in its list behaves as its kind says, as educator and as coordinator.",
@@ -332,7 +331,8 @@
       "screens": [
         "login",
         "help",
-        "feedback"
+        "feedback",
+        "map"
       ],
       "done_when": [
         "Every screen of this slice passes the ten generic checks under `SLICE=UI-12` (sign in is tested signed out) and every element in its list behaves as its kind says; the slice's last commit adds `UI-12` to `merged_slices`.",

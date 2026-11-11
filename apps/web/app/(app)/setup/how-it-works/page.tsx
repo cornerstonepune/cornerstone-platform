@@ -150,8 +150,8 @@ function StepCard({ s, m }: { s: Step; m: Measure | undefined }) {
             {s.screens
               .filter((sc) => !sc.includes("[") && !sc.startsWith("/api/"))
               .map((sc) => (
-                <li key={sc}>
-                  <Link href={sc}>{sc}</Link>
+                <li key={sc} className="fact">
+                  {sc}
                 </li>
               ))}
           </ul>
