@@ -830,6 +830,9 @@
         },
         {
           "label": "Away: hold it for later"
+        },
+        {
+          "label": "Edit this paper"
         }
       ]
     },
@@ -867,6 +870,15 @@
         },
         {
           "label": "the next paper to check"
+        },
+        {
+          "label": "Approve this home assessment"
+        },
+        {
+          "label": "Remove (a question)"
+        },
+        {
+          "label": "bank: topic · skill · level · kind · question"
         }
       ]
     },
