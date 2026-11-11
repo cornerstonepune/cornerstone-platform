@@ -12,7 +12,7 @@ import type { States } from "@/lib/states";
 // class's own grid, never decided here.
 const ORDER: Rag[] = ["red", "amber", "green", "grey"];
 
-export function TopicGrid({ section, steps, kids, states }: { section: string; steps: Step[]; kids: GridChild[]; states: States }) {
+export function TopicGrid({ section, steps, kids, states, topicHref, childHref }: { section: string; steps: Step[]; kids: GridChild[]; states: States; topicHref: (code: string) => string; childHref: (c: GridChild) => string }) {
   // each count in a count's words, the colour's own (the setting `state.colours`, `count_words`)
   const words = (r: Rag) => states.colours[r].count_words;
   const topics = [...new Map(steps.map((s) => [s.topic_code, s.topic_name])).entries()];
@@ -25,7 +25,7 @@ export function TopicGrid({ section, steps, kids, states }: { section: string; s
             <th className="pin">Child</th>
             {topics.map(([code, name]) => (
               <th key={code} data-topic={code} className="border-l border-basalt/12">
-                <Link href={`/growth/class/${encodeURIComponent(section)}?topic=${code}`}>{name}</Link>
+                <Link href={topicHref(code)}>{name}</Link>
               </th>
             ))}
           </tr>
@@ -35,7 +35,7 @@ export function TopicGrid({ section, steps, kids, states }: { section: string; s
             <tr key={c.id} data-child={c.id}>
               <td className="pin whitespace-nowrap">
                 <span className="fact mr-2 text-basalt/55">{c.roll_no}</span>
-                <Link href={`/growth/${c.id}`} className="underline decoration-basalt/30 underline-offset-4">
+                <Link href={childHref(c)} className="underline decoration-basalt/30 underline-offset-4">
                   {c.first_name}
                 </Link>
               </td>

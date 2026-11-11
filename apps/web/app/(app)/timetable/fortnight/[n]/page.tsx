@@ -10,6 +10,8 @@ import { nextState, steppedFor, stateWords } from "@/lib/fortnight-words";
 import { screenHref } from "@/lib/built";
 import { fortnightNumber, isCoordinator, movesOf, planOf, stepsTaken } from "@/lib/timetable-ui";
 import { schoolToday } from "@/lib/voice-page";
+import { sql } from "@/lib/db";
+import { GoLive } from "./go-live";
 import "../../timetable.css";
 
 type Props = { params: Promise<{ n: string }>; searchParams: Promise<Record<string, string | undefined>> };
@@ -17,7 +19,7 @@ const activityHref = (code: string) => screenHref("activity", { code }) ?? `/edu
 
 // A fortnight: its state, its plan lines and the moves made by hand. The coordinator takes the next step with one button
 // (Approve) when the fortnight is ready for it. Frozen once it starts: then no step button and nothing to edit.
-// Go live and its what-changed table are not here: the engine has no route for going live yet (docs/notes/UI-6.md).
+// Go live (coordinator, once approved) puts every class's placed draft live and lists what each changed (`go-live.tsx`).
 export default async function FortnightPage({ params, searchParams }: Props) {
   await requireStaff();
   const { n } = await params;
@@ -28,6 +30,10 @@ export default async function FortnightPage({ params, searchParams }: Props) {
   const started = fn.starts_on <= today;
   const next = nextState(fn.state);
   const canApprove = coordinator && !started && fn.state === "aligned";
+  // Go live comes after Approve (the fortnight is approved and has not started) and only where some class has a placed draft
+  const [{ drafts }] = await sql<{ drafts: number }[]>`select count(distinct school_class_id)::int as drafts from timetable_run where fortnight_id = ${fn.id} and outcome = 'placed'`;
+  const canGoLive = coordinator && !started && fn.state === "approved" && drafts > 0;
+  const subjects = Object.fromEntries((await sql<{ code: string; name: string }[]>`select code, coalesce(label, name) as name from subject`).map((r) => [r.code, r.name]));
   const last = took.at(-1);
   const lines = [...new Map(plan.filter((l) => l.activity).map((l) => [l.activity!.code, l.activity!])).values()];
   const edges: Edge[] = [
@@ -64,6 +70,7 @@ export default async function FortnightPage({ params, searchParams }: Props) {
           </form>
         ) : null}
       </section>
+      {coordinator ? <GoLive number={fn.number} subjects={subjects} can={canGoLive} /> : null}
       <section className="tt-card" aria-labelledby="h-plan" data-card="plan">
         <h2 id="h-plan">Plan lines</h2>
         {plan.length === 0 ? (

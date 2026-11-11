@@ -1,107 +1,36 @@
 /**
  * U72 (UI-3b) — Children, the class picture and where a child is. One test per "Done when" line of specs/UI-3b/spec.md.
- * Two classes of the test's own (fake names only), an educator who teaches the first, the signed-in coordinator who sees both.
- * Rows are made once and a second run finds them; observations are append-only, so a child keeps what a run gave them.
+ * The world (two classes of the test's own, an educator who teaches the first, the signed-in coordinator who sees both) is
+ * tests/children-world.ts; the notes, the attention window and the wireframe's cards are in u76-children-wireframe.spec.ts.
  */
-import { expect, test, type Browser, type BrowserContext, type Page } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 import postgres from "postgres";
-import { FAKE_CHILDREN } from "./fake-names";
-import { sessionFor } from "./inventory-fixtures";
-import { aClass, aPerson, personAsStored } from "./rows";
-import { aK2Note, voiceSwitch } from "./k2-rows";
+import { NAMES_A, NAMES_B, asEducator, childrenWorld, rowsOf, tableOf } from "./children-world";
+import { voiceSwitch } from "./k2-rows";
 
-const A = "U72A";
-const B = "U72B";
-const EDUCATOR = { email: "u72-educator@cornerstone.test", name: "Asha Almond", role: "educator", classes: [A], subjects: ["NUM"] };
-const NAMES_A = FAKE_CHILDREN.slice(0, 12) as readonly string[];
-const NAMES_B = FAKE_CHILDREN.slice(12, 16) as readonly string[];
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
-
 let classA = "";
 let classB = "";
 let kids: Record<string, string> = {};
-let tenant = "";
-let staff = "";
-let skills: { code: string; name: string }[] = [];
-
-async function observe(roll: string, level: number | null, daysAgo: number, outcome = "as_expected", mode = "individual") {
-  const child = kids[NAMES_A[Number(roll) - 1]];
-  const at = new Date(Date.now() - daysAgo * 86_400_000);
-  const [o] = await sql<{ id: string }[]>`
-    insert into activity_observation (tenant_id, confirmation_id, activity_code, child_id, class_id, outcome, entry_mode, route, expected_level, reached_level, observed_at, observed_by, confirmed_by)
-    values (${tenant}, gen_random_uuid(), 'ACT-U72-1', ${child}, ${classA}, ${outcome}, ${mode}, 'form', ${level ?? 2}, ${level}, ${at}, ${staff}, ${staff}) returning id`;
-  if (outcome !== "absent" && (level !== null || mode !== "individual")) {
-    const mark = level === 3 ? "yes" : level === 2 ? "sometimes" : "not_yet";
-    for (const s of skills) {
-      await sql`insert into evidence_event (tenant_id, child_id, skill_code, channel, observed_at, confirmed_by, kind, mark, seen_by, place, source, observation_id)
-        values (${tenant}, ${child}, ${s.code}, 'educator', ${at}, ${staff}, 'observed', ${mark}, ${staff}, 'class', 'u72 test', ${o.id})`;
-    }
-  }
-  await sql`select rebuild_child_observed_state(${child})`;
-}
+let observe: (roll: string, level: number | null, daysAgo: number, outcome?: string, mode?: string) => Promise<void>;
 
 test.beforeAll(async () => {
-  await voiceSwitch(sql, true); // the educator screens are on (the K2 switch); the last test turns them off and on again
-  [{ id: tenant }] = await sql<{ id: string }[]>`select id from tenant order by created_at limit 1`;
-  kids = { ...(await aClass(sql, A, "K2", [...NAMES_A])), ...(await aClass(sql, B, "K2", [...NAMES_B])) };
-  [{ id: classA }, { id: classB }] = [
-    (await sql<{ id: string }[]>`select id from school_class where label = ${A} order by created_at limit 1`)[0],
-    (await sql<{ id: string }[]>`select id from school_class where label = ${B} order by created_at limit 1`)[0],
-  ].map((r) => ({ id: r.id }));
-  if (!(await personAsStored(sql, EDUCATOR.email))) await aPerson(sql, EDUCATOR);
-  [{ id: staff }] = await sql<{ id: string }[]>`select staff_id::text as id from pii.staff where email = ${EDUCATOR.email}`;
-  // she teaches the class: the engine counts a class's waiting notes only for someone who holds it as a teacher
-  await sql`insert into staff_role_grant (tenant_id, staff_id, role_code, school_class_id, valid_from, granted_by)
-            select ${tenant}, ${staff}, 'class_teacher', ${classA}, current_date - 1, 'u72 test'
-            where not exists (select 1 from staff_role_grant where staff_id = ${staff} and school_class_id = ${classA} and role_code = 'class_teacher')`;
-  skills = await sql<{ code: string; name: string }[]>`select code, name from registry_skill where tenant_id = ${tenant} order by code limit 2`;
-  await sql`insert into activity (tenant_id, code, band, strand, name, sheet_no) values (${tenant}, 'ACT-U72-1', 'K2', 'Maths', 'Sorting by size', '') on conflict (tenant_id, code) do nothing`;
-  for (const s of skills) await sql`insert into activity_skill (tenant_id, activity_code, skill_code) values (${tenant}, 'ACT-U72-1', ${s.code}) on conflict do nothing`;
-  const [{ n }] = await sql<{ n: number }[]>`select count(*)::int as n from activity_observation where class_id = ${classA}`;
-  if (n === 0) {
-    await observe("1", 3, 40);
-    await observe("1", 3, 20);
-    await observe("2", 2, 10);
-    await observe("3", 1, 5);
-    await observe("4", null, 5, "as_expected", "group_as_expected");
-    await observe("5", null, 2, "absent");
-    // a child seen on the second paper-day, and corrected: a new entry naming the one it replaces
-  }
-  // school days for the class's campus, and a confirmed lesson on all but one of them
-  await sql`insert into period (tenant_id, grade_code, ord, starts_at, ends_at, label) values (${tenant}, 'K2', 91, '23:10', '23:50', 'U72 period') on conflict do nothing`;
-  const [{ campus, period }] = await sql<{ campus: string; period: string }[]>`
-    select (select campus_id from school_class where id = ${classA}) as campus,
-           (select id from period where grade_code = 'K2' and label = 'U72 period' limit 1) as period`;
-  for (let d = 1; d <= 8; d++) {
-    await sql`insert into school_day (tenant_id, campus_id, on_date, kind) select ${tenant}, ${campus}, current_date - ${d}::int, 'teaching'
-              where not exists (select 1 from school_day where campus_id = ${campus} and on_date = current_date - ${d}::int)`;
-    if (d === 3) continue;
-    await sql`insert into session (tenant_id, school_class_id, school_day_id, period_id, state)
-              select ${tenant}, ${classA}, id, ${period}, 'done' from school_day where campus_id = ${campus} and on_date = current_date - ${d}::int
-              on conflict do nothing`;
-  }
+  ({ classA, classB, kids, observe } = await childrenWorld(sql));
 });
 test.afterAll(async () => {
   await sql.end();
 });
 
-async function asEducator(browser: Browser, width = 1440): Promise<BrowserContext> {
-  const context = await browser.newContext({ baseURL: "http://localhost:3100", viewport: { width, height: 900 } });
-  await context.addCookies([{ name: "cs_staff", value: sessionFor(EDUCATOR.email), domain: "localhost", path: "/", httpOnly: true, secure: false, sameSite: "Lax" }]);
-  return context;
-}
-const rowsOf = (page: Page) => page.locator('table[aria-label^="Children"] tbody tr');
-
 test("1 · an educator's table lists their own children; a coordinator sees every class, with a class filter", async ({ browser, page }) => {
   const mine = await asEducator(browser);
   const p = await mine.newPage();
   await p.goto("/children");
-  await expect(p.getByRole("button", { name: new RegExp(NAMES_A[0]) })).toBeVisible();
+  await expect(tableOf(p).getByRole("button", { name: new RegExp(NAMES_A[0]) })).toBeVisible();
   await expect(p.locator("main")).not.toContainText(NAMES_B[0]);
   await mine.close();
   await page.goto("/children?cls=" + classB);
-  await expect(page.getByRole("button", { name: new RegExp(NAMES_B[0]) })).toBeVisible();
+  await expect(tableOf(page).getByRole("button", { name: new RegExp(NAMES_B[0]) })).toBeVisible();
   await expect(page.getByLabel(/^Class/)).toBeVisible();
 });
 
@@ -136,7 +65,7 @@ test("4 · searching narrows the rows and writes itself into the address; a relo
   await expect(rowsOf(page)).toHaveCount(1);
   await page.getByRole("searchbox").fill("4");
   await page.getByRole("searchbox").press("Enter");
-  await expect(page.getByRole("button", { name: new RegExp(NAMES_A[3]) })).toBeVisible();
+  await expect(tableOf(page).getByRole("button", { name: new RegExp(NAMES_A[3]) })).toBeVisible();
 });
 
 test("5 · absences noted: a grey cell with its word, a day with no lesson blank, never present", async ({ page }) => {
@@ -153,7 +82,7 @@ test("5 · absences noted: a grey cell with its word, a day with no lesson blank
 
 test("6 · a name opens the peek, 'Open the child' lands on the child, the toggle goes to the picture and back", async ({ page }) => {
   await page.goto(`/children?cls=${classA}`);
-  await page.getByRole("button", { name: new RegExp(NAMES_A[0]) }).click();
+  await tableOf(page).getByRole("button", { name: new RegExp(NAMES_A[0]) }).click();
   await expect(page.locator("[data-block=ChildPeek]")).toBeVisible();
   await page.getByRole("link", { name: "Open the child" }).click();
   await expect(page).toHaveURL(new RegExp(`/children/${classA}/1$`));
@@ -179,7 +108,7 @@ test("7 · grouping puts a heading and a count over each group; counts sum to th
 
 test("8 · the peek is newest first with who and when; Escape closes it and focus returns", async ({ page }) => {
   await page.goto(`/children?cls=${classA}`);
-  const opener = page.getByRole("button", { name: new RegExp(NAMES_A[0]) });
+  const opener = tableOf(page).getByRole("button", { name: new RegExp(NAMES_A[0]) });
   await opener.focus();
   await opener.click();
   const peek = page.locator("[data-block=ChildPeek]");
@@ -333,7 +262,7 @@ test("the old K2 addresses answer 308 to the new ones", async ({ request }) => {
 test("axe finds nothing serious or critical on the three screens, with the peek open", async ({ page }) => {
   for (const url of [`/children?cls=${classA}`, `/children/${classA}`, `/children/${classA}/1`]) {
     await page.goto(url);
-    if (url.startsWith("/children?")) await page.getByRole("button", { name: new RegExp(NAMES_A[0]) }).click();
+    if (url.startsWith("/children?")) await tableOf(page).getByRole("button", { name: new RegExp(NAMES_A[0]) }).click();
     const found = (await new AxeBuilder({ page }).analyze()).violations.filter((v) => v.impact === "serious" || v.impact === "critical");
     expect(found.map((v) => `${v.id} (${v.nodes.length})`), url).toEqual([]);
   }
@@ -352,40 +281,5 @@ test("with the educator switch off the three screens say so, show no child, and 
     expect(r.status()).toBe(403);
   } finally {
     await voiceSwitch(sql, true);
-  }
-});
-
-test("notes waiting: the engine's count for a child, none where nothing waits, and not available where the engine cannot say", async ({ browser, page }) => {
-  await sql`insert into activity (tenant_id, code, band, strand, name, sheet_no) values (${tenant}, 'ACT-U72-912', 'K2', 'Maths', 'Counting in tens', '912') on conflict (tenant_id, code) do nothing`;
-  for (const k of skills) await sql`insert into activity_skill (tenant_id, activity_code, skill_code) values (${tenant}, 'ACT-U72-912', ${k.code}) on conflict do nothing`;
-  const note = await aK2Note(sql, { klass: classA, staff }, "Activity 912. Above 2.", "drafted");
-  try {
-    const mine = await asEducator(browser);
-    const p = await mine.newPage();
-    await p.goto(`/children?cls=${classA}`);
-    const row = (n: string) => p.locator("tbody tr").filter({ has: p.getByRole("button", { name: new RegExp(n) }) });
-    await expect(row(NAMES_A[1])).toContainText("1 to confirm");
-    await expect(row(NAMES_A[0])).toContainText("none");
-    await mine.close();
-    // the coordinator holds no class, so the engine will not count another person's notes: not available, never a guess
-    await page.goto(`/children?cls=${classA}`);
-    await expect(page.locator("tbody tr").first()).toContainText("not available yet");
-  } finally {
-    await sql`update pii.educator_note set status = 'left_unconfirmed' where id = ${note}::uuid`;
-  }
-});
-
-test("a child not seen for the school's window needs attention, by the setting and never by a number in the code", async ({ page }) => {
-  const [was] = await sql<{ value: unknown }[]>`select value from config where key = 'children.attention_days'`;
-  try {
-    await sql`update config set value = '1'::jsonb where key = 'children.attention_days'`;
-    await page.goto(`/children?cls=${classA}&show=attention`);
-    const withOne = await page.locator("tbody tr[data-child]").count();
-    await sql`update config set value = '100000'::jsonb where key = 'children.attention_days'`;
-    await page.goto(`/children?cls=${classA}&show=attention`);
-    const withMany = await page.locator("tbody tr[data-child]").count();
-    expect(withOne).toBeGreaterThan(withMany); // a shorter window flags more children
-  } finally {
-    await sql`update config set value = ${sql.json(was.value as never)} where key = 'children.attention_days'`;
   }
 });

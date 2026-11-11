@@ -1215,14 +1215,24 @@
         {
           "t": "filter",
           "label": "class",
-          "roles": [
-            "coordinator"
-          ]
+          "note": "the coordinator always; an educator only when she holds more than one class"
         },
         {
           "t": "tab",
           "label": "Day / Week / Fortnight",
           "note": "Day by default at 400 px"
+        },
+        {
+          "t": "link",
+          "label": "Today",
+          "to": "timetable",
+          "note": "opens today in the Day view"
+        },
+        {
+          "t": "link",
+          "label": "each day head",
+          "to": "timetable",
+          "note": "opens that day in the Day view; earlier and later days are reached the same way"
         },
         {
           "t": "filter",
@@ -1291,7 +1301,9 @@
       "done_when": [
         "a hand move shows an amber outline and its details name who and why",
         "an educator never sees an accept-clash control; a clash cell is red for both roles",
-        "the grid's cells equal the session rows for the day shown (count and names)"
+        "the grid's cells equal the session rows for the day shown (count and names)",
+        "a period running now carries Do now, a recorded one Done, one over and not recorded Late, and no period still to come has a chip",
+        "a holiday day is named in words under the grid"
       ]
     },
     {
@@ -1358,12 +1370,31 @@
           }
         },
         {
+          "t": "field",
+          "label": "reason",
+          "roles": [
+            "coordinator"
+          ],
+          "note": "needed once the fortnight is frozen; the engine says so in words when it is missing"
+        },
+        {
           "t": "button",
           "label": "Go live",
           "roles": [
             "coordinator"
           ],
-          "effect": "sessions updated in place; the what-changed table fills; the stepper moves to live"
+          "effect": "every class's placed draft goes live and the sessions are updated in place; the what-changed table lists every session it moved or removed, and nothing else",
+          "drive": {
+            "fill": {
+              "reason": "the school's own decision"
+            },
+            "click": "Go live",
+            "expect": {
+              "text": [
+                "went live"
+              ]
+            }
+          }
         },
         {
           "t": "link",
@@ -2723,6 +2754,14 @@
           "note": "on a printed copy; the same button then reads Back: count as missing",
           "text": "Away: hold it",
           "data": "data-away"
+        },
+        {
+          "t": "link",
+          "label": "Edit this paper",
+          "to": "paper",
+          "note": "a home assessment's copy not yet printed: its questions, remove, add, approve",
+          "text": "Edit this paper",
+          "data": "data-edit-paper"
         }
       ],
       "rail": [
@@ -2857,6 +2896,30 @@
           "t": "link",
           "label": "rail: the next paper to check",
           "to": "paper"
+        },
+        {
+          "t": "button",
+          "label": "Approve this home assessment",
+          "note": "a copy waiting for approval: approved in the educator's name, this one only",
+          "text": "Approve this home assessment",
+          "data": "data-approve-paper",
+          "pending": "needs a home paper the engine made for a child (a library worksheet cannot be edited); proved against real engine-made papers in u76-edit-a-paper"
+        },
+        {
+          "t": "button",
+          "label": "Remove (a question)",
+          "note": "asks once when the removal costs something (the approval, or the last question of a skill); the paper is made again with a new code",
+          "text": "Remove",
+          "data": "data-remove-question",
+          "pending": "needs a home paper the engine made for a child (a library worksheet cannot be edited); proved against real engine-made papers in u76-edit-a-paper"
+        },
+        {
+          "t": "filter",
+          "label": "bank: topic · skill · level · kind · question",
+          "note": "each choice narrows the next; the chosen question is seen before Add",
+          "text": "Topic",
+          "data": "data-filter",
+          "pending": "needs a home paper the engine made for a child (a library worksheet cannot be edited); proved against real engine-made papers in u76-edit-a-paper"
         }
       ],
       "rail": [
@@ -3259,7 +3322,7 @@
           "roles": [
             "coordinator"
           ],
-          "effect": "a field; Save writes a skill_level_version row"
+          "effect": "a field for the sentence and an optional reason; Save changes that level's words, takes that level out of approved and keeps who and why (the engine's level-words route)"
         },
         {
           "t": "link",
@@ -3296,6 +3359,11 @@
           "label": "peek: Open the child",
           "to": "child",
           "note": "the one way from a list to the child's own page"
+        },
+        {
+          "t": "fold",
+          "label": "Earlier sentences (each level)",
+          "note": "each earlier sentence with who and when, newest first; coordinator"
         }
       ],
       "rail": [
@@ -3320,7 +3388,8 @@
         "the grid's squares equal the class's enrolment in Sr. No. order",
         "grouping by state puts a heading and a count over each group and the counts sum to the squares",
         "a cluster's count equals the chips in it; clusters are computed by code, never by a model",
-        "tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page"
+        "tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page",
+        "a coordinator changes a level's sentence and the change is logged with who and why, taking only that level out of approved; an educator is shown the sentences and no way to change them"
       ]
     },
     {
