@@ -25,7 +25,7 @@ export function materialColumns(look: boolean): Column<DayLine>[] {
       value: (l) => l.activity?.name,
       cell: (l) =>
         l.activity ? (
-          <Link href={`/educator/activity/${encodeURIComponent(l.activity.code)}?back=/educator/materials`} className="inline-flex min-h-[var(--tap)] items-center text-[var(--ink)] underline underline-offset-4">
+          <Link href={`/setup/activities/${encodeURIComponent(l.activity.code)}?back=/educator/materials`} className="inline-flex min-h-[var(--tap)] items-center text-[var(--ink)] underline underline-offset-4">
             {l.activity.name}
           </Link>
         ) : null,
