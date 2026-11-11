@@ -21,7 +21,7 @@ import { signOffPaper } from "../actions";
 import { EditPaper } from "./edit-paper";
 import { AnswerPanel } from "./answer-panel";
 import { Lanes } from "./lanes";
-import { keysOn, proofOf, unnamedOn } from "./answer-data";
+import { keysOn, pageLost, proofOf, unnamedOn } from "./answer-data";
 
 const safeDecode = (v: string) => {
   try {
@@ -117,7 +117,9 @@ export default async function PaperPage({ params, searchParams }: Props) {
       ),
     },
   ];
-  const src = focus ? `/api/scan/${focus.a.capture_id}/${focus.a.file_page}` : answers[0] ? `/api/scan/${answers[0].capture_id}/${answers[0].file_page}` : undefined;
+  const shown = focus?.a ?? answers[0];
+  const lost = shown ? await deadline(pageLost(shown.capture_id, shown.page ?? 1)) : undefined;
+  const src = lost ? undefined : focus ? `/api/scan/${focus.a.capture_id}/${focus.a.file_page}` : answers[0] ? `/api/scan/${answers[0].capture_id}/${answers[0].file_page}` : undefined;
   // the answers still for you to judge, after the one in view, in the order they sit on the page: the way on, so a paper is walked answer by answer
   const others = judging.filter((x) => marks.indexOf(x) > marks.findIndex((m) => m.a.id === focus?.a.id));
   const nextJudge = others.length ? { href: `${paperHref(key, roll)}?answer=${others[0].a.id}#a-${others[0].a.id}`, left: others.length } : undefined;
@@ -180,7 +182,14 @@ export default async function PaperPage({ params, searchParams }: Props) {
         <EmptyState>Nothing has been read from this paper yet. When the scan is read, each answer appears here.</EmptyState>
       ) : (
         <div className="b-split">
+          {lost ? (
+            <figure data-page-not-found={shown?.page ?? 1} className="b-card">
+              <p>{lost}</p>
+              <figcaption className="b-muted">Its answers wait for you. Scan page {shown?.page ?? 1} again and send it to be read.</figcaption>
+            </figure>
+          ) : (
           <PageImage src={src} box={outlined ? focus?.a.box : null} caption={!focus ? "The child's page as photographed" : outlined ? `The child's page as photographed. Question ${qLabel(focus.a, marks.indexOf(focus))} is outlined.` : `We could not find question ${qLabel(focus.a, marks.indexOf(focus))} on this page: it is somewhere on this page.`} />
+          )}
           <DataTable label="The answers" columns={columns} rows={marks} rowKey={(x) => x.a.id} more={{ page: 1, href: () => paperHref(key, roll) }} />
         </div>
       )}

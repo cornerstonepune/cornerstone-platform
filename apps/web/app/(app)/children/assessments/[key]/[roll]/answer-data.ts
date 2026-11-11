@@ -34,3 +34,8 @@ async function read<T>(path: Parameters<typeof engineGet>[0], none: T): Promise<
 export const unnamedOn = (capture: string) => read<Record<string, Unnamed>>(`/capture/${capture}/mistakes`, {});
 export const keysOn = (capture: string) => read<Record<string, Key>>(`/capture/${capture}/keys`, {});
 export const proofOf = (capture: string, page: number) => read<Proof | undefined>(`/capture/${capture}/proof?page=${page}`, undefined);
+
+/** Which pages of a scan the engine found a photograph of, and in words why not (`GET /capture/{id}/pages`): a page that is another page again is never drawn as its own. */
+type PageFound = { page: number; found: boolean; said: string | null };
+export const pageLost = async (capture: string, page: number): Promise<string | undefined> =>
+  (await read<PageFound[]>(`/capture/${capture}/pages`, [])).find((p) => p.page === page && !p.found)?.said ?? undefined;
