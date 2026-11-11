@@ -33,10 +33,10 @@ async function send(path: `/skill/${string}/kind/stop` | `/skill/${string}/kind/
 
 function back(code: string, a: Answer, said: string): never {
   revalidatePath("/");
-  revalidatePath(`/skill-sets/${code}`);
-  if (!(a.stopped || a.started)) redirect(`/skill-sets/${code}?refused=${encodeURIComponent(a.why || "That could not be done.")}#stop-kinds`);
+  revalidatePath(`/setup/skill-sets/${code}`);
+  if (!(a.stopped || a.started)) redirect(`/setup/skill-sets/${code}?refused=${encodeURIComponent(a.why || "That could not be done.")}#stop-kinds`);
   const papers = a.withdrawn?.length ? `&withdrawn=${a.withdrawn.join(",")}` : "";
-  redirect(`/skill-sets/${code}?changed=${said}&at=${encodeURIComponent((a.levels ?? []).join(", "))}${papers}#stop-kinds`);
+  redirect(`/setup/skill-sets/${code}?changed=${said}&at=${encodeURIComponent((a.levels ?? []).join(", "))}${papers}#stop-kinds`);
 }
 
 export async function stopKind(fd: FormData): Promise<void> {

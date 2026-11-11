@@ -35,7 +35,7 @@ test.beforeAll(async ({ browser }) => {
     // a page that opens on the person's own grade is compared at "Every grade", its one tap
     "/setup/needs-doing", "/", "/papers", "/growth", "/asks", "/library?grade=all", "/worksheets?grade=all", "/worksheets/taxonomy", "/skill-sets/approve",
     `/skill-sets/${draft}`, "/capture", "/capture/check", "/make", `/make/${OTHER}`, "/papers/approve", "/children/reports",
-    `/growth/class/${OTHER}`, `/growth/${other.Kavi}`, `/growth/${other.Kavi}/report`, "/workflows",
+    `/growth/class/${OTHER}`, `/growth/${other.Kavi}`, `/growth/${other.Kavi}/report`, "/setup/how-it-works",
   ];
   educator = await asEducator(browser);
 });
@@ -112,7 +112,7 @@ async function offered(page: Page, at: string, name: string): Promise<{ refused:
 const NAMES = [
   "/setup/needs-doing", "/", "/papers", "/growth", "/asks", "/library", "/worksheets", "/worksheets/taxonomy", "/skill-sets/approve",
   "a skill waiting", "/capture", "/capture/check", "/make", "/make of another class", "/papers/approve", "/children/reports",
-  "another class's growth", "a child of another class", "that child's report", "/workflows",
+  "another class's growth", "a child of another class", "that child's report", "/setup/how-it-works",
 ];
 const walked: string[] = [];
 test.describe("an educator reaches every page and every action the coordinator does", () => {

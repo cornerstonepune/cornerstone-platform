@@ -1098,23 +1098,56 @@
     },
     {
       "id": "skillset",
-      "title": "the skill set's name",
-      "eyebrow": "Skill set · Grades 1 to 4",
+      "title": "the skill set's outcome (what the child can do)",
+      "eyebrow": "Curriculum · Skill set · Grade 3 · Skill 4 of 21",
       "group": "Setup",
       "route": "/setup/skill-sets/[code]",
-      "purpose": "A skill set is what the school teaches and tests together, from one to four grades. It points at the skills the system reads a child on; it never scores a child itself.",
+      "purpose": "What this skill looks like at each level, each with a real question from the bank, the kinds of question, and the mistakes it watches for.",
       "does": [
         {
           "label": "Open the skill (each card)"
         },
         {
-          "label": "Each level in a sentence"
+          "label": "For example: a real question (each level)"
+        },
+        {
+          "label": "Which grade each level belongs to"
+        },
+        {
+          "label": "Save the grades"
+        },
+        {
+          "label": "Approve this level (each level)"
+        },
+        {
+          "label": "Approve a way of asking (English)"
+        },
+        {
+          "label": "Change a sample (English)"
+        },
+        {
+          "label": "More like this (each level)"
+        },
+        {
+          "label": "Stop using a kind (each kind, each level)"
+        },
+        {
+          "label": "Approve the skill"
+        },
+        {
+          "label": "Worksheets: a level"
         },
         {
           "label": "each skill"
         },
         {
-          "label": "Question bank for this skill set"
+          "label": "Question bank"
+        },
+        {
+          "label": "Kinds of question"
+        },
+        {
+          "label": "How it is asked (English)"
         }
       ]
     },
@@ -1397,6 +1430,28 @@
         },
         {
           "label": "Find a class (search)"
+        }
+      ]
+    },
+    {
+      "id": "map",
+      "title": "How it works",
+      "eyebrow": "The engine",
+      "group": "Setup",
+      "route": "/setup/how-it-works",
+      "purpose": "The twelve steps agreed with the school: what each does, what it hands on, what it has made so far, and which work for one subject only.",
+      "does": [
+        {
+          "label": "Setup"
+        },
+        {
+          "label": "each step it hands on to"
+        },
+        {
+          "label": "each screen a step shows"
+        },
+        {
+          "label": "each step's files and commands"
         }
       ]
     },

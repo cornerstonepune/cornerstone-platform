@@ -8,13 +8,18 @@ import { Notice } from "@/components/parts";
 import { requireStaff } from "@/lib/auth";
 import { screenHref } from "@/lib/built";
 import { refusedWords } from "@/lib/move-child";
-import { type ChildLine, type ClassLine, classChildren, classLines, moveLog, moveTargets, namesMayShow } from "@/lib/queries-coordinator";
+import { type ChildLine, type ClassLine, classChildren, classLines, moveLog, moveTargets, namesMayShow, shortDate } from "@/lib/queries-coordinator";
 import { schoolToday } from "@/lib/school-clock";
 import type { Column } from "@/lib/ux-rules";
 import { MoveButton } from "./move-button";
 
 // A school's classes, and a class's children, are read whole (docs/ux-rules.md rule 3, as for the class grid): the coordinator finds the class or the child to move without paging.
 const CLASS_ROWS = 40;
+// A class's children are shown whole too, in two groups (the wireframe's): those who moved in this year, then those here since it began.
+const WHOLE_CLASS = 200;
+const MOVED_IN = "Moved in this year";
+const HERE_SINCE = "Here since the year began";
+const movedFirst = (rows: readonly ChildLine[]) => [...rows].sort((a, b) => Number(Boolean(b.movedFrom)) - Number(Boolean(a.movedFrom)));
 
 type Props = { searchParams: Promise<Record<string, string | undefined>> };
 
@@ -38,6 +43,17 @@ export default async function ClassesPage({ searchParams }: Props) {
     { key: "grade", label: "Grade", width: "9rem", keep: true, value: (c) => c.grade },
     { key: "children", label: "Children", width: "7rem", num: true, keep: true, value: (c) => c.children },
     { key: "educators", label: "Educators", keep: true, value: (c) => c.educators.join(", ") },
+    {
+      key: "picture",
+      label: "Picture",
+      width: "8rem",
+      keep: true,
+      value: () => "Class picture",
+      cell: (c) => {
+        const href = screenHref("picture", { class: c.id });
+        return href ? <Link href={href} data-class-picture>Class picture</Link> : null;
+      },
+    },
   ];
   const kid: Column<ChildLine>[] = [
     { key: "roll", label: "Sr. No. and name", keep: true, value: (c) => `${c.roll} ${c.name}`, cell: (c) => <><strong>{c.roll}</strong> {c.name}</> },
@@ -58,7 +74,7 @@ export default async function ClassesPage({ searchParams }: Props) {
       title="Classes and children"
       purpose="Each class, its grade, its children by Sr. No., and who teaches it. Move a child to another class; every change is kept with who made it."
       action={<p className="m-0 text-[14px]">Move a child: press Move on the child&rsquo;s row below.</p>}
-      next={{ href: screenHref("staff") ?? "/staff", label: "Staff" }}
+      next={{ href: screenHref("staff") ?? "/setup/staff", label: "Staff" }}
       rail={<Rail edges={[{ screen: "staff", label: "Staff", icon: "coordinator" }, { screen: "picture", params: open ? { class: open.id } : {}, label: "Class picture", icon: "class" }, { screen: "fortnight", label: "The fortnight", icon: "week" }]} />}
     >
       {q.moved ? <Notice tone="neem">The child is moved. Their answers and results stay with them; the change is kept in the change log.</Notice> : null}
@@ -74,10 +90,10 @@ export default async function ClassesPage({ searchParams }: Props) {
           <h2 className="mb-2 text-[16px]">
             {open.label}: {open.children} children
           </h2>
-          <DataTable label={`${open.label} children`} columns={kid} rows={children} rowKey={(c) => c.id} limit={CLASS_ROWS} more={{ page: Number(q.page) || 1, href: (n: number) => `/setup/classes?class=${open.id}&page=${n}` }} />
+          <DataTable label={`${open.label} children`} columns={kid} rows={movedFirst(children)} rowKey={(c) => c.id} limit={WHOLE_CLASS} counted more={{ by: (c) => (c.movedFrom ? MOVED_IN : HERE_SINCE) }} />
         </section>
       ) : (
-        <p className="note mt-2">No class matches these filters.</p>
+        <p className="text-[13px] text-[var(--ink-muted)] mt-2">No class matches these filters.</p>
       )}
       {open ? (
         <div className="mt-6">
@@ -86,12 +102,12 @@ export default async function ClassesPage({ searchParams }: Props) {
               <ul className="grid gap-1">
                 {log.map((l) => (
                   <li key={l.id}>
-                    Sr. No. {l.roll} moved from {l.from} to {l.to}. By {l.by || "the school"} on {l.at}.
+                    Sr. No. {l.roll} moved from {l.from} to {l.to}. By {l.by || "the school"} · {shortDate(l.at)}.
                   </li>
                 ))}
               </ul>
             ) : (
-              <p className="note">No child has moved in or out of {open.label} yet.</p>
+              <p className="text-[13px] text-[var(--ink-muted)]">No child has moved in or out of {open.label} yet.</p>
             )}
           </Details>
         </div>

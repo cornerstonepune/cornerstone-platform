@@ -332,7 +332,8 @@
       "screens": [
         "login",
         "help",
-        "feedback"
+        "feedback",
+        "map"
       ],
       "done_when": [
         "Every screen of this slice passes the ten generic checks under `SLICE=UI-12` (sign in is tested signed out) and every element in its list behaves as its kind says; the slice's last commit adds `UI-12` to `merged_slices`.",
@@ -3492,17 +3493,21 @@
       "phase": "Core",
       "backend": [],
       "exists": "part (/skill-sets/[code])",
-      "eyebrow": "Skill set · Grades 1 to 4",
-      "title": "the skill set's name",
-      "purpose": "A skill set is what the school teaches and tests together, from one to four grades. It points at the skills the system reads a child on; it never scores a child itself.",
+      "eyebrow": "Curriculum · Skill set · Grade 3 · Skill 4 of 21",
+      "title": "the skill set's outcome (what the child can do)",
+      "purpose": "What this skill looks like at each level, each with a real question from the bank, the kinds of question, and the mistakes it watches for.",
       "blocks": [
         [
           "Cards",
-          "each skill it covers: name, link"
+          "each registry skill it covers: name, link"
+        ],
+        [
+          "Cards",
+          "which grade each level belongs to (coordinator) · each level: its sentence, approval, a real question from the bank, more like this"
         ],
         [
           "Details",
-          "each level in a sentence"
+          "Kinds of question · Stop using a kind · Mistakes it watches for · Worksheets by level"
         ]
       ],
       "elements": [
@@ -3512,8 +3517,81 @@
           "to": "skill"
         },
         {
-          "t": "fold",
-          "label": "Each level in a sentence"
+          "t": "link",
+          "label": "For example: a real question (each level)",
+          "to": "question"
+        },
+        {
+          "t": "field",
+          "label": "Which grade each level belongs to",
+          "roles": [
+            "coordinator"
+          ],
+          "note": "a choice of the school's grades for each level"
+        },
+        {
+          "t": "button",
+          "label": "Save the grades",
+          "roles": [
+            "coordinator"
+          ],
+          "effect": "each level's grade is saved with who and when; the page says Saved"
+        },
+        {
+          "t": "button",
+          "label": "Approve this level (each level)",
+          "roles": [
+            "coordinator"
+          ],
+          "effect": "that level's words are approved in the person's name; the other levels still wait"
+        },
+        {
+          "t": "button",
+          "label": "Approve a way of asking (English)",
+          "roles": [
+            "coordinator"
+          ],
+          "effect": "that way of asking is approved in the person's name"
+        },
+        {
+          "t": "link",
+          "label": "Change a sample (English)",
+          "roles": [
+            "coordinator"
+          ],
+          "to": "skillset",
+          "note": "opens the sample's own form in place; the address carries it"
+        },
+        {
+          "t": "button",
+          "label": "More like this (each level)",
+          "roles": [
+            "coordinator"
+          ],
+          "effect": "questions like the example are made and checked by code; the page says how many"
+        },
+        {
+          "t": "link",
+          "label": "Stop using a kind (each kind, each level)",
+          "roles": [
+            "coordinator"
+          ],
+          "to": "skillset",
+          "note": "asks which level, then stops it; the address carries the choice"
+        },
+        {
+          "t": "button",
+          "label": "Approve the skill",
+          "roles": [
+            "coordinator"
+          ],
+          "effect": "the skill is approved in the person's name"
+        },
+        {
+          "t": "link",
+          "label": "Worksheets: a level",
+          "to": "skillset",
+          "note": "shows that level's worksheets; the address carries it"
         },
         {
           "t": "link",
@@ -3522,18 +3600,26 @@
         },
         {
           "t": "link",
-          "label": "rail: Question bank for this skill set",
+          "label": "rail: Question bank",
           "to": "bank"
+        },
+        {
+          "t": "fold",
+          "label": "Kinds of question"
+        },
+        {
+          "t": "fold",
+          "label": "How it is asked (English)"
         }
       ],
       "rail": [
-        "each skill",
-        "Question bank for this skill set"
+        "each skill it covers",
+        "Question bank"
       ],
       "capture": [],
       "main": "a skill",
       "next": "the question bank",
-      "data": "skill (the skill set: code, name, registry_codes), skill_level, registry_skill",
+      "data": "skill (code, name, learning_objective, difficulty, level_band, level_approved, registry_codes), skill_level, registry_skill, item (a real question per level), question_type, misconception, worksheet",
       "empty": "No registry skill linked yet: shown, no invention",
       "phone": "cards stack in one column",
       "folds": [
@@ -3542,7 +3628,11 @@
       "done_when": [
         "the screen is keyed by the skill set's code, not by a registry skill's code",
         "each registry skill the set points at is a card that opens the skill screen; a set with none says so and invents nothing",
-        "the level sentences sit in a fold, closed on load"
+        "each level shows its sentence, its approval and a real question from the bank (or says there is none); a coordinator approves one level and the others still wait",
+        "a coordinator saves which grade each level belongs to; an educator is shown the grades and no way to change them",
+        "an English skill shows how each level is asked and its sample questions; a coordinator approves a way of asking and changes a sample",
+        "a coordinator asks for more questions like a level's example, and stops a kind of question at one level or at every level",
+        "the old address /skill-sets/<code> answers 308 to this one, query kept"
       ]
     },
     {
@@ -4228,6 +4318,9 @@
         "no sort, rank, ordinal or colour grading on the three numbers; the table cannot be sorted by them",
         "a grant edit is a new row or a valid_to, never a delete (row count never drops)",
         "no staff name appears unless the viewer is in the everything group (names are pii)"
+      ],
+      "folds": [
+        "/staff"
       ]
     },
     {
@@ -4329,6 +4422,67 @@
         "a move closes the enrolment, opens a new one, writes a change_log row and deletes nothing",
         "each child row shows the name beside the Sr. No., read from pii by child_id; the address and the change log's stored text carry no name (DOM scan)",
         "the change log lists the move with who and when"
+      ]
+    },
+    {
+      "id": "map",
+      "route": "/setup/how-it-works",
+      "group": "Setup",
+      "who": "both",
+      "phase": "Core",
+      "backend": [],
+      "exists": "yes (/workflows)",
+      "eyebrow": "The engine",
+      "title": "How it works",
+      "purpose": "The twelve steps agreed with the school: what each does, what it hands on, what it has made so far, and which work for one subject only.",
+      "blocks": [
+        [
+          "Tile",
+          "how many steps work, are partly built, are not built, work for one subject only"
+        ],
+        [
+          "Details",
+          "each step's files and commands"
+        ]
+      ],
+      "elements": [
+        {
+          "t": "link",
+          "label": "Setup",
+          "to": "setup"
+        },
+        {
+          "t": "link",
+          "label": "each step it hands on to",
+          "data": "data-handon",
+          "note": "jumps to that step on the same page"
+        },
+        {
+          "t": "link",
+          "label": "each screen a step shows",
+          "data": "data-shows"
+        },
+        {
+          "t": "fold",
+          "label": "each step's files and commands",
+          "data": "data-files",
+          "text": "Files and commands"
+        }
+      ],
+      "rail": [],
+      "capture": [],
+      "main": "Setup",
+      "next": "Setup",
+      "data": "workflows.json (the map the engine's code is held to), with each step's live number from the database",
+      "empty": "none",
+      "phone": "one column; the cards stack",
+      "folds": [
+        "/workflows"
+      ],
+      "done_when": [
+        "every step of the map is drawn in its workflow, with what it is doing now and where it hands on",
+        "a step's number is the database's own, read now; a step the map says is not built has no number",
+        "the map fits a phone"
       ]
     },
     {

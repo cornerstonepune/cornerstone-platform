@@ -15,11 +15,14 @@ const nextConfig: NextConfig = {
     // The single-activity pages folded into one (UI-3c): the old addresses answer 308 to the new one.
     { source: "/educator/activity/:code", destination: "/setup/activities/:code", permanent: true },
     { source: "/curriculum/fill/:code((?!walk$)[^/]+)", destination: "/setup/activities/:code", permanent: true },
+    { source: "/skill-sets/:code((?!approve$|levels$)[^/]+)", destination: "/setup/skill-sets/:code", permanent: true },
     // The screens folded into sign in and the help (UI-12): the old addresses answer 308 to the new one.
     { source: "/login/forgot", destination: "/login?view=forgot", permanent: true },
     { source: "/login/new-password", destination: "/login?view=new-password", permanent: true },
     { source: "/account/password", destination: "/login?view=forgot", permanent: true },
     { source: "/guide/:path+", destination: "/guide", permanent: true },
+    // How it works moved into the Setup door (screens.json `map`): the old address answers 308 to it.
+    { source: "/workflows", destination: "/setup/how-it-works", permanent: true },
     // The old Parent reports list folded into Reports (UI-8e): the old address answers 308 to the new one, its ?class= kept.
     { source: "/growth/reports", destination: "/children/reports", permanent: true },
     // The K2 pictures folded into Children (UI-3b): the old addresses answer 308 to the new ones.
@@ -28,6 +31,8 @@ const nextConfig: NextConfig = {
     { source: "/k2/:class/:roll", destination: "/children/:class/:roll", permanent: true },
     // UI-5 (docs/frontend/screens.json `folds`): the School page is Classes and children; a bookmark answers 308 to it.
     { source: "/school", destination: "/setup/classes", permanent: true },
+    // UI-5 (docs/frontend/screens.json `folds`): the old Staff page is Staff and classes; its editor became Add a person and Add / End a grant there.
+    { source: "/staff", destination: "/setup/staff", permanent: true },
     // The old voice pages folded into Record, Notes and the confirm screen (UI-3a): the old addresses answer 308 to the new ones. The form is
     // Type the marks, on Record; the class a bookmark names (`?class=`) is carried over, named so the destination has it.
     { source: "/voice/record", has: [{ type: "query", key: "class", value: "(?<class>.+)" }], destination: "/record?class=:class", permanent: true },

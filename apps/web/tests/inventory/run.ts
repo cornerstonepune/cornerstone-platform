@@ -43,7 +43,7 @@ async function auditRows(browser: Browser, s: Screen, role: "educator" | "coordi
       if (width >= 1000) {
         out.push(...(await words(page, s, c, hosts)));
         const axe = await new AxeBuilder({ page }).analyze();
-        for (const v of axe.violations.filter((x) => x.impact === "serious" || x.impact === "critical")) out.push(`${s.id}: axe ${v.impact}: ${v.id} (${v.nodes.length} nodes)`);
+        for (const v of axe.violations.filter((x) => x.impact === "serious" || x.impact === "critical")) out.push(`${s.id}: axe ${v.impact}: ${v.id} (${v.nodes.length} nodes: ${v.nodes.slice(0, 3).map((n) => n.target.join(" ")).join("; ")})`);
         for (const e of s.elements.filter((x) => forRole(x, role))) {
           out.push(...(await drive(page, s, e, c, byId)));
           if (page.url() !== `http://localhost:3100${address}`) await page.goto(address, { waitUntil: "networkidle" });

@@ -36,7 +36,7 @@ test("every step of the map is drawn in its workflow, with what it is doing now 
         await expect(card.getByRole("link", { name: `${next.code} ${next.name}` }), `${s.code} hands on to ${next.code}`).toBeVisible();
       }
       if (s.files.length) {
-        await card.getByText("Files, commands and screens").click();
+        await card.getByText("Files and commands").click();
         await expect(card.getByText(`packages/engine/${s.files[0]}`)).toBeVisible();
       }
     }
@@ -51,7 +51,7 @@ test("a step's number is the database's own, read now", async ({ page }) => {
              where i.source = 'generated' and i.status = 'active' and s.difficulty ? i.difficulty)::int as items,
            (select count(*) from sheet_template t join skill s on s.tenant_id = t.tenant_id and s.code = t.skill_set_code
              where t.source = 'library' and t.retired_at is null)::int as worksheets`;
-  await page.goto("/workflows");
+  await page.goto("/setup/how-it-works");
   await expect(page.locator('[data-measure="N2"]')).toContainText(n.items.toLocaleString("en-IN"));
   await expect(page.locator('[data-measure="N6"]')).toContainText(n.worksheets.toLocaleString("en-IN"));
   // a step the map says is not built has no number: nothing is invented for it
@@ -60,7 +60,7 @@ test("a step's number is the database's own, read now", async ({ page }) => {
 
 test("the map fits a phone", async ({ page }) => {
   await page.setViewportSize({ width: 400, height: 860 });
-  await page.goto("/workflows", { waitUntil: "networkidle" });
+  await page.goto("/setup/how-it-works", { waitUntil: "networkidle" });
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
   expect(overflow).toBeLessThanOrEqual(1);
 });

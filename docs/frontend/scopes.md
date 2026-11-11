@@ -141,7 +141,7 @@ Period, record, confirm, notes, children, class picture, child, activity, object
 3. The journey `e2e/an-educators-tuesday.spec.ts` passes: Today → the lit period → Type the marks → a note written with one activity_observation per named child and none for a child not mentioned → Confirm → Class picture shows the change → the child → the skill → trail back to Today; axe at each step; at 1440 and 400.
 4. A correction from Notes writes a superseding activity_observation row and never updates the old one (database assertion).
 5. The period → note link: a note confirmed from a period carries that session's id, and the period page lists its notes. This line waits for CP-25 (to be scoped: `activity_observation.session_id` is free today); the slice starts and merges without it, and the line is proved when CP-25 lands.
-6. Every one of the 138 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
+6. Every one of the 149 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
 7. the session's name: a period with no activity shows no capture controls and the words 'Nothing to record here'
 8. the session's name: the last-time bar's segments sum to the number of children named in the last session's observations
 9. the session's name: the steps fold is open on load and the others closed
@@ -192,9 +192,13 @@ Period, record, confirm, notes, children, class picture, child, activity, object
 54. the skill's name: a cluster's count equals the chips in it; clusters are computed by code, never by a model
 55. the skill's name: tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page
 56. the skill's name: a coordinator changes a level's sentence and the change is logged with who and why, taking only that level out of approved; an educator is shown the sentences and no way to change them
-57. the skill set's name: the screen is keyed by the skill set's code, not by a registry skill's code
-58. the skill set's name: each registry skill the set points at is a card that opens the skill screen; a set with none says so and invents nothing
-59. the skill set's name: the level sentences sit in a fold, closed on load
+57. the skill set's outcome (what the child can do): the screen is keyed by the skill set's code, not by a registry skill's code
+58. the skill set's outcome (what the child can do): each registry skill the set points at is a card that opens the skill screen; a set with none says so and invents nothing
+59. the skill set's outcome (what the child can do): each level shows its sentence, its approval and a real question from the bank (or says there is none); a coordinator approves one level and the others still wait
+60. the skill set's outcome (what the child can do): a coordinator saves which grade each level belongs to; an educator is shown the grades and no way to change them
+61. the skill set's outcome (what the child can do): an English skill shows how each level is asked and its sample questions; a coordinator approves a way of asking and changes a sample
+62. the skill set's outcome (what the child can do): a coordinator asks for more questions like a level's example, and stops a kind of question at one level or at every level
+63. the skill set's outcome (what the child can do): the old address /skill-sets/<code> answers 308 to this one, query kept
 
 ### Out of scope
 
@@ -448,13 +452,16 @@ Sign in (with forgot and new password), the help pages and the feedback form, re
 4. After sign in the person lands on `/today` once `UI-7` is in `merged_slices`, and on the existing home page until then (test reads `merged_slices`); sign in uses the bare frame.
 5. A used password link is refused the second time, and no development bypass exists in a production build (the existing gate tests kept).
 6. Sign in shows the large `lockup-colour` (`lockup-for-dark-backgrounds` in dark) above the form with its clear space, and the help pages carry the lockup in their head; the BrandMark tests of UI-13 pass on both.
-7. Every one of the 11 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
+7. Every one of the 15 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
 8. Sign in: lands on Today for the person's group
 9. Sign in: no development bypass in production
 10. Sign in: a used password link is refused the second time
 11. Start here: every page's ? opens its own section
 12. Start here: the sections are generated from screens.json so a new screen gets its help without a hand edit
 13. Report a problem or suggest something: Send writes one staff_note and one issue; the issue body carries no child's name: the page warns not to type one, and a screenshot is kept on the private side, linked by id, never attached to the public GitHub issue (names now appear on some screens and the repository is public)
+14. How it works: every step of the map is drawn in its workflow, with what it is doing now and where it hands on
+15. How it works: a step's number is the database's own, read now; a step the map says is not built has no number
+16. How it works: the map fits a phone
 
 ### Out of scope
 

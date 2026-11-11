@@ -11,7 +11,7 @@ import { aPerson, personAsStored } from "./rows";
 const SET = "U73.SET";
 // a reason of this run alone: the log is append-only, so an earlier run on the same database has left its own rows
 const REASON = `u73 wording ${Date.now()}`;
-const EDUCATOR = { email: "u73-educator@cornerstone.test", name: "Ivy Iris", role: "educator", classes: [] as string[], subjects: ["NUM"] };
+const EDUCATOR = { email: "u73-words-educator@cornerstone.test", name: "Ivy Iris", role: "educator", classes: [] as string[], subjects: ["NUM"] };
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 let url = "";
 

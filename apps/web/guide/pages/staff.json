@@ -1,5 +1,5 @@
 {
-  "menu": "/staff",
+  "menu": "/setup/staff",
   "forWhat": [
     "Who teaches which class and subject, and whole counts that can be checked. A person's pages open on the classes and subjects they hold. There is no score and no ranking: the school decides what the numbers mean."
   ],

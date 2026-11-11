@@ -40,6 +40,9 @@ Skill
 21. A coordinator may change a level's sentence on the skill screen (the engine's CP-31 route) and reads each earlier sentence with who and when; an educator sees the sentences and no way to change them.
 22. A change is logged with the staff id and the reason, and takes only that level out of approved.
 23. An empty sentence is refused and nothing is written.
+24. Skill set (`/setup/skill-sets/[code]`, keyed by the skill set's code): each registry skill it covers is a card that opens the skill screen; a set with none says so and invents nothing.
+25. The six functions of the old skill-set page (a real question and its approval per level, a grade per level, approving a way of asking, editing English samples, more like this, stopping a kind) work at the new address as their own specs prove.
+26. `/skill-sets/<code>` answers 308 to the new address with the query kept; `/skill-sets/approve`, `/skill-sets/levels` and `/skill-sets/<code>/edit` stay.
 
 All three
 16. While the educator screens are switched off an educator is shown "not found" on all three (a coordinator who reviews is not); the switch is the school's, the pages do not decide it.

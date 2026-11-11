@@ -205,7 +205,7 @@ export function SampleForm({ code, level, kind, kindWords, open, choices, ord, s
         <button className="btn" type="submit" disabled={busy}>
           Save this sample
         </button>
-        <Link href={`/skill-sets/${code}#level-${level}`} className="chip">
+        <Link href={`/setup/skill-sets/${code}#level-${level}`} className="chip">
           Cancel
         </Link>
         <span className="note">Saving sends {level} back for approval; the sample it replaces is kept.</span>
@@ -242,7 +242,7 @@ export function KindForm({ code, level, kind, kindWords, open, choices, n }: Whe
         <button className="btn" type="submit" disabled={busy}>
           Add this kind
         </button>
-        <Link href={`/skill-sets/${code}#level-${level}`} className="chip">
+        <Link href={`/setup/skill-sets/${code}#level-${level}`} className="chip">
           Cancel
         </Link>
         <span className="note">Adding a kind sends {level} back for approval.</span>

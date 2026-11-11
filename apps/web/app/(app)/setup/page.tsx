@@ -33,8 +33,8 @@ export default async function SetupPage() {
     },
     { kind: "skill" as const, title: "Skills to approve", line: "Read each skill's levels; approve one at a time. How many wait is shown on that page only.", href: screenHref("skills-approve") ?? "/skill-sets/approve", link: "Open Skills to approve", show: coordinator },
     { kind: "assessment" as const, title: "Question bank", line: `${n(o.bank.ready)} ready · ${n(o.bank.removed)} removed`, href: screenHref("bank") ?? "/library", link: "Open Question bank", show: true },
-    { kind: "child" as const, title: "Staff", line: counts ? `${counts.staff} staff · ${counts.grantsOpen} grants open` : "", href: screenHref("staff") ?? "/staff", link: "Open Staff", show: coordinator && counts !== null },
-    { kind: "child" as const, title: "Classes and children", line: counts ? `${counts.classes} classes · ${n(counts.children)} children` : "", href: screenHref("classes") ?? "/school", link: "Open Classes and children", show: coordinator && counts !== null },
+    { kind: "child" as const, title: "Staff", line: counts ? `${counts.staff} staff · ${counts.grantsOpen} grants open` : "", href: screenHref("staff") ?? "/setup/staff", link: "Open Staff", show: coordinator && counts !== null },
+    { kind: "child" as const, title: "Classes and children", line: counts ? `${counts.classes} classes · ${n(counts.children)} children` : "", href: screenHref("classes") ?? "/setup/classes", link: "Open Classes and children", show: coordinator && counts !== null },
     {
       kind: "period" as const,
       title: "School",

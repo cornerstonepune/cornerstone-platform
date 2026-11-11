@@ -27,7 +27,7 @@ test.afterAll(async () => {
 });
 
 test("the coordinator approves one level and the others still wait", async ({ page }) => {
-  await page.goto(`/skill-sets/${code}`);
+  await page.goto(`/setup/skill-sets/${code}`);
   const easy = page.getByRole("region", { name: "Easy", exact: true });
   await easy.getByRole("button", { name: "Approve Easy" }).click();
   await expect(page).toHaveURL(/level_approved=Easy/);
@@ -49,7 +49,7 @@ test("an educator is offered each level's approval, as the coordinator is (one r
     await page.getByLabel("Password").fill(PASSWORD);
     await page.getByRole("button", { name: /sign in/i }).click();
     await expect(page).toHaveURL(/\/today$/);
-    await page.goto(`/skill-sets/${code}`);
+    await page.goto(`/setup/skill-sets/${code}`);
     const medium = page.getByRole("region", { name: "Medium", exact: true });
     await expect(medium.getByRole("button", { name: "Approve Medium" })).toBeVisible();
   } finally {

@@ -7,7 +7,7 @@ import { NotYours } from "@/components/not-yours";
 import { requireStaff } from "@/lib/auth";
 import { screenHref } from "@/lib/built";
 import { givable } from "@/lib/grants";
-import { grantsOf, namesMayShow, staffLines, type StaffLine } from "@/lib/queries-coordinator";
+import { grantChanges, grantsOf, schoolFacts, shortDate, namesMayShow, staffLines, type StaffLine } from "@/lib/queries-coordinator";
 import { rolesHeld } from "@/lib/queries-staff";
 import { NOT_ADDED } from "@/lib/staff-add";
 import { Notice } from "@/components/parts";
@@ -31,7 +31,7 @@ export default async function StaffPage({ searchParams }: Props) {
   const open = shown.find((p) => p.id === q.person) ?? shown[0];
   // a person's grants are changed once the coordinator has opened that person (?person=): the first person's are only listed until then
   const chosen = Boolean(q.person);
-  const [grants, held, options] = await Promise.all([open ? grantsOf(open.id) : Promise.resolve([]), rolesHeld(), open && chosen ? givable(me.email) : Promise.resolve(null)]);
+  const [grants, held, options, changes, facts] = await Promise.all([open ? grantsOf(open.id) : Promise.resolve([]), rolesHeld(), open && chosen ? givable(me.email) : Promise.resolve(null), grantChanges(), schoolFacts()]);
   // a grant is signed with the coordinator's staff id (the engine's give), older ones with a word: the name when the list knows the id
   const names = new Map(all.map((p) => [p.id, p.name]));
   const byName = (by: string) => names.get(by) ?? (/^[0-9a-f]{8}-/i.test(by) ? "a former member of staff" : by);
@@ -48,7 +48,7 @@ export default async function StaffPage({ searchParams }: Props) {
   ];
   return (
     <Screen
-      stage="This fortnight"
+      stage={`This fortnight${facts.now ? ` · Fortnight ${facts.now.number ?? ""}, ${shortDate(facts.now.from)} to ${shortDate(facts.now.to)}` : ""} · ${all.length} staff`}
       title="Staff and classes"
       purpose="Who teaches which class, and whole counts you can rely on. No score, no ranking: the school decides what they mean."
       action={<p className="m-0 text-[14px]">Open a person to see what they hold.</p>}
@@ -62,13 +62,13 @@ export default async function StaffPage({ searchParams }: Props) {
       ) : null}
       {q.refused ? <Notice tone="terracotta">Nobody was added: {NOT_ADDED[q.refused] ?? "that cannot be saved"}.</Notice> : null}
       {q.denied ? <Notice tone="terracotta">Nothing changed: only the coordinators can change the staff list.</Notice> : null}
-      {answered ? null : <p className="note mb-2">The note counts are not available right now.</p>}
+      {answered ? null : <p className="text-[13px] text-[var(--ink-muted)] mb-2">The note counts are not available right now.</p>}
       <FilterBar
         action="/setup/staff"
         filters={[{ name: "role", label: "Role", value: q.role, all: "Every role", options: roles.map((r) => [r, r] as const) }]}
         search={{ name: "q", value: q.q, placeholder: "Find a person" }}
       />
-      <DataTable label="Staff" columns={columns} rows={shown} rowKey={(p) => p.id} more={{ by: (p) => p.roleLabel.replace(/ \(.*\)$/, "") }} />
+      <DataTable label="Staff" columns={columns} rows={shown} rowKey={(p) => p.id} counted more={{ by: (p) => p.roleLabel.replace(/ \(.*\)$/, "") }} />
       <AddPerson roles={held} />
       {open ? (
         <div className="mt-6" id="grants">
@@ -87,12 +87,29 @@ export default async function StaffPage({ searchParams }: Props) {
                 </li>
               ))}
             </ul>
-            {!chosen ? null : options ? <AddGrant key={open.id} staffId={open.id} options={options} /> : <p className="note mt-2">Changing a grant is not available right now.</p>}
+            {!chosen ? null : options ? <AddGrant key={open.id} staffId={open.id} options={options} /> : <p className="text-[13px] text-[var(--ink-muted)] mt-2">Changing a grant is not available right now.</p>}
           </Details>
         </div>
       ) : (
-        <p className="note mt-2">Nobody matches these filters.</p>
+        <p className="text-[13px] text-[var(--ink-muted)] mt-2">Nobody matches these filters.</p>
       )}
+      <section aria-label="Last changes to grants" className="mt-6">
+        <h2 className="mb-2 text-[16px]">Last changes to grants</h2>
+        {changes.length ? (
+          <ul className="grid gap-2">
+            {changes.map((c) => (
+              <li key={c.id}>
+                {c.line}
+                <div className="text-[13px] text-[var(--ink-muted)]">
+                  {c.note} {shortDate(c.at)}
+                </div>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-[13px] text-[var(--ink-muted)]">No grant has been added or ended yet.</p>
+        )}
+      </section>
     </Screen>
   );
 }

@@ -6,7 +6,7 @@ import path from "node:path";
 import type { Sql } from "postgres";
 
 export const TEACHING = { activity: "ACT-U70-3C", objective: "LO-U70-3C" } as const;
-export type Teaching = { activity: string; objective: string; skill: string };
+export type Teaching = { activity: string; objective: string; skill: string; skillSet: string };
 
 /** Two links between registry skills, made by the engine's own fixture (no web code names the raw link tables): `after` follows
  *  `before` by a confirmed link, `proposed` follows `before` by a link nobody has confirmed. Placeholder rows; a second run changes nothing. */
@@ -50,5 +50,7 @@ export async function seedTeaching(sql: Sql, classId: string, educatorEmail: str
       await sql`select rebuild_child_observed_state(${c.id})`;
     }
   }
-  return { activity, objective, skill: skills[1].code };
+  // the skill set screen's [code] is a skill SET's (grades 1 to 4), one the seed holds
+  const [set] = await sql<{ code: string }[]>`select code from skill where tenant_id = ${tenant} order by (code = 'ADD.2D2D') desc, code limit 1`;
+  return { activity, objective, skill: skills[1].code, skillSet: set.code };
 }
