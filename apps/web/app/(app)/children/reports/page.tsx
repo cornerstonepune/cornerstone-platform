@@ -8,7 +8,9 @@ import { StatusChip, type State } from "@/components/status-chip";
 import { requireStaff } from "@/lib/auth";
 import { deadline } from "@/lib/deadline";
 import { grades } from "@/lib/queries";
-import { reportsRows, REPORT_STATES, STATE_OF, type Consent, type ReportsRow } from "@/lib/queries-report-rows";
+import { engineSend } from "@/lib/engine";
+import { Lines, type StagedLine } from "./lines";
+import { reportsRows, seesConsent, REPORT_STATES, STATE_OF, type Consent, type ReportsRow } from "@/lib/queries-report-rows";
 import { workScope } from "@/lib/reach";
 import { classWords } from "@/lib/needs-you";
 import type { Column } from "@/lib/ux-rules";
@@ -27,7 +29,7 @@ const CONSENT_WORDS: Record<Consent, string> = { given: "on file", withdrawn: "w
 export default async function ReportsScreen({ searchParams }: Props) {
   const me = await requireStaff();
   const q = await searchParams;
-  const [all, g] = await deadline(Promise.all([reportsRows(me.email, await workScope(me)), grades()]));
+  const [all, g, coordinator] = await deadline(Promise.all([reportsRows(me.email, await workScope(me)), grades(), seesConsent()]));
   const classes = [...new Set(all.map((r) => r.section))];
   const f = {
     class: classes.includes(q.class ?? "") ? q.class : undefined,
@@ -35,11 +37,19 @@ export default async function ReportsScreen({ searchParams }: Props) {
   };
   const rows = all.filter((r) => (!f.class || r.section === f.class) && (!f.state || STATE_OF(r) === f.state));
 
+  // the lines of the one child opened (?open=): staged by the engine, which also decides who may see them
+  const open = rows.find((r) => r.child_id === q.open && r.note_id);
+  const got = open ? await engineSend("/reports/lines", { actor: me.email, note_id: open.note_id! }).catch(() => null) : null;
+  const staged = got?.ok ? ((await got.json()) as { lines: StagedLine[]; sent_at: string | null }) : null;
+
   const columns: Column<ReportsRow>[] = [
     { key: "child", label: "Child", value: (r) => `${r.first_name} · Sr. No. ${r.roll_no}`, cell: (r) => <Link href={`/growth/${r.child_id}/parent`}>{r.first_name} · Sr. No. {r.roll_no}</Link> },
     { key: "class", label: "Class", width: "7rem", value: (r) => classWords(g, r.band, r.section) },
     { key: "state", label: "Report", status: true, width: "10rem", value: (r) => STATE_OF(r), cell: (r) => <StatusChip state={CHIP[STATE_OF(r)]} words={STATE_OF(r)} /> },
-    { key: "educator", label: "Educator approved", status: true, width: "9rem", value: (r) => (r.report.note?.approved ? "yes" : "no") },
+    { key: "drafted", label: "Lines drafted", num: true, width: "7rem", value: (r) => r.lines.drafted + r.lines.educator + r.lines.coordinator },
+    { key: "educator", label: "Educator approved", num: true, width: "8rem", value: (r) => r.lines.educator + r.lines.coordinator },
+    { key: "coordinator", label: "Coordinator approved", num: true, width: "9rem", value: (r) => r.lines.coordinator },
+    { key: "sent", label: "Sent", width: "7rem", value: (r) => (r.sent_at ? r.sent_at.slice(0, 10) : null) },
     { key: "consent", label: "Consent", width: "9rem", value: (r) => (r.consent ? CONSENT_WORDS[r.consent] : null) },
   ];
 
@@ -64,6 +74,7 @@ export default async function ReportsScreen({ searchParams }: Props) {
           { name: "state", label: "State", value: f.state, all: "Any state", options: REPORT_STATES.map((s) => [s, s] as const) },
         ]}
       />
+      {q.said ? <p role="status" className="mb-3 p-3">{q.said}</p> : null}
       {all.some((r) => r.consent && r.consent !== "given") ? (
         <p role="note" className="note mb-3" data-ux="consent-needed">Consent must be on record before any child&rsquo;s report can be sent. A child marked &ldquo;needed&rdquo; cannot be sent until a parent&rsquo;s consent is recorded under Setup, Classes and children.</p>
       ) : null}
@@ -76,7 +87,7 @@ export default async function ReportsScreen({ searchParams }: Props) {
           rows={rows}
           rowKey={(r) => r.child_id}
           more={{ page: Math.max(1, Math.floor(Number(q.page)) || 1), href: (n: number) => `${HERE}?${new URLSearchParams({ ...(f.class ? { class: f.class } : {}), ...(f.state ? { state: f.state } : {}), page: String(n) })}` }}
-          extras={{ expand: (r) => <Words r={r} /> }}
+          extras={{ expand: (r) => <Words r={r} lines={open?.child_id === r.child_id && staged ? <Lines r={r} lines={staged.lines} sent={staged.sent_at} me={me.id} coordinator={coordinator} /> : null} /> }}
         />
       )}
     </Screen>
@@ -84,10 +95,10 @@ export default async function ReportsScreen({ searchParams }: Props) {
 }
 
 /** One child's report: the system's state beside the educator's words, read-only. A child with no report shows no words. */
-function Words({ r }: { r: ReportsRow }) {
+function Words({ r, lines }: { r: ReportsRow; lines: React.ReactNode }) {
   const w = r.words;
   return (
-    <Details summary={`${r.first_name}'s report`}>
+    <Details summary={`${r.first_name}'s report`} open={!!lines}>
       {w ? (
         <div className="grid gap-2">
           <p>{w.summary}</p>
@@ -103,6 +114,7 @@ function Words({ r }: { r: ReportsRow }) {
       ) : (
         <p>Not written yet</p>
       )}
+      {lines ?? (r.note_id ? <Link href={`${HERE}?open=${r.child_id}`}>Open the lines</Link> : null)}
     </Details>
   );
 }
