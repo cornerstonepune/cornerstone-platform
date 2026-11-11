@@ -41,6 +41,8 @@ Owner: UI-8. Nothing here is built. The old pages stay live until every row of "
 - `workflows.json`: the step's `screens` and its guards list `/growth/[id]/report`, `/growth/[id]/parent` and `/growth/reports`; the map changes first (the layout test holds the code to it).
 - Engine: `test_parent_report.py` stays (it tests the engine, not the page).
 
+**Step 1, done in the first retirement PR (branch `ui-8d-reports-links`):** Today's "Parent reports to approve" tile and each class's report link now open `/children/reports?class=` (item 8, `lib/todo.ts`); the new screen shows the old list's counts as a line "n out of date · n to approve · n to write" for the chosen class (item 7: whole counts of reports; the class filter was already there). The two assertions that named the old address moved to the new one at equal strength (`u15` Today's tile lands on the class's reports; `u20` Today's line carries the class's report link). The menu entry still points at `/growth/reports` and the old pages are untouched.
+
 **Order I propose:** (a) decide 2 and 5 with Nimish; (b) build 1 to 3 on the new screen and carry the Today links (8); (c) move each spec above with equal assertions; (d) 308 `/growth/reports` and `/growth/[id]/parent` to the new screen; (e) delete the old files and update `workflows.json` and the menu in the same change. Steps (b) to (e) are separate PRs, one at a time.
 
 ## Decisions

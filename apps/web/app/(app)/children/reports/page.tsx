@@ -23,6 +23,8 @@ const HERE = "/children/reports";
 // approval, and the consent register. Report lines, the coordinator's approval, Send and the parent's-copy PDF wait for CP-19 and
 // are listed, with their reasons, in docs/notes/UI-8.md; nothing on this screen sends anything. Rows are in class and Sr. No.
 // order: no figure here is a score, rate, rank or ordering of a person.
+// the states that wait on a person, counted for the class chosen: whole counts of reports, never of people
+const WAITING = ["out of date", "to approve", "to write"] as const;
 const CHIP: Record<string, State> = { "out of date": "doNow", "to approve": "toApprove", "to write": "toDo", approved: "approved", "nothing yet": "notYet" };
 const CONSENT_WORDS: Record<Consent, string> = { given: "on file", withdrawn: "withdrawn: needed", none: "none on record: needed" };
 
@@ -35,6 +37,7 @@ export default async function ReportsScreen({ searchParams }: Props) {
     class: classes.includes(q.class ?? "") ? q.class : undefined,
     state: (REPORT_STATES as readonly string[]).includes(q.state ?? "") ? q.state : undefined,
   };
+  const inClass = all.filter((r) => !f.class || r.section === f.class);
   const rows = all.filter((r) => (!f.class || r.section === f.class) && (!f.state || STATE_OF(r) === f.state));
 
   // the lines of the one child opened (?open=): staged by the engine, which also decides who may see them
@@ -74,6 +77,9 @@ export default async function ReportsScreen({ searchParams }: Props) {
           { name: "state", label: "State", value: f.state, all: "Any state", options: REPORT_STATES.map((s) => [s, s] as const) },
         ]}
       />
+      <p className="note mb-3" aria-label="Reports by state">
+        {WAITING.map((w) => `${inClass.filter((r) => STATE_OF(r) === w).length} ${w}`).join(" · ")}
+      </p>
       {q.said ? <p role="status" className="mb-3 p-3">{q.said}</p> : null}
       {all.some((r) => r.consent && r.consent !== "given") ? (
         <p role="note" className="note mb-3" data-ux="consent-needed">Consent must be on record before any child&rsquo;s report can be sent. A child marked &ldquo;needed&rdquo; cannot be sent until a parent&rsquo;s consent is recorded under Setup, Classes and children.</p>
