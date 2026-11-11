@@ -64,3 +64,25 @@ export const schoolCounts = async (me: Pick<Session, "email">) => {
   const got = await ask<School>("/k2/today-school", { actor: me.email });
   return got.ok ? got.value : null;
 };
+
+/** The id of each class by grade and section as the engine's counts name them: a cell of last week's grid opens that class's day. */
+export async function classIds(): Promise<Record<string, string>> {
+  const rows = await sql<{ id: string; grade: string; section: string | null }[]>`select id::text, grade_code as grade, section from school_class`;
+  return Object.fromEntries(rows.map((r) => [`${r.grade}|${r.section ?? ""}`, r.id]));
+}
+
+export type Happening = { day: string; what: string };
+/** What is different about the days from `from` for seven days: a day that is not a teaching day (a holiday, changed timing) with its note, and a fortnight that begins. */
+export async function nextWeekEvents(from: string): Promise<Happening[]> {
+  const [days, fortnights] = await Promise.all([
+    sql<{ day: string; kind: string; note: string | null }[]>`
+      select distinct on_date::text as day, kind, note from school_day
+      where on_date between ${from}::date and ${from}::date + 6 and kind <> 'teaching' order by day`,
+    sql<{ day: string; number: number | null }[]>`
+      select starts_on::text as day, number from fortnight where starts_on between ${from}::date and ${from}::date + 6 and kind = 'teaching'`,
+  ]);
+  return [
+    ...days.map((d) => ({ day: d.day, what: d.kind === "holiday" ? `Holiday${d.note ? `: ${d.note}` : ""}` : d.kind === "changed_timing" ? `Changed timing${d.note ? `: ${d.note}` : ""}` : `No school day on record${d.note ? `: ${d.note}` : ""}` })),
+    ...fortnights.map((f) => ({ day: f.day, what: f.number ? `Fortnight ${f.number} begins` : "A fortnight begins" })),
+  ].sort((a, b) => a.day.localeCompare(b.day));
+}

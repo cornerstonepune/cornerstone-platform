@@ -571,7 +571,7 @@
           "label": "each heat-grid cell",
           "to": "timetable",
           "note": "opens that class's day",
-          "pending": "built: the school's counts come from CP-28's /k2/today-school (backend draft #619); this control is drawn once that route is on main and the inventory has fixtures for it (clashes, drafts, materials lines, last week)"
+          "pending": "built: a cell opens that class's day on the timetable; drawn only with last week's rows from CP-28 (#635/#619), so it waits on that route being on main and a fixture with a taught class"
         },
         {
           "t": "row",
