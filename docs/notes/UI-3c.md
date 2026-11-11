@@ -140,10 +140,11 @@ covers and the question bank, a "Skills it covers" Cards block (each opens the s
 the old page carried, unchanged in behaviour: a real question per level, a grade per level, approving a level, approving a way of
 asking and editing English samples (`ways`, `editing`, `samples`), more like this, stopping a kind. The kinds and worksheets tables are the
 site's `DataTable`; the mistakes and worksheets live in `below.tsx` (the page stays under the 400-line ceiling).
-`/skill-sets/<code>` answers 308 to it (query kept); `approve`, `levels` and `/edit` stay. The parts and their server actions still
-live in `app/(app)/skill-sets/[code]/` because `packages/engine/tests/test_skill_level.py` names `page.tsx` and `level-approval.tsx` there by
-path and this work may not edit the engine; the old `page.tsx` is now a redirect stub that still asks who is asking
-(`test_web_gate`). Moving them is a one-line change to that test plus a `git mv`, for whoever owns the engine tests.
+`/skill-sets/<code>` answers 308 to it (query kept); `approve`, `levels` and `/edit` stay. The page's parts and server actions still live in
+`app/(app)/skill-sets/[code]/` except `page.tsx` (the old one is deleted; next.config.ts answers 308) and `level-approval.tsx`, which
+moved with the new page. Those two paths are on the frozen list in `packages/engine/tests/test_skill_level.py` (web files that still
+read the skill blob); the frontend and backend orchestrators allowed changing exactly those two strings to the new paths (git mv, the list
+does not grow, no assertion changes). The test passes with them.
 The stage keeps "Curriculum ·" ahead of "Skill set" (u17 asserts the tab). The title is the skill's outcome (`learning_objective`),
 which s2 asserts as the h1; the wireframe says so. Specs: the six functions' specs (u28, u34, e0, u54, u55, u64, u65) now open the new
 address; `u73-skill-set.spec.ts` proves the cards, the empty words and the 308. Not done: the inventory run for `skillset`

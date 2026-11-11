@@ -24,7 +24,7 @@ import { requireStaff } from "@/lib/auth";
 import { scopeOf } from "@/lib/scope";
 import { mayDecide } from "@/lib/decides";
 import { KindsPanel, MistakesList, WorksheetsPanel, type Mistaken } from "./below";
-import { LevelApproval } from "../../../skill-sets/[code]/level-approval";
+import { LevelApproval } from "./level-approval";
 import { GradesPanel } from "../../../skill-sets/[code]/grades-panel";
 import { Watched, WaysPanel } from "../../../skill-sets/[code]/ways";
 import { KindStops } from "../../../skill-sets/[code]/kind-stops";

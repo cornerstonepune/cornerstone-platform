@@ -1,6 +1,6 @@
 import { Pill } from "@/components/parts";
 import type { Difficulty, SkillSet } from "@/lib/queries";
-import { approveLevel } from "./actions";
+import { approveLevel } from "../../../skill-sets/[code]/actions";
 import { dateWords } from "@/lib/week";
 
 /** One level's approval on its card (goals/f1d-questions-approved-per-level.yaml): who approved its questions and when,
