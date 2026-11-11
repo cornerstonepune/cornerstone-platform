@@ -163,8 +163,11 @@ test("Notes: the coordinator reads the notes of every class and has no Confirm o
 });
 
 test("Record: Add a photo hangs the photo on the lesson's note, with the rule for photos beside it", async ({ page }) => {
+  // a note keeps at most 6 photos and this lesson's note is kept between runs: start from none
+  await sql`update pii.educator_note set photo_keys = '{}' where session_id = ${lesson}`;
   await page.goto(`/record?class=${klass}&session=${lesson}`);
   await expect(page.locator("[data-add-photo] [data-photo-rule]")).toHaveText("Photograph the work or the board, never a child.");
+  await expect(page.locator("[data-add-photo][data-ready]")).toBeAttached(); // the page is interactive: a file chosen sooner would be dropped
   // a 1 x 1 PNG: the engine looks at the file's first bytes, not its name
   const png = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEgAF/QualzQAAAABJRU5ErkJggg==", "base64");
   await page.locator("[data-add-photo] input[type=file]").setInputFiles({ name: "board.png", mimeType: "image/png", buffer: png });

@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { PhotoRule } from "@/components/capture-bar";
 import { ICON_SIZE, Icon } from "@/lib/icons";
 import { photoTarget, startTyped } from "../notes/actions";
@@ -58,6 +58,9 @@ export function TypeMarks({ classId, sessionId, main }: { classId: string; sessi
 export function AddPhoto({ classId, sessionId }: { classId: string; sessionId?: string }) {
   const [said, setSaid] = useState<string | null>(null);
   const [pending, go] = useTransition();
+  // the picker works once the page has hydrated: a file chosen before then would be dropped without a word
+  const [ready, setReady] = useState(false);
+  useEffect(() => setReady(true), []);
   const send = (file: File) =>
     go(async () => {
       setSaid(null);
@@ -75,11 +78,11 @@ export function AddPhoto({ classId, sessionId }: { classId: string; sessionId?: 
       setSaid("Photo added to this lesson's note.");
     });
   return (
-    <div className="grid gap-2" data-add-photo>
+    <div className="grid gap-2" data-add-photo data-ready={ready ? "" : undefined}>
       <label className="btn secondary !min-h-14 w-full cursor-pointer justify-center gap-2 min-[700px]:w-auto">
         <Icon name="photo" size={ICON_SIZE.row} />
         Add a photo
-        <input type="file" accept="image/jpeg,image/png,image/heic" className="sr-only" disabled={pending} onChange={(e) => e.target.files?.[0] && send(e.target.files[0])} />
+        <input type="file" accept="image/jpeg,image/png,image/heic" className="sr-only" disabled={pending || !ready} onChange={(e) => e.target.files?.[0] && send(e.target.files[0])} />
       </label>
       <PhotoRule />
       {said ? <p role="status" className="text-[14px]">{said}</p> : null}
