@@ -55,13 +55,22 @@ def test_only_mains_newest_commit_changes_live():
         assert after == [], f"{name} runs {after} even when a newer merge is on main"
 
 
-def test_a_newer_merge_cancels_mains_older_ci_run():
-    """Seven merges in a row queued seven runs of the full suite on main and held the website for over an hour
-    (2026-10-22). Only main's newest commit reaches live (above), so its older runs are cancelled, not queued."""
+def test_a_newer_merge_cancels_mains_older_ci_run():  # the name goals/ci1-main-runs-only-its-newest.yaml cites; what it proves changed, below
+    """Not any more (11 Nov 2026): a newer merge no longer cancels main's older run, a newer push to a pull request still does.
+    Seven merges in a row queued seven runs of the full suite on main and held the website for over an hour (2026-10-22); cancelling
+    main's older runs instead left about twelve merges whose CI never finished, so none was deployed (11 Nov 2026). Now a pull request's
+    newer push cancels its older run and a merge to main waits its turn (GitHub keeps one run waiting): an older merge's CI may finish
+    last, and migrate live and deploy engine act only for main's newest commit (above), so it changes nothing."""
     group = _load(WORKFLOWS / "ci.yml")["concurrency"]
-    assert group["cancel-in-progress"] is True
-    assert "github.ref" in group["group"], "main's runs must share one group to cancel each other"
+    cancel = group["cancel-in-progress"]
+    assert cancel == "${{ github.event_name == 'pull_request' }}", "only a pull request's runs are cancelled"
+    event = re.search(r"github\.event_name == '(\w+)'", cancel).group(1)
+    assert event == "pull_request" and event != "push", "a merge to main (a push) is never cancelled"
+    assert "github.ref" in group["group"], "main's runs must share one group, so they wait their turn"
     assert "github.sha" not in group["group"], "a group per commit never cancels anything"
+    # and the two workflows that act on main's merges are never cancelled mid-way
+    for name in ("migrate.yml", "deploy-engine.yml"):
+        assert _load(WORKFLOWS / name)["concurrency"]["cancel-in-progress"] is False, name
 
 
 def test_the_website_goes_live_only_once_live_has_the_commits_migrations():

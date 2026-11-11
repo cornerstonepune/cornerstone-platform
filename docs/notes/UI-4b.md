@@ -62,3 +62,23 @@ Observations, for whoever owns them:
   more sheets it deserves a look by whoever owns the queries.
 - The engine marks every held answer again each time a person types a reading (`again.trusted`); a copy settled for sign-off turns
   back into an answer to judge. The inventory fixture puts it back first; worth a product decision.
+
+## UI-4b PR 2, part 1 (branch `ui-4b-2`, draft): level with a reason, Given on, away, where the papers are
+
+Built on the assessment screen: a child's level is changed with a **required reason** (kept as an override with who, so the prescriber leaves
+that child alone next time; it used to be saved with a fixed phrase and no reason), the day the papers were **given out**, a child who was
+**away** (held for later, not missing; and back again), and the line "N of M in · missing: roll …, away: roll …", and the "To photograph
+again" alert from the old card.
+
+| Old spec | Assertion | New place |
+|---|---|---|
+| `s7-paper-from-library` "changing one child's level writes the reason…" | the reason, the override and who are kept | `u76-assessment-controls.spec.ts` |
+| `s7-paper-from-library` "a level change with no reason is refused" | nothing moves | `u76` |
+| `s42-the-assessment-card` Given on, in/missing, away and back | the day said and by whom; who is missing; away is carried | `u76` ("the card's words") |
+| `s42-the-assessment-card` "a page to photograph again is flagged" | the retake alert | `u76` |
+
+Left for the rest of PR 2: the children with no paper and why, spares as a row, remove or add a question and approve one paper
+(`/papers/review/[qr]`), and the focus paper. The old pages stay until PR 4.
+
+One change of words: the new screen names a copy by its Sr. No. only, so a test that found a row by a child's name (the old card showed
+names) finds it by Sr. No. here.
