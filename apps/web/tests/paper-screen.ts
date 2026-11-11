@@ -21,3 +21,11 @@ export async function openAnswer(page: Page, text: string | RegExp) {
   await expect(panel).toHaveAttribute("id", `a-${id}`);
   return panel;
 }
+
+/** The screen a home or chosen paper opens on when it is made (its address is the assessment, class, week and Sr. No.), and the code of the child's newest paper. */
+export const PAPER_SCREEN = /\/children\/assessments\/[^/]+\/\d+$/;
+export async function landedOn(page: Page, sql: import("postgres").Sql, child: string): Promise<string> {
+  await expect(page).toHaveURL(PAPER_SCREEN);
+  const [r] = await sql<{ qr: string }[]>`select qr_code as qr from sheet_instance where child_id = ${child}::uuid and print_status <> 'void' order by created_at desc limit 1`;
+  return r.qr;
+}
