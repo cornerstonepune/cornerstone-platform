@@ -56,3 +56,12 @@ test("a class is said as the school says it, and readiness is pairs of counts", 
   expect(classLabel({ grade: "G1", section: null })).toBe("G1");
   expect(readiness(school().ready).map((r) => [r.have, r.of])).toEqual([[90, 100], [500, 800], [250, 300]]);
 });
+
+test("a heat-grid cell opens its class's day when the class is known, and a day with no cell has no link", () => {
+  const cells = [cell("K2", "K2 A", "2026-11-16", "done"), cell("K2", "K2 A", "2026-11-18", "not_done"), cell("K1", "K1 B", "2026-11-16", "done")];
+  const g = heat(cells, (c) => (c.grade === "K2" ? `/timetable?class=${c.section}&view=day&day=${c.day}` : null));
+  expect(g.rows.map((r) => r.label)).toEqual(["K2 A", "K1 B"]);
+  expect(g.rows[0].hrefs).toEqual(["/timetable?class=K2 A&view=day&day=2026-11-16", "/timetable?class=K2 A&view=day&day=2026-11-18"]);
+  expect(g.rows[1].hrefs).toEqual([null, null]);
+  expect(heat(cells).rows[0].hrefs).toBeUndefined();
+});
