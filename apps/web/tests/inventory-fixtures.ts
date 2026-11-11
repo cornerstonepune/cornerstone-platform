@@ -6,15 +6,23 @@ import type { Browser, BrowserContext } from "@playwright/test";
 import postgres, { type Sql } from "postgres";
 import { issuesMade } from "./github-server";
 import { SIGNED_IN } from "../playwright.config";
-import { aClass, aPerson, aReadPaper, personAsStored } from "./rows";
+import { aClass, aPerson, aReadPaper, aTaughtClass, personAsStored } from "./rows";
+import { curriculumRows, gate, offers } from "./m1-13-rows";
 import { FAKE_CHILDREN } from "./fake-names";
 import { seedTeaching, type Teaching } from "./inventory-teaching";
+import { markCorrected, typedNoteWritten, VOICE, voiceGone, voiceRest } from "./inventory-voice";
 
 export const SECTION = "U70A";
 export const EDUCATOR = { email: "u70-educator@cornerstone.test", name: "Inventory Educator", role: "educator", classes: [SECTION], subjects: ["NUM"] };
 
 export const OTHER = "U70B";
-export type Rows = { assessment: { key: string; roll: string }; section: string; classId: string; children: Record<string, string>; rolls: Record<string, string>; other: Record<string, string>; otherNames: string[]; teaching: Teaching };
+
+/** The count of skills waiting when the run began: an approval must take it below this (a run that is tried again starts lower, and the check still holds). */
+let waitingAtStart = Infinity;
+const QUESTION_WORDS = "Read the question and write your answer.";
+const questionKey = async (sql: Sql) => (await sql<{ item_key: string }[]>`select item_key from item where fmt = 'word_1step' and source = 'generated' order by created_at, item_key limit 1`)[0].item_key;
+
+export type Rows = { questionKey: string; assessment: { key: string; roll: string }; section: string; classId: string; children: Record<string, string>; rolls: Record<string, string>; other: Record<string, string>; otherNames: string[]; teaching: Teaching };
 
 /** The educator (one class, one subject) and a class of fake children with Sr. Nos 1..n. Made once; a second run finds them. */
 export async function inventoryRows(sql: Sql): Promise<Rows> {
@@ -31,7 +39,18 @@ export async function inventoryRows(sql: Sql): Promise<Rows> {
   const teaching = await seedTeaching(sql, cls?.id ?? "", EDUCATOR.email);
   const [{ week }] = await sql<{ week: string }[]>`select to_char(now(), 'IYYY-"W"IW') as week`;
   const assessment = { key: ["focus", SECTION, week, ""].join("~"), roll: "1" };
-  return { assessment, section: SECTION, classId: cls?.id ?? "", children, rolls, other, otherNames, teaching };
+  // Setup content (UI-11): a class that is taught something, so the bank lists questions; the K2 gate open (the "reviewer" mode) with two
+  // offered skills waiting; the question the screens open, ready and worded without a number
+  await aTaughtClass(sql);
+  await gate(sql, "reviewer");
+  const { skills } = await curriculumRows(sql);
+  // other specs name 22 children "Placeholder" (tests/k2-rows.ts): an activity of that name would be read by the words check as a child's name on the page
+  await sql`update activity set name = replace(name, 'Placeholder', 'Sample') where code like 'ACT-K2-M113-%'`;
+  await offers(sql, skills);
+  waitingAtStart = Number((await sql<{ n: string }[]>`select count(*)::text as n from skill where status <> 'ratified'`)[0].n);
+  await sql`update item set status = 'active', stem = ${QUESTION_WORDS} where item_key = (select item_key from item where fmt = 'word_1step' and source = 'generated' order by created_at, item_key limit 1)`;
+  const [q] = await sql<{ item_key: string }[]>`select item_key from item where fmt = 'word_1step' and source = 'generated' order by created_at, item_key limit 1`;
+  return { questionKey: q?.item_key ?? "", assessment, section: SECTION, classId: cls?.id ?? "", children, rolls, other, otherNames, teaching };
 }
 
 /** What the Children screens need to show something: two skills, three children seen on them (one secure, one practising, one just
@@ -82,15 +101,18 @@ export function addressOf(route: string, rows: Rows, over: Record<string, string
 }
 function fill(route: string, rows: Rows, over: Record<string, string>): string {
   const first = Object.values(rows.children)[0] ?? "";
+  // the voice screens: a note waiting for the inventory educator, and a lesson of today (made by FIXTURES["voice-rest"])
+  const voice = route === "/notes/[id]" ? { id: VOICE.note } : route === "/period/[id]" ? { id: VOICE.lesson } : {};
   // the teaching screens' [code] is an activity's, an objective's or a skill's by the route it sits in
   const code = route.includes("/activities/") ? rows.teaching.activity : route.includes("/objectives/") ? rows.teaching.objective : rows.teaching.skill;
-  const given: Record<string, string> = { class: rows.classId, section: rows.section, roll: rows.assessment.roll, id: first, code, key: rows.assessment.key, ...over };
+  const given: Record<string, string> = { class: rows.classId, section: rows.section, roll: rows.assessment.roll, id: first, code, key: route.includes("/question-bank/") ? rows.questionKey : rows.assessment.key, ...voice, ...over };
   const path = route.replace(/\[(\w+)\]/g, (_, k: string) => {
     if (!(k in given)) throw new Error(`tests/inventory/fixtures.ts has no fixture for [${k}] of ${route}: add one built from the test's own rows`);
     return encodeURIComponent(given[k]);
   });
   // Classes and children opens one class below its table: the test's own, so the children are the fake ones above and not whatever other specs left in the first
-  return route === "/setup/classes" ? `${path}?class=${rows.classId}` : path;
+  // Record opens on the fixture class, so the person holding several classes is not asked which one first
+  return route === "/setup/classes" || route === "/record" ? `${path}?class=${rows.classId}` : path;
 }
 
 /** The coordinator's own copy of createHmac is not needed: the signed-in file holds the cookie. */
@@ -100,9 +122,45 @@ export const sessionFor = (email: string, secret = process.env.E2E_AUTH_SECRET!)
 };
 
 /** The rows a stateful control needs in place before it is pressed, by the name an element's `drive.fixture` gives (tests/inventory/drivers.ts). */
-export const FIXTURES: Record<string, () => Promise<void>> = {};
+export const FIXTURES: Record<string, () => Promise<void>> = {
+  // the inventory's question, ready to print again and worded without a number (a correction keeps every number, so a wording with none can be reworded freely)
+  "question-live": async () => {
+    await quiet();
+    await aside(async (sql) => {
+      await sql`update item set status = 'active', stem = ${QUESTION_WORDS} where item_key = ${await questionKey(sql)}`;
+    });
+  },
+};
 /** What a control must have done to the rows, by the name an element's `drive.expect.check` gives: the problems, [] when it holds. */
 export const CHECKS: Record<string, () => Promise<string[]>> = {
+  // Setup content (UI-11). A press on a server action returns before its work is done (the engine rebuilds worksheets when a question changes),
+  // so each check waits for the rows.
+  "offer-answered": async () => {
+    const n = await settles(openOffers, (v) => v <= 1);
+    return n <= 1 ? [] : [`${n} offers are waiting after one answer, of 2`];
+  },
+  "no-offer-left": async () => {
+    const n = await settles(openOffers, (v) => v === 0);
+    return n === 0 ? [] : [`${n} offers are still waiting after both were answered`];
+  },
+  "one-skill-approved": async () => {
+    const n = await settles(draftSkills, (v) => v < waitingAtStart);
+    return n < waitingAtStart ? [] : [`${n} skills wait after an approval, as before (${waitingAtStart})`];
+  },
+  // a corrected question exists (made by this press, or by an earlier try of this run: the same wording is refused a second time), and a moment is
+  // given for the press to retire the old one, so a revival that comes first is not undone by it
+  "question-corrected": async () => {
+    const read = () =>
+      aside(async (sql) => (await sql<{ made: string; status: string }[]>`
+        select (select count(*) from item c where c.corrected_from = o.id)::text as made, o.status from item o where o.item_key = ${await questionKey(sql)}`)[0]);
+    const r = await settles(read, (v) => Number(v.made) > 0);
+    if (Number(r.made) > 0 && r.status !== "retired") await new Promise((res) => setTimeout(res, 3_000));
+    return Number(r.made) > 0 ? [] : ["no corrected question was made, and the old one does not point to one"];
+  },
+  "question-removed": async () => {
+    const st = await settles(() => aside(async (sql) => (await sql<{ status: string }[]>`select status from item where item_key = ${await questionKey(sql)}`)[0].status), (v) => v === "retired");
+    return st === "retired" ? [] : [`the question is ${st}, not retired`];
+  },
   // Report a problem, Send: each note the inventory sent is one staff_note row and one issue on the run's own GitHub, whose body holds no email
   feedback_note_sent: async () => {
     const mark = "Inventory check: the page reached the team";
@@ -303,3 +361,36 @@ FIXTURES["assessments-gone"] = () =>
   aside(async (sql) => {
     await sql`update sheet_instance set print_status = 'void' where qr_code like ${`CS${RUN}%`}`;
   });
+
+const openOffers = () =>
+  aside(async (sql) =>
+    Number((await sql<{ n: string }[]>`
+      select count(*)::text as n from curriculum_proposal p
+      where p.about is null and p.status = 'needs_person' and p.subject_code like 'ACT-K2-M113-%' and not exists (select 1 from curriculum_proposal f where f.about = p.id)`)[0].n),
+  );
+const draftSkills = () => aside(async (sql) => Number((await sql<{ n: string }[]>`select count(*)::text as n from skill where status <> 'ratified'`)[0].n));
+async function settles<T>(read: () => Promise<T>, ok: (v: T) => boolean): Promise<T> {
+  let v = await read();
+  for (let i = 0; i < 40 && !ok(v); i++) {
+    await new Promise((r) => setTimeout(r, 500));
+    v = await read();
+  }
+  return v;
+}
+/** The engine's work after a press (worksheets rebuilt, rows retired) goes on a moment after the press has returned: a fixture that revives a row waits until no other connection is busy. */
+async function quiet() {
+  let calm = 0;
+  for (let i = 0; i < 60 && calm < 3; i++) {
+    const n = await aside(async (sql) => Number((await sql<{ n: string }[]>`select count(*)::text as n from pg_stat_activity where datname = current_database() and pid <> pg_backend_pid() and state = 'active'`)[0].n));
+    calm = n === 0 ? calm + 1 : 0;
+    await new Promise((r) => setTimeout(r, 400));
+  }
+}
+
+// ---- the voice screens (UI-3a), made in inventory-voice.ts ----
+FIXTURES["voice-rest"] = () => voiceRest(aside, SECTION, EDUCATOR);
+FIXTURES["voice-gone"] = () => voiceGone(aside);
+/** The confirm screen on a note already confirmed, where "Correct this note" is drawn. */
+ADDRESSES["confirmed-note"] = async () => `/notes/${VOICE.done}`;
+CHECKS["typed-note-written"] = () => typedNoteWritten(aside, SECTION);
+CHECKS["mark-corrected"] = () => markCorrected(aside);

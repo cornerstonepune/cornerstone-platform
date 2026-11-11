@@ -34,7 +34,8 @@ export const GROUPS: readonly Door[] = [
     pages: [
       { label: "This week", href: "/educator/week", match: ["/educator/week"], guide: false },
       { label: "Materials", href: "/educator/materials", match: ["/educator/materials", "/timetable/materials"], guide: false },
-      { href: "/timetable/rules", label: "Timetable rules", match: ["/timetable"] },
+      { label: "Timetable", href: "/timetable", match: ["/timetable"], guide: false },
+      { href: "/timetable/rules", label: "Timetable rules", match: ["/timetable/rules"] },
     ],
   },
   {
@@ -50,7 +51,7 @@ export const GROUPS: readonly Door[] = [
       { href: "/capture", label: "Upload papers", match: ["/capture"] },
       { href: "/capture/check", label: "Check answers", match: ["/capture/check"] },
       { href: "/growth", label: "Class results", match: ["/growth"] },
-      { href: "/growth/reports", label: "Parent reports", match: ["/growth/reports"] },
+      { href: "/growth/reports", label: "Parent reports", match: ["/growth/reports", "/children/reports"] },
       { href: "/across", label: "Across classes", match: ["/across"] },
     ],
   },
@@ -63,6 +64,10 @@ export const GROUPS: readonly Door[] = [
     setup: true,
     pages: [
       { href: "/", label: "Curriculum", match: ["/", "/curriculum", "/skill-sets", "/worksheets", "/asks", "/educator/activity", "/setup"] },
+      // the new screens (UI-11), beside the old pages until those are retired one at a time (UI-11b); then these take the old names
+      { label: "All the curriculum", href: "/setup/curriculum", match: ["/setup/curriculum"], guide: false },
+      { label: "Approve skills one by one", href: "/setup/skills/approve", match: ["/setup/skills"], guide: false },
+      { label: "Bank of questions", href: "/setup/question-bank", match: ["/setup/question-bank"], guide: false },
       { label: "Browse the curriculum", href: "/curriculum/browse", match: ["/curriculum/browse"], guide: false },
       { label: "What is filled", href: "/curriculum/fill", match: ["/curriculum/fill"], guide: false },
       { label: "Check the drafted parts", href: "/curriculum/fill/walk", match: ["/curriculum/fill/walk"], guide: false },
