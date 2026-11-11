@@ -8,8 +8,8 @@
 .tt-school { color: var(--kind-note); font-weight: 500; }
 .tt-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr)); gap: var(--space-2); align-items: end; padding-block: var(--space-2); border-top: 1px solid var(--line); }
 .tt-row:first-of-type { border-top: 0; }
-.tt label { min-width: 0; display: grid; gap: var(--space-1); font-size: var(--text-label); font-weight: 500; }
-.tt input, .tt select { width: 100%; min-width: 0; min-height: var(--tap); border: 1px solid var(--line-control); border-radius: var(--radius-control); padding-inline: var(--space-2); background: var(--panel); color: var(--action); font: inherit; }
+.tt label, .tt-form label, .tt-row label { min-width: 0; display: grid; gap: var(--space-1); font-size: var(--text-label); font-weight: 500; }
+.tt input, .tt select, .tt-form input, .tt-form select, .tt-row input, .tt-row select { width: 100%; min-width: 0; min-height: var(--tap); border: 1px solid var(--line-control); border-radius: var(--radius-control); padding-inline: var(--space-2); background: var(--panel); color: var(--action); font: inherit; }
 .tt button { min-height: var(--tap); border: 1px solid var(--action); border-radius: var(--radius-control); padding-inline: var(--space-3); background: var(--action); color: var(--panel); font: inherit; font-weight: 500; cursor: pointer; }
 .tt button.quiet { background: var(--panel); color: var(--action); }
 .tt :focus-visible { outline: var(--focus-ring); outline-offset: 2px; }
@@ -24,3 +24,14 @@
 .tt-list li:first-child { border-top: 0; }
 .tt-list .grow { flex: 1 1 12rem; }
 .tt-error { border: 1px solid var(--state-late); background: var(--state-late-bg); color: var(--state-late); border-radius: var(--radius-control); padding: var(--space-2) var(--space-3); }
+.tt-h { font-family: var(--font-serif); font-size: var(--text-h2, 1.25rem); margin: var(--space-4) 0 var(--space-2); }
+.tt-card-body { display: grid; gap: var(--space-2); }
+.tt-legend { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); margin-block: var(--space-2); }
+.tt-rail { display: grid; gap: var(--space-3); align-content: start; }
+.tt-rail-card { display: grid; gap: var(--space-2); align-content: start; border-radius: var(--radius-card); background: var(--surface); padding: var(--space-3); }
+.tt-rail-h { margin: 0; font-size: var(--text-eyebrow); color: var(--ink-muted); text-transform: uppercase; }
+.tt-form { display: grid; gap: var(--space-3); justify-items: start; max-width: 32rem; margin-block: var(--space-3); }
+.tt-form label { display: grid; gap: var(--space-1); width: 100%; font-weight: 500; }
+.tt-clash { display: grid !important; gap: var(--space-2); justify-items: start; }
+.tt-block { display: grid; gap: var(--space-2); margin-block: var(--space-3); }
+.tt-count { display: inline-block; min-width: 1.6em; padding: 0 var(--space-1); border-radius: var(--radius-pill); background: var(--surface); color: var(--ink-muted); font-family: var(--font-sans); font-size: var(--text-label); text-align: center; vertical-align: middle; }

@@ -234,7 +234,7 @@ test.describe("Question bank", () => {
     await page.goto("/setup/question-bank");
     const table = page.getByRole("table", { name: "Questions by grade and level" });
     await expect(table).toBeHidden();
-    await page.getByText("Statistics (counts and worksheets by taxonomy)").click();
+    await page.getByText("Statistics (counts and worksheets by topic)").click();
     await expect(table).toBeVisible();
   });
 

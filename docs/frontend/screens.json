@@ -1223,6 +1223,12 @@
         },
         {
           "t": "link",
+          "label": "Previous / next day or week",
+          "to": "timetable",
+          "note": "Day view steps a school day (weekends skipped), Week view a week; the fortnight follows the day"
+        },
+        {
+          "t": "link",
           "label": "Today",
           "to": "timetable",
           "note": "opens today in the Day view"
@@ -1302,7 +1308,8 @@
         "an educator never sees an accept-clash control; a clash cell is red for both roles",
         "the grid's cells equal the session rows for the day shown (count and names)",
         "a period running now carries Do now, a recorded one Done, one over and not recorded Late, and no period still to come has a chip",
-        "a holiday day is named in words under the grid"
+        "a holiday day is named in words under the grid",
+        "stepping to the next or previous school day skips the weekend and crosses into the next or earlier fortnight"
       ]
     },
     {
@@ -3945,7 +3952,7 @@
         },
         {
           "t": "fold",
-          "label": "Statistics (counts and worksheets by taxonomy)"
+          "label": "Statistics (counts and worksheets by topic)"
         },
         {
           "t": "link",
@@ -4123,7 +4130,7 @@
       "exists": "yes",
       "eyebrow": "This fortnight",
       "title": "Staff and classes",
-      "purpose": "Who teaches which class, and whole counts the database can stand behind. No score, no ranking: the school decides what they mean.",
+      "purpose": "Who teaches which class, and whole counts you can rely on. No score, no ranking: the school decides what they mean.",
       "blocks": [
         [
           "DataTable",

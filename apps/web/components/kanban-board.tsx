@@ -14,7 +14,7 @@ const LOOK: Record<Tone, string> = { ok: "ok", wait: "wait", act: "late", quiet:
  *  tile, one line, one fact, a state chip). A lane with no card says so in words. The lanes scroll sideways in their own box. */
 export function KanbanBoard({ lanes }: { lanes: readonly Lane[] }) {
   return (
-    <div data-block="KanbanBoard" className="b-kanban" style={{ ["--lanes" as string]: lanes.length }}>
+    <div data-block="KanbanBoard" className={lanes.length > 4 ? "b-kanban b-many" : "b-kanban"} style={{ ["--lanes" as string]: lanes.length }}>
       {lanes.map((l) => {
         const s = STATES[l.state];
         return (

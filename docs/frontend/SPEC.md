@@ -406,9 +406,10 @@ Main action: Open today · Next step: Fortnight
 Data: timetable_rule rows (kind slot) valid today; session for the fortnight's days; period times; school_day kinds
 Empty: No timetable live for this class: coordinator sees 'Make a draft' · Phone: Day view by default; week scrolls sideways in its box
 Folds in: /educator (day), /educator/week
-Every control on the screen (13), and what the test does with each:
+Every control on the screen (14), and what the test does with each:
 - **filter** class (the coordinator always; an educator only when she holds more than one class)
 - **tab** Day / Week / Fortnight (Day by default at 400 px)
+- **link** Previous / next day or week → Timetable (`/timetable`) (Day view steps a school day (weekends skipped), Week view a week; the fortnight follows the day)
 - **link** Today → Timetable (`/timetable`) (opens today in the Day view)
 - **link** each day head → Timetable (`/timetable`) (opens that day in the Day view; earlier and later days are reached the same way)
 - **filter** this / next fortnight
@@ -426,6 +427,7 @@ Done when (on top of the ten generic checks):
 - the grid's cells equal the session rows for the day shown (count and names)
 - a period running now carries Do now, a recorded one Done, one over and not recorded Late, and no period still to come has a chip
 - a holiday day is named in words under the grid
+- stepping to the next or previous school day skips the weekend and crosses into the next or earlier fortnight
 
 
 #### Fortnight 9 `/timetable/fortnight/[n]`
@@ -1112,7 +1114,7 @@ Every control on the screen (11), and what the test does with each:
 - **filter** search
 - **row** each question row → {the question as it prints} (`/setup/question-bank/[key]`)
 - **link** page: Later → → Question bank (`/setup/question-bank`)
-- **fold** Statistics (counts and worksheets by taxonomy)
+- **fold** Statistics (counts and worksheets by topic)
 - **link** rail: a skill → the skill's name (`/setup/skills/[code]`)
 Done when (on top of the ten generic checks):
 - statistics and taxonomy sit behind the details link, not on the first view (rule 8)
@@ -1150,7 +1152,7 @@ Done when (on top of the ten generic checks):
 #### Staff and classes `/setup/staff`
 Who: coordinator · Phase: Core · Backend: CP-1 · CP-3 · Old page today: yes · Slice: UI-5
 Eyebrow: This fortnight
-Purpose: Who teaches which class, and whole counts the database can stand behind. No score, no ranking: the school decides what they mean.
+Purpose: Who teaches which class, and whole counts you can rely on. No score, no ranking: the school decides what they mean.
 Blocks, in order:
 - **DataTable**: role · class · sessions done of planned · notes confirmed · notes late · lines accepted / changed / removed; each row opens the person's grants
 - **Details**: a person's grants: role, class, subject, from, to; Add a grant
