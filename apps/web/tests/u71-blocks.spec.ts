@@ -112,7 +112,8 @@ for (const scheme of ["light", "dark"] as const)
       for (const name of BLOCKS) {
         const sample = page.locator(`[data-sample="${name}"]`);
         await expect(sample, `${name} has a sample`).toBeVisible();
-        await expect(sample).toHaveScreenshot(`${name}-${scheme}-${width}.png`, { maxDiffPixelRatio: 0.01 });
+        // soft: every block that differs is reported in the one run (and its picture kept), not only the first; the test still fails
+        await expect.soft(sample).toHaveScreenshot(`${name}-${scheme}-${width}.png`, { maxDiffPixelRatio: 0.01 });
       }
     });
   }

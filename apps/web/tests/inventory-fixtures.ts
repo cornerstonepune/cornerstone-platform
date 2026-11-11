@@ -11,6 +11,7 @@ import { curriculumRows, gate, offers } from "./m1-13-rows";
 import { FAKE_CHILDREN } from "./fake-names";
 import { correctedPair, moreOffers, openOffersIn } from "./inventory-setup-content";
 import { seedTeaching, type Teaching } from "./inventory-teaching";
+import { markCorrected, typedNoteWritten, VOICE, voiceGone, voiceRest } from "./inventory-voice";
 
 export const SECTION = "U70A";
 export const EDUCATOR = { email: "u70-educator@cornerstone.test", name: "Inventory Educator", role: "educator", classes: [SECTION], subjects: ["NUM"] };
@@ -110,15 +111,18 @@ export function addressOf(route: string, rows: Rows, over: Record<string, string
 }
 function fill(route: string, rows: Rows, over: Record<string, string>): string {
   const first = Object.values(rows.children)[0] ?? "";
+  // the voice screens: a note waiting for the inventory educator, and a lesson of today (made by FIXTURES["voice-rest"])
+  const voice = route === "/notes/[id]" ? { id: VOICE.note } : route === "/period/[id]" ? { id: VOICE.lesson } : {};
   // the teaching screens' [code] is an activity's, an objective's or a skill's by the route it sits in
   const code = route.includes("/activities/") ? rows.teaching.activity : route.includes("/objectives/") ? rows.teaching.objective : rows.teaching.skill;
-  const given: Record<string, string> = { class: rows.classId, section: rows.section, roll: rows.assessment.roll, id: first, code, key: route.includes("/question-bank/") ? rows.questionKey : rows.assessment.key, ...over };
+  const given: Record<string, string> = { class: rows.classId, section: rows.section, roll: rows.assessment.roll, id: first, code, key: route.includes("/question-bank/") ? rows.questionKey : rows.assessment.key, ...voice, ...over };
   const path = route.replace(/\[(\w+)\]/g, (_, k: string) => {
     if (!(k in given)) throw new Error(`tests/inventory/fixtures.ts has no fixture for [${k}] of ${route}: add one built from the test's own rows`);
     return encodeURIComponent(given[k]);
   });
   // Classes and children opens one class below its table: the test's own, so the children are the fake ones above and not whatever other specs left in the first
-  return route === "/setup/classes" ? `${path}?class=${rows.classId}` : path;
+  // Record opens on the fixture class, so the person holding several classes is not asked which one first
+  return route === "/setup/classes" || route === "/record" ? `${path}?class=${rows.classId}` : path;
 }
 
 /** The coordinator's own copy of createHmac is not needed: the signed-in file holds the cookie. */
@@ -398,3 +402,11 @@ async function quiet() {
     await new Promise((r) => setTimeout(r, 400));
   }
 }
+
+// ---- the voice screens (UI-3a), made in inventory-voice.ts ----
+FIXTURES["voice-rest"] = () => voiceRest(aside, SECTION, EDUCATOR);
+FIXTURES["voice-gone"] = () => voiceGone(aside);
+/** The confirm screen on a note already confirmed, where "Correct this note" is drawn. */
+ADDRESSES["confirmed-note"] = async () => `/notes/${VOICE.done}`;
+CHECKS["typed-note-written"] = () => typedNoteWritten(aside, SECTION);
+CHECKS["mark-corrected"] = () => markCorrected(aside);

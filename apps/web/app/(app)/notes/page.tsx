@@ -41,7 +41,7 @@ export default async function Notes({ searchParams }: { searchParams: Promise<{ 
   const q = await searchParams;
   const week: Week = q.week && q.week in WEEKS ? (q.week as Week) : "fortnight";
   const state = q.state && q.state in STATES ? q.state : undefined;
-  const view = q.view === "table" ? "table" : "board";
+  const view = q.view === "table" || coord ? "table" : "board";
   const classes = q.class ? my.classes.filter((c) => c.id === q.class) : my.classes;
   const [today, zone] = await Promise.all([schoolToday(), schoolZone()]);
   const [span, skip] = [WEEKS[week][1], week === "last" ? 7 : 0];
@@ -76,7 +76,11 @@ export default async function Notes({ searchParams }: { searchParams: Promise<{ 
         title="Notes"
         purpose="Every note of your classes: waiting, confirmed, left unconfirmed. Open one to confirm it or to correct a confirmed one."
         action={
-          oldest ? (
+          coord ? (
+            <Link href="/today" className="btn secondary">
+              Back to Today
+            </Link>
+          ) : oldest ? (
             <Link href={`/notes/${oldest.note_id}`} className="btn">
               Confirm the oldest
             </Link>
@@ -98,9 +102,11 @@ export default async function Notes({ searchParams }: { searchParams: Promise<{ 
             { name: "week", label: "Week", value: q.week ? week : undefined, all: "This fortnight", options: Object.entries(WEEKS).map(([k, v]) => [k, v[0]] as const) },
           ]}
         />
-        <div className="mb-3">
-          <ViewToggle current={view} views={[{ key: "table", label: "Table", icon: "table", href: href({ view: "table" }) }, { key: "board", label: "Board", icon: "board", href: href({ view: "board" }) }]} />
-        </div>
+        {coord ? null : (
+          <div className="mb-3">
+            <ViewToggle current={view} views={[{ key: "table", label: "Table", icon: "table", href: href({ view: "table" }) }, { key: "board", label: "Board", icon: "board", href: href({ view: "board" }) }]} />
+          </div>
+        )}
         {all.length === 0 ? (
           <EmptyState next={{ href: "/record", label: "Record a note" }}>No notes yet this fortnight.</EmptyState>
         ) : view === "board" ? (
@@ -127,7 +133,7 @@ export default async function Notes({ searchParams }: { searchParams: Promise<{ 
                   </ul>
                 ),
               },
-              { key: "next", label: "Next", status: true, keep: true, value: (n) => n.state, cell: (n) => <Link href={`/notes/${n.note_id}`} className="btn">{n.state === "confirmed" ? "Open" : n.state === "being_read" ? "Reading" : "Confirm"}</Link> },
+              { key: "next", label: "Next", status: true, keep: true, value: (n) => n.state, cell: (n) => (coord ? <span className="muted">Read only</span> : <Link href={`/notes/${n.note_id}`} className="btn">{n.state === "confirmed" ? "Open" : n.state === "being_read" ? "Reading" : "Confirm"}</Link>) },
             ]}
           />
         )}

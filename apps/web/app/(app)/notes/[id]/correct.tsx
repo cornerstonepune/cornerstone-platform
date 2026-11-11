@@ -37,7 +37,7 @@ export function Correct({ marks, back }: { marks: Mark[]; back: string }) {
       </label>
       <label className="grid gap-1 text-[14px]">
         New mark
-        <select name="outcome" className="select" required>
+        <select name="outcome" className="select" required defaultValue={OUTCOMES.find(([k]) => k !== marks[0].outcome)?.[0]}>
           {OUTCOMES.map(([k, w]) => (
             <option key={k} value={k}>
               {w}
