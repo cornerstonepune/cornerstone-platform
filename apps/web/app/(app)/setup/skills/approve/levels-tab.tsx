@@ -112,7 +112,7 @@ export async function LevelsTab({ q }: { q: Q }) {
                 I&apos;ve looked at this
               </button>
             </form>
-            <Link href={`/setup/skill-sets/${r.skill}/edit`}>Open the skill</Link>
+            <Link href={`/skill-sets/${r.skill}/edit`}>Open the skill</Link>
           </span>
         ) : null,
       width: "17rem",
