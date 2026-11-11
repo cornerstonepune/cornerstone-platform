@@ -1,6 +1,6 @@
 # UI-3a: the notes loop (period, record, confirm, notes)
 
-Branch `u76-notes-loop`, "Part of #518" (UI-3 split: 3a notes loop, 3b children, 3c teaching pages). Backend: issue #565, PR #569
+Branch `ui-3a-notes-loop`, "Part of #518" (UI-3 split: 3a notes loop, 3b children, 3c teaching pages). Backend: issue #565, PR #569
 (`POST /voice/class-notes`, `POST /voice/notes/typed`, `educator_note.session_id`). This branch sits on #569's branch and merges after it.
 
 ## What is built
