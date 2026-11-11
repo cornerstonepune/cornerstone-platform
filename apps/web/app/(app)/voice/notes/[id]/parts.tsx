@@ -18,7 +18,7 @@ export function Late({ draft, zone }: { draft: Draft; zone: string }) {
   return <StatusChip state="late" round words={n === 1 ? W.facts.late : W.facts.lateDays(n)} />;
 }
 
-export async function Body({ draft, klass, grade, form, send, done }: { draft: Draft; klass: string; grade?: string; form: { href: string; label: string }; send: (s: Sent) => Promise<{ error: string } | void>; done?: { href: string; label: string } }) {
+export async function Body({ draft, klass, grade, form, send, done, typed }: { draft: Draft; klass: string; grade?: string; form: { href: string; label: string }; send: (s: Sent) => Promise<{ error: string } | void>; done?: { href: string; label: string }; typed?: boolean }) {
   if (draft.status === "confirmed") return <EmptyState next={done ?? { href: "/today?open=notes", label: W.groups.notes }}>{W.confirm.done}.</EmptyState>;
   if (draft.status === "left_unconfirmed") return <EmptyState next={{ href: "/today", label: W.back }}>{W.confirm.expired}</EmptyState>;
   if (draft.status === "received")
@@ -37,7 +37,7 @@ export async function Body({ draft, klass, grade, form, send, done }: { draft: D
       </section>
     );
   const said = draft.lines.some((l) => l.section !== "sentence");
-  if (!said || !grade)
+  if ((!said && !typed) || !grade) // a typed note has no words to read: it opens on the empty board
     return (
       <section className="panel grid justify-items-start gap-3 p-4" data-could-not>
         <StatusChip state="fixThis" round words={draft.heard ? W.confirm.couldNot : W.record.nothing} />
@@ -49,6 +49,7 @@ export async function Body({ draft, klass, grade, form, send, done }: { draft: D
     );
   const today = await schoolToday();
   const activities = await activitiesOf(grade);
+  if (typed) return <Board start={fromDraft(draft)} enrolled={draft.enrolled} klass={klass} activities={[...activities]} today={today} draft={draft} button={W.confirm.button} send={send} lines={[]} />;
   return (
     <div className="grid gap-4 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]">
       <section className="panel h-fit p-4" aria-label={W.confirm.heard}>

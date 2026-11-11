@@ -87,7 +87,7 @@ export default async function ConfirmWhatTheReaderHeard({ params }: { params: Pr
             {note.children.flatMap((cid) => (kids[cid] ? [<li key={cid}><PeekChip kid={{ ...kids[cid], href: `/children/${kids[cid].classId}/${Number(kids[cid].no)}`, classId: kids[cid].classId, roll: String(Number(kids[cid].no)) }} /></li>] : []))}
           </ul>
         ) : null}
-        <Body draft={draft} klass={klass} grade={found.grade} form={form} send={confirmHere.bind(null, id, found.id)} done={{ href: "/notes", label: "Notes" }} />
+        <Body draft={draft} klass={klass} grade={found.grade} form={form} send={confirmHere.bind(null, id, found.id)} done={{ href: "/notes", label: "Notes" }} typed={note?.typed} />
         {draft.status === "confirmed" ? <Correct back={`/notes/${id}`} marks={marks.map((m) => ({ observation: m.id, no: kids[m.child_id]?.no ?? "", outcome: m.outcome }))} /> : null}
       </Screen>
     </PeekHost>
