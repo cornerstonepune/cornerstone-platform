@@ -15,6 +15,7 @@ import { stateWords } from "@/lib/fortnight-words";
 import { gridOf, moveInto } from "@/lib/timetable-grid";
 import { subjectLooks, clashesOf, fortnightAfter, fortnightAt, fortnightNumber, isCoordinator, movesOf } from "@/lib/timetable-ui";
 import { schoolToday } from "@/lib/voice-page";
+import { DayOnPhone } from "./day-on-phone";
 import "./timetable.css";
 
 type Props = { searchParams: Promise<Record<string, string | undefined>> };
@@ -81,6 +82,7 @@ export default async function TimetablePage({ searchParams }: Props) {
         />
       }
     >
+      <DayOnPhone chosen={(VIEWS as readonly string[]).includes(q.view ?? "")} />
       <FilterBar
         action={HERE}
         keep={{ view, day: q.day, fn: q.fn }}
