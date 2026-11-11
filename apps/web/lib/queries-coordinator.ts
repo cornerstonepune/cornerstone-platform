@@ -7,9 +7,9 @@ import { staffList } from "./queries";
 // `pii.child`, read through the accessor that logs who asked (rule 6). Nothing here writes; the writes are `actions.ts` beside
 // each page, and every one of them is a function of the database or an insert of a new row, never a delete.
 
-const school = () => sql`(select id from tenant where slug = ${TENANT_SLUG})`;
+export const school = () => sql`(select id from tenant where slug = ${TENANT_SLUG})`;
 // the school's day today, in the school's own zone (the same line `lib/move-child.ts` uses), never the server's
-const today = () => sql`(now() at time zone (select value #>> '{}' from config where key = 'school.time_zone'))::date`;
+export const today = () => sql`(now() at time zone (select value #>> '{}' from config where key = 'school.time_zone'))::date`;
 
 /** Whether the signed-in person is in the group that reads every staff row (the database's own rule, `public.my_reach`). */
 export async function namesMayShow(): Promise<boolean> {

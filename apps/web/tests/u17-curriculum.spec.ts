@@ -8,7 +8,7 @@
 import { expect, test } from "@playwright/test";
 import postgres from "postgres";
 import { TEST_STAFF } from "./global-setup";
-import { aClass } from "./rows";
+import { aClass, aTaughtClass } from "./rows";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -20,6 +20,8 @@ test.afterAll(async () => {
 });
 
 test("a skill's page is in five parts, its worksheets one level at a time, and no code on it", async ({ page }) => {
+  // a worksheet is listed once its skill is taught in some class: this test has the class, not whatever ran before it in a shard
+  await aTaughtClass(sql);
   await page.goto("/skill-sets/ADD.2D2D");
   const parts = page.getByRole("navigation", { name: "Parts of this skill" });
   await expect(parts.getByRole("link")).toHaveText(["What it means", "Levels", "Mistakes", "Questions", "Worksheets"]);
