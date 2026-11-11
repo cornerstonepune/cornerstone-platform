@@ -33,7 +33,8 @@ export const GROUPS: readonly Door[] = [
     pages: [
       { label: "This week", href: "/educator/week", match: ["/educator/week"], guide: false },
       { label: "Materials", href: "/educator/materials", match: ["/educator/materials", "/timetable/materials"], guide: false },
-      { href: "/timetable/rules", label: "Timetable rules", match: ["/timetable"] },
+      { label: "Timetable", href: "/timetable", match: ["/timetable"], guide: false },
+      { href: "/timetable/rules", label: "Timetable rules", match: ["/timetable/rules"] },
     ],
   },
   {
@@ -49,7 +50,7 @@ export const GROUPS: readonly Door[] = [
       { href: "/capture", label: "Upload papers", match: ["/capture"] },
       { href: "/capture/check", label: "Check answers", match: ["/capture/check"] },
       { href: "/growth", label: "Class results", match: ["/growth"] },
-      { href: "/growth/reports", label: "Parent reports", match: ["/growth/reports"] },
+      { href: "/growth/reports", label: "Parent reports", match: ["/growth/reports", "/children/reports"] },
       { href: "/across", label: "Across classes", match: ["/across"] },
     ],
   },
