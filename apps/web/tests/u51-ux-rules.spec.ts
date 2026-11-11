@@ -139,7 +139,7 @@ const ROUTES = (): [string, string][] => [
   ["/growth", "/growth"],
   ["/growth/class/[section]", `/growth/class/${SECTION}`],
   ["/growth/[id]", `/growth/${kids.Asha}`],
-  ["/growth/reports", "/growth/reports"],
+  ["/children/reports", "/children/reports"],
   ["/asks", "/asks"],
   ["/home", "/home"],
   ["/setup/how-it-works", "/setup/how-it-works"],

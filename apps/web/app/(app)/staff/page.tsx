@@ -4,21 +4,18 @@ import { Screen } from "@/components/app-frame";
 import { Notice } from "@/components/parts";
 import { requireStaff } from "@/lib/auth";
 import { choices } from "@/lib/choices";
-import { NOT_ADDED } from "@/lib/staff-add";
-import { classLines, people, rolesHeld } from "@/lib/queries-staff";
-import { AddPerson } from "./add-person";
+import { people } from "@/lib/queries-staff";
 import { StaffTable } from "./staff-table";
 
 type Props = { searchParams: Promise<Record<string, string | undefined>> };
 
-// Staff (goals/uxn2-staff-and-school.yaml). Nimish, 2026-10-22: "the staff table of who teaches which class and subject
-// is edited on a Staff page, not by commands." A table: person, role, classes; the coordinator opens a row's classes,
-// ticks the classes and saves. Subjects are kept beside the classes in the same staff row (no schema change), so a person's
-// pages open on their own subjects as on their own classes (goals/nav_teacher_scope_and_todo.yaml).
+// Staff, for reading (goals/uxn2-staff-and-school.yaml; UI-5 moved the editing to Staff and classes, /setup/staff, where a class or
+// subject is given or ended as a grant). The classes and subjects shown are the columns the sign-in reads until backend's #615 reads
+// grants; this page goes when that has been live (plan in docs/notes/UI-5.md).
 export default async function StaffPage({ searchParams }: Props) {
   await requireStaff();
   const q = await searchParams;
-  const [all, classes, offered, givable] = await Promise.all([people(), classLines(), choices(), rolesHeld()]);
+  const [all, offered] = await Promise.all([people(), choices()]);
   const text = q.q?.trim().toLowerCase();
   const shown = all.filter(
     (p) =>
@@ -31,7 +28,7 @@ export default async function StaffPage({ searchParams }: Props) {
     <Screen
       stage="School"
       title="Staff"
-      purpose="Who teaches which class. Open a person's classes, tick the ones they teach and save: their pages open on those classes."
+      purpose="Who teaches which class and subject, for reading. Changes are made on Staff and classes."
       action={
         <Link href="/setup/classes" className="btn">
           See the school&rsquo;s classes
@@ -39,32 +36,10 @@ export default async function StaffPage({ searchParams }: Props) {
       }
       next={{ href: "/", label: "Curriculum" }}
     >
-      {q.saved && q.of === "new" ? (
-        <Notice tone="neem">
-          {q.saved} is on the staff list, and a link to set their own password is on its way to their email. It works
-          once and lasts seven days. Choose their classes and subjects on their row.
-        </Notice>
-      ) : null}
-      {q.saved && q.of !== "new" ? (
-        <Notice tone="neem">
-          {q.saved}&rsquo;s {q.of === "subjects" ? "subjects" : "classes"} are saved. Their pages open on{" "}
-          them from now on.
-        </Notice>
-      ) : null}
-      {q.denied ? (
-        <Notice tone="terracotta">Nothing changed: only the coordinators can change the staff list.</Notice>
-      ) : null}
-      {q.refused && q.of === "new" ? (
-        <Notice tone="terracotta">
-          Nobody was added: {NOT_ADDED[q.refused] ?? "that cannot be saved"}.
-        </Notice>
-      ) : null}
-      {q.refused && q.of !== "new" ? (
-        <Notice tone="terracotta">
-          Nothing changed: {q.of === "subjects" ? `${q.refused} is not a subject of the school` : `no child is in ${q.refused}`}.
-        </Notice>
-      ) : null}
-      <AddPerson roles={givable} />
+      <Notice tone="neem">
+        This list is for reading. To add a person, give or end a class or a subject, use{" "}
+        <Link href="/setup/staff">Staff and classes</Link>.
+      </Notice>
       <FilterBar
         action="/staff"
         filters={[
@@ -80,7 +55,6 @@ export default async function StaffPage({ searchParams }: Props) {
       />
       <StaffTable
         people={shown}
-        classes={classes}
         subjects={offered.subjects}
         page={page}
         pageHref={(n) =>
