@@ -5,7 +5,7 @@
       "title": "Today",
       "eyebrow": "Wednesday 18-Nov · K2 Red · Fortnight 9, week A",
       "group": "Today",
-      "route": "/today",
+      "route": "/today/new",
       "purpose": "Your periods in order. Tap one for what to teach, how, and what to lay out. After it, record a note.",
       "does": [
         {
@@ -60,7 +60,7 @@
       "title": "Today, the school",
       "eyebrow": "Wednesday 18-Nov · every class",
       "group": "Today",
-      "route": "/today",
+      "route": "/today/new",
       "purpose": "What waits on you, each with its own button. Then the week ahead.",
       "does": [
         {
@@ -702,7 +702,7 @@
           "label": "Read it"
         },
         {
-          "label": "class · topic · subject · kind · week · stage"
+          "label": "class · topic · subject · kind · week · stage (and, on Reading, Show: by day, by kind of question, by how sure)"
         },
         {
           "label": "each assessment row"
@@ -739,6 +739,24 @@
         },
         {
           "label": "Later →"
+        },
+        {
+          "label": "By topic"
+        },
+        {
+          "label": "Reading"
+        },
+        {
+          "label": "rename: name this assessment"
+        },
+        {
+          "label": "Save the name"
+        },
+        {
+          "label": "each topic"
+        },
+        {
+          "label": "Read again"
         }
       ]
     },
@@ -791,6 +809,12 @@
         },
         {
           "label": "Photo"
+        },
+        {
+          "label": "rename: name this assessment"
+        },
+        {
+          "label": "Save the name"
         }
       ]
     },
@@ -904,7 +928,7 @@
           "label": "Send back (a drafted part)"
         },
         {
-          "label": "Photo"
+          "label": "Voice note"
         },
         {
           "label": "each objective"
@@ -1061,6 +1085,9 @@
           "label": "Later →"
         },
         {
+          "label": "offers page: Later →"
+        },
+        {
           "label": "Skills to approve"
         },
         {
@@ -1086,6 +1113,12 @@
           "label": "Subject"
         },
         {
+          "label": "Topic"
+        },
+        {
+          "label": "Taught"
+        },
+        {
           "label": "Skills"
         },
         {
@@ -1099,6 +1132,9 @@
         },
         {
           "label": "What a wrong answer counts against"
+        },
+        {
+          "label": "Approve this table as written"
         },
         {
           "label": "Later →"
@@ -1129,6 +1165,12 @@
           "label": "Difficulty"
         },
         {
+          "label": "Kind"
+        },
+        {
+          "label": "Status"
+        },
+        {
           "label": "search"
         },
         {
@@ -1155,6 +1197,12 @@
       "does": [
         {
           "label": "About it"
+        },
+        {
+          "label": "the corrected question"
+        },
+        {
+          "label": "the original wording"
         },
         {
           "label": "the skill"

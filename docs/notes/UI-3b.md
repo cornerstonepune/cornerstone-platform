@@ -38,3 +38,11 @@ in `lib/children-view.ts`. A class is the person's by `staff_sees` (`seesClass`)
 ## Not done here
 
 Saved groups, a real register, a name chosen for a group: all out of scope.
+
+## UI-3c (follow-up, part 1)
+
+Deleted the three files nothing imports since UI-3b: `lib/k2-reads.ts`, `lib/k2-child.ts`, `components/child-state-chip.tsx`
+(the engine's `k2_reads.py` stays: it is the engine's, outside this lane). The child page gains a read-only "Answers" table
+(`components/children/answers.tsx`; the same `childEvidence` read and mark rules as the old `/growth/[id]` answers table): date, question,
+what the child wrote, mark (right / wrong / wrong with working / blank), working shown, mistake matched, skill. Test: `u73-child-answers.spec.ts`.
+Not done yet: redirecting `/growth` and `/growth/class/[section]`, which about 35 older specs still visit.

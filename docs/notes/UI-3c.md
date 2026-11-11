@@ -124,3 +124,12 @@ Per #599: `/skill-sets/[code]` is a skill SET (keyed by `skill.code`), not a reg
 `skillset` at `/setup/skill-sets/[code]` (screens.json, UI-3, wireframes/skillset.html). It lists the registry skills the
 set points at (cards to the skill screen) and the level sentences in a fold. No page yet; the six functions (#599) come as
 later PRs and add their elements here.
+## Clusters on the skill screen (ui-3c-clusters)
+`skillOf` now also returns `clusters` = `clustersOf(places)`, places built from the same `pictureOf` rows the grid uses
+(look on this skill, a confirmed next skill the child lacks, last seen vs the attention days). Drawn with UI-3b's `Clusters`.
+Test 19 in `u73-teaching-pages.spec.ts`: each cluster's count equals its chips; the not-seen cluster equals the grid's not-seen group.
+
+## Activity photo element removed (ui-3c-activity-photo)
+Per #599: the activity screen's `capture: Photo` upload is gone from screens.json and the wireframe (no store for a set-up photo;
+photos are taken on Record, #609). Its capture bar now links to Record (`capture: Voice note`), as the notes screen does. Page: the
+rail draws the link. Test 20. Test 13 now switches `voice.screens_enabled` on for itself (the peek's history route needs it) and restores it.
