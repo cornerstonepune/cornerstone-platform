@@ -26,6 +26,13 @@ const nextConfig: NextConfig = {
     { source: "/k2/:class/:roll", destination: "/children/:class/:roll", permanent: true },
     // UI-5 (docs/frontend/screens.json `folds`): the School page is Classes and children; a bookmark answers 308 to it.
     { source: "/school", destination: "/setup/classes", permanent: true },
+    // The old voice pages folded into Record, Notes and the confirm screen (UI-3a): the old addresses answer 308 to the new ones. The form is
+    // Type the marks, on Record; the class a bookmark names (`?class=`) is carried over, named so the destination has it.
+    { source: "/voice/record", has: [{ type: "query", key: "class", value: "(?<class>.+)" }], destination: "/record?class=:class", permanent: true },
+    { source: "/voice/record", destination: "/record", permanent: true },
+    { source: "/voice/form", has: [{ type: "query", key: "class", value: "(?<class>.+)" }], destination: "/record?class=:class", permanent: true },
+    { source: "/voice/form", destination: "/record", permanent: true },
+    { source: "/voice/notes/:id([0-9a-f-]{36})", destination: "/notes/:id", permanent: true },
   ],
   outputFileTracingRoot: repo,
 };

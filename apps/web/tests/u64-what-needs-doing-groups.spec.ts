@@ -92,7 +92,7 @@ test("the top bar has no Viewing control and nothing keeps its choice", () => {
 test("with recording off the K2 group reads Fill the form and each class opens the form, never Record (D-065)", () => {
   const off = buildTasks({ ...SRC, voice: { ...SRC.voice!, recording: false } }, (c) => c ?? "");
   const k2 = sectionsOf(off).find((s) => s.group.key === "record")!;
-  expect(k2.title).toBe("Fill the form");
-  expect(k2.tasks.map((t) => [t.href, t.action])).toEqual([["/voice/form?class=c1", "Fill the form"]]);
+  expect(k2.title).toBe("Type the marks");
+  expect(k2.tasks.map((t) => [t.href, t.action])).toEqual([["/record?class=c1", "Type the marks"]]);
   expect(sectionsOf(tasks).find((s) => s.group.key === "record")!.title).toBe("Record a note");
 });

@@ -887,7 +887,8 @@
       ],
       "phone_gate": true,
       "folds": [
-        "/voice/record"
+        "/voice/record",
+        "/voice/form"
       ],
       "rest": {
         "fixture": "voice-rest",
@@ -1016,6 +1017,9 @@
         "tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page"
       ],
       "phone_gate": true,
+      "folds": [
+        "/voice/notes/[id]"
+      ],
       "rest": {
         "fixture": "voice-rest",
         "after": "voice-gone"

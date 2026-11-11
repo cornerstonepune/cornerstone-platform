@@ -15,7 +15,7 @@ import { confirmHere } from "../actions";
 import { Correct } from "./correct";
 
 // Confirm what the reader heard (UI-3a), one note a screen: her words line by line on the left, the class already marked from
-// them on the right (the same board as /voice/notes/[id]), the reader's problems pinned in red, Confirm for this note only. A
+// them on the right, the reader's problems pinned in red, Confirm for this note only. A
 // confirmed note is opened here too, where "Correct this note" lives. Its next step is the next note waiting, or Notes.
 const UUID = /^[0-9a-f-]{36}$/;
 
@@ -41,7 +41,7 @@ export default async function ConfirmWhatTheReaderHeard({ params }: { params: Pr
   const klass = classWords(found);
   const names = await activityNames(draft.activity ? [draft.activity] : []);
   const kids = await childrenByIds(me, note?.children ?? []);
-  const form = { href: `/voice/form?class=${found.id}`, label: W.fillForm };
+  const form = { href: `/record?class=${found.id}`, label: W.typeMarks };
   const heard = new Date(draft.received_at).toLocaleString("en-IN", { timeZone: zone, hour: "2-digit", minute: "2-digit", hour12: false });
   const marks =
     draft.status === "confirmed"
@@ -87,7 +87,7 @@ export default async function ConfirmWhatTheReaderHeard({ params }: { params: Pr
             {note.children.flatMap((cid) => (kids[cid] ? [<li key={cid}><PeekChip kid={{ ...kids[cid], href: `/children/${kids[cid].classId}/${Number(kids[cid].no)}`, classId: kids[cid].classId, roll: String(Number(kids[cid].no)) }} /></li>] : []))}
           </ul>
         ) : null}
-        <Body draft={draft} klass={klass} grade={found.grade} form={form} send={confirmHere.bind(null, id, found.id)} done={{ href: "/notes", label: "Notes" }} picker />
+        <Body draft={draft} klass={klass} grade={found.grade} form={form} send={confirmHere.bind(null, id, found.id)} done={{ href: "/notes", label: "Notes" }} typed={note?.typed} />
         {draft.status === "confirmed" ? <Correct back={`/notes/${id}`} marks={marks.map((m) => ({ observation: m.id, no: kids[m.child_id]?.no ?? "", outcome: m.outcome }))} /> : null}
       </Screen>
     </PeekHost>
