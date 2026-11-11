@@ -6,7 +6,9 @@
 --
 -- The rule `staff_sees` takes flat lists, so subjects are flat too: a person with a grant for a whole class (any role
 -- of the own-classes group with no subject) is narrowed in no subject; otherwise their subjects are those of their
--- subject grants. The columns stay for now (the old editor still writes them; nothing reads them): dropping them is
+-- subject grants. A person whose role is `coordinator` sees every class (the rule `staff_sees` already has), so a class
+-- or subject list means nothing for them: it is empty, and a class grant a coordinator also holds does not narrow the
+-- site for them. The columns stay for now (the old editor still writes them; nothing reads them): dropping them is
 -- the step after that editor is retired.
 
 create or replace function public.staff_list(p_slug text)
@@ -14,13 +16,13 @@ returns table (id uuid, email text, name text, role text, password text, passwor
                classes text[], subjects text[])
 language sql stable security definer set search_path = public, pg_temp as $$
   select s.id, p.email, p.name, s.role_code, p.password_hash, p.password_set_at,
-         array(select distinct sc.label
+         case when s.role_code = 'coordinator' then '{}'::text[] else array(select distinct sc.label
                from staff_role_grant g
                join role ro on ro.tenant_id = g.tenant_id and ro.code = g.role_code and ro.access_group = 'own_classes'
                join school_class sc on sc.id = g.school_class_id
                where g.staff_id = s.id and g.valid_from <= d.day and (g.valid_to is null or g.valid_to > d.day)
-               order by 1) as classes,
-         case when exists (
+               order by 1) end as classes,
+         case when s.role_code = 'coordinator' then '{}'::text[] when exists (
                 select 1 from staff_role_grant g
                 join role ro on ro.tenant_id = g.tenant_id and ro.code = g.role_code and ro.access_group = 'own_classes'
                 where g.staff_id = s.id and g.school_class_id is not null and g.subject_code is null
@@ -73,7 +75,7 @@ begin
   from tenant t
   cross join lateral public.staff_list(t.slug) l
   join staff s on s.id = l.id
-  where exists (select 1 from unnest(s.classes) c where c <> all (l.classes));
+  where s.role_code <> 'coordinator' and exists (select 1 from unnest(s.classes) c where c <> all (l.classes));
   if short > 0 then
     raise exception 'grants_one_source: % people would sign in to fewer classes than their staff entry names', short;
   end if;
@@ -82,7 +84,7 @@ begin
   from tenant t
   cross join lateral public.staff_list(t.slug) l
   join staff s on s.id = l.id
-  where cardinality(s.subjects) > 0 and cardinality(s.classes) > 0
+  where s.role_code <> 'coordinator' and cardinality(s.subjects) > 0 and cardinality(s.classes) > 0
     and (select coalesce(array_agg(x order by x), '{}') from unnest(s.subjects) x) is distinct from l.subjects;
   if moved > 0 then
     raise exception 'grants_one_source: % people would sign in with different subjects than their staff entry names', moved;

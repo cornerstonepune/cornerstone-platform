@@ -21,3 +21,9 @@ One migration, `20270126110000_grants_one_source.sql`. No new table, no new func
 Verified: `tests/test_grants_one_source.py` (7), table-budget, data-register, layout, rules, staff, people, access,
 report-lines, approval-list and voice tests on a from-scratch Postgres 16; `bin/check`. Not verified: CI's full suite;
 the rehearsal; live.
+
+## 11 Nov, after the first full CI (browser shards red)
+- Cause: the web test helper `k2-rows.ts` gives the shared test coordinator a `class_teacher` grant on a K2 class and never ends it. Once `staff_list` read grants, that coordinator signed in scoped to the class and later specs saw a class-prefixed page.
+- Root fix, in the migration: a person whose role is `coordinator` signs in with no class or subject list (the engine's `staff_sees` already lets a coordinator see every class), so a class grant a coordinator also holds does not narrow the site. The two guard checks skip coordinators for the same reason.
+- Live (read-only, 11 Nov): 3 coordinators, none with old class or subject entries, none holding a class grant: nothing changes for anyone today. Test: `test_a_coordinator_who_also_holds_a_class_grant_is_not_narrowed_by_it`.
+- Rehearsal re-run on the changed migration; no web test was edited.

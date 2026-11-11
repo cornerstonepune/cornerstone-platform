@@ -128,6 +128,20 @@ def test_a_coordinator_or_a_person_with_no_class_grant_signs_in_with_no_classes(
 
 
 @needs_db
+def test_a_coordinator_who_also_holds_a_class_grant_is_not_narrowed_by_it():
+    """A coordinator sees every class (the rule `staff_sees` already has), so a class grant they also hold must not narrow
+    the site for them; the same grant narrows an educator."""
+    with school() as conn:
+        k, label = a_class(conn)
+        c, e = person(conn, role="coordinator"), person(conn)
+        grant(conn, c, "assistant", k)
+        grant(conn, e, "assistant", k)
+        run_migration(conn)
+        assert signs_in_with(conn, c) == ([], [])
+        assert signs_in_with(conn, e)[0] == [label]
+
+
+@needs_db
 def test_the_backfill_gives_each_educator_the_grants_their_old_entry_implied_and_changes_nothing_they_see():
     with school() as conn:
         a, la = a_class(conn)
