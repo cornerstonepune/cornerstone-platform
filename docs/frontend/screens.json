@@ -2316,7 +2316,7 @@
         },
         {
           "t": "filter",
-          "label": "class · topic · subject · kind · week · stage",
+          "label": "class · topic · subject · kind · week · stage (and, on Reading, Show: by day, by kind of question, by how sure)",
           "text": "Class",
           "data": "data-filter"
         },
@@ -2391,6 +2391,69 @@
           "text": "Later",
           "when": "?view=table",
           "note": "the next ten assessments"
+        },
+        {
+          "t": "tab",
+          "label": "By topic",
+          "note": "every topic a row with its count, closed until opened; the address carries the topic",
+          "text": "By topic"
+        },
+        {
+          "t": "tab",
+          "label": "Reading",
+          "note": "how the reader is doing, and the files read lately",
+          "text": "Reading"
+        },
+        {
+          "t": "field",
+          "label": "rename: name this assessment",
+          "note": "one on each row; the built name shows until a name is chosen",
+          "text": "Name this assessment",
+          "when": "?view=table",
+          "data": "data-rename-name"
+        },
+        {
+          "t": "button",
+          "label": "Save the name",
+          "effect": "the name is the educator's own and is kept as a row of the history log, the older names stay",
+          "text": "Save the name",
+          "when": "?view=table",
+          "drive": {
+            "fill": {
+              "Name this assessment": "Named in the inventory"
+            },
+            "expect": {
+              "text": [
+                "Named in the inventory"
+              ],
+              "check": "assessment-renamed"
+            },
+            "after": "name-undone"
+          },
+          "data": "data-rename-save"
+        },
+        {
+          "t": "link",
+          "label": "each topic",
+          "note": "opens the topic's assessments beneath it",
+          "data": "data-topic-open",
+          "when": "?view=topic",
+          "to": "assessments"
+        },
+        {
+          "t": "button",
+          "label": "Read again",
+          "effect": "the file is read again with the reader as it now is; the page says in words when the engine no longer keeps it",
+          "text": "Read again",
+          "when": "?view=reading",
+          "drive": {
+            "expect": {
+              "url": "read=refused",
+              "text": [
+                "no longer kept by the engine"
+              ]
+            }
+          }
         }
       ],
       "rail": [
@@ -2568,6 +2631,32 @@
           "t": "upload",
           "label": "capture: Photo",
           "effect": "a scan of this assessment's paper; the QR must belong to it, else a message"
+        },
+        {
+          "t": "field",
+          "label": "rename: name this assessment",
+          "note": "the built name shows until a name is chosen",
+          "text": "Name this assessment",
+          "data": "data-rename-name"
+        },
+        {
+          "t": "button",
+          "label": "Save the name",
+          "effect": "the name is the educator's own and is kept as a row of the history log, the older names stay",
+          "text": "Save the name",
+          "drive": {
+            "fill": {
+              "Name this assessment": "Named in the inventory"
+            },
+            "expect": {
+              "text": [
+                "Named in the inventory"
+              ],
+              "check": "assessment-renamed"
+            },
+            "after": "name-undone"
+          },
+          "data": "data-rename-save"
         }
       ],
       "rail": [

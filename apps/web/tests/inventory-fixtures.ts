@@ -193,6 +193,10 @@ export const CHECKS: Record<string, () => Promise<string[]>> = {
 let RUN = "0000";
 /** The answer on Sr. No. 1's paper that is for a person to judge, by its id: the engine rewrites what it read when it marks, so no wording finds it again. */
 let JUDGE = "";
+/** The name the inventory types into a rename field. */
+const NAMED = "Named in the inventory";
+/** The file the inventory has been read lately. */
+const SCAN = "Inventory scan.pdf";
 let SETTLED_CAPTURES: string[] = [];
 const code = (n: number) => `CS${RUN}${n.toString(16).toUpperCase().padStart(2, "0")}`;
 
@@ -346,9 +350,13 @@ FIXTURES["assessments-rest"] = () =>
     RUN = Math.floor(Math.random() * 0xffff).toString(16).toUpperCase().padStart(4, "0");
     const names = Object.fromEntries((await sql<{ id: string; roll: string }[]>`select id, roll_no as roll from child_now where section = ${SECTION}`).map((c) => [c.roll, c.id]));
     await anAssessment(sql, Object.fromEntries(Array.from({ length: 12 }, (_, i) => [`k${i}`, names[String(i + 1)]])));
+    // one file read lately, so the Reading view has a row with Read again (the engine no longer keeps it, and says so)
+    await sql`insert into flow_run (tenant_id, flow, trigger, status, finished_at, result)
+      select id, 'read-scan', ${`e2e@cornerstone.test: ${SCAN}`}, 'ok', now(), ${sql.json({ pages: 2, file: SCAN, copies: [] })} from tenant limit 1`;
   });
 FIXTURES["assessments-gone"] = () =>
   aside(async (sql) => {
+    await sql`delete from flow_run where flow = 'read-scan' and trigger like ${`%${SCAN}`}`;
     await sql`update sheet_instance set print_status = 'void' where qr_code like ${`CS${RUN}%`}`;
   });
 
@@ -384,3 +392,22 @@ FIXTURES["voice-gone"] = () => voiceGone(aside);
 ADDRESSES["confirmed-note"] = async () => `/notes/${VOICE.done}`;
 CHECKS["typed-note-written"] = () => typedNoteWritten(aside, SECTION);
 CHECKS["mark-corrected"] = () => markCorrected(aside);
+
+/** A name an educator chose is a row of the history log and stays (rule 4); to give the built name back, a last row says an empty name,
+ *  which the screens read as no chosen name (`nameOf`). Every assessment a test named gets one. */
+FIXTURES["name-undone"] = () =>
+  aside(async (sql) => {
+    await sql`
+      insert into change_log (tenant_id, table_name, row_id, op, after, origin)
+      select tenant_id, 'assessment', row_id, 'name', '{"name": ""}'::jsonb, 'inventory' from (
+        select distinct on (row_id) row_id, tenant_id, after ->> 'name' as name from change_log
+        where table_name = 'assessment' and op = 'name' order by row_id, at desc, id desc) x
+      where name = ${NAMED}`;
+  });
+CHECKS["assessment-renamed"] = () =>
+  aside(async (sql) => {
+    const rows = await sql`
+      select 1 from (select distinct on (row_id) after ->> 'name' as name from change_log
+        where table_name = 'assessment' and op = 'name' order by row_id, at desc, id desc) x where name = ${NAMED}`;
+    return rows.length ? [] : ["no assessment has the name that was typed"];
+  });
