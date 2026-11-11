@@ -118,3 +118,8 @@ with UI-11's `curriculum` screen, not before.
 
 Not checked here (read when moving, not assumed): the exact assertions of each spec; whether live data matches the seed counts above;
 which of the nine inbound links carry a level (`?level=`) that a new route would also need.
+
+## Clusters on the skill screen (ui-3c-clusters)
+`skillOf` now also returns `clusters` = `clustersOf(places)`, places built from the same `pictureOf` rows the grid uses
+(look on this skill, a confirmed next skill the child lacks, last seen vs the attention days). Drawn with UI-3b's `Clusters`.
+Test 19 in `u73-teaching-pages.spec.ts`: each cluster's count equals its chips; the not-seen cluster equals the grid's not-seen group.
