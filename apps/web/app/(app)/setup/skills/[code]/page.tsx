@@ -3,6 +3,7 @@ import { Cards } from "@/components/cards";
 import { PeekPanel, PeekProvider } from "@/components/children/peek";
 import { Clusters, PictureGrid, type Square } from "@/components/children/picture-grid";
 import { Details } from "@/components/details";
+import { LevelWords, type Earlier } from "@/components/teaching/level-words";
 import { EmptyState } from "@/components/empty-state";
 import { FilterBar } from "@/components/filter-bar";
 import { Rail, Screen, type Edge } from "@/components/app-frame";
@@ -10,6 +11,8 @@ import { Spark } from "@/components/spark";
 import { StackBar } from "@/components/stack-bar";
 import { STATES } from "@/components/status-chip";
 import { requireStaff } from "@/lib/auth";
+import { enginePost } from "@/lib/engine";
+import { staffNames } from "@/lib/timetable-ui";
 import { openTo } from "@/lib/educator/data";
 import { screenHref } from "@/lib/built";
 import { LOOK_ORDER, groupByLook, peekParam } from "@/lib/children-view";
@@ -38,6 +41,21 @@ export default async function SkillScreen({ params, searchParams }: { params: Pr
     ...s.objectives.map((o): Edge => ({ screen: "objective", params: { code: o.code }, label: o.title, icon: "objective" })),
     ...[...s.after, ...s.next].map((k): Edge => ({ screen: "skill", params: { code: k.code }, label: k.name, icon: "skill" })),
   ];
+  // a coordinator may change a level's sentence and reads its earlier ones; the engine decides who may (a refusal leaves it unchanged)
+  const reviews = me.role === "coordinator";
+  const names = reviews && s.levels.length ? await staffNames() : new Map<string, string>();
+  const earlier = new Map<string, Earlier[]>();
+  if (reviews)
+    await Promise.all(
+      s.levels.map(async (l) => {
+        try {
+          const got = (await enginePost("/curriculum/level-words/history", { actor: me.email, skill: l.set, level: l.difficulty })) as { history: { at: string; staff: string | null; was: string | null; now: string | null; reason: string | null }[] };
+          earlier.set(`${l.set}/${l.difficulty}`, got.history.map((h) => ({ at: h.at.slice(0, 16).replace("T", " "), who: (h.staff && names.get(h.staff)) || "a member of staff", was: h.was, now: h.now, reason: h.reason })));
+        } catch {
+          earlier.set(`${l.set}/${l.difficulty}`, []);
+        }
+      }),
+    );
   const links = (list: { code: string; name: string }[], line: string) => list.map((k) => ({ kind: "skill" as const, title: k.name, line, href: href(k.code), link: "Open the skill" }));
   return (
     <PeekProvider initial={open ?? null}>
@@ -87,11 +105,9 @@ export default async function SkillScreen({ params, searchParams }: { params: Pr
           )}
           {s.levels.length ? (
             <Details summary="Each level in a sentence" name="levels">
-              <ul>
+              <ul className="grid gap-[var(--space-2)]">
                 {s.levels.map((l) => (
-                  <li key={l.difficulty}>
-                    <b>{l.difficulty}</b> · {l.looks_like}
-                  </li>
+                  <LevelWords key={`${l.set}/${l.difficulty}`} code={s.code} set={l.set} level={l.difficulty} words={l.looks_like} earlier={earlier.get(`${l.set}/${l.difficulty}`) ?? []} canChange={reviews} />
                 ))}
               </ul>
             </Details>
