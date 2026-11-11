@@ -9,6 +9,7 @@ import { SIGNED_IN } from "../playwright.config";
 import { aClass, aPerson, aReadPaper, aTaughtClass, personAsStored } from "./rows";
 import { curriculumRows, gate, offers } from "./m1-13-rows";
 import { FAKE_CHILDREN } from "./fake-names";
+import { correctedPair, moreOffers, openOffersIn } from "./inventory-setup-content";
 import { seedTeaching, type Teaching } from "./inventory-teaching";
 
 export const SECTION = "U70A";
@@ -18,8 +19,13 @@ export const OTHER = "U70B";
 
 /** The count of skills waiting when the run began: an approval must take it below this (a run that is tried again starts lower, and the check still holds). */
 let waitingAtStart = Infinity;
+/** The offers waiting when the run began (twelve): an answer must take the count below this, and the next below that. */
+let offersAtStart = Infinity;
 const QUESTION_WORDS = "Read the question and write your answer.";
 const questionKey = async (sql: Sql) => (await sql<{ item_key: string }[]>`select item_key from item where fmt = 'word_1step' and source = 'generated' order by created_at, item_key limit 1`)[0].item_key;
+
+// another question than the inventory's own, so correcting it leaves the one the question screen is driven on as it was
+const spareQuestionKey = async (sql: Sql) => (await sql<{ item_key: string }[]>`select item_key from item where fmt = 'word_1step' and source = 'generated' and status = 'active' order by created_at, item_key offset 1 limit 1`)[0].item_key;
 
 export type Rows = { questionKey: string; assessment: { key: string; roll: string }; section: string; classId: string; children: Record<string, string>; rolls: Record<string, string>; other: Record<string, string>; otherNames: string[]; teaching: Teaching };
 
@@ -46,6 +52,10 @@ export async function inventoryRows(sql: Sql): Promise<Rows> {
   // other specs name 22 children "Placeholder" (tests/k2-rows.ts): an activity of that name would be read by the words check as a child's name on the page
   await sql`update activity set name = replace(name, 'Placeholder', 'Sample') where code like 'ACT-K2-M113-%'`;
   await offers(sql, skills);
+  // ten more offers, so the offers table has a second page; and the table of what a wrong answer counts against waiting for approval
+  await moreOffers(sql, skills);
+  offersAtStart = await openOffersIn(sql);
+  await sql`update config set value = '{}'::jsonb where key = 'skills.charges_by_kind.approved'`;
   waitingAtStart = Number((await sql<{ n: string }[]>`select count(*)::text as n from skill where status <> 'ratified'`)[0].n);
   await sql`update item set status = 'active', stem = ${QUESTION_WORDS} where item_key = (select item_key from item where fmt = 'word_1step' and source = 'generated' order by created_at, item_key limit 1)`;
   const [q] = await sql<{ item_key: string }[]>`select item_key from item where fmt = 'word_1step' and source = 'generated' order by created_at, item_key limit 1`;
@@ -132,12 +142,16 @@ export const CHECKS: Record<string, () => Promise<string[]>> = {
   // Setup content (UI-11). A press on a server action returns before its work is done (the engine rebuilds worksheets when a question changes),
   // so each check waits for the rows.
   "offer-answered": async () => {
-    const n = await settles(openOffers, (v) => v <= 1);
-    return n <= 1 ? [] : [`${n} offers are waiting after one answer, of 2`];
+    const n = await settles(openOffers, (v) => v < offersAtStart);
+    return n < offersAtStart ? [] : [`${n} offers wait after one answer, as before (${offersAtStart})`];
   },
-  "no-offer-left": async () => {
-    const n = await settles(openOffers, (v) => v === 0);
-    return n === 0 ? [] : [`${n} offers are still waiting after both were answered`];
+  "another-offer-answered": async () => {
+    const n = await settles(openOffers, (v) => v <= offersAtStart - 2);
+    return n <= offersAtStart - 2 ? [] : [`${n} offers wait after two answers, of ${offersAtStart}`];
+  },
+  "charges-approved": async () => {
+    const ok = await settles(() => aside(async (sql) => (await sql<{ by: string | null }[]>`select value ->> 'by' as by from config where key = 'skills.charges_by_kind.approved'`)[0]?.by ?? null), (v) => v !== null);
+    return ok ? [] : ["the table of what a wrong answer counts against is still waiting for approval"];
   },
   "one-skill-approved": async () => {
     const n = await settles(draftSkills, (v) => v < waitingAtStart);
@@ -281,8 +295,11 @@ export async function anAssessment(sql: Sql, children: Record<string, string>): 
 }
 
 /** Other addresses of a screen, by name, where the rows are in another state (`when: "@name"`): filled by `anAssessment`. */
-export const ADDRESSES: Record<string, () => Promise<string>> = {};
-
+export const ADDRESSES: Record<string, () => Promise<string>> = {
+  // the inventory's question after a correction: the old one removed (it says so and opens the corrected one), and the corrected one (it opens the original)
+  "removed-question": () => aside(async (sql) => `/setup/question-bank/${(await correctedPair(sql, await spareQuestionKey(sql), QUESTION_WORDS)).old}`),
+  "corrected-question": () => aside(async (sql) => `/setup/question-bank/${(await correctedPair(sql, await spareQuestionKey(sql), QUESTION_WORDS)).fresh}`),
+};
 const checkedCopies = async (sql: Sql) =>
   (await sql<{ n: number }[]>`select count(*)::int as n from sheet_instance where qr_code like ${`CS${RUN}%`} and kind = 'focus' and exists (
       select 1 from capture c join item_result r on r.capture_id = c.id where c.sheet_instance_id = sheet_instance.id and c.superseded_by is null and r.state = 'candidate')`)[0].n;
@@ -344,7 +361,6 @@ CHECKS["answer-blank"] = () =>
     const rows = await sql`select 1 from item_result where id = ${JUDGE}::uuid and status = 'blank'`;
     return rows.length ? [] : ["the answer is not marked blank"];
   });
-
 /** The rows the three assessment screens need, made fresh for one screen's run (`rest` in screens.json) and voided after it, so no other
  *  test sees a pack waiting for approval or a dozen more assessments: a paper made here is put away as a paper made in error is. */
 FIXTURES["assessments-rest"] = () =>

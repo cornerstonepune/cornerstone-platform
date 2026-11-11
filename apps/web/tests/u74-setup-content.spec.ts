@@ -7,6 +7,7 @@ import { expect, test, type Page } from "@playwright/test";
 import postgres from "postgres";
 import { aTaughtClass } from "./rows";
 import { clearOffers, code as k2code, curriculumRows, gate, offers } from "./m1-13-rows";
+import { moreOffers } from "./inventory-setup-content";
 
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 let skills: string[] = [];
@@ -156,6 +157,64 @@ test.describe("Curriculum", () => {
     await expect(rows).toHaveCount(0);
     const after = await sql<{ skill_code: string }[]>`select skill_code from activity_skill where activity_code = ${k2code(3)}`;
     expect(after.map((l) => l.skill_code)).not.toContain(skills[2]);
+  });
+});
+
+test.describe("Curriculum: what the old pages did", () => {
+  test.beforeEach(async () => {
+    await gate(sql, "reviewer");
+  });
+
+  test("every offer is reachable: ten a page, then the rest on the next, and an answer keeps the page", async ({ page }) => {
+    await offers(sql, skills);
+    await moreOffers(sql, skills); // twelve in all
+    await page.goto("/setup/curriculum");
+    const rows = page.locator("[data-offer]");
+    await expect(rows).toHaveCount(10);
+    const pager = page.locator("nav[aria-label='Offers pages']");
+    await pager.getByRole("link", { name: /later/i }).click();
+    await expect(page).toHaveURL(/opage=2/);
+    await expect(rows).toHaveCount(2);
+    // answering one of the second page lands on the page still holding the other (the address keeps opage; it clamps when the page is gone)
+    await rows.first().locator("[data-offer-no]").click();
+    await expect(rows).toHaveCount(1);
+    await clearOffers(sql);
+  });
+});
+
+test.describe("Skills to approve: what the old page did", () => {
+  test("a topic and 'taught or not' narrow the rows, and each choice says how many it leaves", async ({ page }) => {
+    await page.goto("/setup/skills/approve");
+    await page.locator("main [data-row]").first().waitFor();
+    const all = await waitingCount(page);
+    const topic = page.locator("select[name=topic]");
+    const options = await topic.locator("option").allInnerTexts();
+    const pick = options.find((o) => /\(\d+\)$/.test(o))!;
+    const n = Number(pick.match(/\((\d+)\)$/)![1]);
+    await topic.selectOption({ label: pick });
+    await page.waitForURL(/topic=/);
+    await page.locator("main [data-row]").first().waitFor();
+    expect(n).toBeLessThanOrEqual(all);
+    // the rows across the pages are that many
+    let rows = 0;
+    for (let i = 0; i < 50; i++) {
+      rows += await page.locator("main [data-row]").count();
+      if (!(await later(page))) break;
+    }
+    expect(rows).toBe(n);
+    await page.goto("/setup/skills/approve?taught=no");
+    await expect(page.locator("select[name=taught]")).toHaveValue("no");
+  });
+
+  test("the table of what a wrong answer counts against is approved on its own, in the coordinator's name, once", async ({ page }) => {
+    await sql`update config set value = '{}'::jsonb where key = 'skills.charges_by_kind.approved'`;
+    await page.goto("/setup/skills/approve");
+    await page.getByRole("button", { name: /Approve this table as written/ }).click();
+    await expect(page.getByText("What a wrong answer counts against is approved, in your name.")).toBeVisible();
+    const [row] = await sql<{ by: string }[]>`select value ->> 'by' as by from config where key = 'skills.charges_by_kind.approved'`;
+    expect(row.by).toBeTruthy();
+    // approved, the button is gone
+    await expect(page.getByRole("button", { name: /Approve this table as written/ })).toHaveCount(0);
   });
 });
 

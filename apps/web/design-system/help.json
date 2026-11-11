@@ -1309,6 +1309,10 @@
           "says": "Opens Curriculum."
         },
         {
+          "label": "offers page: Later →",
+          "says": "the offers table pages on its own, ten a page, and keeps the page of the list"
+        },
+        {
           "label": "rail: Skills to approve",
           "says": "Opens Skills to approve."
         },
@@ -1339,6 +1343,14 @@
           "says": ""
         },
         {
+          "label": "Topic",
+          "says": ""
+        },
+        {
+          "label": "Taught",
+          "says": "taught or not yet: a skill nobody teaches can be approved before its topic is switched on"
+        },
+        {
           "label": "Skills",
           "says": "the first list; the address carries the tab"
         },
@@ -1357,6 +1369,10 @@
         {
           "label": "What a wrong answer counts against",
           "says": ""
+        },
+        {
+          "label": "Approve this table as written",
+          "says": "the table of what a wrong answer counts against is approved as shown, once, with who; a changed table waits again"
         },
         {
           "label": "page: Later →",
@@ -1393,6 +1409,14 @@
           "says": ""
         },
         {
+          "label": "Kind",
+          "says": ""
+        },
+        {
+          "label": "Status",
+          "says": "Ready to print, or Removed: a removed question is kept with its reason and can be read here"
+        },
+        {
           "label": "search",
           "says": ""
         },
@@ -1425,6 +1449,14 @@
         {
           "label": "About it",
           "says": ""
+        },
+        {
+          "label": "the corrected question",
+          "says": "on a removed question that has been corrected"
+        },
+        {
+          "label": "the original wording",
+          "says": "on a corrected question: the old wording, kept and readable"
         },
         {
           "label": "rail: the skill",
