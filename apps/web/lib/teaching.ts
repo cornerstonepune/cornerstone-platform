@@ -5,7 +5,7 @@ import type { Session } from "./auth";
 import { sql } from "./db";
 import { PART_KEYS, type PagePart } from "./page-part";
 import { pictureOf } from "./children-picture";
-import type { Counts } from "./children-view";
+import { clustersOf, daysSince, type Cluster, type Counts, type Place } from "./children-view";
 import { SECURE, UNSEEN, type Bucket } from "./looks";
 import { seesClass } from "./reach";
 import { schoolZone } from "./school-clock";
@@ -90,6 +90,8 @@ export type SkillPage = {
   /** The class on show: the one named, else the person's only one; null when they hold several and named none. */
   cls: { id: string; section: string } | null;
   kids: Kid[];
+  /** Who shares a place on this skill: computed by code from the same rows as the grid, never by a model. */
+  clusters: Cluster[];
   objectives: { code: string; title: string }[];
   after: { code: string; name: string }[];
   next: { code: string; name: string }[];
@@ -105,6 +107,7 @@ export async function skillOf(me: Me, code: string, classId: string | undefined)
   const classes = await sql<{ id: string; section: string }[]>`select c.id, c.label as section from school_class c where ${seesClass(me, sql`c.label`)} order by c.label`;
   const cls = classId ? (classes.find((c) => c.id === classId) ?? null) : classes.length === 1 ? classes[0] : null;
   const kids: Kid[] = [];
+  const places: Place[] = [];
   // the class picture's reader (UI-3b) holds the class, its children and their states; the skill is one column of it
   const pic = cls ? await pictureOf(me, cls.id) : null;
   for (const k of pic?.kids ?? []) {
@@ -116,6 +119,13 @@ export async function skillOf(me: Me, code: string, classId: string | undefined)
     }
     counts.unseen = Math.max(0, pic!.skills.length - counts.secure - counts.practising);
     kids.push({ id: k.id, roll: k.roll, name: k.name, look: row?.get(code)?.look ?? UNSEEN, counts });
+    const seen = pic!.anySeen.get(k.id) ?? null;
+    places.push({
+      id: k.id,
+      look: row?.get(code)?.look ?? null,
+      readyNext: (pic!.next.get(code) ?? []).some((n) => !row?.has(n)),
+      attention: !seen || daysSince(seen, pic!.today) >= pic!.days,
+    });
   }
   kids.sort((a, b) => Number(a.roll) - Number(b.roll));
   const objectives = await sql<{ code: string; title: string }[]>`
@@ -128,7 +138,7 @@ export async function skillOf(me: Me, code: string, classId: string | undefined)
     select l.difficulty, l.looks_like from skill_level l join skill k on k.tenant_id = l.tenant_id and k.code = l.skill_code
     where ${code} = any(k.registry_codes) and coalesce(l.looks_like, '') <> '' order by l.difficulty`;
   const [run] = await sql<{ at: string }[]>`select (finished_at at time zone ${zone})::text as at from flow_run where flow = 'graph_nightly' and finished_at is not null order by finished_at desc limit 1`;
-  return { code: rs.code, name: rs.name, domain: rs.domain ?? "", classes, cls, kids, objectives, after, next, levels, rebuilt: run?.at ?? null };
+  return { code: rs.code, name: rs.name, domain: rs.domain ?? "", classes, cls, kids, clusters: clustersOf(places), objectives, after, next, levels, rebuilt: run?.at ?? null };
 }
 
 // ---- An activity's parts, read from the rows --------------------------------------------------------------------------

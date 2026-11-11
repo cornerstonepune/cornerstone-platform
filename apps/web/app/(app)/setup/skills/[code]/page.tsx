@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { Cards } from "@/components/cards";
 import { PeekPanel, PeekProvider } from "@/components/children/peek";
-import { PictureGrid, type Square } from "@/components/children/picture-grid";
+import { Clusters, PictureGrid, type Square } from "@/components/children/picture-grid";
 import { Details } from "@/components/details";
 import { EmptyState } from "@/components/empty-state";
 import { FilterBar } from "@/components/filter-bar";
@@ -31,6 +31,7 @@ export default async function SkillScreen({ params, searchParams }: { params: Pr
   const squares: Square[] = s.kids.map((k) => ({ classId: s.cls!.id, roll: k.roll, name: k.name, section, counts: k.counts, look: k.look, skill: s.name }));
   const words = (look: Square["look"]) => STATES[stateOf(look)].words;
   const blocks = groupByLook(squares).map((g) => ({ look: g.look, words: words(g.look), squares: g.cells }));
+  const chips = Object.fromEntries(s.kids.map((k, i) => [k.id, squares[i]]));
   const open = squares.find((x) => peekParam(x) === q.peek);
   const edges: Edge[] = [
     ...(s.cls ? [{ screen: "picture", params: { class: s.cls.id }, label: "The class picture", icon: "class" } as Edge] : []),
@@ -70,6 +71,10 @@ export default async function SkillScreen({ params, searchParams }: { params: Pr
                 <Spark values={[]} label="Secure" empty="No fortnights recorded yet" />
               </section>
               <PictureGrid blocks={blocks} grouped label={`${s.name}`} />
+              <section aria-label="Clusters">
+                <h2 className="text-[length:var(--text-title-small)]">Clusters</h2>
+                <Clusters clusters={s.clusters} kids={chips} />
+              </section>
             </>
           )}
           {s.after.length || s.next.length ? (
