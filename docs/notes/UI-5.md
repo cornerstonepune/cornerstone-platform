@@ -16,7 +16,16 @@ Issue #520. Branch `ui-5-coordinator`. Built from the approved wireframes `staff
 
 ## Waiting on the backend (comments on #551)
 1. `app_web` cannot read `pii.educator_note` / `pii.note_claim`: needs a counts-only view or function for notes confirmed, late, and lines accepted / changed / removed per person.
-2. `app_web` cannot write `staff_role_grant` (select only): **Add a grant** and **End a grant** need `grant_role` and `end_grant` security-definer functions. Both elements are `pending` in `screens.json`; remove `pending` and draw the controls when they land.
+2. ~~`app_web` cannot write `staff_role_grant`~~ Settled by backend #616 (engine routes `POST /staff/grants`, `/give`, `/end`; a database function was not needed). Built below (UI-5f).
 
 ## Proof
 `tests/u73-coordinator-pages.spec.ts` (one test per Done-when line the inventory does not carry) and `tests/u70-inventory.spec.ts` (all three screens, both roles where they apply, 1440 and 400). Run locally against a database built from the migrations; the bar test needs the engine API and was left to CI.
+
+## UI-5f: Add a grant, End a grant, and the old Staff page read-only
+Branch `ui-5f-grants`. Draft: it is released with backend #615 (sign-in reads grants) and #616 (the routes), migrate first.
+- `/setup/staff?person=<id>`: **Add a grant** (role, class, and a subject only for a role held for a subject; from today) and **End a grant** on each open grant of a role the page gives. Both are server actions that ask the engine (`lib/grants.ts`); the roles, classes and subjects offered are the engine's listing, not a list in the site (rule 1). The grant table's own words (`one_per_class`, `core_teacher`, needs a subject, wrong class) come back in the form, never in the address; a clash asks for a reason and the same Save sends it. The controls appear only once a person has been opened (`?person=`).
+- "Granted by" shows the coordinator's name (the engine signs with a staff id), not the id.
+- `/staff` (old page) is read-only: no Add a person, no class or subject editor, a line saying where to change. Its actions and the add-person form are gone. `requireStaffEditor` stays in `lib/auth.ts` (engine test `test_web_gate` still names it; not mine to change); nothing calls it now.
+- Tests: `u74-staff-grants` (nine), `u53` loses the two editor tests (their assertions are u74 1, 5, 8, 9; `goals/uxn2-staff-and-school.yaml` proofs point at the new ones, as `test_promises` requires). Inventory: `Add a grant` / `End a grant` lose `pending`, are driven at `@grants` (a fixture person with one open grant), and the End driver checks the row stays with `valid_to` = today.
+- The Staff table's columns were narrowed so the Class column is not squeezed to nothing at 1280 (it was, since #606).
+- Still to do after this is live: repoint the menu's Staff to `/setup/staff`, 308 `/staff` to `/setup/staff`, delete the old page, its components and `people()` (plan in #608).

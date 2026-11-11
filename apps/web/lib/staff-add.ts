@@ -2,7 +2,7 @@ import { sql, TENANT_SLUG } from "./db";
 import { sendFirstLink } from "./password-actions";
 import { rolesHeld } from "./queries-staff";
 
-// Adding a member of staff (goals/auth-email-password.yaml), the one rule both the old Staff page and `/setup/staff` use. Nobody types or
+// Adding a member of staff (goals/auth-email-password.yaml), the one rule `/setup/staff` uses. Nobody types or
 // sees anyone else's password: the person is put on the list without one and emailed a link that lets them set their own, good for
 // `password_link.first_days` days. Their classes and subjects come after, from their grants. The caller has already checked that the
 // person asking may change the staff list.

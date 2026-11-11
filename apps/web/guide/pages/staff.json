@@ -1,24 +1,24 @@
 {
   "menu": "/staff",
   "forWhat": [
-    "Who teaches which class and subject. A person's pages open on their own classes."
+    "Who teaches which class and subject, and whole counts that can be checked. A person's pages open on the classes and subjects they hold. There is no score and no ranking: the school decides what the numbers mean."
   ],
   "layout": [
-    {
-      "area": "Title and main button",
-      "shows": "[[See the school's classes]]."
-    },
-    {
-      "area": "Add a member of staff",
-      "shows": "A form for name, school email and role."
-    },
     {
       "area": "Filter row",
       "shows": "Role, and [[Find a person]]."
     },
     {
       "area": "Table",
-      "shows": "Person, Role, Classes they teach and Subjects they teach. A cell opens to tick classes or subjects."
+      "shows": "Name, Role, Class, Sessions done of planned, Notes confirmed, Notes late and Lines accepted / changed / removed, grouped by role. Press a name to open what that person holds."
+    },
+    {
+      "area": "Add a person",
+      "shows": "A button under the table. It opens a form for name, school email and role."
+    },
+    {
+      "area": "A person's grants",
+      "shows": "Every class and subject the person holds or held: the role, the class, the subject, from and to, and who gave it. With [[Add a grant]] and, on a grant that is still open, [[End a grant]]."
     }
   ],
   "jobs": [
@@ -26,18 +26,27 @@
       "id": "add",
       "title": "Add a member of staff",
       "steps": [
-        "Press [[Add a member of staff]].",
+        "Press [[Add a person]].",
         "Type their name, school email and role. Press [[Add and send a link]].",
         "They get an email with a link to set their password. It works once and lasts {t:password_link.first_days} days.",
-        "Then open their row, tick their classes and press [[Save the classes]]."
+        "Then open their name and give them their classes."
       ]
     },
     {
-      "id": "classes",
-      "title": "Change who teaches a class",
+      "id": "give",
+      "title": "Give a person a class or a subject",
       "steps": [
-        "Open the person's classes, tick the ones they teach and press [[Save the classes]].",
-        "For subjects, tick them and press [[Save the subjects]]."
+        "Press the person's name, then press [[Add a grant]].",
+        "Choose the role and the class. A role held for a subject also asks for the subject. Press [[Save the grant]].",
+        "It starts today. Sometimes the school's rules say no, for example a second class educator for one class. The page says so in words. Type why it should stand anyway and press [[Save the grant]] again, or change what you chose."
+      ]
+    },
+    {
+      "id": "end",
+      "title": "Stop a person holding a class",
+      "steps": [
+        "Press the person's name, find the grant, and press [[End a grant]].",
+        "It ends today. The grant stays on the list with its dates, marked Ended, and nothing is deleted."
       ]
     }
   ],
@@ -48,9 +57,14 @@
       "doesNot": "Nobody types a password for them."
     },
     {
-      "label": "Save the classes",
-      "does": "Saves which classes the person teaches.",
-      "doesNot": "A class with no child in it cannot be chosen."
+      "label": "Save the grant",
+      "does": "Gives the person the role on the class, from today.",
+      "doesNot": "It does not change anyone else's classes, and it cannot give a role that reaches beyond a class."
+    },
+    {
+      "label": "End a grant",
+      "does": "Ends that grant today.",
+      "doesNot": "It does not delete the grant: it stays on the list, marked Ended."
     }
   ]
 }
