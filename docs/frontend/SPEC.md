@@ -339,7 +339,7 @@ Rail (Connected to): The period (when a session is chosen) · The activity · Th
 Main action: Start recording · Next step: Notes to confirm
 Data: the session; pii.educator_note insert via the engine; config: note retention
 Empty: none · Phone: this is the phone screen: one button, the activity already known
-Folds in: /voice/record
+Folds in: /voice/record, /voice/form
 Every control on the screen (9), and what the test does with each:
 - **field** Which period (preselected when opened from a period, a class or a child; otherwise today's periods for the person's classes; required before Start recording or Type the marks)
 - **button** Start recording: microphone permission asked; the button becomes Stop; a timer counts
@@ -368,6 +368,7 @@ Rail (Connected to): The period · The activity · The class
 Main action: Confirm this note · Next step: the next note waiting
 Data: pii.educator_note + draft claims from the engine (pii.note_claim: flag, outcome, entry_mode, child_id, set when the note is read); activity_observation written at confirm, one row per child, confirmation_id
 Empty: No note waiting: link to Record · Phone: the grid first, then her words; Confirm fixed at the bottom
+Folds in: /voice/notes/[id]
 Every control on the screen (12), and what the test does with each:
 - **button** each claim line's × (remove): the claim is marked removed; its children's squares return to unmarked; recorded as her decision
 - **cell** each square: opens the mark picker: above / below / not willing / absent / clear ("as expected" is the one switch for the rest: the engine records an individual child's mark in four lists); the square's corner mark changes; the claim it came from is marked changed
@@ -880,7 +881,7 @@ Blocks, in order:
 - **LevelBars**: where the class sat last time, by level
 - **Details**: Steps (open) · How to think about it · Materials
 - **Cards**: Builds toward: objectives (links) · Where each part came from (school / drafted / person) with Keep · Edit · Send back on a drafted part
-Rail (Connected to): each objective · each material · next taught (a period) · the fortnights it is in · Capture here: photo
+Rail (Connected to): each objective · each material · next taught (a period) · the fortnights it is in · Capture here: voice
 Main action: Keep / Edit a drafted part (curriculum team) · Open the period (educator) · Next step: an objective
 Data: activity (+steps, thinking, levels, materials), activity_objective, activity_material, change_log (origin: upload = school, proposal = drafted, person = person) and curriculum_proposal for the source of each part, change_log for each edit
 Empty: a part with no text: shown empty and marked, never invented · Phone: levels as a 2×2
@@ -894,7 +895,7 @@ Every control on the screen (13), and what the test does with each:
 - **button** Keep (a drafted part): the part's source becomes person (a change_log row with who); the 'drafted' badge goes [coordinator only; absent and refused for others]
 - **button** Edit (a part): the part becomes a field; Save writes a change_log row; the source becomes person [coordinator only; absent and refused for others]
 - **button** Send back (a drafted part): the part is emptied and marked; the proposal is rejected [coordinator only; absent and refused for others]
-- **upload** capture: Photo: a photo of the set-up attaches to the activity
+- **link** capture: Voice note → Record a note (`/record`)
 - **link** rail: each objective → the objective's title (`/setup/objectives/[code]`)
 - **link** rail: each material → Materials, this fortnight (`/timetable/materials`)
 - **link** rail: next taught → the session's name (`/period/[id]`)
@@ -902,7 +903,6 @@ Every control on the screen (13), and what the test does with each:
 Done when (on top of the ten generic checks):
 - a drafted part carries the 'drafted' badge until Keep, Edit or Send back; an educator sees the badge but not the three buttons
 - every edit writes a change_log row with who
-- a photo attaches to the activity, never to a child
 
 
 #### the objective's title `/setup/objectives/[code]`
