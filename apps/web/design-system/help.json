@@ -1145,6 +1145,10 @@
         {
           "label": "the right answer, for every child",
           "says": "inside the fold 'Is the right answer wrong?'"
+        },
+        {
+          "label": "Yes, the child wrote … (the reader's guess, or the spot-check)",
+          "says": "one press confirms what the reader thinks the child wrote; held back until a person says whose page it is"
         }
       ]
     },

@@ -153,14 +153,24 @@ export async function chooseThisPage(f: FormData): Promise<void> {
   redirect(here(f, `answer=${result}`, result));
 }
 
-/** The few answers code cannot mark (a comparison symbol, "find the mistake"): only a person can say right, wrong or blank. */
+/** The few answers code cannot mark (a comparison symbol, "find the mistake"): only a person can say right, wrong or blank. This answer is settled and
+ *  nothing else on the paper is signed off; who judged it is kept as a `read_correction` row whose reading is the engine's own, unchanged. */
 export async function judgeThisOne(f: FormData): Promise<void> {
   const me = await deciding("answers");
   const { result, paper } = ids(f);
   const status = String(f.get("status") ?? "");
   if (!["correct", "wrong", "blank"].includes(status)) redirect(here(f, "error=judge"));
   await mustSee(me, "answers", [{ result }, { sheet: paper }]);
-  await sql`select resolve_result(${result}::uuid, ${status}, '{}'::text[], ${me.email})`;
+  // one statement, so the judgement and the record of who made it land together or not at all
+  await sql`
+    with judged as (
+      update item_result set status = ${status}, misconception_codes = '{}', updated_at = now()
+      where id = ${result}::uuid and state = 'candidate' and status = 'needs_teacher'
+      returning tenant_id, capture_id, coalesce(raw_read::jsonb ->> 'child_answer', '') as read
+    )
+    insert into read_correction (tenant_id, child_id, capture_id, item_result_id, model_read, human_read, by, judged)
+    select j.tenant_id, si.child_id, c.id, ${result}::uuid, j.read, j.read, ${me.email}, ${status}
+    from judged j join capture c on c.id = j.capture_id join sheet_instance si on si.id = c.sheet_instance_id`;
   revalidatePath(here(f));
   redirect(here(f));
 }
