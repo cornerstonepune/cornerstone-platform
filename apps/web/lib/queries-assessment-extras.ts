@@ -1,8 +1,10 @@
 // What the Assessments page adds to an assessment's own row (goals/asm_assessments_page.yaml): the name an educator chose
 // for it, the files read that its printed codes belong to, and the photographed pages of a child's paper. Names no child.
 import { sql, TENANT_SLUG } from "./db";
-import { seesRun, type Who } from "./reach";
+import { seesRun, seesSheet, type Who } from "./reach";
 import { matchFiles } from "./assessment-steps";
+import { papersCte } from "./queries-papers";
+import { paperHref } from "./assessment-ui";
 
 const CODE = /^CS[0-9A-F]{6}$/i;
 
@@ -67,4 +69,14 @@ export async function scanFacts(sheetId: string): Promise<{ on: string; pages: n
     from capture c join sheet_instance si on si.id = c.sheet_instance_id
     where c.sheet_instance_id = ${sheetId}::uuid and c.superseded_by is null order by c.created_at desc limit 1`;
   return r ?? null;
+}
+
+/** The paper screen's address for each of these copies (by sheet id), for those a person sees and that are a child's own. */
+export async function paperScreensOf(ids: string[], me: Who): Promise<Map<string, string>> {
+  if (!ids.length) return new Map();
+  const rows = await sql<{ id: string; kind: string; section: string | null; week: string | null; set: string | null; roll: string | null }[]>`
+    with ${papersCte()}
+    select id, kind, section, week, set_key as set, roll_no as roll from papers
+    where id = any(${ids}::uuid[]) and child_id is not null and ${seesSheet(me, sql`id`)}`;
+  return new Map(rows.filter((r) => r.roll).map((r) => [r.id, paperHref([r.kind, r.section ?? "", r.week ?? "", r.set ?? ""].join("~"), r.roll!)]));
 }
