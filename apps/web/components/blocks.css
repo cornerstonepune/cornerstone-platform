@@ -162,6 +162,9 @@
   .b-pimg { position: relative; aspect-ratio: 1 / 1.414; max-width: 320px; margin: 0; border-radius: var(--radius-card); background: var(--surface); box-shadow: var(--shadow-card); display: grid; place-items: center; color: var(--ink-muted); }
   .b-pimg .b-qr { position: absolute; top: 12px; right: 12px; width: 40px; height: 40px; border-radius: 4px; background: repeating-conic-gradient(var(--ink) 0 25%, var(--ground) 0 50%) 0 0 / 10px 10px; }
   .b-pimg img { width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius-card); }
+  .b-pimg:has(img) { display: block; aspect-ratio: auto; }
+  .b-pimg img { height: auto; display: block; }
+  .b-pimg .b-box { position: absolute; border: 2px solid var(--terracotta); border-radius: 2px; pointer-events: none; }
   .b-empty { display: grid; justify-items: start; gap: var(--space-2); padding: var(--space-4); border-radius: var(--radius-card); background: var(--surface); }
 
   /* ---------- Form, KeyValue ---------- */
@@ -196,6 +199,8 @@
   .b-seg [aria-selected="true"] { background: var(--panel); color: var(--ink); box-shadow: var(--shadow-card); }
   .b-count { min-width: 28px; height: 28px; padding: 0 var(--space-2); border-radius: var(--radius-pill); background: var(--cb, var(--surface)); color: var(--c, var(--ink)); font-size: var(--text-label); font-weight: 600; line-height: 28px; text-align: center; margin-left: auto; }
   .b-kanban { display: grid; grid-template-columns: repeat(var(--lanes, 3), minmax(220px, 1fr)); gap: var(--space-3); align-items: start; overflow-x: auto; padding-bottom: var(--space-1); }
+  /* more than four lanes, wide enough for all of them: the lanes share the width instead of scrolling one out of sight */
+  @media (min-width: 1100px) { .b-kanban.b-many { grid-template-columns: repeat(var(--lanes), minmax(0, 1fr)); } }
   .b-lane { display: grid; gap: var(--space-2); align-content: start; min-width: 0; padding: var(--space-2); border-radius: var(--radius-card); background: var(--surface); }
   .b-lane-h { display: flex; align-items: center; gap: var(--space-1); margin: 0; padding: var(--space-1) var(--space-1) var(--space-1) var(--space-2); font-size: var(--text-body); font-weight: 600; color: var(--c, var(--ink)); }
   .b-lane-b { display: grid; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }

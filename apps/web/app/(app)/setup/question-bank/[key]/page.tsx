@@ -1,7 +1,8 @@
 import { notFound } from "next/navigation";
 import Link from "@/components/link";
 import { Cards } from "@/components/cards";
-import { DataTable } from "@/components/data-table";
+import { outcomesOf, reviewOf } from "@/lib/question-review";
+import { StackBar } from "@/components/stack-bar";
 import { Details } from "@/components/details";
 import { KeyValue } from "@/components/key-value";
 import { Rail, Screen, type Edge } from "@/components/app-frame";
@@ -13,7 +14,6 @@ import { deadline } from "@/lib/deadline";
 import { questionKinds } from "@/lib/question-types";
 import { mistakeBook, questionPage } from "@/lib/queries-bank";
 import { correctItem, flagItem } from "../../../library/actions";
-import type { Column } from "@/lib/ux-rules";
 
 type Props = { params: Promise<{ key: string }>; searchParams: Promise<Record<string, string | undefined>> };
 const BANK = "/setup/question-bank";
@@ -26,7 +26,7 @@ export default async function QuestionScreen({ params, searchParams }: Props) {
   const me = await requireStaff();
   const [{ key }, q] = await Promise.all([params, searchParams]);
   if (!/^[A-Za-z0-9._-]+$/.test(key)) notFound();
-  const [it, book, qk] = await deadline(Promise.all([questionPage(key), mistakeBook(), questionKinds()]));
+  const [it, book, qk, review, done] = await deadline(Promise.all([questionPage(key), mistakeBook(), questionKinds(), reviewOf(key), outcomesOf(key)]));
   if (!it) notFound();
   const may = await deadline(mayDecide(me, "questions").then((ok) => ok && me.role === "coordinator"));
   const live = it.status === "active";
@@ -34,11 +34,6 @@ export default async function QuestionScreen({ params, searchParams }: Props) {
   const caught = it.responses.flatMap((r) =>
     Object.entries(r.misconceptions ?? {}).map(([code, wrong]) => ({ code, wrong, mistake: mistakeOf(book, code, it.spec.op) })),
   );
-  const caughtColumns: Column<(typeof caught)[number]>[] = [
-    { key: "wrong", label: "If the child writes", value: (c) => c.wrong, num: true, width: "9rem" },
-    { key: "mistake", label: "The mistake", value: (c) => c.mistake?.name ?? c.code },
-    { key: "looks", label: "What it looks like", value: (c) => c.mistake?.description ?? "" },
-  ];
   const edges: Edge[] = [
     { screen: "skill", params: { code: it.skill_set_code ?? "" }, label: "The skill", icon: "skill" },
     { screen: "bank", label: "Question bank", icon: "assessment" },
@@ -47,7 +42,7 @@ export default async function QuestionScreen({ params, searchParams }: Props) {
   return (
     <Screen
       stage={`${it.skill_set_name ?? "Question"} · ${it.difficulty ?? ""}`}
-      title={short(it.stem)}
+      title={it.stem.trim() ? short(it.stem) : `Question ${it.item_key}`} // a drawn question has no words: its key is its name
       purpose="The question, its answer, the wrong answers it catches, and where it came from. Correct the wording or remove it."
       next={{ href: BANK, label: "Question bank" }}
       action={may && live ? undefined : <p className="text-[14px]">{live ? "Read the question; the coordinator corrects or removes it." : "This question is removed."}</p>}
@@ -56,6 +51,7 @@ export default async function QuestionScreen({ params, searchParams }: Props) {
       <div className="mb-3 flex flex-wrap items-center gap-2" data-question-state={live ? "ready" : "removed"}>
         <StatusChip state={live ? "done" : "stopped"} words={live ? "ready" : "removed"} />
         <span className="text-[13px] text-[var(--ink-muted)]">{kindWords(qk.words, it.fmt)}</span>
+        {review ? <StatusChip state={/^(ok|agree|pass|approve)/i.test(review.verdict) ? "done" : "toCheck"} words={`Reviewer: ${review.note || review.verdict} · ${review.day}`} /> : null}
         {it.generator === "correction" ? <span className="text-[13px] text-[var(--ink-muted)]">corrected</span> : null}
       </div>
       {q.corrected ? <p role="status" className="mb-3 text-[13px] text-[var(--ink-muted)]">Saved. This is the corrected question; the old wording will not print again.</p> : null}
@@ -83,23 +79,27 @@ export default async function QuestionScreen({ params, searchParams }: Props) {
             ),
           },
           { kind: "assessment", title: "Answer", body: <Answers it={it} rubric /> },
-        ]}
-      />
-      <div className="mt-4">
-        <Cards
-          cards={[
           {
             kind: "assessment",
             title: "Wrong answers it catches",
             body: caught.length ? (
-              <DataTable label="Wrong answers it catches" columns={caughtColumns} rows={caught} rowKey={(c) => `${c.code}-${c.wrong}`} more={{ page: 1, href: () => "" }} />
+              <ul className="grid gap-2 text-[13.5px]" data-caught="">
+                {caught.map((c) => (
+                  <li key={`${c.code}-${c.wrong}`} className="grid grid-cols-[3rem_1fr] gap-2">
+                    <span className="b-num text-[var(--ink-muted)]">{c.wrong}</span>
+                    <span>
+                      {c.mistake?.name ?? c.code}
+                      {c.mistake?.description ? <span className="block text-[var(--ink-muted)]">{c.mistake.description}</span> : null}
+                    </span>
+                  </li>
+                ))}
+              </ul>
             ) : (
               <span className="b-muted">This question is judged by a person, so there is no list of wrong answers.</span>
             ),
           },
-          ]}
-        />
-      </div>
+        ]}
+      />
       {it.corrected_from_key ? (
         <p className="my-3 text-[14px]">
           This wording replaced an earlier one. <Link href={`${BANK}/${it.corrected_from_key}`} data-original-link="">See the original wording</Link>
@@ -153,6 +153,35 @@ export default async function QuestionScreen({ params, searchParams }: Props) {
           <button className="btn secondary" type="submit" data-remove {...(canCorrect ? {} : { "data-ux": "action" })}>Remove</button>
           <p className="text-[13px] text-[var(--ink-muted)]">A removed question is kept with the reason and never printed again.</p>
         </form>
+      ) : null}
+      {done.right + done.wrong + done.wrongWithWorking + done.blank ? (
+        <div className="mt-4">
+          <Cards
+            cards={[
+              {
+                kind: "assessment",
+                title: `How it has done on papers · ${done.right + done.wrong + done.wrongWithWorking + done.blank}`,
+                body: (
+                  <div className="grid gap-2">
+                    <StackBar
+                      parts={[
+                        { state: "right", n: done.right },
+                        { state: "wrong", n: done.wrong },
+                        { state: "wrong", n: done.wrongWithWorking, words: "wrong with working" },
+                        { state: "blank", n: done.blank },
+                      ]}
+                    />
+                    {done.topCode ? (
+                      <span className="b-caption">
+                        The most caught mistake: {mistakeOf(book, done.topCode, it.spec.op)?.name ?? done.topCode}, {done.topTimes} {done.topTimes === 1 ? "time" : "times"}.
+                      </span>
+                    ) : null}
+                  </div>
+                ),
+              },
+            ]}
+          />
+        </div>
       ) : null}
     </Screen>
   );

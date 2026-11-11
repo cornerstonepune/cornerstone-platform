@@ -15,12 +15,12 @@ export function StackBar({ parts, empty = "No children counted yet" }: { parts: 
     <div data-block="StackBar" className="b-stack">
       <div className="b-sbar" role="img" aria-label={words.join(", ")}>
         {parts.filter((p) => p.n > 0).map((p) => (
-          <i key={p.state} data-state={lookOf(p.state)} style={{ "--n": p.n } as React.CSSProperties} />
+          <i key={`${p.state}-${p.words ?? ""}`} data-state={lookOf(p.state)} style={{ "--n": p.n } as React.CSSProperties} />
         ))}
       </div>
       <div className="b-keyrow">
         {parts.map((p) => (
-          <StatusChip key={p.state} state={p.state} words={say(p)} round />
+          <StatusChip key={`${p.state}-${p.words ?? ""}`} state={p.state} words={say(p)} round />
         ))}
       </div>
     </div>

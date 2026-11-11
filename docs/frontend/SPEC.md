@@ -305,6 +305,7 @@ Rail (Connected to): The activity · its learning objectives · Materials · Its
 Main action: Record a note · Next step: the next period
 Data: session → plan_entry → activity (+activity_material, activity_objective); activity_observation of this activity for this class, last session (the five outcome words are a config list)
 Empty: A fixed part of the day: 'Nothing to record here' · Phone: actions first, then the fold; the record button fills the width
+Folds in: /educator/period/[id]
 Every control on the screen (15), and what the test does with each:
 - **link** Record a note → Record a note (`/record`) (opens Record with this period's session preselected)
 - **link** Type the marks instead → Record a note (`/record`) (opens Record on its typing path, session preselected)
@@ -406,9 +407,10 @@ Main action: Open today · Next step: Fortnight
 Data: timetable_rule rows (kind slot) valid today; session for the fortnight's days; period times; school_day kinds
 Empty: No timetable live for this class: coordinator sees 'Make a draft' · Phone: Day view by default; week scrolls sideways in its box
 Folds in: /educator (day), /educator/week
-Every control on the screen (13), and what the test does with each:
+Every control on the screen (14), and what the test does with each:
 - **filter** class (the coordinator always; an educator only when she holds more than one class)
 - **tab** Day / Week / Fortnight (Day by default at 400 px)
+- **link** Previous / next day or week → Timetable (`/timetable`) (Day view steps a school day (weekends skipped), Week view a week; the fortnight follows the day)
 - **link** Today → Timetable (`/timetable`) (opens today in the Day view)
 - **link** each day head → Timetable (`/timetable`) (opens that day in the Day view; earlier and later days are reached the same way)
 - **filter** this / next fortnight
@@ -426,6 +428,7 @@ Done when (on top of the ten generic checks):
 - the grid's cells equal the session rows for the day shown (count and names)
 - a period running now carries Do now, a recorded one Done, one over and not recorded Late, and no period still to come has a chip
 - a holiday day is named in words under the grid
+- stepping to the next or previous school day skips the weekend and crosses into the next or earlier fortnight
 
 
 #### Fortnight 9 `/timetable/fortnight/[n]`
@@ -662,7 +665,7 @@ Main action: a child · Next step: the skill
 Data: child_skill_state (kind 'observed' for K2, 'written' for grades 1–4) for the class by skill; flow_run (the nightly graph run's row) finished_at for the date; evidence_event for clusters
 Empty: No child seen yet: the grid of dashed squares with 'not seen yet, nothing more' · Phone: 3 columns of squares (a name and a state word do not fit a 44 px square; SPEC §2 rule 10)
 Folds in: /growth (Class results), /growth/class/[section]
-Every control on the screen (14), and what the test does with each:
+Every control on the screen (17), and what the test does with each:
 - **filter** skill
 - **filter** domain
 - **peek** each square (and each child chip in a cluster): opens ChildPeek for that child
@@ -677,6 +680,9 @@ Every control on the screen (14), and what the test does with each:
 - **filter** group by (state on this skill / class; a heading and a count per group)
 - **button** peek: Close: closes ChildPeek; focus returns to the child that opened it
 - **link** peek: Open the child → Where this child is (`/children/[class]/[roll]`) (the one way from a list to the child's own page)
+- **tab** Picture (the class picture; the three views of a class are tabs of this screen (UI-3e, carrying /growth and /growth/class/[section]))
+- **tab** By topic (topics as rows: who is secure, practising or needs help; a topic opens its skills, a skill its children)
+- **tab** Matrix (each child against each topic; a topic opens its skills)
 Done when (on top of the ten generic checks):
 - each square shows the Sr. No. and the child's name read from pii by child_id, and no photo (DOM scan)
 - the stack bar's counts equal the squares by state
@@ -836,7 +842,7 @@ Main action: Say what the child wrote · Next step: the next paper
 Data: capture.pages, item_result with status and confidence, key, misconception tags
 Empty: Nothing left to judge on this paper: Sign it off · Phone: image above, answers below
 Folds in: /capture/check, /capture/[id]
-Every control on the screen (12), and what the test does with each:
+Every control on the screen (20), and what the test does with each:
 - **row** each answer row: the page scrolls to that answer and outlines it
 - **field** what the child wrote (for the answer in focus; required when judging)
 - **button** Say what the child wrote: a read_correction row; the engine marks it right / wrong / blank; the chip updates; the next judge answer comes into focus
@@ -849,6 +855,14 @@ Every control on the screen (12), and what the test does with each:
 - **button** Approve this home assessment (a copy waiting for approval: approved in the educator's name, this one only)
 - **button** Remove (a question) (asks once when the removal costs something (the approval, or the last question of a skill); the paper is made again with a new code)
 - **filter** bank: topic · skill · level · kind · question (each choice narrows the next; the chosen question is seen before Add)
+- **button** Change it for every child (under 'Is the right answer wrong?'; code refuses a key the sum contradicts and says why; otherwise every child's answer to the question is marked again)
+- **button** Name the mistake (the likeliest, none of these, another) (for a wrong answer no named mistake explains; kept against the reading and reaches the evidence at sign-off)
+- **button** This page is this child's / Not this child's (where the same photograph is on two copies; saving what the child wrote waits for this)
+- **link** Next answer to judge (the next answer for a person, in the order they sit on the page)
+- **link** Previous paper / Next paper (this child's) (the child's other papers, oldest first, each on its own paper screen)
+- **link** a skill's answer chip (what this paper says by skill; each answer one tap away)
+- **button** Right / Wrong / Blank (judge) (for the few answers code cannot mark; only a person can say which)
+- **field** the right answer, for every child (inside the fold 'Is the right answer wrong?')
 Done when (on top of the ten generic checks):
 - right, wrong and blank are three different chips and three counts; a wrong-with-working reason is shown with its wrong chip
 - a person's answer writes a read_correction row and never overwrites the engine's read
@@ -1015,22 +1029,29 @@ Blocks, in order:
 - **Cards**: Drafts to check (count, link) · Offers waiting (skills offered to activities: Yes / No per row)
 Rail (Connected to): Skills to approve · Question bank · Drafts to check · Offers
 Main action: Check the drafted parts · Next step: an activity
-Data: activity, skill, skill_level, change_log and curriculum_proposal (the source of each part), curriculum_proposal
+Data: activity, skill, skill_level, change_log and curriculum_proposal, ask (the source of each part), curriculum_proposal
 Empty: none · Phone: the table scrolls sideways in its own box
 Folds in: /, /curriculum/browse, /curriculum/fill, /curriculum/offers, /asks
-Every control on the screen (15), and what the test does with each:
+Every control on the screen (22), and what the test does with each:
 - **filter** Grade
 - **filter** Subject
 - **filter** Topic
 - **filter** Status
 - **filter** search (matches names and codes, never children)
 - **row** an activity row → the activity's name (`/setup/activities/[code]`)
-- **row** a skill row → the skill's name (`/setup/skills/[code]`)
+- **row** a skill row → the skill set's name (`/setup/skill-sets/[code]`)
 - **link** Check the drafted parts → the activity's name (`/setup/activities/[code]`) (the first activity with a drafted part)
 - **button** Yes (an offer): the skill is linked to the activity; the offer closes [coordinator only; absent and refused for others]
 - **button** No (an offer): the offer closes; nothing is linked [coordinator only; absent and refused for others]
 - **link** page: Later → → Curriculum (`/setup/curriculum`)
 - **link** offers page: Later → → Curriculum (`/setup/curriculum`) [coordinator only; absent and refused for others] (the offers table pages on its own, ten a page, and keeps the page of the list)
+- **link** Questions to answer: Read them → Curriculum (`/setup/curriculum`) (the card jumps to the table of questions; it is drawn only while a question waits)
+- **link** Read it in full (a question) (opens the full draft in a new tab)
+- **button** Agree as drafted (a question): the question is answered 'agreed' in the person's name; it leaves the waiting list
+- **field** what it should say (a question)
+- **button** Correct it (a question): the question is answered 'corrected' with the person's words and name; it leaves the waiting list
+- **fold** the answered questions (drawn once a question has been answered: who answered, when and what they said)
+- **link** questions page: Later → → Curriculum (`/setup/curriculum`) (the questions table pages on its own, ten a page)
 - **link** rail: Skills to approve → Skills to approve (`/setup/skills/approve`)
 - **link** rail: Question bank → Question bank (`/setup/question-bank`)
 - **link** rail: Drafts to check → the activity's name (`/setup/activities/[code]`)
@@ -1060,7 +1081,7 @@ Every control on the screen (12), and what the test does with each:
 - **filter** Taught (taught or not yet: a skill nobody teaches can be approved before its topic is switched on)
 - **tab** Skills (the first list; the address carries the tab)
 - **tab** Levels to review (the second list is the levels most children are secure at; the address carries the tab)
-- **link** a skill's name → the skill's name (`/setup/skills/[code]`)
+- **link** a skill's name → the skill set's name (`/setup/skill-sets/[code]`)
 - **button** Approve (a row): level_approved set for that skill with who; the row leaves the list; the eyebrow's count drops by one [coordinator only; absent and refused for others]
 - **fold** What a wrong answer counts against
 - **button** Approve this table as written: the table of what a wrong answer counts against is approved as shown, once, with who; a changed table waits again [coordinator only; absent and refused for others]
@@ -1094,7 +1115,7 @@ Every control on the screen (11), and what the test does with each:
 - **filter** search
 - **row** each question row → {the question as it prints} (`/setup/question-bank/[key]`)
 - **link** page: Later → → Question bank (`/setup/question-bank`)
-- **fold** Statistics (counts and worksheets by taxonomy)
+- **fold** Statistics (counts and worksheets by topic)
 - **link** rail: a skill → the skill's name (`/setup/skills/[code]`)
 Done when (on top of the ten generic checks):
 - statistics and taxonomy sit behind the details link, not on the first view (rule 8)
@@ -1132,7 +1153,7 @@ Done when (on top of the ten generic checks):
 #### Staff and classes `/setup/staff`
 Who: coordinator · Phase: Core · Backend: CP-1 · CP-3 · Old page today: yes · Slice: UI-5
 Eyebrow: This fortnight
-Purpose: Who teaches which class, and whole counts the database can stand behind. No score, no ranking: the school decides what they mean.
+Purpose: Who teaches which class, and whole counts you can rely on. No score, no ranking: the school decides what they mean.
 Blocks, in order:
 - **DataTable**: role · class · sessions done of planned · notes confirmed · notes late · lines accepted / changed / removed; each row opens the person's grants
 - **Details**: a person's grants: role, class, subject, from, to; Add a grant
@@ -1194,15 +1215,15 @@ Purpose: The curriculum, the skills, the question bank, staff, classes and the s
 Blocks, in order:
 - **Cards**: Curriculum · Skills to approve (count) · Question bank · Staff · Classes and children · School (campus, academic year, fortnights)
 Rail (Connected to): none
-Main action: Curriculum · Next step: none
+Main action: Open the curriculum · Next step: none
 Data: counts
 Empty: none · Phone: one column
 Every control on the screen (6), and what the test does with each:
-- **link** Curriculum → Curriculum (`/setup/curriculum`)
-- **link** Skills to approve → Skills to approve (`/setup/skills/approve`) [coordinator only; absent and refused for others]
-- **link** Question bank → Question bank (`/setup/question-bank`)
-- **link** Staff → Staff and classes (`/setup/staff`) [coordinator only; absent and refused for others]
-- **link** Classes and children → Classes and children (`/setup/classes`) [coordinator only; absent and refused for others]
+- **link** Open the curriculum → Curriculum (`/setup/curriculum`)
+- **link** Open Skills to approve → Skills to approve (`/setup/skills/approve`) [coordinator only; absent and refused for others]
+- **link** Open Question bank → Question bank (`/setup/question-bank`)
+- **link** Open Staff → Staff and classes (`/setup/staff`) [coordinator only; absent and refused for others]
+- **link** Open Classes and children → Classes and children (`/setup/classes`) [coordinator only; absent and refused for others]
 - **link** details: the blocks gallery → The blocks (`/setup/blocks`) (/setup/blocks, staff only)
 Done when (on top of the ten generic checks):
 - every setup page is reachable in two clicks from the bar

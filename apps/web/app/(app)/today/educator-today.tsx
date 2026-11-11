@@ -8,7 +8,7 @@ import type { Session } from "@/lib/auth";
 import { blankWords, isBlank, isLesson, timeOf } from "@/lib/educator/period";
 import type { Day, Period } from "@/lib/educator/types";
 import { nowAtSchool, schoolToday } from "@/lib/school-clock";
-import { classPicture } from "@/lib/k2-reads";
+import { sql } from "@/lib/db";
 import { DOORS, open } from "@/lib/today-doors";
 import { myDay, myNotes, sessionsOf, type TodoRow } from "@/lib/today-data";
 import { dayWords, fortnightWords, litPeriod, many, periodRow, periodsDone } from "@/lib/today";
@@ -53,7 +53,7 @@ export async function EducatorToday({ me, view, day: asked }: { me: Session; vie
     { key: "doSoon", label: "This week", state: "doSoon", count: soon.length, empty: "No note is waiting for you.", cards: soon.map((r) => noteCard(r, cls)) },
     { key: "done", label: "Done", state: "done", count: done, empty: "No period is taught and confirmed yet today.", cards: periods.filter((p) => isLesson(p) && p.state === "done").map((p) => ({ key: p.period_id, kind: "period" as const, title: p.name, sub: timeOf(p), href: href(p), state: "done" as const })) },
   ];
-  const cards = await cardsFor(me.email, cls, classId, [...late, ...soon]);
+  const cards = await cardsFor(cls, classId, [...late, ...soon]);
   const edges = [
     { screen: "timetable", label: "This fortnight", icon: "fortnight" as const, fallback: "/educator/week" },
     { screen: "materials", label: "Materials", icon: "checklist" as const, fallback: "/timetable/materials" },
@@ -79,13 +79,14 @@ function PeriodsOrNothing({ day, periods, lit, href }: { day: Day | null; period
 }
 
 /** Notes to confirm (how many, how old the oldest) and her class (how many children, to the class picture). */
-async function cardsFor(email: string, cls: string, classId: string, notes: TodoRow[]) {
+async function cardsFor(cls: string, classId: string, notes: TodoRow[]) {
   const out: React.ComponentProps<typeof Cards>["cards"][number][] = [];
   const oldest = notes[0];
   const go = oldest ? open(DOORS.confirm(oldest.note_id)) : null;
   if (oldest && go) out.push({ kind: "note", title: "Notes to confirm", line: `${many(notes.length, "note")} · the oldest is ${ageWords(Math.max(...notes.map((n) => n.age_hours)))} old`, href: go, link: "Confirm the first" });
-  const pic = classId ? await classPicture(email, classId) : null;
+  // her class is her own by construction (`classId` is the class on her staff entry), so the children are counted as the Children screen does
+  const [{ n }] = classId ? await sql<{ n: number }[]>`select count(*)::int as n from child_now where class_id = ${classId}::uuid and active` : [{ n: -1 }];
   const to = classId ? open(DOORS.picture(classId)) : null;
-  if (pic?.ok && to) out.push({ kind: "child", title: `Your class · ${cls}`, line: many(pic.value.children.length, "child", "children"), href: to, link: "Class picture" });
+  if (n >= 0 && to) out.push({ kind: "child", title: `Your class · ${cls}`, line: many(n, "child", "children"), href: to, link: "Class picture" });
   return out;
 }

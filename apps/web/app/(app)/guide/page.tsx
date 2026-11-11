@@ -81,7 +81,7 @@ export default async function Guide({ searchParams }: Props) {
             <KeyValue
               rows={[
                 { label: "What it is for", value: s.purpose },
-                { label: "What each control does", value: s.does.map((d) => (d.says ? `${d.label}: ${d.says}` : d.label)).join(" · ") },
+                { label: "On this page", value: s.does.map((d) => ("says" in d ? `${d.label}: ${d.says}` : d.label)).join(" · ") },
               ]}
             />
             </div>

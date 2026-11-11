@@ -664,6 +664,9 @@
         "CP-8"
       ],
       "exists": "yes (/educator/period)",
+      "folds": [
+        "/educator/period/[id]"
+      ],
       "eyebrow": "Period · 09:15 · K2 Red · Numeracy",
       "title": "the session's name",
       "purpose": "the activity's objective in one line",
@@ -1224,6 +1227,12 @@
         },
         {
           "t": "link",
+          "label": "Previous / next day or week",
+          "to": "timetable",
+          "note": "Day view steps a school day (weekends skipped), Week view a week; the fortnight follows the day"
+        },
+        {
+          "t": "link",
           "label": "Today",
           "to": "timetable",
           "note": "opens today in the Day view"
@@ -1303,7 +1312,8 @@
         "an educator never sees an accept-clash control; a clash cell is red for both roles",
         "the grid's cells equal the session rows for the day shown (count and names)",
         "a period running now carries Do now, a recorded one Done, one over and not recorded Late, and no period still to come has a chip",
-        "a holiday day is named in words under the grid"
+        "a holiday day is named in words under the grid",
+        "stepping to the next or previous school day skips the weekend and crosses into the next or earlier fortnight"
       ]
     },
     {
@@ -2066,6 +2076,24 @@
           "to": "child",
           "note": "the one way from a list to the child's own page",
           "when": "peek"
+        },
+        {
+          "t": "tab",
+          "label": "Picture",
+          "note": "the class picture; the three views of a class are tabs of this screen (UI-3e, carrying /growth and /growth/class/[section])",
+          "text": "Picture"
+        },
+        {
+          "t": "tab",
+          "label": "By topic",
+          "note": "topics as rows: who is secure, practising or needs help; a topic opens its skills, a skill its children",
+          "text": "By topic"
+        },
+        {
+          "t": "tab",
+          "label": "Matrix",
+          "note": "each child against each topic; a topic opens its skills",
+          "text": "Matrix"
         }
       ],
       "rail": [
@@ -2825,7 +2853,7 @@
           "t": "row",
           "label": "each answer row",
           "effect": "the page scrolls to that answer and outlines it",
-          "data": "data-answer"
+          "data": "data-answer-open"
         },
         {
           "t": "field",
@@ -2853,7 +2881,7 @@
           "t": "button",
           "label": "Blank (the child wrote nothing)",
           "effect": "the answer is marked blank, never wrong",
-          "text": "Blank",
+          "text": "Blank (the child wrote nothing)",
           "drive": {
             "fixture": "answer-to-judge",
             "click": "Blank",
@@ -2920,6 +2948,70 @@
           "text": "Topic",
           "data": "data-filter",
           "pending": "needs a home paper the engine made for a child (a library worksheet cannot be edited); proved against real engine-made papers in u76-edit-a-paper"
+        },
+        {
+          "t": "button",
+          "label": "Change it for every child",
+          "note": "under 'Is the right answer wrong?'; code refuses a key the sum contradicts and says why; otherwise every child's answer to the question is marked again",
+          "text": "Change it for every child",
+          "data": "data-change-key",
+          "pending": "proved in u77-paper-tools and u78-whose-paper against papers whose reads carry the doubt the control answers; the shared inventory fixture has none"
+        },
+        {
+          "t": "button",
+          "label": "Name the mistake (the likeliest, none of these, another)",
+          "note": "for a wrong answer no named mistake explains; kept against the reading and reaches the evidence at sign-off",
+          "text": "None of these",
+          "data": "data-name-mistake",
+          "pending": "proved in u77-paper-tools and u78-whose-paper against papers whose reads carry the doubt the control answers; the shared inventory fixture has none"
+        },
+        {
+          "t": "button",
+          "label": "This page is this child's / Not this child's",
+          "note": "where the same photograph is on two copies; saving what the child wrote waits for this",
+          "text": "This page is this child",
+          "data": "data-choose-page",
+          "pending": "proved in u77-paper-tools and u78-whose-paper against papers whose reads carry the doubt the control answers; the shared inventory fixture has none"
+        },
+        {
+          "t": "link",
+          "label": "Next answer to judge",
+          "note": "the next answer for a person, in the order they sit on the page",
+          "text": "Next answer to judge",
+          "data": "data-next-answer",
+          "pending": "proved in u77-paper-tools and u78-whose-paper against papers whose reads carry the doubt the control answers; the shared inventory fixture has none"
+        },
+        {
+          "t": "link",
+          "label": "Previous paper / Next paper (this child's)",
+          "note": "the child's other papers, oldest first, each on its own paper screen",
+          "text": "Previous paper",
+          "data": "data-prev-paper",
+          "pending": "proved in u77-paper-tools and u78-whose-paper against papers whose reads carry the doubt the control answers; the shared inventory fixture has none"
+        },
+        {
+          "t": "link",
+          "label": "a skill's answer chip",
+          "note": "what this paper says by skill; each answer one tap away",
+          "text": "For you to judge",
+          "data": "data-lane-answer",
+          "pending": "proved in u77-paper-tools and u78-whose-paper against papers whose reads carry the doubt the control answers; the shared inventory fixture has none"
+        },
+        {
+          "t": "button",
+          "label": "Right / Wrong / Blank (judge)",
+          "note": "for the few answers code cannot mark; only a person can say which",
+          "text": "Right",
+          "data": "data-judge",
+          "pending": "proved in u77-paper-tools and u78-whose-paper against papers whose reads carry the doubt the control answers; the shared inventory fixture has none"
+        },
+        {
+          "t": "field",
+          "label": "the right answer, for every child",
+          "note": "inside the fold 'Is the right answer wrong?'",
+          "text": "The right answer is",
+          "data": "data-change-key-field",
+          "pending": "proved in u77-paper-tools and u78-whose-paper against papers whose reads carry the doubt the control answers; the shared inventory fixture has none"
         }
       ],
       "rail": [
@@ -3511,7 +3603,7 @@
         {
           "t": "row",
           "label": "a skill row",
-          "to": "skill",
+          "to": "skillset",
           "data": "data-skill-row"
         },
         {
@@ -3569,6 +3661,69 @@
         },
         {
           "t": "link",
+          "label": "Questions to answer: Read them",
+          "text": "Read them",
+          "to": "curriculum",
+          "note": "the card jumps to the table of questions; it is drawn only while a question waits"
+        },
+        {
+          "t": "link",
+          "label": "Read it in full (a question)",
+          "text": "Read it in full",
+          "note": "opens the full draft in a new tab",
+          "when": "@ask-with-link",
+          "newTab": true
+        },
+        {
+          "t": "button",
+          "label": "Agree as drafted (a question)",
+          "data": "data-ask-agree",
+          "effect": "the question is answered 'agreed' in the person's name; it leaves the waiting list",
+          "drive": {
+            "click": "Agree as drafted",
+            "expect": {
+              "check": "ask-answered"
+            }
+          }
+        },
+        {
+          "t": "field",
+          "label": "what it should say (a question)",
+          "data": "data-ask-correction",
+          "text": "What it should say"
+        },
+        {
+          "t": "button",
+          "label": "Correct it (a question)",
+          "data": "data-ask-correct",
+          "effect": "the question is answered 'corrected' with the person's words and name; it leaves the waiting list",
+          "drive": {
+            "fill": {
+              "What it should say": "Say it in the school's own words."
+            },
+            "click": "Correct it",
+            "expect": {
+              "check": "another-ask-answered"
+            }
+          }
+        },
+        {
+          "t": "fold",
+          "label": "the answered questions",
+          "text": "answered",
+          "when": "@asks-answered",
+          "note": "drawn once a question has been answered: who answered, when and what they said"
+        },
+        {
+          "t": "link",
+          "label": "questions page: Later →",
+          "text": "Later →",
+          "to": "curriculum",
+          "when": "paged",
+          "note": "the questions table pages on its own, ten a page"
+        },
+        {
+          "t": "link",
           "label": "rail: Skills to approve",
           "to": "skills-approve"
         },
@@ -3592,7 +3747,7 @@
       "capture": [],
       "main": "Check the drafted parts",
       "next": "an activity",
-      "data": "activity, skill, skill_level, change_log and curriculum_proposal (the source of each part), curriculum_proposal",
+      "data": "activity, skill, skill_level, change_log and curriculum_proposal, ask (the source of each part), curriculum_proposal",
       "empty": "none",
       "phone": "the table scrolls sideways in its own box",
       "folds": [
@@ -3664,7 +3819,7 @@
         {
           "t": "link",
           "label": "a skill's name",
-          "to": "skill",
+          "to": "skillset",
           "data": "data-row-link"
         },
         {
@@ -3801,7 +3956,7 @@
         },
         {
           "t": "fold",
-          "label": "Statistics (counts and worksheets by taxonomy)"
+          "label": "Statistics (counts and worksheets by topic)"
         },
         {
           "t": "link",
@@ -3979,7 +4134,7 @@
       "exists": "yes",
       "eyebrow": "This fortnight",
       "title": "Staff and classes",
-      "purpose": "Who teaches which class, and whole counts the database can stand behind. No score, no ranking: the school decides what they mean.",
+      "purpose": "Who teaches which class, and whole counts you can rely on. No score, no ranking: the school decides what they mean.",
       "blocks": [
         [
           "DataTable",
@@ -4196,12 +4351,12 @@
       "elements": [
         {
           "t": "link",
-          "label": "Curriculum",
+          "label": "Open the curriculum",
           "to": "curriculum"
         },
         {
           "t": "link",
-          "label": "Skills to approve",
+          "label": "Open Skills to approve",
           "to": "skills-approve",
           "roles": [
             "coordinator"
@@ -4209,12 +4364,12 @@
         },
         {
           "t": "link",
-          "label": "Question bank",
+          "label": "Open Question bank",
           "to": "bank"
         },
         {
           "t": "link",
-          "label": "Staff",
+          "label": "Open Staff",
           "to": "staff",
           "roles": [
             "coordinator"
@@ -4222,7 +4377,7 @@
         },
         {
           "t": "link",
-          "label": "Classes and children",
+          "label": "Open Classes and children",
           "to": "classes",
           "roles": [
             "coordinator"
@@ -4237,7 +4392,7 @@
       ],
       "rail": [],
       "capture": [],
-      "main": "Curriculum",
+      "main": "Open the curriculum",
       "next": "none",
       "data": "counts",
       "empty": "none",

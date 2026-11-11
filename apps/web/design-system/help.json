@@ -9,64 +9,49 @@
       "purpose": "Your periods in order. Tap one for what to teach, how, and what to lay out. After it, record a note.",
       "does": [
         {
-          "label": "do now tile",
-          "says": "the oldest unconfirmed note; absent (grey 0) when none"
+          "label": "do now tile"
         },
         {
-          "label": "this week tile",
-          "says": "Opens Notes."
+          "label": "this week tile"
         },
         {
-          "label": "done today tile",
-          "says": "Opens Class picture."
+          "label": "done today tile"
         },
         {
-          "label": "each period row",
-          "says": "a fixed part of the day opens its period page with 'Nothing to record here'"
+          "label": "each period row"
         },
         {
-          "label": "Confirm the first",
-          "says": "Opens Confirm what the reader heard."
+          "label": "Confirm the first"
         },
         {
-          "label": "Class picture",
-          "says": "Opens Class picture."
+          "label": "Class picture"
         },
         {
-          "label": "rail: This fortnight",
-          "says": "Opens Timetable."
+          "label": "This fortnight"
         },
         {
-          "label": "rail: Materials",
-          "says": "Opens Materials, this fortnight."
+          "label": "Materials"
         },
         {
-          "label": "Board",
-          "says": "what waits on me as lanes; the address carries the tab"
+          "label": "Board"
         },
         {
-          "label": "List",
-          "says": "what waits on me as the tiles and the period rows"
+          "label": "List"
         },
         {
-          "label": "each note card on the board",
-          "says": "Opens Confirm what the reader heard."
+          "label": "each note card on the board"
         },
         {
-          "label": "each period card on the board",
-          "says": "Opens the session's name."
+          "label": "each period card on the board"
         },
         {
-          "label": "each Sr. No. in Your class",
-          "says": "opens ChildPeek for that child"
+          "label": "each Sr. No. in Your class"
         },
         {
-          "label": "peek: Close",
-          "says": "closes ChildPeek; focus returns to the child that opened it"
+          "label": "Close"
         },
         {
-          "label": "peek: Open the child",
-          "says": "the one way from a list to the child's own page"
+          "label": "Open the child"
         }
       ]
     },
@@ -79,56 +64,43 @@
       "purpose": "What waits on you, each with its own button. Then the week ahead.",
       "does": [
         {
-          "label": "do now tile",
-          "says": "Opens Moves by hand."
+          "label": "do now tile"
         },
         {
-          "label": "this week tile",
-          "says": "Opens Fortnight 9."
+          "label": "this week tile"
         },
         {
-          "label": "sessions done tile",
-          "says": "Opens Staff and classes."
+          "label": "sessions done tile"
         },
         {
-          "label": "each heat-grid cell",
-          "says": "opens that class's day"
+          "label": "each heat-grid cell"
         },
         {
-          "label": "clash row",
-          "says": "Opens Moves by hand."
+          "label": "clash row"
         },
         {
-          "label": "draft row",
-          "says": "Opens Draft from the rules."
+          "label": "draft row"
         },
         {
-          "label": "late notes row",
-          "says": "Opens Notes."
+          "label": "late notes row"
         },
         {
-          "label": "sessions not done row",
-          "says": "Opens Staff and classes."
+          "label": "sessions not done row"
         },
         {
-          "label": "materials row",
-          "says": "Opens Materials, this fortnight."
+          "label": "materials row"
         },
         {
-          "label": "each new activity next week",
-          "says": "Opens the activity's name."
+          "label": "each new activity next week"
         },
         {
-          "label": "rail: Fortnight 9",
-          "says": "Opens Fortnight 9."
+          "label": "Fortnight 9"
         },
         {
-          "label": "rail: Staff and classes",
-          "says": "Opens Staff and classes."
+          "label": "Staff and classes"
         },
         {
-          "label": "rail: Timetable",
-          "says": "Opens Timetable."
+          "label": "Timetable"
         }
       ]
     },
@@ -141,60 +113,46 @@
       "purpose": "the activity's objective in one line",
       "does": [
         {
-          "label": "Record a note",
-          "says": "opens Record with this period's session preselected"
+          "label": "Record a note"
         },
         {
-          "label": "Type the marks instead",
-          "says": "opens Record on its typing path, session preselected"
+          "label": "Type the marks instead"
         },
         {
-          "label": "Open the activity",
-          "says": "Opens the activity's name."
+          "label": "Open the activity"
         },
         {
-          "label": "each Sr. No. named under the last-time bar",
-          "says": "opens ChildPeek for that child"
+          "label": "each Sr. No. named under the last-time bar"
         },
         {
-          "label": "The steps, short",
-          "says": "open by default"
+          "label": "The steps, short"
         },
         {
-          "label": "Lay out",
-          "says": ""
+          "label": "Lay out"
         },
         {
-          "label": "Watch for",
-          "says": ""
+          "label": "Watch for"
         },
         {
-          "label": "rail: The activity",
-          "says": "Opens the activity's name."
+          "label": "The activity"
         },
         {
-          "label": "rail: each learning objective",
-          "says": "Opens the objective's title."
+          "label": "each learning objective"
         },
         {
-          "label": "rail: Materials",
-          "says": "Opens Materials, this fortnight."
+          "label": "Materials"
         },
         {
-          "label": "rail: Its place in the fortnight",
-          "says": "Opens Timetable."
+          "label": "Its place in the fortnight"
         },
         {
-          "label": "rail: The class",
-          "says": "Opens Class picture."
+          "label": "The class"
         },
         {
-          "label": "peek: Close",
-          "says": "closes ChildPeek; focus returns to the child that opened it"
+          "label": "Close"
         },
         {
-          "label": "peek: Open the child",
-          "says": "the one way from a list to the child's own page"
+          "label": "Open the child"
         }
       ]
     },
@@ -207,40 +165,31 @@
       "purpose": "Say what happened and who, by Sr. number. The reader turns it into marks; you confirm them, one note at a time.",
       "does": [
         {
-          "label": "Which period",
-          "says": "preselected when opened from a period, a class or a child; otherwise today's periods for the person's classes; required before Start recording or Type the marks"
+          "label": "Which period"
         },
         {
-          "label": "Start recording",
-          "says": "microphone permission asked; the button becomes Stop; a timer counts"
+          "label": "Start recording"
         },
         {
-          "label": "Stop",
-          "says": "recording ends; Send and Record again appear"
+          "label": "Stop"
         },
         {
-          "label": "Send",
-          "says": "one pii.educator_note row with the session id, status received; the page says 'sent, the reader is listening' and links to Notes"
+          "label": "Send"
         },
         {
-          "label": "Add a photo",
-          "says": "jpg/png/heic accepted; the photo attaches to the session, never to a child"
+          "label": "Add a photo"
         },
         {
-          "label": "Type the marks",
-          "says": "creates the empty note for the chosen session and class in this step and opens it on the confirm screen"
+          "label": "Type the marks"
         },
         {
-          "label": "rail: The period",
-          "says": "drawn only when a session is chosen"
+          "label": "The period"
         },
         {
-          "label": "rail: The activity",
-          "says": "Opens the activity's name."
+          "label": "The activity"
         },
         {
-          "label": "rail: The class",
-          "says": "Opens Class picture."
+          "label": "The class"
         }
       ]
     },
@@ -253,48 +202,37 @@
       "purpose": "Left, your words line by line. Right, the class already marked from them. Nothing is ticked for you; 'the rest did as expected' is one switch. Confirm is for this note only.",
       "does": [
         {
-          "label": "each claim line's × (remove)",
-          "says": "the claim is marked removed; its children's squares return to unmarked; recorded as her decision"
+          "label": "each claim line's × (remove)"
         },
         {
-          "label": "each square",
-          "says": "opens the mark picker: above / below / not willing / absent / clear (\"as expected\" is the one switch for the rest: the engine records an individual child's mark in four lists); the square's corner mark changes; the claim it came from is marked changed"
+          "label": "each square"
         },
         {
-          "label": "the rest did as expected",
-          "says": "every unmarked present child gets as-expected with entry mode group; off removes them"
+          "label": "the rest did as expected"
         },
         {
-          "label": "Confirm this note",
-          "says": "one activity_observation per marked child with one confirmation_id; the note's status becomes confirmed; lands on the next waiting note or Notes"
+          "label": "Confirm this note"
         },
         {
-          "label": "Correct this note",
-          "says": "a confirmed note only: writes a superseding note row; the old row is never edited"
+          "label": "Correct this note"
         },
         {
-          "label": "rail: The period",
-          "says": "Opens the session's name."
+          "label": "The period"
         },
         {
-          "label": "rail: The activity",
-          "says": "Opens the activity's name."
+          "label": "The activity"
         },
         {
-          "label": "rail: The class",
-          "says": "Opens Class picture."
+          "label": "The class"
         },
         {
-          "label": "each child's name on a claim line",
-          "says": "opens ChildPeek for that child"
+          "label": "each child's name on a claim line"
         },
         {
-          "label": "peek: Close",
-          "says": "closes ChildPeek; focus returns to the child that opened it"
+          "label": "Close"
         },
         {
-          "label": "peek: Open the child",
-          "says": "the one way from a list to the child's own page"
+          "label": "Open the child"
         }
       ]
     },
@@ -307,76 +245,58 @@
       "purpose": "Every note of your classes: waiting, confirmed, left unconfirmed. Open one to confirm it or to correct a confirmed one.",
       "does": [
         {
-          "label": "class",
-          "says": "an educator with one class has no class filter"
+          "label": "class"
         },
         {
-          "label": "state",
-          "says": ""
+          "label": "state"
         },
         {
-          "label": "week",
-          "says": ""
+          "label": "week"
         },
         {
-          "label": "each child named in a note",
-          "says": "opens ChildPeek for that child; a name is read from pii by child_id (pii.note_claim.child_id), the chip shows the Sr. No. and the name"
+          "label": "each child named in a note"
         },
         {
-          "label": "× on a filter chip",
-          "says": "removes that filter from the address"
+          "label": "× on a filter chip"
         },
         {
-          "label": "Clear",
-          "says": "removes every filter"
+          "label": "Clear"
         },
         {
-          "label": "Confirm (a waiting note)",
-          "says": "Opens Confirm what the reader heard."
+          "label": "Confirm (a waiting note)"
         },
         {
-          "label": "Open (a confirmed note)",
-          "says": "the confirmed note on the confirm screen, where Correct this note lives"
+          "label": "Open (a confirmed note)"
         },
         {
-          "label": "page: Later →",
-          "says": "the next ten rows; the address carries the page"
+          "label": "Later →"
         },
         {
-          "label": "rail: Record a note",
-          "says": "Opens Record a note."
+          "label": "Record a note"
         },
         {
-          "label": "rail: Class picture",
-          "says": "Opens Class picture."
+          "label": "Class picture"
         },
         {
-          "label": "rail: Today",
-          "says": "Opens Today."
+          "label": "Today"
         },
         {
-          "label": "capture: Voice note",
-          "says": "Opens Record a note."
+          "label": "Voice note"
         },
         {
-          "label": "Board",
-          "says": "the notes as lanes; the address carries the tab"
+          "label": "Board"
         },
         {
-          "label": "Table",
-          "says": "the notes as rows"
+          "label": "Table"
         },
         {
-          "label": "each card on the board",
-          "says": "a waiting note's card confirms it; a confirmed note's card opens it"
+          "label": "each card on the board"
         },
         {
-          "label": "peek: Close",
-          "says": "closes ChildPeek; focus returns to the child that opened it"
+          "label": "Close"
         },
         {
-          "label": "peek: Open the child",
-          "says": "the one way from a list to the child's own page"
+          "label": "Open the child"
         }
       ]
     },
@@ -389,56 +309,46 @@
       "purpose": "The fortnight is the unit. Week A and week B, each period a block; a moved period is marked, a clash is red until the coordinator accepts it.",
       "does": [
         {
-          "label": "class",
-          "says": "the coordinator always; an educator only when she holds more than one class"
+          "label": "class"
         },
         {
-          "label": "Day / Week / Fortnight",
-          "says": "Day by default at 400 px"
+          "label": "Day / Week / Fortnight"
         },
         {
-          "label": "Today",
-          "says": "opens today in the Day view"
+          "label": "Previous / next day or week"
         },
         {
-          "label": "each day head",
-          "says": "opens that day in the Day view; earlier and later days are reached the same way"
+          "label": "Today"
         },
         {
-          "label": "this / next fortnight",
-          "says": ""
+          "label": "each day head"
         },
         {
-          "label": "each grid cell",
-          "says": "Opens the session's name."
+          "label": "this / next fortnight"
         },
         {
-          "label": "a moved cell's details (who, why, when)",
-          "says": "opens on click, tap or Enter; never by hover alone"
+          "label": "each grid cell"
         },
         {
-          "label": "Fortnight 9 card",
-          "says": "Opens Fortnight 9."
+          "label": "a moved cell's details (who, why, when)"
         },
         {
-          "label": "Materials card",
-          "says": "Opens Materials, this fortnight."
+          "label": "Fortnight 9 card"
         },
         {
-          "label": "rail: Fortnight 9",
-          "says": "Opens Fortnight 9."
+          "label": "Materials card"
         },
         {
-          "label": "rail: Materials",
-          "says": "Opens Materials, this fortnight."
+          "label": "Fortnight 9"
         },
         {
-          "label": "rail: Today's period",
-          "says": "Opens the session's name."
+          "label": "Materials"
         },
         {
-          "label": "rail: Rules",
-          "says": "Opens Timetable rules."
+          "label": "Today's period"
+        },
+        {
+          "label": "Rules"
         }
       ]
     },
@@ -451,40 +361,31 @@
       "purpose": "Its state, its plan lines, and what changed when the draft went live. Frozen once it starts; a move after that is a hand move, kept with who made it.",
       "does": [
         {
-          "label": "each plan line",
-          "says": "Opens the activity's name."
+          "label": "each plan line"
         },
         {
-          "label": "each hand move",
-          "says": "Opens Moves by hand."
+          "label": "each hand move"
         },
         {
-          "label": "Approve",
-          "says": "approval row written; the stepper moves to approved; Go live appears; Approve disappears"
+          "label": "Approve"
         },
         {
-          "label": "reason",
-          "says": "needed once the fortnight is frozen; the engine says so in words when it is missing"
+          "label": "reason"
         },
         {
-          "label": "Go live",
-          "says": "every class's placed draft goes live and the sessions are updated in place; the what-changed table lists every session it moved or removed, and nothing else"
+          "label": "Go live"
         },
         {
-          "label": "rail: The grid",
-          "says": "Opens Timetable."
+          "label": "The grid"
         },
         {
-          "label": "rail: each activity in the plan",
-          "says": "Opens the activity's name."
+          "label": "each activity in the plan"
         },
         {
-          "label": "rail: Materials",
-          "says": "Opens Materials, this fortnight."
+          "label": "Materials"
         },
         {
-          "label": "rail: Draft",
-          "says": "Opens Draft from the rules."
+          "label": "Draft"
         }
       ]
     },
@@ -497,40 +398,31 @@
       "purpose": "One command makes a draft from the period times, blocked days, fixed slots and limits. Rules it could not meet are listed in words.",
       "does": [
         {
-          "label": "which fortnight",
-          "says": "required; the next teaching fortnight by default"
+          "label": "which fortnight"
         },
         {
-          "label": "Make a draft",
-          "says": "the engine command runs; the grid fills with the draft; unmet rules list; a live fortnight is untouched"
+          "label": "Make a draft"
         },
         {
-          "label": "each class",
-          "says": "the grid shows that class"
+          "label": "each class"
         },
         {
-          "label": "each grid cell",
-          "says": "a draft cell opens read-only"
+          "label": "each grid cell"
         },
         {
-          "label": "each unmet rule's rule name",
-          "says": "Opens Timetable rules."
+          "label": "each unmet rule's rule name"
         },
         {
-          "label": "Next: hand moves",
-          "says": "Opens Moves by hand."
+          "label": "Next: hand moves"
         },
         {
-          "label": "rail: Rules",
-          "says": "Opens Timetable rules."
+          "label": "Rules"
         },
         {
-          "label": "rail: Fortnight 10",
-          "says": "Opens Fortnight 9."
+          "label": "Fortnight 10"
         },
         {
-          "label": "rail: Moves by hand",
-          "says": "Opens Moves by hand."
+          "label": "Moves by hand"
         }
       ]
     },
@@ -543,32 +435,25 @@
       "purpose": "Move a period; the clash it makes shows at once; only the coordinator accepts one, with a reason.",
       "does": [
         {
-          "label": "pick a cell, then a target cell",
-          "says": "the session moves; the source and target cells redraw; a clash shows red; a move row appears with who"
+          "label": "pick a cell, then a target cell"
         },
         {
-          "label": "Undo the last move",
-          "says": "the move is reversed as a new move row, never deleted"
+          "label": "Undo the last move"
         },
         {
-          "label": "reason",
-          "says": "required: empty shows 'Say why' and accepts nothing"
+          "label": "reason"
         },
         {
-          "label": "Accept the clash",
-          "says": "the clash is marked accepted with the reason and who; the cell's outline turns amber"
+          "label": "Accept the clash"
         },
         {
-          "label": "rail: Fortnight 10",
-          "says": "Opens Fortnight 9."
+          "label": "Fortnight 10"
         },
         {
-          "label": "rail: The grid",
-          "says": "Opens Timetable."
+          "label": "The grid"
         },
         {
-          "label": "rail: Rules",
-          "says": "Opens Timetable rules."
+          "label": "Rules"
         }
       ]
     },
@@ -581,32 +466,25 @@
       "purpose": "Period times, blocked days, fixed slots and subject limits, kept as rows with who changed them.",
       "does": [
         {
-          "label": "grade",
-          "says": ""
+          "label": "grade"
         },
         {
-          "label": "kind",
-          "says": ""
+          "label": "kind"
         },
         {
-          "label": "Edit (a row)",
-          "says": "the row's value becomes a field; Save writes a change_log row with who and when; Cancel restores"
+          "label": "Edit (a row)"
         },
         {
-          "label": "Add a rule",
-          "says": "a new row form; Save adds the rule and its edit row"
+          "label": "Add a rule"
         },
         {
-          "label": "History of edits",
-          "says": ""
+          "label": "History of edits"
         },
         {
-          "label": "rail: Draft from the rules",
-          "says": "Opens Draft from the rules."
+          "label": "Draft from the rules"
         },
         {
-          "label": "rail: Timetable",
-          "says": "Opens Timetable."
+          "label": "Timetable"
         }
       ]
     },
@@ -619,44 +497,34 @@
       "purpose": "Built from the activities in the plan. Each line knows which activity needs it. Set a quantity, remove a line, add from the catalogue.",
       "does": [
         {
-          "label": "day / week / fortnight",
-          "says": ""
+          "label": "day / week / fortnight"
         },
         {
-          "label": "quantity (each line)",
-          "says": "a number; saving writes materials_line_edit with who; the amber 'to confirm' chip clears"
+          "label": "quantity (each line)"
         },
         {
-          "label": "Remove (each line)",
-          "says": "the line is marked removed with who, never deleted"
+          "label": "Remove (each line)"
         },
         {
-          "label": "Add from the catalogue",
-          "says": "a picker of material_item; never free text"
+          "label": "Add from the catalogue"
         },
         {
-          "label": "each line's activity",
-          "says": "Opens the activity's name."
+          "label": "each line's activity"
         },
         {
-          "label": "My class / School list",
-          "says": "the school-wide view of this screen; the address carries the tab"
+          "label": "My class / School list"
         },
         {
-          "label": "Notes to read",
-          "says": "shows only the lines the system could not read"
+          "label": "Notes to read"
         },
         {
-          "label": "rail: each activity in the plan",
-          "says": "Opens the activity's name."
+          "label": "each activity in the plan"
         },
         {
-          "label": "rail: Fortnight 9",
-          "says": "Opens Fortnight 9."
+          "label": "Fortnight 9"
         },
         {
-          "label": "capture: Photo",
-          "says": "a photo attaches to the list, never to a child"
+          "label": "Photo"
         }
       ]
     },
@@ -669,56 +537,43 @@
       "purpose": "Your children in one table: how each is doing, last seen, notes waiting. Search, filter, open a child.",
       "does": [
         {
-          "label": "search by name or Sr. No.",
-          "says": ""
+          "label": "search by name or Sr. No."
         },
         {
-          "label": "class",
-          "says": "an educator with one class has no class filter and no class column"
+          "label": "class"
         },
         {
-          "label": "needs attention",
-          "says": "all / needs attention"
+          "label": "needs attention"
         },
         {
-          "label": "× on a filter chip",
-          "says": "removes that filter from the address"
+          "label": "× on a filter chip"
         },
         {
-          "label": "Clear",
-          "says": "removes every filter and the search"
+          "label": "Clear"
         },
         {
-          "label": "each child",
-          "says": "opens ChildPeek for that child (the Sr. No. and name are the button)"
+          "label": "each child"
         },
         {
-          "label": "Class picture grid",
-          "says": "the toggle between this table and the class picture grid; the picture's own toggle returns here"
+          "label": "Class picture grid"
         },
         {
-          "label": "rail: Assessments",
-          "says": "Opens Assessments."
+          "label": "Assessments"
         },
         {
-          "label": "rail: Notes",
-          "says": "Opens Notes."
+          "label": "Notes"
         },
         {
-          "label": "page: Later →",
-          "says": "the next ten rows; the address carries the page"
+          "label": "Later →"
         },
         {
-          "label": "group by",
-          "says": "none / class (coordinator) / how they are doing / needs attention; the address carries it; a heading and a count per group"
+          "label": "group by"
         },
         {
-          "label": "peek: Close",
-          "says": "closes ChildPeek; focus returns to the child that opened it"
+          "label": "Close"
         },
         {
-          "label": "peek: Open the child",
-          "says": "the one way from a list to the child's own page"
+          "label": "Open the child"
         }
       ]
     },
@@ -731,56 +586,52 @@
       "purpose": "Each square a child by Sr. No., shown on one skill at a time. Tap a child. Change the skill from the rail.",
       "does": [
         {
-          "label": "skill",
-          "says": ""
+          "label": "skill"
         },
         {
-          "label": "domain",
-          "says": ""
+          "label": "domain"
         },
         {
-          "label": "each square (and each child chip in a cluster)",
-          "says": "opens ChildPeek for that child"
+          "label": "each square (and each child chip in a cluster)"
         },
         {
-          "label": "rail: Show: each skill seen",
-          "says": "same screen, the skill filter changes"
+          "label": "Show: each skill seen"
         },
         {
-          "label": "rail: a child",
-          "says": "Opens Where this child is."
+          "label": "a child"
         },
         {
-          "label": "rail: Record a note",
-          "says": "Opens Record a note."
+          "label": "Record a note"
         },
         {
-          "label": "rail: Assessments",
-          "says": "Opens Assessments."
+          "label": "Assessments"
         },
         {
-          "label": "capture: Voice note",
-          "says": "Opens Record a note."
+          "label": "Voice note"
         },
         {
-          "label": "capture: Photo",
-          "says": "Opens Record a note."
+          "label": "Photo"
         },
         {
-          "label": "Show as a table",
-          "says": "the toggle between the class picture grid and the table of children"
+          "label": "Show as a table"
         },
         {
-          "label": "group by",
-          "says": "state on this skill / class; a heading and a count per group"
+          "label": "group by"
         },
         {
-          "label": "peek: Close",
-          "says": "closes ChildPeek; focus returns to the child that opened it"
+          "label": "Close"
         },
         {
-          "label": "peek: Open the child",
-          "says": "the one way from a list to the child's own page"
+          "label": "Open the child"
+        },
+        {
+          "label": "Picture"
+        },
+        {
+          "label": "By topic"
+        },
+        {
+          "label": "Matrix"
         }
       ]
     },
@@ -793,56 +644,43 @@
       "purpose": "Each skill this child was seen on, coloured by how secure it is and sized by how often. Every mark opens the note or paper behind it.",
       "does": [
         {
-          "label": "each graph node",
-          "says": "Opens the skill's name."
+          "label": "each graph node"
         },
         {
-          "label": "skill for the trend",
-          "says": "the trend redraws; the address carries it"
+          "label": "skill for the trend"
         },
         {
-          "label": "details on each timeline entry",
-          "says": ""
+          "label": "details on each timeline entry"
         },
         {
-          "label": "a timeline entry's activity",
-          "says": "Opens the activity's name."
+          "label": "a timeline entry's activity"
         },
         {
-          "label": "a timeline entry's paper",
-          "says": "Opens Check the answers."
+          "label": "a timeline entry's paper"
         },
         {
-          "label": "each skill row",
-          "says": "Opens the skill's name."
+          "label": "each skill row"
         },
         {
-          "label": "page: more entries",
-          "says": "older entries, ten at a time"
+          "label": "more entries"
         },
         {
-          "label": "rail: each skill",
-          "says": "Opens the skill's name."
+          "label": "each skill"
         },
         {
-          "label": "rail: Back to the class",
-          "says": "Opens Class picture."
+          "label": "Back to the class"
         },
         {
-          "label": "rail: Add a note about this child",
-          "says": "Opens Record a note."
+          "label": "Add a note about this child"
         },
         {
-          "label": "rail: Reports",
-          "says": "Opens Reports."
+          "label": "Reports"
         },
         {
-          "label": "capture: Voice note",
-          "says": "Opens Record a note."
+          "label": "Voice note"
         },
         {
-          "label": "capture: Photo",
-          "says": "Opens Record a note."
+          "label": "Photo"
         }
       ]
     },
@@ -855,120 +693,91 @@
       "purpose": "Each one goes through seven steps. Its row shows the step it waits at and the one thing to do next.",
       "does": [
         {
-          "label": "do now tile",
-          "says": "the first paper with answers to judge"
+          "label": "do now tile"
         },
         {
-          "label": "this week tile",
-          "says": "the first pack to approve"
+          "label": "this week tile"
         },
         {
-          "label": "results in tile",
-          "says": "Opens {the built name}."
+          "label": "results in tile"
         },
         {
-          "label": "Make: For a class",
-          "says": "creates the assessment at step Created, then opens it"
+          "label": "Make: For a class"
         },
         {
-          "label": "Make: For each child",
-          "says": "creates the assessment at step Created, then opens it"
+          "label": "Make: For each child"
         },
         {
-          "label": "Make: For one child",
-          "says": "creates the assessment at step Created, then opens it"
+          "label": "Make: For one child"
         },
         {
-          "label": "Make: A ready-made worksheet",
-          "says": "creates the assessment at step Created, then opens it"
+          "label": "Make: A ready-made worksheet"
         },
         {
-          "label": "Read: choose scans or drop them",
-          "says": "pdf/jpg/png/heic; the QR names the sheet; a paper appears at Uploaded; a file with no QR shows 'could not find the QR' and nothing is written"
+          "label": "Read: choose scans or drop them"
         },
         {
-          "label": "a Google Drive link",
-          "says": "a non-Drive address shows a message"
+          "label": "a Google Drive link"
         },
         {
-          "label": "Read it",
-          "says": "the Drive file is fetched and read as above"
+          "label": "Read it"
         },
         {
-          "label": "class · topic · subject · kind · week · stage (and, on Reading, Show: by day, by kind of question, by how sure)",
-          "says": ""
+          "label": "class · topic · subject · kind · week · stage (and, on Reading, Show: by day, by kind of question, by how sure)"
         },
         {
-          "label": "each assessment row",
-          "says": "Opens {the built name}."
+          "label": "each assessment row"
         },
         {
-          "label": "each row's next action",
-          "says": "lands on the step's action"
+          "label": "each row's next action"
         },
         {
-          "label": "rail: Answers to check",
-          "says": "Opens Check the answers."
+          "label": "Answers to check"
         },
         {
-          "label": "rail: Pack to approve",
-          "says": "Opens {the built name}."
+          "label": "Pack to approve"
         },
         {
-          "label": "rail: A child with results in",
-          "says": "Opens Where this child is."
+          "label": "A child with results in"
         },
         {
-          "label": "rail: The skills tested",
-          "says": "Opens the skill's name."
+          "label": "The skills tested"
         },
         {
-          "label": "rail: Question bank",
-          "says": "Opens Question bank."
+          "label": "Question bank"
         },
         {
-          "label": "capture: Photo",
-          "says": "same as Read"
+          "label": "Photo"
         },
         {
-          "label": "Board",
-          "says": "the assessments as lanes; the address carries the tab"
+          "label": "Board"
         },
         {
-          "label": "Table",
-          "says": "the assessments as rows"
+          "label": "Table"
         },
         {
-          "label": "each card on the board",
-          "says": "Opens {the built name}."
+          "label": "each card on the board"
         },
         {
-          "label": "page: Later →",
-          "says": "the next ten assessments"
+          "label": "Later →"
         },
         {
-          "label": "By topic",
-          "says": "every topic a row with its count, closed until opened; the address carries the topic"
+          "label": "By topic"
         },
         {
-          "label": "Reading",
-          "says": "how the reader is doing, and the files read lately"
+          "label": "Reading"
         },
         {
-          "label": "rename: name this assessment",
-          "says": "one on each row; the built name shows until a name is chosen"
+          "label": "rename: name this assessment"
         },
         {
-          "label": "Save the name",
-          "says": "the name is the educator's own and is kept as a row of the history log, the older names stay"
+          "label": "Save the name"
         },
         {
-          "label": "each topic",
-          "says": "opens the topic's assessments beneath it"
+          "label": "each topic"
         },
         {
-          "label": "Read again",
-          "says": "the file is read again with the reader as it now is; the page says in words when the engine no longer keeps it"
+          "label": "Read again"
         }
       ]
     },
@@ -981,92 +790,70 @@
       "purpose": "Where this assessment stands, and each child's copy. A copy is its own row with its own action; there is no button over all of them.",
       "does": [
         {
-          "label": "Open the skill",
-          "says": "Opens the skill's name."
+          "label": "Open the skill"
         },
         {
-          "label": "Change the level (a row, before print)",
-          "says": "Easy / Medium / Hard / Advance; the row's reason updates; kept as an override with who"
+          "label": "Change the level (a row, before print)"
         },
         {
-          "label": "Approve the pack",
-          "says": "approval row for this pack only; the stepper moves to Approved; Print appears; the rows' Change the level disappears"
+          "label": "Approve the pack"
         },
         {
-          "label": "Print",
-          "says": "the pack PDF opens in a new tab; the stepper moves to Printed"
+          "label": "Print"
         },
         {
-          "label": "Check this paper",
-          "says": "Opens Check the answers."
+          "label": "Check this paper"
         },
         {
-          "label": "Sign it off (a row)",
-          "says": "the paper's results are confirmed; its chip becomes results in"
+          "label": "Sign it off (a row)"
         },
         {
-          "label": "The child",
-          "says": "Opens Where this child is."
+          "label": "The child"
         },
         {
-          "label": "page: Later →",
-          "says": "the next ten copies, grouped by state"
+          "label": "Later →"
         },
         {
-          "label": "rail: a child's paper",
-          "says": "Opens Check the answers."
+          "label": "a child's paper"
         },
         {
-          "label": "rail: the skills",
-          "says": "Opens the skill's name."
+          "label": "the skills"
         },
         {
-          "label": "rail: the class picture",
-          "says": "Opens Class picture."
+          "label": "the class picture"
         },
         {
-          "label": "rail: all assessments",
-          "says": "Opens Assessments."
+          "label": "all assessments"
         },
         {
-          "label": "rail: the printed pack",
-          "says": "the PDF in a new tab"
+          "label": "the printed pack"
         },
         {
-          "label": "capture: Photo",
-          "says": "a scan of this assessment's paper; the QR must belong to it, else a message"
+          "label": "Photo"
         },
         {
-          "label": "rename: name this assessment",
-          "says": "the built name shows until a name is chosen"
+          "label": "rename: name this assessment"
         },
         {
-          "label": "Save the name",
-          "says": "the name is the educator's own and is kept as a row of the history log, the older names stay"
+          "label": "Save the name"
         },
         {
-          "label": "Why the level changes (a row, before print)",
-          "says": "required; kept with the override and who made it"
+          "label": "Why the level changes (a row, before print)"
         },
         {
-          "label": "Change this child",
-          "says": "the level and the reason are kept as an override on this child's prescription; nothing else moves (proved in u76-assessment-controls: it needs a week the engine prescribed)"
+          "label": "Change this child"
         },
         {
-          "label": "Day it was given (printed papers)",
-          "says": "defaults to the day it was last said, else today; never later than today"
+          "label": "Day it was given (printed papers)"
         },
         {
-          "label": "Given on",
-          "says": "the day is kept by the engine as a row of its own, with who said it; the screen says it was given"
+          "label": "Given on"
         },
         {
-          "label": "Away: hold it for later",
-          "says": "on a printed copy; the same button then reads Back: count as missing"
+          "label": "Away: hold it for later"
         },
         {
-          "label": "Edit this paper",
-          "says": "a home assessment's copy not yet printed: its questions, remove, add, approve"
+          "label": "Edit this paper"
         }
       ]
     },
@@ -1079,52 +866,64 @@
       "purpose": "The page as photographed, and each answer as the engine read it. Say what the child wrote where it was unsure; the engine marks it.",
       "does": [
         {
-          "label": "each answer row",
-          "says": "the page scrolls to that answer and outlines it"
+          "label": "each answer row"
         },
         {
-          "label": "what the child wrote",
-          "says": "for the answer in focus; required when judging"
+          "label": "what the child wrote"
         },
         {
-          "label": "Say what the child wrote",
-          "says": "a read_correction row; the engine marks it right / wrong / blank; the chip updates; the next judge answer comes into focus"
+          "label": "Say what the child wrote"
         },
         {
-          "label": "Blank (the child wrote nothing)",
-          "says": "the answer is marked blank, never wrong"
+          "label": "Blank (the child wrote nothing)"
         },
         {
-          "label": "Sign this paper off",
-          "says": "appears only when nothing is left to judge; confirms the results; lands on the assessment"
+          "label": "Sign this paper off"
         },
         {
-          "label": "rail: This child",
-          "says": "Opens Where this child is."
+          "label": "This child"
         },
         {
-          "label": "rail: The skill",
-          "says": "Opens the skill's name."
+          "label": "The skill"
         },
         {
-          "label": "rail: The assessment",
-          "says": "Opens {the built name}."
+          "label": "The assessment"
         },
         {
-          "label": "rail: the next paper to check",
-          "says": "Opens Check the answers."
+          "label": "the next paper to check"
         },
         {
-          "label": "Approve this home assessment",
-          "says": "a copy waiting for approval: approved in the educator's name, this one only"
+          "label": "Approve this home assessment"
         },
         {
-          "label": "Remove (a question)",
-          "says": "asks once when the removal costs something (the approval, or the last question of a skill); the paper is made again with a new code"
+          "label": "Remove (a question)"
         },
         {
-          "label": "bank: topic · skill · level · kind · question",
-          "says": "each choice narrows the next; the chosen question is seen before Add"
+          "label": "bank: topic · skill · level · kind · question"
+        },
+        {
+          "label": "Change it for every child"
+        },
+        {
+          "label": "Name the mistake (the likeliest, none of these, another)"
+        },
+        {
+          "label": "This page is this child's / Not this child's"
+        },
+        {
+          "label": "Next answer to judge"
+        },
+        {
+          "label": "Previous paper / Next paper (this child's)"
+        },
+        {
+          "label": "a skill's answer chip"
+        },
+        {
+          "label": "Right / Wrong / Blank (judge)"
+        },
+        {
+          "label": "the right answer, for every child"
         }
       ]
     },
@@ -1137,44 +936,34 @@
       "purpose": "Each child's report, line by line, in the educator's words. Two approvals per line, consent on file, then sent. Nothing goes out otherwise.",
       "does": [
         {
-          "label": "class · state",
-          "says": ""
+          "label": "class · state"
         },
         {
-          "label": "each child's lines",
-          "says": ""
+          "label": "each child's lines"
         },
         {
-          "label": "a line's words",
-          "says": "the educator edits her words; the system's state beside it is read-only"
+          "label": "a line's words"
         },
         {
-          "label": "Approve (educator, a line)",
-          "says": "educator approval row; the line's chip moves to 'to approve (coordinator)'"
+          "label": "Approve (educator, a line)"
         },
         {
-          "label": "Approve (coordinator, a line)",
-          "says": "coordinator approval row"
+          "label": "Approve (coordinator, a line)"
         },
         {
-          "label": "Send (a child)",
-          "says": "only with both approvals on every line and consent on file; otherwise absent and refused"
+          "label": "Send (a child)"
         },
         {
-          "label": "Preview the parent's copy",
-          "says": "opens the parent's copy as a PDF in a new tab"
+          "label": "Preview the parent's copy"
         },
         {
-          "label": "rail: the child",
-          "says": "Opens Where this child is."
+          "label": "the child"
         },
         {
-          "label": "rail: the class picture",
-          "says": "Opens Class picture."
+          "label": "the class picture"
         },
         {
-          "label": "rail: Consent",
-          "says": "Opens Classes and children."
+          "label": "Consent"
         }
       ]
     },
@@ -1187,56 +976,43 @@
       "purpose": "the objective",
       "does": [
         {
-          "label": "Steps",
-          "says": "open by default"
+          "label": "Steps"
         },
         {
-          "label": "How to think about it",
-          "says": ""
+          "label": "How to think about it"
         },
         {
-          "label": "Materials",
-          "says": ""
+          "label": "Materials"
         },
         {
-          "label": "each objective",
-          "says": "Opens the objective's title."
+          "label": "each objective"
         },
         {
-          "label": "each material",
-          "says": "Opens Materials, this fortnight."
+          "label": "each material"
         },
         {
-          "label": "Keep (a drafted part)",
-          "says": "the part's source becomes person (a change_log row with who); the 'drafted' badge goes"
+          "label": "Keep (a drafted part)"
         },
         {
-          "label": "Edit (a part)",
-          "says": "the part becomes a field; Save writes a change_log row; the source becomes person"
+          "label": "Edit (a part)"
         },
         {
-          "label": "Send back (a drafted part)",
-          "says": "the part is emptied and marked; the proposal is rejected"
+          "label": "Send back (a drafted part)"
         },
         {
-          "label": "capture: Voice note",
-          "says": "Opens Record a note."
+          "label": "Voice note"
         },
         {
-          "label": "rail: each objective",
-          "says": "Opens the objective's title."
+          "label": "each objective"
         },
         {
-          "label": "rail: each material",
-          "says": "Opens Materials, this fortnight."
+          "label": "each material"
         },
         {
-          "label": "rail: next taught",
-          "says": "Opens the session's name."
+          "label": "next taught"
         },
         {
-          "label": "rail: the fortnights it is in",
-          "says": "Opens Fortnight 9."
+          "label": "the fortnights it is in"
         }
       ]
     },
@@ -1249,20 +1025,16 @@
       "purpose": "An objective names the skills it builds. The system reads a child's state on those skills; it never scores the objective itself.",
       "does": [
         {
-          "label": "Open the skill (each card)",
-          "says": "Opens the skill's name."
+          "label": "Open the skill (each card)"
         },
         {
-          "label": "each activity row",
-          "says": "Opens the activity's name."
+          "label": "each activity row"
         },
         {
-          "label": "rail: each skill",
-          "says": "Opens the skill's name."
+          "label": "each skill"
         },
         {
-          "label": "rail: each activity",
-          "says": "Opens the activity's name."
+          "label": "each activity"
         }
       ]
     },
@@ -1275,68 +1047,52 @@
       "purpose": "Where the class stands on this skill, from confirmed notes and papers. A child not seen on it is not seen, nothing more.",
       "does": [
         {
-          "label": "class",
-          "says": ""
+          "label": "class"
         },
         {
-          "label": "each square (and each child chip in a cluster)",
-          "says": "opens ChildPeek for that child"
+          "label": "each square (and each child chip in a cluster)"
         },
         {
-          "label": "Comes after: each skill",
-          "says": "Opens the skill's name."
+          "label": "Comes after: each skill"
         },
         {
-          "label": "Ready next: each skill",
-          "says": "Opens the skill's name."
+          "label": "Ready next: each skill"
         },
         {
-          "label": "Each level in a sentence",
-          "says": ""
+          "label": "Each level in a sentence"
         },
         {
-          "label": "Kinds of question",
-          "says": ""
+          "label": "Kinds of question"
         },
         {
-          "label": "Mistakes it watches for",
-          "says": ""
+          "label": "Mistakes it watches for"
         },
         {
-          "label": "Change a level's sentence",
-          "says": "a field for the sentence and an optional reason; Save changes that level's words, takes that level out of approved and keeps who and why (the engine's level-words route)"
+          "label": "Change a level's sentence"
         },
         {
-          "label": "rail: the class picture on this skill",
-          "says": "Opens Class picture."
+          "label": "the class picture on this skill"
         },
         {
-          "label": "rail: its objectives",
-          "says": "Opens the objective's title."
+          "label": "its objectives"
         },
         {
-          "label": "rail: after / next skills",
-          "says": "Opens the skill's name."
+          "label": "after / next skills"
         },
         {
-          "label": "rail: Question bank for this skill",
-          "says": "Opens Question bank."
+          "label": "Question bank for this skill"
         },
         {
-          "label": "group by",
-          "says": "state on this skill / class (coordinator); a heading and a count per group"
+          "label": "group by"
         },
         {
-          "label": "peek: Close",
-          "says": "closes ChildPeek; focus returns to the child that opened it"
+          "label": "Close"
         },
         {
-          "label": "peek: Open the child",
-          "says": "the one way from a list to the child's own page"
+          "label": "Open the child"
         },
         {
-          "label": "Earlier sentences (each level)",
-          "says": "each earlier sentence with who and when, newest first; coordinator"
+          "label": "Earlier sentences (each level)"
         }
       ]
     },
@@ -1349,20 +1105,16 @@
       "purpose": "A skill set is what the school teaches and tests together, from one to four grades. It points at the skills the system reads a child on; it never scores a child itself.",
       "does": [
         {
-          "label": "Open the skill (each card)",
-          "says": "Opens the skill's name."
+          "label": "Open the skill (each card)"
         },
         {
-          "label": "Each level in a sentence",
-          "says": ""
+          "label": "Each level in a sentence"
         },
         {
-          "label": "rail: each skill",
-          "says": "Opens the skill's name."
+          "label": "each skill"
         },
         {
-          "label": "rail: Question bank for this skill set",
-          "says": "Opens Question bank."
+          "label": "Question bank for this skill set"
         }
       ]
     },
@@ -1375,64 +1127,70 @@
       "purpose": "Every activity and skill of every grade, with its levels and how much of each page is filled in. Open one to read it.",
       "does": [
         {
-          "label": "Grade",
-          "says": ""
+          "label": "Grade"
         },
         {
-          "label": "Subject",
-          "says": ""
+          "label": "Subject"
         },
         {
-          "label": "Topic",
-          "says": ""
+          "label": "Topic"
         },
         {
-          "label": "Status",
-          "says": ""
+          "label": "Status"
         },
         {
-          "label": "search",
-          "says": "matches names and codes, never children"
+          "label": "search"
         },
         {
-          "label": "an activity row",
-          "says": "Opens the activity's name."
+          "label": "an activity row"
         },
         {
-          "label": "a skill row",
-          "says": "Opens the skill's name."
+          "label": "a skill row"
         },
         {
-          "label": "Check the drafted parts",
-          "says": "the first activity with a drafted part"
+          "label": "Check the drafted parts"
         },
         {
-          "label": "Yes (an offer)",
-          "says": "the skill is linked to the activity; the offer closes"
+          "label": "Yes (an offer)"
         },
         {
-          "label": "No (an offer)",
-          "says": "the offer closes; nothing is linked"
+          "label": "No (an offer)"
         },
         {
-          "label": "page: Later →",
-          "says": "Opens Curriculum."
+          "label": "Later →"
         },
         {
-          "label": "offers page: Later →",
-          "says": "the offers table pages on its own, ten a page, and keeps the page of the list"
+          "label": "offers page: Later →"
         },
         {
-          "label": "rail: Skills to approve",
-          "says": "Opens Skills to approve."
+          "label": "Questions to answer: Read them"
         },
         {
-          "label": "rail: Question bank",
-          "says": "Opens Question bank."
+          "label": "Read it in full (a question)"
         },
         {
-          "label": "rail: Drafts to check",
-          "says": "Opens the activity's name."
+          "label": "Agree as drafted (a question)"
+        },
+        {
+          "label": "what it should say (a question)"
+        },
+        {
+          "label": "Correct it (a question)"
+        },
+        {
+          "label": "the answered questions"
+        },
+        {
+          "label": "questions page: Later →"
+        },
+        {
+          "label": "Skills to approve"
+        },
+        {
+          "label": "Question bank"
+        },
+        {
+          "label": "Drafts to check"
         }
       ]
     },
@@ -1445,52 +1203,40 @@
       "purpose": "Read each skill's levels and approve them one at a time. What a wrong answer counts against is shown beside it.",
       "does": [
         {
-          "label": "Grade",
-          "says": ""
+          "label": "Grade"
         },
         {
-          "label": "Subject",
-          "says": ""
+          "label": "Subject"
         },
         {
-          "label": "Topic",
-          "says": ""
+          "label": "Topic"
         },
         {
-          "label": "Taught",
-          "says": "taught or not yet: a skill nobody teaches can be approved before its topic is switched on"
+          "label": "Taught"
         },
         {
-          "label": "Skills",
-          "says": "the first list; the address carries the tab"
+          "label": "Skills"
         },
         {
-          "label": "Levels to review",
-          "says": "the second list is the levels most children are secure at; the address carries the tab"
+          "label": "Levels to review"
         },
         {
-          "label": "a skill's name",
-          "says": "Opens the skill's name."
+          "label": "a skill's name"
         },
         {
-          "label": "Approve (a row)",
-          "says": "level_approved set for that skill with who; the row leaves the list; the eyebrow's count drops by one"
+          "label": "Approve (a row)"
         },
         {
-          "label": "What a wrong answer counts against",
-          "says": ""
+          "label": "What a wrong answer counts against"
         },
         {
-          "label": "Approve this table as written",
-          "says": "the table of what a wrong answer counts against is approved as shown, once, with who; a changed table waits again"
+          "label": "Approve this table as written"
         },
         {
-          "label": "page: Later →",
-          "says": "Opens Skills to approve."
+          "label": "Later →"
         },
         {
-          "label": "rail: Curriculum",
-          "says": "Opens Curriculum."
+          "label": "Curriculum"
         }
       ]
     },
@@ -1503,48 +1249,37 @@
       "purpose": "What is in the bank for the skills taught in your classes, by level. Open a question to read it as it prints.",
       "does": [
         {
-          "label": "What the bank is",
-          "says": ""
+          "label": "What the bank is"
         },
         {
-          "label": "Grade",
-          "says": ""
+          "label": "Grade"
         },
         {
-          "label": "Skill",
-          "says": ""
+          "label": "Skill"
         },
         {
-          "label": "Difficulty",
-          "says": ""
+          "label": "Difficulty"
         },
         {
-          "label": "Kind",
-          "says": ""
+          "label": "Kind"
         },
         {
-          "label": "Status",
-          "says": "Ready to print, or Removed: a removed question is kept with its reason and can be read here"
+          "label": "Status"
         },
         {
-          "label": "search",
-          "says": ""
+          "label": "search"
         },
         {
-          "label": "each question row",
-          "says": "Opens {the question as it prints}."
+          "label": "each question row"
         },
         {
-          "label": "page: Later →",
-          "says": "Opens Question bank."
+          "label": "Later →"
         },
         {
-          "label": "Statistics (counts and worksheets by taxonomy)",
-          "says": ""
+          "label": "Statistics (counts and worksheets by topic)"
         },
         {
-          "label": "rail: a skill",
-          "says": "Opens the skill's name."
+          "label": "a skill"
         }
       ]
     },
@@ -1557,44 +1292,34 @@
       "purpose": "The question, its answer, the wrong answers it catches, and where it came from. Correct the wording or remove it.",
       "does": [
         {
-          "label": "About it",
-          "says": ""
+          "label": "About it"
         },
         {
-          "label": "the corrected question",
-          "says": "on a removed question that has been corrected"
+          "label": "the corrected question"
         },
         {
-          "label": "the original wording",
-          "says": "on a corrected question: the old wording, kept and readable"
+          "label": "the original wording"
         },
         {
-          "label": "rail: the skill",
-          "says": "Opens the skill's name."
+          "label": "the skill"
         },
         {
-          "label": "rail: the bank",
-          "says": "Opens Question bank."
+          "label": "the bank"
         },
         {
-          "label": "the wording",
-          "says": "required when correcting"
+          "label": "the wording"
         },
         {
-          "label": "what was wrong",
-          "says": "required when correcting: the engine refuses a correction with no reason"
+          "label": "what was wrong"
         },
         {
-          "label": "reason for removal",
-          "says": "required"
+          "label": "reason for removal"
         },
         {
-          "label": "Correct the wording",
-          "says": "a new item version; the old one stays, readable, and points to the new; the page shows the new wording"
+          "label": "Correct the wording"
         },
         {
-          "label": "Remove",
-          "says": "the item is retired with the reason, never deleted; the chip reads 'removed'"
+          "label": "Remove"
         }
       ]
     },
@@ -1604,47 +1329,37 @@
       "eyebrow": "This fortnight",
       "group": "Setup",
       "route": "/setup/staff",
-      "purpose": "Who teaches which class, and whole counts the database can stand behind. No score, no ranking: the school decides what they mean.",
+      "purpose": "Who teaches which class, and whole counts you can rely on. No score, no ranking: the school decides what they mean.",
       "does": [
         {
-          "label": "each staff row",
-          "says": "opens that person's grants fold"
+          "label": "each staff row"
         },
         {
-          "label": "a person's grants",
-          "says": ""
+          "label": "a person's grants"
         },
         {
-          "label": "Add a grant",
-          "says": "opens a form: role, class, and a subject for a role held for a subject; Save the grant gives it from today, and the grant table's own words (a second class educator, a clash) show under the form"
+          "label": "Add a grant"
         },
         {
-          "label": "End a grant",
-          "says": "valid_to is set to today on that grant; the row stays on the list, marked Ended, and nothing is deleted"
+          "label": "End a grant"
         },
         {
-          "label": "rail: Fortnight 9",
-          "says": "Opens Fortnight 9."
+          "label": "Fortnight 9"
         },
         {
-          "label": "rail: Timetable",
-          "says": "Opens Timetable."
+          "label": "Timetable"
         },
         {
-          "label": "rail: Classes and children",
-          "says": "Opens Classes and children."
+          "label": "Classes and children"
         },
         {
-          "label": "Role",
-          "says": "narrows the rows to one role"
+          "label": "Role"
         },
         {
-          "label": "Find a person (search)",
-          "says": "narrows the rows to a name"
+          "label": "Find a person (search)"
         },
         {
-          "label": "Add a person",
-          "says": "opens a form: name, school email and role; Add and send a link puts the person on the list with no password and emails them a link to set their own"
+          "label": "Add a person"
         }
       ]
     },
@@ -1657,40 +1372,31 @@
       "purpose": "Each class, its grade, its children by Sr. No., and who teaches it. Move a child to another class; every change is kept with who made it.",
       "does": [
         {
-          "label": "each class row",
-          "says": "opens that class's children table below"
+          "label": "each class row"
         },
         {
-          "label": "Move (a child row)",
-          "says": "opens a picker of classes and a date; Save closes the enrolment, opens a new one and writes a change_log row; the child appears in the new class"
+          "label": "Move (a child row)"
         },
         {
-          "label": "change log",
-          "says": ""
+          "label": "change log"
         },
         {
-          "label": "a class's picture",
-          "says": "Opens Class picture."
+          "label": "a class's picture"
         },
         {
-          "label": "rail: Staff",
-          "says": "Opens Staff and classes."
+          "label": "Staff"
         },
         {
-          "label": "rail: Class picture",
-          "says": "Opens Class picture."
+          "label": "Class picture"
         },
         {
-          "label": "rail: the fortnight",
-          "says": "Opens Fortnight 9."
+          "label": "the fortnight"
         },
         {
-          "label": "Grade",
-          "says": "narrows the classes to one grade"
+          "label": "Grade"
         },
         {
-          "label": "Find a class (search)",
-          "says": "narrows the classes to a name"
+          "label": "Find a class (search)"
         }
       ]
     },
@@ -1703,28 +1409,22 @@
       "purpose": "The curriculum, the skills, the question bank, staff, classes and the school. Statistics and old scans sit behind details links.",
       "does": [
         {
-          "label": "Curriculum",
-          "says": "Opens Curriculum."
+          "label": "Open the curriculum"
         },
         {
-          "label": "Skills to approve",
-          "says": "Opens Skills to approve."
+          "label": "Open Skills to approve"
         },
         {
-          "label": "Question bank",
-          "says": "Opens Question bank."
+          "label": "Open Question bank"
         },
         {
-          "label": "Staff",
-          "says": "Opens Staff and classes."
+          "label": "Open Staff"
         },
         {
-          "label": "Classes and children",
-          "says": "Opens Classes and children."
+          "label": "Open Classes and children"
         },
         {
-          "label": "details: the blocks gallery",
-          "says": "/setup/blocks, staff only"
+          "label": "the blocks gallery"
         }
       ]
     },
@@ -1737,20 +1437,16 @@
       "purpose": "School email and password. Forgot it: a link by email, set by its owner.",
       "does": [
         {
-          "label": "School email",
-          "says": "required; a non-email shows a message"
+          "label": "School email"
         },
         {
-          "label": "Password",
-          "says": "required"
+          "label": "Password"
         },
         {
-          "label": "Sign in",
-          "says": "lands on Today for the person's group; a wrong password shows one message and counts a sign_in_failure; after the limit the form says to wait"
+          "label": "Sign in"
         },
         {
-          "label": "Sign in / Forgot your password?",
-          "says": "the forgot form on the same page; sends one email; its link sets a new password once"
+          "label": "Sign in / Forgot your password?"
         }
       ]
     },
@@ -1763,16 +1459,13 @@
       "purpose": "What each page is for, the usual jobs, and what each button does; the school's steps in four stages. Reached from the ? on every page.",
       "does": [
         {
-          "label": "each job",
-          "says": "the jobs are generated from screens.json: each names its own screen, and the test follows every one"
+          "label": "each job"
         },
         {
-          "label": "each page's section",
-          "says": ""
+          "label": "each page's section"
         },
         {
-          "label": "? on any page",
-          "says": "opens this page at that page's section"
+          "label": "? on any page"
         }
       ]
     },
@@ -1785,20 +1478,16 @@
       "purpose": "Tell us what is broken, what you would like, or ask a question. It reaches the team, who decide what is built.",
       "does": [
         {
-          "label": "what",
-          "says": "required"
+          "label": "what"
         },
         {
-          "label": "where",
-          "says": "prefilled with the page you came from; editable"
+          "label": "where"
         },
         {
-          "label": "capture: a screenshot",
-          "says": "png/jpg attached to the note"
+          "label": "a screenshot"
         },
         {
-          "label": "Send",
-          "says": "a staff_note row and a GitHub issue; the page says it reached the team and links back"
+          "label": "Send"
         }
       ]
     },
@@ -1811,8 +1500,7 @@
       "purpose": "Every part the site is built from, with sample data and its words. Open one to see how it behaves.",
       "does": [
         {
-          "label": "each block's sample",
-          "says": "closed by default; opening shows the component, never a screenshot"
+          "label": "each block's sample"
         }
       ]
     }

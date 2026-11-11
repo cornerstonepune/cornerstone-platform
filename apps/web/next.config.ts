@@ -35,6 +35,10 @@ const nextConfig: NextConfig = {
     { source: "/voice/form", has: [{ type: "query", key: "class", value: "(?<class>.+)" }], destination: "/record?class=:class", permanent: true },
     { source: "/voice/form", destination: "/record", permanent: true },
     { source: "/voice/notes/:id([0-9a-f-]{36})", destination: "/notes/:id", permanent: true },
+    // The period page folded into the one of UI-3a (UI-3a, repoint): the old address, with its class and day, answers 308 to the new one.
+    { source: "/educator/period/:id", has: [{ type: "query", key: "class", value: "(?<class>.+)" }, { type: "query", key: "day", value: "(?<day>.+)" }], destination: "/period/:id?class=:class&day=:day", permanent: true },
+    { source: "/educator/period/:id", has: [{ type: "query", key: "class", value: "(?<class>.+)" }], destination: "/period/:id?class=:class", permanent: true },
+    { source: "/educator/period/:id", destination: "/period/:id", permanent: true },
   ],
   outputFileTracingRoot: repo,
 };
