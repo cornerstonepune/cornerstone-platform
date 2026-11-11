@@ -24,7 +24,7 @@ says:
   - words: "How many rounds of validations will we do till we get to more than 95% accuracy?"
     proved_by: packages/engine/tests/test_legacy.py::test_a_right_answer_waits_for_a_person_until_its_kind_of_question_is_trusted
   - words: "This is a massive effort I'm making the teachers do, so it better help the case"
-    proved_by: apps/web/tests/s4-validation-queue.spec.ts::the second reader's guess is offered back as one click, on the queue and on the paper
+    proved_by: apps/web/tests/s4-validation-queue.spec.ts::the second reader's guess is offered back as one click, on the paper
   # 2026-10-21, the audit on live (docs/notes/reader-learns-audit.md): every notebook was older than its child's last
   # check; a printed paper was read against the digit reader's floor for every child; and an answer signed off that no
   # person was shown counted as the reader being right.
