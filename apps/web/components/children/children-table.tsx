@@ -74,12 +74,12 @@ function columns(showClass: boolean, today: string): Column<Row>[] {
 }
 
 /** A class's header counts, in whole numbers and words: answers waiting for a person and parent reports waiting. No score, no rank. */
-export function ClassCountsLine({ section, counts }: { section?: string; counts: { answers: number; reports: number } }) {
+export function ClassCountsLine({ section, counts, reportsHref }: { section?: string; counts: { answers: number; reports: number }; reportsHref?: string }) {
   const n = (c: number, one: string, many: string) => (c === 0 ? `No ${many} waiting` : `${c} ${c === 1 ? one : many} waiting`);
   return (
     <p className="b-caption" data-class-counts={section ?? ""}>
       {section ? <strong>{section}: </strong> : null}
-      {counts.answers > 0 ? <Link href="/capture/check">{n(counts.answers, "answer", "answers")}</Link> : n(0, "answer", "answers")} · {n(counts.reports, "parent report", "parent reports")}
+      {counts.answers > 0 ? <Link href="/capture/check">{n(counts.answers, "answer", "answers")}</Link> : n(0, "answer", "answers")} · {counts.reports > 0 && reportsHref ? <Link href={reportsHref}>{n(counts.reports, "parent report", "parent reports")}</Link> : n(counts.reports, "parent report", "parent reports")}
     </p>
   );
 }

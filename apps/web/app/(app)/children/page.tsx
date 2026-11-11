@@ -105,7 +105,7 @@ export default async function Children({ searchParams }: { searchParams: Promise
           <>
             <FilterBar action="/children" filters={filters} search={{ name: "q", value: f.q, placeholder: "Name or Sr. No.", label: "Search by name or Sr. No." }} />
             {f.group === "doing" ? <p className="b-caption">Grouped by how they are doing. With &ldquo;None&rdquo;, the same rows sit in one table, in Sr. No. order, with no headings.</p> : null}
-            {oneClass ? <ClassCountsLine section={oneClass.section} counts={t.counts[oneClass.id] ?? { answers: 0, reports: 0 }} /> : null}
+            {oneClass ? <ClassCountsLine section={oneClass.section} counts={t.counts[oneClass.id] ?? { answers: 0, reports: 0 }} reportsHref={`/children/reports?class=${encodeURIComponent(oneClass.section)}`} /> : null}
             {rows.length === 0 ? (
               <EmptyState>No child matches. Check the spelling, or <Link href="/children">Clear</Link> the filters.</EmptyState>
             ) : (

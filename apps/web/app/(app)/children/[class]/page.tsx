@@ -105,7 +105,7 @@ export default async function Picture({ params, searchParams }: { params: Promis
           </aside>
         }
       >
-        <ClassCountsLine counts={counts} />
+        <ClassCountsLine counts={counts} reportsHref={`/children/reports?class=${encodeURIComponent(p.section)}`} />
         <div className="mb-3">
           <ViewToggle current="picture" views={views} />
         </div>

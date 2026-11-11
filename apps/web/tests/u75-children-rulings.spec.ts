@@ -58,6 +58,8 @@ test("a class's header says how many answers and parent reports wait, as whole c
   await expect(line).toContainText("3 answers waiting");
   await expect(line).toContainText(/parent reports? waiting/);
   await expect(line).not.toContainText(/%|rank|score/i);
+  // no parent report waits in this class, so the count is words and not a link to Reports
+  await expect(line.getByRole("link", { name: /parent report/ })).toHaveCount(0);
   await page.goto(`/children/${classId}`);
   await expect(page.locator("[data-class-counts]").first()).toContainText("3 answers waiting");
 });
