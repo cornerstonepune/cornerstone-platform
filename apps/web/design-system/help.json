@@ -883,7 +883,7 @@
           "says": "the Drive file is fetched and read as above"
         },
         {
-          "label": "class · topic · subject · kind · week · stage",
+          "label": "class · topic · subject · kind · week · stage (and, on Reading, Show: by day, by kind of question, by how sure)",
           "says": ""
         },
         {
@@ -933,6 +933,30 @@
         {
           "label": "page: Later →",
           "says": "the next ten assessments"
+        },
+        {
+          "label": "By topic",
+          "says": "every topic a row with its count, closed until opened; the address carries the topic"
+        },
+        {
+          "label": "Reading",
+          "says": "how the reader is doing, and the files read lately"
+        },
+        {
+          "label": "rename: name this assessment",
+          "says": "one on each row; the built name shows until a name is chosen"
+        },
+        {
+          "label": "Save the name",
+          "says": "the name is the educator's own and is kept as a row of the history log, the older names stay"
+        },
+        {
+          "label": "each topic",
+          "says": "opens the topic's assessments beneath it"
+        },
+        {
+          "label": "Read again",
+          "says": "the file is read again with the reader as it now is; the page says in words when the engine no longer keeps it"
         }
       ]
     },
@@ -999,6 +1023,14 @@
         {
           "label": "capture: Photo",
           "says": "a scan of this assessment's paper; the QR must belong to it, else a message"
+        },
+        {
+          "label": "rename: name this assessment",
+          "says": "the built name shows until a name is chosen"
+        },
+        {
+          "label": "Save the name",
+          "says": "the name is the educator's own and is kept as a row of the history log, the older names stay"
         }
       ]
     },
