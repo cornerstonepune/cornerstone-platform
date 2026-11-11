@@ -1,3 +1,4 @@
+import Link from "@/components/link";
 import { notFound } from "next/navigation";
 import { Cards } from "@/components/cards";
 import { Details } from "@/components/details";
@@ -44,7 +45,7 @@ export default async function ActivityScreen({ params, searchParams }: { params:
       purpose={(objective?.text || "What this activity is for is not written yet.").slice(0, 140)}
       action={<span className="text-[length:var(--text-label)] text-[var(--ink-muted)]">{[page.section, page.code].filter(Boolean).join(" · ")}</span>}
       next={back?.startsWith("/educator") ? { href: back, label: "Back to the day" } : { href: "/today", label: "Today" }}
-      rail={<Rail edges={edges} />}
+      rail={<Rail edges={edges} capture={<Link href="/record" className="b-btn b-btn-capture">Voice note</Link>} />}
     >
       <div className="grid gap-[var(--space-3)]">
         <section aria-label="The four levels" data-levels className="grid grid-cols-2 gap-[var(--space-2)] min-[1000px]:grid-cols-4">

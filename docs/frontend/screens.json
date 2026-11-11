@@ -3025,9 +3025,9 @@
           "effect": "the part is emptied and marked; the proposal is rejected"
         },
         {
-          "t": "upload",
-          "label": "capture: Photo",
-          "effect": "a photo of the set-up attaches to the activity"
+          "t": "link",
+          "label": "capture: Voice note",
+          "to": "record"
         },
         {
           "t": "link",
@@ -3057,7 +3057,7 @@
         "the fortnights it is in"
       ],
       "capture": [
-        "photo"
+        "voice"
       ],
       "main": "Keep / Edit a drafted part (curriculum team) · Open the period (educator)",
       "next": "an objective",
@@ -3071,8 +3071,7 @@
       ],
       "done_when": [
         "a drafted part carries the 'drafted' badge until Keep, Edit or Send back; an educator sees the badge but not the three buttons",
-        "every edit writes a change_log row with who",
-        "a photo attaches to the activity, never to a child"
+        "every edit writes a change_log row with who"
       ]
     },
     {
