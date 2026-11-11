@@ -28,7 +28,7 @@ TRIGGERS = CI.get("on") or CI[True]
 
 FAST = {"engine": False, "web": False, "browser": False, "web_reads": False}
 FULL = {"engine": True, "web": True, "browser": True, "web_reads": False}
-WEB_ONLY = {"engine": False, "web": True, "browser": True, "web_reads": True}
+WEB_ONLY = {"engine": False, "web": True, "browser": False, "web_reads": False}
 DOCS = [
     "docs/notes/ci-fast-paths.md",
     "HANDOFF.md",
@@ -192,6 +192,16 @@ def test_5_a_draft_of_them_waits_for_ready_like_any_other_draft(sensitive):
     assert jobs(draft=True, files=[sensitive, *DOCS]) == FAST | {"web": True}
 
 
+@pytest.mark.parametrize("sensitive", SENSITIVE)
+def test_3_a_website_pull_request_is_quick_only_when_nothing_sensitive_or_unknown_is_beside_it(sensitive):
+    """The quick plan (no browser, no engine tests) is for the website and documents alone: each sensitive path, and a file no
+    list names, brings the full suite back, and an unreadable path does too."""
+    assert jobs(files=[*WEB, sensitive]) == FULL
+    assert jobs(files=[*WEB, "something/unknown.txt"]) == FULL
+    assert jobs(files=[*WEB, '"quoted\\"name']) == FULL
+    assert jobs(files=WEB) == WEB_ONLY and not WEB_ONLY["browser"] and not WEB_ONLY["web_reads"]
+
+
 @pytest.mark.parametrize("event", ["push", "schedule", "workflow_dispatch", "something_new"])
 @pytest.mark.parametrize("files", [DOCS, WEB, []])
 def test_4_main_the_nightly_run_and_a_run_by_hand_run_everything_whatever_changed(event, files):
@@ -302,7 +312,7 @@ def test_each_job_starts_on_exactly_its_own_output():
         (DOCS, False, {"engine-checks", "plan"}),
         (DOCS, True, {"engine-checks", "plan"}),
         (WEB, True, {"engine-checks", "plan", "web"}),
-        (WEB, False, {"engine-checks", "plan", "web", "browser-shard", "engine-web-reads"}),
+        (WEB, False, {"engine-checks", "plan", "web"}),
         (["bin/check"], True, {"engine-checks", "plan", "web"}),
         (["bin/check"], False, {"engine-checks", "plan", "web", "browser-shard", "engine-shard"}),
         (
