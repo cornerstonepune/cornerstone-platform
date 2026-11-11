@@ -9,7 +9,6 @@ export const W = {
     title: "Record a note",
     purpose: "Say the activity number, then who did above, below, not willing or absent.",
     say: "Say: Activity 12. Above 3, 7. Below 5. Absent 9. The rest did as expected.",
-    sayActivity: (n: string) => `Say: Activity ${n}. Above … Below … Absent … The rest did as expected.`,
     start: "Record",
     stop: "Stop",
     send: "Send",
@@ -36,7 +35,6 @@ export const W = {
     done: "Confirmed",
     expired: "Not confirmed within 48 hours, so it is not evidence.",
     play: "Play your note",
-    noAudio: "Your recording is not on the server.",
     notSaved: "Not saved. Try again.",
   },
   activity: {
