@@ -7,9 +7,9 @@ goal: >
 # Written 2026-10-22 (night), before the code: web only, no migration, no new table (app_web already updates `config`).
 says:
   - words: "the staff table of who teaches which class and subject is edited on a Staff page, not by commands"
-    proved_by: "apps/web/tests/u53-staff-and-school.spec.ts::a coordinator ticks a person's classes on the Staff page and the list keeps them, and the rest of the person"
+    proved_by: "apps/web/tests/u74-staff-grants.spec.ts::1. a grant is given from today and listed, the log has it, and the rest of the person is as it was"
   - words: "Use filters wherever possible"
-    proved_by: "apps/web/tests/u53-staff-and-school.spec.ts::a class no child is in refuses everything, and the filter row finds a person"
+    proved_by: "apps/web/tests/u74-staff-grants.spec.ts::9. the filter row finds a person, on Staff and classes and on the old Staff page"
   - words: "Ayush is a part of Cornerstone. He has the account"
     proved_by: "apps/web/tests/u53-staff-and-school.spec.ts::School shows each class with its grade, its children and who teaches it"
 manual:

@@ -30,14 +30,15 @@ on:
     - cron: "13 20 * * *" # 01:43 IST
   workflow_dispatch:
 
-# A newer push cancels the older run of the same pull request, and a newer merge cancels main's older run: the engine's
-# shards take 12 of the jobs GitHub runs at once (20 on its free plan), and runs queued behind each other. Two runs of one
-# branch did on 2026-10-21; seven merges in a row held main for over an hour on 2026-10-22. Cancelling main's older run
-# loses nothing, because migrate.yml and deploy-engine.yml act only for main's newest commit, which carries every older
-# merge ("main has moved on").
+# A newer push cancels the older run of the same pull request: the engine's shards take 12 of the jobs GitHub runs at once
+# (20 on its free plan), and runs queued behind each other (two runs of one branch did on 2026-10-21). A merge to main is
+# never cancelled by the next merge: each cancelled run of main was a commit whose own CI never finished, and about twelve
+# merges were never deployed that way (11 Nov 2026). A newer merge waits its turn; GitHub keeps only the newest run waiting,
+# so seven merges in a row (the hour of 2026-10-22) leave one run behind the one running, not seven. The older merge's
+# CI may finish last: migrate.yml and deploy-engine.yml act only for main's newest commit ("main has moved on").
 concurrency:
   group: ci-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 # Every uv call below uses the engine image's Python (packages/engine/Dockerfile, packages/engine/.python-version), never the
 # runner image's: on 2026-11-05 ubuntu-latest began shipping 3.14, and paddlepaddle has no wheel for it (tests/test_python_pin.py).
