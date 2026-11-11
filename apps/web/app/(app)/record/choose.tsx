@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useState, useTransition } from "react";
+import { useState, useSyncExternalStore, useTransition } from "react";
 import { PhotoRule } from "@/components/capture-bar";
 import { ICON_SIZE, Icon } from "@/lib/icons";
 import { photoTarget, startTyped } from "../notes/actions";
@@ -59,8 +59,11 @@ export function AddPhoto({ classId, sessionId }: { classId: string; sessionId?: 
   const [said, setSaid] = useState<string | null>(null);
   const [pending, go] = useTransition();
   // the picker works once the page has hydrated: a file chosen before then would be dropped without a word
-  const [ready, setReady] = useState(false);
-  useEffect(() => setReady(true), []);
+  const ready = useSyncExternalStore(
+    () => () => undefined,
+    () => true,
+    () => false,
+  );
   const send = (file: File) =>
     go(async () => {
       setSaid(null);

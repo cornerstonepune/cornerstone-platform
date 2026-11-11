@@ -15,6 +15,7 @@ import { paperAnswers, paperHeader, type CaptureAnswer } from "@/lib/queries-rea
 import { assessmentHref, paperHref } from "@/lib/assessment-ui";
 import type { Column } from "@/lib/ux-rules";
 import { signOffPaper } from "../actions";
+import { EditPaper } from "./edit-paper";
 import { sayWhatWasWritten } from "./actions";
 
 const safeDecode = (v: string) => {
@@ -59,7 +60,9 @@ export default async function PaperPage({ params, searchParams }: Props) {
   const sheet = mine.find((p) => p.stage !== "replaced") ?? mine[0];
   if (!sheet || !(await sees(me, [{ sheet: sheet.id }]))) notFound();
   const [header, answers, g] = await deadline(Promise.all([paperHeader(sheet.id, me.email), paperAnswers(sheet.id), grades()]));
-  if (answers.length === 0 && !header) notFound();
+  // a home assessment's copy before it prints has no answers yet, and its questions are the page
+  const editing = kind === "focus" && (sheet.stage === "made" || sheet.stage === "printed") && answers.length === 0;
+  if (answers.length === 0 && !header && !editing) notFound();
   const marks = answers.map((a) => ({ a, m: markOf(a) }));
   const count = (m: Mark) => marks.filter((x) => x.m === m).length;
   const judging = marks.filter((x) => x.m === "judge");
@@ -115,7 +118,8 @@ export default async function PaperPage({ params, searchParams }: Props) {
           <StatusChip key={m} state={CHIP[m].state} words={`${count(m)} ${CHIP[m].words.toLowerCase()}`} round />
         ))}
       </div>
-      {answers.length === 0 ? (
+      {editing ? <EditPaper qr={sheet.qr} assessment={key} roll={roll} sp={q} /> : null}
+      {answers.length === 0 && editing ? null : answers.length === 0 ? (
         <EmptyState>Nothing has been read from this paper yet. When the scan is read, each answer appears here.</EmptyState>
       ) : (
         <div className="b-split">
