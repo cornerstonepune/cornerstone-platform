@@ -64,9 +64,10 @@ test("Curriculum says taught one way: a grade's topic row is that grade's, and t
 
 test("the parent reports page says what it lists: reports not up to date, never 'waiting on a person' for one no one has written", async ({ browser }) => {
   const page = await asEducator(browser);
-  await page.goto("/growth/reports");
+  // the page is the Reports screen now (the old list folded into it, UI-8e); the title is kept, as a retired goal cites it by name
+  await page.goto("/children/reports");
   const main = page.locator("main");
-  await expect(main.getByRole("table", { name: "Parent reports not up to date" })).toContainText("Asha");
+  await expect(main.getByRole("table", { name: "Every child's report" })).toContainText("Asha");
   await expect(main).not.toContainText(/waits? on a person/i);
   await page.context().close();
 });
