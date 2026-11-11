@@ -415,7 +415,8 @@
         {
           "t": "link",
           "label": "done today tile",
-          "to": "picture"
+          "to": "picture",
+          "text": "Periods taught of"
         },
         {
           "t": "row",
@@ -466,27 +467,25 @@
         {
           "t": "peek",
           "label": "each Sr. No. in Your class",
-          "effect": "opens ChildPeek for that child",
-          "pending": "UI-3b (#570) and UI-3c (#577) are on main: the children list and its peek are built in a follow-up (UI-7c) that reuses their peek and the activity-to-skill link, not a copy"
+          "effect": "opens ChildPeek for that child"
         },
         {
           "t": "button",
           "label": "peek: Close",
           "effect": "closes ChildPeek; focus returns to the child that opened it",
-          "pending": "UI-3b (#570) and UI-3c (#577) are on main: the children list and its peek are built in a follow-up (UI-7c) that reuses their peek and the activity-to-skill link, not a copy"
+          "when": "peek"
         },
         {
           "t": "link",
           "label": "peek: Open the child",
           "to": "child",
           "note": "the one way from a list to the child's own page",
-          "pending": "UI-3b (#570) and UI-3c (#577) are on main: the children list and its peek are built in a follow-up (UI-7c) that reuses their peek and the activity-to-skill link, not a copy"
+          "when": "peek"
         },
         {
           "t": "child_name",
           "label": "the name in the peek",
-          "note": "the child's name beside the Sr. No., read from pii by child_id",
-          "pending": "UI-3b (#570) and UI-3c (#577) are on main: the children list and its peek are built in a follow-up (UI-7c) that reuses their peek and the activity-to-skill link, not a copy"
+          "note": "the child's name beside the Sr. No., read from pii by child_id"
         }
       ],
       "rail": [

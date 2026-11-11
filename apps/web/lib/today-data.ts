@@ -109,3 +109,9 @@ export const todayBadge = cache(async (me: Session): Promise<number> => {
   const f = noteFigures(await myNotes(me));
   return f.late + f.soon;
 });
+
+/** The skills an activity builds (activity_skill), in code order: the link the educator's Today uses to say where her class stands on the lesson in view. */
+export async function skillsOfActivity(code: string): Promise<string[]> {
+  const rows = await sql<{ skill_code: string }[]>`select distinct skill_code from activity_skill where activity_code = ${code} order by skill_code`;
+  return rows.map((r) => r.skill_code);
+}

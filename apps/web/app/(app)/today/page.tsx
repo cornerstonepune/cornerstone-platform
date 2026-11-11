@@ -16,5 +16,5 @@ export default async function Today({ searchParams }: { searchParams: Promise<Re
   const me = await requireStaff();
   const { view, day } = q;
   if (day !== undefined && !isDay(day)) notFound();
-  return (await schoolVersion(me)) ? <SchoolToday me={me} /> : <EducatorToday me={me} day={day} view={view === "board" ? "board" : "list"} />;
+  return (await schoolVersion(me)) ? <SchoolToday me={me} /> : <EducatorToday me={me} day={day} view={view === "board" ? "board" : "list"} peek={q.peek} />;
 }

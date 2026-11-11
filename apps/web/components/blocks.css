@@ -47,6 +47,7 @@
   .b-card { background: var(--panel); border-radius: var(--radius-card); box-shadow: var(--shadow-card); }
   .b-card-h { display: flex; align-items: center; gap: 10px; padding: 12px var(--space-3); font-size: 16px; font-weight: 600; background: var(--kb, transparent); border-radius: var(--radius-card) var(--radius-card) 0 0; }
   .b-card-b { display: grid; gap: var(--space-2); padding: var(--space-3); }
+  .b-card-b > a { display: inline-flex; align-items: center; min-height: var(--tap); }
   .b-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--space-3); }
   .b-rlist { display: grid; gap: 2px; margin: 0; padding: 0; list-style: none; }
   .b-ritem { display: flex; align-items: center; gap: 12px; min-height: 48px; padding: 6px var(--space-2); border-radius: var(--radius-control); color: var(--ink); text-decoration: none; }
