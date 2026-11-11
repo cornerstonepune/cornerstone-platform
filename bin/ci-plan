@@ -48,6 +48,7 @@ DOCS_PREFIXES = (
     "docs/drafts/",
     "docs/superpowers/",
     "docs/frontend/wireframes/",  # drawings; their checker (check.mjs) is run by bin/check, which every pull request runs
+    "specs/UI-",  # a front-end slice's spec: read by people (the locked proofs are specs/CP-*, which tests do read)
 )
 DOCS_FILES = (
     "HANDOFF.md",
@@ -68,6 +69,10 @@ READ_BY_TESTS = (
 # (tests/test_promises.py). test_ci_plan.py checks bin/check still runs that test.
 READ_IN_BIN_CHECK = ("packages/engine/engine/checks/promises.py",)
 WEB_PREFIX = "apps/web/"
+# The screens' own documents (the list of screens and controls, the tokens, the spec built from them): only the browser tests read them (the
+# inventory, the brand and token specs), no engine test does (test_ci_plan.py checks that), so a change to one is a change to the website.
+# The wireframes in the folder stay documents (DOCS_PREFIXES): their checker runs in bin/check.
+WEB_DOC_PREFIX = "docs/frontend/"
 
 FULL = dict(engine=True, web=True, browser=True, web_reads=False)
 FAST = dict(engine=False, web=False, browser=False, web_reads=False)
@@ -90,6 +95,10 @@ def forces_full(path):
     )
 
 
+def is_web(path):
+    return path.startswith((WEB_PREFIX, WEB_DOC_PREFIX)) and not is_docs(path)
+
+
 def is_docs(path):
     return path not in READ_BY_TESTS and (path.startswith(DOCS_PREFIXES) or path in DOCS_FILES)
 
@@ -110,9 +119,9 @@ def decide(event, draft, files):
         return {**FULL, "reason": f"{hit} is engine, schema, seed, map or gate: everything"}
     if docs:
         return {**FAST, "reason": "documents alone: the checks that need no database"}
-    if all(is_docs(p) or p.startswith(WEB_PREFIX) for p in paths):
+    if all(is_docs(p) or is_web(p) for p in paths):
         return dict(engine=False, web=True, browser=True, web_reads=True, reason="the website alone: its job, the browser tests, and the engine tests that read it")
-    other = next(p for p in paths if not (is_docs(p) or p.startswith(WEB_PREFIX)))
+    other = next(p for p in paths if not (is_docs(p) or is_web(p)))
     return {**FULL, "reason": f"{other} is on no quick list: everything"}
 
 
@@ -157,11 +166,11 @@ def _forms(entry):
     return [re.escape("/".join(parts)), r"[\"'][ ,/]*[\"']".join(re.escape(x) for x in parts)]
 
 
-def reads_of(entries):
+def reads_of(entries, folders=SCANNED):
     """Lines in the engine's code and tests, or the browser tests, that read a file on a quick list. Comments and docstrings that
     only mention one are not reads, so a line counts when it also builds a path or opens a file."""
     hits = []
-    for folder in SCANNED:
+    for folder in folders:
         for path in (REPO / folder).rglob("*"):
             if path.suffix not in {".py", ".ts", ".tsx"} or path.name in SELF or "node_modules" in path.parts:
                 continue
