@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { paperScreenOf } from "@/lib/queries-assessment-extras";
 import { deciding, mustBeMine } from "@/lib/decides";
 import { childSection, childrenSections } from "@/lib/scope";
 import { customHref, makePaper, readArea, readDraw, type Area } from "@/lib/next-paper";
@@ -54,5 +55,5 @@ export async function approveCustom(formData: FormData): Promise<void> {
   const { qr, changed } = await makePaper(child, week, me.email, { draw, seen }, areas);
   revalidatePath("/make");
   if (changed) redirect(`${customHref(child, areas, draw)}&changed=1`);
-  redirect(`/papers/review/${qr}`);
+  redirect((qr && (await paperScreenOf({ qr }, me))?.href) || "/children/assessments");
 }

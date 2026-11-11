@@ -80,3 +80,20 @@ export async function paperScreensOf(ids: string[], me: Who): Promise<Map<string
     where id = any(${ids}::uuid[]) and child_id is not null and ${seesSheet(me, sql`id`)}`;
   return new Map(rows.filter((r) => r.roll).map((r) => [r.id, paperHref([r.kind, r.section ?? "", r.week ?? "", r.set ?? ""].join("~"), r.roll!)]));
 }
+
+// ---- the old addresses, answered with the screen that took their place (308) ----
+
+type Where = { qr?: string; sheet?: string; result?: string };
+/** Where an old paper address now lives: the paper screen of the copy a paper code, a sheet or one answer belongs to, else null (not a child's copy, or not seen). */
+export async function paperScreenOf(by: Where, me: Who): Promise<{ href: string; answer?: string } | null> {
+  const [r] = await sql<{ kind: string; section: string | null; week: string | null; set: string | null; roll: string | null }[]>`
+    with ${papersCte()}
+    select kind, section, week, set_key as set, roll_no as roll from papers
+    where child_id is not null and ${seesSheet(me, sql`id`)} and (
+      (${by.qr ?? null}::text is not null and qr = ${by.qr ?? null})
+      or (${by.sheet ?? null}::uuid is not null and id = ${by.sheet ?? null}::uuid)
+      or (${by.result ?? null}::uuid is not null and id = (select c.sheet_instance_id from item_result r join capture c on c.id = r.capture_id where r.id = ${by.result ?? null}::uuid)))
+    limit 1`;
+  if (!r?.roll) return null;
+  return { href: paperHref([r.kind, r.section ?? "", r.week ?? "", r.set ?? ""].join("~"), r.roll), answer: by.result };
+}

@@ -40,7 +40,7 @@ export default async function ClassResults({ searchParams }: Props) {
       title="Class results"
       purpose="Each topic of the class: who is secure, practising or needs help. Open a topic for its skills, a skill for its children."
       action={
-        <Link href="/papers/make?kind=assessment&way=same" className="btn">
+        <Link href="/children/assessments?make=class&kind=assessment&way=same" className="btn">
           Make an assessment
         </Link>
       }

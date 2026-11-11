@@ -8,7 +8,7 @@ import { StatusChip, type State } from "@/components/status-chip";
 import { EngineDown, engineGet } from "@/lib/engine";
 import { staffList } from "@/lib/queries";
 import { paperHref } from "@/lib/assessment-ui";
-import { costOf, Printed, type Q, type Review } from "../../../../papers/review/[qr]/parts";
+import { costOf, Printed, type Q, type Review } from "./printed";
 import { approveThisPaper, changeThisPaper } from "./actions";
 
 // A copy before it prints, on the paper screen: its questions in order, each drawn as it prints, Remove on each, the bank's dropdowns to add

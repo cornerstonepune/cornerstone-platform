@@ -10,13 +10,12 @@ import { grades, skillSets } from "@/lib/queries";
 import { classRoll } from "@/lib/queries-children";
 import { homeByClass, homeLength } from "@/lib/queries-make";
 import { schoolWeek } from "@/lib/school-clock";
-import { MakerLines } from "../../make/lines";
-import { Made, ThePapers } from "./parts";
+import { MakerLines } from "../../../make/lines";
+import { ThePapers } from "./parts";
 
 type Props = { searchParams: Promise<Record<string, string | string[] | undefined>> };
 
 const LINES = 3; // a paper of up to three skills
-const QR = /^CS[0-9A-F]{6}$/;
 const all = (v: string | string[] | undefined) => (Array.isArray(v) ? v : v ? [v] : []);
 
 function Choice({ name, value, words, line, checked }: { name: string; value: string; words: string; line: string; checked: boolean }) {
@@ -61,7 +60,6 @@ export default async function Maker({ searchParams }: Props) {
   const planned = ready ? await planBatch(ready) : null;
   // a form the engine did not answer on comes back with its own `once`, so sending it again makes its papers once
   const once = UUID.test(get("once")[0] ?? "") ? get("once")[0] : randomUUID();
-  const made = (get("made")[0] ?? "").split(".").filter((x) => QR.test(x));
   const lines = Array.from({ length: LINES }, (_, i) => batch?.areas[i]);
 
   return (
@@ -72,15 +70,10 @@ export default async function Maker({ searchParams }: Props) {
         sub="Class practice, class assessments and home assessments, for any children of a class: one paper for all, the same skill with different questions for each, or each child's own next step. You see every paper before anything prints."
       />
       <Body>
-        {made.length ? (
-          <div className="mb-[18px]">
-            <Made qrs={made} section={get("class")[0] ?? ""} kind={get("kind")[0] ?? ""} week={week} already={!!get("already").length} />
-          </div>
-        ) : null}
         {get("why")[0] ? <Notice tone="terracotta">{get("why")[0]}</Notice> : null}
         <div className="grid gap-[18px] lg:grid-cols-[minmax(0,400px)_minmax(0,1fr)]">
           <Panel title="Choose">
-            <form id="choose" method="get" action={get("make").length ? "/children/assessments" : "/papers/make"} aria-label="Choose the papers" className="group grid gap-4">
+            <form id="choose" method="get" action="/children/assessments" aria-label="Choose the papers" className="group grid gap-4">
               {get("make").length ? <input type="hidden" name="make" value={get("make")[0]} /> : null}
               <label className="field">
                 <span className="label">Class</span>
@@ -155,7 +148,7 @@ export default async function Maker({ searchParams }: Props) {
             {planned && "refused" in planned ? (
               <Notice tone="terracotta">{planned.refused}</Notice>
             ) : planned && ready && cls ? (
-              <ThePapers plan={planned.plan} batch={ready} roll={roll} sets={sets} band={cls.band} once={once} created={get("make").length > 0} />
+              <ThePapers plan={planned.plan} batch={ready} roll={roll} sets={sets} band={cls.band} once={once} />
             ) : (
               <Panel title="The papers">
                 <p className="note">

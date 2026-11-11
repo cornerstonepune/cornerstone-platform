@@ -11,6 +11,7 @@ import { mistakeBook, paperItems, printedPaper, type PrintedPaper } from "@/lib/
 import { deadline } from "@/lib/deadline";
 import { LIBRARY_CODE, LibraryWorksheetPage, sheetWords } from "./library-sheet";
 import { requireStaff } from "@/lib/auth";
+import { paperScreenOf } from "@/lib/queries-assessment-extras";
 import { NotYours } from "@/components/not-yours";
 import { sees } from "@/lib/reach";
 import { weekWords } from "@/lib/week";
@@ -29,7 +30,7 @@ export default async function PaperPage({ params }: Props) {
     // it — has a code of its own (`LEGACY-…`) and opens as the paper read: its answers and its pages.
     if (!/^[A-Za-z0-9-]{1,80}$/.test(qr)) notFound();
     const [found] = await sql<{ id: string }[]>`select id from sheet_instance where qr_code = ${qr}`;
-    if (found) redirect(`/capture/${found.id}`);
+    if (found) redirect((await paperScreenOf({ sheet: found.id }, me))?.href ?? "/children/assessments");
     notFound();
   }
   if (!(await deadline(sees(me, [{ qr }])))) {
@@ -43,7 +44,7 @@ export default async function PaperPage({ params }: Props) {
     Promise.all([printedPaper(qr), paperItems(qr), mistakeBook(), questionKinds()]),
   );
   if (!p) notFound();
-  const back = p.section && p.week ? `/papers/approve?section=${p.section}&week=${p.week}&kind=${p.kind}` : "/papers";
+  const back = p.section && p.week ? `/children/assessments?class=${p.section}&week=${p.week}&kind=${p.kind}` : "/children/assessments";
 
   return (
     <>

@@ -1,4 +1,4 @@
-import Maker_ from "../../papers/make/page";
+import Maker_ from "./make/maker-page";
 import type { Session } from "@/lib/auth";
 
 /** The maker, as a mode of the Assessments screen (`?make=class|each|one|sheet`): the same choose-then-see-the-papers steps. */

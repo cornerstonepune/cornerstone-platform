@@ -70,11 +70,11 @@ export async function ChildrenView({ me, q }: { me: Session; q: Record<string, s
       purpose={own ? "Your classes, child by child. The children who need you come first." : "Every class, child by child. The children who need you come first."}
       action={
         waiting ? (
-          <Link href="/capture/check" className="btn">
+          <Link href="/children/assessments?status=scanned" className="btn">
             Check {waiting} {waiting === 1 ? "answer" : "answers"} →
           </Link>
         ) : (
-          <Link href="/papers/make?kind=assessment&way=same" className="btn">
+          <Link href="/children/assessments?make=class&kind=assessment&way=same" className="btn">
             Make an assessment
           </Link>
         )

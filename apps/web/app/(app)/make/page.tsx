@@ -50,11 +50,11 @@ export default async function MakePapers({ searchParams }: Props) {
       purpose="Each child's home assessment for the week, from their own map, and the class papers waiting for you. Nothing prints until you approve it."
       action={
         first ? (
-          <Link href={`/papers/approve?section=${encodeURIComponent(first.section)}&week=${encodeURIComponent(first.week)}&kind=${first.kind}`} className="btn">
+          <Link href={`/children/assessments?class=${encodeURIComponent(first.section)}&week=${encodeURIComponent(first.week)}&kind=${first.kind}`} className="btn">
             Approve class papers
           </Link>
         ) : (
-          <Link href="/papers/make?kind=assessment&way=same" className="btn">
+          <Link href="/children/assessments?make=class&kind=assessment&way=same" className="btn">
             Make an assessment
           </Link>
         )
