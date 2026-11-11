@@ -130,8 +130,7 @@ test("Confirm shows what she said beside the class already marked, red problems 
   await expect(confirm).toBeEnabled();
   await shoot(page, "4-confirm-ready");
   await confirm.click();
-  await expect(page).toHaveURL(/\/notes(\/[0-9a-f-]{36})?$/);
-  expect((await observations(note))[0].n).toBe(22);
+  await expect.poll(async () => (await observations(note))[0].n).toBe(22); // the page is at /notes/<id> before and after: wait for the write
   await page.goto(`/notes/${note}`);
   await expect(page.locator("main")).toContainText("Confirmed");
 });
@@ -160,8 +159,7 @@ test("the form is paint mode: nothing ticked, the rest off, and Save under the c
   await expect(save).toBeEnabled();
   await shoot(page, "6-form-filled");
   await save.click();
-  await expect(page).toHaveURL(/\/notes(\/[0-9a-f-]{36})?$/);
-  expect(await marksOf(note)).toEqual([
+  await expect.poll(() => marksOf(note)).toEqual([
     { outcome: "absent", n: 1 },
     { outcome: "as_expected", n: 20 },
     { outcome: "below", n: 1 },
@@ -218,7 +216,7 @@ test("with recording off, the K2 educator fills the form: no Record, no micropho
   const note = await aK2Note(sql, { klass, staff }, "Activity 904. Above 3. The rest did as expected.");
   await page.goto("/today?open=record");
   const row = page.locator("[data-group=record]");
-  await expect(row.locator(`a[href="/record?class=${klass}"]`).first()).toHaveText(/Type the marks/);
+  await expect(row.locator(`a[href="/record?class=${klass}"]`).first()).toHaveText(/type the marks/i);
   await page.goto(`/record?class=${klass}`);
   await expect(page.getByRole("heading", { level: 1 })).toContainText("Record a note");
   await expect(page.locator("[data-record]")).toHaveCount(0);
@@ -242,10 +240,9 @@ test("an activity the K2 sheet left without a number is found by its name and sa
   await page.locator("[data-roll='2']").click();
   await page.locator("[data-pick=above]").click();
   await page.getByRole("button", { name: "Confirm this note", exact: true }).click();
-  await expect(page).toHaveURL(/\/notes(\/[0-9a-f-]{36})?$/);
-  const [{ n }] = await sql<{ n: number }[]>`
-    select count(*)::int as n from activity_observation where note_id = ${note} and activity_code = 'ACT-K2-M104-NONE'`;
-  expect(n).toBe(1);
+  await expect
+    .poll(async () => (await sql<{ n: number }[]>`select count(*)::int as n from activity_observation where note_id = ${note} and activity_code = 'ACT-K2-M104-NONE'`)[0].n)
+    .toBe(1);
 });
 
 test("a note that could not be read, or where nothing was heard, sends her to the form", async ({ page }) => {

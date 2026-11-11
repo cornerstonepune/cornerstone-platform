@@ -12,7 +12,7 @@ type Stage = "idle" | "recording" | "recorded" | "sending";
 const EXT: [RegExp, string][] = [[/webm/, ".webm"], [/mp4|aac/, ".m4a"], [/ogg/, ".ogg"], [/wav/, ".wav"]];
 const MIN_BYTES = 1200; // shorter than this is silence: nothing to read
 
-export function Recorder({ classId, say, sessionId, goto, typed }: { classId: string; say: string; sessionId?: string; goto: (noteId: string) => string; typed: React.ReactNode }) {
+export function Recorder({ classId, say, sessionId, opens, typed }: { classId: string; say: string; sessionId?: string; opens: string; typed: React.ReactNode }) {
   const router = useRouter();
   const [stage, setStage] = useState<Stage>("idle");
   const [clip, setClip] = useState<Blob | null>(null);
@@ -76,7 +76,7 @@ export function Recorder({ classId, say, sessionId, goto, typed }: { classId: st
       return;
     }
     setClip(null);
-    router.push(goto(got.note_id));
+    router.push(`${opens}/${got.note_id}`);
   }
 
   return (

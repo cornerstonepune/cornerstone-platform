@@ -37,7 +37,7 @@ export default async function Record({ searchParams }: { searchParams: Promise<{
       purpose="Say what happened and who, by Sr. number. The reader turns it into marks; you confirm them, one note at a time."
       action={
         c && my.recording ? (
-          <Recorder classId={c.id} sessionId={picked?.id} say="Say what happened and who, by Sr. number." goto={(id) => `/notes/${id}`} typed={<TypeMarks classId={c.id} sessionId={picked?.id} main />} />
+          <Recorder classId={c.id} sessionId={picked?.id} say="Say what happened and who, by Sr. number." opens="/notes" typed={<TypeMarks classId={c.id} sessionId={picked?.id} main />} />
         ) : c ? (
           <TypeMarks classId={c.id} sessionId={picked?.id} main />
         ) : (
