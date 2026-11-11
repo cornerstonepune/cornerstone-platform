@@ -78,3 +78,10 @@ Seven of its tests failed on a fresh database. Real, and fixed at their cause: t
 - Carried across from the old page: the time range, the period's own name (from the timetable), the school's words, the planner's lines (a fold, open), the count strip, the activity and its link (which returns to the day).
 - Changed by the wireframe, and so in the old page's spec (`m1-09-calendar.spec.ts`, "any block opens its period"): the page's title is its **activity** ("Insects"), where the old page's was the period's name ("Academic 2 General Awareness"), which is now the header line with the time range; the trail follows the title. Each fact is still asserted.
 - Not run here: the calendar's own tests ("Today is the day as a calendar", "This week is a grid", the two "switched off" tests); they fail on untouched main in the local test database too (the tester previews, and the K2 timetable rows differ), and CI runs them on its own.
+
+## Unfinished when work stopped (2026-11-11)
+
+- PR #681 (period page link repoint, old page deleted): built and green on plan, engine-checks and web; the full run was lost to CI runner install failures (apt) and cancelled on request. Needs one merge of main and one full run, then merge.
+- Child history by name: `notes/peek.ts` still reads staff names from the staff directory; switch to the engine's `by_name` field once its contract is in `engine-routes.ts` (backend session).
+- Inventory fixtures: add `educator.timetable_enabled` to `voiceRest` and `voiceGone` in `tests/inventory-voice.ts`, because the period screen needs the timetable open.
+- Main is red on `test_one_clock`: `lib/queries-assessment-extras.ts` (UI-4c, #674) hard-codes the school's time zone. Not this slice's file.
