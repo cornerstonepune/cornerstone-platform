@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import Link from "@/components/link";
 import { Cards } from "@/components/cards";
 import { DataTable } from "@/components/data-table";
 import { Details } from "@/components/details";
@@ -63,7 +64,12 @@ export default async function QuestionScreen({ params, searchParams }: Props) {
         <p role="status" className="mb-3 text-[13px] text-[var(--ink-muted)]" data-removed>
           Removed{it.removed_by ? ` by ${it.removed_by}` : ""}
           {it.removed_note ? ` — ${it.removed_note}` : ""}. It will not print again.
-          {it.replaced_by_key ? ` The corrected question is ${it.replaced_by_key}.` : ""}
+          {it.replaced_by_key ? (
+            <>
+              {" "}
+              <Link href={`${BANK}/${it.replaced_by_key}`} data-corrected-link="">Open the corrected question →</Link>
+            </>
+          ) : null}
         </p>
       )}
       <Cards
@@ -94,6 +100,11 @@ export default async function QuestionScreen({ params, searchParams }: Props) {
           ]}
         />
       </div>
+      {it.corrected_from_key ? (
+        <p className="my-3 text-[14px]">
+          This wording replaced an earlier one. <Link href={`${BANK}/${it.corrected_from_key}`} data-original-link="">See the original wording</Link>
+        </p>
+      ) : null}
       <div className="my-4">
         <Details summary="About it (source, versions)" name="about">
           <KeyValue
@@ -102,7 +113,12 @@ export default async function QuestionScreen({ params, searchParams }: Props) {
               { label: "Level", value: `${it.difficulty ?? ""}${it.level_words ? ` · ${it.level_words}` : ""}` },
               { label: "Made by", value: it.generator === "correction" ? "Reworded by a person" : `The engine, from this level's rule${it.skill_set_version ? ` (version ${it.skill_set_version})` : ""}` },
               { label: "Key", value: it.item_key, num: true },
-              { label: "Earlier wording", value: it.corrected_from_key ? `${it.corrected_from_key}, kept and readable` : `On ${it.worksheets.length} worksheets; ${it.children} children have had it` },
+              { label: "On papers", value: it.children ? `${it.children} children have had it` : "Not on a paper yet" },
+            ]}
+          />
+          <KeyValue
+            rows={[
+              { label: "On worksheets", value: it.worksheets.length ? it.worksheets.join(", ") : "None: a question that has left the bank is on no worksheet in use", num: true },
             ]}
           />
         </Details>

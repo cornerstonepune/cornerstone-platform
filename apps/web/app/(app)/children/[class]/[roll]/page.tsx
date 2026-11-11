@@ -8,6 +8,7 @@ import { NotYours } from "@/components/not-yours";
 import { StatusChip } from "@/components/status-chip";
 import { Timeline } from "@/components/timeline";
 import { Trend } from "@/components/trend";
+import { Answers } from "@/components/children/answers";
 import { SwitchedOff } from "@/components/children/switched-off";
 import { requireStaff } from "@/lib/auth";
 import { screensOn } from "@/lib/children-reads";
@@ -15,6 +16,7 @@ import { screenHref } from "@/lib/built";
 import { childOf, historyOf } from "@/lib/children-peek";
 import { sittingsOf, skillsOfChild, type ChildSkill } from "@/lib/children-picture";
 import { initialsOf } from "@/lib/children-view";
+import { childEvidence, misconceptionNames } from "@/lib/queries";
 import { dateWords } from "@/lib/week";
 import type { Column } from "@/lib/ux-rules";
 
@@ -23,7 +25,7 @@ const DOMAIN_SLOTS = ["numeracy", "language", "arts"] as const;
 
 // One child's page (UI-3b): where the child is on each skill. The graph and the table hold the same skills with the same words;
 // on a phone the graph is not drawn and the table is the list. The address is by class and Sr. No.; a name is never in it.
-export default async function TheChild({ params, searchParams }: { params: Promise<{ class: string; roll: string }>; searchParams: Promise<{ skill?: string; before?: string }> }) {
+export default async function TheChild({ params, searchParams }: { params: Promise<{ class: string; roll: string }>; searchParams: Promise<{ skill?: string; before?: string; answers?: string }> }) {
   const me = await requireStaff();
   if (!(await screensOn())) return <SwitchedOff title="Where this child is" stage="Children" />;
   const { class: classId, roll } = await params;
@@ -34,6 +36,8 @@ export default async function TheChild({ params, searchParams }: { params: Promi
   const skills = await skillsOfChild(child.id);
   const skill = skills.find((s) => s.code === sp.skill) ?? skills[0];
   const sittings = skill ? await sittingsOf(child.id, skill.code) : [];
+  const [evidence, mistakes] = await Promise.all([childEvidence(child.id), misconceptionNames(child.id)]);
+  const answersPage = Math.max(1, Number.parseInt(sp.answers ?? "1", 10) || 1);
   const newest = await historyOf(child.id, PAGE + 1, sp.before && !Number.isNaN(Date.parse(sp.before)) ? sp.before : null);
   const entries = newest.slice(0, PAGE);
   const older = newest.length > PAGE ? entries[entries.length - 1]?.at : undefined;
@@ -83,6 +87,14 @@ export default async function TheChild({ params, searchParams }: { params: Promi
           <Link data-more href={`/children/${classId}/${encodeURIComponent(roll)}?${new URLSearchParams({ ...(skill ? { skill: skill.code } : {}), before: older })}`}>Older entries</Link>
         </p>
       ) : null}
+      <h2 className="mt-4 mb-2 text-[18px]">Answers</h2>
+      <Answers
+        rows={evidence}
+        names={mistakes}
+        skills={Object.fromEntries(skills.map((s) => [s.code, s.name]))}
+        page={answersPage}
+        href={(p) => `/children/${classId}/${encodeURIComponent(roll)}?${new URLSearchParams({ ...(skill ? { skill: skill.code } : {}), ...(sp.before ? { before: sp.before } : {}), answers: String(p) })}`}
+      />
     </Screen>
   );
 }

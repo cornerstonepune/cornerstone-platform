@@ -24,6 +24,7 @@ export const GROUPS: readonly Door[] = [
       // the K2 voice notes (UI-3a): the old addresses are gone, so Notes has its own door; its page is a 404 while voice notes are off
       { label: "Notes", href: "/notes", match: ["/notes"], guide: false },
       { label: "Your day", href: "/educator", match: ["/educator"], guide: false },
+      { label: "Today, new look", href: "/today/new", match: ["/today/new"], guide: false },
     ],
   },
   {
