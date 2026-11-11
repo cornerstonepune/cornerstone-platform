@@ -26,8 +26,8 @@ const SUBJECT: [RegExp, Subject][] = [
 ];
 const subjectOf = (p: Pick<Period, "kind" | "subject">): Subject => (p.kind === "fixed" || p.kind === "empty" ? "fixed" : (SUBJECT.find(([re]) => re.test(p.subject ?? ""))?.[1] ?? "arts"));
 
-/** What a period's state chip says: only from what was recorded. A fixed part of the day has none. */
-const STATE: Record<SessionState, State | undefined> = { planned: undefined, done: "done", not_done: "notDone", moved: "moved" };
+/** What a period's state chip says: from what was recorded, and "to do" for a lesson still planned. A fixed part of the day has none. */
+const STATE: Record<SessionState, State | undefined> = { planned: "toDo", done: "done", not_done: "notDone", moved: "moved" };
 
 /** A period as PeriodRow draws it. `href` is where it opens; the lit one is `now`. */
 export function periodRow(p: Period, lit: string | null, href: string): Row {

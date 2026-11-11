@@ -8,6 +8,7 @@ import path from "node:path";
 import { expect, test, type Locator, type Page } from "@playwright/test";
 import postgres from "postgres";
 import { AMBER, clearOffers, code, curriculumRows, FILLED, GREEN, offers, RED, gate, STEPS, TOTAL } from "./m1-13-rows";
+import { doorPages } from "./door-pages";
 
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 const SHOTS = path.resolve(__dirname, "../../../docs/screens/m1-13");
@@ -67,7 +68,7 @@ test("open to head with the switch off (to look, or to review), and to staff onc
 
 test("the pages sit in the school's shell: its menu, a breadcrumb, a strip of counts, a tab bar on a phone", async ({ page }) => {
   await page.goto("/curriculum/fill");
-  const row = page.getByRole("navigation", { name: "Pages in this section" });
+  const row = await doorPages(page);
   for (const label of ["Browse the curriculum", "What is filled", "Skills offered", "Check the drafted parts"]) await expect(row.getByRole("link", { name: label })).toBeVisible();
   await expect(page.getByRole("navigation", { name: "Where you are" })).toContainText("What is filled");
   await expect(page.locator("[data-summary] a").first()).toBeVisible();

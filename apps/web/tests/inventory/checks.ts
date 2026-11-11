@@ -12,13 +12,13 @@ type Problems = string[];
 
 const CONTROLS = "a[href], button, [role=button], summary, input:not([type=hidden]), select, textarea";
 
-/** The controls of the main column and the rail (the trail is the frame's, and Next's own action fields are not controls), as measured boxes. */
+/** The controls of the main column and the rail (the trail and the door's pages beside it are the frame's, and Next's own action fields are not controls), as measured boxes. */
 async function mainControls(page: Page) {
   return page.evaluate((sel) => {
     const main = document.querySelector("main");
     if (!main) return [];
     return [...main.querySelectorAll<HTMLElement>(sel)]
-      .filter((e) => !e.closest("[data-trail]") && !(e as HTMLInputElement).name?.startsWith("$ACTION"))
+      .filter((e) => !e.closest("[data-trail], [data-door-pages]") && !(e as HTMLInputElement).name?.startsWith("$ACTION"))
       // the frame's own links (the next step, the details link) are drawn on every screen: an element may list one, and none is extra
       .map((e) => ({ tag: e.tagName.toLowerCase(), frame: e.matches("[data-ux=next], [data-ux=details]"), peek: e.hasAttribute("data-peek-open"), attrs: e.getAttributeNames(), href: e.getAttribute("href") ?? "", name: (e.getAttribute("aria-label") || (e as HTMLInputElement).labels?.[0]?.innerText || e.innerText || (e as HTMLInputElement).placeholder || "").trim(), ...(() => { const r = e.getBoundingClientRect(); return { w: r.width, h: r.height, x: r.x, y: r.y }; })() }));
   }, CONTROLS);
@@ -41,7 +41,8 @@ export async function renders(page: Page, s: Screen, c: Ctx, errors: string[]): 
     return out;
   }
   if (c.width < 1000) return out;
-  const eyebrow = await page.getByTestId("stage").first().evaluate((e) => parseFloat(getComputedStyle(e).fontSize)).catch(() => 0);
+  // an eyebrow that would only repeat the title is not drawn (#690); one that is drawn is 14 px or more
+  const eyebrow = (await page.getByTestId("stage").count()) ? await page.getByTestId("stage").first().evaluate((e) => parseFloat(getComputedStyle(e).fontSize)) : 14;
   if (eyebrow < 14) out.push(`${s.id}: the eyebrow is ${eyebrow} px, not 14 or more`);
   const purpose = await page.locator("header p").first().innerText().catch(() => "");
   if (!purpose || purpose.length > PURPOSE_MAX) out.push(`${s.id}: the purpose line is ${purpose.length} characters (1 to ${PURPOSE_MAX})`);
@@ -147,7 +148,7 @@ export async function keyboard(page: Page, s: Screen): Promise<Problems> {
     await page.keyboard.press("Tab");
     const at = await page.evaluate((sel) => {
       const e = document.activeElement as HTMLElement | null;
-      if (!e || !e.closest("main") || e.closest("[data-trail]")) return null;
+      if (!e || !e.closest("main") || e.closest("[data-trail], [data-door-pages]")) return null;
       const st = getComputedStyle(e);
       // a control is known by its place in the page, not by where it is on screen: Tab scrolls each newly focused control to the same spot, so two like controls (twelve "Move" buttons) would share a position
       const place = [...document.querySelector("main")!.querySelectorAll(sel)].indexOf(e);

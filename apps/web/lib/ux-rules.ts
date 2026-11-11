@@ -6,8 +6,11 @@ export const TABLE_ROW_LIMIT = 10;
 /** Rule 4: the line under a page's title says what the page is for, in one breath. */
 export const PURPOSE_MAX = 140;
 
-/** The bar (docs/ux-rules.md rule 11, UI-13): 64 px high, every control in it at least a tap (44 px) tall, the search a compact field. */
-export const BAR_HEIGHT_PX = 64;
+/** The bar (docs/ux-rules.md rule 11, UI-13): 72 px high, the wireframes' own (kit.css `.bar`), every control in it at least a tap (44 px)
+ *  tall, the search a compact field. The school's logo in it is 48 px high, the most that keeps a quarter of its height clear above
+ *  and below (docs/frontend/SPEC.md "The logo"; Nimish, 11 Nov 2026: "make the Cornerstone logo bigger"). */
+export const BAR_HEIGHT_PX = 72;
+export const BAR_LOGO_PX = 48;
 export const TOP_BAR_MIN_PX = 44;
 export const SEARCH_PX = 240;
 /** At this width or less the four doors are a tab bar at the foot, and the bar keeps the mark, the search and the person. */

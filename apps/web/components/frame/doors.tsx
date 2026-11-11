@@ -1,7 +1,7 @@
 "use client";
 
 import NextLink from "next/link";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import Link from "@/components/link";
 import { usePathname } from "next/navigation";
 import { Icon } from "@/lib/icons";
@@ -82,72 +82,80 @@ export function BottomDoors() {
   );
 }
 
-/** One page of the lit door: a tab with its own underline when it is the page you are on. */
+/** One page of the lit door: a row of the pages panel, marked when it is the page you are on. */
 function PageLink({ page, here }: { page: MenuPage; here: string | undefined }) {
   return (
     <Link
       href={page.href}
       aria-current={page.href === here ? "page" : undefined}
-      className={`flex min-h-[var(--tap)] items-center whitespace-nowrap px-[var(--space-2)] text-[length:var(--text-label)] no-underline ${page.href === here ? "font-medium text-[var(--ink)] shadow-[inset_0_-3px_0_var(--brand-clay)]" : "text-[var(--ink-muted)] hover:text-[var(--ink)]"}`}
+      className={`flex min-h-[var(--tap)] items-center whitespace-nowrap rounded-[var(--radius-control)] px-[var(--space-2)] text-[length:var(--text-body)] no-underline hover:bg-[var(--surface)] ${page.href === here ? "font-medium text-[var(--ink)] shadow-[inset_3px_0_0_var(--brand-clay)]" : "text-[var(--ink)]"}`}
     >
       {page.label}
     </Link>
   );
 }
 
-/** The pages of the lit door, under the bar: a door's other pages are a row here, never more doors. A door whose pages name a group
- *  (Setup, thirteen pages) shows them in labelled clusters that wrap onto further lines, so nothing runs off the edge at any width. */
+/** The pages of the lit door. The wireframes draw one nav row (the bar) and no row of tabs under it (Nimish, 11 Nov 2026), so a door's
+ *  other pages fold behind one button at the end of the trail ("Setup pages"); it opens a panel over the page, grouped where the door's
+ *  pages name a group, and closes on a page, on Escape or on a click outside. The page you are on is marked in it. */
 export function DoorPages() {
   const path = usePathname();
-  // on a phone the grouped pages fold behind one button (the heading must stay near the top); a page of the door closes it again
   const [openAt, setOpenAt] = useState<string | null>(null);
   const shut = openAt !== path;
+  const box = useRef<HTMLElement>(null);
   const { lit } = useWalk();
   const door = GROUPS.find((g) => g.key === lit);
   const pages = pagesOf(door);
   const here = locate(path)?.page.href;
+  useEffect(() => {
+    if (shut) return;
+    const away = (e: Event) => {
+      if (e instanceof KeyboardEvent ? e.key === "Escape" : !box.current?.contains(e.target as Node)) setOpenAt(null);
+    };
+    document.addEventListener("keydown", away);
+    document.addEventListener("pointerdown", away);
+    return () => {
+      document.removeEventListener("keydown", away);
+      document.removeEventListener("pointerdown", away);
+    };
+  }, [shut]);
   if (!pages.length) return null;
   const headings = [...new Set(pages.map((p) => p.group).filter((g): g is string => Boolean(g)))];
-  if (headings.length)
-    return (
-      <nav aria-label="Pages in this section" className="border-t border-[var(--line)] print:hidden">
-        <button
-          type="button"
-          aria-expanded={!shut}
-          aria-controls="door-pages"
-          onClick={() => setOpenAt(shut ? path : null)}
-          className="mx-auto flex min-h-[var(--tap)] w-full max-w-[1560px] items-center justify-between bg-transparent px-[var(--space-3)] text-[length:var(--text-label)] text-[var(--ink)] md:hidden"
-        >
-          <span>{door?.label} pages</span>
-          <span aria-hidden="true">{shut ? "▾" : "▴"}</span>
-        </button>
-        <ul id="door-pages" className={`mx-auto w-full max-w-[1560px] flex-wrap gap-x-[var(--space-4)] px-[var(--space-3)] md:flex md:px-[var(--space-4)] ${shut ? "max-md:hidden" : "flex"}`}>
-          {headings.map((h) => (
-            <li key={h} className="flex flex-wrap items-center">
-              <span className="pr-[var(--space-1)] text-[length:var(--text-label)] leading-6 uppercase tracking-wide text-[var(--ink-muted)]">{h}</span>
-              <ul className="flex flex-wrap gap-[var(--space-1)]" aria-label={h}>
-                {pages
-                  .filter((p) => p.group === h)
-                  .map((p) => (
-                    <li key={p.href}>
-                      <PageLink page={p} here={here} />
-                    </li>
-                  ))}
-              </ul>
-            </li>
-          ))}
-        </ul>
-      </nav>
-    );
+  const list = (ps: readonly MenuPage[], label?: string) => (
+    <ul className="grid gap-[2px]" aria-label={label}>
+      {ps.map((p) => (
+        <li key={p.href}>
+          <PageLink page={p} here={here} />
+        </li>
+      ))}
+    </ul>
+  );
   return (
-    <nav aria-label="Pages in this section" className="border-t border-[var(--line)] print:hidden">
-      <ul className="mx-auto flex w-full max-w-[1560px] gap-[var(--space-1)] overflow-x-auto px-[var(--space-3)] md:px-[var(--space-4)]">
-        {pages.map((p) => (
-          <li key={p.href}>
-            <PageLink page={p} here={here} />
-          </li>
-        ))}
-      </ul>
+    <nav ref={box} aria-label="Pages in this section" data-door-pages className="relative ml-auto shrink-0 print:hidden">
+      <button
+        type="button"
+        aria-expanded={!shut}
+        aria-controls="door-pages"
+        onClick={() => setOpenAt(shut ? path : null)}
+        className="inline-flex min-h-[var(--tap)] items-center gap-[var(--space-1)] rounded-[var(--radius-control)] px-[var(--space-2)] text-[length:var(--text-label)] font-medium text-[var(--ink)] hover:bg-[var(--surface)]"
+      >
+        {door?.label} pages
+        <span aria-hidden="true">{shut ? "▾" : "▴"}</span>
+      </button>
+      <div
+        id="door-pages"
+        hidden={shut}
+        className={`absolute right-0 z-40 mt-1 max-h-[70dvh] w-max max-w-[min(92vw,640px)] overflow-y-auto rounded-[var(--radius-card)] bg-[var(--panel)] p-[var(--space-2)] shadow-[var(--shadow-card)] ${headings.length > 1 ? "grid grid-cols-1 gap-[var(--space-3)] min-[701px]:grid-cols-3" : ""}`}
+      >
+        {headings.length
+          ? headings.map((h) => (
+              <div key={h} className="min-w-[180px]">
+                <span aria-hidden="true" className="block px-[var(--space-2)] pb-[var(--space-1)] text-[length:var(--text-label)] uppercase tracking-wide text-[var(--ink-muted)]">{h}</span>
+                {list(pages.filter((p) => p.group === h), h)}
+              </div>
+            ))
+          : list(pages)}
+      </div>
     </nav>
   );
 }

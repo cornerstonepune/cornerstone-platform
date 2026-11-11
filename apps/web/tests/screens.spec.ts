@@ -2,6 +2,7 @@ import { expect, test } from "@playwright/test";
 import postgres from "postgres";
 import { aClass, aReadPaper, aWorksheet } from "./rows";
 import { voiceSwitch } from "./k2-rows";
+import { doorPages } from "./door-pages";
 
 // Every screen must render its heading at a laptop and at a phone, with no console error and no
 // sideways scroll. A teacher on a phone in a corridor is a real case.
@@ -80,7 +81,7 @@ test("every section is reachable from the menu", async ({ page }) => {
     ["Setup", ["Curriculum", "Question bank", "Staff", "School"]],
   ] as const) {
     await groups.getByRole("link", { name: door }).click();
-    const row = page.getByRole("navigation", { name: "Pages in this section" });
+    const row = await doorPages(page);
     for (const label of labels) await expect(row.getByRole("link", { name: label, exact: true })).toBeVisible();
   }
 });
@@ -100,7 +101,7 @@ test("the menu marks where you are", async ({ page }) => {
   // the question bank is a page of Setup: the group and its tab are both marked
   await page.goto("/library");
   await expect(page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" }).getByRole("link", { name: "Setup" })).toHaveAttribute("aria-current", "page");
-  await expect(page.getByRole("navigation", { name: "Pages in this section" }).getByRole("link", { name: "Question bank" })).toHaveAttribute("aria-current", "page");
+  await expect((await doorPages(page)).getByRole("link", { name: "Question bank" })).toHaveAttribute("aria-current", "page");
 });
 
 // A child's page reads in the school's own words: no rung, skill-set or mistake code reaches a teacher, and every skill

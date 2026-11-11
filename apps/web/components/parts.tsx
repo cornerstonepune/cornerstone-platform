@@ -1,26 +1,38 @@
 import type { ReactNode } from "react";
 import type { Session } from "@/lib/auth";
-import { Trail } from "./trail";
+import { DoorIcon, Trail } from "./trail";
+import { Icon, type IconName } from "@/lib/icons";
 
 // The small parts a page is made of: the page's head and body, a panel, a pill, a tile, a notice. (They lived in the old shell's file.)
 
-/** The head of a page: the trail (the door, then the thing), the eyebrow, the one h1, the purpose line. */
-export function PageHeader({ stage, title, sub }: { stage: string; title: string; sub: string }) {
+/** The eyebrow says something the title does not (a day and a class, a count waiting, a stage): one that only repeats the title is
+ *  not drawn (Nimish, 11 Nov 2026: "these kinds of empty spaces should not be there"). */
+export const eyebrowSays = (stage: string, title: string) => {
+  const norm = (t: string) => t.toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+  return norm(stage) !== "" && norm(stage) !== norm(title);
+};
+
+/** The head of a page: the trail (the door, then the thing), the eyebrow when it says more than the title, the one h1, the purpose
+ *  line across the column. `inColumn`: drawn inside a Screen's main column (beside the rail, as the wireframes' `.page` grid), so the
+ *  column's own padding holds it and no rule or divider follows it. */
+export function PageHeader({ stage, title, sub, icon, inColumn }: { stage: string; title: string; sub: string; icon?: IconName; inColumn?: boolean }) {
   return (
-    <header className="border-b border-[var(--line)] px-5 pt-3 pb-[18px] md:px-9 md:pt-4">
+    <header className={inColumn ? "mb-[var(--space-3)]" : "border-b border-[var(--line)] px-5 pt-3 pb-3 md:px-9"}>
       <Trail thing={title} />
-      <div className="mb-1 truncate text-[length:var(--text-eyebrow)] font-medium tracking-[0.08em] text-[var(--ink-muted)] uppercase md:mb-2 md:whitespace-normal" data-testid="stage">
-        {stage}
-      </div>
-      <h1 className="text-[22px] leading-tight md:text-[26px]">{title}</h1>
-      <p className="mt-[6px] max-w-[620px] text-[13.5px] leading-[1.5] text-basalt/62">{sub}</p>
-      <div className="chalkline" />
+      {eyebrowSays(stage, title) ? (
+        <div className="mb-1 flex items-center gap-[var(--space-1)] truncate text-[length:var(--text-eyebrow)] font-semibold tracking-[0.08em] text-[var(--ink-muted)] uppercase md:whitespace-normal" data-testid="stage">
+          {icon ? <Icon name={icon} size={16} /> : <DoorIcon />}
+          <span>{stage}</span>
+        </div>
+      ) : null}
+      <h1 className="text-[24px] leading-tight md:text-[30px]">{title}</h1>
+      <p className="mt-1 text-[15px] leading-[1.5] text-[var(--ink-muted)] md:text-[16px]">{sub}</p>
     </header>
   );
 }
 
 export function Body({ children }: { children: ReactNode }) {
-  return <div className="min-w-0 flex-1 px-5 pt-[22px] pb-8 md:px-9">{children}</div>;
+  return <div className="min-w-0 flex-1 px-5 pt-[var(--space-3)] pb-[var(--space-5)] md:px-9">{children}</div>;
 }
 
 // `label` names the panel as a region for a screen reader (and a test); `id` makes it a link target. The panel is

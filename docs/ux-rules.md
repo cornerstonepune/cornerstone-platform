@@ -9,7 +9,7 @@ Educators use the site on a desktop, so every screen is designed, tested and scr
 was the K2 screens' width until UI-13). A phone (400 px) must not break: every screen passes a smoke test there (it
 renders, one h1, no console error, no sideways scroll of the page). The screens marked `phone_gate` in
 `docs/frontend/screens.json` are held to more at 400 px: the same order, controls of at least 44 × 44 px with 8 px between,
-the keyboard, and the words; a page's heading sits within the top 240 px (the 64 px bar, the door's row of pages and the
+the keyboard, and the words; a page's heading sits within the top 240 px (the 72 px bar and the
 trail come first). KG observation (S9) is done on a phone and is such a screen.
 
 **Four work states, not five chips.** Work is one of green (done), amber (to confirm, waiting on someone), red (do now,
@@ -46,10 +46,11 @@ are in `apps/web/lib/voice-words.ts` and every icon in `apps/web/lib/icons.tsx`,
 10. **A status is an icon, a word and a colour.** Never colour alone. One chip (`StatusChip`), one map of the school's
    states to green (done, right), amber (waiting on someone or something) and red (needs the educator now), and a quiet
    grey for a state with nothing to do. Red is rare. A state is added to `STATES` before a page uses it.
-11. **The bar is for getting around.** One bar across the whole screen, 64 px high, and no sidebar (the rail beside a page
-   holds what is connected to it, never the menu): the school's logo (BrandMark, a link to Today), the four doors (Today,
+11. **The bar is for getting around.** One bar across the whole screen, 72 px high (the wireframes' bar), and no sidebar (the rail beside a page
+   holds what is connected to it, never the menu): the school's logo (BrandMark, 48 px high, a link to Today), the four doors (Today,
    Timetable, Children, Setup, each with its icon; Setup is every member of staff's while `mayUse(me, "setup")` says so, and
-   the coordinator group's alone once the roles split), the search, acting as (the coordinator's), help and sign out. Under the bar sit the pages of the lit door. The one count in the site is on Today.
+   the coordinator group's alone once the roles split), the search, acting as (the coordinator's), help and sign out. There is one nav row: the lit door's other pages fold behind one button at the end of the trail ("Setup pages"), never a
+   second row under the bar (#690). The one count in the site is on Today.
    The search is a typeahead of at most five suggestions with no results page; what is typed travels in a POST body, never
    in an address or a log. Everything in the bar is at least 44 px tall. Nothing in a shared block or the bar names a
    subject. The door lit is the door the walk started from. Above a page's title is its trail: the door, then the thing,
@@ -75,10 +76,10 @@ are in `apps/web/lib/voice-words.ts` and every icon in `apps/web/lib/icons.tsx`,
 | Setup, apart | | Curriculum; Question bank |
 
 The menu is four doors on the bar (`apps/web/lib/menu.ts`; the old side menus are gone), and the table above is how the week
-runs through them. A page's door is the `group` of the screen that replaces it in `docs/frontend/screens.json`; its pages are
-a row under the bar:
+runs through them. A page's door is the `group` of the screen that replaces it in `docs/frontend/screens.json`; its pages fold
+behind the "<door> pages" button at the end of the trail:
 
-| Door | Its pages (the row under the bar) |
+| Door | Its pages (behind "<door> pages" at the end of the trail) |
 |---|---|
 | Today | What needs doing (a short list of kinds of work, one line each with its count; the address `/today`; carries the one count); Your day |
 | Timetable | This week, Materials, Timetable rules |
