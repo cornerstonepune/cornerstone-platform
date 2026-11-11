@@ -4,7 +4,7 @@ import { Rail, Screen, type Edge } from "@/components/app-frame";
 import { PeekChip, PeekHost } from "@/components/peek-names";
 import { requireStaff } from "@/lib/auth";
 import { sql } from "@/lib/db";
-import { activityNames, childrenByIds, classNotes, type ClassNote } from "@/lib/notes-loop";
+import { activityNames, childrenByIds, classNotes, rosterOf, type ClassNote } from "@/lib/notes-loop";
 import { schoolZone } from "@/lib/school-clock";
 import { draftOf } from "@/lib/voice";
 import { herVoice } from "@/lib/voice-page";
@@ -41,6 +41,7 @@ export default async function ConfirmWhatTheReaderHeard({ params }: { params: Pr
   const klass = classWords(found);
   const names = await activityNames(draft.activity ? [draft.activity] : []);
   const kids = await childrenByIds(me, note?.children ?? []);
+  const roster = await rosterOf(me, found.id);
   const form = { href: `/record?class=${found.id}`, label: W.typeMarks };
   const heard = new Date(draft.received_at).toLocaleString("en-IN", { timeZone: zone, hour: "2-digit", minute: "2-digit", hour12: false });
   const marks =
@@ -87,7 +88,7 @@ export default async function ConfirmWhatTheReaderHeard({ params }: { params: Pr
             {note.children.flatMap((cid) => (kids[cid] ? [<li key={cid}><PeekChip kid={{ ...kids[cid], href: `/children/${kids[cid].classId}/${Number(kids[cid].no)}`, classId: kids[cid].classId, roll: String(Number(kids[cid].no)) }} /></li>] : []))}
           </ul>
         ) : null}
-        <Body draft={draft} klass={klass} grade={found.grade} form={form} send={confirmHere.bind(null, id, found.id)} done={{ href: "/notes", label: "Notes" }} typed={note?.typed} />
+        <Body draft={draft} klass={klass} grade={found.grade} form={form} send={confirmHere.bind(null, id, found.id)} done={{ href: "/notes", label: "Notes" }} typed={note?.typed} roster={roster} />
         {draft.status === "confirmed" ? <Correct back={`/notes/${id}`} marks={marks.map((m) => ({ observation: m.id, no: kids[m.child_id]?.no ?? "", outcome: m.outcome }))} /> : null}
       </Screen>
     </PeekHost>

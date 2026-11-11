@@ -61,3 +61,12 @@ The 308s: `/voice/record` to `/record`, `/voice/form` to `/record` (the typed pa
 
 ### The notes-loop spec ran for the first time (it matched no project's file pattern until it became `u76-notes-loop.spec.ts`)
 Seven of its tests failed on a fresh database. Real, and fixed at their cause: the claim list and its × never appeared (the engine sets a line's `said` only for "the rest", and the filter required it); the phone's `.btn` rule (min-height 44 px, unlayered) beat the Start button's `min-h-14`, and the Start button sat inside a padded card, so it was neither 56 px tall nor the row's width (`!min-h-14`, no card on a phone, `w-full`); the child peek read staff names from `pii.staff`, which the website's role may not read (it reads the staff list the website already asks for; the engine could return the name itself). Test data, fixed in the tests: four tests waited for `/notes` in the address after Confirm, which is true before the write finishes (they wait for the note to be confirmed); the peek test opened the first page of a table that lists every late and waiting note before any confirmed one (it filters to confirmed). One assertion changed its measure and not its strength: "full width" is the width of the screen's action row, not `main` less a 16 px gutter the app does not have (its gutter is 20).
+
+
+### Brought to the wireframes (Record, Confirm, Notes)
+- **Confirm**: the squares of the class carry the child's initials and name (read through `pii.read_child`, only for the children a person may see); "You said" is a row of cards, each the educator's words, "Read as:" the children it names, the mark as a chip, and Remove; the line-by-line list is a fold ("What you said") above them; the grid is full width.
+- **Record**: three cards once a period is chosen: what the class showed the last time this ran, who is not yet seen on it, the class's latest notes. The photo picker is disabled until the page has hydrated (a file chosen sooner was dropped without a word).
+- **Notes**: three summary cards under the list: by state, by class, how they came in.
+- **Period** loads and has its structure; what it still lacks of its wireframe is data (steps, last time) and the rail's icons and second lines, which are the frame's.
+- Not done here: the period-page link repoint and the old page's deletion (waits for #633 and #651, which own the pages that link to it); the child panel on every screen (UI-7c).
+- The spec's Add a photo test cleared its own note first: a note keeps at most 6 photos and the lesson's note outlives a run.

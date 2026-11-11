@@ -1045,6 +1045,9 @@
         },
         {
           "label": "Open the child"
+        },
+        {
+          "label": "Earlier sentences (each level)"
         }
       ]
     },
