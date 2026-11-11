@@ -15,7 +15,7 @@ from tests.voice_rows import a_k2_class, a_note
 
 pytestmark = pytest.mark.skipif(not os.getenv("DATABASE_URL"), reason="needs DATABASE_URL (see .env.example)")
 KEY = "test-engine-key"
-ROUTES = ("/k2/todo", "/k2/coordinator", "/k2/picture", "/k2/child")
+ROUTES = ("/k2/todo", "/k2/coordinator", "/k2/today-school", "/k2/picture", "/k2/child")
 
 
 @pytest.fixture
@@ -88,6 +88,19 @@ def test_the_coordinators_list_is_refused_to_an_educator_and_given_to_a_coordina
     r = _post(client, "/k2/coordinator", {"actor": me})
     assert r.status_code == 200, r.text
     assert set(r.json()) == {"rows", "counts"}
+
+
+def test_the_school_counts_are_refused_to_an_educator_and_given_to_a_coordinator(engine):
+    client, conn = engine
+    k = a_k2_class(conn)
+    me = _coordinator(conn, k)
+    _switch(conn, True)
+    assert _post(client, "/k2/today-school", {"actor": k["email"]}).status_code == 403
+    r = _post(client, "/k2/today-school", {"actor": me})
+    assert r.status_code == 200, r.text
+    assert set(r.json()) == {
+        "clashes", "drafts", "late_notes", "materials_no_quantity", "last_week", "next_week", "ready",
+    }  # fmt: skip
 
 
 def test_the_answers_have_no_field_a_parent_could_be_shown_that_is_not_theirs(engine):
