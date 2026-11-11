@@ -9,6 +9,8 @@ import { gate } from "./m1-13-rows";
 import { aPerson, personAsStored } from "./rows";
 
 const SET = "U73.SET";
+// a reason of this run alone: the log is append-only, so an earlier run on the same database has left its own rows
+const REASON = `u73 wording ${Date.now()}`;
 const EDUCATOR = { email: "u73-educator@cornerstone.test", name: "Ivy Iris", role: "educator", classes: [] as string[], subjects: ["NUM"] };
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 let url = "";
@@ -50,21 +52,22 @@ test("21 · a coordinator may change a level's sentence and sees each earlier on
   const level = page.locator("[data-level-words=Easy]");
   await level.locator("[data-fold=change-words] summary").click();
   await level.locator("textarea[name=words]").fill("Sorts three things by size.");
-  await level.locator("input[name=reason]").fill("u73 wording");
+  await level.locator("input[name=reason]").fill(REASON);
   await level.getByRole("button", { name: "Save" }).click();
-  await expect(page.locator("[data-level-words=Easy]")).toContainText("Sorts three things by size.");
+  // the history lists the sentence the level was made with before anything is changed, so only the new row (with the reason) proves the save
   await page.locator("[data-level-words=Easy] [data-fold=level-history] summary").click();
-  const earlier = page.locator("[data-level-words=Easy] [data-earlier]").first();
-  await expect(earlier).toContainText("Sorts two things.");
-  await expect(earlier).toContainText("u73 wording");
+  const saved = page.locator("[data-level-words=Easy] [data-earlier]", { hasText: REASON });
+  await expect(saved).toBeVisible();
+  await expect(saved).toContainText("Sorts two things.");
+  await expect(saved).toContainText("Sorts three things by size.");
   await expect(page.locator("[data-level-words=Hard]")).toContainText("Sorts ten things.");
 });
 
 test("22 · a change is logged with the staff id and the reason, and takes only that level out of approved", async () => {
   const [log] = await sql<{ staff_id: string | null; reason: string | null }[]>`
-    select staff_id::text, reason from change_log where table_name = 'skill_level' and row_id = ${SET + " Easy"} and (after ? 'looks_like') order by at desc, id desc limit 1`;
+    select staff_id::text, reason from change_log where table_name = 'skill_level' and row_id = ${SET + " Easy"} and reason = ${REASON} and (after ? 'looks_like') limit 1`;
   expect(log.staff_id).not.toBeNull();
-  expect(log.reason).toBe("u73 wording");
+  expect(log.reason).toBe(REASON);
   const [now] = await sql<{ hard: string; easy_ok: boolean; hard_ok: boolean }[]>`
     select difficulty -> 'Hard' ->> 'words' as hard, level_approved ? 'Easy' as easy_ok, level_approved ? 'Hard' as hard_ok from skill where code = ${SET}`;
   expect(now.hard).toBe("Sorts ten things.");
