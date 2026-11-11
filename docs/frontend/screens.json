@@ -4073,7 +4073,7 @@
         ],
         [
           "Details",
-          "each step's files, commands and screens"
+          "each step's files and commands"
         ]
       ],
       "elements": [
@@ -4089,10 +4089,15 @@
           "note": "jumps to that step on the same page"
         },
         {
+          "t": "link",
+          "label": "each screen a step shows",
+          "data": "data-shows"
+        },
+        {
           "t": "fold",
-          "label": "each step's files, commands and screens",
+          "label": "each step's files and commands",
           "data": "data-files",
-          "text": "Files, commands and screens"
+          "text": "Files and commands"
         }
       ],
       "rail": [],

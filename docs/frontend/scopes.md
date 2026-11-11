@@ -444,7 +444,7 @@ Sign in (with forgot and new password), the help pages and the feedback form, re
 4. After sign in the person lands on `/today` once `UI-7` is in `merged_slices`, and on the existing home page until then (test reads `merged_slices`); sign in uses the bare frame.
 5. A used password link is refused the second time, and no development bypass exists in a production build (the existing gate tests kept).
 6. Sign in shows the large `lockup-colour` (`lockup-for-dark-backgrounds` in dark) above the form with its clear space, and the help pages carry the lockup in their head; the BrandMark tests of UI-13 pass on both.
-7. Every one of the 14 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
+7. Every one of the 15 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
 8. Sign in: lands on Today for the person's group
 9. Sign in: no development bypass in production
 10. Sign in: a used password link is refused the second time

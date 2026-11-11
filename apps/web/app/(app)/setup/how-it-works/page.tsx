@@ -94,6 +94,7 @@ export default async function HowItWorks() {
 }
 
 function StepCard({ s, m }: { s: Step; m: Measure | undefined }) {
+  const shown = s.screens.filter((sc) => !sc.includes("[") && !sc.startsWith("/api/"));
   const next = handsOnTo(s);
   const built = BUILT[s.built];
   return (
@@ -133,9 +134,19 @@ function StepCard({ s, m }: { s: Step; m: Measure | undefined }) {
         </p>
       ) : null}
       {!s.subject.any || s.built !== "live" ? <p className="mt-2 text-[12.5px] text-basalt/80">{s.subject.note}</p> : null}
-      {s.files.length || s.commands.length || s.screens.length ? (
+      {shown.length ? (
+        <p className="mt-3 flex flex-wrap gap-x-3 gap-y-1 text-[12.5px]">
+          <span className="text-basalt/80">Screens:</span>
+          {shown.map((sc) => (
+            <Link key={sc} href={sc} data-shows>
+              {sc}
+            </Link>
+          ))}
+        </p>
+      ) : null}
+      {s.files.length || s.commands.length ? (
         <details className="mt-3 text-[12.5px]">
-          <summary className="cursor-pointer text-basalt/80" data-files>Files, commands and screens</summary>
+          <summary className="cursor-pointer text-basalt/80" data-files>Files and commands</summary>
           <ul className="mt-2 grid gap-1">
             {s.files.map((f) => (
               <li key={f} className="fact">
@@ -147,13 +158,6 @@ function StepCard({ s, m }: { s: Step; m: Measure | undefined }) {
                 {c}
               </li>
             ))}
-            {s.screens
-              .filter((sc) => !sc.includes("[") && !sc.startsWith("/api/"))
-              .map((sc) => (
-                <li key={sc} className="fact">
-                  {sc}
-                </li>
-              ))}
           </ul>
         </details>
       ) : null}

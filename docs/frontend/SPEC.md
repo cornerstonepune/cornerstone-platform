@@ -1177,16 +1177,17 @@ Eyebrow: The engine
 Purpose: The twelve steps agreed with the school: what each does, what it hands on, what it has made so far, and which work for one subject only.
 Blocks, in order:
 - **Tile**: how many steps work, are partly built, are not built, work for one subject only
-- **Details**: each step's files, commands and screens
+- **Details**: each step's files and commands
 Rail (Connected to): none
 Main action: Setup · Next step: Setup
 Data: workflows.json (the map the engine's code is held to), with each step's live number from the database
 Empty: none · Phone: one column; the cards stack
 Folds in: /workflows
-Every control on the screen (3), and what the test does with each:
+Every control on the screen (4), and what the test does with each:
 - **link** Setup → Setup (`/setup`)
 - **link** each step it hands on to (jumps to that step on the same page)
-- **fold** each step's files, commands and screens
+- **link** each screen a step shows
+- **fold** each step's files and commands
 Done when (on top of the ten generic checks):
 - every step of the map is drawn in its workflow, with what it is doing now and where it hands on
 - a step's number is the database's own, read now; a step the map says is not built has no number

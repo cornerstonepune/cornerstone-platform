@@ -36,7 +36,7 @@ test("every step of the map is drawn in its workflow, with what it is doing now 
         await expect(card.getByRole("link", { name: `${next.code} ${next.name}` }), `${s.code} hands on to ${next.code}`).toBeVisible();
       }
       if (s.files.length) {
-        await card.getByText("Files, commands and screens").click();
+        await card.getByText("Files and commands").click();
         await expect(card.getByText(`packages/engine/${s.files[0]}`)).toBeVisible();
       }
     }

@@ -1659,7 +1659,11 @@
           "says": "jumps to that step on the same page"
         },
         {
-          "label": "each step's files, commands and screens",
+          "label": "each screen a step shows",
+          "says": ""
+        },
+        {
+          "label": "each step's files and commands",
           "says": ""
         }
       ]
