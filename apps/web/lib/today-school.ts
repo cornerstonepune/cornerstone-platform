@@ -37,7 +37,7 @@ export function heat(cells: readonly Cell[]): { days: string[]; rows: { label: s
   return { days: days.map(word), rows: order.map((label) => ({ label, cells: days.map((d) => CELL[by.get(label)!.get(d)?.state ?? "holiday"]) })) };
 }
 
-export type Wait = { key: "clash" | "draft" | "late" | "undone" | "materials"; state: State; what: string; n: number; many: string };
+export type Wait = { key: "clash" | "draft" | "late" | "undone" | "materials"; state: State; what: string; n: number; many: string; go: string };
 
 const plural = (n: number, one: string, more = `${one}s`) => `${n} ${n === 1 ? one : more}`;
 
@@ -46,11 +46,11 @@ const plural = (n: number, one: string, more = `${one}s`) => `${n} ${n === 1 ? o
 export function waiting(s: School): Wait[] {
   const undone = Math.max(0, s.last_week.sessions_planned - s.last_week.sessions_done);
   return [
-    { key: "clash" as const, state: "clash" as const, what: "Two lessons at once, not accepted", n: s.clashes, many: plural(s.clashes, "clash", "clashes") },
-    { key: "late" as const, state: "late" as const, what: "Notes left unconfirmed", n: s.late_notes, many: plural(s.late_notes, "note") },
-    { key: "draft" as const, state: "toApprove" as const, what: "Timetable drafts to approve", n: s.drafts.count, many: plural(s.drafts.count, "draft") },
-    { key: "undone" as const, state: "notDone" as const, what: "Lessons not done last week", n: undone, many: plural(undone, "lesson") },
-    { key: "materials" as const, state: "waiting" as const, what: "Materials lines with no quantity next week", n: s.materials_no_quantity.count, many: plural(s.materials_no_quantity.count, "line") },
+    { key: "clash" as const, go: "Open the clashes", state: "clash" as const, what: "Two lessons at once, not accepted", n: s.clashes, many: plural(s.clashes, "clash", "clashes") },
+    { key: "late" as const, go: "Open the notes", state: "late" as const, what: "Notes left unconfirmed", n: s.late_notes, many: plural(s.late_notes, "note") },
+    { key: "draft" as const, go: "Open the drafts", state: "toApprove" as const, what: "Timetable drafts to approve", n: s.drafts.count, many: plural(s.drafts.count, "draft") },
+    { key: "undone" as const, go: "Open staff and classes", state: "notDone" as const, what: "Lessons not done last week", n: undone, many: plural(undone, "lesson") },
+    { key: "materials" as const, go: "Open the materials", state: "waiting" as const, what: "Materials lines with no quantity next week", n: s.materials_no_quantity.count, many: plural(s.materials_no_quantity.count, "line") },
   ].filter((w) => w.n > 0);
 }
 

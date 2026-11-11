@@ -23,7 +23,7 @@ const COLUMNS: Column<Wait>[] = [
   { key: "state", label: "Priority", status: true, width: "9rem", value: (r) => r.state, cell: (r) => <StatusChip state={r.state} round /> },
   { key: "what", label: "What", value: (r) => r.what },
   { key: "many", label: "How many", width: "9rem", value: (r) => r.many },
-  { key: "go", label: "", width: "12rem", value: (r) => r.key, cell: (r) => { const to = open(DOOR[r.key]()); return to ? <Link href={to} className="btn secondary whitespace-nowrap" data-row={r.key}>Open them</Link> : null; } },
+  { key: "go", label: "", width: "12rem", value: (r) => r.key, cell: (r) => { const to = open(DOOR[r.key]()); return to ? <Link href={to} className="btn secondary whitespace-nowrap" data-row={r.key}>{r.go}</Link> : null; } },
 ];
 
 export async function SchoolToday({ me }: { me: Session }) {
@@ -31,7 +31,7 @@ export async function SchoolToday({ me }: { me: Session }) {
   const notes = full ? null : await schoolNotes(me);
   const s: School | null = full;
   const left = notes ? notes.rows.filter((r) => r.state === "left_unconfirmed").length : 0;
-  const rows: Wait[] = s ? waiting(s) : left ? [{ key: "late", state: "late", what: "Notes left unconfirmed", n: left, many: many(left, "note") }] : [];
+  const rows: Wait[] = s ? waiting(s) : left ? [{ key: "late", go: "Open the notes", state: "late", what: "Notes left unconfirmed", n: left, many: many(left, "note") }] : [];
   const t = s ? counts(s) : null;
   const strip: Attention[] = t
     ? [
