@@ -18,6 +18,33 @@
 
 update role set label = 'Class educator' where code = 'class_teacher' and label = 'Class teacher';
 
+-- ... and for every school added later: the rows a school starts with say it too (the same function, one label changed)
+create or replace function internal.people_vocabulary(p_tenant uuid) returns void
+language plpgsql security definer set search_path = public as $$
+begin
+  insert into role (tenant_id, code, label, scope, may_grant, one_per_class, ord)
+  select p_tenant, v.code, v.label, v.scope, array['head', 'coordinator'], v.one_per_class, v.ord
+  from (values
+    ('subject_educator',  'Subject educator',                 'class_subject', false, 0),
+    ('class_teacher',     'Class educator',                   'class',         true,  1),
+    ('mentor',            'Mentor',                           'child',         false, 2),
+    ('assistant',         'Assistant',                        'class',         false, 3),
+    ('coordinator',       'Coordinator',                      'campus',        false, 4),
+    ('deputy_coordinator','Deputy coordinator',               'campus',        false, 5),
+    ('curriculum_team',   'Curriculum team',                  'campus',        false, 6),
+    ('head',              'Head',                             'campus',        false, 7),
+    ('ops',               'Ops',                              'campus',        false, 8),
+    ('cover_educator',    'Cover educator',                   'class',         false, 9),
+    ('special_educator',  'Special educator or counsellor',   'child',         false, 10),
+    ('specialist',        'Specialist (PE, music, art)',      'class',         false, 11),
+    -- the one role on the sign-in list (config app.staff) that D-026 does not name
+    ('educator',          'Educator (as on the sign-in list)','campus',        false, 12)
+  ) v (code, label, scope, one_per_class, ord)
+  on conflict (tenant_id, code) do nothing;
+  insert into campus (tenant_id, name) select p_tenant, t.name from tenant t where t.id = p_tenant
+  on conflict (tenant_id, name) do nothing;
+end $$;
+
 -- 2. A line's approvals are a kind of approval. ---------------------------------------------------------------------
 
 alter table approval drop constraint approval_kind_check;

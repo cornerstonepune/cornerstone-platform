@@ -41,9 +41,9 @@ test("a control the inventory lists and the page lacks fails, naming the control
 
 test("a link that lands on the wrong screen fails as a dead link, naming both headings", async ({ browser }) => {
   const inv = mini();
-  inv.screens[0].elements[0] = { t: "link", label: "Check answers", href: "/capture/check", to: "password" };
+  inv.screens[0].elements[0] = { t: "link", label: "Check answers", href: "/capture/check", to: "feedback" };
   const problems = await audit(browser, inv, "across");
-  expect(problems.join("\n")).toMatch(/“Check answers” did not land on password: its h1 is “Check answers”, expected “Change password” \(a dead link\)/);
+  expect(problems.join("\n")).toMatch(/“Check answers” did not land on feedback: its h1 is “Check answers”, expected “Report a problem or suggest something” \(a dead link\)/);
 });
 
 test("a child's name that is not in tests/fake-names.ts fails, naming the name", async ({ browser }) => {
@@ -58,7 +58,7 @@ test("a child's name that is not in tests/fake-names.ts fails, naming the name",
 
 // ---- UI-1b: the checker drives real screens. The pages below are served by the test itself (no app code), small enough to show each rule.
 import type { Page } from "@playwright/test";
-import { completeness, drive } from "./inventory/checks";
+import { completeness, drive, keyboard } from "./inventory/checks";
 import type { Element, Screen } from "./inventory/load";
 
 const ORIGIN = "http://localhost:3100";
@@ -162,18 +162,113 @@ test("an element for many controls takes them all, by its data attribute or by '
 test("a control with a declared drive is pressed, and what a person sees after is held to what the element says", async ({ browser }) => {
   test.setTimeout(300_000); // five audits of a page, each signing in afresh
   const inv = mini();
-  const button = inv.screens.find((x) => x.id === "password")!.elements.find((x) => x.t === "button")!;
-  // pressing it with nothing typed leaves the person on the same page, asking for the fields: a pass
-  button.drive = { expect: { url: "^/account/password", text: ["password"] } };
-  expect(await audit(browser, inv, "password"), "a drive that holds").toEqual([]);
+  const button = inv.screens.find((x) => x.id === "feedback")!.elements.find((x) => x.t === "button")!;
+  // pressing it with nothing typed leaves the person on the same page, asking for the field: a pass
+  button.drive = { expect: { url: "^/feedback", text: ["report a problem"] } };
+  expect(await audit(browser, inv, "feedback"), "a drive that holds").toEqual([]);
   // the same press, held to something that does not happen, fails and says which control and what was not shown
-  button.drive = { expect: { text: ["a sentence the page never says"], gone: ["password"] } };
-  const problems = (await audit(browser, inv, "password")).join("\n");
-  expect(problems).toContain("“Save the new password” did not show “a sentence the page never says” afterwards");
-  expect(problems).toContain("“Save the new password” still shows “password” afterwards");
+  button.drive = { expect: { text: ["a sentence the page never says"], gone: ["report a problem"] } };
+  const problems = (await audit(browser, inv, "feedback")).join("\n");
+  expect(problems).toContain("“Send” did not show “a sentence the page never says” afterwards");
+  expect(problems).toContain("“Send” still shows “report a problem” afterwards");
   // a drive that names a fixture or a field that is not there is a problem named, never a pass
   button.drive = { fixture: "nothing-of-the-kind", expect: {} };
-  expect((await audit(browser, inv, "password")).join("\n")).toContain("names the fixture “nothing-of-the-kind”");
+  expect((await audit(browser, inv, "feedback")).join("\n")).toContain("names the fixture “nothing-of-the-kind”");
   button.drive = { fill: { "No such field": "x" }, expect: {} };
-  expect((await audit(browser, inv, "password")).join("\n")).toContain("no field “No such field”");
+  expect((await audit(browser, inv, "feedback")).join("\n")).toContain("no field “No such field”");
+});
+
+// ---- UI-5b: the keyboard check. It must still fail a control Tab cannot reach and a page that traps focus, however long the page is;
+// and it must pass a long page whose controls look alike. The limit on Tab presses (60 + the number of controls) only ends a loop: a
+// control counts as reached when Tab has focused it, and no number of extra presses can focus a control that Tab skips.
+const longPage = (n: number, extra = "") =>
+  `<!doctype html><html><body style="margin:0"><main><h1>Proof</h1><div data-ux="action"><a href="/__proof/other" style="outline:2px solid #000">Main action</a></div>
+   ${Array.from({ length: n }, (_, i) => `<p style="margin:0 0 30px"><button type="button" style="outline:2px solid #000">Move</button> row ${i + 1}</p>`).join("")}${extra}</main></body></html>`;
+
+test("a long page of like controls (twelve identical Move buttons and sixty more) is reached by Tab in full", async ({ page }) => {
+  await serve(page, longPage(70));
+  expect(await keyboard(page, screen([]))).toEqual([]);
+});
+
+test("a control Tab cannot reach still fails the keyboard check, on a short page and on a long one, saying how many were reached", async ({ page }) => {
+  for (const n of [5, 70]) {
+    await serve(page, longPage(n, `<button type="button" tabindex="-1" style="outline:2px solid #000">Hidden from the keyboard</button>`));
+    const problems = (await keyboard(page, screen([]))).join("\n");
+    expect(problems, `${n} controls and one Tab skips`).toContain(`Tab reached ${n + 1} of ${n + 2} controls in the main column`);
+  }
+});
+
+test("a page that traps focus in three controls fails the keyboard check however many controls follow", async ({ page }) => {
+  const trap = `<script>const t=[...document.querySelectorAll("button")].slice(0,3);document.addEventListener("keydown",(e)=>{if(e.key!=="Tab")return;e.preventDefault();const i=t.indexOf(document.activeElement);t[(i+1)%3].focus();});</script>`;
+  await serve(page, longPage(70, trap));
+  const problems = (await keyboard(page, screen([]))).join("\n");
+  expect(problems).toMatch(/Tab reached \d+ of 71 controls in the main column/);
+});
+
+// ---- UI-5b: a link to the page one is on (the first class row can be the class already open) changes no address and is not waited on;
+// a link that points elsewhere and goes nowhere is still a dead link.
+test("a row link that points at the page already open is driven without waiting for an address that cannot change", async ({ page }) => {
+  const inv = mini();
+  const body = `<!doctype html><html><body><main><h1>Proof</h1><div data-ux="action"><a href="/__proof/other">Main action</a></div>
+    <a data-row href="/__proof/page?class=1">Class one (open)</a><a data-row href="/__proof/page?class=2">Class two</a></main></body></html>`;
+  await page.route("**/__proof/**", (r) => r.fulfill({ contentType: "text/html", body }));
+  await page.goto(`${ORIGIN}/__proof/page?class=1`);
+  const s = screen([{ t: "row", label: "each class row", data: "data-row" }]);
+  expect(await drive(page, s, s.elements[0], { ...ctx(inv), address: "/__proof/page?class=1" }, new Map())).toEqual([]);
+});
+
+test("a link that points elsewhere and leads nowhere still fails, by never changing the address", async ({ page }) => {
+  test.setTimeout(90_000);
+  const inv = mini();
+  const body = `<!doctype html><html><body><main><h1>Proof</h1><div data-ux="action"><a href="/__proof/other">Main action</a></div>
+    <a data-row href="/__proof/elsewhere" onclick="event.preventDefault()">Goes nowhere</a></main></body></html>`;
+  await page.route("**/__proof/**", (r) => r.fulfill({ contentType: "text/html", body }));
+  await page.goto(`${ORIGIN}/__proof/page`);
+  const s = screen([{ t: "row", label: "each class row", data: "data-row" }]);
+  await expect(drive(page, s, s.elements[0], ctx(inv), new Map())).rejects.toThrow(/waitForURL|Timeout/i);
+});
+
+// ---- UI-5e: the "opens a form" driver. It proves the control opens a form in place with a labelled field and a visible, enabled submit
+// control. It does not press the submit (what a submit writes is proved by the screen's own test, or by a declared `drive`), so it cannot
+// tell a submit that does nothing from one that works; what it does refuse is a form with no way to send it, so a dead button drawn as a
+// form cannot pass for a working one.
+const formPage = (form: string) =>
+  `<!doctype html><html><body><main><h1>Proof</h1><div data-ux="action"><a href="/__proof/other" style="outline:2px solid #000">Main action</a></div>
+   <button id="b" type="button" aria-expanded="false">Add a person</button><div id="slot"></div></main>
+   <script>const b=document.getElementById("b"),slot=document.getElementById("slot");let on=false;
+   b.onclick=()=>{on=!on;b.setAttribute("aria-expanded",String(on));slot.innerHTML=on?${JSON.stringify(form)}:"";};</script></body></html>`;
+const openForm = (inv: Inventory) => ({ s: screen([{ t: "button", label: "Add a person", effect: "opens a form: name; Save puts the person on the list" }]), c: ctx(inv) });
+
+test("a button that opens a form with a labelled field and a visible, enabled submit passes, whatever the submit is called", async ({ page }) => {
+  const inv = mini();
+  await serve(page, formPage(`<form><label>Name <input name="n"></label><button type="submit">Add and send a link</button></form>`));
+  const { s, c } = openForm(inv);
+  expect(await drive(page, s, s.elements[0], c, new Map())).toEqual([]);
+  // a button with no type is a submit too
+  await serve(page, formPage(`<form><label>Name <input name="n"></label><button>Go</button></form>`));
+  expect(await drive(page, s, s.elements[0], c, new Map())).toEqual([]);
+});
+
+test("a form with no way to send it fails: no button, a button that only looks like one, a disabled submit, a hidden submit", async ({ page }) => {
+  const inv = mini();
+  const { s, c } = openForm(inv);
+  const cases: Record<string, string> = {
+    "no button at all": `<form><label>Name <input name="n"></label></form>`,
+    "a button that is not a submit": `<form><label>Name <input name="n"></label><button type="button">Add and send a link</button></form>`,
+    "a disabled submit": `<form><label>Name <input name="n"></label><button type="submit" disabled>Add and send a link</button></form>`,
+    "a hidden submit": `<form><label>Name <input name="n"></label><button type="submit" style="display:none">Add and send a link</button></form>`,
+  };
+  for (const [why, form] of Object.entries(cases)) {
+    await serve(page, formPage(form));
+    expect((await drive(page, s, s.elements[0], c, new Map())).join("\n"), why).toContain("opened no form with a field and a button that can send it");
+  }
+});
+
+test("a button that opens no form, or a form whose field has no label, still fails", async ({ page }) => {
+  const inv = mini();
+  const { s, c } = openForm(inv);
+  await serve(page, formPage(`<p>Nothing to fill in here</p>`));
+  expect((await drive(page, s, s.elements[0], c, new Map())).join("\n")).toContain("opened no form with a field");
+  await serve(page, formPage(`<form><input name="n"><button type="submit">Send</button></form>`));
+  expect((await drive(page, s, s.elements[0], c, new Map())).join("\n")).toContain("has a field with no label");
 });

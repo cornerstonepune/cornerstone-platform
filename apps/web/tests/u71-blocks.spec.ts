@@ -112,7 +112,8 @@ for (const scheme of ["light", "dark"] as const)
       for (const name of BLOCKS) {
         const sample = page.locator(`[data-sample="${name}"]`);
         await expect(sample, `${name} has a sample`).toBeVisible();
-        await expect(sample).toHaveScreenshot(`${name}-${scheme}-${width}.png`, { maxDiffPixelRatio: 0.01 });
+        // soft: every block that differs is reported in the one run (and its picture kept), not only the first; the test still fails
+        await expect.soft(sample).toHaveScreenshot(`${name}-${scheme}-${width}.png`, { maxDiffPixelRatio: 0.01 });
       }
     });
   }
@@ -306,7 +307,7 @@ test("12. the page is absent for an educator and linked only from Setup's detail
     }
   };
   for (const d of ["app", "components", "lib"]) walk(path.join(WEB, d));
-  expect(named.filter((f) => !f.startsWith("app/(app)/setup/blocks") && !f.startsWith("components/")).sort()).toEqual(["app/(app)/page.tsx"]);
+  expect(named.filter((f) => !f.startsWith("app/(app)/setup/blocks") && !f.startsWith("components/")).sort()).toEqual(["app/(app)/page.tsx", "app/(app)/setup/page.tsx"]);
   const edu = await asEducator(browser);
   await edu.goto("/setup/blocks"); // the page streams, so it answers 200 with Next's own "not found" in place of the page
   await expect(edu.getByText("This page could not be found")).toBeVisible();

@@ -68,7 +68,7 @@ export default async function PeriodPage({ params, searchParams }: { params: Pro
           {p.activity ? (
             <>
               <p className="font-medium">{p.activity.name}</p>
-              <Link href={`/educator/activity/${encodeURIComponent(p.activity.code)}?back=${encodeURIComponent(today)}`} data-open-activity className="inline-flex min-h-[var(--tap)] w-fit items-center gap-[var(--space-1)] rounded-[var(--radius-control)] border border-[var(--line-control)] px-[var(--space-3)] font-medium text-[var(--ink)] no-underline">
+              <Link href={`/setup/activities/${encodeURIComponent(p.activity.code)}?back=${encodeURIComponent(today)}`} data-open-activity className="inline-flex min-h-[var(--tap)] w-fit items-center gap-[var(--space-1)] rounded-[var(--radius-control)] border border-[var(--line-control)] px-[var(--space-3)] font-medium text-[var(--ink)] no-underline">
                 <Icon name="next" size={16} />
                 {E.page.open}
               </Link>

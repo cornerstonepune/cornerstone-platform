@@ -24,7 +24,7 @@ const HERE = "/children/reports";
 // are listed, with their reasons, in docs/notes/UI-8.md; nothing on this screen sends anything. Rows are in class and Sr. No.
 // order: no figure here is a score, rate, rank or ordering of a person.
 const CHIP: Record<string, State> = { "out of date": "doNow", "to approve": "toApprove", "to write": "toDo", approved: "approved", "nothing yet": "notYet" };
-const CONSENT_WORDS: Record<Consent, string> = { given: "on file", withdrawn: "withdrawn", none: "not recorded" };
+const CONSENT_WORDS: Record<Consent, string> = { given: "on file", withdrawn: "withdrawn: needed", none: "none on record: needed" };
 
 export default async function ReportsScreen({ searchParams }: Props) {
   const me = await requireStaff();
@@ -75,6 +75,9 @@ export default async function ReportsScreen({ searchParams }: Props) {
         ]}
       />
       {q.said ? <p role="status" className="mb-3 p-3">{q.said}</p> : null}
+      {all.some((r) => r.consent && r.consent !== "given") ? (
+        <p role="note" className="note mb-3" data-ux="consent-needed">Consent must be on record before any child&rsquo;s report can be sent. A child marked &ldquo;needed&rdquo; cannot be sent until a parent&rsquo;s consent is recorded under Setup, Classes and children.</p>
+      ) : null}
       {rows.length === 0 ? (
         <EmptyState>No report lines drafted yet</EmptyState>
       ) : (

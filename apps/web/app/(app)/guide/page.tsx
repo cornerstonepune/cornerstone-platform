@@ -1,59 +1,91 @@
 import Link from "@/components/link";
 import { Screen } from "@/components/app-frame";
-import { FlowDrawing, GuideNav, MenuDrawing, Part, Rich } from "@/components/guide";
+import { KeyValue } from "@/components/key-value";
+import { OpenSection } from "@/components/open-section";
+import { Stepper } from "@/components/stepper";
+import { ICON_SIZE, Icon } from "@/lib/icons";
 import { requireStaff } from "@/lib/auth";
-import { START, guideFacts, nextAfter } from "@/lib/guide";
+import { isBuilt, screenHref } from "@/lib/built";
+import { sectionFor } from "@/lib/guide-path";
+import help from "../../../design-system/help.json";
 
-// Start here (goals/guide_for_educators.yaml): what the tool is for, the school's whole flow drawn from the map, the menu
-// drawn from the menu, and "I want to..." buttons that land on the answer.
-export default async function GuideStart() {
+type Props = { searchParams: Promise<Record<string, string | undefined>> };
+const SECTIONS = help.sections;
+const STAGES = ["1 · The bank: skills and questions made and checked", "2 · Assemble and print the papers", "3 · Read, mark and update each child's picture", "4 · The daily round: periods, notes, the fortnight"];
+
+// Start here (UI-12): what each page is for, the usual jobs and what each button does. Every section is made from docs/frontend/screens.json
+// by scripts/help.mjs, so a screen added to the inventory has its help with no hand edit. The "?" of a page opens this page at that page's
+// section (`/guide#<screen id>`); a job is a link to a built screen, so none is a dead link while screens are still being made.
+export default async function Guide({ searchParams }: Props) {
   await requireStaff();
-  const f = await guideFacts();
+  const q = await searchParams;
+  const from = q.from?.startsWith("/") ? q.from : "/";
+  const fromId = sectionFor(from);
+  const came = SECTIONS.find((s) => s.id === fromId);
+  const jobs = SECTIONS.filter((s) => s.id !== "help" && s.id !== "login" && isBuilt(s.id) && screenHref(s.id));
   return (
     <Screen
-      stage="Guide"
+      stage="Start here"
       title="Start here"
-      purpose={START.purpose}
+      purpose="What each page is for, the usual jobs, and what each button does; the school's steps in four stages. Reached from the ? on every page."
       action={
-        <Link href="/guide/worked-out" className="btn">
-          How it is worked out
-        </Link>
+        <>
+          <span>{came ? `You came from ${came.title}.` : "Each page has a section below."}</span>
+          <Link href={`/guide#${came?.id ?? "help"}`} className="btn" data-press data-main>
+            Go to its section
+          </Link>
+        </>
       }
-      next={nextAfter("/guide")}
+      next={{ href: from, label: came ? `Back to ${came.title}` : "Back to the page you came from" }}
     >
-      <GuideNav here="/guide" />
-      <div className="grid gap-8">
-        <div className="grid max-w-[720px] gap-3 text-[15.5px] leading-[1.6]">
-          {START.forWhat.map((p) => (
-            <p key={p}>
-              <Rich p={p} f={f} />
-            </p>
-          ))}
-        </div>
-        <Part id="want" title="I want to...">
-          <ul className="flex flex-wrap gap-2" data-wants>
-            {START.wants.map((w) => (
-              <li key={w.href}>
-                <Link href={w.href} className="inline-flex min-h-11 items-center border border-terracotta/50 bg-chalk px-4 text-[14.5px] no-underline hover:bg-terracotta/10">
-                  {w.label}
-                </Link>
-              </li>
+      <OpenSection />
+      {jobs.length ? (
+        <section aria-labelledby="jobs-h" className="mb-6">
+          <h2 id="jobs-h" className="mb-2 text-[length:var(--text-section,18px)]">
+            I want to…
+          </h2>
+          <div className="b-cards" data-block="Cards">
+            {jobs.map((s) => (
+              <article key={s.id} className="b-card" data-kind="note">
+                <div className="b-card-h">{s.title}</div>
+                <div className="b-card-b">
+                  <span className="b-muted">{s.purpose}</span>
+                  <a href={screenHref(s.id)!} data-job>
+                    {s.title}
+                  </a>
+                </div>
+              </article>
             ))}
-          </ul>
-        </Part>
-        <section id="flow" aria-labelledby="flow-h" className="scroll-mt-6 border-t border-basalt/12 pt-5">
-          <h2 id="flow-h" className="mb-3 text-[18px]">
-            The school&rsquo;s week in one picture
-          </h2>
-          <FlowDrawing />
+          </div>
         </section>
-        <section id="menu" aria-labelledby="menu-h" className="scroll-mt-6 border-t border-basalt/12 pt-5">
-          <h2 id="menu-h" className="mb-3 text-[18px]">
-            The menu, and what each page is for
-          </h2>
-          <MenuDrawing />
-        </section>
-      </div>
+      ) : null}
+      <section aria-labelledby="stages-h" className="mb-6">
+        <h2 id="stages-h" className="mb-2 text-[length:var(--text-section,18px)]">
+          The school&rsquo;s steps, in four stages
+        </h2>
+        <Stepper label="The school's four stages" steps={STAGES.map((words) => ({ state: "notYet" as const, words }))} />
+      </section>
+      <section aria-labelledby="pages-h" className="grid gap-3">
+        <h2 id="pages-h" className="text-[length:var(--text-section,18px)]">
+          Each page
+        </h2>
+        {SECTIONS.map((s) => (
+          <details key={s.id} id={s.id} data-block="Details" className="b-details">
+            <summary data-section>
+              <Icon name="details" size={ICON_SIZE.table} />
+              {s.title} <span className="b-muted">{s.group}</span>
+            </summary>
+            <div>
+            <KeyValue
+              rows={[
+                { label: "What it is for", value: s.purpose },
+                { label: "What each control does", value: s.does.map((d) => (d.says ? `${d.label}: ${d.says}` : d.label)).join(" · ") },
+              ]}
+            />
+            </div>
+          </details>
+        ))}
+      </section>
     </Screen>
   );
 }

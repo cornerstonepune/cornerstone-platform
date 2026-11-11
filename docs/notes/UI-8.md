@@ -22,7 +22,7 @@ Built: `/children/reports` (FilterBar class and state; DataTable child · class 
 
 | Choice | Reason |
 |---|---|
-| Consent column only for a viewer whose `my_reach('consent')` is not none | the school's access rule: the coordinator alone sees consent; an educator is shown no column rather than a guessed "not recorded" (first CI run caught this) |
+| Consent column only for a viewer whose `my_reach('consent')` is not none | the school's access rule: the coordinator alone sees consent; an educator is shown no column rather than a guessed "not recorded" (first CI run caught this). A coordinator sees "none on record: needed" / "withdrawn: needed" and a line saying consent must be on record before any report can be sent (live has 0 consents, so no send can work yet) |
 | Rows ordered by class and Sr. No. only | CP-19: educator figures are whole counts, never a score, rate, rank or ordering of a person |
 | No Approve button drawn yet | an approve that means "whole report" would be replaced by a per-line one; the old page keeps it |
 

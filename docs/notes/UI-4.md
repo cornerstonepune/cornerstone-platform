@@ -37,3 +37,11 @@ Photo" on the assessment screen, and the missing controls with each old spec mov
 |---|---|
 | Make is a mode of the Assessments screen (`?make=class\|each\|one\|sheet`), the old maker body shown in place of the list. | `/papers/make` folds into this screen; a button that opens the maker keeps the listed buttons and adds no control. |
 | `Screen`'s `action` and `next` are optional. | The main action here is one of the screen's own listed controls (marked `data-ux="action"`), and a separate next-step link would be a control outside the list. |
+
+## UI-4b progress (10 Nov 2026, evening)
+
+- **The three screens now pass the inventory test on the paper screen, both roles, 1440** (local copy); the other two pass but for `capture: Photo`, which needs a backend photo route first, so UI-4 stays on the pending list (`merged_slices` unchanged).
+- Elements got `text`, `data`, `when` and `drive` hints in `screens.json`; the title of the assessment screen is `{the built name}`; the assessments list has the pager element ("page: Later →", `when: paged`) because the school has more than ten assessments. The wireframes `assessment.html` and `assessments.html` follow (the printed pack is a button; the pager is drawn); `node docs/frontend/wireframes/check.mjs` is clear.
+- Fixtures: `tests/inventory-fixtures.ts` `anAssessment` makes a home pack with a copy in every state, two class assessments and nine more, so every screen has rows, a second page, an answer to judge and a copy to sign off. `drive` blocks have `fixture` before and `after` to put the rows back.
+- Checker additions (additive): `when` may be a state in the address (`?view=table`) or another address of the screen (`@settled`); `drive.expect.popup`, with a stand-in for the PDF so the engine is not asked to draw a pack for each press.
+- A bug in #566 found by the new Make test and fixed: the address arrives percent-encoded. A flaw in my own `u73` fixed: two tests read the table before the streamed page had drawn it.

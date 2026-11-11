@@ -141,7 +141,7 @@ Period, record, confirm, notes, children, class picture, child, activity, object
 3. The journey `e2e/an-educators-tuesday.spec.ts` passes: Today → the lit period → Type the marks → a note written with one activity_observation per named child and none for a child not mentioned → Confirm → Class picture shows the change → the child → the skill → trail back to Today; axe at each step; at 1440 and 400.
 4. A correction from Notes writes a superseding activity_observation row and never updates the old one (database assertion).
 5. The period → note link: a note confirmed from a period carries that session's id, and the period page lists its notes. This line waits for CP-25 (to be scoped: `activity_observation.session_id` is free today); the slice starts and merges without it, and the line is proved when CP-25 lands.
-6. Every one of the 130 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
+6. Every one of the 134 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
 7. the session's name: a period with no activity shows no capture controls and the words 'Nothing to record here'
 8. the session's name: the last-time bar's segments sum to the number of children named in the last session's observations
 9. the session's name: the steps fold is open on load and the others closed
@@ -192,6 +192,9 @@ Period, record, confirm, notes, children, class picture, child, activity, object
 54. the skill's name: grouping by state puts a heading and a count over each group and the counts sum to the squares
 55. the skill's name: a cluster's count equals the chips in it; clusters are computed by code, never by a model
 56. the skill's name: tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page
+57. the skill set's name: the screen is keyed by the skill set's code, not by a registry skill's code
+58. the skill set's name: each registry skill the set points at is a card that opens the skill screen; a set with none says so and invents nothing
+59. the skill set's name: the level sentences sit in a fold, closed on load
 
 ### Out of scope
 
@@ -216,16 +219,16 @@ Assessments, one assessment and one child's paper as node pages on the blocks; t
 3. `lib/assessment-steps.ts` STEPS and STEP_WORDS and `lib/queries-papers.ts` exported names are unchanged (a test imports them and compares to the committed list).
 4. The journey `e2e/a-paper-comes-back.spec.ts` passes: make a class assessment → approve the pack (per pack, the pack-level button; no all-packs button exists on any screen: `u62` kept) → upload a fixture scan → the paper shows right / wrong / blank / for you to judge with the fixture's counts → say what the child wrote for the one to judge → sign off → the child's timeline shows the paper result beside a voice note; axe at each step.
 5. No approve-all control exists on any screen (the `ux.approveAll` list in workflows.json is empty at the end of this slice).
-6. Every one of the 45 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
+6. Every one of the 46 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
 7. Assessments: the four old pages answer 308 to this one or to the Assessment node
 8. Assessments: every row's name is built topic · skill · level · kind · class · day (regex)
 9. Assessments: no approve-all control anywhere
 10. Assessments: each tile's number equals the rows behind it
 11. Assessments: each board lane's card count equals the table rows at the lane's steps
-12. the built name: Approve acts on this pack only; no control acts on more than one pack or more than one row
-13. the built name: the stepper's amber step equals the status word in the list
-14. the built name: a replaced copy shows 'replaced by a newer one' and no action
-15. the built name: the papers bar's three counts sum to the number of copies
+12. {the built name}: Approve acts on this pack only; no control acts on more than one pack or more than one row
+13. {the built name}: the stepper's amber step equals the status word in the list
+14. {the built name}: a replaced copy shows 'replaced by a newer one' and no action
+15. {the built name}: the papers bar's three counts sum to the number of copies
 16. Check the answers: right, wrong and blank are three different chips and three counts; a wrong-with-working reason is shown with its wrong chip
 17. Check the answers: a person's answer writes a read_correction row and never overwrites the engine's read
 18. Check the answers: Sign off is absent while any answer is 'for you to judge', and acts on one paper
@@ -252,7 +255,7 @@ Staff and grants, classes and children and the Setup home; the small writes that
 2. Every old route listed under `folds` answers 308 to the new address.
 3. `/setup/staff` has no column, sort or text that ranks people: the table cannot be sorted by the three numbers and no ordinal appears (test asserts absence).
 4. A child move writes a child_move row and a new enrolment and deletes nothing; the class picture of both classes reflects it on the next render (database and DOM assertion).
-5. Every one of the 21 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
+5. Every one of the 26 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
 6. Staff and classes: no sort, rank, ordinal or colour grading on the three numbers; the table cannot be sorted by them
 7. Staff and classes: a grant edit is a new row or a valid_to, never a delete (row count never drops)
 8. Staff and classes: no staff name appears unless the viewer is in the everything group (names are pii)
@@ -407,7 +410,7 @@ The four existing Setup pages that carry content rather than people, rebuilt on 
 2. Every old route listed under `folds` for these screens answers 308 to the new address.
 3. No approve-all control exists on any of these screens (Skills to approve and the offers act on one row each).
 4. The skills-to-approve count is the eyebrow of Skills to approve and appears on no card, tile, badge or other page.
-5. Every one of the 32 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
+5. Every one of the 40 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
 6. Curriculum: one list carries activities (K2) and skills (grades 1–4) under one filter row
 7. Curriculum: Curriculum shows no count of skills to approve; that number is the eyebrow of Skills to approve and appears nowhere else
 8. Curriculum: Yes / No act on one offer each; no control acts on all offers
@@ -415,8 +418,8 @@ The four existing Setup pages that carry content rather than people, rebuilt on 
 10. Skills to approve: the eyebrow count equals the rows across all pages, and it is the only place the number is shown
 11. Question bank: statistics and taxonomy sit behind the details link, not on the first view (rule 8)
 12. Question bank: the table shows ten rows then pages
-13. the question as it prints: a correction keeps the old key in change_log and the old version readable
-14. the question as it prints: Remove retires, never deletes (row count unchanged)
+13. {the question as it prints}: a correction keeps the old key in change_log and the old version readable
+14. {the question as it prints}: Remove retires, never deletes (row count unchanged)
 
 ### Out of scope
 

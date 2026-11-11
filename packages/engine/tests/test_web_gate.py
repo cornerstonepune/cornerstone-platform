@@ -22,7 +22,7 @@ CHECKS = re.compile(r"\b(?:requireStaff|currentStaff|deciding|requireStaffEditor
 # (goals/auth-email-password.yaml). Each of the last four is held by the link it is given instead of a session — a
 # token only its owner's email carried, checked by `emailFor` — and a signed-in person must still be able to finish a
 # reset, so none may send a session-holder away.
-OPEN_PAGES = {"app/login/page.tsx", "app/login/new-password/page.tsx"}
+OPEN_PAGES = {"app/login/page.tsx"}
 OPEN_ROUTES = {"app/login/link/route.ts"}
 OPEN_ACTIONS = {
     "lib/auth-actions.ts::signIn",
