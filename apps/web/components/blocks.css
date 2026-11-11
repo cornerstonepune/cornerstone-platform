@@ -140,6 +140,8 @@
   .b-fgrid { display: grid; grid-template-columns: 64px repeat(var(--cols), minmax(150px, 1fr)); gap: 6px; }
   .b-fgrid .b-dh { padding: 6px 10px; font-weight: 600; border-radius: var(--radius-control); }
   .b-fgrid .b-dh[aria-current="date"] { background: var(--action); color: var(--action-ink); }
+  .b-fgrid a.b-dh { color: inherit; text-decoration: none; }
+  .b-fgrid a.b-dh[aria-current="date"] { color: var(--action-ink); }
   .b-fgrid .b-tm { text-align: right; padding-top: var(--space-2); font-size: var(--text-label); color: var(--ink-muted); font-variant-numeric: tabular-nums; }
   .b-cell { display: grid; gap: var(--space-1); align-content: start; min-height: 76px; padding: 10px; border-radius: 12px; background: var(--sb); box-shadow: inset 0 3px 0 var(--s); color: var(--ink); text-decoration: none; }
   .b-cell[aria-current="time"] { box-shadow: inset 0 3px 0 var(--s), 0 0 0 2px var(--action); }

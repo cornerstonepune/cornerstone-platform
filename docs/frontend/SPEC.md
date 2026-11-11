@@ -405,9 +405,11 @@ Main action: Open today · Next step: Fortnight
 Data: timetable_rule rows (kind slot) valid today; session for the fortnight's days; period times; school_day kinds
 Empty: No timetable live for this class: coordinator sees 'Make a draft' · Phone: Day view by default; week scrolls sideways in its box
 Folds in: /educator (day), /educator/week
-Every control on the screen (11), and what the test does with each:
-- **filter** class [coordinator only; absent and refused for others]
+Every control on the screen (13), and what the test does with each:
+- **filter** class (the coordinator always; an educator only when she holds more than one class)
 - **tab** Day / Week / Fortnight (Day by default at 400 px)
+- **link** Today → Timetable (`/timetable`) (opens today in the Day view)
+- **link** each day head → Timetable (`/timetable`) (opens that day in the Day view; earlier and later days are reached the same way)
 - **filter** this / next fortnight
 - **cell** each grid cell → the session's name (`/period/[id]`)
 - **fold** a moved cell's details (who, why, when) (opens on click, tap or Enter; never by hover alone)
@@ -421,6 +423,8 @@ Done when (on top of the ten generic checks):
 - a hand move shows an amber outline and its details name who and why
 - an educator never sees an accept-clash control; a clash cell is red for both roles
 - the grid's cells equal the session rows for the day shown (count and names)
+- a period running now carries Do now, a recorded one Done, one over and not recorded Late, and no period still to come has a chip
+- a holiday day is named in words under the grid
 
 
 #### Fortnight 9 `/timetable/fortnight/[n]`

@@ -37,3 +37,13 @@ Where each old behaviour lands (every old assertion moves, none dropped):
    filter, the Day / Week / Fortnight tabs and this / next fortnight. Moving to another day inside the fortnight needs either a control added to
    `screens.json` or the day heads becoming links (a day head already exists as a cell of the grid).
 2. **An educator with more than one class.** The old pages let her pick her class; the SPEC makes the class filter the coordinator's only.
+
+
+## Decision (orchestrator, 11 Nov 2026): both yes, "no function is lost"
+- Day heads link to their day; "Today" is a listed control; stepping to earlier or later days is the same day heads (`screens.json`, `SPEC.md` updated here).
+- An educator holding more than one class keeps a class picker (only then); the coordinator always has it.
+
+## Built so far for the retirement (all in `/timetable`, tests in `u75-timetable-b.spec.ts`, 7 pass, run twice)
+Day heads open their day; Today; a cell opens `/period/<its session id>`; Done / Late / Do now chips on work and none ahead; holidays named in words under
+the grid; the class picker for an educator with two classes. Next: move the old calendar specs' assertions onto these views, then 308 and delete the old pages.
+`FortnightGrid` gained an optional `dayHrefs` (no visible change without it). The block-gallery screenshots fail on this machine on any branch (fonts); CI draws the baselines.

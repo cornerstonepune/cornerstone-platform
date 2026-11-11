@@ -1202,14 +1202,24 @@
         {
           "t": "filter",
           "label": "class",
-          "roles": [
-            "coordinator"
-          ]
+          "note": "the coordinator always; an educator only when she holds more than one class"
         },
         {
           "t": "tab",
           "label": "Day / Week / Fortnight",
           "note": "Day by default at 400 px"
+        },
+        {
+          "t": "link",
+          "label": "Today",
+          "to": "timetable",
+          "note": "opens today in the Day view"
+        },
+        {
+          "t": "link",
+          "label": "each day head",
+          "to": "timetable",
+          "note": "opens that day in the Day view; earlier and later days are reached the same way"
         },
         {
           "t": "filter",
@@ -1278,7 +1288,9 @@
       "done_when": [
         "a hand move shows an amber outline and its details name who and why",
         "an educator never sees an accept-clash control; a clash cell is red for both roles",
-        "the grid's cells equal the session rows for the day shown (count and names)"
+        "the grid's cells equal the session rows for the day shown (count and names)",
+        "a period running now carries Do now, a recorded one Done, one over and not recorded Late, and no period still to come has a chip",
+        "a holiday day is named in words under the grid"
       ]
     },
     {
