@@ -102,3 +102,13 @@ engine will not edit; the two specs above use papers the engine made. The bank's
 
 Still to do in step 2: the children with no paper and why, the spares as a row, and the focus paper ("next paper for this child"), which today lands
 on the old review page (`approveNextPaper`).
+
+### PR 2, part 3: children with no paper, and spare copies
+
+The assessment screen now lists every child of a home or class assessment week who has no paper, by Sr. No., with the reason the plan kept
+("has sat every worksheet at Hard (4)") or "joined the class after this week was planned" / "not on this week's plan". A child who holds a copy
+is never listed. Spare copies (no child on them) are listed apart with their state, and are not counted among the children's papers.
+
+| Old spec | Assertion | New place |
+|---|---|---|
+| `u37-papers-grouped` 1 | children with no paper and why; spares listed with no name | `u76-no-paper-and-spares.spec.ts` |
