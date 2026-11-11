@@ -118,3 +118,9 @@ with UI-11's `curriculum` screen, not before.
 
 Not checked here (read when moving, not assumed): the exact assertions of each spec; whether live data matches the seed counts above;
 which of the nine inbound links carry a level (`?level=`) that a new route would also need.
+
+## Skill set screen entry (ui-3c-skillset-entry)
+Per #599: `/skill-sets/[code]` is a skill SET (keyed by `skill.code`), not a registry skill, so it gets its own screen
+`skillset` at `/setup/skill-sets/[code]` (screens.json, UI-3, wireframes/skillset.html). It lists the registry skills the
+set points at (cards to the skill screen) and the level sentences in a fold. No page yet; the six functions (#599) come as
+later PRs and add their elements here.

@@ -93,6 +93,10 @@
       "route": "/setup/skills/[code]",
       "built": false
     },
+    "skillset": {
+      "route": "/setup/skill-sets/[code]",
+      "built": false
+    },
     "curriculum": {
       "route": "/setup/curriculum",
       "built": true

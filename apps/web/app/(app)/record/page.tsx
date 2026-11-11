@@ -7,7 +7,7 @@ import { chosenClass, herVoice, schoolToday } from "@/lib/voice-page";
 import { sessionOf, sessionsOfDay } from "@/lib/period";
 import { Recorder } from "../voice/record/recorder";
 import { ClassChoice } from "../voice/class-choice";
-import { PeriodField, TypeMarks } from "./choose";
+import { AddPhoto, PeriodField, TypeMarks } from "./choose";
 
 // Record a note (UI-3a): one button, the activity already known. A period chosen (or arriving from one) is the note's session;
 // "Type the marks" makes the empty note for it and opens it on the confirm screen. A phone that will not record shows the typed
@@ -60,6 +60,7 @@ export default async function Record({ searchParams }: { searchParams: Promise<{
               { label: "Kept", value: "Recordings and transcripts are cleared after 48 hours." },
             ]}
           />
+          <AddPhoto classId={c.id} sessionId={picked?.id} />
           {my.recording ? <TypeMarks classId={c.id} sessionId={picked?.id} /> : null}
         </div>
       ) : (

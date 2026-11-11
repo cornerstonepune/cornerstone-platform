@@ -2,7 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { requireStaff } from "@/lib/auth";
-import { EngineDown, engineSend } from "@/lib/engine";
+import { EngineDown, engineSend, photoTicket } from "@/lib/engine";
 import { classNotes, typedNote } from "@/lib/notes-loop";
 import { myVoice, refusal, voiceOn } from "@/lib/voice";
 import { W } from "@/lib/voice-words";
@@ -55,4 +55,23 @@ export async function correctMark(formData: FormData): Promise<{ error: string }
   }
   if (!res.ok) return { error: await refusal(res, W.confirm.notSaved) };
   redirect(String(formData.get("back") ?? "/notes"));
+}
+
+/** "Add a photo": the note this lesson's photos hang on (the one she has, else an empty one made for it) and the ticket to send the
+ *  photo straight to the engine, as a recording is sent. A photo belongs to a lesson, never to a child. */
+export async function photoTarget(classId: string, sessionId: string): Promise<{ noteId: string; url: string; token: string } | { error: string }> {
+  const me = await requireStaff();
+  await switchedOn();
+  if (!(await myVoice(me))?.classes.some((c) => c.id === classId)) return { error: "That class is not yours." };
+  let res: Response;
+  try {
+    res = await engineSend("/voice/session-note", { actor: me.email, class_id: classId, session_id: sessionId });
+  } catch (e) {
+    if (e instanceof EngineDown) return { error: "Not sent. Try again." };
+    throw e;
+  }
+  if (!res.ok) return { error: await refusal(res, "Not sent. Try again.") };
+  const ticket = photoTicket(me.email);
+  if (!ticket) return { error: "Not sent. Try again." };
+  return { noteId: ((await res.json()) as { note_id: string }).note_id, ...ticket };
 }
