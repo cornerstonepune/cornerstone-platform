@@ -167,15 +167,15 @@ export async function anAssessment(sql: Sql, children: Record<string, string>): 
       await sql`
         insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, section, week, kind, print_status, approved_by, approved_at, printed_at)
         values (${tenant}, ${code(n)}, ${ws.id}, ${kids[n - 1]}, ${SECTION}, ${monday}, 'focus', 'printed', 'e2e', now(), now())`;
-      SETTLED_CAPTURES.push((await read(n, [{ status: "correct", read: "1" }, { status: "correct", read: "2" }, { status: "correct", read: "3" }, { status: "correct", read: "4" }])).capture);
+      SETTLED_CAPTURES.push((await read(n, [{ status: "correct", key: true, checkedBy: "e2e" }, { status: "correct", key: true, checkedBy: "e2e" }, { status: "correct", key: true, checkedBy: "e2e" }, { status: "correct", key: true, checkedBy: "e2e" }])).capture);
     }
     // a second copy with an answer for a person to judge: "the next paper to check"
     await sql`
       insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, section, week, kind, print_status, approved_by, approved_at, printed_at)
       values (${tenant}, ${code(12)}, ${ws.id}, ${kids[11]}, ${SECTION}, ${monday}, 'focus', 'printed', 'e2e', now(), now())`;
-    await read(12, [{ status: "correct", read: "9" }, { status: "needs_teacher", read: "8", why: "under the confidence floor" }, { status: "correct", read: "7" }, { status: "correct", read: "6" }]);
-    const one1 = await read(1, [{ status: "correct", read: "42" }, { status: "wrong", read: "17", checkedBy: "e2e" }, { status: "blank", checkedBy: "e2e" }, { status: "needs_teacher", read: "5", why: "under the confidence floor" }]);
-    const settled = [{ status: "correct", read: "1" }, { status: "correct", read: "2" }, { status: "correct", read: "3" }, { status: "correct", read: "4" }];
+    await read(12, [{ status: "correct", key: true, checkedBy: "e2e" }, { status: "needs_teacher", read: "8", why: "under the confidence floor" }, { status: "correct", key: true, checkedBy: "e2e" }, { status: "correct", key: true, checkedBy: "e2e" }]);
+    const one1 = await read(1, [{ status: "correct", key: true, checkedBy: "e2e" }, { status: "wrong", read: "17", checkedBy: "e2e" }, { status: "blank", checkedBy: "e2e" }, { status: "needs_teacher", read: "5", why: "under the confidence floor" }]);
+    const settled = [{ status: "correct", key: true, checkedBy: "e2e" }, { status: "correct", key: true, checkedBy: "e2e" }, { status: "correct", key: true, checkedBy: "e2e" }, { status: "correct", key: true, checkedBy: "e2e" }];
     JUDGE = one1.results[3];
     SETTLED_CAPTURES.push((await read(2, settled)).capture);
     const three = await read(3, settled);
@@ -193,9 +193,9 @@ export async function anAssessment(sql: Sql, children: Record<string, string>): 
     const r = await aReadPaper(sql, { qr: code(n), child, template, items, reads });
     if (sign) await sql`select confirm_results(${child}::uuid, 'e2e', ${r.capture}::uuid)`;
   };
-  await classCopy(0x81, ws.id, ws.item_ids, kids[3], [{ status: "correct", read: "1" }, { status: "needs_teacher", read: "5", why: "under the confidence floor" }]);
-  await classCopy(0x82, ws.id, ws.item_ids, kids[4], [{ status: "correct", read: "1" }, { status: "correct", read: "2" }]);
-  await classCopy(0x83, ws2.id, ws2.item_ids, kids[5], [{ status: "correct", read: "3" }, { status: "correct", read: "4" }], true);
+  await classCopy(0x81, ws.id, ws.item_ids, kids[3], [{ status: "correct", key: true, checkedBy: "e2e" }, { status: "needs_teacher", read: "5", why: "under the confidence floor" }]);
+  await classCopy(0x82, ws.id, ws.item_ids, kids[4], [{ status: "correct", key: true, checkedBy: "e2e" }, { status: "correct", key: true, checkedBy: "e2e" }]);
+  await classCopy(0x83, ws2.id, ws2.item_ids, kids[5], [{ status: "correct", key: true, checkedBy: "e2e" }, { status: "correct", key: true, checkedBy: "e2e" }], true);
   // nine more class assessments, one copy each, on other skill sets: with these the class has more than ten assessments, so the list has a second page
   const more = await sql<{ id: string }[]>`
     select distinct on (t.skill_set_code) t.id from sheet_template t
@@ -212,7 +212,6 @@ export async function anAssessment(sql: Sql, children: Record<string, string>): 
   ADDRESSES.settled = async () => {
     const sql2 = postgres(process.env.DATABASE_URL!, { max: 1 });
     try {
-      await settle(sql2);
       for (const n of [2, 4, 5, 6]) {
         const open = await sql2`select 1 from item_result r join capture c on c.id = r.capture_id join sheet_instance s on s.id = c.sheet_instance_id
           where s.qr_code = ${code(n)} and c.superseded_by is null and r.state = 'candidate' limit 1`;
@@ -242,10 +241,6 @@ const aside = async <T>(f: (sql: Sql) => Promise<T>) => {
     await sql.end();
   }
 };
-/** The copies read and settled as they were made: the engine marks every answer again from what was read each time a person types a reading (`again.trusted`),
- *  and holds a right answer for a person until its kind has earned trust, so a copy meant to wait only for its sign-off must be put back before it is looked for. */
-const settle = (sql: Sql) =>
-  sql`update item_result set status = 'correct' where capture_id = any(${SETTLED_CAPTURES}::uuid[]) and state = 'candidate' and status = 'needs_teacher'`;
 /** The home pack as it is before anyone approves it: every copy still waiting for approval is as made. */
 FIXTURES["pack-unapproved"] = () =>
   aside(async (sql) => {
@@ -259,13 +254,8 @@ FIXTURES["pack-approved"] = () =>
 FIXTURES["checked-again"] = () =>
   aside(async (sql) => {
     await sql`update item_result set state = 'candidate' where state = 'confirmed' and capture_id = any(${SETTLED_CAPTURES}::uuid[])`;
-    await settle(sql);
   });
-FIXTURES["note-checked"] = () =>
-  aside(async (sql) => {
-    await settle(sql);
-    before = await checkedCopies(sql);
-  });
+FIXTURES["note-checked"] = () => aside(async (sql) => void (before = await checkedCopies(sql)));
 FIXTURES["answer-to-judge"] = () =>
   aside(async (sql) => {
     // Sr. No. 1's answer is for a person to judge again (the person's earlier word stays as a row beside it)
