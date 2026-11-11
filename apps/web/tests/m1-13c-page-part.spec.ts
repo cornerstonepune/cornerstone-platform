@@ -52,7 +52,8 @@ test.describe("drawn on a real page", () => {
   });
 
   test("the component's own styles reach the page: a card with its edge, a slip's keyword in the state's colour, the origin in the school's", async ({ page }) => {
-    await page.goto(`/curriculum/fill/${code(2)}`);
+    // the drafts' queue draws a part as a card (the single activity's page draws its parts in folds, UI-3c)
+    await page.goto("/curriculum/fill/walk?part=thinking");
     const card = page.locator("[data-card=thinking].pp-card");
     await expect(card).toBeVisible();
     expect(await card.evaluate((e) => getComputedStyle(e).borderTopWidth)).toBe("1px");
@@ -65,8 +66,11 @@ test.describe("drawn on a real page", () => {
     });
     expect(mark).toBe(token);
     expect(token).not.toBe("rgba(0, 0, 0, 0)");
-    await expect(page.locator("[data-card=objective] .pp-origin")).toContainText("The school's words");
-    await expect(page.locator("[data-card=steps] .pp-origin")).toContainText("Drafted, check me");
-    await expect(page.locator("[data-card=steps] li")).toHaveCount(2);
+    await expect(card.locator(".pp-origin")).toContainText("Drafted, check me");
+    // and the school's own words on the activity's page carry the school's origin
+    await page.goto(`/setup/activities/${code(2)}`);
+    await expect(page.locator("[data-part=objective] .pp-origin")).toContainText("The school's words");
+    await expect(page.locator("[data-part=steps] .pp-origin")).toContainText("Drafted, check me");
+    await expect(page.locator("details[data-fold=steps] li")).toHaveCount(2);
   });
 });

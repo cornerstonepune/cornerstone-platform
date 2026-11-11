@@ -8,7 +8,7 @@ import { emailFor, LINK_COOKIE, LINK_COOKIE_MINUTES } from "@/lib/password-links
 export async function GET(request: Request): Promise<NextResponse> {
   const token = new URL(request.url).searchParams.get("token") ?? "";
   const good = Boolean(await emailFor(token));
-  const to = new URL(good ? "/login/new-password" : "/login/new-password?error=gone", request.url);
+  const to = new URL(good ? "/login?view=new-password" : "/login?view=new-password&error=gone", request.url);
   const answer = NextResponse.redirect(to);
   if (good) {
     answer.cookies.set(LINK_COOKIE, token, {

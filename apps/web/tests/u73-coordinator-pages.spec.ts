@@ -55,7 +55,9 @@ test("3 and 6. Staff has nothing that ranks or sorts: no sort link, no aria-sort
   const text = await seen(page, "/setup/staff");
   await expect(page.locator("main table th a")).toHaveCount(0);
   await expect(page.locator("main [aria-sort]")).toHaveCount(0);
-  expect(text).not.toMatch(/\b(rank|ranked|top|best|worst|score|1st|2nd|3rd|\d+th)\b/i);
+  // what the tables show (the page's own sentence says "no score, no ranking", and may)
+  const shown = (await page.locator("main table").allInnerTexts()).join("\n");
+  expect(shown).not.toMatch(/\b(rank|ranked|top|best|worst|score|1st|2nd|3rd|\d+th)\b/i);
   expect(text).not.toMatch(/\d\s*%/);
   // the order is the role's own, then name: the same however the address asks (a sort asked for is ignored)
   const first = await page.locator("main table tbody tr td:first-child").allInnerTexts();
@@ -157,4 +159,46 @@ test("13. an educator sees only the cards their group may open", async ({ browse
   for (const hidden of ["Staff", "Classes and children", "Skills to approve"]) expect(theirs).not.toContain(hidden);
   expect(theirs).toContain("Question bank");
   await context.close();
+});
+
+test("14. the Staff counts are the engine's whole numbers for the person's notes, in a column each, and never a percentage, a score or a rank", async ({ page }) => {
+  // the educator the inventory made is given two notes confirmed, one left unconfirmed and four decided lines (two accepted, one changed, one
+  // removed); notes are kept for ever, so the test reads the counts before and after and holds the difference
+  const [who] = await sql<{ staff_id: string; tenant_id: string }[]>`select staff_id, tenant_id from pii.staff where email = ${EDUCATOR.email}`;
+  const read = async () => {
+    const text = await seen(page, "/setup/staff");
+    const row = page.locator("main table tbody tr").filter({ hasText: EDUCATOR.name });
+    // the person's own table (the rows are grouped by role, one table each); a heading is read as the words, not as the capitals it is drawn in
+    const head = (await row.locator("xpath=ancestor::table//th").allTextContents()).map((t) => t.trim().toLowerCase());
+    const cell = async (label: string) => {
+      const at = head.indexOf(label.toLowerCase());
+      return at < 0 ? "" : (await row.locator("td").nth(at).innerText()).trim();
+    };
+    const num = (t: string) => (/^\d+$/.test(t) ? Number(t) : 0);
+    const [x, y, z] = ((await cell("Lines accepted / changed / removed")).match(/^(\d+) \/ (\d+) \/ (\d+)$/) ?? ["", "0", "0", "0"]).slice(1).map(Number);
+    const tables = (await page.locator("main table").allInnerTexts()).join("\n");
+    return { text, tables, head, confirmed: num(await cell("Notes confirmed")), late: num(await cell("Notes late")), lines: [x, y, z] };
+  };
+  const before = await read();
+  const tag14 = `u73-${Date.now()}`;
+  const note = async (status: string, n: number) => {
+    const [r] = await sql<{ id: string }[]>`insert into pii.educator_note (tenant_id, staff_id, class_id, audio_key, status) values (${who.tenant_id}, ${who.staff_id}, ${fromId}, ${`${tag14}-${n}`}, ${status}) returning id`;
+    return r.id;
+  };
+  const a = await note("confirmed", 1);
+  await note("confirmed", 2);
+  await note("left_unconfirmed", 3);
+  let at = 0;
+  for (const [decision, kept] of [["accepted", null], ["accepted", null], ["changed", "words kept"], ["removed", null]] as const) {
+    await sql`insert into pii.note_claim (tenant_id, note_id, section, read_as, words, span_start, span_end, decision, kept_as, decided_by) values (${who.tenant_id}, ${a}, 'Maths', 'read', 'words', ${at}, ${at + 1}, ${decision}, ${kept}, ${who.staff_id})`;
+    at += 2;
+  }
+  const after = await read();
+  expect(after.head).toEqual(expect.arrayContaining(["notes confirmed", "notes late", "lines accepted / changed / removed"]));
+  expect(after.confirmed - before.confirmed).toBe(2);
+  expect(after.late - before.late).toBe(1);
+  expect(after.lines.map((n, i) => n - before.lines[i])).toEqual([2, 1, 1]);
+  expect(after.text).not.toMatch(/\d\s*%/);
+  // the page says "no score, no ranking", so the sentence is allowed; a rank, a score or an accuracy as a thing the tables show is not
+  expect(after.tables).not.toMatch(/\b(rank|ranked|score|scored)\b|accuracy/i);
 });
