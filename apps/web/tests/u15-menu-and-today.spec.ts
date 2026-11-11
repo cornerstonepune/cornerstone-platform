@@ -102,7 +102,8 @@ test.afterAll(async () => {
   await sql.end();
 });
 
-test("the menu is four groups, and only Today carries the count: the strip's do-now plus this-week", async ({ page }) => {
+// the title is the one goals/ui1-menu-and-today.yaml names; since UI-7b the count is Today's strip (do-now plus this-week), and What needs doing sits in Setup
+test("the menu is four groups, and only What needs doing carries the count of what waits", async ({ page }) => {
   await page.goto("/today");
   const menu = page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" });
   const names = await menu.getByRole("link").allInnerTexts();
