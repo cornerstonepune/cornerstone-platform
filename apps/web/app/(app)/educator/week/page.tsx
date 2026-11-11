@@ -85,7 +85,7 @@ function WeekGrid({ w, today, now }: { w: Week; today: string; now: string }) {
           ) : (
             d.periods.map((p) => (
               <div key={`${d.day}-${p.period_id}`} data-day={d.day} style={cell(row(p.starts_at))} className={`min-w-0 ${PLACE}`}>
-                <PeriodBlock p={p} href={`/educator/period/${p.period_id}?class=${w.class.id}&day=${d.day}`} chip={chipOf(p, { now, day: when })} compact />
+                <PeriodBlock p={p} href={`/period/${p.period_id}?class=${w.class.id}&day=${d.day}`} chip={chipOf(p, { now, day: when })} compact />
               </div>
             ))
           ),

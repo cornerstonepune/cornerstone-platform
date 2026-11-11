@@ -91,7 +91,9 @@ test("every heading sits over its own column, on every page with a table", async
     where c.section = ${SECTION} and not exists (select 1 from child_skill_state x where x.child_id = c.id and x.n_events > 0)`;
   const [grid] = await sql<{ section: string }[]>`
     select c.section from child_skill_state s join child_now c on c.id = s.child_id where c.active and s.n_events > 0 limit 1`;
-  for (const path of ["/", "/papers", "/capture", "/growth", "/make", "/library", "/worksheets", `/growth/class/${grid.section}`]) {
+  // the class's results by topic and its children against the topics are tabs of the class picture (UI-3i)
+  const [{ id: classId }] = await sql<{ id: string }[]>`select id from school_class where label = ${grid.section} limit 1`;
+  for (const path of ["/", "/papers", "/capture", "/children", "/make", "/library", "/worksheets", `/children/${classId}?view=topic`, `/children/${classId}?view=matrix`]) {
     await page.goto(path);
     expect(await offColumn(page), path).toEqual([]);
   }

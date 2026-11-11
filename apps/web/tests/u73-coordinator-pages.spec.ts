@@ -140,7 +140,7 @@ test("12. every setup page is two clicks from the bar", async ({ page }) => {
   const bar = page.locator("[data-bar]").getByRole("navigation", { name: "Sections" });
   await bar.getByRole("link", { name: /^Setup/ }).click();
   await expect(page.locator("h1")).toHaveText("Setup");
-  for (const [card, title] of [["Staff", "Staff and classes"], ["Classes and children", "Classes and children"]] as const) {
+  for (const [card, title] of [["Open Staff", "Staff and classes"], ["Open Classes and children", "Classes and children"]] as const) {
     await page.locator("main").getByRole("link", { name: card, exact: true }).click();
     await expect(page.locator("h1")).toHaveText(title);
     await page.goBack();
@@ -151,13 +151,13 @@ test("12. every setup page is two clicks from the bar", async ({ page }) => {
 test("13. an educator sees only the cards their group may open", async ({ browser, page }) => {
   const names = async (p: Page) => (await p.locator("main [data-block=Cards] a").allInnerTexts()).map((t) => t.trim());
   await page.goto("/setup", { waitUntil: "networkidle" });
-  expect(await names(page)).toEqual(expect.arrayContaining(["Staff", "Classes and children", "Skills to approve"]));
+  expect(await names(page)).toEqual(expect.arrayContaining(["Open Staff", "Open Classes and children", "Open Skills to approve"]));
   const context = await signedInAs(browser, "educator", { width: 1440, height: 900 });
   const edu = await context.newPage();
   await edu.goto("/setup", { waitUntil: "networkidle" });
   const theirs = await names(edu);
-  for (const hidden of ["Staff", "Classes and children", "Skills to approve"]) expect(theirs).not.toContain(hidden);
-  expect(theirs).toContain("Question bank");
+  for (const hidden of ["Open Staff", "Open Classes and children", "Open Skills to approve"]) expect(theirs).not.toContain(hidden);
+  expect(theirs).toContain("Open Question bank");
   await context.close();
 });
 

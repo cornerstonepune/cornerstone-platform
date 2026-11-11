@@ -1,6 +1,7 @@
 // What the Assessments page adds to an assessment's own row (goals/asm_assessments_page.yaml): the name an educator chose
 // for it, the files read that its printed codes belong to, and the photographed pages of a child's paper. Names no child.
 import { sql, TENANT_SLUG } from "./db";
+import { schoolZone } from "./school-clock";
 import { seesRun, seesSheet, type Who } from "./reach";
 import { matchFiles } from "./assessment-steps";
 import { papersCte } from "./queries-papers";
@@ -55,17 +56,20 @@ export async function pagesOf(paperIds: string[]): Promise<Map<string, { capture
 /** Who approved each copy of an assessment and on what day, and the day each was made: what the approval ledger and the second pack say. */
 export async function packFacts(ids: string[]): Promise<{ id: string; roll: string | null; approved_by: string | null; approved_on: string | null; made_on: string }[]> {
   if (!ids.length) return [];
+  // the days are the school's, by its clock (config `school.time_zone`), never a zone written here
+  const zone = await schoolZone();
   return sql`
-    select si.id, c.roll_no as roll, si.approved_by, to_char(si.approved_at at time zone 'Asia/Kolkata', 'YYYY-MM-DD') as approved_on,
-           to_char(si.created_at at time zone 'Asia/Kolkata', 'YYYY-MM-DD') as made_on
+    select si.id, c.roll_no as roll, si.approved_by, to_char(si.approved_at at time zone ${zone}, 'YYYY-MM-DD') as approved_on,
+           to_char(si.created_at at time zone ${zone}, 'YYYY-MM-DD') as made_on
     from sheet_instance si left join child_now c on c.id = si.child_id
     where si.id = any(${ids}::uuid[]) order by si.approved_at nulls last, si.created_at`;
 }
 
 /** The scan a copy was read from: when it was put in, how many pages it has, and whether the code read off it is the copy's own. */
 export async function scanFacts(sheetId: string): Promise<{ on: string; pages: number; own: boolean } | null> {
+  const zone = await schoolZone();
   const [r] = await sql<{ on: string; pages: number; own: boolean }[]>`
-    select to_char(c.created_at at time zone 'Asia/Kolkata', 'YYYY-MM-DD HH24:MI') as on, c.pages, c.qr_read = si.qr_code as own
+    select to_char(c.created_at at time zone ${zone}, 'YYYY-MM-DD HH24:MI') as on, c.pages, c.qr_read = si.qr_code as own
     from capture c join sheet_instance si on si.id = c.sheet_instance_id
     where c.sheet_instance_id = ${sheetId}::uuid and c.superseded_by is null order by c.created_at desc limit 1`;
   return r ?? null;
