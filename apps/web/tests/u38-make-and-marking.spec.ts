@@ -12,6 +12,7 @@
  */
 import { expect, test, type Browser, type Locator, type Page } from "@playwright/test";
 import postgres from "postgres";
+import { paperAt } from "./paper-screen";
 import { aClass, aReadPaper, aPerson, forgetPerson } from "./rows";
 import { isoWeek } from "../lib/week";
 
@@ -35,6 +36,8 @@ const EVIDENCE: Record<string, Answer[]> = {
 };
 let kids: Record<string, string> = {};
 const sheet: Record<string, { id: string; title: string }> = {};
+/** Where a read paper opens: its own screen under Assessments (as the coordinator, who sees every paper). */
+const screenOf = async (id: string) => (await paperAt({ sheet: id }));
 
 test.beforeAll(async () => {
   kids = await aClass(sql, SECTION, "G2", ["Asha", "Bina", "Chetan", "Dev"]);
@@ -185,20 +188,20 @@ test("Marking says in one sentence what waits, and each child is one line with t
   await expect(top).toContainText(
     "3 papers in: 5 answers settled by the engine, 0 checked by a person, 2 waiting for you to check; 2 papers to sign off.",
   );
-  await expect(page.locator("[data-ux=action]").getByRole("link", { name: /^check 2 answers/i })).toHaveAttribute("href", "/capture/check");
+  await expect(page.locator("[data-ux=action]").getByRole("link", { name: /^check 2 answers/i })).toHaveAttribute("href", "/children/assessments?status=check");
   const table = page.getByRole("table", { name: `Each child · ${SECTION}` });
   await expect(table).toBeVisible();
   await expect(table.locator("thead th")).toHaveText(["Class", "Roll", "Child", "Paper", "Waiting", "Status", "Next step"]);
   expect(await table.locator("tbody tr").evaluateAll((trs) => trs.map((t) => t.querySelectorAll("td")[2].textContent?.trim()))).toEqual(["Asha", "Bina", "Dev"]);
   const cells = (who: string) => table.locator("tbody tr").filter({ hasText: who }).locator("td");
-  await expect(cells("Asha").nth(3).getByRole("link")).toHaveAttribute("href", `/capture/${sheet.asha.id}`);
+  await expect(cells("Asha").nth(3).getByRole("link")).toHaveAttribute("href", await screenOf(sheet.asha.id));
   await expect(cells("Asha").nth(3)).toHaveText(sheet.asha.title);
   await expect(cells("Asha").nth(4)).toHaveText("2");
   await expect(cells("Asha").nth(6).getByRole("link")).toHaveText("Check 2 answers →");
-  await expect(cells("Asha").nth(6).getByRole("link")).toHaveAttribute("href", `/capture/${sheet.asha.id}`);
+  await expect(cells("Asha").nth(6).getByRole("link")).toHaveAttribute("href", await screenOf(sheet.asha.id));
   await expect(cells("Bina").nth(4)).toHaveText("0");
   await expect(cells("Bina").nth(6).getByRole("link")).toHaveText("Sign off →");
-  await expect(cells("Bina").nth(6).getByRole("link")).toHaveAttribute("href", `/capture/${sheet.bina.id}`);
+  await expect(cells("Bina").nth(6).getByRole("link")).toHaveAttribute("href", await screenOf(sheet.bina.id));
   await expect(cells("Dev").nth(5)).toContainText("signed off");
   await expect(cells("Dev").nth(6).getByRole("link")).toHaveCount(0);
   await page.context().close();

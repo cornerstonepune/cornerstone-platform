@@ -335,16 +335,3 @@ test("16 · while the educator screens are switched off, an educator is shown no
     await sql`update config set value = 'true'::jsonb where key = 'educator.timetable_enabled'`;
   }
 });
-
-// ---- All three -----------------------------------------------------------------------------------------------------
-
-test("17 · the old single-activity addresses answer 308 to the new one; the drafts queue is not moved", async ({ playwright }) => {
-  const api = await playwright.request.newContext({ baseURL: "http://localhost:3100", maxRedirects: 0 });
-  for (const from of [`/educator/activity/${ACT}`, `/curriculum/fill/${ACT}`]) {
-    const r = await api.get(from);
-    expect(r.status(), from).toBe(308);
-    expect(r.headers().location).toBe(`/setup/activities/${ACT}`);
-  }
-  expect((await api.get("/curriculum/fill/walk")).status()).not.toBe(308);
-  await api.dispose();
-});

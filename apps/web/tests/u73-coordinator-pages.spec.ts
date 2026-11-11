@@ -45,12 +45,6 @@ test("1 and 5. this slice is in the inventory, so u70 drives all three screens a
   expect(ids.sort()).toEqual(["classes", "setup", "staff"]);
 });
 
-test("2. the old School address answers 308 to Classes and children", async ({ request }) => {
-  const r = await request.get("/school", { maxRedirects: 0 });
-  expect(r.status()).toBe(308);
-  expect(new URL(r.headers().location, "http://localhost:3100").pathname).toBe("/setup/classes");
-});
-
 test("3 and 6. Staff has nothing that ranks or sorts: no sort link, no aria-sort, no ordinal, no percentage, no grading colour", async ({ page }) => {
   const text = await seen(page, "/setup/staff");
   await expect(page.locator("main table th a")).toHaveCount(0);

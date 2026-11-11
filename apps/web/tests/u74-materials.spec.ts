@@ -104,8 +104,8 @@ test("6. a class that is not hers is not found", async ({ page }) => {
   await expect(page.getByText("This page could not be found.")).toBeVisible();
 });
 
-test("7. the three old materials pages still open", async ({ page }) => {
-  for (const p of ["/educator/materials", "/educator/materials/school?month=2026-12", "/educator/materials/review"]) {
+test("7. the old materials pages still open, and the school's list is the school tab of Materials", async ({ page }) => {
+  for (const p of ["/educator/materials", "/timetable/materials?tab=school&day=2026-12-01", "/educator/materials/review"]) {
     const res = await page.goto(p);
     expect(res?.status(), p).toBe(200);
   }

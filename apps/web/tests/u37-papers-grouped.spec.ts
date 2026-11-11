@@ -98,7 +98,7 @@ const row = (page: Page, w: string) => page.locator("tr[data-assessment]").filte
 
 test("an assessment opens in place to its copies in roll order, its spares on one line", async ({ browser }) => {
   const page = await asEducator(browser);
-  await page.goto("/papers");
+  await page.goto("/children/assessments");
   await row(page, THIS).getByRole("link", { name: skill }).click();
   await expect(page).toHaveURL(/[?&]open=/);
   const copies = page.getByRole("table", { name: `${skill}: each copy` });
@@ -116,7 +116,7 @@ test("an assessment opens in place to its copies in roll order, its spares on on
   await expect(rows.nth(2).locator('[data-status="next"]')).toBeVisible();
   // a copy opens where its work is: one not read yet, its page; one read, its answers
   await expect(cells(0).getByRole("link", { name: "Asha" })).toHaveAttribute("href", `/worksheets/${QR.asha}`);
-  await expect(cells(1).getByRole("link", { name: "Bina" })).toHaveAttribute("href", /^\/capture\/[0-9a-f-]{36}$/);
+  await expect(cells(1).getByRole("link", { name: "Bina" })).toHaveAttribute("href", /^\/children\/assessments\/[^/]+\/\d+$/);
   // the spares: one line under the copies
   const spares = page.locator("[data-spares]");
   await expect(spares).toHaveText(/^1 spare copy, with the pack:\s*CS3705A1$/);
@@ -125,14 +125,14 @@ test("an assessment opens in place to its copies in roll order, its spares on on
 
 test("the one filter row is there, with its active filters, and a child chosen shows their copy under each assessment", async ({ browser }) => {
   const page = await asEducator(browser);
-  await page.goto("/papers");
+  await page.goto("/children/assessments");
   const bar = page.locator("[data-filterbar]");
   await expect(bar).toBeVisible();
   for (const l of ["Class", "Topic", "Subject", "Kind", "Week", "Status"]) await expect(bar.locator(`select[name="${({ Class: "class", Topic: "topic", Subject: "subject", Kind: "kind", Week: "week", Status: "status" } as Record<string, string>)[l]}"]`)).toBeVisible();
   await expect(page.getByRole("navigation", { name: "View" })).toHaveCount(0);
   await expect(page.locator("[data-active-filters]")).toHaveCount(0);
   // a child chosen: their papers, each assessment showing their copy
-  await page.goto(`/papers?child=${kids.Asha}`);
+  await page.goto(`/children/assessments?child=${kids.Asha}`);
   await expect(row(page, OLD).getByRole("link").first()).toBeVisible();
   await expect(page.getByRole("link", { name: "Asha" }).first()).toHaveAttribute("href", /\/worksheets\//);
   await expect(page.getByRole("link", { name: "Bina" })).toHaveCount(0);
@@ -140,7 +140,7 @@ test("the one filter row is there, with its active filters, and a child chosen s
 });
 
 test("class papers to approve names each child, says why a child has no paper, and counts what it approves", async ({ page }) => {
-  await page.goto(`/papers/approve?section=${SECTION}&week=${THIS}&kind=assessment`);
+  await page.goto(`/children/assessments?class=${SECTION}&week=${THIS}&kind=assessment`);
   const table = page.getByRole("table", { name: "Each child's paper this week" });
   await expect(table.locator("thead th")).toHaveText(["Roll", "Child", "Level", "Why", "Paper", "Status", ""]);
   // what needs the educator first: the two children with no paper, then the papers to approve, then what is approved
@@ -166,14 +166,14 @@ test("class papers to approve names each child, says why a child has no paper, a
 });
 
 test("papers to approve is one table with one main action and a filter row (goals/uxn4-papers-to-approve.yaml)", async ({ page }) => {
-  await page.goto(`/papers/approve?section=${SECTION}&week=${THIS}&kind=assessment`);
+  await page.goto(`/children/assessments?class=${SECTION}&week=${THIS}&kind=assessment`);
   // the one main action is the pack's approval, at the top; the page ends on the next step
   await expect(page.locator("[data-ux=action]").getByRole("button", { name: "Approve 1 paper and 1 spare" })).toBeVisible();
-  await expect(page.locator("[data-ux=next]")).toHaveAttribute("href", "/papers");
+  await expect(page.locator("[data-ux=next]")).toHaveAttribute("href", "/children/assessments");
   // no hand-drawn tag for a class and week; the filter row holds them, and a status narrows the table
   await expect(page.getByRole("navigation", { name: "Classes and weeks" })).toHaveCount(0);
   await expect(page.locator("[data-filterbar]")).toBeVisible();
-  await page.goto(`/papers/approve?section=${SECTION}&week=${THIS}&kind=assessment&status=noPaper`);
+  await page.goto(`/children/assessments?class=${SECTION}&week=${THIS}&kind=assessment&status=noPaper`);
   const rows = page.getByRole("table", { name: "Each child's paper this week" }).locator("tbody tr");
   await expect(rows).toHaveCount(2);
   await expect(page.locator("[data-active-filters]")).toContainText("Status: No paper");

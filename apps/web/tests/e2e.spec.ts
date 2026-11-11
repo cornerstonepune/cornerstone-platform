@@ -132,7 +132,7 @@ test("approving a skill records who did it, by name", async ({ page }) => {
     // The test makes its own starting state. Status alone changes no content, so the versioning
     // trigger does not fire.
     await sql`update skill set status = 'draft', ratified_by = null where code = 'ADD.3D3D'`;
-    await page.goto("/skill-sets/ADD.3D3D");
+    await page.goto("/setup/skill-sets/ADD.3D3D");
     await page.getByRole("button", { name: /^Approve, as / }).click();
     await expect(page.getByRole("status")).toContainText("Approved as written");
     const [after] = await sql<{ status: string; ratified_by: string }[]>`
@@ -169,7 +169,7 @@ test("every question in the list shows its answer and opens its own page", async
     await expect(row.locator("td").nth(1)).toHaveText(/\d+/); // the answer
   }
   await rows.first().locator("td").first().getByRole("link").click();
-  await expect(page).toHaveURL(/\/library\/[A-Za-z0-9._-]+$/);
+  await expect(page).toHaveURL(/\/setup\/question-bank\/[A-Za-z0-9._-]+$/);
 });
 
 // Twelve kinds of question, each drawn its own way. Before this, eight of them came out as
@@ -198,8 +198,8 @@ test("a mistake is named for the question's own operation", async ({ page }) => 
     select item_key from item i where status = 'active' and source = 'generated' and spec ->> 'op' = '-'
       and exists (select 1 from jsonb_array_elements(i.responses) r where r -> 'misconceptions' ? 'M_WRONG_OP')
     order by item_key limit 1`;
-  await page.goto(`/library/${q.item_key}`);
-  const caught = page.getByRole("table", { name: "Wrong answers it catches" });
+  await page.goto(`/setup/question-bank/${q.item_key}`);
+  const caught = page.locator("[data-caught]");
   await expect(caught).toContainText("Added instead of subtracting");
   await expect(caught).not.toContainText("instead of multiplying");
   await expect(caught).not.toContainText("Subtracted instead of adding");
@@ -207,24 +207,26 @@ test("a mistake is named for the question's own operation", async ({ page }) => 
   // A number wall records no operation: it may not borrow a subtraction's example either.
   const [wall] = await sql<{ item_key: string }[]>`
     select item_key from item where status = 'active' and fmt = 'number_wall' order by item_key limit 1`;
-  await page.goto(`/library/${wall.item_key}`);
-  await expect(page.getByRole("table", { name: "Wrong answers it catches" })).not.toContainText("difference");
+  await page.goto(`/setup/question-bank/${wall.item_key}`);
+  await expect(page.locator("[data-caught]")).not.toContainText("difference");
 });
 
 // One question, everything about it: the block exactly as it prints, the answer, and every wrong
 // answer it catches — the list shows none of that, so nothing can hide behind "+4 more".
 test("a question's page shows it as printed, its answer, and every wrong answer it catches", async ({ page }) => {
-  const [q] = await sql<{ item_key: string; n: number; answer: string }[]>`
-    select item_key, responses -> 0 ->> 'answer' as answer,
+  const [q] = await sql<{ item_key: string; n: number; answer: string; stem: string }[]>`
+    select item_key, stem, responses -> 0 ->> 'answer' as answer,
            (select count(*)::int from jsonb_array_elements(i.responses) r, jsonb_object_keys(r -> 'misconceptions')) as n
     from item i where status = 'active' and source = 'generated' and fmt = 'word_2step'
     order by item_key limit 1`;
-  await page.goto(`/library/${q.item_key}`);
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Two-step word problem");
+  await page.goto(`/setup/question-bank/${q.item_key}`);
+  // the heading is the question's own words; its kind is said beside its state
+  await expect(page.getByRole("heading", { level: 1 })).toContainText(q.stem.trim().slice(0, 40));
+  await expect(page.locator("[data-question-state]")).toContainText("two-step word problem");
   const printed = page.getByRole("img", { name: "The question as it prints on a paper" });
   await expect.poll(() => printed.evaluate((img: HTMLImageElement) => img.naturalWidth)).toBeGreaterThan(0);
   await expect(page.getByText(q.answer, { exact: true }).first()).toBeVisible();
-  await expect(page.getByRole("table", { name: "Wrong answers it catches" }).locator("tbody tr")).toHaveCount(q.n);
+  await expect(page.locator("[data-caught] li")).toHaveCount(q.n);
 
   await page.setViewportSize({ width: 400, height: 860 });
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
@@ -240,23 +242,23 @@ test("correcting a question's wording saves a new question and retires the old o
   const reworded = `Read carefully. ${q.stem}`;
   const worksheets = await libraryOf(sql, q.skill_set_code, q.difficulty);
   try {
-    await page.goto(`/library/${q.item_key}`);
-    const form = page.locator("form").filter({ has: page.getByRole("button", { name: "Save correction" }) });
+    await page.goto(`/setup/question-bank/${q.item_key}`);
+    const form = page.locator("form").filter({ has: page.getByRole("button", { name: "Correct the wording" }) });
 
     await form.locator('textarea[name="stem"]').fill(`${q.stem} There are 98765 more.`);
     await form.locator('input[name="reason"]').fill(MARK);
-    await form.getByRole("button", { name: "Save correction" }).click();
+    await form.getByRole("button", { name: "Correct the wording" }).click();
     // Both answers come from the engine, which may still be cutting the scan images earlier tests asked
     // for; give it the time a busy engine takes, not a fixed five seconds.
-    await expect(page.getByRole("status")).toContainText("Keep every number exactly as it was", { timeout: 15_000 });
+    await expect(page.getByRole("alert")).toContainText("Keep every number exactly as it was", { timeout: 15_000 });
     const [{ made }] = await sql<{ made: number }[]>`select count(*)::int as made from item where corrected_from = ${q.id}`;
     expect(made, "a refused correction changes nothing").toBe(0);
 
     await form.locator('textarea[name="stem"]').fill(reworded);
     await form.locator('input[name="reason"]').fill(MARK);
-    await Promise.all([page.waitForURL(/corrected=1/), form.getByRole("button", { name: "Save correction" }).click()]);
+    await Promise.all([page.waitForURL(/corrected=1/), form.getByRole("button", { name: "Correct the wording" }).click()]);
     await expect(page.getByRole("status")).toContainText("Saved", { timeout: 15_000 });
-    await expect(page.getByText("Reworded by a teacher")).toBeVisible();
+    await expect(page.getByText("This wording replaced an earlier one.")).toBeVisible();
 
     const [row] = await sql<{ status: string; stem: string; same: boolean }[]>`
       select n.status, n.stem, (n.spec = o.spec and n.responses = o.responses) as same
@@ -281,7 +283,7 @@ test("removing a question retires it in the database and it stops being offered"
     await page.goto("/library?set=SUB.2D2D");
     await page.locator("#questions tbody tr").first().locator("td").first().getByRole("link").click();
     await page.locator('input[name="note"]').fill(MARK);
-    await page.getByRole("button", { name: "Remove this question" }).click();
+    await page.getByRole("button", { name: "Remove", exact: true }).click();
     await expect(page.getByRole("status")).toContainText("It will not print again");
 
     // The flag is recorded with who said it and why …
@@ -305,18 +307,3 @@ test("removing a question retires it in the database and it stops being offered"
     await forgetFlags(sql, MARK); // no wildcard in it: the flags whose note is the mark
   }
 });
-
-// ---------------------------------------------------------------- the screens with no data yet
-
-test("a screen with no data says what it will show and the real count today", async ({ page }) => {
-  // The list is what is still a placeholder, and it shrinks as screens get built: `/capture` is
-  // the approval screen now and `/growth` is a child's ladder. This assertion had not actually run
-  // since either was built — the serial run always failed earlier and skipped it.
-  for (const [route, table] of [["/home", "parent notes"]]) {
-    await page.goto(route);
-    await expect(page.getByText("What this screen will show")).toBeVisible();
-    await expect(page.getByText("In the database today")).toBeVisible();
-    await expect(page.getByRole("table")).toContainText(table);
-  }
-});
-

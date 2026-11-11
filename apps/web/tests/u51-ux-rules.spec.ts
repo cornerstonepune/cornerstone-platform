@@ -17,6 +17,7 @@ import { readFileSync } from "node:fs";
 import path from "node:path";
 import { expect, test, type Page } from "@playwright/test";
 import postgres from "postgres";
+import { paperAt } from "./paper-screen";
 import { aClass, aReadPaper } from "./rows";
 import { aK2Note, k2Class, voiceSwitch } from "./k2-rows";
 import { SIGNED_IN } from "../playwright.config";
@@ -30,24 +31,27 @@ const FROZEN: Record<string, string[]> = JSON.parse(
 ).ux.frozen;
 const PHONE = { width: 390, height: 844 };
 let kids: Record<string, string>;
-let sheet: string;
 let answer: string;
+let classId: string;
+let paper: string; // the paper screen of the paper with an answer waiting
 
 test.beforeAll(async () => {
   kids = await aClass(sql, SECTION, "G2", NAMES);
   const [ws] = await sql<{ id: string; item_ids: string[] }[]>`
     select id, item_ids from sheet_template
     where source = 'library' and retired_at is null and skill_set_code = 'ADD.2D2D' and difficulty = 'Medium' order by code limit 1`;
-  ({ sheet } = await aReadPaper(sql, {
+  const { sheet } = await aReadPaper(sql, {
     qr: "CS51A001",
     child: kids.Asha,
     template: ws.id,
     items: ws.item_ids.slice(0, 2),
     reads: [{ status: "correct", read: "1" }, { status: "needs_teacher", read: "7" }],
-  }));
+  });
   [{ id: answer }] = await sql<{ id: string }[]>`
     select r.id from item_result r join capture c on c.id = r.capture_id join sheet_instance si on si.id = c.sheet_instance_id
     where si.qr_code = 'CS51A001' and r.status = 'needs_teacher' limit 1`;
+  [{ id: classId }] = await sql<{ id: string }[]>`select id from school_class where label = ${SECTION} limit 1`;
+  paper = (await paperAt({ sheet }));
 });
 test.afterAll(async () => {
   await sql.end();
@@ -125,24 +129,22 @@ const ROUTES = (): [string, string][] => [
   ["/setup/needs-doing", "/setup/needs-doing"],
   ["/", "/"],
   ["/library", "/library"],
-  ["/worksheets", "/worksheets"],
   ["/worksheets/taxonomy", "/worksheets/taxonomy"],
   ["/worksheets/[qr]", "/worksheets/CS51A001"],
   ["/children/assessments", "/children/assessments"],
-  // the assessment screen is the paper screen's address without its Sr. No.: found by walking the old link of a paper
-  ["/children/assessments/[key]", `up:${sheet}`],
+  // the assessment screen is the paper screen's address without its Sr. No.
+  ["/children/assessments/[key]", paper.replace(/\/[^/]+$/, "")],
   ["/make", "/make"],
   ["/make/[section]", `/make/${SECTION}`],
   ["/make/[section]/week", `/make/${SECTION}/week`],
   ["/capture", "/capture"],
-  ["/children/assessments/[key]/[roll]", `/capture/${sheet}`],
-  ["/children/assessments/[key]/[roll]?answer", `/capture/check?id=${answer}`],
-  ["/growth", "/growth"],
-  ["/growth/class/[section]", `/growth/class/${SECTION}`],
+  ["/children/assessments/[key]/[roll]", paper],
+  ["/children/assessments/[key]/[roll]?answer", `${paper}?answer=${answer}#a-${answer}`],
+  ["/children", "/children"],
+  ["/children/[class]?view=topic", `/children/${classId}?view=topic`],
+  ["/children/[class]?view=matrix", `/children/${classId}?view=matrix`],
   ["/growth/[id]", `/growth/${kids.Asha}`],
   ["/children/reports", "/children/reports"],
-  ["/asks", "/asks"],
-  ["/home", "/home"],
   ["/setup/how-it-works", "/setup/how-it-works"],
 ];
 
@@ -152,10 +154,7 @@ test("every page keeps the rules, or is named as still breaking them, and only t
   const wrong: string[] = [];
   const measured: string[] = [];
   for (const [route, url] of ROUTES()) {
-    if (url.startsWith("up:")) {
-      await page.goto(`/capture/${url.slice(3)}`);
-      await open(page, new URL(page.url()).pathname.replace(/\/[^/]+$/, ""));
-    } else await open(page, url);
+    await open(page, url);
     const found = await breaks(page);
     // A page still on the list is built by hand and shows whatever the rows give it: measured, not held. A page off it
     // is on the blocks and keeps every rule.
@@ -203,9 +202,9 @@ test("the K2 voice-note pages keep every rule while voice notes are switched on"
   }
 });
 
-test("on a phone the main action of Check answers is a thumb's size", async ({ browser }) => {
+test("on a phone the main action of a paper with an answer to check is a thumb's size", async ({ browser }) => {
   const page = await (await browser.newContext({ storageState: SIGNED_IN, viewport: PHONE })).newPage();
-  await open(page, `/capture/check?id=${answer}`);
+  await open(page, `${paper}?answer=${answer}#a-${answer}`);
   for (const b of await page.locator("[data-ux=action] button, [data-ux=action] a, [data-ux=next]").all()) {
     expect((await b.boundingBox())!.height, await b.textContent() ?? "").toBeGreaterThanOrEqual(44);
   }
@@ -218,7 +217,7 @@ const DESKTOP = { width: 1440, height: 900 };
 
 test("the top bar: the menu button is full-size, the student search is a compact field", async ({ browser }) => {
   const page = await (await browser.newContext({ storageState: SIGNED_IN, viewport: DESKTOP })).newPage();
-  for (const url of ["/setup/needs-doing", "/children/assessments", "/growth", "/"]) {
+  for (const url of ["/setup/needs-doing", "/children/assessments", "/children", "/"]) {
     await open(page, url);
     expect((await page.locator("[data-bar]").first().locator("div").first().boundingBox())!.height, `${url}: the bar`).toBe(BAR_HEIGHT_PX);
     for (const door of await page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" }).getByRole("link").all())

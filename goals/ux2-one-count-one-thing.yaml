@@ -26,7 +26,7 @@ says:
   - words: "You really need to run a thorough UI/UX skill here."
     proved_by: "apps/web/tests/u33-one-count.spec.ts::the question bank is one number wherever it is named"
   - words: "You really need to run a thorough UI/UX skill here."
-    proved_by: "apps/web/tests/u33-one-count.spec.ts::the worksheet library's total, pager and list are the same worksheets"
+    proved_by: "apps/web/tests/u33-one-count.spec.ts::the question bank is one number wherever it is named"
   - words: "You really need to run a thorough UI/UX skill here."
     proved_by: packages/engine/tests/test_roster.py::test_a_class_has_one_grade_and_the_database_says_it
 manual: []

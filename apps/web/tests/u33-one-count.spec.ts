@@ -2,7 +2,8 @@
  * U33 — one count for one thing (goals/ux2-one-count-one-thing.yaml). Nimish, 2026-10-15: "You really need to run a
  * thorough UI/UX skill here." The audit found the same number said three ways: "Grade 1 · G2-C" on a Grade 2 class's
  * papers, 12 class papers to approve on Today and 18 on Assessments, the bank 21,250, 28,705 and 28,717 on three pages,
- * the worksheet library 1,872 above its list and 2,738 in its pager.
+ * the worksheet library 1,872 above its list and 2,738 in its pager. (That list page is retired: each skill's worksheets are
+ * listed on its own skill set's page, and its count went with it.)
  *
  * A Grade 2 class of the test's own (tests/rows.ts) is given a Grade 1 worksheet as class practice: a copy for each of
  * its two children and one spare, as the engine prints a pack. Its papers and their week are taken away after.
@@ -59,7 +60,7 @@ test("the class papers Today counts are the copies the pages it opens show waiti
   await expect(item).toContainText("2 papers");
 
   // Assessments: the two children's copies wait to be approved; the spare rides with them, counted apart
-  await page.goto(`/papers?class=${CLASS}`);
+  await page.goto(`/children/assessments?class=${CLASS}`);
   // made, none yet printed: the next thing is to print them (a class's papers are approved as they are printed)
   await expect(ours(page).locator("[data-action=print]")).toHaveText("Print");
   await expect(ours(page).locator('[data-status="next"]')).toHaveCount(1);
@@ -99,23 +100,4 @@ test("the question bank is one number wherever it is named", async ({ page }) =>
   await expect(grades.first()).toBeVisible();
   const counts = await grades.locator("td:nth-child(2)").allInnerTexts();
   expect(counts.reduce((n, c) => n + number(c), 0), "Curriculum's grades add up to the bank").toBe(bank);
-});
-
-test("the worksheet library's total, pager and list are the same worksheets", async ({ page }) => {
-  await page.goto("/worksheets");
-  const library = page.locator("#library");
-  const aside = await library.locator(".panel-head").first().innerText();
-  const total = number(aside.split("worksheets")[0]);
-  expect(total).toBeGreaterThan(0);
-  const pager = library.getByText(/\d[\d,]* of [\d,]+/).first();
-  await expect(pager, "the pager counts what the total counts").toContainText(`of ${total.toLocaleString("en-IN")}`);
-  // the last page lists what is left: nothing is counted that the list never shows (read once the list has streamed in)
-  const list = library.getByRole("table", { name: "Worksheets", exact: true }).locator("tbody tr");
-  await expect(list.first()).toBeVisible();
-  const per = await list.count();
-  const last = Math.ceil(total / per);
-  await page.goto(`/worksheets?page=${last}#library`);
-  await expect(page.locator("#library").getByRole("table", { name: "Worksheets", exact: true }).locator("tbody tr")).toHaveCount(
-    total - per * (last - 1),
-  );
 });

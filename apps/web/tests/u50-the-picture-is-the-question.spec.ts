@@ -11,11 +11,13 @@ import { mkdirSync, mkdtempSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { aClass, aReadPaper, aWorksheet } from "./rows";
+import { paperScreenOf } from "../lib/queries-assessment-extras";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 test.afterAll(async () => sql.end());
 
+const COORDINATOR = { role: "coordinator", classes: [], subjects: [], id: undefined };
 const W = 1000;
 const H = 1400;
 const ROW = 105;
@@ -66,7 +68,9 @@ test.beforeAll(async ({ browser }) => {
 });
 
 const open = async (page: Page, n: number) => {
-  await page.goto(`/capture/check?id=${id[n]}`);
+  // the answer on its paper's screen, opened on that answer (the screen the old check queue's address became)
+  const at = (await paperScreenOf({ result: id[n] }, COORDINATOR))!;
+  await page.goto(`${at.href}?answer=${id[n]}#a-${id[n]}`);
   // the question's number is said under the picture and over the answer
   await expect(page.locator("figure")).toContainText(new RegExp(`question ${n}`, "i"));
 };

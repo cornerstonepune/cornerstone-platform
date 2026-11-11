@@ -11,6 +11,7 @@ import { randomBytes } from "node:crypto";
 import { expect, test, type Page } from "@playwright/test";
 import postgres from "postgres";
 import { aClass, aReadPaper } from "./rows";
+import { assessmentHref } from "../lib/assessment-ui";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -23,7 +24,8 @@ let ws: { id: string; item_ids: string[]; set: string; title: string };
 let week = "";
 let tenant = "";
 
-const card = (kind: string) => `/papers/card?${new URLSearchParams({ class: SECTION, week, kind, set: ws.set })}`;
+// the assessment's own screen: its key is the kind, the class, the week and the skill set
+const card = (kind: string) => assessmentHref([kind, SECTION, week, ws.set].join("~"));
 const at = (page: Page) => page.getByRole("list", { name: "Where it stands" }).locator("[aria-current=step]");
 
 test.beforeAll(async () => {
@@ -55,9 +57,9 @@ test.afterAll(async () => {
 });
 
 test("the upload box is at the top of the card, Assessments and Marking", async ({ page }) => {
-  for (const path of [card("practice"), "/papers", "/capture"]) {
+  for (const path of [card("practice"), "/children/assessments", "/capture"]) {
     await page.goto(path);
-    if (path === "/papers") {
+    if (path === "/children/assessments") {
       // Assessments: the upload box is one of its two blocks above the list (goals/asm_assessments_page.yaml)
       const block = page.getByRole("region", { name: "Read an assessment" });
       await expect(block.locator("input[type=file]")).toHaveCount(1);
@@ -170,7 +172,7 @@ test("each child's paper has its status chip, and a place in the filter row narr
   await expect(page.locator("[data-filterbar]")).toBeVisible();
   const places = await page.locator("[data-filterbar] select[name=where] option[value]:not([value=''])").evaluateAll((os) => os.map((o) => (o as HTMLOptionElement).value));
   expect(places.length).toBeGreaterThan(0);
-  await page.goto(`${card("practice")}&where=${encodeURIComponent(places[0])}`);
+  await page.goto(`${card("practice")}?where=${encodeURIComponent(places[0])}`);
   await expect(page.locator("[data-active-filters]")).toContainText("Where it is:");
   const narrowed = page.getByRole("table", { name: "Each child's paper" });
   await expect(narrowed).toBeVisible(); // the table streams in after the filter row: count its rows once it is there

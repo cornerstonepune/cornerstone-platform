@@ -94,7 +94,8 @@ test("a move to a class that works at another grade asks which grade, keeps the 
   expect(n, "the same child, so their paper is still theirs").toBe(1);
   await expect(page.getByTestId("move-history")).toContainText(`${FROM} roll 3 → ${TO} roll 12`);
   // the class page now lists them in the new class
-  await page.goto(`/growth/class/${TO}`);
+  const [{ id: classId }] = await sql<{ id: string }[]>`select id from school_class where label = ${TO} limit 1`;
+  await page.goto(`/children/${classId}?view=matrix`);
   await expect(page.locator("main")).toContainText("3 children");
 });
 

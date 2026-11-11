@@ -1,7 +1,7 @@
 /**
  * M1-09m — the materials pages in the educator's screens (goals/m1-09m-materials.yaml, D-076): her class's list built
- * by M1-10's engine from Fortnight 10 as the school wrote it, the school's list for the month and the notes waiting
- * for a person (M1-16). Catalogue items are the tests' own, tied to the real activities. No child; no send screen.
+ * by M1-10's engine from Fortnight 10 as the school wrote it, the school's list for the month (the School list tab of
+ * the Timetable's Materials) and the notes waiting for a person (M1-16). Catalogue items are the tests' own, tied to the real activities. No child; no send screen.
  */
 import { expect, test, type Page } from "@playwright/test";
 import postgres from "postgres";
@@ -83,7 +83,7 @@ test("a quantity she sets is kept, a line removed is gone, an item added from th
 
 test("the school's list and the notes to read are the coordinator's: anyone else is told so, the coordinator sees them", async ({ page }) => {
   await timetableSwitch(sql, true);
-  await page.goto("/educator/materials/school?month=2026-12");
+  await page.goto(`/timetable/materials?class=${klass}&day=${TUESDAY}&tab=school`);
   await expect(page.getByText("The school's list is the coordinator's.")).toBeVisible();
   await page.goto("/educator/materials/review");
   await expect(page.getByText("Notes are read by the coordinator.")).toBeVisible();
@@ -95,8 +95,8 @@ test("the school's list and the notes to read are the coordinator's: anyone else
   await sql`insert into curriculum_proposal (tenant_id, run_id, kind, subject_code, proposal, status, reason, staff_id, machine)
     values (${tenant}, gen_random_uuid(), 'materials_note', ${list}, ${sql.json({ text: "Placeholder note: two dozen lolly sticks" })},
             'needs_person', 'Placeholder: lolly sticks are not in the catalogue', ${staff}, 'materials_read')`;
-  await page.goto("/educator/materials/school?month=2026-12");
-  await expect(page.locator("[data-school-list] tr[data-line]").first()).toBeVisible();
+  await page.goto(`/timetable/materials?class=${klass}&day=${TUESDAY}&tab=school`);
+  await expect(page.getByRole("table", { name: "School list" }).locator("tbody tr").first()).toBeVisible();
   await shoot(page, "6-school-list");
   await page.goto("/educator/materials/review");
   const note = page.locator("tr[data-note]").filter({ hasText: "lolly sticks" });
@@ -119,8 +119,8 @@ test("while switched off a previewer sees her class's real list and the school's
     await open(page);
     await expect(line(page, "Craft paper")).toContainText("2 sheet");
     await expect(page.getByRole("button", { name: /Save|Remove|Add/ })).toHaveCount(0); // a preview changes nothing
-    await page.goto("/educator/materials/school?month=2026-12");
-    await expect(page.locator("[data-school-list] tr[data-line]").first()).toBeVisible();
+    await page.goto(`/timetable/materials?class=${klass}&day=${TUESDAY}&tab=school`);
+    await expect(page.getByRole("table", { name: "School list" }).locator("tbody tr").first()).toBeVisible();
     expect(await kept()).toBe(before);
   } finally {
     for (const r of rows) await sql`update config set value = ${sql.json(r.value as never)} where key = ${r.key}`;

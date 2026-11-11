@@ -88,8 +88,7 @@ const childRows = (page: Page) => page.getByRole("main").locator('table[aria-lab
 test("an educator sees their own class as a table of its children, and no other", async ({ browser }) => {
   const page = await asEducator(browser);
   await voiceSwitch(sql, true);
-  await page.goto("/growth?view=children");
-  await expect(page).toHaveURL(/\/children$/);
+  await page.goto("/children");
   await expect(childRows(page)).toHaveCount(3);
   // one class is theirs: the filter row offers no class choice, and the other class is nowhere on the page
   await expect(page.locator("[data-filterbar] select[name=cls]")).toHaveCount(0);
@@ -107,9 +106,9 @@ test("the coordinator sees every class in one table and can narrow it to one", a
   await choice.selectOption({ label: MINE });
   await expect(page).toHaveURL(/cls=[0-9a-f-]{36}/);
   await expect(childRows(page)).toHaveCount(3);
-  // the old address of the other class lands on it
-  await page.goto(`/growth?view=children&class=${OTHER}`);
-  await expect(page).toHaveURL(/\/children\?cls=[0-9a-f-]{36}$/);
+  // the other class, by its address, is that class alone
+  const [{ id: other }] = await sql<{ id: string }[]>`select id from school_class where label = ${OTHER} limit 1`;
+  await page.goto(`/children?cls=${other}`);
   await expect(page.getByRole("main")).toContainText("Kavi");
   await expect(page.getByRole("main")).not.toContainText("Asha");
 });

@@ -83,7 +83,7 @@ export async function LevelsTab({ q }: { q: Q }) {
             {at >= 0 ? (
               <>
                 {said.slice(0, at)}
-                <Link href={`/skill-sets/${r.skill}`}>{r.skillName}</Link>
+                <Link href={`/setup/skill-sets/${r.skill}`}>{r.skillName}</Link>
                 {said.slice(at + r.skillName.length)}
               </>
             ) : (
@@ -112,7 +112,7 @@ export async function LevelsTab({ q }: { q: Q }) {
                 I&apos;ve looked at this
               </button>
             </form>
-            <Link href={`/skill-sets/${r.skill}/edit`}>Open the skill</Link>
+            <Link href={`/setup/skill-sets/${r.skill}/edit`}>Open the skill</Link>
           </span>
         ) : null,
       width: "17rem",
@@ -176,7 +176,7 @@ export async function LevelsTab({ q }: { q: Q }) {
                             more={{ by: (r) => (r.kind === "grade" ? r.gradeName : `Class ${r.scope}`) }}
                           />
                           <p className="mt-1 text-[13px]">
-                            <Link href={`/skill-sets/${code}`}>About this skill</Link>
+                            <Link href={`/setup/skill-sets/${code}`}>About this skill</Link>
                           </p>
                         </div>
                       </details>

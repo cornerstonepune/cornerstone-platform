@@ -8,7 +8,7 @@
  * The class is the test's own: three Grade 2 children with checked answers chosen so each colour appears. Evidence
  * is append-only, so the children are made once and kept; the papers the test makes are removed.
  */
-import { landedOn } from "./paper-screen";
+import { landedOn, paperAt } from "./paper-screen";
 import { expect, test } from "@playwright/test";
 import postgres from "postgres";
 import { ENGINE_PORT } from "../playwright.config";
@@ -104,8 +104,10 @@ async function clearUp() {
 }
 
 let ids: Record<string, string> = {};
+let classId = ""; // the class picture's address is /children/<id>
 test.beforeAll(async () => {
   ids = await testClass();
+  [{ id: classId }] = await sql<{ id: string }[]>`select id from school_class where label = ${SECTION} limit 1`;
   // the class picture is behind the educator switch (UI-3b), as u21-class-by-topic switches it on for itself
   await voiceSwitch(sql, true);
   await clearUp();
@@ -121,9 +123,8 @@ test.afterAll(async () => {
 test("each grade opens on its classes, and a class is its children against every step in red, amber, green or grey", async ({
   page,
 }) => {
-  // the class's children against every step is the Matrix tab of the class picture; the old address of it goes there
-  await page.goto(`/growth/class/${SECTION}`);
-  await expect(page).toHaveURL(/\/children\/[0-9a-f-]{36}\?view=matrix$/);
+  // the class's children against every step is the Matrix tab of the class picture
+  await page.goto(`/children/${classId}?view=matrix`);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Class picture");
   await expect(page.locator("main")).toContainText(SECTION);
 
@@ -141,7 +142,7 @@ test("each grade opens on its classes, and a class is its children against every
     from child_skill_state s join child_now c on c.id = s.child_id where c.section = ${SECTION}`;
   const shown: string[] = [];
   for (const topic of new Set(steps.map((s) => s.topic))) {
-    await page.goto(`/growth/class/${SECTION}?topic=${topic}`);
+    await page.goto(`/children/${classId}?view=matrix&topic=${topic}`);
     await expect(grid).toBeVisible();
     const cols = await grid.locator("thead th[data-col]").evaluateAll((ths) => ths.map((t) => t.getAttribute("data-col")!));
     shown.push(...cols);
@@ -157,7 +158,7 @@ test("each grade opens on its classes, and a class is its children against every
     }
   }
   expect(shown.sort()).toEqual(steps.map((s) => s.col).sort());
-  await page.goto(`/growth/class/${SECTION}?topic=ADDSUB`);
+  await page.goto(`/children/${classId}?view=matrix&topic=ADDSUB`);
   // the four colours are there, as the test's answers made them
   const asha = grid.locator(`tbody tr[data-child="${ids.Asha}"]`);
   for (const [col, rag] of [
@@ -249,7 +250,9 @@ test("the engine proposes the next paper and a teacher approves it, once, in the
   // once approved, the panel says who approved it and offers no second paper this week
   await page.goto(`/growth/${ids.Asha}`);
   await expect(next).toContainText(`Approved by ${TEST_STAFF.name}`);
-  await expect(next.getByRole("link", { name: qr })).toHaveAttribute("href", `/papers/review/${qr}`); // the old address, answered 308 to the paper screen (u80)
+  // the paper opens its own screen under Assessments
+  const screen = (await paperAt({ qr }));
+  await expect(next.getByRole("link", { name: qr })).toHaveAttribute("href", screen);
   await expect(next.getByRole("button", { name: "Approve this home assessment" })).toHaveCount(0);
 
   // a child with nothing to work on — Bina has no checked answer yet — is offered no home assessment to approve: her
@@ -290,7 +293,7 @@ test("a child's page lists every paper made for them or read from them, with its
 
 test("the class and a child's page fit a phone, with the class's own answers on them", async ({ page }) => {
   await page.setViewportSize({ width: 400, height: 860 });
-  for (const url of ["/growth", `/growth/class/${SECTION}`, `/growth/${ids.Asha}`]) {
+  for (const url of ["/children", `/children/${classId}?view=topic`, `/children/${classId}?view=matrix`, `/growth/${ids.Asha}`]) {
     await page.goto(url, { waitUntil: "networkidle" });
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
     expect(overflow, `${url} must not scroll sideways`).toBeLessThanOrEqual(1);
@@ -302,7 +305,7 @@ test("a class reads the shared tree, topic by topic, each skill by its name, in 
     select t.name from topic t where exists (
       select 1 from skill s join level_rule l on s.rung_code = any(l.rung_codes)
       where s.topic_code = t.code and l.band = 'G2') order by t.ord`;
-  await page.goto(`/growth/class/${SECTION}`);
+  await page.goto(`/children/${classId}?view=matrix`);
   const byTopic = page.getByRole("table", { name: `${SECTION}: each child on each topic` });
   // the page streams in behind its skeleton, and reading texts does not wait: the heading row first
   await expect(byTopic.locator("thead tr")).toBeVisible();

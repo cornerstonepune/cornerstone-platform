@@ -41,9 +41,9 @@ test("a control the inventory lists and the page lacks fails, naming the control
 
 test("a link that lands on the wrong screen fails as a dead link, naming both headings", async ({ browser }) => {
   const inv = mini();
-  inv.screens[0].elements[0] = { t: "link", label: "Check answers", href: "/capture/check", to: "feedback" };
+  inv.screens[0].elements[0] = { t: "link", label: "Check answers", href: "/children/assessments?status=check", to: "feedback" };
   const problems = await audit(browser, inv, "across");
-  expect(problems.join("\n")).toMatch(/“Check answers” did not land on feedback: its h1 is “Check answers”, expected “Report a problem or suggest something” \(a dead link\)/);
+  expect(problems.join("\n")).toMatch(/“Check answers” did not land on feedback: its h1 is “Assessments”, expected “Report a problem or suggest something” \(a dead link\)/);
 });
 
 test("a child's name that is not in tests/fake-names.ts fails, naming the name", async ({ browser }) => {

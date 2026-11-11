@@ -13,15 +13,15 @@
 import { expect, test, type Page } from "@playwright/test";
 import postgres from "postgres";
 import { aClass, aReadPaper, aWorksheet } from "./rows";
+import { answerAt, paperAt } from "./paper-screen";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 test.afterAll(async () => sql.end());
 
-// The queue's page is gone (UI-4): its address answers 308 to the paper screen of the copy an answer is on, that answer in view.
 const panel = (page: Page) => page.getByRole("region", { name: "Say what the child wrote" });
 async function onPaper(page: Page, answer: string) {
-  await page.goto(`/capture/check?id=${answer}`);
+  await page.goto(await answerAt(answer));
   await expect(page.getByRole("heading", { name: "Check the answers" })).toBeVisible();
   await expect(page).toHaveURL(new RegExp(`answer=${answer}`));
   await expect(panel(page)).toHaveAttribute("id", `a-${answer}`);
@@ -264,7 +264,7 @@ test("a child's papers open from their page, and each steps to the child's next 
     from p group by child_id having max(n) >= 2 order by child_id limit 1`;
   expect(c, "a child with two papers read").toBeTruthy();
   await page.goto(`/growth/${c.child_id}`);
-  await page.locator(`a[href="/capture/${c.first}"]`).first().click();
+  await page.locator(`a[href="${await paperAt({ sheet: c.first })}"]`).first().click();
   await expect(page.getByRole("heading", { name: "Check the answers" })).toBeVisible();
   const walk = page.getByLabel("This child's papers");
   await expect(walk).toContainText(/Paper \d+ of \d+ for this child/);
@@ -388,12 +388,12 @@ test("Capture & Mark says how the reader is doing, with the database's own numbe
   await expect(panel.getByText(/a person checks every answer|trusted: settles alone/).first()).toBeVisible();
 });
 
-test("the old queue's address opens the paper screen, which fits a phone", async ({ page }) => {
+test("the paper screen an answer is checked on fits a phone", async ({ page }) => {
   await page.goto("/setup/needs-doing");
   await page.getByRole("heading", { level: 1, name: "What needs doing" }).waitFor();
   const [a] = await sql<{ id: string }[]>`select r.id ${LIVE} and r.status = 'unreadable' and r.state = 'candidate' order by r.id limit 1`;
   await page.setViewportSize({ width: 400, height: 860 });
-  await page.goto(`/capture/check?id=${a.id}`, { waitUntil: "networkidle" });
+  await page.goto(await answerAt(a.id), { waitUntil: "networkidle" });
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Check the answers");
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
   expect(overflow).toBeLessThanOrEqual(1);

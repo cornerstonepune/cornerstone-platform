@@ -10,6 +10,7 @@
  */
 import { expect, test, type Browser, type Page } from "@playwright/test";
 import postgres from "postgres";
+import { paperAt } from "./paper-screen";
 import { aClass, aReadPaper, aPerson, forgetPerson } from "./rows";
 import { SIGNED_IN } from "../playwright.config";
 import { isoWeek } from "../lib/week";
@@ -23,6 +24,8 @@ const PASSWORD = "u47-a-long-test-password";
 const PHONE = { width: 390, height: 844 };
 let kids: Record<string, string>;
 let sheet: string;
+let paper: string; // the read paper's own screen under Assessments
+let classId: string; // the class picture's address is /children/<id>
 
 test.beforeAll(async () => {
   kids = await aClass(sql, SECTION, "G2", ["Asha", "Bina"]);
@@ -49,6 +52,8 @@ test.beforeAll(async () => {
     items: ws.item_ids.slice(0, 2),
     reads: [{ status: "correct", read: "1" }, { status: "needs_teacher", read: "7" }],
   }));
+  paper = (await paperAt({ sheet }));
+  [{ id: classId }] = await sql<{ id: string }[]>`select id from school_class where label = ${SECTION} limit 1`;
   await sql`delete from prescription where child_id = ${kids.Asha} and week = to_date(${THIS}, 'IYYY-"W"IW') and kind = 'practice'`;
   await sql`delete from sheet_instance where qr_code = ${QR.practice}`;
   const [{ id: practice }] = await sql<{ id: string }[]>`
@@ -81,14 +86,14 @@ const pages = () => [
   "/setup/needs-doing",
   "/",
   "/library",
-  "/worksheets",
-  "/papers",
-  `/papers/approve?section=${SECTION}&week=${THIS}&kind=practice`,
+  "/children/assessments",
+  `/children/assessments?class=${SECTION}&week=${THIS}&kind=practice`,
   `/make/${SECTION}`,
   "/capture",
-  `/capture/${sheet}`,
-  "/growth",
-  `/growth/class/${SECTION}`,
+  paper,
+  "/children",
+  `/children/${classId}?view=topic`,
+  `/children/${classId}?view=matrix`,
   `/growth/${kids.Asha}`,
 ];
 
@@ -104,7 +109,7 @@ test("every page has one main action at most: the one loud colour, once", async 
   const loud: string[] = [];
   for (const who of ["educator", "coordinator"] as const) {
     const page = await as(browser, who);
-    for (const path of [...pages(), ...(who === "coordinator" ? ["/skill-sets/approve"] : [])]) {
+    for (const path of [...pages(), ...(who === "coordinator" ? ["/setup/skills/approve"] : [])]) {
       await open(page, path);
       const found = await page.evaluate(() => {
         const terracotta = getComputedStyle(document.documentElement).getPropertyValue("--terracotta").trim();

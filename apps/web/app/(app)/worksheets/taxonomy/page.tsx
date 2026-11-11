@@ -127,7 +127,7 @@ function CaseRow({ c }: { c: TaxonomyCase }) {
         ) : (
           c.set_at.map((p) => (
             <div key={`${p.set}-${p.level}`}>
-              <Link href={`/skill-sets/${p.set}?level=${p.level}#worksheets`}>{p.name}</Link> · {p.level}
+              <Link href={`/setup/skill-sets/${p.set}?level=${p.level}#worksheets`}>{p.name}</Link> · {p.level}
             </div>
           ))
         )}

@@ -10,6 +10,7 @@
  */
 import { expect, test, type Browser, type Page } from "@playwright/test";
 import postgres from "postgres";
+import { paperAt } from "./paper-screen";
 import { aClass, aReadPaper, aPerson, forgetPerson } from "./rows";
 import { isoWeek } from "../lib/week";
 
@@ -22,6 +23,7 @@ const EDUCATOR = { email: "u45-educator@cornerstone.test", name: "U45 Educator",
 const PASSWORD = "u45-a-long-test-password";
 let kids: Record<string, string>;
 let sheet: string;
+let paper: string; // the read paper's own screen under Assessments
 let code: string;
 
 test.beforeAll(async () => {
@@ -38,6 +40,7 @@ test.beforeAll(async () => {
     items: ws.item_ids.slice(0, 2),
     reads: [{ status: "correct", read: "1" }, { status: "needs_teacher", read: "7" }],
   }));
+  paper = (await paperAt({ sheet }));
   await sql`delete from prescription where child_id = ${kids.Asha} and week = to_date(${THIS}, 'IYYY-"W"IW') and kind = 'practice'`;
   await sql`delete from sheet_instance where qr_code = ${QR.practice}`;
   const [{ id: practice }] = await sql<{ id: string }[]>`
@@ -75,7 +78,7 @@ test("a paper is named by what it tests on every page an educator opens it from"
     await expect(main, `${path} names the worksheet by its code`).not.toContainText(code);
   }
   // the assessment's own screen, reached from its paper's screen, is titled by what it tests too
-  await page.goto(`/capture/${sheet}`);
+  await page.goto(paper);
   await page.getByRole("complementary", { name: "Rail" }).getByRole("link", { name: "The assessment" }).click();
   await expect(page.getByRole("heading", { level: 1 })).toContainText(NAME);
   await expect(page.locator("main")).not.toContainText(code);
@@ -84,7 +87,7 @@ test("a paper is named by what it tests on every page an educator opens it from"
 
 test("one skill has one name: the marking page's lanes are the skills every other page names", async ({ browser }) => {
   const page = await asEducator(browser);
-  await page.goto(`/capture/${sheet}`);
+  await page.goto(paper);
   const lanes = page.getByRole("region", { name: "What this paper says, by skill" });
   await expect(lanes.getByRole("heading", { level: 3 })).toHaveText(["2-digit + 2-digit"]);
   await page.context().close();
@@ -92,7 +95,7 @@ test("one skill has one name: the marking page's lanes are the skills every othe
 
 test("a paper with no date says nothing of one", async ({ browser }) => {
   const page = await asEducator(browser);
-  await page.goto(`/capture/${sheet}`);
+  await page.goto(paper);
   // the page itself first: a "not" passes at once on the loading screen
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Check the answers");
   await expect(page.locator("main header")).not.toContainText(/Sat\s*—/);

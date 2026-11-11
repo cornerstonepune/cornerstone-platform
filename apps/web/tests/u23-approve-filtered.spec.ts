@@ -1,8 +1,8 @@
 /**
  * U23 — Approving the skills, as a table to work through (goals/ui6a-approve-filtered.yaml). Nimish, 2026-10-12, with a
  * screenshot of the page: "also ths page needs to have proper filters and all; no page should have such laundary lists
- * like stuff". Each waiting skill one row, its levels folded until opened; grade, topic and taught narrow the rows;
- * "Approve these" approves the rows shown and nothing else. Every change is put back after.
+ * like stuff". On Skills to approve (Setup) each waiting skill is one row with its levels; grade, topic and taught narrow
+ * the rows; each row's Approve approves that skill and nothing else. Every change is put back after.
  */
 import { expect, test, type Page } from "@playwright/test";
 import postgres from "postgres";
@@ -33,7 +33,10 @@ async function onlyThese(run: () => Promise<void>) {
   }
 }
 
-const rows = (page: Page) => page.getByRole("table", { name: "Skills waiting for approval" }).locator("tbody tr");
+// one table a subject, each named "Skills waiting for approval · <subject>": the rows are every table's
+const rows = (page: Page) => page.getByRole("table", { name: /^Skills waiting for approval/ }).locator("tbody tr");
+const filter = (page: Page, name: string) => page.locator("[data-filterbar]").getByLabel(name, { exact: true });
+const show = (page: Page) => page.locator("[data-filterbar]").getByRole("button", { name: "Show" }).click();
 // the rows the page shows once it has loaded: the count is waited for, then each row's skill read
 async function expectRows(page: Page, codes: string[]) {
   await expect(rows(page)).toHaveCount(codes.length);
@@ -41,24 +44,22 @@ async function expectRows(page: Page, codes: string[]) {
   expect(shown.sort()).toEqual([...codes].sort());
 }
 
-test("each waiting skill is one row, its levels folded until opened", async ({ page }) => {
+test("each waiting skill is one row, with its levels", async ({ page }) => {
   await onlyThese(async () => {
-    await page.goto("/skill-sets/approve");
+    await page.goto("/setup/skills/approve");
     await expectRows(page, DRAFTS);
     // no skill is a card of its own any more
     const [{ name }] = await sql<{ name: string }[]>`select name from skill where code = 'ADD.2D2D'`;
     await expect(page.getByRole("region", { name, exact: true })).toHaveCount(0);
     const row = rows(page).and(page.locator('[data-row="ADD.2D2D"]'));
-    await expect(row.getByRole("rowheader")).toHaveText(name);
+    await expect(row.getByRole("cell").first()).toHaveText(name);
     await expect(row).toContainText("Grade 2");
-    const easy = row.getByText("Easy", { exact: true });
-    await expect(easy).toBeHidden();
-    await row.getByText("Read the levels").click();
-    await expect(easy).toBeVisible();
-    await expect(row.getByRole("button", { name: `Approve, as ${TEST_STAFF.name}` })).toBeVisible();
-    await expect(row.getByRole("link", { name: "Change the description and each level’s sentence" })).toHaveAttribute("href", "/skill-sets/ADD.2D2D/edit");
-    // a skill whose topic is not taught yet says so on its row
-    await expect(rows(page).and(page.locator('[data-row="DIV.3D1D"]'))).toContainText("Not taught yet");
+    await expect(row.locator("[data-levels]").getByText("Easy", { exact: true })).toBeVisible();
+    await expect(row.getByRole("button", { name: `Approve ${name}`, exact: true })).toBeVisible();
+    // the skill opens its own page, where its description and each level's sentence are changed
+    await expect(row.getByRole("link", { name, exact: true })).toHaveAttribute("href", "/setup/skill-sets/ADD.2D2D");
+    await page.goto("/setup/skill-sets/ADD.2D2D");
+    await expect(page.getByRole("link", { name: "Change the description and each level’s sentence" })).toHaveAttribute("href", "/skill-sets/ADD.2D2D/edit");
   });
 });
 
@@ -66,34 +67,47 @@ test("a grade and a topic narrow the rows, and approving one approves only its r
   await onlyThese(async () => {
     const [{ value: tableBefore }] = await sql<{ value: unknown }[]>`
       select value from config where key = 'skills.charges_by_kind.approved'`;
-    await page.goto("/skill-sets/approve");
-    const grades = page.getByRole("navigation", { name: "Grade" });
-    await expect(grades.getByRole("link", { name: /^Every grade\s*4$/ })).toHaveAttribute("aria-current", "page");
-    await grades.getByRole("link", { name: /^Grade 2\s*2$/ }).click();
+    const [{ name: add }] = await sql<{ name: string }[]>`select name from skill where code = 'ADD.2D2D'`;
+    const [{ name: sub }] = await sql<{ name: string }[]>`select name from skill where code = 'SUB.2D2D'`;
+    await page.goto("/setup/skills/approve");
+    // every grade until one is chosen: all four; Grade 2 holds two of them
+    await expect(filter(page, "Grade")).toHaveValue("");
+    await expectRows(page, DRAFTS);
+    await filter(page, "Grade").selectOption({ label: "Grade 2 (2)" });
+    await show(page);
     await expect(page).toHaveURL(/[?&]grade=G2(&|$)/);
     await expectRows(page, ["ADD.2D2D", "SUB.2D2D"]);
 
     // a topic, under every grade: only its skills
-    await grades.getByRole("link", { name: /^Every grade/ }).click();
+    await filter(page, "Grade").selectOption({ value: "" });
+    await show(page);
+    await expect(page).not.toHaveURL(/[?&]grade=G2/);
     await expectRows(page, DRAFTS);
-    await page.getByLabel("Topic").selectOption({ label: "Division (1)" });
-    await page.getByRole("button", { name: "Show" }).click();
+    await filter(page, "Topic").selectOption({ label: "Division (1)" });
+    await show(page);
     await expect(page).toHaveURL(/[?&]topic=DIV(&|$)/);
     await expectRows(page, ["DIV.3D1D"]);
-    await page.getByLabel("Topic").selectOption({ value: "" });
-    await page.getByLabel("Taught").selectOption({ label: "Not taught yet (1)" });
-    await page.getByRole("button", { name: "Show" }).click();
+    await filter(page, "Topic").selectOption({ value: "" });
+    await show(page);
+    await expect(page).not.toHaveURL(/[?&]topic=DIV/);
+    // a skill whose topic is not taught yet is the one the Taught choice keeps
+    await filter(page, "Taught").selectOption({ label: "Not taught yet (1)" });
+    await show(page);
     await expect(page).toHaveURL(/[?&]taught=no(&|$)/);
     await expectRows(page, ["DIV.3D1D"]);
 
     // Grade 2's two, each approved on its own row (no button over both): the other two and the mistake table still wait
-    await page.goto("/skill-sets/approve?grade=G2");
+    await page.goto("/setup/skills/approve?grade=G2");
     await expectRows(page, ["ADD.2D2D", "SUB.2D2D"]);
+    await expect(page.getByTestId("stage")).toHaveText("4 waiting");
     await expect(page.getByRole("button", { name: /Approve (all|these)/ })).toHaveCount(0);
-    await page.locator('tr[data-row="ADD.2D2D"]').getByRole("button", { name: `Approve, as ${TEST_STAFF.name}` }).click();
-    await expect(page.getByRole("status").filter({ hasText: "Approved, in your name. 3 still wait." })).toBeVisible();
-    await page.locator('tr[data-row="SUB.2D2D"]').getByRole("button", { name: `Approve, as ${TEST_STAFF.name}` }).click();
-    await expect(page.getByRole("status").filter({ hasText: "Approved, in your name. 2 still wait." })).toBeVisible();
+    await page.locator('tr[data-row="ADD.2D2D"]').getByRole("button", { name: `Approve ${add}`, exact: true }).click();
+    await expect(page).toHaveURL(/[?&]approved=1(&|$)/);
+    await expect(page.getByTestId("stage")).toHaveText("3 waiting");
+    await expectRows(page, ["SUB.2D2D"]);
+    await page.locator('tr[data-row="SUB.2D2D"]').getByRole("button", { name: `Approve ${sub}`, exact: true }).click();
+    await expect(page.getByTestId("stage")).toHaveText("2 waiting");
+    await expect(rows(page)).toHaveCount(0);
     const after = await sql<{ code: string; status: string; ratified_by: string | null }[]>`
       select code, status, ratified_by from skill where code = any(${DRAFTS}) order by code`;
     expect(after).toEqual([

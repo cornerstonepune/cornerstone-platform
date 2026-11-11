@@ -31,11 +31,13 @@ test.beforeAll(async ({ browser }) => {
   EDUCATOR.classes = (await sql<{ section: string }[]>`select distinct section from child_now where active order by 1`).map((r) => r.section);
   await aPerson(sql, { ...EDUCATOR, password: PASSWORD });
   const [{ code: draft }] = await sql<{ code: string }[]>`select code from skill order by status = 'ratified', code limit 1`;
+  // another class's class picture is /children/<its id>
+  const [{ id: otherId }] = await sql<{ id: string }[]>`select id from school_class where label = ${OTHER} limit 1`;
   pages = [
     // a page that opens on the person's own grade is compared at "Every grade", its one tap
-    "/setup/needs-doing", "/", "/children/assessments", "/growth", "/asks", "/library?grade=all", "/worksheets?grade=all", "/worksheets/taxonomy", "/skill-sets/approve",
-    `/skill-sets/${draft}`, "/capture", "/make", `/make/${OTHER}`, "/children/assessments?status=print", "/children/reports",
-    `/growth/class/${OTHER}`, `/growth/${other.Kavi}`, `/growth/${other.Kavi}/report`, "/setup/how-it-works",
+    "/setup/needs-doing", "/", "/children/assessments", "/children", `/children/${otherId}?view=topic`, "/setup/curriculum", "/library?grade=all", "/worksheets/taxonomy", "/setup/skills/approve",
+    `/setup/skill-sets/${draft}`, "/capture", "/make", `/make/${OTHER}`, "/children/assessments?status=print", "/children/reports",
+    `/children/${otherId}?view=matrix`, `/growth/${other.Kavi}`, `/growth/${other.Kavi}/report`, "/setup/how-it-works",
   ];
   educator = await asEducator(browser);
 });
@@ -56,7 +58,7 @@ async function asEducator(browser: Browser): Promise<Page> {
 }
 
 /** One folded toggle opened, and the page read only once it says so. A toggle may be a link that opens its row by loading
- *  the page again (an assessment's row on /papers): a click returns before that page arrives, so reading straight after it
+ *  the page again (an assessment's row on the old Papers list): a click returns before that page arrives, so reading straight after it
  *  read one person's page open and the other's still folded, by however fast each load was (2026-11-05, CI browser shard
  *  3). Its own state is the ready signal: the same toggle, by its words, now `aria-expanded=true`. */
 async function unfold(page: Page, toggle: Locator) {
@@ -110,9 +112,9 @@ async function offered(page: Page, at: string, name: string): Promise<{ refused:
 // two people are read one after the other, never together: the page's counts are heavy and two at once ran the
 // database past its eight seconds. The names are the pages' own, the addresses those made in `beforeAll`.
 const NAMES = [
-  "/setup/needs-doing", "/", "/children/assessments", "/growth", "/asks", "/library", "/worksheets", "/worksheets/taxonomy", "/skill-sets/approve",
+  "/setup/needs-doing", "/", "/children/assessments", "/children", "another class by topic", "/setup/curriculum", "/library", "/worksheets/taxonomy", "/setup/skills/approve",
   "a skill waiting", "/capture", "/make", "/make of another class", "/children/assessments?status=print", "/children/reports",
-  "another class's growth", "a child of another class", "that child's report", "/setup/how-it-works",
+  "another class's matrix", "a child of another class", "that child's report", "/setup/how-it-works",
 ];
 const walked: string[] = [];
 test.describe("an educator reaches every page and every action the coordinator does", () => {
@@ -148,9 +150,9 @@ test("an educator takes a decision once the coordinator's alone: approving a ski
     await educator.goto("/setup/needs-doing");
     await expect(educator.getByRole("main")).toContainText("Skills to approve");
     await expect(educator.getByRole("contentinfo").getByRole("link", { name: "How it works" }), "the engineering map is theirs too").toBeVisible();
-    await educator.goto(`/skill-sets/${waiting.code}`);
+    await educator.goto(`/setup/skill-sets/${waiting.code}`);
     await expect(educator.getByRole("button", { name: /^Approve, as / })).toBeVisible();
-    await educator.goto("/skill-sets/approve");
+    await educator.goto("/setup/skills/approve");
     await expect(educator.getByRole("main")).not.toContainText("The coordinator approves the skills");
   } finally {
     await educator.context().close();

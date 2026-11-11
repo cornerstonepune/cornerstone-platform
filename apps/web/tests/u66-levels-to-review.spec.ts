@@ -2,12 +2,13 @@
  * U66 — Levels to review (goals/cal_levels_to_review.yaml). Nimish, 26 Oct 2026: "If 8 out of 10 people in the class are
  * able to solve the advanced level for that particular grade or school, then that's not actually advanced. We'll need some
  * section which gives us an understanding that certain things need to be upgraded, like a step." His decisions: the system
- * only suggests, the threshold is 80 percent, the minimum is 8 children.
+ * only suggests, the threshold is 80 percent, the minimum is 8 children. It is the "Levels to review" tab of Skills to approve
+ * (/setup/skills/approve?tab=levels).
  *
  * Classes of the test's own, in a grade no school class is in (G10), named afresh each run: evidence is append-only, so a
  * run's rows are kept, and a class of an earlier run is never counted into this one's.
  */
-import { expect, test, type Browser } from "@playwright/test";
+import { expect, test, type Browser, type Page } from "@playwright/test";
 import { createHmac } from "node:crypto";
 import postgres from "postgres";
 import { aClass, aPerson } from "./rows";
@@ -88,21 +89,23 @@ async function asEducator(browser: Browser) {
   return { context, page: await context.newPage() };
 }
 
-const ofClass = (section: string) => `/skill-sets/levels?view=class&class=${section}`;
+const LEVELS = "/setup/skills/approve?tab=levels";
+const ofClass = (section: string) => `${LEVELS}&view=class&class=${section}`;
+const onLevels = (page: Page) => expect(page.getByRole("tab", { name: "Levels to review" })).toHaveAttribute("aria-selected", "true");
 
 test("the page lists a suggestion in words, with its counts, and links to the skill", async ({ page }) => {
   await page.goto(ofClass(BIG));
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Levels to review");
+  await onLevels(page);
   const row = page.locator("tr", { hasText: "Most children (8 of 10)" });
   await expect(row).toContainText(`are secure at ${LEVEL} in ${skill.name}. Consider making it harder or adding a harder level.`);
-  await expect(row.getByRole("link", { name: skill.name })).toHaveAttribute("href", `/skill-sets/${skill.code}`);
+  await expect(row.getByRole("link", { name: skill.name })).toHaveAttribute("href", `/setup/skill-sets/${skill.code}`);
   await expect(row.getByRole("link", { name: "Open the skill" })).toHaveAttribute("href", `/skill-sets/${skill.code}/edit`);
   // under the minimum: the count in words, and no suggestion
   await page.goto(ofClass(SMALL));
   await expect(page.locator("main")).toContainText("not enough children yet (5 of 8)");
   await expect(page.locator("main")).not.toContainText("Consider making it harder");
   // a grade is counted across its classes, on its own: the same figures, said for the grade
-  await page.goto(`/skill-sets/levels?view=grade&grade=${GRADE}`);
+  await page.goto(`${LEVELS}&view=grade&grade=${GRADE}`);
   await expect(page.locator("main")).toContainText(`are secure at ${LEVEL} in ${skill.name}`);
 });
 
@@ -149,8 +152,8 @@ test("I've looked at this hides the suggestion for that grade and only adds a ro
 
 test("an educator sees only the classes in their own scope", async ({ browser }) => {
   const { context, page } = await asEducator(browser);
-  await page.goto("/skill-sets/levels");
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Levels to review");
+  await page.goto(LEVELS);
+  await onLevels(page);
   await expect(page.locator("main")).toContainText(BIG);
   await expect(page.locator("main")).not.toContainText(OTHER);
   await expect(page.locator("main")).not.toContainText(SMALL);
@@ -159,7 +162,7 @@ test("an educator sees only the classes in their own scope", async ({ browser })
   await expect(page.locator("main")).not.toContainText(OTHER);
   await expect(page.locator("main")).not.toContainText("8 of 8");
   // and the grade's own figures, which count classes they do not teach, are not shown to them
-  await page.goto(`/skill-sets/levels?view=grade&grade=${GRADE}`);
+  await page.goto(`${LEVELS}&view=grade&grade=${GRADE}`);
   await expect(page.locator("main")).not.toContainText(`Grade 10`);
   await context.close();
 });

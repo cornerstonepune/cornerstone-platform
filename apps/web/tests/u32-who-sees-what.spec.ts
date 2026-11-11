@@ -78,9 +78,9 @@ test("an educator's Today lists every decision the coordinator's does, and the m
 test("an educator is offered the approval of a skill", async ({ browser }) => {
   const page = await signedIn(browser);
   try {
-    await page.goto(`/skill-sets/${draft}`);
+    await page.goto(`/setup/skill-sets/${draft}`);
     await expect(page.getByRole("button", { name: /^Approve, as / })).toBeVisible();
-    await page.goto("/skill-sets/approve");
+    await page.goto("/setup/skills/approve");
     await expect(page.getByRole("main")).not.toContainText("The coordinator approves the skills");
   } finally {
     await page.context().close();
@@ -108,7 +108,7 @@ test("the coordinator is shown every decision and every class", async ({ page })
   // the skills and questions waiting are rows of What needs doing, and no longer in the menu's one count (UI-7b)
   expect(await badge(page, "Setup"), "no count on Setup").toBe(0);
 
-  await page.goto(`/skill-sets/${draft}`);
+  await page.goto(`/setup/skill-sets/${draft}`);
   await expect(page.getByRole("button", { name: /^Approve, as / })).toBeVisible();
 
   await page.goto(`/worksheets/${sheet}`);

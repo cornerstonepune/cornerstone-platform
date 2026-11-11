@@ -14,7 +14,7 @@ goal: >
 # comes later and is not part of this goal.
 says:
   - words: "The unit of reference is the topic: Subject, then Topic, then Skill, then difficulty levels."
-    proved_by: "apps/web/tests/u71-results-by-topic.spec.ts::class results open on the educator's own class: subjects, then topics, folded, each topic counted in words"
+    proved_by: "apps/web/tests/u71-results-by-topic.spec.ts::class results of the educator's own class: subjects, then topics, folded, each topic counted in words"
   - words: "Scorecard topic-forward. Class view: topics as rows, children inside."
     proved_by: "apps/web/tests/u71-results-by-topic.spec.ts::a topic opens to its skills and a skill to its children, each with level and state"
   - words: "Child page: a row per topic with level, score, strength or weakness."

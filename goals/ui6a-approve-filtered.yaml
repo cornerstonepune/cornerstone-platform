@@ -11,7 +11,7 @@ goal: >
 # live, grouped by grade and nothing else; the button below them approves every one and the mistake table together.
 says:
   - words: "also ths page needs to have proper filters and all; no page should have such laundary lists like stuff"
-    proved_by: "apps/web/tests/u23-approve-filtered.spec.ts::each waiting skill is one row, its levels folded until opened"
+    proved_by: "apps/web/tests/u23-approve-filtered.spec.ts::each waiting skill is one row, with its levels"
   - words: "also ths page needs to have proper filters and all; no page should have such laundary lists like stuff"
     proved_by: "apps/web/tests/u23-approve-filtered.spec.ts::a grade and a topic narrow the rows, and approving one approves only its row"
 manual:

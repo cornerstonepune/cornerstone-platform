@@ -207,9 +207,12 @@ test("a paper shows its score once nothing on it waits", async ({ page }) => {
 });
 
 test("every marking view fits a phone, with the class's own papers on it", async ({ page }) => {
-  const [{ paper }] = await sql<{ paper: string }[]>`select id as paper from sheet_instance where qr_code = 'U3TEST-1'`;
   await page.setViewportSize({ width: 400, height: 860 });
-  for (const url of ["/capture?by=class", "/capture?by=child", "/capture?by=worksheet", "/capture?worksheet=U3-A", `/capture?child=${kids.Dev}`, `/capture/${paper}`]) {
+  // one paper opens on its own screen under Assessments: the address is the one Marking's own link to it gives
+  await page.goto(`/capture?child=${kids.Dev}`);
+  const paper = await page.getByRole("row").filter({ hasText: "U3 paper A" }).getByRole("link", { name: "U3 paper A", exact: true }).getAttribute("href");
+  expect(paper, "U3 paper A links to its own screen").toBeTruthy();
+  for (const url of ["/capture?by=class", "/capture?by=child", "/capture?by=worksheet", "/capture?worksheet=U3-A", `/capture?child=${kids.Dev}`, paper!]) {
     await page.goto(url, { waitUntil: "networkidle" });
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
     expect(overflow, `${url} must not scroll sideways`).toBeLessThanOrEqual(1);

@@ -8,7 +8,7 @@
  */
 import { expect, test, type Page } from "@playwright/test";
 import postgres from "postgres";
-import { openPaper } from "./paper-screen";
+import { openPaper, paperAt } from "./paper-screen";
 import { aClass, aReadPaper, aWorksheet } from "./rows";
 
 test.use({ viewport: { width: 1440, height: 900 } });
@@ -91,9 +91,11 @@ test("an assessment opens into its papers in roll order, and finishing a paper o
 });
 
 test("the three signals stay three on the paper: a wrong and a blank the engine held are said apart", async ({ page }) => {
-  await page.goto(`/capture/check?id=${beta[0]}`);
+  // the paper screen with one answer in view, as the coordinator is sent to it
+  const at = async (id: string) => `${(await paperAt({ result: id }))}?answer=${id}#a-${id}`;
+  await page.goto(await at(beta[0]));
   await expect(paper(page).getByText(/a wrong answer\. Every wrong answer is checked by a person before it counts\./)).toBeVisible();
-  await page.goto(`/capture/check?id=${beta[1]}`);
+  await page.goto(await at(beta[1]));
   await expect(paper(page).getByText("The reader found nothing written here. Every blank is checked by a person before it counts.")).toBeVisible();
   await expect(paper(page).getByRole("button", { name: "Blank (the child wrote nothing)" })).toBeVisible();
 });

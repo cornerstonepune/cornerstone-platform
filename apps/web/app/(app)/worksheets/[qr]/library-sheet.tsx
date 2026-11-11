@@ -44,7 +44,7 @@ export async function LibraryWorksheetPage({ code }: { code: string }) {
         <div className="mb-[18px] flex flex-wrap items-center gap-3">
           {w.skill_live ? (
             <>
-              <Link href={`/skill-sets/${w.skill_set_code}?level=${w.difficulty}#worksheets`} className="chip">
+              <Link href={`/setup/skill-sets/${w.skill_set_code}?level=${w.difficulty}#worksheets`} className="chip">
                 ← {w.skill} · {w.difficulty}
               </Link>
               <Link href={`/setup/skill-sets/${w.skill_set_code}`} className="chip">
@@ -101,7 +101,7 @@ export async function LibraryWorksheetPage({ code }: { code: string }) {
               <div>
                 <dt className="label mb-[3px]">Skill</dt>
                 <dd>
-                  <Link href={`/skill-sets/${w.skill_set_code}`}>{w.outcome}</Link>
+                  <Link href={`/setup/skill-sets/${w.skill_set_code}`}>{w.outcome}</Link>
                 </dd>
               </div>
               <div>

@@ -5,7 +5,7 @@
  *   1 a grant is given from today and listed, and nothing else of the person changes        5 a class that is not on the list is refused, nothing changes
  *   2 a subject role asks for a subject, a class role does not                                6 an educator cannot change grants
  *   3 a clash is answered in the table's own words and stands only with a reason              7 no name or email is in the address
- *   4 ending keeps the row, marks it Ended and is logged                                      8 the old /staff answers 308 to Staff and classes
+ *   4 ending keeps the row, marks it Ended and is logged
  *   9 the filter row finds a person
  * Rows are the test's own (two people and two classes with a random label, children named from tests/fake-names.ts), made once per run.
  */
@@ -153,15 +153,6 @@ test("7. no name or email is in the address, before or after a grant is given or
   await expect(form.getByRole("status")).toContainText("Given from today.");
   const url = decodeURIComponent(page.url()).toLowerCase();
   for (const bad of [TWO.name, TWO.email, "grants person", "@"]) expect(url).not.toContain(bad.toLowerCase());
-});
-
-test("8. the old Staff address answers 308 to Staff and classes, and keeps the filter it was given", async ({ request }) => {
-  for (const [from, to] of [["/staff", "/setup/staff"], ["/staff?q=grants", "/setup/staff?q=grants"]]) {
-    const res = await request.get(from, { maxRedirects: 0 });
-    expect(res.status(), from).toBe(308);
-    const at = new URL(res.headers().location, "http://x");
-    expect(at.pathname + at.search, from).toBe(to);
-  }
 });
 
 test("9. the filter row finds a person on Staff and classes", async ({ page }) => {

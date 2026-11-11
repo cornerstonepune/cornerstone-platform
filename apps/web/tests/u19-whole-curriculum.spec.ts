@@ -48,7 +48,7 @@ test("every grade shows each skill with a level in it, taught or not, and says w
 test("a level moved to another grade moves on the Curriculum, in the name of who moved it", async ({ page }) => {
   const [before] = await sql<{ level_band: Record<string, string> }[]>`select level_band from skill where code = 'MUL.2D1D'`;
   try {
-    await page.goto("/skill-sets/MUL.2D1D");
+    await page.goto("/setup/skill-sets/MUL.2D1D");
     const grades = page.getByRole("region", { name: "Which grade each level belongs to" });
     await grades.getByLabel("Hard").selectOption({ label: "Grade 2" });
     await grades.getByRole("button", { name: "Save the grades" }).click();

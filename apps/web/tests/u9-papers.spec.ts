@@ -5,7 +5,8 @@
  * merge them into one" and "one list of papers with the right filtration and all, and a good view". One menu item,
  * every paper a copy under its assessment, week by week (goals/ux5-papers-grouped.yaml): what it is, whose, where it
  * stands, what waits for a person, filtered by class, child, kind, week and stage; a copy opens the paper where its work
- * is.
+ * is. It is Assessments (/children/assessments): on an assessment, a copy with answers waiting opens its paper screen to
+ * check them.
  *
  * The class is the test's own, two Grade 2 children, with four papers made once and kept:
  * - a class practice proposed and not yet approved (made);
@@ -14,8 +15,9 @@
  * - a class assessment read and signed off, one of two right (signed off).
  */
 import { aChildIn } from "./rows";
-import { expect, type Page, test } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 import postgres from "postgres";
+import { paperScreenOf } from "../lib/queries-assessment-extras";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -91,10 +93,8 @@ test.beforeAll(async () => {
 });
 test.afterAll(async () => sql.end());
 
-const row = (page: Page, p: Paper) => page.locator(`tbody tr[data-paper="${p.id}"]`);
-
 test("one Assessments in the menu for marking and making, and a row opens the paper where its work is", async ({ page }) => {
-  await page.goto("/papers");
+  await page.goto("/children/assessments");
   // Assessments is one page of the Children door: the door is lit, the page is marked in its row, and there is no Marking or Make papers
   const menu = page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" });
   const pagesRow = page.getByRole("navigation", { name: "Pages in this section" });
@@ -103,9 +103,10 @@ test("one Assessments in the menu for marking and making, and a row opens the pa
   await expect(pagesRow.getByRole("link", { name: "Marking" })).toHaveCount(0);
   await expect(pagesRow.getByRole("link", { name: "Make papers" })).toHaveCount(0);
   // making, reading a scan and the queue of answers to check are all here
-  await expect(page.getByRole("region", { name: "Make an assessment" }).getByRole("link", { name: /^For a class/ })).toHaveAttribute("href", /^\/papers\/make\?/);
   await expect(page.getByRole("region", { name: "Read an assessment" })).toBeVisible();
-  await expect(page.getByRole("link", { name: /answers? to check/ })).toHaveAttribute("href", "/capture/check");
+  await expect(page.getByRole("complementary", { name: "Rail" }).getByRole("link", { name: "Answers to check" })).toHaveAttribute("href", /^\/children\/assessments\/[^/?]+\/[^/?]+$/);
+  await page.getByRole("region", { name: "Make an assessment" }).getByRole("button", { name: /For a class/ }).click();
+  await expect(page).toHaveURL(/\/children\/assessments\?make=class$/);
   // the pages it merged are still Assessments
   for (const path of ["/make"]) {
     await page.goto(path);
@@ -113,12 +114,10 @@ test("one Assessments in the menu for marking and making, and a row opens the pa
     await expect(pagesRow.getByRole("link", { name: "Assessments", exact: true })).toHaveAttribute("aria-current", "page");
   }
 
-  // a scanned paper opens to check its answers; one not yet scanned opens as printed: a copy's child is its link
-  const where = `/papers?class=${SECTION}&child=${kids.Asha}`;
-  await page.goto(where);
-  await row(page, papers.scanned).getByRole("link", { name: "Asha" }).click();
-  await expect(page).toHaveURL(`/capture/${papers.scanned.id}`);
-  await page.goto(where);
-  await row(page, papers.printed).getByRole("link", { name: "Asha" }).click();
-  await expect(page).toHaveURL(`/worksheets/${papers.printed.qr}`);
+  // a scanned paper, an answer waiting: on its assessment, the copy opens to check its answers
+  const { href: screen } = (await paperScreenOf({ sheet: papers.scanned.id }, { role: "coordinator", classes: [], subjects: [], id: undefined }))!;
+  await page.goto(screen.replace(/\/[^/]+$/, ""));
+  await page.locator("[data-check-paper]").first().click();
+  await expect(page).toHaveURL(screen);
+  await expect(page.getByRole("heading", { name: "Check the answers" })).toBeVisible();
 });

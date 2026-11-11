@@ -69,7 +69,7 @@ test("curriculum lists the six topics, and a class is taught a topic from its ro
 
 test("no chip names a kind of question, or a topic with nothing taught at the class's grade", async ({ page }) => {
   // Children has none any more (goals/ux10-declutter.yaml); Assessments has the topics as one dropdown of its filter row
-  for (const at of ["/papers"]) {
+  for (const at of ["/children/assessments"]) {
     await page.goto(at);
     const topic = page.locator('[data-filterbar] select[name="topic"]');
     await expect(topic.locator("option").first()).toHaveText("Every topic");

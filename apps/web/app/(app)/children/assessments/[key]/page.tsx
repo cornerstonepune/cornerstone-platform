@@ -305,7 +305,7 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
           <span><b>{a.skills.join(", ") || a.title}</b></span>
           <span className="b-muted">{a.topics.map((t) => topicNames.find((x) => x.code === t)?.name ?? t).join(" · ")}</span>
           <span className="b-muted">{levelsSaid}</span>
-          {a.set ? <Link href={`/skill-sets/${a.set}`}>Open the skill</Link> : null}
+          {a.set ? <Link href={`/setup/skill-sets/${a.set}`}>Open the skill</Link> : null}
           {a.week ? <span className="b-muted">{weekWords(a.week)}</span> : null}
           <RenameForm assessmentKey={key} name={named.name} back={assessmentHref(key)} />
         </section>

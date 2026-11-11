@@ -71,7 +71,7 @@ const assessments = (page: Page) => page.getByRole("region", { name: "Papers" })
 const ours = (page: Page) => assessments(page).locator("tr[data-assessment]").filter({ hasText: SECTION });
 
 test("a topic keeps the assessments on its skills, and an assessment opens its copies", async ({ page }) => {
-  await page.goto(`/papers?class=${SECTION}`);
+  await page.goto(`/children/assessments?class=${SECTION}`);
   const topic = page.locator("[data-filterbar]").locator('select[name="topic"]');
   await expect(topic).toHaveValue("");
   await topic.selectOption({ label: "Data handling" });

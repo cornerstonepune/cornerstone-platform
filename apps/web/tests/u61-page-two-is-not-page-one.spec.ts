@@ -16,6 +16,7 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import postgres from "postgres";
 import { aClass, aReadPaper } from "./rows";
+import { paperScreenOf } from "../lib/queries-assessment-extras";
 
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 const SECTION = "U61-PAGES";
@@ -72,13 +73,13 @@ async function aPaper(who: string, qr: string, file: string, page2: (id: string)
 }
 
 
-/** The paper's screen with the answer on this page of the file in view (the old check address opens the paper; the answer picks the page drawn). */
+/** The paper's screen with the answer on this page of the file in view (the answer picks the page drawn). */
 async function openOnPage(page: Page, sheet: string, n: number): Promise<void> {
-  await page.goto(`/capture/${sheet}`);
+  const { href } = (await paperScreenOf({ sheet }, { role: "coordinator", classes: [], subjects: [], id: undefined }))!;
   const [r] = await sql<{ id: string }[]>`
     select ir.id from item_result ir join capture c on c.id = ir.capture_id join sheet_instance si on si.id = c.sheet_instance_id
     where si.id = ${sheet}::uuid and c.superseded_by is null and (ir.raw_read::jsonb->>'page')::int = ${n} order by ir.created_at, ir.id limit 1`;
-  await page.goto(`${new URL(page.url()).pathname}?answer=${r.id}`);
+  await page.goto(`${href}?answer=${r.id}`);
 }
 const drawn = (page: Page) => page.locator("a[data-page-full] img");
 

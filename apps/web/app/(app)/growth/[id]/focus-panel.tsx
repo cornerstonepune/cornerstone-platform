@@ -79,7 +79,7 @@ export async function FocusPanel({ childId, name, staff, draw }: { childId: stri
           <ol className="grid gap-4" aria-label="Areas the home assessment works on">
             {p.areas.map((a) => (
               <li key={a.skill_set} className="text-[13.5px]">
-                <Link href={`/skill-sets/${a.skill_set}`} className="text-basalt no-underline hover:underline">{a.name}</Link>
+                <Link href={`/setup/skill-sets/${a.skill_set}`} className="text-basalt no-underline hover:underline">{a.name}</Link>
                 <div className="mt-1 flex flex-wrap items-center gap-2">
                   <Pill tone="monsoon">{a.level}</Pill>
                   <span className="text-[12px] text-basalt/62">

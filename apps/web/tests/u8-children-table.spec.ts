@@ -103,7 +103,4 @@ test("each class is a table of its children in the school's words, and a name is
   const [{ n: after }] = await sql<{ n: number }[]>`
     select count(*)::int as n from access_log where child_id = ${ids.Asha} and actor = ${TEST_STAFF.email}`;
   expect(after).toBeGreaterThan(before);
-  // and the old address of the class's list lands here
-  await page.goto(`/growth?view=children&class=${SECTION}`);
-  await expect(page).toHaveURL(new RegExp(`/children\\?cls=${classId}$`));
 });

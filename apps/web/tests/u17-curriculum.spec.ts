@@ -2,8 +2,9 @@
  * U17 — Curriculum (goals/ui3-curriculum.yaml). Nimish, 2026-10-11: "When I go to the curriculum, it has grade-wise,
  * topic-wise descriptions, and people can open and look at the skills and the whole mapping of the curriculum. If there
  * are edits, some changes, tagging, etc., or definitions that need to be changed, one can do that." A skill's page in
- * five parts; a skill approved on its own; a topic switched on once the person has read what it does; the engine's
- * questions one line each until opened. Every change is put back after.
+ * five parts; a skill approved on its own; a topic switched on once the person has read what it does. Every change is put
+ * back after. (The engine's questions are answered on Curriculum now, tests/u74-setup-content.spec.ts; the old Questions
+ * to answer page and the Worksheets list went with their own tests.)
  */
 import { expect, test } from "@playwright/test";
 import postgres from "postgres";
@@ -46,13 +47,13 @@ test("a skill is approved on its own, from skills grouped by grade", async ({ pa
     select code, name, status, ratified_by, version from skill where code = any(${codes}) order by code`;
   try {
     await sql`update skill set status = 'draft', ratified_by = null where code = any(${codes})`;
-    await page.goto("/skill-sets/approve");
+    await page.goto("/setup/skills/approve");
     // the grades are a choice at the top, each skill a row of the table (goals/ui6a-approve-filtered.yaml)
-    await expect(page.getByRole("navigation", { name: "Grade" }).getByRole("link", { name: /^Grade 2/ })).toBeVisible();
-    await page.locator('tr[data-row="ADD.2D2D"]').getByRole("button", { name: `Approve, as ${TEST_STAFF.name}` }).click();
+    await expect(page.locator("[data-filterbar] select[name=grade] option").filter({ hasText: /^Grade 2/ })).toHaveCount(1);
+    await page.locator('tr[data-row="ADD.2D2D"]').locator("[data-approve]").click();
     // the page was at this address before the click: wait for what the approval itself brings back
-    await expect(page).toHaveURL(/\/skill-sets\/approve\?approved=1$/);
-    await expect(page.getByRole("status").filter({ hasText: "Approved, in your name." })).toBeVisible();
+    await expect(page).toHaveURL(/\/setup\/skills\/approve\?approved=1$/);
+    await expect(page.locator('tr[data-row="ADD.2D2D"]')).toHaveCount(0); // approved: it waits no more
     const after = await sql<{ code: string; status: string; ratified_by: string | null }[]>`
       select code, status, ratified_by from skill where code = any(${codes}) order by code`;
     expect(after).toEqual([
@@ -62,7 +63,7 @@ test("a skill is approved on its own, from skills grouped by grade", async ({ pa
 
     // a skill changed by someone else after the page was opened is not approved, and the page says so
     await sql`update skill set version = version + 1 where code = 'SUB.2D2D'`;
-    await page.locator('tr[data-row="SUB.2D2D"]').getByRole("button", { name: `Approve, as ${TEST_STAFF.name}` }).click();
+    await page.locator('tr[data-row="SUB.2D2D"]').locator("[data-approve]").click();
     await expect(page.getByRole("status").filter({ hasText: "Nothing was approved" })).toBeVisible();
     const [still] = await sql<{ status: string }[]>`select status from skill where code = 'SUB.2D2D'`;
     expect(still.status).toBe("draft");
@@ -91,19 +92,6 @@ test("a topic is marked taught from its row on What needs doing, in the person's
   } finally {
     await sql`update school_class set taught = '{}' where label = ${CLASS}`;
   }
-});
-
-test("each question the engine drafted is one line until it is opened", async ({ page }) => {
-  const [{ open }] = await sql<{ open: number }[]>`select count(*)::int as open from ask where answer is null`;
-  expect(open).toBeGreaterThan(1);
-  await page.goto("/asks");
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Questions to answer");
-  const agree = page.getByRole("button", { name: `Agree as drafted, as ${TEST_STAFF.name}`, includeHidden: true });
-  await expect(agree).toHaveCount(open);
-  for (const b of await agree.all()) await expect(b).toBeHidden();
-  const [first] = await sql<{ question: string }[]>`select question from ask where answer is null order by ord nulls last, code limit 1`;
-  await page.getByText(first.question, { exact: true }).first().click();
-  await expect(page.getByRole("region", { name: first.question, exact: true }).getByRole("button", { name: `Agree as drafted, as ${TEST_STAFF.name}` })).toBeVisible();
 });
 
 test("the question bank finds a question by its words, within the choices made", async ({ page }) => {
@@ -144,12 +132,11 @@ test("the question bank finds a question by its words, within the choices made",
 });
 
 test("every page says the tab it is under, above its title, and the menu marks that tab", async ({ page }) => {
-  const [{ key }] = await sql<{ key: string }[]>`select item_key as key from item where source = 'generated' and status = 'active' order by item_key limit 1`;
   const pages: [string, string][] = [
-    ["/", "Curriculum"], ["/skill-sets/approve", "Curriculum"], ["/skill-sets/ADD.2D2D", "Curriculum"], ["/library", "Question bank"],
-    [`/library/${key}`, "Question bank"], ["/worksheets", "Curriculum"], ["/worksheets/taxonomy", "Question bank"], ["/asks", "Curriculum"],
+    ["/", "Curriculum"], ["/setup/skill-sets/ADD.2D2D", "Curriculum"], ["/library", "Question bank"],
+    ["/worksheets/taxonomy", "Question bank"],
     ["/make", "Assessments"],
-    ["/home", "Assessments"], ["/capture", "Upload papers"],
+    ["/capture", "Upload papers"],
   ];
   // the tab is a page of a group of the top menu (lib/menu.ts): the group is marked, and so is the tab under it
   const group: Record<string, string> = { Curriculum: "Setup", "Question bank": "Setup", Assessments: "Children", "Papers to approve": "Children", "Upload papers": "Children" };
@@ -158,16 +145,4 @@ test("every page says the tab it is under, above its title, and the menu marks t
     await expect(page.getByTestId("stage"), path).toHaveText(new RegExp(`^${tab}\\b`));
     await expect(page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" }).locator("[aria-current=page]"), path).toHaveText(new RegExp(`^${group[tab]}`));
   }
-});
-
-test("a class's papers are approved under Assessments, and Worksheets is the library alone", async ({ page }) => {
-  // Worksheets: every question on a numbered worksheet, and nothing of a week
-  await page.goto("/worksheets");
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Worksheets");
-  await expect(page.getByRole("heading", { name: "This week\u2019s papers" })).toHaveCount(0);
-  await expect(page.getByRole("table", { name: "Each child's paper this week" })).toHaveCount(0);
-  // a class's week, asked for at its old address, opens where it is approved now
-  await page.goto("/worksheets?section=NO-SUCH&week=2026-W41&kind=practice");
-  await expect(page).toHaveURL(/\/children\/assessments\?week=2026-W41&kind=practice&class=NO-SUCH/);
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Assessments");
 });

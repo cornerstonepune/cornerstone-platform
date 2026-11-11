@@ -81,8 +81,9 @@ test("the questions answered are folded under one line until opened", async ({ p
   const [open] = await sql<{ code: string }[]>`select code from ask where answer is null order by code limit 1`;
   try {
     await sql`update ask set answer = 'agreed', answered_by = 'End-to-end test', answered_at = now() where code = ${open.code}`;
-    await page.goto("/asks");
-    const answered = page.getByRole("region", { name: "Answered", exact: true });
+    // the questions to answer are a section of Curriculum (the old Asks page folded into it)
+    await page.goto("/setup/curriculum#asks");
+    const answered = page.getByRole("region", { name: "Questions to answer", exact: true }).locator('details[data-fold="answered-asks"]');
     const first = answered.getByRole("listitem").first();
     await expect(first).toBeHidden();
     await answered.getByText(/^Read the \d+ answered$/).click();

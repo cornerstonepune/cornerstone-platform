@@ -24,14 +24,14 @@
         {
           "t": "link",
           "label": "Check answers",
-          "href": "/capture/check",
-          "external": "/capture/check"
+          "href": "/children/assessments?status=check",
+          "external": "/children/assessments?status=check"
         },
         {
           "t": "link",
-          "label": "next step: Class results",
-          "href": "/growth",
-          "external": "/growth"
+          "label": "next step: Children",
+          "href": "/children",
+          "external": "/children"
         }
       ],
       "rail": [],

@@ -21,7 +21,7 @@ const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 // A class and a week of the test's own: the week's rows are removed afterwards; the class is kept.
 const SECTION = "S7-TEST";
 const WEEK = "2091-W34"; // an ISO week of its own: a week is a date since CP-27
-const LIST = `/papers/approve?section=${SECTION}&week=${WEEK}&kind=practice`;
+const LIST = `/children/assessments?class=${SECTION}&week=${WEEK}&kind=practice`;
 
 async function engine(path: string, body: object) {
   const r = await fetch(`http://127.0.0.1:${ENGINE_PORT}${path}`, {
@@ -106,7 +106,7 @@ test("a paper opens from its code: the page as printed, how it was drawn, and it
     order by si.created_at limit 1`;
   expect(paper, "a paper of the week, rendered").toBeTruthy();
 
-  await page.goto(`/papers/approve?section=${paper.section}&week=${paper.week}&kind=${paper.kind}`);
+  await page.goto(`/children/assessments?class=${paper.section}&week=${paper.week}&kind=${paper.kind}`);
   await page.getByRole("row").filter({ hasText: `printed code ${paper.qr}` }).getByRole("link", { name: "See the paper" }).click();
   await expect(page.getByText(`Printed code ${paper.qr}`)).toBeVisible();
   await expect(page.getByRole("table", { name: "Answer key" }).locator("tbody tr")).toHaveCount(paper.n);
@@ -133,8 +133,6 @@ test("a paper opens from its code: the page as printed, how it was drawn, and it
 });
 
 test("the week's plan shows every child with a level and a reason", async ({ page }) => {
-  await page.goto("/worksheets");
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Worksheets");
   const [{ n }] = await sql<{ n: number }[]>`
     select count(*)::int as n from prescription p join child_now c on c.id = p.child_id
     where c.section = ${SECTION} and p.week = to_date(${WEEK}, 'IYYY-"W"IW') and p.kind = 'practice'`;

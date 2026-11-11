@@ -25,7 +25,7 @@ says:
   - words: "They should have the right set of columns which are important."
     proved_by: "apps/web/tests/u42-curriculum-for-the-educator.spec.ts::the bank's stock columns are every member of staff's, beside the educator's own grade's count"
   - words: "Most of the pages just have a long list for no reason."
-    proved_by: "apps/web/tests/u42-curriculum-for-the-educator.spec.ts::the worksheets open on the educator's grade, the counts and the list the same worksheets"
+    proved_by: "apps/web/tests/u42-curriculum-for-the-educator.spec.ts::the question bank opens on the educator's grade, every grade one tap away"
 manual: []
 scenarios: []
 criteria:

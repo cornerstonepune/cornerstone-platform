@@ -3,8 +3,8 @@
  * "just go ahead and build the whole flow and get it live properly - only when I see it and interact with it on the
  * dashboard can I suggest changes."
  *
- * Today → Assessments (upload box on top, one count per assessment, filters) → Papers to approve → Print and give →
- * Upload papers → Check answers → Marking (the papers read) → Class results → the Assessment card → Curriculum (Maths,
+ * Today → Assessments (upload box on top, one count per assessment, filters) → Print and give →
+ * Upload papers → Marking (the papers read) → Class results → the assessment screen → Curriculum (Maths,
  * then English) → Staff and School. On every page: each table's head sits over its columns, a status is an icon and a
  * word, a filter row is there, every row opens something, and nothing says "This page could not load". A class of the
  * test's own, three children and four papers, is kept (evidence is append-only), as the other specs' are.
@@ -103,7 +103,7 @@ test("an educator with one class and one subject: top menu, only hers, no Class 
   await expect(page.locator("#bar-subject, #bar-class, [data-viewing]"), "no universal Class or Subject selector").toHaveCount(0);
   // the bar carries sign out; the door's row of pages has the rest
   await expect(page.locator("[data-bar]").first().getByRole("button", { name: "Sign out" })).toBeVisible();
-  await page.goto("/papers");
+  await page.goto("/children/assessments");
   for (const name of ["Assessments", "Upload papers", "Parent reports"]) await expect(page.getByRole("navigation", { name: "Pages in this section" }).getByRole("link", { name }), name).toBeVisible();
   await page.goto("/setup/needs-doing");
   // What needs doing: groups, each folded into a table of red/amber/green rows, one action on each row that opens that item
@@ -134,7 +134,7 @@ test("an admin: the same top menu, and no Viewing control", async ({ page }) => 
   await theBar(page, DOORS);
   await expect(page.locator("[data-viewing], #bar-subject, #bar-class")).toHaveCount(0);
   // a door's other pages are a row under the bar, not more items on it
-  await page.goto("/papers");
+  await page.goto("/children/assessments");
   await expect(page.getByRole("navigation", { name: "Pages in this section" }).getByRole("link")).toHaveText(["Children", "Assessments", "Upload papers", "Parent reports", "Across classes"]);
 });
 
@@ -236,7 +236,8 @@ test("Class results, its class and a child", async ({ page }) => {
   await voiceSwitch(sql, true);
   // a class's topics, a topic opened (goals/res_results_by_topic.yaml); this class has nothing signed off yet, so its
   // skills are named once as not assessed. Its children, one by one, each in a status chip, and a child opened.
-  await wholePage(page, `/growth?class=${SECTION}`, /Class picture/, { chips: false, filter: false });
+  const [{ id: classId }] = await sql<{ id: string }[]>`select id from school_class where label = ${SECTION} limit 1`;
+  await wholePage(page, `/children/${classId}?view=topic`, /Class picture/, { chips: false, filter: false });
   await page.locator("tr[data-topic]").first().getByRole("link").first().click();
   await expect(page.getByText("This page could not load")).toHaveCount(0);
   await page.getByRole("link", { name: "Show as a table" }).click();

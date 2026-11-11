@@ -125,8 +125,9 @@ test("Curriculum counts a child under the grade of the level they answered", asy
 
 test("a link to a class's week that is not on the list says so, and shows nothing of another class", async ({ browser }) => {
   const page = await asEducator(browser);
-  // the old address opens the list of the educator's own assessments: nothing of the other class is in it, and its pack's screen is not found
-  await page.goto(`/papers/approve?section=${OTHER}&week=${THIS}&kind=practice`);
+  // the list, asked for the other class's week, holds the educator's own assessments only: nothing of the other class is in it, and its
+  // pack's screen is not found
+  await page.goto(`/children/assessments?class=${OTHER}&week=${THIS}&kind=practice`);
   await expect(page.locator("tr[data-assessment]").filter({ hasText: OTHER })).toHaveCount(0);
   await page.goto(`/children/assessments/${encodeURIComponent(`practice~${OTHER}~${THIS}~`)}`);
   await expect(page.getByText("This page could not be found.")).toBeVisible();
