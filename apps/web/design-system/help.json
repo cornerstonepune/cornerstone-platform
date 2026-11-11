@@ -5,7 +5,7 @@
       "title": "Today",
       "eyebrow": "Wednesday 18-Nov · K2 Red · Fortnight 9, week A",
       "group": "Today",
-      "route": "/today/new",
+      "route": "/today",
       "purpose": "Your periods in order. Tap one for what to teach, how, and what to lay out. After it, record a note.",
       "does": [
         {
@@ -60,7 +60,7 @@
       "title": "Today, the school",
       "eyebrow": "Wednesday 18-Nov · every class",
       "group": "Today",
-      "route": "/today/new",
+      "route": "/today",
       "purpose": "What waits on you, each with its own button. Then the week ahead.",
       "does": [
         {

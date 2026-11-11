@@ -154,9 +154,10 @@ test("each I want to link opens its screen", async ({ page }) => {
   const hrefs = await page.locator("main a[data-job]").evaluateAll((as) => as.map((a) => a.getAttribute("href")!));
   expect(hrefs.length).toBeGreaterThan(0);
   for (const href of hrefs) {
-    const screen = INVENTORY.screens.find((s) => s.route === href)!;
+    // an address two screens share (Today: the educator's and the school's) shows the one that is the person's
+    const titles = INVENTORY.screens.filter((s) => s.route === href).map((s) => s.title);
     await page.goto(href);
-    await expect(page.getByRole("heading", { level: 1 }), href).toHaveText(screen.title);
+    expect(titles, href).toContain(await page.getByRole("heading", { level: 1 }).innerText());
   }
 });
 

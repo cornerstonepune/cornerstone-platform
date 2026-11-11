@@ -65,7 +65,8 @@
   "merged_slices": [
     "UI-5",
     "UI-12",
-    "UI-11"
+    "UI-11",
+    "UI-7"
   ],
   "slices": [
     {
@@ -366,7 +367,7 @@
   "screens": [
     {
       "id": "today-educator",
-      "route": "/today/new",
+      "route": "/today",
       "group": "Today",
       "who": "educator",
       "phase": "Core",
@@ -514,7 +515,7 @@
     },
     {
       "id": "today-coordinator",
-      "route": "/today/new",
+      "route": "/today",
       "group": "Today",
       "who": "coordinator",
       "phase": "Core",

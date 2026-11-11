@@ -5,7 +5,8 @@ import { aClass, aReadPaper, aWorksheet } from "./rows";
 // Every screen must render its heading at a laptop and at a phone, with no console error and no
 // sideways scroll. A teacher on a phone in a corridor is a real case.
 const ROUTES: [string, string][] = [
-  ["/today", "What needs doing"],
+  ["/today", "Today, the school"],
+  ["/setup/needs-doing", "What needs doing"],
   ["/", "Curriculum"],
   ["/library", "Question bank"],
   ["/worksheets", "Worksheets"],

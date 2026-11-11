@@ -18,7 +18,7 @@ import { classWords } from "@/lib/voice-types";
 // board's lanes count the same rows, so a tile's number is the number of rows it opens. No score, no ranking, whole counts only.
 const addr = (o: Record<string, string>) => {
   const q = new URLSearchParams(o).toString();
-  return q ? `/today/new?${q}` : "/today/new";
+  return q ? `/today?${q}` : "/today";
 };
 const ageWords = (h: number) => (h >= 48 ? `${Math.floor(h / 24)} days` : `${h} h`);
 const NOTE_STATE: Record<string, KCard["state"]> = { left_unconfirmed: "late", to_confirm: "toConfirm", fix_this: "fixThis", being_read: "reading" };

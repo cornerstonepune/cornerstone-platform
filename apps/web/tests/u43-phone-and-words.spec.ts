@@ -76,7 +76,7 @@ test.beforeAll(async ({ browser }) => {
   const [read] = await sql<{ id: string }[]>`select id from sheet_instance where qr_code = ${QR.asha}`;
   const [item] = await sql<{ item_key: string }[]>`select item_key from item where id = ${ws.item_ids[0]}`;
   const pages = [
-    "/today",
+    "/setup/needs-doing",
     "/",
     "/library",
     `/library/${item.item_key}`,

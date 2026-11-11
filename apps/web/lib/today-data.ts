@@ -6,7 +6,7 @@ import type { Day } from "./educator/types";
 import type { Session } from "./auth";
 import { sql } from "./db";
 import { reachOf } from "./reach";
-import type { School } from "./today-school";
+import { tiles as schoolTiles, type School } from "./today-school";
 
 /** Which version of Today a person gets: the one for everything, or the one for their own classes. Decided by what the person's
  *  group reaches (`reachOf`, the database's one rule), never by naming a role. */
@@ -86,3 +86,26 @@ export async function nextWeekEvents(from: string): Promise<Happening[]> {
     ...fortnights.map((f) => ({ day: f.day, what: f.number ? `Fortnight ${f.number} begins` : "A fortnight begins" })),
   ].sort((a, b) => a.day.localeCompare(b.day));
 }
+
+/** The two figures of the strip that are notes, from her groups: left unconfirmed (do now), and still waiting within their time (this week). The page and the badge both use these. */
+export const noteFigures = (t: Todo | null) => ({
+  late: t?.groups.left_unconfirmed.count ?? 0,
+  soon: t ? t.groups.to_confirm.count + t.groups.fix_this.count + t.groups.being_read.count : 0,
+});
+
+/** The one count on the site, the badge on the bar's Today door: the strip's do-now plus this-week (the two never overlap), computed once per request.
+ *  An educator's are her notes; the school's are its strip's two tiles (clashes, late notes, drafts, materials lines). */
+export const todayBadge = cache(async (me: Session): Promise<number> => {
+  if (await schoolVersion(me)) {
+    // the school's strip: clashes and late notes (do now) plus drafts and materials lines (this week)
+    const counts = await schoolCounts(me);
+    if (counts) {
+      const t = schoolTiles(counts);
+      return t.doNow + t.soon;
+    }
+    const got = await schoolNotes(me);
+    return got ? got.rows.filter((r) => r.state === "left_unconfirmed").length : 0;
+  }
+  const f = noteFigures(await myNotes(me));
+  return f.late + f.soon;
+});

@@ -8,7 +8,8 @@ import { expect, test } from "@playwright/test";
 const GROUPS = ["Today", "Timetable", "Children", "Setup"];
 // every page of the week, with the door it is in and the words of its own title (or its tab)
 const PAGES = [
-  ["/today", "Today", "What needs doing"],
+  ["/today", "Today", "Today"],
+  ["/setup/needs-doing", "Setup", "What needs doing"],
   ["/timetable/rules", "Timetable", "Timetable rules"],
   // bare, its address opens Assessments filtered to what waits for approval
   ["/papers/approve", "Children", "Assessments"],
@@ -47,6 +48,6 @@ test("no step of the week is a dead end: each page of the menu ends on a next st
     const next = await page.locator("[data-ux=next]").count();
     expect(next + (await page.getByRole("main").getByRole("link").count()), `${path}: a way on`).toBeGreaterThan(0);
   }
-  await page.goto("/today");
+  await page.goto("/setup/needs-doing");
   await expect(page.locator("[data-ux=next]")).toHaveAttribute("href", "/papers");
 });

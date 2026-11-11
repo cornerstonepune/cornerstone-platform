@@ -87,7 +87,7 @@ async function figures(page: Page) {
   await open(page, "/today");
   const menu = page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" }).getByRole("link", { name: /^Today/ }).getByTestId("waiting");
   const badge = (await menu.count()) ? number(await menu.innerText()) : 0;
-  const todo = (await page.locator("[data-todo]").evaluateAll((els) => els.map((e) => Number(e.getAttribute("data-todo"))))).reduce((x, y) => x + y, 0);
+  const todo = (await page.locator(".b-att").evaluateAll((els) => els.filter((e) => /do now|this week/i.test(e.textContent ?? "")).map((e) => Number((e.querySelector(".b-n")?.textContent ?? "0").trim())))).reduce((x, y) => x + y, 0);
   await open(page, "/papers");
   const assessments = number(await page.getByRole("link", { name: /answers to check/ }).first().innerText());
   await open(page, "/capture/check");
@@ -149,7 +149,7 @@ test("for each person the counts in the menu, What needs doing and Assessments a
     ["the coordinator", page, null],
   ] as const) {
     const f = await figures(p);
-    expect(f.badge, `${who}: the menu's figure is What needs doing's`).toBe(f.todo);
+    expect(f.badge, `${who}: the menu's figure is Today's strip`).toBe(f.todo);
     expect(f.assessments, `${who}: Assessments says what Check answers says`).toBe(f.check);
     if (waiting !== null) {
       // an educator's list is one page: every answer the figure counts is a line of it, and no more

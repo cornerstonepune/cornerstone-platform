@@ -60,7 +60,7 @@ test("when the staff check cannot reach the database, the page says so instead o
 // screen separately, so at most two small requests each.
 test("opening the Skill Map loads nothing ahead but the menu pages", async ({ page }) => {
   // the four doors (lib/menu.ts) and the logo link are what the bar pre-loads, beside the old menu pages
-  const MENU = ["/today", "/educator/week", "/children", "/papers/approve", "/", "/setup", "/papers", "/make", "/worksheets", "/library", "/capture", "/capture/check", "/growth", "/home", "/setup/how-it-works"];
+  const MENU = ["/today", "/setup/needs-doing", "/educator/week", "/children", "/papers/approve", "/", "/setup", "/papers", "/make", "/worksheets", "/library", "/capture", "/capture/check", "/growth", "/home", "/setup/how-it-works"];
   const background: string[] = [];
   page.on("request", (r) => {
     if (r.resourceType() !== "document" && r.headers()["rsc"] === "1") background.push(new URL(r.url()).pathname);
@@ -74,7 +74,7 @@ test("opening the Skill Map loads nothing ahead but the menu pages", async ({ pa
 test("every menu page opens within three seconds of its click", async ({ page }) => {
   await page.goto("/", { waitUntil: "networkidle" });
   for (const [label, heading] of [
-    ["Today", "What needs doing"],
+    ["Today", "Today, the school"],
     ["Children", "Children"],
     ["Setup", "Setup"],
   ]) {

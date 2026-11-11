@@ -2,16 +2,17 @@
   "merged_slices": [
     "UI-5",
     "UI-12",
-    "UI-11"
+    "UI-11",
+    "UI-7"
   ],
   "screens": {
     "today-educator": {
-      "route": "/today/new",
-      "built": false
+      "route": "/today",
+      "built": true
     },
     "today-coordinator": {
-      "route": "/today/new",
-      "built": false
+      "route": "/today",
+      "built": true
     },
     "period": {
       "route": "/period/[id]",

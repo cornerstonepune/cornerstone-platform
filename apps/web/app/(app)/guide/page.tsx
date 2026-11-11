@@ -22,7 +22,9 @@ export default async function Guide({ searchParams }: Props) {
   const from = q.from?.startsWith("/") ? q.from : "/";
   const fromId = sectionFor(from);
   const came = SECTIONS.find((s) => s.id === fromId);
-  const jobs = SECTIONS.filter((s) => s.id !== "help" && s.id !== "login" && isBuilt(s.id) && screenHref(s.id));
+  const jobs = SECTIONS.filter((s) => s.id !== "help" && s.id !== "login" && isBuilt(s.id) && screenHref(s.id))
+    // two versions of one address (Today) are one job
+    .filter((s, i, all) => all.findIndex((x) => screenHref(x.id) === screenHref(s.id)) === i);
   return (
     <Screen
       stage="Start here"

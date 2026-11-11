@@ -56,7 +56,7 @@ const said = (section: string) =>
 test("an educator says a topic is taught in their class, in their name, and no other class changes", async ({ browser }) => {
   const page = await signedIn(browser);
   try {
-    await page.goto(`/today?kind=taught&subject=NUM&class=${MINE}`);
+    await page.goto(`/setup/needs-doing?kind=taught&subject=NUM&class=${MINE}`);
     const row = page.locator(`tr[data-kind=taught][data-shows="${topicName}"]`);
     await expect(row).toBeVisible();
     // an educator mapped to one class is offered only that class: no box to choose another

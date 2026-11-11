@@ -185,6 +185,7 @@ test("each child's paper has its status chip, and a place in the filter row narr
   await page.goto(`${card("practice")}&where=${encodeURIComponent(places[0])}`);
   await expect(page.locator("[data-active-filters]")).toContainText("Where it is:");
   const narrowed = page.getByRole("table", { name: "Each child's paper" });
+  await expect(narrowed).toBeVisible(); // the table streams in after the filter row: count its rows once it is there
   expect(await narrowed.locator("tbody tr").count()).toBeLessThanOrEqual(rows);
   expect(await narrowed.locator("tbody tr").count()).toBeGreaterThan(0);
 });
