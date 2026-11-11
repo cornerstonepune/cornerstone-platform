@@ -78,7 +78,12 @@ test("Timetable: an educator never sees an accept-clash control; a clash cell is
   expect(await edu.locator("a.b-clash").count()).toBe(red);
   await expect(edu.getByRole("button", { name: /accept/i })).toHaveCount(0);
   await expect(edu.locator("[data-rail]").getByRole("link", { name: /Timetable rules/ })).toHaveCount(0); // the coordinator's rail link
-  await expect(edu.getByLabel("Class")).toHaveCount(0); // the class filter is the coordinator's
+  // the class filter is the coordinator's, and an educator's only when she holds two classes (the old week page's picker)
+  const [{ held }] = await sql<{ held: number }[]>`
+    select count(distinct g.school_class_id)::int as held from staff_role_grant g join pii.staff ps on ps.staff_id = g.staff_id
+    where ps.email = ${EDUCATOR.email} and g.role_code in (select jsonb_array_elements_text(value) from config where key = 'educator.timetable_roles')
+      and g.valid_from <= current_date and (g.valid_to is null or g.valid_to >= current_date)`;
+  await expect(edu.getByLabel("Class")).toHaveCount(held > 1 ? 1 : 0);
 });
 
 const FN = (n: number) => `/timetable/fortnight/${n}`;
@@ -172,6 +177,14 @@ test("Moves by hand: every move is listed with who made it and when, and an undo
 });
 
 test("Moves by hand: accepting a clash needs a reason ('Say why' otherwise), then the clash is accepted with who and why", async ({ page }) => {
+  // an accepted clash stays accepted only until a later move touches its place: a rerun reopens what an earlier run accepted
+  const accepted = await sql<{ places: { class: string; date: string; period: string }[] }[]>`select places from timetable_clash where fortnight_id = ${f.ahead} and accepted`;
+  for (const c of accepted)
+    for (const p of c.places)
+      await sql`
+        insert into change_log (tenant_id, table_name, row_id, op, before, after, staff_id, origin, reason)
+        values (${f.tenant}, 'session', ${`${p.class} ${f.ahead}`}, 'move', ${sql.json({ school_class_id: p.class, on_date: p.date, period_id: p.period })},
+          ${sql.json({ school_class_id: p.class, on_date: p.date, period_id: p.period })}, ${f.staff}, ${`staff:${f.staff}`}, 'u74 reopens a clash an earlier run accepted')`;
   await page.goto(`/timetable/moves?fn=${AHEAD}&class=${f.klass}`);
   const clash = page.locator("[data-clash]").first();
   await clash.getByRole("button", { name: "Accept the clash" }).click();

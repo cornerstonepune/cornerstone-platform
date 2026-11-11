@@ -205,7 +205,7 @@
       "/growth/[id]": ["filter", "shell", "status", "table", "taglist"],
       "/growth/[id]/parent": ["shell", "taglist"],
       "/growth/[id]/report": ["shell", "taglist"],
-      "/growth/class/[section]": ["filter", "shell", "table", "taglist"],
+      "/growth/class/[section]": ["shell", "taglist"],
       "/home": ["shell"],
       "/library": ["filter", "shell", "table", "taglist"],
       "/library/[key]": ["filter", "shell", "table"],

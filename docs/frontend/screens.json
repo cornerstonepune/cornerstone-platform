@@ -1214,14 +1214,24 @@
         {
           "t": "filter",
           "label": "class",
-          "roles": [
-            "coordinator"
-          ]
+          "note": "the coordinator always; an educator only when she holds more than one class"
         },
         {
           "t": "tab",
           "label": "Day / Week / Fortnight",
           "note": "Day by default at 400 px"
+        },
+        {
+          "t": "link",
+          "label": "Today",
+          "to": "timetable",
+          "note": "opens today in the Day view"
+        },
+        {
+          "t": "link",
+          "label": "each day head",
+          "to": "timetable",
+          "note": "opens that day in the Day view; earlier and later days are reached the same way"
         },
         {
           "t": "filter",
@@ -1290,7 +1300,9 @@
       "done_when": [
         "a hand move shows an amber outline and its details name who and why",
         "an educator never sees an accept-clash control; a clash cell is red for both roles",
-        "the grid's cells equal the session rows for the day shown (count and names)"
+        "the grid's cells equal the session rows for the day shown (count and names)",
+        "a period running now carries Do now, a recorded one Done, one over and not recorded Late, and no period still to come has a chip",
+        "a holiday day is named in words under the grid"
       ]
     },
     {
@@ -1357,12 +1369,31 @@
           }
         },
         {
+          "t": "field",
+          "label": "reason",
+          "roles": [
+            "coordinator"
+          ],
+          "note": "needed once the fortnight is frozen; the engine says so in words when it is missing"
+        },
+        {
           "t": "button",
           "label": "Go live",
           "roles": [
             "coordinator"
           ],
-          "effect": "sessions updated in place; the what-changed table fills; the stepper moves to live"
+          "effect": "every class's placed draft goes live and the sessions are updated in place; the what-changed table lists every session it moved or removed, and nothing else",
+          "drive": {
+            "fill": {
+              "reason": "the school's own decision"
+            },
+            "click": "Go live",
+            "expect": {
+              "text": [
+                "went live"
+              ]
+            }
+          }
         },
         {
           "t": "link",
