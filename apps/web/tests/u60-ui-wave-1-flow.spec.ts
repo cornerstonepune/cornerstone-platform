@@ -243,7 +243,7 @@ test("Class results, its class and a child", async ({ page }) => {
   await voiceSwitch(sql, true);
   // a class's topics, a topic opened (goals/res_results_by_topic.yaml); this class has nothing signed off yet, so its
   // skills are named once as not assessed. Its children, one by one, each in a status chip, and a child opened.
-  await wholePage(page, `/growth?class=${SECTION}`, /Class picture/, { chips: false });
+  await wholePage(page, `/growth?class=${SECTION}`, /Class picture/, { chips: false, filter: false });
   await page.locator("tr[data-topic]").first().getByRole("link").first().click();
   await expect(page.getByText("This page could not load")).toHaveCount(0);
   await page.getByRole("link", { name: "Show as a table" }).click();

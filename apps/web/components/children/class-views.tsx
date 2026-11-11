@@ -24,7 +24,7 @@ export async function ClassViews({ me, classId, section, count, view, q, toggle 
     <Screen
       stage={`${section} · ${count} ${count === 1 ? "child" : "children"}`}
       title="Class picture"
-      action={<Link href="/children" className="btn secondary">Show as a table</Link>}
+      action={<Link href={`/children?cls=${classId}`} className="btn secondary">Show as a table</Link>}
       purpose={view === "topic" ? "Each topic of the class: who is secure, practising or needs help. Open a topic for its skills, a skill for its children." : "Each child against each topic of the class. Open a topic for its skills; a name opens the child."}
       next={{ href: "/children", label: "Children" }}
     >

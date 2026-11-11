@@ -151,8 +151,10 @@ test("an assessment opens the child's written page in place", async ({ browser }
 test("a teacher of another class is refused the class and its children, in words, and opens on their own", async ({ browser }) => {
   const page = await as(browser, OTHER.email);
   await page.goto("/growth");
-  await expect(page.locator("[data-filterbar]").getByLabel("Class")).toHaveValue(B);
-  await expect(page.locator("[data-filterbar]").getByLabel("Class").locator(`option[value="${A}"]`)).toHaveCount(0);
+  // it opens on their own class's picture, and no other class is offered
+  await expect(page).toHaveURL(/\/children\/[0-9a-f-]{36}\?view=topic$/);
+  await expect(page.locator("main")).toContainText(B);
+  await expect(page.locator("main")).not.toContainText(A);
   for (const url of [`/growth?class=${A}`, `/growth?class=${A}&topic=${TOPIC}&skill=${SKILL}`, `/growth/${kids.Asha}`]) {
     await page.goto(url);
     await expect(page.getByText(/is not one of your classes/), url).toBeVisible();

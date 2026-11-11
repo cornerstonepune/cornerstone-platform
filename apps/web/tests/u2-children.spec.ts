@@ -145,7 +145,7 @@ test("each grade opens on its classes, and a class is its children against every
     await expect(grid).not.toContainText(/\b(R\d{1,2}|X[12]|M_[A-Z0-9_]+|[A-Z]{3}\.[A-Z0-9]+\.[A-Z0-9]+)\b/);
     for (const c of CHILDREN) {
       const row = grid.locator(`tbody tr[data-child="${ids[c.name]}"]`);
-      await expect(row.getByRole("link", { name: c.name })).toHaveAttribute("href", `/growth/${ids[c.name]}`);
+      await expect(row.getByRole("link", { name: c.name })).toHaveAttribute("href", /^\/children\/[0-9a-f-]{36}\/\d+$/); // a name opens the child on the Children screen
       for (const col of cols) {
         const state = states.find((s) => s.child_id === ids[c.name] && s.col === col)?.state ?? "not_enough_yet";
         await expect(row.locator(`td[data-col="${col}"]`)).toHaveAttribute("data-rag", COLOUR[state]);
