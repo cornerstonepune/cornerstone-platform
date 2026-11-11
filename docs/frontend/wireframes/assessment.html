@@ -150,14 +150,14 @@
                 <tbody>
                 <tr>
                   <td class="num" data-source="enrolment.roll_no sheet_instance.child_id">24</td>
-                  <td><select data-el="1" aria-label="Level for Sr. No. 24" data-source="prescription.difficulty prescription.override_by prescription.override_reason"><option selected>Easy</option><option>Medium</option><option>Hard</option><option>Advance</option></select><br><span class="muted" data-source="prescription.rule_fired prescription.override_reason">Level 2 secure, so Medium; changed to Easy by Asha Almond: absent for the first pack</span></td>
+                  <td><select data-el="1" aria-label="Level for Sr. No. 24" data-source="prescription.difficulty prescription.override_by prescription.override_reason"><option selected>Easy</option><option>Medium</option><option>Hard</option><option>Advance</option></select><br><input data-el="16" type="text" aria-label="Why Sr. No. 24 changes level" placeholder="Why" data-source="prescription.override_reason"><button data-el="17" type="button" class="btn press">Change this child</button><br><span class="muted" data-source="prescription.rule_fired prescription.override_reason">Level 2 secure, so Medium; changed to Easy by Asha Almond: absent for the first pack</span></td>
                   <td class="n" data-source="item_result.status item_result.working_shown">none yet</td>
                   <td class="st"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>Waits for approval</span></td>
                   <td class="st"><span class="muted">Change the level before print</span></td>
                 </tr>
                 <tr>
                   <td class="num" data-source="enrolment.roll_no sheet_instance.child_id">25</td>
-                  <td><select data-el="1" aria-label="Level for Sr. No. 25" data-source="prescription.difficulty prescription.override_by prescription.override_reason"><option>Easy</option><option selected>Medium</option><option>Hard</option><option>Advance</option></select><br><span class="muted" data-source="prescription.rule_fired">Level 2 secure, so Medium</span></td>
+                  <td><select data-el="1" aria-label="Level for Sr. No. 25" data-source="prescription.difficulty prescription.override_by prescription.override_reason"><option>Easy</option><option selected>Medium</option><option>Hard</option><option>Advance</option></select><br><input data-el="16" type="text" aria-label="Why Sr. No. 25 changes level" placeholder="Why" data-source="prescription.override_reason"><button data-el="17" type="button" class="btn press">Change this child</button><br><span class="muted" data-source="prescription.rule_fired">Level 2 secure, so Medium</span></td>
                   <td class="n" data-source="item_result.status item_result.working_shown">none yet</td>
                   <td class="st"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>Waits for approval</span></td>
                   <td class="st"><span class="muted">Change the level before print</span></td>
@@ -208,6 +208,19 @@
             </div>
           </section>
           </div>
+          <div class="card" data-kind="assessment">
+            <div class="card-h"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span>The first pack: printed</div>
+            <div class="card-b">
+              <span>Not said to be given yet.</span>
+              <form class="form" data-block="Form"><label class="field"><span class="label">Day it was given</span><input data-el="18" type="date" aria-label="Day it was given" value="2026-11-10"></label><div class="keyrow"><button class="btn press" data-el="19" type="submit">Given on</button></div></form>
+            </div>
+          </div>
+          <section class="grp" data-state="wait" aria-label="With the children, 1 copies">
+            <h3 class="grp-h"><i class="ic s" data-icon="wait"></i>With the children <span class="count num">1</span></h3>
+            <div class="table-box" data-block="DataTable"><table class="table"><thead><tr><th>Sr. No.</th><th class="st">State</th><th class="st">Action</th></tr></thead><tbody>
+              <tr><td class="num">26</td><td class="st"><span class="chip" data-state="wait"><i class="ic s" data-icon="wait"></i>Away, held for later</span></td><td class="st"><button class="btn press" data-el="20" type="button">Away: hold it for later</button></td></tr>
+            </tbody></table></div>
+          </section>
           <div class="toolbar"><span class="caption">Copies 1 to 10 of 26, grouped by where each stands. The group counts add up to the ten on this page.</span><a data-el="7" href="#assessment">Later →</a></div>
           <div class="card">
             <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: no copies yet</div>
@@ -383,14 +396,14 @@
                 <tbody>
                 <tr>
                   <td class="num" data-source="enrolment.roll_no sheet_instance.child_id">24</td>
-                  <td><select data-el="1" aria-label="Level for Sr. No. 24" data-source="prescription.difficulty prescription.override_by prescription.override_reason"><option selected>Easy</option><option>Medium</option><option>Hard</option><option>Advance</option></select><br><span class="muted" data-source="prescription.rule_fired prescription.override_reason">Level 2 secure, so Medium; changed to Easy by Asha Almond: absent for the first pack</span></td>
+                  <td><select data-el="1" aria-label="Level for Sr. No. 24" data-source="prescription.difficulty prescription.override_by prescription.override_reason"><option selected>Easy</option><option>Medium</option><option>Hard</option><option>Advance</option></select><br><input data-el="16" type="text" aria-label="Why Sr. No. 24 changes level" placeholder="Why" data-source="prescription.override_reason"><button data-el="17" type="button" class="btn press">Change this child</button><br><span class="muted" data-source="prescription.rule_fired prescription.override_reason">Level 2 secure, so Medium; changed to Easy by Asha Almond: absent for the first pack</span></td>
                   <td class="n" data-source="item_result.status item_result.working_shown">none yet</td>
                   <td class="st"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>Waits for approval</span></td>
                   <td class="st"><span class="muted">Change the level before print</span></td>
                 </tr>
                 <tr>
                   <td class="num" data-source="enrolment.roll_no sheet_instance.child_id">25</td>
-                  <td><select data-el="1" aria-label="Level for Sr. No. 25" data-source="prescription.difficulty prescription.override_by prescription.override_reason"><option>Easy</option><option selected>Medium</option><option>Hard</option><option>Advance</option></select><br><span class="muted" data-source="prescription.rule_fired">Level 2 secure, so Medium</span></td>
+                  <td><select data-el="1" aria-label="Level for Sr. No. 25" data-source="prescription.difficulty prescription.override_by prescription.override_reason"><option>Easy</option><option selected>Medium</option><option>Hard</option><option>Advance</option></select><br><input data-el="16" type="text" aria-label="Why Sr. No. 25 changes level" placeholder="Why" data-source="prescription.override_reason"><button data-el="17" type="button" class="btn press">Change this child</button><br><span class="muted" data-source="prescription.rule_fired">Level 2 secure, so Medium</span></td>
                   <td class="n" data-source="item_result.status item_result.working_shown">none yet</td>
                   <td class="st"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>Waits for approval</span></td>
                   <td class="st"><span class="muted">Change the level before print</span></td>
@@ -441,6 +454,19 @@
             </div>
           </section>
           </div>
+          <div class="card" data-kind="assessment">
+            <div class="card-h"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span>The first pack: printed</div>
+            <div class="card-b">
+              <span>Not said to be given yet.</span>
+              <form class="form" data-block="Form"><label class="field"><span class="label">Day it was given</span><input data-el="18" type="date" aria-label="Day it was given" value="2026-11-10"></label><div class="keyrow"><button class="btn press" data-el="19" type="submit">Given on</button></div></form>
+            </div>
+          </div>
+          <section class="grp" data-state="wait" aria-label="With the children, 1 copies">
+            <h3 class="grp-h"><i class="ic s" data-icon="wait"></i>With the children <span class="count num">1</span></h3>
+            <div class="table-box" data-block="DataTable"><table class="table"><thead><tr><th>Sr. No.</th><th class="st">State</th><th class="st">Action</th></tr></thead><tbody>
+              <tr><td class="num">26</td><td class="st"><span class="chip" data-state="wait"><i class="ic s" data-icon="wait"></i>Away, held for later</span></td><td class="st"><button class="btn press" data-el="20" type="button">Away: hold it for later</button></td></tr>
+            </tbody></table></div>
+          </section>
           <div class="toolbar"><span class="caption">Copies 1 to 10 of 26, grouped by where each stands. The group counts add up to the ten on this page.</span><a data-el="7" href="#assessment">Later →</a></div>
           <div class="card">
             <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: no copies yet</div>
