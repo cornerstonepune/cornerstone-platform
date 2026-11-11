@@ -14,6 +14,7 @@ import { grades as schoolGrades, levelsOf, skillSets, type SkillSet } from "@/li
 import { chargesTable } from "@/lib/queries-charges";
 import { openedAt } from "@/lib/queries-skills";
 import { scopeOf } from "@/lib/scope";
+import { skillSetHref } from "@/lib/skill-set-href";
 import type { Column } from "@/lib/ux-rules";
 import { approveSkills } from "../../../skill-sets/[code]/actions";
 import { LevelsTab } from "./levels-tab";
@@ -66,7 +67,7 @@ export default async function SkillsToApprove({ searchParams }: { searchParams: 
       cell: (x) => (
         <span className="flex items-center gap-2">
           <KindTile kind="skill" />
-          <Link href={`/setup/skills/${x.code}`} data-row-link>
+          <Link href={skillSetHref(x.code)} data-row-link>
             {x.name}
           </Link>
         </span>

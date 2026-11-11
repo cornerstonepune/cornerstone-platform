@@ -1348,7 +1348,7 @@
         },
         {
           "label": "a skill row",
-          "says": "Opens the skill's name."
+          "says": "Opens the skill set's name."
         },
         {
           "label": "Check the drafted parts",
@@ -1418,7 +1418,7 @@
         },
         {
           "label": "a skill's name",
-          "says": "Opens the skill's name."
+          "says": "Opens the skill set's name."
         },
         {
           "label": "Approve (a row)",

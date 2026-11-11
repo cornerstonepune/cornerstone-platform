@@ -3400,7 +3400,7 @@
         {
           "t": "row",
           "label": "a skill row",
-          "to": "skill",
+          "to": "skillset",
           "data": "data-skill-row"
         },
         {
@@ -3553,7 +3553,7 @@
         {
           "t": "link",
           "label": "a skill's name",
-          "to": "skill",
+          "to": "skillset",
           "data": "data-row-link"
         },
         {

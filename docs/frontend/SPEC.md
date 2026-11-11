@@ -339,7 +339,7 @@ Rail (Connected to): The period (when a session is chosen) · The activity · Th
 Main action: Start recording · Next step: Notes to confirm
 Data: the session; pii.educator_note insert via the engine; config: note retention
 Empty: none · Phone: this is the phone screen: one button, the activity already known
-Folds in: /voice/record
+Folds in: /voice/record, /voice/form
 Every control on the screen (9), and what the test does with each:
 - **field** Which period (preselected when opened from a period, a class or a child; otherwise today's periods for the person's classes; required before Start recording or Type the marks)
 - **button** Start recording: microphone permission asked; the button becomes Stop; a timer counts
@@ -368,6 +368,7 @@ Rail (Connected to): The period · The activity · The class
 Main action: Confirm this note · Next step: the next note waiting
 Data: pii.educator_note + draft claims from the engine (pii.note_claim: flag, outcome, entry_mode, child_id, set when the note is read); activity_observation written at confirm, one row per child, confirmation_id
 Empty: No note waiting: link to Record · Phone: the grid first, then her words; Confirm fixed at the bottom
+Folds in: /voice/notes/[id]
 Every control on the screen (12), and what the test does with each:
 - **button** each claim line's × (remove): the claim is marked removed; its children's squares return to unmarked; recorded as her decision
 - **cell** each square: opens the mark picker: above / below / not willing / absent / clear ("as expected" is the one switch for the rest: the engine records an individual child's mark in four lists); the square's corner mark changes; the claim it came from is marked changed
@@ -1008,7 +1009,7 @@ Every control on the screen (15), and what the test does with each:
 - **filter** Status
 - **filter** search (matches names and codes, never children)
 - **row** an activity row → the activity's name (`/setup/activities/[code]`)
-- **row** a skill row → the skill's name (`/setup/skills/[code]`)
+- **row** a skill row → the skill set's name (`/setup/skill-sets/[code]`)
 - **link** Check the drafted parts → the activity's name (`/setup/activities/[code]`) (the first activity with a drafted part)
 - **button** Yes (an offer): the skill is linked to the activity; the offer closes [coordinator only; absent and refused for others]
 - **button** No (an offer): the offer closes; nothing is linked [coordinator only; absent and refused for others]
@@ -1043,7 +1044,7 @@ Every control on the screen (12), and what the test does with each:
 - **filter** Taught (taught or not yet: a skill nobody teaches can be approved before its topic is switched on)
 - **tab** Skills (the first list; the address carries the tab)
 - **tab** Levels to review (the second list is the levels most children are secure at; the address carries the tab)
-- **link** a skill's name → the skill's name (`/setup/skills/[code]`)
+- **link** a skill's name → the skill set's name (`/setup/skill-sets/[code]`)
 - **button** Approve (a row): level_approved set for that skill with who; the row leaves the list; the eyebrow's count drops by one [coordinator only; absent and refused for others]
 - **fold** What a wrong answer counts against
 - **button** Approve this table as written: the table of what a wrong answer counts against is approved as shown, once, with who; a changed table waits again [coordinator only; absent and refused for others]
