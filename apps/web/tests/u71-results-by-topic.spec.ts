@@ -12,6 +12,7 @@ import { createHmac } from "node:crypto";
 import { expect, test, type Browser, type Page } from "@playwright/test";
 import postgres from "postgres";
 import { A, B, MINE, OTHER, SKILL, TOPIC, aResultsClass } from "./results-rows";
+import { voiceSwitch } from "./k2-rows";
 
 test.describe.configure({ mode: "serial" });
 test.use({ viewport: { width: 1440, height: 900 } });
@@ -26,6 +27,8 @@ const BUDGET = 1000;
 test.beforeAll(async () => {
   test.setTimeout(180_000);
   ({ kids } = await aResultsClass(sql));
+  // the class picture is behind the educator switch (UI-3b), as u21-class-by-topic switches it on for itself
+  await voiceSwitch(sql, true);
   [{ name: skillName }] = await sql<{ name: string }[]>`select name from skill where code = ${SKILL}`;
   [{ name: topicName }] = await sql<{ name: string }[]>`select name from topic where code = ${TOPIC}`;
 });

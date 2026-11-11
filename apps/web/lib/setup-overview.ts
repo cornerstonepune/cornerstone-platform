@@ -3,6 +3,7 @@ import { school, today } from "./queries-coordinator";
 import { staffList } from "./queries";
 import { bankTotals } from "./queries-bank";
 import { screensGrade, waiting, readOffers } from "./curriculum-screens";
+import { levels } from "./levels";
 
 // What the Setup screen (docs/frontend/screens.json `setup`) reads beyond its counts: the curriculum's size, the bank's, the
 // school's year, what waits for a person, and the last set-up changes. Each is one question to the database or the engine;
@@ -41,8 +42,6 @@ export async function setupOverview(email: string): Promise<SetupOverview> {
 
 export type Change = { kind: "skill" | "child" | "assessment"; title: string; by: string; at: string; when: number };
 
-const DIFFICULTIES = ["Easy", "Medium", "Hard", "Advance"];
-
 /** The last set-up changes, newest first: a skill's level approved or sent back and a question removed or corrected (the
  *  `approval` log), and a child moved to another class (`change_log`). Who made each and when. `only` narrows it to one kind. */
 export async function changedLately(limit = 4, only?: Change["kind"]): Promise<Change[]> {
@@ -61,11 +60,12 @@ export async function changedLately(limit = 4, only?: Change["kind"]): Promise<C
           select row_id, after, staff_id::text, origin, to_char(at at time zone ${zone}, 'YYYY-MM-DD') as day, at
           from change_log where tenant_id = ${school()} and table_name = 'child' and op = 'move' order by at desc limit ${limit}`,
   ]);
-  const names = new Map((await staffList()).map((p) => [p.id, p.name]));
+  const [staff, { order }] = await Promise.all([staffList(), levels()]);
+  const names = new Map(staff.map((p) => [p.id, p.name]));
   const made: Change[] = [
     ...approvals.map((r): Change => {
       if (r.kind === "item") return { kind: "assessment", title: r.reason?.startsWith("Corrected") ? "A question's wording corrected" : "A question removed", by: r.by, at: when(r.day), when: +r.at };
-      const level = DIFFICULTIES.find((d) => r.target.endsWith(` ${d}`));
+      const level = order.find((d) => r.target.endsWith(` ${d}`));
       const what = `${r.name ?? r.target.split(" ")[0]}${level ? ` · ${level}` : ""}`;
       return { kind: "skill", title: `${r.decision === "approved" ? "Skill level approved" : "A level sent back"}: ${what}`, by: r.by, at: when(r.day), when: +r.at };
     }),

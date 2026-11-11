@@ -76,6 +76,10 @@ test("5. GROUPS are exactly Today, Timetable, Children, Setup, and every route b
   expect(outside.sort()).toEqual(["/feedback", "/guide", "/refused"].sort());
 });
 
+// a file the page links to (a PDF, an image), not a page: a question's address has dots in its key (/setup/question-bank/SUB.2D2D.REG0-…)
+// and is a page
+const FILE = /\.(pdf|png|jpe?g|svg|webp|ico|css|js|json|txt|xml|csv|zip)$/i;
+
 test("5. each route is reached by clicking from the bar in at most three clicks", async ({ playwright }) => {
   test.setTimeout(300_000);
   const api = await playwright.request.newContext({ baseURL: "http://localhost:3100", extraHTTPHeaders: { cookie: `cs_staff=${sessionFor("e2e@cornerstone.test")}` } });
@@ -83,7 +87,7 @@ test("5. each route is reached by clicking from the bar in at most three clicks"
     const res = await api.get(url);
     if (!res.ok()) return [];
     const html = await res.text();
-    return [...html.matchAll(/<a\b[^>]*?\shref="([^"#]*)[^"]*"/g)].map((m) => m[1].replace(/&amp;/g, "&")).filter((h) => h.startsWith("/") && !h.startsWith("//") && !h.startsWith("/api/") && !h.startsWith("/_next") && !h.includes("."));
+    return [...html.matchAll(/<a\b[^>]*?\shref="([^"#]*)[^"]*"/g)].map((m) => m[1].replace(/&amp;/g, "&")).filter((h) => h.startsWith("/") && !h.startsWith("//") && !h.startsWith("/api/") && !h.startsWith("/_next") && !FILE.test(h));
   };
   // clicks: from the bar (a door, help, the account, report a problem), then two more
   let frontier = new Set(await hrefsOf("/today"));

@@ -5,6 +5,7 @@ import { createHmac } from "node:crypto";
 import type { Browser, BrowserContext } from "@playwright/test";
 import postgres, { type Sql } from "postgres";
 import { issuesMade } from "./github-server";
+import { dayIn } from "../lib/school-clock";
 import { SIGNED_IN } from "../playwright.config";
 import { aClass, aPerson, aTaughtClass, personAsStored } from "./rows";
 import { curriculumRows, gate, offers } from "./m1-13-rows";
@@ -232,13 +233,17 @@ CHECKS["mark-corrected"] = () => markCorrected(aside);
 /** Staff and classes with a person's grants open (`when: "@grants"`): a person of the inventory's own, with one open class grant for a role this page
  *  gives, so Add a grant and End a grant both have a person to act on. Made if it is not there; nobody else's reach changes. → the person's id. */
 const GRANT_PERSON = { email: "inventory.grants@cornerstone.test", name: "Grants Fixture", role: "educator", classes: [] as string[] };
+/** Today on the school's clock (config `school.time_zone`), as Staff reads it when it ends a grant: never the database's UTC date, which is
+ *  a day behind the school's from 18:30 to midnight UTC (the school in India). */
+const schoolDay = async (sql: Sql) => dayIn((await sql<{ z: string }[]>`select value #>> '{}' as z from config where key = 'school.time_zone'`)[0].z, new Date());
 const personWithAGrant = () =>
   aside(async (sql) => {
     const { id } = await aPerson(sql, GRANT_PERSON);
-    const open = await sql`select 1 from staff_role_grant where staff_id = ${id}::uuid and (valid_to is null or valid_to > current_date)`;
+    const today = await schoolDay(sql);
+    const open = await sql`select 1 from staff_role_grant where staff_id = ${id}::uuid and (valid_to is null or valid_to > ${today}::date)`;
     if (!open.length) {
       await sql`insert into staff_role_grant (tenant_id, staff_id, role_code, school_class_id, valid_from, granted_by)
-        select s.tenant_id, s.id, ro.code, sc.id, current_date, 'inventory'
+        select s.tenant_id, s.id, ro.code, sc.id, ${today}::date, 'inventory'
         from staff s, school_class sc, role ro
         where s.id = ${id}::uuid and sc.tenant_id = s.tenant_id and ro.tenant_id = s.tenant_id
           and ro.access_group = 'own_classes' and ro.scope = 'class' and not ro.one_per_class
@@ -253,6 +258,6 @@ CHECKS["grant-ended"] = () =>
   aside(async (sql) => {
     const rows = await sql<{ valid_to: string | null }[]>`select g.valid_to::text from staff_role_grant g join pii.staff p on p.staff_id = g.staff_id
       where p.email = ${GRANT_PERSON.email} order by g.created_at desc limit 1`;
-    const today = (await sql<{ d: string }[]>`select current_date::text as d`)[0].d;
+    const today = await schoolDay(sql);
     return rows.length && rows[0].valid_to === today ? [] : ["the grant is not ended today, or its row is gone"];
   });
