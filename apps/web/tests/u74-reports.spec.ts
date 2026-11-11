@@ -29,11 +29,12 @@ test.afterAll(async () => {
   await sql.end();
 });
 
-const table = (page: import("@playwright/test").Page) => page.getByRole("table", { name: "Every child's report" });
-/** The rows of the table once it has drawn: the page shows a loading skeleton first, so nothing is counted before the table is there. */
+// the reports are one table for each stage they stand at, so the rows are read across every table of the main part
+const table = (page: import("@playwright/test").Page) => page.getByRole("main").locator("table").first();
+/** The rows of the tables once they have drawn: the page shows a loading skeleton first, so nothing is counted before a table is there. */
 const rowsOf = async (page: import("@playwright/test").Page) => {
   await expect(table(page)).toBeVisible();
-  return table(page).locator("tbody tr:not(.under)").allInnerTexts();
+  return page.getByRole("main").locator("table tbody tr:not(.under)").allInnerTexts();
 };
 
 test("an educator sees only their own class's children, each with Sr. No., state, educator approval and consent (1, 2)", async ({ browser }) => {
@@ -44,21 +45,25 @@ test("an educator sees only their own class's children, each with Sr. No., state
   const body = await rowsOf(page);
   expect(body.length).toBe(Math.min(10, Object.keys(rows.children).length)); // the table pages at 10 rows (rule 3)
   expect(body.join("\n")).not.toContain(rows.otherNames[0]);
-  expect(body[0]).toMatch(/Sr\. No\. 1/);
+  expect(body[0]).toMatch(new RegExp(`^1 ${Object.keys(rows.children)[0]}`));
   expect(body[0]).toMatch(/to approve/);
   expect(body[1]).toMatch(/approved/);
   // consent is the coordinator's alone to see (the school's access rule): an educator is shown no consent column, never a guessed word
-  await expect(table(page).getByRole("columnheader", { name: "Consent" })).toHaveCount(0);
+  await expect(page.getByRole("main").getByRole("columnheader", { name: "Consent" })).toHaveCount(0);
   expect(body.join("\n")).not.toMatch(/on file|none on record|withdrawn/);
+  // the strip has no consent tile for an educator, and no consent bar either
+  await expect(page.locator("[data-block=AttentionStrip] .b-att")).toHaveCount(2);
+  await expect(page.getByText("Consent missing")).toHaveCount(0);
+  await expect(page.getByLabel("Consent on file")).toHaveCount(0);
   await ctx.close();
 });
 
 test("a coordinator sees other classes too, and the class and state filters narrow the rows (3)", async ({ page }) => {
   await page.goto(`/children/reports?class=${rows.section}`);
   expect((await rowsOf(page)).length).toBe(Math.min(10, Object.keys(rows.children).length));
-  await page.goto(`/children/reports?class=${rows.section}&state=approved`);
-  expect((await rowsOf(page)).length).toBe(1);
-  await page.goto(`/children/reports?class=${rows.other ? "U70B" : ""}&state=approved`);
+  await page.goto(`/children/reports?class=${rows.section}&state=none`);
+  expect((await rowsOf(page)).length).toBe(Math.min(10, Object.keys(rows.children).length));
+  await page.goto(`/children/reports?class=${rows.other ? "U70B" : ""}&state=sent`);
   await expect(page.getByText("No report lines drafted yet")).toBeVisible();
 });
 
@@ -67,7 +72,7 @@ test("a coordinator sees each child's consent: on file, or none on record and sa
   const body = await rowsOf(page);
   expect(body[0]).toMatch(/on file/);
   expect(body[1]).toMatch(/none on record: needed/);
-  await expect(page.getByText(/Consent must be on record before any child/)).toBeVisible();
+  await expect(page.getByText(/Consent missing: a report cannot be sent until a parent's consent is recorded/)).toBeVisible();
 });
 
 test("a child's fold shows the report's words with the name put in; a child with no report says so (4)", async ({ page }) => {
@@ -83,7 +88,7 @@ test("the screen never says teacher, a rung or skill code, or borrow, and orders
   await expect(table(page)).toBeVisible();
   const text = await page.locator("main").innerText();
   expect(text).not.toMatch(/teacher|borrow|\bR\d+\b|NUM\./i);
-  const rolls = (await rowsOf(page)).map((r) => Number(/Sr\. No\. (\d+)/.exec(r)![1]));
+  const rolls = (await rowsOf(page)).map((r) => Number(/^(\d+) /.exec(r)![1]));
   expect(rolls).toEqual([...rolls].sort((a, b) => a - b));
   void EDUCATOR;
 });
@@ -124,15 +129,34 @@ test("CP-19: with both approvals on every line, Send appears only when consent i
   await expect(page.getByRole("button", { name: /^send$/i })).toHaveCount(0);
 });
 
-test("the line of counts says how many reports are out of date, to approve and to write for the class, and each count is the rows behind it (carried from the old list)", async ({ page }) => {
+test("the strip counts what waits, the reports are grouped by stage, the board shows the same reports, and the consent bar counts consent (carried from the old list's counts)", async ({ page }) => {
+  // after the tests above: the first two children hold a line approved twice (the first has consent, the second has none), the third a line
+  // nobody has approved, and the rest of the class have no lines yet
+  const kids = Object.keys(rows.children).length;
   await page.goto(`/children/reports?class=${rows.section}`);
-  const line = page.getByLabel("Reports by state");
-  await expect(line).toBeVisible();
-  const counts = Object.fromEntries([...(await line.innerText()).matchAll(/(\d+) (out of date|to approve|to write)/g)].map((m) => [m[2], Number(m[1])]));
-  expect(Object.keys(counts).sort()).toEqual(["out of date", "to approve", "to write"]);
-  for (const [state, n] of Object.entries(counts)) {
-    await page.goto(`/children/reports?class=${rows.section}&state=${encodeURIComponent(state)}`);
-    if (n === 0) await expect(page.getByText("No report lines drafted yet")).toBeVisible();
-    else expect((await rowsOf(page)).length).toBe(Math.min(10, n));
-  }
+  const strip = page.locator("[data-block=AttentionStrip]");
+  await expect(strip).toBeVisible();
+  const tile = (words: string) => strip.locator(".b-att").filter({ hasText: words }).locator(".b-n");
+  await expect(tile("Lines waiting")).toHaveText("1");
+  await expect(tile("Consent missing")).toHaveText(String(kids - 1));
+  await expect(tile("Reports sent")).toHaveText("0");
+
+  // one table for each stage a report stands at, each headed by its words and its count
+  await expect(page.getByRole("heading", { level: 3, name: "Drafted · 1" })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 3, name: "Coordinator approved, ready to send · 2" })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 3, name: `No lines yet · ${kids - 3}` })).toBeVisible();
+
+  // the same reports as a board, one lane for each stage
+  await expect(page.getByRole("heading", { level: 2, name: "The same reports as a board" })).toBeVisible();
+  await expect(page.locator('[data-lane="drafted"] .b-count')).toHaveText("1");
+  await expect(page.locator('[data-lane="educator"] .b-count')).toHaveText("0");
+  await expect(page.locator('[data-lane="coordinator"] .b-count')).toHaveText("2");
+  await expect(page.locator('[data-lane="sent"]')).toContainText("No report has been sent yet.");
+
+  // the consent bar, the coordinator's alone: the first child has consent, the rest of the class have none
+  await expect(page.getByRole("img", { name: `1 on file, ${kids - 1} missing` })).toBeVisible();
+
+  // a stage chosen shows only its reports
+  await page.goto(`/children/reports?class=${rows.section}&state=drafted`);
+  expect((await rowsOf(page)).length).toBe(1);
 });

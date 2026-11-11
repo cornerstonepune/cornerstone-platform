@@ -18,11 +18,22 @@ export type ReportsRow = {
   note_id: string | null;
   lines: { drafted: number; educator: number; coordinator: number };
   sent_at: string | null;
+  /** The words of each line, in order (read-only here; they are written on the line cards). */
+  line_words: string[];
   /** null when the viewer may not read consent (the school's access rule: the coordinator alone sees it), so no word is guessed. */
   consent: Consent | null;
   /** The report's words as the engine kept them, with [child] not yet filled in; null when none is written. */
   words: { summary: string; can_do: string[]; working_on: string[]; at_home: string[]; next_at_school: string | null } | null;
 };
+
+// Where a report stands by its lines (CP-19): drafted until every line has an educator's approval, educator approved until every line has
+// the coordinator's too, then ready to send, then sent. A report with no lines has no stage of its own ("none"): its old whole-report
+// state (`STATE_OF`) is what it shows. Whole counts of lines and reports, never of people.
+export type Stage = "drafted" | "educator" | "coordinator" | "sent" | "none";
+export const STAGES = ["drafted", "educator", "coordinator", "sent", "none"] as const satisfies readonly Stage[];
+export const STAGE_WORDS: Record<Stage, string> = { drafted: "Drafted", educator: "Educator approved", coordinator: "Coordinator approved, ready to send", sent: "Sent", none: "No lines yet" };
+export const totalLines = (r: Pick<ReportsRow, "lines">) => r.lines.drafted + r.lines.educator + r.lines.coordinator;
+export const stageOf = (r: ReportsRow): Stage => (r.sent_at ? "sent" : totalLines(r) === 0 ? "none" : r.lines.drafted > 0 ? "drafted" : r.lines.educator > 0 ? "educator" : "coordinator");
 
 export const STATE_OF = (r: ReportsRow) => reportWords(r.report).short;
 export const REPORT_STATES = ["out of date", "to approve", "to write", "approved", "nothing yet"] as const;
@@ -33,6 +44,7 @@ export async function reportsRows(actor: string, scope: Scope): Promise<ReportsR
            (select case when (select public.my_reach('consent')) = 'none' then null else coalesce((select cn.decision from consent_now cn where cn.child_id = c.id), 'none') end) as consent,
            (select n.body from parent_note n where n.child_id = c.id and n.body like '{"facts"%' order by n.created_at desc limit 1) as draft,
            nn.id::text as note_id, nn.sent_at::text as sent_at,
+           coalesce((select jsonb_agg(l ->> 'words') from jsonb_array_elements(coalesce(nn.lines, '[]'::jsonb)) l), '[]'::jsonb) as line_words,
            coalesce(ln.drafted, 0)::int as drafted, coalesce(ln.educator, 0)::int as educator, coalesce(ln.coordinator, 0)::int as coordinator
     from child_now c, lateral pii.read_child(c.id, ${actor}) p
     left join lateral (select n.id, n.sent_at, n.lines from parent_note n where n.child_id = c.id and n.body like '{"facts"%' order by n.created_at desc limit 1) nn on true
@@ -76,4 +88,19 @@ function wordsOf(body: string | null, name: string): ReportsRow["words"] {
 export async function seesConsent(): Promise<boolean> {
   const [r] = await sql<{ all: boolean }[]>`select public.my_reach('consent') = 'all' as all`;
   return !!r?.all;
+}
+
+export type LineFact = { name: string | null; state: "secure" | "practising" | "emerging" | "notSeenYet" };
+
+/** For the lines of one child opened: each piece of evidence a line cites → the skill it is about (its name) and the system's state of that
+ *  skill for this child, which the line card shows beside the educator's words, read only. */
+export async function lineFacts(child: string, evidence: readonly string[]): Promise<Map<string, LineFact>> {
+  if (!evidence.length) return new Map();
+  const rows = await sql<{ id: string; name: string | null; state: string | null }[]>`
+    select e.id::text as id,
+           (select s.name from skill s where s.code = e.skill_code order by s.updated_at desc limit 1) as name,
+           (select k.state from child_skill_state k where k.child_id = e.child_id and k.skill_code = e.skill_code order by k.computed_at desc limit 1) as state
+    from evidence_event e where e.child_id = ${child} and e.id = any(${evidence as string[]}::uuid[])`;
+  const known = ["secure", "practising", "emerging"] as const;
+  return new Map(rows.map((r) => [r.id, { name: r.name, state: (known as readonly string[]).includes(r.state ?? "") ? (r.state as LineFact["state"]) : "notSeenYet" }]));
 }
