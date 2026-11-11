@@ -112,3 +112,7 @@ is never listed. Spare copies (no child on them) are listed apart with their sta
 | Old spec | Assertion | New place |
 |---|---|---|
 | `u37-papers-grouped` 1 | children with no paper and why; spares listed with no name | `u76-no-paper-and-spares.spec.ts` |
+
+The focus paper ("next paper for this child") is made from the child's own page, which is not an assessments page and stays. After approval it
+lands on the old review address until PR 4, when that address becomes a 308 to the paper screen; the specs that read the code from that
+address (`s11-focus-paper`, `p4-preview-before-print`, `u2-children`, `p5-review-a-paper`) move with it.
