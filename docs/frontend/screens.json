@@ -2680,9 +2680,9 @@
         {
           "t": "button",
           "label": "Change this child",
-          "effect": "the level and the reason are kept as an override on this child's prescription; nothing else moves",
           "text": "Change this child",
-          "data": "data-level-save"
+          "data": "data-level-save",
+          "note": "the level and the reason are kept as an override on this child's prescription; nothing else moves (proved in u76-assessment-controls: it needs a week the engine prescribed)"
         },
         {
           "t": "field",
