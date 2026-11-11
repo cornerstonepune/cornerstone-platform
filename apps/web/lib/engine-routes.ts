@@ -59,6 +59,8 @@ export type EngineRoutes = {
   "POST /curriculum/page/gate": { actor: string };
   "POST /curriculum/page/read": { actor: string; code: string };
   "POST /curriculum/page/revert": { actor: string; code: string; part: string };
+  "POST /feedback/screenshot": null;
+  "POST /feedback/screenshot/get": { note_id: string };
   "POST /fortnight/move": { actor: string; fortnight_id: string; to_state: string };
   "POST /fortnight/state": { actor: string; fortnight_id: string };
   "POST /graph/nightly": null;
