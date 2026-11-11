@@ -793,7 +793,7 @@ Main action: the step's action · Next step: Assessments
 Data: sheet/paper rows, counts per step (Counts), prescriptions and reasons, approval ledger
 Empty: No copies yet · Phone: stepper wraps; the table scrolls sideways in its own box
 Folds in: /papers/approve, /papers/card, /papers/review/[qr]
-Every control on the screen (21), and what the test does with each:
+Every control on the screen (22), and what the test does with each:
 - **link** Open the skill → the skill's name (`/setup/skills/[code]`)
 - **field** Change the level (a row, before print): Easy / Medium / Hard / Advance; the row's reason updates; kept as an override with who
 - **button** Approve the pack: approval row for this pack only; the stepper moves to Approved; Print appears; the rows' Change the level disappears
@@ -815,6 +815,7 @@ Every control on the screen (21), and what the test does with each:
 - **field** Day it was given (printed papers) (defaults to the day it was last said, else today; never later than today)
 - **button** Given on: the day is kept by the engine as a row of its own, with who said it; the screen says it was given
 - **button** Away: hold it for later (on a printed copy; the same button then reads Back: count as missing)
+- **link** Edit this paper → Check the answers (`/children/assessments/[key]/[roll]`) (a home assessment's copy not yet printed: its questions, remove, add, approve)
 Done when (on top of the ten generic checks):
 - Approve acts on this pack only; no control acts on more than one pack or more than one row
 - the stepper's amber step equals the status word in the list
@@ -835,7 +836,7 @@ Main action: Say what the child wrote · Next step: the next paper
 Data: capture.pages, item_result with status and confidence, key, misconception tags
 Empty: Nothing left to judge on this paper: Sign it off · Phone: image above, answers below
 Folds in: /capture/check, /capture/[id]
-Every control on the screen (9), and what the test does with each:
+Every control on the screen (12), and what the test does with each:
 - **row** each answer row: the page scrolls to that answer and outlines it
 - **field** what the child wrote (for the answer in focus; required when judging)
 - **button** Say what the child wrote: a read_correction row; the engine marks it right / wrong / blank; the chip updates; the next judge answer comes into focus
@@ -845,6 +846,9 @@ Every control on the screen (9), and what the test does with each:
 - **link** rail: The skill → the skill's name (`/setup/skills/[code]`)
 - **link** rail: The assessment → {the built name} (`/children/assessments/[key]`)
 - **link** rail: the next paper to check → Check the answers (`/children/assessments/[key]/[roll]`)
+- **button** Approve this home assessment (a copy waiting for approval: approved in the educator's name, this one only)
+- **button** Remove (a question) (asks once when the removal costs something (the approval, or the last question of a skill); the paper is made again with a new code)
+- **filter** bank: topic · skill · level · kind · question (each choice narrows the next; the chosen question is seen before Add)
 Done when (on top of the ten generic checks):
 - right, wrong and blank are three different chips and three counts; a wrong-with-working reason is shown with its wrong chip
 - a person's answer writes a read_correction row and never overwrites the engine's read

@@ -123,6 +123,8 @@ test("the papers bar's three counts sum to the copies, and the stepper's amber s
 test("Approve acts on this pack only, and the level can be changed until it is approved (11)", async ({ page }) => {
   await page.goto(assessmentHref(HOME()));
   await expect(page.getByRole("button", { name: "Approve the pack" })).toHaveCount(1);
+  // the sentence beside the button says what one tap approves: this pack's two copies (and any spares), this pack only
+  await expect(page.getByRole("region", { name: "This pack" })).toContainText("This approves 2 papers, this pack only.");
   await page.getByRole("button", { name: "Approve the pack" }).click();
   await expect(page).toHaveURL(new RegExp(encodeURIComponent(HOME()).replace(/[~]/g, "~")));
   const state = async (like: string) => (await sql<{ s: string }[]>`select print_status as s from sheet_instance where qr_code like ${like}`).map((r) => r.s);

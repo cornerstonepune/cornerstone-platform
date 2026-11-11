@@ -1,6 +1,6 @@
 # UI-3a: the notes loop (period, record, confirm, notes)
 
-Branch `ui-3a-notes-loop`, "Part of #518" (UI-3 split: 3a notes loop, 3b children, 3c teaching pages). Backend: issue #565, PR #569
+Branch `u76-notes-loop`, "Part of #518" (UI-3 split: 3a notes loop, 3b children, 3c teaching pages). Backend: issue #565, PR #569
 (`POST /voice/class-notes`, `POST /voice/notes/typed`, `educator_note.session_id`). This branch sits on #569's branch and merges after it.
 
 ## What is built
@@ -58,3 +58,6 @@ The 308s: `/voice/record` to `/record`, `/voice/form` to `/record` (the typed pa
 - Notes is a page of the Today door (`apps/web/lib/menu.ts`, after "What needs doing", which keeps `/record` and `/period`), so the bar reaches it in one click and no screen of the loop is left without a door. While voice notes are off the page answers not found, as every voice address does; the menu does not hide it (it has no switch to read).
 - Unproven here (no database in this sandbox): the browser specs above, and that an empty typed note opens on the board and not on the "could not read" panel.
 - The test titles in `m1-04-k2-voice-notes.spec.ts` and `u64-what-needs-doing-groups.spec.ts` still say "the form" / "Fill the form": `packages/engine/tests/test_promises.py` ties the retired goal's lines to those exact titles, so the titles stay and the assertions inside moved.
+
+### The notes-loop spec ran for the first time (it matched no project's file pattern until it became `u76-notes-loop.spec.ts`)
+Seven of its tests failed on a fresh database. Real, and fixed at their cause: the claim list and its × never appeared (the engine sets a line's `said` only for "the rest", and the filter required it); the phone's `.btn` rule (min-height 44 px, unlayered) beat the Start button's `min-h-14`, and the Start button sat inside a padded card, so it was neither 56 px tall nor the row's width (`!min-h-14`, no card on a phone, `w-full`); the child peek read staff names from `pii.staff`, which the website's role may not read (it reads the staff list the website already asks for; the engine could return the name itself). Test data, fixed in the tests: four tests waited for `/notes` in the address after Confirm, which is true before the write finishes (they wait for the note to be confirmed); the peek test opened the first page of a table that lists every late and waiting note before any confirmed one (it filters to confirmed). One assertion changed its measure and not its strength: "full width" is the width of the screen's action row, not `main` less a 16 px gutter the app does not have (its gutter is 20).
