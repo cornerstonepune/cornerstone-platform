@@ -30,11 +30,16 @@ test.afterAll(async () => {
   await sql.end();
 });
 
-const rolesOf = (who: string) => (who === "educator" ? ["educator", "coordinator"] : who === "coordinator" ? ["coordinator"] : ["educator", "coordinator"]) as ("educator" | "coordinator")[];
+const rolesOf = (who: string, route: string) => {
+  // two screens on one address are two versions of it (Today): each is held to its own role, the other version being the other screen
+  if ((who === "educator" || who === "coordinator") && inv.screens.filter((x) => x.route === route).length > 1) return [who] as ("educator" | "coordinator")[];
+  return (who === "educator" ? ["educator", "coordinator"] : who === "coordinator" ? ["coordinator"] : ["educator", "coordinator"]) as ("educator" | "coordinator")[];
+};
 
 const pending = inv.screens.filter((s) => !run.has(s.id));
 test(`the inventory report: ${pending.length} of ${inv.screens.length} screens pending, ${inv.screens.length - pending.length} run`, () => {
   for (const s of pending) test.info().annotations.push({ type: "pending", description: `${s.id} (${s.route}): its slice is not in merged_slices` });
+  for (const s of inv.screens) for (const e of s.elements) if (e.pending && run.has(s.id)) test.info().annotations.push({ type: "pending", description: `${s.id}: ${e.label} (${e.pending})` });
   console.log(`inventory: ${inv.screens.length - pending.length} screens run, ${pending.length} pending: ${pending.map((s) => s.id).join(", ")}`);
   // every screen belongs to a slice (the inventory's own rule), so a screen is run or pending and never lost
   const inSlice = new Set(inv.slices.flatMap((x) => x.screens));
@@ -43,7 +48,7 @@ test(`the inventory report: ${pending.length} of ${inv.screens.length} screens p
 
 for (const s of inv.screens) {
   if (!run.has(s.id)) continue;
-  for (const role of rolesOf(s.who))
+  for (const role of rolesOf(s.who, s.route))
     for (const width of [1440, 400])
       test(`${s.id} · ${role} · ${width}`, async ({ browser }) => {
         test.setTimeout(180_000);

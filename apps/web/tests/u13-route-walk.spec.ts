@@ -47,11 +47,20 @@ const NOT_BY_CLICK: Record<string, string> = {
   "/papers/card": "opened by a button of the paper's own form",
   "/children/assessments/[key]": "a link on an assessment's row, which needs an assessment of the class (tests/u73-assessments.spec.ts opens it with rows)",
   "/children/assessments/[key]/[roll]": "a child's copy on that assessment (tests/u73-assessments.spec.ts opens it with rows)",
+  "/children/reports": "ships beside the old Parent reports page (UI-8); the menu moves to it with UI-8b, when the old pages fold, because tests/u60 pins the menu's exact items",
   "/make/[section]/week": "opened by the make form's choice of a class and a week",
   "/skill-sets/[code]/edit": "opened from a skill's own page (click four)",
   "/voice/notes/[id]": "where recording a note sends the educator",
-  "/educator/activity/[code]": "a link of a period or of the materials list, which need a timetable's rows",
+  "/setup/activities/[code]": "a link of a period or of the materials list, which need a timetable's rows",
+  "/setup/objectives/[code]": "a link of an activity, which needs a timetable's rows",
+  "/setup/skills/[code]": "a link of an objective, which needs a timetable's rows",
+  "/notes": "a page of What needs doing only once the doors are rebuilt; opened from the Notes to confirm group today",
+  "/record": "opened from a period or from Notes, both of which need a K2 class the test database does not hold with the voice switch on",
+  "/period/[id]": "a link of a day of the timetable, which needs a timetable's rows",
+  "/notes/[id]": "a card or a row of Notes, which needs a recorded note",
   "/timetable/materials": "the menu's Materials still opens the old page, which keeps the controls this one lacks, until UI-9b moves them (tests/u74-materials.spec.ts opens it)",
+  "/timetable/fortnight/[n]": "a link of the timetable page's Fortnight card and of the timetable's rail, which need a fortnight's rows (tests/u74-timetable.spec.ts opens it with rows)",
+  "/timetable/moves": "the draft page's Next card and a hand move on the fortnight page, which need a fortnight's rows (tests/u74-timetable.spec.ts opens it with rows)",
   "/educator/period/[id]": "a link of a day of the timetable, which needs a timetable's rows",
   "/growth/[id]/parent": "a link on a child's page (click four)",
   "/growth/[id]/report": "a link on a child's page (click four)",
@@ -66,7 +75,7 @@ test("5. GROUPS are exactly Today, Timetable, Children, Setup, and every route b
   expect(doorOf("/timetable/rules")?.key).toBe("timetable");
   // the pages outside the bar: help, feedback, the password, the refusal page
   const outside = routes().filter((r) => !doorOf(r.replace(/\[[^\]]+\]/g, "x")));
-  expect(outside.sort()).toEqual(["/account/password", "/feedback", "/guide", "/guide/[slug]", "/guide/workflows", "/refused"].sort());
+  expect(outside.sort()).toEqual(["/feedback", "/guide", "/refused"].sort());
 });
 
 test("5. each route is reached by clicking from the bar in at most three clicks", async ({ playwright }) => {

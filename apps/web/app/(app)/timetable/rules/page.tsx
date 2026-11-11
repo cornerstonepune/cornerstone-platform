@@ -1,5 +1,6 @@
-import Link from "@/components/link";
-import { Screen } from "@/components/app-frame";
+import { Rail, Screen } from "@/components/app-frame";
+import { Details } from "@/components/details";
+import { FilterBar } from "@/components/filter-bar";
 import { requireStaff } from "@/lib/auth";
 import { EngineDown } from "@/lib/engine";
 import { schoolZone } from "@/lib/school-clock";
@@ -167,6 +168,7 @@ export default async function RulesPage({ searchParams }: Props) {
   const me = await requireStaff();
   const q = await searchParams;
   const zone = await schoolZone();
+  const kind = ["period", "block", "limit", "fixed"].includes(q.kind ?? "") ? q.kind : undefined;
   let rules: Rules | null = null;
   let down: string | null = null;
   try {
@@ -181,7 +183,8 @@ export default async function RulesPage({ searchParams }: Props) {
       title="Timetable rules"
       purpose="Period times, blocked days, fixed slots and subject limits, kept as rows with who changed them."
       action={<a href="#block" className="btn">Block a day</a>}
-      next={{ href: "/today", label: "What needs doing" }}
+      next={{ href: "/timetable/draft", label: "Draft from the rules" }}
+      rail={<Rail edges={[{ screen: "draft", label: "Draft from the rules", icon: "setup" }, { screen: "timetable", label: "Timetable", icon: "week" }]} />}
     >
       <div className="tt">
         {down ? <p className="tt-chip late" role="alert">{down}</p> : null}
@@ -191,30 +194,30 @@ export default async function RulesPage({ searchParams }: Props) {
           !down && <p className="tt-empty">No class has a timetable yet. Rules appear here once the school&apos;s timetable is loaded.</p>
         ) : (
           <>
-            <nav aria-label="Class" className="tt-note">
-              Class{" "}
-              {rules.classes.map((c) => (
-                <Link key={c.id} href={`/timetable/rules?class=${c.id}`} className="chip" aria-current={c.id === rules.class.id ? "page" : undefined}>
-                  {c.grade} {c.section}
-                </Link>
-              ))}
-            </nav>
+            <FilterBar
+              action="/timetable/rules"
+              filters={[
+                { name: "class", label: "Grade", value: rules.class.id, required: true, all: "", options: rules.classes.map((c) => [c.id, `${c.grade} ${c.section}`] as const) },
+                { name: "kind", label: "Kind", value: kind, all: "Every kind", options: [["period", "Period times"], ["block", "Blocked days"], ["limit", "Subject limits"], ["fixed", "Fixed slots"]] as const },
+              ]}
+            />
             <div className="tt-grid">
-              <Blocks rules={rules} />
-              <Limits rules={rules} />
-              <FixedSlots rules={rules} />
-              <Periods rules={rules} />
+              {!kind || kind === "block" ? <Blocks rules={rules} /> : null}
+              {!kind || kind === "limit" ? <Limits rules={rules} /> : null}
+              {!kind || kind === "fixed" ? <FixedSlots rules={rules} /> : null}
+              {!kind || kind === "period" ? <Periods rules={rules} /> : null}
               <section className="tt-card" aria-labelledby="h-hist">
-                <h2 id="h-hist">Changes</h2>
-                {rules.history.length === 0 ? (
-                  <p className="tt-empty">No rule has been changed yet.</p>
-                ) : (
-                  <ul className="tt-list">
-                    {rules.history.slice(0, 8).map((e) => (
-                      <li key={e.id}><span className="tt-note">{when(e.at, zone)}</span><span className="grow">{said(e)}</span></li>
-                    ))}
-                  </ul>
-                )}
+                <Details summary={<span id="h-hist">History of edits</span>} id="history" open>
+                  {rules.history.length === 0 ? (
+                    <p className="tt-empty">No rule has been changed yet.</p>
+                  ) : (
+                    <ul className="tt-list">
+                      {rules.history.map((e) => (
+                        <li key={e.id} data-edit><span className="tt-note">{when(e.at, zone)}</span><span className="grow">{said(e)}</span></li>
+                      ))}
+                    </ul>
+                  )}
+                </Details>
               </section>
             </div>
           </>

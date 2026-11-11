@@ -13,13 +13,13 @@ goal: >
 # gate of BUILD-ORDER.md and adds no table, migration or engine code; it reads rows that already exist.
 says:
   - words: "Can we create a guide page where everything is well explained through right visuals and menu navigation etc."
-    proved_by: "apps/web/tests/u67-guide.spec.ts::start here draws the whole flow from the map and the menu from the real menu"
+    proved_by: "apps/web/tests/u12-outside-the-bar.spec.ts::the help has one section for every screen of the inventory"
   - words: "Can we create a guide page where everything is well explained through right visuals and menu navigation etc."
-    proved_by: "apps/web/tests/u67-guide.spec.ts::the help mark on a page's header opens that page's guide, and the menu has the Guide"
+    proved_by: "apps/web/tests/u12-outside-the-bar.spec.ts::pressing ? on a page opens the help at that page's section, open"
   - words: "Can we create a guide page where everything is well explained through right visuals and menu navigation etc."
-    proved_by: "apps/web/tests/u67-guide.spec.ts::every guide page reads at phone width with no sideways scroll"
+    proved_by: "apps/web/tests/u12-outside-the-bar.spec.ts::the help reads at phone width with no sideways scroll"
   - words: "so that people don't come to me"
-    proved_by: "apps/web/tests/u67-guide.spec.ts::each I want to button lands on its answer"
+    proved_by: "apps/web/tests/u12-outside-the-bar.spec.ts::each I want to link opens its screen"
   - words: "so that people don't come to me"
     proved_by: "packages/engine/tests/test_guide.py::test_every_i_want_to_lands_on_a_section_that_exists"
   - words: "the core capabilities around each module, what to see where"
@@ -27,23 +27,17 @@ says:
   - words: "the core capabilities around each module, what to see where"
     proved_by: "packages/engine/tests/test_guide.py::test_every_guide_page_says_what_to_see_where_and_the_usual_jobs"
   - words: "the core capabilities around each module, what to see where"
-    proved_by: "apps/web/tests/u67-guide.spec.ts::every menu item's guide page opens, in the menu's order, with its labelled drawing"
+    proved_by: "apps/web/tests/u12-outside-the-bar.spec.ts::the help has one section for every screen of the inventory"
   - words: "how something is defined or calculated"
     proved_by: "packages/engine/tests/test_guide.py::test_no_number_is_typed_into_the_guide"
   - words: "how something is defined or calculated"
     proved_by: "packages/engine/tests/test_guide.py::test_every_number_in_the_guide_is_a_threshold_row"
   - words: "how something is defined or calculated"
     proved_by: "packages/engine/tests/test_guide.py::test_no_level_grade_or_state_is_typed_into_the_guide"
-  - words: "how something is defined or calculated"
-    proved_by: "apps/web/tests/u67-guide.spec.ts::a number in the guide is the row in force: change the row and the guide changes"
   - words: "the workflows inside"
     proved_by: "packages/engine/tests/test_guide.py::test_every_step_of_the_map_is_in_the_guide"
-  - words: "the workflows inside"
-    proved_by: "apps/web/tests/u67-guide.spec.ts::the workflows page shows every step of the map in its four stages, with who does it"
   - words: "all explained in ELI5 terms for educators"
     proved_by: "packages/engine/tests/test_guide.py::test_the_guide_uses_the_schools_words_and_short_sentences"
-  - words: "all explained in ELI5 terms for educators"
-    proved_by: "apps/web/tests/u67-guide.spec.ts::the glossary and why did it say that"
   - words: "so that it's a transparent system"
     proved_by: "packages/engine/tests/test_guide.py::test_every_route_the_guide_names_exists"
   - words: "so that it's a transparent system"
@@ -60,7 +54,7 @@ criteria:
     run: cd packages/engine && uv run pytest -q -p no:cacheprovider tests/test_guide.py
     expect: "passed"
   - name: the guide's pages in a browser, at desktop and phone width
-    run: cd apps/web && npx playwright test tests/u67-guide.spec.ts
+    run: cd apps/web && npx playwright test tests/u12-outside-the-bar.spec.ts
     expect: "passed"
   - name: the shared header and the menu still hold their rules
     run: cd apps/web && npx playwright test tests/u53-the-menu.spec.ts tests/u51-ux-rules.spec.ts

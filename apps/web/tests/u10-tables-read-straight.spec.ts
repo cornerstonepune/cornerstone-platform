@@ -81,6 +81,14 @@ async function offColumn(page: Page): Promise<string[]> {
 }
 
 test("every heading sits over its own column, on every page with a table", async ({ page }) => {
+  // a class page with a graded child is needed: make one of its own, so the test does not rely on what an earlier spec of the
+  // shard left behind (the shards are cut by file, so which spec runs first changes with every file added)
+  await twoDays();
+  await sql`
+    insert into child_skill_state (tenant_id, child_id, skill_code, rung_code, state, n_events, n_correct)
+    select s.tenant_id, c.id, s.code, s.rung_code, 'emerging', 4, 0
+    from child_now c, lateral (select tenant_id, code, rung_code from skill where rung_code is not null order by code limit 1) s
+    where c.section = ${SECTION} and not exists (select 1 from child_skill_state x where x.child_id = c.id and x.n_events > 0)`;
   const [grid] = await sql<{ section: string }[]>`
     select c.section from child_skill_state s join child_now c on c.id = s.child_id where c.active and s.n_events > 0 limit 1`;
   for (const path of ["/", "/papers", "/capture", "/growth", "/make", "/library", "/worksheets", `/growth/class/${grid.section}`]) {
