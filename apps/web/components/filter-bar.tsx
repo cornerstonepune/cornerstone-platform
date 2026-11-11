@@ -28,7 +28,7 @@ export function FilterBar({
   /** The page's own path. */
   action: string;
   filters: readonly Filter[];
-  search?: { name: string; value?: string; placeholder: string };
+  search?: { name: string; value?: string; placeholder: string; label?: string };
   /** What the page keeps while filtering (a chosen week, a tab) and never shows as a filter. */
   keep?: Record<string, string | undefined>;
 }) {
@@ -51,9 +51,9 @@ export function FilterBar({
       <form ref={form} action={action} method="get" role="search" className="flex flex-wrap items-center gap-2">
         {Object.entries(keep).map(([k, v]) => (v ? <input key={k} type="hidden" name={k} value={v} /> : null))}
         {filters.map((f) => (
-          <label key={f.name} className="flex items-center gap-2 text-[13px] text-[var(--ink-muted)]">
+          <label key={f.name} className="flex max-w-full min-w-0 items-center gap-2 text-[13px] text-[var(--ink-muted)]">
             <span>{f.label}</span>
-            <select name={f.name} defaultValue={f.value ?? ""} onChange={() => form.current?.requestSubmit()} className={`select ${control} !w-auto`}>
+            <select data-filter="" name={f.name} defaultValue={f.value ?? ""} onChange={() => form.current?.requestSubmit()} className={`select ${control} !w-auto max-w-full min-w-0`}>
               {f.required ? null : <option value="">{f.all}</option>}
               {f.options.map(([v, words]) => (
                 <option key={v} value={v}>
@@ -65,12 +65,12 @@ export function FilterBar({
         ))}
         {search ? (
           <label className="relative ml-auto flex items-center">
-            <span className="sr-only">Search the list</span>
+            <span className="sr-only">{search.label ?? "Search the list"}</span>
             <svg width="15" height="15" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.7" className="pointer-events-none absolute left-3 text-[var(--ink-muted)]">
               <circle cx="7" cy="7" r="4.6" />
               <path d="M10.6 10.6L14 14" />
             </svg>
-            <input type="search" name={search.name} defaultValue={search.value ?? ""} placeholder={search.placeholder} autoComplete="off" className={`input ${control} !pl-9 !w-[240px] focus:!w-[340px]`} />
+            <input data-filter="" type="search" name={search.name} defaultValue={search.value ?? ""} placeholder={search.placeholder} autoComplete="off" className={`input ${control} !pl-9 !w-[240px] focus:!w-[340px]`} />
           </label>
         ) : null}
         <noscript>
@@ -83,7 +83,7 @@ export function FilterBar({
         <ul data-active-filters aria-label="Filters on" className="mt-2 flex flex-wrap items-center gap-2 text-[13px]">
           {on.map((a) => (
             <li key={a.name}>
-              <Link href={href([a.name])} aria-label={`Remove filter ${a.label}`} className="inline-flex min-h-8 items-center gap-2 border border-[var(--line-control)] bg-[var(--surface)] px-3 text-[var(--ink)] no-underline hover:border-[var(--ink)]">
+              <Link href={href([a.name])} data-chip aria-label={`Remove filter ${a.label}`} className="inline-flex min-h-8 items-center gap-2 border border-[var(--line-control)] bg-[var(--surface)] px-3 text-[var(--ink)] no-underline hover:border-[var(--ink)]">
                 {a.label}
                 <span aria-hidden="true">×</span>
               </Link>

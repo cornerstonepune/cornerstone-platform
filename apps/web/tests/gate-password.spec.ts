@@ -44,7 +44,7 @@ async function linkSentTo(email: string, seen = 0): Promise<string> {
 }
 
 async function askForALink(page: Page, email: string): Promise<void> {
-  await page.goto("/login/forgot");
+  await page.goto("/login?view=forgot");
   await page.getByLabel("School email").fill(email);
   await page.getByRole("button", { name: "Send me a link" }).click();
   await expect(page.getByRole("main")).toContainText("If that email is a staff email, we have sent a link");
@@ -66,7 +66,7 @@ async function signedIn(page: Page, email: string, password: string): Promise<vo
 test("the sign-in page offers the forgotten-password link and no longer sends anyone to Nimish", async ({ page }) => {
   await page.goto("/login");
   await expect(page.getByRole("main")).not.toContainText("Ask Nimish");
-  await page.getByRole("link", { name: "Forgot your password?" }).click();
+  await page.getByRole("tab", { name: "Forgot your password?" }).click();
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Forgot your password");
 });
 
@@ -197,29 +197,22 @@ test("a session open elsewhere is signed out once the password is set", async ({
   }
 });
 
-test("a signed-in person changes their own password, and the old one stops working", async ({ page }) => {
+test("a signed-in person gets a link from their name in the bar, sets a new password with it, and the old one stops working", async ({ page }) => {
   const email = await staffMember();
   try {
     await signedIn(page, email, PASSWORD);
-    // "Change password" is the person's own name in the bar, where Sign out is
-    await page.locator("[data-bar]").first().getByRole("link", { name: "Your account: change your password" }).or(page.locator("[data-bar]").first().locator('a[href="/account/password"]')).first().click();
-    await expect(page.getByRole("heading", { level: 1 })).toHaveText("Change password");
-
-    // the current password is required
-    await page.getByLabel("Your current password").fill("not-the-password");
+    // the person's own name in the bar, where Sign out is, leads to the form that sends the link
+    await page.locator("[data-bar]").first().getByTestId("who").click();
+    await expect(page).toHaveURL(/\/login\?view=forgot/);
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("Forgot your password");
+    await page.getByLabel("School email").fill(email);
+    await page.getByRole("button", { name: "Send me a link" }).click();
+    await expect(page.getByRole("main")).toContainText("If that email is a staff email, we have sent a link");
+    await page.goto(await linkSentTo(email));
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("Set a new password");
     await page.getByLabel("New password").fill("amravati-gate-3");
     await page.getByLabel("The same password again").fill("amravati-gate-3");
-    await page.getByRole("button", { name: "Save the new password" }).click();
-    await expect(page.getByRole("main")).toContainText("not your current password");
-
-    await page.getByLabel("Your current password").fill(PASSWORD);
-    await page.getByLabel("New password").fill("amravati-gate-3");
-    await page.getByLabel("The same password again").fill("amravati-gate-3");
-    await page.getByRole("button", { name: "Save the new password" }).click();
-    await expect(page.getByRole("main")).toContainText("Your password is changed");
-
-    // this browser stays signed in; the old password does not open anything any more
-    await page.goto("/today");
+    await page.getByRole("button", { name: "Save it and sign in" }).click();
     await expect(page).toHaveURL(/\/today/);
     await page.context().clearCookies();
     await signIn(page, email, PASSWORD);
@@ -250,11 +243,12 @@ test("a new member of staff added on the Staff page has no password and is sent 
   const email = `new-${randomUUID().slice(0, 8)}@cornerstone.test`;
   try {
     await signedIn(page, coordinator, PASSWORD);
-    await page.goto("/staff");
-    await page.locator("summary", { hasText: "Add a member of staff" }).click();
-    await page.getByLabel("Name").fill("Newly added");
-    await page.getByLabel("School email").fill(email);
-    await page.getByRole("button", { name: "Add and send a link" }).click();
+    await page.goto("/setup/staff"); // Staff and classes (UI-5): the old /staff page's Add a member of staff is Add a person here
+    await page.getByRole("button", { name: "Add a person" }).click();
+    const form = page.getByRole("form", { name: "Add a person" });
+    await form.getByLabel("Name").fill("Newly added");
+    await form.getByLabel("School email").fill(email);
+    await form.getByRole("button", { name: "Add and send a link" }).click();
     await expect(page.getByRole("main")).toContainText("a link to set their own password is on its way");
     // nobody typed a password: the row holds none
     expect((await personAsStored(sql, email))?.password ?? null).toBeNull();

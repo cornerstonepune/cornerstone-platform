@@ -31,9 +31,9 @@ export function Person({ name, children }: { name: string; children: ReactNode }
   );
 }
 
-export function AccountLink({ name }: { name: string }) {
+export function AccountLink({ name, classes }: { name: string; classes: string }) {
   return (
-    <Link href="/account/password" title="Your account: change your password" className="inline-flex min-h-[var(--tap)] max-w-[160px] items-center gap-[var(--space-1)] whitespace-nowrap truncate text-[var(--ink)] no-underline">
+    <Link href="/login?view=forgot" title={`${classes}. Get a link to change your password`} data-testid="who" className="inline-flex min-h-[var(--tap)] max-w-[160px] items-center gap-[var(--space-1)] whitespace-nowrap truncate text-[var(--ink)] no-underline">
       <span className="min-[1400px]:hidden max-[700px]:hidden">
         <Icon name="educator" size={20} />
       </span>

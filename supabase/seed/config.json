@@ -481,6 +481,24 @@
       "seed_once": true
     },
     {
+      "key": "report.seen_enough",
+      "description": "How many pieces of confirmed evidence a parent-report line must rest on before it is not thin. A line on fewer is shown as thin (CP-19); the number is the school's to change.",
+      "value": 2,
+      "seed_once": true
+    },
+    {
+      "key": "report.period_days",
+      "description": "How many days after a report's week a piece of evidence may be dated and still count for a line of that report (CP-19). Evidence dated later is refused by the database.",
+      "value": 14,
+      "seed_once": true
+    },
+    {
+      "key": "timetable.subject_looks",
+      "description": "How the timetable grid draws a subject: numeracy, language or arts (subject code to look). A subject not listed is drawn as arts. The timetable screen reads it; the engine does not use it.",
+      "value": {"NUM": "numeracy", "ENG": "language"},
+      "seed_once": true
+    },
+    {
       "key": "children.attention_days",
       "description": "How many days a child may go without a confirmed note before the children screen marks that child as needing attention. The screen reads it (issue 565, frontend request, 14 days to start); the engine does not use it.",
       "value": 14,

@@ -5,15 +5,17 @@ import { addressOf, signedInAs, type Rows } from "../inventory-fixtures";
 import { brandRules } from "./brand";
 import { completeness, drive, forRole, keyboard, renders, touch, words, type Ctx } from "./checks";
 import type { When } from "./load";
+import { FIXTURES } from "../inventory-fixtures";
 import type { Inventory, Screen } from "./load";
 
 export type Audit = { inv: Inventory; rows: Rows; allow: readonly string[]; names: readonly string[]; address?: Record<string, string> };
 
-export async function auditScreen(browser: Browser, s: Screen, role: "educator" | "coordinator", width: number, a: Audit): Promise<string[]> {
+async function auditRows(browser: Browser, s: Screen, role: "educator" | "coordinator", width: number, a: Audit): Promise<string[]> {
   const out: string[] = [];
   const byId = new Map(a.inv.screens.map((x) => [x.id, x]));
   for (const scheme of width >= 1000 ? (["light", "dark"] as const) : (["light"] as const)) {
-    const context = await signedInAs(browser, role, { width, height: 900 }, scheme);
+    // a screen of the bare frame is the sign-in page: it is met signed out, as the person who needs it is
+    const context = s.frame === "bare" ? await browser.newContext({ baseURL: "http://localhost:3100", viewport: { width, height: 900 }, colorScheme: scheme, storageState: { cookies: [], origins: [] } }) : await signedInAs(browser, role, { width, height: 900 }, scheme);
     const page = await context.newPage();
     const errors: string[] = [];
     const hosts = new Set<string>();
@@ -52,4 +54,14 @@ export async function auditScreen(browser: Browser, s: Screen, role: "educator" 
     }
   }
   return out;
+}
+
+/** One screen, one role, one width. A screen that says `rest` has its rows made fresh for the run and put away after it, whatever the run did. */
+export async function auditScreen(browser: Browser, s: Screen, role: "educator" | "coordinator", width: number, a: Audit): Promise<string[]> {
+  if (s.rest) await FIXTURES[s.rest.fixture]?.();
+  try {
+    return await auditRows(browser, s, role, width, a);
+  } finally {
+    if (s.rest?.after) await FIXTURES[s.rest.after]?.();
+  }
 }

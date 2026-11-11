@@ -8,6 +8,7 @@
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { help } from "./help.mjs";
 
 const web = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const repo = path.resolve(web, "../..");
@@ -83,6 +84,7 @@ export function outputs() {
   ]);
   const screens = JSON.parse(readFileSync(path.join(repo, "docs/frontend/screens.json"), "utf8"));
   out.set(path.join(web, "design-system/built.json"), Buffer.from(`${JSON.stringify(built(screens), null, 2)}\n`));
+  out.set(path.join(web, "design-system/help.json"), Buffer.from(`${JSON.stringify(help(screens), null, 2)}\n`));
   for (const f of LOGO_FILES) out.set(path.join(web, "public/brand", f), readFileSync(path.join(LOGOS, f)));
   out.set(path.join(web, "app/icon.svg"), readFileSync(path.join(LOGOS, "Cornerstone-logo-mark-on-white-tile.svg")));
   return out;

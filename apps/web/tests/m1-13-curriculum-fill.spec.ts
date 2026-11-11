@@ -104,7 +104,7 @@ test("a section lists ten rows a page, is searchable, and a row opens its activi
   await expect(page.locator("[data-row]")).toHaveCount(1);
   await page.goto(`/curriculum/browse?q=${code(2)}`);
   await page.locator(`[data-row="${code(2)}"] a`).first().click();
-  await expect(page).toHaveURL(new RegExp(`/curriculum/fill/${code(2)}$`));
+  await expect(page).toHaveURL(new RegExp(`/setup/activities/${code(2)}$`));
   await page.goto(`/curriculum/browse?q=zzz-no-such-activity`);
   await expect(page.getByText("No activity matches that.")).toBeVisible();
 });
