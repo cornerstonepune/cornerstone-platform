@@ -101,7 +101,6 @@ test("confirming the reader's guess settles the answer in the person's name, and
     and coalesce(r.raw_read::jsonb ->> 'guess', '') <> '' order by r.id limit 1`;
   expect(a, "an unclear reading with a guess").toBeTruthy();
   const before = await keep(a.id);
-  const n = await waiting();
   try {
     await onPaper(page, a.id);
     const left = await judging(page);

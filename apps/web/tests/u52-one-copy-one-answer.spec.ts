@@ -28,7 +28,6 @@ const QR = { asha: "CS520A01", ashaTwin: "CS520A02", bina: "CS520B01", chetan: "
 const EDUCATOR = { email: "u52-educator@cornerstone.test", name: "U52 Educator", role: "educator", classes: [SECTION] };
 const PASSWORD = "u52-a-long-test-password";
 let kids: Record<string, string> = {};
-let skill = "";
 let ashaCapture = "";
 
 test.beforeAll(async () => {
