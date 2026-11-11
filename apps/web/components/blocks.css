@@ -139,6 +139,8 @@
   .b-hc { display: flex; align-items: center; gap: var(--space-1); padding: 6px; border-radius: 8px; background: var(--cb); color: var(--c); font-size: var(--text-label); }
   .b-fgrid-box { overflow-x: auto; }
   .b-fgrid { display: grid; grid-template-columns: 64px repeat(var(--cols), minmax(150px, 1fr)); gap: 6px; }
+  /* wide enough for the whole fortnight: the day columns share the width (a cell is a little tighter) instead of scrolling out of sight */
+  @media (min-width: 1100px) { .b-fgrid { grid-template-columns: 56px repeat(var(--cols), minmax(0, 1fr)); gap: 4px; } .b-fgrid > * { min-width: 0; } .b-fgrid .b-cell { padding: 8px 6px; } }
   .b-fgrid .b-dh { padding: 6px 10px; font-weight: 600; border-radius: var(--radius-control); }
   .b-fgrid .b-dh[aria-current="date"] { background: var(--action); color: var(--action-ink); }
   .b-fgrid a.b-dh { color: inherit; text-decoration: none; }
