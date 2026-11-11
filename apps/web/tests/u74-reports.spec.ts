@@ -98,7 +98,7 @@ test("CP-19: an opened child shows its lines with the system's stage beside the 
   const third = Object.values(rows.children)[2];
   await sql`delete from parent_note where child_id = ${third} and body like '{"facts"%'`;
   const lineId = crypto.randomUUID();
-  await sql`insert into parent_note (tenant_id, child_id, week, body, lines) values (${tenant}, ${third}, to_date(${WEEK}, 'IYYY-"W"IW'), ${JSON.stringify(words)}, ${JSON.stringify([{ id: lineId, words: "Adds within 20.", evidence: [] }])}::jsonb)`;
+  await sql`insert into parent_note (tenant_id, child_id, week, body, lines) values (${tenant}, ${third}, to_date(${WEEK}, 'IYYY-"W"IW'), ${JSON.stringify(words)}, ${sql.json([{ id: lineId, words: "Adds within 20.", evidence: [] }])})`;
   await page.goto(`/children/reports?class=${rows.section}&open=${third}`);
   await expect(page.getByLabel("The line's words")).toHaveValue("Adds within 20.");
   await expect(page.getByText("to approve (educator)")).toBeVisible();
@@ -111,7 +111,7 @@ test("CP-19: with both approvals on every line, Send appears only when consent i
   for (const child of [first, second]) {
     await sql`delete from parent_note where child_id = ${child} and body like '{"facts"%'`;
     const lineId = crypto.randomUUID();
-    const [n] = await sql<{ id: string }[]>`insert into parent_note (tenant_id, child_id, week, body, lines) values (${tenant}, ${child}, to_date(${WEEK}, 'IYYY-"W"IW'), ${JSON.stringify(words)}, ${JSON.stringify([{ id: lineId, words: "Adds within 20.", evidence: [] }])}::jsonb) returning id`;
+    const [n] = await sql<{ id: string }[]>`insert into parent_note (tenant_id, child_id, week, body, lines) values (${tenant}, ${child}, to_date(${WEEK}, 'IYYY-"W"IW'), ${JSON.stringify(words)}, ${sql.json([{ id: lineId, words: "Adds within 20.", evidence: [] }])}) returning id`;
     for (const by of [crypto.randomUUID(), crypto.randomUUID()])
       await sql`insert into approval (tenant_id, kind, target, decision, "by") values (${tenant}, 'report_line', ${`${n.id}:${lineId}`}, 'approved', ${by})`;
   }
