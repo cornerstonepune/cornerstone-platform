@@ -14,7 +14,7 @@ const SUBJECT = { numeracy: "Numeracy", language: "Language", arts: "Arts" } as 
 export function FortnightGrid({ days, today, rows, dayHrefs }: { days: readonly string[]; today?: string; rows: readonly FRow[]; /** a link for each day head, when the heads open their day */ dayHrefs?: readonly (string | undefined)[] }) {
   return (
     <div data-block="FortnightGrid" className="b-fgrid-box">
-      <div className="b-fgrid" style={{ "--cols": days.length } as React.CSSProperties}>
+      <div className={days.length > 5 ? "b-fgrid b-many" : "b-fgrid"} style={{ "--cols": days.length } as React.CSSProperties}>
         <span />
         {days.map((d, i) =>
           dayHrefs?.[i] ? (

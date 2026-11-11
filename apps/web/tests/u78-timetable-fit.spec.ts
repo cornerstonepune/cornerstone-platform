@@ -4,15 +4,23 @@
  */
 import { expect, test, type Page } from "@playwright/test";
 import postgres from "postgres";
+import { timetableSwitch } from "./educator-screens";
 import { HERE, timetableRows, type Fixture } from "./timetable-rows";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 let f: Fixture;
+let wasOn = false;
 test.beforeAll(async () => {
   f = await timetableRows(sql);
+  const [r] = await sql<{ on: boolean }[]>`select coalesce((select value = 'true'::jsonb from config where key = 'educator.timetable_enabled'), false) as on`;
+  wasOn = r.on;
+  await timetableSwitch(sql, true); // the screen is behind the gate; this spec turns it on and puts it back
 });
-test.afterAll(() => sql.end());
+test.afterAll(async () => {
+  await timetableSwitch(sql, wasOn);
+  await sql.end();
+});
 
 const at = (page: Page, width: number, height = 900) => page.setViewportSize({ width, height });
 const url = (view: string) => `/timetable?fn=${HERE}&class=${f.klass}&view=${view}`;

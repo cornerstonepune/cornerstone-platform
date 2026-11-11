@@ -78,7 +78,12 @@ test("Timetable: an educator never sees an accept-clash control; a clash cell is
   expect(await edu.locator("a.b-clash").count()).toBe(red);
   await expect(edu.getByRole("button", { name: /accept/i })).toHaveCount(0);
   await expect(edu.locator("[data-rail]").getByRole("link", { name: /Timetable rules/ })).toHaveCount(0); // the coordinator's rail link
-  await expect(edu.getByLabel("Class")).toHaveCount(0); // the class filter is the coordinator's
+  // the class filter is the coordinator's, and an educator's only when she holds two classes (the old week page's picker)
+  const [{ held }] = await sql<{ held: number }[]>`
+    select count(distinct g.school_class_id)::int as held from staff_role_grant g join pii.staff ps on ps.staff_id = g.staff_id
+    where ps.email = ${EDUCATOR.email} and g.role_code in (select jsonb_array_elements_text(value) from config where key = 'educator.timetable_roles')
+      and g.valid_from <= current_date and (g.valid_to is null or g.valid_to >= current_date)`;
+  await expect(edu.getByLabel("Class")).toHaveCount(held > 1 ? 1 : 0);
 });
 
 const FN = (n: number) => `/timetable/fortnight/${n}`;
