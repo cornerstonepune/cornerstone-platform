@@ -144,7 +144,7 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
   const ordered = GROUPS.flatMap((grp) => copies.filter((p) => groupOf(p) === grp.key).map((p) => ({ p, grp })));
   const shown = ordered.slice((page - 1) * PAGE, page * PAGE);
   const later = ordered.length > page * PAGE;
-  const mainId = toApprove ? "approve" : printed ? "print" : shown.find((s) => s.grp.key !== "replaced" && s.grp.key !== "children" && s.grp.key !== "read")?.p.id;
+  const mainId = toApprove ? "approve" : printed && qrs.length ? "print" : shown.find((s) => s.grp.key === "judge" || s.grp.key === "check" || s.grp.key === "signoff")?.p.id;
 
   const columns = (grp: Group): Column<PaperListRow>[] => [
     { key: "roll", label: "Sr. No.", num: true, width: "6rem", value: (p) => p.roll_no },
@@ -208,6 +208,9 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
       stage={`${a.band ? g.name(a.band) : "Assessment"} · ${live.length} papers`}
       title={named.name}
       purpose="Where this assessment stands, and each child's copy. A copy is its own row with its own action; there is no button over all of them."
+      next={{ href: "/growth", label: "Class results" }}
+      // with nothing of its own to press, the one main action is the way back to the list
+      action={mainId ? undefined : <Link href="/children/assessments" className="btn">All assessments</Link>}
       rail={
         <Rail
           cards={<ApprovalLedger packs={packs} />}

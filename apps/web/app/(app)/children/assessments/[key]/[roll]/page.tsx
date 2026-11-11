@@ -132,6 +132,7 @@ export default async function PaperPage({ params, searchParams }: Props) {
       stage={`${sheet.band ? g.name(sheet.band) : "Assessment"} · Sr. No. ${roll}${level ? ` · ${level}` : ""}`}
       title="Check the answers"
       purpose="The page as photographed, and each answer as the engine read it. Say what the child wrote where it was unsure; the engine marks it."
+      next={nextJudge ? { href: nextJudge.href, label: "The next answer to judge" } : next ? { href: paperHref(key, next.roll_no ?? ""), label: "The next paper to check" } : { href: assessmentHref(key), label: "Back to the assessment" }}
       rail={
         <Rail
           cards={

@@ -154,6 +154,7 @@ export default async function AssessmentsPage({ searchParams }: Props) {
       stage="Grades 1 to 4 · your classes"
       title="Assessments"
       purpose="Each one goes through seven steps. Its row shows the step it waits at and the one thing to do next."
+      next={{ href: "/growth", label: "Class results" }}
       rail={
         <Rail
           edges={[
