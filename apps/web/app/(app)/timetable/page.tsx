@@ -21,7 +21,7 @@ import { stateWords } from "@/lib/fortnight-words";
 import { sql } from "@/lib/db";
 import { gridOf, moveInto } from "@/lib/timetable-grid";
 import { subjectsAgainstRule, type SubjectRow } from "@/lib/timetable-subjects";
-import { classesOf, subjectLooks, clashesOf, fortnightAfter, fortnightAt, fortnightNumber, fortnightsOfYear, isCoordinator, liveWords, movesOf, switchedOn, yearFor, type Fn } from "@/lib/timetable-ui";
+import { classesOf, subjectLooks, clashesOf, fortnightAfter, fortnightAt, fortnightNumber, fortnightsOfYear, isCoordinator, liveIds, liveWords, movesOf, switchedOn, yearFor, type Fn } from "@/lib/timetable-ui";
 import { schoolToday } from "@/lib/voice-page";
 import { DayOnPhone } from "./day-on-phone";
 import { PlanSections } from "./plan-sections";
@@ -77,17 +77,18 @@ export default async function TimetablePage({ searchParams }: Props) {
   const weeks = read.every((w) => w !== null) ? read : null;
   const on = await switchedOn();
   const plan = coordinator && classId ? await yearFor(fn, classId) : [];
-  const said = liveWords(fn.state, on && plan.some((r) => r.id === fn.id && r.live));
+  const live = liveIds(plan, today, on);
+  const said = liveWords(fn.state, { on, live: live.has(fn.id), lessons: plan.find((r) => r.id === fn.id)?.lessons ?? 0 });
+  const moveHref = `/timetable/moves?${new URLSearchParams({ fn: String(fn.number), ...(classId ? { class: classId } : {}) })}`;
   const choose = coordinator ? await coordinatorFilters(fn, all, classId) : null;
-  const sections = coordinator ? <PlanSections rows={plan} on={on} shown={fn.number} grid={(n) => `${HERE}?${new URLSearchParams({ ...(classId ? { class: classId } : {}), fn: String(n), view })}`} /> : null;
+  const sections = coordinator ? <PlanSections rows={plan} on={on} live={live} today={today} shown={fn.number} classId={classId} grid={(n) => `${HERE}?${new URLSearchParams({ ...(classId ? { class: classId } : {}), fn: String(n), view })}`} /> : null;
   if (!weeks) {
-    // an educator: switched off, nothing is live for her (a plain page, not "not found"); switched on, a class not hers stays not found
+    // an educator the engine does not answer (switched off, or no class of hers has lessons then): a plain page, never "not found"
     if (!coordinator) {
-      if (on) notFound();
       return (
         <Screen stage="Timetable" title="Timetable" purpose="Your class's fortnight, once the coordinator makes it live.">
           <EmptyState>
-            <span data-not-live>No timetable is live yet. The coordinator makes one live from Setup, Fortnight.</span>
+            <span data-not-live>{on ? "No timetable is live for your class yet." : "No timetable is live yet."} The coordinator makes one live from Setup, Fortnight.</span>
           </EmptyState>
         </Screen>
       );
@@ -141,7 +142,12 @@ export default async function TimetablePage({ searchParams }: Props) {
       stage={`${klass.grade} ${klass.section} · Fortnight ${fn.number}`}
       title="Timetable"
       purpose="The fortnight is the unit: week A and week B, each period a block. A moved period is marked; a clash is red until it is accepted."
-      action={<a className="btn" href={keep({ view: "day", day: today, fn: undefined, when: undefined })} data-ux="action">Open today</a>}
+      action={
+        <>
+          <a className="btn" href={keep({ view: "day", day: today, fn: undefined, when: undefined })} data-ux="action">Open today</a>
+          {coordinator ? <Link href={moveHref} className="btn secondary" data-move-lessons>Move lessons</Link> : null}
+        </>
+      }
       next={{ href: `/timetable/fortnight/${fn.number}`, label: `Fortnight ${fn.number}` }}
       rail={
         <div className="tt-rail">
@@ -164,6 +170,9 @@ export default async function TimetablePage({ searchParams }: Props) {
     >
       <DayOnPhone chosen={(VIEWS as readonly string[]).includes(q.view ?? "")} />
       {sections}
+      {!q.fn && !q.day && q.when !== "next" && today < fn.starts_on ? (
+        <p className="tt-note" data-no-fortnight-today>No fortnight runs today. Fortnight {fn.number} starts on {dateWords(fn.starts_on)}.</p>
+      ) : null}
       {coordinator ? <p className="tt-note" data-fortnight-state={fn.state}>Fortnight {fn.number}, shown below · {said}</p> : null}
       <FilterBar
         action={HERE}

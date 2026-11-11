@@ -126,8 +126,23 @@ export async function switchedOn(): Promise<boolean> {
   return r?.on === true;
 }
 
-/** The words the coordinator reads above a fortnight: its state in the school's words, and whether educators see it yet. */
-export const liveWords = (state: string, live: boolean): string => `${stateWords(state)}: ${live ? "live, educators see it" : "not live yet"}`;
+/** The fortnight that is live: once the switch is on, educators open on today's fortnight, or the next one when none runs today
+ *  (a holiday), so that one is live when it has lessons; a fortnight a draft was put live for (`timetable_live`) is live too.
+ *  The rest are planning. With the switch off nothing is live. Ids, so a page can ask of any row. */
+export function liveIds(rows: readonly PlanRow[], today: string, on: boolean): Set<string> {
+  if (!on) return new Set();
+  const first = rows.find((r) => r.ends_on >= today && r.lessons > 0);
+  return new Set([...rows.filter((r) => r.live).map((r) => r.id), ...(first ? [first.id] : [])]);
+}
+
+/** The words the coordinator reads about a fortnight: its state in the school's words, and what educators see of it. With the
+ *  switch on the engine shows educators every fortnight with lessons, so a planning one says so rather than claim it is hidden. */
+export function liveWords(state: string, w: { on: boolean; live: boolean; lessons: number }): string {
+  const s = stateWords(state);
+  if (!w.on) return `${s}: not live yet`;
+  if (w.live) return `${s}: live, educators see it`;
+  return w.lessons ? `${s}: planning, educators can already open it` : `${s}: planning, nothing placed yet`;
+}
 
 /** Every teaching fortnight of `f`'s year for one class, oldest first: its state, its lessons placed for the class (a whole count)
  *  and whether it went live for the class (`timetable_live`, CP-22). The coordinator's Live and Planning sections (#691). Read only. */

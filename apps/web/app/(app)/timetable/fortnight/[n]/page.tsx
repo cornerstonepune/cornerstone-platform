@@ -147,6 +147,11 @@ export default async function FortnightPage({ params, searchParams }: Props) {
       {q.error ? <p role="alert" className="tt-error">{q.error}</p> : null}
       {q.done ? <p role="status" className="tt-note">Done.</p> : null}
       <Stepper steps={steppedFor(fn.state)} label="Where this fortnight is" />
+      {coordinator ? (
+        <p className="tt-note">
+          <Link href={`/timetable?fn=${fn.number}`}>Open its timetable</Link> · <Link href={`/timetable/moves?fn=${fn.number}`} data-move-lessons>Move lessons</Link>
+        </p>
+      ) : null}
       {coordinator ? <GoLive number={fn.number} span={`${dateWords(fn.starts_on)} to ${dateWords(fn.ends_on)}`} subjects={subjects} can={canGoLive} /> : null}
       <Cards cards={cards} />
       <h2 className="tt-h">Every fortnight of the year, by state</h2>

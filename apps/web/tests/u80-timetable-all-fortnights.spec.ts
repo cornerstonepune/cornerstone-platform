@@ -107,7 +107,35 @@ test("the coordinator opens a fortnight still in planning: its grid, its state i
   for (const [name, href] of [["Draft from the rules", "/timetable/draft"], ["Moves by hand", "/timetable/moves"], ["Timetable rules", "/timetable/rules"]])
     await expect(page.locator("[data-section=planning]").getByRole("link", { name })).toHaveAttribute("href", href);
   await expect(page.getByRole("button", { name: /go live/i })).toHaveCount(0);
+  // Move lessons opens the existing Moves by hand on this fortnight and class (the engine asks a reason past planning)
+  await expect(page.locator("[data-move-lessons]").first()).toHaveAttribute("href", `/timetable/moves?fn=${PLANNED}&class=${f.klass}`);
   await page.context().close();
+});
+
+test("with the switch on (as live today): the fortnight under way is Live, the later ones are Planning, and each says what educators see", async ({ browser }) => {
+  await timetableSwitch(sql, true);
+  try {
+    const page = await as(browser, COORDINATOR.email);
+    const res = await page.goto(`/timetable?class=${f.klass}&fn=${PLANNED}`);
+    expect(res?.status()).toBe(200);
+    await expect(page.getByText(NOT_FOUND)).toHaveCount(0);
+    await expect(page.locator("[data-fortnight-state=planning]")).toContainText("Drafted: planning, educators can already open it");
+    await expect(page.locator("[data-section=live] [data-live-fortnight]")).toHaveCount(1);
+    await expect(page.locator("[data-section=live] [data-live-fortnight='7401']")).toContainText("live, educators see it"); // the fixture's fortnight runs today
+    await expect(page.locator(`[data-section=planning] [data-planning-fortnight="${PLANNED}"]`)).toBeVisible();
+    await expect(page.locator(`[data-section=planning] [data-planning-fortnight="${EMPTY}"]`)).toContainText("planning, nothing placed yet");
+    await expect(page.locator("[data-section=planning] [data-planning-fortnight='7401']")).toHaveCount(0);
+    await page.context().close();
+    // an educator reads only, with no Move action
+    const edu = await as(browser, EDUCATOR.email);
+    await edu.goto(`/timetable?class=${f.klass}&fn=7401`);
+    await expect(edu.locator("[data-block=FortnightGrid]")).toBeVisible();
+    await expect(edu.locator("[data-move-lessons]")).toHaveCount(0);
+    await expect(edu.locator("[data-section=planning]")).toHaveCount(0);
+    await edu.context().close();
+  } finally {
+    await timetableSwitch(sql, false);
+  }
 });
 
 test("the fortnight picker reaches every fortnight of the year, each in its own state", async ({ browser }) => {
