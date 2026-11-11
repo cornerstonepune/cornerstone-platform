@@ -1,10 +1,11 @@
 import { Cards } from "@/components/cards";
-import { Rail, Screen } from "@/components/app-frame";
+import { Rail, RailFacts, Screen } from "@/components/app-frame";
 import { AttentionStrip, type Attention } from "@/components/attention-strip";
 import { EmptyState } from "@/components/empty-state";
 import { KanbanBoard, ViewToggle, type KCard, type Lane } from "@/components/kanban-board";
 import { PeriodRow } from "@/components/period-row";
 import type { Session } from "@/lib/auth";
+import { pageOf } from "@/lib/educator/data";
 import { blankWords, isBlank, isLesson, timeOf } from "@/lib/educator/period";
 import type { Day, Period } from "@/lib/educator/types";
 import { nowAtSchool, schoolToday } from "@/lib/school-clock";
@@ -69,11 +70,14 @@ export async function EducatorToday({ me, view, day: asked }: { me: Session; vie
   ];
   const cards = await cardsFor(cls, classId, [...late, ...soon]);
   const edges = [
-    { screen: "timetable", label: "This fortnight", icon: "fortnight" as const, fallback: "/timetable" },
+    { screen: "timetable", label: "This fortnight", icon: "fortnight" as const, fallback: "/timetable", line: day?.fortnight ? fortnightWords(day.fortnight, day.week).toLowerCase() : undefined },
     { screen: "materials", label: "Materials", icon: "checklist" as const, fallback: "/timetable/materials" },
   ];
+  // "Lay out for <the period lit, or next>": what the educator sets out, from the activity's own page (the engine's /curriculum/page/read)
+  const layOut = next?.activity ? ((await pageOf(me, next.activity.code))?.materials.items ?? []) : [];
+  const facts = layOut.length ? <RailFacts title={`Lay out for ${next!.activity!.name}`} rows={layOut.map((m) => ({ label: m.name, value: [m.quantity, m.unit].filter((x) => x !== null && x !== "").join(" ") }))} /> : undefined;
   return (
-    <Screen stage={stage} title="Today" purpose="Your periods in order. Tap one for what to teach, how, and what to lay out. After it, record a note." action={action} next={{ href: open(DOORS.timetable()) ?? "/timetable", label: "Timetable" }} rail={<div className="[&_[data-rail]_ul]:gap-2"><Rail edges={edges} /></div>}>
+    <Screen stage={stage} title="Today" purpose="Your periods in order. Tap one for what to teach, how, and what to lay out. After it, record a note." action={action} next={{ href: open(DOORS.timetable()) ?? "/timetable", label: "Timetable" }} rail={<Rail edges={edges} facts={facts} />}>
       {tiles.length ? <AttentionStrip tiles={tiles} /> : null}
       {notes.ok || !notes.down ? null : <p className="b-muted" data-unread="notes">Your notes could not be read just now. {notes.words}</p>}
       <div className="my-4">

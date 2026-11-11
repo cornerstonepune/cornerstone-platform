@@ -132,9 +132,9 @@ test.describe("the menu", () => {
   test("four doors, in order, and every sub-page belongs to one", () => {
     expect(GROUPS.map((g) => g.label)).toEqual(["Today", "Timetable", "Children", "Setup"]);
     expect(doorOf("/children/assessments")?.label).toBe("Children");
-    expect(doorOf("/skill-sets/approve")?.label).toBe("Setup");
+    expect(doorOf("/skill-sets/ADD.2D2D/edit")?.label).toBe("Setup");
     expect(doorOf("/taught")).toBeUndefined();
-    expect(doorOf("/growth/class/2B")?.label).toBe("Children");
+    expect(doorOf("/growth/0f2db249-3e3c-48ce-8aed-c87619862e1e")?.label).toBe("Children");
     expect(pagesOf(doorOf("/children/assessments")).map((t) => t.label)).toContain("Assessments");
     expect(pagesOf(doorOf("/setup/needs-doing")).length).toBeGreaterThan(0);
   });

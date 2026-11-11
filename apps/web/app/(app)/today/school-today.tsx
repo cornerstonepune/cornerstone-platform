@@ -3,7 +3,7 @@ import { Cards } from "@/components/cards";
 import { DataTable } from "@/components/data-table";
 import { EmptyState } from "@/components/empty-state";
 import { HeatGrid } from "@/components/heat-grid";
-import { Rail, Screen } from "@/components/app-frame";
+import { Rail, RailFacts, Screen } from "@/components/app-frame";
 import { AttentionStrip, type Attention } from "@/components/attention-strip";
 import type { Session } from "@/lib/auth";
 import { schoolToday } from "@/lib/school-clock";
@@ -75,11 +75,11 @@ export async function SchoolToday({ me }: { me: Session }) {
     : [];
   const edges = [
     { screen: "fortnight", params: { n: String(s?.drafts.rows[0]?.fortnight ?? 0) }, label: "Fortnight", icon: "fortnight" as const },
-    { screen: "staff", label: "Staff and classes", icon: "class" as const, fallback: "/setup/staff" },
+    { screen: "staff", label: "Staff and classes", icon: "class" as const, fallback: "/setup/staff", line: s ? many(s.ready.children, "child", "children") : undefined },
     { screen: "timetable", label: "Timetable", icon: "week" as const, fallback: "/timetable" },
   ].filter((e) => e.screen !== "fortnight" || s?.drafts.rows[0]);
   return (
-    <Screen stage={`${dayWords(today)} · every class`} title="Today, the school" purpose="What waits on you, each with its own button. Then the week ahead." action={<p className="font-medium">{unread ? "What waits on you could not be read just now." : rows.length ? `${rows.length === 1 ? "One kind of work waits" : `${rows.length} kinds of work wait`} on you.` : "Nothing waits on you."}</p>} next={{ href: open(DOORS.timetable()) ?? "/timetable", label: "Timetable" }} rail={<div className="[&_[data-rail]_ul]:gap-2"><Rail edges={edges} /></div>}>
+    <Screen stage={`${dayWords(today)} · every class`} title="Today, the school" purpose="What waits on you, each with its own button. Then the week ahead." action={<p className="font-medium">{unread ? "What waits on you could not be read just now." : rows.length ? `${rows.length === 1 ? "One kind of work waits" : `${rows.length} kinds of work wait`} on you.` : "Nothing waits on you."}</p>} next={{ href: open(DOORS.timetable()) ?? "/timetable", label: "Timetable" }} rail={<Rail edges={edges} facts={s ? <RailFacts title="The school this fortnight" rows={[{ label: "Children", value: s.ready.children }, { label: "Activities", value: s.ready.activities }, { label: "Materials lines", value: s.ready.materials }]} /> : undefined} />}>
       {strip.length ? <AttentionStrip tiles={strip} /> : null}
       <div className="my-4">
         {unread ? <EmptyState>{unread.down ? `What waits on you could not be read just now. ${unread.words}` : unread.words}</EmptyState> : rows.length ? <DataTable label="What waits on you" columns={COLUMNS} rows={rows} rowKey={(r) => r.key} more={{ page: 1, href: () => "/today" }} /> : <EmptyState>Nothing waits on you.</EmptyState>}

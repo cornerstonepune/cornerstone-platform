@@ -97,14 +97,14 @@ def test_a_status_chip_always_draws_its_icon_with_its_word():
 
 
 def test_the_bar_is_sized_from_the_rules_and_the_search_is_compact():
-    """The bar is 64 px high; every control in it is at least a tap tall; the student search is about 240 px, never a strip."""
+    """The bar is 72 px high (the wireframes' bar); every control in it is at least a tap tall; the student search is about 240 px, never a strip."""
     rules = (WEB / "lib/ux-rules.ts").read_text()
     least = int(re.search(r"TOP_BAR_MIN_PX = (\d+)", rules)[1])
     height = int(re.search(r"BAR_HEIGHT_PX = (\d+)", rules)[1])
     search = int(re.search(r"SEARCH_PX = (\d+)", rules)[1])
-    assert least >= 44 and height == 64 and 200 <= search <= 280
+    assert least >= 44 and height == 72 and 200 <= search <= 280
     frame = (WEB / "components/app-frame.tsx").read_text()
-    assert "h-16" in frame, "the bar is 64 px (h-16) high"
+    assert "h-[72px]" in frame, "the bar is 72 px high"
     box = (WEB / "components/frame/search-box.tsx").read_text()
     assert "min-h-[var(--tap)]" in box and f"min-[701px]:w-[{search}px]" in box, (
         "the search is sized from the rules"

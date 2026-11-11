@@ -15,6 +15,7 @@ import { aClass, aReadPaper, aPerson } from "./rows";
 import { voiceSwitch } from "./k2-rows";
 import { createHmac } from "node:crypto";
 import { isoWeek } from "../lib/week";
+import { doorPages } from "./door-pages";
 
 test.use({ viewport: { width: 1440, height: 900 } });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -104,7 +105,8 @@ test("an educator with one class and one subject: top menu, only hers, no Class 
   // the bar carries sign out; the door's row of pages has the rest
   await expect(page.locator("[data-bar]").first().getByRole("button", { name: "Sign out" })).toBeVisible();
   await page.goto("/children/assessments");
-  for (const name of ["Assessments", "Upload papers", "Parent reports"]) await expect(page.getByRole("navigation", { name: "Pages in this section" }).getByRole("link", { name }), name).toBeVisible();
+  const pagesOfChildren = await doorPages(page);
+  for (const name of ["Assessments", "Upload papers", "Parent reports"]) await expect(pagesOfChildren.getByRole("link", { name }), name).toBeVisible();
   await page.goto("/setup/needs-doing");
   // What needs doing: groups, each folded into a table of red/amber/green rows, one action on each row that opens that item
   await page.locator("details[data-group]").evaluateAll((els) => els.forEach((e) => ((e as HTMLDetailsElement).open = true)));
@@ -133,9 +135,9 @@ test("an admin: the same top menu, and no Viewing control", async ({ page }) => 
   await open(page, "/setup/needs-doing", /What needs doing/);
   await theBar(page, DOORS);
   await expect(page.locator("[data-viewing], #bar-subject, #bar-class")).toHaveCount(0);
-  // a door's other pages are a row under the bar, not more items on it
+  // a door's other pages fold behind one button at the end of the trail, not more items on the bar (one nav row, #690)
   await page.goto("/children/assessments");
-  await expect(page.getByRole("navigation", { name: "Pages in this section" }).getByRole("link")).toHaveText(["Children", "Assessments", "Upload papers", "Parent reports", "Across classes"]);
+  await expect((await doorPages(page)).getByRole("link")).toHaveText(["Children", "Assessments", "Upload papers", "Parent reports", "Across classes"]);
 });
 
 /** The page opened, with nothing broken on it. */

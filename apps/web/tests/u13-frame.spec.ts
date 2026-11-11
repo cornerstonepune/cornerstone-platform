@@ -10,6 +10,7 @@ import { FAKE_CHILDREN } from "./fake-names";
 import { inventoryRows, signedInAs, type Rows } from "./inventory-fixtures";
 import { brandRules } from "./inventory/brand";
 import { addressToLookIn, type Seen } from "./u13-address";
+import { BAR_HEIGHT_PX, BAR_LOGO_PX } from "../lib/ux-rules";
 
 const WEB = path.resolve(__dirname, "..");
 const sql = postgres(process.env.DATABASE_URL!, { max: 1 });
@@ -52,7 +53,7 @@ test("2. at 1440 the four doors are the bar's own; at 400 they are a bottom tab 
   await expect(top).toBeVisible();
   expect((await top.getByRole("link").allInnerTexts()).map((t) => t.replace(/\s*\d[\d,]*$/, "").trim())).toEqual(["Today", "Timetable", "Children", "Setup"]);
   await expect(top.locator("[aria-current=page]")).toHaveText(/^Children/);
-  expect((await wide.locator("[data-bar]").first().locator("div").first().boundingBox())?.height).toBe(64);
+  expect((await wide.locator("[data-bar]").first().locator("div").first().boundingBox())?.height).toBe(BAR_HEIGHT_PX);
 
   const phone = await (await signedInAs(browser, "coordinator", { width: 400, height: 900 })).newPage();
   await phone.goto("/children");
@@ -100,7 +101,8 @@ test("3 and 4. BrandMark: the right file for the ground and the room, as given, 
     await page.goto("/today");
     expect(await brandRules(page, scheme, width, `${scheme} ${width}`)).toEqual([]);
     const img = page.locator("picture[data-brand-mark] img");
-    if (width === 1440) expect((await img.boundingBox())!.height).toBeCloseTo(40, 0);
+    // the logo is bigger than it was (40 px) on both the lockup and the phone's mark, and keeps its clear space (brandRules above)
+    expect((await img.boundingBox())!.height).toBeCloseTo(BAR_LOGO_PX, 0);
     await expect(page.getByRole("link", { name: "Cornerstone Gurukul", exact: true })).toHaveAttribute("href", "/today");
     await context.close();
   }
