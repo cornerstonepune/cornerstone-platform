@@ -41,6 +41,17 @@ screens (`docs/frontend/screens.json`); a function with no home is a function th
 dropped** (#599 guard rail). Spec names below come from the file names and a count of their address mentions; each is to be read when it
 is moved, and moved at equal assertions.
 
+## Decisions (11 Nov 2026, relayed by the frontend orchestrator): no function is lost
+
+1. **A skill set keeps its own screen** on the new frame, keyed by the skill-set code, linking to registry skills where one exists. It is added to
+   `screens.json` and the wireframes as "Skill set". No alias route, no schema change.
+2. **All six no-home functions are carried** onto the skill and skill-set screens (real-question example per level, grade per level, approve a way of
+   asking, edit English samples, "more like this", stop a kind), each with a drive and its spec moved at equal assertions; coordinator-only where the
+   old page was.
+3. **The walk queue gets its own element** on the curriculum side. This is coordinated with UI-11 (#582) first; #582 merges before this work starts.
+4. **Order:** separate draft PRs, one at a time, starting after #582 merges. This note is the plan; the first PR is the "Skill set" screen entry
+   (inventory and wireframe), because every later PR hangs on its key.
+
 ## First: the two skill pages are not the same thing
 
 The old page, `/skill-sets/[code]`, is keyed by `skill.code`: a grade 1 to 4 **skill set** (ADD.2D1D, ...). The new screen,
