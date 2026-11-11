@@ -63,3 +63,12 @@ as one stack bar and its counts) and "Needing attention" (the children not seen 
 confirmed (a link once the Notes screen is built) and "Latest notes, any child" (who a note names, to confirm or confirmed, by voice or by form, who recorded it, the
 day; never a note's words), from the engine's own notes reads. Last seen reads as the weekday inside the last week, as the wireframe does.
 Ranking check: nothing ranks a child. Groups are categories (the wireframe's order: secure, practising, not seen yet), the attention card lists by Sr. No., every number is a whole count.
+
+## UI-3d (the old child list redirects to Children)
+
+`/growth?view=children…` (and the old sort/status/grade/page bookmarks) now answer 308 to `/children`, to the class the old address named.
+Deleted with it: `growth/children-view.tsx`, `growth/tables.tsx`. Kept in place for the screens that will replace them: Class results by topic
+(`/growth`), the child-against-topic grid (`/growth/class/[section]`), parent reports (`/growth/reports`), the old child page (`/growth/[id]`).
+Old specs that opened the list were moved to Children where an assertion still holds, and retired where the old column or control has no
+equal on the new screen. Not carried over, for the orchestrator to place: the per-child "Needs help on" topic names, the "Parent report"
+column and its sort, the class table's counts of answers and parent reports waiting, the "Against every skill" link on the list.
