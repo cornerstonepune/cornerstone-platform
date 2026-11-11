@@ -133,3 +133,11 @@ Test 19 in `u73-teaching-pages.spec.ts`: each cluster's count equals its chips; 
 Per #599: the activity screen's `capture: Photo` upload is gone from screens.json and the wireframe (no store for a set-up photo;
 photos are taken on Record, #609). Its capture bar now links to Record (`capture: Voice note`), as the notes screen does. Page: the
 rail draws the link. Test 20. Test 13 now switches `voice.screens_enabled` on for itself (the peek's history route needs it) and restores it.
+
+## Level-sentence edit with history (ui-3c-level-sentence)
+CP-31's engine routes (`/curriculum/level-words`, `/history`) are on main. On the skill screen each level of "Each level in a
+sentence" is a `LevelWords` row: the sentence, its earlier sentences (who by name, when, why; a coordinator) and, for a
+coordinator, a form to change it (server action `changeWords`, engine key server-side). A change takes only that level out of
+approved. The engine's gate decides who may write; the page shows the form to a coordinator. Note the key: the route takes the
+skill SET's code (`skill.code`), which `skillOf` now carries on each level row. screens.json `skill` gains the fold "Earlier
+sentences"; the wireframe drops its data-gap. Tests 21 to 23 (`u73-level-words.spec.ts`, split from the teaching spec for the 400-line ceiling).
