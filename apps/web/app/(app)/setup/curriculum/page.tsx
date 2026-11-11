@@ -48,11 +48,15 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
     .filter((r) => (!grade || r.band === grade) && (!subject || r.subject === subject) && (!topic || r.topic === topic) && (!status || r.status === status) && (!text || r.name.toLowerCase().includes(text) || r.code.toLowerCase().includes(text)))
     .sort((a, b) => rank[a.status] - rank[b.status] || order(a) - order(b) || a.topic.localeCompare(b.topic) || a.name.localeCompare(b.name));
   const page = Math.max(1, Math.trunc(Number(q.page)) || 1);
+  const opage = Math.min(Math.max(1, Math.trunc(Number(q.opage)) || 1), Math.max(1, Math.ceil(offers.length / 10)));
   const keep = { grade, subject, topic, status, q: q.q?.trim() || undefined };
-  const href = (p: number) => {
-    const s = new URLSearchParams(Object.entries({ ...keep, page: p > 1 ? String(p) : undefined }).flatMap(([k, v]) => (v ? [[k, v]] : [])));
+  // an address of this screen: the choices, the page of the list and the page of the offers (each table pages on its own)
+  const at = (p: number, o: number) => {
+    const s = new URLSearchParams(Object.entries({ ...keep, page: p > 1 ? String(p) : undefined, opage: o > 1 ? String(o) : undefined }).flatMap(([k, v]) => (v ? [[k, v]] : [])));
     return s.size ? `${HERE}?${s}` : HERE;
   };
+  const href = (p: number) => at(p, opage);
+  const offersHref = (o: number) => at(page, o);
   const uniq = (xs: string[]) => [...new Set(xs.filter(Boolean))].sort().map((x): [string, string] => [x, x]);
 
   const columns: Column<CRow>[] = [
@@ -96,7 +100,8 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
 
   const firstDraft = drafts[0];
   const draftHref = firstDraft ? `/setup/activities/${firstDraft.code}` : null;
-  const shownOffers = offers.slice(0, 10);
+  // every offer is reachable: ten a page, the page the person is on kept in the address
+  const shownOffers = offers.slice((opage - 1) * 10, opage * 10);
   const had = await linked([...new Set(shownOffers.map((o) => o.activity.code))]);
   const offerColumns: Column<(typeof offers)[number]>[] = [
     { key: "activity", label: "Activity", value: (o) => o.activity.name, cell: (o) => <span className="flex items-center gap-2"><KindTile kind="activity" />{o.activity.name}</span> },
@@ -112,7 +117,7 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
         reviews ? (
           <form action={answerOffer} className="flex gap-2">
             <input type="hidden" name="id" value={o.id} />
-            <input type="hidden" name="back" value={href(page)} />
+            <input type="hidden" name="back" value={at(page, opage)} />
             <button type="submit" name="do" value="yes" className="btn" data-offer-yes>Yes<span className="sr-only"> add the offered skills to {o.activity.name}</span></button>
             <button type="submit" name="do" value="no" className="btn secondary" data-offer-no>No<span className="sr-only"> close the offer for {o.activity.name}</span></button>
           </form>
@@ -154,7 +159,7 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
         <section className="mt-6" aria-label="Offers waiting" data-offers>
           <h2 className="mb-2 text-[16px]">Offers waiting</h2>
           <p className="mb-2 text-[13px] text-[var(--ink-muted)]">Skills the machine offers for an activity the examples did not show. Yes adds the skill to that activity; No closes the offer.</p>
-          <DataTable label="Offers" columns={offerColumns} rows={shownOffers} rowKey={(o) => o.id} more={{ page: 1, href: () => HERE }} extras={{ attrs: (o) => ({ "data-offer": o.id }) }} />
+          <DataTable label="Offers" columns={offerColumns} rows={offers} rowKey={(o) => o.id} more={{ page: opage, href: offersHref }} extras={{ attrs: (o) => ({ "data-offer": o.id }) }} />
         </section>
       ) : null}
     </Screen>
