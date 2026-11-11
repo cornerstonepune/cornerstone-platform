@@ -957,7 +957,7 @@ Main action: a child · Next step: the next skill
 Data: child_skill_state (kind 'observed' / 'written') by skill; skill_link_confirmed (a view over activity_skill and approval); skill_level; misconception; flow_run result for the six-fortnight spark; evidence_event for clusters
 Empty: nobody seen on it yet · Phone: grid of 3 columns of squares (SPEC §2 rule 10)
 Folds in: /skill-sets/[code], /skill-sets/[code]/edit
-Every control on the screen (16), and what the test does with each:
+Every control on the screen (17), and what the test does with each:
 - **filter** class [coordinator only; absent and refused for others]
 - **peek** each square (and each child chip in a cluster): opens ChildPeek for that child
 - **child_name** each square (the name beside the Sr. No. (same ClassGrid as the class picture))
@@ -966,7 +966,7 @@ Every control on the screen (16), and what the test does with each:
 - **fold** Each level in a sentence
 - **fold** Kinds of question
 - **fold** Mistakes it watches for
-- **button** Change a level's sentence: a field; Save writes a skill_level_version row [coordinator only; absent and refused for others]
+- **button** Change a level's sentence: a field for the sentence and an optional reason; Save changes that level's words, takes that level out of approved and keeps who and why (the engine's level-words route) [coordinator only; absent and refused for others]
 - **link** rail: the class picture on this skill → Class picture (`/children/[class]`)
 - **link** rail: its objectives → the objective's title (`/setup/objectives/[code]`)
 - **link** rail: after / next skills → the skill's name (`/setup/skills/[code]`)
@@ -974,6 +974,7 @@ Every control on the screen (16), and what the test does with each:
 - **filter** group by (state on this skill / class (coordinator); a heading and a count per group)
 - **button** peek: Close: closes ChildPeek; focus returns to the child that opened it
 - **link** peek: Open the child → Where this child is (`/children/[class]/[roll]`) (the one way from a list to the child's own page)
+- **fold** Earlier sentences (each level) (each earlier sentence with who and when, newest first; coordinator)
 Done when (on top of the ten generic checks):
 - a prerequisite or next skill is shown only when its link is confirmed (a proposed link in the fixture does not appear)
 - the spark's last value equals the grid's secure count
@@ -981,6 +982,7 @@ Done when (on top of the ten generic checks):
 - grouping by state puts a heading and a count over each group and the counts sum to the squares
 - a cluster's count equals the chips in it; clusters are computed by code, never by a model
 - tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page
+- a coordinator changes a level's sentence and the change is logged with who and why, taking only that level out of approved; an educator is shown the sentences and no way to change them
 
 
 #### the skill set's name `/setup/skill-sets/[code]`

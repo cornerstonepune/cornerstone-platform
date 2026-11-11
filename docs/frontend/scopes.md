@@ -141,7 +141,7 @@ Period, record, confirm, notes, children, class picture, child, activity, object
 3. The journey `e2e/an-educators-tuesday.spec.ts` passes: Today → the lit period → Type the marks → a note written with one activity_observation per named child and none for a child not mentioned → Confirm → Class picture shows the change → the child → the skill → trail back to Today; axe at each step; at 1440 and 400.
 4. A correction from Notes writes a superseding activity_observation row and never updates the old one (database assertion).
 5. The period → note link: a note confirmed from a period carries that session's id, and the period page lists its notes. This line waits for CP-25 (to be scoped: `activity_observation.session_id` is free today); the slice starts and merges without it, and the line is proved when CP-25 lands.
-6. Every one of the 134 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
+6. Every one of the 135 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
 7. the session's name: a period with no activity shows no capture controls and the words 'Nothing to record here'
 8. the session's name: the last-time bar's segments sum to the number of children named in the last session's observations
 9. the session's name: the steps fold is open on load and the others closed
@@ -191,9 +191,10 @@ Period, record, confirm, notes, children, class picture, child, activity, object
 53. the skill's name: grouping by state puts a heading and a count over each group and the counts sum to the squares
 54. the skill's name: a cluster's count equals the chips in it; clusters are computed by code, never by a model
 55. the skill's name: tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page
-56. the skill set's name: the screen is keyed by the skill set's code, not by a registry skill's code
-57. the skill set's name: each registry skill the set points at is a card that opens the skill screen; a set with none says so and invents nothing
-58. the skill set's name: the level sentences sit in a fold, closed on load
+56. the skill's name: a coordinator changes a level's sentence and the change is logged with who and why, taking only that level out of approved; an educator is shown the sentences and no way to change them
+57. the skill set's name: the screen is keyed by the skill set's code, not by a registry skill's code
+58. the skill set's name: each registry skill the set points at is a card that opens the skill screen; a set with none says so and invents nothing
+59. the skill set's name: the level sentences sit in a fold, closed on load
 
 ### Out of scope
 

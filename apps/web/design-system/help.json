@@ -1324,7 +1324,7 @@
         },
         {
           "label": "Change a level's sentence",
-          "says": "a field; Save writes a skill_level_version row"
+          "says": "a field for the sentence and an optional reason; Save changes that level's words, takes that level out of approved and keeps who and why (the engine's level-words route)"
         },
         {
           "label": "rail: the class picture on this skill",
@@ -1353,6 +1353,10 @@
         {
           "label": "peek: Open the child",
           "says": "the one way from a list to the child's own page"
+        },
+        {
+          "label": "Earlier sentences (each level)",
+          "says": "each earlier sentence with who and when, newest first; coordinator"
         }
       ]
     },
