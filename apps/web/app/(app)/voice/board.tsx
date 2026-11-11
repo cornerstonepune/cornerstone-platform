@@ -4,7 +4,7 @@ import { useMemo, useState, useTransition } from "react";
 import { ClassGrid, type GridCell, type Look } from "@/components/class-grid";
 import { StatusChip } from "@/components/status-chip";
 import { ICON_SIZE, Icon, MARK_ICON } from "@/lib/icons";
-import { activityWords, countLine, findActivities, listsOf, moveTo, paint, problemsOf, type Activity, type Draft, type Problem, type Work } from "@/lib/voice-check";
+import { activityWords, countLine, findActivities, listsOf, moveTo, paint, problemsOf, putBack, removeLine, setMark as markChild, type Activity, type Draft, type DraftLine, type Problem, type Work } from "@/lib/voice-check";
 import { MARKS, type MarkKey, W } from "@/lib/voice-words";
 
 // The K2 board (task M1-04): pick a mark, then tap the children; the activity by its number; the level; the day; "the
@@ -25,6 +25,8 @@ export function Board({
   draft,
   button,
   send,
+  picker = false,
+  lines = [],
 }: {
   start: Work;
   enrolled: string[];
@@ -34,10 +36,16 @@ export function Board({
   draft?: Draft;
   button: string;
   send: (s: Sent) => Promise<{ error: string } | void>;
+  /** A square opens the mark picker (above, below, not willing, absent, clear) instead of painting; the screens that ask for it also list each
+   *  claim line with its ×. The first confirm screen (/voice/notes/[id]) keeps the paint mode it was built with. */
+  picker?: boolean;
+  lines?: DraftLine[];
 }) {
   const [w, setW] = useState<Work>(start);
   const [mark, setMark] = useState<MarkKey | "clear">("above");
   const [fixing, setFixing] = useState<string | null>(null);
+  const [picking, setPicking] = useState<string | null>(null);
+  const [gone, setGone] = useState<string[]>([]);
   const [said, setSaid] = useState<string | null>(null);
   const [pending, go] = useTransition();
   const problems = useMemo(() => problemsOf(w, { enrolled, klass, activities, today, draft }), [w, enrolled, klass, activities, today, draft]);
@@ -45,8 +53,14 @@ export function Board({
     if (fixing) {
       setW(moveTo(w, fixing, roll));
       setFixing(null);
-    } else setW(paint(w, roll, mark));
+    } else if (picker) setPicking(picking === roll ? null : roll);
+    else setW(paint(w, roll, mark));
   };
+  const pick = (m: MarkKey | "clear") => {
+    if (picking) setW(markChild(w, picking, m));
+    setPicking(null);
+  };
+  const lineWords = (l: DraftLine) => `${W.marks[l.section as MarkKey]} ${l.numbers.join(", ")}`;
   const submit = () =>
     go(async () => {
       setSaid(null);
@@ -61,6 +75,26 @@ export function Board({
             <ProblemRow key={p.key} p={p} w={w} setW={setW} fixing={fixing} setFixing={setFixing} />
           ))}
         </ol>
+      ) : null}
+      {picker && lines.length ? (
+        <section className="panel grid gap-2 p-4" aria-label="What you said, line by line" data-claims>
+          <ol className="grid gap-2">
+            {lines.map((l) => (
+              <li key={l.section} className="flex flex-wrap items-center gap-3" data-claim={l.section} data-removed={gone.includes(l.section) ? "" : undefined}>
+                <span className={`min-w-[10rem] flex-1 text-[15px] ${gone.includes(l.section) ? "line-through opacity-60" : ""}`}>{lineWords(l)}</span>
+                {gone.includes(l.section) ? (
+                  <button type="button" className="btn secondary" onClick={() => (setW(putBack(w, l)), setGone(gone.filter((g) => g !== l.section)))}>
+                    Put back: {lineWords(l)}
+                  </button>
+                ) : (
+                  <button type="button" className="btn secondary" aria-label={`Remove: ${lineWords(l)}`} onClick={() => (setW(removeLine(w, l.section as MarkKey)), setGone([...gone, l.section]))}>
+                    ×
+                  </button>
+                )}
+              </li>
+            ))}
+          </ol>
+        </section>
       ) : null}
       <section className="panel grid gap-3 p-4" aria-label="The activity">
         <ActivityPicker w={w} setW={setW} activities={activities} />
@@ -80,7 +114,7 @@ export function Board({
         </div>
       </section>
       <section className="panel grid gap-3 p-4" aria-label={W.confirm.children}>
-        <div className="flex flex-wrap items-center gap-2" role="group" aria-label={W.pick}>
+        <div className="flex flex-wrap items-center gap-2" role="group" aria-label={W.pick} hidden={picker}>
           {([...MARKS, "clear"] as const).map((m) => (
             <button key={m} type="button" aria-pressed={mark === m} data-mark-pick={m} onClick={() => setMark(m)} className={`chip ${mark === m ? "on" : ""}`}>
               <span className="inline-flex items-center gap-1.5">
@@ -92,6 +126,18 @@ export function Board({
         </div>
         {fixing ? <p className="text-[14px] font-medium text-terracotta">{W.problems.stranger_fix(fixing)}</p> : null}
         <ClassGrid label={`${klass}, by Sr. No.`} showName={false} onTap={tap} cells={enrolled.map((roll) => cellOf(roll, w.marks[roll], w.rest))} />
+        {picker && picking ? (
+          <div className="flex flex-wrap items-center gap-2" role="group" aria-label={`Mark #${picking}`} data-picker={picking} onKeyDown={(e) => e.key === "Escape" && setPicking(null)}>
+            {([...MARKS, "clear"] as const).map((m) => (
+              <button key={m} type="button" className="chip" data-pick={m} onClick={() => pick(m)}>
+                <span className="inline-flex items-center gap-1.5">
+                  <Icon name={MARK_ICON[m]} />
+                  {W.marks[m]}
+                </span>
+              </button>
+            ))}
+          </div>
+        ) : null}
         <div className="flex flex-wrap items-center gap-3">
           <button type="button" role="switch" aria-checked={w.rest} onClick={() => setW({ ...w, rest: !w.rest })} className={`chip ${w.rest ? "on" : ""}`} data-rest={w.rest}>
             <span className="inline-flex items-center gap-1.5">

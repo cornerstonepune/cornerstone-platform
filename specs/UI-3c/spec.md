@@ -35,6 +35,7 @@ Skill
 13. Tapping a square opens UI-3b's ChildPeek with that child's recent history newest first, each entry with who and when; Escape closes it and focus returns; "Open the child" lands on the child page.
 14. The spark draws only fortnights that were recorded; the nightly run records no class counts yet, so it shows its empty words and never a made-up line.
 15. An educator is shown only the classes they hold; a coordinator picks a class with the class filter.
+19. Clusters: a cluster's count equals the chips in it; clusters are computed by code from the same rows as the grid, never by a model; the not-seen cluster equals the grid's not-seen group.
 
 All three
 16. While the educator screens are switched off an educator is shown "not found" on all three (a coordinator who reviews is not); the switch is the school's, the pages do not decide it.
