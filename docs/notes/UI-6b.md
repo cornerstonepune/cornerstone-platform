@@ -75,3 +75,11 @@ the grid; the class picker for an educator with two classes. Next: move the old 
 - The Timetable gained what the old pages did and it lacked: a lesson row's time as a range (`09:40–10:20`), a fixed part of the day as a band with its start, a counts line (`[data-summary]`: lessons and holidays), a Day view "next" line (`[data-next]`: the next period, or "This day is over."), and Do now and Late in the legend. The wireframe's legend is drawn with them.
 - The Period screen's "Open the activity" carries `?back=/period/<id>`; the activity's next step says "Back to the period" (it said "Back to the day" for the old page).
 - Specs moved with equal assertions: `m1-09-calendar` (now on the Day and Week views, plus the 308s), `m1-09-activity` (the period → activity → back test), `s1-site-answers`, `u13-frame`, `u13-route-walk`. Not kept, by design, and said at the top of `m1-09-calendar`: the sand/ivory/cream fill check (old look), the "Free" word on an empty period (the wireframe draws a blank cell), stacked days on a phone (the phone opens the Day view).
+
+## What is unfinished in the timetable slice (11 Nov, end of week)
+1. **Coordinator's journey** (`e2e/the-coordinators-fortnight.spec.ts`, #586): draft → move → approve → go live as one walk. Not written.
+2. **Inventory drives and `merged_slices`**: add UI-6 to `merged_slices` in `docs/frontend/screens.json` once the 12-child inventory fixtures land (do not edit `tests/inventory-fixtures.ts`); the timetable rail links already draw through `href` until then.
+3. **Subject colours (backend)**: seed `timetable.subject_looks` keyed by the real lowercase subject codes (`math` → numeracy; `english`, `hindi`, `phonics`, `reading`, `story`, `rhymes` → language; the rest arts) and update the live row (`seed_once`). Until then every block draws amber.
+4. **Fortnight "Live" lane**: the wireframe draws a Live lane; no fortnight state says it. Needs a backend state or a decision to drop the lane.
+5. **A blocked day's own Edit**: the engine has no field edit for a block, so Edit offers Remove only.
+6. **Old timetable pages**: nothing left in code (`/educator`, `/educator/week`, `/educator/period/[id]` are deleted and 308) once #685 merges. `/educator/materials*` stays for UI-9.
