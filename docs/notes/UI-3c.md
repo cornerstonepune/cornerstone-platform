@@ -149,3 +149,10 @@ The stage keeps "Curriculum ·" ahead of "Skill set" (u17 asserts the tab). The 
 which s2 asserts as the h1; the wireframe says so. Specs: the six functions' specs (u28, u34, e0, u54, u55, u64, u65) now open the new
 address; `u73-skill-set.spec.ts` proves the cards, the empty words and the 308. Not done: the inventory run for `skillset`
 (drives for each control), same as activity, objective and skill.
+## Level-sentence edit with history (ui-3c-level-sentence)
+CP-31's engine routes (`/curriculum/level-words`, `/history`) are on main. On the skill screen each level of "Each level in a
+sentence" is a `LevelWords` row: the sentence, its earlier sentences (who by name, when, why; a coordinator) and, for a
+coordinator, a form to change it (server action `changeWords`, engine key server-side). A change takes only that level out of
+approved. The engine's gate decides who may write; the page shows the form to a coordinator. Note the key: the route takes the
+skill SET's code (`skill.code`), which `skillOf` now carries on each level row. screens.json `skill` gains the fold "Earlier
+sentences"; the wireframe drops its data-gap. Tests 21 to 23 (`u73-level-words.spec.ts`, split from the teaching spec for the 400-line ceiling).
