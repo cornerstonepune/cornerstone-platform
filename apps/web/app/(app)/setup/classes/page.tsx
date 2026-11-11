@@ -93,7 +93,7 @@ export default async function ClassesPage({ searchParams }: Props) {
           <DataTable label={`${open.label} children`} columns={kid} rows={movedFirst(children)} rowKey={(c) => c.id} limit={WHOLE_CLASS} counted more={{ by: (c) => (c.movedFrom ? MOVED_IN : HERE_SINCE) }} />
         </section>
       ) : (
-        <p className="note mt-2">No class matches these filters.</p>
+        <p className="text-[13px] text-[var(--ink-muted)] mt-2">No class matches these filters.</p>
       )}
       {open ? (
         <div className="mt-6">
@@ -107,7 +107,7 @@ export default async function ClassesPage({ searchParams }: Props) {
                 ))}
               </ul>
             ) : (
-              <p className="note">No child has moved in or out of {open.label} yet.</p>
+              <p className="text-[13px] text-[var(--ink-muted)]">No child has moved in or out of {open.label} yet.</p>
             )}
           </Details>
         </div>

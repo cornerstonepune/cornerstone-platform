@@ -62,7 +62,7 @@ export default async function StaffPage({ searchParams }: Props) {
       ) : null}
       {q.refused ? <Notice tone="terracotta">Nobody was added: {NOT_ADDED[q.refused] ?? "that cannot be saved"}.</Notice> : null}
       {q.denied ? <Notice tone="terracotta">Nothing changed: only the coordinators can change the staff list.</Notice> : null}
-      {answered ? null : <p className="note mb-2">The note counts are not available right now.</p>}
+      {answered ? null : <p className="text-[13px] text-[var(--ink-muted)] mb-2">The note counts are not available right now.</p>}
       <FilterBar
         action="/setup/staff"
         filters={[{ name: "role", label: "Role", value: q.role, all: "Every role", options: roles.map((r) => [r, r] as const) }]}
@@ -87,11 +87,11 @@ export default async function StaffPage({ searchParams }: Props) {
                 </li>
               ))}
             </ul>
-            {!chosen ? null : options ? <AddGrant key={open.id} staffId={open.id} options={options} /> : <p className="note mt-2">Changing a grant is not available right now.</p>}
+            {!chosen ? null : options ? <AddGrant key={open.id} staffId={open.id} options={options} /> : <p className="text-[13px] text-[var(--ink-muted)] mt-2">Changing a grant is not available right now.</p>}
           </Details>
         </div>
       ) : (
-        <p className="note mt-2">Nobody matches these filters.</p>
+        <p className="text-[13px] text-[var(--ink-muted)] mt-2">Nobody matches these filters.</p>
       )}
       <section aria-label="Last changes to grants" className="mt-6">
         <h2 className="mb-2 text-[16px]">Last changes to grants</h2>
@@ -107,7 +107,7 @@ export default async function StaffPage({ searchParams }: Props) {
             ))}
           </ul>
         ) : (
-          <p className="note">No grant has been added or ended yet.</p>
+          <p className="text-[13px] text-[var(--ink-muted)]">No grant has been added or ended yet.</p>
         )}
       </section>
     </Screen>
