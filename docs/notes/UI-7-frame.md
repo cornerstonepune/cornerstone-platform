@@ -66,3 +66,13 @@ touch-target checks unchanged. Step 6: `u13-route-walk` and the audit table.
 
 Subject colours in the Timetable grid, the Period page failure, the 404 on a skill row and the one-letter Curriculum column are defects,
 not frame fidelity; they are with their owners (see FINDINGS.md).
+
+## Where this stands (2026-11-11, work stopped: token budget)
+
+Built, not merged: branch `ui-7-frame` (pushed; it sits on top of #651's branch `ui-7b-swap`, so it waits for #651).
+
+- **Done on `ui-7-frame`:** steps 1 to 4 (rail with kind tiles, captions, facts and a peek slot; the wireframes' buttons and cards links; the page-head icon); Today educator: "Lay out for…" card, "to do" chips, "Your class" with the child panel; Today school: rail facts and captions.
+- **Not done:** step 5 captions and facts on the other doors' pages (Timetable, Children, Assessments, Setup); step 6 nav row (kept on purpose: the audit table of pages that only it reaches is not written); the final wireframe-against-built comparison on the merged result.
+- **Before `ui-7-frame` can merge:** the block screenshot baselines (`tests/u71-blocks.spec.ts-snapshots`) change for about 8 blocks (AppFrame, Form, Cards, ChildPeek, EmptyState, KanbanBoard, KindTile, BrandMark). They must be taken from CI, not locally (fonts differ): dispatch `ci.yml` by hand on the branch, download the `browser-shard-*-screenshots` artifact (`actions_get download_workflow_run_artifact`, then `curl` the URL), commit the `*-actual.png` files as the baselines, run once more.
+- **Today gaps still open against the wireframes:** the educator's "Your class" children grouped by the lesson's own skill only when the activity builds a skill the class was seen on (otherwise the most recently seen skill); coordinator Today's "last week" heat grid and "New activities" card need real data to judge; school rail facts are counts only.
+- **Defects found in the comparison, with other owners:** Period page fails to load (React error 441); Timetable subject colours; Skills-to-approve rows link to `/setup/skills/<skill-set code>` and 404; Curriculum table's first column is one letter wide; Setup tab row.
