@@ -161,3 +161,9 @@ What the old specs said, and where each is now. Where an old assertion was about
 | `u1`, `u10`, `u15`, `u79`, `p6` | addresses, tables, timings | addresses changed to the new ones; no assertion loosened |
 
 Dropped as unreachable: the old Check answers page's "N answers left to check" figure and its table of assessments (the list's "Waits for" column says it, row by row; `u68` checks it person by person).
+
+### Unfinished in this slice (stopped for the week's budget)
+
+- Photo upload (`capture: Photo`) waits for the engine's photo route; the old Upload papers page stays until then, and UI-4 moves to `merged_slices` only after it.
+- CI on PR 4 had not been seen when work stopped: local failures not yet explained are u12, u13, m1-09, u38, u41, s41 (possibly local database leftovers) and the p6 timing (4.4 s here against 2.5 s).
+- Shared Rail second lines and icons are the UI-7 frame plan; the scan's "By" has no column; the level's one-line description has no row; "Its answer key" link on the paper screen is not carried.
