@@ -3,6 +3,8 @@ import { Rail, Screen } from "@/components/app-frame";
 import { DataTable } from "@/components/data-table";
 import { EmptyState } from "@/components/empty-state";
 import { FortnightGrid } from "@/components/fortnight-grid";
+import { KeyValue } from "@/components/key-value";
+import { StatusChip } from "@/components/status-chip";
 import { ViewToggle } from "@/components/kanban-board";
 import { requireStaff } from "@/lib/auth";
 import { sql } from "@/lib/db";
@@ -41,7 +43,7 @@ export default async function MovesPage({ searchParams }: Props) {
   const stay = (extra: Record<string, string>) => `${HERE}?${new URLSearchParams({ fn: String(fn.number), class: klass.id, ...extra })}`;
   const grid = gridOf(weeks, { looks: await subjectLooks(),
     clashes,
-    href: (day, p) => (!coordinator ? `/educator/period/${p}?class=${klass.id}&day=${day}` : !pick ? stay({ from: `${day}~${p}` }) : stay({ from: pick, to: `${day}~${p}` })),
+    href: (day, p) => (!coordinator ? `/period/${p}?class=${klass.id}&day=${day}` : !pick ? stay({ from: `${day}~${p}` }) : stay({ from: pick, to: `${day}~${p}` })),
   });
   const [toDay, toPeriod] = (q.to ?? "").split("~");
   const ready = coordinator && fromDay && toDay && ords.has(fromPeriod) && ords.has(toPeriod);
@@ -62,10 +64,23 @@ export default async function MovesPage({ searchParams }: Props) {
       title="Moves by hand"
       purpose="Move a period; the clash it makes shows at once; only the coordinator accepts one, with a reason."
       next={{ href: `/timetable/fortnight/${fn.number}`, label: `Fortnight ${fn.number}: Approve` }}
-      rail={<Rail edges={[{ screen: "fortnight", params: { n: String(fn.number) }, label: `Fortnight ${fn.number}`, icon: "fortnight" }, { screen: "timetable", label: "The grid", icon: "week" }, { screen: "rules", label: "Timetable rules", icon: "setup" }]} />}
+      rail={
+        <div className="tt-rail">
+          <Rail edges={[{ screen: "fortnight", params: { n: String(fn.number) }, href: `/timetable/fortnight/${fn.number}`, label: `Fortnight ${fn.number}`, icon: "fortnight" }, { screen: "timetable", href: `/timetable?fn=${fn.number}&class=${klass.id}`, label: "The grid", icon: "week" }, { screen: "rules", href: "/timetable/rules", label: "Timetable rules", icon: "setup" }]} />
+          <aside aria-label="This draft so far" data-rail-part="so-far" className="tt-rail-card">
+            <h2 className="tt-rail-h">This draft so far</h2>
+            <KeyValue rows={[{ label: "Lessons", value: String(grid.placed.length), num: true }, { label: "Moved by hand", value: String(mine.length), num: true }, { label: "Clashes open", value: String(open.length), num: true }, { label: "Clashes accepted", value: String(clashes.length - open.length), num: true }]} />
+          </aside>
+        </div>
+      }
     >
       {q.error ? <p role="alert" className="tt-error">{q.error}</p> : null}
       {q.done ? <p role="status" className="tt-note">Done.</p> : null}
+      <div className="tt-legend" data-legend>
+        <StatusChip state="moved" words="Moved by hand" round />
+        <StatusChip state="clash" words="Clash, not yet accepted" round />
+        <StatusChip state="done" words="Clash accepted" round />
+      </div>
       {coordinator ? <p className="tt-note">{pick ? `Picked ${shortDate(fromDay)}. Now pick the lesson to swap it with.` : "Pick a lesson, then the lesson to swap it with."}</p> : <p className="tt-note">You can read the moves; only the coordinator makes them.</p>}
       <div className="mb-3">
         <ViewToggle current={klass.id} views={weeks[0].classes.map((c) => ({ key: c.id, label: `${c.grade} ${c.section}`, icon: "class" as const, href: stay({ class: c.id }) }))} />
@@ -92,16 +107,17 @@ export default async function MovesPage({ searchParams }: Props) {
         </form>
       ) : null}
       {mine.length === 0 ? <EmptyState>No moves yet.</EmptyState> : <DataTable label="Moves made" columns={columns} rows={mine} rowKey={(m) => m.id} more={{ page: 1, href: (n: number) => stay({ page: String(n) }) }} />}
-      <h2 className="mt-4 mb-2 text-[length:var(--text-title-small)]">Clashes</h2>
+      <h2 className="tt-h">Clashes in Fortnight {fn.number}</h2>
       {open.length === 0 ? <p className="tt-note">No clash waits to be accepted.</p> : (
         <ul className="tt-list">
           {open.map((c) => (
-            <li key={c.key} data-clash={c.key}>
-              <span className="grow">{c.detail}</span>
+            <li key={c.key} data-clash={c.key} className="tt-clash">
+              <strong className="grow">{c.detail}</strong>
               {coordinator ? (
-                <form action="/api/timetable/clash" method="post" className="tt-row" aria-label={`Accept: ${c.detail}`}>
+                <form action="/api/timetable/clash" method="post" className="tt-form" aria-label={`Accept: ${c.detail}`}>
                   <input type="hidden" name="back" value={stay({})} /><input type="hidden" name="key" value={c.key} />
                   <label>Reason<input name="reason" /></label>
+                  <span className="tt-note">Left empty, the form says “Say why” and accepts nothing.</span>
                   <button className="btn" data-ux="action">Accept the clash</button>
                 </form>
               ) : <span className="tt-note">Only the coordinator accepts a clash.</span>}

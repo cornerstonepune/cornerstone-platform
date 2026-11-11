@@ -315,6 +315,9 @@
           "label": "Day / Week / Fortnight"
         },
         {
+          "label": "Previous / next day or week"
+        },
+        {
           "label": "Today"
         },
         {
@@ -1160,6 +1163,27 @@
           "label": "offers page: Later →"
         },
         {
+          "label": "Questions to answer: Read them"
+        },
+        {
+          "label": "Read it in full (a question)"
+        },
+        {
+          "label": "Agree as drafted (a question)"
+        },
+        {
+          "label": "what it should say (a question)"
+        },
+        {
+          "label": "Correct it (a question)"
+        },
+        {
+          "label": "the answered questions"
+        },
+        {
+          "label": "questions page: Later →"
+        },
+        {
           "label": "Skills to approve"
         },
         {
@@ -1407,19 +1431,19 @@
       "purpose": "The curriculum, the skills, the question bank, staff, classes and the school. Statistics and old scans sit behind details links.",
       "does": [
         {
-          "label": "Curriculum"
+          "label": "Open the curriculum"
         },
         {
-          "label": "Skills to approve"
+          "label": "Open Skills to approve"
         },
         {
-          "label": "Question bank"
+          "label": "Open Question bank"
         },
         {
-          "label": "Staff"
+          "label": "Open Staff"
         },
         {
-          "label": "Classes and children"
+          "label": "Open Classes and children"
         },
         {
           "label": "the blocks gallery"

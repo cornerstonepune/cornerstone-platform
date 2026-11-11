@@ -81,3 +81,14 @@ emerging seen only once; not seen here but practising a skill a person confirmed
 `named_days`, which counts only the days that opened secure. Child: the "Rebuilt" caption, the skills by state with how often seen, three cards in whole counts (counts by
 state with Sr. No. and since when; last seen by skill; notes confirmed, papers read, corrections, newest entry) and "Skill by skill" (named days, last seen, ready next).
 The three view tabs of the class (Picture, By topic, Matrix) are listed in `docs/frontend/screens.json` as controls of the picture screen.
+
+## Left unfinished (work stopped, token budget)
+
+- #684 itself: CI run was cancelled after runner network faults (Chromium apt downloads timed out); it needs one re-run, then merge on green.
+- `/growth/[id]` (old child page) and `growth/actions.ts` stay until their panels have homes: focus paper (UI-4), parent report (UI-8), move child to another class, answers sign-off.
+- Six-fortnight Spark line stays empty (the nightly run records no class counts).
+- "Close to secure" group needs the school's number (`children.close_to_secure_seen`, not seeded).
+- Rail "Notes" is plain text until the Notes screen exists.
+- Removable "Needs attention" filter chip / Clear button not drawn.
+- By topic and Matrix tables are the old hand-built tables, not DataTable.
+- `u49-one-role` on `/today` fails (educator not shown the coordinator's notes buttons); belongs to Today, unverified against main.

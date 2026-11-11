@@ -1,3 +1,4 @@
+import Link from "@/components/link";
 import type { ReactNode } from "react";
 import { Screen } from "@/components/app-frame";
 import { ClassMatrix, loadMatrix } from "@/components/children/class-matrix";
@@ -17,12 +18,13 @@ import { childStates } from "@/lib/states";
 // against each topic, a topic opened against its skills). Same reads and rules as those pages; the address carries what is open.
 type Q = Record<string, string | undefined>;
 
-export async function ClassViews({ me, classId, section, view, q, toggle }: { me: Session; classId: string; section: string; view: "topic" | "matrix"; q: Q; toggle: ReactNode }) {
+export async function ClassViews({ me, classId, section, count, view, q, toggle }: { me: Session; classId: string; section: string; count: number; view: "topic" | "matrix"; q: Q; toggle: ReactNode }) {
   const here = `/children/${classId}?view=${view}`;
   return (
     <Screen
-      stage={`${section} · class`}
+      stage={`${section} · ${count} ${count === 1 ? "child" : "children"}`}
       title="Class picture"
+      action={<Link href={`/children?cls=${classId}`} className="btn secondary">Show as a table</Link>}
       purpose={view === "topic" ? "Each topic of the class: who is secure, practising or needs help. Open a topic for its skills, a skill for its children." : "Each child against each topic of the class. Open a topic for its skills; a name opens the child."}
       next={{ href: "/children", label: "Children" }}
     >

@@ -15,7 +15,6 @@ const PAGES = [
   ["/papers", "Children", "Assessments"],
   ["/capture", "Children", "Upload papers"],
   ["/capture/check", "Children", "Check answers"],
-  ["/growth", "Children", "Class results"],
   ["/", "Setup", "Curriculum"],
   ["/library", "Setup", "Question bank"],
 ] as const;
@@ -34,7 +33,7 @@ test("the menu lists the four groups in order, and each page is marked and title
 });
 
 test("only What needs doing carries a count, and no word of the menu names a subject", async ({ page }) => {
-  await page.goto("/growth");
+  await page.goto("/children");
   const menu = page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" });
   expect(await menu.getByTestId("waiting").count()).toBeLessThanOrEqual(1);
   expect(await page.locator("[data-bar]").first().innerText()).not.toMatch(/\b(maths|english|hindi|science|evs)\b/i);

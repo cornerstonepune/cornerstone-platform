@@ -45,7 +45,7 @@ const watch = (l: () => void) => {
   return () => void listeners.delete(l);
 };
 
-export function GoLive({ number, subjects, can }: { number: number; subjects: Record<string, string>; can: boolean }) {
+export function GoLive({ number, span, subjects, can }: { number: number; span: string; subjects: Record<string, string>; can: boolean }) {
   const key = `golive-${number}`;
   const [fresh, setFresh] = useState<Done | null>(null);
   const [error, setError] = useState("");
@@ -78,6 +78,7 @@ export function GoLive({ number, subjects, can }: { number: number; subjects: Re
 
   return (
     <>
+      {can && !done ? <p className="tt-note">Go live puts the approved draft into the sessions of {span}. It changes only this fortnight.</p> : null}
       {can && !done ? (
         <form
           className="tt-card tt-row"
