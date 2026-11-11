@@ -30,7 +30,9 @@ export async function sayWhatWasWritten(f: FormData): Promise<void> {
     redirect(`${here}?said=${encodeURIComponent("The engine is not answering; nothing was changed.")}`);
   }
   revalidatePath(here);
-  redirect(here);
+  // words the engine cannot mark (an explanation) leave the answer with the person: it stays in view, asking Right, Wrong or Blank
+  const [left] = await sql<{ status: string }[]>`select status from item_result where id = ${result}::uuid`;
+  redirect(left?.status === "needs_teacher" ? `${here}?answer=${result}#a-${result}` : here);
 }
 
 // ---- a copy before it prints: a question taken off or put on, and the paper approved (the old review page's controls) ----

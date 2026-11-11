@@ -41,7 +41,6 @@ test.beforeAll(async () => {
                               and w.source = 'library' and w.retired_at is null
                               where cardinality(s.registry_codes) >= 2 group by s.code having count(*) >= 2 order by s.code limit 1)
     order by t.code limit 3`;
-  [{ name: skill }] = await sql<{ name: string }[]>`select name from skill where code = ${ws[0].skill}`;
   const onThePack = (qr: string) => sql`
     update sheet_instance set week = to_date(${THIS}, 'IYYY-"W"IW'), section = ${SECTION}, kind = 'assessment', approved_by = 'u52', approved_at = now()
     where qr_code = ${qr}`;

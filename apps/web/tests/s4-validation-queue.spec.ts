@@ -62,17 +62,11 @@ test.beforeAll(async () => {
   await paper("S4TEST-4", kids.Chitra, [{ status: "correct", read: "84" }, { status: "correct", read: "85" }, { status: "correct", read: "95" }]);
 });
 
-// every answer on a paper of the test's own; `waiting` counts the whole queue, as the screen does
-const ALL = sql`from item_result r join capture c on c.id = r.capture_id where c.superseded_by is null`;
 const LIVE = sql`from item_result r join capture c on c.id = r.capture_id join item i on i.id = r.item_id
   where c.superseded_by is null and c.path like 'S4TEST-%'`;
 const NUMBER = sql`coalesce(i.spec ->> 'answer', i.responses -> 0 ->> 'answer') is not null`;
 // A wrong or a blank the engine holds for a person (ADR 0029) is a reading to confirm, not a judgement.
 const notHeld = sql`coalesce(r.raw_read::jsonb ->> 'why', '') not like '%a person checks every%'`;
-
-// The engine's own definition (`engine read waiting`), so the screen's count is checked against it.
-const waiting = async () =>
-  (await sql<{ n: number }[]>`select count(*)::int as n ${ALL} and r.status in ('unreadable', 'needs_teacher')`)[0].n;
 
 type Row = { id: string; status: string; state: string; misconception_codes: string[]; working_shown: string };
 const keep = async (id: string) =>
@@ -91,7 +85,7 @@ test("the paper counts what the engine counts, and shows each answer with the ch
     ${LIVE} and r.status = 'unreadable' and r.state = 'candidate' order by r.id limit 1`;
   await onPaper(page, a.id);
   expect(await judging(page)).toBe(a.n);
-  const writing = page.getByRole("img", { name: /^The child's page as photographed/ });
+  const writing = page.locator("a[data-page-full] img");
   await expect.poll(() => writing.evaluate((i: HTMLImageElement) => i.naturalWidth), { timeout: 15_000 }).toBeGreaterThan(0);
 });
 
@@ -199,7 +193,8 @@ test("an explanation held as blank takes the child's words, then asks for Right 
     const card = panel(page);
     await card.getByRole("textbox").fill("because the number is big");
     await card.getByRole("button", { name: "Say what the child wrote" }).click();
-    await expect(card.getByText("You said the child wrote because the number is big.")).toBeVisible();
+    // the words are kept beside the reading, and only then does the answer ask for a person's Right or Wrong
+    await expect(card.getByText("The engine cannot mark this one")).toBeVisible();
     await card.getByRole("button", { name: "Right", exact: true }).click();
     await expect.poll(async () => (await keep(a.id)).status, { timeout: 15_000 }).toBe("correct");
   } finally {
@@ -216,7 +211,7 @@ test("on its paper, a held answer asks what the child wrote with the reading fil
   await onPaper(page, a.id);
   const card = panel(page);
   await expect(card.getByText(`The reader read ${a.read}, a wrong answer.`)).toBeVisible();
-  await expect(card.getByRole("textbox")).toHaveValue(a.read);
+  await expect(card.locator("input[name=human_read]:not([type=hidden])")).toHaveValue(a.read);
   await expect(card.getByRole("button", { name: "Wrong", exact: true })).toHaveCount(0);
 });
 
@@ -343,7 +338,7 @@ test("the second reader's guess is offered back as one click, on the paper", asy
     await expect(panel(page).getByRole("button", { name: "Yes, the child wrote 282" })).toBeVisible();
     const card = panel(page);
     await expect(card.getByText(/The second reader, shown 3 of the child.s own answers, reads it as 282/)).toBeVisible();
-    await expect(card.getByRole("textbox")).toHaveValue("282");
+    await expect(card.locator("input[name=human_read]:not([type=hidden])")).toHaveValue("282");
   } finally {
     await sql`update item_result set raw_read = ${a.raw_read} where id = ${a.id}`;
   }
