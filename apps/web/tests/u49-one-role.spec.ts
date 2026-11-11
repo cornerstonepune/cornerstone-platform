@@ -34,7 +34,7 @@ test.beforeAll(async ({ browser }) => {
   pages = [
     // a page that opens on the person's own grade is compared at "Every grade", its one tap
     "/today", "/", "/papers", "/growth", "/asks", "/library?grade=all", "/worksheets?grade=all", "/worksheets/taxonomy", "/skill-sets/approve",
-    `/skill-sets/${draft}`, "/capture", "/capture/check", "/make", `/make/${OTHER}`, "/papers/approve", "/growth/reports",
+    `/skill-sets/${draft}`, "/capture", "/capture/check", "/make", `/make/${OTHER}`, "/papers/approve", "/children/reports",
     `/growth/class/${OTHER}`, `/growth/${other.Kavi}`, `/growth/${other.Kavi}/report`, "/workflows",
   ];
   educator = await asEducator(browser);
@@ -111,7 +111,7 @@ async function offered(page: Page, at: string, name: string): Promise<{ refused:
 // database past its eight seconds. The names are the pages' own, the addresses those made in `beforeAll`.
 const NAMES = [
   "/today", "/", "/papers", "/growth", "/asks", "/library", "/worksheets", "/worksheets/taxonomy", "/skill-sets/approve",
-  "a skill waiting", "/capture", "/capture/check", "/make", "/make of another class", "/papers/approve", "/growth/reports",
+  "a skill waiting", "/capture", "/capture/check", "/make", "/make of another class", "/papers/approve", "/children/reports",
   "another class's growth", "a child of another class", "that child's report", "/workflows",
 ];
 const walked: string[] = [];
@@ -125,7 +125,10 @@ test.describe("an educator reaches every page and every action the coordinator d
       const mine = await offered(educator, at, EDUCATOR.name);
       // a page's own words may name the coordinator (the map does); a refusal is one the coordinator is not given
       expect(mine.refused, `${at} refuses an educator`).toBe(theirs.refused);
-      expect(theirs.actions.filter((a) => !mine.actions.includes(a)), `on ${at}, offered to the coordinator only`).toEqual([]);
+      // what the school's access rule keeps from an educator by name: consent is the coordinator's alone to see (CP-3: the educators'
+      // group has reach "none" on consent), so the Reports screen draws its Consent column for the coordinator only
+      const KEPT_BY_ACCESS_RULE = at === "/children/reports" ? new Set(["column: Consent"]) : new Set<string>();
+      expect(theirs.actions.filter((a) => !mine.actions.includes(a) && !KEPT_BY_ACCESS_RULE.has(a)), `on ${at}, offered to the coordinator only`).toEqual([]);
       walked.push(name);
     });
   });
