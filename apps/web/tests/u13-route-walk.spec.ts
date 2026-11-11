@@ -50,6 +50,10 @@ const NOT_BY_CLICK: Record<string, string> = {
   "/make/[section]/week": "opened by the make form's choice of a class and a week",
   "/skill-sets/[code]/edit": "opened from a skill's own page (click four)",
   "/voice/notes/[id]": "where recording a note sends the educator",
+  "/notes": "a page of What needs doing only once the doors are rebuilt; opened from the Notes to confirm group today",
+  "/record": "opened from a period or from Notes, both of which need a K2 class the test database does not hold with the voice switch on",
+  "/period/[id]": "a link of a day of the timetable, which needs a timetable's rows",
+  "/notes/[id]": "a card or a row of Notes, which needs a recorded note",
   "/educator/activity/[code]": "a link of a period or of the materials list, which need a timetable's rows",
   "/timetable/materials": "the menu's Materials still opens the old page, which keeps the controls this one lacks, until UI-9b moves them (tests/u74-materials.spec.ts opens it)",
   "/educator/period/[id]": "a link of a day of the timetable, which needs a timetable's rows",
@@ -66,7 +70,7 @@ test("5. GROUPS are exactly Today, Timetable, Children, Setup, and every route b
   expect(doorOf("/timetable/rules")?.key).toBe("timetable");
   // the pages outside the bar: help, feedback, the password, the refusal page
   const outside = routes().filter((r) => !doorOf(r.replace(/\[[^\]]+\]/g, "x")));
-  expect(outside.sort()).toEqual(["/account/password", "/feedback", "/guide", "/guide/[slug]", "/guide/workflows", "/refused"].sort());
+  expect(outside.sort()).toEqual(["/feedback", "/guide", "/refused"].sort());
 });
 
 test("5. each route is reached by clicking from the bar in at most three clicks", async ({ playwright }) => {

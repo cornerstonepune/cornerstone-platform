@@ -1,13 +1,22 @@
-import { locate } from "./menu";
+import data from "../design-system/help.json";
 
-// Where the Guide explains a page of the site (goals/guide_for_educators.yaml): pure, so the header's "?" can use it
-// in the browser without the guide's words. A menu page's guide is its label in small words joined by dashes
-// ("Papers to approve" → /guide/papers-to-approve); packages/engine/tests/test_guide.py names its files the same way.
+// Where the help explains a page of the site (UI-12): each screen of docs/frontend/screens.json has one section on /guide,
+// whose address is the screen's id. Pure, so the "?" in the bar can use it in the browser.
+type Section = { id: string; route: string };
+const SECTIONS = data.sections as Section[];
 
-export const slugOf = (label: string) => label.toLowerCase().replace(/[^a-z]+/g, "-").replace(/^-|-$/g, "");
+const pattern = (route: string) => new RegExp(`^${route.split("/").map((p) => (p.startsWith("[") ? "[^/]+" : p.replace(/[.*+?^${}()|\\]/g, "\\$&"))).join("/")}$`);
+// the screen whose route has the fewest [params] wins ("/children/assessments" is Assessments, not a class), the first of equals
+const params = (route: string) => route.split("/").filter((p) => p.startsWith("[")).length;
+const MATCHERS = SECTIONS.map((s) => ({ id: s.id, re: pattern(s.route), params: params(s.route) })).sort((a, b) => a.params - b.params);
 
-/** The guide page for a path of the site: its menu page's, or none (the guide's own pages, a page on no menu item). */
-export function guideFor(path: string): string | undefined {
-  const page = locate(path)?.page;
-  return page && page.guide !== false && !path.startsWith("/guide") ? `/guide/${slugOf(page.label)}` : undefined;
+/** The help section of the screen a path belongs to (the first screen of that route), or none: a page not in the inventory has no section. */
+export function sectionFor(path: string): string | undefined {
+  return MATCHERS.find((m) => m.re.test(path.split("?")[0].split("#")[0]))?.id;
+}
+
+/** The address "?" opens from a page: the help at that page's section, or its front when the page has none. */
+export function guideFor(path: string): string {
+  const id = path.startsWith("/guide") ? undefined : sectionFor(path);
+  return id ? `/guide#${id}` : "/guide";
 }

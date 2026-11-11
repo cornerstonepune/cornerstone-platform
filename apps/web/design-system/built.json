@@ -1,6 +1,7 @@
 {
   "merged_slices": [
-    "UI-5"
+    "UI-5",
+    "UI-12"
   ],
   "screens": {
     "today-educator": {
@@ -121,15 +122,15 @@
     },
     "login": {
       "route": "/login",
-      "built": false
+      "built": true
     },
     "help": {
       "route": "/guide",
-      "built": false
+      "built": true
     },
     "feedback": {
       "route": "/feedback",
-      "built": false
+      "built": true
     },
     "blocks": {
       "route": "/setup/blocks",
