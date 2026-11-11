@@ -65,6 +65,7 @@ async function badge(page: Page, tab: string): Promise<number> {
 test("an educator's Today lists every decision the coordinator's does, and the menu counts the same", async ({ browser }) => {
   const page = await signedIn(browser);
   try {
+    await page.goto("/setup/needs-doing");
     const main = page.getByRole("main");
     await expect(main).toContainText("Skills to approve");
     // the skills and questions waiting are rows of What needs doing, and no longer in the menu's one count (UI-7b)

@@ -108,7 +108,7 @@ test("the menu is four groups, and only What needs doing carries the count of wh
   const menu = page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" });
   const names = await menu.getByRole("link").allInnerTexts();
   expect(names.map((n) => n.replace(/\s*\d[\d,]*$/, "").trim())).toEqual(GROUPS);
-  await expect(menu.getByTestId("waiting"), "one count, on one group").toHaveCount(1);
+  expect(await menu.getByTestId("waiting").count(), "one count, on one group at most (none while nothing waits)").toBeLessThanOrEqual(1);
   // the count is the strip's do-now and this-week, which never overlap
   const strip = await page.locator(".b-att").evaluateAll((els) => els.filter((e) => /do now|this week/i.test(e.textContent ?? "")).map((e) => Number((e.querySelector(".b-n")?.textContent ?? "0").trim())));
   expect(await badge(page), "the group's count is the strip's").toBe(strip.reduce((a, b) => a + b, 0));

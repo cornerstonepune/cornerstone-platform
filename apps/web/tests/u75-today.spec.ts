@@ -6,7 +6,7 @@
 import { expect, test, type Browser } from "@playwright/test";
 import postgres from "postgres";
 import { loadFortnight10, timetableSwitch } from "./educator-screens";
-import { SECTION, k2Class } from "./k2-rows";
+import { SECTION, aK2Note, k2Class, voiceSwitch } from "./k2-rows";
 import { sessionFor, signedInAs } from "./inventory-fixtures";
 import { aPerson, personAsStored } from "./rows";
 import type { Period } from "../lib/educator/types";
@@ -116,6 +116,28 @@ test.describe("the page", () => {
       if (n === 0) await expect(p.locator(`[data-lane="${lane}"] .b-lane-empty`)).toHaveText(/\w+ \w+/);
     }
     await mine.close();
+  });
+
+  test("the bar's one count is the strip's do-now plus this-week, and a note of hers is in it", async ({ browser }) => {
+    const [mine] = await sql<{ staff_id: string; class_id: string }[]>`
+      select p.staff_id, g.school_class_id as class_id from pii.staff p join staff_role_grant g on g.staff_id = p.staff_id where p.email = ${TEACHER.email} and g.school_class_id is not null limit 1`;
+    await voiceSwitch(sql, true);
+    const note = await aK2Note(sql, { klass: mine.class_id, staff: mine.staff_id }, "u75 a note to confirm");
+    try {
+      const ctx = await as(browser, TEACHER.email);
+      const p = await ctx.newPage();
+      await p.goto("/today");
+      const strip = await p.locator(".b-att").evaluateAll((els) => els.filter((e) => /do now|this week/i.test(e.textContent ?? "")).map((e) => Number((e.querySelector(".b-n")?.textContent ?? "0").trim())));
+      const badge = p.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" }).getByRole("link", { name: /^Today/ }).getByTestId("waiting");
+      expect(strip.reduce((a, b) => a + b, 0)).toBeGreaterThan(0);
+      expect(Number((await badge.innerText()).replace(/\D/g, ""))).toBe(strip.reduce((a, b) => a + b, 0));
+      // no other door carries a count
+      await expect(p.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" }).getByTestId("waiting")).toHaveCount(1);
+      await ctx.close();
+    } finally {
+      await sql`update pii.educator_note set status = 'confirmed' where id = ${note}`;
+      await voiceSwitch(sql, false);
+    }
   });
 
   test("neither Today shows a count of skills to approve, and the school's names no person's rank", async ({ page, browser }) => {
