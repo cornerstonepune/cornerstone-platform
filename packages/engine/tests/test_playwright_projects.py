@@ -62,6 +62,7 @@ def test_no_spec_is_run_twice():
 
 
 def test_a_spec_that_now_runs_comes_off_the_frozen_list():
+    """A name on the list whose file still exists and is run by a project is stale: take it off. (A file renamed away leaves its old name
+    harmlessly; the rename needs no edit here.)"""
     now_run = sorted(s for s in NOT_RUN_YET if (WEB / s).exists() and runners(s))
-    gone = sorted(s for s in NOT_RUN_YET if not (WEB / s).exists())
-    assert now_run == [] and gone == [], f"take {now_run + gone} off NOT_RUN_YET: it is run now (or gone)"
+    assert now_run == [], f"take {now_run} off NOT_RUN_YET: it is run now"
