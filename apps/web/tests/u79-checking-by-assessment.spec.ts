@@ -78,6 +78,8 @@ test("an assessment opens into its papers in roll order, and finishing a paper o
   for (let i = 0; i < 2; i++) {
     await paper(page).getByRole("button", { name: /^Yes, the child wrote / }).click();
     await expect.poll(async () => (await sql`select count(*)::int as n from item_result where id = any(${alpha.asha}) and status = 'needs_teacher'`)[0].n, { timeout: 15_000 }).toBe(1 - i);
+    // the panel moves on to the paper's next answer before the next press
+    if (i === 0) await expect(paper(page)).toContainText("Question 2");
   }
   // her paper is done, and the next paper to check is Bina's, of the same assessment
   await page.goto(page.url());
