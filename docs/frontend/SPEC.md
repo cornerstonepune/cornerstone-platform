@@ -370,7 +370,7 @@ Data: pii.educator_note + draft claims from the engine (pii.note_claim: flag, ou
 Empty: No note waiting: link to Record · Phone: the grid first, then her words; Confirm fixed at the bottom
 Every control on the screen (12), and what the test does with each:
 - **button** each claim line's × (remove): the claim is marked removed; its children's squares return to unmarked; recorded as her decision
-- **cell** each square: opens the mark picker: above / as expected / below / not willing / absent / clear; the square's corner mark changes; the claim it came from is marked changed
+- **cell** each square: opens the mark picker: above / below / not willing / absent / clear ("as expected" is the one switch for the rest: the engine records an individual child's mark in four lists); the square's corner mark changes; the claim it came from is marked changed
 - **switch** the rest did as expected: every unmarked present child gets as-expected with entry mode group; off removes them
 - **button** Confirm this note: one activity_observation per marked child with one confirmation_id; the note's status becomes confirmed; lands on the next waiting note or Notes
 - **button** Correct this note: a confirmed note only: writes a superseding note row; the old row is never edited (absent on a waiting note)
