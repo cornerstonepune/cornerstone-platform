@@ -104,14 +104,16 @@ test("every parent report waiting on a person is one list, and a child's page en
   await expect(page.getByRole("region", { name: "Parent report" })).toContainText("Nothing to report yet");
   await expect(page.getByRole("region", { name: "Parent report" }).getByRole("link")).toHaveCount(0);
 
-  // one list: written and waiting before not yet written, each opening the report; a child with nothing to report
-  // is not on it
-  await page.goto("/growth/reports");
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Parent reports");
-  const rows = page.getByRole("table", { name: "Parent reports not up to date" }).locator("tbody tr");
-  const ours = rows.filter({ hasText: SECTION });
-  await expect(ours).toHaveText([/Ishaan.*to approve/, /Kabir.*to write/]);
-  await ours.first().getByRole("link", { name: "Ishaan" }).click();
+  // one list on the Reports screen (the old list folded into it, UI-8e): each child's report state in words, each name opening the
+  // report; a child with nothing to report says so. Rows are in Sr. No. order, never ranked (CP-19's school rule), so each state is
+  // read on its own child's row
+  await page.goto(`/children/reports?class=${SECTION}`);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Reports");
+  const rows = page.getByRole("table", { name: "Every child's report" }).locator("tbody tr:not(.under)");
+  await expect(rows.filter({ hasText: "Ishaan" })).toContainText("to approve");
+  await expect(rows.filter({ hasText: "Kabir" })).toContainText("to write");
+  await expect(rows.filter({ hasText: "Mira" })).toContainText("nothing yet");
+  await rows.filter({ hasText: "Ishaan" }).getByRole("link", { name: /Ishaan/ }).click();
   await expect(page).toHaveURL(new RegExp(`/growth/${kids.Ishaan}/parent$`));
 
   // Today's line for the reports opens the new Reports screen (the old list is still live until it is retired)
