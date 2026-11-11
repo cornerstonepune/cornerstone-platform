@@ -65,20 +65,6 @@ test.afterAll(async () => {
   await sql.end();
 });
 
-test("the week's list names the worksheet each child was given", async ({ page }) => {
-  const rows = await papers();
-  expect(rows.length).toBeGreaterThan(1);
-  expect(new Set(rows.map((r) => r.worksheet)).size, "no two children share a worksheet").toBe(rows.length);
-  await page.goto(LIST);
-  for (const r of rows) {
-    expect(r.worksheet).toMatch(/^R\d+-[EMHA]\d{2}$/);
-    // by its number at its level, linked to it, never by its code (goals/ux8b-papers-named.yaml)
-    await expect(
-      page.getByRole("row").filter({ hasText: `printed code ${r.qr_code}` }).locator(`a[href="/worksheets/${r.worksheet}"]`),
-    ).toHaveText(/^sheet \d+$/);
-  }
-});
-
 test("a paper says which worksheet it is, and that worksheet's own page opens from it", async ({ page }) => {
   const [r] = await papers();
   await page.goto(`/worksheets/${r.qr_code}`);

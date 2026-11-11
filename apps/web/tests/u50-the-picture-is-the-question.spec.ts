@@ -67,10 +67,11 @@ test.beforeAll(async ({ browser }) => {
 
 const open = async (page: Page, n: number) => {
   await page.goto(`/capture/check?id=${id[n]}`);
-  // the card's heading is the child's strip now (child · paper · answer k of m), the question stays over the picture
-  await expect(page.locator("figure")).toContainText(`Question ${n} ·`);
+  // the question's number is said under the picture and over the answer
+  await expect(page.locator("figure")).toContainText(new RegExp(`question ${n}`, "i"));
 };
 const shown = (page: Page) => page.locator("figure img");
+const outline = (page: Page) => page.getByTestId("crop-outline");
 const natural = async (page: Page) => shown(page).evaluate((el: HTMLImageElement) => [el.naturalWidth, el.naturalHeight]);
 const shoot = async (page: Page, label: string) => {
   if (!process.env.CK1_SHOTS) return;
@@ -81,57 +82,49 @@ const shoot = async (page: Page, label: string) => {
 
 test("the question's own number and printed words head the picture", async ({ page }) => {
   await open(page, 8);
-  await expect(page.locator("figure")).toContainText(`Question 8 · ${WORDS}`);
+  await expect(page.getByRole("region", { name: "Say what the child wrote" }).getByRole("heading")).toContainText(`Question 8: ${WORDS}`);
 });
 
-test("an answer cut from its own printed boxes shows that part of the page, large enough to read", async ({ page }) => {
+test("an answer cut from its own printed boxes has its part of the page outlined, the whole page shown", async ({ page }) => {
   await open(page, 4);
   await shoot(page, "own-box-q4");
-  await expect(shown(page)).toHaveAttribute("src", /\?box=/);
-  await expect.poll(async () => (await natural(page))[1]).toBeGreaterThan(0);
-  const [w, h] = await natural(page);
-  expect(h, "a strip of the page, not the page").toBeLessThan(w / 3);
-  expect(w, "wide enough to read").toBeGreaterThan(600);
+  await expect(outline(page)).toBeVisible();
+  await expect(page.locator("figure")).toContainText("Question 4 is outlined");
+  await expect.poll(async () => (await natural(page))[1]).toBeGreaterThanOrEqual(H);
+  await expect(shown(page)).not.toHaveAttribute("src", /box=/);
 });
 
-test("a box another question shares is not shown: the whole page and the plain line instead", async ({ page }) => {
+test("a box another question shares is not outlined: the page and the plain line instead", async ({ page }) => {
   for (const n of [1, 7, 8]) {
     await open(page, n);
     if (n === 8) await shoot(page, "shared-box-q8");
-    await expect(shown(page)).not.toHaveAttribute("src", /box=/);
-    await expect(page.locator("figure")).toContainText(
-      `We could not find question ${n} on this page: it is somewhere on this page`,
-    );
+    await expect(outline(page)).toHaveCount(0);
+    await expect(page.locator("figure")).toContainText(`We could not find question ${n} on this page: it is somewhere on this page`);
   }
 });
 
-test("a region found by words, here another question's, is never shown as this question's", async ({ page }) => {
+test("a region found by words, here another question's, is never outlined as this question's", async ({ page }) => {
   await open(page, 2);
   await shoot(page, "words-region-q2");
-  await expect(shown(page)).not.toHaveAttribute("src", /box=/);
+  await expect(outline(page)).toHaveCount(0);
   await expect(page.locator("figure")).toContainText("We could not find question 2 on this page");
 });
 
-test("an answer with no box shows the whole page, and a click opens it to full size to scroll about in", async ({ page }) => {
+test("an answer with no box shows the whole page, and a click opens it to full size", async ({ page }) => {
   await open(page, 3);
   await shoot(page, "whole-page-q3");
-  const frame = page.locator("figure button").locator("..");
   await expect.poll(async () => (await natural(page))[1]).toBeGreaterThanOrEqual(H);
-  const fit = await shown(page).evaluate((el) => el.getBoundingClientRect().width);
-  await page.getByRole("button", { name: /Enlarge the page/ }).click();
-  await expect(page.getByRole("button", { name: /Shrink the page/ })).toBeVisible();
-  const full = await shown(page).evaluate((el) => el.getBoundingClientRect().width);
-  expect(full, "the page opens at its own size").toBeGreaterThan(fit);
-  expect(await frame.evaluate((el) => el.scrollWidth > el.clientWidth), "and can be scrolled across").toBe(true);
+  await expect(outline(page)).toHaveCount(0);
+  await expect(page.getByRole("link", { name: "Open the page at full size" })).toHaveAttribute("href", /^\/api\/scan\/[0-9a-f-]{36}\/1$/);
 });
 
-test("no two answers of a page are shown the same part of it", async ({ page }) => {
-  const crops: string[] = [];
+test("no two answers of a page are outlined in the same part of it", async ({ page }) => {
+  const boxes: string[] = [];
   for (const n of [1, 2, 3, 4, 5, 6, 7, 8]) {
     await open(page, n);
-    const src = (await shown(page).getAttribute("src")) ?? "";
-    if (src.includes("box=")) crops.push(src);
+    const at = await outline(page).count() ? await outline(page).getAttribute("style") : null;
+    if (at) boxes.push(at);
   }
-  expect(crops.length).toBeGreaterThan(0);
-  expect(new Set(crops).size, "two answers shown one box").toBe(crops.length);
+  expect(boxes.length).toBeGreaterThan(0);
+  expect(new Set(boxes).size, "two answers outlined one box").toBe(boxes.length);
 });

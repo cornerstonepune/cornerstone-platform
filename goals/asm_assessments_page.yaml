@@ -8,28 +8,28 @@ goal: >
 # (`assessment_name`, append-only) for the names an educator chooses.
 says:
   - words: "This whole tab 'Papers to approve': there won't be any papers to approve, right? What do you mean by 'papers to approve'?"
-    proved_by: "apps/web/tests/u63-assessments-page.spec.ts::Papers to approve is the status filter of this list; the old addresses still work"
+    proved_by: "apps/web/tests/u80-old-addresses.spec.ts::followed, each old address lands on a screen of Assessments with its title"
   - words: "It can just be two nice blocks side by side."
-    proved_by: "apps/web/tests/u63-assessments-page.spec.ts::two equal blocks side by side above the list; no explanatory paragraph in the read block"
+    proved_by: "apps/web/tests/u81-assessments-list.spec.ts::two equal blocks side by side above the list: the four ways to make one, and one box to read a scan"
   - words: "Then we have a very proper list of the last 5, last 7, whatever assessments that have been uploaded or papers that have been generated and are yet to be approved, so that table comes out very clearly."
-    proved_by: "apps/web/tests/u63-assessments-page.spec.ts::the list is the last ten assessments, newest first, paged"
+    proved_by: "apps/web/tests/u81-assessments-list.spec.ts::the list is ten assessments to a page, newest first"
   - words: "We should not use these file names, because if we know the assessment code, there is a QR inside these files. That QR is associated with a certain topic, so we can actually show proper names."
-    proved_by: "apps/web/tests/u63-assessments-page.spec.ts::an assessment is named from its sheet, never from its file; the file is a small note under it"
+    proved_by: "apps/web/tests/u81-assessments-list.spec.ts::an assessment is named from its sheet, never from its file; the file is told apart in the Reading view"
   - words: "We should ideally have the ability to name the assessment."
-    proved_by: "apps/web/tests/u63-assessments-page.spec.ts::an educator renames an assessment; the old name stays as a row, the newest shows"
+    proved_by: "apps/web/tests/u75-assessments-list.spec.ts::a name an educator gives wins: from a row of the table, each name a row of the history log"
   - words: "Then you have this 4. There is no sequence of anything. That's my major issue."
-    proved_by: "apps/web/tests/u63-assessments-page.spec.ts::the steps are in the order the school does them, each an icon, a word and a colour"
+    proved_by: "apps/web/tests/u73-assessments.spec.ts::the seven steps, their words and the queries' names are the committed ones (3)"
   - words: "One can very easily open any question, like a certain paper that a child has given. Those two or three pages of the child can be opened up. There is nothing hidden from the system."
-    proved_by: "apps/web/tests/u63-assessments-page.spec.ts::a row opens to its children: roll, child, level, the same steps, the score and their pages"
+    proved_by: "apps/web/tests/u76-no-paper-and-spares.spec.ts::the screen says which children have no paper and why, by Sr. No."
   - words: "There are some papers you need to approve ... Everything has to have its own set of approvals"
-    proved_by: "apps/web/tests/u63-assessments-page.spec.ts::a home assessment starts at To approve with one Approve for its row, never for all"
+    proved_by: "apps/web/tests/u81-assessments-list.spec.ts::a home assessment waits for approval, its row has no Approve for all, and a class assessment has no approval step"
 manual:
   - "The page as an educator sees it on the live site, with the school's own scans, after the merge and the migration."
   - "Migration 20261212090000 (`assessment_name`) needs the rehearsal workflow before merge, then migrate live."
 scenarios: []
 criteria:
   - name: the logic, the page and every spec that touches Assessments
-    run: cd apps/web && npx playwright test tests/u62-assessment-steps.spec.ts tests/u63-assessments-page.spec.ts tests/u60-ui-wave-1-flow.spec.ts tests/u51-ux-rules.spec.ts tests/u53-the-menu.spec.ts tests/u9-papers.spec.ts tests/u22-assessments-readable.spec.ts tests/u37-papers-grouped.spec.ts
+    run: cd apps/web && npx playwright test tests/u62-assessment-steps.spec.ts tests/u81-assessments-list.spec.ts tests/u60-ui-wave-1-flow.spec.ts tests/u51-ux-rules.spec.ts tests/u53-the-menu.spec.ts tests/u9-papers.spec.ts tests/u22-assessments-readable.spec.ts tests/u37-papers-grouped.spec.ts
     expect: "passed"
   - name: the website's types and lint
     run: cd apps/web && npx tsc --noEmit && npx eslint --max-warnings 0 && echo "types and lint clean"

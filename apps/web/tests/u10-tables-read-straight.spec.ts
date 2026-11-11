@@ -65,8 +65,8 @@ test.afterAll(async () => sql.end());
  *  another column. Compared as the browser draws them, for every table on the page with a body row. */
 async function offColumn(page: Page): Promise<string[]> {
   // a table inside a closed line (a coordinator's class on Marking) is read too: its alignment is computed all the same
-  await expect(page.locator("table.grid tbody tr").first()).toBeAttached();
-  return page.locator("table.grid").evaluateAll((tables) => {
+  await expect(page.locator("table.grid tbody tr, .data-table tbody tr").first()).toBeAttached();
+  return page.locator("table.grid, .data-table table").evaluateAll((tables) => {
     const side = (el: Element) => ({ start: "left", end: "right" })[getComputedStyle(el).textAlign] ?? getComputedStyle(el).textAlign;
     return tables.flatMap((t, n) => {
       const heads = [...t.querySelectorAll("thead tr:last-child th")];
@@ -93,7 +93,7 @@ test("every heading sits over its own column, on every page with a table", async
     select c.section from child_skill_state s join child_now c on c.id = s.child_id where c.active and s.n_events > 0 limit 1`;
   // the class's results by topic and its children against the topics are tabs of the class picture (UI-3i)
   const [{ id: classId }] = await sql<{ id: string }[]>`select id from school_class where label = ${grid.section} limit 1`;
-  for (const path of ["/", "/papers", "/capture", "/children", "/make", "/library", "/worksheets", `/children/${classId}?view=topic`, `/children/${classId}?view=matrix`]) {
+  for (const path of ["/", "/children/assessments?view=table", "/capture", "/children", "/make", "/library", "/worksheets", `/children/${classId}?view=topic`, `/children/${classId}?view=matrix`]) {
     await page.goto(path);
     expect(await offColumn(page), path).toEqual([]);
   }

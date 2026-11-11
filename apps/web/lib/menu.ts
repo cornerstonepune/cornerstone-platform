@@ -46,11 +46,9 @@ export const GROUPS: readonly Door[] = [
     icon: "child",
     screen: "children",
     pages: [
-      { href: "/children", label: "Children", match: ["/children", "/k2", "/growth"] },
-      { href: "/papers", label: "Assessments", match: ["/papers", "/children/assessments", "/make", "/home", "/worksheets/CS"] },
-      { href: "/papers/approve", label: "Papers to approve", match: ["/papers/approve"] },
+      { label: "Children", href: "/children", match: ["/children", "/k2", "/growth"], guide: false },
+      { href: "/children/assessments", label: "Assessments", match: ["/children/assessments", "/make", "/home", "/worksheets/CS"] },
       { href: "/capture", label: "Upload papers", match: ["/capture"] },
-      { href: "/capture/check", label: "Check answers", match: ["/capture/check"] },
       { href: "/children/reports", label: "Parent reports", match: ["/children/reports"] },
       { href: "/across", label: "Across classes", match: ["/across"] },
     ],
@@ -85,7 +83,7 @@ export const GROUPS: readonly Door[] = [
 
 const reach = (path: string, m: string) => (m === "/" ? (path === "/" ? 1 : -1) : path === m || path.startsWith(`${m}/`) || (m === "/worksheets/CS" && path.startsWith(m)) ? m.length : -1);
 
-/** The page and door a path belongs to: the longest matching prefix, so /papers/approve is its own page of Children. */
+/** The page and door a path belongs to: the longest matching prefix, so /children/assessments is its own page of Children. */
 export function locate(address: string): { door: Door; page: MenuPage } | undefined {
   const path = address.split(/[?#]/)[0];
   let best: { door: Door; page: MenuPage; at: number } | undefined;

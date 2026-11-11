@@ -24,7 +24,7 @@ criteria:
     run: cd apps/web && npx playwright test tests/p6-check-is-quick.spec.ts
     expect: "passed"
   - name: the screens that show the proof still show it
-    run: cd apps/web && npx playwright test tests/s44-whose-paper.spec.ts
+    run: cd apps/web && npx playwright test tests/u78-whose-paper.spec.ts
     expect: "passed"
   - name: the code sits where the map says; every promise has its command; lint
     run: bin/check

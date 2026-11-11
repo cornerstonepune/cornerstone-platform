@@ -77,7 +77,7 @@ export function TheirPapers({
           </ul>
         )}
         {sheets.length > NEWEST ? (
-          <Link href={`/papers?child=${childId}`} className="mt-3 block text-[13px]">
+          <Link href={`/children/assessments?child=${childId}`} className="mt-3 block text-[13px]">
             Every paper of this child, {sheets.length} in all →
           </Link>
         ) : null}

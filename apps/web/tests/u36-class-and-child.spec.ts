@@ -197,7 +197,7 @@ test("a child with no answers gets one sentence and one action", async ({ page }
   const names = await sql<{ name: string }[]>`select name from skill where code in ${sql(lines.map((a) => a.split("~")[0]))}`;
   for (const { name } of names) await expect(sentence).toContainText(name);
   await first.click();
-  await expect(page).toHaveURL(/\/papers\/make\?/);
+  await expect(page).toHaveURL(/\/children\/assessments\?make=/);
   const plan = page.getByRole("table", { name: "Each child's paper" });
   await expect(plan.locator("tbody tr")).toHaveCount(1);
   await expect(plan.locator(`tr[data-child="${kids.Chetan}"]`)).toBeVisible();
@@ -214,5 +214,5 @@ test("a child with no answers gets one sentence and one action", async ({ page }
   await expect(sentence).toHaveText(`Ela has no checked answers yet: 2 papers made for Ela wait to be approved or read.`);
   await expect(main.getByRole("region").filter({ hasNot: page.locator("#grade-class") })).toHaveCount(1);
   await expect(actions).toHaveCount(1);
-  await expect(main.getByRole("link", { name: "See Ela’s 2 papers →" })).toHaveAttribute("href", `/papers?child=${kids.Ela}`);
+  await expect(main.getByRole("link", { name: "See Ela’s 2 papers →" })).toHaveAttribute("href", `/children/assessments?child=${kids.Ela}`);
 });

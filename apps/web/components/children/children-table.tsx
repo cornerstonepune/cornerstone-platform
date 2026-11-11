@@ -79,7 +79,7 @@ export function ClassCountsLine({ section, counts, reportsHref }: { section?: st
   return (
     <p className="b-caption" data-class-counts={section ?? ""}>
       {section ? <strong>{section}: </strong> : null}
-      {counts.answers > 0 ? <Link href="/capture/check">{n(counts.answers, "answer", "answers")}</Link> : n(0, "answer", "answers")} · {counts.reports > 0 && reportsHref ? <Link href={reportsHref}>{n(counts.reports, "parent report", "parent reports")}</Link> : n(counts.reports, "parent report", "parent reports")}
+      {counts.answers > 0 ? <Link href="/children/assessments?status=check">{n(counts.answers, "answer", "answers")}</Link> : n(0, "answer", "answers")} · {counts.reports > 0 && reportsHref ? <Link href={reportsHref}>{n(counts.reports, "parent report", "parent reports")}</Link> : n(counts.reports, "parent report", "parent reports")}
     </p>
   );
 }

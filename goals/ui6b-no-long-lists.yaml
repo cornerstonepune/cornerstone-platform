@@ -16,7 +16,7 @@ says:
   - words: "no page should have such laundary lists like stuff"
     proved_by: "apps/web/tests/u24-no-long-lists.spec.ts::the questions answered are folded under one line until opened"
   - words: "no page should have such laundary lists like stuff"
-    proved_by: "apps/web/tests/u24-no-long-lists.spec.ts::Papers to approve chooses a class's week in the filter row, however many weeks there are"
+    proved_by: "apps/web/tests/u37-papers-grouped.spec.ts::papers to approve is one table with one main action and a filter row (goals/uxn4-papers-to-approve.yaml)"
   - words: "no page should have such laundary lists like stuff"
     proved_by: "apps/web/tests/u24-no-long-lists.spec.ts::the parent reports waiting are narrowed by class"
 manual:

@@ -153,11 +153,6 @@ export type CaptureAnswer = {
 export const held = (a: Pick<CaptureAnswer, "why" | "human_read">) =>
   a.human_read === null && (a.why ?? "").includes("a person checks every");
 
-// Only a person's Right or Wrong settles this one: its reading is known — the reader's, or what a person
-// typed — and code cannot mark it.
-export const toJudge = (a: Pick<CaptureAnswer, "status" | "answer_state" | "why" | "human_read">) =>
-  a.status === "needs_teacher" && (a.human_read !== null || a.answer_state === "written") && !held(a);
-
 // Every answer on one paper, in the order they sit on the page — which is the order a teacher
 // reads them in, with the photograph beside them.
 export async function paperAnswers(id: string): Promise<CaptureAnswer[]> {
@@ -349,50 +344,4 @@ export async function checkQueue(me: Who): Promise<QueueEntry[]> {
              roll_order(ch.roll_no), ch.roll_no, si.id, coalesce((l.raw_read::jsonb ->> 'page')::int, (i.spec ->> 'page')::int, 1),
              nullif(regexp_replace(result_slot(i.item_key, l.raw_read::jsonb), '[^0-9]', '', 'g'), '')::int, i.item_key,
              result_order(i.responses, l.rid)`;
-}
-
-export type CheckItem = CaptureAnswer & {
-  paper_id: string;
-  first_name: string;
-  paper_title: string | null;
-  sat: string | null;
-  guess: string | null;
-};
-
-// One answer from the queue, with the child's first name — read through pii.read_child, which logs
-// who asked (rule 6): one name per answer shown, never the whole queue's.
-export async function checkItem(id: string, actor: string): Promise<CheckItem | undefined> {
-  const rows = await sql<CheckItem[]>`
-    select r.id, r.capture_id, result_slot(i.item_key, r.raw_read::jsonb) as slot,
-           nullif(regexp_replace(result_slot(i.item_key, r.raw_read::jsonb), '[^0-9]', '', 'g'), '')::int as n,
-           coalesce((r.raw_read::jsonb ->> 'page')::int, (i.spec ->> 'page')::int, 1) as page,
-           coalesce((r.raw_read::jsonb ->> 'file_page')::int, (r.raw_read::jsonb ->> 'page')::int, (i.spec ->> 'page')::int, 1) as file_page,
-           coalesce(i.spec ->> 'question', i.stem) as question, result_part(i.responses, r.rid) as part,
-           coalesce(i.spec ->> 'kind', 'bare') as kind, i.rung_code, i.skill_codes[1] as skill_code,
-           (select ss.name from skill ss where ss.tenant_id = i.tenant_id and ss.code = i.skill_set_code) as set_name,
-           operation_sign(i.spec ->> 'op') as op, i.mistake_skills,
-           coalesce(i.spec ->> 'answer', result_response(i.responses, r.rid) ->> 'answer') as answer,
-           r.raw_read::jsonb ->> 'child_answer' as read,
-           r.raw_read::jsonb ->> 'answer_state' as answer_state,
-           nullif(r.raw_read::jsonb ->> 'why', '') as why,
-           nullif(r.raw_read::jsonb ->> 'guess_by', '') as guess_by,
-           r.raw_read::jsonb ->> 'second_read' as second_read,
-           (r.raw_read::jsonb ->> 'confidence')::numeric as confidence,
-           ${ownBox()} as box,
-           r.status, r.state, r.working_shown, r.misconception_codes,
-           k.human_read, k.by as corrected_by,
-           si.id as paper_id, p.first_name, ${paperName("t")} as paper_title, t.key ->> 'date' as sat,
-           nullif(r.raw_read::jsonb ->> 'guess', '') as guess
-    from item_result r
-    join capture c on c.id = r.capture_id
-    join item i on i.id = r.item_id
-    join sheet_instance si on si.id = c.sheet_instance_id
-    join sheet_template t on t.id = si.sheet_template_id,
-    lateral pii.read_child(si.child_id, ${actor}) p
-    left join lateral (
-      select rc.human_read, rc.by from read_correction rc
-       where rc.item_result_id = r.id and rc.judged is null order by rc.created_at desc limit 1
-    ) k on true
-    where r.id = ${id}::uuid`;
-  return rows[0];
 }

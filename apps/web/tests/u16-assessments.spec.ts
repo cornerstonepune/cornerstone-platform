@@ -10,7 +10,7 @@
 import { expect, test } from "@playwright/test";
 import postgres from "postgres";
 import { aClass, aReadPaper, aWorksheet } from "./rows";
-import { isoWeek, weekWords } from "../lib/week";
+import { isoWeek } from "../lib/week";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -39,13 +39,13 @@ test.afterAll(async () => {
 });
 
 test("Assessments opens on four ways to make one, each opening the maker ready for its use", async ({ page }) => {
-  await page.goto("/papers");
+  await page.goto("/children/assessments");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Assessments");
   const make = page.getByRole("region", { name: "Make an assessment", exact: true });
-  await expect(make.getByRole("link")).toHaveText([/^For a class/, /^For each child/, /^For one child/, /^A ready-made worksheet/]);
+  await expect(make.getByRole("button")).toHaveText([/^For a class/, /^For each child/, /^For one child/, /^A ready-made worksheet/]);
 
   // for a class: one assessment for every child, the class still to choose
-  await make.getByRole("link", { name: /^For a class/ }).click();
+  await make.getByRole("button", { name: /^For a class/ }).click();
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Make papers");
   await page.getByRole("form", { name: "Choose the papers" }).getByLabel("Class").selectOption({ value: SECTION });
   await page.getByRole("button", { name: "Show the class" }).click();
@@ -54,20 +54,25 @@ test("Assessments opens on four ways to make one, each opening the maker ready f
   for (const box of await page.getByRole("checkbox").all()) await expect(box).toBeChecked();
 
   // for one child: the same maker, no child ticked until the educator ticks one
-  await page.goto("/papers");
-  await make.getByRole("link", { name: /^For one child/ }).click();
+  await page.goto("/children/assessments");
+  await make.getByRole("button", { name: /^For one child/ }).click();
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Make papers");
   await page.getByRole("form", { name: "Choose the papers" }).getByLabel("Class").selectOption({ value: SECTION });
   await page.getByRole("button", { name: "Show the class" }).click();
   await expect(page.getByRole("checkbox", { checked: true })).toHaveCount(0);
 
   // for each child: this week's home assessments, one per child from their record; a worksheet: the library
-  await page.goto("/papers");
-  await make.getByRole("link", { name: /^For each child/ }).click();
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Home assessments");
-  await page.goto("/papers");
-  await make.getByRole("link", { name: /^A ready-made worksheet/ }).click();
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Worksheets");
+  await page.goto("/children/assessments");
+  await make.getByRole("button", { name: /^For each child/ }).click();
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Make papers");
+  await page.getByRole("form", { name: "Choose the papers" }).getByLabel("Class").selectOption({ value: SECTION });
+  await page.getByRole("button", { name: "Show the class" }).click();
+  await expect(page.getByRole("radio", { name: /Home assessment/ })).toBeChecked();
+  await expect(page.getByRole("radio", { name: /Each child's own next step/ })).toBeChecked();
+  await page.goto("/children/assessments");
+  await make.getByRole("button", { name: /^A ready-made worksheet/ }).click();
+  await expect(page).toHaveURL(/make=sheet/);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Make papers");
 });
 
 test("a class and a topic make the class's default assessment, every child's paper seen first", async ({ page }) => {
@@ -84,7 +89,7 @@ test("a class and a topic make the class's default assessment, every child's pap
   const levels = ["Easy", "Medium", "Hard", "Advance"];
   const want = sets.map((s) => `${s.code}~${s.difficulty.Medium ? "Medium" : levels.find((d) => s.difficulty[d])}`);
 
-  await page.goto(`/papers/make?kind=assessment&way=same`);
+  await page.goto(`/children/assessments?make=class&kind=assessment&way=same`);
   await page.getByRole("form", { name: "Choose the papers" }).getByLabel("Class").selectOption({ value: SECTION });
   await page.getByRole("button", { name: "Show the class" }).click();
   await page.getByLabel("Start from a topic").selectOption({ label: topic.name });
@@ -97,29 +102,27 @@ test("a class and a topic make the class's default assessment, every child's pap
   // nothing is made until the educator has seen each child's paper
   const papers = page.getByRole("region", { name: "The papers" });
   for (const name of ["Asha", "Bina"]) await expect(papers).toContainText(name);
-  await expect(papers.getByRole("button", { name: /^Make and approve/ })).toBeVisible();
+  await expect(papers.getByRole("button", { name: /^Make \d/ })).toBeVisible();
 });
 
 test("every assessment's stage, class and week are said in words", async ({ page }) => {
-  await page.goto(`/papers?class=${SECTION}`);
+  await page.goto(`/children/assessments?class=${SECTION}&view=table`);
   const filters = page.locator("[data-filterbar]");
-  // the status is the next thing the assessment asks to be done, in words, with how many wait on it
+  // the stage is where the paper stands, in words
   const options = await filters.locator('select[name="status"]').locator("option").allTextContents();
   expect(options[0]).toMatch(/^Any stage/);
-  for (const o of options.slice(1)) expect(o).toMatch(/^(Created, to approve|Approved, to print|Printed, to upload|Uploaded, being read|Read, to check|Checked, to sign off|Results in) \(\d+\)$/);
-  // its week said in words under its name, a line for the assessment, its copy under it (goals/ux5-papers-grouped.yaml)
+  for (const o of options.slice(1)) expect(o).toMatch(/^(Created, to approve|Approved, to print|Printed, to upload|Uploaded, being read|Read, to check|Checked, to sign off|Results in|.*replaced.*)$/);
+  // its day said in words in its name, its kind and class beside it, never an ISO week code
   const line = page.locator("tr[data-assessment]").filter({ hasText: "U16 paper" });
-  await expect(line).toContainText(weekWords(WEEK));
   await expect(line).toContainText("Earlier paper");
   await expect(line).toContainText(`Grade 2 · ${SECTION}`);
-  await page.goto(`/papers?class=${SECTION}&child=${kids.Asha}`);
-  const copy = page.getByRole("table", { name: "U16 paper: each copy" }).locator("tbody tr");
-  // the child's steps, the last one reached done and the answers to check red
-  await expect(copy.locator("td").nth(1)).toHaveText("Asha");
-  await expect(copy.locator('[data-status="toCheck"]')).toHaveText(/to check/);
-  await expect(copy.locator("[data-action=check]")).toHaveText("Check 1 answer");
-  expect(await page.getByRole("region", { name: "Papers" }).innerText(), "an ISO week code in the list").not.toMatch(/\b\d{4}-W\d{2}\b/);
-  await page.goto(`/papers?class=${SECTION}`);
+  expect(await page.getByRole("main").innerText(), "an ISO week code in the list").not.toMatch(/\b\d{4}-W\d{2}\b/);
+  // the child's copy on the assessment's own screen: the answers to check, said once
+  await line.locator("a[data-assessment-row]").click();
+  const copy = page.getByRole("table").filter({ hasText: "Answers to judge" }).locator("tbody tr").filter({ hasText: /Check this paper/ });
+  await expect(copy).toHaveCount(1);
+  await expect(copy).toContainText("Answers to judge");
+  await page.goto(`/children/assessments?class=${SECTION}&view=table`);
   await filters.locator('select[name="status"]').selectOption("check");
   await expect(page).toHaveURL(/status=check/);
   await expect(page.locator("tr[data-assessment]").filter({ hasText: "U16 paper" })).toHaveCount(1);

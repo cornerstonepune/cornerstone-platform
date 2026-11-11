@@ -7,9 +7,9 @@ goal: >
 # Written 2026-10-23 (night), before the code.
 says:
   - words: "Use filters wherever possible."
-    proved_by: "apps/web/tests/u51-ux-rules.spec.ts::Check answers lists what is left to check as one table with its filter row"
+    proved_by: "apps/web/tests/u51-ux-rules.spec.ts::Assessments is a table of aligned columns with the one filter row, and a status is an icon, a word and a colour"
   - words: "for teachers, in most of the places, can we use tables instead of a lot of places where the tags ... are never aligned"
-    proved_by: "apps/web/tests/u51-ux-rules.spec.ts::Check answers is built on the blocks: one main action, its next step, one count"
+    proved_by: "apps/web/tests/u51-ux-rules.spec.ts::every page keeps the rules, or is named as still breaking them, and only those"
 manual: []
 scenarios: []
 criteria:
@@ -17,7 +17,7 @@ criteria:
     run: cd packages/engine && .venv/bin/python -m pytest tests/test_ux_rules.py tests/test_ratchet.py tests/test_layout.py -q -p no:cacheprovider -o addopts=
     expect: "passed"
   - name: the check pages, rendered
-    run: cd apps/web && npx playwright test tests/u51-ux-rules.spec.ts tests/u3-marking.spec.ts tests/s26-right-answer.spec.ts tests/u45-papers-named.spec.ts --reporter=line --workers=1
+    run: cd apps/web && npx playwright test tests/u51-ux-rules.spec.ts tests/u3-marking.spec.ts tests/u77-paper-tools.spec.ts tests/u45-papers-named.spec.ts --reporter=line --workers=1
     expect: "passed"
   - name: every page still holds
     run: cd apps/web && npx playwright test --reporter=line --workers=1

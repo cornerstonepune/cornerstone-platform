@@ -64,7 +64,7 @@ test("a child's page shows their newest papers and opens every one of them on As
   const papers = page.getByRole("region", { name: "Their papers", exact: true });
   await expect(papers.getByRole("listitem")).toHaveCount(5);
   const all = papers.getByRole("link", { name: "Every paper of this child, 7 in all →" });
-  await expect(all).toHaveAttribute("href", `/papers?child=${kids.Esha}`);
+  await expect(all).toHaveAttribute("href", `/children/assessments?child=${kids.Esha}`);
 });
 
 test("Today names the first five classes waiting and opens the rest", async ({ page }) => {
@@ -90,18 +90,6 @@ test("the questions answered are folded under one line until opened", async ({ p
   } finally {
     await sql`update ask set answer = null, answered_by = null, answered_at = null where code = ${open.code}`;
   }
-});
-
-test("Papers to approve chooses a class's week in the filter row, however many weeks there are", async ({ page }) => {
-  const [plan] = await sql<{ section: string; week: string; kind: string }[]>`
-    select c.section, p.week, p.kind from prescription p join child_now c on c.id = p.child_id order by p.week desc, c.section limit 1`;
-  await page.goto(`/papers/approve?section=${plan.section}&week=${plan.week}&kind=${plan.kind}`);
-  // no row of a class-and-week tag for every week ever planned: one Week dropdown holds them (goals/uxn4-papers-to-approve.yaml)
-  await expect(page.getByRole("navigation", { name: "Classes and weeks" })).toHaveCount(0);
-  // the page streams in behind its loading screen: wait for the table before reading the filter row
-  await expect(page.getByRole("table", { name: "Each child's paper this week" })).toBeVisible();
-  const week = page.locator("[data-filterbar]").getByLabel("Week");
-  expect(await week.locator("option").count()).toBeGreaterThanOrEqual(8);
 });
 
 test("the parent reports waiting are narrowed by class", async ({ page }) => {

@@ -54,18 +54,6 @@ test.afterAll(async () => {
   await sql.end();
 });
 
-test("at Made the card shows each child's proposed paper and opens the place to change it", async ({ page }) => {
-  await page.goto(card("practice"));
-  await expect(at(page)).toContainText("Approved for print");
-  const papers = page.getByRole("table", { name: "Each child's paper" });
-  for (const who of ["Asha", "Bina", "Chetan"]) {
-    await expect(papers.getByRole("row").filter({ hasText: who })).toContainText(ws.title);
-  }
-  await page.getByRole("link", { name: "Look over and approve for print →" }).click();
-  await expect(page).toHaveURL(new RegExp(`/papers/approve\\?section=${SECTION}&week=${week}&kind=practice`));
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Papers to approve");
-});
-
 test("the upload box is at the top of the card, Assessments and Marking", async ({ page }) => {
   for (const path of [card("practice"), "/papers", "/capture"]) {
     await page.goto(path);

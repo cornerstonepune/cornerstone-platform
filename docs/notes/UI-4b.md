@@ -140,3 +140,30 @@ Gaps, said plainly: "Capture here: Photo" waits for the engine's photo route (no
 column on `capture`, so it is not drawn; the level's one-line description in "What it asks" has no row to read it from here. After sign-off the
 old queue (`/capture/check`) and the old Marking page (`/capture/[id]`) still stand until PR 4, which turns them into 308s to these screens; the
 focus paper keeps landing on the old review address until then.
+
+### PR 4: the old pages are gone; every old address answers 308 to its screen
+
+`/papers` (and `/papers/make`), `/papers/review/[qr]`, `/papers/card`, `/papers/approve`, `/capture/[id]` and `/capture/check` are route handlers that answer 308 to the
+list, the assessment screen or the paper screen (the paper screen with that answer in view); a page cannot give a real 308 once it has begun to stream. Their pages,
+components and actions are deleted; the maker lives under Assessments (`make/`). `/capture` (Upload papers) stays: photograph upload waits for the engine's photo route.
+
+What the old specs said, and where each is now. Where an old assertion was about the old DOM rather than behaviour, the behaviour moved to a spec of the new screen.
+
+| Old spec | Assertion | New place |
+|---|---|---|
+| `s44-whose-paper`, `asm2-by-topic` | whose paper a page is; By topic; names; seven steps | `u78-whose-paper`, `u81-assessments-list`, `u62-assessment-steps` |
+| `u61-page-two-is-not-page-one` | a page not found is said, never drawn as another | same spec, now on the paper screen; the screen says it (it did not before: it would have drawn page 1 for a page 2 answer) |
+| `u60-ui-wave-1-flow` | the week walked page by page | same spec; the approve page and the Check answers page are gone, the assessment screen takes their place |
+| `u68-who-sees-answers` | another class's paper, its link, its sign-off | same spec: an old link to another class's paper lands on the list, which names nothing of it; the sign-off is still refused in words |
+| `u51-ux-rules` | every page keeps the rules | same spec over the three new screens; each now ends on a next step and always has one main action; two tests of the old Check answers page retired (the paper screen is covered by `u77`, `u78`, `u79`) |
+| `u52-one-copy-one-answer` | one row per child; extra copies said in words; blank / none right warns | same spec on the assessment screen, which now carries the score, its "is this the right page?" question and the extra-copies line (they were not carried before) |
+| `s4-validation-queue` | the queue of answers to check | same spec on the paper screen; an explanation the engine cannot mark now stays in view and asks Right, Wrong or Blank (it jumped on before); the walk between a child's papers skips a twin copy at one address |
+| `u1`, `u10`, `u15`, `u79`, `p6` | addresses, tables, timings | addresses changed to the new ones; no assertion loosened |
+
+Dropped as unreachable: the old Check answers page's "N answers left to check" figure and its table of assessments (the list's "Waits for" column says it, row by row; `u68` checks it person by person).
+
+### Unfinished in this slice (stopped for the week's budget)
+
+- Photo upload (`capture: Photo`) waits for the engine's photo route; the old Upload papers page stays until then, and UI-4 moves to `merged_slices` only after it.
+- CI on PR 4 had not been seen when work stopped: local failures not yet explained are u12, u13, m1-09, u38, u41, s41 (possibly local database leftovers) and the p6 timing (4.4 s here against 2.5 s).
+- Shared Rail second lines and icons are the UI-7 frame plan; the scan's "By" has no column; the level's one-line description has no row; "Its answer key" link on the paper screen is not carried.

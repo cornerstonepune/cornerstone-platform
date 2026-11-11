@@ -71,6 +71,17 @@ async function aPaper(who: string, qr: string, file: string, page2: (id: string)
   return sheet;
 }
 
+
+/** The paper's screen with the answer on this page of the file in view (the old check address opens the paper; the answer picks the page drawn). */
+async function openOnPage(page: Page, sheet: string, n: number): Promise<void> {
+  await page.goto(`/capture/${sheet}`);
+  const [r] = await sql<{ id: string }[]>`
+    select ir.id from item_result ir join capture c on c.id = ir.capture_id join sheet_instance si on si.id = c.sheet_instance_id
+    where si.id = ${sheet}::uuid and c.superseded_by is null and (ir.raw_read::jsonb->>'page')::int = ${n} order by ir.created_at, ir.id limit 1`;
+  await page.goto(`${new URL(page.url()).pathname}?answer=${r.id}`);
+}
+const drawn = (page: Page) => page.locator("a[data-page-full] img");
+
 async function shoot(page: Page, name: string): Promise<void> {
   if (!process.env.IMG_SHOTS) return;
   mkdirSync(process.env.IMG_SHOTS, { recursive: true });
@@ -88,12 +99,14 @@ test.beforeAll(async () => {
 
 test("a reading made before: page 2 that is page 1 again is not drawn, and the screen says page 2 is not found", async ({ page }) => {
   const sheet = await aPaper("Kavya", "CS61A001", pdf("again.pdf", [PAGE1, PAGE1]), async () => {});
-  await page.goto(`/capture/${sheet}`);
+  await openOnPage(page, sheet, 2);
   await shoot(page, "before-and-after-a-reading-made-before");
-  const panel = page.locator("section", { has: page.getByRole("heading", { name: "The whole page" }) });
-  await expect(panel.getByText("Page 2 not found. The photograph in its place is page 1 again.")).toBeVisible();
-  await expect(panel.locator("img")).toHaveCount(1);
-  await expect(panel.locator("img").first()).toHaveAttribute("alt", "Page 1 of the paper");
+  const lost = page.locator("[data-page-not-found]");
+  await expect(lost).toContainText("Page 2 not found. The photograph in its place is page 1 again.");
+  await expect(drawn(page)).toHaveCount(0);
+  await openOnPage(page, sheet, 1);
+  await expect(page.locator("[data-page-not-found]")).toHaveCount(0);
+  await expect(drawn(page)).toHaveCount(1);
 });
 
 test("a reading made after: page 2's answers wait for a person and no photograph is drawn for it", async ({ page }) => {
@@ -103,26 +116,23 @@ test("a reading made after: page 2's answers wait for a person and no photograph
       await sql`update item_result set raw_read = ${sql.json(lost)}::text, status = 'unreadable' where id = ${id}`;
     }
   });
-  await page.goto(`/capture/${sheet}`);
+  await openOnPage(page, sheet, 2);
   await shoot(page, "after-a-reading-made-after");
-  const panel = page.locator("section", { has: page.getByRole("heading", { name: "The whole page" }) });
-  await expect(panel.getByText("Page 2 not found. No photograph of it is in the file.")).toBeVisible();
-  await expect(panel.locator("img")).toHaveCount(1);
+  await expect(page.locator("[data-page-not-found]")).toContainText("Page 2 not found. No photograph of it is in the file.");
+  await expect(drawn(page)).toHaveCount(0);
 });
 
 test("two different pages are both drawn, as two different images", async ({ page }) => {
   const sheet = await aPaper("Neel", "CS61A003", pdf("both.pdf", [PAGE1, PAGE2]), async () => {});
-  await page.goto(`/capture/${sheet}`);
-  await shoot(page, "two-different-pages");
-  const panel = page.locator("section", { has: page.getByRole("heading", { name: "The whole page" }) });
-  await expect(panel.getByText(/not found/)).toHaveCount(0);
-  const pics = panel.locator("img");
-  await expect(pics).toHaveCount(2);
-  const bytes = [];
-  for (const i of [0, 1]) {
-    const res = await page.request.get((await pics.nth(i).getAttribute("src"))!);
+  const bytes: string[] = [];
+  for (const n of [1, 2]) {
+    await openOnPage(page, sheet, n);
+    await expect(page.locator("[data-page-not-found]")).toHaveCount(0);
+    const src = await drawn(page).getAttribute("src");
+    const res = await page.request.get(src!);
     expect(res.ok()).toBe(true);
     bytes.push((await res.body()).toString("base64"));
   }
+  await shoot(page, "two-different-pages");
   expect(bytes[0]).not.toEqual(bytes[1]);
 });

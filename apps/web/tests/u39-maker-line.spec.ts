@@ -24,7 +24,7 @@ test("a line's skills are its topic's, and one paper takes lines from different 
   await aClass(sql, CLASS, "G3", ["Ira", "Jai"]);
   const mul = await sql<{ code: string }[]>`select code from skill where topic_code = 'MUL' and difficulty <> '{}'::jsonb`;
   const name = await names(["MUL.2D2D", "MD.MULTIPLES"]);
-  await page.goto(`/papers/make?class=${CLASS}&kind=assessment&way=same`);
+  await page.goto(`/children/assessments?make=class&class=${CLASS}&kind=assessment&way=same`);
   const form = page.getByRole("form", { name: "Choose the papers" });
 
   await form.getByLabel("Topic 1").selectOption("MUL");
@@ -43,7 +43,7 @@ test("a line's skills are its topic's, and one paper takes lines from different 
   const papers = page.getByRole("region", { name: "The papers" });
   await expect(papers.getByRole("list", { name: `${name["MUL.2D2D"]} · Medium` }).getByRole("listitem")).toHaveCount(3);
   await expect(papers.getByRole("list", { name: `${name["MD.MULTIPLES"]} · Hard` }).getByRole("listitem")).toHaveCount(3);
-  await expect(papers.getByRole("button", { name: "Make and approve 2 class assessment papers" })).toBeEnabled();
+  await expect(papers.getByRole("button", { name: "Make 2 class assessment papers" })).toBeEnabled();
   // the lines come back as chosen, each under its own topic
   await expect(form.getByLabel("Topic 2")).toHaveValue("FACTORS");
   await expect(form.getByLabel("Skill 2")).toHaveValue("MD.MULTIPLES");
@@ -52,7 +52,7 @@ test("a line's skills are its topic's, and one paper takes lines from different 
 test("every skill of a topic is offered, a higher grade and an untaught skill said so", async ({ page }) => {
   await aClass(sql, CLASS, "G3", ["Ira", "Jai"]);
   const name = await names(["MUL.2D2D", "MUL.3D1D", "MD.MULTIPLES"]);
-  await page.goto(`/papers/make?class=${CLASS}&kind=assessment&way=same`);
+  await page.goto(`/children/assessments?make=class&class=${CLASS}&kind=assessment&way=same`);
   const form = page.getByRole("form", { name: "Choose the papers" });
 
   await form.getByLabel("Topic 1").selectOption("MUL");

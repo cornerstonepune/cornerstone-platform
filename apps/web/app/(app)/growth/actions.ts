@@ -8,6 +8,7 @@ import { childSection } from "@/lib/scope";
 import { sql } from "@/lib/db";
 import { engineSend, markWhatTrustSettles } from "@/lib/engine";
 import { makePaper, readDraw } from "@/lib/next-paper";
+import { paperScreenOf } from "@/lib/queries-assessment-extras";
 
 const UUID = /^[0-9a-f-]{36}$/;
 
@@ -25,7 +26,7 @@ export async function confirmChild(formData: FormData): Promise<void> {
     where si.child_id = ${id}::uuid and c.superseded_by is null and ${seesSheet(me, sql`si.id`)}`;
   const marked = await markWhatTrustSettles(); // a sign-off may be what earns a kind the reader's trust
   revalidatePath(`/growth/${id}`);
-  revalidatePath("/capture/check");
+  revalidatePath("/children/assessments");
   redirect(`/growth/${id}?confirmed=${n}${marked ? "" : "&later=1"}`);
 }
 
@@ -63,7 +64,7 @@ export async function approveNextPaper(formData: FormData): Promise<void> {
   if (changed) redirect(`/growth/${id}?draw=${draw}&changed=1`);
   // made: the educator lands on its review page, its questions to remove or add (goals/paper_review_add_remove.yaml);
   // a colleague's click made a newer one first (or this one was clicked twice): the page shows who approved it
-  redirect(qr ? `/papers/review/${qr}` : `/growth/${id}`);
+  redirect((qr && (await paperScreenOf({ qr }, me))?.href) || `/growth/${id}`);
 }
 
 /** An educator asks for the parent report to be written from the child's signed-off answers (goals/w4c-parent-report.yaml).

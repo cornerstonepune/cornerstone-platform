@@ -11,7 +11,7 @@ says:
   - words: "use icons or red, amber, green in places that make it easier for people to navigate? Use filters wherever possible."
     proved_by: "apps/web/tests/u37-papers-grouped.spec.ts::papers to approve is one table with one main action and a filter row (goals/uxn4-papers-to-approve.yaml)"
   - words: "Make sure that the navigation and all the menu items are perfect"
-    proved_by: "apps/web/tests/u24-no-long-lists.spec.ts::Papers to approve chooses a class's week in the filter row, however many weeks there are"
+    proved_by: "apps/web/tests/u37-papers-grouped.spec.ts::papers to approve is one table with one main action and a filter row (goals/uxn4-papers-to-approve.yaml)"
 manual: []
 scenarios: []
 criteria:

@@ -1,9 +1,8 @@
-import Link from "@/components/link";
 import { Panel, Pill } from "@/components/parts";
 import type { SkillSet } from "@/lib/queries";
 import { batchQuery, KINDS, repeatWords, type Batch, type MakerPlan, type PlannedPaper } from "@/lib/maker";
 import { DifferentQuestions, Questions as AreaQuestions } from "@/components/questions";
-import { SkillLevelSelect } from "../../make/skill-level";
+import { SkillLevelSelect } from "../../../make/skill-level";
 import { makePapers } from "./actions";
 import { MakeButton } from "./make-button";
 
@@ -25,8 +24,8 @@ const paperWords = (p: PlannedPaper) => p.areas.map((a) => `${a.name} · ${a.lev
 // whose paper cannot be made with the engine's words. On each child's own next step, any child can be changed; the
 // papers are made in the educator's name only when every one can be. "Different questions" draws every paper again and
 // makes nothing; the papers made are the questions shown (goals/preview-before-print.yaml).
-export function ThePapers({ plan, batch, roll, sets, band, once, created = false }: {
-  plan: MakerPlan; batch: Batch; roll: Child[]; sets: SkillSet[]; band: string; once: string; created?: boolean;
+export function ThePapers({ plan, batch, roll, sets, band, once }: {
+  plan: MakerPlan; batch: Batch; roll: Child[]; sets: SkillSet[]; band: string; once: string;
 }) {
   const papers = new Map(plan.papers.map((p) => [p.child_id, p]));
   const refused = new Map(plan.refused.map((r) => [r.child_id, r]));
@@ -117,7 +116,7 @@ export function ThePapers({ plan, batch, roll, sets, band, once, created = false
       ) : null}
       {n ? (
         <div className="mt-3">
-          <DifferentQuestions href={`${created ? "/children/assessments?make=class&" : "/papers/make?"}${batchQuery({ ...batch, draw: batch.draw + 1 })}`} />
+          <DifferentQuestions href={`/children/assessments?make=class&${batchQuery({ ...batch, draw: batch.draw + 1 })}`} />
         </div>
       ) : null}
       <form action={makePapers} className="mt-4 border-t border-basalt/10 pt-4">
@@ -128,7 +127,7 @@ export function ThePapers({ plan, batch, roll, sets, band, once, created = false
         <input type="hidden" name="once" value={once} />
         <input type="hidden" name="draw" value={batch.draw} />
         <input type="hidden" name="seen" value={plan.seen} />
-        {created ? <input type="hidden" name="approve" value="0" /> : null}
+        <input type="hidden" name="approve" value="0" />
         {batch.children.map((c) => (
           <input key={c} type="hidden" name="c" value={c} />
         ))}
@@ -138,33 +137,8 @@ export function ThePapers({ plan, batch, roll, sets, band, once, created = false
         {Object.entries(batch.changed).map(([c, [a]]) => (
           <input key={c} type="hidden" name="x" value={`${c}~${a.skill_set}~${a.level}`} />
         ))}
-        <MakeButton created={created} n={n} kind={(KINDS.find(([k]) => k === batch.kind)?.[1] ?? batch.kind).toLowerCase()} ready={ready} />
+        <MakeButton n={n} kind={(KINDS.find(([k]) => k === batch.kind)?.[1] ?? batch.kind).toLowerCase()} ready={ready} />
       </form>
-    </Panel>
-  );
-}
-
-// The papers just made: print them as one, or find them in Papers.
-export function Made({ qrs, section, kind, week, already }: {
-  qrs: string[]; section: string; kind: string; week: string; already: boolean;
-}) {
-  const n = qrs.length;
-  return (
-    <Panel title={already ? "Already made" : "Made"} label="Made">
-      <p className="mb-3 text-[14px]">
-        {already
-          ? `These ${n} papers were made before; nothing was printed twice.`
-          : `${n} ${n === 1 ? "paper" : "papers"} made and approved in your name.`}
-      </p>
-      <div className="flex flex-wrap gap-3">
-        <a className="btn" href={`/api/papers/print?${qrs.map((q) => `qr=${q}`).join("&")}`} target="_blank" rel="noreferrer">
-          Print them all
-        </a>
-        {/* the assessment just made, opened to its copies (goals/ux5-papers-grouped.yaml) */}
-        <Link href={`/papers?class=${encodeURIComponent(section)}&week=${week}&kind=${kind}`} className="btn secondary">
-          See them in Assessments
-        </Link>
-      </div>
     </Panel>
   );
 }

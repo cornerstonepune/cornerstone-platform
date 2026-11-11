@@ -13,6 +13,7 @@ import { deadline } from "@/lib/deadline";
 import { levels } from "@/lib/levels";
 import { grades, RULE_WORDS } from "@/lib/queries";
 import { assessmentList, paperList, type PaperListRow } from "@/lib/queries-papers";
+import { ExtraCopies, Score } from "./score";
 import { chosenNames } from "@/lib/queries-assessment-extras";
 import { topicNamesOf } from "@/lib/queries-by-topic";
 import { STEP_WORDS, stepCells, type Counts } from "@/lib/assessment-steps";
@@ -22,9 +23,9 @@ import type { Column } from "@/lib/ux-rules";
 import { assessmentCard, standing } from "@/lib/queries-card";
 import { spareSheets, unplanned, weekPlan } from "@/lib/queries-approve";
 import { schoolToday } from "@/lib/school-clock";
-import { namedRows } from "../../../papers/named";
-import { countsOf } from "../../../papers/step-columns";
-import { assessmentKey } from "../../../papers/assessments-table";
+import { namedRows } from "../named";
+import { countsOf } from "../step-counts";
+import { assessmentKey } from "../assessment-key";
 import { approveThisPack, awayThis, givenOnThis, signOffPaper } from "./actions";
 import { LevelSelect } from "./level-select";
 import { RenameForm } from "../rename-form";
@@ -131,8 +132,8 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
   const settled = live.filter((p) => p.stage === "signed off").length;
   const toCheck = live.filter((p) => p.stage === "checked" || p.stage === "scanned").length;
   const notBack = live.filter((p) => p.stage === "made" || p.stage === "printed").length;
-  const toApprove = counts.home && counts.by.made > 0;
-  const toPrint = !counts.home && counts.by.made > 0;
+  // nothing prints before the pack is approved (the engine refuses it): a class's papers are approved on this screen too, in the signer's name
+  const toApprove = counts.by.made > 0;
   const printed = live.length > 0 && counts.by.made === 0;
   const qrs = live.filter((p) => p.stage === "made" || p.stage === "printed").map((p) => p.qr);
   // printed and not yet back: what the day "Given on" is said for (with the spares, which are given out too)
@@ -144,10 +145,11 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
   const ordered = GROUPS.flatMap((grp) => copies.filter((p) => groupOf(p) === grp.key).map((p) => ({ p, grp })));
   const shown = ordered.slice((page - 1) * PAGE, page * PAGE);
   const later = ordered.length > page * PAGE;
-  const mainId = toApprove ? "approve" : toPrint ? "print" : shown.find((s) => s.grp.key !== "replaced" && s.grp.key !== "children" && s.grp.key !== "read")?.p.id;
+  const mainId = toApprove ? "approve" : printed && qrs.length ? "print" : shown.find((s) => s.grp.key === "judge" || s.grp.key === "check" || s.grp.key === "signoff")?.p.id;
 
   const columns = (grp: Group): Column<PaperListRow>[] => [
     { key: "roll", label: "Sr. No.", num: true, width: "6rem", value: (p) => p.roll_no },
+    { key: "score", label: "Score", num: true, width: "8rem", value: (p) => (p.scored ? `${p.right} of ${p.scored}` : null), cell: (p) => <Score p={p} /> },
     {
       key: "level",
       label: "Level",
@@ -208,6 +210,9 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
       stage={`${a.band ? g.name(a.band) : "Assessment"} · ${live.length} papers`}
       title={named.name}
       purpose="Where this assessment stands, and each child's copy. A copy is its own row with its own action; there is no button over all of them."
+      next={{ href: "/growth", label: "Class results" }}
+      // with nothing of its own to press, the one main action is the way back to the list
+      action={mainId ? undefined : <Link href="/children/assessments" className="btn">All assessments</Link>}
       rail={
         <Rail
           cards={<ApprovalLedger packs={packs} />}
@@ -229,16 +234,14 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
       <p className="b-caption my-2">
         {wait.words}. {wait.action.label}.
       </p>
-      {toApprove || toPrint || printed ? (
+      {toApprove || printed ? (
         <section className="b-card my-4" data-kind="assessment" aria-label="This pack">
           <h2 className="b-card-h"><KindTile kind="assessment" /> {second?.words === "waits for you" ? `The ${second.name.toLowerCase()}: ${second.rolls.length} new ${second.rolls.length === 1 ? "copy" : "copies"}` : toApprove ? "This pack" : "The pack"}</h2>
           <p>
             {second?.words === "waits for you" ? `${madeWords(second)} ` : ""}
             {toApprove
               ? `Nothing prints without your approval. This approves ${approvesWords(live.filter((p) => p.stage === "made").length, sparesWaiting) || "nothing more"}, this pack only.`
-              : toPrint
-                ? "The pack is ready to print."
-                : "The pack is printed."}
+              : "The pack is printed."}
           </p>
           <div className="flex flex-wrap items-center gap-2">
             {toApprove ? (
@@ -323,6 +326,7 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
           />
         </section>
       ) : null}
+      <ExtraCopies extras={copiesAll.rows.filter((p) => p.extra)} keyOf={key} />
       {spares.length ? (
         <section aria-label="Spare copies" className="mb-4" data-spares>
           <h2 className="mb-2">Spare copies <span className="b-muted">{spares.length}</span></h2>

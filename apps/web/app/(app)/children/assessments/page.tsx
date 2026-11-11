@@ -21,10 +21,10 @@ import { actionOf, sigsFor } from "@/lib/assessment-steps";
 import { weekWords } from "@/lib/week";
 import { deadline } from "@/lib/deadline";
 import type { Column } from "@/lib/ux-rules";
-import { assessmentKey, type Named } from "../../papers/assessments-table";
-import { ghostRow, namedRows } from "../../papers/named";
-import { countsOf } from "../../papers/step-columns";
-import { ReadBox } from "../../papers/read-box";
+import { assessmentKey, type Named } from "./assessment-key";
+import { namedRows } from "./named";
+import { countsOf } from "./step-counts";
+import { ReadBox } from "./read-box";
 import { topicGroups, topicNamesOf } from "@/lib/queries-by-topic";
 import { ScansTable } from "../../capture/scans-table";
 import { ReaderPanel } from "../../capture/parts";
@@ -81,7 +81,6 @@ export default async function AssessmentsPage({ searchParams }: Props) {
   const [chosen, files] = await deadline(Promise.all([chosenNames(keys.map((k) => k.key)), fileLinks(keys, me)]));
   const topicNames = new Map((await deadline(topicNamesOf())).map((t) => [t.code, t.name]));
   const named: Named[] = namedRows(all, { g, topicName: (c) => topicNames.get(c) ?? c, chosen, files: files.byKey });
-  void ghostRow;
   // a replaced assessment (every copy replaced by a newer one) has no next step and no row here
   const rows = named
     .map((a) => ({ a, key: assessmentKey(a), counts: countsOf(a), w: waitsFor(countsOf(a), a.waiting) }))
@@ -155,6 +154,7 @@ export default async function AssessmentsPage({ searchParams }: Props) {
       stage="Grades 1 to 4 · your classes"
       title="Assessments"
       purpose="Each one goes through seven steps. Its row shows the step it waits at and the one thing to do next."
+      next={{ href: "/growth", label: "Class results" }}
       rail={
         <Rail
           edges={[
@@ -209,7 +209,21 @@ export default async function AssessmentsPage({ searchParams }: Props) {
           {scans.length ? (
             <section aria-label="Read a scan" className="mt-4" data-files-read>
               <h2 className="mb-2">Files read lately, and what each lacks ({scans.length})</h2>
-              <ScansTable scans={scans} from={HERE} />
+              <ScansTable
+                scans={scans}
+                from={HERE}
+                belongs={(file) => {
+                  // the assessments the file's printed codes belong to, else a plain word that it belongs to none
+                  const mine = named.filter((a) => files.byKey.get(assessmentKey(a))?.includes(file));
+                  return mine.length ? (
+                    mine.map((a) => (
+                      <Link key={assessmentKey(a)} href={assessmentHref(assessmentKey(a))} className="block">{a.name}</Link>
+                    ))
+                  ) : (
+                    <span className="text-terracotta" data-unmatched="">{files.unmatched.includes(file) ? "Not matched to an assessment" : "No assessment of yours"}</span>
+                  );
+                }}
+              />
             </section>
           ) : (
             <EmptyState>No file has been read yet. Read one with the box above and it appears here.</EmptyState>
@@ -238,7 +252,7 @@ export default async function AssessmentsPage({ searchParams }: Props) {
       ) : view === "board" ? (
         <KanbanBoard lanes={lanes} />
       ) : (
-        <DataTable label="Every assessment" columns={columns} rows={rows} rowKey={(r) => r.key} more={{ page: Math.max(1, Math.floor(Number(q.page)) || 1), href: (n: number) => `${view_("table")}&page=${n}` }} />
+        <DataTable label="Every assessment" columns={columns} rows={rows} rowKey={(r) => r.key} extras={{ attrs: (r) => ({ "data-assessment": r.key }) }} more={{ page: Math.max(1, Math.floor(Number(q.page)) || 1), href: (n: number) => `${view_("table")}&page=${n}` }} />
       )}
       {more ? <p className="note mt-2">The newest 300 assessments are shown; narrow the filters to see the rest.</p> : null}
     </Screen>

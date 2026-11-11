@@ -90,12 +90,12 @@ export function buildTasks(src: Sources, subjectLabel: (code: string | null) => 
   for (const c of src.check) add("check", c.paper, c, [c.section, c.code], count(c.n, "answer"), `/capture/check?id=${c.first}`, "Check this paper", c.code, [c.section]);
   for (const p of src.signoff) add("signoff", p.paper, p, [p.section, p.code], count(p.n, "answer"), `/capture/${p.paper}`, "Sign it off", p.section, [p.section]);
   for (const p of src.packs)
-    add("classpaper", `${p.section}|${p.week}|${p.kind}`, p, [p.gradeWords, p.section, KIND_WORDS[p.kind] ?? p.kind, p.weekWords], count(p.n, "paper"), `/papers/approve?section=${encodeURIComponent(p.section)}&week=${encodeURIComponent(p.week)}&kind=${p.kind}`, "Open the papers", p.section, [p.section]);
+    add("classpaper", `${p.section}|${p.week}|${p.kind}`, p, [p.gradeWords, p.section, KIND_WORDS[p.kind] ?? p.kind, p.weekWords], count(p.n, "paper"), `/children/assessments?class=${encodeURIComponent(p.section)}&week=${encodeURIComponent(p.week)}&kind=${p.kind}`, "Open the papers", p.section, [p.section]);
   for (const r of src.reports) add("report", r.section, none, [r.gradeWords, r.section], count(r.n, "report"), `/children/reports?class=${encodeURIComponent(r.section)}`, "Read the reports", r.section, [r.section]);
   for (const t of src.untaught)
     add("taught", t.topic, { subject: t.subject, topic: t.topic, topicName: t.topicName }, [t.sections.length > 3 ? `${t.sections.length} classes` : t.sections.join(", ")], count(t.sections.length, "class", "classes"), `/?topic=${encodeURIComponent(t.topic)}`, "Mark as taught", t.topicName, t.sections);
   for (const g of src.generate)
-    add("generate", `${g.topic}|${g.section}`, { subject: g.subject, topic: g.topic, topicName: g.topicName }, [g.section], "none yet", `/papers/make?topic=${encodeURIComponent(g.topic)}&section=${encodeURIComponent(g.section)}`, "Make one", g.section, [g.section]);
+    add("generate", `${g.topic}|${g.section}`, { subject: g.subject, topic: g.topic, topicName: g.topicName }, [g.section], "none yet", `/children/assessments?make=class&topic=${encodeURIComponent(g.topic)}&class=${encodeURIComponent(g.section)}`, "Make one", g.section, [g.section]);
   const klass = new Map((src.voice?.classes ?? []).map((c) => [c.id, classWords(c)]));
   // with recording off (D-065) a class's row asks to type the marks: no Record, no microphone
   const recording = src.voice?.recording ?? false;
@@ -157,10 +157,10 @@ export const TODO_GROUPS: readonly Group[] = [
   { key: "skills", title: "Skills to approve", of: ["skill", "skills"], kinds: ["skill"], home: "/skill-sets/approve" },
   { key: "asks", title: "Questions to answer", of: ["question", "questions"], kinds: ["ask"], home: "/asks" },
   { key: "taught", title: "Topics to mark as taught", of: ["topic", "topics"], kinds: ["taught"], home: "/" },
-  { key: "generate", title: "Assessments to make", of: ["assessment", "assessments"], kinds: ["generate"], home: "/papers/make" },
-  { key: "classpapers", title: "Class papers to approve", of: ["class paper", "class papers"], kinds: ["classpaper"], home: "/papers/approve" },
+  { key: "generate", title: "Assessments to make", of: ["assessment", "assessments"], kinds: ["generate"], home: "/children/assessments?make=class" },
+  { key: "classpapers", title: "Class papers to approve", of: ["class paper", "class papers"], kinds: ["classpaper"], home: "/children/assessments?status=print" },
   { key: "scans", title: "Papers to read again", of: ["scan", "scans"], kinds: ["empty"], home: "/capture" },
-  { key: "answers", title: "Answers to check", of: ["paper", "papers"], kinds: ["check", "signoff"], home: "/capture/check" },
+  { key: "answers", title: "Answers to check", of: ["paper", "papers"], kinds: ["check", "signoff"], home: "/children/assessments?status=check" },
   { key: "home", title: "Home assessments to approve", of: ["class", "classes"], kinds: ["home"], home: "/make" },
   { key: "reports", title: "Parent reports to approve", of: ["class", "classes"], kinds: ["report"], home: "/children/reports" },
 ];

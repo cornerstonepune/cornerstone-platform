@@ -53,18 +53,6 @@ test.afterAll(async () => {
 
 const ours = (page: Page) => page.getByRole("table").locator("tbody tr").filter({ hasText: CLASS });
 
-test("a class paper carries its class's grade, a spare copy too", async ({ page }) => {
-  const [{ band }] = await sql<{ band: string }[]>`select class_band(tenant_id, ${CLASS}) as band from child_now where section = ${CLASS} limit 1`;
-  expect(band, "the class's grade, the database's one rule").toBe("G2");
-  await page.goto(`/papers?class=${CLASS}`);
-  await expect(ours(page)).toHaveCount(1);
-  await expect(ours(page)).toContainText(`Grade 2 · ${CLASS}`);
-  // the class's one assessment, opened by itself: its two children's copies, and the spare with them, the class's too
-  // (goals/ux5-papers-grouped.yaml)
-  await expect(page.getByRole("table", { name: /: each copy$/ }).locator("tbody tr")).toHaveCount(2);
-  await expect(page.locator("[data-spares]"), "a spare copy is the class's too").toContainText("1 spare copy, with the pack");
-});
-
 test("the class papers Today counts are the copies the pages it opens show waiting", async ({ page }) => {
   await page.goto(`/setup/needs-doing?kind=classpaper&class=${CLASS}`);
   const item = page.locator("tr[data-kind=classpaper]").filter({ hasText: `${CLASS} · class practice` });

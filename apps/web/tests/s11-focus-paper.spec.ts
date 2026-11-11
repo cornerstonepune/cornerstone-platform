@@ -9,6 +9,7 @@
  * append-only, so a child with evidence is never deleted); the papers the test makes are removed.
  */
 import { aChildIn } from "./rows";
+import { landedOn } from "./paper-screen";
 import { expect, test } from "@playwright/test";
 import postgres from "postgres";
 
@@ -70,10 +71,9 @@ test("a child's page says which areas the home assessment works on and why, and 
   await expect(page.getByText("12 questions", { exact: true }).first()).toBeVisible();
 
   await page.getByRole("button", { name: "Approve this home assessment" }).click();
-  // made, it opens on its review page (goals/paper_review_add_remove.yaml); its answer key is a link from there
-  await expect(page).toHaveURL(/\/papers\/review\/CS[0-9A-F]{6}$/);
-  const qr = page.url().split("/").pop()!;
-  await page.getByRole("link", { name: "Its answer key" }).click();
+  // made, it opens on its paper screen (goals/paper_review_add_remove.yaml); its answer key is the worksheet page of its code
+  const qr = await landedOn(page, sql, child);
+  await page.goto(`/worksheets/${qr}`);
   // named by what it is, its printed code beneath (goals/ux8b-papers-named.yaml)
   await expect(page.getByRole("heading", { level: 1 })).not.toContainText(qr);
   await expect(page.getByText(`Printed code ${qr}`)).toBeVisible();
@@ -91,13 +91,11 @@ test("a home assessment is made again the same week and the newest is the week's
   await clearUp(child);
   await page.goto(`/growth/${child}`);
   await page.getByRole("button", { name: "Approve this home assessment" }).click();
-  await expect(page).toHaveURL(/\/papers\/review\/CS[0-9A-F]{6}$/);
-  const first = page.url().split("/").pop()!;
+  const first = await landedOn(page, sql, child);
   await page.goto(`/growth/${child}`);
   const panel = page.getByRole("region", { name: "Home assessment" });
   await panel.getByRole("button", { name: "Make a new home assessment" }).click();
-  await expect(page).toHaveURL(/\/papers\/review\/CS[0-9A-F]{6}$/);
-  const second = page.url().split("/").pop()!;
+  const second = await landedOn(page, sql, child);
   expect(second).toMatch(/^CS[0-9A-F]{6}$/);
   expect(second).not.toBe(first);
   await page.goto(`/growth/${child}`);
@@ -106,8 +104,7 @@ test("a home assessment is made again the same week and the newest is the week's
   await expect(panel.getByRole("link", { name: second })).toBeVisible();
   await expect(panel.locator("[data-replaced]")).toContainText(`Replaced this week: ${first}`);
   await panel.getByRole("button", { name: "Make a new home assessment" }).click();
-  await expect(page).toHaveURL(/\/papers\/review\/CS[0-9A-F]{6}$/);
-  const third = page.url().split("/").pop()!;
+  const third = await landedOn(page, sql, child);
   expect(new Set([first, second, third]).size).toBe(3);
   await page.goto(`/growth/${child}`);
   await expect(panel.locator("[data-replaced]")).toContainText(`${second}, ${first}`);
@@ -121,8 +118,8 @@ test("a home assessment is made again the same week and the newest is the week's
   await page.goto(`/make?class=${SECTION}`);
   const row = page.getByRole("table", { name: "Home assessments this week" }).getByRole("row").filter({ hasText: SECTION });
   await expect(row.locator('[data-n="approved"]')).toHaveText("1");
-  // the Papers list: the two earlier copies replaced, the newest with the child
-  await page.goto(`/papers?child=${child}`);
-  // (the Status filter's own option says it too, hidden: the papers are read in the table)
-  await expect(page.getByRole("region", { name: "Papers" }).getByText("replaced by a newer one").first()).toBeVisible();
+  // the assessment of the child's home assessments: the two earlier copies replaced, the newest with the child
+  await page.goto(`/children/assessments?child=${child}&view=table`);
+  await page.locator("a[data-assessment-row]").first().click();
+  await expect(page.getByRole("region", { name: /^Replaced by a newer one, 2 copies/ })).toBeVisible();
 });

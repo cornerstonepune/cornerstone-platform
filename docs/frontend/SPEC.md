@@ -842,7 +842,7 @@ Main action: Say what the child wrote · Next step: the next paper
 Data: capture.pages, item_result with status and confidence, key, misconception tags
 Empty: Nothing left to judge on this paper: Sign it off · Phone: image above, answers below
 Folds in: /capture/check, /capture/[id]
-Every control on the screen (20), and what the test does with each:
+Every control on the screen (22), and what the test does with each:
 - **row** each answer row: the page scrolls to that answer and outlines it
 - **field** what the child wrote (for the answer in focus; required when judging)
 - **button** Say what the child wrote: a read_correction row; the engine marks it right / wrong / blank; the chip updates; the next judge answer comes into focus
@@ -863,6 +863,8 @@ Every control on the screen (20), and what the test does with each:
 - **link** a skill's answer chip (what this paper says by skill; each answer one tap away)
 - **button** Right / Wrong / Blank (judge) (for the few answers code cannot mark; only a person can say which)
 - **field** the right answer, for every child (inside the fold 'Is the right answer wrong?')
+- **button** Yes, the child wrote … (the reader's guess, or the spot-check) (one press confirms what the reader thinks the child wrote; held back until a person says whose page it is)
+- **button** Open the page at full size (the picture is a link to the page as photographed, at its own size, in a new tab)
 Done when (on top of the ten generic checks):
 - right, wrong and blank are three different chips and three counts; a wrong-with-working reason is shown with its wrong chip
 - a person's answer writes a read_correction row and never overwrites the engine's read

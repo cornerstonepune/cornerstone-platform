@@ -38,12 +38,15 @@ export function AnswerPanel({
   const [slot, now, changed, kept] = (said?.key ?? "").split("|");
   const listed = new Set((unnamed?.shortlist ?? []).map(([c]) => c));
   const label = (c: string) => (c === "NONE" ? "None of these" : mistakeName(names, c, a.op, a.mistake_skills?.[c] ?? a.skill_code));
+  // what the reader thinks the child wrote, offered back as one press: its guess where it was unsure, its reading where the engine was sure
+  // and a person is asked to confirm it (the paper's one spot-check)
+  const says = a.status === "correct" && a.state === "candidate" ? (a.read ?? "") : (a.guess ?? "");
   const write = (
     <form action={sayWhatWasWritten} className="grid gap-2">
       {hidden}
       <label className="field">
         <span className="label">What the child wrote for question {n}</span>
-        <input className="input" name="human_read" inputMode="numeric" defaultValue={signedOff ? value : undefined} placeholder="Type the number you see" maxLength={40} />
+        <input className="input" name="human_read" inputMode="numeric" defaultValue={value || undefined} placeholder="Type the number you see" maxLength={40} />
       </label>
       <div className="flex flex-wrap gap-2">
         <button className="btn" type="submit" disabled={locked} data-ux={signedOff ? undefined : "action"}>{signedOff ? "Save the correction" : "Say what the child wrote"}</button>
@@ -112,6 +115,14 @@ export function AnswerPanel({
             <button className="btn secondary" type="submit" data-name-mistake="">Name it</button>
           </form>
         </div>
+      ) : null}
+      {!signedOff && says && a.status === "correct" ? <p className="mt-2">A spot-check: the engine was sure of this one.</p> : null}
+      {!signedOff && says ? (
+        <form action={sayWhatWasWritten} className="mt-3">
+          {hidden}
+          <input type="hidden" name="human_read" value={says} />
+          <button className="btn" type="submit" disabled={locked} title={locked ? "A person chooses first: see the notice about this page" : undefined} data-confirm-read="">Yes, the child wrote {says}</button>
+        </form>
       ) : null}
       <div className="mt-3">
         {signedOff ? (

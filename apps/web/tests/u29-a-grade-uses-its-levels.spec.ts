@@ -20,7 +20,7 @@ test("make papers offers a class its own grade's levels first, a higher grade's 
   await aClass(sql, "U29-G1", "G1", ["Ira", "Jai"]);
   await aClass(sql, "U29-G2", "G2", ["Kavya", "Laksh"]);
   const offered = async (cls: string) => {
-    await page.goto(`/papers/make?class=${cls}`);
+    await page.goto(`/children/assessments?make=class&class=${cls}`);
     await page.getByLabel("Topic 1").selectOption("ADDSUB");
     await page.getByLabel("Skill 1").selectOption("ADD.2D1D");
     const options = (await page.getByLabel("Level 1").locator("option").allTextContents()).slice(1);
