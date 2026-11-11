@@ -1,8 +1,10 @@
 // What the Assessments page adds to an assessment's own row (goals/asm_assessments_page.yaml): the name an educator chose
 // for it, the files read that its printed codes belong to, and the photographed pages of a child's paper. Names no child.
 import { sql, TENANT_SLUG } from "./db";
-import { seesRun, type Who } from "./reach";
+import { seesRun, seesSheet, type Who } from "./reach";
 import { matchFiles } from "./assessment-steps";
+import { papersCte } from "./queries-papers";
+import { paperHref } from "./assessment-ui";
 
 const CODE = /^CS[0-9A-F]{6}$/i;
 
@@ -48,4 +50,33 @@ export async function pagesOf(paperIds: string[]): Promise<Map<string, { capture
     where k.sheet_instance_id = any(${paperIds}::uuid[]) and k.superseded_by is null
     group by k.sheet_instance_id`;
   return new Map(rows.map((r) => [r.id, { capture: r.capture, pages: [...r.pages].sort((a, b) => a - b) }]));
+}
+
+/** Who approved each copy of an assessment and on what day, and the day each was made: what the approval ledger and the second pack say. */
+export async function packFacts(ids: string[]): Promise<{ id: string; roll: string | null; approved_by: string | null; approved_on: string | null; made_on: string }[]> {
+  if (!ids.length) return [];
+  return sql`
+    select si.id, c.roll_no as roll, si.approved_by, to_char(si.approved_at at time zone 'Asia/Kolkata', 'YYYY-MM-DD') as approved_on,
+           to_char(si.created_at at time zone 'Asia/Kolkata', 'YYYY-MM-DD') as made_on
+    from sheet_instance si left join child_now c on c.id = si.child_id
+    where si.id = any(${ids}::uuid[]) order by si.approved_at nulls last, si.created_at`;
+}
+
+/** The scan a copy was read from: when it was put in, how many pages it has, and whether the code read off it is the copy's own. */
+export async function scanFacts(sheetId: string): Promise<{ on: string; pages: number; own: boolean } | null> {
+  const [r] = await sql<{ on: string; pages: number; own: boolean }[]>`
+    select to_char(c.created_at at time zone 'Asia/Kolkata', 'YYYY-MM-DD HH24:MI') as on, c.pages, c.qr_read = si.qr_code as own
+    from capture c join sheet_instance si on si.id = c.sheet_instance_id
+    where c.sheet_instance_id = ${sheetId}::uuid and c.superseded_by is null order by c.created_at desc limit 1`;
+  return r ?? null;
+}
+
+/** The paper screen's address for each of these copies (by sheet id), for those a person sees and that are a child's own. */
+export async function paperScreensOf(ids: string[], me: Who): Promise<Map<string, string>> {
+  if (!ids.length) return new Map();
+  const rows = await sql<{ id: string; kind: string; section: string | null; week: string | null; set: string | null; roll: string | null }[]>`
+    with ${papersCte()}
+    select id, kind, section, week, set_key as set, roll_no as roll from papers
+    where id = any(${ids}::uuid[]) and child_id is not null and ${seesSheet(me, sql`id`)}`;
+  return new Map(rows.filter((r) => r.roll).map((r) => [r.id, paperHref([r.kind, r.section ?? "", r.week ?? "", r.set ?? ""].join("~"), r.roll!)]));
 }

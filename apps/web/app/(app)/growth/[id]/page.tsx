@@ -10,7 +10,7 @@ import { childSheets, childSkills, classLatest, firstStep, repeatedMistakes, sum
 import { ColourKeyLine } from "@/components/colour-key";
 import { checkHref, checkLevel, colourRules } from "@/lib/colours";
 import { childStates } from "@/lib/states";
-import { ChecksPanel, type Check } from "../checks";
+import { ChecksPanel, type Check } from "@/components/children/checks";
 import { confirmChild, resolveOne } from "../actions";
 import { deadline } from "@/lib/deadline";
 import { FocusPanel } from "./focus-panel";

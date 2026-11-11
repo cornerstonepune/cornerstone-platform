@@ -96,7 +96,7 @@ export type SkillPage = {
   after: { code: string; name: string }[];
   next: { code: string; name: string }[];
   /** Per-level sentences of a grade 1 to 4 skill: the rows of skill_level that point at this registry skill. */
-  levels: { difficulty: string; looks_like: string }[];
+  levels: { set: string; difficulty: string; looks_like: string }[];
   rebuilt: string | null;
 };
 
@@ -134,9 +134,9 @@ export async function skillOf(me: Me, code: string, classId: string | undefined)
     select r.code, r.name from skill_link_confirmed l join registry_skill r on r.tenant_id = l.tenant_id and r.code = l.before_code where l.skill_code = ${code} order by r.name`;
   const next = await sql<{ code: string; name: string }[]>`
     select r.code, r.name from skill_link_confirmed l join registry_skill r on r.tenant_id = l.tenant_id and r.code = l.skill_code where l.before_code = ${code} order by r.name`;
-  const levels = await sql<{ difficulty: string; looks_like: string }[]>`
-    select l.difficulty, l.looks_like from skill_level l join skill k on k.tenant_id = l.tenant_id and k.code = l.skill_code
-    where ${code} = any(k.registry_codes) and coalesce(l.looks_like, '') <> '' order by l.difficulty`;
+  const levels = await sql<{ set: string; difficulty: string; looks_like: string }[]>`
+    select l.skill_code as set, l.difficulty, l.looks_like from skill_level l join skill k on k.tenant_id = l.tenant_id and k.code = l.skill_code
+    where ${code} = any(k.registry_codes) and coalesce(l.looks_like, '') <> '' order by l.skill_code, l.difficulty`;
   const [run] = await sql<{ at: string }[]>`select (finished_at at time zone ${zone})::text as at from flow_run where flow = 'graph_nightly' and finished_at is not null order by finished_at desc limit 1`;
   return { code: rs.code, name: rs.name, domain: rs.domain ?? "", classes, cls, kids, clusters: clustersOf(places), objectives, after, next, levels, rebuilt: run?.at ?? null };
 }

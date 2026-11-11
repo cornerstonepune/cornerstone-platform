@@ -63,59 +63,15 @@ async function asEducator(browser: Browser): Promise<Page> {
 }
 
 
-test("Children leads with the children who need the educator, as a short list", async ({ browser }) => {
+// Children (UI-3b) keeps the rule: no topic chips on the list. The old addresses of the list still land on it.
+test("Children has no topic chips; an old address of the list lands on Children", async ({ browser }) => {
   const page = await asEducator(browser);
   await page.goto("/growth?view=children");
-  const lead = page.getByRole("region", { name: "Children who need you" });
-  await expect(lead).toBeVisible();
-  // the child who needs help and has answers waiting is on it, and links to the child; a child with nothing is not
-  await expect(lead.getByRole("link", { name: /Asha/ })).toHaveAttribute("href", `/growth/${kids.Asha}`);
-  await expect(lead).not.toContainText("Bina");
-  await expect(lead).not.toContainText("Cara");
-  expect(await lead.locator("tbody tr").count(), "a short list").toBeLessThanOrEqual(10);
-  // and it comes before the classes
-  const [leadY, classY] = await Promise.all([lead.boundingBox(), page.getByRole("region", { name: "Classes" }).boundingBox()]);
-  expect(leadY!.y).toBeLessThan(classY!.y);
-  await page.context().close();
-});
-
-test("a class's table holds only the columns that have something in them", async ({ browser }) => {
-  const page = await asEducator(browser);
-  // a class with nothing to show: the child, and the roll number, and a status (the filter row chooses the class)
-  await page.goto(`/growth?view=children&class=${QUIET}`);
-  const quiet = page.getByRole("table", { name: `${QUIET}: its children` });
-  await expect(quiet).toBeVisible();
-  expect((await quiet.getByRole("columnheader").allTextContents()).map((h) => h.trim())).toEqual(["Roll", "Child", "Status"]);
-  // a class with something: every column it shows has a number, a name or a pill in some row, and no cell is a dash or a nought
-  await page.goto(`/growth?view=children&class=${BUSY}`);
-  const busy = page.getByRole("table", { name: `${BUSY}: its children` });
-  await expect(busy).toBeVisible();
-  const heads = (await busy.getByRole("columnheader").allTextContents()).map((h) => h.trim());
-  expect(heads.map((h) => h.replace(/\s*▾$/, ""))).toEqual(expect.arrayContaining(["Roll", "Child", "Needs help on", "Needs help", "Waiting on you"]));
-  const rows = await busy.locator("tbody tr").all();
-  for (let c = 0; c < heads.length; c++) {
-    const cells = await Promise.all(rows.map(async (r) => (await r.locator("td").nth(c).innerText()).trim()));
-    expect(cells.some((t) => t !== "" && t !== "0" && t !== "—"), `${heads[c]} has something in it`).toBe(true);
-    expect(cells.filter((t) => t === "0" || t === "—"), `${heads[c]}: no nought or dash`).toEqual([]);
-  }
-  await page.context().close();
-});
-
-test("Children has no topic chips and no second box to find a child; all skills is a quiet link", async ({ browser }) => {
-  const page = await asEducator(browser);
-  await page.goto("/growth?view=children");
+  await expect(page).toHaveURL(/\/children$/);
   await expect(page.getByRole("navigation", { name: "Topic" })).toHaveCount(0);
-  await expect(page.getByRole("main").getByRole("textbox")).toHaveCount(0);
   await page.goto(`/growth?view=children&class=${BUSY}`);
-  const all = page.getByRole("link", { name: "Against every skill →" });
-  await expect(all).toBeVisible();
-  // quiet: small type, never a button or a chip
-  expect(await all.evaluate((a) => parseFloat(getComputedStyle(a).fontSize))).toBeLessThanOrEqual(14);
-  await expect(all).not.toHaveClass(/chip|btn/);
-  // the long explanation and the key to the colours are put away behind a link, not shown
-  const details = page.getByRole("main").locator("details", { hasText: "Details" }).last();
-  await expect(details).not.toHaveAttribute("open", "");
-  await expect(details.getByText(/From checked papers only/)).toBeHidden();
+  await expect(page).toHaveURL(/\/children\?cls=[0-9a-f-]{36}$/);
+  await expect(page.getByRole("navigation", { name: "Topic" })).toHaveCount(0);
   await page.context().close();
 });
 

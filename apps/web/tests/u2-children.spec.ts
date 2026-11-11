@@ -117,11 +117,10 @@ test.afterAll(async () => {
 test("each grade opens on its classes, and a class is its children against every step in red, amber, green or grey", async ({
   page,
 }) => {
-  // the classes side by side and a class's children: Results' children view (goals/res_results_by_topic.yaml)
-  await page.goto(`/growth?view=children&class=${SECTION}`);
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Children, one by one");
-  // each class a row of the classes table, with its link (goals/uxn9-class-results.yaml)
-  await page.getByRole("table", { name: "Classes" }).getByRole("link", { name: "Against every skill →" }).click();
+  // the class's children against every step: reached from Class results ("Each child against each topic →"); the old list of
+  // children it was once reached from is the Children screen now (UI-3b), which has no such grid
+  await page.goto(`/growth?class=${SECTION}`);
+  await page.getByRole("link", { name: "Each child against each topic →" }).click();
   await expect(page).toHaveURL(`/growth/class/${SECTION}`);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(SECTION);
 

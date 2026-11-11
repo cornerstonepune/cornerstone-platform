@@ -76,7 +76,7 @@ export default async function HowItWorks() {
           </Panel>
 
           <Panel title="How the code connects" aside={`${HANDOVERS.length} connections, each checked`}>
-            <p className="note mb-3">
+            <p className="b-muted mb-3">
               A workflow reaches another only through one of these. Any other connection fails the engine&rsquo;s layout check before it can be merged.
             </p>
             <ul className="grid gap-2 text-[13.5px]">
