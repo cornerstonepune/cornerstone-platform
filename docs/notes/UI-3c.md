@@ -156,3 +156,18 @@ coordinator, a form to change it (server action `changeWords`, engine key server
 approved. The engine's gate decides who may write; the page shows the form to a coordinator. Note the key: the route takes the
 skill SET's code (`skill.code`), which `skillOf` now carries on each level row. screens.json `skill` gains the fold "Earlier
 sentences"; the wireframe drops its data-gap. Tests 21 to 23 (`u73-level-words.spec.ts`, split from the teaching spec for the 400-line ceiling).
+
+## The teaching screens toward their wireframes (ui-3c-wireframes, from docs/screens/compare-2026-11-11/FINDINGS.md)
+Activity: the four levels as stacked tiles, "Where <class> sat last time" and "Taught so far" as cards (tiles for last taught,
+children seen, times taught; outcome chips from the status rows), "Builds toward" and "Where each part came from" side by side as kind-headed
+cards, and a rail of kind-tiled links with a second line ("the objective", "to lay out", "Next taught · day, time · class", "The fortnights it is in")
+plus a "Fortnights it is in" card (Taught / Coming up, from `plan_entry` and `fortnight`, by the school's day). Objective: each skill
+card carries the "Prerequisite confirmed" chip only for a confirmed link (a "not confirmed yet" chip would need the proposed links, which web
+code may not read: `test_skill_links_confirmed`), the activities table gains Fortnights, and "Children seen on each skill" counts the
+person's classes from the class picture's own reader. Skill: "The class now" and "Secure, fortnight by fortnight" as two cards,
+clusters above the grid, Comes after / Ready next as two cards, the rail with the peek on top, and folds for Kinds of question and Mistakes it
+watches for (read from the skill sets that point at the skill: kinds counted from the bank, mistakes named by `skill.misconception_codes`; a count of
+the questions catching each mistake read the whole bank on every render, 2.5 s for a skill with ten sets, so none is shown).
+Not done, and why: the shared `Rail` and the second tab row are the frame's (UI-7); "Group by class" on the skill screen (coordinator) needs a grid per
+class; the skill-set page keeps its long panels open (folding them moves seven specs) and its wireframe is the short card page.
+Also: u73-level-words waited on a text the form itself held, so it passed before the save; it now waits for the new history row, which carries a reason of its own.
