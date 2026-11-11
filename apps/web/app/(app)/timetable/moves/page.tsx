@@ -43,7 +43,7 @@ export default async function MovesPage({ searchParams }: Props) {
   const stay = (extra: Record<string, string>) => `${HERE}?${new URLSearchParams({ fn: String(fn.number), class: klass.id, ...extra })}`;
   const grid = gridOf(weeks, { looks: await subjectLooks(),
     clashes,
-    href: (day, p) => (!coordinator ? `/educator/period/${p}?class=${klass.id}&day=${day}` : !pick ? stay({ from: `${day}~${p}` }) : stay({ from: pick, to: `${day}~${p}` })),
+    href: (day, p) => (!coordinator ? `/timetable?${new URLSearchParams({ view: "day", class: klass.id, day })}` : !pick ? stay({ from: `${day}~${p}` }) : stay({ from: pick, to: `${day}~${p}` })),
   });
   const [toDay, toPeriod] = (q.to ?? "").split("~");
   const ready = coordinator && fromDay && toDay && ords.has(fromPeriod) && ords.has(toPeriod);
@@ -67,10 +67,10 @@ export default async function MovesPage({ searchParams }: Props) {
       rail={
         <div className="tt-rail">
           <Rail edges={[{ screen: "fortnight", params: { n: String(fn.number) }, href: `/timetable/fortnight/${fn.number}`, label: `Fortnight ${fn.number}`, icon: "fortnight" }, { screen: "timetable", href: `/timetable?fn=${fn.number}&class=${klass.id}`, label: "The grid", icon: "week" }, { screen: "rules", href: "/timetable/rules", label: "Timetable rules", icon: "setup" }]} />
-          <aside aria-label="This draft so far" data-rail-part="so-far" className="tt-rail-card">
+          <section aria-label="This draft so far" data-rail-part="so-far" className="tt-rail-card">
             <h2 className="tt-rail-h">This draft so far</h2>
             <KeyValue rows={[{ label: "Lessons", value: String(grid.placed.length), num: true }, { label: "Moved by hand", value: String(mine.length), num: true }, { label: "Clashes open", value: String(open.length), num: true }, { label: "Clashes accepted", value: String(clashes.length - open.length), num: true }]} />
-          </aside>
+          </section>
         </div>
       }
     >

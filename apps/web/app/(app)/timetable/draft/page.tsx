@@ -62,10 +62,10 @@ export default async function DraftPage({ searchParams }: Props) {
         <div className="tt-rail">
           <Rail edges={[{ screen: "rules", href: "/timetable/rules", label: "Timetable rules", icon: "setup" }, { screen: "fortnight", params: { n: String(fn.number) }, href: `/timetable/fortnight/${fn.number}`, label: `Fortnight ${fn.number}`, icon: "fortnight" }, { screen: "moves", href: `/timetable/moves?fn=${fn.number}`, label: "Moves by hand", icon: "moved" }]} />
           {reads.length ? (
-            <aside aria-label="What the draft reads" data-rail-part="reads" className="tt-rail-card">
+            <section aria-label="What the draft reads" data-rail-part="reads" className="tt-rail-card">
               <h2 className="tt-rail-h">What the draft reads</h2>
               <KeyValue rows={reads} />
-            </aside>
+            </section>
           ) : null}
         </div>
       }

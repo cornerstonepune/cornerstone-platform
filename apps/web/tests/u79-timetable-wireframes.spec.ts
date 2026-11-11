@@ -28,7 +28,7 @@ test("Timetable: a legend names Done, Moved by hand and Clash; the rail lists wh
   await expect(legend).toContainText("Done");
   await expect(legend).toContainText("Moved by hand");
   await expect(legend).toContainText("Clash, not yet accepted");
-  await expect(page.getByRole("complementary", { name: "Changed this fortnight" })).toBeVisible();
+  await expect(page.getByRole("region", { name: "Changed this fortnight" })).toBeVisible();
 });
 
 test("Timetable: lessons by subject counts the class's sessions for the fortnight, subject by subject", async ({ page }) => {
@@ -64,7 +64,7 @@ test("Draft: the fortnight is chosen from the teaching fortnights, and the rail 
   const options = page.locator("select[name=fortnight] option");
   expect(await options.count()).toBeGreaterThan(0);
   await expect(page.locator("select[name=fortnight]")).toHaveValue(String(AHEAD));
-  const reads = page.getByRole("complementary", { name: "What the draft reads" });
+  const reads = page.getByRole("region", { name: "What the draft reads" });
   const [{ blocks }] = await sql<{ blocks: number }[]>`select count(*)::int as blocks from timetable_rule where school_class_id = ${f.klass} and kind = 'block'`;
   await expect(reads).toContainText("Blocked days");
   await expect(reads.locator("dt", { hasText: "Blocked days" }).locator("xpath=following-sibling::dd[1]")).toHaveText(String(blocks));
@@ -76,7 +76,7 @@ test("Moves: a legend names the three marks, and the rail counts this draft so f
   await expect(legend).toContainText("Moved by hand");
   await expect(legend).toContainText("Clash, not yet accepted");
   await expect(legend).toContainText("Clash accepted");
-  const so = page.getByRole("complementary", { name: "This draft so far" });
+  const so = page.getByRole("region", { name: "This draft so far" });
   const made = await page.locator("table tbody tr").count();
   await expect(so.locator("dt", { hasText: "Moved by hand" }).locator("xpath=following-sibling::dd[1]")).toHaveText(String(made));
 });

@@ -44,7 +44,7 @@ export default async function ActivityScreen({ params, searchParams }: { params:
       title={page.name}
       purpose={(objective?.text || "What this activity is for is not written yet.").slice(0, 140)}
       action={<span className="text-[length:var(--text-label)] text-[var(--ink-muted)]">{[page.section, page.code].filter(Boolean).join(" · ")}</span>}
-      next={back?.startsWith("/educator") ? { href: back, label: "Back to the day" } : { href: "/today", label: "Today" }}
+      next={back?.startsWith("/period/") ? { href: back, label: "Back to the period" } : back?.startsWith("/educator") ? { href: back, label: "Back to the day" } : { href: "/today", label: "Today" }}
       rail={<Rail edges={edges} capture={<Link href="/record" className="b-btn b-btn-capture">Voice note</Link>} />}
     >
       <div className="grid gap-[var(--space-3)]">

@@ -12,6 +12,18 @@ const nextConfig: NextConfig = {
   // Teaching left the menu on 26 Oct 2026 (goals/nav3_what_needs_doing.yaml): its old address, in a bookmark or a link, opens What needs doing.
   redirects: async () => [
     { source: "/taught", destination: "/today", permanent: false },
+    // The old Your day, This week and period pages folded into the Timetable's Day and Week views (UI-6b, decision #599: no old screen stays active): the old
+    // addresses answer 308 to the new ones, the class and day they name carried over.
+    { source: "/educator", has: [{ type: "query", key: "class", value: "(?<cls>.+)" }, { type: "query", key: "day", value: "(?<d>.+)" }], destination: "/timetable?view=day&class=:cls&day=:d", permanent: true },
+    { source: "/educator", has: [{ type: "query", key: "day", value: "(?<d>.+)" }], destination: "/timetable?view=day&day=:d", permanent: true },
+    { source: "/educator", has: [{ type: "query", key: "class", value: "(?<cls>.+)" }], destination: "/timetable?view=day&class=:cls", permanent: true },
+    { source: "/educator", destination: "/timetable?view=day", permanent: true },
+    { source: "/educator/week", has: [{ type: "query", key: "class", value: "(?<cls>.+)" }, { type: "query", key: "day", value: "(?<d>.+)" }], destination: "/timetable?view=week&class=:cls&day=:d", permanent: true },
+    { source: "/educator/week", has: [{ type: "query", key: "day", value: "(?<d>.+)" }], destination: "/timetable?view=week&day=:d", permanent: true },
+    { source: "/educator/week", has: [{ type: "query", key: "class", value: "(?<cls>.+)" }], destination: "/timetable?view=week&class=:cls", permanent: true },
+    { source: "/educator/week", destination: "/timetable?view=week", permanent: true },
+    { source: "/educator/period/:id", has: [{ type: "query", key: "class", value: "(?<cls>.+)" }, { type: "query", key: "day", value: "(?<d>.+)" }], destination: "/timetable?view=day&class=:cls&day=:d", permanent: true },
+    { source: "/educator/period/:id", destination: "/timetable?view=day", permanent: true },
     // The single-activity pages folded into one (UI-3c): the old addresses answer 308 to the new one.
     { source: "/educator/activity/:code", destination: "/setup/activities/:code", permanent: true },
     { source: "/curriculum/fill/:code((?!walk$)[^/]+)", destination: "/setup/activities/:code", permanent: true },

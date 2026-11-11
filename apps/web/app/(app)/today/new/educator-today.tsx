@@ -55,7 +55,7 @@ export async function EducatorToday({ me, view, day: asked }: { me: Session; vie
   ];
   const cards = await cardsFor(cls, classId, [...late, ...soon]);
   const edges = [
-    { screen: "timetable", label: "This fortnight", icon: "fortnight" as const, fallback: "/educator/week" },
+    { screen: "timetable", label: "This fortnight", icon: "fortnight" as const, fallback: "/timetable" },
     { screen: "materials", label: "Materials", icon: "checklist" as const, fallback: "/timetable/materials" },
   ];
   return (

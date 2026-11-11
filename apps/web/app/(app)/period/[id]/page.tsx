@@ -37,7 +37,7 @@ export default async function Period({ params }: { params: Promise<{ id: string 
   const steps = page?.parts.find((p) => p.part === "steps");
   const thinking = page?.parts.find((p) => p.part === "thinking");
   const record = `/record?session=${id}`;
-  const open = a ? (screenHref("activity", { code: a.code }) ?? `/setup/activities/${encodeURIComponent(a.code)}`) : null;
+  const open = a ? `${screenHref("activity", { code: a.code }) ?? `/setup/activities/${encodeURIComponent(a.code)}`}?back=${encodeURIComponent(`/period/${id}`)}` : null;
   const edges: Edge[] = a
     ? [
         { screen: "activity", params: { code: a.code }, label: "The activity", icon: "activity" },

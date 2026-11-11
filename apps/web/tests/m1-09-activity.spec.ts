@@ -6,7 +6,7 @@
 import { expect, test } from "@playwright/test";
 import postgres from "postgres";
 import { loadFortnight10, shoot, tapsAreBig, timetableSwitch } from "./educator-screens";
-import { SECTION, k2Class } from "./k2-rows";
+import { SECTION, k2Class, voiceSwitch } from "./k2-rows";
 
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 const CODE = "ACT-K2-T09A";
@@ -93,15 +93,17 @@ test("Keep makes a draft a person's, Edit puts her words in its place, and Send 
 
 test("a period whose line names an activity opens its page, and back returns to the day", async ({ page }) => {
   await timetableSwitch(sql, true);
-  const [p] = await sql<{ klass: string; day: string; period: string }[]>`
-    select s.school_class_id::text as klass, d.on_date::text as day, s.period_id::text as period from session s
+  const [p] = await sql<{ session: string }[]>`
+    select s.id::text as session from session s
     join school_day d on d.id = s.school_day_id join plan_entry pe on pe.id = s.plan_entry_id
     join activity a on a.id = pe.activity_id where a.code = 'ACT-K2-0348' order by d.on_date limit 1`;
   expect(p, "Fortnight 10 names Insects on a period").toBeTruthy();
-  await page.goto(`/educator/period/${p.period}?class=${p.klass}&day=${p.day}`);
-  await page.locator("[data-open-activity]").click();
+  await voiceSwitch(sql, true); // the Period screen is behind the voice switch (UI-3a)
+  await page.goto(`/period/${p.session}`); // the Timetable's cell opens this page (the old "Your day" block did)
+  await page.getByRole("link", { name: "Open the activity" }).click();
   await expect(page.getByRole("heading", { level: 1, name: "Insects" })).toBeVisible();
   await expect(page).toHaveURL(/\/setup\/activities\/ACT-K2-0348/);
-  await page.locator('[data-ux="next"]').click();
-  await expect(page).toHaveURL(new RegExp(`/educator\\?class=${p.klass}&day=${p.day}`));
+  await page.getByRole("link", { name: "Back to the period" }).first().click();
+  await expect(page).toHaveURL(new RegExp(`/period/${p.session}`)); // back returns to the period it came from
+  await voiceSwitch(sql, false);
 });

@@ -12,9 +12,10 @@ import { StatusChip } from "@/components/status-chip";
 import { Timeline, type Seen } from "@/components/timeline";
 import type { Column } from "@/lib/ux-rules";
 import { requireStaff } from "@/lib/auth";
-import { mondayOf, nowAtSchool, schoolDay, shortDate } from "@/lib/educator/clock";
+import { chipOf } from "@/lib/educator/chip";
+import { mondayOf, nowAtSchool, schoolDay, shortDate, whenIs } from "@/lib/educator/clock";
 import { weekOf } from "@/lib/educator/data";
-import { isDay } from "@/lib/educator/period";
+import { isDay, isLesson } from "@/lib/educator/period";
 import { dateWords } from "@/lib/week";
 import { stateWords } from "@/lib/fortnight-words";
 import { sql } from "@/lib/db";
@@ -83,11 +84,18 @@ export default async function TimetablePage({ searchParams }: Props) {
     days: shown,
     clashes,
     at: { today, now },
-    href: (day, p) => (sessionAt.has(`${day}|${p}`) ? `/period/${sessionAt.get(`${day}|${p}`)}` : `/educator/period/${p}?class=${klass.id}&day=${day}`),
+    href: (day, p) => (sessionAt.has(`${day}|${p}`) ? `/period/${sessionAt.get(`${day}|${p}`)}` : keep({ view: "day", day })),
   });
   const lessons = grid.rows.some((r) => "cells" in r && r.cells.some((c) => c));
   const movedHere = grid.placed.filter((x) => x.cell.moved).map((x) => ({ day: x.day, cell: x.cell, move: moveInto(moves, x.day, x.periodId) }));
   const open = clashes.filter((c) => !c.accepted).length;
+  const shownDays = weeks.flatMap((w) => w.days).filter((d) => grid.days.includes(d.day));
+  const lessonCount = grid.placed.length;
+  const holidayCount = grid.holidays.length;
+  // Day view: what comes next (the period running now, else the next one; a day gone by says so)
+  const dayPeriods = view === "day" ? (shownDays[0]?.periods ?? []).filter(isLesson) : [];
+  const dayWhen = whenIs(focus, today);
+  const nextPeriod = view === "day" ? dayPeriods.find((p) => chipOf(p, { now, day: dayWhen }) === "doNow") ?? (dayWhen === "past" ? undefined : dayPeriods.find((p) => dayWhen === "future" || p.starts_at > now)) : undefined;
   const bySubject = await subjectsAgainstRule(klass.id, fn.starts_on, fn.ends_on);
   const changed: Seen[] = [
     ...clashes.filter((c) => !c.accepted).map((c) => ({ kind: "period" as const, title: c.detail, line: "Not yet accepted", when: "clash" })),
@@ -99,7 +107,7 @@ export default async function TimetablePage({ searchParams }: Props) {
       stage={`${klass.grade} ${klass.section} · Fortnight ${fn.number}`}
       title="Timetable"
       purpose="The fortnight is the unit: week A and week B, each period a block. A moved period is marked; a clash is red until it is accepted."
-      action={<a className="btn" href={`/educator?class=${klass.id}&day=${today}`} data-ux="action">Open today</a>}
+      action={<a className="btn" href={keep({ view: "day", day: today })} data-ux="action">Open today</a>}
       next={{ href: `/timetable/fortnight/${fn.number}`, label: `Fortnight ${fn.number}` }}
       rail={
         <div className="tt-rail">
@@ -112,10 +120,10 @@ export default async function TimetablePage({ searchParams }: Props) {
           ]}
         />
         {changed.length ? (
-          <aside aria-label="Changed this fortnight" data-rail-part="changed" className="tt-rail-card">
+          <section aria-label="Changed this fortnight" data-rail-part="changed" className="tt-rail-card">
             <h2 className="tt-rail-h">Changed this fortnight</h2>
             <Timeline entries={changed} />
-          </aside>
+          </section>
         ) : null}
         </div>
       }
@@ -150,8 +158,18 @@ export default async function TimetablePage({ searchParams }: Props) {
         <StatusChip state="done" words="Done" round />
         <StatusChip state="moved" words="Moved by hand" round />
         <StatusChip state="clash" words="Clash, not yet accepted" round />
+        <StatusChip state="doNow" words="Do now" round />
+        <StatusChip state="late" words="Late" round />
         <span className="tt-note">Each block is one lesson; tap it to open the period.</span>
       </div>
+      <p className="tt-note" data-summary>
+        {lessonCount} lesson{lessonCount === 1 ? "" : "s"}{holidayCount ? ` · ${holidayCount} holiday${holidayCount === 1 ? "" : "s"}` : ""}
+      </p>
+      {view === "day" ? (
+        <p className="tt-note" data-next>
+          {nextPeriod ? `Next: ${nextPeriod.starts_at.slice(0, 5)} ${nextPeriod.name}` : "This day is over."}
+        </p>
+      ) : null}
       {open ? <p className="tt-note" data-clashes={open}>{open} clash{open === 1 ? "" : "es"} not accepted yet: red below.</p> : null}
       {lessons ? (
         <div data-view={view} data-day-count={grid.days.length}>

@@ -72,7 +72,7 @@ export async function SchoolToday({ me }: { me: Session }) {
   const edges = [
     { screen: "fortnight", params: { n: String(s?.drafts.rows[0]?.fortnight ?? 0) }, label: "Fortnight", icon: "fortnight" as const },
     { screen: "staff", label: "Staff and classes", icon: "class" as const, fallback: "/setup/staff" },
-    { screen: "timetable", label: "Timetable", icon: "week" as const, fallback: "/educator/week" },
+    { screen: "timetable", label: "Timetable", icon: "week" as const, fallback: "/timetable" },
   ].filter((e) => e.screen !== "fortnight" || s?.drafts.rows[0]);
   return (
     <Screen stage={`${dayWords(today)} · every class`} title="Today, the school" purpose="What waits on you, each with its own button. Then the week ahead." action={<p className="font-medium">{rows.length ? `${rows.length === 1 ? "One kind of work waits" : `${rows.length} kinds of work wait`} on you.` : "Nothing waits on you."}</p>} next={{ href: open(DOORS.timetable()) ?? "/educator/week", label: "Timetable" }} rail={<div className="[&_[data-rail]_ul]:gap-2"><Rail edges={edges} /></div>}>

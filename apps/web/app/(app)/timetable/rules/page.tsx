@@ -223,10 +223,10 @@ export default async function RulesPage({ searchParams }: Props) {
         <div className="tt-rail">
           <Rail edges={[{ screen: "draft", href: "/timetable/draft", label: "Draft from the rules", icon: "setup" }, { screen: "timetable", href: "/timetable", label: "Timetable", icon: "week" }]} />
           {grouped ? (
-            <aside aria-label="This class" data-rail-part="counts" className="tt-rail-card">
+            <section aria-label="This class" data-rail-part="counts" className="tt-rail-card">
               <h2 className="tt-rail-h">{rules!.class.grade} {rules!.class.section}</h2>
               <KeyValue rows={[{ label: "Period times", value: String(rules!.periods.length), num: true }, { label: "Fixed slots", value: String(rules!.fixed.length), num: true }, { label: "Blocked days", value: String(grouped.block.length), num: true }, { label: "Limits", value: String(grouped.limit.length), num: true }]} />
-            </aside>
+            </section>
           ) : null}
         </div>
       }

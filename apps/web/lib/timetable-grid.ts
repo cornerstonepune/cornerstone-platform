@@ -26,9 +26,9 @@ export function gridOf(weeks: readonly Week[], show: {
   const rows: FRow[] = starts.map((start) => {
     const at = days.map((d) => d.periods.find((p) => p.starts_at === start) ?? null);
     const label = at.find((p) => p)?.label ?? start;
-    if (at.length && at.every((p) => p === null || p.kind === "fixed")) return { band: at.find((p) => p)?.name ?? label };
+    if (at.length && at.every((p) => p === null || p.kind === "fixed")) return { band: `${at.find((p) => p)?.name ?? label} · ${start.slice(0, 5)}` };
     return {
-      time: `${start.slice(0, 5)} ${label}`,
+      time: `${start.slice(0, 5)}${at.find((p) => p?.ends_at)?.ends_at ? `–${at.find((p) => p?.ends_at)!.ends_at!.slice(0, 5)}` : ""} ${label}`,
       cells: at.map((p, i): FCell | null => {
         if (!p || !isLesson(p)) return null;
         const chip = show.at ? chipOf(p, { now: show.at.now, day: whenIs(days[i].day, show.at.today) }) : null;
