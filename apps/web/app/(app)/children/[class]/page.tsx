@@ -9,6 +9,8 @@ import { Spark } from "@/components/spark";
 import { STATES } from "@/components/status-chip";
 import { StackBar } from "@/components/stack-bar";
 import { SwitchedOff } from "@/components/children/switched-off";
+import { ClassViews } from "@/components/children/class-views";
+import { ViewToggle } from "@/components/kanban-board";
 import { requireStaff } from "@/lib/auth";
 import { screensOn, childrenTable } from "@/lib/children-reads";
 import { ClassCountsLine } from "@/components/children/children-table";
@@ -16,7 +18,7 @@ import { pictureOf, type Look } from "@/lib/children-picture";
 import { LOOK_ORDER, byRoll, clustersOf, daysSince, groupByLook, peekParam, type PictureLook } from "@/lib/children-view";
 import { SECURE, UNSEEN, stateOf } from "@/lib/looks";
 
-type Q = { skill?: string; domain?: string; group?: string; peek?: string };
+type Q = { skill?: string; domain?: string; group?: string; peek?: string; view?: string; topic?: string; subject?: string; kp?: string };
 
 // The class picture (UI-3b): each square a child by Sr. No., shown on one skill at a time. A square a child has no state on is
 // "not seen yet", which is not "not secure". The clusters are worked out here from the graph's rows, each child in as many as fit.
@@ -27,6 +29,12 @@ export default async function Picture({ params, searchParams }: { params: Promis
   const sp = await searchParams;
   const p = await pictureOf({ ...me, email: me.email }, classId);
   if (!p) return <NotYours what="This class" />;
+  const views = [
+    { key: "picture", label: "Picture", icon: "board" as const, href: `/children/${classId}` },
+    { key: "topic", label: "By topic", icon: "table" as const, href: `/children/${classId}?view=topic` },
+    { key: "matrix", label: "Matrix", icon: "table" as const, href: `/children/${classId}?view=matrix` },
+  ];
+  if (sp.view === "topic" || sp.view === "matrix") return <ClassViews me={me} classId={classId} section={p.section} view={sp.view} q={sp as Record<string, string | undefined>} toggle={<ViewToggle current={sp.view} views={views} />} />;
   const domains = [...new Set(p.skills.map((s) => s.domain).filter(Boolean))].sort();
   const domain = domains.includes(sp.domain ?? "") ? sp.domain : undefined;
   const skills = p.skills.filter((s) => !domain || s.domain === domain);
@@ -98,6 +106,9 @@ export default async function Picture({ params, searchParams }: { params: Promis
         }
       >
         <ClassCountsLine counts={counts} />
+        <div className="mb-3">
+          <ViewToggle current="picture" views={views} />
+        </div>
         {p.skills.length === 0 ? (
           <>
             <EmptyState>Not seen yet. No child has been seen on a skill, so there is nothing more to show.</EmptyState>

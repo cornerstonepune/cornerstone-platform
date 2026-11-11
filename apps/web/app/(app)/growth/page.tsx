@@ -14,7 +14,7 @@ import { deadline } from "@/lib/deadline";
 import { classTopics } from "@/lib/queries-results";
 import { NOT_ASSESSED } from "@/components/standing";
 import { ChildrenView } from "./children-view";
-import { TopicsTable, type Open } from "./by-topic";
+import { TopicsTable, type Open } from "@/components/children/by-topic";
 
 type Props = { searchParams: Promise<Record<string, string | undefined>> };
 

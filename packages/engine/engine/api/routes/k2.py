@@ -4,6 +4,7 @@ it is worked out is `w3_read/k2_reads.py`. The site calls with the engine's key 
 models, so their schema (in /openapi.json) shows every field a screen can be given: no name, no "not willing", no
 internal label."""
 
+import datetime as dt
 from typing import Literal
 
 from fastapi import APIRouter, Depends, HTTPException
@@ -11,7 +12,7 @@ from pydantic import BaseModel, Field
 
 from engine.api.deps import get_conn, require_engine_key
 from engine.w2_print import educator_gate
-from engine.w3_read import child_history, k2_picture_reads, k2_reads, voice_intake, voice_store
+from engine.w3_read import child_history, k2_picture_reads, k2_reads, today_school, voice_intake, voice_store
 
 router = APIRouter(dependencies=[Depends(require_engine_key)])
 
@@ -60,6 +61,72 @@ class Counts(BaseModel):
 class Coordinator(BaseModel):
     rows: list[CoordinatorRow]
     counts: Counts
+
+
+class DraftRow(BaseModel):
+    fortnight: int
+    grade: str
+    section: str
+
+
+class LineRow(BaseModel):
+    grade: str
+    lines: int
+
+
+class SchoolDayCell(BaseModel):
+    grade: str
+    section: str
+    day: dt.date
+    state: Literal["done", "moved", "not_done", "holiday", "none"]
+
+
+class NewActivity(BaseModel):
+    code: str
+    name: str
+    subject: str | None
+    classes: list[str]
+
+
+class Ready(BaseModel):
+    children: int
+    children_with_consent: int
+    activities: int
+    activities_ready: int
+    materials: int
+    materials_with_quantity: int
+
+
+class Drafts(BaseModel):
+    count: int
+    rows: list[DraftRow]
+
+
+class NoQuantity(BaseModel):
+    count: int
+    rows: list[LineRow]
+
+
+class LastWeek(BaseModel):
+    cells: list[SchoolDayCell]
+    sessions_done: int
+    sessions_planned: int
+
+
+class NextWeek(BaseModel):
+    from_: dt.date = Field(alias="from")
+    new_activities: list[NewActivity]
+
+
+class TodaySchool(BaseModel):
+    # whole numbers and class codes only: no person, no rate, no ranking
+    clashes: int
+    drafts: Drafts
+    late_notes: int
+    materials_no_quantity: NoQuantity
+    last_week: LastWeek
+    next_week: NextWeek
+    ready: Ready
 
 
 class Class(Who):
@@ -177,6 +244,15 @@ def coordinator(body: Who, conn=Depends(get_conn, scope="function")):
     _on(conn)
     try:
         return k2_reads.coordinator(conn, body.actor)
+    except voice_store.Refused as no:
+        raise _refused(no) from no
+
+
+@router.post("/k2/today-school", response_model=TodaySchool, response_model_by_alias=True)
+def today_school_route(body: Who, conn=Depends(get_conn, scope="function")):
+    _on(conn)
+    try:
+        return today_school.school(conn, body.actor)
     except voice_store.Refused as no:
         raise _refused(no) from no
 

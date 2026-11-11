@@ -135,6 +135,7 @@
   /* ---------- HeatGrid, FortnightGrid ---------- */
   .b-heat { display: grid; grid-template-columns: 96px repeat(var(--cols), minmax(0, 1fr)); gap: 4px; }
   .b-heat .b-h { font-size: var(--text-label); color: var(--ink-muted); padding: 6px; }
+  a.b-hc { text-decoration: none; }
   .b-hc { display: flex; align-items: center; gap: var(--space-1); padding: 6px; border-radius: 8px; background: var(--cb); color: var(--c); font-size: var(--text-label); }
   .b-fgrid-box { overflow-x: auto; }
   .b-fgrid { display: grid; grid-template-columns: 64px repeat(var(--cols), minmax(150px, 1fr)); gap: 6px; }
