@@ -9,7 +9,7 @@ import postgres from "postgres";
 import { FAKE_CHILDREN, FAKE_STAFF } from "./fake-names";
 import { EDUCATOR, inventoryRows, signedInAs } from "./inventory-fixtures";
 import { loadInventory } from "./inventory/load";
-import { aClass } from "./rows";
+import { aClass, forgetPerson } from "./rows";
 
 const sql = postgres(process.env.DATABASE_URL!, { max: 1 });
 const tag = Math.random().toString(36).slice(2, 5).toUpperCase();
@@ -201,4 +201,31 @@ test("14. the Staff counts are the engine's whole numbers for the person's notes
   expect(after.text).not.toMatch(/\d\s*%/);
   // the page says "no score, no ranking", so the sentence is allowed; a rank, a score or an accuracy as a thing the tables show is not
   expect(after.tables).not.toMatch(/\b(rank|ranked|score|scored)\b|accuracy/i);
+});
+
+test("15. Add a person refuses a second add of the same email and a missing name, in words, and the address carries no name", async ({ page }) => {
+  const email = `u73-${Date.now()}@cornerstone.test`;
+  const add = async (name: string, address: string) => {
+    await page.goto("/setup/staff", { waitUntil: "networkidle" });
+    await page.getByRole("button", { name: "Add a person" }).click();
+    const form = page.getByRole("form", { name: "Add a person" });
+    await form.getByLabel("Name").fill(name);
+    await form.getByLabel("School email").fill(address);
+    await form.getByRole("button", { name: "Add and send a link" }).click();
+    await page.waitForURL(/\/setup\/staff\?(added|refused)=/);
+  };
+  try {
+    await add("Fake Newcomer", email);
+    await expect(page.getByRole("main")).toContainText("a link to set their own password is on its way");
+    expect(page.url()).not.toContain("Newcomer");
+    await add("Fake Newcomer", email);
+    await expect(page.getByRole("main")).toContainText("Nobody was added: that email is already on the staff list");
+    await add("Fake Other", "nobody@localhost"); // the browser accepts it; the school wants a full address
+    await expect(page.getByRole("main")).toContainText("Nobody was added: a name and a school email are both needed");
+    // the person is on the list once, with no password
+    const [{ n }] = await sql<{ n: number }[]>`select count(*)::int as n from pii.staff where email = ${email}`;
+    expect(n).toBe(1);
+  } finally {
+    await forgetPerson(sql, email); // taken off the list, as the other specs do; the rows are kept
+  }
 });

@@ -1467,6 +1467,10 @@
         {
           "label": "Find a person (search)",
           "says": "narrows the rows to a name"
+        },
+        {
+          "label": "Add a person",
+          "says": "opens a form: name, school email and role; Add and send a link puts the person on the list with no password and emails them a link to set their own"
         }
       ]
     },
