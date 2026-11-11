@@ -71,7 +71,7 @@ const row = (page: Page, text?: RegExp | string) => {
 };
 
 async function gotoClass(page: Page) {
-  await page.goto(`/papers?class=${SECTION}`);
+  await page.goto(`/children/assessments?class=${SECTION}&view=table`);
   await expect(page.getByRole("heading", { level: 1 }).first()).toHaveText(/Assessments/);
 }
 
