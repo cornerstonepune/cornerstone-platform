@@ -199,7 +199,7 @@ test("class results, an open topic, an open skill and a child's page each open w
   // to being no slower than the site's other most-used pages, as u65 holds What needs doing.
   const [{ classes }] = await sql<{ classes: number }[]>`select count(distinct section)::int as classes from child_now where active`;
   let others = 0;
-  if (classes >= 30) for (const u of ["/today", "/papers", "/capture/check"]) others = Math.max(others, await median(u));
+  if (classes >= 30) for (const u of ["/setup/needs-doing", "/papers", "/capture/check"]) others = Math.max(others, await median(u));
   for (const url of urls) {
     const ms = await median(url);
     console.log(`u71 | ${url} | ${ms} ms${others ? ` (the slowest other page: ${others} ms)` : ""}`);

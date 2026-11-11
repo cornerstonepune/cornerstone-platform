@@ -103,7 +103,7 @@ test.afterAll(async () => {
 });
 
 test("the menu is four groups, and only What needs doing carries the count of what waits", async ({ page }) => {
-  await page.goto("/today");
+  await page.goto("/setup/needs-doing");
   const menu = page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" });
   const names = await menu.getByRole("link").allInnerTexts();
   expect(names.map((n) => n.replace(/\s*\d[\d,]*$/, "").trim())).toEqual(GROUPS);
@@ -119,7 +119,7 @@ test("the menu is four groups, and only What needs doing carries the count of wh
 });
 
 test("What needs doing lists everything that waits as rows, and each row's button opens that one item", async ({ page }) => {
-  await page.goto(`/today?kind=classpaper&class=${SECTION}`);
+  await page.goto(`/setup/needs-doing?kind=classpaper&class=${SECTION}`);
   await expect(page.getByText(/For others|For you/)).toHaveCount(0);
 
   // the test's own class pack, waiting before it prints: its row opens the page that approves exactly that pack
@@ -132,25 +132,25 @@ test("What needs doing lists everything that waits as rows, and each row's butto
 
   // skills to approve: one row each, as many as the skills the rows say are waiting
   const [{ drafts }] = await sql<{ drafts: number }[]>`select count(*)::int as drafts from skill where status <> 'ratified'`;
-  await page.goto("/today?kind=skill");
+  await page.goto("/setup/needs-doing?kind=skill");
   const counted = (await page.locator("details[data-group] > summary [data-group-count]").allInnerTexts()).reduce((n, t) => n + Number(t.replace(/\D/g, "")), 0);
   expect(counted, "a row for every skill waiting").toBe(drafts);
   const skill = page.locator("tr[data-kind=skill]").first();
   if (drafts) {
     await skill.getByRole("link").click();
     await expect(page).toHaveURL(/\/skill-sets\/[A-Z0-9_.]+$/);
-    await page.goto("/today");
+    await page.goto("/setup/needs-doing");
   }
 
   // a topic not taught is a green row, "when ready": the school's choice, never counted as waiting
-  await page.goto("/today?kind=taught");
+  await page.goto("/setup/needs-doing?kind=taught");
   const [{ off }] = await sql<{ off: number }[]>`select count(*)::int as off from topic t where not exists (select 1 from child_now k where k.tenant_id = t.tenant_id and k.active and taught_in(t.tenant_id, t.code, k.section))`;
   const taught = await rows(page);
   expect(taught.every((r) => r.state === "whenReady"), "marking a topic taught is never red or amber").toBe(true);
   expect(taught.length > 0 || off === 0).toBe(true);
 
   // the test child's parent report, written and not approved: its row opens the reports of that class
-  await page.goto(`/today?kind=report&class=${SECTION}`);
+  await page.goto(`/setup/needs-doing?kind=report&class=${SECTION}`);
   const report = page.locator("tr[data-kind=report]").filter({ hasText: SECTION });
   await expect(report).toHaveCount(1);
   await expect(report).toContainText("Grade 2");
@@ -163,14 +163,14 @@ test("an educator not mapped to a class sees the rows of no class a coordinator 
   // one role for now (goals/ux9c-one-role.yaml): every decision is an educator's too; but since 27 Oct 2026 a class's work
   // is its own educators' and the coordinator's (goals/own_who_sees_answers.yaml), so one linked to no class sees the
   // school's work only: skills and the engine's questions
-  await page.goto("/today");
+  await page.goto("/setup/needs-doing");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("What needs doing");
   const coordinator = await rows(page);
   await expect(page.locator("[data-frame]").getByRole("link", { name: "How it works" }).first()).toBeVisible();
 
   await aPerson(sql, EDUCATOR);
   await signInAs(page, EDUCATOR.email);
-  await page.goto("/today");
+  await page.goto("/setup/needs-doing");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("What needs doing");
   const school = ["skill", "ask"];
   expect(await rows(page)).toEqual(coordinator.filter((r) => school.includes(r.kind)));
@@ -179,7 +179,7 @@ test("an educator not mapped to a class sees the rows of no class a coordinator 
 });
 
 test("weeks and classes on What needs doing are said in words, not codes", async ({ page }) => {
-  await page.goto(`/today?kind=classpaper&class=${SECTION}`);
+  await page.goto(`/setup/needs-doing?kind=classpaper&class=${SECTION}`);
   const main = page.getByRole("main");
   await expect(main.getByText(new RegExp(`Grade 2 · ${SECTION} · class practice · ${weekWords(WEEK)}`))).toBeVisible();
   expect(weekWords(WEEK)).toMatch(/^week of \d{1,2} [A-Z][a-z]{2}$/);

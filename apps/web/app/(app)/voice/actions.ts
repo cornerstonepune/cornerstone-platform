@@ -32,7 +32,7 @@ async function written(res: Promise<Response>, fallback: string): Promise<{ erro
     throw e;
   }
   if (!got.ok) return { error: await refusal(got, fallback) };
-  redirect("/today?open=notes&voice=saved");
+  redirect("/setup/needs-doing?open=notes&voice=saved");
 }
 
 export async function confirmNote(noteId: string, s: Sent): Promise<{ error: string } | void> {

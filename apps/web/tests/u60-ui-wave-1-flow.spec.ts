@@ -97,14 +97,14 @@ async function theBar(page: Page, doors: string[]) {
 
 test("an educator with one class and one subject: top menu, only hers, no Class or Subject boxes, no approve-all", async ({ browser }) => {
   const { context, page } = await asEducator(browser);
-  await open(page, "/today", /What needs doing/);
+  await open(page, "/setup/needs-doing", /What needs doing/);
   await theBar(page, DOORS);
   await expect(page.locator("#bar-subject, #bar-class, [data-viewing]"), "no universal Class or Subject selector").toHaveCount(0);
   // the bar carries sign out; the door's row of pages has the rest
   await expect(page.locator("[data-bar]").first().getByRole("button", { name: "Sign out" })).toBeVisible();
   await page.goto("/papers");
   for (const name of ["Papers to approve", "Check answers", "Class results"]) await expect(page.getByRole("navigation", { name: "Pages in this section" }).getByRole("link", { name }), name).toBeVisible();
-  await page.goto("/today");
+  await page.goto("/setup/needs-doing");
   // What needs doing: groups, each folded into a table of red/amber/green rows, one action on each row that opens that item
   await page.locator("details[data-group]").evaluateAll((els) => els.forEach((e) => ((e as HTMLDetailsElement).open = true)));
   const rows = page.locator(".data-table tbody tr[data-kind]");
@@ -129,7 +129,7 @@ test("an educator with one class and one subject: top menu, only hers, no Class 
 });
 
 test("an admin: the same top menu, and no Viewing control", async ({ page }) => {
-  await open(page, "/today", /What needs doing/);
+  await open(page, "/setup/needs-doing", /What needs doing/);
   await theBar(page, DOORS);
   await expect(page.locator("[data-viewing], #bar-subject, #bar-class")).toHaveCount(0);
   // a door's other pages are a row under the bar, not more items on it
@@ -199,9 +199,9 @@ async function wholePage(page: Page, path: string, title: RegExp, { filter = tru
 }
 
 test("What needs doing opens, and its first action leads on", async ({ page }) => {
-  await open(page, "/today", /What needs doing/);
+  await open(page, "/setup/needs-doing", /What needs doing/);
   await expect(page.locator("[data-ux=action] a, [data-ux=action] button").first()).toBeVisible();
-  await tablesRead(page, "/today");
+  await tablesRead(page, "/setup/needs-doing");
   await expect(page.locator("[data-filterbar]").first()).toBeVisible();
 });
 
@@ -292,7 +292,7 @@ test("Curriculum, Maths then English, and Staff and School", async ({ page }) =>
 });
 
 test("the flow is one chain: each page's next step opens the following page", async ({ page }) => {
-  const chain = ["/today", "/papers/approve", "/papers", "/capture", "/capture/check", "/growth"];
+  const chain = ["/setup/needs-doing", "/papers/approve", "/papers", "/capture", "/capture/check", "/growth"];
   for (const path of chain) {
     await page.goto(path);
     await expect(page.getByText("This page could not load"), path).toHaveCount(0);

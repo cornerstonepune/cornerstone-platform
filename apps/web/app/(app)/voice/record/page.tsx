@@ -30,7 +30,7 @@ export default async function RecordANote({ searchParams }: { searchParams: Prom
           {W.useForm}
         </Link>
       }
-      next={{ href: "/today?open=notes", label: W.groups.notes }}
+      next={{ href: "/setup/needs-doing?open=notes", label: W.groups.notes }}
     >
       {c ? <Recorder classId={c.id} say={activity ? W.record.sayActivity(activity) : W.record.say} form={form} /> : <ClassChoice my={my} href={(id) => `/voice/record?class=${id}`} />}
     </Screen>

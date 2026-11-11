@@ -152,8 +152,8 @@ export type Group = {
 };
 export const TODO_GROUPS: readonly Group[] = [
   // K2 first: a note is recorded after the activity and confirmed the same day (shown only while voice notes are on)
-  { key: "record", title: W.groups.record, of: ["class", "classes"], kinds: ["record"], home: "/today?open=record", titleOf: (ts) => (ts.every((t) => t.href.startsWith("/voice/form")) ? W.groups.form : W.groups.record) },
-  { key: "notes", title: W.groups.notes, of: ["to confirm", "to confirm"], kinds: ["note"], home: "/today?open=notes" },
+  { key: "record", title: W.groups.record, of: ["class", "classes"], kinds: ["record"], home: "/setup/needs-doing?open=record", titleOf: (ts) => (ts.every((t) => t.href.startsWith("/voice/form")) ? W.groups.form : W.groups.record) },
+  { key: "notes", title: W.groups.notes, of: ["to confirm", "to confirm"], kinds: ["note"], home: "/setup/needs-doing?open=notes" },
   { key: "skills", title: "Skills to approve", of: ["skill", "skills"], kinds: ["skill"], home: "/skill-sets/approve" },
   { key: "asks", title: "Questions to answer", of: ["question", "questions"], kinds: ["ask"], home: "/asks" },
   { key: "taught", title: "Topics to mark as taught", of: ["topic", "topics"], kinds: ["taught"], home: "/" },

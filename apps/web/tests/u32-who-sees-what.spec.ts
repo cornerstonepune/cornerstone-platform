@@ -107,7 +107,7 @@ test("a worksheet's print list is the educator's own children, and every class's
 });
 
 test("the coordinator is shown every decision and every class", async ({ page }) => {
-  await page.goto("/today");
+  await page.goto("/setup/needs-doing");
   await expect(page.getByRole("main")).toContainText("Skills to approve");
   // the menu carries a count on What needs doing alone: a row for each skill waiting and one for the questions
   expect(await badge(page, "Today"), "every skill waiting and the questions").toBeGreaterThanOrEqual((await waitingSkills()) + ((await waitingAsks(null)) > 0 ? 1 : 0));

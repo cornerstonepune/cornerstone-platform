@@ -54,7 +54,7 @@ test.beforeEach(async ({ page }) => {
 test("while voice notes are switched off no K2 group shows and every K2 address is not found", async ({ page }) => {
   const note = await aK2Note(sql, { klass, staff }, "Activity 904. Above 3.");
   await voiceSwitch(sql, false);
-  await page.goto("/today");
+  await page.goto("/setup/needs-doing");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("What needs doing");
   await expect(page.locator("[data-group=record], [data-group=notes]")).toHaveCount(0);
   // a page streams, so its status is 200 and it says so (as tests/s7-paper-from-library.spec.ts reads one); the recording is 404
@@ -68,7 +68,7 @@ test("while voice notes are switched off no K2 group shows and every K2 address 
 test("What needs doing carries Record a note and Notes to confirm, and a row opens its note", async ({ page }) => {
   await noNotesWaiting(sql, { klass, staff });
   const note = await aK2Note(sql, { klass, staff }, "Activity 904. Above 3, 7. Below 5. Absent 9. The rest did as expected.");
-  await page.goto("/today");
+  await page.goto("/setup/needs-doing");
   const record = page.locator("[data-group=record]");
   await expect(record.getByRole("link", { name: "Record a note" })).toBeVisible();
   const notes = page.locator("[data-group=notes]");
@@ -78,7 +78,7 @@ test("What needs doing carries Record a note and Notes to confirm, and a row ope
   await notes.locator(`a[data-action=note][href="/voice/notes/${note}"]`).click();
   await expect(page).toHaveURL(new RegExp(`/voice/notes/${note}$`));
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Confirm this note");
-  await page.goto("/today?open=record");
+  await page.goto("/setup/needs-doing?open=record");
   await expect(page.locator(`a[href="/voice/record?class=${klass}"]`).first()).toBeVisible();
   await shoot(page, "1-today");
 });
@@ -214,7 +214,7 @@ test("Record sends her recording and opens the note being read; a refused microp
 test("with recording off, the K2 educator fills the form: no Record, no microphone, no recording kept or played", async ({ page }) => {
   await voiceSwitch(sql, true, false);
   const note = await aK2Note(sql, { klass, staff }, "Activity 904. Above 3. The rest did as expected.");
-  await page.goto("/today?open=record");
+  await page.goto("/setup/needs-doing?open=record");
   const row = page.locator("[data-group=record]");
   await expect(row.locator(`a[href="/voice/form?class=${klass}"]`).first()).toBeVisible();
   await expect(page.locator('a[href^="/voice/record"]')).toHaveCount(0);

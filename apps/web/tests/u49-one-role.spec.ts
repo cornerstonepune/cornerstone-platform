@@ -33,7 +33,7 @@ test.beforeAll(async ({ browser }) => {
   const [{ code: draft }] = await sql<{ code: string }[]>`select code from skill order by status = 'ratified', code limit 1`;
   pages = [
     // a page that opens on the person's own grade is compared at "Every grade", its one tap
-    "/today", "/", "/papers", "/growth", "/asks", "/library?grade=all", "/worksheets?grade=all", "/worksheets/taxonomy", "/skill-sets/approve",
+    "/setup/needs-doing", "/", "/papers", "/growth", "/asks", "/library?grade=all", "/worksheets?grade=all", "/worksheets/taxonomy", "/skill-sets/approve",
     `/skill-sets/${draft}`, "/capture", "/capture/check", "/make", `/make/${OTHER}`, "/papers/approve", "/growth/reports",
     `/growth/class/${OTHER}`, `/growth/${other.Kavi}`, `/growth/${other.Kavi}/report`, "/workflows",
   ];
@@ -110,7 +110,7 @@ async function offered(page: Page, at: string, name: string): Promise<{ refused:
 // two people are read one after the other, never together: the page's counts are heavy and two at once ran the
 // database past its eight seconds. The names are the pages' own, the addresses those made in `beforeAll`.
 const NAMES = [
-  "/today", "/", "/papers", "/growth", "/asks", "/library", "/worksheets", "/worksheets/taxonomy", "/skill-sets/approve",
+  "/setup/needs-doing", "/", "/papers", "/growth", "/asks", "/library", "/worksheets", "/worksheets/taxonomy", "/skill-sets/approve",
   "a skill waiting", "/capture", "/capture/check", "/make", "/make of another class", "/papers/approve", "/growth/reports",
   "another class's growth", "a child of another class", "that child's report", "/workflows",
 ];
@@ -142,7 +142,7 @@ test("an educator takes a decision once the coordinator's alone: approving a ski
   const putBack = await aWaitingSkill(sql, waiting.code);
   const educator = await asEducator(browser);
   try {
-    await educator.goto("/today");
+    await educator.goto("/setup/needs-doing");
     await expect(educator.getByRole("main")).toContainText("Skills to approve");
     await expect(educator.locator("[data-frame]").getByRole("link", { name: "How it works" }), "the engineering map is theirs too").toBeVisible();
     await educator.goto(`/skill-sets/${waiting.code}`);

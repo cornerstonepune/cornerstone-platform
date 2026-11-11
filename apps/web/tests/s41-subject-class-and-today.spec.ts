@@ -75,7 +75,7 @@ type P = import("@playwright/test").Page;
 const find = (page: P) => page.getByRole("search", { name: "Find a child or paper" });
 
 test("every screen opens with the search in the bar, above the heading, and no Class or Subject box (goals/nav3_what_needs_doing.yaml)", async ({ page }) => {
-  for (const path of ["/today", "/", "/papers", "/growth", "/capture", "/worksheets", `/growth/${kids.Asha}`]) {
+  for (const path of ["/setup/needs-doing", "/", "/papers", "/growth", "/capture", "/worksheets", `/growth/${kids.Asha}`]) {
     await page.goto(path);
     await expect(page.locator("[data-viewing], #bar-subject, #bar-class"), path).toHaveCount(0);
     await expect(find(page).getByRole("combobox"), path).toBeVisible();
@@ -87,7 +87,7 @@ test("every screen opens with the search in the bar, above the heading, and no C
 });
 
 test("the search finds a child, an assessment and a paper by its code", async ({ page }) => {
-  await page.goto("/today");
+  await page.goto("/setup/needs-doing");
   const box = find(page).getByRole("combobox");
   const found = page.getByRole("listbox", { name: "Found" });
 
@@ -114,7 +114,7 @@ test("the search finds a child, an assessment and a paper by its code", async ({
 });
 
 test("Today opens on five lines of what the system knows this week, then the next actions", async ({ page }) => {
-  await page.goto(`/today?class=${SECTION}`);
+  await page.goto(`/setup/needs-doing?class=${SECTION}`);
   // folded under the list (goals/nav_teacher_scope_and_todo.yaml): opened to read
   const note = page.locator("details[data-know]");
   await note.locator("summary").click();
@@ -141,7 +141,7 @@ test("on a phone the bar and the heading are at the top and every tap is big eno
   const context = await browser.newContext({ storageState: SIGNED_IN, viewport: { width: 400, height: 800 } });
   const page = await context.newPage();
   try {
-    for (const path of ["/today", "/papers", "/growth", "/"]) {
+    for (const path of ["/setup/needs-doing", "/papers", "/growth", "/"]) {
       await page.goto(path);
       const top = (await page.getByRole("banner").first().boundingBox())!;
       expect(top.y, path).toBeLessThan(8);
@@ -156,7 +156,7 @@ test("on a phone the bar and the heading are at the top and every tap is big eno
       expect(await page.evaluate(() => document.documentElement.scrollWidth), path).toBeLessThanOrEqual(400);
     }
     // and the doors at the foot are each a big tap
-    await page.goto("/today");
+    await page.goto("/setup/needs-doing");
     for (const link of await page.locator("nav[data-bar=doors]").getByRole("link").all()) expect((await link.boundingBox())!.height).toBeGreaterThanOrEqual(44);
   } finally {
     await context.close();

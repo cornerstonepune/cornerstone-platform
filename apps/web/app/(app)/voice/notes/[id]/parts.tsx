@@ -20,8 +20,8 @@ export function Late({ draft, zone }: { draft: Draft; zone: string }) {
 }
 
 export async function Body({ draft, klass, grade, form, send, done, picker }: { draft: Draft; klass: string; grade?: string; form: { href: string; label: string }; send?: (s: Sent) => Promise<{ error: string } | void>; done?: { href: string; label: string }; picker?: boolean }) {
-  if (draft.status === "confirmed") return <EmptyState next={done ?? { href: "/today?open=notes", label: W.groups.notes }}>{W.confirm.done}.</EmptyState>;
-  if (draft.status === "left_unconfirmed") return <EmptyState next={{ href: "/today", label: W.back }}>{W.confirm.expired}</EmptyState>;
+  if (draft.status === "confirmed") return <EmptyState next={done ?? { href: "/setup/needs-doing?open=notes", label: W.groups.notes }}>{W.confirm.done}.</EmptyState>;
+  if (draft.status === "left_unconfirmed") return <EmptyState next={{ href: "/setup/needs-doing", label: W.back }}>{W.confirm.expired}</EmptyState>;
   if (draft.status === "received")
     return (
       <section className="panel grid justify-items-start gap-2 p-4" data-reading>

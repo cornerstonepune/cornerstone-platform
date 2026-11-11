@@ -22,7 +22,7 @@ test.afterAll(async () => {
 /** What the rows of one kind on What needs doing add up to: the "How many" of each (answers, questions, classes), or, for
  *  `rows`, how many rows there are (a topic's own rows are counted in its summary, which the table's first ten do not cap). */
 async function todo(page: Page, kind: string, by: "many" | "rows" = "many"): Promise<number> {
-  await page.goto(`/today?kind=${kind}`);
+  await page.goto(`/setup/needs-doing?kind=${kind}`);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("What needs doing");
   if (by === "rows") {
     // the group's own count on its line (a table shows ten rows a page)
@@ -36,7 +36,7 @@ async function todo(page: Page, kind: string, by: "many" | "rows" = "many"): Pro
 test("Today lists what waits on a person, under the tab where it is done, hidden from no one", async ({ page }) => {
   // a class of the test's own, so a topic is waiting to be taught whichever spec ran before this one (a shard may start with it)
   await aClass(sql, CLASS, "G3", ["Mehr", "Neel"]);
-  await page.goto("/today");
+  await page.goto("/setup/needs-doing");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("What needs doing");
   // the school's two educators are its only layer: no row is filed under someone else's name
   await expect(page.getByText(/For others|For you|No one on the staff list/)).toHaveCount(0);
@@ -48,7 +48,7 @@ test("Today lists what waits on a person, under the tab where it is done, hidden
   expect(open, "the engine has drafted questions to answer").toBeGreaterThan(0);
   expect(await todo(page, "ask")).toBe(open);
   // a topic is marked taught in its own row; its group's heading opens Curriculum
-  await page.goto("/today?kind=taught");
+  await page.goto("/setup/needs-doing?kind=taught");
   await expect(page.locator("tr[data-kind=taught]").first().getByRole("button", { name: "Mark as taught" })).toBeVisible();
   await expect(page.locator("details[data-group=taught] a[data-group-home]")).toHaveAttribute("href", "/");
 });
@@ -60,7 +60,7 @@ test("an educator switches a topic on, in their name, and its skills are on Curr
   expect(topic.taught, "division waits for an educator's word").toBe(false);
   const said = () => sql`select bool_and(taught) as taught, min(taught_by) as taught_by from (select sc.tenant_id, sc.label as section, w.key as skill_set_code, (w.value ->> 'taught')::boolean as taught, w.value ->> 'by' as taught_by from school_class sc cross join jsonb_each(sc.taught) w) class_skill where section = ${CLASS} and skill_set_code in (select code from skill where topic_code = 'DIV')`;
   try {
-    await page.goto(`/today?kind=taught&subject=NUM&class=${CLASS}`);
+    await page.goto(`/setup/needs-doing?kind=taught&subject=NUM&class=${CLASS}`);
     const row = page.locator(`tr[data-kind=taught][data-shows="${topic.name}"]`);
     await expect(row).toContainText(topic.name);
     // with one class on the roll there is no choice to make, and so no box

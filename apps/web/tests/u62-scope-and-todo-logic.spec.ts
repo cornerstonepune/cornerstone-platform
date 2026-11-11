@@ -132,7 +132,7 @@ test.describe("the menu", () => {
     expect(doorOf("/taught")).toBeUndefined();
     expect(doorOf("/growth/class/2B")?.label).toBe("Children");
     expect(pagesOf(doorOf("/papers")).map((t) => t.label)).toContain("Papers to approve");
-    expect(pagesOf(doorOf("/today")).length).toBeGreaterThan(0);
+    expect(pagesOf(doorOf("/setup/needs-doing")).length).toBeGreaterThan(0);
   });
 });
 

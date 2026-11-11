@@ -57,7 +57,7 @@ async function kind(page: Page, k: string): Promise<{ rows: number; n: number }>
   // the rows are paged ten at a time: every page of the one group the kind opens
   const many: string[] = [];
   for (let at = 1; ; at++) {
-    await page.goto(`/today?kind=${k}&page=${at}`);
+    await page.goto(`/setup/needs-doing?kind=${k}&page=${at}`);
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("What needs doing");
     many.push(...(await page.locator(`tr[data-kind=${k}] td[data-label="How many"]`).allInnerTexts()));
     if (!(await page.getByRole("link", { name: "Later →" }).count())) break;
@@ -77,7 +77,7 @@ test.afterAll(async () => {
 });
 
 test("the menu is the teacher's week, and says where they are", async ({ page }) => {
-  await page.goto("/today");
+  await page.goto("/setup/needs-doing");
   const menu = page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" });
   // four doors (lib/menu.ts); the one count of what waits follows the first name
   await expect(menu.getByRole("link")).toHaveText([/^Today/, /^Timetable/, /^Children/, /^Setup/]);
@@ -93,7 +93,7 @@ test("the menu is the teacher's week, and says where they are", async ({ page })
 });
 
 test("today lists everything waiting on a teacher, each with its count and one click to act", async ({ page }) => {
-  await page.goto(`/today?kind=classpaper&class=${SECTION}`);
+  await page.goto(`/setup/needs-doing?kind=classpaper&class=${SECTION}`);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("What needs doing");
 
   // the class papers the engine proposed for the test's class wait for a teacher before they print
@@ -118,7 +118,7 @@ test("today lists everything waiting on a teacher, each with its count and one c
 
   // the skills that wait for an approval: one row each, every skill waiting, taught or not (goals/ny1-needs-you.yaml)
   const [{ drafts }] = await sql<{ drafts: number }[]>`select count(*)::int as drafts from skill s where s.status <> 'ratified'`;
-  await page.goto("/today?kind=skill");
+  await page.goto("/setup/needs-doing?kind=skill");
   const counted = (await page.locator("details[data-group] > summary [data-group-count]").allInnerTexts()).reduce((t, x) => t + Number(x.replace(/\D/g, "")), 0);
   expect(counted).toBe(drafts);
   if (drafts > 0) {
@@ -137,19 +137,19 @@ test("what has nothing waiting says so, and each count is the page's own", async
   await expect(page.getByRole("region", { name: "Answers to check" }).getByTestId("to-sign")).toHaveText(String(sign.rows));
 
   // what has nothing waiting is not listed: a kind with no row says so, and every number shown is above zero
-  await page.goto("/today");
+  await page.goto("/setup/needs-doing");
   for (const n of await page.locator("td[data-label=\"How many\"]").allInnerTexts()) if (/\d/.test(n)) expect(Number(n.replace(/\D/g, ""))).toBeGreaterThan(0);
-  await page.goto("/today?kind=empty");
+  await page.goto("/setup/needs-doing?kind=empty");
   if (!(await page.locator("tr[data-kind=empty]").count())) await expect(page.getByText(/Nothing waits on you/)).toBeVisible();
 });
 
 test("Today has the one filter row: a place and what waits narrow its lines (goals/uxn10-today.yaml)", async ({ page }) => {
-  await page.goto("/today");
+  await page.goto("/setup/needs-doing");
   await expect(page.locator("[data-filterbar]")).toBeVisible();
-  await page.goto("/today?group=skills");
+  await page.goto("/setup/needs-doing?group=skills");
   await expect(page.locator("[data-active-filters]")).toContainText("What: Skills to approve");
   await expect(page.locator("tr[data-kind]:not([data-kind=skill])")).toHaveCount(0);
-  await page.goto("/today?subject=NUM");
+  await page.goto("/setup/needs-doing?subject=NUM");
   await expect(page.locator("[data-active-filters]")).toContainText("Subject: Maths");
   for (const where of await page.locator("td[data-label=Where]").allInnerTexts()) expect(where).not.toMatch(/^English/);
 });

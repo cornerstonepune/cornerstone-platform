@@ -38,7 +38,7 @@ export default async function ConfirmNote({ params }: { params: Promise<{ id: st
           {W.useForm}
         </Link>
       }
-      next={{ href: "/today?open=notes", label: W.groups.notes }}
+      next={{ href: "/setup/needs-doing?open=notes", label: W.groups.notes }}
     >
       <div className="mb-4 flex flex-wrap items-center gap-3 text-[14px]" data-note-head>
         <span className="font-medium">{klass}</span>

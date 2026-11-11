@@ -381,7 +381,7 @@ test("Capture & Mark says how the reader is doing, with the database's own numbe
 
 test("the queue is on the menu, and fits a phone", async ({ page }) => {
   // the queue is a page of Assessments, and What needs doing has a row that opens it whenever an answer waits
-  await page.goto("/today");
+  await page.goto("/setup/needs-doing");
   await page.getByRole("heading", { level: 1, name: "What needs doing" }).waitFor();
   await page.goto("/capture/check");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Check answers");

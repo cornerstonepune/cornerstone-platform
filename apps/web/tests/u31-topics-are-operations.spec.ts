@@ -53,7 +53,7 @@ test("curriculum lists the six topics, and a class is taught a topic from its ro
       select count(*)::int as n from skill s
       where s.topic_code = 'MUL' and skill_taught_in(s.tenant_id, s.code, ${CLASS})`;
     expect(left[0].n, "not one multiplication skill is taught in the class now").toBe(0);
-    await page.goto(`/today?kind=taught&subject=NUM&class=${CLASS}`);
+    await page.goto(`/setup/needs-doing?kind=taught&subject=NUM&class=${CLASS}`);
     const again = page.locator('tr[data-kind=taught][data-shows="Multiplication"]');
     if (await again.getByLabel("Class taught Multiplication").count()) await again.getByLabel("Class taught Multiplication").selectOption(CLASS);
     await again.getByRole("button", { name: "Mark as taught" }).click();

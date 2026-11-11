@@ -33,7 +33,7 @@ export default async function TheForm({ searchParams }: { searchParams: Promise<
           </Link>
         ) : null
       }
-      next={{ href: "/today", label: W.back }}
+      next={{ href: "/setup/needs-doing", label: W.back }}
     >
       {c ? <FormBoard id={c.id} grade={c.grade} words={c.words} actor={me.email} today={today} /> : <ClassChoice my={my} href={(id) => `/voice/form?class=${id}`} />}
     </Screen>

@@ -39,7 +39,7 @@ export async function SchoolToday({ me }: { me: Session }) {
     <Screen stage={`${dayWords(today)} · every class`} title="Today, the school" purpose="What waits on you, each with its own button. Then the week ahead." action={<p className="font-medium">{waiting.length ? `${many(left.length, "note")} left unconfirmed wait on you.` : "Nothing waits on you."}</p>} next={{ href: open(DOORS.timetable()) ?? "/educator/week", label: "Fortnight" }} rail={<div className="[&_[data-rail]_ul]:gap-2"><Rail edges={edges} /></div>}>
       <AttentionStrip tiles={tiles} />
       <div className="my-4">
-        {waiting.length ? <DataTable label="What waits on you" columns={COLUMNS} rows={waiting} rowKey={(r) => r.key} more={{ page: 1, href: () => "/today/new" }} /> : <EmptyState>Nothing waits on you.</EmptyState>}
+        {waiting.length ? <DataTable label="What waits on you" columns={COLUMNS} rows={waiting} rowKey={(r) => r.key} more={{ page: 1, href: () => "/today" }} /> : <EmptyState>Nothing waits on you.</EmptyState>}
       </div>
     </Screen>
   );

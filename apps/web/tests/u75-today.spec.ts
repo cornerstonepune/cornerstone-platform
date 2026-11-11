@@ -79,11 +79,11 @@ test.describe("the page", () => {
   });
 
   test("the coordinator is given the school's Today, the educator the educator's, and neither is given the other's", async ({ page, browser }) => {
-    await page.goto("/today/new");
+    await page.goto("/today");
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("Today, the school");
     const mine = await signedInAs(browser, "educator", { width: 1440, height: 900 });
     const p = await mine.newPage();
-    await p.goto("/today/new");
+    await p.goto("/today");
     await expect(p.getByRole("heading", { level: 1 })).toHaveText("Today");
     await mine.close();
   });
@@ -91,14 +91,14 @@ test.describe("the page", () => {
   test("an educator sees the periods of the class their grant names, in time order; the other educator sees none of them", async ({ browser }) => {
     const mine = await as(browser, TEACHER.email);
     const p = await mine.newPage();
-    await p.goto(`/today/new?day=${MONDAY}`);
+    await p.goto(`/today?day=${MONDAY}`);
     const times = await p.locator("[data-block=PeriodRow] .b-t").allTextContents();
     expect(times.length).toBeGreaterThan(0);
     expect([...times].sort()).toEqual(times);
     await mine.close();
     const other = await as(browser, OTHER.email);
     const q = await other.newPage();
-    await q.goto(`/today/new?day=${MONDAY}`);
+    await q.goto(`/today?day=${MONDAY}`);
     await expect(q.locator("[data-block=PeriodRow]")).toHaveCount(0);
     await expect(q.getByText(/No (sessions|timetable)/)).toBeVisible();
     await other.close();
@@ -107,7 +107,7 @@ test.describe("the page", () => {
   test("the tiles and the board's lanes count the same rows, and an empty lane says so in words", async ({ browser }) => {
     const mine = await as(browser, TEACHER.email);
     const p = await mine.newPage();
-    await p.goto(`/today/new?view=board&day=${MONDAY}`);
+    await p.goto(`/today?view=board&day=${MONDAY}`);
     for (const [lane, state] of [["doNow", "do now"], ["doSoon", "this week"], ["done", "done"]] as const) {
       const n = Number(await p.locator(`[data-lane="${lane}"] .b-count`).innerText());
       const tile = Number(await p.locator(".b-att", { hasText: new RegExp(`^\\d+\\s*${state}`, "i") }).locator(".b-n").innerText());
@@ -119,12 +119,12 @@ test.describe("the page", () => {
   });
 
   test("neither Today shows a count of skills to approve, and the school's names no person's rank", async ({ page, browser }) => {
-    await page.goto("/today/new");
+    await page.goto("/today");
     await expect(page.locator("main")).not.toContainText(/skills? to approve/i);
     await expect(page.locator("main")).not.toContainText(/\b(rank|ranking|score|leaderboard|top|bottom)\b/i);
     const mine = await signedInAs(browser, "educator", { width: 1440, height: 900 });
     const p = await mine.newPage();
-    await p.goto("/today/new");
+    await p.goto("/today");
     await expect(p.locator("main")).not.toContainText(/skills? to approve/i);
     await mine.close();
   });

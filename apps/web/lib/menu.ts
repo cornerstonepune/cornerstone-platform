@@ -20,9 +20,8 @@ export const GROUPS: readonly Door[] = [
     icon: "today",
     screen: "today-educator",
     pages: [
-      { href: "/today", label: "What needs doing", match: ["/today", "/voice", "/notes", "/record", "/period"] },
+      { label: "Today", href: "/today", match: ["/today", "/voice", "/notes", "/record", "/period"], guide: false },
       { label: "Your day", href: "/educator", match: ["/educator"], guide: false },
-      { label: "Today, new look", href: "/today/new", match: ["/today/new"], guide: false },
     ],
   },
   {
@@ -63,6 +62,8 @@ export const GROUPS: readonly Door[] = [
     screen: "setup",
     setup: true,
     pages: [
+      // What needs doing moved here from Today (UI-7b): its controls (a topic taught, the groups of tasks) are not on Today's screens
+      { href: "/setup/needs-doing", label: "What needs doing", match: ["/setup/needs-doing"] },
       { href: "/", label: "Curriculum", match: ["/", "/curriculum", "/skill-sets", "/worksheets", "/asks", "/educator/activity", "/setup"] },
       // the new screens (UI-11), beside the old pages until those are retired one at a time (UI-11b); then these take the old names
       { label: "All the curriculum", href: "/setup/curriculum", match: ["/setup/curriculum"], guide: false },

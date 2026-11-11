@@ -57,13 +57,13 @@ async function open(page: Page, url: string) {
 }
 
 test("the top bar has no Viewing, Class or Subject control, for a coordinator or an educator, and an educator still sees only her own class", async ({ page, browser }) => {
-  for (const url of ["/today", "/papers", "/growth"]) {
+  for (const url of ["/setup/needs-doing", "/papers", "/growth"]) {
     await open(page, url);
     await expect(page.locator("[data-viewing], #bar-subject, #bar-class"), url).toHaveCount(0);
     await expect(page.getByRole("banner"), url).not.toContainText("Viewing");
   }
   const { context, page: her } = await asEducator(browser);
-  await open(her, "/today?open=generate");
+  await open(her, "/setup/needs-doing?open=generate");
   await expect(her.locator("[data-viewing], #bar-subject, #bar-class")).toHaveCount(0);
   const where = await her.locator("td[data-label=Where]").allInnerTexts();
   expect(where.length, "she has rows").toBeGreaterThan(0);
@@ -72,7 +72,7 @@ test("the top bar has no Viewing, Class or Subject control, for a coordinator or
 });
 
 test("What needs doing is a short list of folded groups in the order the work happens, each opening into its own table with no approve-all", async ({ page }) => {
-  await open(page, "/today");
+  await open(page, "/setup/needs-doing");
   const groups = page.locator("details[data-group]");
   const keys = await groups.evaluateAll((els) => els.map((e) => e.getAttribute("data-group")!));
   expect(keys.length, "a short list of kinds of work").toBeGreaterThanOrEqual(3);
@@ -104,7 +104,7 @@ test("What needs doing is a short list of folded groups in the order the work ha
 
 test("every group heading and every row opens a page that exists and shows that item", async ({ page }) => {
   test.setTimeout(240_000);
-  await open(page, "/today");
+  await open(page, "/setup/needs-doing");
   const links = await page.evaluate(() => {
     const out: { href: string; shows: string | null; what: string }[] = [];
     for (const g of document.querySelectorAll("details[data-group]")) {
@@ -135,7 +135,7 @@ test("every group heading and every row opens a page that exists and shows that 
   }
   // a topic is marked taught in its own row, and the page comes back showing it done
   const { context, page: her } = await asEducator(page.context().browser()!);
-  await open(her, "/today?open=taught");
+  await open(her, "/setup/needs-doing?open=taught");
   const row = her.locator("tr[data-kind=taught]").first();
   await expect(row, "a topic waiting to be marked taught").toBeVisible();
   const topic = (await row.getAttribute("data-shows"))!;
@@ -146,18 +146,18 @@ test("every group heading and every row opens a page that exists and shows that 
 });
 
 test("the queue-shrinking trend is off What needs doing, its data and function kept, and parked in the notes", async ({ page }) => {
-  await open(page, "/today?open=answers");
+  await open(page, "/setup/needs-doing?open=answers");
   await expect(page.locator("main")).not.toContainText(/queue shrinking/i);
   const root = path.resolve(__dirname, "..");
   expect(readFileSync(path.join(root, "lib/queries-today.ts"), "utf8"), "the data function is kept").toMatch(/queueByWeek/);
-  expect(existsSync(path.join(root, "app/(app)/today/shrinking.tsx")), "the part is kept, unused, to be placed on Results or Setup").toBe(true);
+  expect(existsSync(path.join(root, "app/(app)/setup/needs-doing/shrinking.tsx")), "the part is kept, unused, to be placed on Results or Setup").toBe(true);
   const note = readFileSync(path.resolve(root, "../../docs/notes/nav3-what-needs-doing.md"), "utf8");
   expect(note).toMatch(/Parked/);
   expect(note).toMatch(/Is the queue shrinking/);
 });
 
 test("Teaching is not in the menu and its old address opens What needs doing", async ({ page }) => {
-  await open(page, "/today");
+  await open(page, "/setup/needs-doing");
   const top = page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" }).getByRole("link");
   const names = (await top.allInnerTexts()).map((n) => n.replace(/\s*\d[\d,]*$/, "").trim());
   expect(names).not.toContain("Teaching");
@@ -185,13 +185,13 @@ test("What needs doing opens in under a second, as the other pages do", async ({
     return ms.sort((a, b) => a - b)[1];
   };
   const times: Record<string, number> = {};
-  for (const url of ["/today", "/papers", "/growth", "/", "/capture/check", "/skill-sets/approve"]) times[url] = await median(url);
+  for (const url of ["/setup/needs-doing", "/papers", "/growth", "/", "/capture/check", "/skill-sets/approve"]) times[url] = await median(url);
   test.info().annotations.push({ type: "load time, ms (median of 3, warm)", description: JSON.stringify(times) });
   console.log("load time ms", JSON.stringify(times));
   // On the seeded copy, one second (Nimish: nothing slow). Once the other specs have filled the copy with test classes every
   // page pays the menu's count alike (the layout's one query set), so there the page is held to being no slower than the rest.
   const [{ classes }] = await sql<{ classes: number }[]>`select count(distinct section)::int as classes from child_now where active`;
-  const others = Math.max(...Object.entries(times).filter(([u]) => u !== "/today").map(([, ms]) => ms));
-  if (classes < 30) expect(times["/today"], "a seeded copy").toBeLessThan(1000);
-  expect(times["/today"], "no slower than the slowest other page").toBeLessThanOrEqual(others * 1.25);
+  const others = Math.max(...Object.entries(times).filter(([u]) => u !== "/setup/needs-doing").map(([, ms]) => ms));
+  if (classes < 30) expect(times["/setup/needs-doing"], "a seeded copy").toBeLessThan(1000);
+  expect(times["/setup/needs-doing"], "no slower than the slowest other page").toBeLessThanOrEqual(others * 1.25);
 });
