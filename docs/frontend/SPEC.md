@@ -662,7 +662,7 @@ Main action: a child · Next step: the skill
 Data: child_skill_state (kind 'observed' for K2, 'written' for grades 1–4) for the class by skill; flow_run (the nightly graph run's row) finished_at for the date; evidence_event for clusters
 Empty: No child seen yet: the grid of dashed squares with 'not seen yet, nothing more' · Phone: 3 columns of squares (a name and a state word do not fit a 44 px square; SPEC §2 rule 10)
 Folds in: /growth (Class results), /growth/class/[section]
-Every control on the screen (14), and what the test does with each:
+Every control on the screen (17), and what the test does with each:
 - **filter** skill
 - **filter** domain
 - **peek** each square (and each child chip in a cluster): opens ChildPeek for that child
@@ -677,6 +677,9 @@ Every control on the screen (14), and what the test does with each:
 - **filter** group by (state on this skill / class; a heading and a count per group)
 - **button** peek: Close: closes ChildPeek; focus returns to the child that opened it
 - **link** peek: Open the child → Where this child is (`/children/[class]/[roll]`) (the one way from a list to the child's own page)
+- **tab** Picture (the class picture; the three views of a class are tabs of this screen (UI-3e, carrying /growth and /growth/class/[section]))
+- **tab** By topic (topics as rows: who is secure, practising or needs help; a topic opens its skills, a skill its children)
+- **tab** Matrix (each child against each topic; a topic opens its skills)
 Done when (on top of the ten generic checks):
 - each square shows the Sr. No. and the child's name read from pii by child_id, and no photo (DOM scan)
 - the stack bar's counts equal the squares by state
@@ -1102,7 +1105,7 @@ Every control on the screen (11), and what the test does with each:
 - **filter** search
 - **row** each question row → {the question as it prints} (`/setup/question-bank/[key]`)
 - **link** page: Later → → Question bank (`/setup/question-bank`)
-- **fold** Statistics (counts and worksheets by taxonomy)
+- **fold** Statistics (counts and worksheets by topic)
 - **link** rail: a skill → the skill's name (`/setup/skills/[code]`)
 Done when (on top of the ten generic checks):
 - statistics and taxonomy sit behind the details link, not on the first view (rule 8)
@@ -1140,7 +1143,7 @@ Done when (on top of the ten generic checks):
 #### Staff and classes `/setup/staff`
 Who: coordinator · Phase: Core · Backend: CP-1 · CP-3 · Old page today: yes · Slice: UI-5
 Eyebrow: This fortnight
-Purpose: Who teaches which class, and whole counts the database can stand behind. No score, no ranking: the school decides what they mean.
+Purpose: Who teaches which class, and whole counts you can rely on. No score, no ranking: the school decides what they mean.
 Blocks, in order:
 - **DataTable**: role · class · sessions done of planned · notes confirmed · notes late · lines accepted / changed / removed; each row opens the person's grants
 - **Details**: a person's grants: role, class, subject, from, to; Add a grant
