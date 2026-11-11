@@ -54,7 +54,7 @@ async function activityRows(grades: Grades): Promise<CRow[]> {
     levels: r.levels,
     fill: { school: r.school, drafted: r.drafted, person: r.person, empty: r.empty },
     status: r.drafted ? "drafted" : "complete",
-    href: `/curriculum/fill/${r.code}`,
+    href: `/setup/activities/${r.code}`,
   }));
 }
 
@@ -77,7 +77,7 @@ async function skillRows(grades: Grades, scope: Scope, kBand: string): Promise<C
         levels: levels.length,
         fill: { school: approved, drafted: levels.length - approved, person: 0, empty: 0 },
         status: approved === levels.length ? ("complete" as const) : ("waiting" as const),
-        href: `/skill-sets/${s.code}`,
+        href: `/setup/skills/${s.code}`,
       };
     });
 }

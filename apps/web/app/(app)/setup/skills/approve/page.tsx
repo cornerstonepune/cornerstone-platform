@@ -56,7 +56,7 @@ export default async function SkillsToApprove({ searchParams }: { searchParams: 
       cell: (x) => (
         <span className="flex items-center gap-2">
           <KindTile kind="skill" />
-          <Link href={`/skill-sets/${x.code}`} data-row-link>
+          <Link href={`/setup/skills/${x.code}`} data-row-link>
             {x.name}
           </Link>
         </span>

@@ -95,7 +95,7 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
   ];
 
   const firstDraft = drafts[0];
-  const draftHref = firstDraft ? `/curriculum/fill/${firstDraft.code}` : null;
+  const draftHref = firstDraft ? `/setup/activities/${firstDraft.code}` : null;
   const shownOffers = offers.slice(0, 10);
   const had = await linked([...new Set(shownOffers.map((o) => o.activity.code))]);
   const offerColumns: Column<(typeof offers)[number]>[] = [

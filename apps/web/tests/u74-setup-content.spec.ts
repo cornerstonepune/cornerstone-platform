@@ -112,7 +112,7 @@ test.describe("Curriculum", () => {
     const row = page.locator(`[data-activity-row]`).filter({ hasText: "Placeholder activity 3" }).first();
     await expect(row).toBeVisible();
     await row.click();
-    await expect(page).toHaveURL(new RegExp(`/curriculum/fill/${k2code(3)}`));
+    await expect(page).toHaveURL(new RegExp(`/setup/activities/${k2code(3)}`));
   });
 
   test("one list carries activities (K2) and skills (grades 1–4) under one filter row", async ({ page }) => {
