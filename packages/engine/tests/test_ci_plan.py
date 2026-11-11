@@ -142,6 +142,13 @@ def test_3_the_screens_own_documents_are_read_by_no_engine_test():
     # the wireframes stay documents, and the folder's other files are the website's
     assert jobs(files=["docs/frontend/wireframes/staff.html"]) == FAST
     assert jobs(files=["docs/frontend/SPEC.md", "bin/check"]) == FULL
+    # the engine and the schema still run everything, whatever else the change holds
+    for engine_or_schema in (
+        "packages/engine/engine/cli.py",
+        "supabase/migrations/20261105000000_x.sql",
+        "supabase/seed/levels.json",
+    ):
+        assert jobs(files=["docs/frontend/SPEC.md", engine_or_schema]) == FULL, engine_or_schema
     # a locked proof (specs/CP-*) is read by tests, and a front-end slice's spec (specs/UI-*) by none
     assert jobs(files=["specs/CP-7/proofs/cp7_world.py"]) == FULL
     assert (
