@@ -6,9 +6,8 @@ import { EmptyState } from "@/components/empty-state";
 import { PeekChip, PeekHost } from "@/components/peek-names";
 import { Rail, Screen, type Edge } from "@/components/app-frame";
 import { StackBar } from "@/components/stack-bar";
-import type { OutcomeState } from "@/components/outcome-states";
+import { outcomeWords, type OutcomeState } from "@/components/outcome-states";
 import { requireStaff } from "@/lib/auth";
-import { sql } from "@/lib/db";
 import { pageOf } from "@/lib/educator/data";
 import { childrenByIds } from "@/lib/notes-loop";
 import { lastTime, sessionOf } from "@/lib/period";
@@ -33,7 +32,6 @@ export default async function Period({ params }: { params: Promise<{ id: string 
   const klass = classWords(c);
   const a = s.activity;
   const page = a ? await pageOf(me, a.code).catch(() => null) : null;
-  const words = Object.fromEntries((await sql<{ code: string; words: string }[]>`select code, words from observation_outcome`).map((r) => [r.code, r.words]));
   const last = a ? await lastTime(s.class_id, a.code, s.day) : null;
   const named = last ? await childrenByIds(me, last.named.flatMap((n) => n.children)) : {};
   const objective = page?.parts.find((p) => p.part === "objective");
@@ -81,11 +79,11 @@ export default async function Period({ params }: { params: Promise<{ id: string 
               <h2 className="text-[16px]">{last ? `Last time this ran, ${last.day}` : "Last time this ran"}</h2>
               {last ? (
                 <>
-                  <StackBar parts={OUTCOMES.map(([k, state]) => ({ state, n: last.counts[k] ?? 0, words: words[k] ?? k }))} />
+                  <StackBar parts={OUTCOMES.map(([k, state]) => ({ state, n: last.counts[k] ?? 0, words: outcomeWords(k) }))} />
                   {last.named.map((n) =>
                     n.children.length ? (
                       <div key={n.outcome} className="grid gap-1" data-named={n.outcome}>
-                        <span className="text-[13px] text-[var(--ink-muted)]">{words[n.outcome] ?? n.outcome}</span>
+                        <span className="text-[13px] text-[var(--ink-muted)]">{outcomeWords(n.outcome)}</span>
                         <ul className="b-nchips">
                           {n.children.flatMap((cid) => (named[cid] ? [<li key={cid}><PeekChip kid={{ ...named[cid], href: `/children/${named[cid].classId}/${Number(named[cid].no)}`, classId: named[cid].classId, roll: String(Number(named[cid].no)) }} /></li>] : []))}
                         </ul>

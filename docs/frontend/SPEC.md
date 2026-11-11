@@ -788,7 +788,7 @@ Main action: the step's action · Next step: Assessments
 Data: sheet/paper rows, counts per step (Counts), prescriptions and reasons, approval ledger
 Empty: No copies yet · Phone: stepper wraps; the table scrolls sideways in its own box
 Folds in: /papers/approve, /papers/card, /papers/review/[qr]
-Every control on the screen (16), and what the test does with each:
+Every control on the screen (21), and what the test does with each:
 - **link** Open the skill → the skill's name (`/setup/skills/[code]`)
 - **field** Change the level (a row, before print): Easy / Medium / Hard / Advance; the row's reason updates; kept as an override with who
 - **button** Approve the pack: approval row for this pack only; the stepper moves to Approved; Print appears; the rows' Change the level disappears
@@ -805,6 +805,11 @@ Every control on the screen (16), and what the test does with each:
 - **upload** capture: Photo: a scan of this assessment's paper; the QR must belong to it, else a message
 - **field** rename: name this assessment (the built name shows until a name is chosen)
 - **button** Save the name: the name is the educator's own and is kept as a row of the history log, the older names stay
+- **field** Why the level changes (a row, before print) (required; kept with the override and who made it)
+- **button** Change this child (the level and the reason are kept as an override on this child's prescription; nothing else moves (proved in u76-assessment-controls: it needs a week the engine prescribed))
+- **field** Day it was given (printed papers) (defaults to the day it was last said, else today; never later than today)
+- **button** Given on: the day is kept by the engine as a row of its own, with who said it; the screen says it was given
+- **button** Away: hold it for later (on a printed copy; the same button then reads Back: count as missing)
 Done when (on top of the ten generic checks):
 - Approve acts on this pack only; no control acts on more than one pack or more than one row
 - the stepper's amber step equals the status word in the list

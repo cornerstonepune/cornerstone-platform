@@ -815,6 +815,21 @@
         },
         {
           "label": "Save the name"
+        },
+        {
+          "label": "Why the level changes (a row, before print)"
+        },
+        {
+          "label": "Change this child"
+        },
+        {
+          "label": "Day it was given (printed papers)"
+        },
+        {
+          "label": "Given on"
+        },
+        {
+          "label": "Away: hold it for later"
         }
       ]
     },

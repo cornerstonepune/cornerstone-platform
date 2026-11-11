@@ -35,6 +35,7 @@ from engine.api.routes import (
     reports,
     runs,
     samples,
+    staff,
     timetable,
     timetable_hand,
     timetable_rules,
@@ -87,6 +88,7 @@ app.include_router(page.router)
 app.include_router(voice.router)
 app.include_router(voice.keyed)
 app.include_router(reports.router)
+app.include_router(staff.router)
 app.include_router(materials.keyed)
 app.include_router(materials_school.keyed)
 
