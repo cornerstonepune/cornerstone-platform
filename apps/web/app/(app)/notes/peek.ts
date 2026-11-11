@@ -6,6 +6,7 @@ import { EngineDown, engineSend } from "@/lib/engine";
 import { schoolZone } from "@/lib/school-clock";
 import { voiceOn } from "@/lib/voice";
 import { outcomeWords } from "@/components/outcome-states";
+import { staffList } from "@/lib/queries";
 import type { Seen } from "@/components/timeline";
 
 // The history under a child in ChildPeek (SPEC §5): what was observed, what evidence stands and the papers given, newest first,
@@ -29,7 +30,10 @@ export async function peekHistory(classId: string, roll: string): Promise<Seen[]
   const { entries } = (await res.json()) as { entries: Entry[] };
   const when = whenIn(await schoolZone());
   const staff = [...new Set(entries.flatMap((e) => (e.who ? [e.who] : [])))];
-  const names = staff.length ? Object.fromEntries((await sql<{ id: string; name: string }[]>`select staff_id::text as id, name from pii.staff where staff_id = any(${staff}::uuid[])`).map((r) => [r.id, r.name])) : {};
+  // the website's role may not read `pii.staff` or run `pii.read_staff` (the engine's only): a name is read from the staff list the website
+  // already asks for, by id, and only for those the history names
+  const listed = staff.length ? new Map((await staffList()).flatMap((s) => (s.id ? [[s.id, s.name] as const] : []))) : new Map<string, string>();
+  const names = Object.fromEntries(staff.map((id) => [id, listed.get(id) ?? ""]));
   const codes = [...new Set(entries.flatMap((e) => (e.what.activity ? [e.what.activity] : [])))];
   const acts = codes.length ? Object.fromEntries((await sql<{ code: string; name: string }[]>`select code, name from activity where code = any(${codes}::text[])`).map((r) => [r.code, r.name])) : {};
   return entries.map((e): Seen => {

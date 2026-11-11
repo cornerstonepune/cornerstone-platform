@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { deciding, mustSee } from "@/lib/decides";
-import { EngineDown, enginePost } from "@/lib/engine";
+import { EngineDown, enginePost, engineSend } from "@/lib/engine";
 import { paperHref } from "@/lib/assessment-ui";
 
 const UUID = /^[0-9a-f-]{36}$/;
@@ -30,4 +30,45 @@ export async function sayWhatWasWritten(f: FormData): Promise<void> {
   }
   revalidatePath(here);
   redirect(here);
+}
+
+// ---- a copy before it prints: a question taken off or put on, and the paper approved (the old review page's controls) ----
+// The engine holds every rule (`w2_print/edit_paper.py`): what may change, the limits, the new code and the edit's own row. An edit makes the paper
+// again with a new code; a copy is addressed by its Sr. No., so the address does not move. A home assessment's paper only (`home_papers`).
+
+const QR = /^CS[0-9A-F]{6}$/;
+const ITEM = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+const said = async (res: Response) => ((await res.json().catch(() => ({}))) as { detail?: string }).detail ?? `The engine answered ${res.status}.`;
+function backTo(f: FormData, q: Record<string, string | string[]>) {
+  const s = new URLSearchParams();
+  for (const [k, v] of Object.entries(q)) for (const x of [v].flat()) s.append(k, x);
+  return `${paperHref(String(f.get("key") ?? ""), String(f.get("roll") ?? ""))}?${s}`;
+}
+
+/** One question off this copy, or one from the bank onto it. A refusal stays here and says why. */
+export async function changeThisPaper(f: FormData): Promise<void> {
+  const me = await deciding("home_papers");
+  const qr = String(f.get("qr") ?? "");
+  const item = String(f.get("item_id") ?? "");
+  const what = f.get("what") === "add" ? "add" : "remove";
+  const at = Number(f.get("at") ?? "") || null;
+  if (!QR.test(qr) || !ITEM.test(item) || !f.get("key") || !f.get("roll")) redirect("/children/assessments");
+  await mustSee(me, "papers", [{ qr }]);
+  const res = await engineSend(`/paper/${qr}/${what}`, { by: me.email, item_id: item, at });
+  if (!res.ok) redirect(backTo(f, { error: await said(res) }));
+  const out = (await res.json()) as { qr: string; n: number; withdrew_approval: boolean; uncovered: string[] };
+  revalidatePath(paperHref(String(f.get("key")), String(f.get("roll"))));
+  redirect(backTo(f, { done: what, n: String(out.n), ...(out.withdrew_approval ? { withdrew: "1" } : {}), gone: out.uncovered }));
+}
+
+/** This copy approved in the educator's name: from now on it may be printed. */
+export async function approveThisPaper(f: FormData): Promise<void> {
+  const me = await deciding("home_papers");
+  const qr = String(f.get("qr") ?? "");
+  if (!QR.test(qr) || !f.get("key") || !f.get("roll")) redirect("/children/assessments");
+  await mustSee(me, "papers", [{ qr }]);
+  const res = await engineSend(`/paper/${qr}/approve`, { by: me.email });
+  revalidatePath(paperHref(String(f.get("key")), String(f.get("roll"))));
+  redirect(backTo(f, res.ok ? { done: "approved" } : { error: await said(res) }));
 }
