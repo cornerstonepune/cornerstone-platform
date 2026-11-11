@@ -19,6 +19,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ act
   const who = await coordinatorOnly(await currentStaff());
   if ("refused" in who) return who.refused;
   const f = await request.formData();
+  if (action === "golive") return goLive(f, who.me.email);
   const back = text(f, "back") || "/timetable";
   if (!back.startsWith("/timetable")) return new Response("not a place to go back to", { status: 400 });
   const actor = who.me.email;
@@ -61,4 +62,32 @@ export async function POST(request: Request, { params }: { params: Promise<{ act
   }
   if (!res.ok) return backTo(request, back, { error: await refusal(res, "That was not done.") });
   return backTo(request, back, { done: action });
+}
+
+// Go live puts every class's newest placed draft live for one fortnight (the engine does one class at a time: `/timetable/go-live`)
+// and answers what each changed, so the fortnight page can list every session. A class whose draft the engine refuses is named with
+// the engine's own words; the others still go. Nothing is stored here: the engine's report is the answer.
+async function goLive(f: FormData, actor: string): Promise<Response> {
+  const number = num(f, "fortnight");
+  const [year] = await sql<{ year: string }[]>`
+    select y.label as year from fortnight n join academic_year y on y.id = n.academic_year_id where n.number = ${number} and n.kind = 'teaching' limit 1`;
+  if (!year) return Response.json({ error: "That is not a teaching fortnight." }, { status: 404 });
+  const classes = await sql<{ grade: string; section: string; label: string }[]>`
+    select distinct c.grade_code as grade, c.section, c.label from timetable_run r
+    join fortnight n on n.id = r.fortnight_id join school_class c on c.id = r.school_class_id
+    where n.number = ${number} and r.outcome = 'placed' order by c.label`;
+  if (!classes.length) return Response.json({ error: "No class has a placed draft for this fortnight." }, { status: 409 });
+  const reports: { class: string; report: unknown }[] = [];
+  const refused: { class: string; error: string }[] = [];
+  try {
+    for (const c of classes) {
+      const res = await engineSend("/timetable/go-live", { actor, grade: c.grade, section: c.section, year: year.year, fortnight: number, reason: text(f, "reason") || null });
+      if (res.ok) reports.push({ class: c.label, report: await res.json() });
+      else refused.push({ class: c.label, error: await refusal(res, "That was not done.") });
+    }
+  } catch (e) {
+    if (e instanceof EngineDown) return Response.json({ error: e.message }, { status: 503 });
+    throw e;
+  }
+  return Response.json({ reports, refused }, { status: reports.length ? 200 : 409 });
 }

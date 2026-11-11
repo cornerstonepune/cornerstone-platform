@@ -172,6 +172,14 @@ test("Moves by hand: every move is listed with who made it and when, and an undo
 });
 
 test("Moves by hand: accepting a clash needs a reason ('Say why' otherwise), then the clash is accepted with who and why", async ({ page }) => {
+  // an accepted clash stays accepted only until a later move touches its place: a rerun reopens what an earlier run accepted
+  const accepted = await sql<{ places: { class: string; date: string; period: string }[] }[]>`select places from timetable_clash where fortnight_id = ${f.ahead} and accepted`;
+  for (const c of accepted)
+    for (const p of c.places)
+      await sql`
+        insert into change_log (tenant_id, table_name, row_id, op, before, after, staff_id, origin, reason)
+        values (${f.tenant}, 'session', ${`${p.class} ${f.ahead}`}, 'move', ${sql.json({ school_class_id: p.class, on_date: p.date, period_id: p.period })},
+          ${sql.json({ school_class_id: p.class, on_date: p.date, period_id: p.period })}, ${f.staff}, ${`staff:${f.staff}`}, 'u74 reopens a clash an earlier run accepted')`;
   await page.goto(`/timetable/moves?fn=${AHEAD}&class=${f.klass}`);
   const clash = page.locator("[data-clash]").first();
   await clash.getByRole("button", { name: "Accept the clash" }).click();

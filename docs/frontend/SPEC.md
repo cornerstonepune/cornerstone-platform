@@ -440,11 +440,12 @@ Rail (Connected to): The grid · every activity in the plan · Materials · Draf
 Main action: Approve / Go live (coordinator) · Open the grid (educator) · Next step: Timetable
 Data: fortnight + fortnight.state (CP-6; each step's yes is an approval row); plan_entry; session diffs at go-live (CP-22); approval ledger
 Empty: No plan lines yet: link to the planner upload · Phone: stepper wraps to two rows
-Every control on the screen (8), and what the test does with each:
+Every control on the screen (9), and what the test does with each:
 - **link** each plan line → the activity's name (`/setup/activities/[code]`)
 - **link** each hand move → Moves by hand (`/timetable/moves`) [coordinator only; absent and refused for others]
 - **button** Approve: approval row written; the stepper moves to approved; Go live appears; Approve disappears [coordinator only; absent and refused for others]
-- **button** Go live: sessions updated in place; the what-changed table fills; the stepper moves to live [coordinator only; absent and refused for others]
+- **field** reason [coordinator only; absent and refused for others] (needed once the fortnight is frozen; the engine says so in words when it is missing)
+- **button** Go live: every class's placed draft goes live and the sessions are updated in place; the what-changed table lists every session it moved or removed, and nothing else [coordinator only; absent and refused for others]
 - **link** rail: The grid → Timetable (`/timetable`)
 - **link** rail: each activity in the plan → the activity's name (`/setup/activities/[code]`)
 - **link** rail: Materials → Materials, this fortnight (`/timetable/materials`)
