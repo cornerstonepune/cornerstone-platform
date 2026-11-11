@@ -28,7 +28,7 @@ test("Timetable: a legend names Done, Moved by hand and Clash; the rail lists wh
   await expect(legend).toContainText("Done");
   await expect(legend).toContainText("Moved by hand");
   await expect(legend).toContainText("Clash, not yet accepted");
-  await expect(page.getByRole("complementary", { name: "Changed this fortnight" })).toBeVisible();
+  await expect(page.getByRole("region", { name: "Changed this fortnight" })).toBeVisible(); // a part of the rail, not a second side column (u13-frame: one aside, the rail)
 });
 
 test("Timetable: lessons by subject counts the class's sessions for the fortnight, subject by subject", async ({ page }) => {

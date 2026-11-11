@@ -42,7 +42,7 @@ export default async function Period({ params, searchParams }: { params: Promise
     if (!slot || !(await mayRead(me, slot.section))) notFound();
     const coordinates = me.role === "coordinator" || me.role === "admin";
     return (
-      <Screen stage={`Period · ${slot.starts_at} · ${classWords(slot)}`} title="No lesson here" purpose="Nothing is planned in this period on this day. It may have been moved away on purpose." action={<Link href="/today" className="btn secondary">Back to Today</Link>} next={{ href: `/educator?class=${q.class}${q.day ? `&day=${q.day}` : ""}`, label: "Today" }}>
+      <Screen stage={`Period · ${slot.starts_at} · ${classWords(slot)}`} title="No lesson here" purpose="Nothing is planned in this period on this day. It may have been moved away on purpose." action={<Link href="/today" className="btn secondary">Back to Today</Link>} next={{ href: `/timetable?view=day&class=${q.class}${q.day ? `&day=${q.day}` : ""}`, label: "The day" }}>
         <EmptyState next={coordinates ? { href: "/timetable", label: "Open the Timetable" } : undefined}>No lesson here.</EmptyState>
       </Screen>
     );
@@ -62,7 +62,7 @@ export default async function Period({ params, searchParams }: { params: Promise
   const steps = page?.parts.find((p) => p.part === "steps");
   const thinking = page?.parts.find((p) => p.part === "thinking");
   const record = `/record?session=${id}`;
-  const day = `/educator?class=${s.class_id}&day=${s.day}`;
+  const day = `/timetable?view=day&class=${s.class_id}&day=${s.day}`;
   // the activity's own page returns to this day when it is left (its `back`)
   const open = a ? `${screenHref("activity", { code: a.code }) ?? `/setup/activities/${encodeURIComponent(a.code)}`}?back=${encodeURIComponent(day)}` : null;
   const edges: Edge[] = a

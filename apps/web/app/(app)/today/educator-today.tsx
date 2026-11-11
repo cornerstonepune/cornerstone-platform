@@ -55,11 +55,11 @@ export async function EducatorToday({ me, view, day: asked }: { me: Session; vie
   ];
   const cards = await cardsFor(cls, classId, [...late, ...soon]);
   const edges = [
-    { screen: "timetable", label: "This fortnight", icon: "fortnight" as const, fallback: "/educator/week" },
+    { screen: "timetable", label: "This fortnight", icon: "fortnight" as const, fallback: "/timetable" },
     { screen: "materials", label: "Materials", icon: "checklist" as const, fallback: "/timetable/materials" },
   ];
   return (
-    <Screen stage={stage} title="Today" purpose="Your periods in order. Tap one for what to teach, how, and what to lay out. After it, record a note." action={action} next={{ href: open(DOORS.timetable()) ?? "/educator/week", label: "Timetable" }} rail={<div className="[&_[data-rail]_ul]:gap-2"><Rail edges={edges} /></div>}>
+    <Screen stage={stage} title="Today" purpose="Your periods in order. Tap one for what to teach, how, and what to lay out. After it, record a note." action={action} next={{ href: open(DOORS.timetable()) ?? "/timetable", label: "Timetable" }} rail={<div className="[&_[data-rail]_ul]:gap-2"><Rail edges={edges} /></div>}>
       <AttentionStrip tiles={tiles} />
       <div className="my-4">
         <div className="[&_.b-seg]:gap-2 [&_.b-seg_[role=tab]]:min-h-[44px] [&_.b-seg_[role=tab]]:min-w-[44px]">

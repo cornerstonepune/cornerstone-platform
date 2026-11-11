@@ -44,7 +44,7 @@ export default async function MaterialsPage({ searchParams }: { searchParams: Pr
           ))}
         </nav>
       }
-      next={{ href: `/educator?class=${d.class.id}&day=${day}`, label: E.today.title }}
+      next={{ href: `/timetable?view=day&class=${d.class.id}&day=${day}`, label: "The day" }}
     >
       <ClassPick classes={d.classes} on={d.class.id} href={(id) => `/educator/materials?class=${id}&day=${day}&span=${span}`} />
       {list === null ? (

@@ -1,5 +1,6 @@
 import { cache } from "react";
 import { sql } from "./db";
+import { stateWords } from "./fortnight-words";
 import { EngineDown, engineSend } from "./engine";
 import type { Subject } from "@/components/period-row";
 
@@ -106,4 +107,36 @@ export async function planOf(fortnightId: string): Promise<PlanLine[]> {
            case when a.id is null then null else jsonb_build_object('code', a.code, 'name', a.name) end as activity
     from plan_entry p join school_class c on c.id = p.school_class_id left join activity a on a.id = p.activity_id
     where p.fortnight_id = ${fortnightId} order by c.label, p.week_code nulls last, p.ord`;
+}
+
+/** Every class of the fortnight's academic year, each with how many lessons it has in that fortnight (a whole count), for the
+ *  coordinator's class picker: she sees every class whatever state the fortnight is in (issue #691). Read-only. */
+export type ClassRow = { id: string; grade: string; section: string; lessons: number };
+export async function classesOf(f: Fn): Promise<ClassRow[]> {
+  return sql<ClassRow[]>`
+    select c.id::text as id, c.grade_code as grade, c.section,
+           (select count(*)::int from session s join school_day d on d.id = s.school_day_id
+             where s.school_class_id = c.id and d.on_date between ${f.starts_on}::date and ${f.ends_on}::date) as lessons
+    from school_class c where c.academic_year_id = (select academic_year_id from fortnight where id = ${f.id}) order by c.grade_code, c.section`;
+}
+
+/** Whether educators see a timetable at all: config `educator.timetable_enabled`, the engine's one switch. Read only. */
+export async function switchedOn(): Promise<boolean> {
+  const [r] = await sql<{ on: boolean }[]>`select coalesce((select value = 'true'::jsonb from config where key = 'educator.timetable_enabled'), false) as on`;
+  return r?.on === true;
+}
+
+/** The words the coordinator reads above a fortnight: its state in the school's words, and whether educators see it yet. */
+export const liveWords = (state: string, live: boolean): string => `${stateWords(state)}: ${live ? "live, educators see it" : "not live yet"}`;
+
+/** Every teaching fortnight of `f`'s year for one class, oldest first: its state, its lessons placed for the class (a whole count)
+ *  and whether it went live for the class (`timetable_live`, CP-22). The coordinator's Live and Planning sections (#691). Read only. */
+export type PlanRow = { id: string; number: number; starts_on: string; ends_on: string; state: string; lessons: number; live: boolean };
+export async function yearFor(f: Fn, classId: string): Promise<PlanRow[]> {
+  return sql<PlanRow[]>`
+    select g.id, g.number, g.starts_on::text as starts_on, g.ends_on::text as ends_on, g.state,
+           (select count(*)::int from session s join school_day d on d.id = s.school_day_id
+             where s.school_class_id = ${classId} and d.on_date between g.starts_on and g.ends_on) as lessons,
+           exists (select 1 from approval a where a.kind = 'timetable_live' and a.target = ${classId} || ' ' || g.id::text) as live
+    from fortnight g where g.kind = 'teaching' and g.academic_year_id = (select academic_year_id from fortnight where id = ${f.id}) order by g.starts_on`;
 }
