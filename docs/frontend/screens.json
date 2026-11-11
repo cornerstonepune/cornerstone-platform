@@ -604,7 +604,7 @@
           "label": "sessions not done row",
           "to": "staff",
           "pending": "built: the school's counts come from CP-28's /k2/today-school (backend draft #619); this control is drawn once that route is on main and the inventory has fixtures for it (clashes, drafts, materials lines, last week)",
-          "text": "staff and classes"
+          "text": "open staff and classes"
         },
         {
           "t": "row",
