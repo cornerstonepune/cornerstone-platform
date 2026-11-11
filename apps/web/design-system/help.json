@@ -258,7 +258,7 @@
         },
         {
           "label": "each square",
-          "says": "opens the mark picker: above / as expected / below / not willing / absent / clear; the square's corner mark changes; the claim it came from is marked changed"
+          "says": "opens the mark picker: above / below / not willing / absent / clear (\"as expected\" is the one switch for the rest: the engine records an individual child's mark in four lists); the square's corner mark changes; the claim it came from is marked changed"
         },
         {
           "label": "the rest did as expected",
