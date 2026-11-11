@@ -112,7 +112,7 @@ export default async function QuestionBank({ searchParams }: { searchParams: Pro
         <DataTable label="Questions" columns={columns} rows={rows} rowKey={(it) => it.item_key} more={{ page, href, of: total }} extras={{ attrs: (it) => ({ "data-row": it.item_key }) }} />
       )}
       <div className="mt-4" id="statistics">
-        <Details summary="Statistics (counts and worksheets by taxonomy)" name="statistics">
+        <Details summary="Statistics (counts and worksheets by topic)" name="statistics">
           <p className="mb-2 text-[13px] text-[var(--ink-muted)]">Questions ready to print, by grade and level.</p>
           <DataTable label="Questions by grade and level" columns={statColumns} rows={stats} rowKey={(r) => r.band} more={{ page: 1, href: () => HERE }} />
         </Details>
