@@ -8,7 +8,7 @@
  */
 import { execFileSync } from "node:child_process";
 import { mkdirSync, rmSync } from "node:fs";
-import { tmpdir } from "node:os";
+import { cpus, loadavg, tmpdir } from "node:os";
 import path from "node:path";
 import { expect, test, type Page } from "@playwright/test";
 import postgres from "postgres";
@@ -97,6 +97,13 @@ test("the paper screen opens on a paper of 7 answers waiting within its budget",
   await open(page, url)(); // the build's first request warms its own code, once
   const screen = page.url().replace(/#.*$/, "");
   const ms = await measured("open the paper screen", open(page, screen));
+  // where the time went, so a slow run says whether it was the server, the browser or the machine (the same code has measured
+  // 0.4 s and 3.6 s on CI: 12 Nov 2026); the budget below is unchanged
+  const nav = await page.evaluate(() => {
+    const n = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming;
+    return { firstByte: Math.round(n.responseStart), lastByte: Math.round(n.responseEnd), domReady: Math.round(n.domContentLoadedEventEnd), loaded: Math.round(n.loadEventEnd) };
+  });
+  console.log(`p6 | where the time went | ${JSON.stringify({ ...nav, cpus: cpus().length, cpu: cpus()[0]?.model, load: loadavg().map((x) => x.toFixed(2)) })}`);
   await expect(page.locator(".b-keyrow").first()).toHaveAttribute("aria-label", /7 for you to judge/);
   expect(ms).toBeLessThan(BUDGET);
 });
