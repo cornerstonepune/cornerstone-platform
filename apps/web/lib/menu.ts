@@ -60,7 +60,6 @@ export const SECTIONS: readonly Section[] = [
     key: "school",
     label: "School",
     icon: "setup",
-    coordinator: true,
     pages: [
       { href: "/across", label: "Across classes", match: ["/across"] },
       { href: "/setup/curriculum", label: "Curriculum", match: ["/setup/curriculum", "/", "/skill-sets", "/worksheets", "/setup"] },
@@ -97,8 +96,9 @@ export function locate(address: string): { section: Section; page: MenuPage } | 
 /** The section a path belongs to when nothing says the walk began elsewhere; none for the pages outside the menu (help, feedback, password). */
 export const sectionOf = (address: string): Section | undefined => locate(address)?.section;
 
-/** The sidebar a person sees: School and the coordinator's lines only for the coordinator, and not while acting as an educator. A view,
- *  never a permission (lib/access.ts says what anyone may open). */
+/** The sidebar a person sees: every section for everyone (Nimish, 12 Nov: educators see School, read-only; its buttons stay the
+ *  coordinator's, lib/access.ts), and the coordinator's own lines only for the coordinator, not while acting as an educator. A view, never a
+ *  permission (lib/access.ts says what anyone may open). */
 export function sectionsFor(coordinator: boolean): Section[] {
   return SECTIONS.filter((s) => coordinator || !s.coordinator).map((s) => ({ ...s, pages: s.pages.filter((p) => coordinator || !p.coordinator) }));
 }

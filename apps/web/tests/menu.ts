@@ -1,7 +1,7 @@
 import type { Locator, Page } from "@playwright/test";
 
 /** The sections of the sidebar (lib/menu.ts, page charter A1), as each person sees them: School is the coordinator's. */
-export const SECTIONS = { coordinator: ["My day", "Timetable", "Children", "Assessments", "School"], educator: ["My day", "Timetable", "Children", "Assessments"] } as const;
+export const SECTIONS = { coordinator: ["My day", "Timetable", "Children", "Assessments", "School"], educator: ["My day", "Timetable", "Children", "Assessments", "School"] } as const;
 
 /** The menu (components/frame/sidebar.tsx): the sidebar from 701 px wide, opened out if it was folded to icons; on a phone the drawer behind
  *  the bar's Menu button, opened. A spec reads or presses a page of the menu through this. */

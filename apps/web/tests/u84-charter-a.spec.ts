@@ -145,7 +145,7 @@ test("A3: stat tiles show whole counts, one line each, and the panel's summary c
 
 test("A3: one state scale: secure green, practising amber, needs help red, not seen grey; rubric levels 0-3 on it", () => {
   expect([...SCALE]).toEqual(["secure", "practising", "needsHelp", "notSeenYet"]);
-  expect([0, 1, 2, 3].map((n) => levelState(n, 4))).toEqual(["notSeenYet", "needsHelp", "practising", "secure"]);
+  expect([0, 1, 2, 3].map((n) => levelState(n, 4))).toEqual(["notSeenYet", "practising", "practising", "secure"]);
   expect(() => levelState(4, 4)).toThrow();
   expect(() => levelState(1.5, 4)).toThrow();
   // no page types a level's words: the rubric shows the activity's own

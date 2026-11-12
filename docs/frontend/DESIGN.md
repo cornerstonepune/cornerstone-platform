@@ -87,10 +87,7 @@ A state is **an icon, a word and a colour, never one alone** (`.chip`, `.sq`, `.
 
 **Red is for work, never for a child.** A child below, not willing, not seen or at level 0 is grey or amber. If two
 things on a screen are red, one is wrong. A chip on a tinted cell gets `.on-tint` (panel fill, 1 px ring), because the
-amber and Arts tints, and the red and Language tints, sit close. **Open question (page charter A3, 12 Nov 2026):** the charter's
-one scale puts red on "needs help" and on a rubric's level 1, which this rule forbids on a child. Until Nimish settles it, red is drawn
-on a rubric's level row in the lesson panel (the activity's words for that level), and never on a child's square: ClassGrid and the
-class form are unchanged.
+amber and Arts tints, and the red and Language tints, sit close. **Settled (Nimish, 12 Nov 2026):** a rubric's levels are grey (0), amber (every level between) and green (the top), never red; red stays for work (a clash, an overdue check), never on a child.
 
 ## 4. Kinds, subjects, icons
 
