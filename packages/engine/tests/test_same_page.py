@@ -129,3 +129,23 @@ def test_a_copy_of_two_different_pages_is_found_whole(conn, worksheet, tmp_path,
         (1, True),
         (2, True),
     ]
+
+
+def test_a_pages_fingerprint_is_worked_out_once_per_version_of_its_file(tmp_path, monkeypatch):
+    """CP-38: the check screen asks `pages_of` on every open and each page photo was decoded and hashed again (0.4 to 0.5 s
+    a call). The fingerprint of a page of a file is kept while the file is unchanged, and worked out again when it changes."""
+    import os
+
+    path = tmp_path / "scan.png"
+    cv2.imwrite(str(path), np.full((40, 30, 3), 7, np.uint8))
+    real, calls = same_page.render_pdf.photo, []
+    monkeypatch.setattr(same_page.render_pdf, "photo", lambda p, n=1: calls.append((str(p), n)) or real(p, n))
+    first = same_page._prints(path, {1: 1, 2: 1})
+    again = same_page._prints(path, {1: 1, 2: 1})
+    assert again == first and len(calls) == 1, "one photograph, decoded once however many times it is asked"
+    cv2.imwrite(str(path), np.full((40, 30, 3), 9, np.uint8))
+    os.utime(path, ns=(1, 1_000_000_000_000_000_000))  # a new version of the same file
+    changed = same_page._prints(path, {1: 1})
+    assert changed != {1: first[1]} and len(calls) == 2, (
+        "a changed file is read again, never answered from the old one"
+    )
