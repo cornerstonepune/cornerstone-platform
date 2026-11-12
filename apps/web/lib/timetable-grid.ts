@@ -9,12 +9,19 @@ import { subjectLook, type Clash, type Looks, type Move } from "./timetable-ui";
 /** The fortnight grid for one class from the engine's weeks (the sessions as they stand): days across, periods down. A cell
  *  is a moved one when the session is marked moved, a clash one when an unaccepted clash names its class, day and period.
  *  The cells are the session rows for the days shown, one for one; a period fixed on every day shown is a full-width band. */
+/** A row's time: the range, then the period's label only when it says something else (a K2 label is itself the range). */
+export function timeOf(start: string, end: string | null, label: string) {
+  const range = `${start.slice(0, 5)}${end ? `–${end.slice(0, 5)}` : ""}`;
+  const digits = (t: string) => t.replace(/\D/g, "");
+  return digits(label) === digits(range) || digits(label) === digits(start.slice(0, 5)) ? range : `${range} ${label}`;
+}
+
 export function gridOf(weeks: readonly Week[], show: {
     days?: readonly string[];
     looks: Looks;
     clashes: readonly Clash[];
     /** where a click on a lesson goes: the page of its activity (called only for a lesson that has one; a lesson with none is not a link) */
-    open?: (activityCode: string) => string;
+    open?: (day: string, periodId: string) => string;
     /** the coordinator's click on a lesson or a free slot: choosing it as the lesson to move, or as the place to move it to (none for an educator) */
     pick?: (day: string, periodId: string) => string;
     /** the lesson chosen to move, if any: its block is marked, and every free slot then offers itself as a place to move it to */
@@ -34,7 +41,7 @@ export function gridOf(weeks: readonly Week[], show: {
     // a fixed part of the day is a band whether or not a session row was loaded for it (the engine gives it as `empty` when none was)
     if (at.length && at.every((p) => p === null || p.fixed || p.kind === "fixed")) return { band: `${at.find((p) => p)?.name ?? label} · ${start.slice(0, 5)}` };
     return {
-      time: `${start.slice(0, 5)}${at.find((p) => p?.ends_at)?.ends_at ? `–${at.find((p) => p?.ends_at)!.ends_at!.slice(0, 5)}` : ""} ${label}`,
+      time: timeOf(start, at.find((p) => p?.ends_at)?.ends_at ?? null, label),
       cells: at.map((p, i): FCell | FSlot | null => {
         if (!p) return null;
         // a lesson period with no lesson that day is a place to move the chosen lesson to
@@ -45,7 +52,7 @@ export function gridOf(weeks: readonly Week[], show: {
         const cell: FCell = {
           subject: subjectLook(show.looks, p.subject),
           activity: p.name,
-          href: p.activity && show.open ? show.open(p.activity.code) : undefined,
+          href: p.activity && show.open ? show.open(days[i].day, p.period_id) : undefined,
           pick: show.pick?.(days[i].day, p.period_id),
           picked: show.picked ? show.picked.day === days[i].day && show.picked.periodId === p.period_id : undefined,
           moved: p.state === "moved",
@@ -69,5 +76,3 @@ export const cellsIn = (rows: readonly FRow[]) => rows.flatMap((r) => ("cells" i
 /** The moves that put a lesson where the grid now shows it: by day and period, the latest move to that place. */
 export const moveInto = (moves: readonly Move[], day: string, periodId: string) => moves.find((m) => m.to === `${day} ${periodId}`);
 
-/** The page of an activity (what to do, its materials): the setup page that shows it. */
-export const activityHref = (code: string) => `/setup/activities/${encodeURIComponent(code)}`;

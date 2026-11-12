@@ -20,7 +20,7 @@ import { weekOrNull } from "@/lib/educator/data";
 import { isDay, isLesson } from "@/lib/educator/period";
 import { dateWords } from "@/lib/week";
 import { stateWords } from "@/lib/fortnight-words";
-import { activityHref, gridOf, moveInto } from "@/lib/timetable-grid";
+import { gridOf, moveInto } from "@/lib/timetable-grid";
 import { subjectsAgainstRule, type SubjectRow } from "@/lib/timetable-subjects";
 import { classesOf, subjectLooks, clashesOf, fortnightAfter, fortnightAt, fortnightNumber, fortnightsOfYear, isCoordinator, liveIds, liveWords, movesOf, noSchoolOn, switchedOn, yearFor, type Fn } from "@/lib/timetable-ui";
 import { schoolToday } from "@/lib/voice-page";
@@ -135,9 +135,9 @@ export default async function TimetablePage({ searchParams }: Props) {
     days: shown,
     clashes,
     at: { today, now },
-    // a lesson with an activity opens it (what to do, materials); one with none is not a link. The coordinator's click on a block chooses it
+    // a lesson with an activity opens its lesson page (the activity in full, the class form); one with none is not a link. The coordinator's click on a block chooses it
     // to move, on the fortnight page, where the move is made and its clashes drawn
-    open: activityHref,
+    open: (day, p) => `/period/${p}?${new URLSearchParams({ class: klass.id, day })}`,
     pick: coordinator ? (day, p) => `/timetable/fortnight/${fn.number}?${new URLSearchParams({ class: klass.id, from: `${day}~${p}` })}` : undefined,
   });
   const lessons = grid.rows.some((r) => "cells" in r && r.cells.some((c) => c));
