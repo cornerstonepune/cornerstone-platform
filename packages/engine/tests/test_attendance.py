@@ -197,3 +197,39 @@ def test_the_routes_load_for_a_coordinator_only_and_read_for_the_class_staff(wor
             assert client.post("/attendance/class", json=late, headers=h).status_code == 422
     finally:
         app.dependency_overrides.clear()
+
+
+def test_a_child_kept_by_first_name_is_matched_by_first_name_in_the_programs_grade_and_only_when_it_is_one(
+    world,
+):
+    c, k, child, name = world
+    first = name.split()[0]
+    c.execute("update pii.child set last_name = '' where child_id = %s", (child,))
+    grade = c.execute(
+        "select k.grade_code from enrolment e join school_class k on k.id = e.class_id where e.child_id = %s and e.to_date is null",
+        (child,),
+    ).fetchone()["grade_code"]
+    c.execute(
+        "insert into config (tenant_id, key, value) select id, 'attendance.program_grades', jsonb_build_object('Prog', %s::text)"
+        " from tenant where slug = %s on conflict (tenant_id, key) do update set value = excluded.value",
+        (grade, db.tenant_slug()),
+    )
+    row = _row(f"{first} Surnameadded", D1, program="Prog")
+    out = at.load(c, [row, _row(f"{first} Surnameadded", D2, program="Elsewhere")])
+    assert out["loaded"] == 1 and out["by_first_name_in_grade"] == 1
+    assert out["skipped"] == [{"row": 2, "program": "Elsewhere", "why": "no child of that name"}], (
+        "another program: no guess"
+    )
+    other = c.execute(
+        "select e.child_id from enrolment e join school_class k on k.id = e.class_id where k.grade_code = %s and e.to_date is null"
+        " and e.child_id <> %s limit 1",
+        (grade, child),
+    ).fetchone()
+    if other:
+        c.execute(
+            "update pii.child set first_name = %s, last_name = '' where child_id = %s",
+            (first, other["child_id"]),
+        )
+        assert at.load(c, [row])["skipped"][0]["why"] == "two children of that name", (
+            "two in the grade: never picked"
+        )

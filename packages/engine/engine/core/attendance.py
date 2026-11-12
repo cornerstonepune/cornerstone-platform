@@ -65,28 +65,53 @@ def status_of(row: dict[str, Any], minutes: int | None, in_time: dt.time | None)
     return "present"
 
 
+def _tokens(name: Any) -> list[str]:
+    return re.sub(r"[^\w\s]", " ", _clean(name)).lower().split()
+
+
 def _key(name: Any) -> str:
-    return re.sub(r"\s+", " ", _clean(name)).lower()
+    return " ".join(_tokens(name))
 
 
-def _children(conn: db.Conn) -> dict[str, list[Any]]:
-    found: dict[str, list[Any]] = defaultdict(list)
-    for r in conn.execute("select child_id, first_name, last_name from pii.child").fetchall():
-        found[_key(f"{r['first_name']} {r['last_name']}")].append(r["child_id"])
-    return found
+class _Index:
+    """The children by name, as `pii.child` holds them: by full name, and by name with the grade each is in now."""
+
+    def __init__(self, conn: db.Conn) -> None:
+        self.full: dict[str, list[Any]] = defaultdict(list)
+        self.people: list[tuple[Any, list[str], str | None]] = []
+        for r in conn.execute(
+            "select p.child_id, p.first_name, p.last_name, (select k.grade_code from enrolment e join school_class k"
+            " on k.id = e.class_id where e.child_id = p.child_id and e.to_date is null limit 1) as grade from pii.child p"
+        ).fetchall():
+            name = f"{r['first_name']} {r['last_name']}"
+            self.full[_key(name)].append(r["child_id"])
+            self.people.append((r["child_id"], _tokens(name), r["grade"]))
+        self.grades: dict[str, str] = dict(settings.config(conn, "attendance.program_grades", {}) or {})
+
+    def find(self, name: Any, program: str) -> tuple[list[Any], bool]:
+        """The children this report name can be, and whether it was by first name in the grade. The full name first; when
+        no child has it, a child whose stored name is only the start of the report's (a first name, with the surname the
+        report adds), in the grade the program is (`attendance.program_grades`). More than one is never picked."""
+        ids = self.full.get(_key(name), [])
+        grade = self.grades.get(program)
+        if ids or not grade:
+            return ids, False
+        tokens = _tokens(name)
+        return [i for i, t, g in self.people if g == grade and t and tokens[: len(t)] == t], True
 
 
 def load(conn: db.Conn, rows: list[dict[str, Any]]) -> dict[str, Any]:
     """Write each row of the report as that child's day. Idempotent: the same report twice leaves the same rows. The
     answer counts the rows and lists the ones not loaded by number (from 1) and program: never a name."""
     tenant = db.one(conn, "select id from tenant where slug = %s", (db.tenant_slug(),))["id"]
-    known = _children(conn)
+    known = _Index(conn)
+    by_grade = 0
     loaded = 0
     skipped: list[dict[str, Any]] = []
     seen: set[tuple[Any, dt.date]] = set()
     for n, row in enumerate(rows, 1):
         day, program = parse_date(row.get("date")), _clean(row.get("program"))
-        ids = known.get(_key(row.get("name")), [])
+        ids, in_grade = known.find(row.get("name"), program)
         if day is None or not program:
             skipped.append({"row": n, "program": program or None, "why": "not a date or no program"})
             continue
@@ -109,8 +134,9 @@ def load(conn: db.Conn, rows: list[dict[str, Any]]) -> dict[str, Any]:
         )  # fmt: skip
         seen.add((ids[0], day))
         loaded += 1
+        by_grade += int(in_grade)
     return {
-        "rows": len(rows), "loaded": loaded, "days_written": len(seen), "not_loaded": len(skipped),
+        "rows": len(rows), "loaded": loaded, "by_first_name_in_grade": by_grade, "days_written": len(seen), "not_loaded": len(skipped),
         "children_not_matched": len({s["row"] for s in skipped if s["why"] != "not a date or no program"}),
         "skipped": skipped[:200],
     }  # fmt: skip
