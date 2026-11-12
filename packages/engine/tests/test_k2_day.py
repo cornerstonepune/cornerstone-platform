@@ -291,3 +291,24 @@ def test_each_period_carries_its_own_name_apart_from_its_planner_line(world):
         period_id=by_start["10:20"]["period_id"],
     )
     assert one.json()["name"] == "Academic 2 General Awareness"
+
+
+def test_the_lessons_activity_is_asked_for_in_full_when_a_teacher_opens_it_and_never_carries_a_child(world):
+    """CP-39: the day, week and period calls say only who the activity is; this one gives its steps, objectives, skills,
+    materials and the four rubric levels, for the period the teacher opens."""
+    week = call(world, "week", week_of="2026-11-23").json()
+    day, linked = next(
+        (d["day"], p)
+        for d in week["days"]
+        for p in d["periods"]
+        if p["activity"] and p["activity"]["code"] == "ACT-K2-TCLAY"
+    )
+    got = call(world, "activity", class_id=world["k"]["class"], day=day, period_id=linked["period_id"])
+    assert got.status_code == 200, got.text
+    body = got.json()
+    assert body["activity"]["name"] == "Placeholder counting game" and len(body["activity"]["levels"]) == 4
+    assert body["chosen"] is False and "head" in body
+    assert call(world, "activity", class_id=world["k"]["class"], day=day).status_code == 422
+    text = json.dumps(body).lower()
+    for word in ("child", "roll_no", "birthday", "pii", world["k"]["email"]):
+        assert word not in text

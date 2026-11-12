@@ -124,6 +124,7 @@ export type EngineRoutes = {
   "POST /staff/grants": { actor: string };
   "POST /staff/grants/end": { actor: string; grant_id: string };
   "POST /staff/grants/give": { actor: string; staff_id: string; role: string; class_label: string; subject?: string | null; reason?: string | null };
+  "POST /timetable/activity": { actor: string; class_id?: string | null; day?: string | null; week_of?: string | null; period_id?: string | null };
   "POST /timetable/clash/accept": { actor: string; key: string; reason: string };
   "POST /timetable/day": { actor: string; class_id?: string | null; day?: string | null; week_of?: string | null; period_id?: string | null };
   "POST /timetable/generate": { actor: string; grade: string; section: string; year: string; fortnight: number };

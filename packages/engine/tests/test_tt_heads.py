@@ -234,8 +234,9 @@ def test_the_activity_page_of_a_lesson_names_its_objectives_skills_materials_and
         "grade": "K2",
         "section": w["section"],
     }
-    one = k2_day.period(c, klass, [klass], MON, str(w["period"]["p1"]))
-    detail = one["activity_detail"]
+    one = k2_day.period_activity(c, klass, MON, str(w["period"]["p1"]))
+    assert one["chosen"] is True and one["head"] == "math"
+    detail = one["activity"]
     assert detail["code"] == act and detail["levels"] == ["L zero", "L one", "L two", "L three"]
     assert (
         detail["materials_text"] == "Placeholder beads"
