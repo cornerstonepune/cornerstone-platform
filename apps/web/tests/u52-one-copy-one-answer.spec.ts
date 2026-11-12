@@ -122,6 +122,10 @@ const opened = async (page: Page) => {
   await page.goto(`/children/assessments?class=${SECTION}&view=table`);
   await page.locator("a[data-assessment-row]").first().click();
   await expect(page).toHaveURL(/\/children\/assessments\/[^/?]+/);
+  // the address changes at the click, while the page still shows its loading screen (app/(app)/children/assessments/loading.tsx):
+  // the copies are read once the page itself has arrived
+  await expect(page.getByRole("status", { name: "Loading this page" })).toHaveCount(0);
+  await expect(page.locator('main td[data-label="Sr. No."]').first()).toBeVisible();
   return page.locator("main");
 };
 const row = (main: Locator, roll: string) => main.locator("tr").filter({ has: main.page().locator('td[data-label="Sr. No."]', { hasText: new RegExp(`^${roll}$`) }) });
