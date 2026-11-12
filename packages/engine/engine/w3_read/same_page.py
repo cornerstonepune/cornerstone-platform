@@ -9,6 +9,8 @@ whether the page is found, and in words why not.
 """
 
 import hashlib
+import os
+from functools import lru_cache
 from pathlib import Path
 
 import pymupdf
@@ -57,14 +59,27 @@ def _file_of(path):
     return p if p.exists() else None
 
 
+@lru_cache(maxsize=1024)
+def _held(path: str, mtime_ns: int, size: int) -> int:
+    """How many pages the file holds, kept for the version of the file named by its time and size."""
+    with pymupdf.open(path) as doc:
+        return len(doc) if path.lower().endswith(".pdf") else 1
+
+
+@lru_cache(maxsize=4096)
+def _print_of(path: str, mtime_ns: int, size: int, file_page: int) -> str:
+    """The fingerprint of one page of one version of a file. Decoding a page photograph is what takes the time (0.4 to 0.5 s
+    a page), and the screen asks again on every open: the answer is kept while the file's time and size are the same."""
+    return fingerprint(render_pdf.photo(path, file_page)[0])
+
+
 def _prints(path, file_pages: dict[int, int]) -> dict[int, str]:
     """{paper page: the fingerprint of the file page it is drawn from}, a page past the file's end drawn as the file's
     last, as the image server draws it (`legacy.page_crop`)."""
-    with pymupdf.open(path) as doc:
-        held = len(doc) if str(path).lower().endswith(".pdf") else 1
-    return {
-        page: fingerprint(render_pdf.photo(path, min(max(f, 1), held))[0]) for page, f in file_pages.items()
-    }
+    st = os.stat(path)
+    key = (str(path), st.st_mtime_ns, st.st_size)
+    held = _held(*key)
+    return {page: _print_of(*key, min(max(f, 1), held)) for page, f in file_pages.items()}
 
 
 def pages_of(conn, capture_id) -> list[dict]:
