@@ -4,7 +4,6 @@ import type { Week } from "./educator/types";
 import { chipOf } from "./educator/chip";
 import { whenIs } from "./educator/clock";
 import { isLesson } from "./educator/period";
-import { screenHref } from "./built";
 import { subjectLook, type Clash, type Looks, type Move } from "./timetable-ui";
 
 /** The fortnight grid for one class from the engine's weeks (the sessions as they stand): days across, periods down. A cell
@@ -70,5 +69,5 @@ export const cellsIn = (rows: readonly FRow[]) => rows.flatMap((r) => ("cells" i
 /** The moves that put a lesson where the grid now shows it: by day and period, the latest move to that place. */
 export const moveInto = (moves: readonly Move[], day: string, periodId: string) => moves.find((m) => m.to === `${day} ${periodId}`);
 
-/** The page of an activity (what to do, its materials): the built screen's address, else the page that does the work today. */
-export const activityHref = (code: string) => screenHref("activity", { code }) ?? `/educator/activity/${encodeURIComponent(code)}`;
+/** The page of an activity (what to do, its materials): the setup page that shows it. */
+export const activityHref = (code: string) => `/setup/activities/${encodeURIComponent(code)}`;

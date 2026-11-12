@@ -17,7 +17,7 @@
 import { expect, test, type Page } from "@playwright/test";
 import postgres from "postgres";
 import { loadFortnight10, tapsAreBig, timetableSwitch } from "./educator-screens";
-import { SECTION, k2Class, voiceSwitch } from "./k2-rows";
+import { SECTION, k2Class } from "./k2-rows";
 
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 const MONDAY = "2026-11-23"; // Fortnight 10, week A; Tuesday 24 is a holiday
@@ -83,15 +83,14 @@ test("the Week view is a grid: a column a day, a row a period, a holiday named; 
   await tapsAreBig(page);
 });
 
-test("any block opens its period: the school's words and the activity", async ({ page }) => {
+test("a block with an activity opens it: the school's words and the activity (the coordinator's click on the block chooses it to move)", async ({ page }) => {
   await timetableSwitch(sql, true);
-  await voiceSwitch(sql, true); // the Period screen is behind the voice switch (UI-3a)
   await page.goto(at("day"));
-  await page.locator(`${GRID} a.b-cell`).filter({ hasText: "General Awareness" }).click();
-  await expect(page).toHaveURL(/\/period\/[0-9a-f-]{36}/);
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Insects"); // the period is named by its activity
-  await expect(page.getByText("Insects").first()).toBeVisible(); // the activity the planner names for it
-  await voiceSwitch(sql, false);
+  const block = page.locator(`${GRID} .b-cell-w`).filter({ hasText: "General Awareness" });
+  await block.locator("[data-activity-link]").click();
+  await expect(page).toHaveURL(/\/(setup|educator)\/activit(y|ies)\//);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Insects"); // the page is named by its activity
+  await expect(page.getByText("Insects").first()).toBeVisible(); // the activity the planner names for the lesson
 });
 
 test("her menu marks where she is: the Timetable door on a desktop, and tabs at the foot of a phone that open it", async ({ page }) => {

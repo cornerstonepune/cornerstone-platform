@@ -77,12 +77,14 @@ test("Timetable: a lesson with an activity opens it; one with none is not a link
     // the educator: the one lesson with an activity is a link to it; every other block is a plain block
     const edu = await educatorPage(browser);
     await edu.goto(`${TT()}&view=day&day=${f.days[1]}`);
+    await expect(edu.locator("[data-block=FortnightGrid]")).toBeVisible(); // the page has streamed in
     const links = await edu.locator("[data-block=FortnightGrid] a.b-cell").evaluateAll((as) => as.map((a) => a.getAttribute("href")));
     expect(links).toHaveLength(1);
     expect(links[0]).toContain(encodeURIComponent(row.code));
     expect(await edu.locator("[data-block=FortnightGrid] div.b-cell").count()).toBeGreaterThan(0);
     // the coordinator: every block is a click that chooses it (on the fortnight page, where the move is made), the activity link beside it
     await page.goto(`${TT()}&view=day&day=${f.days[1]}`);
+    await expect(page.locator("[data-block=FortnightGrid]")).toBeVisible();
     const picks = await page.locator("[data-block=FortnightGrid] a[data-pick]").evaluateAll((as) => as.map((a) => a.getAttribute("href")));
     expect(picks.length).toBeGreaterThan(0);
     for (const h of picks) expect(h).toMatch(new RegExp(`^/timetable/fortnight/${HERE}\\?class=${f.klass}&from=`));
