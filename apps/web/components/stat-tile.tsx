@@ -15,13 +15,13 @@ export function StatTile({ n, line, tone, href, id }: Stat) {
       <span className="b-stat-l">{line}</span>
     </>
   );
-  const attrs = { "data-block": "StatTile", "data-stat": id ?? line, "data-state": tone ? LOOK[tone] : undefined, className: "b-stat" };
+  const attrs = { "data-stat": id ?? line, "data-state": tone ? LOOK[tone] : undefined, className: "b-stat" };
   return href ? (
-    <Link href={href} {...attrs}>
+    <Link href={href} data-block="StatTile" {...attrs}>
       {body}
     </Link>
   ) : (
-    <div {...attrs}>{body}</div>
+    <div data-block="StatTile" {...attrs}>{body}</div>
   );
 }
 

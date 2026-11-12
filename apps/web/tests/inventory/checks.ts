@@ -20,7 +20,9 @@ async function mainControls(page: Page) {
     return [...main.querySelectorAll<HTMLElement>(sel)]
       .filter((e) => !e.closest("[data-trail], [data-sidebar]") && !(e as HTMLInputElement).name?.startsWith("$ACTION"))
       // the frame's own links (the next step, the details link) are drawn on every screen: an element may list one, and none is extra
-      .map((e) => ({ tag: e.tagName.toLowerCase(), frame: e.matches("[data-ux=next], [data-ux=details]"), peek: e.hasAttribute("data-peek-open"), attrs: e.getAttributeNames(), href: e.getAttribute("href") ?? "", name: (e.getAttribute("aria-label") || (e as HTMLInputElement).labels?.[0]?.innerText || e.innerText || (e as HTMLInputElement).placeholder || "").trim(), ...(() => { const r = e.getBoundingClientRect(); return { w: r.width, h: r.height, x: r.x, y: r.y }; })() }));
+      // the filter bar's More filters button is the shared block's own (page charter A4), as the frame's links are; a dropdown folded behind it
+      // is read by its label's words (innerText is empty while it is folded away)
+      .map((e) => ({ tag: e.tagName.toLowerCase(), frame: e.matches("[data-ux=next], [data-ux=details], [data-more-filters] > summary"), peek: e.hasAttribute("data-peek-open"), attrs: e.getAttributeNames(), href: e.getAttribute("href") ?? "", name: (e.getAttribute("aria-label") || (e as HTMLInputElement).labels?.[0]?.innerText || (e as HTMLInputElement).labels?.[0]?.querySelector("span")?.textContent || e.innerText || (e as HTMLInputElement).placeholder || "").trim(), ...(() => { const r = e.getBoundingClientRect(); return { w: r.width, h: r.height, x: r.x, y: r.y }; })() }));
   }, CONTROLS);
 }
 
@@ -240,6 +242,9 @@ async function filter(page: Page, s: Screen, e: Element): Promise<Problems> {
     const sel = page.locator("main label").filter({ hasText: new RegExp(needle(e), "i") }).locator("select").first();
     await sel.waitFor({ timeout: 10_000 }).catch(() => undefined);
     if (!(await sel.count())) return [`${s.id}: the filter “${e.label}” has no select`];
+    // a filter past the row's first three is behind More filters (page charter A4): opened as a person would, then chosen
+    const more = sel.locator("xpath=ancestor::details[@data-more-filters][1]");
+    if ((await more.count()) && !(await sel.isVisible())) await more.locator("summary").click();
     const options = await sel.locator("option").evaluateAll((os) => os.map((o) => (o as HTMLOptionElement).value));
     const now = await sel.inputValue();
     const pick = options.reverse().find((v) => v !== now);
