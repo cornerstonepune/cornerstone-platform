@@ -12,14 +12,14 @@ from typing import Any
 from engine.core import db
 from engine.w2_print import educator_gate as gate
 from engine.w2_print import fortnight_cycle as fc
-from engine.w2_print import tt_live
+from engine.w2_print import tt_heads, tt_live
 from engine.w2_print.tt_live_plan import Refused
 
 
 def _lesson(conn: db.Conn, session_id: str) -> dict:
     try:
         s = conn.execute(
-            "select s.*, d.on_date, d.kind as day_kind, p.fixed as period_fixed, c.academic_year_id"
+            "select s.*, d.on_date, d.kind as day_kind, p.fixed as period_fixed, c.academic_year_id, c.grade_code"
             " from session s join school_day d on d.id = s.school_day_id join period p on p.id = s.period_id"
             " join school_class c on c.id = s.school_class_id where s.id = %s",
             (session_id,),
@@ -44,34 +44,43 @@ def _taught(conn: db.Conn, s: dict, code: str) -> bool:
     )
 
 
+def _ensure_open(s: dict, today: Any, *, words: bool) -> None:
+    """The lesson may be edited at all: a school day not past, not a holiday, still planned, and, when its words or subject
+    are to change, not a fixed lesson (its activity may be chosen: `tt_heads` says whether its head takes one)."""
+    if s["day_kind"] == "holiday":
+        raise Refused(f"{s['on_date']} is a holiday; nothing is taught there.")
+    if s["on_date"] < today:
+        raise Refused(f"{s['on_date']} is already past; a lesson on a day gone by is not edited.")
+    if (s["kind"] == "fixed" or s["period_fixed"]) and words:
+        raise Refused(f"{s['text'] or 'this'} is a fixed lesson; its words and subject are not edited.")
+    if s["state"] != "planned" or not s["planned"]:
+        raise Refused(
+            f"the lesson on {s['on_date']} is already marked {s['state'].replace('_', ' ')}; only a planned lesson is edited."
+        )
+
+
 def edit(
     conn: db.Conn, session_id: str, *, who: Any, text: str | None = None, subject_code: str | None = None,
-    reason: str | None = None,
+    reason: str | None = None, activity_code: str | None = None,
 ) -> dict:  # fmt: skip
     """Change the lesson's topic text and/or subject, as `who` (a staff id). Raises `Refused` (nothing written) when a
     check fails, `fortnight_cycle.CycleError` when the fortnight is past planning and no reason is given."""
     s = _lesson(conn, str(session_id))
     today = gate.school_today(conn)
     tt_live.in_group(conn, str(s["tenant_id"]), who, today, what="edit a lesson")
-    if text is None and subject_code is None:
-        raise Refused("Give the new words, the new subject, or both.")
+    if text is None and subject_code is None and activity_code is None:
+        raise Refused("Give the new words, the new subject, the activity (empty clears it), or any of them.")
     new_text = s["text"] if text is None else text.strip()
     if text is not None and not new_text:
         raise Refused("A lesson needs words: give its topic, not blanks.")
     new_subject = s["subject_code"] if subject_code is None else subject_code
-    if s["day_kind"] == "holiday":
-        raise Refused(f"{s['on_date']} is a holiday; nothing is taught there.")
-    if s["on_date"] < today:
-        raise Refused(f"{s['on_date']} is already past; a lesson on a day gone by is not edited.")
-    if s["kind"] == "fixed" or s["period_fixed"]:
-        raise Refused(f"{s['text'] or 'this'} is a fixed lesson; it is not edited.")
-    if s["state"] != "planned" or not s["planned"]:
-        raise Refused(
-            f"the lesson on {s['on_date']} is already marked {s['state'].replace('_', ' ')}; only a planned lesson is edited."
-        )
+    _ensure_open(s, today, words=text is not None or subject_code is not None)
     if subject_code is not None and subject_code != s["subject_code"] and not _taught(conn, s, subject_code):
         raise Refused(f"'{subject_code}' is not taught to this class; choose one of its subjects.")
-    if (new_text, new_subject) == (s["text"], s["subject_code"]):
+    new_activity = s["activity_code"] if activity_code is None else (activity_code.strip() or None)
+    if new_activity and new_activity != s["activity_code"]:
+        tt_heads.ensure_offered(conn, s, new_activity)
+    if (new_text, new_subject, new_activity) == (s["text"], s["subject_code"], s["activity_code"]):
         raise Refused("That is what the lesson already says; nothing changes.")
     f = conn.execute(
         "select id from fortnight where academic_year_id = %s and kind = 'teaching' and %s between starts_on and ends_on",
@@ -89,14 +98,15 @@ def edit(
                 actor=who,
             )
         conn.execute(
-            "update session set text = %s, subject_code = %s, updated_at = now() where id = %s",
-            (new_text, new_subject, s["id"]),
+            "update session set text = %s, subject_code = %s, activity_code = %s, updated_at = now() where id = %s",
+            (new_text, new_subject, new_activity, s["id"]),
         )
         conn.execute(
             "insert into change_log (tenant_id, table_name, row_id, op, before, after, staff_id, origin, reason)"
-            " values (%s, 'session', %s, 'edit', jsonb_build_object('text', %s::text, 'subject_code', %s::text),"
-            " jsonb_build_object('text', %s::text, 'subject_code', %s::text), %s, %s, %s)",
-            (s["tenant_id"], str(s["id"]), s["text"], s["subject_code"], new_text, new_subject, who, f"staff:{who}",
+            " values (%s, 'session', %s, 'edit', jsonb_build_object('text', %s::text, 'subject_code', %s::text, 'activity_code', %s::text),"
+            " jsonb_build_object('text', %s::text, 'subject_code', %s::text, 'activity_code', %s::text), %s, %s, %s)",
+            (s["tenant_id"], str(s["id"]), s["text"], s["subject_code"], s["activity_code"], new_text, new_subject,
+             new_activity, who, f"staff:{who}",
              (reason or "").strip() or None),
         )  # fmt: skip
     return {
@@ -104,4 +114,5 @@ def edit(
         "on_date": s["on_date"].isoformat(),
         "text": new_text,
         "subject_code": new_subject,
+        "activity_code": new_activity,
     }

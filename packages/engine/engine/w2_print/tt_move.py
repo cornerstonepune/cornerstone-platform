@@ -135,10 +135,11 @@ def _swap(conn: db.Conn, a: Place, b: Place) -> None:
         for s, to in going:
             conn.execute(
                 "insert into session (id, tenant_id, school_class_id, school_day_id, period_id, subject_code, kind,"
-                " led_by_staff_id, state, planned, plan_entry_id, text, created_at)"
-                " values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+                " led_by_staff_id, state, planned, plan_entry_id, text, created_at, activity_code)"
+                " values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
                 (s["id"], s["tenant_id"], s["school_class_id"], to.day_id, to.period["id"], s["subject_code"], s["kind"],
-                 s["led_by_staff_id"], s["state"], s["planned"], s["plan_entry_id"], s["text"], s["created_at"]),
+                 s["led_by_staff_id"], s["state"], s["planned"], s["plan_entry_id"], s["text"], s["created_at"],
+                 s["activity_code"]),
             )  # fmt: skip
     day_of = {s["id"]: to.date for s, to in going}
     for r in links:

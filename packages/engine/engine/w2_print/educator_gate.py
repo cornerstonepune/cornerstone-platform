@@ -55,7 +55,7 @@ def a_class(conn: db.Conn, staff: Any, class_id: str) -> dict | None:
     except ValueError:
         return None
     return conn.execute(
-        "select c.id::text as id, c.grade_code as grade, c.section, c.academic_year_id, c.campus_id from school_class c"
+        "select c.id::text as id, c.grade_code as grade, c.section, c.academic_year_id, c.campus_id, c.tenant_id from school_class c"
         " where c.id = %s and c.tenant_id = (select tenant_id from staff where id = %s)",
         (class_id, staff),
     ).fetchone()
