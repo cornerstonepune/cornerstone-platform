@@ -25,8 +25,7 @@ import { cookies } from "next/headers";
 // foot fill the rest of the width. The page itself is `Screen`, which holds the title, the one main action, the right side and the next
 // step. Nothing here names a subject.
 
-/** The sidebar a person sees: the same for everyone, School included (read-only for an educator; lib/access.ts says who may change
- *  what). Only Today carries a count (docs/ux-rules.md rule 5). */
+/** The sidebar everyone sees (lib/menu.ts): the same sections for every role. Only Today carries a count (docs/ux-rules.md rule 5). */
 function sectionsOf(waiting: number): FrameSection[] {
   return sectionsFor().map((s) => ({
     key: s.key,
