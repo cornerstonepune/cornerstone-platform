@@ -26,21 +26,21 @@ import { cookies } from "next/headers";
 // step. Nothing here names a subject.
 
 /** The sidebar everyone sees (lib/menu.ts): the same sections for every role. Only Today carries a count (docs/ux-rules.md rule 5). */
-function sectionsOf(waiting: number): FrameSection[] {
+function sectionsOf(): FrameSection[] {
   return sectionsFor().map((s) => ({
     key: s.key,
     label: s.label,
     icon: s.icon,
-    pages: s.pages.map((p) => ({ href: p.href, label: p.label, count: p.href === "/today" && waiting ? waiting : undefined })),
+    pages: s.pages.map((p) => ({ href: p.href, label: p.label, counted: p.href === "/today" })),
   }));
 }
 
-export async function AppFrame({ me, waiting, children }: { me: Session; waiting: number; children: ReactNode }) {
+export async function AppFrame({ me, waiting, children }: { me: Session; waiting: Promise<number>; children: ReactNode }) {
   const acting = await actingAsEducator(me);
-  const sections = sectionsOf(waiting);
+  const sections = sectionsOf();
   const folded = (await cookies()).get(FOLD_COOKIE)?.value === "icons";
   return (
-    <WalkProvider sections={sections}>
+    <WalkProvider sections={sections} waiting={waiting}>
       <div data-block="AppFrame" data-frame className="flex min-h-dvh flex-col bg-[var(--ground)] text-[var(--ink)]">
         <header data-bar className="relative z-30 border-b border-[var(--line)] bg-[var(--panel)] print:hidden">
           <div className="flex h-[72px] w-full items-center gap-[var(--space-3)] px-[var(--space-3)] min-[701px]:gap-[var(--space-4)] md:px-[var(--space-4)]">

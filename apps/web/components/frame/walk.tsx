@@ -9,10 +9,14 @@ import type { IconName } from "@/lib/icons";
 // Activity from Today stays in My day, where the same Activity opened from School would light School. A sidebar link the person clicks
 // starts a walk in its section; any other link inside the frame keeps the walk going; a page opened any other way (typed, a bookmark)
 // belongs to the section its route is mapped to (lib/menu.ts), and Back returns to the section that page had.
-export type FramePage = { href: string; label: string; count?: number };
+/** `counted`: the page whose link carries the one count on the site (Today), drawn when it arrives (`Walk.waiting`). */
+export type FramePage = { href: string; label: string; counted?: boolean };
 export type FrameSection = { key: SectionKey; label: string; icon: IconName; pages: readonly FramePage[] };
-type Walk = { sections: readonly FrameSection[]; lit: SectionKey | undefined };
-const Ctx = createContext<Walk>({ sections: [], lit: undefined });
+/** `waiting`: the Today count, still on its way: the layout starts it and does not wait for it, so a page's first byte is not held by
+ *  the school's counts (p6 measured 1.3 s before the first byte on a slow runner, 12 Nov 2026); the badge reads it with `use`. */
+type Walk = { sections: readonly FrameSection[]; lit: SectionKey | undefined; waiting: Promise<number> };
+const NONE = Promise.resolve(0);
+const Ctx = createContext<Walk>({ sections: [], lit: undefined, waiting: NONE });
 export const useWalk = () => useContext(Ctx);
 
 const STORE = "cs.walk";
@@ -26,7 +30,7 @@ function remembered(path: string): SectionKey | undefined {
   }
 }
 
-export function WalkProvider({ sections, children }: { sections: readonly FrameSection[]; children: ReactNode }) {
+export function WalkProvider({ sections, waiting = NONE, children }: { sections: readonly FrameSection[]; waiting?: Promise<number>; children: ReactNode }) {
   const path = usePathname();
   const shown = (k: SectionKey | undefined) => (k && sections.some((d) => d.key === k) ? k : undefined);
   const [lit, setLit] = useState<SectionKey | undefined>(() => shown(sectionOf(path)?.key));
@@ -60,5 +64,5 @@ export function WalkProvider({ sections, children }: { sections: readonly FrameS
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [path]);
 
-  return <Ctx.Provider value={{ sections, lit }}>{children}</Ctx.Provider>;
+  return <Ctx.Provider value={{ sections, lit, waiting }}>{children}</Ctx.Provider>;
 }
