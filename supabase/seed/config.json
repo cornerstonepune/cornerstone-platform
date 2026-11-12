@@ -493,6 +493,18 @@
       "seed_once": true
     },
     {
+      "key": "attendance.start_times",
+      "description": "The time school starts for each program (the attendance report's own program names), as HH:MM: a child who comes in after it is late (CP-42). A program not listed has no late count. Empty until the school gives its times.",
+      "value": {},
+      "seed_once": true
+    },
+    {
+      "key": "timetable.time_tolerance_pct",
+      "description": "How far a subject's lesson minutes may sit from the standing timetable's for the same days and still be called within (CP-41): over or short beyond this percent.",
+      "value": 10,
+      "seed_once": true
+    },
+    {
       "key": "timetable.subject_looks",
       "description": "How the timetable grid draws a subject: numeracy, language or arts (the timetable's subject code to look, as `session.subject_code` holds it). A subject not listed is drawn as arts. The timetable screen reads it; the engine does not use it.",
       "value": {"math": "numeracy", "english": "language", "hindi": "language", "phonics": "language", "reading": "language", "story": "language", "rhymes": "language", "rhymes_dance": "language"},

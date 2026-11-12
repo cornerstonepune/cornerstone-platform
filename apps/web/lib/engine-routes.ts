@@ -33,6 +33,9 @@ export type EngineRoutes = {
   "GET /worksheet/{code}.pdf": null;
   "GET /worksheet/{code}/geometry": null;
   "POST /assessment/name": { by: string; key: string; name: string };
+  "POST /attendance/child": { actor: string; class_id: string; roll_no: string; start: string; end: string };
+  "POST /attendance/class": { actor: string; class_id: string; start: string; end: string; by?: "week" | "month" };
+  "POST /attendance/load": { actor: string; rows: Record<string, unknown>[] };
   "POST /bank/fill": { skill_set: string; difficulty: string; count: number };
   "POST /bank/item/{item_key}/correct": { stem: string; by: string; reason: string };
   "POST /bank/item/{item_key}/remove": { by: string; note: string };
@@ -137,6 +140,7 @@ export type EngineRoutes = {
   "POST /timetable/period": { actor: string; class_id?: string | null; day?: string | null; week_of?: string | null; period_id?: string | null };
   "POST /timetable/rules/change": { actor: string; class_id?: string | null; rule: string; action: string; id?: string | null; period_id?: string | null; starts_at?: string | null; ends_at?: string | null; label?: string | null; on_date?: string | null; weekday?: number | null; week_code?: string | null; reason?: string | null; subject_code?: string | null; span?: string | null; fewest?: number | null; most?: number | null; text?: string | null; frozen_reason?: string | null };
   "POST /timetable/rules/read": { actor: string; class_id?: string | null };
+  "POST /timetable/time": { actor: string; start: string; end: string; class_id?: string | null; grade?: string | null };
   "POST /timetable/unmatched": { actor: string; fortnight?: number | null; band?: string | null };
   "POST /timetable/week": { actor: string; class_id?: string | null; day?: string | null; week_of?: string | null; period_id?: string | null };
   "POST /voice/class": { actor: string; class_id: string; day?: string | null };

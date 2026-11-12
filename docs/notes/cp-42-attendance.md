@@ -1,0 +1,2 @@
+# CP-42 — attendance
+Table `attendance` (migration 20270128100000), `core/attendance.py`, routes `/attendance/load|child|class`. Report rows: name, date ("28 Sept 2026"), program, total_hours/hours, in/out, absent, leave. Status: leave if a leave time; absent if an absent time or no in-time and no minutes; else present. `attendance.start_times` is empty until the school gives them. Live load: through the live engine route with the engine key, by the person who has the file; names are matched inside the engine and never answered.
