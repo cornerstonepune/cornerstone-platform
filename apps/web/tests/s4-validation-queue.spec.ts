@@ -305,13 +305,13 @@ test("Capture & Mark lists students by class; a student lists their papers; a pa
   await expect(page.getByRole("table").first().locator("tbody tr").first()).toBeVisible();
 });
 
-// ADR 0032: until the reader has earned 95% on a kind of question, a right answer waits too — its
-// reading the one-click guess — and the queue says so in words.
+// ADR 0032: until the reader has earned 95% on a kind of question, a right answer waits too (its reading the one-click guess) and the queue
+// says so. The answer taken (fixed order) reads its own key ("82" on S4TEST-1 is marked correct against 62, and re-marks wrong) on the child's only copy.
 test("a right answer of a kind the reader is not yet trusted on waits, and settles in one click", async ({ page }) => {
   const [a] = await sql<{ id: string; raw_read: string; read: string }[]>`
     select r.id, r.raw_read, r.raw_read::jsonb ->> 'child_answer' as read ${LIVE} and r.status = 'correct' and r.state = 'candidate'
-      and coalesce(r.raw_read::jsonb ->> 'child_answer', '') <> ''
-      and not exists (select 1 from read_correction rc where rc.item_result_id = r.id) order by r.id limit 1`;
+      and r.raw_read::jsonb ->> 'child_answer' = coalesce(i.spec ->> 'answer', i.responses -> 0 ->> 'answer') and not exists (select 1 from sheet_instance s join sheet_instance o on o.child_id = s.child_id and o.sheet_template_id = s.sheet_template_id and o.id <> s.id join capture oc on oc.sheet_instance_id = o.id and oc.superseded_by is null where s.id = c.sheet_instance_id)
+      and not exists (select 1 from read_correction rc where rc.item_result_id = r.id) order by c.path, r.rid limit 1`;
   expect(a, "a right answer still a candidate").toBeTruthy();
   const before = await keep(a.id);
   try {
