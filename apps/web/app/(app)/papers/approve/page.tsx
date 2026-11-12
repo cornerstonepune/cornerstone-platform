@@ -44,7 +44,7 @@ export default async function ApprovePage({ searchParams }: Props) {
         stage="Papers to approve"
         title="Papers to approve"
         purpose="A class's week: each child's paper, the level it is set at and why. Change any child, then approve the pack to print it."
-        action={<Link href="/today?open=taught" className="btn">Say what was taught</Link>}
+        action={<Link href="/setup/needs-doing?open=taught" className="btn">Say what was taught</Link>}
         next={{ href: "/papers", label: "Assessments: print and give" }}
       >
         {notListed ? <Notice tone="terracotta">{notListed}</Notice> : null}

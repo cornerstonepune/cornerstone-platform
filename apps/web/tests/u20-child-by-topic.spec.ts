@@ -109,7 +109,7 @@ test("every parent report waiting on a person is one list, and a child's page en
   // read on its own child's row
   await page.goto(`/children/reports?class=${SECTION}`);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Reports");
-  const rows = page.getByRole("table", { name: "Every child's report" }).locator("tbody tr:not(.under)");
+  const rows = page.getByRole("main").locator("table tbody tr:not(.under)");
   await expect(rows.filter({ hasText: "Ishaan" })).toContainText("to approve");
   await expect(rows.filter({ hasText: "Kabir" })).toContainText("to write");
   await expect(rows.filter({ hasText: "Mira" })).toContainText("nothing yet");
@@ -117,6 +117,6 @@ test("every parent report waiting on a person is one list, and a child's page en
   await expect(page).toHaveURL(new RegExp(`/growth/${kids.Ishaan}/parent$`));
 
   // Today's line for the reports opens the new Reports screen (the old list is still live until it is retired)
-  await page.goto(`/today?kind=report&class=${SECTION}`);
+  await page.goto(`/setup/needs-doing?kind=report&class=${SECTION}`);
   await expect(page.locator("tr[data-kind=report]").filter({ hasText: SECTION }).getByRole("link")).toHaveAttribute("href", new RegExp(`^/children/reports\\?class=${SECTION}`));
 });

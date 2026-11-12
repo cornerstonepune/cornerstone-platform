@@ -65,7 +65,8 @@
   "merged_slices": [
     "UI-5",
     "UI-12",
-    "UI-11"
+    "UI-11",
+    "UI-7"
   ],
   "slices": [
     {
@@ -331,7 +332,8 @@
       "screens": [
         "login",
         "help",
-        "feedback"
+        "feedback",
+        "map"
       ],
       "done_when": [
         "Every screen of this slice passes the ten generic checks under `SLICE=UI-12` (sign in is tested signed out) and every element in its list behaves as its kind says; the slice's last commit adds `UI-12` to `merged_slices`.",
@@ -365,7 +367,7 @@
   "screens": [
     {
       "id": "today-educator",
-      "route": "/today/new",
+      "route": "/today",
       "group": "Today",
       "who": "educator",
       "phase": "Core",
@@ -513,7 +515,7 @@
     },
     {
       "id": "today-coordinator",
-      "route": "/today/new",
+      "route": "/today",
       "group": "Today",
       "who": "coordinator",
       "phase": "Core",
@@ -663,6 +665,9 @@
         "CP-8"
       ],
       "exists": "yes (/educator/period)",
+      "folds": [
+        "/educator/period/[id]"
+      ],
       "eyebrow": "Period · 09:15 · K2 Red · Numeracy",
       "title": "the session's name",
       "purpose": "the activity's objective in one line",
@@ -1214,14 +1219,30 @@
         {
           "t": "filter",
           "label": "class",
-          "roles": [
-            "coordinator"
-          ]
+          "note": "the coordinator always; an educator only when she holds more than one class"
         },
         {
           "t": "tab",
           "label": "Day / Week / Fortnight",
           "note": "Day by default at 400 px"
+        },
+        {
+          "t": "link",
+          "label": "Previous / next day or week",
+          "to": "timetable",
+          "note": "Day view steps a school day (weekends skipped), Week view a week; the fortnight follows the day"
+        },
+        {
+          "t": "link",
+          "label": "Today",
+          "to": "timetable",
+          "note": "opens today in the Day view"
+        },
+        {
+          "t": "link",
+          "label": "each day head",
+          "to": "timetable",
+          "note": "opens that day in the Day view; earlier and later days are reached the same way"
         },
         {
           "t": "filter",
@@ -1290,7 +1311,10 @@
       "done_when": [
         "a hand move shows an amber outline and its details name who and why",
         "an educator never sees an accept-clash control; a clash cell is red for both roles",
-        "the grid's cells equal the session rows for the day shown (count and names)"
+        "the grid's cells equal the session rows for the day shown (count and names)",
+        "a period running now carries Do now, a recorded one Done, one over and not recorded Late, and no period still to come has a chip",
+        "a holiday day is named in words under the grid",
+        "stepping to the next or previous school day skips the weekend and crosses into the next or earlier fortnight"
       ]
     },
     {
@@ -1357,12 +1381,31 @@
           }
         },
         {
+          "t": "field",
+          "label": "reason",
+          "roles": [
+            "coordinator"
+          ],
+          "note": "needed once the fortnight is frozen; the engine says so in words when it is missing"
+        },
+        {
           "t": "button",
           "label": "Go live",
           "roles": [
             "coordinator"
           ],
-          "effect": "sessions updated in place; the what-changed table fills; the stepper moves to live"
+          "effect": "every class's placed draft goes live and the sessions are updated in place; the what-changed table lists every session it moved or removed, and nothing else",
+          "drive": {
+            "fill": {
+              "reason": "the school's own decision"
+            },
+            "click": "Go live",
+            "expect": {
+              "text": [
+                "went live"
+              ]
+            }
+          }
         },
         {
           "t": "link",
@@ -2034,6 +2077,24 @@
           "to": "child",
           "note": "the one way from a list to the child's own page",
           "when": "peek"
+        },
+        {
+          "t": "tab",
+          "label": "Picture",
+          "note": "the class picture; the three views of a class are tabs of this screen (UI-3e, carrying /growth and /growth/class/[section])",
+          "text": "Picture"
+        },
+        {
+          "t": "tab",
+          "label": "By topic",
+          "note": "topics as rows: who is secure, practising or needs help; a topic opens its skills, a skill its children",
+          "text": "By topic"
+        },
+        {
+          "t": "tab",
+          "label": "Matrix",
+          "note": "each child against each topic; a topic opens its skills",
+          "text": "Matrix"
         }
       ],
       "rail": [
@@ -2793,7 +2854,7 @@
           "t": "row",
           "label": "each answer row",
           "effect": "the page scrolls to that answer and outlines it",
-          "data": "data-answer"
+          "data": "data-answer-open"
         },
         {
           "t": "field",
@@ -2821,7 +2882,7 @@
           "t": "button",
           "label": "Blank (the child wrote nothing)",
           "effect": "the answer is marked blank, never wrong",
-          "text": "Blank",
+          "text": "Blank (the child wrote nothing)",
           "drive": {
             "fixture": "answer-to-judge",
             "click": "Blank",
@@ -2888,6 +2949,70 @@
           "text": "Topic",
           "data": "data-filter",
           "pending": "needs a home paper the engine made for a child (a library worksheet cannot be edited); proved against real engine-made papers in u76-edit-a-paper"
+        },
+        {
+          "t": "button",
+          "label": "Change it for every child",
+          "note": "under 'Is the right answer wrong?'; code refuses a key the sum contradicts and says why; otherwise every child's answer to the question is marked again",
+          "text": "Change it for every child",
+          "data": "data-change-key",
+          "pending": "proved in u77-paper-tools and u78-whose-paper against papers whose reads carry the doubt the control answers; the shared inventory fixture has none"
+        },
+        {
+          "t": "button",
+          "label": "Name the mistake (the likeliest, none of these, another)",
+          "note": "for a wrong answer no named mistake explains; kept against the reading and reaches the evidence at sign-off",
+          "text": "None of these",
+          "data": "data-name-mistake",
+          "pending": "proved in u77-paper-tools and u78-whose-paper against papers whose reads carry the doubt the control answers; the shared inventory fixture has none"
+        },
+        {
+          "t": "button",
+          "label": "This page is this child's / Not this child's",
+          "note": "where the same photograph is on two copies; saving what the child wrote waits for this",
+          "text": "This page is this child",
+          "data": "data-choose-page",
+          "pending": "proved in u77-paper-tools and u78-whose-paper against papers whose reads carry the doubt the control answers; the shared inventory fixture has none"
+        },
+        {
+          "t": "link",
+          "label": "Next answer to judge",
+          "note": "the next answer for a person, in the order they sit on the page",
+          "text": "Next answer to judge",
+          "data": "data-next-answer",
+          "pending": "proved in u77-paper-tools and u78-whose-paper against papers whose reads carry the doubt the control answers; the shared inventory fixture has none"
+        },
+        {
+          "t": "link",
+          "label": "Previous paper / Next paper (this child's)",
+          "note": "the child's other papers, oldest first, each on its own paper screen",
+          "text": "Previous paper",
+          "data": "data-prev-paper",
+          "pending": "proved in u77-paper-tools and u78-whose-paper against papers whose reads carry the doubt the control answers; the shared inventory fixture has none"
+        },
+        {
+          "t": "link",
+          "label": "a skill's answer chip",
+          "note": "what this paper says by skill; each answer one tap away",
+          "text": "For you to judge",
+          "data": "data-lane-answer",
+          "pending": "proved in u77-paper-tools and u78-whose-paper against papers whose reads carry the doubt the control answers; the shared inventory fixture has none"
+        },
+        {
+          "t": "button",
+          "label": "Right / Wrong / Blank (judge)",
+          "note": "for the few answers code cannot mark; only a person can say which",
+          "text": "Right",
+          "data": "data-judge",
+          "pending": "proved in u77-paper-tools and u78-whose-paper against papers whose reads carry the doubt the control answers; the shared inventory fixture has none"
+        },
+        {
+          "t": "field",
+          "label": "the right answer, for every child",
+          "note": "inside the fold 'Is the right answer wrong?'",
+          "text": "The right answer is",
+          "data": "data-change-key-field",
+          "pending": "proved in u77-paper-tools and u78-whose-paper against papers whose reads carry the doubt the control answers; the shared inventory fixture has none"
         }
       ],
       "rail": [
@@ -3290,7 +3415,7 @@
           "roles": [
             "coordinator"
           ],
-          "effect": "a field; Save writes a skill_level_version row"
+          "effect": "a field for the sentence and an optional reason; Save changes that level's words, takes that level out of approved and keeps who and why (the engine's level-words route)"
         },
         {
           "t": "link",
@@ -3327,6 +3452,11 @@
           "label": "peek: Open the child",
           "to": "child",
           "note": "the one way from a list to the child's own page"
+        },
+        {
+          "t": "fold",
+          "label": "Earlier sentences (each level)",
+          "note": "each earlier sentence with who and when, newest first; coordinator"
         }
       ],
       "rail": [
@@ -3351,7 +3481,8 @@
         "the grid's squares equal the class's enrolment in Sr. No. order",
         "grouping by state puts a heading and a count over each group and the counts sum to the squares",
         "a cluster's count equals the chips in it; clusters are computed by code, never by a model",
-        "tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page"
+        "tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page",
+        "a coordinator changes a level's sentence and the change is logged with who and why, taking only that level out of approved; an educator is shown the sentences and no way to change them"
       ]
     },
     {
@@ -3362,17 +3493,21 @@
       "phase": "Core",
       "backend": [],
       "exists": "part (/skill-sets/[code])",
-      "eyebrow": "Skill set · Grades 1 to 4",
-      "title": "the skill set's name",
-      "purpose": "A skill set is what the school teaches and tests together, from one to four grades. It points at the skills the system reads a child on; it never scores a child itself.",
+      "eyebrow": "Curriculum · Skill set · Grade 3 · Skill 4 of 21",
+      "title": "the skill set's outcome (what the child can do)",
+      "purpose": "What this skill looks like at each level, each with a real question from the bank, the kinds of question, and the mistakes it watches for.",
       "blocks": [
         [
           "Cards",
-          "each skill it covers: name, link"
+          "each registry skill it covers: name, link"
+        ],
+        [
+          "Cards",
+          "which grade each level belongs to (coordinator) · each level: its sentence, approval, a real question from the bank, more like this"
         ],
         [
           "Details",
-          "each level in a sentence"
+          "Kinds of question · Stop using a kind · Mistakes it watches for · Worksheets by level"
         ]
       ],
       "elements": [
@@ -3382,8 +3517,81 @@
           "to": "skill"
         },
         {
-          "t": "fold",
-          "label": "Each level in a sentence"
+          "t": "link",
+          "label": "For example: a real question (each level)",
+          "to": "question"
+        },
+        {
+          "t": "field",
+          "label": "Which grade each level belongs to",
+          "roles": [
+            "coordinator"
+          ],
+          "note": "a choice of the school's grades for each level"
+        },
+        {
+          "t": "button",
+          "label": "Save the grades",
+          "roles": [
+            "coordinator"
+          ],
+          "effect": "each level's grade is saved with who and when; the page says Saved"
+        },
+        {
+          "t": "button",
+          "label": "Approve this level (each level)",
+          "roles": [
+            "coordinator"
+          ],
+          "effect": "that level's words are approved in the person's name; the other levels still wait"
+        },
+        {
+          "t": "button",
+          "label": "Approve a way of asking (English)",
+          "roles": [
+            "coordinator"
+          ],
+          "effect": "that way of asking is approved in the person's name"
+        },
+        {
+          "t": "link",
+          "label": "Change a sample (English)",
+          "roles": [
+            "coordinator"
+          ],
+          "to": "skillset",
+          "note": "opens the sample's own form in place; the address carries it"
+        },
+        {
+          "t": "button",
+          "label": "More like this (each level)",
+          "roles": [
+            "coordinator"
+          ],
+          "effect": "questions like the example are made and checked by code; the page says how many"
+        },
+        {
+          "t": "link",
+          "label": "Stop using a kind (each kind, each level)",
+          "roles": [
+            "coordinator"
+          ],
+          "to": "skillset",
+          "note": "asks which level, then stops it; the address carries the choice"
+        },
+        {
+          "t": "button",
+          "label": "Approve the skill",
+          "roles": [
+            "coordinator"
+          ],
+          "effect": "the skill is approved in the person's name"
+        },
+        {
+          "t": "link",
+          "label": "Worksheets: a level",
+          "to": "skillset",
+          "note": "shows that level's worksheets; the address carries it"
         },
         {
           "t": "link",
@@ -3392,18 +3600,26 @@
         },
         {
           "t": "link",
-          "label": "rail: Question bank for this skill set",
+          "label": "rail: Question bank",
           "to": "bank"
+        },
+        {
+          "t": "fold",
+          "label": "Kinds of question"
+        },
+        {
+          "t": "fold",
+          "label": "How it is asked (English)"
         }
       ],
       "rail": [
-        "each skill",
-        "Question bank for this skill set"
+        "each skill it covers",
+        "Question bank"
       ],
       "capture": [],
       "main": "a skill",
       "next": "the question bank",
-      "data": "skill (the skill set: code, name, registry_codes), skill_level, registry_skill",
+      "data": "skill (code, name, learning_objective, difficulty, level_band, level_approved, registry_codes), skill_level, registry_skill, item (a real question per level), question_type, misconception, worksheet",
       "empty": "No registry skill linked yet: shown, no invention",
       "phone": "cards stack in one column",
       "folds": [
@@ -3412,7 +3628,11 @@
       "done_when": [
         "the screen is keyed by the skill set's code, not by a registry skill's code",
         "each registry skill the set points at is a card that opens the skill screen; a set with none says so and invents nothing",
-        "the level sentences sit in a fold, closed on load"
+        "each level shows its sentence, its approval and a real question from the bank (or says there is none); a coordinator approves one level and the others still wait",
+        "a coordinator saves which grade each level belongs to; an educator is shown the grades and no way to change them",
+        "an English skill shows how each level is asked and its sample questions; a coordinator approves a way of asking and changes a sample",
+        "a coordinator asks for more questions like a level's example, and stops a kind of question at one level or at every level",
+        "the old address /skill-sets/<code> answers 308 to this one, query kept"
       ]
     },
     {
@@ -3473,7 +3693,7 @@
         {
           "t": "row",
           "label": "a skill row",
-          "to": "skill",
+          "to": "skillset",
           "data": "data-skill-row"
         },
         {
@@ -3531,6 +3751,69 @@
         },
         {
           "t": "link",
+          "label": "Questions to answer: Read them",
+          "text": "Read them",
+          "to": "curriculum",
+          "note": "the card jumps to the table of questions; it is drawn only while a question waits"
+        },
+        {
+          "t": "link",
+          "label": "Read it in full (a question)",
+          "text": "Read it in full",
+          "note": "opens the full draft in a new tab",
+          "when": "@ask-with-link",
+          "newTab": true
+        },
+        {
+          "t": "button",
+          "label": "Agree as drafted (a question)",
+          "data": "data-ask-agree",
+          "effect": "the question is answered 'agreed' in the person's name; it leaves the waiting list",
+          "drive": {
+            "click": "Agree as drafted",
+            "expect": {
+              "check": "ask-answered"
+            }
+          }
+        },
+        {
+          "t": "field",
+          "label": "what it should say (a question)",
+          "data": "data-ask-correction",
+          "text": "What it should say"
+        },
+        {
+          "t": "button",
+          "label": "Correct it (a question)",
+          "data": "data-ask-correct",
+          "effect": "the question is answered 'corrected' with the person's words and name; it leaves the waiting list",
+          "drive": {
+            "fill": {
+              "What it should say": "Say it in the school's own words."
+            },
+            "click": "Correct it",
+            "expect": {
+              "check": "another-ask-answered"
+            }
+          }
+        },
+        {
+          "t": "fold",
+          "label": "the answered questions",
+          "text": "answered",
+          "when": "@asks-answered",
+          "note": "drawn once a question has been answered: who answered, when and what they said"
+        },
+        {
+          "t": "link",
+          "label": "questions page: Later →",
+          "text": "Later →",
+          "to": "curriculum",
+          "when": "paged",
+          "note": "the questions table pages on its own, ten a page"
+        },
+        {
+          "t": "link",
           "label": "rail: Skills to approve",
           "to": "skills-approve"
         },
@@ -3554,7 +3837,7 @@
       "capture": [],
       "main": "Check the drafted parts",
       "next": "an activity",
-      "data": "activity, skill, skill_level, change_log and curriculum_proposal (the source of each part), curriculum_proposal",
+      "data": "activity, skill, skill_level, change_log and curriculum_proposal, ask (the source of each part), curriculum_proposal",
       "empty": "none",
       "phone": "the table scrolls sideways in its own box",
       "folds": [
@@ -3626,7 +3909,7 @@
         {
           "t": "link",
           "label": "a skill's name",
-          "to": "skill",
+          "to": "skillset",
           "data": "data-row-link"
         },
         {
@@ -3763,7 +4046,7 @@
         },
         {
           "t": "fold",
-          "label": "Statistics (counts and worksheets by taxonomy)"
+          "label": "Statistics (counts and worksheets by topic)"
         },
         {
           "t": "link",
@@ -3941,7 +4224,7 @@
       "exists": "yes",
       "eyebrow": "This fortnight",
       "title": "Staff and classes",
-      "purpose": "Who teaches which class, and whole counts the database can stand behind. No score, no ranking: the school decides what they mean.",
+      "purpose": "Who teaches which class, and whole counts you can rely on. No score, no ranking: the school decides what they mean.",
       "blocks": [
         [
           "DataTable",
@@ -4035,6 +4318,9 @@
         "no sort, rank, ordinal or colour grading on the three numbers; the table cannot be sorted by them",
         "a grant edit is a new row or a valid_to, never a delete (row count never drops)",
         "no staff name appears unless the viewer is in the everything group (names are pii)"
+      ],
+      "folds": [
+        "/staff"
       ]
     },
     {
@@ -4139,6 +4425,67 @@
       ]
     },
     {
+      "id": "map",
+      "route": "/setup/how-it-works",
+      "group": "Setup",
+      "who": "both",
+      "phase": "Core",
+      "backend": [],
+      "exists": "yes (/workflows)",
+      "eyebrow": "The engine",
+      "title": "How it works",
+      "purpose": "The twelve steps agreed with the school: what each does, what it hands on, what it has made so far, and which work for one subject only.",
+      "blocks": [
+        [
+          "Tile",
+          "how many steps work, are partly built, are not built, work for one subject only"
+        ],
+        [
+          "Details",
+          "each step's files and commands"
+        ]
+      ],
+      "elements": [
+        {
+          "t": "link",
+          "label": "Setup",
+          "to": "setup"
+        },
+        {
+          "t": "link",
+          "label": "each step it hands on to",
+          "data": "data-handon",
+          "note": "jumps to that step on the same page"
+        },
+        {
+          "t": "link",
+          "label": "each screen a step shows",
+          "data": "data-shows"
+        },
+        {
+          "t": "fold",
+          "label": "each step's files and commands",
+          "data": "data-files",
+          "text": "Files and commands"
+        }
+      ],
+      "rail": [],
+      "capture": [],
+      "main": "Setup",
+      "next": "Setup",
+      "data": "workflows.json (the map the engine's code is held to), with each step's live number from the database",
+      "empty": "none",
+      "phone": "one column; the cards stack",
+      "folds": [
+        "/workflows"
+      ],
+      "done_when": [
+        "every step of the map is drawn in its workflow, with what it is doing now and where it hands on",
+        "a step's number is the database's own, read now; a step the map says is not built has no number",
+        "the map fits a phone"
+      ]
+    },
+    {
       "id": "setup",
       "route": "/setup",
       "group": "Setup",
@@ -4158,12 +4505,12 @@
       "elements": [
         {
           "t": "link",
-          "label": "Curriculum",
+          "label": "Open the curriculum",
           "to": "curriculum"
         },
         {
           "t": "link",
-          "label": "Skills to approve",
+          "label": "Open Skills to approve",
           "to": "skills-approve",
           "roles": [
             "coordinator"
@@ -4171,12 +4518,12 @@
         },
         {
           "t": "link",
-          "label": "Question bank",
+          "label": "Open Question bank",
           "to": "bank"
         },
         {
           "t": "link",
-          "label": "Staff",
+          "label": "Open Staff",
           "to": "staff",
           "roles": [
             "coordinator"
@@ -4184,7 +4531,7 @@
         },
         {
           "t": "link",
-          "label": "Classes and children",
+          "label": "Open Classes and children",
           "to": "classes",
           "roles": [
             "coordinator"
@@ -4199,7 +4546,7 @@
       ],
       "rail": [],
       "capture": [],
-      "main": "Curriculum",
+      "main": "Open the curriculum",
       "next": "none",
       "data": "counts",
       "empty": "none",

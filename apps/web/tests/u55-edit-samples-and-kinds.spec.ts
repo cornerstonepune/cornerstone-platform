@@ -57,7 +57,7 @@ test.afterAll(async () => {
 });
 
 test("Ayush edits a Hard sample's wrong answer, is told in words why the first try fails, fixes it, and Hard waits for approval again", async ({ page }) => {
-  await page.goto(`/skill-sets/${slot.code}`);
+  await page.goto(`/setup/skill-sets/${slot.code}`);
   const hard = page.getByRole("region", { name: "Hard", exact: true });
   await expect(hard.getByText(/^Approved ·/)).toBeVisible();
   const card = hard.locator(`section[data-kind="ENG.CHOOSE"] li[data-sample="${slot.ord}"]`);
@@ -97,7 +97,7 @@ test("Ayush edits a Hard sample's wrong answer, is told in words why the first t
 
 test("an approval does not land on a sample changed after the page was opened", async ({ page }) => {
   await sql`update skill set level_approved = level_approved - 'Hard' where code = ${slot.code}`;
-  await page.goto(`/skill-sets/${slot.code}`);
+  await page.goto(`/setup/skill-sets/${slot.code}`);
   const hard = page.getByRole("region", { name: "Hard", exact: true });
   await expect(hard.getByRole("button", { name: "Approve Hard" })).toBeVisible();
   // someone else saves the sample again while the page is open
@@ -117,7 +117,7 @@ test("an approval does not land on a sample changed after the page was opened", 
 
 test("a kind is added to a level only with three samples, each checked", async ({ page }) => {
   expect(bare, "the skill has a level that does not ask Write the word").toBeTruthy();
-  await page.goto(`/skill-sets/${slot.code}`);
+  await page.goto(`/setup/skill-sets/${slot.code}`);
   const level = page.getByRole("region", { name: bare, exact: true });
   await level.getByLabel(`Add a kind of question to ${bare}`).selectOption({ label: "Write the word" });
   await level.getByRole("button", { name: `Add to ${bare}` }).click();
@@ -133,7 +133,7 @@ test("a kind is added to a level only with three samples, each checked", async (
 });
 
 test("a level's sentence is changed from the skill's page, and that level waits for approval again", async ({ page }) => {
-  await page.goto(`/skill-sets/${slot.code}`);
+  await page.goto(`/setup/skill-sets/${slot.code}`);
   await expect(page.getByRole("link", { name: "Change the description and each level’s sentence" }).first()).toBeVisible();
   await page.getByRole("region", { name: "Hard", exact: true }).getByRole("link", { name: "Change this level’s sentence" }).click();
   await expect(page).toHaveURL(new RegExp(`/skill-sets/${slot.code.replace(/\./g, "\\.")}/edit#words-Hard$`));
@@ -149,7 +149,7 @@ test("a Maths skill says in words that its questions are made by code and not ed
   const [m] = await sql<{ code: string }[]>`
     select s.code from skill s join topic t on t.tenant_id = s.tenant_id and t.code = s.topic_code
     where t.subject_code <> 'ENG' and s.status = 'ratified' order by s.code limit 1`;
-  await page.goto(`/skill-sets/${m.code}`);
+  await page.goto(`/setup/skill-sets/${m.code}`);
   await expect(page.getByText("This skill’s questions are made by code from each level’s rule")).toBeVisible();
   await expect(page.getByRole("link", { name: /^Edit sample/ })).toHaveCount(0);
 });

@@ -52,13 +52,13 @@ const NOT_BY_CLICK: Record<string, string> = {
   "/setup/activities/[code]": "a link of a period or of the materials list, which need a timetable's rows",
   "/setup/objectives/[code]": "a link of an activity, which needs a timetable's rows",
   "/setup/skills/[code]": "a link of an objective, which needs a timetable's rows",
+  "/setup/skill-sets/[code]": "a skill's row on Curriculum or Skills to approve (their links still name the old address, which answers 308 to this one)",
   "/record": "opened from a period or from Notes, both of which need a K2 class the test database does not hold with the voice switch on",
   "/period/[id]": "a link of a day of the timetable, which needs a timetable's rows",
   "/notes/[id]": "a card or a row of Notes, which needs a recorded note",
   "/timetable/materials": "the menu's Materials still opens the old page, which keeps the controls this one lacks, until UI-9b moves them (tests/u74-materials.spec.ts opens it)",
   "/timetable/fortnight/[n]": "a link of the timetable page's Fortnight card and of the timetable's rail, which need a fortnight's rows (tests/u74-timetable.spec.ts opens it with rows)",
   "/timetable/moves": "the draft page's Next card and a hand move on the fortnight page, which need a fortnight's rows (tests/u74-timetable.spec.ts opens it with rows)",
-  "/educator/period/[id]": "a link of a day of the timetable, which needs a timetable's rows",
   "/growth/[id]": "a child's name on a class's page: the class list is click two, a class's page click three, so a child's page is click four. It only counted as reached while the static page /growth/reports (which matches the pattern /growth/[^/]+) was in the app",
   "/growth/[id]/parent": "a link on a child's page (click four)",
   "/growth/[id]/report": "a link on a child's page (click four)",
@@ -76,6 +76,10 @@ test("5. GROUPS are exactly Today, Timetable, Children, Setup, and every route b
   expect(outside.sort()).toEqual(["/feedback", "/guide", "/refused"].sort());
 });
 
+// a file the page links to (a PDF, an image), not a page: a question's address has dots in its key (/setup/question-bank/SUB.2D2D.REG0-…)
+// and is a page
+const FILE = /\.(pdf|png|jpe?g|svg|webp|ico|css|js|json|txt|xml|csv|zip)$/i;
+
 test("5. each route is reached by clicking from the bar in at most three clicks", async ({ playwright }) => {
   test.setTimeout(300_000);
   const api = await playwright.request.newContext({ baseURL: "http://localhost:3100", extraHTTPHeaders: { cookie: `cs_staff=${sessionFor("e2e@cornerstone.test")}` } });
@@ -83,7 +87,7 @@ test("5. each route is reached by clicking from the bar in at most three clicks"
     const res = await api.get(url);
     if (!res.ok()) return [];
     const html = await res.text();
-    return [...html.matchAll(/<a\b[^>]*?\shref="([^"#]*)[^"]*"/g)].map((m) => m[1].replace(/&amp;/g, "&")).filter((h) => h.startsWith("/") && !h.startsWith("//") && !h.startsWith("/api/") && !h.startsWith("/_next") && !h.includes("."));
+    return [...html.matchAll(/<a\b[^>]*?\shref="([^"#]*)[^"]*"/g)].map((m) => m[1].replace(/&amp;/g, "&")).filter((h) => h.startsWith("/") && !h.startsWith("//") && !h.startsWith("/api/") && !h.startsWith("/_next") && !FILE.test(h));
   };
   // clicks: from the bar (a door, help, the account, report a problem), then two more
   let frontier = new Set(await hrefsOf("/today"));

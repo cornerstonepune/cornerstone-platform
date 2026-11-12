@@ -8,7 +8,7 @@
   "wants": [
     {
       "label": "Make a home assessment",
-      "href": "/guide/class-results#home-assessment"
+      "href": "/guide/children#home-assessment"
     },
     {
       "label": "Upload and read papers",
@@ -24,7 +24,7 @@
     },
     {
       "label": "See how a child is doing",
-      "href": "/guide/class-results#a-child"
+      "href": "/guide/children#a-child"
     },
     {
       "label": "Change a level",

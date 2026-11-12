@@ -10,6 +10,7 @@ import { FAKE_CHILDREN } from "./fake-names";
 import { inventoryRows, signedInAs, type Rows } from "./inventory-fixtures";
 import { brandRules } from "./inventory/brand";
 import { addressToLookIn, type Seen } from "./u13-address";
+import { BAR_HEIGHT_PX, BAR_LOGO_PX } from "../lib/ux-rules";
 
 const WEB = path.resolve(__dirname, "..");
 const sql = postgres(process.env.DATABASE_URL!, { max: 1 });
@@ -37,7 +38,7 @@ test("1. the four shells, the old menu and the second icon file are gone, and no
 });
 
 test("1. every existing page renders inside AppFrame (the bar, the trail, one main)", async ({ page }) => {
-  for (const route of ["/today", "/papers", "/growth", "/educator", "/educator/week", "/children", "/library", "/setup/classes", "/curriculum/browse", "/guide"]) {
+  for (const route of ["/today", "/papers", "/growth", "/timetable", "/children", "/library", "/setup/classes", "/curriculum/browse", "/guide"]) {
     await page.goto(route);
     await expect(page.locator("[data-frame] [data-bar]").first(), route).toBeVisible();
     await expect(page.getByRole("main"), route).toHaveCount(1);
@@ -52,7 +53,7 @@ test("2. at 1440 the four doors are the bar's own; at 400 they are a bottom tab 
   await expect(top).toBeVisible();
   expect((await top.getByRole("link").allInnerTexts()).map((t) => t.replace(/\s*\d[\d,]*$/, "").trim())).toEqual(["Today", "Timetable", "Children", "Setup"]);
   await expect(top.locator("[aria-current=page]")).toHaveText(/^Children/);
-  expect((await wide.locator("[data-bar]").first().locator("div").first().boundingBox())?.height).toBe(64);
+  expect((await wide.locator("[data-bar]").first().locator("div").first().boundingBox())?.height).toBe(BAR_HEIGHT_PX);
 
   const phone = await (await signedInAs(browser, "coordinator", { width: 400, height: 900 })).newPage();
   await phone.goto("/growth");
@@ -100,7 +101,8 @@ test("3 and 4. BrandMark: the right file for the ground and the room, as given, 
     await page.goto("/today");
     expect(await brandRules(page, scheme, width, `${scheme} ${width}`)).toEqual([]);
     const img = page.locator("picture[data-brand-mark] img");
-    if (width === 1440) expect((await img.boundingBox())!.height).toBeCloseTo(40, 0);
+    // the logo is bigger than it was (40 px) on both the lockup and the phone's mark, and keeps its clear space (brandRules above)
+    expect((await img.boundingBox())!.height).toBeCloseTo(BAR_LOGO_PX, 0);
     await expect(page.getByRole("link", { name: "Cornerstone Gurukul", exact: true })).toHaveAttribute("href", "/today");
     await context.close();
   }
@@ -149,7 +151,7 @@ test("8. search is a typeahead: an educator's Sr. No. and fake name find their o
   const logs: string[] = [];
   person.on("request", (r) => seen.push({ url: r.url(), method: r.method(), body: r.postData(), type: r.resourceType() }));
   person.on("console", (m) => logs.push(m.text()));
-  await person.goto("/today");
+  await person.goto("/setup/needs-doing");
   const box = person.locator("[data-bar]").first().getByRole("combobox");
   const options = person.getByRole("listbox", { name: "Found" }).getByRole("option");
   const mine = Object.keys(rows.children)[0];

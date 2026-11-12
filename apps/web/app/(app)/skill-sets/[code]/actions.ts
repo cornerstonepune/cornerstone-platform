@@ -44,8 +44,8 @@ export async function saveWords(formData: FormData): Promise<void> {
       updated_at = now()
     where code = ${code}`;
   revalidatePath("/");
-  revalidatePath(`/skill-sets/${code}`);
-  redirect(`/skill-sets/${code}?saved=1`);
+  revalidatePath(`/setup/skill-sets/${code}`);
+  redirect(`/setup/skill-sets/${code}?saved=1`);
 }
 
 /** The time a page was drawn (`openedAt`), as its approval form carried it; none from a form that carried none. */
@@ -117,10 +117,10 @@ export async function approveSkills(formData: FormData): Promise<void> {
     done.set("table", String(rows.length));
   }
   revalidatePath("/");
-  for (const c of approved) revalidatePath(`/skill-sets/${c.code}`);
+  for (const c of approved) revalidatePath(`/setup/skill-sets/${c.code}`);
   // Only back to the map, a skill page or the approval page under its choices: a return address from a form never
   // leaves the site.
-  const to = /^\/(skill-sets\/[A-Z0-9._]+)?$/.test(back) || APPROVE_PAGE.test(back) ? back : "/";
+  const to = /^\/((setup\/)?skill-sets\/[A-Z0-9._]+)?$/.test(back) || APPROVE_PAGE.test(back) ? back : "/";
   redirect(`${to}${to.includes("?") ? "&" : "?"}${done}`);
 }
 
@@ -147,8 +147,8 @@ export async function saveGrades(formData: FormData): Promise<void> {
     update skill set level_band = ${sql.json(moved as never)}, level_band_by = ${me.name}, level_band_at = now()
     where code = ${code}`;
   revalidatePath("/");
-  revalidatePath(`/skill-sets/${code}`);
-  redirect(`/skill-sets/${code}?grades=1`);
+  revalidatePath(`/setup/skill-sets/${code}`);
+  redirect(`/setup/skill-sets/${code}?grades=1`);
 }
 
 /** The coordinator approves one level's questions (goals/f1d-questions-approved-per-level.yaml): that level, at the
@@ -169,8 +169,8 @@ export async function approveLevel(formData: FormData): Promise<void> {
       and ${unchangedSince(sql`${code}`, opened, level)}
     returning 1`;
   revalidatePath("/");
-  revalidatePath(`/skill-sets/${code}`);
-  redirect(done.length ? `/skill-sets/${code}?level_approved=${level}#levels` : `/skill-sets/${code}?approved=0#levels`);
+  revalidatePath(`/setup/skill-sets/${code}`);
+  redirect(done.length ? `/setup/skill-sets/${code}?level_approved=${level}#levels` : `/setup/skill-sets/${code}?approved=0#levels`);
 }
 
 /** A named person approves one way of asking (a row of the one approval list, `approval`, CP-27): once, for every skill
@@ -185,6 +185,6 @@ export async function approveWay(formData: FormData): Promise<void> {
     insert into approval (tenant_id, kind, target, decision, by)
     select tenant_id, kind, target, 'approved', ${me.name}::text from approval_list
     where kind = 'question_type' and target = ${way} and first_by is null`;
-  revalidatePath(`/skill-sets/${back}`);
-  redirect(`/skill-sets/${back}?way_approved=${way}#ways`);
+  revalidatePath(`/setup/skill-sets/${back}`);
+  redirect(`/setup/skill-sets/${back}?way_approved=${way}#ways`);
 }

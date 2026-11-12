@@ -98,10 +98,10 @@ test("a period whose line names an activity opens its page, and back returns to 
     join school_day d on d.id = s.school_day_id join plan_entry pe on pe.id = s.plan_entry_id
     join activity a on a.id = pe.activity_id where a.code = 'ACT-K2-0348' order by d.on_date limit 1`;
   expect(p, "Fortnight 10 names Insects on a period").toBeTruthy();
-  await page.goto(`/educator/period/${p.period}?class=${p.klass}&day=${p.day}`);
+  await page.goto(`/period/${p.period}?class=${p.klass}&day=${p.day}`); // the period address of the links: it is the lesson if there is one
   await page.locator("[data-open-activity]").click();
   await expect(page.getByRole("heading", { level: 1, name: "Insects" })).toBeVisible();
   await expect(page).toHaveURL(/\/setup\/activities\/ACT-K2-0348/);
   await page.locator('[data-ux="next"]').click();
-  await expect(page).toHaveURL(new RegExp(`/educator\\?class=${p.klass}&day=${p.day}`));
+  await expect(page).toHaveURL(new RegExp(`/timetable\\?view=day&class=${p.klass}&day=${p.day}`)); // the day it came from, on the Timetable (the old Your day page is gone)
 });

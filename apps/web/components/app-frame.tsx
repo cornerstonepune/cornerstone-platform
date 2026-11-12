@@ -1,13 +1,15 @@
 import type { ReactNode } from "react";
 import Link from "@/components/link";
 import { BrandMark } from "./brand-mark";
-import { BottomDoors, DoorPages, HelpLink, TopDoors } from "./frame/doors";
+import { BottomDoors, HelpLink, TopDoors } from "./frame/doors";
 import { ActingAsSwitch, AccountLink, Person } from "./frame/person";
 import { MapLink, ReportLink } from "./frame/foot-links";
 import { SearchBox } from "./frame/search-box";
 import { WalkProvider, type FrameDoor } from "./frame/walk";
 import { Body, PageHeader, classesSaid } from "./parts";
-import { Icon } from "@/lib/icons";
+import { Icon, type IconName as Icon_ } from "@/lib/icons";
+import { KeyValue } from "@/components/key-value";
+import type { Kind } from "@/components/kind-tile";
 import { signOut } from "@/lib/auth-actions";
 import type { Session } from "@/lib/auth";
 import { mayUse } from "@/lib/access";
@@ -40,7 +42,7 @@ export async function AppFrame({ me, waiting, children }: { me: Session; waiting
     <WalkProvider doors={doors}>
       <div data-block="AppFrame" data-frame className="flex min-h-dvh flex-col bg-[var(--ground)] pb-[var(--space-7)] text-[var(--ink)] min-[701px]:pb-0">
         <header data-bar className="relative z-30 border-b border-[var(--line)] bg-[var(--panel)] print:hidden">
-          <div className="mx-auto flex h-16 w-full max-w-[1560px] items-center gap-[var(--space-3)] px-[var(--space-3)] min-[701px]:gap-[var(--space-4)] md:px-[var(--space-4)]">
+          <div className="mx-auto flex h-[72px] w-full max-w-[1560px] items-center gap-[var(--space-3)] px-[var(--space-3)] min-[701px]:gap-[var(--space-4)] md:px-[var(--space-4)]">
             <Link href="/today" prefetch className="flex shrink-0 items-center no-underline">
               <BrandMark />
             </Link>
@@ -64,7 +66,6 @@ export async function AppFrame({ me, waiting, children }: { me: Session; waiting
               </Person>
             </div>
           </div>
-          <DoorPages />
         </header>
         <main className="mx-auto flex w-full min-w-0 max-w-[1560px] flex-1 flex-col">{children}</main>
         <footer className="mx-auto w-full max-w-[1560px] px-[var(--space-3)] py-[var(--space-3)] text-[length:var(--text-label)] md:px-[var(--space-4)] print:hidden">
@@ -91,32 +92,121 @@ export function CaptureHere({ children }: { children: ReactNode }) {
   );
 }
 
-/** The rail: a surface box at the right of the main column (below it on a phone) of "Connected to" edges and, where a lesson or a
- *  child is in view, "Capture here". An edge is a screen id: it is drawn only when that screen is built (lib/built.ts). */
+/** The rail, as the wireframes draw it (docs/frontend/wireframes/kit.css `.rail`): at the right of the page (below it on a phone), a stack
+ *  of boxes in this order: the child peek when one is chosen, "Connected to" (each edge a kind tile, its name and a caption saying what
+ *  it is or where it stands), a facts card where the screen has one, and "Capture here" where a lesson or a child is in view. An edge is a
+ *  screen id: it is drawn only when that screen is built (lib/built.ts). */
 /** `href`: an edge to a screen of the slice being built, whose address the page knows (its screen is not in `merged_slices` yet, so the id alone draws nothing).
- *  `fallback`: the address of the page that does this work today, drawn while the screen is not built (an old page that is still live). */
-export type Edge = { screen: string; params?: Record<string, string>; label: string; icon: Parameters<typeof Icon>[0]["name"]; href?: string; newTab?: boolean; fallback?: string };
-export function Rail({ edges = [], capture }: { edges?: Edge[]; capture?: ReactNode }) {
-  const drawn = edges.map((e) => ({ ...e, href: e.href ?? screenHref(e.screen, e.params) ?? e.fallback ?? null })).filter((e): e is typeof e & { href: string } => e.href !== null);
-  if (!drawn.length && !capture) return null;
+ *  `fallback`: the address of the page that does this work today, drawn while the screen is not built (an old page that is still live).
+ *  `line`: the caption under the name ("fortnight 9, week A"); `kind` colours the tile and defaults from the icon. */
+export type Edge = { screen: string; params?: Record<string, string>; label: string; icon: Parameters<typeof Icon>[0]["name"]; href?: string; newTab?: boolean; fallback?: string; line?: string; kind?: Kind };
+
+/** The kind (and so the colour) of an edge's tile when the page names none: what the thing it opens is. */
+const KIND_OF: Partial<Record<Edge["icon"], Kind>> = {
+  class: "child", child: "child", parent: "child", absent: "child",
+  week: "period", fortnight: "period", period: "period", today: "period", table: "period", board: "period", moved: "period", clash: "period", frozen: "period", late: "period",
+  skill: "skill", tree: "skill", sprout: "skill", leaf: "skill", correct: "skill",
+  assessment: "assessment", checklist: "assessment", form: "assessment",
+  activity: "activity", materials: "activity", setup: "activity",
+  objective: "objective",
+  note: "note", record: "note", play: "note",
+};
+const kindOfEdge = (e: Pick<Edge, "icon" | "kind">): Kind => e.kind ?? KIND_OF[e.icon] ?? "period";
+
+/** The second line of a rail link when the page gives none: what the screen it opens is, in the wireframes' words (docs/frontend/
+ *  wireframes, the rails' `<small>`). Words only, never a number: a count is the page's own `line`, read from its rows. */
+const LINE_OF: Partial<Record<string, string>> = {
+  today: "the day's periods",
+  timetable: "the live grid",
+  materials: "what to lay out",
+  rules: "what the draft reads",
+  fortnight: "its plan and its state",
+  draft: "from the rules",
+  moves: "the next step",
+  period: "the period",
+  record: "a note about this class",
+  notes: "notes to confirm",
+  confirm: "notes to confirm",
+  children: "every class",
+  picture: "the class picture",
+  child: "the child",
+  assessments: "papers, approvals and results",
+  assessment: "the assessment",
+  paper: "answers to judge",
+  reports: "for parents",
+  curriculum: "every grade",
+  "skills-approve": "read and approve their levels",
+  bank: "the questions papers are made from",
+  skill: "the skill",
+  skillset: "the skill set",
+  objective: "the objective",
+  activity: "the activity",
+  staff: "who teaches what",
+  classes: "classes and children",
+  setup: "the school's setup",
+  "today-educator": "the day's periods",
+};
+
+const BOX = "rounded-[var(--radius-card)] bg-[var(--surface)] p-[var(--space-3)]";
+
+/** A titled box of label and value rows in the rail (This fortnight, Latest notes, Grants open now). Whole counts and words only. */
+export function RailFacts({ title, rows }: { title: string; rows: readonly { label: string; value: ReactNode }[] }) {
   return (
-    <aside aria-label="Rail" data-rail className="grid content-start gap-[var(--space-3)] rounded-[var(--radius-card)] bg-[var(--surface)] p-[var(--space-3)]">
+    <section aria-label={title} data-rail-part="facts" className={BOX}>
+      <h2 className="mb-[var(--space-1)] text-[length:var(--text-eyebrow)] text-[var(--ink-muted)] uppercase">{title}</h2>
+      <KeyValue rows={rows.map((r) => ({ label: r.label, value: r.value, num: true }))} />
+    </section>
+  );
+}
+
+export function Rail({ edges = [], capture, peek, facts, cards, boxes = [] }: { edges?: Edge[]; capture?: ReactNode; peek?: ReactNode; facts?: ReactNode; cards?: ReactNode; boxes?: { title: string; body: ReactNode }[] }) {
+  const drawn = edges.map((e) => ({ ...e, href: e.href ?? screenHref(e.screen, e.params) ?? e.fallback ?? null })).filter((e): e is typeof e & { href: string } => e.href !== null);
+  if (!drawn.length && !capture && !peek && !facts && !cards && !boxes.length) return null;
+  return (
+    <aside aria-label="Rail" data-rail className="grid content-start gap-[var(--space-4)]">
+      {peek}
       {drawn.length ? (
-        <section aria-label="Connected to">
+        <section aria-label="Connected to" className={BOX}>
           <h2 className="mb-[var(--space-1)] text-[length:var(--text-eyebrow)] text-[var(--ink-muted)] uppercase">Connected to</h2>
-          <ul className="grid gap-[var(--space-1)]">
-            {drawn.map((e) => (
-              <li key={e.href}>
-                <Link href={e.href} {...(e.newTab ? { target: "_blank", rel: "noreferrer" } : {})} className="flex min-h-[var(--tap)] items-center gap-[var(--space-2)] text-[var(--link)] underline">
-                  <Icon name={e.icon} size={20} />
-                  {e.label}
-                </Link>
-              </li>
-            ))}
+          <ul className="b-rlist !gap-[var(--space-2)]">
+            {drawn.map((e, i) => {
+              // the caption describes the link; the link's name stays the screen's own word (a test or a screen reader finds "Notes")
+              const line = e.line ?? LINE_OF[e.screen];
+              const id = `rail-line-${i}`;
+              return (
+                <li key={e.href}>
+                  <Link href={e.href} {...(e.newTab ? { target: "_blank", rel: "noreferrer" } : {})} className="b-ritem" data-rail-link data-kind={kindOfEdge(e)} aria-describedby={line ? id : undefined}>
+                    <span data-block="KindTile" data-kind={kindOfEdge(e)} className="b-tile">
+                      <Icon name={e.icon} size={20} />
+                    </span>
+                    <span>
+                      {e.label}
+                      {line ? (
+                        <small id={id} aria-hidden="true" data-rail-line>
+                          {line}
+                        </small>
+                      ) : null}
+                    </span>
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
         </section>
       ) : null}
-      {capture ? <CaptureHere>{capture}</CaptureHere> : null}
+      {cards}
+      {boxes.map((b) => (
+        <section key={b.title} aria-label={b.title} className={BOX}>
+          <h2 className="mb-[var(--space-1)] text-[length:var(--text-eyebrow)] text-[var(--ink-muted)] uppercase">{b.title}</h2>
+          {b.body}
+        </section>
+      ))}
+      {facts}
+      {capture ? (
+        <div className={BOX}>
+          <CaptureHere>{capture}</CaptureHere>
+        </div>
+      ) : null}
     </aside>
   );
 }
@@ -128,6 +218,7 @@ export function Rail({ edges = [], capture }: { edges?: Edge[]; capture?: ReactN
  *  `purpose` is held to PURPOSE_MAX by tests/test_ux_rules.py and the rendered test. */
 export function Screen({
   stage,
+  icon,
   title,
   purpose,
   action,
@@ -137,6 +228,8 @@ export function Screen({
   children,
 }: {
   stage: string;
+  /** The icon before the small-caps line, as the wireframes draw it. */
+  icon?: Icon_;
   title: string;
   purpose: string;
   /** The one main action; a screen whose main action is one of its own controls marks that control `data-ux="action"` and passes none. */
@@ -146,33 +239,32 @@ export function Screen({
   rail?: ReactNode;
   children: ReactNode;
 }) {
+  // the wireframes' `.page`: the main column (trail, title, purpose, the action, the page) and the rail beside it from the top
   return (
-    <>
-      <PageHeader stage={stage} title={title} sub={purpose} />
-      <Body>
-        <div className={rail ? "grid gap-[var(--space-4)] min-[1000px]:grid-cols-[minmax(0,1fr)_320px]" : undefined}>
-          <div className="min-w-0">
-            <div className={action !== undefined || details ? "mb-4 flex flex-wrap items-center gap-3" : undefined} data-ux={action !== undefined ? "action" : undefined}>
-              {action}
-              {details ? (
-                <Link href={details.href} className="ml-auto text-[13px]" data-ux="details">
-                  {details.label}
-                </Link>
-              ) : null}
-            </div>
-            {children}
-            {next ? (
-              <nav className="mt-6 border-t border-[var(--line)] pt-4" aria-label="Next step">
-                <Link href={next.href} className="chip" data-ux="next">
-                  {next.label} →
-                </Link>
-              </nav>
+    <Body>
+      <div className={rail ? "grid gap-[var(--space-4)] min-[1000px]:grid-cols-[minmax(0,1fr)_320px] min-[1000px]:gap-[var(--space-5)]" : undefined}>
+        <div className="min-w-0">
+          <PageHeader stage={stage} icon={icon} title={title} sub={purpose} inColumn />
+          <div className={action !== undefined || details ? "mb-[var(--space-3)] flex flex-wrap items-center gap-3" : undefined} data-ux={action !== undefined ? "action" : undefined}>
+            {action}
+            {details ? (
+              <Link href={details.href} className="ml-auto text-[13px]" data-ux="details">
+                {details.label}
+              </Link>
             ) : null}
           </div>
-          {rail}
+          {children}
+          {next ? (
+            <nav className="mt-[var(--space-4)] border-t border-[var(--line)] pt-[var(--space-3)]" aria-label="Next step">
+              <Link href={next.href} className="chip" data-ux="next">
+                {next.label} →
+              </Link>
+            </nav>
+          ) : null}
         </div>
-      </Body>
-    </>
+        {rail}
+      </div>
+    </Body>
   );
 }
 

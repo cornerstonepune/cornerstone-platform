@@ -38,7 +38,7 @@ export async function KindStops({ code, ways, levels, q, mayChange }: {
         label="Kinds of question in use"
         rowKey={(r) => `${r.level}~${r.kind}`}
         rows={rows}
-        more={{ page, href: (n: number) => `/skill-sets/${code}?kinds=${n}#stop-kinds` }}
+        more={{ page, href: (n: number) => `/setup/skill-sets/${code}?kinds=${n}#stop-kinds` }}
         extras={{ attrs: (r) => ({ "data-kind": r.kind, "data-level": r.level }) }}
         columns={[
           { key: "level", label: "Level", width: "7rem", value: (r) => r.level },
@@ -55,7 +55,7 @@ export async function KindStops({ code, ways, levels, q, mayChange }: {
                      <button className="btn" type="submit" aria-label={`Use “${r.words}” again at ${r.level}`}>Use it again</button>
                    </form>
                  ) : (
-                   <Link href={`/skill-sets/${code}?stop=${r.level}~${r.kind}#stop-kinds`} aria-label={`Stop using “${r.words}” at ${r.level}`}>
+                   <Link href={`/setup/skill-sets/${code}?stop=${r.level}~${r.kind}#stop-kinds`} aria-label={`Stop using “${r.words}” at ${r.level}`}>
                      Stop using this kind of question
                    </Link>
                  ) }]
@@ -103,8 +103,8 @@ async function Confirm({ code, level, kind, words }: { code: string; level: stri
           <input type="hidden" name="kind" value={kind} />
           <button className="btn" type="submit">Stop using this kind of question</button>
         </form>
-        {level ? <Link href={`/skill-sets/${code}?stop=all~${kind}#stop-kinds`}>Stop it at every level instead</Link> : null}
-        <Link href={`/skill-sets/${code}#stop-kinds`}>Keep using it</Link>
+        {level ? <Link href={`/setup/skill-sets/${code}?stop=all~${kind}#stop-kinds`}>Stop it at every level instead</Link> : null}
+        <Link href={`/setup/skill-sets/${code}#stop-kinds`}>Keep using it</Link>
       </div>
     </div>
   );

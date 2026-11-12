@@ -8,7 +8,7 @@
 import { expect, test } from "@playwright/test";
 import postgres from "postgres";
 import { TEST_STAFF } from "./global-setup";
-import { aClass } from "./rows";
+import { aClass, aTaughtClass } from "./rows";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -20,7 +20,9 @@ test.afterAll(async () => {
 });
 
 test("a skill's page is in five parts, its worksheets one level at a time, and no code on it", async ({ page }) => {
-  await page.goto("/skill-sets/ADD.2D2D");
+  // a worksheet is listed once its skill is taught in some class: this test has the class, not whatever ran before it in a shard
+  await aTaughtClass(sql);
+  await page.goto("/setup/skill-sets/ADD.2D2D");
   const parts = page.getByRole("navigation", { name: "Parts of this skill" });
   await expect(parts.getByRole("link")).toHaveText(["What it means", "Levels", "Mistakes", "Questions", "Worksheets"]);
   await expect(parts.getByRole("link", { name: "Questions" })).toHaveAttribute("href", /^\/library\?set=ADD\.2D2D/);
@@ -77,7 +79,7 @@ test("a topic is marked taught from its row on What needs doing, in the person's
   const [topic] = await sql<{ name: string; taught: boolean }[]>`select name, taught_in(tenant_id, code, null) as taught from topic where code = 'DIV'`;
   expect(topic.taught, "division waits for an educator's word").toBe(false);
   try {
-    await page.goto(`/today?kind=taught&subject=NUM&class=${CLASS}`);
+    await page.goto(`/setup/needs-doing?kind=taught&subject=NUM&class=${CLASS}`);
     const row = page.locator(`tr[data-kind=taught][data-shows="${topic.name}"]`);
     // skills are approved in Setup: nothing on this row approves one
     await expect(row.getByRole("button", { name: /approve/i })).toHaveCount(0);
@@ -147,13 +149,14 @@ test("every page says the tab it is under, above its title, and the menu marks t
     ["/", "Curriculum"], ["/skill-sets/approve", "Curriculum"], ["/skill-sets/ADD.2D2D", "Curriculum"], ["/library", "Question bank"],
     [`/library/${key}`, "Question bank"], ["/worksheets", "Curriculum"], ["/worksheets/taxonomy", "Question bank"], ["/asks", "Curriculum"],
     ["/papers", "Assessments"], ["/papers/make", "Assessments"], ["/papers/approve", "Assessments"], ["/make", "Assessments"],
-    ["/home", "Assessments"], ["/capture", "Upload papers"], ["/growth", "Class results"],
+    ["/home", "Assessments"], ["/capture", "Upload papers"],
   ];
   // the tab is a page of a group of the top menu (lib/menu.ts): the group is marked, and so is the tab under it
-  const group: Record<string, string> = { Curriculum: "Setup", "Question bank": "Setup", Assessments: "Children", "Papers to approve": "Children", "Upload papers": "Children", "Class results": "Children" };
+  const group: Record<string, string> = { Curriculum: "Setup", "Question bank": "Setup", Assessments: "Children", "Papers to approve": "Children", "Upload papers": "Children" };
   for (const [path, tab] of pages) {
     await page.goto(path);
-    await expect(page.getByTestId("stage"), path).toHaveText(new RegExp(`^${tab}\\b`));
+    // the eyebrow says the tab; where the title already says it, the eyebrow is not drawn (#690: no line that repeats the title)
+    await expect(page.locator("[data-testid=stage], h1").first(), path).toHaveText(new RegExp(`^${tab}\\b`));
     await expect(page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" }).locator("[aria-current=page]"), path).toHaveText(new RegExp(`^${group[tab]}`));
   }
 });

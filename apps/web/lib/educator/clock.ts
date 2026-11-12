@@ -25,8 +25,6 @@ export function mondayOf(day: string, weeks = 0): string {
   return iso(t - wd * 86_400_000 + weeks * 7 * 86_400_000);
 }
 
-const LONG = new Intl.DateTimeFormat("en-GB", { weekday: "long", day: "numeric", month: "long", timeZone: "UTC" });
 const SHORT = new Intl.DateTimeFormat("en-GB", { weekday: "short", day: "numeric", timeZone: "UTC" });
-/** "Monday 23 November", "Mon 23": the school's dates as words. */
-export const longDate = (day: string) => LONG.format(at(day));
+/** "Mon 23": the school's dates as words. */
 export const shortDate = (day: string) => SHORT.format(at(day));

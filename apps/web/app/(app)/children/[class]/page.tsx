@@ -9,13 +9,16 @@ import { Spark } from "@/components/spark";
 import { STATES } from "@/components/status-chip";
 import { StackBar } from "@/components/stack-bar";
 import { SwitchedOff } from "@/components/children/switched-off";
+import { ClassViews } from "@/components/children/class-views";
+import { ViewToggle } from "@/components/kanban-board";
 import { requireStaff } from "@/lib/auth";
-import { screensOn } from "@/lib/children-reads";
+import { screensOn, childrenTable, closeToSecureSeen } from "@/lib/children-reads";
+import { ClassCountsLine } from "@/components/children/children-table";
 import { pictureOf, type Look } from "@/lib/children-picture";
-import { LOOK_ORDER, byRoll, clustersOf, daysSince, groupByLook, peekParam, type PictureLook } from "@/lib/children-view";
-import { SECURE, UNSEEN, stateOf } from "@/lib/looks";
+import { LOOK_ORDER, byRoll, groupByLook, pictureClusters, peekParam, type PictureLook } from "@/lib/children-view";
+import { PRACTISING, SECURE, UNSEEN, stateOf } from "@/lib/looks";
 
-type Q = { skill?: string; domain?: string; group?: string; peek?: string };
+type Q = { skill?: string; domain?: string; group?: string; peek?: string; view?: string; topic?: string; subject?: string; kp?: string };
 
 // The class picture (UI-3b): each square a child by Sr. No., shown on one skill at a time. A square a child has no state on is
 // "not seen yet", which is not "not secure". The clusters are worked out here from the graph's rows, each child in as many as fit.
@@ -26,12 +29,20 @@ export default async function Picture({ params, searchParams }: { params: Promis
   const sp = await searchParams;
   const p = await pictureOf({ ...me, email: me.email }, classId);
   if (!p) return <NotYours what="This class" />;
+  const views = [
+    { key: "picture", label: "Picture", icon: "board" as const, href: `/children/${classId}` },
+    { key: "topic", label: "By topic", icon: "table" as const, href: `/children/${classId}?view=topic` },
+    { key: "matrix", label: "Matrix", icon: "table" as const, href: `/children/${classId}?view=matrix` },
+  ];
+  if (sp.view === "topic" || sp.view === "matrix") return <ClassViews me={me} classId={classId} section={p.section} count={p.kids.length} view={sp.view} q={sp as Record<string, string | undefined>} toggle={<ViewToggle current={sp.view} views={views} />} />;
   const domains = [...new Set(p.skills.map((s) => s.domain).filter(Boolean))].sort();
   const domain = domains.includes(sp.domain ?? "") ? sp.domain : undefined;
   const skills = p.skills.filter((s) => !domain || s.domain === domain);
   const skill = skills.find((s) => s.code === sp.skill) ?? skills[0];
   const grouped = sp.group !== "class";
+  const seenWords = (s: { code: string; seen: number }) => (s.code === skill?.code ? "the skill shown" : `${s.seen} ${s.seen === 1 ? "child" : "children"} seen`);
   const kids = [...p.kids].sort(byRoll);
+  const counts = (await childrenTable({ ...me, email: me.email })).counts[classId] ?? { answers: 0, reports: 0 };
   const stateOn = (id: string): Look | null => (skill ? (p.cells.get(id)?.get(skill.code)?.look ?? null) : null);
   const chosenOf = (k: (typeof kids)[number]): Chosen => {
     const row = p.cells.get(k.id);
@@ -45,13 +56,18 @@ export default async function Picture({ params, searchParams }: { params: Promis
   const words = (l: PictureLook) => STATES[stateOf(l)].words;
   const blocks: Block[] = grouped ? groupByLook(squares).map((g) => ({ look: g.look, words: words(g.look)[0].toUpperCase() + words(g.look).slice(1), squares: g.cells })) : [{ look: SECURE, words: "Class", squares }];
   const parts = LOOK_ORDER.map((l) => ({ state: stateOf(l), n: squares.filter((s) => s.look === l).length }));
-  const clusters = clustersOf(
-    kids.map((k) => ({
-      id: k.id,
-      look: stateOn(k.id),
-      readyNext: skill ? (p.next.get(skill.code) ?? []).some((n) => !p.cells.get(k.id)?.has(n)) : false,
-      attention: !p.anySeen.get(k.id) || daysSince(p.anySeen.get(k.id)!, p.today) >= p.days,
-    })),
+  const clusters = pictureClusters(
+    kids.map((k) => {
+      const cell = skill ? p.cells.get(k.id)?.get(skill.code) : undefined;
+      return {
+        id: k.id,
+        look: stateOn(k.id),
+        readyNext: skill ? (p.next.get(skill.code) ?? []).some((n) => !p.cells.get(k.id)?.has(n)) : false,
+        seen: cell?.seen ?? null,
+        relatedPractising: !cell && skill ? [...(p.related.get(skill.code) ?? [])].some((r) => p.cells.get(k.id)?.get(r)?.look === PRACTISING) : false,
+      };
+    }),
+    await closeToSecureSeen(),
   );
   const kidChosen = Object.fromEntries(kids.map((k) => [k.id, chosenOf(k)]));
   const open = squares.find((x) => peekParam(x) === sp.peek);
@@ -70,7 +86,7 @@ export default async function Picture({ params, searchParams }: { params: Promis
         action={<Link href="/children" className="btn secondary">Show as a table</Link>}
         next={{ href: kids[0] ? `/children/${classId}/${encodeURIComponent(kids[0].roll)}` : "/children", label: "A child" }}
         rail={
-          <aside aria-label="Rail" data-rail className="grid content-start gap-[var(--space-3)]">
+          <aside aria-label="Rail" data-rail className="grid content-start gap-[var(--space-4)]">
             <PeekPanel />
             <div className="grid gap-[var(--space-2)] rounded-[var(--radius-card)] bg-[var(--surface)] p-[var(--space-3)]">
               <section aria-label="Show">
@@ -78,8 +94,9 @@ export default async function Picture({ params, searchParams }: { params: Promis
                 <ul className="grid gap-[var(--space-1)]">
                   {skills.map((s) => (
                     <li key={s.code}>
-                      <Link href={q({ skill: s.code })} data-show aria-label={`Show: ${s.name}`} aria-current={s.code === skill?.code ? "true" : undefined} className="flex min-h-[var(--tap)] items-center text-[var(--link)] underline">
-                        {s.name}
+                      <Link href={q({ skill: s.code })} data-show aria-label={`Show: ${s.name} ${seenWords(s)}`} aria-current={s.code === skill?.code ? "true" : undefined} className="flex min-h-[var(--tap)] items-center text-[var(--link)] underline">
+                        {s.name}{" "}
+                        <span className="b-muted ml-2 text-[13px]">{seenWords(s)}</span>
                       </Link>
                     </li>
                   ))}
@@ -90,11 +107,15 @@ export default async function Picture({ params, searchParams }: { params: Promis
                   A child
                 </Link>
               ) : null}
-              <Rail edges={[{ screen: "record", label: "Record a note", icon: "note" }, { screen: "assessments", label: "Assessments", icon: "assessment" }]} />
             </div>
+            <Rail edges={[{ screen: "record", label: "Record a note", icon: "note" }, { screen: "assessments", label: "Assessments", icon: "assessment" }]} />
           </aside>
         }
       >
+        <ClassCountsLine counts={counts} reportsHref={`/children/reports?class=${encodeURIComponent(p.section)}`} />
+        <div className="mb-3">
+          <ViewToggle current="picture" views={views} />
+        </div>
         {p.skills.length === 0 ? (
           <>
             <EmptyState>Not seen yet. No child has been seen on a skill, so there is nothing more to show.</EmptyState>

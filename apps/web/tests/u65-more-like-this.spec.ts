@@ -40,7 +40,7 @@ test("an educator asks for more questions like a Maths sample and is told what w
   const count = async () =>
     (await sql<{ n: number }[]>`select count(*)::int as n from item where skill_set_code = ${CODE} and difficulty = 'Medium'`)[0].n;
   const before = await count();
-  await page.goto(`/skill-sets/${CODE}`);
+  await page.goto(`/setup/skill-sets/${CODE}`);
   const more = page.locator('[data-more="Medium"]');
   await more.getByText("More questions like a sample").click();
   await more.getByLabel("A sample question at Medium").fill("47 + 38");
@@ -63,7 +63,7 @@ test("an educator asks for more questions like a Maths sample and is told what w
   // score (DECISIONS-LOG.md, 27 Oct 2026), so this puts the rule's case back for the length of this check
   const was = await sql<{ version: number; active: boolean }[]>`select version, active from prompt where purpose = 'english_generate'`;
   await sql`update prompt set active = false where purpose = 'english_generate'`;
-  await page.goto(`/skill-sets/${english.code}`);
+  await page.goto(`/setup/skill-sets/${english.code}`);
   const card = page.locator(`#level-${english.level} section[data-kind="${english.kind}"] li[data-sample="${english.ord}"]`);
   await card.getByText("Make more like this").click();
   await card.getByRole("button", { name: `Make questions like sample ${english.ord}` }).click();

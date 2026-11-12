@@ -53,13 +53,13 @@ test("a K2 educator blocks a day and changes a subject's weekly limit in well un
   await page.screenshot({ path: path.join(SHOTS, "empty-1280.png"), fullPage: true });
 
   // 1. block a day
-  const block = page.locator("#block form");
+  const block = page.getByRole("form", { name: "Block a day" });
   await tap(block.getByLabel("Date").fill("2026-11-25"));
   await tap(block.getByLabel("Reason").fill("Sports day"));
   await tap(block.getByRole("button", { name: "Block" }).click());
   await expect(page.getByText("Saved.")).toBeVisible();
-  await expect(page.locator("#block .tt-list")).toContainText("Sports day");
-  await expect(page.locator("#block .tt-list")).toContainText(/Wed, 25 Nov,? 2026/);
+  await expect(page.locator("[data-rules=block]")).toContainText("Sports day");
+  await expect(page.locator("[data-rules=block]")).toContainText(/Wed, 25 Nov,? 2026/);
 
   // 2. change a subject's weekly limit
   const limit = page.locator("form").filter({ has: page.getByRole("button", { name: "Save limit" }) });
@@ -67,8 +67,8 @@ test("a K2 educator blocks a day and changes a subject's weekly limit in well un
   await tap(limit.getByLabel("Most").fill("3"));
   await tap(limit.getByRole("button", { name: "Save limit" }).click());
   await expect(page.getByText("Saved.")).toBeVisible();
-  await expect(page.getByText(/Math, per week/)).toBeVisible();
-  await expect(page.getByText(/placed, over/)).toBeVisible(); // more maths is placed than 3: it needs a look
+  await expect(page.locator("[data-rules=limit]")).toContainText(/Math.*at most 3 a week/);
+  await expect(page.locator("[data-rules=limit]")).toContainText(/placed, over/); // more maths is placed than 3: it needs a look
 
   const seconds = (Date.now() - started) / 1000;
   console.log(`walkthrough: ${taps} taps and fields, ${seconds.toFixed(1)} seconds (limit: 300)`);
@@ -88,17 +88,20 @@ test("a rule that cannot be right is refused in the engine's words and nothing i
   await limit.getByLabel("Most").fill("3");
   await limit.getByRole("button", { name: "Save limit" }).click();
   await expect(page.locator(".tt [role=alert]")).toContainText("The fewest cannot be more than the most");
-  await expect(page.getByText(/Art, per week/)).toHaveCount(0);
+  await expect(page.locator("[data-rules=limit]")).not.toContainText(/\bArt\b/);
 });
 
 test("a period is given new times, and the change is kept with who made it", async ({ page }) => {
   await page.goto(PAGE());
-  const row = page.getByRole("form", { name: /^Period / }).first();
+  const edit = () => page.locator("[data-rule=period]").first().getByRole("link", { name: "Edit" }).click(); // the row is read-only until Edit
+  await edit();
+  const row = page.getByRole("form", { name: /^Edit period / }).first();
   await row.getByLabel("Starts").fill("08:25");
   await row.getByRole("button", { name: "Save" }).click();
   await expect(page.getByText("Saved.")).toBeVisible();
   await expect(page.getByText(/changed period/).first()).toBeVisible();
   await expect(page.getByText(/^You changed period/).first()).toBeVisible();
+  await edit();
   await row.getByLabel("Starts").fill("08:30"); // put it back: the school's own time
   await row.getByRole("button", { name: "Save" }).click();
   await expect(page.getByText("Saved.")).toBeVisible();
@@ -106,7 +109,8 @@ test("a period is given new times, and the change is kept with who made it", asy
 
 test("the last period of the day, which the school gave no end, can be renamed without inventing one", async ({ page }) => {
   await page.goto(PAGE());
-  const row = page.getByRole("form", { name: /^Period Boarding/ });
+  await page.locator("[data-rule=period]").filter({ hasText: "Boarding" }).getByRole("link", { name: "Edit" }).click();
+  const row = page.getByRole("form", { name: /^Edit period Boarding/ });
   await expect(row.getByLabel("Ends")).toHaveValue("");
   await row.getByRole("button", { name: "Save" }).click();
   await expect(page.getByText("Saved.")).toBeVisible();
@@ -114,7 +118,8 @@ test("the last period of the day, which the school gave no end, can be renamed w
 
 test("a block is removed", async ({ page }) => {
   await page.goto(PAGE());
-  await page.getByRole("button", { name: "Remove" }).first().click();
+  await page.locator("[data-rule=block]").first().getByRole("link", { name: "Edit" }).click();
+  await page.getByRole("button", { name: "Remove this block" }).click();
   await expect(page.getByText("Saved.")).toBeVisible();
   await expect(page.getByText("Nothing is blocked.")).toBeVisible();
 });

@@ -76,7 +76,7 @@ test.beforeAll(async ({ browser }) => {
   const [read] = await sql<{ id: string }[]>`select id from sheet_instance where qr_code = ${QR.asha}`;
   const [item] = await sql<{ item_key: string }[]>`select item_key from item where id = ${ws.item_ids[0]}`;
   const pages = [
-    "/today",
+    "/setup/needs-doing",
     "/",
     "/library",
     `/library/${item.item_key}`,
@@ -108,7 +108,7 @@ test.beforeAll(async ({ browser }) => {
   ];
   for (const role of ["educator", "coordinator"] as const) {
     const page = role === "educator" ? await asEducator(browser) : await signedIn(browser);
-    for (const path of [...pages, ...(role === "coordinator" ? ["/workflows"] : [])]) seen[role].push(await look(page, path));
+    for (const path of [...pages, ...(role === "coordinator" ? ["/setup/how-it-works"] : [])]) seen[role].push(await look(page, path));
     await page.context().close();
   }
 });

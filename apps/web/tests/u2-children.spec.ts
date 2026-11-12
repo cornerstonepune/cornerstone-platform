@@ -14,6 +14,7 @@ import { ENGINE_PORT } from "../playwright.config";
 import { isoWeek } from "../lib/week";
 import { TEST_STAFF } from "./global-setup";
 import { aChildIn, daysAgo } from "./rows";
+import { voiceSwitch } from "./k2-rows";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -104,6 +105,8 @@ async function clearUp() {
 let ids: Record<string, string> = {};
 test.beforeAll(async () => {
   ids = await testClass();
+  // the class picture is behind the educator switch (UI-3b), as u21-class-by-topic switches it on for itself
+  await voiceSwitch(sql, true);
   await clearUp();
   // the class's own paper for the week, proposed by the engine and not yet approved
   await engine("/week/prescribe", { section: SECTION, week: WEEK, skill_set: "SUB.2D2D" });
@@ -117,13 +120,11 @@ test.afterAll(async () => {
 test("each grade opens on its classes, and a class is its children against every step in red, amber, green or grey", async ({
   page,
 }) => {
-  // the classes side by side and a class's children: Results' children view (goals/res_results_by_topic.yaml)
-  await page.goto(`/growth?view=children&class=${SECTION}`);
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Children, one by one");
-  // each class a row of the classes table, with its link (goals/uxn9-class-results.yaml)
-  await page.getByRole("table", { name: "Classes" }).getByRole("link", { name: "Against every skill →" }).click();
-  await expect(page).toHaveURL(`/growth/class/${SECTION}`);
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText(SECTION);
+  // the class's children against every step is the Matrix tab of the class picture; the old address of it goes there
+  await page.goto(`/growth/class/${SECTION}`);
+  await expect(page).toHaveURL(/\/children\/[0-9a-f-]{36}\?view=matrix$/);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Class picture");
+  await expect(page.locator("main")).toContainText(SECTION);
 
   // the columns, a topic opened at a time (goals/ux4-class-and-child.yaml), are the taught skills someone in the class
   // has a checked answer on — never a column nobody answered
@@ -147,7 +148,7 @@ test("each grade opens on its classes, and a class is its children against every
     await expect(grid).not.toContainText(/\b(R\d{1,2}|X[12]|M_[A-Z0-9_]+|[A-Z]{3}\.[A-Z0-9]+\.[A-Z0-9]+)\b/);
     for (const c of CHILDREN) {
       const row = grid.locator(`tbody tr[data-child="${ids[c.name]}"]`);
-      await expect(row.getByRole("link", { name: c.name })).toHaveAttribute("href", `/growth/${ids[c.name]}`);
+      await expect(row.getByRole("link", { name: c.name })).toHaveAttribute("href", /^\/children\/[0-9a-f-]{36}\/\d+$/); // a name opens the child on the Children screen
       for (const col of cols) {
         const state = states.find((s) => s.child_id === ids[c.name] && s.col === col)?.state ?? "not_enough_yet";
         await expect(row.locator(`td[data-col="${col}"]`)).toHaveAttribute("data-rag", COLOUR[state]);

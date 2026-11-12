@@ -133,3 +133,38 @@ Test 19 in `u73-teaching-pages.spec.ts`: each cluster's count equals its chips; 
 Per #599: the activity screen's `capture: Photo` upload is gone from screens.json and the wireframe (no store for a set-up photo;
 photos are taken on Record, #609). Its capture bar now links to Record (`capture: Voice note`), as the notes screen does. Page: the
 rail draws the link. Test 20. Test 13 now switches `voice.screens_enabled` on for itself (the peek's history route needs it) and restores it.
+
+## The Skill set screen (ui-3c-skillset-screen)
+`/setup/skill-sets/[code]` ([code] = the skill SET, `skill.code`) in the frame: `Screen`, the trail, a rail of the registry skills it
+covers and the question bank, a "Skills it covers" Cards block (each opens the skill screen; none says so). Under it the six functions
+the old page carried, unchanged in behaviour: a real question per level, a grade per level, approving a level, approving a way of
+asking and editing English samples (`ways`, `editing`, `samples`), more like this, stopping a kind. The kinds and worksheets tables are the
+site's `DataTable`; the mistakes and worksheets live in `below.tsx` (the page stays under the 400-line ceiling).
+`/skill-sets/<code>` answers 308 to it (query kept); `approve`, `levels` and `/edit` stay. The page's parts and server actions still live in
+`app/(app)/skill-sets/[code]/` except `page.tsx` (the old one is deleted; next.config.ts answers 308) and `level-approval.tsx`, which
+moved with the new page. Those two paths are on the frozen list in `packages/engine/tests/test_skill_level.py` (web files that still
+read the skill blob); the frontend and backend orchestrators allowed changing exactly those two strings to the new paths (git mv, the list
+does not grow, no assertion changes). The test passes with them.
+The stage keeps "Curriculum ·" ahead of "Skill set" (u17 asserts the tab). The title is the skill's outcome (`learning_objective`),
+which s2 asserts as the h1; the wireframe says so. Specs: the six functions' specs (u28, u34, e0, u54, u55, u64, u65) now open the new
+address; `u73-skill-set.spec.ts` proves the cards, the empty words and the 308. Not done: the inventory run for `skillset`
+(drives for each control), same as activity, objective and skill.
+## Level-sentence edit with history (ui-3c-level-sentence)
+CP-31's engine routes (`/curriculum/level-words`, `/history`) are on main. On the skill screen each level of "Each level in a
+sentence" is a `LevelWords` row: the sentence, its earlier sentences (who by name, when, why; a coordinator) and, for a
+coordinator, a form to change it (server action `changeWords`, engine key server-side). A change takes only that level out of
+approved. The engine's gate decides who may write; the page shows the form to a coordinator. Note the key: the route takes the
+skill SET's code (`skill.code`), which `skillOf` now carries on each level row. screens.json `skill` gains the fold "Earlier
+sentences"; the wireframe drops its data-gap. Tests 21 to 23 (`u73-level-words.spec.ts`, split from the teaching spec for the 400-line ceiling).
+
+## Unfinished when work stopped (2026-11-11)
+
+- **#666** (Skill set screen): needs the orchestrator's GO, then main merged in and one clean CI run. Its last full run died on the runner's package mirrors (`playwright install`), not on a test.
+- **Activity / Objective / Skill pages to their wireframes**: built and committed on the local branch `ui-3c-wireframes` (37551d18, e1f245c7) but never pushed, and no PR is open. It follows `docs/screens/compare-2026-11-11/FINDINGS.md`. It needs main merged in once #666 lands, the generated docs rebuilt, and the affected specs run before it becomes one PR. Because the branch was never pushed, it is lost if this container is reclaimed.
+- `/skill-sets/[code]/edit` (skill name, description, outcome): no new home yet.
+- Inventory-run (u70) drives for the new controls on the activity, objective, skill and skill-set screens.
+- The skill-set page's long panels are not folded.
+- Skill "group by class" for coordinators.
+- The shared tab row (UI-7's).
+- UI-11b's approve-row links still use `screenHref("skillset")`.
+- Old routes `curriculum/fill`, `educator/period`, `educator/materials` belong to UI-11, UI-3a and UI-9.

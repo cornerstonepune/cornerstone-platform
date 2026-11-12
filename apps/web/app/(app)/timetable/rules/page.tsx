@@ -1,6 +1,10 @@
 import { Rail, Screen } from "@/components/app-frame";
+import Link from "@/components/link";
+import { DataTable } from "@/components/data-table";
 import { Details } from "@/components/details";
 import { FilterBar } from "@/components/filter-bar";
+import { KeyValue } from "@/components/key-value";
+import type { Column } from "@/lib/ux-rules";
 import { requireStaff } from "@/lib/auth";
 import { EngineDown } from "@/lib/engine";
 import { schoolZone } from "@/lib/school-clock";
@@ -38,43 +42,98 @@ const Remove = ({ rule, rules, id, word }: { rule: string; rules: Rules; id: str
   </form>
 );
 
-function Periods({ rules }: { rules: Rules }) {
-  return (
-    <section className="tt-card" aria-labelledby="h-periods">
-      <h2 id="h-periods">Period times</h2>
-      <p className="tt-note">When each period starts and ends (the last may have no end). A period belongs to the grade: a change is for every class of it.</p>
-      {rules.periods.map((p) => (
-        <form key={p.id} action={changeRule} className="tt-row" aria-label={`Period ${p.label}`}>
-          <Hidden rule="period" rules={rules} id={p.id} />
-          <label>Name<input name="label" defaultValue={p.label} required /></label>
-          <label>Starts<input type="time" name="starts_at" defaultValue={p.starts_at} required /></label>
-          <label>Ends<input type="time" name="ends_at" defaultValue={p.ends_at ?? ""} /></label>
+type Row = { id: string; rule: "period" | "fixed" | "block" | "limit"; name: string; value: string; by: string };
+
+const limitWords = (l: Limit) => (l.fewest !== null && l.most !== null ? `${l.fewest} to ${l.most} a ${l.span}` : l.fewest !== null ? `at least ${l.fewest} a ${l.span}` : l.most !== null ? `at most ${l.most} a ${l.span}` : `no limit a ${l.span}`);
+
+/** Who last changed each rule row and when: the newest edit that names it, read from the history. */
+function lastChanges(rules: Rules, zone: string): Map<string, string> {
+  const latest = new Map<string, Edit>();
+  for (const e of rules.history) {
+    const id = String((e.after ?? e.before ?? {}).id ?? "");
+    if (id && (!latest.has(id) || e.at > latest.get(id)!.at)) latest.set(id, e);
+  }
+  return new Map([...latest].map(([id, e]) => [id, `${e.who} · ${when(e.at, zone)}`]));
+}
+
+function rowsOf(rules: Rules, by: Map<string, string>) {
+  const who = (id: string) => by.get(id) ?? "–";
+  return {
+    period: [
+      ...rules.periods.map((p): Row => ({ id: p.id, rule: "period", name: p.label, value: `${p.starts_at} to ${p.ends_at ?? "–"}${p.fixed ? " · fixed" : ""}`, by: who(p.id) })),
+      ...rules.fixed.map((f: Fixed): Row => ({ id: f.id, rule: "fixed", name: `${f.label}: ${f.text}`, value: `Week ${f.week}, ${day(f.weekday)}`, by: who(f.id) })),
+    ],
+    block: rules.blocks.map((b: Block): Row => ({ id: b.id, rule: "block", name: b.reason, value: `${blockWhen(b)}, ${b.period ?? "all day"}`, by: who(b.id) })),
+    limit: rules.limits.map((l: Limit): Row => {
+      const s = standing(l, rules.placed);
+      return { id: l.id, rule: "limit", name: name(l.subject_code), value: `${limitWords(l)} · ${s.now} placed, ${s.state === "within" ? "within" : s.state}`, by: who(l.id) };
+    }),
+  };
+}
+
+/** What opens under a row when its Edit was chosen: the row's own fields with Save, and Cancel to close it. */
+function EditRow({ row, rules, back }: { row: Row; rules: Rules; back: string }) {
+  const cancel = <Link href={back} className="btn secondary">Cancel</Link>;
+  if (row.rule === "period") {
+    const p = rules.periods.find((x) => x.id === row.id)!;
+    return (
+      <form action={changeRule} className="tt-row" aria-label={`Edit period ${p.label}`}>
+        <Hidden rule="period" rules={rules} id={p.id} />
+        <label>Name<input name="label" defaultValue={p.label} required /></label>
+        <label>Starts<input type="time" name="starts_at" defaultValue={p.starts_at} required /></label>
+        <label>Ends<input type="time" name="ends_at" defaultValue={p.ends_at ?? ""} /></label>
+        <button>Save</button>
+        {cancel}
+      </form>
+    );
+  }
+  if (row.rule === "limit") {
+    const l = rules.limits.find((x) => x.id === row.id)!;
+    return (
+      <div className="tt-row">
+        <form action={changeRule} className="tt-row" aria-label={`Edit the limit on ${name(l.subject_code)}`}>
+          <Hidden rule="limit" rules={rules} />
+          <input type="hidden" name="subject_code" value={l.subject_code} />
+          <label>Per<select name="span" defaultValue={l.span}><option value="week">Week</option><option value="fortnight">Fortnight</option></select></label>
+          <label>Fewest<input type="number" name="fewest" min={0} defaultValue={l.fewest ?? ""} /></label>
+          <label>Most<input type="number" name="most" min={0} defaultValue={l.most ?? ""} /></label>
           <button>Save</button>
         </form>
-      ))}
-    </section>
+        <Remove rule="limit" rules={rules} id={l.id} word="Remove this limit" />
+        {cancel}
+      </div>
+    );
+  }
+  if (row.rule === "fixed") {
+    const f = rules.fixed.find((x) => x.id === row.id)!;
+    return (
+      <div className="tt-row">
+        <form action={changeRule} className="tt-row" aria-label={`Edit the fixed slot ${f.label}`}>
+          <Hidden rule="fixed" rules={rules} />
+          <input type="hidden" name="week_code" value={f.week} />
+          <input type="hidden" name="weekday" value={f.weekday} />
+          <input type="hidden" name="period_id" value={f.period_id} />
+          <label>What is fixed<input name="text" defaultValue={f.text} required /></label>
+          <button>Save</button>
+        </form>
+        <Remove rule="fixed" rules={rules} id={f.id} word="Release this slot" />
+        {cancel}
+      </div>
+    );
+  }
+  return (
+    <div className="tt-row">
+      <p className="tt-note">To change a blocked day, remove it and block the new day below.</p>
+      <Remove rule="block" rules={rules} id={row.id} word="Remove this block" />
+      {cancel}
+    </div>
   );
 }
 
-function Blocks({ rules }: { rules: Rules }) {
+function AddRule({ rules }: { rules: Rules }) {
   return (
-    <section className="tt-card" id="block" aria-labelledby="h-block">
-      <h2 id="h-block">Blocked days and periods</h2>
-      <p className="tt-note">Nothing is placed on a blocked day or period. Give one date, or a weekday of every week.</p>
-      {rules.blocks.length === 0 ? (
-        <p className="tt-empty">Nothing is blocked. Block a day when school is off, or a period that must stay free.</p>
-      ) : (
-        <ul className="tt-list">
-          {rules.blocks.map((b: Block) => (
-            <li key={b.id}>
-              <span className="tt-chip late">Blocked</span>
-              <span className="grow"><strong>{blockWhen(b)}</strong>, {b.period ?? "the whole day"}. {b.reason}</span>
-              <Remove rule="block" rules={rules} id={b.id} word="Remove" />
-            </li>
-          ))}
-        </ul>
-      )}
-      <form action={changeRule} className="tt-row">
+    <Details summary="Add a rule" id="add" open>
+      <form action={changeRule} className="tt-row" aria-label="Block a day">
         <Hidden rule="block" rules={rules} />
         <label>Date<input type="date" name="on_date" /></label>
         <label>Or weekday
@@ -89,34 +148,7 @@ function Blocks({ rules }: { rules: Rules }) {
         <label>Reason<input name="reason" required /></label>
         <button>Block</button>
       </form>
-    </section>
-  );
-}
-
-function Limits({ rules }: { rules: Rules }) {
-  return (
-    <section className="tt-card" aria-labelledby="h-limits">
-      <h2 id="h-limits">Fewest and most periods of a subject</h2>
-      <p className="tt-note">Per week or per fortnight. Saving a subject and span again replaces its limit.</p>
-      {rules.limits.length === 0 ? (
-        <p className="tt-empty">No limits yet. Set the most periods of a subject, the fewest, or both.</p>
-      ) : (
-        <ul className="tt-list">
-          {rules.limits.map((l: Limit) => {
-            const s = standing(l, rules.placed);
-            return (
-              <li key={l.id}>
-                <span className="grow"><strong>{name(l.subject_code)}</strong>, per {l.span}: {l.fewest ?? "no"} fewest, {l.most ?? "no"} most</span>
-                <span className={`tt-chip ${s.state === "within" ? "done" : "soon"}`}>
-                  {s.state === "within" ? `${s.now} placed, within` : s.state === "over" ? `${s.now} placed, over` : `${s.now} placed, under`}
-                </span>
-                <Remove rule="limit" rules={rules} id={l.id} word="Remove" />
-              </li>
-            );
-          })}
-        </ul>
-      )}
-      <form action={changeRule} className="tt-row">
+      <form action={changeRule} className="tt-row" aria-label="Set a limit">
         <Hidden rule="limit" rules={rules} />
         <label>Subject<select name="subject_code" required>{rules.subjects.map((s) => <option key={s.code} value={s.code}>{s.name}</option>)}</select></label>
         <label>Per<select name="span"><option value="week">Week</option><option value="fortnight">Fortnight</option></select></label>
@@ -124,35 +156,7 @@ function Limits({ rules }: { rules: Rules }) {
         <label>Most<input type="number" name="most" min={0} /></label>
         <button>Save limit</button>
       </form>
-    </section>
-  );
-}
-
-function FixedSlots({ rules }: { rules: Rules }) {
-  return (
-    <section className="tt-card" aria-labelledby="h-fixed">
-      <h2 id="h-fixed">Fixed slots</h2>
-      <p className="tt-note">Pinned by the school: this period, this weekday, this week. Pinning over a lesson replaces it and keeps it in the changes.</p>
-      {rules.fixed.length === 0 ? (
-        <p className="tt-empty">No slot is fixed yet.</p>
-      ) : (
-        ["A", "B"].flatMap((w) => [1, 2, 3, 4, 5].map((d) => ({ w, d, rows: rules.fixed.filter((f: Fixed) => f.week === w && f.weekday === d) })))
-          .filter((g) => g.rows.length > 0)
-          .map((g) => (
-            <details key={`${g.w}${g.d}`} open={g.w === "A" && g.d === 1}>
-              <summary><strong>Week {g.w}, {day(g.d)}</strong> <span className="tt-note">{g.rows.length} fixed</span></summary>
-              <ul className="tt-list">
-                {g.rows.map((f: Fixed) => (
-                  <li key={f.id}>
-                    <span className="grow">{f.label}: <span className="tt-school">{f.text}</span></span>
-                    <Remove rule="fixed" rules={rules} id={f.id} word="Release" />
-                  </li>
-                ))}
-              </ul>
-            </details>
-          ))
-      )}
-      <form action={changeRule} className="tt-row">
+      <form action={changeRule} className="tt-row" aria-label="Pin a slot">
         <Hidden rule="fixed" rules={rules} />
         <label>Week<select name="week_code"><option>A</option><option>B</option></select></label>
         <label>Weekday<select name="weekday">{DAYS.slice(1).map((d, i) => <option key={d} value={i + 1}>{d}</option>)}</select></label>
@@ -160,7 +164,7 @@ function FixedSlots({ rules }: { rules: Rules }) {
         <label>What is fixed<input name="text" required /></label>
         <button>Pin</button>
       </form>
-    </section>
+    </Details>
   );
 }
 
@@ -177,20 +181,61 @@ export default async function RulesPage({ searchParams }: Props) {
     if (!(e instanceof EngineDown)) throw e;
     down = e.message;
   }
+  const grouped = rules ? rowsOf(rules, lastChanges(rules, zone)) : null;
+  const total = grouped ? grouped.period.length + grouped.block.length + grouped.limit.length : 0;
+  const here = (extra: Record<string, string | undefined> = {}) => {
+    const p = new URLSearchParams();
+    for (const [k, v] of Object.entries({ class: rules?.class.id, kind, ...extra })) if (v) p.set(k, v);
+    return `/timetable/rules?${p}`;
+  };
+  const table = (id: string, heading: string, rows: Row[], empty: string) => (
+    <section className="tt-block" aria-labelledby={`h-${id}`} data-rules={id}>
+      <h2 id={`h-${id}`} className="tt-h">{heading} <span className="tt-count">{rows.length}</span></h2>
+      {rows.length === 0 ? (
+        <p className="tt-empty">{empty}</p>
+      ) : (
+        <DataTable
+          label={heading}
+          columns={[
+            { key: "rule", label: "Rule", value: (r: Row) => r.name },
+            { key: "grade", label: "Grade", value: () => rules!.class.grade, width: "6rem" },
+            { key: "value", label: "Value", value: (r: Row) => r.value },
+            { key: "by", label: "Changed by, when", value: (r: Row) => r.by },
+            { key: "edit", label: "Edit", value: () => "Edit", width: "6rem", cell: (r: Row) => <Link href={`${here({ edit: r.id })}#row-${r.id}`} className="btn secondary">Edit</Link> },
+          ] satisfies Column<Row>[]}
+          rows={rows}
+          rowKey={(r) => r.id}
+          limit={rows.length}
+          more={{ page: 1, href: () => "#" }}
+          extras={{ attrs: (r) => ({ id: `row-${r.id}`, "data-rule": r.rule }), expand: (r) => (q.edit === r.id ? <EditRow row={r} rules={rules!} back={here()} /> : null) }}
+        />
+      )}
+    </section>
+  );
   return (
     <Screen
-      stage="Timetable"
+      stage={rules ? `${rules.class.grade} ${rules.class.section} · ${total} rules` : "Timetable"}
       title="Timetable rules"
       purpose="Period times, blocked days, fixed slots and subject limits, kept as rows with who changed them."
-      action={<a href="#block" className="btn">Block a day</a>}
+      action={<a href="#add" className="btn" data-ux="action">Add a rule</a>}
       next={{ href: "/timetable/draft", label: "Draft from the rules" }}
-      rail={<Rail edges={[{ screen: "draft", label: "Draft from the rules", icon: "setup" }, { screen: "timetable", label: "Timetable", icon: "week" }]} />}
+      rail={
+        <div className="tt-rail">
+          <Rail edges={[{ screen: "draft", href: "/timetable/draft", label: "Draft from the rules", icon: "setup" }, { screen: "timetable", href: "/timetable", label: "Timetable", icon: "week" }]} />
+          {grouped ? (
+            <aside aria-label="This class" data-rail-part="counts" className="tt-rail-card">
+              <h2 className="tt-rail-h">{rules!.class.grade} {rules!.class.section}</h2>
+              <KeyValue rows={[{ label: "Period times", value: String(rules!.periods.length), num: true }, { label: "Fixed slots", value: String(rules!.fixed.length), num: true }, { label: "Blocked days", value: String(grouped.block.length), num: true }, { label: "Limits", value: String(grouped.limit.length), num: true }]} />
+            </aside>
+          ) : null}
+        </div>
+      }
     >
       <div className="tt">
         {down ? <p className="tt-chip late" role="alert">{down}</p> : null}
         {q.error ? <p className="tt-chip late" role="alert">{q.error}</p> : null}
         {q.saved ? <p className="tt-chip done" role="status">Saved.</p> : null}
-        {rules === null ? (
+        {rules === null || grouped === null ? (
           !down && <p className="tt-empty">No class has a timetable yet. Rules appear here once the school&apos;s timetable is loaded.</p>
         ) : (
           <>
@@ -198,28 +243,27 @@ export default async function RulesPage({ searchParams }: Props) {
               action="/timetable/rules"
               filters={[
                 { name: "class", label: "Grade", value: rules.class.id, required: true, all: "", options: rules.classes.map((c) => [c.id, `${c.grade} ${c.section}`] as const) },
-                { name: "kind", label: "Kind", value: kind, all: "Every kind", options: [["period", "Period times"], ["block", "Blocked days"], ["limit", "Subject limits"], ["fixed", "Fixed slots"]] as const },
+                { name: "kind", label: "Kind", value: kind, all: "Every kind", options: [["period", "Period times and fixed slots"], ["block", "Blocked days"], ["limit", "Subject limits"]] as const },
               ]}
             />
-            <div className="tt-grid">
-              {!kind || kind === "block" ? <Blocks rules={rules} /> : null}
-              {!kind || kind === "limit" ? <Limits rules={rules} /> : null}
-              {!kind || kind === "fixed" ? <FixedSlots rules={rules} /> : null}
-              {!kind || kind === "period" ? <Periods rules={rules} /> : null}
-              <section className="tt-card" aria-labelledby="h-hist">
-                <Details summary={<span id="h-hist">History of edits</span>} id="history" open>
-                  {rules.history.length === 0 ? (
-                    <p className="tt-empty">No rule has been changed yet.</p>
-                  ) : (
-                    <ul className="tt-list">
-                      {rules.history.map((e) => (
-                        <li key={e.id} data-edit><span className="tt-note">{when(e.at, zone)}</span><span className="grow">{said(e)}</span></li>
-                      ))}
-                    </ul>
-                  )}
-                </Details>
-              </section>
-            </div>
+            <p className="tt-note">Edit opens the row’s fields with Save and Cancel; Save keeps who changed it and when, in the history below.</p>
+            {!kind || kind === "period" || kind === "fixed" ? table("period", "Period times and fixed slots", grouped.period, "No period times yet.") : null}
+            {!kind || kind === "block" ? table("block", "Blocked days", grouped.block, "Nothing is blocked. Block a day when school is off, or a period that must stay free.") : null}
+            {!kind || kind === "limit" ? table("limit", "Subject limits", grouped.limit, "No limits yet. Set the most periods of a subject, the fewest, or both.") : null}
+            <AddRule rules={rules} />
+            <section className="tt-block" aria-labelledby="h-hist">
+              <Details summary={<span id="h-hist">History of edits</span>} id="history" open>
+                {rules.history.length === 0 ? (
+                  <p className="tt-empty">No rule has been changed yet.</p>
+                ) : (
+                  <ul className="tt-list">
+                    {rules.history.map((e) => (
+                      <li key={e.id} data-edit><span className="tt-note">{when(e.at, zone)}</span><span className="grow">{said(e)}</span></li>
+                    ))}
+                  </ul>
+                )}
+              </Details>
+            </section>
           </>
         )}
       </div>

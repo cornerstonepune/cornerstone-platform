@@ -8,6 +8,7 @@
  */
 import { expect, test, type Page } from "@playwright/test";
 import postgres from "postgres";
+import { doorPages } from "./door-pages";
 
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 test.afterAll(async () => sql.end());
@@ -36,7 +37,7 @@ test("a click shows the page is loading at once, and a database that does not an
   await page.goto("/setup", { waitUntil: "networkidle" });
   await whileLocked("item", async () => {
     const clicked = Date.now();
-    await page.getByRole("navigation", { name: "Pages in this section" }).getByRole("link", { name: "Curriculum", exact: true }).click();
+    await (await doorPages(page)).getByRole("link", { name: "Curriculum", exact: true }).click();
     await expect(page.getByRole("status", { name: "Loading this page" })).toBeVisible({ timeout: 1_500 });
     await expect(page.getByRole("heading", { name: COULD_NOT_LOAD })).toBeVisible({ timeout: 12_000 });
     expect(Date.now() - clicked).toBeLessThan(12_000);
@@ -60,7 +61,7 @@ test("when the staff check cannot reach the database, the page says so instead o
 // screen separately, so at most two small requests each.
 test("opening the Skill Map loads nothing ahead but the menu pages", async ({ page }) => {
   // the four doors (lib/menu.ts) and the logo link are what the bar pre-loads, beside the old menu pages
-  const MENU = ["/today", "/educator/week", "/children", "/papers/approve", "/", "/setup", "/papers", "/make", "/worksheets", "/library", "/capture", "/capture/check", "/growth", "/home", "/workflows"];
+  const MENU = ["/today", "/setup/needs-doing", "/timetable", "/children", "/papers/approve", "/", "/setup", "/papers", "/make", "/worksheets", "/library", "/capture", "/capture/check", "/growth", "/home", "/setup/how-it-works"];
   const background: string[] = [];
   page.on("request", (r) => {
     if (r.resourceType() !== "document" && r.headers()["rsc"] === "1") background.push(new URL(r.url()).pathname);
@@ -74,7 +75,7 @@ test("opening the Skill Map loads nothing ahead but the menu pages", async ({ pa
 test("every menu page opens within three seconds of its click", async ({ page }) => {
   await page.goto("/", { waitUntil: "networkidle" });
   for (const [label, heading] of [
-    ["Today", "What needs doing"],
+    ["Today", "Today, the school"],
     ["Children", "Children"],
     ["Setup", "Setup"],
   ]) {

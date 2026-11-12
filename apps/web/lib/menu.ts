@@ -7,7 +7,9 @@ import type { IconName } from "./icons";
 
 /** `guide: false`: the page has no page of the Guide yet (the Guide has one page per menu item that existed before the four doors;
  *  packages/engine/tests/test_guide.py reads those from entries written `{ href, label, ...`). Its "?" opens the Guide's front. */
-export type MenuPage = { href: string; label: string; match: readonly string[]; guide?: false };
+export type MenuPage = { href: string; label: string; match: readonly string[]; guide?: false; group?: string };
+// `group`: a door with many pages (Setup has thirteen) names a heading for each page; the second row then shows the pages in
+// labelled clusters that wrap, so no page runs off the edge of the screen. A door whose pages name no group is one row, as before.
 export type DoorKey = "today" | "timetable" | "children" | "setup";
 /** `screen`: the screen the door opens once its slice has merged (lib/built.ts); until then `href`, the first page below. */
 export type Door = { key: DoorKey; label: string; href: string; icon: IconName; screen: string; setup?: boolean; pages: readonly MenuPage[] };
@@ -20,21 +22,18 @@ export const GROUPS: readonly Door[] = [
     icon: "today",
     screen: "today-educator",
     pages: [
-      { href: "/today", label: "What needs doing", match: ["/today", "/record", "/period"] },
+      { label: "Today", href: "/today", match: ["/today", "/record", "/period"], guide: false },
       // the K2 voice notes (UI-3a): the old addresses are gone, so Notes has its own door; its page is a 404 while voice notes are off
       { label: "Notes", href: "/notes", match: ["/notes"], guide: false },
-      { label: "Your day", href: "/educator", match: ["/educator"], guide: false },
-      { label: "Today, new look", href: "/today/new", match: ["/today/new"], guide: false },
     ],
   },
   {
     key: "timetable",
     label: "Timetable",
-    href: "/educator/week",
+    href: "/timetable",
     icon: "week",
     screen: "timetable",
     pages: [
-      { label: "This week", href: "/educator/week", match: ["/educator/week"], guide: false },
       { label: "Materials", href: "/educator/materials", match: ["/educator/materials", "/timetable/materials"], guide: false },
       { label: "Timetable", href: "/timetable", match: ["/timetable"], guide: false },
       { href: "/timetable/rules", label: "Timetable rules", match: ["/timetable/rules"] },
@@ -47,12 +46,11 @@ export const GROUPS: readonly Door[] = [
     icon: "child",
     screen: "children",
     pages: [
-      { label: "Children", href: "/children", match: ["/children", "/k2"], guide: false },
+      { href: "/children", label: "Children", match: ["/children", "/k2", "/growth"] },
       { href: "/papers", label: "Assessments", match: ["/papers", "/children/assessments", "/make", "/home", "/worksheets/CS"] },
       { href: "/papers/approve", label: "Papers to approve", match: ["/papers/approve"] },
       { href: "/capture", label: "Upload papers", match: ["/capture"] },
       { href: "/capture/check", label: "Check answers", match: ["/capture/check"] },
-      { href: "/growth", label: "Class results", match: ["/growth"] },
       { href: "/children/reports", label: "Parent reports", match: ["/children/reports"] },
       { href: "/across", label: "Across classes", match: ["/across"] },
     ],
@@ -65,20 +63,22 @@ export const GROUPS: readonly Door[] = [
     screen: "setup",
     setup: true,
     pages: [
-      { href: "/", label: "Curriculum", match: ["/", "/curriculum", "/skill-sets", "/worksheets", "/asks", "/educator/activity", "/setup"] },
+      // What needs doing moved here from Today (UI-7b): its controls (a topic taught, the groups of tasks) are not on Today's screens
+      { href: "/setup/needs-doing", label: "What needs doing", match: ["/setup/needs-doing"], group: "Skills and questions" },
+      { href: "/", label: "Curriculum", match: ["/", "/curriculum", "/skill-sets", "/worksheets", "/asks", "/educator/activity", "/setup"], group: "Curriculum" },
       // the new screens (UI-11), beside the old pages until those are retired one at a time (UI-11b); then these take the old names
-      { label: "All the curriculum", href: "/setup/curriculum", match: ["/setup/curriculum"], guide: false },
-      { label: "Approve skills one by one", href: "/setup/skills/approve", match: ["/setup/skills"], guide: false },
-      { label: "Bank of questions", href: "/setup/question-bank", match: ["/setup/question-bank"], guide: false },
-      { label: "Browse the curriculum", href: "/curriculum/browse", match: ["/curriculum/browse"], guide: false },
-      { label: "What is filled", href: "/curriculum/fill", match: ["/curriculum/fill"], guide: false },
-      { label: "Check the drafted parts", href: "/curriculum/fill/walk", match: ["/curriculum/fill/walk"], guide: false },
-      { label: "Skills offered", href: "/curriculum/offers", match: ["/curriculum/offers"], guide: false },
-      { href: "/skill-sets/approve", label: "Skills to approve", match: ["/skill-sets/approve"] },
-      { href: "/library", label: "Question bank", match: ["/library", "/worksheets/taxonomy"] },
-      { href: "/staff", label: "Staff", match: ["/staff", "/setup/staff"] },
-      { href: "/setup/classes", label: "School", match: ["/setup/classes", "/school"] },
-      { label: "How it works", href: "/workflows", match: ["/workflows"], guide: false },
+      { label: "All the curriculum", href: "/setup/curriculum", match: ["/setup/curriculum"], guide: false, group: "Curriculum" },
+      { label: "Browse the curriculum", href: "/curriculum/browse", match: ["/curriculum/browse"], guide: false, group: "Curriculum" },
+      { label: "What is filled", href: "/curriculum/fill", match: ["/curriculum/fill"], guide: false, group: "Curriculum" },
+      { label: "Check the drafted parts", href: "/curriculum/fill/walk", match: ["/curriculum/fill/walk"], guide: false, group: "Curriculum" },
+      { label: "Skills offered", href: "/curriculum/offers", match: ["/curriculum/offers"], guide: false, group: "Curriculum" },
+      { label: "Approve skills one by one", href: "/setup/skills/approve", match: ["/setup/skills"], guide: false, group: "Skills and questions" },
+      { href: "/skill-sets/approve", label: "Skills to approve", match: ["/skill-sets/approve"], group: "Skills and questions" },
+      { label: "Bank of questions", href: "/setup/question-bank", match: ["/setup/question-bank"], guide: false, group: "Skills and questions" },
+      { href: "/library", label: "Question bank", match: ["/library", "/worksheets/taxonomy"], group: "Skills and questions" },
+      { href: "/setup/staff", label: "Staff", match: ["/setup/staff"], group: "The school" },
+      { href: "/setup/classes", label: "School", match: ["/setup/classes", "/school"], group: "The school" },
+      { label: "How it works", href: "/setup/how-it-works", match: ["/setup/how-it-works", "/workflows"], guide: false, group: "The school" },
     ],
   },
 ];

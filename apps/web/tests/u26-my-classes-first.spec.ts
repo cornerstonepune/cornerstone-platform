@@ -70,7 +70,7 @@ test("an educator's pages open on their own class, and another class's pages, ch
       expect((await page.request.get(href)).status(), href).toBe(403);
     }
     // no Class box: an educator mapped to one class is shown that class, and every class is the coordinator's view
-    await page.goto("/today");
+    await page.goto("/setup/needs-doing");
     await expect(page.locator("#bar-class, [data-viewing]")).toHaveCount(0);
   } finally {
     await page.context().close();
@@ -78,7 +78,7 @@ test("an educator's pages open on their own class, and another class's pages, ch
 });
 
 test("the coordinator sees every class", async ({ page }) => {
-  await page.goto(`/today?kind=classpaper&class=${OTHER}`);
+  await page.goto(`/setup/needs-doing?kind=classpaper&class=${OTHER}`);
   await expect(page.getByRole("main")).toContainText(OTHER);
   await page.goto(`/growth?view=children&class=${MINE}`);
   await expect(page.getByRole("main")).toContainText("Aarav");

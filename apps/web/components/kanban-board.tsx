@@ -3,7 +3,7 @@ import { ICON_SIZE, Icon, type IconName } from "@/lib/icons";
 import { KindTile, type Kind } from "./kind-tile";
 import { STATES, StatusChip, type State, type Tone } from "./status-chip";
 
-export type KCard = { key: string; kind: Kind; title: string; sub: string; href: string; state: State; note?: string; main?: boolean };
+export type KCard = { key: string; kind: Kind; title: string; sub: string; href: string; state: State; note?: string; words?: string; main?: boolean; attrs?: Record<string, string> };
 export type Lane = { key: string; label: string; state: State; count: number; empty: string; cards: readonly KCard[] };
 export type View = { key: string; label: string; icon: IconName; href: string };
 
@@ -14,7 +14,7 @@ const LOOK: Record<Tone, string> = { ok: "ok", wait: "wait", act: "late", quiet:
  *  tile, one line, one fact, a state chip). A lane with no card says so in words. The lanes scroll sideways in their own box. */
 export function KanbanBoard({ lanes }: { lanes: readonly Lane[] }) {
   return (
-    <div data-block="KanbanBoard" className="b-kanban" style={{ ["--lanes" as string]: lanes.length }}>
+    <div data-block="KanbanBoard" className={lanes.length > 4 ? "b-kanban b-many" : "b-kanban"} style={{ ["--lanes" as string]: lanes.length }}>
       {lanes.map((l) => {
         const s = STATES[l.state];
         return (
@@ -28,13 +28,13 @@ export function KanbanBoard({ lanes }: { lanes: readonly Lane[] }) {
               <ul className="b-lane-b">
                 {l.cards.map((c) => (
                   <li key={c.key}>
-                    <Link href={c.href} className="b-kcard" data-kcard="" data-kind={c.kind} data-press="" data-ux={c.main ? "action" : undefined}>
+                    <Link href={c.href} className="b-kcard" data-kcard="" data-kind={c.kind} data-press="" data-ux={c.main ? "action" : undefined} {...c.attrs}>
                       <KindTile kind={c.kind} />
                       <span>
                         <b>{c.title}</b>
                         <span className="b-sub">{c.sub}</span>
                       </span>
-                      <StatusChip state={c.state} note={c.note} compact round />
+                      <StatusChip state={c.state} note={c.note} words={c.words} compact round />
                     </Link>
                   </li>
                 ))}

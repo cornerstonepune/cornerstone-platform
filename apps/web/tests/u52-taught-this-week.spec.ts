@@ -17,7 +17,7 @@ test.beforeAll(async () => {
 test.afterAll(async () => sql.end());
 
 test("a topic waiting to be marked taught is a row with its own button, in the group that opens Curriculum", async ({ page }) => {
-  await page.goto("/today?kind=taught");
+  await page.goto("/setup/needs-doing?kind=taught");
   const group = page.locator("details[data-group=taught]");
   await expect(group.locator("a[data-group-home]")).toHaveAttribute("href", "/");
   const rows = group.locator("tr[data-kind=taught]");
@@ -30,5 +30,5 @@ test("a topic waiting to be marked taught is a row with its own button, in the g
 test("Curriculum's next step is What needs doing", async ({ page }) => {
   await page.goto("/");
   await page.locator("[data-ux=next]").click();
-  await expect(page).toHaveURL(/\/today$/);
+  await expect(page).toHaveURL(/\/setup\/needs-doing$/);
 });

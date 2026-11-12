@@ -12,13 +12,13 @@ type Problems = string[];
 
 const CONTROLS = "a[href], button, [role=button], summary, input:not([type=hidden]), select, textarea";
 
-/** The controls of the main column and the rail (the trail is the frame's, and Next's own action fields are not controls), as measured boxes. */
+/** The controls of the main column and the rail (the trail and the door's pages beside it are the frame's, and Next's own action fields are not controls), as measured boxes. */
 async function mainControls(page: Page) {
   return page.evaluate((sel) => {
     const main = document.querySelector("main");
     if (!main) return [];
     return [...main.querySelectorAll<HTMLElement>(sel)]
-      .filter((e) => !e.closest("[data-trail]") && !(e as HTMLInputElement).name?.startsWith("$ACTION"))
+      .filter((e) => !e.closest("[data-trail], [data-door-pages]") && !(e as HTMLInputElement).name?.startsWith("$ACTION"))
       // the frame's own links (the next step, the details link) are drawn on every screen: an element may list one, and none is extra
       .map((e) => ({ tag: e.tagName.toLowerCase(), frame: e.matches("[data-ux=next], [data-ux=details]"), peek: e.hasAttribute("data-peek-open"), attrs: e.getAttributeNames(), href: e.getAttribute("href") ?? "", name: (e.getAttribute("aria-label") || (e as HTMLInputElement).labels?.[0]?.innerText || e.innerText || (e as HTMLInputElement).placeholder || "").trim(), ...(() => { const r = e.getBoundingClientRect(); return { w: r.width, h: r.height, x: r.x, y: r.y }; })() }));
   }, CONTROLS);
@@ -41,7 +41,8 @@ export async function renders(page: Page, s: Screen, c: Ctx, errors: string[]): 
     return out;
   }
   if (c.width < 1000) return out;
-  const eyebrow = await page.getByTestId("stage").first().evaluate((e) => parseFloat(getComputedStyle(e).fontSize)).catch(() => 0);
+  // an eyebrow that would only repeat the title is not drawn (#690); one that is drawn is 14 px or more
+  const eyebrow = (await page.getByTestId("stage").count()) ? await page.getByTestId("stage").first().evaluate((e) => parseFloat(getComputedStyle(e).fontSize)) : 14;
   if (eyebrow < 14) out.push(`${s.id}: the eyebrow is ${eyebrow} px, not 14 or more`);
   const purpose = await page.locator("header p").first().innerText().catch(() => "");
   if (!purpose || purpose.length > PURPOSE_MAX) out.push(`${s.id}: the purpose line is ${purpose.length} characters (1 to ${PURPOSE_MAX})`);
@@ -147,7 +148,7 @@ export async function keyboard(page: Page, s: Screen): Promise<Problems> {
     await page.keyboard.press("Tab");
     const at = await page.evaluate((sel) => {
       const e = document.activeElement as HTMLElement | null;
-      if (!e || !e.closest("main") || e.closest("[data-trail]")) return null;
+      if (!e || !e.closest("main") || e.closest("[data-trail], [data-door-pages]")) return null;
       const st = getComputedStyle(e);
       // a control is known by its place in the page, not by where it is on screen: Tab scrolls each newly focused control to the same spot, so two like controls (twelve "Move" buttons) would share a position
       const place = [...document.querySelector("main")!.querySelectorAll(sel)].indexOf(e);
@@ -263,7 +264,9 @@ export async function drive(page: Page, s: Screen, e: Element, c: Ctx, byId: Map
     if (why) return [`${s.id}: cannot bring the page to “${e.when}” to drive “${e.label}”: ${why}`];
   }
   const here = page.url();
-  const find = () => (e.data ? page.locator(`main a[${e.data}]`).first() : e.href ? page.locator("main").locator(`a[href="${e.href}"]`).first() : page.locator("main a").filter({ hasText: needle(e) }).first());
+  // the door's pages (folded at the end of the trail) are the frame's, never the screen's link of the same name
+  const own = "main a:not([data-door-pages] a)";
+  const find = () => (e.data ? page.locator(`${own}[${e.data}]`).first() : e.href ? page.locator(`${own}[href="${e.href}"]`).first() : page.locator(own).filter({ hasText: needle(e) }).first());
   if (e.t === "peek") {
     const opener = page.locator("main [data-peek-open]").first();
     await opener.waitFor({ timeout: 10_000 }).catch(() => undefined);
@@ -282,6 +285,14 @@ export async function drive(page: Page, s: Screen, e: Element, c: Ctx, byId: Map
   if (["link", "row", "cell"].includes(e.t)) {
     await find().waitFor({ timeout: 10_000 }).catch(() => undefined); // rows stream in after the shell
     if (!(await find().count())) return [`${s.id}: cannot drive “${e.label}”: no such link`];
+    if (e.newTab) {
+      // a link that opens in a new tab (another site): it must open one, and the other site is not what is under test (CI does not reach it)
+      const popup = page.waitForEvent("popup", { timeout: 4_000 }).catch(() => null);
+      await find().click();
+      const opened = await popup;
+      if (opened) await opened.close();
+      return opened ? out : [`${s.id}: “${e.label}” did not open a new tab`];
+    }
     // a link to the page one is on changes no address, whichever link it is (the first class row may be the class already open): what it points at
     // is read from the link itself unless the inventory says. A link that points elsewhere must still change the address, or it is a dead link.
     const pointsAt = new URL(e.href ?? (await find().getAttribute("href")) ?? "", here);
@@ -293,7 +304,8 @@ export async function drive(page: Page, s: Screen, e: Element, c: Ctx, byId: Map
     const h1 = (await page.locator("h1").allInnerTexts())[0] ?? "";
     const target = e.to ? byId.get(e.to) : undefined;
     if (e.to && !target) out.push(`${s.id}: “${e.label}” targets ${e.to}, which is not in the inventory`);
-    else if (target && !titleMatches(target.title, h1)) out.push(`${s.id}: “${e.label}” did not land on ${e.to}: its h1 is “${h1}”, expected “${target.title}” (a dead link)`);
+    // two screens on one address (Today: the educator's and the school's) are two versions of it: the page shows the one that is the person's
+    else if (target && ![target, ...[...byId.values()].filter((x) => x.id !== target.id && x.route === target.route)].some((x) => titleMatches(x.title, h1))) out.push(`${s.id}: “${e.label}” did not land on ${e.to}: its h1 is “${h1}”, expected “${target.title}” (a dead link)`);
     else if (e.external && !h1) out.push(`${s.id}: “${e.label}” opens ${e.external} and it shows no heading (a dead link)`);
     if (!same) {
       await page.goBack();

@@ -13,8 +13,19 @@ async function read<T, P extends PostPath = PostPath>(path: P, body: BodyOf<P>):
   return (await res.json()) as T;
 }
 
+/** The same read, but a refusal (switched off, a class she does not hold, nothing live) is `null` instead of a 404, for the Timetable: a door of
+ *  the menu must never lead to "not found" (live, 11 Nov 2026). The page then says in words why there is nothing to show (issue #691). */
+async function readOrNull<T, P extends PostPath = PostPath>(path: P, body: BodyOf<P>): Promise<T | null> {
+  const res = await engineSend(path, body);
+  if (res.status === 404 || res.status === 403) return null;
+  if (!res.ok) throw new EngineDown(`The engine refused that (${res.status}).`);
+  return (await res.json()) as T;
+}
+
 /** Her day (M1-06's /timetable/day): her first class unless she picked one, today unless she picked a day. */
 export const dayOf = (me: Pick<Session, "email">, q: { class_id?: string; day?: string }) => read<Day, "/timetable/day">("/timetable/day", { actor: me.email, ...q });
+
+export const weekOrNull = (me: Pick<Session, "email">, q: { class_id?: string; week_of?: string }) => readOrNull<Week, "/timetable/week">("/timetable/week", { actor: me.email, ...q });
 
 /** Her week, Monday to Saturday (M1-06's /timetable/week). */
 export const weekOf = (me: Pick<Session, "email">, q: { class_id?: string; week_of?: string }) => read<Week, "/timetable/week">("/timetable/week", { actor: me.email, ...q });

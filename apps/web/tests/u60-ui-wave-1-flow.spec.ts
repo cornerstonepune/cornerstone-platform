@@ -12,8 +12,10 @@
 import { expect, test, type Page } from "@playwright/test";
 import postgres from "postgres";
 import { aClass, aReadPaper, aPerson } from "./rows";
+import { voiceSwitch } from "./k2-rows";
 import { createHmac } from "node:crypto";
 import { isoWeek } from "../lib/week";
+import { doorPages } from "./door-pages";
 
 test.use({ viewport: { width: 1440, height: 900 } });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -97,14 +99,15 @@ async function theBar(page: Page, doors: string[]) {
 
 test("an educator with one class and one subject: top menu, only hers, no Class or Subject boxes, no approve-all", async ({ browser }) => {
   const { context, page } = await asEducator(browser);
-  await open(page, "/today", /What needs doing/);
+  await open(page, "/setup/needs-doing", /What needs doing/);
   await theBar(page, DOORS);
   await expect(page.locator("#bar-subject, #bar-class, [data-viewing]"), "no universal Class or Subject selector").toHaveCount(0);
   // the bar carries sign out; the door's row of pages has the rest
   await expect(page.locator("[data-bar]").first().getByRole("button", { name: "Sign out" })).toBeVisible();
   await page.goto("/papers");
-  for (const name of ["Papers to approve", "Check answers", "Class results"]) await expect(page.getByRole("navigation", { name: "Pages in this section" }).getByRole("link", { name }), name).toBeVisible();
-  await page.goto("/today");
+  const pagesOfChildren = await doorPages(page);
+  for (const name of ["Papers to approve", "Check answers", "Parent reports"]) await expect(pagesOfChildren.getByRole("link", { name }), name).toBeVisible();
+  await page.goto("/setup/needs-doing");
   // What needs doing: groups, each folded into a table of red/amber/green rows, one action on each row that opens that item
   await page.locator("details[data-group]").evaluateAll((els) => els.forEach((e) => ((e as HTMLDetailsElement).open = true)));
   const rows = page.locator(".data-table tbody tr[data-kind]");
@@ -129,12 +132,12 @@ test("an educator with one class and one subject: top menu, only hers, no Class 
 });
 
 test("an admin: the same top menu, and no Viewing control", async ({ page }) => {
-  await open(page, "/today", /What needs doing/);
+  await open(page, "/setup/needs-doing", /What needs doing/);
   await theBar(page, DOORS);
   await expect(page.locator("[data-viewing], #bar-subject, #bar-class")).toHaveCount(0);
-  // a door's other pages are a row under the bar, not more items on it
+  // a door's other pages fold behind one button at the end of the trail, not more items on the bar (one nav row, #690)
   await page.goto("/papers");
-  await expect(page.getByRole("navigation", { name: "Pages in this section" }).getByRole("link")).toHaveText(["Children", "Assessments", "Papers to approve", "Upload papers", "Check answers", "Class results", "Parent reports", "Across classes"]);
+  await expect((await doorPages(page)).getByRole("link")).toHaveText(["Children", "Assessments", "Papers to approve", "Upload papers", "Check answers", "Parent reports", "Across classes"]);
 });
 
 /** The page opened, with nothing broken on it. */
@@ -199,9 +202,9 @@ async function wholePage(page: Page, path: string, title: RegExp, { filter = tru
 }
 
 test("What needs doing opens, and its first action leads on", async ({ page }) => {
-  await open(page, "/today", /What needs doing/);
+  await open(page, "/setup/needs-doing", /What needs doing/);
   await expect(page.locator("[data-ux=action] a, [data-ux=action] button").first()).toBeVisible();
-  await tablesRead(page, "/today");
+  await tablesRead(page, "/setup/needs-doing");
   await expect(page.locator("[data-filterbar]").first()).toBeVisible();
 });
 
@@ -239,19 +242,19 @@ test("Upload papers, Check answers, Marking", async ({ page }) => {
 });
 
 test("Class results, its class and a child", async ({ page }) => {
+  await voiceSwitch(sql, true);
   // a class's topics, a topic opened (goals/res_results_by_topic.yaml); this class has nothing signed off yet, so its
   // skills are named once as not assessed. Its children, one by one, each in a status chip, and a child opened.
-  await wholePage(page, `/growth?class=${SECTION}`, /Class results/, { chips: false });
+  await wholePage(page, `/growth?class=${SECTION}`, /Class picture/, { chips: false, filter: false });
   await page.locator("tr[data-topic]").first().getByRole("link").first().click();
   await expect(page.getByText("This page could not load")).toHaveCount(0);
-  await page.getByRole("link", { name: "Every child, one by one →" }).click();
-  await expect(page.locator("[data-status]:visible").first()).toBeVisible();
-  await statusesSaid(page, "/growth?view=children");
-  const child = page.getByRole("link", { name: /Bina/ }).first();
-  await expect(child).toBeVisible();
-  await child.click();
+  await page.getByRole("link", { name: "Show as a table" }).click();
+  // the old list of children is the Children screen (UI-3b): a child opens from its peek
+  await expect(page).toHaveURL(/\/children\?cls=[0-9a-f-]{36}$/);
+  await page.getByRole("button", { name: /Bina/ }).first().click();
+  await page.getByRole("link", { name: "Open the child" }).click();
   await expect(page.getByText("This page could not load")).toHaveCount(0);
-  await expect(page.getByRole("heading", { level: 1 }).first()).toContainText("Bina");
+  await expect(page.locator("main")).toContainText("Bina");
 });
 
 test("the Assessment card, opened from its row", async ({ page }) => {
@@ -287,12 +290,12 @@ test("Curriculum, Maths then English, and Staff and School", async ({ page }) =>
   await expect(page.getByRole("heading", { level: 1 }).first()).toHaveText(/Curriculum/);
   await expect(page.getByText("This page could not load")).toHaveCount(0);
   await tablesRead(page, "/ (English)");
-  await wholePage(page, "/staff", /Staff/, { filter: false });
+  await wholePage(page, "/setup/staff", /Staff and classes/);
   await wholePage(page, "/setup/classes", /Classes and children/, { filter: false });
 });
 
 test("the flow is one chain: each page's next step opens the following page", async ({ page }) => {
-  const chain = ["/today", "/papers/approve", "/papers", "/capture", "/capture/check", "/growth"];
+  const chain = ["/setup/needs-doing", "/papers/approve", "/papers", "/capture", "/capture/check", "/growth"];
   for (const path of chain) {
     await page.goto(path);
     await expect(page.getByText("This page could not load"), path).toHaveCount(0);

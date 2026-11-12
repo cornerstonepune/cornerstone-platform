@@ -8,14 +8,14 @@ import { expect, test } from "@playwright/test";
 const GROUPS = ["Today", "Timetable", "Children", "Setup"];
 // every page of the week, with the door it is in and the words of its own title (or its tab)
 const PAGES = [
-  ["/today", "Today", "What needs doing"],
+  ["/today", "Today", "Today"],
+  ["/setup/needs-doing", "Setup", "What needs doing"],
   ["/timetable/rules", "Timetable", "Timetable rules"],
   // bare, its address opens Assessments filtered to what waits for approval
   ["/papers/approve", "Children", "Assessments"],
   ["/papers", "Children", "Assessments"],
   ["/capture", "Children", "Upload papers"],
   ["/capture/check", "Children", "Check answers"],
-  ["/growth", "Children", "Class results"],
   ["/", "Setup", "Curriculum"],
   ["/library", "Setup", "Question bank"],
 ] as const;
@@ -34,7 +34,7 @@ test("the menu lists the four groups in order, and each page is marked and title
 });
 
 test("only What needs doing carries a count, and no word of the menu names a subject", async ({ page }) => {
-  await page.goto("/growth");
+  await page.goto("/children");
   const menu = page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" });
   expect(await menu.getByTestId("waiting").count()).toBeLessThanOrEqual(1);
   expect(await page.locator("[data-bar]").first().innerText()).not.toMatch(/\b(maths|english|hindi|science|evs)\b/i);
@@ -48,6 +48,6 @@ test("no step of the week is a dead end: each page of the menu ends on a next st
     const next = await page.locator("[data-ux=next]").count();
     expect(next + (await page.getByRole("main").getByRole("link").count()), `${path}: a way on`).toBeGreaterThan(0);
   }
-  await page.goto("/today");
+  await page.goto("/setup/needs-doing");
   await expect(page.locator("[data-ux=next]")).toHaveAttribute("href", "/papers");
 });

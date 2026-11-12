@@ -13,6 +13,7 @@
 import { expect, test } from "@playwright/test";
 import postgres from "postgres";
 import { aClass, aReadPaper, aWorksheet } from "./rows";
+import { doorPages } from "./door-pages";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -381,11 +382,11 @@ test("Capture & Mark says how the reader is doing, with the database's own numbe
 
 test("the queue is on the menu, and fits a phone", async ({ page }) => {
   // the queue is a page of Assessments, and What needs doing has a row that opens it whenever an answer waits
-  await page.goto("/today");
+  await page.goto("/setup/needs-doing");
   await page.getByRole("heading", { level: 1, name: "What needs doing" }).waitFor();
   await page.goto("/capture/check");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Check answers");
-  await expect(page.getByRole("navigation", { name: "Pages in this section" }).getByRole("link", { name: "Check answers" })).toHaveAttribute(
+  await expect((await doorPages(page)).getByRole("link", { name: "Check answers" })).toHaveAttribute(
     "aria-current",
     "page",
   );

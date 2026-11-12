@@ -229,14 +229,26 @@ table.grid th {
   text-transform: uppercase;
   color: var(--ink-55);
   font-weight: 600;
-  padding: 11px 14px;
+  padding: 8px 12px;
   border-bottom: 1px solid var(--ink-16);
   background: var(--ink-03);
 }
 table.grid td {
-  padding: 11px 14px;
+  padding: 7px 12px;
   border-bottom: 1px solid var(--ink-09);
-  vertical-align: top;
+  vertical-align: middle;
+}
+/* Dense rows (Nimish, 11 Nov 2026: "things should look properly dense"): on a desktop with a mouse a row's own button is a compact
+   control, so a row is about 44 px, not 70; on a phone or a touch screen it keeps the thumb's 44 px (the rule below). */
+@media (min-width: 768px) and (hover: hover) and (pointer: fine) {
+  table.grid td .btn,
+  table.grid td .chip,
+  summary .btn,
+  summary .chip {
+    min-height: 32px;
+    padding: 0 12px;
+    font-size: 14px;
+  }
 }
 /* A row's own heading (the skill a row of the approval table is) reads as its first cell, not as a column heading. */
 table.grid tbody th {
@@ -341,39 +353,48 @@ table.grid.steady tr.under td {
   border-color: var(--state-quiet);
 }
 
+/* The wireframes' buttons (docs/frontend/wireframes/kit.css `.btn`): a rounded filled control with a soft edge, no outline. */
 .chip {
-  display: inline-block;
-  padding: 7px 13px;
-  border: 1px solid var(--ink-30);
-  font-size: 13px;
-  background: var(--chalk);
-  color: var(--basalt);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: var(--tap);
+  padding: 0 var(--space-3);
+  border: 0;
+  border-radius: var(--radius-control);
+  box-shadow: var(--shadow-card);
+  font-size: 15px;
+  font-weight: 600;
+  background: var(--panel);
+  color: var(--ink);
   text-decoration: none;
 }
 @media (hover: hover) and (pointer: fine) {
   .chip:hover {
-    color: var(--ink);
-    border-color: var(--ink);
+    background: var(--surface);
   }
 }
 .chip.on {
   background: var(--action);
   color: var(--action-ink);
-  border-color: var(--action);
+  box-shadow: none;
 }
 
 /* The one loud colour: one primary action per screen. */
 .btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
-  padding: 10px 18px;
+  min-height: var(--tap);
+  padding: 0 var(--space-3);
   background: var(--action);
   color: var(--action-ink);
   font-family: var(--font-sans);
-  font-size: 13.5px;
-  font-weight: 700;
+  font-size: 15px;
+  font-weight: 600;
   border: none;
+  border-radius: var(--radius-control);
   cursor: pointer;
 }
 @media (hover: hover) and (pointer: fine) {
@@ -382,15 +403,14 @@ table.grid.steady tr.under td {
   }
 }
 .btn.secondary {
-  background: transparent;
+  background: var(--panel);
   color: var(--ink);
-  border: 1px solid var(--ink-30);
-  font-weight: 400;
+  box-shadow: var(--shadow-card);
+  font-weight: 600;
 }
 @media (hover: hover) and (pointer: fine) {
   .btn.secondary:hover {
-    border-color: var(--ink);
-    background: transparent;
+    background: var(--surface);
   }
 }
 .btn:disabled {
