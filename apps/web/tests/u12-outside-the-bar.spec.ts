@@ -128,6 +128,9 @@ test("the help reads at phone width with no sideways scroll", async ({ browser }
 
 test("each I want to link opens its screen", async ({ page }) => {
   await page.goto("/guide");
+  // waited for, then read: the page streams in behind (app)/loading.tsx, and for a moment after "load" its links stand in React's hidden
+  // holder outside <main> (4 of 20 local loads; CI run 43151164772 read 0 there). The count must still be above 0.
+  await expect(page.locator("main a[data-job]").first()).toBeVisible();
   const hrefs = await page.locator("main a[data-job]").evaluateAll((as) => as.map((a) => a.getAttribute("href")!));
   expect(hrefs.length).toBeGreaterThan(0);
   for (const href of hrefs) {
