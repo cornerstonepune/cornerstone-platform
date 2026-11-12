@@ -66,14 +66,16 @@ test("2. the gallery renders every block, and each block's behaviours work", asy
   // filter writes the address, × clears one, Clear clears all, a reload keeps them
   await gallery(page, "?open=FilterBar");
   const bar = page.locator('[data-fold="FilterBar"]');
-  await bar.locator("select").selectOption("K2 Red");
+  // the sample's first dropdown is Class (the row shows three, the rest behind More filters)
+  const klass = bar.locator('select[name="class"]');
+  await klass.selectOption("K2 Red");
   await expect(page).toHaveURL(/class=K2\+Red/);
   await page.reload();
   await expect(page).toHaveURL(/class=K2\+Red/);
-  await expect(bar.locator("select")).toHaveValue("K2 Red");
+  await expect(klass).toHaveValue("K2 Red");
   await bar.getByRole("link", { name: /Remove filter/ }).click();
   await expect(page).not.toHaveURL(/class=/);
-  await bar.locator("select").selectOption("K2 Blue");
+  await klass.selectOption("K2 Blue");
   await bar.getByRole("link", { name: "Clear" }).click();
   await expect(page).not.toHaveURL(/class=/);
   // a grid cell acts: a tap changes the mark; a child's square is a link
