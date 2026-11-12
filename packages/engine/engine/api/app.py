@@ -13,6 +13,7 @@ from fastapi.responses import JSONResponse
 
 from engine.api.idempotency import InProgress
 from engine.api.routes import (
+    attendance,
     bank,
     capture,
     card,
@@ -79,6 +80,7 @@ app.include_router(timetable.keyed)
 app.include_router(timetable_rules.keyed)
 app.include_router(plan.keyed)
 app.include_router(timetable_hand.keyed)
+app.include_router(attendance.keyed)
 app.include_router(feedback.keyed)
 app.include_router(levels.keyed)
 app.include_router(k2.router)
