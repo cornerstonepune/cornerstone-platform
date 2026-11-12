@@ -1,6 +1,7 @@
 import { cache } from "react";
 import type { Session } from "./auth";
 import { sql } from "./db";
+import { grades } from "./queries";
 import { EngineDown, enginePost, engineSend } from "./engine";
 import type { Activity, Draft } from "./voice-check";
 import type { MyVoice } from "./voice-types";
@@ -22,6 +23,9 @@ export const myVoice = cache(async (me: Pick<Session, "email">): Promise<MyVoice
   if (!(await voiceOn())) return null;
   try {
     const got = (await enginePost("/voice/queue", { actor: me.email })) as MyVoice;
+    // the engine says a class's grade by its code; the page says it by the grade's name
+    const g = await grades();
+    got.classes = got.classes.map((c) => ({ ...c, gradeName: g.name(c.grade) }));
     return got.classes.length || got.notes.length ? got : null;
   } catch (e) {
     if (e instanceof EngineDown) return null;

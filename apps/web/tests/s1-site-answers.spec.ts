@@ -33,11 +33,11 @@ async function menu(page: Page, label: string) {
 }
 
 test("a click shows the page is loading at once, and a database that does not answer is said in words within 12 s", async ({ page }) => {
-  // Setup (UI-5) does not read the question bank; the Question bank page, one click on in the sidebar, does
+  // Setup (UI-5) does not read the question bank; the Curriculum page, one click on in the sidebar, does
   await page.goto("/setup", { waitUntil: "networkidle" });
   await whileLocked("item", async () => {
     const clicked = Date.now();
-    await (await theMenu(page)).getByRole("link", { name: "Question bank", exact: true }).click();
+    await (await theMenu(page)).getByRole("link", { name: "Curriculum", exact: true }).click();
     await expect(page.getByRole("status", { name: "Loading this page" })).toBeVisible({ timeout: 1_500 });
     await expect(page.getByRole("heading", { name: COULD_NOT_LOAD })).toBeVisible({ timeout: 12_000 });
     expect(Date.now() - clicked).toBeLessThan(12_000);
@@ -45,7 +45,7 @@ test("a click shows the page is loading at once, and a database that does not an
   });
   // Once the database answers again, Try again brings the page back.
   await page.getByRole("button", { name: "Try again" }).click();
-  await expect(page.getByRole("heading", { level: 1, name: "Question bank" })).toBeVisible({ timeout: 10_000 });
+  await expect(page.getByRole("heading", { level: 1, name: "Curriculum" })).toBeVisible({ timeout: 10_000 });
 });
 
 test("when the staff check cannot reach the database, the page says so instead of asking you to sign in again", async ({ page }) => {

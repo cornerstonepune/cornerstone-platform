@@ -530,11 +530,26 @@ table.grid.steady tr.under td {
   }
 }
 
+/* a table is never narrower than its columns need (components/data-table.tsx sets --table-least); on a phone it is a list of cards */
+@media (min-width: 768px) {
+  table.grid.steady {
+    min-width: var(--table-least, 0);
+  }
+}
+
+/* More filters, closed, holds no box at all: Chromium lays out a closed <details>' content (hidden, yet measured where it would hang) */
+details[data-more-filters]:not([open]) > :not(summary) {
+  display: none;
+}
+
 /* a table never makes its page wider than the screen: it scrolls inside its own box instead */
 .data-table {
   min-width: 0;
   max-width: 100%;
   overflow-x: auto;
+  /* its width never comes from the table inside: a parent sized by its content (a grid or flex item) grew to the table's width, past
+     the page's column and under the rail, instead of letting the table scroll here */
+  contain: inline-size;
 }
 
 /* The old screens' faint text (text-basalt/35 … /55, an ink at a fraction of its strength) measured 3.9:1 on white, under the 4.5:1 of

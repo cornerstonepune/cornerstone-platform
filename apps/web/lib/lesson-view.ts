@@ -1,4 +1,5 @@
 import { sql } from "./db";
+import { grades } from "./queries";
 import type { Session } from "./auth";
 import { classRolls, lessonActivity, lessonOffers, pageOf, periodOf } from "./educator/data";
 import { childrenByIds, rosterOf } from "./notes-loop";
@@ -16,7 +17,7 @@ export type LessonView = NonNullable<Awaited<ReturnType<typeof lessonView>>>;
 export async function lessonView(me: Session, id: string) {
   const s = await sessionOf(id);
   if (!s || !(await mayRead(me, s.section))) return null;
-  const klass = classWords(s);
+  const klass = classWords({ ...s, gradeName: (await grades()).name(s.grade) });
   const voice = await voiceOn();
   const mine = voice ? !!(await myVoice(me))?.classes.some((x) => x.id === s.class_id) : false;
   const a = s.activity;

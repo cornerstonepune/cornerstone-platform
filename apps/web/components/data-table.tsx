@@ -98,11 +98,18 @@ export function DataTable<T>({
   );
 }
 
+/** The least width of a column with no fixed width, in rem: a question or a name, a few words a line. */
+const FREE_COLUMN_REM = 14;
+
 function Grid<T>({ label, cols, rows, rowKey, extras, sort, dense }: { label: string; cols: Column<T>[]; rows: readonly T[]; rowKey: (r: T) => string; extras?: RowExtras<T>; sort?: Sort; dense?: boolean }) {
   const cls = (c: Column<T>) => `a-${alignOf(c)}`;
+  // never narrower than its fixed columns plus room for each free one (globals.css reads it from 768 px): narrower, a fixed layout gave
+  // the free columns what was left, nothing beside a rail or panel, and a question's words stood one letter a line; now it scrolls in its box
+  const free = cols.filter((c) => !c.width).length;
+  const least = `calc(${[...cols.flatMap((c) => (c.width ? [c.width] : [])), `${free * FREE_COLUMN_REM}rem`].join(" + ")})`;
   return (
     <div className="data-table">
-      <table className={`grid list steady${dense ? " dense" : ""}`} aria-label={label}>
+      <table className={`grid list steady${dense ? " dense" : ""}`} aria-label={label} style={{ "--table-least": least } as React.CSSProperties}>
         <colgroup>
           {cols.map((c) => (
             <col key={c.key} style={c.width ? { width: c.width } : undefined} />
