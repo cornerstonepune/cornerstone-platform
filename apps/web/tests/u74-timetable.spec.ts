@@ -47,8 +47,12 @@ test("Timetable: its purpose holds, the fortnight is the unit, week A and week B
   await page.goto(TT());
   await expect(page.getByRole("heading", { name: "Timetable", level: 1 })).toBeVisible();
   await expect(page.getByText(/The fortnight is the unit/)).toBeVisible();
+  // the wireframe opens on the week that holds today (five days, named week A or B beside the eyebrow); the Fortnight view is two weeks of five days
+  await expect(page.locator("[data-block=FortnightGrid] .b-dh")).toHaveCount(5);
+  await expect(page.getByTestId("stage")).toContainText(/week [AB]/);
+  await page.goto(`${TT()}&view=fortnight`);
   const grid = page.locator("[data-block=FortnightGrid]");
-  await expect(grid.locator(".b-dh")).toHaveCount(10); // two weeks of five days
+  await expect(grid.locator(".b-dh")).toHaveCount(10);
   await expect(grid.locator("a.b-moved")).toHaveCount(1);
   expect(await grid.locator("a.b-clash").count()).toBeGreaterThan(0);
 });

@@ -19,6 +19,8 @@ export type Filter = {
   required?: boolean;
   /** The value is the page's own starting choice (a grade the page opens on), not one the person made: it keeps its "all" choice and shows no chip. */
   starting?: boolean;
+  /** The options in labelled groups (a Live and a Planning list): each group names option values from `options`; one in no group follows them. */
+  groups?: readonly { label: string; values: readonly string[] }[];
 };
 
 export function FilterBar({
@@ -57,11 +59,28 @@ export function FilterBar({
             <span>{f.label}</span>
             <select data-filter="" name={f.name} defaultValue={f.value ?? ""} onChange={() => form.current?.requestSubmit()} className={`select ${control} !w-auto max-w-full min-w-0`}>
               {f.required ? null : <option value="">{f.all}</option>}
-              {f.options.map(([v, words]) => (
-                <option key={v} value={v}>
-                  {words}
-                </option>
-              ))}
+              {f.groups
+                ? [
+                    ...f.groups.map((g) => (
+                      <optgroup key={g.label} label={g.label}>
+                        {f.options.filter(([v]) => g.values.includes(v)).map(([v, words]) => (
+                          <option key={v} value={v}>
+                            {words}
+                          </option>
+                        ))}
+                      </optgroup>
+                    )),
+                    ...f.options.filter(([v]) => !f.groups!.some((g) => g.values.includes(v))).map(([v, words]) => (
+                      <option key={v} value={v}>
+                        {words}
+                      </option>
+                    )),
+                  ]
+                : f.options.map(([v, words]) => (
+                    <option key={v} value={v}>
+                      {words}
+                    </option>
+                  ))}
             </select>
           </label>
         ))}
