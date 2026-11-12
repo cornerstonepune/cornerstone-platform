@@ -21,6 +21,8 @@ const PAGES = [
 ] as const;
 
 test("the menu lists the four groups in order, and each page is marked and titled by its own words", async ({ page }) => {
+  // the door's pages are the page's rail on a wide screen (the Timetable door); the fold is the narrow-width fallback, read at 900 px
+  await page.setViewportSize({ width: 900, height: 900 });
   await page.goto("/today");
   const menu = page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" });
   const names = (await menu.getByRole("link").allInnerTexts()).map((n) => n.replace(/\s*\d[\d,]*$/, "").trim());

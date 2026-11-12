@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation";
 import Link from "@/components/link";
-import { Rail, Screen } from "@/components/app-frame";
+import { Screen } from "@/components/app-frame";
+import { GridRefused } from "@/components/grid-refused";
+import { TimetableRail } from "@/components/timetable-rail";
 import { Cards } from "@/components/cards";
 import { DataTable } from "@/components/data-table";
 import { Details } from "@/components/details";
@@ -64,7 +66,7 @@ export default async function TimetablePage({ searchParams }: Props) {
 
   if (!fn) {
     return (
-      <Screen stage="Timetable" title="Timetable" purpose="No teaching fortnight is set up for the dates ahead.">
+      <Screen stage="Timetable" title="Timetable" purpose="No teaching fortnight is set up for the dates ahead." rail={<TimetableRail here="grid" coordinator={coordinator} />}>
         <EmptyState next={coordinator ? { href: "/timetable/draft", label: "Make a draft" } : undefined}>No timetable live for this class yet.</EmptyState>
       </Screen>
     );
@@ -93,23 +95,30 @@ export default async function TimetablePage({ searchParams }: Props) {
     // an educator the engine does not answer (switched off, or no class of hers has lessons then): a plain page, never "not found"
     if (!coordinator) {
       return (
-        <Screen stage="Timetable" title="Timetable" purpose="Your class's fortnight, once the coordinator makes it live.">
+        <Screen stage="Timetable" title="Timetable" purpose="Your class's fortnight, once the coordinator makes it live." rail={<TimetableRail here="grid" fn={fn.number} coordinator={false} />}>
           <EmptyState>
             <span data-not-live>{on ? "No timetable is live for your class yet." : "No timetable is live yet."} The coordinator makes one live from Setup, Fortnight.</span>
           </EmptyState>
         </Screen>
       );
     }
-    // the coordinator, whom the engine could not answer for this class: the fortnight, its state and the pickers still show
+    // the coordinator, whom the engine could not answer for this class: the fortnight, its state and the pickers still show. Lessons
+    // placed and unread means the engine refused her (it shows a class's grid to that class's own educator): said so, not as a success.
+    const placed = all.find((c) => c.id === classId)?.lessons;
+    const refused = classId && placed ? placed : 0;
     return (
-      <Screen stage={`Fortnight ${fn.number}`} title="Timetable" purpose="Every fortnight, in any state, read-only: what is placed, and whether educators see it yet." next={{ href: `/timetable/fortnight/${fn.number}`, label: `Fortnight ${fn.number}` }}>
+      <Screen stage={`Fortnight ${fn.number}`} title="Timetable" purpose="Every fortnight, in any state, read-only: what is placed, and whether educators see it yet." next={{ href: `/timetable/fortnight/${fn.number}`, label: `Fortnight ${fn.number}` }} rail={<TimetableRail here="grid" fn={fn.number} classId={classId} coordinator />}>
         {sections}
         {aheadLine}
         <p className="tt-note" data-fortnight-state={fn.state}>{said}</p>
         {choose ? <FilterBar action={HERE} keep={{ view }} filters={choose} /> : null}
-        <EmptyState next={{ href: `/timetable/fortnight/${fn.number}`, label: `Open Fortnight ${fn.number}` }}>
-          {placedWords(all.find((c) => c.id === classId)?.lessons, all.length, fn.number)}
-        </EmptyState>
+        {refused ? (
+          <GridRefused lessons={refused} fortnight={fn.number} next={{ href: `/timetable/fortnight/${fn.number}`, label: `Open Fortnight ${fn.number}` }} />
+        ) : (
+          <EmptyState next={{ href: `/timetable/fortnight/${fn.number}`, label: `Open Fortnight ${fn.number}` }}>
+            {placedWords(all.length, fn.number)}
+          </EmptyState>
+        )}
       </Screen>
     );
   }
@@ -159,22 +168,21 @@ export default async function TimetablePage({ searchParams }: Props) {
       }
       next={{ href: `/timetable/fortnight/${fn.number}`, label: `Fortnight ${fn.number}` }}
       rail={
-        <div className="tt-rail">
-        <Rail
-          edges={[
-            { screen: "fortnight", params: { n: String(fn.number) }, href: `/timetable/fortnight/${fn.number}`, label: `Fortnight ${fn.number}`, icon: "fortnight" },
-            { screen: "materials", label: "Materials, this fortnight", icon: "activity" },
-            { screen: "period", params: { id: "today" }, label: "Today’s period", icon: "period" },
-            ...(coordinator ? [{ screen: "rules", href: "/timetable/rules", label: "Timetable rules", icon: "setup" as const }] : []),
-          ]}
+        <TimetableRail
+          here="grid"
+          fn={fn.number}
+          classId={klass.id}
+          coordinator={coordinator}
+          edges={[{ screen: "period", params: { id: "today" }, label: "Today’s period", icon: "period" }]}
+          cards={
+            changed.length ? (
+              <section aria-label="Changed this fortnight" data-rail-part="changed" className="tt-rail-card">
+                <h2 className="tt-rail-h">Changed this fortnight</h2>
+                <Timeline entries={changed} />
+              </section>
+            ) : null
+          }
         />
-        {changed.length ? (
-          <section aria-label="Changed this fortnight" data-rail-part="changed" className="tt-rail-card">
-            <h2 className="tt-rail-h">Changed this fortnight</h2>
-            <Timeline entries={changed} />
-          </section>
-        ) : null}
-        </div>
       }
     >
       <DayOnPhone chosen={(VIEWS as readonly string[]).includes(q.view ?? "")} />
@@ -279,8 +287,6 @@ async function coordinatorFilters(fn: Fn, all: { id: string; grade: string; sect
   ];
 }
 
-/** Why the coordinator sees no grid, in words: no class this year, nothing placed yet, or lessons placed that the engine did not answer. */
-const placedWords = (lessons: number | undefined, classes: number, n: number) =>
-  !classes ? "No class is set up for this year yet."
-  : lessons ? `${lessons} lesson${lessons === 1 ? " is" : "s are"} placed for this class in Fortnight ${n}, but they could not be read just now.`
-  : `Nothing is placed for this class in Fortnight ${n} yet.`;
+/** Why the coordinator sees no grid, in words, when it is not the engine's refusal (that is `GridRefused`): no class this year, or nothing placed yet. */
+const placedWords = (classes: number, n: number) =>
+  !classes ? "No class is set up for this year yet." : `Nothing is placed for this class in Fortnight ${n} yet.`;

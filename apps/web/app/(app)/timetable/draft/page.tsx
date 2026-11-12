@@ -1,5 +1,6 @@
 import Link from "@/components/link";
-import { Rail, Screen } from "@/components/app-frame";
+import { Screen } from "@/components/app-frame";
+import { TimetableRail } from "@/components/timetable-rail";
 import { Cards } from "@/components/cards";
 import { DataTable } from "@/components/data-table";
 import { EmptyState } from "@/components/empty-state";
@@ -38,7 +39,7 @@ export default async function DraftPage({ searchParams }: Props) {
   const here = await fortnightAt(today);
   const upcoming = here && here.starts_on > today ? here : here ? await fortnightAfter(here) : null;
   const fn = (/^\d+$/.test(q.fn ?? "") ? await fortnightNumber(Number(q.fn)) : null) ?? upcoming;
-  if (!fn) return <Screen stage="Draft from the rules" title="Draft from the rules" purpose="No teaching fortnight is set up ahead." next={{ href: "/timetable/rules", label: "Timetable rules" }}><EmptyState next={{ href: "/timetable/rules", label: "Timetable rules" }}>No rules for this grade yet: add the period times first.</EmptyState></Screen>;
+  if (!fn) return <Screen stage="Draft from the rules" title="Draft from the rules" purpose="No teaching fortnight is set up ahead." next={{ href: "/timetable/rules", label: "Timetable rules" }} rail={<TimetableRail here="draft" coordinator />}><EmptyState next={{ href: "/timetable/rules", label: "Timetable rules" }}>No rules for this grade yet: add the period times first.</EmptyState></Screen>;
   const drafts = await draftsOf(fn.id);
   const on = drafts.find((d) => d.class_id === q.class) ?? drafts[0];
   const grid = on ? await draftGrid(on, fn, (day, p) => `${HERE}?fn=${fn.number}&class=${on.class_id}&cell=${day}~${p}`) : null;
@@ -60,7 +61,7 @@ export default async function DraftPage({ searchParams }: Props) {
       next={{ href: "/timetable/moves", label: "Moves by hand" }}
       rail={
         <div className="tt-rail">
-          <Rail edges={[{ screen: "rules", href: "/timetable/rules", label: "Timetable rules", icon: "setup" }, { screen: "fortnight", params: { n: String(fn.number) }, href: `/timetable/fortnight/${fn.number}`, label: `Fortnight ${fn.number}`, icon: "fortnight" }, { screen: "moves", href: `/timetable/moves?fn=${fn.number}`, label: "Moves by hand", icon: "moved" }]} />
+          <TimetableRail here="draft" fn={fn.number} coordinator />
           {reads.length ? (
             <aside aria-label="What the draft reads" data-rail-part="reads" className="tt-rail-card">
               <h2 className="tt-rail-h">What the draft reads</h2>

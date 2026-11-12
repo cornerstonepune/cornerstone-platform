@@ -97,7 +97,7 @@ export default async function Children({ searchParams }: { searchParams: Promise
         purpose="Your children in one table: how each is doing, last seen, notes waiting. Search, filter, open a child."
         action={first ? <Link href={`/children/${first}`} className="btn secondary">Class picture grid</Link> : <span />}
         next={{ href: first ? `/children/${first}` : "/today", label: first ? "The class picture" : "Today" }}
-        rail={<ChildrenRail notes={notes} />}
+        rail={<ChildrenRail notes={notes} first={first} />}
       >
         {t.rows.length === 0 ? (
           <EmptyState>No class linked to you. The coordinator links you to the classes you teach.</EmptyState>
@@ -119,37 +119,42 @@ export default async function Children({ searchParams }: { searchParams: Promise
   );
 }
 
-function ChildrenRail({ notes }: { notes: { toConfirm: number; latest: LatestNote[] } | null }) {
+/** The rail, as the wireframe draws it (children.html): the child chosen in the table, where this page connects to, and the latest notes. */
+function ChildrenRail({ notes, first }: { notes: { toConfirm: number; latest: LatestNote[] } | null; first: string | undefined }) {
   const notesHref = screenHref("notes");
   return (
     <Rail
       peek={<PeekPanel />}
-      edges={[{ screen: "assessments", label: "Assessments", icon: "assessment" }, ...(notes ? [] : [{ screen: "notes", label: "Notes", icon: "note" as const }])]}
+      edges={[
+        ...(first ? [{ screen: "picture", href: `/children/${first}`, label: "Class picture", icon: "class" as const, line: "every child on every skill" }] : []),
+        { screen: "assessments", href: screenHref("assessments") ?? "/papers", label: "Assessments", icon: "assessment" as const },
+        ...(notes ? [] : [{ screen: "notes", label: "Notes", icon: "note" as const }]),
+      ]}
       cards={
-        <>
-      {notes ? (
-        <p data-notes-count className="rounded-[var(--radius-card)] bg-[var(--surface)] p-[var(--space-3)] text-[14px]">
-          {notesHref ? <Link href={notesHref} className="text-[var(--link)] underline">Notes</Link> : "Notes"} · {notes.toConfirm} to confirm
-        </p>
-      ) : null}
-      {notes && notes.latest.length > 0 ? (
-        <section aria-label="Latest notes, any child" data-latest-notes className="grid gap-[var(--space-1)] rounded-[var(--radius-card)] bg-[var(--surface)] p-[var(--space-3)]">
-          <h2 className="mb-[var(--space-1)] text-[length:var(--text-eyebrow)] text-[var(--ink-muted)] uppercase">Latest notes, any child</h2>
-          <ul className="grid gap-[var(--space-2)]">
-            {notes.latest.map((n) => (
-              <li key={n.id} className="text-[13px]">
-                <b>{n.who}</b> · {n.state === "to_confirm" ? "to confirm" : "confirmed"}
-                <br />
-                <span className="b-muted">
-                  {n.how}
-                  {n.by ? ` · ${n.by}` : ""} · {n.at}
-                </span>
-              </li>
-            ))}
-          </ul>
-        </section>
-      ) : null}
-        </>
+        notes ? (
+          <section aria-label="Latest notes, any child" data-latest-notes className="grid gap-[var(--space-1)] rounded-[var(--radius-card)] bg-[var(--surface)] p-[var(--space-3)]">
+            <h2 className="mb-[var(--space-1)] text-[length:var(--text-eyebrow)] text-[var(--ink-muted)] uppercase">Latest notes, any child</h2>
+            <p data-notes-count className="text-[14px]">
+              {notesHref ? <Link href={notesHref} className="text-[var(--link)] underline">Notes</Link> : "Notes"} · {notes.toConfirm} to confirm
+            </p>
+            {notes.latest.length > 0 ? (
+              <ul className="grid gap-[var(--space-2)]">
+                {notes.latest.map((n) => (
+                  <li key={n.id} className="text-[13px]">
+                    <b>{n.who}</b> · {n.state === "to_confirm" ? "to confirm" : "confirmed"}
+                    <br />
+                    <span className="b-muted">
+                      {n.how}
+                      {n.by ? ` · ${n.by}` : ""} · {n.at}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="b-muted text-[13px]">No note has come in yet.</p>
+            )}
+          </section>
+        ) : null
       }
     />
   );

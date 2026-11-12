@@ -56,7 +56,7 @@
   .b-ritem small { font-size: var(--text-label); font-weight: 400; color: var(--ink-muted); }
 
   /* ---------- AttentionStrip ---------- */
-  .b-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-3); }
+  .b-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: var(--space-3); }
   .b-att { display: grid; grid-template-columns: auto 1fr; gap: var(--space-1) 14px; align-items: center; padding: var(--space-3); border-radius: var(--radius-card); background: var(--cb); color: var(--ink); text-decoration: none; }
   .b-att .b-n { grid-row: span 2; font: var(--text-title-page)/var(--lh-title-page) var(--font-serif); color: var(--c); font-variant-numeric: tabular-nums; }
   .b-att .b-w { display: flex; align-items: center; gap: var(--space-1); font-weight: 600; color: var(--c); }

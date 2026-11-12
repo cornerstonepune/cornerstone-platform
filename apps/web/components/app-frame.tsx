@@ -42,7 +42,7 @@ export async function AppFrame({ me, waiting, children }: { me: Session; waiting
     <WalkProvider doors={doors}>
       <div data-block="AppFrame" data-frame className="flex min-h-dvh flex-col bg-[var(--ground)] pb-[var(--space-7)] text-[var(--ink)] min-[701px]:pb-0">
         <header data-bar className="relative z-30 border-b border-[var(--line)] bg-[var(--panel)] print:hidden">
-          <div className="mx-auto flex h-[72px] w-full max-w-[1560px] items-center gap-[var(--space-3)] px-[var(--space-3)] min-[701px]:gap-[var(--space-4)] md:px-[var(--space-4)]">
+          <div className="flex h-[72px] w-full items-center gap-[var(--space-3)] px-[var(--space-3)] min-[701px]:gap-[var(--space-4)] md:px-[var(--space-4)]">
             <Link href="/today" prefetch className="flex shrink-0 items-center no-underline">
               <BrandMark />
             </Link>
@@ -67,8 +67,8 @@ export async function AppFrame({ me, waiting, children }: { me: Session; waiting
             </div>
           </div>
         </header>
-        <main className="mx-auto flex w-full min-w-0 max-w-[1560px] flex-1 flex-col">{children}</main>
-        <footer className="mx-auto w-full max-w-[1560px] px-[var(--space-3)] py-[var(--space-3)] text-[length:var(--text-label)] md:px-[var(--space-4)] print:hidden">
+        <main className="flex w-full min-w-0 flex-1 flex-col">{children}</main>
+        <footer className="w-full px-[var(--space-3)] py-[var(--space-3)] text-[length:var(--text-label)] md:px-[var(--space-4)] print:hidden">
           <span className="flex flex-wrap gap-x-[var(--space-4)]">
             <ReportLink />
             {mayUse(me, "the_map") ? <MapLink /> : null}
@@ -159,11 +159,12 @@ export function RailFacts({ title, rows }: { title: string; rows: readonly { lab
   );
 }
 
-export function Rail({ edges = [], capture, peek, facts, cards, boxes = [] }: { edges?: Edge[]; capture?: ReactNode; peek?: ReactNode; facts?: ReactNode; cards?: ReactNode; boxes?: { title: string; body: ReactNode }[] }) {
+/** `doorRail`: the rail holds the lit door's other pages, so the fold at the end of the trail is put away where the rail sits beside the page. */
+export function Rail({ edges = [], capture, peek, facts, cards, boxes = [], doorRail }: { edges?: Edge[]; capture?: ReactNode; peek?: ReactNode; facts?: ReactNode; cards?: ReactNode; boxes?: { title: string; body: ReactNode }[]; doorRail?: boolean }) {
   const drawn = edges.map((e) => ({ ...e, href: e.href ?? screenHref(e.screen, e.params) ?? e.fallback ?? null })).filter((e): e is typeof e & { href: string } => e.href !== null);
   if (!drawn.length && !capture && !peek && !facts && !cards && !boxes.length) return null;
   return (
-    <aside aria-label="Rail" data-rail className="grid content-start gap-[var(--space-4)]">
+    <aside aria-label="Rail" data-rail data-door-rail={doorRail ? "" : undefined} className="grid content-start gap-[var(--space-4)]">
       {peek}
       {drawn.length ? (
         <section aria-label="Connected to" className={BOX}>
