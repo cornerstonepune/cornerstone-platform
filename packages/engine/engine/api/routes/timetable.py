@@ -32,17 +32,18 @@ def _refused(no: Exception) -> HTTPException:
     return HTTPException(status_code=getattr(no, "status", 403), detail=str(no))
 
 
-def _gate(conn, body: Ask):
+def _gate(conn, body: Ask, reads: bool = True):
     """Her staff id, once the gate lets her past: switched on, or she is the staff preview (D-076). First, before any
-    field is checked, so a call while switched off learns nothing more."""
+    field is checked, so a call while switched off learns nothing more. `reads`: a call that reads a timetable (a day, a
+    week, a period), which the school's coordinators may make whether the switch is on or off (issue #691); the question
+    "are her screens open" (`/timetable/open`) is not one, so the activity and curriculum pages stay as they were."""
     try:
         staff = voice_intake.staff_of(conn, body.actor)
     except voice_store.Refused as no:
         if not educator_gate.switched_on(conn):
             raise HTTPException(status_code=403, detail="The timetable is not switched on.") from no
         raise _refused(no) from no
-    # the school's coordinators read every class's timetable, switched on or off (issue #691); everyone else as before
-    if not (educator_gate.open_to(conn, staff) or educator_gate.sees_all(conn, staff)):
+    if not (educator_gate.open_to(conn, staff) or (reads and educator_gate.sees_all(conn, staff))):
         raise HTTPException(status_code=403, detail="The timetable is not switched on.")
     return staff
 
@@ -69,7 +70,7 @@ def _mine(conn, body: Ask, on: dt.date, staff=None) -> tuple[dict, list[dict]]:
 def open_to(body: Ask, conn=Depends(get_conn, scope="function")):
     """Whether her screens are open to her, for a screen that reads no timetable (the activity page): refused as every
     other call is, else whether she sees them as the staff preview."""
-    return {"previewing": educator_gate.previewing(conn, _gate(conn, body))}
+    return {"previewing": educator_gate.previewing(conn, _gate(conn, body, reads=False))}
 
 
 @keyed.post("/timetable/day")

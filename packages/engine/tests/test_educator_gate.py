@@ -271,3 +271,15 @@ def test_reading_a_class_as_a_coordinator_writes_nothing(world):
         world, "week", actor=_head(world, "coordinator"), day="2026-11-23", class_id=str(world["k"]["class"])
     )
     assert count() == before
+
+
+def test_the_question_whether_her_screens_are_open_is_not_widened(world):
+    """Only reading a timetable is widened: the activity and curriculum pages ask `/timetable/open`, which stays as it was,
+    so a deputy coordinator (not a preview role) is still refused it while the switch is off."""
+    _switch(world, False)
+    deputy = _head(world, "deputy_coordinator")
+    assert call(world, "open", actor=deputy).status_code == 403
+    assert (
+        call(world, "day", actor=deputy, day="2026-11-23", class_id=str(world["k"]["class"])).status_code
+        == 200
+    )
