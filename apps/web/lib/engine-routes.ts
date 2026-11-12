@@ -137,6 +137,7 @@ export type EngineRoutes = {
   "POST /timetable/period": { actor: string; class_id?: string | null; day?: string | null; week_of?: string | null; period_id?: string | null };
   "POST /timetable/rules/change": { actor: string; class_id?: string | null; rule: string; action: string; id?: string | null; period_id?: string | null; starts_at?: string | null; ends_at?: string | null; label?: string | null; on_date?: string | null; weekday?: number | null; week_code?: string | null; reason?: string | null; subject_code?: string | null; span?: string | null; fewest?: number | null; most?: number | null; text?: string | null; frozen_reason?: string | null };
   "POST /timetable/rules/read": { actor: string; class_id?: string | null };
+  "POST /timetable/time": { actor: string; start: string; end: string; class_id?: string | null; grade?: string | null };
   "POST /timetable/unmatched": { actor: string; fortnight?: number | null; band?: string | null };
   "POST /timetable/week": { actor: string; class_id?: string | null; day?: string | null; week_of?: string | null; period_id?: string | null };
   "POST /voice/class": { actor: string; class_id: string; day?: string | null };
