@@ -34,6 +34,9 @@ class Confirmed:
     )  # section (above, below, not_willing, absent) → rolls
     rest: bool = False  # "the rest did as expected"
     day: dt.date | None = None  # the day it was taught; the note's own day when not given
+    session_id: str | None = (
+        None  # CP-40: the lesson it was taught in, when the form is saved from the lesson
+    )
 
 
 def _reached(conn: db.Conn, outcome: str, level: int) -> int:
@@ -101,10 +104,10 @@ def _write(
             "insert into activity_observation (tenant_id, confirmation_id, note_id, activity_code, child_id, class_id,"
             " outcome, entry_mode, route, expected_level, reached_level, observed_at, observed_by, confirmed_by, session_id)"
             " select tenant_id, %s, %s, %s, %s, id, %s, %s, %s, %s, %s, %s, %s, %s,"
-            " (select session_id from pii.educator_note where id = %s) from school_class where id = %s"
+            " coalesce(%s::uuid, (select session_id from pii.educator_note where id = %s)) from school_class where id = %s"
             " returning id, tenant_id",
             (confirmation, note_id, final.activity, child, outcome, mode, route, final.level, reached, observed_at,
-             staff, staff, note_id, class_id),
+             staff, staff, final.session_id, note_id, class_id),
         )  # fmt: skip
         if reached is not None:
             mark = _mark(conn, reached)
@@ -191,11 +194,34 @@ def confirm_note(conn: db.Conn, note_id: str, email: str, final: Confirmed) -> u
     return confirmation
 
 
+def _of_lesson(conn: db.Conn, class_id: str, final: Confirmed) -> None:
+    """CP-40: a form saved from a lesson is about that lesson: it must be this class's, its activity is the default and
+    its day the lesson's own."""
+    if not final.session_id:
+        return
+    lesson = None
+    try:
+        lesson = conn.execute(
+            "select s.activity_code, d.on_date from session s join school_day d on d.id = s.school_day_id"
+            " where s.id = %s and s.school_class_id = %s",
+            (final.session_id, class_id),
+        ).fetchone()
+    except Exception:  # not an id at all: the same answer as a lesson nothing holds
+        conn.rollback()
+    if lesson is None:
+        raise Refused("That lesson is not one of this class's.", 404)
+    final.activity = final.activity or lesson["activity_code"] or ""
+    if not final.activity:
+        raise Refused("This lesson has no activity yet; choose one.", 409)
+    final.day = final.day or lesson["on_date"]
+
+
 def save_form(conn: db.Conn, email: str, class_id: str, final: Confirmed) -> uuid.UUID:
     """The form's Save is its confirmation: the same rows, by the form, with no note."""
     staff = voice_intake.staff_of(conn, email)
     class_id = voice_intake.valid_id(class_id)
     voice_intake.may_record(conn, staff, class_id)
+    _of_lesson(conn, class_id, final)
     final.day = final.day or _today(conn)
     now = db.one(conn, "select now() as n")["n"]
     return _write(

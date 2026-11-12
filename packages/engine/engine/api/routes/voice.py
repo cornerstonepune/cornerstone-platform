@@ -67,6 +67,9 @@ class NoteConfirm(Confirm):
 
 class FormSave(Confirm):
     class_id: str
+    session_id: str | None = (
+        None  # CP-40: the lesson the form is saved from; its activity and day are the defaults
+    )
 
 
 class Correction(Who):
@@ -235,8 +238,9 @@ def class_roll(body: ClassDay, conn=Depends(get_conn, scope="function")):
 
 def _final(body: Confirm) -> voice_confirm.Confirmed:
     return voice_confirm.Confirmed(
-        body.activity, body.level, {k: list(v) for k, v in body.lists.items()}, body.rest, body.day
-    )
+        body.activity, body.level, {k: list(v) for k, v in body.lists.items()}, body.rest, body.day,
+        getattr(body, "session_id", None),
+    )  # fmt: skip
 
 
 @keyed.post("/voice/notes/confirm")
