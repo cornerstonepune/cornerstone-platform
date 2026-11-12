@@ -86,7 +86,7 @@ test("Timetable: a lesson with an activity opens it; one with none is not a link
     await expect(edu.locator("[data-block=FortnightGrid]")).toBeVisible(); // the page has streamed in
     const links = await edu.locator("[data-block=FortnightGrid] a.b-cell").evaluateAll((as) => as.map((a) => a.getAttribute("href")));
     expect(links).toHaveLength(1);
-    expect(links[0]).toContain(encodeURIComponent(row.code));
+    expect(links[0]).toMatch(/^\/period\/[0-9a-f-]{36}\?/); // the lesson page
     expect(await edu.locator("[data-block=FortnightGrid] div.b-cell").count()).toBeGreaterThan(0);
     // the coordinator: every block is a click that chooses it (on the fortnight page, where the move is made), the activity link beside it
     await page.goto(`${TT()}&view=day&day=${f.days[1]}`);
@@ -95,6 +95,9 @@ test("Timetable: a lesson with an activity opens it; one with none is not a link
     expect(picks.length).toBeGreaterThan(0);
     for (const h of picks) expect(h).toMatch(new RegExp(`^/timetable/fortnight/${HERE}\\?class=${f.klass}&from=`));
     await expect(page.locator("[data-activity-link]")).toHaveCount(1);
+    expect(await page.locator("[data-activity-link]").getAttribute("href")).toMatch(/^\/period\/[0-9a-f-]{36}\?/); // the lesson page, not /setup
+    // a row's time is printed once: no label that only repeats the range
+    for (const t of await page.locator("[data-block=FortnightGrid] .b-tm").allInnerTexts()) expect(t).not.toMatch(/(\d\d:\d\d)\s*[–-]\s*(\d\d:\d\d)[\s\S]*\1\s*[–-]\s*\2/);
   } finally {
     await sql`update session set plan_entry_id = null where id = ${row.id}`;
     await sql`update plan_entry set activity_id = null where id = ${row.entry}`;

@@ -13,7 +13,7 @@ import { requireStaff } from "@/lib/auth";
 import { weekOrNull } from "@/lib/educator/data";
 import { dateWords } from "@/lib/week";
 import { nextState, steppedFor } from "@/lib/fortnight-words";
-import { activityHref, gridOf } from "@/lib/timetable-grid";
+import { gridOf } from "@/lib/timetable-grid";
 import { classesOf, clashesOf, fortnightNumber, fortnightsOfYear, isCoordinator, liveIds, liveWords, movesOf, subjectLooks, switchedOn, yearFor } from "@/lib/timetable-ui";
 import { schoolToday } from "@/lib/voice-page";
 import { nowAtSchool, shortDate } from "@/lib/educator/clock";
@@ -85,7 +85,7 @@ export default async function FortnightPage({ params, searchParams }: Props) {
     looks: await subjectLooks(),
     clashes,
     at: { today, now },
-    open: activityHref,
+    open: (day, p) => `/period/${p}?${new URLSearchParams({ class: klass.id, day })}`,
     pick: coordinator ? (day, p) => (!chosen ? stay({ from: `${day}~${p}` }) : chosen.day === day && chosen.periodId === p ? stay() : stay({ from: `${fromDay}~${fromPeriod}`, to: `${day}~${p}` })) : undefined,
     picked: chosen,
   });
