@@ -9,10 +9,13 @@ import { StackBar } from "@/components/stack-bar";
 import { Summary } from "@/components/educator/summary";
 import { OUTCOME_ORDER, outcomeWords } from "@/components/outcome-states";
 import { requireStaff } from "@/lib/auth";
-import { openTo, pageOf, periodOf } from "@/lib/educator/data";
+import { classRolls, lessonActivity, lessonOffers, openTo, pageOf, periodOf } from "@/lib/educator/data";
 import { isDay } from "@/lib/educator/period";
 import { E } from "@/lib/educator/words";
-import { childrenByIds } from "@/lib/notes-loop";
+import { childrenByIds, rosterOf } from "@/lib/notes-loop";
+import { isCoordinator } from "@/lib/timetable-ui";
+import { ChooseActivity } from "./choose-activity";
+import { LessonForm } from "./lesson-form";
 import { lastTime, mayRead, sessionAt, sessionOf, slotOf } from "@/lib/period";
 import { schoolToday } from "@/lib/school-clock";
 import { screenHref } from "@/lib/built";
@@ -52,6 +55,13 @@ export default async function Period({ params, searchParams }: { params: Promise
   const voice = await voiceOn();
   const mine = voice ? !!(await myVoice(me))?.classes.some((x) => x.id === s.class_id) : false;
   const a = s.activity;
+  // the lesson's activity in full (the engine's own words), what kind of lesson it is, and, for the coordinator, what it may be given
+  const coordinator = await isCoordinator();
+  const lesson = s.kind === "fixed" ? null : await lessonActivity(me, { class_id: s.class_id, day: s.day, period_id: s.period_id }).catch(() => null);
+  const full = lesson?.activity ?? null;
+  const offers = coordinator && s.kind !== "fixed" ? await lessonOffers(me, id).catch(() => null) : null;
+  const rolls = a && mine ? await classRolls(me, s.class_id, s.day).catch(() => []) : [];
+  const roster = rolls.length ? await rosterOf(me, s.class_id).catch(() => undefined) : undefined;
   const page = a ? await pageOf(me, a.code).catch(() => null) : null;
   const last = a ? await lastTime(s.class_id, a.code, s.day) : null;
   // the planner's lines for this subject this fortnight (what the page it replaced showed); none if the engine has none for it
@@ -65,20 +75,19 @@ export default async function Period({ params, searchParams }: { params: Promise
   const day = `/timetable?view=day&class=${s.class_id}&day=${s.day}`;
   // the activity's own page returns to this day when it is left (its `back`)
   const open = a ? `${screenHref("activity", { code: a.code }) ?? `/setup/activities/${encodeURIComponent(a.code)}`}?back=${encodeURIComponent(day)}` : null;
-  const edges: Edge[] = a
-    ? [
-        { screen: "activity", params: { code: a.code }, label: "The activity", icon: "activity" },
-        { screen: "materials", label: "Materials", icon: "materials" },
-        { screen: "timetable", label: "Its place in the fortnight", icon: "fortnight" },
-        { screen: "picture", params: { class: s.class_id }, label: "The class", icon: "class" },
-      ]
-    : [{ screen: "picture", params: { class: s.class_id }, label: "The class", icon: "class" }];
+  // where this lesson leads, with the addresses that exist (a rail link whose screen is not registered as built would not be drawn at all)
+  const edges: Edge[] = [
+    ...(a ? [{ screen: "activity", href: open!, label: "The activity", icon: "activity" as const, line: "what to do, what to lay out" }] : []),
+    ...(a ? [{ screen: "materials", href: "/educator/materials", label: "Materials", icon: "materials" as const, line: "what to lay out" }] : []),
+    { screen: "timetable", href: day, label: "The day", icon: "fortnight" as const, line: "its place in the timetable" },
+    { screen: "picture", href: `/children/${s.class_id}`, label: "The class", icon: "class" as const, line: "every child on every skill" },
+  ];
   return (
     <PeekHost>
       <Screen
-        stage={`Period · ${s.starts_at}–${s.ends_at} · ${klass}${period?.name || s.subject ? ` · ${period?.name || s.subject}` : ""}`}
+        stage={`Period · ${s.starts_at}${s.ends_at ? `–${s.ends_at}` : ""} · ${klass}${period?.name || s.subject ? ` · ${period?.name || s.subject}` : ""}`}
         title={a?.name ?? (s.text || "A fixed part of the day")}
-        purpose={objective?.text ? objective.text.slice(0, 140) : a ? "What this activity is for is not written yet." : "A fixed part of the day."}
+        purpose={objective?.text ? objective.text.slice(0, 140) : full?.outcome ? full.outcome.slice(0, 140) : a ? "What this activity is for is not written yet." : s.kind === "fixed" ? "A fixed part of the day." : "This lesson has no activity yet."}
         action={
           a && mine ? (
             <Link href={record} className="btn">
@@ -144,9 +153,17 @@ export default async function Period({ params, searchParams }: { params: Promise
                 <p className="text-[var(--ink-muted)]">Not run with this class yet.</p>
               )}
             </section>
+            {mine && rolls.length ? (
+              <div className="mt-4" data-part="lesson-form">
+                <LessonForm rolls={rolls} roster={roster} levels={full?.levels ?? ["", "", "", ""]} klass={klass} sessionId={id} classId={s.class_id} day={s.day} />
+              </div>
+            ) : null}
             <div className="mt-4 grid gap-2">
+              <Details summary="What it is for" open>
+                <p className="whitespace-pre-line" data-part="outcome">{full?.outcome || objective?.text || "Not written yet."}</p>
+              </Details>
               <Details summary="The steps, short" open>
-                {steps?.items.length ? <ol>{steps.items.map((i) => <li key={i}>{i}</li>)}</ol> : <p>{steps?.text || "No steps written yet."}</p>}
+                {steps?.items.length ? <ol>{steps.items.map((i) => <li key={i}>{i}</li>)}</ol> : <p className="whitespace-pre-line">{steps?.text || full?.steps || "No steps written yet."}</p>}
               </Details>
               <Details summary="Lay out">
                 {page?.materials.items.length ? (
@@ -159,11 +176,32 @@ export default async function Period({ params, searchParams }: { params: Promise
                     ))}
                   </ul>
                 ) : (
-                  <p>{page?.materials.text || "Nothing listed."}</p>
+                  <p className="whitespace-pre-line">{page?.materials.text || full?.materials_text || "Nothing listed."}</p>
                 )}
               </Details>
               <Details summary="Watch for">
                 <p>{thinking?.text || "Nothing written yet."}</p>
+              </Details>
+              <Details summary="Objectives and skills" open>
+                <div className="grid gap-2" data-part="objectives">
+                  <div>
+                    <h3 className="text-[13px] text-[var(--ink-muted)]">Objectives</h3>
+                    {full?.objectives.length ? <ul>{full.objectives.map((o) => <li key={o}>{o}</li>)}</ul> : <p>None written for this activity.</p>}
+                  </div>
+                  <div>
+                    <h3 className="text-[13px] text-[var(--ink-muted)]">Skills</h3>
+                    {full?.skills.length ? <ul>{full.skills.map((k) => <li key={k}>{k}</li>)}</ul> : <p>None linked to this activity.</p>}
+                  </div>
+                </div>
+              </Details>
+              <Details summary="The four levels">
+                {full?.levels.some(Boolean) ? (
+                  <ol start={0} data-part="levels">
+                    {full.levels.map((w, n) => (w ? <li key={n} value={n}>{w}</li> : null))}
+                  </ol>
+                ) : (
+                  <p>The four levels are not written for this activity.</p>
+                )}
               </Details>
               <Details summary="The planner's lines" id="planner" open>
                 {planner.length ? (
@@ -176,10 +214,22 @@ export default async function Period({ params, searchParams }: { params: Promise
                   <p>The planner has no line for this period.</p>
                 )}
               </Details>
+              {coordinator && offers ? (
+                <Details summary="Choose another activity" id="choose">
+                  <ChooseActivity sessionId={id} offers={offers.activities} current={offers.activity_code} kind={offers.label} />
+                </Details>
+              ) : null}
             </div>
           </>
-        ) : (
+        ) : s.kind === "fixed" ? (
           <EmptyState next={{ href: "/today", label: "Today" }}>Nothing to record here.</EmptyState>
+        ) : (
+          <section className="grid gap-3" aria-label="This lesson has no activity yet" data-no-activity>
+            <p className="max-w-[62ch] rounded-[var(--radius-card)] border border-dashed border-[var(--line-control)] p-[var(--space-3)] text-[var(--ink-muted)]">
+              This lesson has no activity yet.{offers?.label ? ` It is a ${offers.label} lesson.` : ""} Nothing can be marked against it until one is chosen.
+            </p>
+            {coordinator && offers ? <ChooseActivity sessionId={id} offers={offers.activities} current={offers.activity_code} kind={offers.label} /> : coordinator ? null : <p className="text-[length:var(--text-label)] text-[var(--ink-muted)]">The coordinator chooses a lesson&apos;s activity.</p>}
+          </section>
         )}
       </Screen>
     </PeekHost>

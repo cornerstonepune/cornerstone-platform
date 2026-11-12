@@ -29,7 +29,7 @@ export async function sessionOf(id: string): Promise<SessionRow | null> {
     join period p on p.id = s.period_id
     left join subject su on su.tenant_id = s.tenant_id and su.code = s.subject_code
     left join plan_entry pe on pe.id = s.plan_entry_id
-    left join activity a on a.id = pe.activity_id
+    left join activity a on a.id = coalesce((select x.id from activity x where x.tenant_id = s.tenant_id and x.code = s.activity_code), pe.activity_id)
     where s.id = ${id}`;
   if (!r) return null;
   const { code, aname, ...rest } = r;
@@ -67,7 +67,7 @@ export async function sessionsOfDay(classId: string, day: string): Promise<DaySe
     join school_day d on d.id = s.school_day_id
     join period p on p.id = s.period_id
     left join plan_entry pe on pe.id = s.plan_entry_id
-    left join activity a on a.id = pe.activity_id
+    left join activity a on a.id = coalesce((select x.id from activity x where x.tenant_id = s.tenant_id and x.code = s.activity_code), pe.activity_id)
     where s.school_class_id = ${classId} and d.on_date = ${day}::date and s.kind <> 'fixed'
     order by p.starts_at`;
 }

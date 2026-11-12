@@ -84,3 +84,15 @@ export type ActivityPage = {
   parts: import("../page-part").PagePart[];
   materials: { text: string; items: { name: string; quantity: number | null; unit: string }[] };
 };
+
+/** A lesson's activity in full (CP-39's POST /timetable/activity), asked when the lesson is opened: the school's own words and nothing made up.
+ *  `activity` is null when the lesson holds none; `head` says what kind of lesson it is, `chosen` whether a person chose its activity. */
+export type LessonActivity = {
+  day: string;
+  period_id: string;
+  head: string | null;
+  chosen: boolean;
+  activity: null | { code: string; name: string; group: string; steps: string; outcome: string; objectives: string[]; skills: string[]; materials_text: string; materials: string[]; levels: string[] };
+};
+/** The activities a lesson may hold, for the coordinator to choose from (POST /timetable/lesson/offers). */
+export type LessonOffers = { session_id: string; head: string | null; label: string; groups: string[]; activity_code: string | null; activities: { code: string; name: string; strand: string; objectives: number; skills: number }[] };

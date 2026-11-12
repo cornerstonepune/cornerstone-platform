@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Session } from "../auth";
 import { type BodyOf, EngineDown, type PostPath, engineSend } from "../engine";
-import type { ActivityPage, CatalogueItem, Day, MaterialsList, OnePeriod, SchoolList, WaitingNote, Week } from "./types";
+import type { ActivityPage, CatalogueItem, Day, LessonActivity, LessonOffers, MaterialsList, OnePeriod, SchoolList, WaitingNote, Week } from "./types";
 
 // What the K2 educator's screens read, all from the engine with her email as `actor` (M1-09): the engine finds her staff
 // id and her classes. Behind `educator.timetable_enabled` (config, off): the engine refuses while it is off, and every
@@ -75,3 +75,16 @@ export async function waitingNotes(me: Pick<Session, "email">): Promise<WaitingN
 
 /** An activity's page, part by part (M1-12b's /curriculum/page/read). */
 export const pageOf = (me: Pick<Session, "email">, code: string) => read<ActivityPage, "/curriculum/page/read">("/curriculum/page/read", { actor: me.email, code });
+
+/** A lesson's activity in full, for the lesson page; null when the engine will not say (switched off, not her class). */
+export const lessonActivity = (me: Pick<Session, "email">, q: { class_id: string; day: string; period_id: string }) => readOrNull<LessonActivity, "/timetable/activity">("/timetable/activity", { actor: me.email, ...q });
+
+/** The activities a lesson may hold; null for anyone the engine does not let choose (the coordinator group's only). */
+export const lessonOffers = (me: Pick<Session, "email">, sessionId: string) => readOrNull<LessonOffers, "/timetable/lesson/offers">("/timetable/lesson/offers", { actor: me.email, session_id: sessionId });
+
+/** The roll numbers enrolled in a class on a day (POST /voice/class), for the form's squares; empty when the voice screens are off. */
+export async function classRolls(me: Pick<Session, "email">, classId: string, day: string): Promise<string[]> {
+  const res = await engineSend("/voice/class", { actor: me.email, class_id: classId, day });
+  if (!res.ok) return [];
+  return ((await res.json()) as { rolls: string[] }).rolls;
+}
