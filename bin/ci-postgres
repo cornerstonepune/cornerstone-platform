@@ -30,7 +30,10 @@ sudo curl -fsSo /usr/share/postgresql-common/pgdg/apt.postgresql.org.asc "${CURL
 echo "deb [signed-by=/usr/share/postgresql-common/pgdg/apt.postgresql.org.asc] https://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" |
   sudo tee /etc/apt/sources.list.d/pgdg.list >/dev/null
 retry sudo apt-get -o Acquire::Retries=5 update -qq
-retry sudo DEBIAN_FRONTEND=noninteractive apt-get -o Acquire::Retries=5 install -y -qq postgresql-17 >/dev/null
+# EXPERIMENT (not for merge): the minor this job installs was 17.11 until 17.12 reached the repository on 2026-11-12, and the
+# paper-screen speed test went from 0.4-1.3 s to 2.1-3.8 s with it. This branch installs 17.11 to see whether that is the cause.
+retry sudo DEBIAN_FRONTEND=noninteractive apt-get -o Acquire::Retries=5 install -y -qq --allow-downgrades \
+  postgresql-17=17.11-1.pgdg26.04+2 postgresql-client-17=17.11-1.pgdg26.04+2 >/dev/null
 sudo locale-gen en_US.UTF-8 >/dev/null
 
 # The package starts a cluster of its own, and the runner may carry an older Postgres: neither is the one used here,
