@@ -25,11 +25,9 @@ import { cookies } from "next/headers";
 // foot fill the rest of the width. The page itself is `Screen`, which holds the title, the one main action, the right side and the next
 // step. Nothing here names a subject.
 
-/** The sidebar a person sees: School and the coordinator's own lines are the coordinator's (an admin's too), and put away while she
- *  acts as an educator. Only Today carries a count (docs/ux-rules.md rule 5). */
-function sectionsOf(me: Session, acting: boolean, waiting: number): FrameSection[] {
-  const coordinator = (me.role === "coordinator" || me.role === "admin") && !acting;
-  return sectionsFor(coordinator).map((s) => ({
+/** The sidebar everyone sees (lib/menu.ts): the same sections for every role. Only Today carries a count (docs/ux-rules.md rule 5). */
+function sectionsOf(waiting: number): FrameSection[] {
+  return sectionsFor().map((s) => ({
     key: s.key,
     label: s.label,
     icon: s.icon,
@@ -39,7 +37,7 @@ function sectionsOf(me: Session, acting: boolean, waiting: number): FrameSection
 
 export async function AppFrame({ me, waiting, children }: { me: Session; waiting: number; children: ReactNode }) {
   const acting = await actingAsEducator(me);
-  const sections = sectionsOf(me, acting, waiting);
+  const sections = sectionsOf(waiting);
   const folded = (await cookies()).get(FOLD_COOKIE)?.value === "icons";
   return (
     <WalkProvider sections={sections}>
