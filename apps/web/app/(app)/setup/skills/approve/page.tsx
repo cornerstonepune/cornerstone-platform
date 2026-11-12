@@ -85,8 +85,9 @@ export default async function SkillsToApprove({ searchParams }: { searchParams: 
       label: "Its levels",
       value: (x) => levelsOf(x).join(" "),
       cell: (x) => (
-        // each level a box of its own, named, in the order Easy, Medium, Hard, Advance
-        <dl className="grid grid-cols-2 gap-2 text-[13px] min-[1100px]:grid-cols-4" data-levels="">
+        // each level a box of its own, named, in the order Easy, Medium, Hard, Advance; as many to a line as the cell has room for
+        // (never by the screen's width: beside the sidebar and the rail four to a line stood one word a line)
+        <dl className="grid grid-cols-[repeat(auto-fill,minmax(10rem,1fr))] gap-2 text-[13px]" data-levels="">
           {levelsOf(x).map((d) => (
             <div key={d} className="rounded-[var(--radius-card)] bg-[var(--panel)] p-2">
               <dt className="label pb-[2px]">{d}</dt>

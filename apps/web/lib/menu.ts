@@ -98,6 +98,6 @@ export const sectionOf = (address: string): Section | undefined => locate(addres
 
 /** The sidebar a person sees: the same for everyone (Nimish, 22 Oct: one set of features for both; 12 Nov: educators see School,
  *  read-only). A coordinator's own buttons stay the coordinator's on the page itself (lib/access.ts says what anyone may change). */
-export function sectionsFor(_coordinator: boolean): Section[] {
+export function sectionsFor(): Section[] {
   return [...SECTIONS];
 }

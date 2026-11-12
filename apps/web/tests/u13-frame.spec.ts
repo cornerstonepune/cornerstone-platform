@@ -105,12 +105,19 @@ test("2. at 1440 the menu is a sidebar beside the page, grouped by the educator'
   await expect(bar.getByRole("button", { name: /account/ })).toBeVisible();
 });
 
-test("2b. an educator's sidebar has no School section, and a coordinator acting as an educator sees what she sees", async ({ browser }) => {
+test("2b. an educator's sidebar is the coordinator's: every section and page, School included (read-only for her)", async ({ browser }) => {
+  // Nimish, 22 Oct: one set of features for both; 12 Nov: educators see School, read-only (lib/access.ts says who may change what)
   const educator = await (await signedInAs(browser, "educator", { width: 1440, height: 900 })).newPage();
-  await educator.goto("/today");
-  const nav = await menu(educator);
-  expect(await sectionNames(nav)).toEqual([...SECTIONS.educator]);
-  await expect(nav.getByRole("link", { name: "What needs doing" })).toHaveCount(0);
+  const coordinator = await (await signedInAs(browser, "coordinator", { width: 1440, height: 900 })).newPage();
+  const links = async (page: Page) => {
+    await page.goto("/today");
+    const nav = await menu(page);
+    return { sections: await sectionNames(nav), pages: await nav.getByRole("link").evaluateAll((a) => a.map((x) => x.getAttribute("href"))) };
+  };
+  const hers = await links(educator);
+  expect(hers.sections).toEqual([...SECTIONS.educator]);
+  expect(hers.sections).toContain("School");
+  expect(hers).toEqual(await links(coordinator));
 });
 
 test("3 and 4. BrandMark: the right file for the ground and the room, as given, unfiltered, with its clear space and its name", async ({ browser }) => {

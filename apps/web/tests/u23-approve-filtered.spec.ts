@@ -87,7 +87,9 @@ test("a grade and a topic narrow the rows, and approving one approves only its r
     await expectRows(page, ["DIV.3D1D"]);
     await filter(page, "Topic").selectOption({ value: "" });
     await expect(page).not.toHaveURL(/[?&]topic=DIV/);
-    // a skill whose topic is not taught yet is the one the Taught choice keeps
+    // a skill whose topic is not taught yet is the one the Taught choice keeps (Taught is behind More filters: page charter A4)
+    await page.locator("[data-filterbar] details[data-more-filters] > summary").click();
+    await expect(filter(page, "Taught")).toBeVisible();
     await filter(page, "Taught").selectOption({ label: "Not taught yet (1)" });
     await expect(page).toHaveURL(/[?&]taught=no(&|$)/);
     await expectRows(page, ["DIV.3D1D"]);
