@@ -11,7 +11,7 @@ from pydantic import BaseModel
 from engine.api.deps import get_conn, require_engine_key
 from engine.w2_print import educator_gate as gate
 from engine.w2_print import fortnight_cycle as fc
-from engine.w2_print import tt_clash, tt_live, tt_move, tt_need
+from engine.w2_print import tt_clash, tt_edit, tt_live, tt_move, tt_need
 from engine.w3_read import voice_intake, voice_store
 
 keyed = APIRouter(dependencies=[Depends(require_engine_key)])
@@ -26,6 +26,14 @@ class Move(BaseModel):
     from_period: int
     to_date: dt.date
     to_period: int
+    reason: str | None = None
+
+
+class LessonEdit(BaseModel):
+    actor: str
+    session_id: str
+    text: str | None = None
+    subject_code: str | None = None
     reason: str | None = None
 
 
@@ -64,6 +72,24 @@ def move(body: Move, conn=Depends(get_conn, scope="function")):
         )  # fmt: skip
     except (tt_move.Refused, fc.CycleError) as no:
         raise HTTPException(status_code=409, detail=str(no)) from no
+
+
+@keyed.post("/timetable/lesson/edit")
+def lesson_edit(body: LessonEdit, conn=Depends(get_conn, scope="function")):
+    """CP-35: one lesson's topic and subject. Not in the go-live group: 403; any other refusal: 409, nothing written."""
+    staff = _staff(conn, body.actor)
+    try:
+        return tt_edit.edit(
+            conn,
+            body.session_id,
+            who=staff,
+            text=body.text,
+            subject_code=body.subject_code,
+            reason=body.reason,
+        )
+    except (tt_edit.Refused, fc.CycleError) as no:
+        status = 403 if "not in it" in str(no) else 409
+        raise HTTPException(status_code=status, detail=str(no)) from no
 
 
 @keyed.post("/timetable/clash/accept")

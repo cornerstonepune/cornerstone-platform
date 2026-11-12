@@ -71,3 +71,30 @@ def test_the_accept_route_accepts_a_clash_for_the_coordinator_group_only(engine)
         "select accepted from timetable_clash where fortnight_id = %s", (w["fortnight"],)
     ).fetchall()
     assert now["accepted"] is True
+
+
+def test_the_lesson_edit_route_edits_for_the_coordinator_group_only_and_refuses_with_a_reason(engine):
+    client, conn, w = engine
+    s = tw.session_at(conn, w, MON, "p1")
+    body = {"session_id": str(s["id"]), "text": "Counting to 20"}
+    assert client.post("/timetable/lesson/edit", json={}).status_code == 401, "the engine key is needed"
+    assert (
+        client.post(
+            "/timetable/lesson/edit", headers=H, json={"actor": "nobody@example.org"} | body
+        ).status_code
+        == 403
+    )
+    teacher = client.post(
+        "/timetable/lesson/edit", headers=H, json={"actor": w["staff"]["educator"]["email"]} | body
+    )
+    assert teacher.status_code == 403 and "not in it" in teacher.json()["detail"]
+    ok = client.post(
+        "/timetable/lesson/edit", headers=H, json={"actor": w["staff"]["coordinator"]["email"]} | body
+    )
+    assert ok.status_code == 200, ok.text
+    assert tw.session_at(conn, w, MON, "p1")["text"] == "Counting to 20"
+    refused = client.post(
+        "/timetable/lesson/edit", headers=H,
+        json={"actor": w["staff"]["coordinator"]["email"], "session_id": str(s["id"]), "subject_code": "zz-none"},
+    )  # fmt: skip
+    assert refused.status_code == 409 and "not taught" in refused.json()["detail"]
