@@ -108,6 +108,8 @@ test("a stage and a class narrow the topics, and a class with nothing says so", 
   await page.goto(`${LIST}&view=topic&t=MUL`);
   // the papers are printed and not yet in, so they wait to be uploaded
   const stage = page.locator("[data-filterbar] select[name=status]");
+  // one row (page charter A4): the stage is behind More filters, which stays open while one of its filters is on
+  await page.locator("[data-filterbar] details[data-more-filters] summary").click();
   await stage.selectOption("upload");
   await expect(page).toHaveURL(/status=upload/);
   await expect(page.locator("tr[data-assessment]")).toHaveCount(2);

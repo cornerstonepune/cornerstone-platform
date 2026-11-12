@@ -172,8 +172,11 @@ test("A4: the filter row shows its first dropdowns and puts the rest behind More
   await expect(bar.locator("form > label select")).toHaveCount(FILTERS_IN_ROW);
   const more = bar.locator("details[data-more-filters]");
   await expect(more.locator("summary")).toHaveText("More filters (1 on)");
-  await more.locator("summary").click();
+  // a filter of its own is on, so it stands open, its dropdown in reach; closed, it hides the rest
+  await expect(more).toHaveAttribute("open", "");
   await expect(more.getByRole("combobox")).toHaveCount(1);
+  await more.locator("summary").click();
+  await expect(more.getByRole("combobox")).toHaveCount(0);
   // at 1440 the row is one line
   const tops = await bar.locator("form > label, form > details").evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().top)));
   expect(new Set(tops).size).toBe(1);

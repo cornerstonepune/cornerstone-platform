@@ -106,7 +106,7 @@ export function FilterBar({
         {Object.entries(keep).map(([k, v]) => (v ? <input key={k} type="hidden" name={k} value={v} /> : null))}
         {filters.slice(0, shown).map(drop)}
         {filters.length > shown ? (
-          <details data-more-filters className="relative">
+          <details data-more-filters className="relative" open={moreOn > 0 || undefined}>
             <summary className="inline-flex min-h-[40px] cursor-pointer items-center gap-2 whitespace-nowrap rounded-[var(--radius-control)] border border-[var(--line-control)] bg-[var(--panel)] px-3 text-[15px] text-[var(--ink)]">
               More filters{moreOn ? ` (${moreOn} on)` : ""}
             </summary>

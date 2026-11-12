@@ -261,6 +261,8 @@ test("Assessments is a table of aligned columns with the one filter row, and a s
   // the filter row is in the same place, and a filter shows itself and clears in one click
   const filters = page.locator("[data-filterbar]");
   await expect(filters).toBeVisible();
+  // one row (page charter A4): the first three dropdowns, the rest behind More filters
+  await filters.locator("details[data-more-filters] summary").click();
   await filters.locator('select[name="kind"]').selectOption("assessment");
   await expect(page).toHaveURL(/kind=assessment/);
   await expect(page.locator("[data-active-filters]")).toContainText("Kind: Class assessment");
