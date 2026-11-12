@@ -7,7 +7,7 @@
 import { expect, test } from "@playwright/test";
 import postgres from "postgres";
 import { aClass, aPerson, forgetPerson, teaches as teachesClasses } from "./rows";
-import { doorPages } from "./door-pages";
+import { menu } from "./menu";
 
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 const CLASS = "UXN2-CLASS";
@@ -44,6 +44,6 @@ test("School shows each class with its grade, its children and who teaches it", 
   await expect(row).toContainText("Grade 3");
   await expect(row).toContainText("Ayush Test");
   await expect(row.locator("td").nth(2)).toHaveText("2");
-  // the way to the Staff page is a page of the Setup door, beside School
-  await expect((await doorPages(page)).getByRole("link", { name: "Staff" })).toBeVisible();
+  // the way to the Staff page is a page of the School section of the sidebar, beside Classes
+  await expect((await menu(page)).getByRole("list", { name: "School" }).getByRole("link", { name: "Staff" })).toBeVisible();
 });

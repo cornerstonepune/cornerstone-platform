@@ -1,97 +1,104 @@
-// The site's menu: four doors and the pages inside each (docs/frontend/screens.json `groups`, UI-13). Today, Timetable,
-// Children, Setup, in that order and no other. Each existing route belongs to one door by the `group` of the screen that
-// is its successor in screens.json; assessments, papers, capture and growth are Children. A door's pages are the second
-// row of the bar, so a page of the old side menus is at most two clicks from any page. Pure, so a test can read it.
-// Nothing here names a subject (docs/ux-rules.md rule 6).
+// The site's menu: the left sidebar, grouped by the educator's jobs (docs/frontend/page-charter.md A1, approved by Nimish on 12 Nov
+// 2026). My day, Timetable, Children, Assessments, and School for the coordinator, in that order and no other. Each existing route
+// belongs to one section by its `match`, the longest matching prefix winning. Pure, so a test can read it. Nothing here names a subject
+// (docs/ux-rules.md rule 6).
+//
+// Two pages the charter merges away still stand until their screen's own PR absorbs them, so they keep a line in the section they will
+// end in: Upload papers (into an assessment, B6) and What needs doing (into the coordinator's Today, B1b). Time by subject (B3) is not
+// listed: it needs an engine read first, and a control whose screen is not built is not drawn.
 import type { IconName } from "./icons";
 
-/** `guide: false`: the page has no page of the Guide yet (the Guide has one page per menu item that existed before the four doors;
- *  packages/engine/tests/test_guide.py reads those from entries written `{ href, label, ...`). Its "?" opens the Guide's front. */
-export type MenuPage = { href: string; label: string; match: readonly string[]; guide?: false; group?: string };
-// `group`: a door with many pages (Setup has thirteen) names a heading for each page; the second row then shows the pages in
-// labelled clusters that wrap, so no page runs off the edge of the screen. A door whose pages name no group is one row, as before.
-export type DoorKey = "today" | "timetable" | "children" | "setup";
-/** `screen`: the screen the door opens once its slice has merged (lib/built.ts); until then `href`, the first page below. */
-export type Door = { key: DoorKey; label: string; href: string; icon: IconName; screen: string; setup?: boolean; pages: readonly MenuPage[] };
+/** `guide: false`: the page has no page of the Guide yet (packages/engine/tests/test_guide.py reads the entries written
+ *  `{ href, label, ...`). `coordinator`: only the coordinator's sidebar lists it. `view`: the page is the timetable's view of that name
+ *  (`?view=`), so the Week and the Fortnight lines are told apart on the one address. */
+export type MenuPage = { href: string; label: string; match: readonly string[]; guide?: false; coordinator?: boolean; view?: string };
+export type SectionKey = "today" | "timetable" | "children" | "assessments" | "school";
+/** `coordinator`: the whole section is the coordinator's (School). */
+export type Section = { key: SectionKey; label: string; icon: IconName; coordinator?: boolean; pages: readonly MenuPage[] };
 
-export const GROUPS: readonly Door[] = [
+export const SECTIONS: readonly Section[] = [
   {
     key: "today",
-    label: "Today",
-    href: "/today",
+    label: "My day",
     icon: "today",
-    screen: "today-educator",
     pages: [
       { label: "Today", href: "/today", match: ["/today", "/record", "/period"], guide: false },
-      // the K2 voice notes (UI-3a): the old addresses are gone, so Notes has its own door; its page is a 404 while voice notes are off
-      { label: "Notes", href: "/notes", match: ["/notes"], guide: false },
+      { label: "Notes to confirm", href: "/notes", match: ["/notes"], guide: false },
+      { href: "/setup/needs-doing", label: "What needs doing", match: ["/setup/needs-doing"], coordinator: true },
     ],
   },
   {
     key: "timetable",
     label: "Timetable",
-    href: "/timetable",
     icon: "week",
-    screen: "timetable",
     pages: [
+      { label: "Week", href: "/timetable", match: ["/timetable"], guide: false },
+      { label: "Fortnight", href: "/timetable?view=fortnight", match: ["/timetable/fortnight", "/timetable/draft"], view: "fortnight", guide: false },
       { label: "Materials", href: "/educator/materials", match: ["/educator/materials", "/timetable/materials"], guide: false },
-      { label: "Timetable", href: "/timetable", match: ["/timetable"], guide: false },
-      { href: "/timetable/rules", label: "Timetable rules", match: ["/timetable/rules"] },
     ],
   },
   {
     key: "children",
     label: "Children",
-    href: "/children",
     icon: "child",
-    screen: "children",
     pages: [
-      { label: "Children", href: "/children", match: ["/children", "/growth"], guide: false },
-      { href: "/children/assessments", label: "Assessments", match: ["/children/assessments", "/make", "/worksheets/CS"] },
-      { href: "/capture", label: "Upload papers", match: ["/capture"] },
+      { label: "Class picture", href: "/children", match: ["/children", "/growth"], guide: false },
       { href: "/children/reports", label: "Parent reports", match: ["/children/reports"] },
-      { href: "/across", label: "Across classes", match: ["/across"] },
     ],
   },
   {
-    key: "setup",
-    label: "Setup",
-    href: "/",
-    icon: "setup",
-    screen: "setup",
-    setup: true,
+    key: "assessments",
+    label: "Assessments",
+    icon: "assessment",
     pages: [
-      // What needs doing moved here from Today (UI-7b): its controls (a topic taught, the groups of tasks) are not on Today's screens
-      { href: "/setup/needs-doing", label: "What needs doing", match: ["/setup/needs-doing"], group: "Skills and questions" },
-      { href: "/", label: "Curriculum", match: ["/", "/skill-sets", "/worksheets", "/setup"], group: "Curriculum" },
-      // the new screens (UI-11), beside the old pages until those are retired one at a time (UI-11b); then these take the old names
-      { label: "All the curriculum", href: "/setup/curriculum", match: ["/setup/curriculum"], guide: false, group: "Curriculum" },
-      { label: "Skills to approve", href: "/setup/skills/approve", match: ["/setup/skills"], guide: false, group: "Skills and questions" },
-      { label: "Bank of questions", href: "/setup/question-bank", match: ["/setup/question-bank"], guide: false, group: "Skills and questions" },
-      { href: "/library", label: "Question bank", match: ["/library", "/worksheets/taxonomy"], group: "Skills and questions" },
-      { href: "/setup/staff", label: "Staff", match: ["/setup/staff"], group: "The school" },
-      { href: "/setup/classes", label: "School", match: ["/setup/classes"], group: "The school" },
-      { label: "How it works", href: "/setup/how-it-works", match: ["/setup/how-it-works"], guide: false, group: "The school" },
+      { href: "/children/assessments", label: "Assessments", match: ["/children/assessments", "/make", "/worksheets/CS"] },
+      { href: "/capture", label: "Upload papers", match: ["/capture"] },
+      { href: "/setup/question-bank", label: "Question bank", match: ["/setup/question-bank", "/library", "/worksheets/taxonomy"] },
+    ],
+  },
+  {
+    key: "school",
+    label: "School",
+    icon: "setup",
+    coordinator: true,
+    pages: [
+      { href: "/across", label: "Across classes", match: ["/across"] },
+      { href: "/setup/curriculum", label: "Curriculum", match: ["/setup/curriculum", "/", "/skill-sets", "/worksheets", "/setup"] },
+      { label: "Skills to approve", href: "/setup/skills/approve", match: ["/setup/skills"], guide: false },
+      { href: "/setup/staff", label: "Staff", match: ["/setup/staff"] },
+      { href: "/setup/classes", label: "Classes", match: ["/setup/classes"] },
+      { href: "/timetable/rules", label: "Timetable rules", match: ["/timetable/rules"] },
+      { label: "How it works", href: "/setup/how-it-works", match: ["/setup/how-it-works"], guide: false },
     ],
   },
 ];
 
+/** The cookie that keeps the sidebar folded to its icons ("icons") or open, so the next page is drawn the same way by the server. */
+export const FOLD_COOKIE = "cs.menu";
+
 const reach = (path: string, m: string) => (m === "/" ? (path === "/" ? 1 : -1) : path === m || path.startsWith(`${m}/`) || (m === "/worksheets/CS" && path.startsWith(m)) ? m.length : -1);
 
-/** The page and door a path belongs to: the longest matching prefix, so /children/assessments is its own page of Children. */
-export function locate(address: string): { door: Door; page: MenuPage } | undefined {
-  const path = address.split(/[?#]/)[0];
-  let best: { door: Door; page: MenuPage; at: number } | undefined;
-  for (const door of GROUPS)
-    for (const page of door.pages) {
-      const at = Math.max(-1, ...page.match.map((m) => reach(path, m)));
-      if (at > (best?.at ?? -1)) best = { door, page, at };
+/** The section and page an address belongs to: the longest matching prefix, so /children/assessments is Assessments, not Children.
+ *  On the one timetable address, `?view=fortnight` is the Fortnight line and any other view the Week. */
+export function locate(address: string): { section: Section; page: MenuPage } | undefined {
+  const [path, query = ""] = address.split("#")[0].split("?");
+  const view = new URLSearchParams(query).get("view") ?? undefined;
+  let best: { section: Section; page: MenuPage; at: number } | undefined;
+  for (const section of SECTIONS)
+    for (const page of section.pages) {
+      let at = Math.max(-1, ...page.match.map((m) => reach(path, m)));
+      // the timetable's own address: its view decides between the Week and the Fortnight
+      if (path === "/timetable" && page.view) at = view === page.view ? path.length + 1 : -1;
+      if (at > (best?.at ?? -1)) best = { section, page, at };
     }
   return best;
 }
 
-/** The door a path belongs to when nothing says the walk began elsewhere; none for the pages outside the bar (help, feedback, password). */
-export const doorOf = (path: string): Door | undefined => locate(path)?.door;
+/** The section a path belongs to when nothing says the walk began elsewhere; none for the pages outside the menu (help, feedback, password). */
+export const sectionOf = (address: string): Section | undefined => locate(address)?.section;
 
-/** The pages of a door, as the bar's second row shows them: none when the door is one page. */
-export const pagesOf = (door: Door | undefined): readonly MenuPage[] => (door && door.pages.length > 1 ? door.pages : []);
+/** The sidebar a person sees: School and the coordinator's lines only for the coordinator, and not while acting as an educator. A view,
+ *  never a permission (lib/access.ts says what anyone may open). */
+export function sectionsFor(coordinator: boolean): Section[] {
+  return SECTIONS.filter((s) => coordinator || !s.coordinator).map((s) => ({ ...s, pages: s.pages.filter((p) => coordinator || !p.coordinator) }));
+}

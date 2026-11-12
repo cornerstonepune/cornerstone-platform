@@ -66,7 +66,7 @@ test("Timetable: each day head opens that day, and Today opens today", async ({ 
   expect(today).toMatch(/day=\d{4}-\d{2}-\d{2}/);
 });
 
-test("Timetable: a lesson with an activity opens it; one with none is not a link and says nothing more; the coordinator's click chooses the lesson to move", async ({ page, browser }) => {
+test("Timetable: every lesson opens in the panel on the right by its own id, its full page is the lesson page, and the coordinator's Move is in the panel", async ({ page, browser }) => {
   const [row] = await sql<{ id: string; code: string; entry: string }[]>`
     select s.id, a.code, p.id as entry from session s join school_day d on d.id = s.school_day_id
     join activity a on a.tenant_id = s.tenant_id, plan_entry p
@@ -80,22 +80,24 @@ test("Timetable: a lesson with an activity opens it; one with none is not a link
   await sql`update plan_entry set activity_id = (select id from activity where code = ${row.code}) where id = ${row.entry}`;
   await sql`update session set plan_entry_id = ${row.entry} where id = ${row.id}`;
   try {
-    // the educator: the one lesson with an activity is a link to it; every other block is a plain block
+    // the educator (page charter A2): every lesson's block opens that lesson in the panel on the right, by its own id; the one with an
+    // activity names it there, and its full page is the lesson page
     const edu = await educatorPage(browser);
     await edu.goto(`${TT()}&view=day&day=${f.days[1]}`);
     await expect(edu.locator("[data-block=FortnightGrid]")).toBeVisible(); // the page has streamed in
     const links = await edu.locator("[data-block=FortnightGrid] a.b-cell").evaluateAll((as) => as.map((a) => a.getAttribute("href")));
-    expect(links).toHaveLength(1);
-    expect(links[0]).toMatch(/^\/period\/[0-9a-f-]{36}\?/); // the lesson page
-    expect(await edu.locator("[data-block=FortnightGrid] div.b-cell").count()).toBeGreaterThan(0);
-    // the coordinator: every block is a click that chooses it (on the fortnight page, where the move is made), the activity link beside it
-    await page.goto(`${TT()}&view=day&day=${f.days[1]}`);
+    expect(links.length).toBe(await edu.locator("[data-block=FortnightGrid] .b-cell").count());
+    for (const h of links) expect(h).toMatch(/^\/timetable\?.*open=lesson(%3A|:)[0-9a-f-]{36}/);
+    await edu.locator(`[data-open-key="lesson:${row.id}"]`).click();
+    const panel = edu.locator("[data-block=DetailPanel][data-panel=open]");
+    await expect(panel.getByRole("link", { name: "Open full page" })).toHaveAttribute("href", `/period/${row.id}`);
+    await expect(panel.locator("[data-panel-actions] a", { hasText: "Move" })).toHaveCount(0); // the educator moves nothing
+    // the coordinator: no pick and no activity link on the blocks; Move is the panel's, to the fortnight page where the move is made
+    await page.goto(`${TT()}&view=day&day=${f.days[1]}&open=lesson:${row.id}`);
     await expect(page.locator("[data-block=FortnightGrid]")).toBeVisible();
-    const picks = await page.locator("[data-block=FortnightGrid] a[data-pick]").evaluateAll((as) => as.map((a) => a.getAttribute("href")));
-    expect(picks.length).toBeGreaterThan(0);
-    for (const h of picks) expect(h).toMatch(new RegExp(`^/timetable/fortnight/${HERE}\\?class=${f.klass}&from=`));
-    await expect(page.locator("[data-activity-link]")).toHaveCount(1);
-    expect(await page.locator("[data-activity-link]").getAttribute("href")).toMatch(/^\/period\/[0-9a-f-]{36}\?/); // the lesson page, not /setup
+    await expect(page.locator("[data-block=FortnightGrid] [data-pick], [data-block=FortnightGrid] [data-activity-link]")).toHaveCount(0);
+    expect(await page.locator("[data-panel-actions]").getByRole("link", { name: "Move" }).getAttribute("href")).toMatch(new RegExp(`^/timetable/fortnight/${HERE}\\?class=${f.klass}&from=`));
+    await expect(page.locator("[data-block=DetailPanel]").getByRole("link", { name: "Open full page" })).toHaveAttribute("href", `/period/${row.id}`);
     // a row's time is printed once: no label that only repeats the range
     for (const t of await page.locator("[data-block=FortnightGrid] .b-tm").allInnerTexts()) expect(t).not.toMatch(/(\d\d:\d\d)\s*[–-]\s*(\d\d:\d\d)[\s\S]*\1\s*[–-]\s*\2/);
   } finally {

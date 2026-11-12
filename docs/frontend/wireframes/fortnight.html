@@ -18,291 +18,369 @@
   <section class="wf" data-viewport="1440" aria-label="Laptop, 1440 px">
     <div class="frame">
       <header class="bar">
+        <button class="barbtn menubtn press" data-bar="2" type="button" aria-label="Menu" aria-haspopup="dialog"><i class="ic" data-icon="menu"></i></button>
         <a class="brand" data-bar="0" href="#today" aria-label="Cornerstone Gurukul, go to Today">
           <img class="wide on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-colour.svg" alt="">
           <img class="wide on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-for-dark-backgrounds.svg" alt="">
           <img class="small on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark.svg" alt="">
           <img class="small on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark-on-white-tile.svg" alt="">
         </a>
-        <ul class="doors" aria-label="Doors">
-          <li><a class="door" data-bar="0" href="#today"><i class="ic" data-icon="today"></i>Today <span class="badge num" data-source="pii.educator_note.status pii.educator_note.received_at" aria-label="7 notes to confirm">7</span></a></li>
-          <li><a class="door" data-bar="1" href="#timetable" aria-current="page"><i class="ic" data-icon="timetable"></i>Timetable</a></li>
-          <li><a class="door" data-bar="2" href="#children"><i class="ic" data-icon="children"></i>Children</a></li>
-          <li><a class="door" data-bar="3" href="#setup"><i class="ic" data-icon="setup"></i>Setup</a></li>
-        </ul>
-        <label class="search"><i class="ic s" data-icon="search"></i><span class="vh">Search</span><input data-bar="4" type="search" placeholder="Sr. No., name or activity"></label>
-        <button class="barbtn press" data-bar="5" type="button" role="switch" aria-checked="false"><i class="ic" data-icon="acting-as"></i><span class="w">Acting as</span></button>
-        <a class="barbtn" data-bar="6" href="#help" aria-label="Help for this page"><i class="ic" data-icon="help"></i></a>
-        <button class="barbtn press" data-bar="7" type="button"><i class="ic" data-icon="sign-out"></i><span class="w">Sign out</span></button>
+        <label class="search"><i class="ic s" data-icon="search"></i><span class="vh">Search</span><input data-bar="3" type="search" placeholder="Sr. No., name or activity"></label>
+        <button class="barbtn press" data-bar="4" type="button" role="switch" aria-checked="false"><i class="ic" data-icon="acting-as"></i><span class="w">Acting as</span></button>
+        <a class="barbtn" data-bar="5" href="#help" aria-label="Help for this page"><i class="ic" data-icon="help"></i></a>
+        <button class="barbtn press" data-bar="6" type="button"><i class="ic" data-icon="sign-out"></i><span class="w">Sign out</span></button>
       </header>
-      <ol class="trail" aria-label="Trail">
-        <li><a data-trail href="#timetable">Timetable</a></li>
-        <li><i class="ic s" data-icon="trail"></i></li>
-        <li aria-current="page">Fortnight 9</li>
-      </ol>
-      <div class="page">
-        <main class="main">
-          <div class="head">
-            <p class="eyebrow"><i class="ic s" data-icon="fortnight"></i><span class="num" data-source="fortnight.starts_on">16-Nov</span> to <span class="num" data-source="fortnight.ends_on">27-Nov</span> · <span data-source="school_class.label">K2 Red</span></p>
-            <h1 class="title">Fortnight 9</h1>
-            <p class="purpose">Its state, its plan lines, and what changed when the draft went live. Frozen once it starts; a later move is a hand move, kept with who.</p>
+      <div class="shell">
+        <nav class="side" aria-label="Menu">
+          <button class="sidefold press" data-bar="2" type="button" aria-label="Fold the menu to icons" aria-expanded="true"><i class="ic" data-icon="collapse"></i></button>
+          <div class="sidegroup">
+            <h2 class="sideh" id="side-today"><i class="ic s" data-icon="today"></i>My day</h2>
+            <ul aria-labelledby="side-today">
+              <li><a class="sidelink" data-bar="1" href="#today">Today <span class="badge num" data-source="pii.educator_note.status pii.educator_note.received_at" aria-label="7 notes to confirm">7</span></a></li>
+              <li><a class="sidelink" data-bar="1" href="#notes">Notes to confirm</a></li>
+              <li><a class="sidelink" data-bar="1" href="#needs-doing">What needs doing</a></li>
+            </ul>
           </div>
-          <ol class="stepper" data-block="Stepper" data-source="fortnight.state approval.kind">
-            <li class="step" data-state="ok"><i class="ic s" data-icon="done"></i>Drafted</li>
-            <li class="step" data-state="ok"><i class="ic s" data-icon="done"></i>Approved</li>
-            <li class="step" data-state="wait"><i class="ic s" data-icon="next"></i>Live (next)</li>
-            <li class="step" data-state="quiet"><i class="ic s" data-icon="frozen"></i>Frozen on 16-Nov</li>
-          </ol>
-          <form class="form" data-block="Form">
-            <p class="muted">Go live puts the approved draft into the sessions of 16-Nov to 27-Nov. It changes only this fortnight.</p>
-            <label class="sel">Reason <input data-el="3" data-source="approval.reason" placeholder="needed once the fortnight is frozen"></label><div><button class="btn btn-main press" data-el="4" type="button" data-source="approval.kind approval.target fortnight.state"><i class="ic" data-icon="send"></i>Go live</button></div>
-          </form>
-          <div class="cards" data-block="Cards">
-            <article class="card" data-kind="period"><div class="card-h"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span>State</div><div class="card-b">
-              <div class="keyrow"><span class="chip" data-state="ok" data-source="fortnight.state"><i class="ic s" data-icon="done"></i>Approved</span></div>
-              <ol class="timeline">
-                <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="done"></i></span><div><b>Approved</b><p data-source="approval.by pii.staff.name">Asha Almond</p></div><span class="caption num" data-source="approval.created_at">10-Nov</span></li>
-                <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="form"></i></span><div><b>Drafted from the rules</b><p data-source="timetable_run.created_by pii.staff.name">Asha Almond</p></div><span class="caption num" data-source="timetable_run.created_at">6-Nov</span></li>
-              </ol></div></article>
-            <article class="card" data-kind="activity"><div class="card-h"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span>Plan lines <span class="count num" data-source="plan_entry.id">7</span></div><div class="card-b">
-              <ol class="timeline">
-              <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><a data-el="0" href="#activity" data-source="plan_entry.activity_id activity.name">Counting in tens with bundles</a><p><span data-source="session.subject_code">Numeracy</span> · week <span data-source="plan_entry.week_code">A</span></p></div></li>
-              <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><a data-el="0" href="#activity" data-source="plan_entry.activity_id activity.name">Story circle: the lost mitten</a><p><span data-source="session.subject_code">Language</span> · week <span data-source="plan_entry.week_code">A</span></p></div></li>
-              <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><a data-el="0" href="#activity" data-source="plan_entry.activity_id activity.name">Leaf printing</a><p><span data-source="session.subject_code">Arts</span> · week <span data-source="plan_entry.week_code">A</span></p></div></li>
-              <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><a data-el="0" href="#activity" data-source="plan_entry.activity_id activity.name">Sorting by size</a><p><span data-source="session.subject_code">Numeracy</span> · week <span data-source="plan_entry.week_code">A</span></p></div></li>
-              <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><a data-el="0" href="#activity" data-source="plan_entry.activity_id activity.name">Rhyme time</a><p><span data-source="session.subject_code">Language</span> · week <span data-source="plan_entry.week_code">B</span></p></div></li>
-              <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><a data-el="0" href="#activity" data-source="plan_entry.activity_id activity.name">Clay pots</a><p><span data-source="session.subject_code">Arts</span> · week <span data-source="plan_entry.week_code">B</span></p></div></li>
-              <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><a data-el="0" href="#activity" data-source="plan_entry.activity_id activity.name">Number stories</a><p><span data-source="session.subject_code">Numeracy</span> · week <span data-source="plan_entry.week_code">B</span></p></div></li>
-              </ol></div></article>
-            <article class="card" data-kind="period"><div class="card-h"><span class="tile" data-kind="period"><i class="ic" data-icon="moved"></i></span>Hand moves <span class="count num" data-source="change_log.row_id">2</span></div><div class="card-b">
-              <ol class="timeline">
-                <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="moved"></i></span><div><a data-el="1" href="#moves" data-source="change_log.before change_log.after">Leaf printing: Mon 16 at 10:30 to Tue 17 at 09:30</a><p><span data-source="change_log.reason">The art room is being painted on Monday.</span> · <span data-source="change_log.staff_id pii.staff.name">Bina Basil</span></p></div><span class="caption num" data-source="change_log.at">9-Nov</span></li>
-                <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="clash"></i></span><div><a data-el="1" href="#moves" data-source="change_log.before change_log.after">Sorting by size: to Thu 19 at 08:45</a><p><span data-source="change_log.reason">Clash accepted: two groups, two rooms.</span> · <span data-source="approval.by pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="change_log.at">9-Nov</span></li>
-              </ol></div></article>
+          <div class="sidegroup" data-lit>
+            <h2 class="sideh" id="side-timetable"><i class="ic s" data-icon="week"></i>Timetable</h2>
+            <ul aria-labelledby="side-timetable">
+              <li><a class="sidelink" data-bar="1" href="#timetable">Week</a></li>
+              <li><a class="sidelink" data-bar="1" href="#fortnight" aria-current="page">Fortnight</a></li>
+              <li><a class="sidelink" data-bar="1" href="#materials">Materials</a></li>
+            </ul>
           </div>
-          <h2 class="title-section">Every fortnight of the year, by state</h2>
-          <div class="kanban" data-block="KanbanBoard" style="--lanes: 4">
-            <section class="lane" data-state="quiet" aria-label="Drafted, 1">
-              <h3 class="lane-h"><i class="ic s" data-icon="form"></i>Drafted <span class="count num">1</span></h3>
-              <ul class="lane-b"><li><div class="kcard" data-kind="period" data-source="fortnight.number fortnight.state fortnight.starts_on"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span><span><b>Fortnight 10</b><span class="sub">30-Nov to 11-Dec</span></span><span class="chip" data-state="quiet"><i class="ic s" data-icon="to-do"></i>To approve</span></div></li></ul>
-            </section>
-            <section class="lane" data-state="wait" aria-label="Approved, 1">
-              <h3 class="lane-h"><i class="ic s" data-icon="done"></i>Approved <span class="count num">1</span></h3>
-              <ul class="lane-b"><li><div class="kcard" data-kind="period" data-source="fortnight.number fortnight.state fortnight.starts_on"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span><span><b>Fortnight 9</b><span class="sub">16-Nov to 27-Nov · this page</span></span><span class="chip" data-state="wait"><i class="ic s" data-icon="next"></i>To go live</span></div></li></ul>
-            </section>
-            <section class="lane" data-state="ok" aria-label="Live, 0">
-              <h3 class="lane-h"><i class="ic s" data-icon="send"></i>Live <span class="count num">0</span></h3>
-              <p class="lane-empty">None live and waiting to start.</p>
-            </section>
-            <section class="lane" data-state="quiet" aria-label="Frozen, 8">
-              <h3 class="lane-h"><i class="ic s" data-icon="frozen"></i>Frozen <span class="count num">8</span></h3>
-              <ul class="lane-b">
-                <li><div class="kcard" data-kind="period" data-source="fortnight.number fortnight.state fortnight.starts_on"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span><span><b>Fortnight 8</b><span class="sub">2-Nov to 13-Nov · running now</span></span><span class="chip" data-state="ok"><i class="ic s" data-icon="frozen"></i>Frozen</span></div></li>
-                <li><div class="kcard" data-kind="period" data-source="fortnight.number fortnight.state fortnight.starts_on"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span><span><b>Fortnight 7</b><span class="sub">19-Oct to 30-Oct · 3 hand moves</span></span><span class="chip" data-state="ok"><i class="ic s" data-icon="frozen"></i>Frozen</span></div></li>
-                <li><div class="kcard" data-kind="period" data-source="fortnight.number fortnight.state"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span><span><b>Fortnights 1 to 6</b><span class="sub">June to October</span></span></div></li>
-              </ul>
-            </section>
+          <div class="sidegroup">
+            <h2 class="sideh" id="side-children"><i class="ic s" data-icon="child"></i>Children</h2>
+            <ul aria-labelledby="side-children">
+              <li><a class="sidelink" data-bar="1" href="#children">Class picture</a></li>
+              <li><a class="sidelink" data-bar="1" href="#reports">Parent reports</a></li>
+            </ul>
           </div>
-          <div class="card">
-            <div class="card-h"><i class="ic s" data-icon="form"></i>Inset: while the fortnight is drafted <span class="caption">Approve in place of Go live, as the main action</span></div>
-            <div class="card-b"><span class="muted">Read the plan lines and the hand moves, then approve. Go live appears once approved.</span><div><button class="btn press" data-el="2" type="button" data-source="approval.kind approval.by fortnight.state"><i class="ic" data-icon="done"></i>Approve</button></div></div>
+          <div class="sidegroup">
+            <h2 class="sideh" id="side-assessments"><i class="ic s" data-icon="assessment"></i>Assessments</h2>
+            <ul aria-labelledby="side-assessments">
+              <li><a class="sidelink" data-bar="1" href="#assessments">Assessments</a></li>
+              <li><a class="sidelink" data-bar="1" href="#upload">Upload papers</a></li>
+              <li><a class="sidelink" data-bar="1" href="#bank">Question bank</a></li>
+            </ul>
           </div>
-          <div class="card">
-            <div class="card-h"><i class="ic s" data-icon="send"></i>After Go live: what changed, session by session <span class="count num" data-source="change_log.row_id">4</span></div>
-            <div class="card-b">
-              <div class="table-box" data-block="DataTable">
-                <table class="table">
-                  <thead><tr><th>Day</th><th>Period</th><th>Before</th><th>After</th></tr></thead>
-                  <tbody>
-                    <tr><td class="num" data-source="school_day.on_date">Mon 16</td><td class="num" data-source="period.starts_at">08:45</td><td data-source="change_log.before">Number stories</td><td data-source="change_log.after session.text">Counting in tens with bundles</td></tr>
-                    <tr><td class="num" data-source="school_day.on_date">Mon 16</td><td class="num" data-source="period.starts_at">10:30</td><td data-source="change_log.before">Leaf printing</td><td data-source="change_log.after session.text">Free drawing</td></tr>
-                    <tr><td class="num" data-source="school_day.on_date">Tue 17</td><td class="num" data-source="period.starts_at">09:30</td><td data-source="change_log.before">Picture talk</td><td data-source="change_log.after session.text">Leaf printing</td></tr>
-                    <tr><td class="num" data-source="school_day.on_date">Thu 19</td><td class="num" data-source="period.starts_at">08:45</td><td data-source="change_log.before">empty</td><td data-source="change_log.after session.text">Sorting by size</td></tr>
-                  </tbody>
-                </table>
+          <div class="sidegroup">
+            <h2 class="sideh" id="side-school"><i class="ic s" data-icon="setup"></i>School</h2>
+            <ul aria-labelledby="side-school">
+              <li><a class="sidelink" data-bar="1" href="#across">Across classes</a></li>
+              <li><a class="sidelink" data-bar="1" href="#curriculum">Curriculum</a></li>
+              <li><a class="sidelink" data-bar="1" href="#skills-approve">Skills to approve</a></li>
+              <li><a class="sidelink" data-bar="1" href="#staff">Staff</a></li>
+              <li><a class="sidelink" data-bar="1" href="#classes">Classes</a></li>
+              <li><a class="sidelink" data-bar="1" href="#rules">Timetable rules</a></li>
+              <li><a class="sidelink" data-bar="1" href="#map">How it works</a></li>
+            </ul>
+          </div>
+        </nav>
+        <div class="shellmain">
+        <ol class="trail" aria-label="Trail">
+          <li><a data-trail href="#timetable">Timetable</a></li>
+          <li><i class="ic s" data-icon="trail"></i></li>
+          <li aria-current="page">Fortnight 9</li>
+        </ol>
+        <div class="page">
+          <main class="main">
+            <div class="head">
+              <p class="eyebrow"><i class="ic s" data-icon="fortnight"></i><span class="num" data-source="fortnight.starts_on">16-Nov</span> to <span class="num" data-source="fortnight.ends_on">27-Nov</span> · <span data-source="school_class.label">K2 Red</span></p>
+              <h1 class="title">Fortnight 9</h1>
+              <p class="purpose">Its state, its plan lines, and what changed when the draft went live. Frozen once it starts; a later move is a hand move, kept with who.</p>
+            </div>
+            <ol class="stepper" data-block="Stepper" data-source="fortnight.state approval.kind">
+              <li class="step" data-state="ok"><i class="ic s" data-icon="done"></i>Drafted</li>
+              <li class="step" data-state="ok"><i class="ic s" data-icon="done"></i>Approved</li>
+              <li class="step" data-state="wait"><i class="ic s" data-icon="next"></i>Live (next)</li>
+              <li class="step" data-state="quiet"><i class="ic s" data-icon="frozen"></i>Frozen on 16-Nov</li>
+            </ol>
+            <form class="form" data-block="Form">
+              <p class="muted">Go live puts the approved draft into the sessions of 16-Nov to 27-Nov. It changes only this fortnight.</p>
+              <label class="sel">Reason <input data-el="3" data-source="approval.reason" placeholder="needed once the fortnight is frozen"></label><div><button class="btn btn-main press" data-el="4" type="button" data-source="approval.kind approval.target fortnight.state"><i class="ic" data-icon="send"></i>Go live</button></div>
+            </form>
+            <div class="cards" data-block="Cards">
+              <article class="card" data-kind="period"><div class="card-h"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span>State</div><div class="card-b">
+                <div class="keyrow"><span class="chip" data-state="ok" data-source="fortnight.state"><i class="ic s" data-icon="done"></i>Approved</span></div>
+                <ol class="timeline">
+                  <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="done"></i></span><div><b>Approved</b><p data-source="approval.by pii.staff.name">Asha Almond</p></div><span class="caption num" data-source="approval.created_at">10-Nov</span></li>
+                  <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="form"></i></span><div><b>Drafted from the rules</b><p data-source="timetable_run.created_by pii.staff.name">Asha Almond</p></div><span class="caption num" data-source="timetable_run.created_at">6-Nov</span></li>
+                </ol></div></article>
+              <article class="card" data-kind="activity"><div class="card-h"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span>Plan lines <span class="count num" data-source="plan_entry.id">7</span></div><div class="card-b">
+                <ol class="timeline">
+                <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><a data-el="0" href="#activity" data-source="plan_entry.activity_id activity.name">Counting in tens with bundles</a><p><span data-source="session.subject_code">Numeracy</span> · week <span data-source="plan_entry.week_code">A</span></p></div></li>
+                <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><a data-el="0" href="#activity" data-source="plan_entry.activity_id activity.name">Story circle: the lost mitten</a><p><span data-source="session.subject_code">Language</span> · week <span data-source="plan_entry.week_code">A</span></p></div></li>
+                <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><a data-el="0" href="#activity" data-source="plan_entry.activity_id activity.name">Leaf printing</a><p><span data-source="session.subject_code">Arts</span> · week <span data-source="plan_entry.week_code">A</span></p></div></li>
+                <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><a data-el="0" href="#activity" data-source="plan_entry.activity_id activity.name">Sorting by size</a><p><span data-source="session.subject_code">Numeracy</span> · week <span data-source="plan_entry.week_code">A</span></p></div></li>
+                <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><a data-el="0" href="#activity" data-source="plan_entry.activity_id activity.name">Rhyme time</a><p><span data-source="session.subject_code">Language</span> · week <span data-source="plan_entry.week_code">B</span></p></div></li>
+                <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><a data-el="0" href="#activity" data-source="plan_entry.activity_id activity.name">Clay pots</a><p><span data-source="session.subject_code">Arts</span> · week <span data-source="plan_entry.week_code">B</span></p></div></li>
+                <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><a data-el="0" href="#activity" data-source="plan_entry.activity_id activity.name">Number stories</a><p><span data-source="session.subject_code">Numeracy</span> · week <span data-source="plan_entry.week_code">B</span></p></div></li>
+                </ol></div></article>
+              <article class="card" data-kind="period"><div class="card-h"><span class="tile" data-kind="period"><i class="ic" data-icon="moved"></i></span>Hand moves <span class="count num" data-source="change_log.row_id">2</span></div><div class="card-b">
+                <ol class="timeline">
+                  <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="moved"></i></span><div><a data-el="1" href="#moves" data-source="change_log.before change_log.after">Leaf printing: Mon 16 at 10:30 to Tue 17 at 09:30</a><p><span data-source="change_log.reason">The art room is being painted on Monday.</span> · <span data-source="change_log.staff_id pii.staff.name">Bina Basil</span></p></div><span class="caption num" data-source="change_log.at">9-Nov</span></li>
+                  <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="clash"></i></span><div><a data-el="1" href="#moves" data-source="change_log.before change_log.after">Sorting by size: to Thu 19 at 08:45</a><p><span data-source="change_log.reason">Clash accepted: two groups, two rooms.</span> · <span data-source="approval.by pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="change_log.at">9-Nov</span></li>
+                </ol></div></article>
+            </div>
+            <h2 class="title-section">Every fortnight of the year, by state</h2>
+            <div class="kanban" data-block="KanbanBoard" style="--lanes: 4">
+              <section class="lane" data-state="quiet" aria-label="Drafted, 1">
+                <h3 class="lane-h"><i class="ic s" data-icon="form"></i>Drafted <span class="count num">1</span></h3>
+                <ul class="lane-b"><li><div class="kcard" data-kind="period" data-source="fortnight.number fortnight.state fortnight.starts_on"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span><span><b>Fortnight 10</b><span class="sub">30-Nov to 11-Dec</span></span><span class="chip" data-state="quiet"><i class="ic s" data-icon="to-do"></i>To approve</span></div></li></ul>
+              </section>
+              <section class="lane" data-state="wait" aria-label="Approved, 1">
+                <h3 class="lane-h"><i class="ic s" data-icon="done"></i>Approved <span class="count num">1</span></h3>
+                <ul class="lane-b"><li><div class="kcard" data-kind="period" data-source="fortnight.number fortnight.state fortnight.starts_on"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span><span><b>Fortnight 9</b><span class="sub">16-Nov to 27-Nov · this page</span></span><span class="chip" data-state="wait"><i class="ic s" data-icon="next"></i>To go live</span></div></li></ul>
+              </section>
+              <section class="lane" data-state="ok" aria-label="Live, 0">
+                <h3 class="lane-h"><i class="ic s" data-icon="send"></i>Live <span class="count num">0</span></h3>
+                <p class="lane-empty">None live and waiting to start.</p>
+              </section>
+              <section class="lane" data-state="quiet" aria-label="Frozen, 8">
+                <h3 class="lane-h"><i class="ic s" data-icon="frozen"></i>Frozen <span class="count num">8</span></h3>
+                <ul class="lane-b">
+                  <li><div class="kcard" data-kind="period" data-source="fortnight.number fortnight.state fortnight.starts_on"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span><span><b>Fortnight 8</b><span class="sub">2-Nov to 13-Nov · running now</span></span><span class="chip" data-state="ok"><i class="ic s" data-icon="frozen"></i>Frozen</span></div></li>
+                  <li><div class="kcard" data-kind="period" data-source="fortnight.number fortnight.state fortnight.starts_on"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span><span><b>Fortnight 7</b><span class="sub">19-Oct to 30-Oct · 3 hand moves</span></span><span class="chip" data-state="ok"><i class="ic s" data-icon="frozen"></i>Frozen</span></div></li>
+                  <li><div class="kcard" data-kind="period" data-source="fortnight.number fortnight.state"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span><span><b>Fortnights 1 to 6</b><span class="sub">June to October</span></span></div></li>
+                </ul>
+              </section>
+            </div>
+            <div class="card">
+              <div class="card-h"><i class="ic s" data-icon="form"></i>Inset: while the fortnight is drafted <span class="caption">Approve in place of Go live, as the main action</span></div>
+              <div class="card-b"><span class="muted">Read the plan lines and the hand moves, then approve. Go live appears once approved.</span><div><button class="btn press" data-el="2" type="button" data-source="approval.kind approval.by fortnight.state"><i class="ic" data-icon="done"></i>Approve</button></div></div>
+            </div>
+            <div class="card">
+              <div class="card-h"><i class="ic s" data-icon="send"></i>After Go live: what changed, session by session <span class="count num" data-source="change_log.row_id">4</span></div>
+              <div class="card-b">
+                <div class="table-box" data-block="DataTable">
+                  <table class="table">
+                    <thead><tr><th>Day</th><th>Period</th><th>Before</th><th>After</th></tr></thead>
+                    <tbody>
+                      <tr><td class="num" data-source="school_day.on_date">Mon 16</td><td class="num" data-source="period.starts_at">08:45</td><td data-source="change_log.before">Number stories</td><td data-source="change_log.after session.text">Counting in tens with bundles</td></tr>
+                      <tr><td class="num" data-source="school_day.on_date">Mon 16</td><td class="num" data-source="period.starts_at">10:30</td><td data-source="change_log.before">Leaf printing</td><td data-source="change_log.after session.text">Free drawing</td></tr>
+                      <tr><td class="num" data-source="school_day.on_date">Tue 17</td><td class="num" data-source="period.starts_at">09:30</td><td data-source="change_log.before">Picture talk</td><td data-source="change_log.after session.text">Leaf printing</td></tr>
+                      <tr><td class="num" data-source="school_day.on_date">Thu 19</td><td class="num" data-source="period.starts_at">08:45</td><td data-source="change_log.before">empty</td><td data-source="change_log.after session.text">Sorting by size</td></tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="card">
-            <div class="card-h"><i class="ic s" data-icon="frozen"></i>Inset: once it starts (frozen)</div>
-            <div class="card-b"><span class="muted">No Approve, no Go live, no edit. A move from here on is a hand move, kept with who made it.</span></div>
-          </div>
-          <div class="card">
-            <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: when it has no plan lines</div>
-            <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="upload"></i><b>No plan lines yet</b><span class="muted">The planner is uploaded first; its lines appear here.</span></div></div>
-          </div>
-        </main>
-        <aside class="rail" aria-label="Connected to">
-          <section class="rail-box">
-            <h2>Connected to</h2>
-            <ul class="rlist">
-              <li><a class="ritem" data-el="5" href="#timetable"><span class="tile" data-kind="period"><i class="ic" data-icon="timetable"></i></span><span>The grid<small>K2 Red, Fortnight 9</small></span></a></li>
-              <li><a class="ritem" data-el="7" href="#materials"><span class="tile" data-kind="note"><i class="ic" data-icon="materials"></i></span><span>Materials<small>for these plan lines</small></span></a></li>
-              <li><a class="ritem" data-el="8" href="#draft"><span class="tile" data-kind="period"><i class="ic" data-icon="form"></i></span><span>Draft<small>from the rules, coordinator</small></span></a></li>
-            </ul>
-          </section>
-          <section class="rail-box">
-            <h2>Activities in the plan</h2>
-            <ul class="rlist">
-              <li><a class="ritem" data-el="6" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><span data-source="activity.name">Counting in tens with bundles</span></a></li>
-              <li><a class="ritem" data-el="6" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><span data-source="activity.name">Story circle: the lost mitten</span></a></li>
-              <li><a class="ritem" data-el="6" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><span data-source="activity.name">Leaf printing</span></a></li>
-              <li><a class="ritem" data-el="6" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><span data-source="activity.name">Sorting by size</span></a></li>
-            </ul>
-          </section>
-        </aside>
+            <div class="card">
+              <div class="card-h"><i class="ic s" data-icon="frozen"></i>Inset: once it starts (frozen)</div>
+              <div class="card-b"><span class="muted">No Approve, no Go live, no edit. A move from here on is a hand move, kept with who made it.</span></div>
+            </div>
+            <div class="card">
+              <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: when it has no plan lines</div>
+              <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="upload"></i><b>No plan lines yet</b><span class="muted">The planner is uploaded first; its lines appear here.</span></div></div>
+            </div>
+          </main>
+          <aside class="rail" aria-label="Connected to">
+            <section class="rail-box">
+              <h2>Connected to</h2>
+              <ul class="rlist">
+                <li><a class="ritem" data-el="5" href="#timetable"><span class="tile" data-kind="period"><i class="ic" data-icon="timetable"></i></span><span>The grid<small>K2 Red, Fortnight 9</small></span></a></li>
+                <li><a class="ritem" data-el="7" href="#materials"><span class="tile" data-kind="note"><i class="ic" data-icon="materials"></i></span><span>Materials<small>for these plan lines</small></span></a></li>
+                <li><a class="ritem" data-el="8" href="#draft"><span class="tile" data-kind="period"><i class="ic" data-icon="form"></i></span><span>Draft<small>from the rules, coordinator</small></span></a></li>
+              </ul>
+            </section>
+            <section class="rail-box">
+              <h2>Activities in the plan</h2>
+              <ul class="rlist">
+                <li><a class="ritem" data-el="6" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><span data-source="activity.name">Counting in tens with bundles</span></a></li>
+                <li><a class="ritem" data-el="6" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><span data-source="activity.name">Story circle: the lost mitten</span></a></li>
+                <li><a class="ritem" data-el="6" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><span data-source="activity.name">Leaf printing</span></a></li>
+                <li><a class="ritem" data-el="6" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><span data-source="activity.name">Sorting by size</span></a></li>
+              </ul>
+            </section>
+          </aside>
+        </div>
+        </div>
       </div>
-      <nav class="tabbar" aria-label="Doors">
-        <a class="tab" data-bar="0" href="#today"><i class="ic" data-icon="today"></i>Today</a>
-        <a class="tab" data-bar="1" href="#timetable" aria-current="page"><i class="ic" data-icon="timetable"></i>Timetable</a>
-        <a class="tab" data-bar="2" href="#children"><i class="ic" data-icon="children"></i>Children</a>
-        <a class="tab" data-bar="3" href="#setup"><i class="ic" data-icon="setup"></i>Setup</a>
-      </nav>
     </div>
   </section>
   <section class="wf" data-viewport="400" aria-label="Phone, 400 px">
     <div class="frame">
       <header class="bar">
+        <button class="barbtn menubtn press" data-bar="2" type="button" aria-label="Menu" aria-haspopup="dialog"><i class="ic" data-icon="menu"></i></button>
         <a class="brand" data-bar="0" href="#today" aria-label="Cornerstone Gurukul, go to Today">
           <img class="wide on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-colour.svg" alt="">
           <img class="wide on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-for-dark-backgrounds.svg" alt="">
           <img class="small on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark.svg" alt="">
           <img class="small on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark-on-white-tile.svg" alt="">
         </a>
-        <ul class="doors" aria-label="Doors">
-          <li><a class="door" data-bar="0" href="#today"><i class="ic" data-icon="today"></i>Today <span class="badge num" data-source="pii.educator_note.status pii.educator_note.received_at" aria-label="7 notes to confirm">7</span></a></li>
-          <li><a class="door" data-bar="1" href="#timetable" aria-current="page"><i class="ic" data-icon="timetable"></i>Timetable</a></li>
-          <li><a class="door" data-bar="2" href="#children"><i class="ic" data-icon="children"></i>Children</a></li>
-          <li><a class="door" data-bar="3" href="#setup"><i class="ic" data-icon="setup"></i>Setup</a></li>
-        </ul>
-        <label class="search"><i class="ic s" data-icon="search"></i><span class="vh">Search</span><input data-bar="4" type="search" placeholder="Sr. No., name or activity"></label>
-        <button class="barbtn press" data-bar="5" type="button" role="switch" aria-checked="false"><i class="ic" data-icon="acting-as"></i><span class="w">Acting as</span></button>
-        <a class="barbtn" data-bar="6" href="#help" aria-label="Help for this page"><i class="ic" data-icon="help"></i></a>
-        <button class="barbtn press" data-bar="7" type="button"><i class="ic" data-icon="sign-out"></i><span class="w">Sign out</span></button>
+        <label class="search"><i class="ic s" data-icon="search"></i><span class="vh">Search</span><input data-bar="3" type="search" placeholder="Sr. No., name or activity"></label>
+        <button class="barbtn press" data-bar="4" type="button" role="switch" aria-checked="false"><i class="ic" data-icon="acting-as"></i><span class="w">Acting as</span></button>
+        <a class="barbtn" data-bar="5" href="#help" aria-label="Help for this page"><i class="ic" data-icon="help"></i></a>
+        <button class="barbtn press" data-bar="6" type="button"><i class="ic" data-icon="sign-out"></i><span class="w">Sign out</span></button>
       </header>
-      <ol class="trail" aria-label="Trail">
-        <li><a data-trail href="#timetable">Timetable</a></li>
-        <li><i class="ic s" data-icon="trail"></i></li>
-        <li aria-current="page">Fortnight 9</li>
-      </ol>
-      <div class="page">
-        <main class="main">
-          <div class="head">
-            <p class="eyebrow"><i class="ic s" data-icon="fortnight"></i><span class="num" data-source="fortnight.starts_on">16-Nov</span> to <span class="num" data-source="fortnight.ends_on">27-Nov</span> · <span data-source="school_class.label">K2 Red</span></p>
-            <h1 class="title">Fortnight 9</h1>
-            <p class="purpose">Its state, its plan lines, and what changed when the draft went live. Frozen once it starts; a later move is a hand move, kept with who.</p>
+      <div class="shell">
+        <nav class="side" aria-label="Menu">
+          <button class="sidefold press" data-bar="2" type="button" aria-label="Fold the menu to icons" aria-expanded="true"><i class="ic" data-icon="collapse"></i></button>
+          <div class="sidegroup">
+            <h2 class="sideh" id="side-today"><i class="ic s" data-icon="today"></i>My day</h2>
+            <ul aria-labelledby="side-today">
+              <li><a class="sidelink" data-bar="1" href="#today">Today <span class="badge num" data-source="pii.educator_note.status pii.educator_note.received_at" aria-label="7 notes to confirm">7</span></a></li>
+              <li><a class="sidelink" data-bar="1" href="#notes">Notes to confirm</a></li>
+              <li><a class="sidelink" data-bar="1" href="#needs-doing">What needs doing</a></li>
+            </ul>
           </div>
-          <ol class="stepper" data-block="Stepper" data-source="fortnight.state approval.kind">
-            <li class="step" data-state="ok"><i class="ic s" data-icon="done"></i>Drafted</li>
-            <li class="step" data-state="ok"><i class="ic s" data-icon="done"></i>Approved</li>
-            <li class="step" data-state="wait"><i class="ic s" data-icon="next"></i>Live (next)</li>
-            <li class="step" data-state="quiet"><i class="ic s" data-icon="frozen"></i>Frozen on 16-Nov</li>
-          </ol>
-          <form class="form" data-block="Form">
-            <p class="muted">Go live puts the approved draft into the sessions of 16-Nov to 27-Nov. It changes only this fortnight.</p>
-            <label class="sel">Reason <input data-el="3" data-source="approval.reason" placeholder="needed once the fortnight is frozen"></label><div><button class="btn btn-main press" data-el="4" type="button" data-source="approval.kind approval.target fortnight.state"><i class="ic" data-icon="send"></i>Go live</button></div>
-          </form>
-          <div class="cards" data-block="Cards">
-            <article class="card" data-kind="period"><div class="card-h"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span>State</div><div class="card-b">
-              <div class="keyrow"><span class="chip" data-state="ok" data-source="fortnight.state"><i class="ic s" data-icon="done"></i>Approved</span></div>
-              <ol class="timeline">
-                <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="done"></i></span><div><b>Approved</b><p data-source="approval.by pii.staff.name">Asha Almond</p></div><span class="caption num" data-source="approval.created_at">10-Nov</span></li>
-                <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="form"></i></span><div><b>Drafted from the rules</b><p data-source="timetable_run.created_by pii.staff.name">Asha Almond</p></div><span class="caption num" data-source="timetable_run.created_at">6-Nov</span></li>
-              </ol></div></article>
-            <article class="card" data-kind="activity"><div class="card-h"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span>Plan lines <span class="count num" data-source="plan_entry.id">7</span></div><div class="card-b">
-              <ol class="timeline">
-              <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><a data-el="0" href="#activity" data-source="plan_entry.activity_id activity.name">Counting in tens with bundles</a><p><span data-source="session.subject_code">Numeracy</span> · week <span data-source="plan_entry.week_code">A</span></p></div></li>
-              <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><a data-el="0" href="#activity" data-source="plan_entry.activity_id activity.name">Story circle: the lost mitten</a><p><span data-source="session.subject_code">Language</span> · week <span data-source="plan_entry.week_code">A</span></p></div></li>
-              <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><a data-el="0" href="#activity" data-source="plan_entry.activity_id activity.name">Leaf printing</a><p><span data-source="session.subject_code">Arts</span> · week <span data-source="plan_entry.week_code">A</span></p></div></li>
-              <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><a data-el="0" href="#activity" data-source="plan_entry.activity_id activity.name">Sorting by size</a><p><span data-source="session.subject_code">Numeracy</span> · week <span data-source="plan_entry.week_code">A</span></p></div></li>
-              <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><a data-el="0" href="#activity" data-source="plan_entry.activity_id activity.name">Rhyme time</a><p><span data-source="session.subject_code">Language</span> · week <span data-source="plan_entry.week_code">B</span></p></div></li>
-              <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><a data-el="0" href="#activity" data-source="plan_entry.activity_id activity.name">Clay pots</a><p><span data-source="session.subject_code">Arts</span> · week <span data-source="plan_entry.week_code">B</span></p></div></li>
-              <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><a data-el="0" href="#activity" data-source="plan_entry.activity_id activity.name">Number stories</a><p><span data-source="session.subject_code">Numeracy</span> · week <span data-source="plan_entry.week_code">B</span></p></div></li>
-              </ol></div></article>
-            <article class="card" data-kind="period"><div class="card-h"><span class="tile" data-kind="period"><i class="ic" data-icon="moved"></i></span>Hand moves <span class="count num" data-source="change_log.row_id">2</span></div><div class="card-b">
-              <ol class="timeline">
-                <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="moved"></i></span><div><a data-el="1" href="#moves" data-source="change_log.before change_log.after">Leaf printing: Mon 16 at 10:30 to Tue 17 at 09:30</a><p><span data-source="change_log.reason">The art room is being painted on Monday.</span> · <span data-source="change_log.staff_id pii.staff.name">Bina Basil</span></p></div><span class="caption num" data-source="change_log.at">9-Nov</span></li>
-                <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="clash"></i></span><div><a data-el="1" href="#moves" data-source="change_log.before change_log.after">Sorting by size: to Thu 19 at 08:45</a><p><span data-source="change_log.reason">Clash accepted: two groups, two rooms.</span> · <span data-source="approval.by pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="change_log.at">9-Nov</span></li>
-              </ol></div></article>
+          <div class="sidegroup" data-lit>
+            <h2 class="sideh" id="side-timetable"><i class="ic s" data-icon="week"></i>Timetable</h2>
+            <ul aria-labelledby="side-timetable">
+              <li><a class="sidelink" data-bar="1" href="#timetable">Week</a></li>
+              <li><a class="sidelink" data-bar="1" href="#fortnight" aria-current="page">Fortnight</a></li>
+              <li><a class="sidelink" data-bar="1" href="#materials">Materials</a></li>
+            </ul>
           </div>
-          <h2 class="title-section">Every fortnight of the year, by state</h2>
-          <div class="kanban" data-block="KanbanBoard" style="--lanes: 4">
-            <section class="lane" data-state="quiet" aria-label="Drafted, 1">
-              <h3 class="lane-h"><i class="ic s" data-icon="form"></i>Drafted <span class="count num">1</span></h3>
-              <ul class="lane-b"><li><div class="kcard" data-kind="period" data-source="fortnight.number fortnight.state fortnight.starts_on"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span><span><b>Fortnight 10</b><span class="sub">30-Nov to 11-Dec</span></span><span class="chip" data-state="quiet"><i class="ic s" data-icon="to-do"></i>To approve</span></div></li></ul>
-            </section>
-            <section class="lane" data-state="wait" aria-label="Approved, 1">
-              <h3 class="lane-h"><i class="ic s" data-icon="done"></i>Approved <span class="count num">1</span></h3>
-              <ul class="lane-b"><li><div class="kcard" data-kind="period" data-source="fortnight.number fortnight.state fortnight.starts_on"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span><span><b>Fortnight 9</b><span class="sub">16-Nov to 27-Nov · this page</span></span><span class="chip" data-state="wait"><i class="ic s" data-icon="next"></i>To go live</span></div></li></ul>
-            </section>
-            <section class="lane" data-state="ok" aria-label="Live, 0">
-              <h3 class="lane-h"><i class="ic s" data-icon="send"></i>Live <span class="count num">0</span></h3>
-              <p class="lane-empty">None live and waiting to start.</p>
-            </section>
-            <section class="lane" data-state="quiet" aria-label="Frozen, 8">
-              <h3 class="lane-h"><i class="ic s" data-icon="frozen"></i>Frozen <span class="count num">8</span></h3>
-              <ul class="lane-b">
-                <li><div class="kcard" data-kind="period" data-source="fortnight.number fortnight.state fortnight.starts_on"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span><span><b>Fortnight 8</b><span class="sub">2-Nov to 13-Nov · running now</span></span><span class="chip" data-state="ok"><i class="ic s" data-icon="frozen"></i>Frozen</span></div></li>
-                <li><div class="kcard" data-kind="period" data-source="fortnight.number fortnight.state fortnight.starts_on"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span><span><b>Fortnight 7</b><span class="sub">19-Oct to 30-Oct · 3 hand moves</span></span><span class="chip" data-state="ok"><i class="ic s" data-icon="frozen"></i>Frozen</span></div></li>
-                <li><div class="kcard" data-kind="period" data-source="fortnight.number fortnight.state"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span><span><b>Fortnights 1 to 6</b><span class="sub">June to October</span></span></div></li>
-              </ul>
-            </section>
+          <div class="sidegroup">
+            <h2 class="sideh" id="side-children"><i class="ic s" data-icon="child"></i>Children</h2>
+            <ul aria-labelledby="side-children">
+              <li><a class="sidelink" data-bar="1" href="#children">Class picture</a></li>
+              <li><a class="sidelink" data-bar="1" href="#reports">Parent reports</a></li>
+            </ul>
           </div>
-          <div class="card">
-            <div class="card-h"><i class="ic s" data-icon="form"></i>Inset: while the fortnight is drafted <span class="caption">Approve in place of Go live, as the main action</span></div>
-            <div class="card-b"><span class="muted">Read the plan lines and the hand moves, then approve. Go live appears once approved.</span><div><button class="btn press" data-el="2" type="button" data-source="approval.kind approval.by fortnight.state"><i class="ic" data-icon="done"></i>Approve</button></div></div>
+          <div class="sidegroup">
+            <h2 class="sideh" id="side-assessments"><i class="ic s" data-icon="assessment"></i>Assessments</h2>
+            <ul aria-labelledby="side-assessments">
+              <li><a class="sidelink" data-bar="1" href="#assessments">Assessments</a></li>
+              <li><a class="sidelink" data-bar="1" href="#upload">Upload papers</a></li>
+              <li><a class="sidelink" data-bar="1" href="#bank">Question bank</a></li>
+            </ul>
           </div>
-          <div class="card">
-            <div class="card-h"><i class="ic s" data-icon="send"></i>After Go live: what changed, session by session <span class="count num" data-source="change_log.row_id">4</span></div>
-            <div class="card-b">
-              <div class="table-box" data-block="DataTable">
-                <table class="table">
-                  <thead><tr><th>Day</th><th>Period</th><th>Before</th><th>After</th></tr></thead>
-                  <tbody>
-                    <tr><td class="num" data-source="school_day.on_date">Mon 16</td><td class="num" data-source="period.starts_at">08:45</td><td data-source="change_log.before">Number stories</td><td data-source="change_log.after session.text">Counting in tens with bundles</td></tr>
-                    <tr><td class="num" data-source="school_day.on_date">Mon 16</td><td class="num" data-source="period.starts_at">10:30</td><td data-source="change_log.before">Leaf printing</td><td data-source="change_log.after session.text">Free drawing</td></tr>
-                    <tr><td class="num" data-source="school_day.on_date">Tue 17</td><td class="num" data-source="period.starts_at">09:30</td><td data-source="change_log.before">Picture talk</td><td data-source="change_log.after session.text">Leaf printing</td></tr>
-                    <tr><td class="num" data-source="school_day.on_date">Thu 19</td><td class="num" data-source="period.starts_at">08:45</td><td data-source="change_log.before">empty</td><td data-source="change_log.after session.text">Sorting by size</td></tr>
-                  </tbody>
-                </table>
+          <div class="sidegroup">
+            <h2 class="sideh" id="side-school"><i class="ic s" data-icon="setup"></i>School</h2>
+            <ul aria-labelledby="side-school">
+              <li><a class="sidelink" data-bar="1" href="#across">Across classes</a></li>
+              <li><a class="sidelink" data-bar="1" href="#curriculum">Curriculum</a></li>
+              <li><a class="sidelink" data-bar="1" href="#skills-approve">Skills to approve</a></li>
+              <li><a class="sidelink" data-bar="1" href="#staff">Staff</a></li>
+              <li><a class="sidelink" data-bar="1" href="#classes">Classes</a></li>
+              <li><a class="sidelink" data-bar="1" href="#rules">Timetable rules</a></li>
+              <li><a class="sidelink" data-bar="1" href="#map">How it works</a></li>
+            </ul>
+          </div>
+        </nav>
+        <div class="shellmain">
+        <ol class="trail" aria-label="Trail">
+          <li><a data-trail href="#timetable">Timetable</a></li>
+          <li><i class="ic s" data-icon="trail"></i></li>
+          <li aria-current="page">Fortnight 9</li>
+        </ol>
+        <div class="page">
+          <main class="main">
+            <div class="head">
+              <p class="eyebrow"><i class="ic s" data-icon="fortnight"></i><span class="num" data-source="fortnight.starts_on">16-Nov</span> to <span class="num" data-source="fortnight.ends_on">27-Nov</span> · <span data-source="school_class.label">K2 Red</span></p>
+              <h1 class="title">Fortnight 9</h1>
+              <p class="purpose">Its state, its plan lines, and what changed when the draft went live. Frozen once it starts; a later move is a hand move, kept with who.</p>
+            </div>
+            <ol class="stepper" data-block="Stepper" data-source="fortnight.state approval.kind">
+              <li class="step" data-state="ok"><i class="ic s" data-icon="done"></i>Drafted</li>
+              <li class="step" data-state="ok"><i class="ic s" data-icon="done"></i>Approved</li>
+              <li class="step" data-state="wait"><i class="ic s" data-icon="next"></i>Live (next)</li>
+              <li class="step" data-state="quiet"><i class="ic s" data-icon="frozen"></i>Frozen on 16-Nov</li>
+            </ol>
+            <form class="form" data-block="Form">
+              <p class="muted">Go live puts the approved draft into the sessions of 16-Nov to 27-Nov. It changes only this fortnight.</p>
+              <label class="sel">Reason <input data-el="3" data-source="approval.reason" placeholder="needed once the fortnight is frozen"></label><div><button class="btn btn-main press" data-el="4" type="button" data-source="approval.kind approval.target fortnight.state"><i class="ic" data-icon="send"></i>Go live</button></div>
+            </form>
+            <div class="cards" data-block="Cards">
+              <article class="card" data-kind="period"><div class="card-h"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span>State</div><div class="card-b">
+                <div class="keyrow"><span class="chip" data-state="ok" data-source="fortnight.state"><i class="ic s" data-icon="done"></i>Approved</span></div>
+                <ol class="timeline">
+                  <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="done"></i></span><div><b>Approved</b><p data-source="approval.by pii.staff.name">Asha Almond</p></div><span class="caption num" data-source="approval.created_at">10-Nov</span></li>
+                  <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="form"></i></span><div><b>Drafted from the rules</b><p data-source="timetable_run.created_by pii.staff.name">Asha Almond</p></div><span class="caption num" data-source="timetable_run.created_at">6-Nov</span></li>
+                </ol></div></article>
+              <article class="card" data-kind="activity"><div class="card-h"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span>Plan lines <span class="count num" data-source="plan_entry.id">7</span></div><div class="card-b">
+                <ol class="timeline">
+                <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><a data-el="0" href="#activity" data-source="plan_entry.activity_id activity.name">Counting in tens with bundles</a><p><span data-source="session.subject_code">Numeracy</span> · week <span data-source="plan_entry.week_code">A</span></p></div></li>
+                <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><a data-el="0" href="#activity" data-source="plan_entry.activity_id activity.name">Story circle: the lost mitten</a><p><span data-source="session.subject_code">Language</span> · week <span data-source="plan_entry.week_code">A</span></p></div></li>
+                <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><a data-el="0" href="#activity" data-source="plan_entry.activity_id activity.name">Leaf printing</a><p><span data-source="session.subject_code">Arts</span> · week <span data-source="plan_entry.week_code">A</span></p></div></li>
+                <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><a data-el="0" href="#activity" data-source="plan_entry.activity_id activity.name">Sorting by size</a><p><span data-source="session.subject_code">Numeracy</span> · week <span data-source="plan_entry.week_code">A</span></p></div></li>
+                <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><a data-el="0" href="#activity" data-source="plan_entry.activity_id activity.name">Rhyme time</a><p><span data-source="session.subject_code">Language</span> · week <span data-source="plan_entry.week_code">B</span></p></div></li>
+                <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><a data-el="0" href="#activity" data-source="plan_entry.activity_id activity.name">Clay pots</a><p><span data-source="session.subject_code">Arts</span> · week <span data-source="plan_entry.week_code">B</span></p></div></li>
+                <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><a data-el="0" href="#activity" data-source="plan_entry.activity_id activity.name">Number stories</a><p><span data-source="session.subject_code">Numeracy</span> · week <span data-source="plan_entry.week_code">B</span></p></div></li>
+                </ol></div></article>
+              <article class="card" data-kind="period"><div class="card-h"><span class="tile" data-kind="period"><i class="ic" data-icon="moved"></i></span>Hand moves <span class="count num" data-source="change_log.row_id">2</span></div><div class="card-b">
+                <ol class="timeline">
+                  <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="moved"></i></span><div><a data-el="1" href="#moves" data-source="change_log.before change_log.after">Leaf printing: Mon 16 at 10:30 to Tue 17 at 09:30</a><p><span data-source="change_log.reason">The art room is being painted on Monday.</span> · <span data-source="change_log.staff_id pii.staff.name">Bina Basil</span></p></div><span class="caption num" data-source="change_log.at">9-Nov</span></li>
+                  <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="clash"></i></span><div><a data-el="1" href="#moves" data-source="change_log.before change_log.after">Sorting by size: to Thu 19 at 08:45</a><p><span data-source="change_log.reason">Clash accepted: two groups, two rooms.</span> · <span data-source="approval.by pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="change_log.at">9-Nov</span></li>
+                </ol></div></article>
+            </div>
+            <h2 class="title-section">Every fortnight of the year, by state</h2>
+            <div class="kanban" data-block="KanbanBoard" style="--lanes: 4">
+              <section class="lane" data-state="quiet" aria-label="Drafted, 1">
+                <h3 class="lane-h"><i class="ic s" data-icon="form"></i>Drafted <span class="count num">1</span></h3>
+                <ul class="lane-b"><li><div class="kcard" data-kind="period" data-source="fortnight.number fortnight.state fortnight.starts_on"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span><span><b>Fortnight 10</b><span class="sub">30-Nov to 11-Dec</span></span><span class="chip" data-state="quiet"><i class="ic s" data-icon="to-do"></i>To approve</span></div></li></ul>
+              </section>
+              <section class="lane" data-state="wait" aria-label="Approved, 1">
+                <h3 class="lane-h"><i class="ic s" data-icon="done"></i>Approved <span class="count num">1</span></h3>
+                <ul class="lane-b"><li><div class="kcard" data-kind="period" data-source="fortnight.number fortnight.state fortnight.starts_on"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span><span><b>Fortnight 9</b><span class="sub">16-Nov to 27-Nov · this page</span></span><span class="chip" data-state="wait"><i class="ic s" data-icon="next"></i>To go live</span></div></li></ul>
+              </section>
+              <section class="lane" data-state="ok" aria-label="Live, 0">
+                <h3 class="lane-h"><i class="ic s" data-icon="send"></i>Live <span class="count num">0</span></h3>
+                <p class="lane-empty">None live and waiting to start.</p>
+              </section>
+              <section class="lane" data-state="quiet" aria-label="Frozen, 8">
+                <h3 class="lane-h"><i class="ic s" data-icon="frozen"></i>Frozen <span class="count num">8</span></h3>
+                <ul class="lane-b">
+                  <li><div class="kcard" data-kind="period" data-source="fortnight.number fortnight.state fortnight.starts_on"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span><span><b>Fortnight 8</b><span class="sub">2-Nov to 13-Nov · running now</span></span><span class="chip" data-state="ok"><i class="ic s" data-icon="frozen"></i>Frozen</span></div></li>
+                  <li><div class="kcard" data-kind="period" data-source="fortnight.number fortnight.state fortnight.starts_on"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span><span><b>Fortnight 7</b><span class="sub">19-Oct to 30-Oct · 3 hand moves</span></span><span class="chip" data-state="ok"><i class="ic s" data-icon="frozen"></i>Frozen</span></div></li>
+                  <li><div class="kcard" data-kind="period" data-source="fortnight.number fortnight.state"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span><span><b>Fortnights 1 to 6</b><span class="sub">June to October</span></span></div></li>
+                </ul>
+              </section>
+            </div>
+            <div class="card">
+              <div class="card-h"><i class="ic s" data-icon="form"></i>Inset: while the fortnight is drafted <span class="caption">Approve in place of Go live, as the main action</span></div>
+              <div class="card-b"><span class="muted">Read the plan lines and the hand moves, then approve. Go live appears once approved.</span><div><button class="btn press" data-el="2" type="button" data-source="approval.kind approval.by fortnight.state"><i class="ic" data-icon="done"></i>Approve</button></div></div>
+            </div>
+            <div class="card">
+              <div class="card-h"><i class="ic s" data-icon="send"></i>After Go live: what changed, session by session <span class="count num" data-source="change_log.row_id">4</span></div>
+              <div class="card-b">
+                <div class="table-box" data-block="DataTable">
+                  <table class="table">
+                    <thead><tr><th>Day</th><th>Period</th><th>Before</th><th>After</th></tr></thead>
+                    <tbody>
+                      <tr><td class="num" data-source="school_day.on_date">Mon 16</td><td class="num" data-source="period.starts_at">08:45</td><td data-source="change_log.before">Number stories</td><td data-source="change_log.after session.text">Counting in tens with bundles</td></tr>
+                      <tr><td class="num" data-source="school_day.on_date">Mon 16</td><td class="num" data-source="period.starts_at">10:30</td><td data-source="change_log.before">Leaf printing</td><td data-source="change_log.after session.text">Free drawing</td></tr>
+                      <tr><td class="num" data-source="school_day.on_date">Tue 17</td><td class="num" data-source="period.starts_at">09:30</td><td data-source="change_log.before">Picture talk</td><td data-source="change_log.after session.text">Leaf printing</td></tr>
+                      <tr><td class="num" data-source="school_day.on_date">Thu 19</td><td class="num" data-source="period.starts_at">08:45</td><td data-source="change_log.before">empty</td><td data-source="change_log.after session.text">Sorting by size</td></tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="card">
-            <div class="card-h"><i class="ic s" data-icon="frozen"></i>Inset: once it starts (frozen)</div>
-            <div class="card-b"><span class="muted">No Approve, no Go live, no edit. A move from here on is a hand move, kept with who made it.</span></div>
-          </div>
-          <div class="card">
-            <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: when it has no plan lines</div>
-            <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="upload"></i><b>No plan lines yet</b><span class="muted">The planner is uploaded first; its lines appear here.</span></div></div>
-          </div>
-        </main>
-        <aside class="rail" aria-label="Connected to">
-          <section class="rail-box">
-            <h2>Connected to</h2>
-            <ul class="rlist">
-              <li><a class="ritem" data-el="5" href="#timetable"><span class="tile" data-kind="period"><i class="ic" data-icon="timetable"></i></span><span>The grid<small>K2 Red, Fortnight 9</small></span></a></li>
-              <li><a class="ritem" data-el="7" href="#materials"><span class="tile" data-kind="note"><i class="ic" data-icon="materials"></i></span><span>Materials<small>for these plan lines</small></span></a></li>
-              <li><a class="ritem" data-el="8" href="#draft"><span class="tile" data-kind="period"><i class="ic" data-icon="form"></i></span><span>Draft<small>from the rules, coordinator</small></span></a></li>
-            </ul>
-          </section>
-          <section class="rail-box">
-            <h2>Activities in the plan</h2>
-            <ul class="rlist">
-              <li><a class="ritem" data-el="6" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><span data-source="activity.name">Counting in tens with bundles</span></a></li>
-              <li><a class="ritem" data-el="6" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><span data-source="activity.name">Story circle: the lost mitten</span></a></li>
-              <li><a class="ritem" data-el="6" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><span data-source="activity.name">Leaf printing</span></a></li>
-              <li><a class="ritem" data-el="6" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><span data-source="activity.name">Sorting by size</span></a></li>
-            </ul>
-          </section>
-        </aside>
+            <div class="card">
+              <div class="card-h"><i class="ic s" data-icon="frozen"></i>Inset: once it starts (frozen)</div>
+              <div class="card-b"><span class="muted">No Approve, no Go live, no edit. A move from here on is a hand move, kept with who made it.</span></div>
+            </div>
+            <div class="card">
+              <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: when it has no plan lines</div>
+              <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="upload"></i><b>No plan lines yet</b><span class="muted">The planner is uploaded first; its lines appear here.</span></div></div>
+            </div>
+          </main>
+          <aside class="rail" aria-label="Connected to">
+            <section class="rail-box">
+              <h2>Connected to</h2>
+              <ul class="rlist">
+                <li><a class="ritem" data-el="5" href="#timetable"><span class="tile" data-kind="period"><i class="ic" data-icon="timetable"></i></span><span>The grid<small>K2 Red, Fortnight 9</small></span></a></li>
+                <li><a class="ritem" data-el="7" href="#materials"><span class="tile" data-kind="note"><i class="ic" data-icon="materials"></i></span><span>Materials<small>for these plan lines</small></span></a></li>
+                <li><a class="ritem" data-el="8" href="#draft"><span class="tile" data-kind="period"><i class="ic" data-icon="form"></i></span><span>Draft<small>from the rules, coordinator</small></span></a></li>
+              </ul>
+            </section>
+            <section class="rail-box">
+              <h2>Activities in the plan</h2>
+              <ul class="rlist">
+                <li><a class="ritem" data-el="6" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><span data-source="activity.name">Counting in tens with bundles</span></a></li>
+                <li><a class="ritem" data-el="6" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><span data-source="activity.name">Story circle: the lost mitten</span></a></li>
+                <li><a class="ritem" data-el="6" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><span data-source="activity.name">Leaf printing</span></a></li>
+                <li><a class="ritem" data-el="6" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><span data-source="activity.name">Sorting by size</span></a></li>
+              </ul>
+            </section>
+          </aside>
+        </div>
+        </div>
       </div>
-      <nav class="tabbar" aria-label="Doors">
-        <a class="tab" data-bar="0" href="#today"><i class="ic" data-icon="today"></i>Today</a>
-        <a class="tab" data-bar="1" href="#timetable" aria-current="page"><i class="ic" data-icon="timetable"></i>Timetable</a>
-        <a class="tab" data-bar="2" href="#children"><i class="ic" data-icon="children"></i>Children</a>
-        <a class="tab" data-bar="3" href="#setup"><i class="ic" data-icon="setup"></i>Setup</a>
-      </nav>
     </div>
   </section>
 </div>

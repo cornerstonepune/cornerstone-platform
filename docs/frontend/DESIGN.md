@@ -16,7 +16,7 @@ token (`var(--state-ok)`); nobody types a hex. `wireframes/kit.mjs` writes them 
 | Neutrals | `ground` `surface` `panel` `ink` `ink-muted` `line` `line-control` `link` `focus` `highlight` | the page, a sunken box, a card, text, hairlines, a control's edge, links (always underlined) |
 | Main action | `action` `action-ink` | the one filled button on a page; the "now" outline; today's column |
 | Brand | `brand-clay` (+ materials) | the mark and the lit door's underline only; never a state, never on a child |
-| Work states | `state-ok` `state-wait` `state-late` `state-quiet`, each with `-bg` | green, amber, red, grey; always with icon and word |
+| Work states | `state-ok` `state-wait` `state-late` `state-quiet`, each with `-bg` | green, amber, red, grey; always with icon and word. The one state scale of a child's standing (page charter A3: secure green, practising amber, needs help red, not seen grey) and a rubric's levels 0–3 (grey, red, amber, green) use the same four (`apps/web/lib/state-scale.ts`) |
 | Kinds | `kind-period` `-child` `-activity` `-objective` `-skill` `-assessment` `-note`, each with `-bg` | which kind of thing a tile, card header or rail link is |
 | Subjects | `subject-numeracy` `-language` `-arts` (+ `-arts-ink`) `-fixed`, each with `-bg` | the top edge, icon and word of a period or cell |
 
@@ -43,29 +43,35 @@ nothing else moves; removed under reduced motion.
 
 ## 2. The frame (AppFrame)
 
+Since the page charter (`page-charter.md` A1–A2, approved 12 Nov 2026) the menu is a sidebar and the right side is a detail panel.
+
 ```
 ┌ bar ──────────────────────────────────────────────────────────────────────────┐
-│ [logo] Today(7) Timetable Children Setup        [search]  Acting as  ?  Sign out │
-├───────────────────────────────────────────────────────────────────────────────┤
-│ Children › K2 Red                                       (trail: door › thing)   │
-│ EYEBROW · FACTS                                         ┌ rail ─────────────┐  │
-│ Title (h1)                                              │ CONNECTED TO       │  │
-│ Purpose line, ≤140 characters                           │ [tile] link        │  │
-│ blocks…                                                 │ CAPTURE HERE       │  │
-│                                                         └────────────────────┘  │
-└───────────────────────────────────────────────────────────────────────────────┘
-phone (≤700 px wide): mark alone, icon buttons; one column, rail below; the four doors are a bottom tab bar
+│ [logo]                                   [search]  person · Acting as  ?  Sign out │
+├──────────────┬────────────────────────────────────────────────────────────────┤
+│ [fold]       │ My day › Today, the school                 (trail: section › thing) │
+│ MY DAY       │ EYEBROW · FACTS                        ┌ DetailPanel ─────────────┐ │
+│  Today (7)   │ Title (h1)                             │ [tile] the thing     [×] │ │
+│  Notes …     │ Purpose line, ≤140 characters          │ Move · Edit · full page  │ │
+│ TIMETABLE    │ blocks… (a grid, a list, a board)      │ Activity|Children|…      │ │
+│  Week …      │   choosing a thing opens it on the     │ (nothing chosen: 3–4     │ │
+│ CHILDREN …   │   right: ?open=<kind>:<id>&tab=…       │  stat tiles, no links)   │ │
+│ ASSESSMENTS …│                                        └──────────────────────────┘ │
+│ SCHOOL …     │                                                                │
+└──────────────┴────────────────────────────────────────────────────────────────┘
+phone (≤700 px wide): Menu button, mark, search, person; the sidebar is a drawer (a modal); an open panel is a sheet over the page
 ```
 
-- **Bar**: the BrandMark links to Today; four doors with their icons, the lit door underlined in `brand-clay`
-  (`aria-current="page"`); the one count badge on Today; search; acting-as (coordinator); help; sign out. Its eight items
-  are `screens.json` `bar`, in that order.
-- **Trail**: the door, then the thing (two levels) plus the browser's Back.
-- **Rail**: where a child was tapped, the ChildPeek first (§10); then "Connected to" (edges not already linked in the main
-  column, each a KindTile + words) and, where a lesson or a child is in view, "Capture here" (Voice note, Photo), in
-  `surface` boxes.
-- **Phone**: the doors become a bottom tab bar (icon over word, the chosen icon in `brand-clay`). The switch is a container
-  query on `.frame`, so one markup serves both widths.
+- **Bar**: the BrandMark links to Today; search; the person and acting-as (coordinator); help; sign out. Its items, with the sidebar's
+  lines and the Menu button, are `screens.json` `bar`, in that order.
+- **Sidebar**: the sections of `apps/web/lib/menu.ts` (My day, Timetable, Children, Assessments, School for the coordinator), each a
+  heading and its pages; the page you are on `aria-current="page"` with a `brand-clay` edge; the section of the walk lit. It folds to one
+  icon per section (a cookie keeps the fold); on a phone it is a drawer. Only Today carries a count.
+- **Trail**: the section, then the thing (two levels) plus the browser's Back.
+- **DetailPanel** (right): what a page's thing is, in tabs; the same tabs for the same kind (a lesson: Activity · Children · Materials ·
+  History). Escape or × closes it and focus returns to the thing. With nothing chosen: the page's stat tiles. A page not yet moved to the
+  charter keeps its old **rail** (ChildPeek, "Connected to", Capture here) until its own screen's pull request.
+- **Phone**: the switch is a container query on `.frame` in the kit, a 700 px media query on the site.
 
 ## 3. The state rule
 
@@ -81,7 +87,10 @@ A state is **an icon, a word and a colour, never one alone** (`.chip`, `.sq`, `.
 
 **Red is for work, never for a child.** A child below, not willing, not seen or at level 0 is grey or amber. If two
 things on a screen are red, one is wrong. A chip on a tinted cell gets `.on-tint` (panel fill, 1 px ring), because the
-amber and Arts tints, and the red and Language tints, sit close.
+amber and Arts tints, and the red and Language tints, sit close. **Open question (page charter A3, 12 Nov 2026):** the charter's
+one scale puts red on "needs help" and on a rubric's level 1, which this rule forbids on a child. Until Nimish settles it, red is drawn
+on a rubric's level row in the lesson panel (the activity's words for that level), and never on a child's square: ClassGrid and the
+class form are unchanged.
 
 ## 4. Kinds, subjects, icons
 

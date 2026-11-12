@@ -5,6 +5,7 @@
  * Rows are the test's own (a pair of classes with a random label, children named from tests/fake-names.ts), made once per run.
  */
 import { expect, test, type Page } from "@playwright/test";
+import { menu } from "./menu";
 import postgres from "postgres";
 import { FAKE_CHILDREN, FAKE_STAFF } from "./fake-names";
 import { EDUCATOR, inventoryRows, signedInAs } from "./inventory-fixtures";
@@ -129,10 +130,15 @@ test("10 and 11. each child row shows the name beside the Sr. No.; the address a
   for (const n of FAKE_CHILDREN) expect(stored.t).not.toContain(n);
 });
 
-test("12. every setup page is two clicks from the bar", async ({ page }) => {
+test("12. every setup page is two clicks from the menu", async ({ page }) => {
+  // the setup pages are each one line of the sidebar's School section (page charter A1); the Setup page's own cards still lead to them
   await page.goto("/setup/needs-doing", { waitUntil: "networkidle" });
-  const bar = page.locator("[data-bar]").getByRole("navigation", { name: "Sections" });
-  await bar.getByRole("link", { name: /^Setup/ }).click();
+  const school = (await menu(page)).getByRole("list", { name: "School" });
+  for (const [line, title] of [["Staff", "Staff and classes"], ["Classes", "Classes and children"]] as const) {
+    await school.getByRole("link", { name: line, exact: true }).click();
+    await expect(page.locator("h1")).toHaveText(title);
+  }
+  await page.goto("/setup", { waitUntil: "networkidle" });
   await expect(page.locator("h1")).toHaveText("Setup");
   for (const [card, title] of [["Open Staff", "Staff and classes"], ["Open Classes and children", "Classes and children"]] as const) {
     await page.locator("main").getByRole("link", { name: card, exact: true }).click();

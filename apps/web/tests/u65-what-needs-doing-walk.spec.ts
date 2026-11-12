@@ -6,6 +6,7 @@
  * A class of the test's own and a waiting skill give the page its groups; an educator mapped to that class and one subject gives the scope.
  */
 import { expect, test, type Browser, type Page } from "@playwright/test";
+import { menu, sectionNames, SECTIONS } from "./menu";
 import { createHmac } from "node:crypto";
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
@@ -157,11 +158,12 @@ test("the queue-shrinking trend is off What needs doing, its data and function k
 
 test("Teaching is not in the menu", async ({ page }) => {
   await open(page, "/setup/needs-doing");
-  const top = page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" }).getByRole("link");
-  const names = (await top.allInnerTexts()).map((n) => n.replace(/\s*\d[\d,]*$/, "").trim());
+  const nav = await menu(page);
+  const names = await sectionNames(nav);
   expect(names).not.toContain("Teaching");
   test.info().annotations.push({ type: "top-level menu items", description: `${names.length}: ${names.join(", ")}` });
-  expect(names).toEqual(["Today", "Timetable", "Children", "Setup"]);
+  expect(names).toEqual([...SECTIONS.coordinator]);
+  await expect(nav.getByRole("link", { name: "Teaching" })).toHaveCount(0);
   await expect(page.locator("[data-bar]").first().getByRole("link", { name: "Teaching" })).toHaveCount(0);
 });
 

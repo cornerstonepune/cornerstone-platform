@@ -252,8 +252,8 @@ test("Fortnight, moving: accepting a clash needs a reason ('Say why' otherwise),
   expect(a.reason).toBe("Sports day is on purpose");
 });
 
-test("Timetable rules: the page sits under Timetable in the menu, not Setup", async ({ page }) => {
-  expect(locate("/timetable/rules")?.door.key).toBe("timetable");
+test("Timetable rules: the page sits under School in the menu, the coordinator's (page charter A1)", async ({ page }) => {
+  expect(locate("/timetable/rules")?.section.key).toBe("school");
   expect(locate("/timetable/rules")?.page.label).toBe("Timetable rules");
   await page.goto(`/timetable/rules?class=${f.klass}`);
   await expect(page.getByRole("heading", { name: "Timetable rules", level: 1 })).toBeVisible();

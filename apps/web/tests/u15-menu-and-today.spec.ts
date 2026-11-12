@@ -7,6 +7,7 @@
  * The test's own class, its pack for this week and its parent report are made on the copy and cleared afterwards.
  */
 import { expect, type Page, test } from "@playwright/test";
+import { menu as theMenu, sectionNames, SECTIONS } from "./menu";
 import { createHmac } from "node:crypto";
 import postgres from "postgres";
 import { isoWeek, weekWords } from "../lib/week";
@@ -18,7 +19,6 @@ const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 const SECTION = "UI1-TEST";
 const WEEK = isoWeek();
 const EDUCATOR = { email: "ui1-educator@cornerstone.test", name: "UI1 educator", role: "educator" };
-const GROUPS = ["Today", "Timetable", "Children", "Setup"];
 
 async function engine(path: string, body: object) {
   const r = await fetch(`http://127.0.0.1:${ENGINE_PORT}${path}`, {
@@ -87,7 +87,7 @@ async function rows(page: Page) {
 
 /** The count the group "What needs doing" carries, 0 when it carries none. */
 async function badge(page: Page): Promise<number> {
-  const n = page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" }).getByRole("link", { name: /^Today/ }).getByTestId("waiting");
+  const n = (await theMenu(page)).getByRole("link", { name: /^Today/ }).getByTestId("waiting");
   return (await n.count()) ? Number((await n.innerText()).replace(/\D/g, "")) : 0;
 }
 
@@ -103,16 +103,16 @@ test.afterAll(async () => {
 });
 
 // the title is the one goals/ui1-menu-and-today.yaml names; since UI-7b the count is Today's strip (do-now plus this-week), and What needs doing sits in Setup
+// the title is the one goals/ui1-menu-and-today.yaml names; since the page charter (A1) it proves the sidebar's five sections and Today's one count
 test("the menu is four groups, and only What needs doing carries the count of what waits", async ({ page }) => {
   await page.goto("/today");
-  const menu = page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" });
-  const names = await menu.getByRole("link").allInnerTexts();
-  expect(names.map((n) => n.replace(/\s*\d[\d,]*$/, "").trim())).toEqual(GROUPS);
+  const menu = await theMenu(page);
+  expect(await sectionNames(menu)).toEqual([...SECTIONS.coordinator]);
   expect(await menu.getByTestId("waiting").count(), "one count, on one group at most (none while nothing waits)").toBeLessThanOrEqual(1);
   // the count is the strip's do-now and this-week, which never overlap
   const strip = await page.locator(".b-att").evaluateAll((els) => els.filter((e) => /do now|this week/i.test(e.textContent ?? "")).map((e) => Number((e.querySelector(".b-n")?.textContent ?? "0").trim())));
   expect(await badge(page), "the group's count is the strip's").toBe(strip.reduce((a, b) => a + b, 0));
-  for (const [group, heading] of [["Setup", "Setup"], ["Children", "Children"], ["Today", "Today, the school"]]) {
+  for (const [group, heading] of [["Curriculum", "Curriculum"], ["Class picture", "Children"], ["Today", "Today, the school"]]) {
     await menu.getByRole("link", { name: new RegExp(`^${group}\\b`) }).click();
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(heading);
     await expect(menu.getByRole("link", { name: new RegExp(`^${group}\\b`) })).toHaveAttribute("aria-current", "page");

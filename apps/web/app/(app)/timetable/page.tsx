@@ -12,6 +12,11 @@ import { FortnightGrid } from "@/components/fortnight-grid";
 import { ViewToggle } from "@/components/kanban-board";
 import { StatusChip } from "@/components/status-chip";
 import { Timeline, type Seen } from "@/components/timeline";
+import { DetailPanel, parseOpen, type Opened } from "@/components/detail-panel";
+import { lessonPanel } from "@/components/lesson-panel";
+import { SubjectMix } from "@/components/subject-tag";
+import { SUBJECT } from "@/components/fortnight-grid";
+import { lessonIds, lessonView } from "@/lib/lesson-view";
 import type { Column } from "@/lib/ux-rules";
 import { requireStaff } from "@/lib/auth";
 import { chipOf } from "@/lib/educator/chip";
@@ -130,15 +135,25 @@ export default async function TimetablePage({ searchParams }: Props) {
   const focus = q.day && weeks.some((w) => w.days.some((d) => d.day === q.day)) ? q.day : today >= fn.starts_on && today <= fn.ends_on ? today : fn.starts_on;
   const shown = view === "day" ? [focus] : view === "week" ? weeks.find((w) => w.days.some((d) => d.day === focus))!.days.map((d) => d.day) : undefined;
   const now = await nowAtSchool();
+  // a block opens its lesson in the panel on the right (page charter A2); the address carries it (`open=lesson:<id>`), so it is linked and reloaded
+  const shownDays = (shown ?? weeks.flatMap((w) => w.days.map((d) => d.day))) as string[];
+  const ids = await lessonIds(klass.id, shownDays);
+  const opened = parseOpen(q.open);
+  const at = (extra: Record<string, string | undefined>) => {
+    const p = new URLSearchParams();
+    for (const [k, v] of Object.entries({ class: q.class, when: q.when, fn: q.fn, view: q.view, day: q.day, ...extra })) if (v) p.set(k, v);
+    const str = p.toString();
+    return str ? `${HERE}?${str}` : HERE;
+  };
   const grid = gridOf(weeks, {
     looks: await subjectLooks(),
     days: shown,
     clashes,
     at: { today, now },
-    // a lesson with an activity opens its lesson page (the activity in full, the class form); one with none is not a link. The coordinator's click on a block chooses it
-    // to move, on the fortnight page, where the move is made and its clashes drawn
-    open: (day, p) => `/period/${p}?${new URLSearchParams({ class: klass.id, day })}`,
-    pick: coordinator ? (day, p) => `/timetable/fortnight/${fn.number}?${new URLSearchParams({ class: klass.id, from: `${day}~${p}` })}` : undefined,
+    select: (day, p) => {
+      const id = ids.get(`${day}~${p}`);
+      return id ? { href: at({ open: `lesson:${id}` }), key: `lesson:${id}`, selected: opened?.kind === "lesson" && opened.id === id } : undefined;
+    },
   });
   const lessons = grid.rows.some((r) => "cells" in r && r.cells.some((c) => c));
   const movedHere = grid.placed.filter((x) => x.cell.moved).map((x) => ({ day: x.day, periodId: x.periodId, cell: x.cell, move: moveInto(moves, x.day, x.periodId) }));
@@ -155,6 +170,23 @@ export default async function TimetablePage({ searchParams }: Props) {
     ...moves.slice(0, 4).map((m) => ({ kind: "period" as const, title: m.undo ? "A move was undone" : "A lesson was moved by hand", line: `${m.who}${m.why ? `: ${m.why}` : ""}`, when: dateWords(m.at.slice(0, 10)) })),
   ].slice(0, 5);
 
+  // the panel: the lesson chosen (its own page's data, lib/lesson-view.ts), or this view's numbers when none is
+  const chosen = opened?.kind === "lesson" ? grid.placed.find((x) => x.cell.openKey === `lesson:${opened.id}`) : undefined;
+  const lesson = chosen ? await lessonView(me, opened!.id) : null;
+  const move = chosen ? moveInto(moves, chosen.day, chosen.periodId) : undefined;
+  const panelOpen: Opened | null = lesson
+    ? lessonPanel(lesson, {
+        key: `lesson:${opened!.id}`,
+        closeHref: at({ open: undefined, tab: undefined }),
+        tab: q.tab,
+        move: coordinator ? `/timetable/fortnight/${fn.number}?${new URLSearchParams({ class: klass.id, from: `${chosen!.day}~${chosen!.periodId}` })}` : undefined,
+        moved: chosen!.cell.moved ? (move ? `by ${move.who} on ${dateWords(move.at.slice(0, 10))}${move.why ? `, because ${move.why}` : ""}` : "moved by hand") : undefined,
+        clash: chosen!.cell.note,
+      })
+    : null;
+  const mix = (Object.keys(SUBJECT) as (keyof typeof SUBJECT)[]).map((look) => ({ look, words: SUBJECT[look], n: grid.placed.filter((x) => x.cell.subject === look).length }));
+  const spanWords = view === "day" ? "This day" : view === "week" ? "This week" : "This fortnight";
+
   return (
     <Screen
       stage={`${klass.grade} ${klass.section} · Fortnight ${fn.number}${view === "fortnight" ? "" : ` · week ${"AB"[Math.max(0, weeks.findIndex((w) => w.days.some((d) => d.day === focus)))]}`}`}
@@ -162,21 +194,29 @@ export default async function TimetablePage({ searchParams }: Props) {
       title="Timetable"
       purpose="The fortnight is the unit: week A and week B, each period a block. A moved period is marked; a clash is red until it is accepted."
       next={{ href: `/timetable/fortnight/${fn.number}`, label: `Fortnight ${fn.number}` }}
-      rail={
-        <TimetableRail
-          here="grid"
-          fn={fn.number}
-          classId={klass.id}
-          coordinator={coordinator}
-          edges={[{ screen: "period", params: { id: "today" }, label: "Today’s period", icon: "period" }]}
-          cards={
-            changed.length ? (
-              <section aria-label="Changed this fortnight" data-rail-part="changed" className="tt-rail-card">
-                <h2 className="tt-rail-h">Changed this fortnight</h2>
-                <Timeline entries={changed} />
-              </section>
-            ) : null
-          }
+      panel={
+        <DetailPanel
+          open={panelOpen}
+          summary={{
+            title: spanWords,
+            stats: [
+              { id: "lessons", n: lessonCount, line: lessonCount === 1 ? "lesson" : "lessons" },
+              { id: "moved", n: movedHere.length, line: "moved by hand", tone: movedHere.length ? "wait" : undefined },
+              { id: "clashes", n: open, line: open === 1 ? "clash not accepted" : "clashes not accepted", tone: open ? "act" : undefined },
+            ],
+            after: (
+              <>
+                <SubjectMix label="Lessons by subject" parts={mix} />
+                <p className="b-label b-muted">Choose a lesson in the grid to see it here.</p>
+                {changed.length ? (
+                  <section aria-label="Changed this fortnight" data-rail-part="changed">
+                    <h3 className="b-label b-muted">Changed this fortnight</h3>
+                    <Timeline entries={changed} />
+                  </section>
+                ) : null}
+              </>
+            ),
+          }}
         />
       }
     >
@@ -213,7 +253,7 @@ export default async function TimetablePage({ searchParams }: Props) {
         <StatusChip state="clash" words="Clash, not yet accepted" round />
         <StatusChip state="doNow" words="Do now" round />
         <StatusChip state="late" words="Late" round />
-        <span className="tt-note">Each block is one lesson; tap it to open the period.</span>
+        <span className="tt-note">Each block is one lesson; choose it to see the lesson on the right.</span>
       </div>
       <p className="tt-note" data-summary>
         {lessonCount} lesson{lessonCount === 1 ? "" : "s"}{holidayCount ? ` · ${holidayCount} holiday${holidayCount === 1 ? "" : "s"}` : ""}

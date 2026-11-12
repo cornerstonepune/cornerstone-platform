@@ -7,6 +7,7 @@
  * to answer page and the Worksheets list went with their own tests.)
  */
 import { expect, test } from "@playwright/test";
+import { litSection, menu } from "./menu";
 import postgres from "postgres";
 import { TEST_STAFF } from "./global-setup";
 import { aClass, aTaughtClass } from "./rows";
@@ -140,12 +141,13 @@ test("every page says the tab it is under, above its title, and the menu marks t
     ["/make", "Assessments"],
     ["/capture", "Upload papers"],
   ];
-  // the tab is a page of a group of the top menu (lib/menu.ts): the group is marked, and so is the tab under it
-  const group: Record<string, string> = { Curriculum: "Setup", "Question bank": "Setup", Assessments: "Children", "Papers to approve": "Children", "Upload papers": "Children" };
+  // the tab is a page of a section of the sidebar (lib/menu.ts): the section is lit, and the page in it is marked
+  const group: Record<string, string> = { Curriculum: "School", "Question bank": "Assessments", Assessments: "Assessments", "Papers to approve": "Assessments", "Upload papers": "Assessments" };
   for (const [path, tab] of pages) {
     await page.goto(path);
     // the eyebrow says the tab; where the title already says it, the eyebrow is not drawn (#690: no line that repeats the title)
     await expect(page.locator("[data-testid=stage], h1").first(), path).toHaveText(new RegExp(`^${tab}\\b`));
-    await expect(page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" }).locator("[aria-current=page]"), path).toHaveText(new RegExp(`^${group[tab]}`));
+    await expect(litSection(page), path).toHaveText(group[tab]);
+    await expect((await menu(page)).locator("[aria-current=page]"), path).toHaveText(new RegExp(`^${tab}\\b`));
   }
 });

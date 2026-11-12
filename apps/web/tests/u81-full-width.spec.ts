@@ -1,7 +1,8 @@
 /**
  * U81 (#688 follow-up, Nimish 12 Nov 2026) — the pages use the whole screen. At 1920 px the main content spans at least 90 % of the
  * viewport on Today, Timetable, a Fortnight, Children and Setup (no 1560 px cap, token gutters); the same holds at 1440; the Live and
- * Planning rows name their fortnight with a link; the door's other pages are the page's rail, with the fold as the narrow fallback.
+ * Planning rows name their fortnight with a link. Since the page charter (A1, A2) the menu is a sidebar at the left, so "the screen" is the
+ * width beside it, and the Timetable's right side is its detail panel: stat tiles, never a list of links.
  */
 import { expect, test, type Page } from "@playwright/test";
 import postgres from "postgres";
@@ -24,7 +25,8 @@ test.afterAll(async () => {
 });
 
 const mainShare = async (page: Page) => {
-  const w = await page.evaluate(() => document.documentElement.clientWidth);
+  // the width beside the sidebar (page charter A1: the sidebar fills the left margin, the page body keeps the rest)
+  const w = await page.evaluate(() => document.documentElement.clientWidth - (document.querySelector("[data-sidebar]")?.getBoundingClientRect().width ?? 0));
   const box = await page.locator("main").boundingBox();
   return { share: (box?.width ?? 0) / w, scrolls: await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth) };
 };
@@ -73,21 +75,21 @@ test("at 1440 px the Timetable's filter row is one line with real slack, and at 
   }
 });
 
-test("a page with a rail fills it: the Timetable's rail holds the door's other pages, each with a second line", async ({ page }) => {
+test("the Timetable's right side is its detail panel: with nothing chosen, the week's numbers as stat tiles, and its pages are the sidebar's", async ({ page }) => {
   await page.setViewportSize({ width: 1920, height: 1080 });
   await page.goto(`/timetable?class=${f.klass}`);
-  const rail = page.locator("[data-rail]");
-  for (const name of ["Fortnight", "Draft from the rules", "Timetable rules", "Materials"]) {
-    const link = rail.getByRole("link", { name, exact: false }).first();
-    await expect(link, name).toBeVisible();
-    await expect(link.locator("small"), name).not.toHaveText("");
-  }
-  // wide: the rail is the menu of the door and the fold is put away; narrow: the fold is a bordered button and it opens the same pages
-  await expect(page.locator("[data-door-pages]")).toBeHidden();
-  await page.setViewportSize({ width: 900, height: 900 });
-  const fold = page.locator("[data-door-pages]").getByRole("button", { name: "Timetable pages" });
-  await expect(fold).toBeVisible();
-  expect(await fold.evaluate((e) => getComputedStyle(e).borderTopWidth)).not.toBe("0px");
+  const panel = page.locator("[data-block=DetailPanel][data-panel=summary]");
+  await expect(panel).toBeVisible();
+  await expect(panel.locator("[data-block=StatTile]")).toHaveCount(3);
+  // never "Connected to": no link list on the right; the Timetable's pages are lines of the sidebar
+  await expect(page.locator("[data-rail]")).toHaveCount(0);
+  await expect(page.getByRole("region", { name: "Connected to" })).toHaveCount(0);
+  const timetable = page.locator("[data-sidebar]").getByRole("list", { name: "Timetable" });
+  await expect(timetable.getByRole("link")).toHaveText(["Week", "Fortnight", "Materials"]);
+  await expect(timetable.getByRole("link", { name: "Week" })).toHaveAttribute("aria-current", "page");
+  // the panel sits beside the grid, to its right, from the top
+  const [grid, side] = [(await page.locator("[data-block=FortnightGrid]").boundingBox())!, (await panel.boundingBox())!];
+  expect(side.x).toBeGreaterThan(grid.x + grid.width - 1);
 });
 
 test("the grid is the page: the filter row, the legend, then a subject-coloured block for every lesson, and Live or Planning is a chip", async ({ page }) => {

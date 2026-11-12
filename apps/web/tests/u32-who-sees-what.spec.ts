@@ -8,6 +8,7 @@
  * the coordinator are taken away after.
  */
 import { expect, test, type Browser, type Page } from "@playwright/test";
+import { menu } from "./menu";
 import postgres from "postgres";
 import { aClass, aWaitingSkill, aPerson, forgetPerson } from "./rows";
 
@@ -55,11 +56,11 @@ async function signedIn(browser: Browser): Promise<Page> {
   return page;
 }
 
-/** The count a menu tab carries, 0 when it carries none (as u15 reads it). */
-async function badge(page: Page, tab: string): Promise<number> {
-  const link = page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" }).getByRole("link", { name: new RegExp(`^${tab}\\b`) });
-  const n = link.getByTestId("waiting");
-  return (await n.count()) ? Number((await n.innerText()).replace(/\D/g, "")) : 0;
+
+/** Counts the menu carries on any line but Today's (only Today carries one: docs/ux-rules.md rule 5). */
+async function countsBesideToday(page: Page): Promise<number> {
+  const nav = await menu(page);
+  return (await nav.getByTestId("waiting").count()) - (await nav.getByRole("link", { name: /^Today/ }).getByTestId("waiting").count());
 }
 
 test("an educator's Today lists every decision the coordinator's does, and the menu counts the same", async ({ browser }) => {
@@ -69,7 +70,7 @@ test("an educator's Today lists every decision the coordinator's does, and the m
     const main = page.getByRole("main");
     await expect(main).toContainText("Skills to approve");
     // the skills and questions waiting are rows of What needs doing, and no longer in the menu's one count (UI-7b)
-    expect(await badge(page, "Setup"), "no count on Setup").toBe(0);
+    expect(await countsBesideToday(page), "no count on any line of the menu but Today").toBe(0);
   } finally {
     await page.context().close();
   }
@@ -106,7 +107,7 @@ test("the coordinator is shown every decision and every class", async ({ page })
   await page.goto("/setup/needs-doing");
   await expect(page.getByRole("main")).toContainText("Skills to approve");
   // the skills and questions waiting are rows of What needs doing, and no longer in the menu's one count (UI-7b)
-  expect(await badge(page, "Setup"), "no count on Setup").toBe(0);
+  expect(await countsBesideToday(page), "no count on any line of the menu but Today").toBe(0);
 
   await page.goto(`/setup/skill-sets/${draft}`);
   await expect(page.getByRole("button", { name: /^Approve, as / })).toBeVisible();

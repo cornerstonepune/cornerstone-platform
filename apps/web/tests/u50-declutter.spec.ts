@@ -8,6 +8,7 @@
  * - U50-QUIET: Cara and Dev, with nothing yet — so nothing in their table has a number to show.
  */
 import { expect, test, type Browser, type Page } from "@playwright/test";
+import { menu as theMenu } from "./menu";
 import postgres from "postgres";
 import { aClass, aReadPaper, aPerson, forgetPerson } from "./rows";
 
@@ -79,9 +80,9 @@ test("in the menu only Today carries a count", async ({ browser }) => {
   const page = await asEducator(browser);
   for (const path of ["/setup/needs-doing", "/", `/children/${busy}?view=topic`]) {
     await page.goto(path);
-    const menu = page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" });
+    const menu = await theMenu(page);
     // Asha's waiting answers make Assessments and Today non-zero, so a count elsewhere would show
-    for (const tab of ["Timetable", "Children", "Setup"]) {
+    for (const tab of ["Week", "Class picture", "Assessments", "Notes to confirm"]) {
       await expect(menu.getByRole("link", { name: new RegExp(`^${tab}\\b`) }).getByTestId("waiting"), `${tab} on ${path}`).toHaveCount(0);
     }
     expect(await menu.getByTestId("waiting").count()).toBeLessThanOrEqual(1);

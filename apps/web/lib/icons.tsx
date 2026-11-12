@@ -68,6 +68,9 @@ import {
   MoveRight,
   Palette,
   Upload,
+  Menu,
+  PanelLeftClose,
+  PanelLeftOpen,
 } from "lucide-react";
 
 // Every icon the site's K2 screens and its status chip draw, behind this one lookup (task M1-04). One open-source set,
@@ -160,6 +163,10 @@ export const ICONS = {
   table: Table,
   board: Columns3,
   history: History,
+  // the sidebar (page charter A1): the phone's menu button, and folding the sidebar to its icons and back
+  menu: Menu,
+  collapse: PanelLeftClose,
+  expand: PanelLeftOpen,
 } satisfies Record<string, LucideIcon>;
 export type IconName = keyof typeof ICONS;
 

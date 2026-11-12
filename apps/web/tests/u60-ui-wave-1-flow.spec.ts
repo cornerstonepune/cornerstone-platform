@@ -15,7 +15,7 @@ import { aClass, aReadPaper, aPerson } from "./rows";
 import { voiceSwitch } from "./k2-rows";
 import { createHmac } from "node:crypto";
 import { isoWeek } from "../lib/week";
-import { doorPages } from "./door-pages";
+import { menu, sectionNames, SECTIONS } from "./menu";
 
 test.use({ viewport: { width: 1440, height: 900 } });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -83,30 +83,29 @@ async function asEducator(browser: import("@playwright/test").Browser) {
   return { context, page: await context.newPage() };
 }
 
-const DOORS = ["Today", "Timetable", "Children", "Setup"];
-
-/** The frame (UI-13): the school's mark, the doors on one bar (Setup shown while `mayUse(me, "setup")`), and no sidebar. */
-async function theBar(page: Page, doors: string[]) {
+/** The frame (UI-13, page charter A1): the school's mark in the bar, and the menu a sidebar at the left, under the bar, grouped by the
+ *  educator's jobs (School the coordinator's); the main column starts right after it. */
+async function theBar(page: Page, sections: readonly string[]) {
   await expect(page.locator("header picture[data-brand-mark] img"), "the school's logo").toBeVisible();
-  expect(await page.locator("aside:not([data-rail])").count(), "no left sidebar").toBe(0);
-  const groups = page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" });
-  expect((await groups.getByRole("link").allInnerTexts()).map((n) => n.replace(/\s*\d[\d,]*$/, "").trim())).toEqual(doors);
-  const bar = await groups.boundingBox();
-  expect(bar && bar.y < 64, "the doors are in the bar at the top").toBe(true);
-  const main = await page.getByRole("main").boundingBox();
-  expect(main && main.x < 100, "the content starts at the left, no gutter for a menu").toBe(true);
+  const nav = await menu(page);
+  expect(await sectionNames(nav)).toEqual([...sections]);
+  const side = (await page.locator("[data-sidebar]").boundingBox())!;
+  expect(side.x, "the sidebar is at the left").toBe(0);
+  expect(side.y, "under the bar").toBeGreaterThanOrEqual(64);
+  const main = (await page.getByRole("main").boundingBox())!;
+  expect(main.x - (side.x + side.width), "the content starts right after the sidebar").toBeLessThan(8);
 }
 
 test("an educator with one class and one subject: top menu, only hers, no Class or Subject boxes, no approve-all", async ({ browser }) => {
   const { context, page } = await asEducator(browser);
   await open(page, "/setup/needs-doing", /What needs doing/);
-  await theBar(page, DOORS);
+  await theBar(page, SECTIONS.educator);
   await expect(page.locator("#bar-subject, #bar-class, [data-viewing]"), "no universal Class or Subject selector").toHaveCount(0);
-  // the bar carries sign out; the door's row of pages has the rest
+  // the bar carries sign out; the sidebar has the pages
   await expect(page.locator("[data-bar]").first().getByRole("button", { name: "Sign out" })).toBeVisible();
   await page.goto("/children/assessments");
-  const pagesOfChildren = await doorPages(page);
-  for (const name of ["Assessments", "Upload papers", "Parent reports"]) await expect(pagesOfChildren.getByRole("link", { name }), name).toBeVisible();
+  const nav = await menu(page);
+  for (const name of ["Assessments", "Upload papers", "Parent reports"]) await expect(nav.getByRole("link", { name, exact: true }), name).toBeVisible();
   await page.goto("/setup/needs-doing");
   // What needs doing: groups, each folded into a table of red/amber/green rows, one action on each row that opens that item
   await page.locator("details[data-group]").evaluateAll((els) => els.forEach((e) => ((e as HTMLDetailsElement).open = true)));
@@ -133,11 +132,15 @@ test("an educator with one class and one subject: top menu, only hers, no Class 
 
 test("an admin: the same top menu, and no Viewing control", async ({ page }) => {
   await open(page, "/setup/needs-doing", /What needs doing/);
-  await theBar(page, DOORS);
+  await theBar(page, SECTIONS.coordinator);
   await expect(page.locator("[data-viewing], #bar-subject, #bar-class")).toHaveCount(0);
-  // a door's other pages fold behind one button at the end of the trail, not more items on the bar (one nav row, #690)
+  // every page of the menu is in the sidebar, under its section, in the charter's order; nothing more sits in the bar
   await page.goto("/children/assessments");
-  await expect((await doorPages(page)).getByRole("link")).toHaveText(["Children", "Assessments", "Upload papers", "Parent reports", "Across classes"]);
+  const nav = await menu(page);
+  await expect(nav.getByRole("list", { name: "Children" }).getByRole("link")).toHaveText(["Class picture", "Parent reports"]);
+  await expect(nav.getByRole("list", { name: "Assessments" }).getByRole("link")).toHaveText(["Assessments", "Upload papers", "Question bank"]);
+  await expect(nav.getByRole("list", { name: "School" }).getByRole("link")).toHaveText(["Across classes", "Curriculum", "Skills to approve", "Staff", "Classes", "Timetable rules", "How it works"]);
+  await expect(page.locator("[data-bar]").first().getByRole("navigation")).toHaveCount(0);
 });
 
 /** The page opened, with nothing broken on it. */

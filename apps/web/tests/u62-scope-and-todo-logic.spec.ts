@@ -9,7 +9,7 @@ import path from "node:path";
 import { subjectsFor } from "../lib/viewing";
 import { buildTasks, filterTasks, KINDS, waitingCount, type Sources } from "../lib/todo";
 import { classResult, topicFlow, topicStatuses } from "../lib/topic-flow";
-import { doorOf, GROUPS, pagesOf } from "../lib/menu";
+import { SECTIONS, sectionOf } from "../lib/menu";
 
 const SUBJECTS = [
   { code: "NUM", label: "Maths" },
@@ -129,14 +129,14 @@ test.describe("topic flow", () => {
 });
 
 test.describe("the menu", () => {
-  test("four doors, in order, and every sub-page belongs to one", () => {
-    expect(GROUPS.map((g) => g.label)).toEqual(["Today", "Timetable", "Children", "Setup"]);
-    expect(doorOf("/children/assessments")?.label).toBe("Children");
-    expect(doorOf("/skill-sets/ADD.2D2D/edit")?.label).toBe("Setup");
-    expect(doorOf("/taught")).toBeUndefined();
-    expect(doorOf("/growth/0f2db249-3e3c-48ce-8aed-c87619862e1e")?.label).toBe("Children");
-    expect(pagesOf(doorOf("/children/assessments")).map((t) => t.label)).toContain("Assessments");
-    expect(pagesOf(doorOf("/setup/needs-doing")).length).toBeGreaterThan(0);
+  test("five sections, in the charter's order, and every sub-page belongs to one", () => {
+    expect(SECTIONS.map((g) => g.label)).toEqual(["My day", "Timetable", "Children", "Assessments", "School"]);
+    expect(sectionOf("/children/assessments")?.label).toBe("Assessments");
+    expect(sectionOf("/skill-sets/ADD.2D2D/edit")?.label).toBe("School");
+    expect(sectionOf("/taught")).toBeUndefined();
+    expect(sectionOf("/growth/0f2db249-3e3c-48ce-8aed-c87619862e1e")?.label).toBe("Children");
+    expect(sectionOf("/children/assessments")?.pages.map((t) => t.label)).toContain("Assessments");
+    expect(sectionOf("/setup/needs-doing")?.pages.length).toBeGreaterThan(1);
   });
 });
 

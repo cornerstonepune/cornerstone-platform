@@ -9,17 +9,15 @@ import { StackBar } from "@/components/stack-bar";
 import { Summary } from "@/components/educator/summary";
 import { OUTCOME_ORDER, outcomeWords } from "@/components/outcome-states";
 import { requireStaff } from "@/lib/auth";
-import { classRolls, lessonActivity, lessonOffers, openTo, pageOf, periodOf } from "@/lib/educator/data";
+import { openTo } from "@/lib/educator/data";
+import { lessonView } from "@/lib/lesson-view";
 import { isDay } from "@/lib/educator/period";
 import { E } from "@/lib/educator/words";
-import { childrenByIds, rosterOf } from "@/lib/notes-loop";
-import { isCoordinator } from "@/lib/timetable-ui";
 import { ChooseActivity } from "./choose-activity";
 import { LessonForm } from "./lesson-form";
-import { lastTime, mayRead, sessionAt, sessionOf, slotOf } from "@/lib/period";
+import { mayRead, sessionAt, sessionOf, slotOf } from "@/lib/period";
 import { schoolToday } from "@/lib/school-clock";
 import { screenHref } from "@/lib/built";
-import { myVoice, voiceOn } from "@/lib/voice";
 import { classWords } from "@/lib/voice-types";
 
 // One period (UI-3a): the session's name, what the activity is for in a line, three actions (record a note, type the marks, open
@@ -50,27 +48,9 @@ export default async function Period({ params, searchParams }: { params: Promise
       </Screen>
     );
   }
-  if (!(await mayRead(me, s.section))) notFound();
-  const klass = classWords(s);
-  const voice = await voiceOn();
-  const mine = voice ? !!(await myVoice(me))?.classes.some((x) => x.id === s.class_id) : false;
-  const a = s.activity;
-  // the lesson's activity in full (the engine's own words), what kind of lesson it is, and, for the coordinator, what it may be given
-  const coordinator = await isCoordinator();
-  const lesson = s.kind === "fixed" ? null : await lessonActivity(me, { class_id: s.class_id, day: s.day, period_id: s.period_id }).catch(() => null);
-  const full = lesson?.activity ?? null;
-  const offers = coordinator && s.kind !== "fixed" ? await lessonOffers(me, id).catch(() => null) : null;
-  const rolls = a && mine ? await classRolls(me, s.class_id, s.day).catch(() => []) : [];
-  const roster = rolls.length ? await rosterOf(me, s.class_id).catch(() => undefined) : undefined;
-  const page = a ? await pageOf(me, a.code).catch(() => null) : null;
-  const last = a ? await lastTime(s.class_id, a.code, s.day) : null;
-  // the planner's lines for this subject this fortnight (what the page it replaced showed); none if the engine has none for it
-  const period = await periodOf(me, { class_id: s.class_id, day: s.day, period_id: s.period_id }).catch(() => null);
-  const planner = period?.plan_lines ?? [];
-  const named = last ? await childrenByIds(me, last.named.flatMap((n) => n.children)) : {};
-  const objective = page?.parts.find((p) => p.part === "objective");
-  const steps = page?.parts.find((p) => p.part === "steps");
-  const thinking = page?.parts.find((p) => p.part === "thinking");
+  const v = await lessonView(me, id);
+  if (!v) notFound();
+  const { a, klass, mine, coordinator, full, offers, rolls, roster, page, last, named, period, planner, objective, steps, thinking } = v;
   const record = `/record?session=${id}`;
   const day = `/timetable?view=day&class=${s.class_id}&day=${s.day}`;
   // the activity's own page returns to this day when it is left (its `back`)

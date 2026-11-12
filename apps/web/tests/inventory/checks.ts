@@ -18,7 +18,7 @@ async function mainControls(page: Page) {
     const main = document.querySelector("main");
     if (!main) return [];
     return [...main.querySelectorAll<HTMLElement>(sel)]
-      .filter((e) => !e.closest("[data-trail], [data-door-pages]") && !(e as HTMLInputElement).name?.startsWith("$ACTION"))
+      .filter((e) => !e.closest("[data-trail], [data-sidebar]") && !(e as HTMLInputElement).name?.startsWith("$ACTION"))
       // the frame's own links (the next step, the details link) are drawn on every screen: an element may list one, and none is extra
       .map((e) => ({ tag: e.tagName.toLowerCase(), frame: e.matches("[data-ux=next], [data-ux=details]"), peek: e.hasAttribute("data-peek-open"), attrs: e.getAttributeNames(), href: e.getAttribute("href") ?? "", name: (e.getAttribute("aria-label") || (e as HTMLInputElement).labels?.[0]?.innerText || e.innerText || (e as HTMLInputElement).placeholder || "").trim(), ...(() => { const r = e.getBoundingClientRect(); return { w: r.width, h: r.height, x: r.x, y: r.y }; })() }));
   }, CONTROLS);
@@ -148,7 +148,7 @@ export async function keyboard(page: Page, s: Screen): Promise<Problems> {
     await page.keyboard.press("Tab");
     const at = await page.evaluate((sel) => {
       const e = document.activeElement as HTMLElement | null;
-      if (!e || !e.closest("main") || e.closest("[data-trail], [data-door-pages]")) return null;
+      if (!e || !e.closest("main") || e.closest("[data-trail], [data-sidebar]")) return null;
       const st = getComputedStyle(e);
       // a control is known by its place in the page, not by where it is on screen: Tab scrolls each newly focused control to the same spot, so two like controls (twelve "Move" buttons) would share a position
       const place = [...document.querySelector("main")!.querySelectorAll(sel)].indexOf(e);
@@ -265,7 +265,7 @@ export async function drive(page: Page, s: Screen, e: Element, c: Ctx, byId: Map
   }
   const here = page.url();
   // the door's pages (folded at the end of the trail) are the frame's, never the screen's link of the same name
-  const own = "main a:not([data-door-pages] a)";
+  const own = "main a:not([data-sidebar] a)";
   const find = () => (e.data ? page.locator(`${own}[${e.data}]`).first() : e.href ? page.locator(`${own}[href="${e.href}"]`).first() : page.locator(own).filter({ hasText: needle(e) }).first());
   if (e.t === "peek") {
     const opener = page.locator("main [data-peek-open]").first();

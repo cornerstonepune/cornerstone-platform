@@ -11,12 +11,12 @@
  */
 import { expect, test, type Browser, type Page } from "@playwright/test";
 import postgres from "postgres";
-import { GROUPS } from "../lib/menu";
+import { SECTIONS } from "../lib/menu";
 import { timetableSwitch } from "./educator-screens";
 import { sessionFor } from "./inventory-fixtures";
 import { aPerson, personAsStored } from "./rows";
 import { timetableRows, type Fixture } from "./timetable-rows";
-import { doorPages } from "./door-pages";
+import { menu } from "./menu";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -196,25 +196,24 @@ test("an educator with nothing live reads a plain page, never not found, and see
     await expect(page.locator("[data-section=planning]")).toHaveCount(0);
     await expect(page.locator("select[name=fn]")).toHaveCount(0);
   }
-  await expect(page.locator("[data-bar] [data-door=timetable]").first()).toBeVisible(); // the menu stays
+  await expect(page.locator("[data-sidebar]").getByRole("list", { name: "Timetable" })).toBeVisible(); // the menu stays
   await page.context().close();
 });
 
-test("the tabs that led nowhere are gone: no Your day, no This week; the Timetable door opens the Timetable", async ({ page }) => {
-  const pages = GROUPS.flatMap((d) => d.pages);
+test("the tabs that led nowhere are gone: no Your day, no This week; the Timetable's first page opens the Timetable", async ({ page }) => {
+  const pages = SECTIONS.flatMap((d) => d.pages);
   expect(pages.filter((p) => ["Your day", "This week"].includes(p.label))).toEqual([]);
   expect(pages.filter((p) => p.href === "/educator" || p.href === "/educator/week")).toEqual([]);
-  expect(GROUPS.find((d) => d.key === "timetable")?.href).toBe("/timetable");
-  // the door's pages fold behind "<door> pages" (one nav row, #690 step B): opened, they hold no Your day and no This week
+  expect(SECTIONS.find((d) => d.key === "timetable")?.pages[0].href).toBe("/timetable");
+  // the sidebar holds no Your day and no This week, at any width
   await page.goto("/today");
-  await expect((await doorPages(page)).getByRole("link", { name: "Your day" })).toHaveCount(0);
-  // on a wide screen the door's pages are in the page's rail; the fold is the narrow-width fallback, so it is read at 900 px
+  await expect((await menu(page)).getByRole("link", { name: "Your day" })).toHaveCount(0);
   await page.setViewportSize({ width: 900, height: 800 });
   await page.goto("/timetable");
-  const row = await doorPages(page);
-  await expect(row.getByRole("link", { name: "This week" })).toHaveCount(0);
-  await expect(row.getByRole("link", { name: "Timetable", exact: true })).toBeVisible();
-  await page.keyboard.press("Escape");
-  await page.locator("[data-bar] [data-door=timetable]").first().click();
+  const nav = await menu(page);
+  await expect(nav.getByRole("link", { name: "This week" })).toHaveCount(0);
+  await expect(nav.getByRole("link", { name: "Week", exact: true })).toBeVisible();
+  await page.goto("/today");
+  await (await menu(page)).getByRole("link", { name: "Week", exact: true }).click();
   await expect(page).toHaveURL(/\/timetable$/);
 });

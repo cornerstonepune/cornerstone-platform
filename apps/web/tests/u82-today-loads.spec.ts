@@ -7,6 +7,7 @@
  * website talks to one live engine; the page's handling of a refusal is then seen on the page itself (no class, switched off).
  */
 import { expect, test, type Browser, type Page } from "@playwright/test";
+import { menu } from "./menu";
 import { createServer, type Server } from "node:http";
 import type { AddressInfo } from "node:net";
 import postgres from "postgres";
@@ -140,7 +141,7 @@ test.describe("the page", () => {
     const strip = p.locator("[data-block=AttentionStrip]");
     if (await strip.count()) await expect(strip.locator(".b-att").first()).toBeVisible();
     const waiting = await p.locator(".b-att").evaluateAll((els) => els.filter((e) => /do now|this week/i.test(e.textContent ?? "")).reduce((n, e) => n + Number((e.querySelector(".b-n")?.textContent ?? "0").trim()), 0));
-    const badge = p.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" }).getByTestId("waiting");
+    const badge = (await menu(p)).getByTestId("waiting");
     if (waiting) await expect(badge).toHaveText(String(waiting));
     else await expect(badge).toHaveCount(0);
   };
