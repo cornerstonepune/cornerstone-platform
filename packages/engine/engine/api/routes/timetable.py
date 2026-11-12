@@ -9,7 +9,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 
 from engine.api.deps import get_conn, require_engine_key
-from engine.w2_print import educator_gate, k2_day
+from engine.w2_print import educator_gate, k2_day, tt_time
 from engine.w3_read import voice_intake, voice_store
 
 keyed = APIRouter(dependencies=[Depends(require_engine_key)])
@@ -112,3 +112,29 @@ def activity(body: Ask, conn=Depends(get_conn, scope="function")):
         return k2_day.period_activity(conn, klass, body.day, body.period_id)
     except k2_day.Refused as no:
         raise _refused(no) from no
+
+
+class TimeAsk(BaseModel):
+    actor: str
+    start: dt.date
+    end: dt.date
+    class_id: str | None = None  # one class she holds, or any class for a coordinator
+    grade: str | None = None  # every class of the grade (K2): coordinators only
+
+
+@keyed.post("/timetable/time")
+def time_by_subject(body: TimeAsk, conn=Depends(get_conn, scope="function")):
+    """CP-41: a class's (or a whole grade's) lesson minutes by subject over a range, beside the standing timetable's."""
+    staff = _gate(conn, Ask(actor=body.actor), reads=True)
+    if body.end < body.start or (body.end - body.start).days > 400:
+        raise HTTPException(status_code=422, detail="Give a start and an end, at most 400 days apart.")
+    if bool(body.class_id) == bool(body.grade):
+        raise HTTPException(status_code=422, detail="Name a class or a grade, not both and not neither.")
+    if body.grade:
+        if not educator_gate.sees_all(conn, staff):
+            raise HTTPException(status_code=403, detail="A whole grade is read by the coordinators.")
+        ids = tt_time.class_ids_of(conn, body.grade, body.start, body.end)
+    else:
+        klass, _ = _mine(conn, Ask(actor=body.actor, class_id=body.class_id), body.start, staff)
+        ids = [klass["id"]]
+    return tt_time.time_by_subject(conn, ids, body.start, body.end)
