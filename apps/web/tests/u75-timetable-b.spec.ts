@@ -40,10 +40,10 @@ test("Timetable: at 400 px the Day view is the default, and a chosen view is kep
   await expect(page.locator("[data-block=FortnightGrid] .b-dh")).toHaveCount(10);
 });
 
-test("Timetable: at desktop width the Fortnight view is still the default", async ({ page }) => {
+test("Timetable: at desktop width the Week view is the default (the wireframe's), and the Fortnight view is one click away", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto(TT());
-  await expect(page.locator("[data-block=FortnightGrid] .b-dh")).toHaveCount(10);
+  await expect(page.locator("[data-block=FortnightGrid] .b-dh")).toHaveCount(5);
   expect(page.url()).not.toMatch(/view=day/);
 });
 
@@ -56,7 +56,7 @@ const educatorPage = async (browser: Browser): Promise<Page> => {
 test("Timetable: each day head opens that day, and Today opens today", async ({ page }) => {
   await page.goto(TT());
   const heads = page.locator("[data-block=FortnightGrid] a.b-dh");
-  await expect(heads).toHaveCount(10);
+  await expect(heads).toHaveCount(5);
   await heads.nth(1).click();
   await expect(page).toHaveURL(new RegExp(`view=day.*day=${f.days[1]}|day=${f.days[1]}.*view=day`));
   await expect(page.locator("[data-block=FortnightGrid] .b-dh")).toHaveCount(1);

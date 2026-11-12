@@ -219,6 +219,7 @@ export function Rail({ edges = [], capture, peek, facts, cards, boxes = [], door
  *  `purpose` is held to PURPOSE_MAX by tests/test_ux_rules.py and the rendered test. */
 export function Screen({
   stage,
+  stageChip,
   icon,
   title,
   purpose,
@@ -229,6 +230,8 @@ export function Screen({
   children,
 }: {
   stage: string;
+  /** A state chip beside the small-caps line (the Timetable says Live or Planning there). */
+  stageChip?: ReactNode;
   /** The icon before the small-caps line, as the wireframes draw it. */
   icon?: Icon_;
   title: string;
@@ -245,7 +248,7 @@ export function Screen({
     <Body>
       <div className={rail ? "grid gap-[var(--space-4)] min-[1000px]:grid-cols-[minmax(0,1fr)_320px] min-[1000px]:gap-[var(--space-5)]" : undefined}>
         <div className="min-w-0">
-          <PageHeader stage={stage} icon={icon} title={title} sub={purpose} inColumn />
+          <PageHeader stage={stage} icon={icon} title={title} sub={purpose} inColumn chip={stageChip} />
           <div className={action !== undefined || details ? "mb-[var(--space-3)] flex flex-wrap items-center gap-3" : undefined} data-ux={action !== undefined ? "action" : undefined}>
             {action}
             {details ? (

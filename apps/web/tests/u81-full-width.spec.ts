@@ -62,25 +62,40 @@ test("a page with a rail fills it: the Timetable's rail holds the door's other p
   expect(await fold.evaluate((e) => getComputedStyle(e).borderTopWidth)).not.toBe("0px");
 });
 
-test("the Live and Planning rows name their fortnight with a link, and the whole row opens its grid", async ({ page }) => {
+test("the grid is the page: the filter row, the legend, then a subject-coloured block for every lesson, and Live or Planning is a chip", async ({ page }) => {
   await page.setViewportSize({ width: 1920, height: 1080 });
-  await page.goto(`/timetable?class=${f.klass}`);
-  const live = page.locator(`[data-section=live] [data-live-fortnight='${HERE}']`);
-  const name = live.getByRole("link", { name: `Fortnight ${HERE}`, exact: true }).first();
-  await expect(name).toBeVisible();
-  for (const col of ["Fortnight", "Dates", "State", "Lessons placed"]) await expect(page.locator("[data-section=live]").getByRole("columnheader", { name: col })).toBeVisible();
-  // a click on the row, away from the name and the actions, follows the name's link
-  const box = await live.boundingBox();
-  await page.mouse.click(box!.x + box!.width * 0.45, box!.y + box!.height / 2);
-  await expect(page).toHaveURL(new RegExp(`fn=${HERE}`));
+  await page.goto(`/timetable?class=${f.klass}&view=fortnight`);
+  // no table of fortnights above the grid: the first thing under the filter row and the legend is the grid
+  await expect(page.locator("[data-block=FortnightGrid]")).toBeVisible(); // the page has streamed in
+  await expect(page.locator("[data-section], [data-live-fortnight], [data-planning-fortnight]")).toHaveCount(0);
+  const top = async (sel: string) => (await page.locator(sel).first().boundingBox())!.y;
+  expect(await top(".tt-filters")).toBeLessThan(await top("[data-legend]"));
+  expect(await top("[data-legend]")).toBeLessThan(await top("[data-block=FortnightGrid]"));
+  expect(await top("[data-block=FortnightGrid]"), "the grid starts in the first screen").toBeLessThan(500);
+  // a block for every lesson (a session row), each in a subject's colour
+  const [{ n }] = await sql<{ n: number }[]>`
+    select count(*)::int as n from session s join school_day d on d.id = s.school_day_id join fortnight g on d.on_date between g.starts_on and g.ends_on
+    where s.school_class_id = ${f.klass} and g.number = ${HERE} and s.kind <> 'fixed'`;
+  const blocks = page.locator("[data-block=FortnightGrid] a.b-cell");
+  await expect(blocks).toHaveCount(n);
+  const fills = await blocks.evaluateAll((els) => els.map((e) => ({ subject: e.getAttribute("data-subject"), back: getComputedStyle(e).backgroundColor, edge: getComputedStyle(e).borderTopColor })));
+  for (const x of fills) {
+    expect(["numeracy", "language", "arts"]).toContain(x.subject);
+    expect(x.back, "a block is tinted, not left on the page colour").not.toBe("rgba(0, 0, 0, 0)");
+  }
+  // the state is a chip beside the eyebrow, and the picker groups the fortnights
+  await expect(page.getByTestId("stage").locator("[data-fortnight-state]")).toBeVisible();
+  expect(await page.locator("select[name=fn] optgroup").count()).toBeGreaterThan(0);
+  // the main action is in the filter row, as the wireframe draws it
+  await expect(page.locator(".tt-filters").getByRole("link", { name: "Open today" })).toBeVisible();
 });
 
 test("the grid the engine will not show a coordinator is said in plain words, not in a success box", async ({ page }) => {
   await page.goto(`/timetable?class=${f.klass}`);
   const refused = page.locator("[data-grid-refused]");
   if (await refused.count()) {
-    await expect(refused).toContainText("shown only to a class’s own educator");
-    await expect(refused).toContainText("ask the school’s head to allow coordinators");
+    await expect(refused).toContainText("a class’s own educator and to staff whose current role is on the school’s coordinator list");
+    await expect(refused).toContainText("ask the school’s head to add it");
     await expect(refused.getByRole("link", { name: /Open Fortnight/ })).toBeVisible();
     await expect(page.locator("[data-block=EmptyState]")).toHaveCount(0);
   }

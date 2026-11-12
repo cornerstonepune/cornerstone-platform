@@ -26,7 +26,6 @@ import { subjectsAgainstRule, type SubjectRow } from "@/lib/timetable-subjects";
 import { classesOf, subjectLooks, clashesOf, fortnightAfter, fortnightAt, fortnightNumber, fortnightsOfYear, isCoordinator, liveIds, liveWords, movesOf, noSchoolOn, switchedOn, yearFor, type Fn } from "@/lib/timetable-ui";
 import { schoolToday } from "@/lib/voice-page";
 import { DayOnPhone } from "./day-on-phone";
-import { PlanSections } from "./plan-sections";
 import "./timetable.css";
 
 type Props = { searchParams: Promise<Record<string, string | undefined>> };
@@ -55,9 +54,11 @@ export default async function TimetablePage({ searchParams }: Props) {
   // a day named in the address decides the fortnight it is shown in (stepping across a fortnight's edge); otherwise today does
   const named = q.day && isDay(q.day) ? q.day : undefined;
   const here = await fortnightAt(named ?? today, q.class);
+  const after = here ? await fortnightAfter(here) : null;
   const asked = /^\d+$/.test(q.fn ?? "") ? await fortnightNumber(Number(q.fn)) : null;
-  const fn = asked ?? (!named && q.when === "next" && here ? await fortnightAfter(here) : here);
-  const view: View = (VIEWS as readonly string[]).includes(q.view ?? "") ? (q.view as View) : "fortnight";
+  const fn = asked ?? (!named && q.when === "next" && here ? after : here);
+  // the wireframe opens on the week (the week that holds today, or the first week of the fortnight on a holiday); a phone opens on the day
+  const view: View = (VIEWS as readonly string[]).includes(q.view ?? "") ? (q.view as View) : "week";
   const keep = (extra: Record<string, string | undefined> = {}) => {
     const p = new URLSearchParams();
     for (const [k, v] of Object.entries({ class: q.class, when: q.when, fn: q.fn, view, ...extra })) if (v) p.set(k, v);
@@ -88,9 +89,13 @@ export default async function TimetablePage({ searchParams }: Props) {
       {(await noSchoolOn(today)) ? "School is on holiday" : "No fortnight runs today"}; Fortnight {fn.number} starts on {dateWords(fn.starts_on)}.
     </p>
   ) : null;
-  const moveHref = `/timetable/moves?${new URLSearchParams({ fn: String(fn.number), ...(classId ? { class: classId } : {}) })}`;
-  const choose = coordinator ? await coordinatorFilters(fn, all, classId) : null;
-  const sections = coordinator ? <PlanSections rows={plan} on={on} live={live} today={today} shown={fn.number} classId={classId} grid={(n) => `${HERE}?${new URLSearchParams({ ...(classId ? { class: classId } : {}), fn: String(n), view })}`} /> : null;
+  const choose = coordinator ? await coordinatorFilters(fn, all, classId, live, today) : null;
+  // Live or Planning, said beside the eyebrow (the coordinator's; an educator sees only what is live)
+  const chip = coordinator ? (
+    <span data-fortnight-state={fn.state}>
+      <StatusChip state={live.has(fn.id) ? "done" : "waiting"} words={said} compact round />
+    </span>
+  ) : null;
   if (!weeks) {
     // an educator the engine does not answer (switched off, or no class of hers has lessons then): a plain page, never "not found"
     if (!coordinator) {
@@ -107,10 +112,8 @@ export default async function TimetablePage({ searchParams }: Props) {
     const placed = all.find((c) => c.id === classId)?.lessons;
     const refused = classId && placed ? placed : 0;
     return (
-      <Screen stage={`Fortnight ${fn.number}`} title="Timetable" purpose="Every fortnight, in any state, read-only: what is placed, and whether educators see it yet." next={{ href: `/timetable/fortnight/${fn.number}`, label: `Fortnight ${fn.number}` }} rail={<TimetableRail here="grid" fn={fn.number} classId={classId} coordinator />}>
-        {sections}
+      <Screen stage={`Fortnight ${fn.number}`} title="Timetable" purpose="Every fortnight, in any state, read-only: what is placed, and whether educators see it yet." next={{ href: `/timetable/fortnight/${fn.number}`, label: `Fortnight ${fn.number}` }} stageChip={chip} rail={<TimetableRail here="grid" fn={fn.number} classId={classId} coordinator />}>
         {aheadLine}
-        <p className="tt-note" data-fortnight-state={fn.state}>{said}</p>
         {choose ? <FilterBar action={HERE} keep={{ view }} filters={choose} /> : null}
         {refused ? (
           <GridRefused lessons={refused} fortnight={fn.number} next={{ href: `/timetable/fortnight/${fn.number}`, label: `Open Fortnight ${fn.number}` }} />
@@ -157,15 +160,10 @@ export default async function TimetablePage({ searchParams }: Props) {
 
   return (
     <Screen
-      stage={`${klass.grade} ${klass.section} · Fortnight ${fn.number}`}
+      stage={`${klass.grade} ${klass.section} · Fortnight ${fn.number}${view === "fortnight" ? "" : ` · week ${"AB"[Math.max(0, weeks.findIndex((w) => w.days.some((d) => d.day === focus)))]}`}`}
+      stageChip={chip}
       title="Timetable"
       purpose="The fortnight is the unit: week A and week B, each period a block. A moved period is marked; a clash is red until it is accepted."
-      action={
-        <>
-          <a className="btn" href={keep({ view: "day", day: today, fn: undefined, when: undefined })} data-ux="action">Open today</a>
-          {coordinator ? <Link href={moveHref} className="btn secondary" data-move-lessons>Move lessons</Link> : null}
-        </>
-      }
       next={{ href: `/timetable/fortnight/${fn.number}`, label: `Fortnight ${fn.number}` }}
       rail={
         <TimetableRail
@@ -186,18 +184,16 @@ export default async function TimetablePage({ searchParams }: Props) {
       }
     >
       <DayOnPhone chosen={(VIEWS as readonly string[]).includes(q.view ?? "")} />
-      {sections}
       {aheadLine}
-      {coordinator ? <p className="tt-note" data-fortnight-state={fn.state}>Fortnight {fn.number}, shown below · {said}</p> : null}
+      <div className="tt-filters">
       <FilterBar
         action={HERE}
         keep={choose ? { view } : { view, day: q.day, fn: q.fn }}
         filters={choose ?? [
           ...(coordinator || weeks[0].classes.length > 1 ? [{ name: "class", label: "Class", value: klass.id, required: true, all: "", options: weeks[0].classes.map((c) => [c.id, `${c.grade} ${c.section}`] as const) }] : []),
-          { name: "when", label: "Fortnight", value: q.when === "next" ? "next" : "this", required: true, all: "", options: [["this", "This fortnight"], ["next", "Next fortnight"]] as const },
+          { name: "when", label: "Fortnight", value: q.when === "next" ? "next" : "this", required: true, all: "", options: [["this", `This: ${here ? `${here.number} (${span(here)})` : "this fortnight"}`], ["next", `Next: ${after ? `${after.number} (${span(after)})` : "next fortnight"}`]] as const },
         ]}
       />
-      <div className="mb-3 flex flex-wrap items-center gap-3">
         <ViewToggle
           current={view}
           views={[
@@ -213,6 +209,7 @@ export default async function TimetablePage({ searchParams }: Props) {
           </>
         ) : null}
         <Link href={keep({ view: "day", day: today })} className="chip" data-today-link>Today</Link>
+        <a className="btn" href={keep({ view: "day", day: today, fn: undefined, when: undefined })} data-ux="action">Open today</a>
       </div>
       <div className="tt-legend" data-legend>
         <StatusChip state="done" words="Done" round />
@@ -278,14 +275,27 @@ export default async function TimetablePage({ searchParams }: Props) {
 }
 
 /** The coordinator's two pickers: the class (every class of the year, with its lessons this fortnight as a whole count) and the
- *  fortnight (every teaching fortnight of the year, each with its state), so any fortnight in any state can be reached (#691). */
-async function coordinatorFilters(fn: Fn, all: { id: string; grade: string; section: string; lessons: number }[], classId: string | undefined) {
+ *  fortnight (every teaching fortnight of the year, in groups: Live, Planning, Earlier; each with its state and its dates), so any
+ *  fortnight in any state can be reached (#691). */
+async function coordinatorFilters(fn: Fn, all: { id: string; grade: string; section: string; lessons: number }[], classId: string | undefined, live: Set<string>, today: string) {
   const fns = await fortnightsOfYear(fn);
+  const group = (f: (typeof fns)[number]) => (live.has(f.id) ? "Live" : f.ends_on >= today ? "Planning" : "Earlier");
   return [
     { name: "class", label: "Class", value: classId ?? "", required: true, all: "", options: all.map((c) => [c.id, `${c.grade} ${c.section} · ${c.lessons} lesson${c.lessons === 1 ? "" : "s"}`] as const) },
-    { name: "fn", label: "Fortnight", value: String(fn.number), required: true, all: "", options: fns.map((f) => [String(f.number), `Fortnight ${f.number} · ${stateWords(f.state)} · ${dateWords(f.starts_on)}`] as const) },
+    {
+      name: "fn",
+      label: "Fortnight",
+      value: String(fn.number),
+      required: true,
+      all: "",
+      options: fns.map((f) => [String(f.number), `Fortnight ${f.number} · ${stateWords(f.state)} · ${span(f)}`] as const),
+      groups: (["Live", "Planning", "Earlier"] as const).map((label) => ({ label, values: fns.filter((f) => group(f) === label).map((f) => String(f.number)) })).filter((g) => g.values.length),
+    },
   ];
 }
+
+/** "16-Nov to 27-Nov": a fortnight's dates, as the wireframe's picker says them. */
+const span = (f: { starts_on: string; ends_on: string }) => `${dateWords(f.starts_on).slice(0, 6)} to ${dateWords(f.ends_on).slice(0, 6)}`;
 
 /** Why the coordinator sees no grid, in words, when it is not the engine's refusal (that is `GridRefused`): no class this year, or nothing placed yet. */
 const placedWords = (classes: number, n: number) =>
