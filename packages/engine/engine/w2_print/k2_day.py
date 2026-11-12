@@ -30,7 +30,7 @@ def my_classes(conn: db.Conn, staff_id: Any, day: dt.date) -> list[dict]:
     that day."""
     roles = list(settings.config(conn, "educator.timetable_roles", []))
     held = conn.execute(
-        "select distinct c.id::text as id, c.grade_code as grade, c.section, c.academic_year_id, c.campus_id"
+        "select distinct c.id::text as id, c.grade_code as grade, c.section, c.academic_year_id, c.campus_id, c.tenant_id"
         " from staff_role_grant g join school_class c on c.id = g.school_class_id"
         " where g.staff_id = %s and g.role_code = any(%s) and g.valid_from <= %s"
         " and (g.valid_to is null or g.valid_to >= %s) order by c.grade_code, c.section",
@@ -62,8 +62,7 @@ select d.on_date, d.kind as day_kind, d.note, f.number, f.starts_on, f.ends_on,
   w.week,
   p.id::text as period_id, p.starts_at, p.ends_at, p.label, p.fixed, coalesce(s.kind, 'empty') as kind, s.subject_code,
   coalesce(s.text, '') as text, fr.text as slot_text, s.state, pe.text as line, pe.id::text as entry_id, a.id::text as activity_id, a.code, a.name,
-  s.activity_code is not null as chosen,
-  (select c.value from config c where c.key = 'timetable.heads' and c.tenant_id = d.tenant_id) as heads_cfg
+  s.activity_code is not null as chosen
 from school_day d
 left join fortnight f on f.academic_year_id = %(year)s and d.on_date between f.starts_on and f.ends_on
 left join lateral (select case when f.id is null then null when d.on_date - f.starts_on < 7 then 'A' else 'B' end as week) w on true
@@ -90,7 +89,7 @@ def _hm(t: dt.time | None) -> str | None:
     return t.strftime("%H:%M") if t else None
 
 
-def _period(r: dict) -> dict:
+def _period(r: dict, listed: list[dict] | None = None) -> dict:
     act = (
         {"id": r["activity_id"], "code": r["code"], "name": r["name"], "chosen": bool(r["chosen"])}
         if r["activity_id"]
@@ -101,7 +100,7 @@ def _period(r: dict) -> dict:
         "label": r["label"], "fixed": r["fixed"], "kind": r["kind"], "subject": r["subject_code"],
         "name": r["label"] if r["fixed"] else (r["slot_text"] or r["label"]),
         "text": r["text"] or "", "line": r["line"], "plan_entry_id": r["entry_id"], "state": r["state"] or "planned", "activity": act,
-        "head": tt_heads.head_of(r["heads_cfg"] or [], r["subject_code"], r["kind"], r["text"]),
+        "head": tt_heads.head_of(listed or [], r["subject_code"], r["kind"], r["text"]),
     }  # fmt: skip
 
 
@@ -122,6 +121,7 @@ def days(conn: db.Conn, klass: dict, dates: list[dt.date]) -> list[dict]:
         "grade": klass["grade"],
         "days": dates,
     }
+    listed = tt_heads.heads(conn)
     for r in conn.execute(_ROWS, query).fetchall():
         if r["on_date"] not in got:
             got[r["on_date"]] = _empty_day(r["on_date"], r["day_kind"], r["note"]) | {
@@ -130,7 +130,7 @@ def days(conn: db.Conn, klass: dict, dates: list[dt.date]) -> list[dict]:
                 if r["number"] else None,
             }  # fmt: skip
         if r["period_id"]:
-            got[r["on_date"]]["periods"].append(_period(r))
+            got[r["on_date"]]["periods"].append(_period(r, listed))
     for d in got.values():
         _ends(d["periods"])
     return [got.get(d) or _empty_day(d) for d in dates]
@@ -145,7 +145,10 @@ def _ends(periods: list[dict]) -> None:
 
 def _who(conn: db.Conn, klass: dict, classes: list[dict], on: dt.date) -> dict:
     # `frozen` is the state of the fortnight holding the day (CP-6), `fortnight.state`
-    tenant = db.one(conn, "select tenant_id from school_class where id = %s", (klass["id"],))["tenant_id"]
+    tenant = (
+        klass.get("tenant_id")
+        or db.one(conn, "select tenant_id from school_class where id = %s", (klass["id"],))["tenant_id"]
+    )
     return {
         "classes": [_public(c) for c in classes],
         "class": _public(klass),
