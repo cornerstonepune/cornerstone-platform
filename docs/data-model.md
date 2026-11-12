@@ -138,3 +138,5 @@ ISO week (`core/weeks.py`: `2026-W40` is 2026-09-28); an old paper's own label (
   the private store, cleared with the recordings);
 - worked out when asked, never stored: a question's attempts and share right (the view `item_stat`), a level's samples
   (`engine links`), a child's reading notebook (`profiles.current`), a materials list's reminders.
+
+**Attendance (CP-42).** `attendance`: one row a child a day (present, absent or leave, the in and out times, the minutes), loaded from the school's report by `POST /attendance/load` and replaced when the same day is loaded again. No name and not who marked it; a name in the report is matched to `child_id` through `pii.child` inside the engine and the rows that match no child are reported by row number and program only. It is a table because it is the raw fact, many rows per child (`evidence_event` is append-only learning evidence; attendance is not).

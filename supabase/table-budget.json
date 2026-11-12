@@ -1,6 +1,8 @@
 {
   "why": "CP-27: the schema may only shrink. Equal to today's counts; lower them when a change removes tables or functions. Raising one needs a line in raised_by naming the spec and why the new table cannot be a column, a row in a shared table, a rule on a column, or a view.",
-  "tables": 81,
+  "tables": 82,
   "functions": 121,
-  "raised_by": []
+  "raised_by": [
+    "CP-42 (attendance): one row a child a day, about 13,000 a year, loaded from the school's report; it cannot be a column (it is many rows per child), a row in a shared table (evidence_event is append-only learning evidence and attendance is not evidence), a rule on a column, or a view (it is the raw fact)."
+  ]
 }

@@ -33,6 +33,9 @@ export type EngineRoutes = {
   "GET /worksheet/{code}.pdf": null;
   "GET /worksheet/{code}/geometry": null;
   "POST /assessment/name": { by: string; key: string; name: string };
+  "POST /attendance/child": { actor: string; class_id: string; roll_no: string; start: string; end: string };
+  "POST /attendance/class": { actor: string; class_id: string; start: string; end: string; by?: "week" | "month" };
+  "POST /attendance/load": { actor: string; rows: Record<string, unknown>[] };
   "POST /bank/fill": { skill_set: string; difficulty: string; count: number };
   "POST /bank/item/{item_key}/correct": { stem: string; by: string; reason: string };
   "POST /bank/item/{item_key}/remove": { by: string; note: string };

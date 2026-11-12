@@ -18,6 +18,14 @@
       "tables": ["public.child", "public.enrolment", "public.staff_role_grant"]
     },
     {
+      "code": "attendance",
+      "what": "Whether your child was present, absent or on leave each school day, and the times they came in and left.",
+      "why": "So your child's educators and the school can see how often your child is in school and notice a change early.",
+      "how_long": "While your child is at the school. How long after they leave is for the school to decide.",
+      "who_sees": "Your child's educators and the school's coordinator.",
+      "tables": ["public.attendance"]
+    },
+    {
       "code": "papers",
       "what": "The papers your child is given and writes on, and the scans or photos of them.",
       "why": "So each answer can be read and checked, and the next paper fits what your child is ready for.",
