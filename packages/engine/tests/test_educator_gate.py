@@ -188,3 +188,98 @@ def test_the_educator_still_cannot_build_a_list_while_the_switch_is_off(world):
         },
     )
     assert (r.status_code, r.json()["detail"]) == (403, "The timetable is not switched on.")
+
+
+# Nimish, 12 Nov 2026 (his yes, in the backend session): coordinators, deputy coordinators and the head read every class's
+# timetable, read-only, whether the switch is on or off (issue #691). The roles are the school's coordinator list
+# (config `k2.reads`.coordinator_roles); educators are unchanged.
+
+
+def test_switched_on_a_coordinator_level_role_reads_any_class_it_names(world):
+    _switch(world, True)
+    for role in ("coordinator", "deputy_coordinator", "head"):
+        who = _head(world, role)
+        r = call(world, "week", actor=who, day="2026-11-23", class_id=str(world["k"]["class"]))
+        assert r.status_code == 200, (role, r.text)
+        assert r.json()["class"]["id"] == str(world["k"]["class"]) and len(r.json()["days"]) == 5
+
+
+def test_switched_off_a_deputy_coordinator_reads_a_class_too(world):
+    _switch(world, False)
+    deputy = _head(
+        world, "deputy_coordinator"
+    )  # not a preview role: it reads as one of the school's coordinators
+    r = call(world, "day", actor=deputy, day="2026-11-23", class_id=str(world["k"]["class"]))
+    assert r.status_code == 200, r.text
+    _switch(world, True)
+    hers = call(
+        world, "day", day="2026-11-23"
+    ).json()  # the class's own educator, the switch on: the same day
+    assert r.json()["periods"] == hers["periods"] and len(hers["periods"]) > 0
+
+
+def test_a_coordinator_reads_a_week_whose_friday_has_no_lessons(world):
+    _switch(world, True)
+    world["conn"].execute(
+        "delete from session s using school_day d where d.id = s.school_day_id and s.school_class_id = %s"
+        " and d.on_date = '2026-11-27'",
+        (world["k"]["class"],),
+    )
+    r = call(
+        world, "week", actor=_head(world, "coordinator"), day="2026-11-23", class_id=str(world["k"]["class"])
+    )
+    assert r.status_code == 200, r.text
+    friday = next(d for d in r.json()["days"] if d["day"] == "2026-11-27")
+    assert friday["periods"] == []
+
+
+def test_the_educator_is_unchanged_and_a_role_off_the_list_reads_nothing(world):
+    _switch(world, False)
+    r = call(world, "week", day="2026-11-23", class_id=str(world["k"]["class"]))
+    assert (r.status_code, r.json()["detail"]) == (403, "The timetable is not switched on.")
+    _switch(world, True)
+    other = (
+        world["conn"]
+        .execute(
+            "insert into school_class (tenant_id, campus_id, academic_year_id, grade_code, section)"
+            " select tenant_id, campus_id, academic_year_id, grade_code, section || 'X' from school_class where id = %s"
+            " returning id",
+            (world["k"]["class"],),
+        )
+        .fetchone()["id"]
+    )
+    assert (
+        call(world, "week", day="2026-11-23", class_id=str(other)).status_code == 403
+    )  # a class she does not hold
+    ops = _head(world, "ops")
+    assert (
+        call(world, "week", actor=ops, day="2026-11-23", class_id=str(world["k"]["class"])).status_code == 403
+    )
+
+
+def test_reading_a_class_as_a_coordinator_writes_nothing(world):
+    _switch(world, True)
+    conn = world["conn"]
+
+    def count() -> int:
+        return conn.execute(
+            "select (select count(*) from session) + (select count(*) from change_log) as n"
+        ).fetchone()["n"]
+
+    before = count()
+    call(
+        world, "week", actor=_head(world, "coordinator"), day="2026-11-23", class_id=str(world["k"]["class"])
+    )
+    assert count() == before
+
+
+def test_the_question_whether_her_screens_are_open_is_not_widened(world):
+    """Only reading a timetable is widened: the activity and curriculum pages ask `/timetable/open`, which stays as it was,
+    so a deputy coordinator (not a preview role) is still refused it while the switch is off."""
+    _switch(world, False)
+    deputy = _head(world, "deputy_coordinator")
+    assert call(world, "open", actor=deputy).status_code == 403
+    assert (
+        call(world, "day", actor=deputy, day="2026-11-23", class_id=str(world["k"]["class"])).status_code
+        == 200
+    )
