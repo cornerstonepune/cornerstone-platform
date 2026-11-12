@@ -97,7 +97,7 @@ test.afterAll(async () => sql.end());
 test("one Assessments in the menu for marking and making, and a row opens the paper where its work is", async ({ page }) => {
   await page.goto("/children/assessments");
   // Assessments is one page of the Children door: the door is lit, the page is marked in its row, and there is no Marking or Make papers
-  const menu = page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" });
+  const menu = page.getByRole("navigation", { name: "Sections" });
   const pagesRow = await doorPages(page);
   await expect(menu.getByRole("link", { name: "Children" })).toHaveAttribute("aria-current", "page");
   await expect(pagesRow.getByRole("link", { name: "Assessments", exact: true })).toHaveAttribute("aria-current", "page");

@@ -131,7 +131,7 @@ test("10 and 11. each child row shows the name beside the Sr. No.; the address a
 
 test("12. every setup page is two clicks from the bar", async ({ page }) => {
   await page.goto("/setup/needs-doing", { waitUntil: "networkidle" });
-  const bar = page.locator("[data-bar]").getByRole("navigation", { name: "Sections" });
+  const bar = page.getByRole("navigation", { name: "Sections" });
   await bar.getByRole("link", { name: /^Setup/ }).click();
   await expect(page.locator("h1")).toHaveText("Setup");
   for (const [card, title] of [["Open Staff", "Staff and classes"], ["Open Classes and children", "Classes and children"]] as const) {

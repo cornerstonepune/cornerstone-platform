@@ -57,7 +57,7 @@ async function signedIn(browser: Browser): Promise<Page> {
 
 /** The count a menu tab carries, 0 when it carries none (as u15 reads it). */
 async function badge(page: Page, tab: string): Promise<number> {
-  const link = page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" }).getByRole("link", { name: new RegExp(`^${tab}\\b`) });
+  const link = page.getByRole("navigation", { name: "Sections" }).getByRole("link", { name: new RegExp(`^${tab}\\b`) });
   const n = link.getByTestId("waiting");
   return (await n.count()) ? Number((await n.innerText()).replace(/\D/g, "")) : 0;
 }

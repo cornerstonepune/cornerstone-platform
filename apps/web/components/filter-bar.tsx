@@ -28,6 +28,7 @@ export function FilterBar({
   filters,
   search,
   keep = {},
+  primary,
 }: {
   /** The page's own path. */
   action: string;
@@ -35,6 +36,8 @@ export function FilterBar({
   search?: { name: string; value?: string; placeholder: string; label?: string };
   /** What the page keeps while filtering (a chosen week, a tab) and never shows as a filter. */
   keep?: Record<string, string | undefined>;
+  /** How many filters stay in the one row; the rest wait behind "More filters" (docs/frontend/page-charter.md A4). All show when unset. */
+  primary?: number;
 }) {
   const form = useRef<HTMLFormElement>(null);
   const on = [
@@ -50,40 +53,47 @@ export function FilterBar({
     return s ? `${action}?${s}` : action;
   };
   const control = "min-h-[40px] border border-[var(--line-control)] bg-[var(--panel)] px-3 !text-[15px] text-[var(--ink)]";
+  const filterControl = (f: Filter) => (
+      <label key={f.name} className="flex max-w-full min-w-0 items-center gap-2 text-[13px] text-[var(--ink-muted)]">
+        <span>{f.label}</span>
+        <select data-filter="" name={f.name} defaultValue={f.value ?? ""} onChange={() => form.current?.requestSubmit()} className={`select ${control} !w-auto max-w-full min-w-0`}>
+          {f.required ? null : <option value="">{f.all}</option>}
+          {f.groups
+            ? [
+                ...f.groups.map((g) => (
+                  <optgroup key={g.label} label={g.label}>
+                    {f.options.filter(([v]) => g.values.includes(v)).map(([v, words]) => (
+                      <option key={v} value={v}>
+                        {words}
+                      </option>
+                    ))}
+                  </optgroup>
+                )),
+                ...f.options.filter(([v]) => !f.groups!.some((g) => g.values.includes(v))).map(([v, words]) => (
+                  <option key={v} value={v}>
+                    {words}
+                  </option>
+                )),
+              ]
+            : f.options.map(([v, words]) => (
+                <option key={v} value={v}>
+                  {words}
+                </option>
+              ))}
+        </select>
+      </label>
+  );
   return (
     <section data-block="FilterBar" data-filterbar aria-label="Filters" className="mb-3">
       <form ref={form} action={action} method="get" role="search" className="flex flex-wrap items-center gap-2">
         {Object.entries(keep).map(([k, v]) => (v ? <input key={k} type="hidden" name={k} value={v} /> : null))}
-        {filters.map((f) => (
-          <label key={f.name} className="flex max-w-full min-w-0 items-center gap-2 text-[13px] text-[var(--ink-muted)]">
-            <span>{f.label}</span>
-            <select data-filter="" name={f.name} defaultValue={f.value ?? ""} onChange={() => form.current?.requestSubmit()} className={`select ${control} !w-auto max-w-full min-w-0`}>
-              {f.required ? null : <option value="">{f.all}</option>}
-              {f.groups
-                ? [
-                    ...f.groups.map((g) => (
-                      <optgroup key={g.label} label={g.label}>
-                        {f.options.filter(([v]) => g.values.includes(v)).map(([v, words]) => (
-                          <option key={v} value={v}>
-                            {words}
-                          </option>
-                        ))}
-                      </optgroup>
-                    )),
-                    ...f.options.filter(([v]) => !f.groups!.some((g) => g.values.includes(v))).map(([v, words]) => (
-                      <option key={v} value={v}>
-                        {words}
-                      </option>
-                    )),
-                  ]
-                : f.options.map(([v, words]) => (
-                    <option key={v} value={v}>
-                      {words}
-                    </option>
-                  ))}
-            </select>
-          </label>
-        ))}
+        {filters.slice(0, primary ?? filters.length).map(filterControl)}
+        {primary !== undefined && filters.length > primary ? (
+          <details data-more-filters className="b-more">
+            <summary>{filters.slice(primary).some((f) => f.value && !f.required && !f.starting) ? "More filters (on)" : "More filters"}</summary>
+            <div className="mt-2 flex flex-wrap items-center gap-2">{filters.slice(primary).map(filterControl)}</div>
+          </details>
+        ) : null}
         {search ? (
           <label className="relative ml-auto flex items-center">
             <span className="sr-only">{search.label ?? "Search the list"}</span>

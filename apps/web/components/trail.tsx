@@ -3,7 +3,6 @@
 import Link from "@/components/link";
 import { useWalk } from "./frame/walk";
 import { Icon } from "@/lib/icons";
-import { DoorPages } from "./frame/doors";
 
 // Where she is: two fixed levels, the door and then the thing (docs/frontend/SPEC.md §3), plus the browser's Back. The door is
 // the one lit on the bar, so the walk's own door; the thing is the page itself. Nothing deeper: a deeper path is the Back button's.
@@ -30,7 +29,6 @@ export function Trail({ thing }: { thing: string }) {
         </li>
       </ol>
     </nav>
-    <DoorPages />
     </div>
   );
 }

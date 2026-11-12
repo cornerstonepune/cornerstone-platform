@@ -73,7 +73,7 @@ test("a teacher can reach every section from the menu, and the menu says where t
     ["Children", "Children"],
   ];
   for (const [label, heading] of sections) {
-    const group = page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" }).getByRole("link", { name: new RegExp(`^${label}\\b`) });
+    const group = page.getByRole("navigation", { name: "Sections" }).getByRole("link", { name: new RegExp(`^${label}\\b`) });
     await group.click();
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(heading);
     await expect(group).toHaveAttribute(

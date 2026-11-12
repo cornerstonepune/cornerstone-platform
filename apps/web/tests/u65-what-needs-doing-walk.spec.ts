@@ -157,7 +157,7 @@ test("the queue-shrinking trend is off What needs doing, its data and function k
 
 test("Teaching is not in the menu", async ({ page }) => {
   await open(page, "/setup/needs-doing");
-  const top = page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" }).getByRole("link");
+  const top = page.getByRole("navigation", { name: "Sections" }).getByRole("link");
   const names = (await top.allInnerTexts()).map((n) => n.replace(/\s*\d[\d,]*$/, "").trim());
   expect(names).not.toContain("Teaching");
   test.info().annotations.push({ type: "top-level menu items", description: `${names.length}: ${names.join(", ")}` });

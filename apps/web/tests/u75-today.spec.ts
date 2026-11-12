@@ -130,11 +130,11 @@ test.describe("the page", () => {
       const p = await ctx.newPage();
       await p.goto("/today");
       const strip = await p.locator(".b-att").evaluateAll((els) => els.filter((e) => /do now|this week/i.test(e.textContent ?? "")).map((e) => Number((e.querySelector(".b-n")?.textContent ?? "0").trim())));
-      const badge = p.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" }).getByRole("link", { name: /^Today/ }).getByTestId("waiting");
+      const badge = p.getByRole("navigation", { name: "Sections" }).getByRole("link", { name: /^Today/ }).getByTestId("waiting");
       expect(strip.reduce((a, b) => a + b, 0)).toBeGreaterThan(0);
       expect(Number((await badge.innerText()).replace(/\D/g, ""))).toBe(strip.reduce((a, b) => a + b, 0));
       // no other door carries a count
-      await expect(p.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" }).getByTestId("waiting")).toHaveCount(1);
+      await expect(p.getByRole("navigation", { name: "Sections" }).getByTestId("waiting")).toHaveCount(1);
       await ctx.close();
     } finally {
       await sql`update pii.educator_note set status = 'confirmed' where id = ${note}`;

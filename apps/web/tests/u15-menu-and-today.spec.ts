@@ -18,7 +18,8 @@ const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 const SECTION = "UI1-TEST";
 const WEEK = isoWeek();
 const EDUCATOR = { email: "ui1-educator@cornerstone.test", name: "UI1 educator", role: "educator" };
-const GROUPS = ["Today", "Timetable", "Children", "Setup"];
+// the sidebar (docs/frontend/page-charter.md A1), as the coordinator sees it: five sections
+const GROUPS = ["Today", "Notes to confirm", "Week", "Fortnight", "Materials", "Class picture", "Parent reports", "Board", "Question bank", "Across classes", "Curriculum", "What needs doing", "Skills to approve", "Staff", "Classes", "Timetable rules", "How it works"];
 
 async function engine(path: string, body: object) {
   const r = await fetch(`http://127.0.0.1:${ENGINE_PORT}${path}`, {
@@ -87,7 +88,7 @@ async function rows(page: Page) {
 
 /** The count the group "What needs doing" carries, 0 when it carries none. */
 async function badge(page: Page): Promise<number> {
-  const n = page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" }).getByRole("link", { name: /^Today/ }).getByTestId("waiting");
+  const n = page.getByRole("navigation", { name: "Sections" }).getByRole("link", { name: /^Today/ }).getByTestId("waiting");
   return (await n.count()) ? Number((await n.innerText()).replace(/\D/g, "")) : 0;
 }
 
@@ -105,7 +106,7 @@ test.afterAll(async () => {
 // the title is the one goals/ui1-menu-and-today.yaml names; since UI-7b the count is Today's strip (do-now plus this-week), and What needs doing sits in Setup
 test("the menu is four groups, and only What needs doing carries the count of what waits", async ({ page }) => {
   await page.goto("/today");
-  const menu = page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" });
+  const menu = page.getByRole("navigation", { name: "Sections" });
   const names = await menu.getByRole("link").allInnerTexts();
   expect(names.map((n) => n.replace(/\s*\d[\d,]*$/, "").trim())).toEqual(GROUPS);
   expect(await menu.getByTestId("waiting").count(), "one count, on one group at most (none while nothing waits)").toBeLessThanOrEqual(1);

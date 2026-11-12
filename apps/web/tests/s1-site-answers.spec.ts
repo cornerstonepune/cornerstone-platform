@@ -29,7 +29,7 @@ async function whileLocked(table: "item" | "config", work: () => Promise<void>):
 const COULD_NOT_LOAD = "This page could not load";
 
 async function menu(page: Page, label: string) {
-  await page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" }).getByRole("link", { name: new RegExp(`^${label}\\b`) }).click();
+  await page.getByRole("navigation", { name: "Sections" }).getByRole("link", { name: new RegExp(`^${label}\\b`) }).click();
 }
 
 test("a click shows the page is loading at once, and a database that does not answer is said in words within 12 s", async ({ page }) => {

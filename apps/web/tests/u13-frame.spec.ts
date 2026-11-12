@@ -42,56 +42,41 @@ test("1. every existing page renders inside AppFrame (the bar, the trail, one ma
     await page.goto(route);
     await expect(page.locator("[data-frame] [data-bar]").first(), route).toBeVisible();
     await expect(page.getByRole("main"), route).toHaveCount(1);
-    await expect(page.locator("aside:not([data-rail])"), `${route}: no side menu`).toHaveCount(0);
+    await expect(page.locator("aside:not([data-rail]):not([data-sidebar])"), `${route}: no side menu but the sidebar`).toHaveCount(0);
   }
 });
 
-test("2. at 1440 the four doors are the bar's own; at 400 they are a bottom tab bar of 44 px or more with the chosen door in clay", async ({ browser }) => {
+test("2. at 1440 the sidebar is beside the page with the charter's five sections; at 400 it is a drawer the bar's Menu button opens", async ({ browser }) => {
   const wide = await (await signedInAs(browser, "coordinator", { width: 1440, height: 900 })).newPage();
   await wide.goto("/children");
-  const top = wide.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" });
-  await expect(top).toBeVisible();
-  expect((await top.getByRole("link").allInnerTexts()).map((t) => t.replace(/\s*\d[\d,]*$/, "").trim())).toEqual(["Today", "Timetable", "Children", "Setup"]);
-  await expect(top.locator("[aria-current=page]")).toHaveText(/^Children/);
+  const side = wide.getByRole("navigation", { name: "Sections" });
+  await expect(side).toBeVisible();
+  expect(await side.locator("h2").allInnerTexts()).toEqual(["My day", "Timetable", "Children", "Assessments", "School"]);
+  await expect(side.locator("[aria-current=page]")).toHaveText(/^Class picture/);
   expect((await wide.locator("[data-bar]").first().locator("div").first().boundingBox())?.height).toBe(BAR_HEIGHT_PX);
+  // the page keeps the width the sidebar leaves: the sidebar is a column, not an overlay
+  const box = (await wide.locator("[data-sidebar]").boundingBox())!;
+  expect((await wide.locator("main").boundingBox())!.x).toBeGreaterThanOrEqual(box.x + box.width - 1);
+  // folded to icons, it is narrower and still names every link
+  await wide.locator("[data-sidebar-fold]").click();
+  expect((await wide.locator("[data-sidebar]").boundingBox())!.width).toBeLessThan(100);
+  await expect(side.getByRole("link", { name: "Class picture" })).toBeVisible();
 
   const phone = await (await signedInAs(browser, "coordinator", { width: 400, height: 900 })).newPage();
   await phone.goto("/children");
-  const tabs = phone.locator("nav[data-bar=doors]");
-  await expect(tabs).toBeVisible();
-  const links = tabs.getByRole("link");
-  await expect(links).toHaveCount(4);
-  for (const l of await links.all()) expect((await l.boundingBox())!.height).toBeGreaterThanOrEqual(44);
-  const lit = tabs.locator("[aria-current=page]");
-  await expect(lit).toHaveText(/Children/);
-  const [icon, word] = await lit.evaluate((a) => {
-    const [i, w] = [a.children[0] as HTMLElement, a.children[1] as HTMLElement];
-    return [getComputedStyle(i).color, getComputedStyle(w).color];
-  });
-  const clay = await phone.evaluate(() => {
-    const e = document.createElement("i");
-    e.style.color = "var(--brand-clay)";
-    document.body.append(e);
-    const c = getComputedStyle(e).color;
-    e.remove();
-    return c;
-  });
-  const ink = await phone.evaluate(() => {
-    const e = document.createElement("i");
-    e.style.color = "var(--ink)";
-    document.body.append(e);
-    const c = getComputedStyle(e).color;
-    e.remove();
-    return c;
-  });
-  expect(icon).toBe(clay);
-  expect(word).toBe(ink);
+  await expect(phone.locator("[data-sidebar]")).toBeHidden();
+  await phone.locator("[data-menu-button]").click();
+  const drawer = phone.getByRole("navigation", { name: "Sections" });
+  await expect(drawer).toBeVisible();
+  for (const l of await drawer.getByRole("link").all()) expect((await l.boundingBox())!.height).toBeGreaterThanOrEqual(44);
+  await expect(drawer.locator("[aria-current=page]")).toHaveText(/Class picture/);
+  await phone.keyboard.press("Escape");
+  await expect(phone.locator("[data-sidebar]")).toBeHidden();
   // the top bar keeps the mark, the search and the person
   const bar = phone.locator("[data-bar]").first();
   await expect(bar.locator("picture[data-brand-mark] img")).toBeVisible();
   await expect(bar.getByRole("combobox")).toBeVisible();
   await expect(bar.getByRole("button", { name: /account/ })).toBeVisible();
-  await expect(bar.getByRole("navigation", { name: "Sections" })).toBeHidden();
 });
 
 test("3 and 4. BrandMark: the right file for the ground and the room, as given, unfiltered, with its clear space and its name", async ({ browser }) => {
@@ -110,7 +95,7 @@ test("3 and 4. BrandMark: the right file for the ground and the room, as given, 
 
 async function walk(page: Page) {
   await page.goto("/today");
-  await page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" }).getByRole("link", { name: /^Today/ }).click();
+  await page.getByRole("navigation", { name: "Sections" }).getByRole("link", { name: /^Today/ }).click();
 }
 
 test("6. the trail is two levels (the door, then the thing); an Activity opened from Today lights Today, opened cold it lights Setup", async ({ page }) => {
@@ -123,7 +108,7 @@ test("6. the trail is two levels (the door, then the thing); an Activity opened 
   await expect(page.locator("h1")).toHaveText("Children");
   // opened cold: the route's own door
   await page.goto("/setup/activities/NO-SUCH");
-  await expect(page.locator("[data-bar] [data-door][aria-current=page]").first()).toHaveText(/^Setup/);
+  await expect(page.locator("[data-trail-door]")).toHaveText("Setup"); // the trail names the walk's door; the sidebar lights the page itself
   // opened from Today: Today stays lit
   await walk(page);
   await page.evaluate(() => {
@@ -132,7 +117,7 @@ test("6. the trail is two levels (the door, then the thing); an Activity opened 
   });
   await page.getByRole("link", { name: "an activity" }).click();
   await page.waitForURL(/activities/);
-  await expect(page.locator("[data-bar] [data-door][aria-current=page]").first()).toHaveText(/^Today/);
+  await expect(page.locator("[data-trail-door]")).toHaveText("Today");
 });
 
 test("8a. the address check looks at page and data requests only: a page request carrying the term fails it, a static file name does not", () => {
@@ -202,7 +187,7 @@ test("9. a screen that is not built is not drawn: isBuilt reads merged_slices, a
   expect(readFileSync(path.join(WEB, "lib/built.ts"), "utf8")).toContain("export const isBuilt");
   await page.goto("/today");
   // no door points at a screen that is not built: each opens a page that exists today
-  for (const door of await page.locator("[data-bar]").first().locator("[data-door]").all()) {
+  for (const door of await page.locator("[data-sidebar]").locator("[data-door]").all()) {
     const href = (await door.getAttribute("href"))!;
     expect((await page.request.get(href)).status(), href).toBeLessThan(400);
   }

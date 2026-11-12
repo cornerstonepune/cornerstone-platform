@@ -1,7 +1,8 @@
 import type { ReactNode } from "react";
 import Link from "@/components/link";
 import { BrandMark } from "./brand-mark";
-import { BottomDoors, HelpLink, TopDoors } from "./frame/doors";
+import { HelpLink } from "./frame/doors";
+import { MenuButton, Sidebar, SidebarProvider, type SideGroup } from "./frame/sidebar";
 import { ActingAsSwitch, AccountLink, Person } from "./frame/person";
 import { MapLink, ReportLink } from "./frame/foot-links";
 import { SearchBox } from "./frame/search-box";
@@ -13,14 +14,16 @@ import type { Kind } from "@/components/kind-tile";
 import { signOut } from "@/lib/auth-actions";
 import type { Session } from "@/lib/auth";
 import { mayUse } from "@/lib/access";
-import { GROUPS } from "@/lib/menu";
+import { GROUPS, SIDEBAR } from "@/lib/menu";
 import { isBuilt, screenHref } from "@/lib/built";
 import { actingAsEducator } from "@/lib/acting-view";
+import { fortnightAt } from "@/lib/timetable-ui";
+import { schoolToday } from "@/lib/school-clock";
 
 // AppFrame (docs/frontend/SPEC.md §5, UI-13): the one frame of every signed-in page. The bar across the top (the school's logo, a
 // link to Today; the four doors; search; acting as; help; sign out), the trail and the main column below it, and on a phone
 // the four doors at the foot. The page itself is `Screen`, which holds the title, the one main action, the rail and the next
-// step. Nimish, 24 Oct 2026: "the menu can be on the top" — there is no sidebar. Nothing here names a subject.
+// step. The menu is the left sidebar (docs/frontend/page-charter.md A1; it replaced the doors along the top, 12 Nov 2026). Nothing here names a subject.
 
 /** A door opens its screen once that screen is built (lib/built.ts), and the first page of the door until then. */
 function doorsFor(me: Session, acting: boolean, waiting: number): FrameDoor[] {
@@ -35,18 +38,39 @@ function doorsFor(me: Session, acting: boolean, waiting: number): FrameDoor[] {
   }));
 }
 
+/** The sidebar's sections (lib/menu.ts SIDEBAR): the School section for the staff who may use Setup, the count on Today, and Fortnight
+ *  opening the fortnight in view (the school's today) where there is one. */
+function sidebarFor(me: Session, acting: boolean, waiting: number, fortnight: number | null): SideGroup[] {
+  const school = mayUse(me, "setup") && !acting;
+  return SIDEBAR.filter((s) => !s.coordinator || school).map((s) => ({
+    key: s.key,
+    label: s.label,
+    links: s.items.map((i) => ({
+      key: i.href,
+      label: i.label,
+      icon: i.icon,
+      door: i.door,
+      href: i.fortnight && fortnight ? `/timetable/fortnight/${fortnight}` : i.href,
+      count: i.href === "/today" && waiting ? waiting : undefined,
+    })),
+  }));
+}
+
 export async function AppFrame({ me, waiting, children }: { me: Session; waiting: number; children: ReactNode }) {
   const acting = await actingAsEducator(me);
   const doors = doorsFor(me, acting, waiting);
+  const fortnight = await fortnightAt(await schoolToday()).then((f) => f?.number ?? null).catch(() => null);
+  const groups = sidebarFor(me, acting, waiting, fortnight);
   return (
     <WalkProvider doors={doors}>
-      <div data-block="AppFrame" data-frame className="flex min-h-dvh flex-col bg-[var(--ground)] pb-[var(--space-7)] text-[var(--ink)] min-[701px]:pb-0">
+      <SidebarProvider>
+      <div data-block="AppFrame" data-frame className="flex min-h-dvh flex-col bg-[var(--ground)] text-[var(--ink)]">
         <header data-bar className="relative z-30 border-b border-[var(--line)] bg-[var(--panel)] print:hidden">
           <div className="flex h-[72px] w-full items-center gap-[var(--space-3)] px-[var(--space-3)] min-[701px]:gap-[var(--space-4)] md:px-[var(--space-4)]">
+            <MenuButton />
             <Link href="/today" prefetch className="flex shrink-0 items-center no-underline">
               <BrandMark />
             </Link>
-            <TopDoors />
             <div className="ml-auto flex min-w-0 items-center gap-[var(--space-2)] max-[700px]:flex-1 max-[700px]:justify-end">
               <SearchBox />
               <Person name={me.name}>
@@ -67,15 +91,20 @@ export async function AppFrame({ me, waiting, children }: { me: Session; waiting
             </div>
           </div>
         </header>
-        <main className="flex w-full min-w-0 flex-1 flex-col">{children}</main>
-        <footer className="w-full px-[var(--space-3)] py-[var(--space-3)] text-[length:var(--text-label)] md:px-[var(--space-4)] print:hidden">
-          <span className="flex flex-wrap gap-x-[var(--space-4)]">
-            <ReportLink />
-            {mayUse(me, "the_map") ? <MapLink /> : null}
-          </span>
-        </footer>
-        <BottomDoors />
+        <div className="flex min-w-0 flex-1 items-start">
+          <Sidebar groups={groups} />
+          <div className="flex min-h-[calc(100dvh-72px)] min-w-0 flex-1 flex-col">
+            <main className="flex w-full min-w-0 flex-1 flex-col">{children}</main>
+            <footer className="w-full px-[var(--space-3)] py-[var(--space-3)] text-[length:var(--text-label)] md:px-[var(--space-4)] print:hidden">
+              <span className="flex flex-wrap gap-x-[var(--space-4)]">
+                <ReportLink />
+                {mayUse(me, "the_map") ? <MapLink /> : null}
+              </span>
+            </footer>
+          </div>
+        </div>
       </div>
+      </SidebarProvider>
     </WalkProvider>
   );
 }

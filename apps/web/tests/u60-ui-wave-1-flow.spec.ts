@@ -89,7 +89,7 @@ const DOORS = ["Today", "Timetable", "Children", "Setup"];
 async function theBar(page: Page, doors: string[]) {
   await expect(page.locator("header picture[data-brand-mark] img"), "the school's logo").toBeVisible();
   expect(await page.locator("aside:not([data-rail])").count(), "no left sidebar").toBe(0);
-  const groups = page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" });
+  const groups = page.getByRole("navigation", { name: "Sections" });
   expect((await groups.getByRole("link").allInnerTexts()).map((n) => n.replace(/\s*\d[\d,]*$/, "").trim())).toEqual(doors);
   const bar = await groups.boundingBox();
   expect(bar && bar.y < 64, "the doors are in the bar at the top").toBe(true);

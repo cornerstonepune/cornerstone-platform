@@ -95,3 +95,73 @@ export const doorOf = (path: string): Door | undefined => locate(path)?.door;
 
 /** The pages of a door, as the bar's second row shows them: none when the door is one page. */
 export const pagesOf = (door: Door | undefined): readonly MenuPage[] => (door && door.pages.length > 1 ? door.pages : []);
+
+// The left sidebar (docs/frontend/page-charter.md A1): the teacher's jobs, in five sections, always at the left. It replaces the four
+// doors along the bar and the "… pages" fold. A page the charter moves or merges keeps its address here; the doors above stay the map
+// for the trail, the walk and the guide. `door`: the door a link belongs to (the trail's first level). `fn`: the address names the
+// fortnight in view, which the frame fills in. Nothing here names a subject (docs/ux-rules.md rule 6).
+export type SideItem = { label: string; href: string; icon: IconName; match: readonly string[]; door: DoorKey; fortnight?: boolean };
+export type SideSection = { key: string; label: string; coordinator?: boolean; items: readonly SideItem[] };
+
+export const SIDEBAR: readonly SideSection[] = [
+  {
+    key: "my-day",
+    label: "My day",
+    items: [
+      { label: "Today", href: "/today", icon: "today", match: ["/today", "/record", "/period"], door: "today" },
+      { label: "Notes to confirm", href: "/notes", icon: "note", match: ["/notes"], door: "today" },
+    ],
+  },
+  {
+    key: "timetable",
+    label: "Timetable",
+    items: [
+      { label: "Week", href: "/timetable", icon: "week", match: ["/timetable"], door: "timetable" },
+      { label: "Fortnight", href: "/timetable?view=fortnight", icon: "fortnight", match: ["/timetable/fortnight", "/timetable/draft"], door: "timetable", fortnight: true },
+      { label: "Materials", href: "/educator/materials", icon: "materials", match: ["/educator/materials", "/timetable/materials"], door: "timetable" },
+    ],
+  },
+  {
+    key: "children",
+    label: "Children",
+    items: [
+      { label: "Class picture", href: "/children", icon: "class", match: ["/children", "/growth"], door: "children" },
+      { label: "Parent reports", href: "/children/reports", icon: "parent", match: ["/children/reports"], door: "children" },
+    ],
+  },
+  {
+    key: "assessments",
+    label: "Assessments",
+    items: [
+      { label: "Board", href: "/children/assessments", icon: "board", match: ["/children/assessments", "/make", "/worksheets/CS", "/capture"], door: "children" },
+      { label: "Question bank", href: "/setup/question-bank", icon: "assessment", match: ["/setup/question-bank", "/library", "/worksheets/taxonomy"], door: "setup" },
+    ],
+  },
+  {
+    key: "school",
+    label: "School",
+    coordinator: true,
+    items: [
+      { label: "Across classes", href: "/across", icon: "table", match: ["/across"], door: "children" },
+      { label: "Curriculum", href: "/", icon: "tree", match: ["/", "/skill-sets", "/worksheets", "/setup", "/setup/curriculum"], door: "setup" },
+      { label: "What needs doing", href: "/setup/needs-doing", icon: "checklist", match: ["/setup/needs-doing"], door: "setup" },
+      { label: "Skills to approve", href: "/setup/skills/approve", icon: "skill", match: ["/setup/skills"], door: "setup" },
+      { label: "Staff", href: "/setup/staff", icon: "educator", match: ["/setup/staff"], door: "setup" },
+      { label: "Classes", href: "/setup/classes", icon: "school-words", match: ["/setup/classes"], door: "setup" },
+      { label: "Timetable rules", href: "/timetable/rules", icon: "setup", match: ["/timetable/rules"], door: "timetable" },
+      { label: "How it works", href: "/setup/how-it-works", icon: "help", match: ["/setup/how-it-works"], door: "setup" },
+    ],
+  },
+];
+
+/** The sidebar link a path belongs to: the longest matching prefix (so /timetable/rules is Timetable rules, not Week). */
+export function sideItemOf(address: string): SideItem | undefined {
+  const path = address.split(/[?#]/)[0];
+  let best: { item: SideItem; at: number } | undefined;
+  for (const s of SIDEBAR)
+    for (const item of s.items) {
+      const at = Math.max(-1, ...item.match.map((m) => reach(path, m)));
+      if (at > (best?.at ?? -1)) best = { item, at };
+    }
+  return best?.item;
+}

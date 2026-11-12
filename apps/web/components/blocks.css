@@ -239,4 +239,27 @@
   .b-days > i:empty { background: transparent; }
   .b-ctable td { vertical-align: middle; }
   .b-pending { color: var(--ink-muted); border: 1px dashed var(--line-control); border-radius: var(--radius-control); padding: 0 var(--space-2); }
+
+  /* ---------- stat tiles, the detail panel, the state scale (docs/frontend/page-charter.md A2, A3) ---------- */
+  .b-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: var(--space-2); }
+  .b-stat { display: grid; gap: 2px; padding: var(--space-3); border-radius: var(--radius-card); background: var(--cb, var(--surface)); color: var(--ink); text-decoration: none; }
+  .b-stat-n { font: var(--text-title-page)/var(--lh-title-page) var(--font-serif); color: var(--c, var(--ink)); font-variant-numeric: tabular-nums; }
+  .b-stat-l { font-size: var(--text-label); color: var(--ink-muted); }
+  .b-panel { display: grid; align-content: start; gap: var(--space-3); padding: var(--space-3); border-radius: var(--radius-card); background: var(--panel); box-shadow: var(--shadow-card); min-width: 0; }
+  .b-phead { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--space-2); }
+  .b-ptitle { font-size: 18px; font-weight: 600; overflow-wrap: anywhere; }
+  .b-psub { font-size: var(--text-label); color: var(--ink-muted); }
+  .b-pclose { display: inline-flex; min-width: var(--tap); min-height: var(--tap); align-items: center; justify-content: center; border-radius: var(--radius-control); border: 1px solid var(--line-control); font-size: 22px; line-height: 1; color: var(--ink); text-decoration: none; }
+  .b-pactions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-3); }
+  .b-pactions > a, .b-pactions > button { display: inline-flex; min-height: var(--tap); align-items: center; }
+  .b-ptabs { display: flex; flex-wrap: wrap; gap: 2px; border-bottom: 1px solid var(--line); }
+  .b-ptab { min-height: var(--tap); padding: 0 var(--space-3); border: 0; border-bottom: 3px solid transparent; background: none; color: var(--ink-muted); font: inherit; cursor: pointer; }
+  .b-ptab[aria-selected="true"] { color: var(--ink); font-weight: 600; border-bottom-color: var(--brand-clay); }
+  .b-pbody { display: grid; gap: var(--space-3); padding-top: var(--space-3); }
+  .b-pbody[hidden] { display: none; }
+  .b-lvl { display: grid; grid-template-columns: auto 1fr; gap: var(--space-2); align-items: start; padding: var(--space-2); border-radius: var(--radius-control); background: var(--cb); }
+  .b-lvl > b { min-width: 28px; text-align: center; color: var(--c); font-variant-numeric: tabular-nums; }
+  .b-mini { display: flex; height: 10px; overflow: hidden; border-radius: var(--radius-pill); }
+  .b-mini > i { display: block; height: 100%; background: var(--s); }
+  .b-more > summary { cursor: pointer; display: inline-flex; min-height: 40px; align-items: center; font-size: 13px; color: var(--link); }
 }

@@ -71,24 +71,16 @@ for (const { name, width, height } of SIZES) {
 
 test("every section is reachable from the menu", async ({ page }) => {
   await page.goto("/");
-  const groups = page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" });
-  for (const label of ["Today", "Timetable", "Children", "Setup"]) await expect(groups.getByRole("link", { name: label })).toBeVisible();
-  // and every page of a door from the row of pages under the bar
-  for (const [door, labels] of [
-    ["Children", ["Children", "Upload papers"]],
-    ["Setup", ["Curriculum", "Question bank", "Staff", "School"]],
-  ] as const) {
-    await groups.getByRole("link", { name: door }).click();
-    const row = await doorPages(page);
-    for (const label of labels) await expect(row.getByRole("link", { name: label, exact: true })).toBeVisible();
-  }
+  const groups = page.getByRole("navigation", { name: "Sections" });
+  // the sidebar's five sections hold every page of the site's menu, always in view
+  for (const label of ["Today", "Week", "Class picture", "Board", "Curriculum", "Question bank", "Staff", "Classes"]) await expect(groups.getByRole("link", { name: label, exact: true })).toBeVisible();
 });
 
 // Unlayered, the global `a:hover` beat the menu's own hover colour and drew an item basalt on basalt: it vanished under the pointer.
 test("a menu item stays readable while the pointer is on it", async ({ page }) => {
   await page.goto("/");
   const bar = await page.getByRole("banner").first().evaluate((el) => getComputedStyle(el).backgroundColor);
-  for (const item of await page.getByRole("banner").first().getByRole("navigation", { name: "Sections" }).getByRole("link").all()) {
+  for (const item of await page.getByRole("navigation", { name: "Sections" }).getByRole("link").all()) {
     await item.hover();
     const colour = await item.evaluate((el) => getComputedStyle(el).color);
     expect(colour, (await item.textContent()) ?? "").not.toBe(bar);
@@ -96,9 +88,8 @@ test("a menu item stays readable while the pointer is on it", async ({ page }) =
 });
 
 test("the menu marks where you are", async ({ page }) => {
-  // the question bank is a page of Setup: the group and its tab are both marked
+  // the question bank is a page of Assessments: its link is marked
   await page.goto("/library");
-  await expect(page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" }).getByRole("link", { name: "Setup" })).toHaveAttribute("aria-current", "page");
   await expect((await doorPages(page)).getByRole("link", { name: "Question bank" })).toHaveAttribute("aria-current", "page");
 });
 

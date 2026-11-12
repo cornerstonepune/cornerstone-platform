@@ -2,7 +2,9 @@ import { KindTile, type Kind } from "./kind-tile";
 
 /** Two to three panels side by side, each with a header tinted in its kind's colour (kind tile and title), a few lines and
  *  one link. A card may hold more than a line (`body`: a picture, a short table) and may have no link when it only shows. */
-export type Card = { kind: Kind; title: string; line?: string; body?: React.ReactNode; href?: string; link?: string; primary?: boolean };
+/** At most two chips on a card (docs/frontend/page-charter.md A3): one status chip and one count; the rest goes in the detail panel. The tuple type
+ *  refuses a third at compile time and the block draws no more than two. */
+export type Card = { kind: Kind; title: string; line?: string; body?: React.ReactNode; href?: string; link?: string; primary?: boolean; chips?: readonly [React.ReactNode?, React.ReactNode?] };
 export function Cards({ cards }: { cards: readonly Card[] }) {
   return (
     <div data-block="Cards" className="b-cards">
@@ -14,6 +16,7 @@ export function Cards({ cards }: { cards: readonly Card[] }) {
           </div>
           <div className="b-card-b">
             {c.line ? <span className="b-muted">{c.line}</span> : null}
+            {c.chips?.some(Boolean) ? <span className="flex flex-wrap items-center gap-[var(--space-1)]" data-card-chips>{c.chips.slice(0, 2)}</span> : null}
             {c.body}
             {c.href && c.link ? c.primary ? <a href={c.href} className="btn" data-ux="action">{c.link}</a> : <a href={c.href}>{c.link}</a> : null}
           </div>

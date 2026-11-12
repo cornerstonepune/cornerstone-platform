@@ -10,12 +10,15 @@ export async function driveBar(browser: Browser, inv: Inventory): Promise<string
   const page = await context.newPage();
   await page.goto("/today");
   const bar = page.locator("[data-bar]").first();
+  // the four doors are the sidebar's first page of each: Today, Week, Class picture, Curriculum (School)
+  const sidebar = page.getByRole("navigation", { name: "Sections" });
+  const SIDE: Record<string, string> = { Today: "Today", Timetable: "Week", Children: "Class picture", Setup: "Curriculum" };
   for (const e of inv.bar) {
     if (e.t === "link" && ["Today", "Timetable", "Children", "Setup"].includes(e.label)) {
-      await bar.getByRole("navigation", { name: "Sections" }).getByRole("link", { name: new RegExp(`^${e.label}`) }).click();
+      await sidebar.getByRole("link", { name: new RegExp(`^${SIDE[e.label]}`) }).click();
       await page.locator("h1").first().waitFor();
       // the lit door follows the walk a moment after the page changes
-      await expect(bar.locator("[data-door][aria-current=page]").filter({ hasText: e.label }), `bar: after “${e.label}” the door is not lit`).toHaveCount(1).catch((x: Error) => out.push(x.message.split("\n")[0]));
+      await expect(sidebar.locator("a[aria-current=page]").filter({ hasText: SIDE[e.label] }), `bar: after “${e.label}” its page is not lit in the sidebar`).toHaveCount(1).catch((x: Error) => out.push(x.message.split("\n")[0]));
     } else if (e.t === "link" && e.label === "?") {
       await bar.getByRole("link", { name: "Help" }).click();
       await page.waitForURL(/\/guide/, { timeout: 15_000 }).catch(() => out.push(`bar: “?” opened ${page.url()}, not the guide`));

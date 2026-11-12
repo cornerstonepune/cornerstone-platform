@@ -148,16 +148,17 @@ test("on a phone the bar and the heading are at the top and every tap is big eno
       const h1 = page.getByRole("heading", { level: 1 }).first();
       const end = await h1.evaluate((el) => el.getBoundingClientRect().top + parseFloat(getComputedStyle(el).lineHeight));
       expect(end, `${path}: heading's first line ends at ${end}`).toBeLessThanOrEqual(240); // the frame adds a row of the door's pages and the trail above the heading
-      // the groups fold into the menu button on a phone; the button and the search are each big enough
-      await expect(page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" })).toBeHidden();
+      // the sidebar is a drawer on a phone, shut until the Menu button opens it; the button and the search are each big enough
+      await expect(page.getByRole("navigation", { name: "Sections" })).toBeHidden();
       for (const field of [page.getByRole("button", { name: /account/ }), find(page).getByRole("combobox")]) {
         expect((await field.boundingBox())!.height, path).toBeGreaterThanOrEqual(44);
       }
       expect(await page.evaluate(() => document.documentElement.scrollWidth), path).toBeLessThanOrEqual(400);
     }
-    // and the doors at the foot are each a big tap
+    // and the menu's links, in the drawer the Menu button opens, are each a big tap
     await page.goto("/setup/needs-doing");
-    for (const link of await page.locator("nav[data-bar=doors]").getByRole("link").all()) expect((await link.boundingBox())!.height).toBeGreaterThanOrEqual(44);
+    await page.locator("[data-menu-button]").click();
+    for (const link of await page.getByRole("navigation", { name: "Sections" }).getByRole("link").all()) expect((await link.boundingBox())!.height).toBeGreaterThanOrEqual(44);
   } finally {
     await context.close();
   }

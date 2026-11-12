@@ -140,7 +140,7 @@ test.describe("the page", () => {
     const strip = p.locator("[data-block=AttentionStrip]");
     if (await strip.count()) await expect(strip.locator(".b-att").first()).toBeVisible();
     const waiting = await p.locator(".b-att").evaluateAll((els) => els.filter((e) => /do now|this week/i.test(e.textContent ?? "")).reduce((n, e) => n + Number((e.querySelector(".b-n")?.textContent ?? "0").trim()), 0));
-    const badge = p.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" }).getByTestId("waiting");
+    const badge = p.getByRole("navigation", { name: "Sections" }).getByTestId("waiting");
     if (waiting) await expect(badge).toHaveText(String(waiting));
     else await expect(badge).toHaveCount(0);
   };

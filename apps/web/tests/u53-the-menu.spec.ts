@@ -21,7 +21,7 @@ test("the menu lists the four groups in order, and each page is marked and title
   // the door's pages are the page's rail on a wide screen (the Timetable door); the fold is the narrow-width fallback, read at 900 px
   await page.setViewportSize({ width: 900, height: 900 });
   await page.goto("/today");
-  const menu = page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" });
+  const menu = page.getByRole("navigation", { name: "Sections" });
   const names = (await menu.getByRole("link").allInnerTexts()).map((n) => n.replace(/\s*\d[\d,]*$/, "").trim());
   expect(names).toEqual(GROUPS);
   for (const [path, group, label] of PAGES) {
@@ -34,7 +34,7 @@ test("the menu lists the four groups in order, and each page is marked and title
 
 test("only What needs doing carries a count, and no word of the menu names a subject", async ({ page }) => {
   await page.goto("/children");
-  const menu = page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" });
+  const menu = page.getByRole("navigation", { name: "Sections" });
   expect(await menu.getByTestId("waiting").count()).toBeLessThanOrEqual(1);
   expect(await page.locator("[data-bar]").first().innerText()).not.toMatch(/\b(maths|english|hindi|science|evs)\b/i);
 });

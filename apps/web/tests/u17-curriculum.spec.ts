@@ -146,6 +146,6 @@ test("every page says the tab it is under, above its title, and the menu marks t
     await page.goto(path);
     // the eyebrow says the tab; where the title already says it, the eyebrow is not drawn (#690: no line that repeats the title)
     await expect(page.locator("[data-testid=stage], h1").first(), path).toHaveText(new RegExp(`^${tab}\\b`));
-    await expect(page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" }).locator("[aria-current=page]"), path).toHaveText(new RegExp(`^${group[tab]}`));
+    await expect(page.getByRole("navigation", { name: "Sections" }).locator("[aria-current=page]"), path).toHaveText(new RegExp(`^${group[tab]}`));
   }
 });

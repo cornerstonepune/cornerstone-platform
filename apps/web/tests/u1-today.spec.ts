@@ -79,7 +79,7 @@ test.afterAll(async () => {
 
 test("the menu is the teacher's week, and says where they are", async ({ page }) => {
   await page.goto("/setup/needs-doing");
-  const menu = page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" });
+  const menu = page.getByRole("navigation", { name: "Sections" });
   // four doors (lib/menu.ts); the one count of what waits follows the first name
   await expect(menu.getByRole("link")).toHaveText([/^Today/, /^Timetable/, /^Children/, /^Setup/]);
   for (const [label, heading] of [
