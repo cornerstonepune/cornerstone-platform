@@ -71,6 +71,12 @@ test("Timetable: a lesson with an activity opens it; one with none is not a link
     select s.id, a.code, p.id as entry from session s join school_day d on d.id = s.school_day_id
     join activity a on a.tenant_id = s.tenant_id, plan_entry p
     where s.school_class_id = ${f.klass} and d.on_date = ${f.days[1]}::date and s.period_id = ${f.periods[0].id} and p.school_class_id = ${f.klass} limit 1`;
+  // the educator holds the class as cover, here and not only in a later test: a person with no class sees no timetable (grants are kept, never deleted)
+  await sql`
+    insert into staff_role_grant (tenant_id, staff_id, role_code, school_class_id, valid_from, granted_by)
+    select ${f.tenant}, ps.staff_id, 'cover_educator', ${f.klass}, current_date - 3, 'u75 test' from pii.staff ps
+    where ps.email = ${EDUCATOR.email}
+      and not exists (select 1 from staff_role_grant g where g.staff_id = ps.staff_id and g.school_class_id = ${f.klass} and g.role_code = 'cover_educator')`;
   await sql`update plan_entry set activity_id = (select id from activity where code = ${row.code}) where id = ${row.entry}`;
   await sql`update session set plan_entry_id = ${row.entry} where id = ${row.id}`;
   try {
