@@ -1,5 +1,6 @@
 import Link from "@/components/link";
 import { Screen } from "@/components/app-frame";
+import { TimetableRail } from "@/components/timetable-rail";
 import { EmptyState } from "@/components/empty-state";
 import { ClassPick } from "@/components/educator/day-head";
 import { DataTable } from "@/components/data-table";
@@ -45,6 +46,7 @@ export default async function MaterialsPage({ searchParams }: { searchParams: Pr
         </nav>
       }
       next={{ href: `/timetable?view=day&class=${d.class.id}&day=${day}`, label: "The day" }}
+      rail={<TimetableRail here="materials" classId={d.class.id} coordinator={me.role === "coordinator"} />}
     >
       <ClassPick classes={d.classes} on={d.class.id} href={(id) => `/educator/materials?class=${id}&day=${day}&span=${span}`} />
       {list === null ? (

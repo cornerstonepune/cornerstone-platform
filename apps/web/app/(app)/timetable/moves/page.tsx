@@ -1,5 +1,7 @@
 import Link from "@/components/link";
-import { Rail, Screen } from "@/components/app-frame";
+import { Screen } from "@/components/app-frame";
+import { GridRefused } from "@/components/grid-refused";
+import { TimetableRail } from "@/components/timetable-rail";
 import { DataTable } from "@/components/data-table";
 import { EmptyState } from "@/components/empty-state";
 import { FortnightGrid } from "@/components/fortnight-grid";
@@ -31,13 +33,13 @@ export default async function MovesPage({ searchParams }: Props) {
   const here = await fortnightAt(today);
   const upcoming = here && here.starts_on > today ? here : here ? await fortnightAfter(here) : here;
   const fn = (/^\d+$/.test(q.fn ?? "") ? await fortnightNumber(Number(q.fn)) : null) ?? upcoming;
-  if (!fn) return <Screen stage="Moves by hand" title="Moves by hand" purpose="No teaching fortnight is set up ahead." next={{ href: "/timetable", label: "Timetable" }}><EmptyState>No moves yet.</EmptyState></Screen>;
+  if (!fn) return <Screen stage="Moves by hand" title="Moves by hand" purpose="No teaching fortnight is set up ahead." next={{ href: "/timetable", label: "Timetable" }} rail={<TimetableRail here="moves" coordinator={coordinator} />}><EmptyState>No moves yet.</EmptyState></Screen>;
   const read = await Promise.all([fn.starts_on, addDays(fn.starts_on, 7)].map((w) => weekOrNull(me, { class_id: q.class, week_of: w })));
   // the engine does not answer for this class (a class not held while the timetable is switched on): said in words, never "not found"
   if (read.some((w) => w === null))
     return (
-      <Screen stage={`Fortnight ${fn.number}`} title="Moves by hand" purpose="Pick a lesson, then the lesson to swap it with." next={{ href: `/timetable?fn=${fn.number}`, label: "Timetable" }}>
-        <EmptyState>The lessons of this class in Fortnight {fn.number} could not be read just now, so none can be moved from here yet.</EmptyState>
+      <Screen stage={`Fortnight ${fn.number}`} title="Moves by hand" purpose="Pick a lesson, then the lesson to swap it with." next={{ href: `/timetable?fn=${fn.number}`, label: "Timetable" }} rail={<TimetableRail here="moves" fn={fn.number} coordinator={coordinator} />}>
+        <GridRefused fortnight={fn.number} next={{ href: `/timetable/fortnight/${fn.number}`, label: `Open Fortnight ${fn.number}` }} />
       </Screen>
     );
   const weeks = read.filter((w) => w !== null);
@@ -74,7 +76,7 @@ export default async function MovesPage({ searchParams }: Props) {
       next={{ href: `/timetable/fortnight/${fn.number}`, label: `Fortnight ${fn.number}: Approve` }}
       rail={
         <div className="tt-rail">
-          <Rail edges={[{ screen: "fortnight", params: { n: String(fn.number) }, href: `/timetable/fortnight/${fn.number}`, label: `Fortnight ${fn.number}`, icon: "fortnight" }, { screen: "timetable", href: `/timetable?fn=${fn.number}&class=${klass.id}`, label: "The grid", icon: "week" }, { screen: "rules", href: "/timetable/rules", label: "Timetable rules", icon: "setup" }]} />
+          <TimetableRail here="moves" fn={fn.number} classId={klass.id} coordinator={coordinator} />
           <aside aria-label="This draft so far" data-rail-part="so-far" className="tt-rail-card">
             <h2 className="tt-rail-h">This draft so far</h2>
             <KeyValue rows={[{ label: "Lessons", value: String(grid.placed.length), num: true }, { label: "Moved by hand", value: String(mine.length), num: true }, { label: "Clashes open", value: String(open.length), num: true }, { label: "Clashes accepted", value: String(clashes.length - open.length), num: true }]} />

@@ -547,3 +547,9 @@ table.grid.steady tr.under td {
     color: var(--ink-muted);
   }
 }
+
+/* The Timetable door's pages are in the page's rail ("Connected to") wherever the rail sits beside the page (the Screen's grid, 1000 px
+   and up); the fold at the end of the trail is the narrow-width fallback only. */
+@media (min-width: 1000px) {
+  body:has([data-door-rail]) [data-door-pages] { display: none; }
+}

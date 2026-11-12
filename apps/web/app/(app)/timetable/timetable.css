@@ -35,3 +35,9 @@
 .tt-clash { display: grid !important; gap: var(--space-2); justify-items: start; }
 .tt-block { display: grid; gap: var(--space-2); margin-block: var(--space-3); }
 .tt-count { display: inline-block; min-width: 1.6em; padding: 0 var(--space-1); border-radius: var(--radius-pill); background: var(--surface); color: var(--ink-muted); font-family: var(--font-sans); font-size: var(--text-label); text-align: center; vertical-align: middle; }
+
+/* A fortnight's row opens its grid: the name's link is stretched over the row (the row is the positioning box). The row's own actions sit above it. */
+[data-fortnight-row] { position: relative; cursor: pointer; }
+[data-fortnight-row] .tt-name::after { content: ""; position: absolute; inset: 0; }
+[data-fortnight-row] .tt-actions { position: relative; z-index: 1; display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); }
+[data-fortnight-row][data-live-fortnight] td:first-child, [data-fortnight-row] td { vertical-align: middle; }

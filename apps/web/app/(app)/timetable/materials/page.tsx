@@ -1,5 +1,6 @@
 import Link from "@/components/link";
-import { Screen, Rail, type Edge } from "@/components/app-frame";
+import { Screen } from "@/components/app-frame";
+import { TimetableRail } from "@/components/timetable-rail";
 import { DataTable } from "@/components/data-table";
 import { EmptyState } from "@/components/empty-state";
 import { FilterBar } from "@/components/filter-bar";
@@ -104,7 +105,6 @@ export default async function MaterialsFortnight({ searchParams }: { searchParam
   ) : null;
 
   let body;
-  let edges: Edge[] = [];
   if (school) {
     // the school's list is the coordinator's: for anyone else the engine refuses and the page says whose it is
     const list = await schoolListOf(me, day.slice(0, 7) + "-01", new Date(Date.UTC(Number(day.slice(0, 4)), Number(day.slice(5, 7)), 0)).toISOString().slice(0, 10));
@@ -113,12 +113,6 @@ export default async function MaterialsFortnight({ searchParams }: { searchParam
     const list = await materialsOf(me, d.class.id, day, span);
     const lines: Row[] = list?.groups.flatMap((g) => g.lines.map((l) => ({ ...l, day: g.label }))) ?? [];
     const notes = q.show === "notes" ? await waitingNotes(me) : null;
-    const seen = new Map<string, string>();
-    for (const l of lines) if (l.activity) seen.set(l.activity.code, l.activity.name);
-    edges = [
-      ...[...seen].map(([code, name]): Edge => ({ screen: "activity", params: { code }, label: name, icon: "activity" })),
-      { screen: "fortnight", label: "Fortnight", icon: "week" },
-    ];
     body =
       list === null ? (
         <EmptyState>{W.notHers}</EmptyState>
@@ -137,7 +131,7 @@ export default async function MaterialsFortnight({ searchParams }: { searchParam
       title="Materials, this fortnight"
       purpose="Built from the activities in the plan. Each line knows which activity needs it."
       next={{ href: `/educator/materials?class=${d.class.id}&day=${day}&span=${span}`, label: "Change quantities on the class list" }}
-      rail={<Rail edges={edges} />}
+      rail={<TimetableRail here="materials" coordinator={coordinator} />}
     >
       {tabs}
       {school ? null : (

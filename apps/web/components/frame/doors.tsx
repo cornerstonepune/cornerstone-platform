@@ -96,7 +96,8 @@ function PageLink({ page, here }: { page: MenuPage; here: string | undefined }) 
 }
 
 /** The pages of the lit door. The wireframes draw one nav row (the bar) and no row of tabs under it (Nimish, 11 Nov 2026), so a door's
- *  other pages fold behind one button at the end of the trail ("Setup pages"); it opens a panel over the page, grouped where the door's
+ *  other pages fold behind one button at the end of the trail ("Setup pages"), a bordered button, not grey text. Where a page's rail
+ *  holds the door's pages already (`Rail doorRail`, the Timetable door) the fold is for a narrow screen only (globals.css); it opens a panel over the page, grouped where the door's
  *  pages name a group, and closes on a page, on Escape or on a click outside. The page you are on is marked in it. */
 export function DoorPages() {
   const path = usePathname();
@@ -137,7 +138,7 @@ export function DoorPages() {
         aria-expanded={!shut}
         aria-controls="door-pages"
         onClick={() => setOpenAt(shut ? path : null)}
-        className="inline-flex min-h-[var(--tap)] items-center gap-[var(--space-1)] rounded-[var(--radius-control)] px-[var(--space-2)] text-[length:var(--text-label)] font-medium text-[var(--ink)] hover:bg-[var(--surface)]"
+        className="inline-flex min-h-[var(--tap)] cursor-pointer items-center gap-[var(--space-1)] rounded-[var(--radius-control)] border border-[var(--line-control)] bg-[var(--panel)] px-[var(--space-3)] text-[length:var(--text-body)] font-medium text-[var(--ink)] hover:bg-[var(--surface)]"
       >
         {/* the site's fold marker, first, as every fold draws it: ▸ folded, ▾ open */}
         <span aria-hidden="true">{shut ? "▸" : "▾"}</span>

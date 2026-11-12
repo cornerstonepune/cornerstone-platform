@@ -17,7 +17,7 @@ export const eyebrowSays = (stage: string, title: string) => {
  *  column's own padding holds it and no rule or divider follows it. */
 export function PageHeader({ stage, title, sub, icon, inColumn }: { stage: string; title: string; sub: string; icon?: IconName; inColumn?: boolean }) {
   return (
-    <header className={inColumn ? "mb-[var(--space-3)]" : "border-b border-[var(--line)] px-5 pt-3 pb-3 md:px-9"}>
+    <header className={inColumn ? "mb-[var(--space-3)]" : "border-b border-[var(--line)] px-[var(--space-3)] pt-3 pb-3 md:px-[var(--space-4)]"}>
       <Trail thing={title} />
       {eyebrowSays(stage, title) ? (
         <div className="mb-1 flex items-center gap-[var(--space-1)] truncate text-[length:var(--text-eyebrow)] font-semibold tracking-[0.08em] text-[var(--ink-muted)] uppercase md:whitespace-normal" data-testid="stage">
@@ -26,13 +26,13 @@ export function PageHeader({ stage, title, sub, icon, inColumn }: { stage: strin
         </div>
       ) : null}
       <h1 className="text-[24px] leading-tight md:text-[30px]">{title}</h1>
-      <p className="mt-1 text-[15px] leading-[1.5] text-[var(--ink-muted)] md:text-[16px]">{sub}</p>
+      <p className="mt-1 max-w-[62ch] text-[15px] leading-[1.5] text-[var(--ink-muted)] md:text-[16px]">{sub}</p>
     </header>
   );
 }
 
 export function Body({ children }: { children: ReactNode }) {
-  return <div className="min-w-0 flex-1 px-5 pt-[var(--space-3)] pb-[var(--space-5)] md:px-9">{children}</div>;
+  return <div className="min-w-0 flex-1 px-[var(--space-3)] pt-[var(--space-3)] pb-[var(--space-5)] md:px-[var(--space-4)]">{children}</div>;
 }
 
 // `label` names the panel as a region for a screen reader (and a test); `id` makes it a link target. The panel is

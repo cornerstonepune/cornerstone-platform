@@ -1,4 +1,5 @@
-import { Rail, Screen } from "@/components/app-frame";
+import { Screen } from "@/components/app-frame";
+import { TimetableRail } from "@/components/timetable-rail";
 import Link from "@/components/link";
 import { DataTable } from "@/components/data-table";
 import { Details } from "@/components/details";
@@ -221,7 +222,7 @@ export default async function RulesPage({ searchParams }: Props) {
       next={{ href: "/timetable/draft", label: "Draft from the rules" }}
       rail={
         <div className="tt-rail">
-          <Rail edges={[{ screen: "draft", href: "/timetable/draft", label: "Draft from the rules", icon: "setup" }, { screen: "timetable", href: "/timetable", label: "Timetable", icon: "week" }]} />
+          <TimetableRail here="rules" coordinator />
           {grouped ? (
             <aside aria-label="This class" data-rail-part="counts" className="tt-rail-card">
               <h2 className="tt-rail-h">{rules!.class.grade} {rules!.class.section}</h2>

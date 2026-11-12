@@ -50,7 +50,8 @@ are in `apps/web/lib/voice-words.ts` and every icon in `apps/web/lib/icons.tsx`,
    holds what is connected to it, never the menu): the school's logo (BrandMark, 48 px high, a link to Today), the four doors (Today,
    Timetable, Children, Setup, each with its icon; Setup is every member of staff's while `mayUse(me, "setup")` says so, and
    the coordinator group's alone once the roles split), the search, acting as (the coordinator's), help and sign out. There is one nav row: the lit door's other pages fold behind one button at the end of the trail ("Setup pages"), never a
-   second row under the bar (#690). The one count in the site is on Today.
+   second row under the bar (#690). The Timetable door's pages are also the page's rail ("Connected to", each with an icon and a second line), and there the fold is the narrow-width fallback only.
+   Nothing caps the width: the bar, the main column and the footer use the whole screen with the token gutters (24 px); only a running paragraph (the purpose line) keeps a readable line length (62 ch), never a table, grid, list or the page itself (U81). The one count in the site is on Today.
    The search is a typeahead of at most five suggestions with no results page; what is typed travels in a POST body, never
    in an address or a log. Everything in the bar is at least 44 px tall. Nothing in a shared block or the bar names a
    subject. The door lit is the door the walk started from. Above a page's title is its trail: the door, then the thing,

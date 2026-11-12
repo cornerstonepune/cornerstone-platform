@@ -102,8 +102,8 @@ test("the coordinator opens a fortnight still in planning: its grid, its state i
   await expect(page.locator("[data-section=live] [data-nothing-live]")).toContainText("Nothing is live yet.");
   const row = page.locator(`[data-section=planning] [data-planning-fortnight="${PLANNED}"]`);
   await expect(row).toContainText("Drafted: not live yet");
-  await expect(row).toContainText(`${lessons} lessons placed`);
-  await expect(page.locator(`[data-section=planning] [data-planning-fortnight="${EMPTY}"]`)).toContainText("0 lessons placed");
+  await expect(row.locator("td[data-label='Lessons placed']")).toHaveText(String(lessons));
+  await expect(page.locator(`[data-section=planning] [data-planning-fortnight="${EMPTY}"] td[data-label='Lessons placed']`)).toHaveText("0");
   // the tools that change a plan are links to the pages that already do it; this page changes nothing
   for (const [name, href] of [["Draft from the rules", "/timetable/draft"], ["Moves by hand", "/timetable/moves"], ["Timetable rules", "/timetable/rules"]])
     await expect(page.locator("[data-section=planning]").getByRole("link", { name })).toHaveAttribute("href", href);
@@ -204,6 +204,8 @@ test("the tabs that led nowhere are gone: no Your day, no This week; the Timetab
   // the door's pages fold behind "<door> pages" (one nav row, #690 step B): opened, they hold no Your day and no This week
   await page.goto("/today");
   await expect((await doorPages(page)).getByRole("link", { name: "Your day" })).toHaveCount(0);
+  // on a wide screen the door's pages are in the page's rail; the fold is the narrow-width fallback, so it is read at 900 px
+  await page.setViewportSize({ width: 900, height: 800 });
   await page.goto("/timetable");
   const row = await doorPages(page);
   await expect(row.getByRole("link", { name: "This week" })).toHaveCount(0);

@@ -40,23 +40,28 @@ test("Timetable: lessons by subject counts the class's sessions for the fortnigh
   for (const r of rows) await expect(page.locator(`[data-subject-row="${r.code}"]`)).toContainText(String(r.n));
 });
 
-test("Fortnight: three cards (State, Plan lines, Hand moves) and every fortnight of the year by state", async ({ page }) => {
+test("Fortnight: two cards (State, Hand moves), the plan lines as a table grouped by week, and every fortnight of the year by state", async ({ page }) => {
   await page.goto(`/timetable/fortnight/${HERE}`);
   const cards = page.locator("[data-block=Cards] article");
-  await expect(cards).toHaveCount(3);
+  await expect(cards).toHaveCount(2);
   await expect(cards.nth(0)).toContainText("State");
-  await expect(cards.nth(1)).toContainText("Plan lines");
-  await expect(cards.nth(2)).toContainText("Hand moves");
+  await expect(cards.nth(1)).toContainText("Hand moves");
+  const plan = page.locator("[data-card=plan]");
+  await expect(plan.getByRole("heading", { name: /Plan lines/ })).toBeVisible();
+  await expect(plan.getByRole("columnheader", { name: "Week" })).toBeVisible();
+  await expect(plan.getByRole("columnheader", { name: "Line" })).toBeVisible();
   const lanes = page.locator("[data-block=KanbanBoard] [data-lane]");
   await expect(lanes).toHaveText([/Drafted/, /Frozen/, /Aligned/, /Approved/, /List sent/]);
   const [{ n }] = await sql<{ n: number }[]>`select count(*)::int as n from fortnight where kind = 'teaching' and academic_year_id = (select academic_year_id from fortnight where id = ${f.here})`;
   await expect(page.locator("[data-block=KanbanBoard] [data-kcard]")).toHaveCount(n);
 });
 
-test("Fortnight: the rail lists the activities in the plan beside the grid and draft links", async ({ page }) => {
+test("Fortnight: the rail is the few places it connects to: the grid, Moves by hand, Draft, Rules and Materials, not the activities", async ({ page }) => {
   await page.goto(`/timetable/fortnight/${HERE}`);
   await expect(page.locator("[data-rail]").getByRole("link", { name: "The grid" })).toBeVisible();
   await expect(page.locator("[data-rail]").getByRole("link", { name: "Draft from the rules" })).toBeVisible();
+  for (const name of ["Moves by hand", "Timetable rules", "Materials"]) await expect(page.locator("[data-rail]").getByRole("link", { name })).toBeVisible();
+  expect(await page.locator("[data-rail] [data-rail-link]").count()).toBeLessThanOrEqual(6);
 });
 
 test("Draft: the fortnight is chosen from the teaching fortnights, and the rail says what the draft reads", async ({ page }) => {

@@ -1,6 +1,9 @@
 import { notFound } from "next/navigation";
 import Link from "@/components/link";
-import { Rail, Screen, type Edge } from "@/components/app-frame";
+import { Screen } from "@/components/app-frame";
+import { TimetableRail } from "@/components/timetable-rail";
+import { DataTable } from "@/components/data-table";
+import type { Column } from "@/lib/ux-rules";
 import { Cards, type Card } from "@/components/cards";
 import { EmptyState } from "@/components/empty-state";
 import { KanbanBoard, type Lane } from "@/components/kanban-board";
@@ -10,7 +13,7 @@ import { requireStaff } from "@/lib/auth";
 import { dateWords } from "@/lib/week";
 import { FORTNIGHT_STEPS, nextState, steppedFor, stateWords } from "@/lib/fortnight-words";
 import { screenHref } from "@/lib/built";
-import { fortnightNumber, fortnightsOfYear, isCoordinator, movesOf, planOf, stepsTaken } from "@/lib/timetable-ui";
+import { fortnightNumber, fortnightsOfYear, isCoordinator, movesOf, planOf, stepsTaken, type PlanLine } from "@/lib/timetable-ui";
 import { schoolToday } from "@/lib/voice-page";
 import { sql } from "@/lib/db";
 import { GoLive } from "./go-live";
@@ -21,6 +24,14 @@ const STEP_STATE: Record<string, string> = { freeze: "frozen", align: "aligned",
 // the lane's colour and icon: a fortnight still being made waits, one that is settled is done
 const LANE_STATE = { planning: "waiting", aligned: "waiting", approved: "waiting", frozen: "done", list_sent: "done" } as const;
 const activityHref = (code: string) => screenHref("activity", { code }) ?? `/educator/activity/${encodeURIComponent(code)}`;
+
+// The plan lines are a table grouped by week: a week's lines first, a line for both weeks (no week) last.
+const WEEK_ORDER = (w: string | null) => (w === null ? "~" : w);
+const PLAN_COLUMNS: Column<PlanLine>[] = [
+  { key: "week", label: "Week", width: "7rem", value: (l) => (l.week ? `Week ${l.week}` : "Both weeks") },
+  { key: "line", label: "Line", value: (l) => l.text, cell: (l) => (<><b>{l.text}</b> <span className="tt-note">{l.class_label}</span></>) },
+  { key: "activity", label: "Activity", value: (l) => l.activity?.name ?? "", cell: (l) => (l.activity ? <Link href={activityHref(l.activity.code)}>{l.activity.name}</Link> : null) },
+];
 
 // A fortnight: its state, its plan lines and the moves made by hand. The coordinator takes the next step with one button
 // (Approve) when the fortnight is ready for it. Frozen once it starts: then no step button and nothing to edit.
@@ -40,13 +51,9 @@ export default async function FortnightPage({ params, searchParams }: Props) {
   const canGoLive = coordinator && !started && fn.state === "approved" && drafts > 0;
   const subjects = Object.fromEntries((await sql<{ code: string; name: string }[]>`select code, coalesce(label, name) as name from subject`).map((r) => [r.code, r.name]));
   const last = took.at(-1);
-  const lines = [...new Map(plan.filter((l) => l.activity).map((l) => [l.activity!.code, l.activity!])).values()];
-  const edges: Edge[] = [
-    { screen: "timetable", href: `/timetable?fn=${fn.number}`, label: "The grid", icon: "week" },
-    { screen: "materials", label: "Materials, this fortnight", icon: "activity" },
-    ...(coordinator ? [{ screen: "draft", href: `/timetable/draft?fn=${fn.number}`, label: "Draft from the rules", icon: "setup" as const }] : []),
-  ];
-  const planEdges: Edge[] = lines.map((a) => ({ screen: "activity", params: { code: a.code }, href: activityHref(a.code), label: a.name, icon: "activity" as const }));
+  // the plan lines are shown ten to a week with the rest one click away (rule 3); `?all=1` shows every line
+  const byWeek = [...plan].sort((x, y) => WEEK_ORDER(x.week).localeCompare(WEEK_ORDER(y.week)));
+  const planLimit = q.all === "1" ? Math.max(byWeek.length, 1) : undefined;
   const steps: Seen[] = took.map((t) => ({ kind: "note", title: stateWords(STEP_STATE[t.step] ?? t.step), line: t.who, when: dateWords(t.at.slice(0, 10)) }));
   const cards: Card[] = [
     {
@@ -67,29 +74,6 @@ export default async function FortnightPage({ params, searchParams }: Props) {
               <button className="btn" data-ux="action">Approve</button>
             </form>
           ) : null}
-        </div>
-      ),
-    },
-    {
-      kind: "activity",
-      title: "Plan lines",
-      line: plan.length === 1 ? "1 line" : `${plan.length} lines`,
-      body: (
-        <div data-card="plan" className="tt-card-body">
-          {plan.length === 0 ? (
-            <EmptyState>No plan lines yet.</EmptyState>
-          ) : (
-            <ul className="tt-list">
-              {plan.map((l) => (
-                <li key={l.id} data-plan-line>
-                  <span className="grow">
-                    <b>{l.text}</b>
-                    <span className="tt-note"> {l.class_label}{l.week ? ` · week ${l.week}` : ""}{l.activity ? <> · <Link href={activityHref(l.activity.code)}>{l.activity.name}</Link></> : null}</span>
-                  </span>
-                </li>
-              ))}
-            </ul>
-          )}
         </div>
       ),
     },
@@ -142,7 +126,7 @@ export default async function FortnightPage({ params, searchParams }: Props) {
       title={`Fortnight ${fn.number}`}
       purpose="Its state, its plan lines, and the moves made by hand. Frozen once it starts; a move after that is a hand move, kept with who made it."
       next={{ href: "/timetable", label: "Timetable" }}
-      rail={<Rail edges={[...edges, ...planEdges]} />}
+      rail={<TimetableRail here="fortnight" fn={fn.number} coordinator={coordinator} />}
     >
       {q.error ? <p role="alert" className="tt-error">{q.error}</p> : null}
       {q.done ? <p role="status" className="tt-note">Done.</p> : null}
@@ -154,6 +138,23 @@ export default async function FortnightPage({ params, searchParams }: Props) {
       ) : null}
       {coordinator ? <GoLive number={fn.number} span={`${dateWords(fn.starts_on)} to ${dateWords(fn.ends_on)}`} subjects={subjects} can={canGoLive} /> : null}
       <Cards cards={cards} />
+      <section aria-labelledby="tt-plan" data-card="plan">
+        <h2 id="tt-plan" className="tt-h">Plan lines <span className="tt-note">· {plan.length === 1 ? "1 line" : `${plan.length} lines`}</span></h2>
+        {plan.length === 0 ? (
+          <EmptyState>No plan lines yet.</EmptyState>
+        ) : (
+          <DataTable
+            label="Plan lines"
+            columns={PLAN_COLUMNS}
+            rows={byWeek}
+            rowKey={(l) => l.id}
+            limit={planLimit}
+            more={{ by: (l) => (l.week ? `Week ${l.week}` : "Both weeks"), href: () => `/timetable/fortnight/${fn.number}?all=1#tt-plan` }}
+            counted
+            extras={{ attrs: () => ({ "data-plan-line": "" }) }}
+          />
+        )}
+      </section>
       <h2 className="tt-h">Every fortnight of the year, by state</h2>
       <KanbanBoard lanes={lanes} />
     </Screen>
