@@ -422,38 +422,7 @@
           "label": "Fortnight 10"
         },
         {
-          "label": "Moves by hand"
-        }
-      ]
-    },
-    {
-      "id": "moves",
-      "title": "Moves by hand",
-      "eyebrow": "Fortnight 10 · draft",
-      "group": "Timetable",
-      "route": "/timetable/moves",
-      "purpose": "Move a period; the clash it makes shows at once; only the coordinator accepts one, with a reason.",
-      "does": [
-        {
-          "label": "pick a cell, then a target cell"
-        },
-        {
-          "label": "Undo the last move"
-        },
-        {
-          "label": "reason"
-        },
-        {
-          "label": "Accept the clash"
-        },
-        {
-          "label": "Fortnight 10"
-        },
-        {
-          "label": "The grid"
-        },
-        {
-          "label": "Rules"
+          "label": "Fortnight 10, move then approve"
         }
       ]
     },

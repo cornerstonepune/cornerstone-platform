@@ -20,8 +20,7 @@ import { weekOrNull } from "@/lib/educator/data";
 import { isDay, isLesson } from "@/lib/educator/period";
 import { dateWords } from "@/lib/week";
 import { stateWords } from "@/lib/fortnight-words";
-import { sql } from "@/lib/db";
-import { gridOf, moveInto } from "@/lib/timetable-grid";
+import { activityHref, gridOf, moveInto } from "@/lib/timetable-grid";
 import { subjectsAgainstRule, type SubjectRow } from "@/lib/timetable-subjects";
 import { classesOf, subjectLooks, clashesOf, fortnightAfter, fortnightAt, fortnightNumber, fortnightsOfYear, isCoordinator, liveIds, liveWords, movesOf, noSchoolOn, switchedOn, yearFor, type Fn } from "@/lib/timetable-ui";
 import { schoolToday } from "@/lib/voice-page";
@@ -131,20 +130,18 @@ export default async function TimetablePage({ searchParams }: Props) {
   const focus = q.day && weeks.some((w) => w.days.some((d) => d.day === q.day)) ? q.day : today >= fn.starts_on && today <= fn.ends_on ? today : fn.starts_on;
   const shown = view === "day" ? [focus] : view === "week" ? weeks.find((w) => w.days.some((d) => d.day === focus))!.days.map((d) => d.day) : undefined;
   const now = await nowAtSchool();
-  const sessions = await sql<{ id: string; on_date: string; period_id: string }[]>`
-    select s.id, d.on_date::text as on_date, s.period_id from session s join school_day d on d.id = s.school_day_id
-    where s.school_class_id = ${klass.id} and d.on_date between ${fn.starts_on}::date and ${fn.ends_on}::date`;
-  const sessionAt = new Map(sessions.map((r) => [`${r.on_date}|${r.period_id}`, r.id]));
   const grid = gridOf(weeks, {
     looks: await subjectLooks(),
     days: shown,
     clashes,
     at: { today, now },
-    move: coordinator ? (day, p) => `/timetable/moves?${new URLSearchParams({ fn: String(fn.number), class: klass.id, from: `${day}~${p}` })}` : undefined,
-    href: (day, p) => (sessionAt.has(`${day}|${p}`) ? `/period/${sessionAt.get(`${day}|${p}`)}` : `/period/${p}?class=${klass.id}&day=${day}`),
+    // a lesson with an activity opens it (what to do, materials); one with none is not a link. The coordinator's click on a block chooses it
+    // to move, on the fortnight page, where the move is made and its clashes drawn
+    open: activityHref,
+    pick: coordinator ? (day, p) => `/timetable/fortnight/${fn.number}?${new URLSearchParams({ class: klass.id, from: `${day}~${p}` })}` : undefined,
   });
   const lessons = grid.rows.some((r) => "cells" in r && r.cells.some((c) => c));
-  const movedHere = grid.placed.filter((x) => x.cell.moved).map((x) => ({ day: x.day, cell: x.cell, move: moveInto(moves, x.day, x.periodId) }));
+  const movedHere = grid.placed.filter((x) => x.cell.moved).map((x) => ({ day: x.day, periodId: x.periodId, cell: x.cell, move: moveInto(moves, x.day, x.periodId) }));
   const open = clashes.filter((c) => !c.accepted).length;
   const lessonCount = grid.placed.length;
   const holidayCount = grid.holidays.length;
@@ -204,12 +201,11 @@ export default async function TimetablePage({ searchParams }: Props) {
         />
         {view !== "fortnight" ? (
           <>
-            <Link href={keep({ view, fn: undefined, day: view === "day" ? schoolDay(focus, -1) : mondayOf(focus, -1) })} className="chip" data-step="back">{view === "day" ? "Previous day" : "Previous week"}</Link>
-            <Link href={keep({ view, fn: undefined, day: view === "day" ? schoolDay(focus, 1) : mondayOf(focus, 1) })} className="chip" data-step="on">{view === "day" ? "Next day" : "Next week"}</Link>
+            <Link href={keep({ view, fn: undefined, day: view === "day" ? schoolDay(focus, -1) : mondayOf(focus, -1) })} className="chip" data-step="back" aria-label={view === "day" ? "Previous day" : "Previous week"}>Previous</Link>
+            <Link href={keep({ view, fn: undefined, day: view === "day" ? schoolDay(focus, 1) : mondayOf(focus, 1) })} className="chip" data-step="on" aria-label={view === "day" ? "Next day" : "Next week"}>Next</Link>
           </>
         ) : null}
-        <Link href={keep({ view: "day", day: today })} className="chip" data-today-link>Today</Link>
-        <a className="btn" href={keep({ view: "day", day: today, fn: undefined, when: undefined })} data-ux="action">Open today</a>
+        <a className="btn" href={keep({ view: "day", day: today, fn: undefined, when: undefined })} data-ux="action" data-today-link>Open today</a>
       </div>
       <div className="tt-legend" data-legend>
         <StatusChip state="done" words="Done" round />
@@ -250,7 +246,7 @@ export default async function TimetablePage({ searchParams }: Props) {
         <Details summary={`Moved periods (${movedHere.length})`} id="moved">
           <ul className="tt-list">
             {movedHere.map((m) => (
-              <li key={`${m.day}-${m.cell!.href}`} data-moved-detail>
+              <li key={`${m.day}-${m.periodId}`} data-moved-detail>
                 <strong>{m.cell!.activity}</strong>, {shortDate(m.day)}:{" "}
                 {m.move ? `moved by ${m.move.who} on ${dateWords(m.move.at.slice(0, 10))}${m.move.why ? `, because ${m.move.why}` : ""}.` : "moved (the record of who and why is not kept for this one)."}
               </li>
@@ -281,14 +277,14 @@ async function coordinatorFilters(fn: Fn, all: { id: string; grade: string; sect
   const fns = await fortnightsOfYear(fn);
   const group = (f: (typeof fns)[number]) => (live.has(f.id) ? "Live" : f.ends_on >= today ? "Planning" : "Earlier");
   return [
-    { name: "class", label: "Class", value: classId ?? "", required: true, all: "", options: all.map((c) => [c.id, `${c.grade} ${c.section} · ${c.lessons} lesson${c.lessons === 1 ? "" : "s"}`] as const) },
+    { name: "class", label: "Class", value: classId ?? "", required: true, all: "", options: all.map((c) => [c.id, `${c.grade} ${c.section}`] as const) },
     {
       name: "fn",
       label: "Fortnight",
       value: String(fn.number),
       required: true,
       all: "",
-      options: fns.map((f) => [String(f.number), `Fortnight ${f.number} · ${stateWords(f.state)} · ${span(f)}`] as const),
+      options: fns.map((f) => [String(f.number), `${f.number} · ${stateWords(f.state)} · ${span(f)}`] as const),
       groups: (["Live", "Planning", "Earlier"] as const).map((label) => ({ label, values: fns.filter((f) => group(f) === label).map((f) => String(f.number)) })).filter((g) => g.values.length),
     },
   ];

@@ -45,12 +45,40 @@ for (const width of [1920, 1440]) {
   });
 }
 
+test("at 1440 px the Timetable's filter row is one line with real slack, and at 1280 it wraps without overflowing", async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto(`/timetable?class=${f.klass}`);
+  await expect(page.locator("[data-block=FortnightGrid]")).toBeVisible();
+  const row = page.locator(".tt-filters");
+  const tops = await row.locator("select, [role=tab], a.chip, a.btn").evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().top + e.getBoundingClientRect().height / 2)));
+  expect(tops.length).toBeGreaterThanOrEqual(6);
+  expect(Math.max(...tops) - Math.min(...tops), `centres of the row's controls: ${tops.join(", ")}`).toBeLessThan(12);
+  // slack, so a wider font on another machine (CI's) cannot wrap it: the controls, each made 10 % wider, still fit the row with their gaps
+  const fit = await row.evaluate((el) => {
+    const kids = [...el.children] as HTMLElement[];
+    const gap = parseFloat(getComputedStyle(el).columnGap) || 0;
+    const need = kids.reduce((n, k) => n + k.getBoundingClientRect().width * 1.1, 0) + gap * (kids.length - 1);
+    return { need: Math.round(need), have: Math.round(el.getBoundingClientRect().width) };
+  });
+  expect(fit.need, `the row needs ${fit.need} px with 10 % more width on each control, and has ${fit.have}`).toBeLessThanOrEqual(fit.have);
+  // narrower, the row wraps and nothing runs off the page
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto(`/timetable?class=${f.klass}`);
+  await expect(page.locator("[data-block=FortnightGrid]")).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
+  const box = await row.boundingBox();
+  for (const c of await row.locator("select, [role=tab], a.chip, a.btn").all()) {
+    const b = (await c.boundingBox())!;
+    expect(b.x + b.width, "a control inside the row's right edge").toBeLessThanOrEqual(box!.x + box!.width + 1);
+  }
+});
+
 test("a page with a rail fills it: the Timetable's rail holds the door's other pages, each with a second line", async ({ page }) => {
   await page.setViewportSize({ width: 1920, height: 1080 });
   await page.goto(`/timetable?class=${f.klass}`);
   const rail = page.locator("[data-rail]");
-  for (const name of ["Moves by hand", "Draft from the rules", "Timetable rules", "Materials"]) {
-    const link = rail.getByRole("link", { name });
+  for (const name of ["Fortnight", "Draft from the rules", "Timetable rules", "Materials"]) {
+    const link = rail.getByRole("link", { name, exact: false }).first();
     await expect(link, name).toBeVisible();
     await expect(link.locator("small"), name).not.toHaveText("");
   }
@@ -76,7 +104,7 @@ test("the grid is the page: the filter row, the legend, then a subject-coloured 
   const [{ n }] = await sql<{ n: number }[]>`
     select count(*)::int as n from session s join school_day d on d.id = s.school_day_id join fortnight g on d.on_date between g.starts_on and g.ends_on
     where s.school_class_id = ${f.klass} and g.number = ${HERE} and s.kind <> 'fixed'`;
-  const blocks = page.locator("[data-block=FortnightGrid] a.b-cell");
+  const blocks = page.locator("[data-block=FortnightGrid] .b-cell");
   await expect(blocks).toHaveCount(n);
   const fills = await blocks.evaluateAll((els) => els.map((e) => ({ subject: e.getAttribute("data-subject"), back: getComputedStyle(e).backgroundColor, edge: getComputedStyle(e).borderTopColor })));
   for (const x of fills) {

@@ -39,5 +39,15 @@
 /* A fortnight's row opens its grid: the name's link is stretched over the row (the row is the positioning box). The row's own actions sit above it. */
 
 /* The wireframe's one filter row (timetable.html `.filters`): the pickers, the Day/Week/Fortnight toggle, Previous and Next, Today, and the main action. */
-.tt-filters { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-3); margin-bottom: var(--space-3); }
+.tt-filters { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); margin-bottom: var(--space-3); }
 .tt-filters > [data-filterbar] { margin: 0; }
+.tt-filters .chip, .tt-filters .btn { padding-inline: var(--space-2); white-space: nowrap; }
+.tt-filters .b-seg { flex-shrink: 0; }
+/* a clash in conflict is one row: its words, then the reason and the button beside them */
+.tt-list li.tt-clash { display: flex !important; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-2) var(--space-4); }
+.tt-clash .tt-form { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); max-width: none; margin: 0; width: auto; }
+.tt-clash .tt-form label { display: flex; align-items: center; gap: var(--space-2); width: auto; }
+.tt-clash .tt-form .tt-note { display: none; }
+/* the pickers never grow past what the row can spare: a long fortnight label is cut with an ellipsis, never pushes the row onto a second line */
+.tt-filters select { max-width: 13rem; text-overflow: ellipsis; }
+.tt-filters .b-seg [role="tab"] { padding-inline: var(--space-2); }

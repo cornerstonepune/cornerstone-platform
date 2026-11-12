@@ -41,7 +41,7 @@ const educatorPage = async (browser: import("@playwright/test").Browser): Promis
   return context.newPage();
 };
 const TT = () => `/timetable?fn=${HERE}&class=${f.klass}`;
-const cellCount = (page: Page) => page.locator("[data-block=FortnightGrid] a.b-cell").count();
+const cellCount = (page: Page) => page.locator("[data-block=FortnightGrid] .b-cell").count();
 
 test("Timetable: its purpose holds, the fortnight is the unit, week A and week B, a moved period marked, a clash red", async ({ page }) => {
   await page.goto(TT());
@@ -53,8 +53,8 @@ test("Timetable: its purpose holds, the fortnight is the unit, week A and week B
   await page.goto(`${TT()}&view=fortnight`);
   const grid = page.locator("[data-block=FortnightGrid]");
   await expect(grid.locator(".b-dh")).toHaveCount(10);
-  await expect(grid.locator("a.b-moved")).toHaveCount(1);
-  expect(await grid.locator("a.b-clash").count()).toBeGreaterThan(0);
+  await expect(grid.locator(".b-moved")).toHaveCount(1);
+  expect(await grid.locator(".b-clash").count()).toBeGreaterThan(0);
 });
 
 test("Timetable: the grid's cells equal the session rows for the day shown (count and names)", async ({ page }) => {
@@ -67,7 +67,7 @@ test("Timetable: the grid's cells equal the session rows for the day shown (coun
 
 test("Timetable: a hand move shows an amber outline and its details name who and why", async ({ page }) => {
   await page.goto(TT());
-  await expect(page.locator("a.b-moved")).toHaveCount(1);
+  await expect(page.locator(".b-moved")).toHaveCount(1);
   const note = page.locator("[data-moved-detail]");
   await expect(note).toContainText("The educator was away");
   await expect(note).toContainText("moved by");
@@ -75,11 +75,11 @@ test("Timetable: a hand move shows an amber outline and its details name who and
 
 test("Timetable: an educator never sees an accept-clash control; a clash cell is red for both roles", async ({ browser, page }) => {
   await page.goto(TT());
-  const red = await page.locator("a.b-clash").count();
+  const red = await page.locator(".b-clash").count();
   expect(red).toBeGreaterThan(0);
   const edu = await educatorPage(browser);
   await edu.goto(TT());
-  expect(await edu.locator("a.b-clash").count()).toBe(red);
+  expect(await edu.locator(".b-clash").count()).toBe(red);
   await expect(edu.getByRole("button", { name: /accept/i })).toHaveCount(0);
   await expect(edu.locator("[data-rail]").getByRole("link", { name: /Timetable rules/ })).toHaveCount(0); // the coordinator's rail link
   // the class filter is the coordinator's, and an educator's only when she holds two classes (the old week page's picker)
@@ -117,10 +117,11 @@ test("Fortnight: the stepper says the fortnight's real state in the school's wor
   await expect(page.getByText("Aligned").first()).toBeVisible();
 });
 
-test("Fortnight: the plan lines and each hand move are listed, a hand move with who and why", async ({ page }) => {
-  await page.goto(FN(HERE));
-  await expect(page.locator("[data-plan-line]")).toContainText("Count the red cards");
-  await expect(page.locator("[data-hand-move]")).toContainText("The educator was away");
+test("Fortnight: each hand move is listed, with who and why, and the page is the grid (no plan-lines table, no cards)", async ({ page }) => {
+  await page.goto(`${FN(HERE)}?class=${f.klass}`);
+  await expect(page.locator("[data-hand-move]").first()).toContainText("The educator was away");
+  await expect(page.locator("[data-plan-line], [data-card=plan], [data-block=Cards]")).toHaveCount(0);
+  await expect(page.locator("[data-block=FortnightGrid] .b-dh")).toHaveCount(10); // the whole fortnight, week A and week B
 });
 
 test("Draft from the rules: the draft shown equals the slots the generator wrote (count and cells)", async ({ page }) => {
@@ -164,23 +165,71 @@ test("The web layer answers 403 to an educator for each plan route the engine on
   }
 });
 
-test("Moves by hand: as educator the page is read-only: no pick, no Accept, and the requests are refused", async ({ browser }) => {
+test("Fortnight, moving: as educator the grid is read-only: no pick, no Accept, no Move, no Undo, and the requests are refused", async ({ browser }) => {
   const edu = await educatorPage(browser);
-  await edu.goto(`/timetable/moves?fn=${HERE}&class=${f.klass}`);
-  await expect(edu.getByText("only the coordinator makes them")).toBeVisible();
-  await expect(edu.getByRole("button", { name: /Accept|Move|Undo/ })).toHaveCount(0);
-  expect(await edu.locator("a.b-cell[href*='from=']").count()).toBe(0);
+  await edu.goto(`${FN(HERE)}?class=${f.klass}`);
+  await expect(edu.locator("[data-block=FortnightGrid]")).toBeVisible();
+  await expect(edu.getByRole("button", { name: /Accept|Move|Undo|Freeze|Align|Approve/ })).toHaveCount(0);
+  expect(await edu.locator("[data-pick], [data-move-form]").count()).toBe(0);
 });
 
-test("Moves by hand: every move is listed with who made it and when, and an undo is a new row", async ({ page }) => {
-  await page.goto(`/timetable/moves?fn=${HERE}&class=${f.klass}`);
-  const row = page.locator("[data-block=DataTable] tbody tr").first();
+test("Fortnight, moving: every move is listed with who made it and when, and an undo is a new row", async ({ page }) => {
+  await page.goto(`${FN(HERE)}?class=${f.klass}`);
+  const row = page.locator("[data-hand-move]").first();
   await expect(row).toContainText("The educator was away");
   await expect(row).toContainText("End-to-end test");
   await expect(page.getByRole("button", { name: "Undo the last move" })).toHaveCount(1);
 });
 
-test("Moves by hand: accepting a clash needs a reason ('Say why' otherwise), then the clash is accepted with who and why", async ({ page }) => {
+test("Fortnight, moving: choose a lesson, then the lesson to swap it with, say why, and it is moved; Undo moves it back; a clash shows on the grid in the rule's words", async ({ page }) => {
+  const url = `${FN(AHEAD)}?class=${f.klass}`;
+  await page.goto(url);
+  // a clash is red on its block with the rule's own words (the fixture blocks Wednesday: "U74 sports day")
+  await expect(page.locator("[data-block=FortnightGrid] .b-clash").first()).toBeVisible();
+  await expect(page.locator("[data-clash-note]").first()).toContainText("U74 sports day");
+  const picks = page.locator("[data-block=FortnightGrid] a[data-pick]");
+  await picks.nth(0).click();
+  await expect(page).toHaveURL(/from=/);
+  await expect(page.locator("[data-block=FortnightGrid] [data-pick][aria-pressed=true]")).toHaveCount(1);
+  expect(await page.locator("[data-move-form]").count()).toBe(0); // one chosen: the form waits for the second
+  await page.locator("[data-block=FortnightGrid] a[data-pick][aria-pressed=false]").nth(3).click();
+  await expect(page).toHaveURL(/to=/);
+  const form = page.locator("[data-move-form]");
+  await expect(form).toBeVisible();
+  const moves = async () => (await sql<{ n: number }[]>`select count(*)::int as n from change_log where table_name = 'session' and op = 'move' and row_id = ${`${f.klass} ${f.ahead}`}`)[0].n;
+  const before = await moves();
+  await form.getByLabel("Reason").fill("U74 swaps two lessons");
+  await form.getByRole("button", { name: /^Move / }).click();
+  await expect(page.locator("[data-block=FortnightGrid]")).toBeVisible();
+  expect(await moves()).toBe(before + 1);
+  await page.getByRole("button", { name: "Undo the last move" }).click();
+  await expect(page.locator("[data-block=FortnightGrid]")).toBeVisible();
+  expect(await moves()).toBe(before + 2); // an undo is a new row
+});
+
+test("Fortnight, moving: while a lesson is chosen every free slot offers itself as a place to move it to, and none shows before", async ({ page }) => {
+  // a lesson period of the class's grade with no lesson on any day: a free slot on each of the fortnight's ten days
+  const [p] = await sql<{ id: string }[]>`
+    insert into period (tenant_id, grade_code, ord, starts_at, label, fixed) values (${f.tenant}, ${GRADE}, 95, '19:11'::time, 'U74 free', false)
+    on conflict (tenant_id, grade_code, starts_at) do update set label = excluded.label returning id`;
+  try {
+    const url = `${FN(AHEAD)}?class=${f.klass}`;
+    await page.goto(url);
+    await expect(page.locator("[data-block=FortnightGrid]")).toBeVisible();
+    await expect(page.locator("[data-slot]")).toHaveCount(0);
+    await page.locator("[data-block=FortnightGrid] a[data-pick]").first().click();
+    await expect(page.locator("[data-slot]")).toHaveCount(10);
+    await page.locator("[data-slot]").nth(4).click();
+    await expect(page).toHaveURL(/to=/);
+    await expect(page.locator("[data-move-form]")).toBeVisible();
+    await expect(page.locator("[data-move-form]").getByRole("button", { name: /^Move .+ to / })).toBeVisible(); // what is moved, from where, and to which day
+    await expect(page.locator("[data-move-form] input[name=to_period]")).toHaveValue("95"); // the free slot's own period
+  } finally {
+    await sql`delete from period where id = ${p.id}`;
+  }
+});
+
+test("Fortnight, moving: accepting a clash needs a reason ('Say why' otherwise), then the clash is accepted with who and why", async ({ page }) => {
   // an accepted clash stays accepted only until a later move touches its place: a rerun reopens what an earlier run accepted
   const accepted = await sql<{ places: { class: string; date: string; period: string }[] }[]>`select places from timetable_clash where fortnight_id = ${f.ahead} and accepted`;
   for (const c of accepted)
@@ -189,7 +238,7 @@ test("Moves by hand: accepting a clash needs a reason ('Say why' otherwise), the
         insert into change_log (tenant_id, table_name, row_id, op, before, after, staff_id, origin, reason)
         values (${f.tenant}, 'session', ${`${p.class} ${f.ahead}`}, 'move', ${sql.json({ school_class_id: p.class, on_date: p.date, period_id: p.period })},
           ${sql.json({ school_class_id: p.class, on_date: p.date, period_id: p.period })}, ${f.staff}, ${`staff:${f.staff}`}, 'u74 reopens a clash an earlier run accepted')`;
-  await page.goto(`/timetable/moves?fn=${AHEAD}&class=${f.klass}`);
+  await page.goto(`${FN(AHEAD)}?class=${f.klass}`);
   const clash = page.locator("[data-clash]").first();
   await clash.getByRole("button", { name: "Accept the clash" }).click();
   await expect(page.locator(".tt-error")).toContainText("Say why");

@@ -1,4 +1,4 @@
-import type { FCell, FRow } from "@/components/fortnight-grid";
+import type { FCell, FRow, FSlot } from "@/components/fortnight-grid";
 import { shortDate } from "./educator/clock";
 import type { Week } from "./educator/types";
 import { chipOf } from "./educator/chip";
@@ -13,9 +13,12 @@ export function gridOf(weeks: readonly Week[], show: {
     days?: readonly string[];
     looks: Looks;
     clashes: readonly Clash[];
-    href: (day: string, periodId: string) => string;
-    /** the coordinator's Move action on each lesson: Moves by hand on that fortnight, the lesson picked (none for an educator) */
-    move?: (day: string, periodId: string) => string;
+    /** where a click on a lesson goes: the page of its activity (called only for a lesson that has one; a lesson with none is not a link) */
+    open?: (activityCode: string) => string;
+    /** the coordinator's click on a lesson or a free slot: choosing it as the lesson to move, or as the place to move it to (none for an educator) */
+    pick?: (day: string, periodId: string) => string;
+    /** the lesson chosen to move, if any: its block is marked, and every free slot then offers itself as a place to move it to */
+    picked?: { day: string; periodId: string } | null;
     /** the school's today and now: a period running now is Do now, one recorded is Done, one not recorded and over is Late, none ahead has a chip */
     at?: { today: string; now: string };
   }) {
@@ -23,24 +26,31 @@ export function gridOf(weeks: readonly Week[], show: {
   const starts = [...new Set(days.flatMap((d) => d.periods.map((p) => p.starts_at)))].sort();
   const classId = weeks[0]?.class.id ?? "";
   const open = show.clashes.filter((c) => !c.accepted);
-  const clashAt = (day: string, period: string) => open.some((c) => c.places.some((p) => p.class === classId && p.date === day && p.period === period));
+  const clashAt = (day: string, period: string) => open.find((c) => c.places.some((p) => p.class === classId && p.date === day && p.period === period));
   const placed: { day: string; periodId: string; cell: FCell }[] = [];
   const rows: FRow[] = starts.map((start) => {
     const at = days.map((d) => d.periods.find((p) => p.starts_at === start) ?? null);
     const label = at.find((p) => p)?.label ?? start;
-    if (at.length && at.every((p) => p === null || p.kind === "fixed")) return { band: `${at.find((p) => p)?.name ?? label} · ${start.slice(0, 5)}` };
+    // a fixed part of the day is a band whether or not a session row was loaded for it (the engine gives it as `empty` when none was)
+    if (at.length && at.every((p) => p === null || p.fixed || p.kind === "fixed")) return { band: `${at.find((p) => p)?.name ?? label} · ${start.slice(0, 5)}` };
     return {
       time: `${start.slice(0, 5)}${at.find((p) => p?.ends_at)?.ends_at ? `–${at.find((p) => p?.ends_at)!.ends_at!.slice(0, 5)}` : ""} ${label}`,
-      cells: at.map((p, i): FCell | null => {
-        if (!p || !isLesson(p)) return null;
+      cells: at.map((p, i): FCell | FSlot | null => {
+        if (!p) return null;
+        // a lesson period with no lesson that day is a place to move the chosen lesson to
+        if (!isLesson(p) && p.kind === "empty" && !p.fixed && show.picked && show.pick) return { slot: show.pick(days[i].day, p.period_id), label: "Move it here" };
+        if (!isLesson(p)) return null;
+        const clash = clashAt(days[i].day, p.period_id);
         const chip = show.at ? chipOf(p, { now: show.at.now, day: whenIs(days[i].day, show.at.today) }) : null;
         const cell: FCell = {
           subject: subjectLook(show.looks, p.subject),
           activity: p.name,
-          href: show.href(days[i].day, p.period_id),
-          move: show.move?.(days[i].day, p.period_id),
+          href: p.activity && show.open ? show.open(p.activity.code) : undefined,
+          pick: show.pick?.(days[i].day, p.period_id),
+          picked: show.picked ? show.picked.day === days[i].day && show.picked.periodId === p.period_id : undefined,
           moved: p.state === "moved",
-          clash: clashAt(days[i].day, p.period_id),
+          clash: clash !== undefined,
+          note: clash?.detail,
           chip: chip === "doNow" || chip === "done" || chip === "late" ? chip : undefined,
           now: chip === "doNow",
         };
@@ -58,3 +68,6 @@ export const cellsIn = (rows: readonly FRow[]) => rows.flatMap((r) => ("cells" i
 
 /** The moves that put a lesson where the grid now shows it: by day and period, the latest move to that place. */
 export const moveInto = (moves: readonly Move[], day: string, periodId: string) => moves.find((m) => m.to === `${day} ${periodId}`);
+
+/** The page of an activity (what to do, its materials): the setup page that shows it. */
+export const activityHref = (code: string) => `/setup/activities/${encodeURIComponent(code)}`;

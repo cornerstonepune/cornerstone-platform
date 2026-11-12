@@ -1,162 +1,193 @@
 import { notFound } from "next/navigation";
 import Link from "@/components/link";
 import { Screen } from "@/components/app-frame";
-import { TimetableRail } from "@/components/timetable-rail";
-import { DataTable } from "@/components/data-table";
-import type { Column } from "@/lib/ux-rules";
-import { Cards, type Card } from "@/components/cards";
+import { Details } from "@/components/details";
 import { EmptyState } from "@/components/empty-state";
-import { KanbanBoard, type Lane } from "@/components/kanban-board";
+import { FilterBar } from "@/components/filter-bar";
+import { FortnightGrid } from "@/components/fortnight-grid";
+import { GridRefused } from "@/components/grid-refused";
 import { Stepper } from "@/components/stepper";
-import { Timeline, type Seen } from "@/components/timeline";
+import { StatusChip } from "@/components/status-chip";
+import { TimetableRail } from "@/components/timetable-rail";
 import { requireStaff } from "@/lib/auth";
+import { weekOrNull } from "@/lib/educator/data";
 import { dateWords } from "@/lib/week";
-import { FORTNIGHT_STEPS, nextState, steppedFor, stateWords } from "@/lib/fortnight-words";
-import { screenHref } from "@/lib/built";
-import { fortnightNumber, fortnightsOfYear, isCoordinator, movesOf, planOf, stepsTaken, type PlanLine } from "@/lib/timetable-ui";
+import { nextState, steppedFor } from "@/lib/fortnight-words";
+import { activityHref, gridOf } from "@/lib/timetable-grid";
+import { classesOf, clashesOf, fortnightNumber, fortnightsOfYear, isCoordinator, liveIds, liveWords, movesOf, subjectLooks, switchedOn, yearFor } from "@/lib/timetable-ui";
 import { schoolToday } from "@/lib/voice-page";
+import { nowAtSchool, shortDate } from "@/lib/educator/clock";
 import { sql } from "@/lib/db";
 import { GoLive } from "./go-live";
 import "../../timetable.css";
 
 type Props = { params: Promise<{ n: string }>; searchParams: Promise<Record<string, string | undefined>> };
-const STEP_STATE: Record<string, string> = { freeze: "frozen", align: "aligned", approve: "approved", list_sent: "list_sent" };
-// the lane's colour and icon: a fortnight still being made waits, one that is settled is done
-const LANE_STATE = { planning: "waiting", aligned: "waiting", approved: "waiting", frozen: "done", list_sent: "done" } as const;
-const activityHref = (code: string) => screenHref("activity", { code }) ?? `/educator/activity/${encodeURIComponent(code)}`;
+const addDays = (d: string, n: number) => new Date(Date.parse(`${d}T00:00:00Z`) + n * 86_400_000).toISOString().slice(0, 10);
+// the button for each step the engine takes (fortnight_cycle: freeze, align, approve); it refuses a skipped or early one in words
+const STEP_BUTTON: Record<string, string> = { frozen: "Freeze", aligned: "Align", approved: "Approve" };
 
-// The plan lines are a table grouped by week: a week's lines first, a line for both weeks (no week) last.
-const WEEK_ORDER = (w: string | null) => (w === null ? "~" : w);
-const PLAN_COLUMNS: Column<PlanLine>[] = [
-  { key: "week", label: "Week", width: "7rem", value: (l) => (l.week ? `Week ${l.week}` : "Both weeks") },
-  { key: "line", label: "Line", value: (l) => l.text, cell: (l) => (<><b>{l.text}</b> <span className="tt-note">{l.class_label}</span></>) },
-  { key: "activity", label: "Activity", value: (l) => l.activity?.name ?? "", cell: (l) => (l.activity ? <Link href={activityHref(l.activity.code)}>{l.activity.name}</Link> : null) },
-];
-
-// A fortnight: its state, its plan lines and the moves made by hand. The coordinator takes the next step with one button
-// (Approve) when the fortnight is ready for it. Frozen once it starts: then no step button and nothing to edit.
-// Go live (coordinator, once approved) puts every class's placed draft live and lists what each changed (`go-live.tsx`).
+// A fortnight, and the one page of its work (Nimish, 12 Nov 2026: "this is where the freezing happens, where the movement happens, where
+// the rules are seen if they conflict when the movement is being shown"): the whole fortnight as lesson blocks, week A and week B; the
+// coordinator takes its next step (Freeze, Align, Approve, then Go live) and moves a lesson by choosing it and then the lesson or free slot
+// to swap it with; a clash the move makes is drawn on the grid at once, red, in the rule's own words, and accepted here with a reason. The
+// engine decides every step and every move and says why when it refuses; nothing is checked here. An educator reads the same grid.
 export default async function FortnightPage({ params, searchParams }: Props) {
-  await requireStaff();
+  const me = await requireStaff();
   const { n } = await params;
   const q = await searchParams;
   const fn = /^\d+$/.test(n) ? await fortnightNumber(Number(n)) : null;
   if (!fn) notFound();
-  const [coordinator, today, took, plan, moves, year] = await Promise.all([isCoordinator(), schoolToday(), stepsTaken(fn.id), planOf(fn.id), movesOf(fn.id), fortnightsOfYear(fn)]);
+  const [coordinator, today, on, year] = await Promise.all([isCoordinator(), schoolToday(), switchedOn(), fortnightsOfYear(fn)]);
+  const here = `/timetable/fortnight/${fn.number}`;
+  const all = coordinator ? await classesOf(fn) : [];
+  const classId = q.class ?? (coordinator ? (all.find((c) => c.lessons > 0) ?? all[0])?.id : undefined);
+  const rail = <TimetableRail here="fortnight" fn={fn.number} classId={classId} coordinator={coordinator} />;
+  const read = await Promise.all([fn.starts_on, addDays(fn.starts_on, 7)].map((w) => weekOrNull(me, { class_id: classId, week_of: w })));
+  const plan = coordinator && classId ? await yearFor(fn, classId) : [];
+  const live = liveIds(plan, today, on);
+  const said = liveWords(fn.state, { on, live: live.has(fn.id), lessons: plan.find((r) => r.id === fn.id)?.lessons ?? 0, from: fn.starts_on > today ? fn.starts_on : undefined });
+  const span = `${dateWords(fn.starts_on)} to ${dateWords(fn.ends_on)}`;
+  const chip = coordinator ? (
+    <span data-fortnight-state={fn.state}>
+      <StatusChip state={live.has(fn.id) ? "done" : "waiting"} words={said} compact round />
+    </span>
+  ) : null;
+  const at = year.findIndex((y) => y.id === fn.id);
+  const step = (y: (typeof year)[number] | undefined) => (y ? `/timetable/fortnight/${y.number}${classId ? `?class=${classId}` : ""}` : null);
+  const [before, after] = [step(year[at - 1]), step(year[at + 1])];
+
+  if (read.some((w) => w === null)) {
+    return (
+      <Screen stage={span} stageChip={chip} title={`Fortnight ${fn.number}`} purpose="Its lessons as blocks, and the work on them: freeze, move, approve." next={{ href: "/timetable", label: "Timetable" }} rail={rail}>
+        <GridRefused fortnight={fn.number} next={{ href: "/timetable", label: "Timetable" }} />
+      </Screen>
+    );
+  }
+  const weeks = read.filter((w) => w !== null);
+  const klass = weeks[0].class;
+  const [clashes, moves, now] = await Promise.all([clashesOf(fn.id), movesOf(fn.id), nowAtSchool()]);
+  const mine = moves.filter((m) => m.class_id === klass.id);
+  const open = clashes.filter((c) => !c.accepted && c.places.some((p) => p.class === klass.id));
   const started = fn.starts_on <= today;
   const next = nextState(fn.state);
-  const canApprove = coordinator && !started && fn.state === "aligned";
-  // Go live comes after Approve (the fortnight is approved and has not started) and only where some class has a placed draft
   const [{ drafts }] = await sql<{ drafts: number }[]>`select count(distinct school_class_id)::int as drafts from timetable_run where fortnight_id = ${fn.id} and outcome = 'placed'`;
   const canGoLive = coordinator && !started && fn.state === "approved" && drafts > 0;
   const subjects = Object.fromEntries((await sql<{ code: string; name: string }[]>`select code, coalesce(label, name) as name from subject`).map((r) => [r.code, r.name]));
-  const last = took.at(-1);
-  // the plan lines are shown ten to a week with the rest one click away (rule 3); `?all=1` shows every line
-  const byWeek = [...plan].sort((x, y) => WEEK_ORDER(x.week).localeCompare(WEEK_ORDER(y.week)));
-  const planLimit = q.all === "1" ? Math.max(byWeek.length, 1) : undefined;
-  const steps: Seen[] = took.map((t) => ({ kind: "note", title: stateWords(STEP_STATE[t.step] ?? t.step), line: t.who, when: dateWords(t.at.slice(0, 10)) }));
-  const cards: Card[] = [
-    {
-      kind: "period",
-      title: "State",
-      line: stateWords(fn.state),
-      body: (
-        <div data-card="state" className="tt-card-body">
-          {last ? <p className="tt-note">{stateWords(fn.state)} · {last.who}, {dateWords(last.at.slice(0, 10))}</p> : null}
-          {steps.length ? <Timeline entries={steps} /> : <p className="tt-empty">No step taken yet.</p>}
-          {started ? <p className="tt-note" data-frozen>This fortnight has started: it is frozen. A change now is a hand move, kept with who made it and why.</p> : null}
-          {!started && next && !canApprove ? <p className="tt-note">Next step: {stateWords(next)}.</p> : null}
-          {canApprove ? (
-            <form action="/api/timetable/fortnight" method="post">
-              <input type="hidden" name="fortnight_id" value={fn.id} />
-              <input type="hidden" name="to_state" value="approved" />
-              <input type="hidden" name="back" value={`/timetable/fortnight/${fn.number}`} />
-              <button className="btn" data-ux="action">Approve</button>
-            </form>
-          ) : null}
-        </div>
-      ),
-    },
-    {
-      kind: "note",
-      title: "Hand moves",
-      line: moves.length === 1 ? "1 move" : `${moves.length} moves`,
-      body: (
-        <div data-card="moves" className="tt-card-body">
-          {moves.length === 0 ? (
-            <p className="tt-empty">No hand moves.</p>
-          ) : (
-            <ul className="tt-list">
-              {moves.map((m) => (
-                <li key={m.id} data-hand-move>
-                  <span className="grow">
-                    <b>{m.why ?? "Moved by hand"}</b>
-                    <span className="tt-note"> {coordinator ? <Link href={`/timetable/moves?fn=${fn.number}&class=${m.class_id}`}>{m.who}</Link> : m.who}, {dateWords(m.at.slice(0, 10))}</span>
-                  </span>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-      ),
-    },
-  ];
-  const lanes: Lane[] = FORTNIGHT_STEPS.map((st) => {
-    const here = year.filter((y) => y.state === st.state);
-    return {
-      key: st.state,
-      label: st.words,
-      state: LANE_STATE[st.state],
-      count: here.length,
-      empty: "None in this state.",
-      cards: here.map((y) => ({
-        key: y.id,
-        kind: "period" as const,
-        title: `Fortnight ${y.number}`,
-        sub: `${dateWords(y.starts_on)} to ${dateWords(y.ends_on)}${y.moves ? ` · ${y.moves} hand move${y.moves === 1 ? "" : "s"}` : ""}${y.id === fn.id ? " · this page" : ""}`,
-        href: `/timetable/fortnight/${y.number}`,
-        state: LANE_STATE[st.state],
-        note: st.words,
-      })),
-    };
+
+  // the move: the coordinator's first click chooses a lesson, the second the lesson or free slot to swap it with; the engine does the rest
+  const stay = (extra: Record<string, string> = {}) => `${here}?${new URLSearchParams({ class: klass.id, ...extra })}`;
+  const [fromDay, fromPeriod] = (q.from ?? "").split("~");
+  const [toDay, toPeriod] = (q.to ?? "").split("~");
+  const ords = new Map((await sql<{ id: string; ord: number }[]>`select id, ord from period where grade_code = ${klass.grade}`).map((p) => [p.id, p.ord]));
+  const chosen = coordinator && fromDay && ords.has(fromPeriod) ? { day: fromDay, periodId: fromPeriod } : null;
+  const ready = chosen && toDay && ords.has(toPeriod) && !(toDay === fromDay && toPeriod === fromPeriod);
+  const grid = gridOf(weeks, {
+    looks: await subjectLooks(),
+    clashes,
+    at: { today, now },
+    open: activityHref,
+    pick: coordinator ? (day, p) => (!chosen ? stay({ from: `${day}~${p}` }) : chosen.day === day && chosen.periodId === p ? stay() : stay({ from: `${fromDay}~${fromPeriod}`, to: `${day}~${p}` })) : undefined,
+    picked: chosen,
   });
+  const [{ label: yearLabel }] = await sql<{ label: string }[]>`select y.label from fortnight f join academic_year y on y.id = f.academic_year_id where f.id = ${fn.id}`;
+  const last = mine[0];
+  const [lastFrom, lastTo] = last ? [last.from.split(" "), last.to.split(" ")] : [[], []];
+  const hidden = (k: string, v: string | number | undefined) => <input type="hidden" name={k} value={v} />;
+  const lessonWords = (day: string, p: string) => grid.placed.find((x) => x.day === day && x.periodId === p)?.cell.activity ?? "a free slot";
+
   return (
     <Screen
-      stage={`${dateWords(fn.starts_on)} to ${dateWords(fn.ends_on)}`}
+      stage={`${span} · ${klass.grade} ${klass.section}`}
+      stageChip={chip}
       title={`Fortnight ${fn.number}`}
-      purpose="Its state, its plan lines, and the moves made by hand. Frozen once it starts; a move after that is a hand move, kept with who made it."
-      next={{ href: "/timetable", label: "Timetable" }}
-      rail={<TimetableRail here="fortnight" fn={fn.number} coordinator={coordinator} />}
+      purpose="Its lessons as blocks, week A and week B. Freeze, move a lesson and approve here; a clash shows on the grid as soon as a move makes one."
+      next={{ href: `/timetable?fn=${fn.number}&class=${klass.id}`, label: "Timetable" }}
+      rail={rail}
     >
       {q.error ? <p role="alert" className="tt-error">{q.error}</p> : null}
       {q.done ? <p role="status" className="tt-note">Done.</p> : null}
+      <div className="tt-filters">
+        {coordinator ? <FilterBar action={here} filters={[{ name: "class", label: "Class", value: klass.id, required: true, all: "", options: all.map((c) => [c.id, `${c.grade} ${c.section}`] as const) }]} /> : null}
+        {before ? <Link href={before} className="chip" data-step="back">Previous fortnight</Link> : null}
+        {after ? <Link href={after} className="chip" data-step="on">Next fortnight</Link> : null}
+        {coordinator && !started && next && STEP_BUTTON[next] ? (
+          <form action="/api/timetable/fortnight" method="post" aria-label={`${STEP_BUTTON[next]} this fortnight`} className="contents">
+            {hidden("fortnight_id", fn.id)}
+            {hidden("to_state", next)}
+            {hidden("back", stay())}
+            <button className="btn" data-ux="action" data-step-button={next}>{STEP_BUTTON[next]}</button>
+          </form>
+        ) : null}
+      </div>
       <Stepper steps={steppedFor(fn.state)} label="Where this fortnight is" />
-      {coordinator ? (
-        <p className="tt-note">
-          <Link href={`/timetable?fn=${fn.number}`}>Open its timetable</Link> · <Link href={`/timetable/moves?fn=${fn.number}`} data-move-lessons>Move lessons</Link>
-        </p>
+      {coordinator && started ? <p className="tt-note" data-frozen>This fortnight has started: it is frozen. A move now is a hand move, kept with who made it and why.</p> : null}
+      {coordinator ? <GoLive number={fn.number} span={span} subjects={subjects} can={canGoLive} /> : null}
+      <div className="tt-legend" data-legend>
+        <StatusChip state="done" words="Done" round />
+        <StatusChip state="moved" words="Moved by hand" round />
+        <StatusChip state="clash" words="Clash, not yet accepted" round />
+        <span className="tt-note">
+          {coordinator ? (chosen ? `Chosen: ${lessonWords(chosen.day, chosen.periodId)}, ${shortDate(chosen.day)}. Now choose the lesson, or the free slot, to swap it with. ` : "Choose a lesson to move it, then the lesson or free slot to swap it with. ") : "Each block is one lesson; one with an activity opens it. "}
+          {coordinator && chosen ? <Link href={stay()}>Cancel</Link> : null}
+        </span>
+      </div>
+      {ready ? (
+        <form action="/api/timetable/move" method="post" className="tt-row" aria-label="Make this move" data-move-form>
+          {hidden("back", stay())}
+          {hidden("grade", klass.grade)}{hidden("section", klass.section)}{hidden("year", yearLabel)}
+          {hidden("from_date", fromDay)}{hidden("from_period", ords.get(fromPeriod))}
+          {hidden("to_date", toDay)}{hidden("to_period", ords.get(toPeriod))}
+          <label>Reason<input name="reason" /></label>
+          <button className="btn" data-ux="action">Move {lessonWords(fromDay, fromPeriod)} ({shortDate(fromDay)}) to {shortDate(toDay)}</button>
+        </form>
       ) : null}
-      {coordinator ? <GoLive number={fn.number} span={`${dateWords(fn.starts_on)} to ${dateWords(fn.ends_on)}`} subjects={subjects} can={canGoLive} /> : null}
-      <Cards cards={cards} />
-      <section aria-labelledby="tt-plan" data-card="plan">
-        <h2 id="tt-plan" className="tt-h">Plan lines <span className="tt-note">· {plan.length === 1 ? "1 line" : `${plan.length} lines`}</span></h2>
-        {plan.length === 0 ? (
-          <EmptyState>No plan lines yet.</EmptyState>
-        ) : (
-          <DataTable
-            label="Plan lines"
-            columns={PLAN_COLUMNS}
-            rows={byWeek}
-            rowKey={(l) => l.id}
-            limit={planLimit}
-            more={{ by: (l) => (l.week ? `Week ${l.week}` : "Both weeks"), href: () => `/timetable/fortnight/${fn.number}?all=1#tt-plan` }}
-            counted
-            extras={{ attrs: () => ({ "data-plan-line": "" }) }}
-          />
-        )}
-      </section>
-      <h2 className="tt-h">Every fortnight of the year, by state</h2>
-      <KanbanBoard lanes={lanes} />
+      {grid.rows.some((r) => "cells" in r && r.cells.some((c) => c)) ? (
+        <FortnightGrid days={grid.labels} today={shortDate(today)} rows={grid.rows} />
+      ) : (
+        <EmptyState next={coordinator ? { href: "/timetable/draft", label: "Make a draft" } : undefined}>{coordinator ? `Nothing is placed for this class in Fortnight ${fn.number} yet.` : "No timetable is live for this class: nothing is placed in these days."}</EmptyState>
+      )}
+      <p className="tt-note" data-summary>{grid.placed.length} lesson{grid.placed.length === 1 ? "" : "s"} · {grid.placed.filter((x) => x.cell.href).length} with an activity to open</p>
+      {open.length ? (
+        <section aria-labelledby="tt-clashes" data-section="clashes">
+          <h2 id="tt-clashes" className="tt-h">Rules in conflict · {open.length}</h2>
+          <ul className="tt-list">
+            {open.map((c) => (
+              <li key={c.key} data-clash={c.key} className="tt-clash">
+                <strong className="grow">{c.detail}</strong>
+                {coordinator ? (
+                  <form action="/api/timetable/clash" method="post" className="tt-form" aria-label={`Accept: ${c.detail}`}>
+                    {hidden("back", stay())}{hidden("key", c.key)}
+                    <label>Reason<input name="reason" /></label>
+                    <span className="tt-note">Left empty, the form says “Say why” and accepts nothing.</span>
+                    <button className="btn secondary">Accept the clash</button>
+                  </form>
+                ) : <span className="tt-note">Only the coordinator accepts a clash.</span>}
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
+      {coordinator && last && !last.undo ? (
+        <form action="/api/timetable/move" method="post" className="tt-row" aria-label="Undo the last move">
+          {hidden("back", stay())}
+          {hidden("grade", klass.grade)}{hidden("section", klass.section)}{hidden("year", yearLabel)}
+          {hidden("from_date", lastTo[0])}{hidden("from_period", ords.get(lastTo[1]))}
+          {hidden("to_date", lastFrom[0])}{hidden("to_period", ords.get(lastFrom[1]))}
+          {hidden("reason", `Undo of the move on ${last.at.slice(0, 10)}`)}
+          <button className="btn secondary">Undo the last move</button>
+        </form>
+      ) : null}
+      {mine.length ? (
+        <Details summary={`Moved by hand (${mine.length})`} id="moved">
+          <ul className="tt-list">
+            {mine.map((m) => (
+              <li key={m.id} data-hand-move>
+                <strong>{m.undo ? "Undone" : "Moved"}</strong>, {dateWords(m.from.split(" ")[0])} to {dateWords(m.to.split(" ")[0])}: {m.who}, {dateWords(m.at.slice(0, 10))}{m.why ? `, because ${m.why}` : ""}
+              </li>
+            ))}
+          </ul>
+        </Details>
+      ) : null}
     </Screen>
   );
 }

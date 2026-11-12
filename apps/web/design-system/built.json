@@ -42,10 +42,6 @@
       "route": "/timetable/draft",
       "built": false
     },
-    "moves": {
-      "route": "/timetable/moves",
-      "built": false
-    },
     "rules": {
       "route": "/timetable/rules",
       "built": false

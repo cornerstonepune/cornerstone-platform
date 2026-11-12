@@ -58,7 +58,7 @@ export default async function DraftPage({ searchParams }: Props) {
       stage={`Fortnight ${fn.number} · from the rules`}
       title="Draft from the rules"
       purpose="One command makes a draft from the period times, blocked days, fixed slots and limits. Rules it could not meet are listed in words."
-      next={{ href: "/timetable/moves", label: "Moves by hand" }}
+      next={{ href: `/timetable/fortnight/${fn.number}`, label: `Fortnight ${fn.number}: move, then approve` }}
       rail={
         <div className="tt-rail">
           <TimetableRail here="draft" fn={fn.number} coordinator />
@@ -98,7 +98,7 @@ export default async function DraftPage({ searchParams }: Props) {
           {on.unmet.length ? <DataTable label="Rules not met" columns={columns} rows={on.unmet} rowKey={(r) => r.id} more={{ page: 1, href: (n: number) => `${HERE}?page=${n}` }} /> : <p className="tt-note">Every rule was met.</p>}
         </>
       )}
-      <Cards cards={[{ kind: "period", title: "Next: hand moves", line: "Then Approve on the fortnight.", href: "/timetable/moves", link: "Moves by hand" }]} />
+      <Cards cards={[{ kind: "period", title: "Next: the fortnight", line: "Move lessons by hand, then freeze and approve.", href: `/timetable/fortnight/${fn.number}`, link: `Open Fortnight ${fn.number}` }]} />
     </Screen>
   );
 }

@@ -155,7 +155,11 @@
   .b-cell.b-clash { outline: 2px solid var(--state-late); outline-offset: -2px; }
   .b-cell-w { position: relative; display: grid; min-width: 0; }
   .b-cell-w > .b-cell { padding-bottom: 54px; }
-  .b-move { position: absolute; right: 6px; bottom: 6px; min-height: 44px; min-width: 44px; justify-content: center; display: inline-flex; align-items: center; padding: 0 10px; border-radius: 999px; background: var(--panel); border: 1px solid var(--line-control); color: var(--ink); font-size: 13px; font-weight: 600; text-decoration: none; }
+  .b-cell.b-picked { box-shadow: inset 0 3px 0 var(--s), 0 0 0 3px var(--action); }
+  .b-cell[data-pick] { cursor: pointer; }
+  .b-note { font-size: var(--text-label); line-height: 1.3; color: var(--state-late); }
+  .b-open { position: absolute; right: 8px; bottom: 6px; min-height: 44px; display: inline-flex; align-items: center; padding: 0 var(--space-2); border-radius: 999px; background: var(--panel); border: 1px solid var(--line-control); color: var(--ink); font-size: 12px; font-weight: 600; text-decoration: none; }
+  .b-slot { display: grid; place-items: center; min-height: 76px; padding: 10px; border-radius: 12px; border: 2px dashed var(--line-control); color: var(--ink-muted); font-size: var(--text-label); text-align: center; text-decoration: none; }
   .b-band { grid-column: 2 / -1; display: flex; align-items: center; gap: var(--space-2); min-height: 34px; padding: 0 12px; border-radius: 10px; background: var(--subject-fixed-bg); color: var(--subject-fixed); font-size: var(--text-label); }
 
   /* ---------- CaptureBar, DropZone, PageImage, EmptyState ---------- */
