@@ -88,6 +88,13 @@ call the class (K2's class is section A, label K2), and the view `child_now` giv
 op `move`). A class's word that a skill is taught is `school_class.taught` ({skill: {taught, by, at}}); the class card
 is built from the graph when asked, never stored.
 
+**A lesson and its activity (CP-39).** A lesson has a head (`session.subject_code`; a fixed lesson such as Circle Time is found
+by its words) and an activity has a group (`activity.strand`). The setting `timetable.heads` is the one list that says which
+groups each head takes; an activity's head is worked out from its group when asked, never stored. A lesson holds the activity
+the coordinator chose for it on `session.activity_code` (a column linked to `activity`), offered only from its head's groups,
+and the lesson view shows that activity first, else the plan line's (`plan_entry.activity_id`). A lesson moved or put live
+keeps its activity. An observation of a note recorded on a lesson that names no activity is of the lesson's own activity.
+
 <!-- CP-27 group 5 (time): begin -->
 **How time is kept (CP-27 group 5).** The timetable of a date is its `session` rows: one per lesson, with its `kind`
 (`fixed`, `subject`, `specialist`); a period with no lesson is empty. `timetable_rule` holds the rules a timetable is made

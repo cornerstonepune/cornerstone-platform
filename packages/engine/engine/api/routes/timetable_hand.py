@@ -11,7 +11,7 @@ from pydantic import BaseModel
 from engine.api.deps import get_conn, require_engine_key
 from engine.w2_print import educator_gate as gate
 from engine.w2_print import fortnight_cycle as fc
-from engine.w2_print import tt_clash, tt_edit, tt_live, tt_move, tt_need
+from engine.w2_print import tt_clash, tt_edit, tt_heads, tt_live, tt_move, tt_need
 from engine.w3_read import voice_intake, voice_store
 
 keyed = APIRouter(dependencies=[Depends(require_engine_key)])
@@ -34,7 +34,13 @@ class LessonEdit(BaseModel):
     session_id: str
     text: str | None = None
     subject_code: str | None = None
+    activity_code: str | None = None  # CP-39: the activity the lesson holds; empty clears it
     reason: str | None = None
+
+
+class LessonOffers(BaseModel):
+    actor: str
+    session_id: str
 
 
 class Accept(BaseModel):
@@ -86,10 +92,22 @@ def lesson_edit(body: LessonEdit, conn=Depends(get_conn, scope="function")):
             text=body.text,
             subject_code=body.subject_code,
             reason=body.reason,
+            activity_code=body.activity_code,
         )
     except (tt_edit.Refused, fc.CycleError) as no:
         status = 403 if "not in it" in str(no) else 409
         raise HTTPException(status_code=status, detail=str(no)) from no
+
+
+@keyed.post("/timetable/lesson/offers")
+def lesson_offers(body: LessonOffers, conn=Depends(get_conn, scope="function")):
+    """CP-39: the activities a lesson may hold (those of its head), for the coordinator to choose from. Not in the go-live
+    group: 403; any other refusal: 409. Reads only."""
+    staff = _staff(conn, body.actor)
+    try:
+        return tt_heads.offers(conn, body.session_id, who=staff)
+    except (tt_heads.Refused, fc.CycleError) as no:
+        raise HTTPException(status_code=403 if "not in it" in str(no) else 409, detail=str(no)) from no
 
 
 @keyed.post("/timetable/clash/accept")

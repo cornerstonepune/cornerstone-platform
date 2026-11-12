@@ -98,3 +98,17 @@ def period(body: Ask, conn=Depends(get_conn, scope="function")):
         return k2_day.period(conn, klass, classes, body.day, body.period_id)
     except k2_day.Refused as no:
         raise _refused(no) from no
+
+
+@keyed.post("/timetable/activity")
+def activity(body: Ask, conn=Depends(get_conn, scope="function")):
+    """CP-39: the activity of one lesson in full (its steps, objectives, skills, materials and rubric levels), asked when a
+    teacher opens the lesson; the day, week and period calls carry only who it is."""
+    staff = _gate(conn, body)
+    if not (body.day and body.period_id):
+        raise HTTPException(status_code=422, detail="Name the day and the period.")
+    klass, _ = _mine(conn, body, body.day, staff)
+    try:
+        return k2_day.period_activity(conn, klass, body.day, body.period_id)
+    except k2_day.Refused as no:
+        raise _refused(no) from no

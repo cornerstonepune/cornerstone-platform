@@ -164,6 +164,12 @@ def confirm_note(conn: db.Conn, note_id: str, email: str, final: Confirmed) -> u
         raise Refused("An incident note is never confirmed as an observation.", 409)
     found = voice_intake.resolve(conn, note)
     voice_intake.may_record(conn, staff, note["class_id"])
+    # a note on a lesson that names no activity is about the lesson's own (CP-39)
+    if not final.activity and note["session_id"]:
+        held = conn.execute(
+            "select activity_code from session where id = %s", (note["session_id"],)
+        ).fetchone()
+        final.activity = (held or {}).get("activity_code") or ""
     final.day = final.day or found.taught_on
     at = _observed_at(conn, final.day, note["received_at"])
     # confirmed first, in the same transaction: the database refuses evidence from a note that is not

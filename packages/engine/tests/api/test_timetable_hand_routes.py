@@ -98,3 +98,37 @@ def test_the_lesson_edit_route_edits_for_the_coordinator_group_only_and_refuses_
         json={"actor": w["staff"]["coordinator"]["email"], "session_id": str(s["id"]), "subject_code": "zz-none"},
     )  # fmt: skip
     assert refused.status_code == 409 and "not taught" in refused.json()["detail"]
+
+
+def test_the_offers_and_lesson_edit_routes_choose_an_activity_of_the_lessons_head_for_the_group_only(engine):
+    import uuid
+
+    client, conn, w = engine
+    lesson = tw.session_at(conn, w, MON, "p1")
+    maths = f"ACT-K2-T{uuid.uuid4().hex[:6]}"
+    story = f"ACT-K2-T{uuid.uuid4().hex[:6]}"
+    for code, group in ((maths, "Maths"), (story, "Story Telling")):
+        conn.execute(
+            "insert into activity (tenant_id, code, band, strand, name) values (%s, %s, 'K2', %s, 'Placeholder')",
+            (w["tenant"], code, group),
+        )
+    who, teacher = w["staff"]["coordinator"]["email"], w["staff"]["educator"]["email"]
+    body = {"session_id": str(lesson["id"])}
+    assert client.post("/timetable/lesson/offers", json={}).status_code == 401, "the engine key is needed"
+    assert (
+        client.post("/timetable/lesson/offers", headers=H, json={"actor": teacher} | body).status_code == 403
+    )
+    offered = client.post("/timetable/lesson/offers", headers=H, json={"actor": who} | body)
+    assert offered.status_code == 200, offered.text
+    codes = [a["code"] for a in offered.json()["activities"]]
+    assert maths in codes and story not in codes and offered.json()["head"] == "math"
+    wrong = client.post(
+        "/timetable/lesson/edit", headers=H, json={"actor": who, "activity_code": story} | body
+    )
+    assert wrong.status_code == 409 and "does not take" in wrong.json()["detail"]
+    ok = client.post("/timetable/lesson/edit", headers=H, json={"actor": who, "activity_code": maths} | body)
+    assert ok.status_code == 200 and ok.json()["activity_code"] == maths
+    assert (
+        client.post("/timetable/lesson/offers", headers=H, json={"actor": who} | body).json()["activity_code"]
+        == maths
+    )

@@ -186,7 +186,7 @@ def _write(conn: db.Conn, i: need.Inputs, new: list[tuple], plan: Plan, days: di
     moving = [s["id"] for s, _ in plan.moves]
     held = conn.execute(
         "select s.id, s.tenant_id, s.school_class_id, s.subject_code, s.kind, s.led_by_staff_id, s.state, s.planned,"
-        " s.plan_entry_id, s.text from session s where s.id = any(%s)",
+        " s.plan_entry_id, s.text, s.activity_code from session s where s.id = any(%s)",
         (moving,),
     ).fetchall()
     links = conn.execute(
@@ -208,10 +208,12 @@ def _write(conn: db.Conn, i: need.Inputs, new: list[tuple], plan: Plan, days: di
         )
         cur.executemany(
             "insert into session (id, tenant_id, school_class_id, school_day_id, period_id, subject_code, kind,"
-            " led_by_staff_id, state, planned, plan_entry_id, text) values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+            " led_by_staff_id, state, planned, plan_entry_id, text, activity_code)"
+            " values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
             [
                 (h["id"], h["tenant_id"], h["school_class_id"], days[where[h["id"]][0]], where[h["id"]][1],
-                 h["subject_code"], h["kind"], h["led_by_staff_id"], h["state"], h["planned"], h["plan_entry_id"], h["text"])
+                 h["subject_code"], h["kind"], h["led_by_staff_id"], h["state"], h["planned"], h["plan_entry_id"], h["text"],
+                 h["activity_code"])
                 for h in held
             ],
         )  # fmt: skip

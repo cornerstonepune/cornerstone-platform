@@ -124,11 +124,13 @@ export type EngineRoutes = {
   "POST /staff/grants": { actor: string };
   "POST /staff/grants/end": { actor: string; grant_id: string };
   "POST /staff/grants/give": { actor: string; staff_id: string; role: string; class_label: string; subject?: string | null; reason?: string | null };
+  "POST /timetable/activity": { actor: string; class_id?: string | null; day?: string | null; week_of?: string | null; period_id?: string | null };
   "POST /timetable/clash/accept": { actor: string; key: string; reason: string };
   "POST /timetable/day": { actor: string; class_id?: string | null; day?: string | null; week_of?: string | null; period_id?: string | null };
   "POST /timetable/generate": { actor: string; grade: string; section: string; year: string; fortnight: number };
   "POST /timetable/go-live": { actor: string; grade: string; section: string; year: string; fortnight: number; run_id?: string | null; reason?: string | null; discard_changes?: boolean; dry?: boolean };
-  "POST /timetable/lesson/edit": { actor: string; session_id: string; text?: string | null; subject_code?: string | null; reason?: string | null };
+  "POST /timetable/lesson/edit": { actor: string; session_id: string; text?: string | null; subject_code?: string | null; activity_code?: string | null; reason?: string | null };
+  "POST /timetable/lesson/offers": { actor: string; session_id: string };
   "POST /timetable/link": { actor: string; fortnight?: number | null; band?: string | null; apply?: boolean };
   "POST /timetable/move": { actor: string; grade: string; section: string; year: string; from_date: string; from_period: number; to_date: string; to_period: number; reason?: string | null };
   "POST /timetable/open": { actor: string; class_id?: string | null; day?: string | null; week_of?: string | null; period_id?: string | null };
