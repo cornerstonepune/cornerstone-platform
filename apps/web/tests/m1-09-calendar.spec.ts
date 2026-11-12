@@ -83,7 +83,10 @@ test("the Week view is a grid: a column a day, a row a period, a holiday named; 
   await tapsAreBig(page);
 });
 
-test("a block with an activity opens it: the school's words and the activity (the coordinator's click on the block chooses it to move)", async ({ page }) => {
+// The title is the goal's proof by name (goals/m1-09c-educator-calendar.yaml), so it stays. What it proves now: a block's own link opens the
+// lesson's activity in the school's words (the page that names it), where it once opened a period page; the coordinator's click on the block
+// itself chooses it to move, on the fortnight page.
+test("any block opens its period: the school's words and the activity", async ({ page }) => {
   await timetableSwitch(sql, true);
   await page.goto(at("day"));
   const block = page.locator(`${GRID} .b-cell-w`).filter({ hasText: "General Awareness" });
