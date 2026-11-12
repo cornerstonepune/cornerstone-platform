@@ -116,8 +116,9 @@ test("the grid is the page: the filter row, the legend, then a subject-coloured 
   // the state is a chip beside the eyebrow, and the picker groups the fortnights
   await expect(page.getByTestId("stage").locator("[data-fortnight-state]")).toBeVisible();
   expect(await page.locator("select[name=fn] optgroup").count()).toBeGreaterThan(0);
-  // the main action is in the filter row, as the wireframe draws it
-  await expect(page.locator(".tt-filters").getByRole("link", { name: "Open today" })).toBeVisible();
+  // the page's one primary action is under the title (page charter A3, B2: it moved there from the wireframe's filter row)
+  await expect(page.locator("[data-ux=action]").getByRole("link", { name: "Open today" })).toBeVisible();
+  await expect(page.locator(".tt-filters").getByRole("link", { name: "Open today" })).toHaveCount(0);
 });
 
 test("the grid the engine will not show a coordinator is said in plain words, not in a success box", async ({ page }) => {

@@ -258,7 +258,7 @@ export function Screen({
       <div
         className={
           panel
-            ? "grid items-start gap-[var(--space-4)] min-[1000px]:grid-cols-[minmax(0,1fr)_minmax(320px,380px)] min-[1000px]:gap-[var(--space-4)]"
+            ? "grid items-start gap-[var(--space-4)] min-[1000px]:grid-cols-[minmax(0,1fr)_320px] min-[1600px]:grid-cols-[minmax(0,1fr)_380px] min-[1000px]:gap-[var(--space-4)]"
             : rail
               ? "grid gap-[var(--space-4)] min-[1000px]:grid-cols-[minmax(0,1fr)_320px] min-[1000px]:gap-[var(--space-5)]"
               : undefined

@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "@/components/link";
+import { Icon } from "@/lib/icons";
 import { Screen } from "@/components/app-frame";
 import { GridRefused } from "@/components/grid-refused";
 import { TimetableRail } from "@/components/timetable-rail";
@@ -194,6 +195,8 @@ export default async function TimetablePage({ searchParams }: Props) {
       title="Timetable"
       purpose="The fortnight is the unit: week A and week B, each period a block. A moved period is marked; a clash is red until it is accepted."
       next={{ href: `/timetable/fortnight/${fn.number}`, label: `Fortnight ${fn.number}` }}
+      // the page's one primary action, under the title (page charter A3, B2)
+      action={<a className="btn" href={keep({ view: "day", day: today, fn: undefined, when: undefined })} data-today-link>Open today</a>}
       panel={
         <DetailPanel
           open={panelOpen}
@@ -241,11 +244,11 @@ export default async function TimetablePage({ searchParams }: Props) {
         />
         {view !== "fortnight" ? (
           <>
-            <Link href={keep({ view, fn: undefined, day: view === "day" ? schoolDay(focus, -1) : mondayOf(focus, -1) })} className="chip" data-step="back" aria-label={view === "day" ? "Previous day" : "Previous week"}>Previous</Link>
-            <Link href={keep({ view, fn: undefined, day: view === "day" ? schoolDay(focus, 1) : mondayOf(focus, 1) })} className="chip" data-step="on" aria-label={view === "day" ? "Next day" : "Next week"}>Next</Link>
+            {/* arrows, named in full for a screen reader and on hover: the row holds the filters, the view and the steps on one line beside the panel */}
+            <Link href={keep({ view, fn: undefined, day: view === "day" ? schoolDay(focus, -1) : mondayOf(focus, -1) })} className="chip" data-step="back" aria-label={view === "day" ? "Previous day" : "Previous week"} title={view === "day" ? "Previous day" : "Previous week"}><Icon name="previous" size={18} /></Link>
+            <Link href={keep({ view, fn: undefined, day: view === "day" ? schoolDay(focus, 1) : mondayOf(focus, 1) })} className="chip" data-step="on" aria-label={view === "day" ? "Next day" : "Next week"} title={view === "day" ? "Next day" : "Next week"}><Icon name="following" size={18} /></Link>
           </>
         ) : null}
-        <a className="btn" href={keep({ view: "day", day: today, fn: undefined, when: undefined })} data-ux="action" data-today-link>Open today</a>
       </div>
       <div className="tt-legend" data-legend>
         <StatusChip state="done" words="Done" round />

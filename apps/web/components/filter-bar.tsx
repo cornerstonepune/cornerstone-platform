@@ -106,11 +106,12 @@ export function FilterBar({
         {Object.entries(keep).map(([k, v]) => (v ? <input key={k} type="hidden" name={k} value={v} /> : null))}
         {filters.slice(0, shown).map(drop)}
         {filters.length > shown ? (
-          <details data-more-filters className="relative" open={moreOn > 0 || undefined}>
-            <summary className="inline-flex min-h-[40px] cursor-pointer items-center gap-2 whitespace-nowrap rounded-[var(--radius-control)] border border-[var(--line-control)] bg-[var(--panel)] px-3 text-[15px] text-[var(--ink)]">
+          // as tall as the row's dropdowns (stretched to the line), so the row reads as one line, tops and all
+          <details data-more-filters className="relative flex self-stretch" open={moreOn > 0 || undefined}>
+            <summary className="inline-flex min-h-[40px] self-stretch cursor-pointer items-center gap-2 whitespace-nowrap rounded-[var(--radius-control)] border border-[var(--line-control)] bg-[var(--panel)] px-3 text-[15px] text-[var(--ink)]">
               More filters{moreOn ? ` (${moreOn} on)` : ""}
             </summary>
-            <div className="absolute left-0 z-30 mt-1 grid w-max max-w-[min(92vw,420px)] gap-2 rounded-[var(--radius-card)] bg-[var(--panel)] p-[var(--space-3)] shadow-[var(--shadow-card)]">
+            <div className="absolute left-0 top-full z-30 mt-1 grid w-max max-w-[min(92vw,420px)] gap-2 rounded-[var(--radius-card)] bg-[var(--panel)] p-[var(--space-3)] shadow-[var(--shadow-card)]">
               {filters.slice(shown).map(drop)}
             </div>
           </details>
