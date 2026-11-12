@@ -5,6 +5,15 @@ import type { Page } from "@playwright/test";
 import { CHECKS, FIXTURES } from "../inventory-fixtures";
 import type { Element, Screen } from "./load";
 
+/** The page itself has arrived: its loading screen gone and its heading drawn. The frame is sent before the page's own content
+ *  streams in (app/(app)/loading.tsx, the layout not waiting on the Today count), so "the document has loaded" can come while the
+ *  page still shows its loading screen; a field read then is read from the skeleton. */
+export async function settled(page: Page): Promise<void> {
+  await page.waitForLoadState("domcontentloaded");
+  await page.getByRole("status", { name: "Loading this page" }).waitFor({ state: "detached", timeout: 15_000 }).catch(() => undefined);
+  await page.getByRole("heading", { level: 1 }).first().waitFor({ timeout: 15_000 }).catch(() => undefined);
+}
+
 export async function drive(page: Page, s: Screen, e: Element, needle: string): Promise<string[]> {
   const d = e.drive;
   if (!d) return [];
@@ -15,6 +24,7 @@ export async function drive(page: Page, s: Screen, e: Element, needle: string): 
     if (!put) return [at(`names the fixture “${d.fixture}”, which tests/inventory-fixtures.ts does not have`)];
     await put();
     await page.reload({ waitUntil: "domcontentloaded" });
+    await settled(page);
   }
   const main = page.locator("main");
   for (const [label, value] of Object.entries(d.fill ?? {})) {
@@ -46,7 +56,7 @@ export async function drive(page: Page, s: Screen, e: Element, needle: string): 
   if (opened) await opened.close();
   if (target) await page.context().unroute(target, stand);
   if (target && opened && !asked.length) out.push(at(`opened a new tab, but not at its own address ${target}`));
-  await page.waitForLoadState("domcontentloaded");
+  await settled(page);
   // what a person sees afterwards is waited for, not guessed at with a pause: the action runs on the server and the page is drawn again
   const holds = async () => {
     const now = (await main.innerText().catch(() => "")).toLowerCase();
@@ -70,6 +80,7 @@ export async function drive(page: Page, s: Screen, e: Element, needle: string): 
     else {
       await back();
       await page.reload({ waitUntil: "domcontentloaded" });
+      await settled(page);
     }
   }
   return out;
