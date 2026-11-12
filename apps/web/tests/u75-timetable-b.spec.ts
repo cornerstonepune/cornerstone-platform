@@ -66,13 +66,31 @@ test("Timetable: each day head opens that day, and Today opens today", async ({ 
   expect(today).toMatch(/day=\d{4}-\d{2}-\d{2}/);
 });
 
-test("Timetable: a cell opens the period of its session", async ({ page }) => {
-  await page.goto(`${TT()}&view=day&day=${f.days[1]}`);
-  const [row] = await sql<{ id: string }[]>`
-    select s.id from session s join school_day d on d.id = s.school_day_id
-    where s.school_class_id = ${f.klass} and d.on_date = ${f.days[1]}::date and s.period_id = ${f.periods[0].id}`;
-  const hrefs = await page.locator("[data-block=FortnightGrid] a.b-cell").evaluateAll((as) => as.map((a) => a.getAttribute("href")));
-  expect(hrefs).toContain(`/period/${row.id}`);
+test("Timetable: a lesson with an activity opens it; one with none is not a link and says nothing more; the coordinator's click chooses the lesson to move", async ({ page, browser }) => {
+  const [row] = await sql<{ id: string; code: string; entry: string }[]>`
+    select s.id, a.code, p.id as entry from session s join school_day d on d.id = s.school_day_id
+    join activity a on a.tenant_id = s.tenant_id, plan_entry p
+    where s.school_class_id = ${f.klass} and d.on_date = ${f.days[1]}::date and s.period_id = ${f.periods[0].id} and p.school_class_id = ${f.klass} limit 1`;
+  await sql`update plan_entry set activity_id = (select id from activity where code = ${row.code}) where id = ${row.entry}`;
+  await sql`update session set plan_entry_id = ${row.entry} where id = ${row.id}`;
+  try {
+    // the educator: the one lesson with an activity is a link to it; every other block is a plain block
+    const edu = await educatorPage(browser);
+    await edu.goto(`${TT()}&view=day&day=${f.days[1]}`);
+    const links = await edu.locator("[data-block=FortnightGrid] a.b-cell").evaluateAll((as) => as.map((a) => a.getAttribute("href")));
+    expect(links).toHaveLength(1);
+    expect(links[0]).toContain(encodeURIComponent(row.code));
+    expect(await edu.locator("[data-block=FortnightGrid] div.b-cell").count()).toBeGreaterThan(0);
+    // the coordinator: every block is a click that chooses it (on the fortnight page, where the move is made), the activity link beside it
+    await page.goto(`${TT()}&view=day&day=${f.days[1]}`);
+    const picks = await page.locator("[data-block=FortnightGrid] a[data-pick]").evaluateAll((as) => as.map((a) => a.getAttribute("href")));
+    expect(picks.length).toBeGreaterThan(0);
+    for (const h of picks) expect(h).toMatch(new RegExp(`^/timetable/fortnight/${HERE}\\?class=${f.klass}&from=`));
+    await expect(page.locator("[data-activity-link]")).toHaveCount(1);
+  } finally {
+    await sql`update session set plan_entry_id = null where id = ${row.id}`;
+    await sql`update plan_entry set activity_id = null where id = ${row.entry}`;
+  }
 });
 
 test("Timetable: a period recorded done carries Done, one over and not recorded Late, and a period still to come none", async ({ page }) => {
@@ -84,12 +102,12 @@ test("Timetable: a period recorded done carries Done, one over and not recorded 
     await set("done", f.days[0], f.periods[0].id);
     await set("not_done", f.days[0], f.periods[1].id);
     await page.goto(`${TT()}&view=day&day=${f.days[0]}`);
-    const cells = page.locator("[data-block=FortnightGrid] a.b-cell");
+    const cells = page.locator("[data-block=FortnightGrid] .b-cell");
     await expect(cells.nth(0)).toContainText(/done/i);
     await expect(cells.nth(1)).toContainText(/late/i);
     await expect(cells.nth(2)).not.toContainText(/done|late|do now/i);
     await page.goto(`${TT()}&view=day&day=${last}`);
-    await expect(page.locator("[data-block=FortnightGrid] a.b-cell").first()).not.toContainText(/do now|done|late/i);
+    await expect(page.locator("[data-block=FortnightGrid] .b-cell").first()).not.toContainText(/do now|done|late/i);
   } finally {
     await set("planned", f.days[0], f.periods[0].id);
     await set("planned", f.days[0], f.periods[1].id);

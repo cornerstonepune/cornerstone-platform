@@ -230,13 +230,12 @@
       "title": "Timetable, rules and the fortnight's actions",
       "tier": 2,
       "waits_for": "CP-6, CP-11, CP-12 and CP-22 merged",
-      "what": "The timetable's day, week and fortnight views and the timetable rules, the fortnight node with Approve and Go live, the draft from the rules with its unmet rules, and moves by hand with clashes accepted by the coordinator only. Until this merges the bar's Timetable door opens the page that exists today.",
+      "what": "The timetable's day, week and fortnight views and the timetable rules, the fortnight node with Approve and Go live, the draft from the rules with its unmet rules, and, on the fortnight page, moves by hand with clashes accepted by the coordinator only. Until this merges the bar's Timetable door opens the page that exists today.",
       "screens": [
         "timetable",
         "rules",
         "fortnight",
-        "draft",
-        "moves"
+        "draft"
       ],
       "done_when": [
         "Every screen of this slice passes the ten generic checks and every element in its list behaves as its kind says, as educator (read-only) and as coordinator.",
@@ -551,7 +550,7 @@
         {
           "t": "link",
           "label": "do now tile",
-          "to": "moves",
+          "to": "fortnight",
           "text": "left unconfirmed"
         },
         {
@@ -578,7 +577,7 @@
         {
           "t": "row",
           "label": "clash row",
-          "to": "moves",
+          "to": "fortnight",
           "roles": [
             "coordinator"
           ],
@@ -1358,7 +1357,7 @@
         {
           "t": "link",
           "label": "each hand move",
-          "to": "moves",
+          "to": "fortnight",
           "roles": [
             "coordinator"
           ]
@@ -1519,7 +1518,7 @@
         {
           "t": "link",
           "label": "Next: hand moves",
-          "to": "moves"
+          "to": "fortnight"
         },
         {
           "t": "link",
@@ -1533,18 +1532,17 @@
         },
         {
           "t": "link",
-          "label": "rail: Moves by hand",
-          "to": "moves"
+          "label": "rail: Fortnight 10, move then approve",
+          "to": "fortnight"
         }
       ],
       "rail": [
         "Rules",
-        "Fortnight 10",
-        "Moves by hand"
+        "Fortnight 10"
       ],
       "capture": [],
       "main": "Make a draft",
-      "next": "Moves by hand",
+      "next": "Fortnight 10",
       "data": "engine command (FET) → draft slots; unmet rules report",
       "empty": "No rules for this grade yet: link to Rules",
       "phone": "read-only; the button is desktop",
@@ -1552,108 +1550,6 @@
         "the draft shown equals the slots the generator wrote (count and cells)",
         "every unmet rule row names a rule row that exists",
         "Make a draft never changes a live fortnight's sessions (count unchanged before and after)"
-      ]
-    },
-    {
-      "id": "moves",
-      "route": "/timetable/moves",
-      "group": "Timetable",
-      "who": "coordinator",
-      "phase": "Core",
-      "backend": [
-        "CP-12"
-      ],
-      "exists": "no",
-      "eyebrow": "Fortnight 10 · draft",
-      "title": "Moves by hand",
-      "purpose": "Move a period; the clash it makes shows at once; only the coordinator accepts one, with a reason.",
-      "blocks": [
-        [
-          "FortnightGrid",
-          "drag or pick-and-place; a moved cell amber; a clash red"
-        ],
-        [
-          "DataTable",
-          "moves made: what · from · to · who · why · clash accepted?"
-        ],
-        [
-          "Form",
-          "accept this clash: reason (required) · Accept"
-        ]
-      ],
-      "elements": [
-        {
-          "t": "cell",
-          "label": "pick a cell, then a target cell",
-          "effect": "the session moves; the source and target cells redraw; a clash shows red; a move row appears with who"
-        },
-        {
-          "t": "button",
-          "label": "Undo the last move",
-          "effect": "the move is reversed as a new move row, never deleted",
-          "drive": {
-            "click": "Undo the last move",
-            "expect": {
-              "url": "/timetable/moves",
-              "text": [
-                "Done."
-              ]
-            }
-          }
-        },
-        {
-          "t": "field",
-          "label": "reason",
-          "note": "required: empty shows 'Say why' and accepts nothing"
-        },
-        {
-          "t": "button",
-          "label": "Accept the clash",
-          "effect": "the clash is marked accepted with the reason and who; the cell's outline turns amber",
-          "drive": {
-            "fill": {
-              "reason": "The school's own decision"
-            },
-            "click": "Accept the clash",
-            "expect": {
-              "url": "/timetable/moves",
-              "text": [
-                "Done."
-              ]
-            }
-          }
-        },
-        {
-          "t": "link",
-          "label": "rail: Fortnight 10",
-          "to": "fortnight"
-        },
-        {
-          "t": "link",
-          "label": "rail: The grid",
-          "to": "timetable"
-        },
-        {
-          "t": "link",
-          "label": "rail: Rules",
-          "to": "rules"
-        }
-      ],
-      "rail": [
-        "Fortnight 10",
-        "The grid",
-        "Rules"
-      ],
-      "capture": [],
-      "main": "Accept the clash",
-      "next": "Fortnight: Approve",
-      "data": "session moves kept with staff id and reason; clash detection from the engine",
-      "empty": "No moves yet",
-      "phone": "read-only",
-      "done_when": [
-        "a move changes only its own fortnight's sessions",
-        "as educator the page is read-only: no pick, no Accept, and the requests are refused",
-        "every move is listed with who made it and when, and an undo is a new row"
       ]
     },
     {

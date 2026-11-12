@@ -87,27 +87,27 @@ test("a coordinator holding no class sees the grid of a planning fortnight: a bl
   await expect(page.getByText(/could not be read just now/)).toHaveCount(0);
   const grid = page.locator("[data-block=FortnightGrid]");
   await expect(grid.locator(".b-dh")).toHaveCount(10);
-  await expect(grid.locator("a.b-cell")).toHaveCount(LESSONS);
+  await expect(grid.locator(".b-cell")).toHaveCount(LESSONS);
   await expect(grid.locator(".b-band")).toHaveCount(2); // the fixed parts of the day are bands
   await expect(page.locator("[data-fortnight-state=planning]")).toContainText("not live yet");
   // each block is tinted by its subject, and two subjects are two colours (numeracy and language)
-  const looks = await grid.locator("a.b-cell").evaluateAll((els) => els.map((e) => [e.getAttribute("data-subject"), getComputedStyle(e).backgroundColor] as const));
+  const looks = await grid.locator(".b-cell").evaluateAll((els) => els.map((e) => [e.getAttribute("data-subject"), getComputedStyle(e).backgroundColor] as const));
   const by = new Map(looks);
   expect([...by.keys()].sort()).toEqual(["language", "numeracy"]);
   expect(new Set(by.values()).size).toBe(2);
-  // the week view (the default) draws one week of it, and the Move on each block is the coordinator's
+  // the week view (the default) draws one week of it, and the click on each block that chooses it to move is the coordinator's
   await page.goto(`/timetable?class=${klass}&fn=${NUMBER}`);
   await expect(grid.locator(".b-dh")).toHaveCount(5);
-  const move = grid.locator("[data-move-lesson]");
-  expect(await move.count()).toBeGreaterThan(0);
-  expect(await move.first().getAttribute("href")).toMatch(new RegExp(`^/timetable/moves\\?fn=${NUMBER}&class=${klass}&from=`));
+  const pick = grid.locator("[data-pick]");
+  expect(await pick.count()).toBeGreaterThan(0);
+  expect(await pick.first().getAttribute("href")).toMatch(new RegExp(`^/timetable/fortnight/${NUMBER}\\?class=${klass}&from=`));
   await page.context().close();
 });
 
 test("the same page at a phone's width draws the grid with no sideways scroll of the page", async ({ browser }) => {
   const page = await as(browser, COORDINATOR.email, 400);
   await page.goto(`/timetable?class=${klass}&fn=${NUMBER}&view=week`);
-  await expect(page.locator("[data-block=FortnightGrid] a.b-cell").first()).toBeVisible();
+  await expect(page.locator("[data-block=FortnightGrid] .b-cell").first()).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
   await page.context().close();
 });

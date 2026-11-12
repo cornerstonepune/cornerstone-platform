@@ -40,27 +40,25 @@ test("Timetable: lessons by subject counts the class's sessions for the fortnigh
   for (const r of rows) await expect(page.locator(`[data-subject-row="${r.code}"]`)).toContainText(String(r.n));
 });
 
-test("Fortnight: two cards (State, Hand moves), the plan lines as a table grouped by week, and every fortnight of the year by state", async ({ page }) => {
-  await page.goto(`/timetable/fortnight/${HERE}`);
-  const cards = page.locator("[data-block=Cards] article");
-  await expect(cards).toHaveCount(2);
-  await expect(cards.nth(0)).toContainText("State");
-  await expect(cards.nth(1)).toContainText("Hand moves");
-  const plan = page.locator("[data-card=plan]");
-  await expect(plan.getByRole("heading", { name: /Plan lines/ })).toBeVisible();
-  await expect(plan.getByRole("columnheader", { name: "Week" })).toBeVisible();
-  await expect(plan.getByRole("columnheader", { name: "Line" })).toBeVisible();
-  const lanes = page.locator("[data-block=KanbanBoard] [data-lane]");
-  await expect(lanes).toHaveText([/Drafted/, /Frozen/, /Aligned/, /Approved/, /List sent/]);
-  const [{ n }] = await sql<{ n: number }[]>`select count(*)::int as n from fortnight where kind = 'teaching' and academic_year_id = (select academic_year_id from fortnight where id = ${f.here})`;
-  await expect(page.locator("[data-block=KanbanBoard] [data-kcard]")).toHaveCount(n);
+test("Fortnight: the page is the grid of the whole fortnight, its state steps are on it, and there are no cards, no plan-lines table and no board of fortnights", async ({ page }) => {
+  await page.goto(`/timetable/fortnight/${HERE}?class=${f.klass}`);
+  const grid = page.locator("[data-block=FortnightGrid]");
+  await expect(grid.locator(".b-dh")).toHaveCount(10); // week A and week B
+  const [{ n }] = await sql<{ n: number }[]>`
+    select count(*)::int as n from session s join school_day d on d.id = s.school_day_id join fortnight g on d.on_date between g.starts_on and g.ends_on
+    where s.school_class_id = ${f.klass} and g.number = ${HERE} and s.kind <> 'fixed'`;
+  await expect(grid.locator(".b-cell")).toHaveCount(n); // a block for every lesson
+  await expect(page.locator("[data-block=Stepper] li")).toHaveText(["Drafted", "Frozen", "Aligned", "Approved", "List sent"]);
+  await expect(page.locator("[data-block=Cards], [data-block=KanbanBoard], [data-card=plan]")).toHaveCount(0);
+  await expect(page.getByTestId("stage").locator("[data-fortnight-state]")).toBeVisible();
 });
 
-test("Fortnight: the rail is the few places it connects to: the grid, Moves by hand, Draft, Rules and Materials, not the activities", async ({ page }) => {
+test("Fortnight: the rail is the few places it connects to: the grid, Draft, Rules and Materials, not the activities", async ({ page }) => {
   await page.goto(`/timetable/fortnight/${HERE}`);
   await expect(page.locator("[data-rail]").getByRole("link", { name: "The grid" })).toBeVisible();
   await expect(page.locator("[data-rail]").getByRole("link", { name: "Draft from the rules" })).toBeVisible();
-  for (const name of ["Moves by hand", "Timetable rules", "Materials"]) await expect(page.locator("[data-rail]").getByRole("link", { name })).toBeVisible();
+  for (const name of ["Timetable rules", "Materials"]) await expect(page.locator("[data-rail]").getByRole("link", { name })).toBeVisible();
+  await expect(page.locator("[data-rail]").getByRole("link", { name: "Moves by hand" })).toHaveCount(0); // the moves are made on the grid itself
   expect(await page.locator("[data-rail] [data-rail-link]").count()).toBeLessThanOrEqual(6);
 });
 
@@ -75,15 +73,14 @@ test("Draft: the fortnight is chosen from the teaching fortnights, and the rail 
   await expect(reads.locator("dt", { hasText: "Blocked days" }).locator("xpath=following-sibling::dd[1]")).toHaveText(String(blocks));
 });
 
-test("Moves: a legend names the three marks, and the rail counts this draft so far", async ({ page }) => {
-  await page.goto(`/timetable/moves?fn=${HERE}&class=${f.klass}`);
+test("Fortnight, moving: a legend names the marks, and the moves made by hand are counted in their fold", async ({ page }) => {
+  await page.goto(`/timetable/fortnight/${HERE}?class=${f.klass}`);
   const legend = page.locator("[data-legend]");
   await expect(legend).toContainText("Moved by hand");
   await expect(legend).toContainText("Clash, not yet accepted");
-  await expect(legend).toContainText("Clash accepted");
-  const so = page.getByRole("complementary", { name: "This draft so far" });
-  const made = await page.locator("table tbody tr").count();
-  await expect(so.locator("dt", { hasText: "Moved by hand" }).locator("xpath=following-sibling::dd[1]")).toHaveText(String(made));
+  const made = await page.locator("[data-hand-move]").count();
+  expect(made).toBeGreaterThan(0);
+  await expect(page.getByText(`Moved by hand (${made})`)).toBeVisible();
 });
 
 test("Rules: each rule is a read-only row with Edit; Edit opens that row's fields with Save and Cancel, and Cancel closes it", async ({ page }) => {
