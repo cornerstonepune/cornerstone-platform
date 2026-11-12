@@ -1,6 +1,6 @@
 import type { Locator, Page } from "@playwright/test";
 
-/** The sections of the sidebar (lib/menu.ts, page charter A1), as each person sees them: School is the coordinator's. */
+/** The sections of the sidebar (lib/menu.ts, page charter A1): the same for everyone (Nimish, 12 Nov: School too, read-only). */
 export const SECTIONS = { coordinator: ["My day", "Timetable", "Children", "Assessments", "School"], educator: ["My day", "Timetable", "Children", "Assessments", "School"] } as const;
 
 /** The menu (components/frame/sidebar.tsx): the sidebar from 701 px wide, opened out if it was folded to icons; on a phone the drawer behind

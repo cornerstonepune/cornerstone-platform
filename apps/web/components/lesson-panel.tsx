@@ -5,7 +5,7 @@ import { StackBar } from "./stack-bar";
 import { StatusChip } from "./status-chip";
 import { OUTCOME_ORDER, outcomeWords } from "./outcome-states";
 import type { LessonView } from "@/lib/lesson-view";
-import { SCALE_LOOK, levelState } from "@/lib/state-scale";
+import { scaleLook, levelState } from "@/lib/state-scale";
 import { ChooseActivity } from "@/app/(app)/period/[id]/choose-activity";
 import { EditLesson } from "@/app/(app)/period/[id]/edit-lesson";
 import { LessonForm } from "@/app/(app)/period/[id]/lesson-form";
@@ -54,7 +54,7 @@ export function lessonPanel(v: LessonView, o: { key: string; closeHref: string; 
             {levels.map((w, n) => {
               const state = levelState(n, levels.length);
               return (
-                <li key={n} className="b-level" data-level={n} data-state={SCALE_LOOK[state]}>
+                <li key={n} className="b-level" data-level={n} data-state={scaleLook(state)}>
                   <b className="b-num">{n}</b>
                   <span>{w || "Not written."}</span>
                 </li>

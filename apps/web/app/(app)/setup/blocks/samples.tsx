@@ -6,7 +6,7 @@ import { Cards } from "@/components/cards";
 import { StatTiles } from "@/components/stat-tile";
 import { DetailPanel } from "@/components/detail-panel";
 import { SubjectMix, SubjectTag } from "@/components/subject-tag";
-import { levelState, SCALE_LOOK } from "@/lib/state-scale";
+import { levelState, scaleLook } from "@/lib/state-scale";
 import { CaptureBar } from "@/components/capture-bar";
 import { ChildGraph } from "@/components/child-graph";
 import { DataTable } from "@/components/data-table";
@@ -204,7 +204,7 @@ export function sampleOf(name: string, q: Record<string, string | undefined>, me
                 body: (
                   <ol className="b-levels" data-block-part="rubric">
                     {["Counts with help", "Counts ones", "Bundles tens with help", "Counts in tens alone"].map((w, n) => (
-                      <li key={n} className="b-level" data-level={n} data-state={SCALE_LOOK[levelState(n, 4)]}>
+                      <li key={n} className="b-level" data-level={n} data-state={scaleLook(levelState(n, 4))}>
                         <b className="b-num">{n}</b>
                         <span>{w}</span>
                       </li>

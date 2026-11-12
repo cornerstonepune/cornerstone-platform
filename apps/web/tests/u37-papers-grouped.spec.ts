@@ -145,7 +145,11 @@ test("the one filter row is there, with its active filters, and a child chosen s
   await page.goto("/children/assessments");
   const bar = page.locator("[data-filterbar]");
   await expect(bar).toBeVisible();
-  for (const l of ["Class", "Topic", "Subject", "Kind", "Week", "Status"]) await expect(bar.locator(`select[name="${({ Class: "class", Topic: "topic", Subject: "subject", Kind: "kind", Week: "week", Status: "status" } as Record<string, string>)[l]}"]`)).toBeVisible();
+  // page charter B6: Class, Subject and Week in the row; Topic, Kind and Stage one press away, behind "More filters"
+  for (const name of ["class", "subject", "week"]) await expect(bar.locator(`select[name="${name}"]`)).toBeVisible();
+  for (const name of ["topic", "kind", "status"]) await expect(bar.locator(`select[name="${name}"]`)).toBeHidden();
+  await bar.locator("[data-more-filters] > summary").click();
+  for (const name of ["topic", "kind", "status"]) await expect(bar.locator(`select[name="${name}"]`)).toBeVisible();
   await expect(page.getByRole("navigation", { name: "View" })).toHaveCount(0);
   await expect(page.locator("[data-active-filters]")).toHaveCount(0);
   // a child chosen: the assessments they have a copy in, this week's and the one long past

@@ -63,7 +63,7 @@ test("A2: choosing a lesson block opens its lesson on the right in tabs, and the
   const levels = panel(page).locator("[data-block=Rubric] [data-level]");
   await expect(levels).toHaveCount(4);
   await expect(levels.nth(0)).toHaveAttribute("data-state", "quiet");
-  await expect(levels.nth(1)).toHaveAttribute("data-state", "late");
+  await expect(levels.nth(1)).toHaveAttribute("data-state", "wait");
   await expect(levels.nth(2)).toHaveAttribute("data-state", "wait");
   await expect(levels.nth(3)).toHaveAttribute("data-state", "ok");
   // the title takes the focus, and the panel is opened full page at the lesson's own address
@@ -117,6 +117,9 @@ test("A2: Escape and the × close the panel, the page stays where it was, and th
 test("A2: on a phone an open panel is a sheet over the page, and closes the same way", async ({ page }) => {
   await page.setViewportSize({ width: 400, height: 860 });
   await page.goto(`${week()}&open=lesson:${lesson}`);
+  // its box is read once it is drawn open (a box read straight after the load can come before the panel is laid out: null)
+  await expect(panel(page)).toHaveAttribute("data-panel", "open");
+  await expect(panel(page)).toBeVisible();
   const box = (await panel(page).boundingBox())!;
   expect(box.x).toBe(0);
   expect(box.width).toBe(400);

@@ -135,7 +135,8 @@ export async function EditPaper({ qr, assessment, roll, sp }: { qr: string; asse
       {editable && b ? (
         <section aria-label="Add a question from the bank" className="mt-6">
           <h2 className="mb-2 text-[16px]">Add a question from the bank</h2>
-          <FilterBar action={here} filters={filters} />
+          {/* a question picked step by step (topic, skill, level, kind, question): every step stays in the row, none behind More filters */}
+          <FilterBar action={here} filters={filters} shown={filters.length} />
           {chosen ? (
             <Panel title="See it" label="The chosen question">
               <div className="text-[14px]" data-item={chosen.item_key}>

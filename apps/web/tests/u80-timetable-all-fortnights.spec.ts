@@ -105,19 +105,26 @@ test("the coordinator opens a fortnight still in planning: its grid, its state i
   await expect(picker.locator("optgroup")).toHaveAttribute("label", "Planning");
   await expect(picker.locator(`option[value='${PLANNED}']`)).toContainText("Drafted");
   await expect(picker.locator(`option[value='${PLANNED}']`)).toContainText(/\d{2}-[A-Z][a-z]{2} to \d{2}-[A-Z][a-z]{2}/);
-  // the tools that change a plan are links to the pages that already do it, in the rail; this page changes nothing
+  // this page changes nothing: no Go live, no moves; the panel's summary is numbers, never links (page charter A2)
+  await expect(page.getByRole("link", { name: "Moves by hand" })).toHaveCount(0); // the moves are made on the fortnight page
+  await expect(page.getByRole("button", { name: /go live/i })).toHaveCount(0);
+  // every lesson in the grid is a click that opens it in the panel (page charter A2); the coordinator's Move there opens the fortnight
+  // page with that lesson chosen to move
+  const blocks = page.locator(`${GRID} [data-open-key^="lesson:"]`);
+  await expect(blocks).toHaveCount(lessons);
+  const one = blocks.first();
+  expect(await one.getAttribute("href")).toMatch(/[?&]open=lesson(:|%3A)[0-9a-f-]{36}(&|$)/);
+  await one.click();
+  await expect(one).toHaveAttribute("aria-expanded", "true");
+  const move = page.locator("[data-panel-move]");
+  expect(await move.getAttribute("href")).toMatch(new RegExp(`^/timetable/fortnight/${PLANNED}\\?class=${f.klass}&from=\\d{4}-\\d\\d-\\d\\d(~|%7E)[0-9a-f-]{36}$`));
+  await move.click();
+  await expect(page.getByRole("heading", { name: `Fortnight ${PLANNED}`, level: 1 })).toBeVisible();
+  await expect(page.locator(`${GRID} [data-pick][aria-pressed=true]`)).toHaveCount(1);
+  // the tools that change a plan are links to the pages that already do it, on the fortnight page (page charter C: Fortnight)
   const rail = page.locator("[data-rail]");
   for (const [name, href] of [["Draft from the rules", `/timetable/draft?fn=${PLANNED}`], ["Timetable rules", "/timetable/rules"]])
     await expect(rail.getByRole("link", { name }), name).toHaveAttribute("href", href);
-  await expect(rail.getByRole("link", { name: "Moves by hand" })).toHaveCount(0); // the moves are made on the fortnight page
-  await expect(page.getByRole("button", { name: /go live/i })).toHaveCount(0);
-  // every lesson in the grid is a click that chooses it (the coordinator's), opening the fortnight page with that lesson chosen to move
-  await expect(page.locator(`${GRID} [data-pick]`)).toHaveCount(lessons);
-  const one = page.locator(`${GRID} [data-pick]`).first();
-  expect(await one.getAttribute("href")).toMatch(new RegExp(`^/timetable/fortnight/${PLANNED}\\?class=${f.klass}&from=\\d{4}-\\d\\d-\\d\\d(~|%7E)[0-9a-f-]{36}$`));
-  await one.click();
-  await expect(page.getByRole("heading", { name: `Fortnight ${PLANNED}`, level: 1 })).toBeVisible();
-  await expect(page.locator(`${GRID} [data-pick][aria-pressed=true]`)).toHaveCount(1);
   await expect(page.getByText(NOT_FOUND)).toHaveCount(0);
   await page.context().close();
 });
@@ -152,6 +159,10 @@ test("with the switch on (as live today): the fortnight under way is Live, the l
     await edu.goto(`/timetable?class=${f.klass}&fn=7401`);
     await expect(edu.locator("[data-block=FortnightGrid]")).toBeVisible();
     await expect(edu.locator("[data-pick]")).toHaveCount(0); // an educator chooses nothing to move
+    await expect(edu.getByRole("link", { name: "Draft from the rules" })).toHaveCount(0); // nor drafts
+    await edu.locator('[data-block=FortnightGrid] [data-open-key^="lesson:"]').first().click();
+    await expect(edu.locator("[data-panel-title]")).toBeVisible();
+    await expect(edu.locator("[data-panel-move]")).toHaveCount(0); // the lesson opens, with no Move in it
     await expect(edu.locator("[data-fortnight-state]")).toHaveCount(0); // the state of a plan is the coordinator's
     await edu.context().close();
   } finally {

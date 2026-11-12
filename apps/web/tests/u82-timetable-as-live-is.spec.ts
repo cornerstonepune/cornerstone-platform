@@ -95,12 +95,14 @@ test("a coordinator holding no class sees the grid of a planning fortnight: a bl
   const by = new Map(looks);
   expect([...by.keys()].sort()).toEqual(["language", "numeracy"]);
   expect(new Set(by.values()).size).toBe(2);
-  // the week view (the default) draws one week of it, and the click on each block that chooses it to move is the coordinator's
+  // the week view (the default) draws one week of it; each block opens its lesson in the panel, where Move (choosing it to move) is the
+  // coordinator's
   await page.goto(`/timetable?class=${klass}&fn=${NUMBER}`);
   await expect(grid.locator(".b-dh")).toHaveCount(5);
-  const pick = grid.locator("[data-pick]");
-  expect(await pick.count()).toBeGreaterThan(0);
-  expect(await pick.first().getAttribute("href")).toMatch(new RegExp(`^/timetable/fortnight/${NUMBER}\\?class=${klass}&from=`));
+  const blocks = grid.locator('[data-open-key^="lesson:"]');
+  expect(await blocks.count()).toBeGreaterThan(0);
+  await blocks.first().click();
+  expect(await page.locator("[data-panel-move]").getAttribute("href")).toMatch(new RegExp(`^/timetable/fortnight/${NUMBER}\\?class=${klass}&from=`));
   await page.context().close();
 });
 

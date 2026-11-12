@@ -24,7 +24,7 @@ export const SECTIONS: readonly Section[] = [
     pages: [
       { label: "Today", href: "/today", match: ["/today", "/record", "/period"], guide: false },
       { label: "Notes to confirm", href: "/notes", match: ["/notes"], guide: false },
-      { href: "/setup/needs-doing", label: "What needs doing", match: ["/setup/needs-doing"], coordinator: true },
+      { href: "/setup/needs-doing", label: "What needs doing", match: ["/setup/needs-doing"] },
     ],
   },
   {
@@ -96,9 +96,8 @@ export function locate(address: string): { section: Section; page: MenuPage } | 
 /** The section a path belongs to when nothing says the walk began elsewhere; none for the pages outside the menu (help, feedback, password). */
 export const sectionOf = (address: string): Section | undefined => locate(address)?.section;
 
-/** The sidebar a person sees: every section for everyone (Nimish, 12 Nov: educators see School, read-only; its buttons stay the
- *  coordinator's, lib/access.ts), and the coordinator's own lines only for the coordinator, not while acting as an educator. A view, never a
- *  permission (lib/access.ts says what anyone may open). */
-export function sectionsFor(coordinator: boolean): Section[] {
-  return SECTIONS.filter((s) => coordinator || !s.coordinator).map((s) => ({ ...s, pages: s.pages.filter((p) => coordinator || !p.coordinator) }));
+/** The sidebar a person sees: the same for everyone (Nimish, 22 Oct: one set of features for both; 12 Nov: educators see School,
+ *  read-only). A coordinator's own buttons stay the coordinator's on the page itself (lib/access.ts says what anyone may change). */
+export function sectionsFor(_coordinator: boolean): Section[] {
+  return [...SECTIONS];
 }
