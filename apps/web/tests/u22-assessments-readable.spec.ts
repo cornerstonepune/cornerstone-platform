@@ -74,6 +74,9 @@ const ours = (page: Page) => assessments(page).locator(`tr[data-assessment*="~${
 test("a topic keeps the assessments on its skills, and an assessment opens its copies", async ({ page }) => {
   await page.goto(`/children/assessments?class=${SECTION}&view=table`);
   const topic = page.locator("[data-filterbar]").locator('select[name="topic"]');
+  // Topic is behind More filters (page charter A4: the row shows Class, Subject and Week)
+  await page.locator("[data-filterbar] details[data-more-filters] > summary").click();
+  await expect(topic).toBeVisible();
   await expect(topic).toHaveValue("");
   await topic.selectOption({ label: "Data handling" });
   await expect(page).toHaveURL(/topic=DATA\b/);

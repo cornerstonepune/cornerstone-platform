@@ -108,7 +108,8 @@ function Grid<T>({ label, cols, rows, rowKey, extras, sort, dense }: { label: st
   const free = cols.filter((c) => !c.width).length;
   const least = `calc(${[...cols.flatMap((c) => (c.width ? [c.width] : [])), `${free * FREE_COLUMN_REM}rem`].join(" + ")})`;
   return (
-    <div className="data-table">
+    // a box that scrolls sideways is reached by the keyboard too: tab to it, then the arrow keys (axe: scrollable-region-focusable)
+    <div className="data-table" tabIndex={0}>
       <table className={`grid list steady${dense ? " dense" : ""}`} aria-label={label} style={{ "--table-least": least } as React.CSSProperties}>
         <colgroup>
           {cols.map((c) => (

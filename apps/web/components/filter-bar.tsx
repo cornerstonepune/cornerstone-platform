@@ -102,17 +102,17 @@ export function FilterBar({
   );
   return (
     <section data-block="FilterBar" data-filterbar aria-label="Filters" className="mb-3">
-      <form ref={form} action={action} method="get" role="search" className="relative flex flex-wrap items-center gap-2">
+      <form ref={form} action={action} method="get" role="search" className="flex flex-wrap items-center gap-2">
         {Object.entries(keep).map(([k, v]) => (v ? <input key={k} type="hidden" name={k} value={v} /> : null))}
         {filters.slice(0, shown).map(drop)}
         {filters.length > shown ? (
-          // as tall as the row's dropdowns (stretched to the line), so the row reads as one line, tops and all; on a phone its list hangs
-          // from the row's left edge (the form), not from the button, which can sit at the right of the screen
-          <details data-more-filters className="relative flex self-stretch max-[767px]:static" open={moreOn > 0 || undefined}>
+          // closed: one button, as tall as the row's dropdowns (stretched to the line). Open (as it stands while one of its filters is on):
+          // a line of its own under the row, its dropdowns beside the button, in the page's flow, so it never lies over the list below
+          <details data-more-filters className="flex flex-wrap items-center gap-2 self-stretch [&[open]]:basis-full" open={moreOn > 0 || undefined}>
             <summary className="inline-flex min-h-[40px] self-stretch cursor-pointer items-center gap-2 whitespace-nowrap rounded-[var(--radius-control)] border border-[var(--line-control)] bg-[var(--panel)] px-3 text-[15px] text-[var(--ink)]">
               More filters{moreOn ? ` (${moreOn} on)` : ""}
             </summary>
-            <div className="absolute left-0 top-full z-30 mt-1 grid w-max grid-cols-[minmax(0,1fr)] max-w-[min(92vw,420px)] gap-2 rounded-[var(--radius-card)] bg-[var(--panel)] p-[var(--space-3)] shadow-[var(--shadow-card)]">
+            <div className="flex min-w-0 flex-wrap items-center gap-2">
               {filters.slice(shown).map(drop)}
             </div>
           </details>
