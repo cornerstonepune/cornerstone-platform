@@ -354,7 +354,7 @@ jobs:
           if (s.skipped || s.unexpected) process.exit(1)"
       # every statement over a second (bin/ci-postgres), so a page the database was too slow for names the statement
       - name: the database's slow statements
-        if: failure()
+        if: always()
         run: grep -A2 "duration:" "$RUNNER_TEMP/postgres/log" || echo "no statement took over a second"
       - uses: actions/upload-artifact@v4
         if: always()
