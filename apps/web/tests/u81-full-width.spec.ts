@@ -45,7 +45,7 @@ for (const width of [1920, 1440]) {
   });
 }
 
-test("at 1440 px the Timetable's filter row is one line: the pickers, the toggle, Previous, Next, Today and Open today share a row", async ({ page }) => {
+test("at 1440 px the Timetable's filter row is one line with real slack, and at 1280 it wraps without overflowing", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto(`/timetable?class=${f.klass}`);
   await expect(page.locator("[data-block=FortnightGrid]")).toBeVisible();
@@ -53,6 +53,24 @@ test("at 1440 px the Timetable's filter row is one line: the pickers, the toggle
   const tops = await row.locator("select, [role=tab], a.chip, a.btn").evaluateAll((els) => els.map((e) => Math.round(e.getBoundingClientRect().top + e.getBoundingClientRect().height / 2)));
   expect(tops.length).toBeGreaterThanOrEqual(6);
   expect(Math.max(...tops) - Math.min(...tops), `centres of the row's controls: ${tops.join(", ")}`).toBeLessThan(12);
+  // slack, so a wider font on another machine (CI's) cannot wrap it: the controls, each made 10 % wider, still fit the row with their gaps
+  const fit = await row.evaluate((el) => {
+    const kids = [...el.children] as HTMLElement[];
+    const gap = parseFloat(getComputedStyle(el).columnGap) || 0;
+    const need = kids.reduce((n, k) => n + k.getBoundingClientRect().width * 1.1, 0) + gap * (kids.length - 1);
+    return { need: Math.round(need), have: Math.round(el.getBoundingClientRect().width) };
+  });
+  expect(fit.need, `the row needs ${fit.need} px with 10 % more width on each control, and has ${fit.have}`).toBeLessThanOrEqual(fit.have);
+  // narrower, the row wraps and nothing runs off the page
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto(`/timetable?class=${f.klass}`);
+  await expect(page.locator("[data-block=FortnightGrid]")).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
+  const box = await row.boundingBox();
+  for (const c of await row.locator("select, [role=tab], a.chip, a.btn").all()) {
+    const b = (await c.boundingBox())!;
+    expect(b.x + b.width, "a control inside the row's right edge").toBeLessThanOrEqual(box!.x + box!.width + 1);
+  }
 });
 
 test("a page with a rail fills it: the Timetable's rail holds the door's other pages, each with a second line", async ({ page }) => {

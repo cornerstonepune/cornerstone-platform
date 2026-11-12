@@ -205,8 +205,7 @@ export default async function TimetablePage({ searchParams }: Props) {
             <Link href={keep({ view, fn: undefined, day: view === "day" ? schoolDay(focus, 1) : mondayOf(focus, 1) })} className="chip" data-step="on" aria-label={view === "day" ? "Next day" : "Next week"}>Next</Link>
           </>
         ) : null}
-        <Link href={keep({ view: "day", day: today })} className="chip" data-today-link>Today</Link>
-        <a className="btn" href={keep({ view: "day", day: today, fn: undefined, when: undefined })} data-ux="action">Open today</a>
+        <a className="btn" href={keep({ view: "day", day: today, fn: undefined, when: undefined })} data-ux="action" data-today-link>Open today</a>
       </div>
       <div className="tt-legend" data-legend>
         <StatusChip state="done" words="Done" round />
