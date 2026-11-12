@@ -122,9 +122,11 @@ export default async function Children({ searchParams }: { searchParams: Promise
 function ChildrenRail({ notes }: { notes: { toConfirm: number; latest: LatestNote[] } | null }) {
   const notesHref = screenHref("notes");
   return (
-    <div className="grid content-start gap-[var(--space-3)]">
-      <PeekPanel />
-      <Rail edges={[{ screen: "assessments", label: "Assessments", icon: "assessment" }, ...(notes ? [] : [{ screen: "notes", label: "Notes", icon: "note" as const }])]} />
+    <Rail
+      peek={<PeekPanel />}
+      edges={[{ screen: "assessments", label: "Assessments", icon: "assessment" }, ...(notes ? [] : [{ screen: "notes", label: "Notes", icon: "note" as const }])]}
+      cards={
+        <>
       {notes ? (
         <p data-notes-count className="rounded-[var(--radius-card)] bg-[var(--surface)] p-[var(--space-3)] text-[14px]">
           {notesHref ? <Link href={notesHref} className="text-[var(--link)] underline">Notes</Link> : "Notes"} · {notes.toConfirm} to confirm
@@ -147,6 +149,8 @@ function ChildrenRail({ notes }: { notes: { toConfirm: number; latest: LatestNot
           </ul>
         </section>
       ) : null}
-    </div>
+        </>
+      }
+    />
   );
 }

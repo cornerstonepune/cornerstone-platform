@@ -62,6 +62,9 @@ test("Record: at 400 px the Start button is the full width and at least 56 px ta
   const c = await browser.newContext({ storageState: SIGNED_IN, viewport: { width: 400, height: 800 } });
   const p = await c.newPage();
   await p.goto(`/record?class=${klass}`);
+  // the page streams: the button arrives in a hidden holder before it is swapped in, and a hidden element has no box to measure
+  await expect(p.locator("[data-record]")).toBeVisible();
+  await expect(p.locator("[data-ux=action]")).toBeVisible();
   const box = (await p.locator("[data-record]").boundingBox())!;
   // "full width" is the whole row of the screen's one action (the page's gutters are the page's, not the button's)
   const row = (await p.locator("[data-ux=action]").boundingBox())!;

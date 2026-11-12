@@ -16,6 +16,7 @@ import { timetableSwitch } from "./educator-screens";
 import { sessionFor } from "./inventory-fixtures";
 import { aPerson, personAsStored } from "./rows";
 import { timetableRows, type Fixture } from "./timetable-rows";
+import { doorPages } from "./door-pages";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -196,12 +197,14 @@ test("the tabs that led nowhere are gone: no Your day, no This week; the Timetab
   expect(pages.filter((p) => ["Your day", "This week"].includes(p.label))).toEqual([]);
   expect(pages.filter((p) => p.href === "/educator" || p.href === "/educator/week")).toEqual([]);
   expect(GROUPS.find((d) => d.key === "timetable")?.href).toBe("/timetable");
-  const row = page.getByRole("navigation", { name: "Pages in this section" });
+  // the door's pages fold behind "<door> pages" (one nav row, #690 step B): opened, they hold no Your day and no This week
   await page.goto("/today");
-  await expect(row.getByRole("link", { name: "Your day" })).toHaveCount(0);
+  await expect((await doorPages(page)).getByRole("link", { name: "Your day" })).toHaveCount(0);
   await page.goto("/timetable");
+  const row = await doorPages(page);
   await expect(row.getByRole("link", { name: "This week" })).toHaveCount(0);
   await expect(row.getByRole("link", { name: "Timetable", exact: true })).toBeVisible();
+  await page.keyboard.press("Escape");
   await page.locator("[data-bar] [data-door=timetable]").first().click();
   await expect(page).toHaveURL(/\/timetable$/);
 });

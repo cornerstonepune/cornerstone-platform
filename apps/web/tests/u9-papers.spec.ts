@@ -16,6 +16,7 @@
 import { aChildIn } from "./rows";
 import { expect, type Page, test } from "@playwright/test";
 import postgres from "postgres";
+import { doorPages } from "./door-pages";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -161,11 +162,12 @@ test("one Assessments in the menu for marking and making, and a row opens the pa
   await page.goto("/papers");
   // Assessments is one page of the Children door: the door is lit, the page is marked in its row, and there is no Marking or Make papers
   const menu = page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" });
-  const pagesRow = page.getByRole("navigation", { name: "Pages in this section" });
+  const pagesRow = await doorPages(page);
   await expect(menu.getByRole("link", { name: "Children" })).toHaveAttribute("aria-current", "page");
   await expect(pagesRow.getByRole("link", { name: "Assessments", exact: true })).toHaveAttribute("aria-current", "page");
   await expect(pagesRow.getByRole("link", { name: "Marking" })).toHaveCount(0);
   await expect(pagesRow.getByRole("link", { name: "Make papers" })).toHaveCount(0);
+  await page.keyboard.press("Escape");
   // making, reading a scan and the queue of answers to check are all here
   await expect(page.getByRole("region", { name: "Make an assessment" }).getByRole("link", { name: /^For a class/ })).toHaveAttribute("href", /^\/papers\/make\?/);
   await expect(page.getByRole("region", { name: "Read an assessment" })).toBeVisible();
@@ -174,7 +176,8 @@ test("one Assessments in the menu for marking and making, and a row opens the pa
   for (const path of ["/make"]) {
     await page.goto(path);
     await expect(menu.getByRole("link", { name: "Children" })).toHaveAttribute("aria-current", "page");
-    await expect(pagesRow.getByRole("link", { name: "Assessments", exact: true })).toHaveAttribute("aria-current", "page");
+    await expect((await doorPages(page)).getByRole("link", { name: "Assessments", exact: true })).toHaveAttribute("aria-current", "page");
+    await page.keyboard.press("Escape");
   }
 
   // a scanned paper opens to check its answers; one not yet scanned opens as printed: a copy's child is its link

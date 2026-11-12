@@ -8,6 +8,7 @@
  */
 import { expect, test, type Page } from "@playwright/test";
 import postgres from "postgres";
+import { doorPages } from "./door-pages";
 
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 test.afterAll(async () => sql.end());
@@ -36,7 +37,7 @@ test("a click shows the page is loading at once, and a database that does not an
   await page.goto("/setup", { waitUntil: "networkidle" });
   await whileLocked("item", async () => {
     const clicked = Date.now();
-    await page.getByRole("navigation", { name: "Pages in this section" }).getByRole("link", { name: "Curriculum", exact: true }).click();
+    await (await doorPages(page)).getByRole("link", { name: "Curriculum", exact: true }).click();
     await expect(page.getByRole("status", { name: "Loading this page" })).toBeVisible({ timeout: 1_500 });
     await expect(page.getByRole("heading", { name: COULD_NOT_LOAD })).toBeVisible({ timeout: 12_000 });
     expect(Date.now() - clicked).toBeLessThan(12_000);

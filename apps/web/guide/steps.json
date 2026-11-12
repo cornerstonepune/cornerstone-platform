@@ -74,7 +74,7 @@
     "who": [
       "the engine"
     ],
-    "sees": "A signed off answer counts for every skill it used, and each child's skills are worked out again. See [Class results](/guide/class-results#a-child)."
+    "sees": "A signed off answer counts for every skill it used, and each child's skills are worked out again. See [Children](/guide/children#a-child)."
   },
   "N11": {
     "name": "Home assessment",
@@ -82,7 +82,7 @@
       "the engine",
       "educator"
     ],
-    "sees": "A home assessment for each child, aimed at what they got wrong. You approve it on the child's page. See [Make a home assessment](/guide/class-results#home-assessment)."
+    "sees": "A home assessment for each child, aimed at what they got wrong. You approve it on the child's page. See [Make a home assessment](/guide/children#home-assessment)."
   },
   "N12": {
     "name": "Reports and planning",
