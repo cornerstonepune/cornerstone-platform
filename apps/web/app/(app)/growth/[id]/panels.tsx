@@ -40,11 +40,14 @@ const NEWEST = 5;
 export function TheirPapers({
   childId,
   sheets,
+  screens,
   failed,
   staff,
 }: {
   childId: string;
   sheets: ChildSheet[];
+  /** each read paper's own screen under Assessments, by sheet id */
+  screens: Map<string, string>;
   failed: number;
   staff: Record<string, string>;
 }) {
@@ -60,7 +63,7 @@ export function TheirPapers({
                   <Pill tone="monsoon">{s.kind ? (PURPOSE[s.kind] ?? s.kind) : "paper done in class"}</Pill>
                   <span className="fact">{s.date ? fmtDate(s.date) : s.week ? weekWords(s.week) : "—"}</span>
                 </div>
-                <Link href={s.n_results ? `/capture/${s.id}` : `/worksheets/${s.qr_code}`} className="mt-1 block leading-snug">
+                <Link href={(s.n_results ? screens.get(s.id) : null) ?? `/worksheets/${s.qr_code}`} className="mt-1 block leading-snug">
                   {s.title ?? `Paper ${s.qr_code}`}
                 </Link>
                 <div className="text-[12px] text-basalt/62">
@@ -77,7 +80,7 @@ export function TheirPapers({
           </ul>
         )}
         {sheets.length > NEWEST ? (
-          <Link href={`/papers?child=${childId}`} className="mt-3 block text-[13px]">
+          <Link href={`/children/assessments?child=${childId}`} className="mt-3 block text-[13px]">
             Every paper of this child, {sheets.length} in all →
           </Link>
         ) : null}

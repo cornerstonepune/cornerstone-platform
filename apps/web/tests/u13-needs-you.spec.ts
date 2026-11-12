@@ -81,12 +81,15 @@ test("a skill is approved before its topic is switched on", async ({ page }) => 
     select status, ratified_by from skill where code = 'DIV.2D1D'`;
   try {
     await sql`update skill set status = 'draft', ratified_by = null where code = 'DIV.2D1D'`;
-    await page.goto("/skill-sets/approve");
-    await expect(page.locator('tr[data-row="DIV.2D1D"]')).toContainText("Not taught yet");
-    const waiting = await page.locator('input[name="code"]').count();
+    // Skills to approve, its Taught filter on "Not taught yet": the skill is among them (ten rows a page: under its topic)
+    await page.goto("/setup/skills/approve?taught=no&topic=DIV");
+    await expect(page.locator('tr[data-row="DIV.2D1D"]')).toBeVisible();
+    // the screen's eyebrow counts every skill waiting (its table shows ten a page)
+    // (the eyebrow over the title, not the bar's own "n waiting" beside Today)
+    const waiting = Number(((await page.getByTestId("stage").textContent()) ?? "").trim().match(/^(\d+) waiting$/)?.[1]);
     expect(await todo(page, "skill", "rows")).toBe(waiting);
     // approved from its own page, as written, in the approver's name
-    await page.goto("/skill-sets/DIV.2D1D");
+    await page.goto("/setup/skill-sets/DIV.2D1D");
     await expect(page.getByRole("main")).toContainText("Not taught yet");
     await page.getByRole("button", { name: /^Approve, as / }).click();
     await expect(page.getByRole("main")).toContainText(/Approved/);
@@ -103,17 +106,24 @@ test("a question drafted for Achal is agreed or corrected on the site, in the na
     select code, question from ask where code in ('MD.A2', 'MD.A3') and answer is null order by code`;
   expect(asked.map((a) => a.code)).toEqual(["MD.A2", "MD.A3"]);
   const [{ n: before }] = await sql<{ n: number }[]>`select count(*)::int as n from ask where answer is null`;
+  // the questions to answer are a section of Curriculum, ten a page: the page that holds one is found by paging
+  const row = (q: string) => page.locator("main [data-ask]").filter({ hasText: q });
+  const find = async (q: string) => {
+    for (let p = 1; p <= 3; p++) {
+      await page.goto(`/setup/curriculum?apage=${p}#asks`);
+      await page.locator("main [data-ask]").first().waitFor();
+      if (await row(q).count()) return row(q);
+    }
+    throw new Error(`no question “${q}” among those waiting`);
+  };
   try {
-    await page.goto("/asks");
-    // each question is one line until it is opened (goals/ui3-curriculum.yaml)
-    const a2 = page.getByRole("region", { name: asked[0].question, exact: true });
-    await a2.locator("summary").click();
-    await a2.getByRole("button", { name: `Agree as drafted, as ${TEST_STAFF.name}` }).click();
-    const a3 = page.getByRole("region", { name: asked[1].question, exact: true });
-    await a3.locator("summary").click();
+    await (await find(asked[0].question)).getByRole("button", { name: `Agree as drafted (${asked[0].code}), as ${TEST_STAFF.name}` }).click();
+    await expect(row(asked[0].question)).toHaveCount(0);
+    const a3 = await find(asked[1].question);
     await a3.getByLabel("What it should say").fill("A remainder is written in words first, then with r from Grade 3");
-    await a3.getByRole("button", { name: `Correct it, as ${TEST_STAFF.name}` }).click();
-    const answered = page.getByRole("region", { name: "Answered", exact: true });
+    await a3.getByRole("button", { name: `Correct it (${asked[1].code}), as ${TEST_STAFF.name}` }).click();
+    await expect(row(asked[1].question)).toHaveCount(0);
+    const answered = page.locator("[data-asks] details[data-fold=answered-asks]");
     await expect(answered).toContainText(asked[0].question);
     await expect(answered).toContainText("A remainder is written in words first, then with r from Grade 3");
     const rows = await sql<{ code: string; answer: string; correction: string | null; answered_by: string }[]>`

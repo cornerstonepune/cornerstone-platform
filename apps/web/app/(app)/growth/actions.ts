@@ -8,6 +8,7 @@ import { childSection } from "@/lib/scope";
 import { sql } from "@/lib/db";
 import { engineSend, markWhatTrustSettles } from "@/lib/engine";
 import { makePaper, readDraw } from "@/lib/next-paper";
+import { paperScreenOf } from "@/lib/queries-assessment-extras";
 
 const UUID = /^[0-9a-f-]{36}$/;
 
@@ -16,7 +17,7 @@ const UUID = /^[0-9a-f-]{36}$/;
 export async function confirmChild(formData: FormData): Promise<void> {
   const me = await deciding("answers");
   const id = String(formData.get("child_id") ?? "");
-  if (!UUID.test(id)) redirect("/growth");
+  if (!UUID.test(id)) redirect("/children");
   await mustBeMine(me, "answers", [await childSection(id)]);
   // only the papers this person sees: a subject or an upload not theirs is left for whoever it belongs to
   const [{ n }] = await sql<{ n: number }[]>`
@@ -25,7 +26,7 @@ export async function confirmChild(formData: FormData): Promise<void> {
     where si.child_id = ${id}::uuid and c.superseded_by is null and ${seesSheet(me, sql`si.id`)}`;
   const marked = await markWhatTrustSettles(); // a sign-off may be what earns a kind the reader's trust
   revalidatePath(`/growth/${id}`);
-  revalidatePath("/capture/check");
+  revalidatePath("/children/assessments");
   redirect(`/growth/${id}?confirmed=${n}${marked ? "" : "&later=1"}`);
 }
 
@@ -35,7 +36,7 @@ export async function resolveOne(formData: FormData): Promise<void> {
   const id = String(formData.get("result_id") ?? "");
   const child = String(formData.get("child_id") ?? "");
   const status = String(formData.get("status") ?? "");
-  if (!UUID.test(id) || !UUID.test(child)) redirect("/growth");
+  if (!UUID.test(id) || !UUID.test(child)) redirect("/children");
   await mustSee(me, "answers", [{ result: id }, { child }]);
   if (!["correct", "wrong", "blank"].includes(status))
     redirect(`/growth/${child}?error=resolve`);
@@ -55,7 +56,7 @@ export async function approveNextPaper(formData: FormData): Promise<void> {
   const replaces = String(formData.get("replaces") ?? "") || undefined;
   const draw = readDraw(String(formData.get("draw") ?? ""));
   const seen = String(formData.get("seen") ?? "");
-  if (!UUID.test(id) || !/^\d{4}-W\d{2}$/.test(week) || !seen) redirect("/growth");
+  if (!UUID.test(id) || !/^\d{4}-W\d{2}$/.test(week) || !seen) redirect("/children");
   await mustBeMine(me, "home_papers", [await childSection(id)]);
   const { qr, changed } = await makePaper(id, week, me.email, { draw, seen }, undefined, replaces);
   revalidatePath(`/growth/${id}`);
@@ -63,7 +64,7 @@ export async function approveNextPaper(formData: FormData): Promise<void> {
   if (changed) redirect(`/growth/${id}?draw=${draw}&changed=1`);
   // made: the educator lands on its review page, its questions to remove or add (goals/paper_review_add_remove.yaml);
   // a colleague's click made a newer one first (or this one was clicked twice): the page shows who approved it
-  redirect(qr ? `/papers/review/${qr}` : `/growth/${id}`);
+  redirect((qr && (await paperScreenOf({ qr }, me))?.href) || `/growth/${id}`);
 }
 
 /** An educator asks for the parent report to be written from the child's signed-off answers (goals/w4c-parent-report.yaml).
@@ -71,7 +72,7 @@ export async function approveNextPaper(formData: FormData): Promise<void> {
 export async function writeParentReport(formData: FormData): Promise<void> {
   const me = await deciding("reports");
   const id = String(formData.get("child_id") ?? "");
-  if (!UUID.test(id)) redirect("/growth");
+  if (!UUID.test(id)) redirect("/children");
   await mustBeMine(me, "reports", [await childSection(id)]);
   const r = await engineSend(`/child/${id}/parent-report`, {
     by: me.email,
@@ -91,7 +92,7 @@ export async function approveParentReport(formData: FormData): Promise<void> {
   const me = await deciding("reports");
   const id = String(formData.get("child_id") ?? "");
   const note = String(formData.get("note_id") ?? "");
-  if (!UUID.test(id) || !UUID.test(note)) redirect("/growth");
+  if (!UUID.test(id) || !UUID.test(note)) redirect("/children");
   await mustBeMine(me, "reports", [await childSection(id)]);
   const r = await engineSend(`/child/${id}/parent-report/${note}/approve`, {
     by: me.email,
@@ -108,7 +109,7 @@ export async function editParentReport(formData: FormData): Promise<void> {
   const me = await deciding("reports");
   const id = String(formData.get("child_id") ?? "");
   const note = String(formData.get("note_id") ?? "");
-  if (!UUID.test(id) || !UUID.test(note)) redirect("/growth");
+  if (!UUID.test(id) || !UUID.test(note)) redirect("/children");
   await mustBeMine(me, "reports", [await childSection(id)]);
   const name = String(formData.get("name") ?? "").trim();
   const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");

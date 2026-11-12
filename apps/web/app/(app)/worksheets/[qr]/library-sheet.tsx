@@ -9,7 +9,7 @@ import { workScope } from "@/lib/reach";
 import { childrenOnRoll, grades, type ChildRow } from "@/lib/queries";
 import { worksheetCases } from "@/lib/queries-taxonomy";
 import { libraryWorksheet, worksheetItems } from "@/lib/queries-worksheets";
-import { kindsInWords } from "../library";
+import { kindsInWords } from "@/lib/worksheet-kinds";
 import { dateWords } from "@/lib/week";
 
 export const LIBRARY_CODE = /^[RMX]\d{1,2}-[A-Z]\d{2,3}$/;
@@ -44,10 +44,10 @@ export async function LibraryWorksheetPage({ code }: { code: string }) {
         <div className="mb-[18px] flex flex-wrap items-center gap-3">
           {w.skill_live ? (
             <>
-              <Link href={`/skill-sets/${w.skill_set_code}?level=${w.difficulty}#worksheets`} className="chip">
+              <Link href={`/setup/skill-sets/${w.skill_set_code}?level=${w.difficulty}#worksheets`} className="chip">
                 ← {w.skill} · {w.difficulty}
               </Link>
-              <Link href={`/worksheets?set=${w.skill_set_code}&level=${w.difficulty}#library`} className="chip">
+              <Link href={`/setup/skill-sets/${w.skill_set_code}`} className="chip">
                 All worksheets
               </Link>
             </>
@@ -79,7 +79,7 @@ export async function LibraryWorksheetPage({ code }: { code: string }) {
                     <tr key={it.item_key}>
                       <td className="num align-top">{i + 1}</td>
                       <td className="min-w-[220px]">
-                        <Link href={`/library/${it.item_key}`} className="text-basalt no-underline">
+                        <Link href={`/setup/question-bank/${it.item_key}`} className="text-basalt no-underline">
                           <Question it={it} />
                         </Link>
                       </td>
@@ -101,7 +101,7 @@ export async function LibraryWorksheetPage({ code }: { code: string }) {
               <div>
                 <dt className="label mb-[3px]">Skill</dt>
                 <dd>
-                  <Link href={`/skill-sets/${w.skill_set_code}`}>{w.outcome}</Link>
+                  <Link href={`/setup/skill-sets/${w.skill_set_code}`}>{w.outcome}</Link>
                 </dd>
               </div>
               <div>

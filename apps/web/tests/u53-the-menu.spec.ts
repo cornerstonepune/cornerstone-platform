@@ -11,11 +11,8 @@ const PAGES = [
   ["/today", "Today", "Today"],
   ["/setup/needs-doing", "Setup", "What needs doing"],
   ["/timetable/rules", "Timetable", "Timetable rules"],
-  // bare, its address opens Assessments filtered to what waits for approval
-  ["/papers/approve", "Children", "Assessments"],
-  ["/papers", "Children", "Assessments"],
+  ["/children/assessments", "Children", "Assessments"],
   ["/capture", "Children", "Upload papers"],
-  ["/capture/check", "Children", "Check answers"],
   ["/", "Setup", "Curriculum"],
   ["/library", "Setup", "Question bank"],
 ] as const;
@@ -49,5 +46,5 @@ test("no step of the week is a dead end: each page of the menu ends on a next st
     expect(next + (await page.getByRole("main").getByRole("link").count()), `${path}: a way on`).toBeGreaterThan(0);
   }
   await page.goto("/setup/needs-doing");
-  await expect(page.locator("[data-ux=next]")).toHaveAttribute("href", "/papers");
+  await expect(page.locator("[data-ux=next]")).toHaveAttribute("href", "/children/assessments");
 });

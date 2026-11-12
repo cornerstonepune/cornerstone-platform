@@ -6,6 +6,7 @@ import { grades } from "./queries";
 import { asksWaiting, classWords, skillIsTaught, untaughtTopics } from "./queries-people";
 import { homeByClass } from "./queries-make";
 import { checkQueue } from "./queries-read";
+import { paperScreensOf } from "./queries-assessment-extras";
 import { classPacksWaiting, reportsWaiting } from "./queries-today";
 import { inScope } from "./scope";
 import { reachOf, seesSheet } from "./reach";
@@ -89,10 +90,11 @@ export const tasksFor = cache(async (me: Session): Promise<Task[]> => {
   ]);
 
   const ids = [...new Set([...queue.filter((e) => !e.spot).map((e) => e.paper_id), ...signoff.map((s) => s.id)])];
-  const refs = new Map((await paperRefs(ids)).map((r) => [r.id, r]));
+  const [found, screens] = await Promise.all([paperRefs(ids), paperScreensOf(ids, me)]);
+  const refs = new Map(found.map((r) => [r.id, r]));
   const ref = (id: string) => {
     const r = refs.get(id);
-    return { subject: r?.subject ?? null, topic: r?.topic ?? null, topicName: r?.topic_name ?? null, section: r?.section ?? "", code: r?.code ?? "" };
+    return { subject: r?.subject ?? null, topic: r?.topic ?? null, topicName: r?.topic_name ?? null, section: r?.section ?? "", code: r?.code ?? "", screen: screens.get(id) ?? null };
   };
   const perPaper = new Map<string, { first: string; n: number }>();
   for (const e of queue.filter((e) => !e.spot)) {

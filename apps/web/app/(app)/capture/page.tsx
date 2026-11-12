@@ -60,16 +60,16 @@ export default async function MarkingPage({ searchParams }: Props) {
       purpose="Papers in, and where every answer on them stands: settled by the engine, checked by a person, or still waiting."
       action={
         all.waiting ? (
-          <Link href="/capture/check" className="btn">
+          <Link href="/children/assessments?status=check" className="btn">
             Check {all.waiting} {all.waiting === 1 ? "answer" : "answers"} →
           </Link>
         ) : (
-          <Link href="/capture/check" className="btn secondary">
+          <Link href="/children/assessments?status=check" className="btn secondary">
             Check answers
           </Link>
         )
       }
-      next={{ href: "/growth", label: "Class results" }}
+      next={{ href: "/children", label: "Children" }}
     >
         {/* the upload box at the top (goals/s2-the-assessment-card.yaml) */}
         <div className="mb-[18px] grid min-w-0">

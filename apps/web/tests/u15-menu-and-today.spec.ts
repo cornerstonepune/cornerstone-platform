@@ -128,8 +128,11 @@ test("What needs doing lists everything that waits as rows, and each row's butto
   await expect(pack).toHaveCount(1);
   await expect(pack.locator("[data-status]")).toContainText("this week");
   await pack.getByRole("link").click();
-  await expect(page).toHaveURL(new RegExp(`section=${SECTION}&week=${WEEK}&kind=practice`));
-  await expect(page.getByRole("button", { name: /Approve/ })).toBeVisible();
+  await expect(page).toHaveURL(new RegExp(`class=${SECTION}&week=${WEEK}&kind=practice`));
+  // the list shows the class's assessment; its screen is where the pack is approved
+  await page.goto(`${page.url()}&view=table`);
+  await page.locator("a[data-assessment-row]").first().click();
+  await expect(page.getByRole("button", { name: /Approve/ }).first()).toBeVisible();
 
   // skills to approve: one row each, as many as the skills the rows say are waiting
   const [{ drafts }] = await sql<{ drafts: number }[]>`select count(*)::int as drafts from skill where status <> 'ratified'`;

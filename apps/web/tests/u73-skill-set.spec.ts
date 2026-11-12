@@ -1,5 +1,5 @@
 /**
- * U73 (UI-3c) — the Skill set screen at /setup/skill-sets/[code]: the old address answers 308 to it, each registry skill the set
+ * U73 (UI-3c) — the Skill set screen at /setup/skill-sets/[code]: each registry skill the set
  * covers is a card that opens the skill screen, and a set with none says so. The six functions the old page carried (a real question
  * per level, a grade per level, approving a way of asking, editing English samples, more like this, stopping a kind) are proved
  * by their own specs (u28, u34, e0, u54, u55, u64, u65), now at the new address.
@@ -39,13 +39,4 @@ test("a skill set that covers no registry skill says so and invents nothing", as
   await page.goto(`/setup/skill-sets/${WITHOUT}`);
   await expect(page.getByText("No registry skill is linked to this skill set yet")).toBeVisible();
   await expect(page.locator("[data-block=Cards] article[data-kind=skill]")).toHaveCount(0);
-});
-
-test("the old address answers 308 to the new one with the code and the query kept; the approve, levels and edit pages stay", async ({ playwright }) => {
-  const api = await playwright.request.newContext({ baseURL: "http://localhost:3100", maxRedirects: 0 });
-  const moved = await api.get(`/skill-sets/${WITH}?level=Easy`);
-  expect(moved.status()).toBe(308);
-  expect(moved.headers().location).toMatch(new RegExp(`/setup/skill-sets/${WITH.replace(/\./g, "\\.")}\\?level=Easy$`));
-  for (const stays of ["/skill-sets/approve", "/skill-sets/levels", `/skill-sets/${WITH}/edit`]) expect((await api.get(stays)).status(), stays).not.toBe(308);
-  await api.dispose();
 });

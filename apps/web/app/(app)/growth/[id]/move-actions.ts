@@ -16,7 +16,7 @@ type Said = { moved: boolean; refused?: string; prescriptions_withdrawn?: number
 export async function moveChild(formData: FormData): Promise<void> {
   const me = await requireStaff();
   const id = String(formData.get("child_id") ?? "");
-  if (!UUID.test(id)) redirect("/growth");
+  if (!UUID.test(id)) redirect("/children");
   const back = `/growth/${id}`;
   if (!mayUse(me, "move_child")) redirect(`${back}?refused=not_coordinator#grade-class`);
   const band = String(formData.get("band") ?? "").trim();

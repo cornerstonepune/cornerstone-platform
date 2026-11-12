@@ -10,6 +10,7 @@ import { sql } from "./db";
 import { ownBox } from "./own-box";
 import { seesSheet, type Who } from "./reach";
 import { paperName, setKeySql, weekSql } from "./queries-papers";
+import { paperScreensOf } from "./queries-assessment-extras";
 
 // ---- the approval queue. One row per paper a child sat, and every answer on it.
 //
@@ -19,6 +20,8 @@ import { paperName, setKeySql, weekSql } from "./queries-papers";
 
 export type PaperRow = {
   id: string;
+  /** The paper's own screen (Assessments, the paper): set by `papersToApprove`; null for a copy that is no child's own. */
+  screen?: string | null;
   child_id: string;
   first_name: string;
   section: string;
@@ -80,11 +83,15 @@ const paperRows = (where: ReturnType<typeof sql>, actor: string) => sql<PaperRow
 // Every paper that has been read. Names come through pii.read_child, which logs who asked
 // (rule 6) — a queue of papers is still a list of children.
 export async function papersToApprove(actor: string, me: Who): Promise<PaperRow[]> {
-  return paperRows(
+  const rows = await paperRows(
+    // a voided copy is no paper of the class's (the Assessments list leaves it out too): its answers wait for no one
     sql`exists (select 1 from capture c where c.sheet_instance_id = si.id and c.superseded_by is null)
-        and ${seesSheet(me, sql`si.id`)}`,
+        and si.print_status <> 'void' and ${seesSheet(me, sql`si.id`)}`,
     actor,
   );
+  // each paper opens its own screen under Assessments (the paper, `/children/assessments/[key]/[roll]`)
+  const screens = await paperScreensOf(rows.map((r) => r.id), me);
+  return rows.map((r) => ({ ...r, screen: screens.get(r.id) ?? null }));
 }
 
 export async function paperHeader(id: string, actor: string): Promise<PaperRow | undefined> {
@@ -152,11 +159,6 @@ export type CaptureAnswer = {
 // hid those buttons, so typing the child's words again and again never settled it (2026-09-22).
 export const held = (a: Pick<CaptureAnswer, "why" | "human_read">) =>
   a.human_read === null && (a.why ?? "").includes("a person checks every");
-
-// Only a person's Right or Wrong settles this one: its reading is known — the reader's, or what a person
-// typed — and code cannot mark it.
-export const toJudge = (a: Pick<CaptureAnswer, "status" | "answer_state" | "why" | "human_read">) =>
-  a.status === "needs_teacher" && (a.human_read !== null || a.answer_state === "written") && !held(a);
 
 // Every answer on one paper, in the order they sit on the page — which is the order a teacher
 // reads them in, with the photograph beside them.
@@ -318,7 +320,9 @@ export async function checkQueue(me: Who): Promise<QueueEntry[]> {
   return sql<QueueEntry[]>`
     with live as (
       select r.id, r.rid, r.status, r.state, r.raw_read, r.item_id, c.sheet_instance_id, c.path, c.created_at as captured
-      from item_result r join capture c on c.id = r.capture_id where c.superseded_by is null
+      from item_result r join capture c on c.id = r.capture_id
+      join sheet_instance vs on vs.id = c.sheet_instance_id and vs.print_status <> 'void' -- a voided copy's answers wait for no one
+      where c.superseded_by is null
     ),
     spot as (
       select distinct on (l.sheet_instance_id) l.id, l.state
@@ -349,50 +353,4 @@ export async function checkQueue(me: Who): Promise<QueueEntry[]> {
              roll_order(ch.roll_no), ch.roll_no, si.id, coalesce((l.raw_read::jsonb ->> 'page')::int, (i.spec ->> 'page')::int, 1),
              nullif(regexp_replace(result_slot(i.item_key, l.raw_read::jsonb), '[^0-9]', '', 'g'), '')::int, i.item_key,
              result_order(i.responses, l.rid)`;
-}
-
-export type CheckItem = CaptureAnswer & {
-  paper_id: string;
-  first_name: string;
-  paper_title: string | null;
-  sat: string | null;
-  guess: string | null;
-};
-
-// One answer from the queue, with the child's first name — read through pii.read_child, which logs
-// who asked (rule 6): one name per answer shown, never the whole queue's.
-export async function checkItem(id: string, actor: string): Promise<CheckItem | undefined> {
-  const rows = await sql<CheckItem[]>`
-    select r.id, r.capture_id, result_slot(i.item_key, r.raw_read::jsonb) as slot,
-           nullif(regexp_replace(result_slot(i.item_key, r.raw_read::jsonb), '[^0-9]', '', 'g'), '')::int as n,
-           coalesce((r.raw_read::jsonb ->> 'page')::int, (i.spec ->> 'page')::int, 1) as page,
-           coalesce((r.raw_read::jsonb ->> 'file_page')::int, (r.raw_read::jsonb ->> 'page')::int, (i.spec ->> 'page')::int, 1) as file_page,
-           coalesce(i.spec ->> 'question', i.stem) as question, result_part(i.responses, r.rid) as part,
-           coalesce(i.spec ->> 'kind', 'bare') as kind, i.rung_code, i.skill_codes[1] as skill_code,
-           (select ss.name from skill ss where ss.tenant_id = i.tenant_id and ss.code = i.skill_set_code) as set_name,
-           operation_sign(i.spec ->> 'op') as op, i.mistake_skills,
-           coalesce(i.spec ->> 'answer', result_response(i.responses, r.rid) ->> 'answer') as answer,
-           r.raw_read::jsonb ->> 'child_answer' as read,
-           r.raw_read::jsonb ->> 'answer_state' as answer_state,
-           nullif(r.raw_read::jsonb ->> 'why', '') as why,
-           nullif(r.raw_read::jsonb ->> 'guess_by', '') as guess_by,
-           r.raw_read::jsonb ->> 'second_read' as second_read,
-           (r.raw_read::jsonb ->> 'confidence')::numeric as confidence,
-           ${ownBox()} as box,
-           r.status, r.state, r.working_shown, r.misconception_codes,
-           k.human_read, k.by as corrected_by,
-           si.id as paper_id, p.first_name, ${paperName("t")} as paper_title, t.key ->> 'date' as sat,
-           nullif(r.raw_read::jsonb ->> 'guess', '') as guess
-    from item_result r
-    join capture c on c.id = r.capture_id
-    join item i on i.id = r.item_id
-    join sheet_instance si on si.id = c.sheet_instance_id
-    join sheet_template t on t.id = si.sheet_template_id,
-    lateral pii.read_child(si.child_id, ${actor}) p
-    left join lateral (
-      select rc.human_read, rc.by from read_correction rc
-       where rc.item_result_id = r.id and rc.judged is null order by rc.created_at desc limit 1
-    ) k on true
-    where r.id = ${id}::uuid`;
-  return rows[0];
 }

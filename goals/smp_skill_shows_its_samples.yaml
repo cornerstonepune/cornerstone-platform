@@ -9,7 +9,7 @@ goal: >
 # page. W1 (Curriculum / approve), beside the C slices: the E0 content, now with the table its samples waited on.
 says:
   - words: "How will the educator approve without having sample questions?"
-    proved_by: "apps/web/tests/u54-skill-shows-its-samples.spec.ts::an English skill opened from Approve the skills shows each level's samples by kind, with the right answer and named mistakes"
+    proved_by: "apps/web/tests/u54-skill-shows-its-samples.spec.ts::an English skill opened from Skills to approve shows each level's samples by kind, with the right answer and named mistakes"
   - words: "I was looking to have the questions also there."
     proved_by: "packages/engine/tests/test_english_samples.py::test_every_sample_passage_rubric_and_wrong_answer_of_the_seed_is_loaded_and_a_second_load_moves_nothing"
   - words: "I was looking to have the questions also there."

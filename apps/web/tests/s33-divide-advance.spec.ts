@@ -74,8 +74,8 @@ test("a worked division's mistake is named on the Question bank by its row", asy
       const [one] = await sql<{ item_key: string }[]>`
         select item_key from item where skill_set_code = ${set} and difficulty = 'Advance' and fmt = 'find_mistake'
           and status = 'active' order by item_key limit 1`;
-      await page.goto(`/library/${one.item_key}`);
-      const caught = page.getByRole("table", { name: "Wrong answers it catches" });
+      await page.goto(`/setup/question-bank/${one.item_key}`);
+      const caught = page.locator("[data-caught]");
       await expect(caught).toContainText(new RegExp(planted.map((n) => n.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|")));
       await expect(page.getByRole("main")).toContainText("Looks for: Names the mistake its worked answer shows");
       expect(await page.getByRole("main").innerText(), "a code on the page").not.toMatch(CODE);

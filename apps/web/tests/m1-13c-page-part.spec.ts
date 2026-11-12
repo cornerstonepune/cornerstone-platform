@@ -1,8 +1,10 @@
 /**
  * M1-13c — the page part, drawn once (goals/m1-13c-page-part-component.yaml). Nimish's brief via the orchestrator: lift the
  * rendering of one part of an activity page (its words, who wrote them) out of /curriculum into one shared component that
- * takes its actions and its gate as props, so /curriculum/* and the educator's activity page draw it the same way, each with
- * its own actions. The behaviour of /curriculum stays what tests/m1-13-curriculum-fill.spec.ts holds.
+ * takes its actions and its gate as props, so every screen that shows a part draws it the same way, each with its own
+ * actions. The old /curriculum pages are gone; the activity's screen (/setup/activities/<code>) is where a part is drawn now.
+ * Not kept with them: the drafts' queue drew a part as a bordered card with its slip's keyword in the state's colour; no
+ * screen draws that card now (the activity's screen draws parts in folds), so its two style checks went with it.
  */
 import { readFileSync } from "node:fs";
 import path from "node:path";
@@ -31,11 +33,10 @@ test("the component and its styles use tokens only, and its icons come from the 
   expect(read("components/page-part/part.tsx")).toContain('from "@/lib/icons"');
 });
 
-test("/curriculum draws its parts with the component and keeps no copy of it", () => {
-  const parts = read("app/(app)/curriculum/parts.tsx");
-  expect(parts).toContain('from "@/components/page-part/part"');
-  expect(parts).not.toMatch(/export function (Words|Origin)\b/);
-  expect(read("app/(app)/curriculum/screens.css")).not.toMatch(/\.cs-(steps|slip|origin)\b/);
+test("the activity's screen draws its parts with the component and keeps no copy of it", () => {
+  const screen = read("app/(app)/setup/activities/[code]/page.tsx");
+  expect(screen).toContain('from "@/components/page-part/part"');
+  expect(screen).not.toMatch(/export function (Words|Origin)\b/);
 });
 
 test.describe("drawn on a real page", () => {
@@ -51,24 +52,10 @@ test.describe("drawn on a real page", () => {
     await sql.end();
   });
 
-  test("the component's own styles reach the page: a card with its edge, a slip's keyword in the state's colour, the origin in the school's", async ({ page }) => {
-    // the drafts' queue draws a part as a card (the single activity's page draws its parts in folds, UI-3c)
-    await page.goto("/curriculum/fill/walk?part=thinking");
-    const card = page.locator("[data-card=thinking].pp-card");
-    await expect(card).toBeVisible();
-    expect(await card.evaluate((e) => getComputedStyle(e).borderTopWidth)).toBe("1px");
-    const [mark, token] = await page.evaluate(() => {
-      const m = document.querySelector("[data-card=thinking] mark")!;
-      const probe = document.createElement("div");
-      probe.style.background = "var(--state-wait-bg)";
-      document.body.append(probe);
-      return [getComputedStyle(m).backgroundColor, getComputedStyle(probe).backgroundColor];
-    });
-    expect(mark).toBe(token);
-    expect(token).not.toBe("rgba(0, 0, 0, 0)");
-    await expect(card.locator(".pp-origin")).toContainText("Drafted, check me");
-    // and the school's own words on the activity's page carry the school's origin
+  test("the component draws whose words each part is on the activity's page", async ({ page }) => {
     await page.goto(`/setup/activities/${code(2)}`);
+    await expect(page.locator("[data-part=thinking] .pp-origin")).toContainText("Drafted, check me");
+    // and the school's own words on the activity's page carry the school's origin
     await expect(page.locator("[data-part=objective] .pp-origin")).toContainText("The school's words");
     await expect(page.locator("[data-part=steps] .pp-origin")).toContainText("Drafted, check me");
     await expect(page.locator("details[data-fold=steps] li")).toHaveCount(2);

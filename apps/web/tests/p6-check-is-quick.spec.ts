@@ -1,5 +1,5 @@
 /**
- * Check answers is quick again (goals/perf-slow-site.yaml, docs/notes/perf-slow-site.md).
+ * Check answers is quick again (goals/perf-slow-site.yaml, docs/notes/perf-slow-site.md), on the paper screen the queue became (UI-4).
  *
  * Nimish, 2026-10-26: "Once I click what the child has written, it literally takes a few seconds to go to the next one.
  * This wasn't the case previously." — "slow on all clicks". The screen as he saw it: 80 answers waiting over 12 papers,
@@ -12,6 +12,7 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import { expect, test, type Page } from "@playwright/test";
 import postgres from "postgres";
+import { answerAt } from "./paper-screen";
 import { aClass, aReadPaper, aWorksheet } from "./rows";
 import { TEST_STAFF } from "./global-setup";
 
@@ -81,15 +82,22 @@ async function measured(what: string, go: () => Promise<unknown>): Promise<numbe
   return ms;
 }
 
+/** The paper screen of one answer, that answer in view, as the site draws its own link to it. */
+
 const open = (page: Page, url: string) => async () => {
   await page.goto(url);
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
 };
 
-test("the check screen opens on 80 answers within its budget", async ({ page }) => {
-  await open(page, "/capture/check")(); // the build's first request warms its own code, once
-  const ms = await measured("open /capture/check", open(page, "/capture/check"));
-  await expect(page.getByText(/\d+ answers left to check/)).toBeVisible();
+test("the paper screen opens on a paper of 7 answers waiting within its budget", async ({ page }) => {
+  const [r] = await sql<{ id: string }[]>`
+    select r.id from item_result r join capture c on c.id = r.capture_id
+    where c.path = ${copyFile(1)} and c.superseded_by is null and r.status = 'unreadable' order by r.created_at, r.id limit 1`;
+  const url = await answerAt(r.id); // the paper screen, that answer in view
+  await open(page, url)(); // the build's first request warms its own code, once
+  const screen = page.url().replace(/#.*$/, "");
+  const ms = await measured("open the paper screen", open(page, screen));
+  await expect(page.locator(".b-keyrow").first()).toHaveAttribute("aria-label", /7 for you to judge/);
   expect(ms).toBeLessThan(BUDGET);
 });
 
@@ -99,12 +107,12 @@ test("one click of Yes shows the next answer within its budget", async ({ page }
     select r.id, r.status, r.state, r.misconception_codes, r.working_shown from item_result r join capture c on c.id = r.capture_id
     where c.path = ${copyFile(1)} and c.superseded_by is null and r.status = 'unreadable' order by r.created_at, r.id limit 1`;
   try {
-    await page.goto(`/capture/check?id=${r.id}`);
-    const left = page.getByText(/\d+ answers left to check/);
-    const n = Number((await left.textContent())?.match(/\d+/)?.[0]);
+    await page.goto(await answerAt(r.id));
+    const keyrow = page.locator(".b-keyrow").first();
+    const n = Number(((await keyrow.getAttribute("aria-label")) ?? "").match(/(\d+) for you to judge/)?.[1]);
     const ms = await measured("click Yes, the child wrote 84", async () => {
-      await page.getByRole("button", { name: "Yes, the child wrote 84" }).click();
-      await expect(page.getByText(`${n - 1} answers left to check`)).toBeVisible();
+      await page.getByRole("region", { name: "Say what the child wrote" }).getByRole("button", { name: "Yes, the child wrote 84" }).click();
+      await expect(page.locator(".b-keyrow").first()).toHaveAttribute("aria-label", new RegExp(`${n - 1} for you to judge`));
     });
     expect(ms).toBeLessThan(BUDGET);
   } finally {
@@ -118,8 +126,8 @@ test("the five most-used pages open within their budget", async ({ page }) => {
   for (const [name, url] of [
     ["What needs doing", "/setup/needs-doing"],
     ["Children", "/setup/classes"],
-    ["Assessments", "/papers"],
-    ["Results", "/growth"],
+    ["Assessments", "/children/assessments"],
+    ["Results", "/children"],
     ["Skills", "/"],
   ] as const) {
     await open(page, url)();

@@ -16,6 +16,7 @@ test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 const SECTION = "U21-TEST";
 let kids: Record<string, string> = {};
+let classId = "";
 // child, rung, skill, state, answers, right: Asha needs help on and is secure in Addition & subtraction and secure in
 // Data handling; Bina is practising in Addition & subtraction and has no answer in Data handling
 const STATES: [string, string, string, string, number, number][] = [
@@ -26,6 +27,7 @@ const STATES: [string, string, string, string, number, number][] = [
 ];
 test.beforeAll(async () => {
   kids = await aClass(sql, SECTION, "G2", ["Asha", "Bina"]);
+  [{ id: classId }] = await sql<{ id: string }[]>`select id from school_class where label = ${SECTION} limit 1`;
   const [{ tenant_id }] = await sql<{ tenant_id: string }[]>`select tenant_id from child_now where id = ${kids.Asha}`;
   await sql`delete from child_skill_state where child_id in (${kids.Asha}, ${kids.Bina})`;
   for (const [who, rung, skill, state, n, right] of STATES) {
@@ -41,17 +43,16 @@ test.afterAll(async () => {
 
 // goals/ux10-declutter.yaml, Nimish 2026-10-22: the topic chips on Children are dropped. What the page said by topic it
 // now says across every topic switched on, and a class's own page still reads topic by topic (the next test).
-test("the Children list has no topic chips, whatever the address of the old list says", async ({ page }) => {
+test("the Children list has no topic chips, with a class chosen too", async ({ page }) => {
   await voiceSwitch(sql, true);
-  for (const at of [`/growth?view=children&class=${SECTION}`, `/growth?view=children&class=${SECTION}&topic=DATA`]) {
+  for (const at of ["/children", `/children?cls=${classId}`]) {
     await page.goto(at);
-    await expect(page, at).toHaveURL(/\/children\?cls=[0-9a-f-]{36}$/);
     await expect(page.getByRole("navigation", { name: "Topic" }), at).toHaveCount(0);
   }
 });
 
 test("a class opens on its children against its topics, and a topic opens its skills alone", async ({ page }) => {
-  await page.goto(`/growth/class/${SECTION}`);
+  await page.goto(`/children/${classId}?view=matrix`);
   const byTopic = page.getByRole("table", { name: `${SECTION}: each child on each topic` });
   await expect(byTopic.locator("thead th")).toHaveText(["Child", "Addition & subtraction", "Data handling"]);
   const cell = (who: string, topic: string) => byTopic.locator(`tr[data-child="${kids[who]}"] td[data-topic="${topic}"]`);

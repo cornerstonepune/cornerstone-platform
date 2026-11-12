@@ -3,7 +3,8 @@
  * skills: "shouldn't this page have a link that opens the skill in detail - coz the questions associated with each level of
  * difficulty and all needs to be down too. I can't click on any of these skills and deep dive in."
  *
- * A Maths draft and an English draft (the loader's own rows) are each opened by clicking their name on the approve list; the
+ * A Maths draft and an English draft (the loader's own rows) are each opened by clicking their name on Skills to approve
+ * (/setup/skills/approve, narrowed to the skill's grade, subject and topic so its row is on the first page of ten); the
  * skill page shows each level with its questions (a count and a link to the library for Maths, a sentence for English), and
  * the same two actions the list has. At 1440 px. Every status the test changes is put back.
  */
@@ -37,6 +38,14 @@ test.afterAll(async () => {
 
 const row = (page: Page, code: string) => page.locator(`[data-row="${code}"]`);
 
+/** Skills to approve, narrowed to one skill's grade, subject and topic: the list shows ten rows a page. */
+async function approveListOf(code: string) {
+  const [s] = await sql<{ grade: string; subject: string; topic: string }[]>`
+    select s.grade, t.subject_code as subject, s.topic_code as topic
+    from skill s join topic t on t.tenant_id = s.tenant_id and t.code = s.topic_code where s.code = ${code}`;
+  return `/setup/skills/approve?${new URLSearchParams(s)}`;
+}
+
 async function shot(page: Page, name: string) {
   if (!SHOTS) return;
   mkdirSync(SHOTS, { recursive: true });
@@ -44,16 +53,16 @@ async function shot(page: Page, name: string) {
 }
 
 test("a Maths skill's name on the approve list opens it, with each level's questions and the two actions", async ({ page }) => {
-  await page.goto("/skill-sets/approve");
+  await page.goto(await approveListOf(MATHS));
   await shot(page, "approve-list");
   const [{ name }] = await sql<{ name: string }[]>`select name from skill where code = ${MATHS}`;
-  const link = row(page, MATHS).getByRole("rowheader").getByRole("link", { name });
-  await expect(link).toHaveAttribute("href", `/skill-sets/${MATHS}`);
+  const link = row(page, MATHS).getByRole("link", { name });
+  await expect(link).toHaveAttribute("href", `/setup/skill-sets/${MATHS}`);
   // the keyboard reaches it and opens it
   await link.focus();
   await expect(link).toBeFocused();
   await page.keyboard.press("Enter");
-  await expect(page).toHaveURL(new RegExp(`/skill-sets/${MATHS}$`));
+  await expect(page).toHaveURL(new RegExp(`/setup/skill-sets/${MATHS}$`));
 
   const levels = await sql<{ difficulty: string }[]>`select difficulty from skill_level where skill_code = ${MATHS}`;
   expect(levels.length).toBeGreaterThan(0);
@@ -69,10 +78,10 @@ test("a Maths skill's name on the approve list opens it, with each level's quest
 });
 
 test("an English skill's name opens it, and each level shows its sample questions", async ({ page }) => {
-  await page.goto("/skill-sets/approve");
-  const link = row(page, english.code).getByRole("rowheader").getByRole("link", { name: english.name });
+  await page.goto(await approveListOf(english.code));
+  const link = row(page, english.code).getByRole("link", { name: english.name });
   await link.click();
-  await expect(page).toHaveURL(new RegExp(`/skill-sets/${english.code}$`));
+  await expect(page).toHaveURL(new RegExp(`/setup/skill-sets/${english.code}$`));
 
   const levels = await sql<{ difficulty: string }[]>`select difficulty from skill_level where skill_code = ${english.code}`;
   expect(levels.length).toBeGreaterThan(0);
@@ -96,9 +105,9 @@ test("on Curriculum, a skill in a table row opens its skill page", async ({ page
     if (!(await closed.count())) break;
     await closed.first().click();
   }
-  const skill = page.locator(`a[href="/skill-sets/${MATHS}"]`).first();
+  const skill = page.locator(`a[href="/setup/skill-sets/${MATHS}"]`).first();
   await expect(skill).toBeVisible();
   await skill.click();
-  await expect(page).toHaveURL(new RegExp(`/skill-sets/${MATHS}$`));
+  await expect(page).toHaveURL(new RegExp(`/setup/skill-sets/${MATHS}$`));
   await expect(page.getByRole("region", { name: "Easy", exact: true })).toBeVisible();
 });

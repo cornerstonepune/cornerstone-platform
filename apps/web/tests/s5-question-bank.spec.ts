@@ -63,10 +63,10 @@ test("every question shows its skill, level, kind and worksheets, and every link
 test("a question's worksheet opens and holds that question", async ({ page }) => {
   await page.goto("/library");
   const row = page.locator("#questions table tbody tr").first();
-  const key = (await row.locator("td").first().getByRole("link").getAttribute("href"))!.replace("/library/", "");
+  const key = (await row.locator("td").first().getByRole("link").getAttribute("href"))!.replace("/setup/question-bank/", "");
   await row.locator("td").nth(3).getByRole("link").first().click();
   // named by its skill, level and number, its code beneath (goals/ux8b-papers-named.yaml)
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(/ · sheet \d+$/);
   await expect(page.getByText(/^Worksheet [RMX]\d{1,2}-[EMHA]\d{2,3}\./)).toBeVisible();
-  await expect(page.locator(`a[href="/library/${key}"]`)).toBeVisible();
+  await expect(page.locator(`a[href="/setup/question-bank/${key}"]`)).toBeVisible();
 });

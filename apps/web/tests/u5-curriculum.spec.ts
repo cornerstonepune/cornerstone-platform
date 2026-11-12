@@ -49,7 +49,7 @@ test("the tree reads grade, subject, skill, level, worksheets, and every count i
     const cell = row.locator("td").nth(3 + ["Easy", "Medium", "Hard", "Advance"].indexOf(l.level));
     await expect(cell).toHaveText(n(l.questions));
     await expect(cell).toHaveAttribute("title", l.words);
-    await expect(row.locator("td").nth(2).getByRole("link")).toHaveAttribute("href", `/skill-sets/${l.code}#worksheets`);
+    await expect(row.locator("td").nth(2).getByRole("link")).toHaveAttribute("href", `/setup/skill-sets/${l.code}#worksheets`);
   }
   // every taught skill has one row in each grade one of its levels belongs to
   for (const key of new Set(all.map((l) => `${l.band}/${l.code}`))) {
@@ -68,7 +68,7 @@ test("a skill waiting for approval says so in the tree and opens where it is edi
   if (s.status === "ratified") await expect(row).not.toContainText("waiting for approval");
   else await expect(row).toContainText("waiting for approval");
   await row.getByRole("link", { name: s.outcome }).click();
-  await expect(page).toHaveURL(new RegExp(`/skill-sets/${s.code.replace(/\./g, "\\.")}`));
+  await expect(page).toHaveURL(new RegExp(`/setup/skill-sets/${s.code.replace(/\./g, "\\.")}`));
 });
 
 test("the taxonomy is two clicks from the tree, behind Question bank details, and the tree fits a phone", async ({ page }) => {

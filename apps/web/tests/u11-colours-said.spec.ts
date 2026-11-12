@@ -13,6 +13,7 @@
 import { expect, test } from "@playwright/test";
 import postgres from "postgres";
 import { aChildIn, daysAgo } from "./rows";
+import { voiceSwitch } from "./k2-rows";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -41,7 +42,14 @@ const CHILDREN: { roll: string; name: string; answers: Answer[] }[] = [
 ];
 
 const ids: Record<string, string> = {};
+/** The class against its topics: the Matrix tab of the class picture (UI-3i), with a topic opened when one is named. */
+const matrix = async (topic?: string) => {
+  const [{ id }] = await sql<{ id: string }[]>`select id from school_class where label = ${SECTION} limit 1`;
+  return `/children/${id}?view=matrix${topic ? `&topic=${topic}` : ""}`;
+};
 test.beforeAll(async () => {
+  // the class picture, whose Matrix and By topic tabs hold the class's colours, is behind the educator switch (UI-3b)
+  await voiceSwitch(sql, true);
   const [{ id: tenant }] = await sql<{ id: string }[]>`select id from tenant limit 1`;
   for (const c of CHILDREN) {
     const [had] = await sql<{ id: string }[]>`select id from child_now where section = ${SECTION} and roll_no = ${c.roll}`;
@@ -84,7 +92,7 @@ test("each colour is said in the rule's own numbers, wherever colours show", asy
   const pc = (x: number) => `${Math.round(x * 100)}%`;
   const [{ id: classId }] = await sql<{ id: string }[]>`select id from school_class where label = ${SECTION} limit 1`;
   const byTopic = `/children/${classId}?view=topic`;
-  for (const path of [`/growth/class/${SECTION}`, byTopic, `/growth/${ids.Bina}`]) {
+  for (const path of [await matrix(), byTopic, `/growth/${ids.Bina}`]) {
     await page.goto(path);
     // a class's results by topic put the key behind "Details" (goals/ux10-declutter.yaml)
     if (path === byTopic) await page.getByText("Details", { exact: true }).click();
@@ -102,7 +110,7 @@ test("each colour is said in the rule's own numbers, wherever colours show", asy
   }
   // and the grid's own colours are the ones the key says, the class's addition and subtraction opened: Asha green, Bina
   // grey, Chetan red
-  await page.goto(`/growth/class/${SECTION}?topic=ADDSUB`);
+  await page.goto(await matrix("ADDSUB"));
   const cell = (who: string, col: string) => page.locator(`tr[data-child="${ids[who]}"] td[data-col="${col}"]`);
   await expect(cell("Asha", "NUM.OPS.01|R22")).toHaveAttribute("data-rag", "green");
   await expect(cell("Bina", "NUM.OPS.01|R22")).toHaveAttribute("data-rag", "grey");
@@ -111,7 +119,7 @@ test("each colour is said in the rule's own numbers, wherever colours show", asy
 
 test("a grey or empty skill has the check that would place the child, and one click opens it in the maker", async ({ page }) => {
   const r = await rules();
-  await page.goto(`/growth/class/${SECTION}`);
+  await page.goto(await matrix());
   const checks = page.getByRole("region", { name: "Checks that would place them" });
   // 2-digit + 2-digit: Bina has one answer, Chetan none; Asha is green and is not in it
   const add = checks.locator('[data-check="ADD.2D2D"]');
@@ -125,13 +133,13 @@ test("a grey or empty skill has the check that would place the child, and one cl
   await expect(sub).not.toContainText("Chetan");
 
   await add.getByRole("link", { name: "Make this check →" }).click();
-  await expect(page).toHaveURL(/\/papers\/make\?/);
+  await expect(page).toHaveURL(/\/children\/assessments\?make=/);
   const plan = page.getByRole("table", { name: "Each child's paper" });
   await expect(plan.locator("tbody tr")).toHaveCount(3);
   await expect(plan.locator(`tr[data-child="${ids.Bina}"]`)).toContainText(`2-digit + 2-digit · ${r.g2} · ${r.check} questions`);
   await expect(plan.locator(`tr[data-child="${ids.Chetan}"]`)).toContainText(`2-digit + 2-digit · ${r.g2} · ${r.check} questions`);
   await expect(page.getByRole("radio", { name: /Class assessment/ })).toBeChecked();
-  await expect(page.getByRole("button", { name: "Make and approve 3 class assessment papers" })).toBeEnabled();
+  await expect(page.getByRole("button", { name: "Make 3 class assessment papers" })).toBeEnabled();
 
   // a child's own page: the same check, for them alone
   await page.goto(`/growth/${ids.Bina}`);
@@ -146,7 +154,7 @@ test("a skill has one check, though its rung tests two skills, and a skill no ch
   // code review, 2026-09-30 (goals/p0-the-maker-makes-what-it-shows.yaml): a rung that tests two skills gave its skill
   // two check rows, and a skill nobody in the class had answered had none at all
   const r = await rules();
-  await page.goto(`/growth/class/${SECTION}`);
+  await page.goto(await matrix());
   const checks = page.getByRole("region", { name: "Checks that would place them" });
   const word = checks.locator('[data-check="WORD.1_2STEP"]');
   await expect(word).toHaveCount(1);
@@ -180,7 +188,7 @@ test("a skill has one check, though its rung tests two skills, and a skill no ch
 
 test("no colour is the only sign: each swatch carries its mark", async ({ page }) => {
   // goals/p2-less-code.yaml: an eye that cannot tell red from green reads the mark inside
-  await page.goto(`/growth/class/${SECTION}?topic=ADDSUB`);
+  await page.goto(await matrix("ADDSUB"));
   const swatch = (who: string, col: string) =>
     page.locator(`tr[data-child="${ids[who]}"] td[data-col="${col}"] [role="img"]`);
   await expect(swatch("Asha", "NUM.OPS.01|R22")).toHaveText("✓");

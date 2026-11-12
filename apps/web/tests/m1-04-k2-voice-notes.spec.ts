@@ -3,7 +3,7 @@
  * like a well-oiled machine, right?" What needs doing carries Record a note and Notes to confirm; Record sends her
  * recording to the engine; Confirm shows what she said beside the class already marked, red problems first; the typed
  * path (the old form) is "Type the marks" on Record, and Confirm on the note it makes is her confirmation. All of it
- * behind voice.screens_enabled. Moved to the screens of UI-3a (Record, Notes, Confirm); the old addresses answer 308.
+ * behind voice.screens_enabled. Moved to the screens of UI-3a (Record, Notes, Confirm); the old addresses are gone.
  *
  * Placeholder rows only: a K2 class of the test's own ("M104"), 22 children known by Sr. No. alone, two activities
  * numbered 904 and 907, and the signed-in tester on the staff list with a grant for that class. Notes are made as the
@@ -59,7 +59,7 @@ test("while voice notes are switched off no K2 group shows and every K2 address 
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("What needs doing");
   await expect(page.locator("[data-group=record], [data-group=notes]")).toHaveCount(0);
   // a page streams, so its status is 200 and it says so (as tests/s7-paper-from-library.spec.ts reads one); the recording is 404
-  for (const url of [`/record?class=${klass}`, `/notes/${note}`, `/voice/record?class=${klass}`, `/voice/form?class=${klass}`, `/voice/notes/${note}`]) {
+  for (const url of [`/record?class=${klass}`, `/notes/${note}`]) {
     await page.goto(url);
     await expect(page.getByText("This page could not be found."), url).toBeVisible();
   }
@@ -79,7 +79,7 @@ test("What needs doing carries Record a note and Notes to confirm, and a row ope
   await notes.locator(`a[data-action=note][href="/notes/${note}"]`).click();
   await expect(page).toHaveURL(new RegExp(`/notes/${note}$`));
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Confirm what the reader heard");
-  await page.goto("/today?open=record");
+  await page.goto("/setup/needs-doing?open=record");
   await expect(page.locator(`a[href="/record?class=${klass}"]`).first()).toBeVisible();
   await shoot(page, "1-today");
 });

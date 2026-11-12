@@ -75,7 +75,7 @@ type P = import("@playwright/test").Page;
 const find = (page: P) => page.getByRole("search", { name: "Find a child or paper" });
 
 test("every screen opens with the search in the bar, above the heading, and no Class or Subject box (goals/nav3_what_needs_doing.yaml)", async ({ page }) => {
-  for (const path of ["/setup/needs-doing", "/", "/papers", "/growth", "/capture", "/worksheets", `/growth/${kids.Asha}`]) {
+  for (const path of ["/setup/needs-doing", "/", "/children/assessments", "/children", "/capture", `/growth/${kids.Asha}`]) {
     await page.goto(path);
     await expect(page.locator("[data-viewing], #bar-subject, #bar-class"), path).toHaveCount(0);
     await expect(find(page).getByRole("combobox"), path).toBeVisible();
@@ -106,7 +106,7 @@ test("the search finds a child, an assessment and a paper by its code", async ({
   const assessment = page.getByRole("listbox", { name: "Found" }).getByRole("link", { name: new RegExp(`${SECTION}`) }).first();
   await expect(assessment).toContainText("Assessment");
   await assessment.click();
-  await expect(page).toHaveURL(/\/papers\?/);
+  await expect(page).toHaveURL(/\/children\/assessments\?/);
   await expect(page.getByRole("main")).toContainText(setName);
 
   await find(page).getByRole("combobox").fill("zzqqxx-no-such-thing");
@@ -141,7 +141,7 @@ test("on a phone the bar and the heading are at the top and every tap is big eno
   const context = await browser.newContext({ storageState: SIGNED_IN, viewport: { width: 400, height: 800 } });
   const page = await context.newPage();
   try {
-    for (const path of ["/setup/needs-doing", "/papers", "/growth", "/"]) {
+    for (const path of ["/setup/needs-doing", "/children/assessments", "/children", "/"]) {
       await page.goto(path);
       const top = (await page.getByRole("banner").first().boundingBox())!;
       expect(top.y, path).toBeLessThan(8);

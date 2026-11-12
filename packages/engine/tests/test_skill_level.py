@@ -48,9 +48,10 @@ MOVED = [
     "apps/web/lib/queries-taxonomy.ts",
     "apps/web/lib/maker.ts",
     "apps/web/components/curriculum-counts.tsx",
-    "apps/web/app/(app)/worksheets/page.tsx",
+    "apps/web/app/(app)/setup/skill-sets/[code]/below.tsx",
     "apps/web/app/(app)/worksheets/[qr]/page.tsx",
-    "apps/web/app/(app)/papers/approve/page.tsx",
+    "apps/web/app/(app)/children/assessments/[key]/page.tsx",
+    "apps/web/app/(app)/children/assessments/make/maker-page.tsx",
     "apps/web/app/(app)/setup/skill-sets/[code]/page.tsx",
     "apps/web/app/(app)/setup/skill-sets/[code]/level-approval.tsx",
 ]

@@ -11,7 +11,8 @@ import type { Day, Period } from "@/lib/educator/types";
 import { nowAtSchool, schoolToday } from "@/lib/school-clock";
 import { sql } from "@/lib/db";
 import { DOORS, open } from "@/lib/today-doors";
-import { myDay, myNotes, sessionsOf, type TodoRow } from "@/lib/today-data";
+import { myDay, myNotes, nextFortnight, noteFigures, sessionsOf, type Read, type TodoRow } from "@/lib/today-data";
+import { E } from "@/lib/educator/words";
 import { dayWords, fortnightWords, litPeriod, many, periodRow, periodsDone } from "@/lib/today";
 import { classWords } from "@/lib/voice-types";
 
@@ -30,7 +31,11 @@ const noteCard = (r: TodoRow, cls: string): KCard => {
 };
 
 export async function EducatorToday({ me, view, day: asked }: { me: Session; view: "list" | "board"; day?: string }) {
-  const [today, now, day, todo] = await Promise.all([schoolToday(), nowAtSchool(), myDay(me, asked), myNotes(me)]);
+  const [today, now, got, notes] = await Promise.all([schoolToday(), nowAtSchool(), myDay(me, asked), myNotes(me)]);
+  const day = got.ok ? got.value : null;
+  const todo = notes.ok ? notes.value : null;
+  // null when the engine could not be read: the two note tiles and lanes are left out and a sentence says why, never a 0 that is not known
+  const figures = noteFigures(notes);
   const cls = day ? classWords(day.class) : "";
   const stage = [dayWords(day?.day ?? today), cls, day ? fortnightWords(day.fortnight, day.week) : ""].filter(Boolean).join(" · ");
   const late = todo?.groups.left_unconfirmed.rows ?? [];
@@ -40,18 +45,27 @@ export async function EducatorToday({ me, view, day: asked }: { me: Session; vie
   const { done, planned } = periodsDone(periods);
   const classId = day?.class.id ?? "";
   const sessions = day && classId ? await sessionsOf(classId, day.day) : {};
+  // a day with no lesson says when lessons start again: the class's next fortnight
+  const coming = day && isBlank(day) && classId ? await nextFortnight(classId, day.day) : null;
   const href = (p: Period) => open(DOORS.period(p.period_id, classId, day!.day, sessions[p.period_id])) ?? "#";
   const tiles: Attention[] = [
-    { state: "doNow", n: late.length, sentence: "Notes left unconfirmed past the time they may wait", href: late[0] ? open(DOORS.confirm(late[0].note_id)) : null },
-    { state: "doSoon", n: soon.length, sentence: "Notes waiting for you to confirm", href: soon.length ? open(DOORS.notes()) : null },
-    { state: "done", n: done, sentence: `Periods taught of ${planned} planned today`, href: classId ? open(DOORS.picture(classId)) : null },
+    ...(figures
+      ? [
+          { state: "doNow" as const, n: late.length, sentence: "Notes left unconfirmed past the time they may wait", href: late[0] ? open(DOORS.confirm(late[0].note_id)) : null },
+          { state: "doSoon" as const, n: soon.length, sentence: "Notes waiting for you to confirm", href: soon.length ? open(DOORS.notes()) : null },
+        ]
+      : []),
+    ...(got.ok || !got.down ? [{ state: "done" as const, n: done, sentence: `Periods taught of ${planned} planned today`, href: classId ? open(DOORS.picture(classId)) : null }] : []),
   ];
   const next = periods.find((p) => p.period_id === lit) ?? periods.find((p) => isLesson(p) && p.starts_at > now && day?.day === today);
   // the main action is the period itself: the lit row (or the next) is the one to open, and says so in words here
   const action = <p className="font-medium">{next ? `${lit === next.period_id ? "Now" : "Next"}: ${next.name}, ${timeOf(next)}` : day && !isBlank(day) ? "No lesson is left today." : "No lesson to open today."}</p>;
-  const lanes: Lane[] = [
+  const noteLanes: Lane[] = [
     { key: "doNow", label: "Do now", state: "doNow", count: late.length, empty: "No note is waiting past its time.", cards: late.map((r) => noteCard(r, cls)) },
     { key: "doSoon", label: "This week", state: "doSoon", count: soon.length, empty: "No note is waiting for you.", cards: soon.map((r) => noteCard(r, cls)) },
+  ];
+  const lanes: Lane[] = [
+    ...(figures ? noteLanes : []),
     { key: "done", label: "Done", state: "done", count: done, empty: "No period is taught and confirmed yet today.", cards: periods.filter((p) => isLesson(p) && p.state === "done").map((p) => ({ key: p.period_id, kind: "period" as const, title: p.name, sub: timeOf(p), href: href(p), state: "done" as const })) },
   ];
   const cards = await cardsFor(cls, classId, [...late, ...soon]);
@@ -64,21 +78,28 @@ export async function EducatorToday({ me, view, day: asked }: { me: Session; vie
   const facts = layOut.length ? <RailFacts title={`Lay out for ${next!.activity!.name}`} rows={layOut.map((m) => ({ label: m.name, value: [m.quantity, m.unit].filter((x) => x !== null && x !== "").join(" ") }))} /> : undefined;
   return (
     <Screen stage={stage} title="Today" purpose="Your periods in order. Tap one for what to teach, how, and what to lay out. After it, record a note." action={action} next={{ href: open(DOORS.timetable()) ?? "/timetable", label: "Timetable" }} rail={<Rail edges={edges} facts={facts} />}>
-      <AttentionStrip tiles={tiles} />
+      {tiles.length ? <AttentionStrip tiles={tiles} /> : null}
+      {notes.ok || !notes.down ? null : <p className="b-muted" data-unread="notes">Your notes could not be read just now. {notes.words}</p>}
       <div className="my-4">
         <div className="[&_.b-seg]:gap-2 [&_.b-seg_[role=tab]]:min-h-[44px] [&_.b-seg_[role=tab]]:min-w-[44px]">
         <ViewToggle current={view} views={[{ key: "list", label: "List", icon: "table", href: addr(asked ? { day: asked } : {}) }, { key: "board", label: "Board", icon: "board", href: addr({ view: "board", ...(asked ? { day: asked } : {}) }) }]} />
         </div>
       </div>
-      {view === "board" ? <KanbanBoard lanes={lanes} /> : <PeriodsOrNothing day={day} periods={periods} lit={lit} href={href} />}
+      {view === "board" ? <KanbanBoard lanes={lanes} /> : <PeriodsOrNothing got={got} periods={periods} lit={lit} href={href} today={today} coming={coming} />}
       {view === "list" && cards.length ? <Cards cards={cards} /> : null}
     </Screen>
   );
 }
 
-function PeriodsOrNothing({ day, periods, lit, href }: { day: Day | null; periods: Period[]; lit: string | null; href: (p: Period) => string }) {
-  if (!day) return <EmptyState>No timetable is live for your class yet, so there are no sessions to show.</EmptyState>;
-  if (isBlank(day)) return <EmptyState>No sessions today: {blankWords(day).toLowerCase()}</EmptyState>;
+/** Her periods, or in words why there are none: a holiday or a day with no school, the engine's own reason for not giving her a day
+ *  (switched off, no class held), or that it could not be read just now. Never a blank. */
+function PeriodsOrNothing({ got, periods, lit, href, today, coming }: { got: Read<Day>; periods: Period[]; lit: string | null; href: (p: Period) => string; today: string; coming: { number: number; starts_on: string } | null }) {
+  if (!got.ok) return <EmptyState>{got.down ? `Your day could not be read just now. ${got.words}` : got.words}</EmptyState>;
+  const day = got.value;
+  if (isBlank(day)) {
+    const next = coming ? ` ${E.dayKind.nextFortnight.replace("{n}", String(coming.number)).replace("{day}", dayWords(coming.starts_on))}` : "";
+    return <EmptyState>{`${day.day === today ? "No sessions today." : "No sessions on this day."} ${blankWords(day)}${next}`}</EmptyState>;
+  }
   return <PeriodRow periods={periods.map((p) => periodRow(p, lit, href(p)))} />;
 }
 

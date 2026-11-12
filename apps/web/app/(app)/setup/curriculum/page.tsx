@@ -19,8 +19,7 @@ import { asks, ROLE_WORDS, type Ask } from "@/lib/queries-people";
 import { dateWords } from "@/lib/week";
 import { scopeOf } from "@/lib/scope";
 import type { Column } from "@/lib/ux-rules";
-import { answerOffer } from "../../curriculum/actions";
-import { answerAsk } from "../../asks/actions";
+import { answerAsk, answerOffer } from "./actions";
 
 type Q = Record<string, string | undefined>;
 const HERE = "/setup/curriculum";

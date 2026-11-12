@@ -79,7 +79,7 @@ export default async function CurriculumPage({ searchParams }: Props) {
       purpose="Every skill of every grade, with its levels and where it stands. Open a skill to read what each level asks."
       action={
         <Link
-          href={waiting ? "/skill-sets/approve" : "/library"}
+          href={waiting ? "/setup/skills/approve" : "/library"}
           className="btn"
         >
           {waiting
@@ -111,7 +111,7 @@ export default async function CurriculumPage({ searchParams }: Props) {
           {/* approving is the coordinator's; anyone else is told whose it is (goals/ux1-who-sees-what.yaml) */}
           {waiting} {waiting === 1 ? "skill waits" : "skills wait"} for{" "}
           {mayApprove ? "approval" : "the coordinator’s approval"}.{" "}
-          <Link href="/skill-sets/approve">
+          <Link href="/setup/skills/approve">
             {mayApprove ? "Read and approve →" : "Read them →"}
           </Link>
         </Notice>

@@ -114,9 +114,10 @@ export default async function Period({ params, searchParams }: { params: Promise
                   body: (
                     <div className="grid gap-1" data-part="activity">
                       <span className="font-medium">{a.name}</span>
-                      <a href={open!} data-open-activity>
+                      {/* the site's Link, as every other: a page change, not a reload that streams the activity's page in again */}
+                      <Link href={open!} data-open-activity>
                         Open the activity
-                      </a>
+                      </Link>
                     </div>
                   ),
                 },

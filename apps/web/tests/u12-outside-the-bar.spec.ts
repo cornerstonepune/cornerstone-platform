@@ -20,29 +20,6 @@ const HELP = JSON.parse(readFileSync(path.resolve(__dirname, "../design-system/h
 const sql = postgres(process.env.DATABASE_URL!, { max: 1 });
 test.afterAll(() => sql.end());
 
-// Done when 2 — every old route of these screens answers 308 to the new address
-test("each old address answers 308 to its new one", async ({ request }) => {
-  const folds: [string, string][] = [
-    ["/login/forgot", "/login?view=forgot"],
-    ["/login/new-password", "/login?view=new-password"],
-    ["/account/password", "/login?view=forgot"],
-    ["/guide/papers-to-approve", "/guide"],
-    ["/guide/workflows", "/guide"],
-    ["/workflows", "/setup/how-it-works"],
-    // the old Parent reports list folded into Reports (UI-8e)
-    ["/growth/reports", "/children/reports"],
-    ["/growth/reports?class=2B", "/children/reports?class=2B"],
-    // the old Staff page folded into Staff and classes (UI-5): its editor is Add a person and Add / End a grant there
-    ["/staff", "/setup/staff"],
-    ["/staff?q=ayush", "/setup/staff?q=ayush"],
-  ];
-  for (const [from, to] of folds) {
-    const res = await request.get(from, { maxRedirects: 0 });
-    expect(res.status(), from).toBe(308);
-    expect(new URL(res.headers().location, "http://x").pathname + new URL(res.headers().location, "http://x").search, from).toBe(to);
-  }
-});
-
 // Done when 3 and 12 — one section per screen of screens.json, generated from it, and the ? of every page opens its own
 test("the help has one section for every screen of the inventory", async ({ page }) => {
   await page.goto("/guide");

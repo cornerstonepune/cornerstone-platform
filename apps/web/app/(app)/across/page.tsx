@@ -5,9 +5,10 @@ import { EmptyState } from "@/components/empty-state";
 import { Screen } from "@/components/app-frame";
 import { Panel } from "@/components/parts";
 import { StatusChip } from "@/components/status-chip";
-import { STAGE_STATE } from "../papers/copies-table";
+import { STAGE_STATE } from "@/lib/assessment-ui";
 import { requireStaff } from "@/lib/auth";
 import { deadline } from "@/lib/deadline";
+import { sql } from "@/lib/db";
 import { classWords } from "@/lib/needs-you";
 import { grades } from "@/lib/queries";
 import { across, stageOrder } from "@/lib/queries-across";
@@ -20,7 +21,9 @@ import { dateWords, weekWords } from "@/lib/week";
 // elsewhere, since it is the page across them.
 export default async function AcrossPage() {
   const me = await requireStaff();
-  const [a, g] = await deadline(Promise.all([across(me.email, me), grades()]));
+  const [a, g, classes] = await deadline(Promise.all([across(me.email, me), grades(), sql<{ id: string; label: string }[]>`select id::text, label from school_class`]));
+  // a class's group opens its picture under Children, on the class against its topics
+  const ids: Record<string, string> = Object.fromEntries(classes.map((c) => [c.label, c.id]));
   const cls = (band: string, section: string) => classWords(g, band, section);
   return (
     <Screen
@@ -28,11 +31,11 @@ export default async function AcrossPage() {
       title="Across every class"
       purpose="Where each class's newest assessment stands, answers waiting too long, papers not back, and children needing help in two subjects."
       action={
-        <Link href="/capture/check" className="btn">
+        <Link href="/children/assessments?status=check" className="btn">
           Check answers
         </Link>
       }
-      next={{ href: "/growth", label: "Children" }}
+      next={{ href: "/children", label: "Children" }}
     >
       <div className="grid min-w-0 gap-[18px]">
         <Panel title="Each class and subject" label="Each class and subject" aside="its newest assessment">
@@ -41,7 +44,7 @@ export default async function AcrossPage() {
               label="Each class and subject"
               rows={a.stages}
               rowKey={(s) => `${s.section}|${s.subject}`}
-              more={{ by: (s) => cls(s.band, s.section), href: (name: string) => `/growth/class/${encodeURIComponent(a.stages.find((s) => cls(s.band, s.section) === name)?.section ?? "")}` }}
+              more={{ by: (s) => cls(s.band, s.section), href: (name: string) => { const id = ids[a.stages.find((s) => cls(s.band, s.section) === name)?.section ?? ""]; return id ? `/children/${id}?view=matrix` : "/children"; } }}
               columns={[
                 { key: "subject", label: "Subject", value: (s) => s.subject, keep: true },
                 {
@@ -81,7 +84,7 @@ export default async function AcrossPage() {
                 <li key={o.section} data-class={o.section}>
                   <strong>{cls(o.band, o.section)}</strong>: <Count of="overdue-answers" n={o.answers} /> {o.answers === 1 ? "answer" : "answers"} on{" "}
                   {o.papers} {o.papers === 1 ? "paper" : "papers"} waiting for a person, the oldest read {dateWords(o.oldest)}.{" "}
-                  <Link href="/capture/check">Check them →</Link>
+                  <Link href="/children/assessments?status=check">Check them →</Link>
                 </li>
               ))}
             </ul>

@@ -65,8 +65,8 @@ test("the map lists every skill, a row each, led by what the child can do, and n
   await expect(table).toBeVisible();
   const hrefs = await skillLinks(page);
   // each skill is led by what the child can do, and that sentence opens its page, under every grade that holds a level of it
-  for (const s of all) expect(hrefs, s.code).toContain(`/skill-sets/${s.code}`);
-  for (const h of hrefs) expect(h).toMatch(/^\/skill-sets\//);
+  for (const s of all) expect(hrefs, s.code).toContain(`/setup/skill-sets/${s.code}`);
+  for (const h of hrefs) expect(h).toMatch(/^\/setup\/skill-sets\//);
   await expect(page.getByText("Registry skills")).toHaveCount(0);
   const tables = await page
     .getByRole("main")
@@ -115,7 +115,7 @@ test("every skill page shows each level in a sentence with a real question, its 
   page,
 }) => {
   for (const s of await skills()) {
-    await page.goto(`/skill-sets/${s.code}`);
+    await page.goto(`/setup/skill-sets/${s.code}`);
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(s.outcome);
     const levels = LEVELS.filter((d) => s.words[d]); // a skill may define fewer than four (1-digit − 1-digit)
     for (const d of levels) {
@@ -208,13 +208,14 @@ test("every waiting skill is approved from one page, in the approver's name", as
     await sql`update skill set status = 'draft', ratified_by = null where code in ('ADD.1D1D', 'SUB.1D1D')`;
     await page.goto("/");
     await page.getByRole("link", { name: "Read and approve →" }).click();
+    await expect(page).toHaveURL(/\/setup\/skills\/approve$/);
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(
-      "Approve the skills",
+      "Skills to approve",
     );
     // the table of what a mistake charges waits beside them (step 8b), approved by a press of its own: a press meant
     // for some skills never approves it (goals/ui6a-approve-filtered.yaml)
     await expect(
-      page.getByRole("heading", { name: "What a wrong answer counts against" }),
+      page.getByText("What a wrong answer counts against", { exact: true }),
     ).toBeVisible();
     await page
       .getByRole("button", {
@@ -229,15 +230,11 @@ test("every waiting skill is approved from one page, in the approver's name", as
     // each skill is approved on its own row: there is no button over all of them
     await expect(page.getByRole("button", { name: /Approve all|Approve these/ })).toHaveCount(0);
     for (const code of ["ADD.1D1D", "SUB.1D1D"]) {
-      await page.locator(`tr[data-row="${code}"]`).getByRole("button", { name: "Approve, as End-to-end test" }).click();
+      await page.locator(`tr[data-row="${code}"]`).locator("[data-approve]").click();
+      await expect(page.locator(`tr[data-row="${code}"]`)).toHaveCount(0);
     }
-    await expect(
-      page
-        .getByRole("status")
-        .filter({
-          hasText: "Approved, in your name. Every skill is approved.",
-        }),
-    ).toBeVisible();
+    // every skill is approved: none is left to read
+    await expect(page.getByText("Nothing to approve")).toBeVisible();
     const [approved] = await sql<{ by: string; same: boolean }[]>`
       select a.value ->> 'by' as by, (a.value -> 'table') = t.value as same
       from config a, config t where a.key = 'skills.charges_by_kind.approved' and t.key = 'skills.charges_by_kind'`;
@@ -260,8 +257,8 @@ test("the map and a skill page fit a phone", async ({ page }) => {
   await page.setViewportSize({ width: 400, height: 860 });
   for (const path of [
     "/",
-    "/skill-sets/SUB.2D2D",
-    "/skill-sets/approve",
+    "/setup/skill-sets/SUB.2D2D",
+    "/setup/skills/approve",
     "/skill-sets/SUB.2D2D/edit",
   ]) {
     await page.goto(path, { waitUntil: "networkidle" });

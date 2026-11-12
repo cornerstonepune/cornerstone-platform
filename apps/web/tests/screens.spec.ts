@@ -11,14 +11,10 @@ const ROUTES: [string, string][] = [
   ["/setup/needs-doing", "What needs doing"],
   ["/", "Curriculum"],
   ["/library", "Question bank"],
-  ["/worksheets", "Worksheets"],
-  ["/papers", "Assessments"],
-  ["/papers/make", "Make papers"],
-  ["/papers/approve", "Assessments"],
+  ["/children/assessments", "Assessments"],
   ["/capture", "Upload papers"],
-  // Class results moved (UI-3i, #684): /growth opens the By topic tab of the class picture
-  ["/growth", "Class picture"],
-  ["/home", "Home Assignments"],
+  // Class results are the By topic tab of the class picture (UI-3i, #684); `:class` is the test's own class
+  ["/children/:class?view=topic", "Class picture"],
 ];
 
 const SIZES = [
@@ -30,8 +26,10 @@ const SIZES = [
 // first class live listed, and skipped themselves on a database with none (goals/p1-browser-tests-in-ci.yaml).
 const sql = postgres(process.env.DATABASE_URL!, { max: 1 });
 let kavya = "";
+let classId = "";
 test.beforeAll(async () => {
   ({ Kavya: kavya } = await aClass(sql, "SCREENS-TEST", "G2", ["Kavya"]));
+  [{ id: classId }] = await sql<{ id: string }[]>`select id::text from school_class where label = 'SCREENS-TEST' limit 1`;
   // the class picture is behind the educator switch (UI-3b), as u21-class-by-topic switches it on for itself
   await voiceSwitch(sql, true);
   const [{ n }] = await sql<{ n: number }[]>`select count(*)::int as n from evidence_event where child_id = ${kavya}`;
@@ -59,7 +57,7 @@ for (const { name, width, height } of SIZES) {
       const errors: string[] = [];
       page.on("console", (m) => m.type() === "error" && errors.push(m.text()));
       await page.setViewportSize({ width, height });
-      await page.goto(path, { waitUntil: "networkidle" });
+      await page.goto(path.replace(":class", classId), { waitUntil: "networkidle" });
 
       await expect(page.getByRole("heading", { level: 1 })).toHaveText(heading);
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
@@ -77,7 +75,7 @@ test("every section is reachable from the menu", async ({ page }) => {
   for (const label of ["Today", "Timetable", "Children", "Setup"]) await expect(groups.getByRole("link", { name: label })).toBeVisible();
   // and every page of a door from the row of pages under the bar
   for (const [door, labels] of [
-    ["Children", ["Children", "Papers to approve", "Upload papers", "Check answers"]],
+    ["Children", ["Children", "Upload papers"]],
     ["Setup", ["Curriculum", "Question bank", "Staff", "School"]],
   ] as const) {
     await groups.getByRole("link", { name: door }).click();
@@ -109,8 +107,7 @@ test("the menu marks where you are", async ({ page }) => {
 test("a child's page is in words, with the answers behind each skill", async ({ page }) => {
   // the class's results by topic are the By topic tab of its class picture (UI-3i, #684): a topic opens to its skills, a skill to
   // its children, and a child's name opens their page (goals/ui4b2-class-by-topic.yaml)
-  await page.goto("/growth?class=SCREENS-TEST");
-  await expect(page).toHaveURL(/\/children\/[0-9a-f-]{36}\?view=topic$/);
+  await page.goto(`/children/${classId}?view=topic`);
   await page.locator("tr[data-topic]").first().getByRole("link").first().click();
   await page.locator("tr[data-skill]").first().getByRole("link").first().click();
   await page.locator("tr[data-child]").first().getByRole("link").first().click();
@@ -151,7 +148,11 @@ for (const { name, width, height } of SIZES) {
     await page.locator(`a[href="/capture?child=${kavya}"]`).first().click();
     await expect(page).toHaveURL(/child=/); // the student's own papers, not the list still on screen
     await page.getByRole("table").first().getByRole("link").first().click();
-    await expect(page.getByRole("heading", { level: 1 })).toContainText("·");
+    // the paper opens on its own screen (the old /capture/<sheet> is retired): the h1 says what is done here and the
+    // line above it names which paper, by its grade and Sr. No.
+    await expect(page).toHaveURL(/\/children\/assessments\/[^/]+\/[^/?#]+/);
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("Check the answers");
+    await expect(page.getByTestId("stage")).toContainText(" · Sr. No. ");
     await expect(page.getByRole("heading", { name: "What this paper says, by skill" })).toBeVisible();
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
     expect(overflow, "page must not scroll sideways").toBeLessThanOrEqual(1);

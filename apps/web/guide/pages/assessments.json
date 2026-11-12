@@ -1,14 +1,11 @@
 {
-  "menu": "/papers",
+  "menu": "/children/assessments",
   "forWhat": [
     "Make an assessment, read one that came back, and follow each one from made to results in.",
-    "Each assessment is one row. The row's button is always the next thing to do."
+    "Each assessment is one row. The row's button is always the next thing to do.",
+    "An assessment opens to each child's copy. A child's paper opens to their answers: checking them and signing off happen there."
   ],
   "layout": [
-    {
-      "area": "Tabs",
-      "shows": "[[Assessments]], [[Needs checking]] and [[Reading status]]."
-    },
     {
       "area": "Make an assessment",
       "shows": "Four tiles: [[For a class]], [[For each child]], [[For one child]] and [[A ready-made worksheet]]."
@@ -22,12 +19,16 @@
       "shows": "Class, Topic, Subject, Kind, Week and Stage, and a search box."
     },
     {
-      "area": "Assessments table",
-      "shows": "One row per assessment. Its steps run from [[Created]] to [[Results in]], then the score and the next button."
+      "area": "Views",
+      "shows": "[[Board]], [[Table]], [[By topic]] and [[Reading]]. Reading lists the files read lately and what each one lacks."
     },
     {
-      "area": "Folded notes",
-      "shows": "Files read lately and what each one lacks, and a short note on how it works."
+      "area": "Assessments table",
+      "shows": "One row per assessment: its name, class, papers back, what it waits for, and the next button."
+    },
+    {
+      "area": "An assessment's page",
+      "shows": "Its steps, the pack to approve and print, and [[Each child’s copy]], one row per child with its own button."
     }
   ],
   "jobs": [
@@ -35,12 +36,54 @@
       "id": "make",
       "title": "Make an assessment for a class",
       "steps": [
-        "Press [[Make an assessment]], or the tile [[For a class]].",
+        "Press the tile [[For a class]].",
         "Choose the class, what it is, how it is made, and the children.",
         "Press [[See the papers]]. Every child's paper shows on screen before anything is made.",
         "Not happy with a child's questions? Press [[Different questions]]. It draws others and makes nothing.",
-        "Press [[Make and approve …]]. The papers are made exactly as you saw them, in your name.",
-        "Press [[Print them all]]."
+        "Press [[Make … papers]]. The papers are made exactly as you saw them, in your name.",
+        "The assessment opens. Approve the pack there before it prints."
+      ]
+    },
+    {
+      "id": "approve",
+      "title": "Approve and print the pack",
+      "steps": [
+        "Open the assessment, from its name or its row's [[Approve]] button.",
+        "Read each child's copy and level. Nothing prints without your approval.",
+        "Press [[Approve the pack]]. It approves this pack only.",
+        "Press [[Print]]. It shows only once the pack is approved."
+      ]
+    },
+    {
+      "id": "change-level",
+      "title": "Change one child's level before print",
+      "steps": [
+        "Open the assessment before its pack is approved.",
+        "On the child's row, choose the new level and write why. A change with no reason is refused.",
+        "Press [[Change this child]]. The engine leaves that child's level alone next time."
+      ]
+    },
+    {
+      "id": "home-assessment",
+      "title": "Make a home assessment",
+      "steps": [
+        "Open the child's page. The panel [[Home assessment]] shows the paper the engine proposes, from the child's own answers.",
+        "Press [[See it as it will print]] to look at it. Press [[Different questions]] for others; it makes nothing.",
+        "To choose the skills and levels yourself, press [[Choose a different home assessment]].",
+        "Press [[Approve this home assessment]]. It is made and printed in your name.",
+        "On a home assessment's own page, [[Edit this paper]] lets you add or remove a question before print."
+      ]
+    },
+    {
+      "id": "check",
+      "title": "Check and sign off a child's paper",
+      "steps": [
+        "Press the row's [[Check … answers]] button, or [[Check this paper]] on a child's row.",
+        "The child's page shows as photographed, with each answer as the engine read it.",
+        "If the engine read it right, press [[Yes, the child wrote …]].",
+        "If not, type what the child wrote and press [[Say what the child wrote]]. For an empty box, press [[Blank (the child wrote nothing)]].",
+        "For an answer only a person can mark, press [[Right]], [[Wrong]] or [[Blank]].",
+        "Press [[Next answer to judge]]. When nothing is left, press [[Sign this paper off]]."
       ]
     },
     {
@@ -48,23 +91,34 @@
       "title": "Follow an assessment",
       "steps": [
         "Find its row. The filter row and search help when the list is long.",
-        "Press the row's next button: [[Approve]], [[Print]], [[Upload]], [[Check]] or [[See results]].",
+        "Press the row's next button: [[Approve]], [[Print]], [[Upload]], [[Check … answers]], [[Sign off … papers]] or [[See results]].",
         "Press the assessment's name to see each child's copy and where it stands."
+      ]
+    },
+    {
+      "id": "a-child",
+      "title": "See how a child is doing",
+      "steps": [
+        "On an assessment with results in, press [[The child]] on the child's row. Their page opens.",
+        "[[What their answers show]] is a row per topic: the level of their newest question, their last paper's answers, their state, and their strongest or weakest skill.",
+        "On a paper, press [[See the child’s page]] to see what the child wrote.",
+        "[[Repeated mistakes]] shows a mistake they make more than once. [[Report card]] and [[Parent report]] open their reports."
       ]
     },
     {
       "id": "rename",
       "title": "Rename an assessment",
       "steps": [
-        "Press [[Rename]] on its row, type the new name and press [[Save]].",
+        "Type the new name in the field under its name and press [[Save the name]].",
         "The old names are kept. An empty name changes nothing."
       ]
     }
   ],
   "buttons": [
     {
-      "label": "Make an assessment",
-      "does": "Opens the page that makes papers."
+      "label": "See the papers",
+      "does": "Shows every child's paper before anything is made.",
+      "doesNot": "It makes and prints nothing."
     },
     {
       "label": "Different questions",
@@ -72,14 +126,29 @@
       "doesNot": "It makes and prints nothing."
     },
     {
-      "label": "Make and approve …",
-      "does": "Makes the papers you saw and approves them in your name.",
-      "doesNot": "If you change a choice, it waits until you see the papers again. Pressing it twice makes the papers once."
+      "label": "Make … papers",
+      "does": "Makes the papers you saw, in your name.",
+      "doesNot": "If you change a choice, it waits until you see the papers again. Nothing prints until the pack is approved."
     },
     {
-      "label": "Approve",
-      "does": "On a home assessment's row, approves that one row and marks its papers printed.",
-      "doesNot": "No other row is approved."
+      "label": "Approve the pack",
+      "does": "Approves this pack's papers and spares in your name.",
+      "doesNot": "No other pack is approved."
+    },
+    {
+      "label": "Change this child",
+      "does": "Sets that child's level and records who changed it and why.",
+      "doesNot": "Other children keep their levels."
+    },
+    {
+      "label": "Say what the child wrote",
+      "does": "Records what the child wrote. The engine then marks it by the answer key.",
+      "doesNot": "The engine's own reading is kept beside yours, never written over."
+    },
+    {
+      "label": "Sign this paper off",
+      "does": "Signs off the paper's answers in your name. Only signed off answers count.",
+      "doesNot": "A signed off answer is never edited afterwards. A correction is added as a new one."
     },
     {
       "label": "Read it",
@@ -87,7 +156,7 @@
       "doesNot": "It takes only Google Drive links."
     },
     {
-      "label": "Rename",
+      "label": "Save the name",
       "does": "Gives the assessment a new name.",
       "doesNot": "The older names are kept, not deleted."
     }

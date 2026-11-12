@@ -105,11 +105,11 @@ export default async function WhatNeedsDoing({ searchParams }: { searchParams: P
       title="What needs doing"
       purpose="The kinds of work waiting on you, in the order the week runs. Open one to see its rows; each row has its own button."
       action={
-        <Link href={first?.href ?? "/papers"} className="btn">
+        <Link href={first?.href ?? "/children/assessments"} className="btn">
           {first ? `Start with: ${first.what.toLowerCase()} →` : "Open Assessments →"}
         </Link>
       }
-      next={{ href: "/papers", label: "Assessments" }}
+      next={{ href: "/children/assessments", label: "Assessments" }}
     >
       <TaughtNotice q={q} />
       <p className="mb-3 text-[14px]" data-todo={waiting}>
@@ -123,7 +123,7 @@ export default async function WhatNeedsDoing({ searchParams }: { searchParams: P
           { name: "group", label: "What", value: group, all: "Everything", options: TODO_GROUPS.map((g) => [g.key, g.title] as const) },
         ]}
       />
-      {sections.length === 0 ? <EmptyState next={{ href: "/papers", label: "Assessments" }}>Nothing waits on you{subject || section || group || kind ? " under these choices" : ""}.</EmptyState> : null}
+      {sections.length === 0 ? <EmptyState next={{ href: "/children/assessments", label: "Assessments" }}>Nothing waits on you{subject || section || group || kind ? " under these choices" : ""}.</EmptyState> : null}
       <ol className="grid gap-2" aria-label="Kinds of work waiting">
         {sections.map((s) => (
           <Group key={s.group.key} s={s} open={s.group.key === open} page={s.group.key === open ? page : 1} q={q} />

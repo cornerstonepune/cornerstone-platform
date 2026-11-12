@@ -11,6 +11,7 @@
  * - Dev's copy read, every answer wrong.
  * What each screen counts is read back and recomputed here from the rows, not taken from the screen.
  */
+import type { Locator } from "@playwright/test";
 import { mkdirSync } from "node:fs";
 import path from "node:path";
 import { expect, test, type Browser, type Page } from "@playwright/test";
@@ -27,7 +28,6 @@ const QR = { asha: "CS520A01", ashaTwin: "CS520A02", bina: "CS520B01", chetan: "
 const EDUCATOR = { email: "u52-educator@cornerstone.test", name: "U52 Educator", role: "educator", classes: [SECTION] };
 const PASSWORD = "u52-a-long-test-password";
 let kids: Record<string, string> = {};
-let skill = "";
 let ashaCapture = "";
 
 test.beforeAll(async () => {
@@ -41,7 +41,6 @@ test.beforeAll(async () => {
                               and w.source = 'library' and w.retired_at is null
                               where cardinality(s.registry_codes) >= 2 group by s.code having count(*) >= 2 order by s.code limit 1)
     order by t.code limit 3`;
-  [{ name: skill }] = await sql<{ name: string }[]>`select name from skill where code = ${ws[0].skill}`;
   const onThePack = (qr: string) => sql`
     update sheet_instance set week = to_date(${THIS}, 'IYYY-"W"IW'), section = ${SECTION}, kind = 'assessment', approved_by = 'u52', approved_at = now()
     where qr_code = ${qr}`;
@@ -118,38 +117,35 @@ async function shoot(page: Page, name: string) {
   await page.screenshot({ path: path.join(process.env.SHOTS, `${name}.png`), fullPage: true });
 }
 
+/** The assessment screen of the class's one assessment: its copies are rows by Sr. No., grouped by what each waits for. */
 const opened = async (page: Page) => {
-  await page.goto(`/papers?class=${SECTION}`);
-  // a class's one assessment opens by itself when the filters leave only it; a click would close it again
-  const line = page.locator(`[data-assessment]`).getByRole("link", { name: skill });
-  if ((await line.getAttribute("aria-expanded")) !== "true") await line.click();
-  const copies = page.getByRole("table", { name: `${skill}: each copy` });
-  await expect(copies).toBeVisible();
-  return copies;
+  await page.goto(`/children/assessments?class=${SECTION}&view=table`);
+  await page.locator("a[data-assessment-row]").first().click();
+  await expect(page).toHaveURL(/\/children\/assessments\/[^/?]+/);
+  return page.locator("main");
 };
+const row = (main: Locator, roll: string) => main.locator("tr").filter({ has: main.page().locator('td[data-label="Sr. No."]', { hasText: new RegExp(`^${roll}$`) }) });
 
 test("an assessment shows each child once; a copy never handed back beside a read one is said in words, not listed as a second child", async ({ browser }) => {
   const page = await asEducator(browser);
-  const copies = await opened(page);
+  const main = await opened(page);
   await shoot(page, "papers-assessment");
-  const names = await copies.locator("tbody tr").evaluateAll((trs) => trs.map((t) => t.querySelectorAll("td")[1].textContent?.trim()));
-  expect(names).toEqual(["Asha", "Bina", "Chetan", "Dev"]);
-  // Asha's read copy is the one listed, with its score; her second copy is said under the table
-  const asha = copies.locator("tbody tr", { hasText: "Asha" });
-  await expect(asha).toContainText("3 of 3");
+  const rolls = await main.locator('td[data-label="Sr. No."]').allInnerTexts();
+  expect(rolls.map((r) => r.trim()).sort(), "each child once, by Sr. No.").toEqual(["1", "2", "3", "4"]);
+  // roll 1's read copy is the one listed, with its score; her second copy is said under the table
+  await expect(row(main, "1").locator('td[data-label="Score"]')).toContainText("3 of 3");
   await expect(page.locator("[data-extras]")).toHaveText(/1 extra copy of a child who has already handed theirs in, not read:\s*CS520A02/);
-  // the assessment's own line counts the children's copies, not the extra: four children, so no step reads "of 5"
-  await expect(page.locator("[data-assessment]").first()).not.toContainText(/of 5\b/);
-  // …and the score across copies counts Asha's answers once
+  // the assessment's own steps count the children's copies, not the extra: four children, so no step reads "of 5"
+  await expect(page.getByRole("list", { name: /^The steps/ })).not.toContainText(/of 5\b/);
   await page.context().close();
 });
 
 test("a copy whose answers are all blank, or none right, says so beside its score", async ({ browser }) => {
   const page = await asEducator(browser);
-  const copies = await opened(page);
-  await expect(copies.locator("tbody tr", { hasText: "Bina" }).locator("[data-warn]")).toHaveText(/every answer blank.*right page/i);
-  await expect(copies.locator("tbody tr", { hasText: "Dev" }).locator("[data-warn]")).toHaveText(/none right.*right page/i);
-  await expect(copies.locator("tbody tr", { hasText: "Asha" }).locator("[data-warn]")).toHaveCount(0);
+  const main = await opened(page);
+  await expect(row(main, "2").locator("[data-warn]")).toHaveText(/every answer blank.*right page/i);
+  await expect(row(main, "4").locator("[data-warn]")).toHaveText(/none right.*right page/i);
+  await expect(row(main, "1").locator("[data-warn]")).toHaveCount(0);
   await page.context().close();
 });
 

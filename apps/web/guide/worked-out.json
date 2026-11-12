@@ -79,7 +79,7 @@
         "When {t:calibration.too_easy_share|pct} or more of them are {colour:green}, it suggests making the level harder or adding a harder one.",
         "It only suggests. It never changes a level. A change is made on the skill's own page.",
         "[[I've looked at this]] hides a suggestion until the counts move by {t:calibration.review_again_children} children.",
-        "See it on [Levels to review](/skill-sets/levels)."
+        "See it on [Levels to review](/setup/skills/approve?tab=levels)."
       ]
     },
     {

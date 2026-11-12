@@ -48,7 +48,7 @@ export async function suggest(me: Session, typed: string): Promise<Hit[]> {
     ...children.map((c) => ({ label: `${c.name} · ${said(c.band, c.section)} · Sr. No. ${c.roll_no}`, href: `/growth/${c.id}` })),
     ...assessments.map((a) => {
       const to = new URLSearchParams({ class: a.section, kind: a.kind, set: a.set, ...(a.week ? { week: a.week } : {}) });
-      return { label: `Assessment · ${a.name} · ${said(a.band, a.section)} · ${weekWords(a.week)}`, href: `/papers?${to}` };
+      return { label: `Assessment · ${a.name} · ${said(a.band, a.section)} · ${weekWords(a.week)}`, href: `/children/assessments?${to}` };
     }),
   ];
   return hits.slice(0, MOST_SUGGESTIONS);

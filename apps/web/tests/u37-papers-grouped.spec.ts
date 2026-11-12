@@ -1,5 +1,6 @@
 /**
- * U37 — Assessments grouped, and a class's papers to approve said child by child (goals/ux5-papers-grouped.yaml).
+ * U37 — Assessments grouped, and a class's papers to approve said copy by copy (goals/ux5-papers-grouped.yaml), on the
+ * assessment's own screen (the old Assessments page that opened in place, and Papers to approve, are retired).
  * Nimish, 2026-10-11: "This cannot be just such a freaking long list of stuff. Need to make it more readable." and
  * "the assessment page needs to have the filter and the view by topic and all"; 2026-10-15: "All these things should be
  * expandable and collapsible. They should have the right set of columns which are important."
@@ -13,7 +14,8 @@
 import { expect, test, type Browser, type Page } from "@playwright/test";
 import postgres from "postgres";
 import { aClass, aReadPaper, aPerson, forgetPerson } from "./rows";
-import { isoWeek, weekWords } from "../lib/week";
+import { isoWeek } from "../lib/week";
+import { assessmentHref } from "../lib/assessment-ui";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -25,7 +27,7 @@ const WHY = "has sat every worksheet at Hard (4)";
 const EDUCATOR = { email: "u37-educator@cornerstone.test", name: "U37 Educator", role: "educator", classes: [SECTION] };
 const PASSWORD = "u37-a-long-test-password";
 let kids: Record<string, string> = {};
-let skill = "";
+let set = "";
 
 test.beforeAll(async () => {
   kids = await aClass(sql, SECTION, "G2", ["Asha", "Bina", "Chetan", "Dev", "Esha"]);
@@ -38,7 +40,7 @@ test.beforeAll(async () => {
                             and band = 'G2' and difficulty = 'Hard' order by skill_set_code limit 1)
       and difficulty in ('Medium', 'Hard')
     order by difficulty = 'Hard' desc, code limit 4`;
-  [{ name: skill }] = await sql<{ name: string }[]>`select name from skill where code = ${ws[0].skill}`;
+  set = ws[0].skill;
   const paper = (qr: string, w: string, child: string | null, week: string, kind: string, status: string) => sql`
     insert into sheet_instance (tenant_id, qr_code, sheet_template_id, child_id, week, section, kind, print_status,
                                 approved_by, approved_at)
@@ -93,108 +95,93 @@ async function asEducator(browser: Browser): Promise<Page> {
   return page;
 }
 
-// one table, a row for each assessment, its week said under its name (goals/uxn1-design-system.yaml)
-const row = (page: Page, w: string) => page.locator("tr[data-assessment]").filter({ hasText: weekWords(w) });
+// an assessment is addressed by its key: the kind, the class, the week and the skill; its row in the table carries it
+const KEY = (week: string, kind: string) => [kind, SECTION, week, set].join("~");
+const row = (page: Page, key: string) => page.locator(`tr[data-assessment="${key}"]`);
+/** One group of the assessment's copies, by where they stand (the screen's own regions: "Answers to judge, 1 copies"). */
+const group = (page: Page, label: string) => page.getByRole("region", { name: new RegExp(`^${label}, \\d+ copies$`) });
 
-test("Assessments opens on one table, newest first, each row saying where it stands", async ({ browser }) => {
+test("an assessment opens to its copies, each in the group of where it stands, its spares listed apart", async ({ browser }) => {
   const page = await asEducator(browser);
-  await page.goto("/papers");
-  // the educator's own class only: two assessments, the newest week first
-  const rows = page.locator("tr[data-assessment]");
-  await expect(rows).toHaveCount(2);
-  await expect(rows.nth(0)).toContainText(weekWords(THIS));
-  await expect(rows.nth(1)).toContainText(weekWords(OLD));
-  // what waits is in the status of each row, in words
-  await expect(row(page, THIS).locator('[data-status="toCheck"]')).toBeVisible();
-  await expect(row(page, OLD).locator("[data-action]")).toHaveText(/See results|Sign off|Upload|Print|Approve/);
-  // one line an assessment: what it is and its class; no copies until it is opened
-  const a = row(page, THIS);
-  await expect(a).toHaveCount(1);
-  await expect(a).toContainText(skill);
-  await expect(a).toContainText(`Grade 2 · ${SECTION}`);
-  await expect(page.getByRole("table", { name: /: each copy$/ })).toHaveCount(0);
+  await page.goto("/children/assessments?view=table");
+  const key = KEY(THIS, "assessment");
+  await expect(row(page, key)).toHaveCount(1);
+  const open = row(page, key).locator("a[data-assessment-row]");
+  await expect(open).toHaveAttribute("href", assessmentHref(key));
+  await page.goto(assessmentHref(key)); // the row's own address, the whole page waited for
+  // the steps the school does, in order, over the copies; each copy a row with its Sr. No. and level (names stay off it)
+  const steps = page.locator('[data-block="Stepper"]');
+  for (const h of ["Created", "Printed", "Uploaded", "Read", "Checked", "Results in"]) await expect(steps).toContainText(h);
+  // three copies: Bina's read with an answer for a person first, Asha's with the children, Chetan's to approve (the tables
+  // stream in after the steps: counted, and so waited for, before their headings are read)
+  const copies = page.locator('section[aria-label$=" copies"]:not([data-spares]) tbody tr');
+  await expect(copies).toHaveCount(3);
+  // asserted (and so waited for), not read at one instant: while the page streams in, the table can stand only in React's hidden holder
+  const heads = page.getByRole("table", { name: "Answers to judge" }).locator("thead th");
+  await expect(heads.first()).toHaveText("Sr. No.");
+  await expect(heads.filter({ hasText: /^Level$/ })).toHaveCount(1);
+  const judge = group(page, "Answers to judge").locator("tbody tr");
+  await expect(judge).toHaveCount(1);
+  await expect(judge.locator('td[data-label="Sr. No."]')).toHaveText("2");
+  await expect(judge.locator('[data-status="judge"]')).toBeVisible();
+  // a copy read opens its answers: the paper screen, by the assessment and the Sr. No.
+  await expect(judge.locator("[data-check-paper]")).toHaveText("Check this paper");
+  await expect(judge.locator("[data-check-paper]")).toHaveAttribute("href", /^\/children\/assessments\/[^/]+\/2$/);
+  const out = group(page, "With the children").locator("tbody tr");
+  await expect(out.locator('td[data-label="Sr. No."]')).toHaveText("1");
+  await expect(out.locator('td[data-label="Level"]')).toContainText("Hard");
+  const made = group(page, "Not printed yet").locator("tbody tr");
+  await expect(made.locator('td[data-label="Sr. No."]')).toHaveText("3");
+  await expect(made.locator('[data-status="toApprove"]')).toBeVisible();
+  // the spares: listed apart from the children's copies
+  const spares = page.getByRole("table", { name: "Spare copies" }).locator("tbody tr");
+  await expect(spares).toHaveCount(1);
+  await expect(spares).toContainText(QR.spare);
   await page.context().close();
 });
 
-test("an assessment opens in place to its copies in roll order, its spares on one line", async ({ browser }) => {
+test("the one filter row is there, with its active filters, and a child chosen shows the assessments of their copies", async ({ browser }) => {
   const page = await asEducator(browser);
-  await page.goto("/papers");
-  await row(page, THIS).getByRole("link", { name: skill }).click();
-  await expect(page).toHaveURL(/[?&]open=/);
-  const copies = page.getByRole("table", { name: `${skill}: each copy` });
-  await expect(copies).toBeVisible();
-  const heads = (await copies.locator("thead th").allTextContents()).map((h) => h.trim());
-  expect(heads.slice(0, 3)).toEqual(["Roll", "Child", "Level"]);
-  for (const h of ["Created", "Printed", "Uploaded", "Read", "Checked", "Results in"]) expect(heads).toContain(h);
-  const rows = copies.locator("tbody tr");
-  await expect(rows).toHaveCount(3);
-  expect(await rows.evaluateAll((trs) => trs.map((t) => t.querySelectorAll("td")[1].textContent?.trim()))).toEqual(["Asha", "Bina", "Chetan"]);
-  const cells = (i: number) => rows.nth(i).locator("td");
-  await expect(cells(0).nth(2)).toHaveText("Hard");
-  await expect(rows.nth(1).locator('[data-status="toCheck"]')).toBeVisible();
-  await expect(rows.nth(1).locator("[data-action=check]")).toHaveText("Check 1 answer");
-  await expect(rows.nth(2).locator('[data-status="next"]')).toBeVisible();
-  // a copy opens where its work is: one not read yet, its page; one read, its answers
-  await expect(cells(0).getByRole("link", { name: "Asha" })).toHaveAttribute("href", `/worksheets/${QR.asha}`);
-  await expect(cells(1).getByRole("link", { name: "Bina" })).toHaveAttribute("href", /^\/capture\/[0-9a-f-]{36}$/);
-  // the spares: one line under the copies
-  const spares = page.locator("[data-spares]");
-  await expect(spares).toHaveText(/^1 spare copy, with the pack:\s*CS3705A1$/);
-  await page.context().close();
-});
-
-test("the one filter row is there, with its active filters, and a child chosen shows their copy under each assessment", async ({ browser }) => {
-  const page = await asEducator(browser);
-  await page.goto("/papers");
+  await page.goto("/children/assessments");
   const bar = page.locator("[data-filterbar]");
   await expect(bar).toBeVisible();
   for (const l of ["Class", "Topic", "Subject", "Kind", "Week", "Status"]) await expect(bar.locator(`select[name="${({ Class: "class", Topic: "topic", Subject: "subject", Kind: "kind", Week: "week", Status: "status" } as Record<string, string>)[l]}"]`)).toBeVisible();
   await expect(page.getByRole("navigation", { name: "View" })).toHaveCount(0);
   await expect(page.locator("[data-active-filters]")).toHaveCount(0);
-  // a child chosen: their papers, each assessment showing their copy
-  await page.goto(`/papers?child=${kids.Asha}`);
-  await expect(row(page, OLD).getByRole("link").first()).toBeVisible();
-  await expect(page.getByRole("link", { name: "Asha" }).first()).toHaveAttribute("href", /\/worksheets\//);
-  await expect(page.getByRole("link", { name: "Bina" })).toHaveCount(0);
+  // a child chosen: the assessments they have a copy in, this week's and the one long past
+  await page.goto(`/children/assessments?child=${kids.Asha}&view=table`);
+  await expect(row(page, KEY(OLD, "practice"))).toHaveCount(1);
+  await expect(row(page, KEY(THIS, "assessment"))).toHaveCount(1);
+  await expect(page.locator("tr[data-assessment]")).toHaveCount(2);
   await page.context().close();
 });
 
-test("class papers to approve names each child, says why a child has no paper, and counts what it approves", async ({ page }) => {
-  await page.goto(`/papers/approve?section=${SECTION}&week=${THIS}&kind=assessment`);
-  const table = page.getByRole("table", { name: "Each child's paper this week" });
-  await expect(table.locator("thead th")).toHaveText(["Roll", "Child", "Level", "Why", "Paper", "Status", ""]);
-  // what needs the educator first: the two children with no paper, then the papers to approve, then what is approved
-  expect(await table.locator("tbody tr").evaluateAll((trs) => trs.map((t) => t.querySelectorAll("td")[1].textContent?.trim()))).toEqual([
-    "Dev",
-    "Esha",
-    "Chetan",
-    "Spare copy",
-    "Asha",
-    "Bina",
-  ]);
-  const row = (who: string) => table.locator("tbody tr").filter({ hasText: who });
-  // the level, and why it was chosen
-  await expect(row("Chetan")).toContainText("Medium");
-  // every child of the class without a paper, by name, and why, with a status that says so
-  await expect(row("Dev")).toContainText(WHY);
-  await expect(row("Dev").locator("[data-status=noPaper]")).toBeVisible();
-  await expect(row("Esha")).toContainText("joined the class after this week was planned");
-  await expect(row("Chetan").locator("[data-status=toApprove]")).toBeVisible();
-  await expect(row("Asha").locator("[data-status=done]")).toBeVisible();
-  // the button says what one tap approves: Chetan's paper and the spare
-  await expect(page.getByRole("button", { name: "Approve 1 paper and 1 spare" })).toBeEnabled();
+test("class papers to approve says each copy, why a child has no paper, and counts what it approves", async ({ page }) => {
+  await page.goto(assessmentHref(KEY(THIS, "assessment")));
+  // every child of the class without a paper, by Sr. No., and why, with a status that says so: Dev's plan, Esha joined late
+  const none = page.getByRole("table", { name: "Children with no paper" }).locator("tbody tr");
+  await expect(none).toHaveCount(2);
+  const dev = none.filter({ has: page.locator('td[data-label="Sr. No."]', { hasText: /^4$/ }) });
+  await expect(dev).toContainText(WHY);
+  await expect(dev.locator("[data-status=noPaper]")).toBeVisible();
+  await expect(none.filter({ has: page.locator('td[data-label="Sr. No."]', { hasText: /^5$/ }) })).toContainText("joined the class after this week was planned");
+  // the level of the paper to approve, and its status; the copy given out is with the children
+  const made = group(page, "Not printed yet").locator("tbody tr");
+  await expect(made.locator('td[data-label="Level"]')).toContainText("Medium");
+  await expect(made.locator("[data-status=toApprove]")).toBeVisible();
+  await expect(group(page, "With the children").locator("[data-status=withChildren]")).toBeVisible();
+  // the approval says what one tap approves: Chetan's paper and the spare
+  const pack = page.getByRole("region", { name: "This pack" });
+  await expect(pack).toContainText("This approves 1 paper and 1 spare, this pack only.");
+  await expect(pack.getByRole("button", { name: "Approve the pack" })).toBeEnabled();
 });
 
-test("papers to approve is one table with one main action and a filter row (goals/uxn4-papers-to-approve.yaml)", async ({ page }) => {
-  await page.goto(`/papers/approve?section=${SECTION}&week=${THIS}&kind=assessment`);
-  // the one main action is the pack's approval, at the top; the page ends on the next step
-  await expect(page.locator("[data-ux=action]").getByRole("button", { name: "Approve 1 paper and 1 spare" })).toBeVisible();
-  await expect(page.locator("[data-ux=next]")).toHaveAttribute("href", "/papers");
-  // no hand-drawn tag for a class and week; the filter row holds them, and a status narrows the table
+test("papers to approve has one main action and ends on a next step (goals/uxn4-papers-to-approve.yaml)", async ({ page }) => {
+  await page.goto(assessmentHref(KEY(THIS, "assessment")));
+  // the one main action is the pack's approval; the page ends on the next step
+  await expect(page.locator("[data-ux=action]")).toHaveCount(1);
+  await expect(page.getByRole("button", { name: "Approve the pack" })).toHaveAttribute("data-ux", "action");
+  await expect(page.locator("[data-ux=next]")).toHaveAttribute("href", "/children");
+  // no hand-drawn tag for a class and week
   await expect(page.getByRole("navigation", { name: "Classes and weeks" })).toHaveCount(0);
-  await expect(page.locator("[data-filterbar]")).toBeVisible();
-  await page.goto(`/papers/approve?section=${SECTION}&week=${THIS}&kind=assessment&status=noPaper`);
-  const rows = page.getByRole("table", { name: "Each child's paper this week" }).locator("tbody tr");
-  await expect(rows).toHaveCount(2);
-  await expect(page.locator("[data-active-filters]")).toContainText("Status: No paper");
 });

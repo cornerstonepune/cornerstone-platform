@@ -17,6 +17,7 @@ import { readFileSync } from "node:fs";
 import path from "node:path";
 import { expect, test, type Page } from "@playwright/test";
 import postgres from "postgres";
+import { paperAt } from "./paper-screen";
 import { aClass, aReadPaper } from "./rows";
 import { aK2Note, k2Class, voiceSwitch } from "./k2-rows";
 import { SIGNED_IN } from "../playwright.config";
@@ -30,24 +31,27 @@ const FROZEN: Record<string, string[]> = JSON.parse(
 ).ux.frozen;
 const PHONE = { width: 390, height: 844 };
 let kids: Record<string, string>;
-let sheet: string;
 let answer: string;
+let classId: string;
+let paper: string; // the paper screen of the paper with an answer waiting
 
 test.beforeAll(async () => {
   kids = await aClass(sql, SECTION, "G2", NAMES);
   const [ws] = await sql<{ id: string; item_ids: string[] }[]>`
     select id, item_ids from sheet_template
     where source = 'library' and retired_at is null and skill_set_code = 'ADD.2D2D' and difficulty = 'Medium' order by code limit 1`;
-  ({ sheet } = await aReadPaper(sql, {
+  const { sheet } = await aReadPaper(sql, {
     qr: "CS51A001",
     child: kids.Asha,
     template: ws.id,
     items: ws.item_ids.slice(0, 2),
     reads: [{ status: "correct", read: "1" }, { status: "needs_teacher", read: "7" }],
-  }));
+  });
   [{ id: answer }] = await sql<{ id: string }[]>`
     select r.id from item_result r join capture c on c.id = r.capture_id join sheet_instance si on si.id = c.sheet_instance_id
     where si.qr_code = 'CS51A001' and r.status = 'needs_teacher' limit 1`;
+  [{ id: classId }] = await sql<{ id: string }[]>`select id from school_class where label = ${SECTION} limit 1`;
+  paper = (await paperAt({ sheet }));
 });
 test.afterAll(async () => {
   await sql.end();
@@ -125,23 +129,22 @@ const ROUTES = (): [string, string][] => [
   ["/setup/needs-doing", "/setup/needs-doing"],
   ["/", "/"],
   ["/library", "/library"],
-  ["/worksheets", "/worksheets"],
   ["/worksheets/taxonomy", "/worksheets/taxonomy"],
   ["/worksheets/[qr]", "/worksheets/CS51A001"],
-  ["/papers", "/papers"],
-  ["/papers/make", "/papers/make"],
+  ["/children/assessments", "/children/assessments"],
+  // the assessment screen is the paper screen's address without its Sr. No.
+  ["/children/assessments/[key]", paper.replace(/\/[^/]+$/, "")],
   ["/make", "/make"],
   ["/make/[section]", `/make/${SECTION}`],
   ["/make/[section]/week", `/make/${SECTION}/week`],
   ["/capture", "/capture"],
-  ["/capture/[id]", `/capture/${sheet}`],
-  ["/capture/check", `/capture/check?id=${answer}`],
-  ["/growth", "/growth"],
-  ["/growth/class/[section]", `/growth/class/${SECTION}`],
+  ["/children/assessments/[key]/[roll]", paper],
+  ["/children/assessments/[key]/[roll]?answer", `${paper}?answer=${answer}#a-${answer}`],
+  ["/children", "/children"],
+  ["/children/[class]?view=topic", `/children/${classId}?view=topic`],
+  ["/children/[class]?view=matrix", `/children/${classId}?view=matrix`],
   ["/growth/[id]", `/growth/${kids.Asha}`],
   ["/children/reports", "/children/reports"],
-  ["/asks", "/asks"],
-  ["/home", "/home"],
   ["/setup/how-it-works", "/setup/how-it-works"],
 ];
 
@@ -173,7 +176,7 @@ test("the K2 voice-note pages keep every rule while voice notes are switched on"
   try {
     const wrong: string[] = [];
     for (const [route, url] of [
-      ["/today", "/today?open=notes"],
+      ["/setup/needs-doing", "/setup/needs-doing?open=notes"],
       ["/record", `/record?class=${k.klass}`],
       ["/notes/[id]", `/notes/${note}`],
     ]) {
@@ -185,7 +188,7 @@ test("the K2 voice-note pages keep every rule while voice notes are switched on"
     // with recording off (D-065) Record, which then offers only typing, and What needs doing keep the rules too
     await voiceSwitch(sql, true, false);
     for (const [route, url] of [
-      ["/today", "/today?open=record"],
+      ["/setup/needs-doing", "/setup/needs-doing?open=record"],
       ["/record", `/record?class=${k.klass}`],
     ]) {
       await open(page, url);
@@ -199,39 +202,9 @@ test("the K2 voice-note pages keep every rule while voice notes are switched on"
   }
 });
 
-test("Check answers is built on the blocks: one main action, its next step, one count", async ({ browser }) => {
-  const page = await (await browser.newContext({ storageState: SIGNED_IN })).newPage();
-  await open(page, `/capture/check?id=${answer}`);
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Check answers");
-  expect(await breaks(page)).toEqual([]);
-  expect(FROZEN["/capture/check"]).toBeUndefined();
-  // the progress line is all that sits above the card; the decision (Right/Wrong/Blank, or "Yes, the child wrote…")
-  // is in the answer box, beside the sentence it answers (Nimish, 23 Oct 2026)
-  await expect(page.locator("[data-ux=action] button")).toHaveCount(0);
-  await expect(page.locator("form button[type=submit]").first()).toBeVisible();
-  await expect(page.locator("[data-ux=next]")).toHaveAttribute("href", /\/(capture\/check\?from=|growth)/);
-  const waiting = await page.locator('[data-count="answers to check"]').textContent();
-  expect(Number(waiting?.replace(/\D/g, ""))).toBeGreaterThan(0);
-  await page.context().close();
-});
-
-test("Check answers lists what is left to check as one table with its filter row", async ({ browser }) => {
-  const page = await (await browser.newContext({ storageState: SIGNED_IN })).newPage();
-  await open(page, `/capture/check?id=${answer}`);
-  const table = page.getByRole("table", { name: "Left to check, by assessment" });
-  await expect(table.locator(":scope > thead th")).toContainText(["Assessment", "Class", "Papers waiting", "Answers left", "Oldest wait"]);
-  expect(await table.locator(":scope > tbody > tr[data-assessment]").count()).toBeGreaterThan(0);
-  await expect(page.locator("[data-filterbar]")).toBeVisible();
-  // a status narrows it, and the answer in hand stays where it is
-  await page.goto(`/capture/check?id=${answer}&why=spot`);
-  await expect(page.locator("[data-active-filters]")).toContainText("Status: Spot-check");
-  for (const cell of await page.getByRole("table", { name: "Left to check, by assessment" }).locator("td[data-label='Answers left']").all()) await expect(cell).toHaveText("0");
-  await page.context().close();
-});
-
-test("on a phone the main action of Check answers is a thumb's size", async ({ browser }) => {
+test("on a phone the main action of a paper with an answer to check is a thumb's size", async ({ browser }) => {
   const page = await (await browser.newContext({ storageState: SIGNED_IN, viewport: PHONE })).newPage();
-  await open(page, `/capture/check?id=${answer}`);
+  await open(page, `${paper}?answer=${answer}#a-${answer}`);
   for (const b of await page.locator("[data-ux=action] button, [data-ux=action] a, [data-ux=next]").all()) {
     expect((await b.boundingBox())!.height, await b.textContent() ?? "").toBeGreaterThanOrEqual(44);
   }
@@ -244,7 +217,7 @@ const DESKTOP = { width: 1440, height: 900 };
 
 test("the top bar: the menu button is full-size, the student search is a compact field", async ({ browser }) => {
   const page = await (await browser.newContext({ storageState: SIGNED_IN, viewport: DESKTOP })).newPage();
-  for (const url of ["/setup/needs-doing", "/papers", "/growth", "/"]) {
+  for (const url of ["/setup/needs-doing", "/children/assessments", "/children", "/"]) {
     await open(page, url);
     expect((await page.locator("[data-bar]").first().locator("div").first().boundingBox())!.height, `${url}: the bar`).toBe(BAR_HEIGHT_PX);
     for (const door of await page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" }).getByRole("link").all())
@@ -263,19 +236,19 @@ test("the top bar: the menu button is full-size, the student search is a compact
 
 test("Assessments is a table of aligned columns with the one filter row, and a status is an icon, a word and a colour", async ({ browser }) => {
   const page = await (await browser.newContext({ storageState: SIGNED_IN, viewport: DESKTOP })).newPage();
-  await open(page, "/papers");
-  expect(FROZEN["/papers"]).toBeUndefined();
+  await open(page, "/children/assessments?view=table");
+  expect(FROZEN["/children/assessments"]).toBeUndefined();
   expect(await breaks(page)).toEqual([]);
-  const table = page.getByRole("table", { name: "Assessments" });
+  const table = page.locator(".data-table table").first();
   const heads = (await table.locator("thead th").allTextContents()).map((h) => h.trim());
-  for (const h of ["Class", "Assessment", "Kind", "Made on", "Created", "Printed", "Uploaded", "Read", "Checked", "Results in", "Next"]) expect(heads, "columns").toContain(h);
+  for (const h of ["Assessment", "Class", "Papers back", "Waits for", "Next"]) expect(heads, "columns").toContain(h);
   // text left, numbers right, a state in the middle: heading and cells together
   const align = async (name: string) => {
     const i = heads.indexOf(name);
     return table.locator(`tbody tr[data-assessment] td:nth-child(${i + 1})`).first().evaluate((el) => getComputedStyle(el).textAlign);
   };
   expect(await align("Assessment")).toBe("left");
-  expect(await align("Read")).toBe("center");
+  expect(await align("Waits for")).toBe("center");
   // every status carries an icon and a word, and is one of the three colours
   const chips = table.locator("[data-status]");
   expect(await chips.count()).toBeGreaterThan(0);

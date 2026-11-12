@@ -13,6 +13,7 @@ import { deadline } from "@/lib/deadline";
 import { levels } from "@/lib/levels";
 import { grades, RULE_WORDS } from "@/lib/queries";
 import { assessmentList, paperList, type PaperListRow } from "@/lib/queries-papers";
+import { ExtraCopies, Score } from "./score";
 import { chosenNames } from "@/lib/queries-assessment-extras";
 import { topicNamesOf } from "@/lib/queries-by-topic";
 import { STEP_WORDS, stepCells, type Counts } from "@/lib/assessment-steps";
@@ -22,9 +23,9 @@ import type { Column } from "@/lib/ux-rules";
 import { assessmentCard, standing } from "@/lib/queries-card";
 import { spareSheets, unplanned, weekPlan } from "@/lib/queries-approve";
 import { schoolToday } from "@/lib/school-clock";
-import { namedRows } from "../../../papers/named";
-import { countsOf } from "../../../papers/step-columns";
-import { assessmentKey } from "../../../papers/assessments-table";
+import { namedRows } from "../named";
+import { countsOf } from "../step-counts";
+import { assessmentKey } from "../assessment-key";
 import { approveThisPack, awayThis, givenOnThis, signOffPaper } from "./actions";
 import { LevelSelect } from "./level-select";
 import { RenameForm } from "../rename-form";
@@ -109,6 +110,7 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
         ...planned[1].filter((c) => !copies.some((p) => p.roll_no === c.roll_no && p.stage !== "replaced")).map((c) => ({ roll: c.roll_no ?? "", why: c.later ? "joined the class after this week was planned" : "not on this week's plan" })),
       ].sort((x, y) => Number(x.roll) - Number(y.roll) || x.roll.localeCompare(y.roll))
     : [];
+  const [classOf] = noPaper.length && section ? (await sql<{ id: string }[]>`select id::text from school_class where label = ${section} limit 1`).map((c) => c.id) : [];
   const reasons = new Map(
     (
       await sql<{ sheet: string; rule: string; by: string | null; why: string | null }[]>`
@@ -131,8 +133,8 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
   const settled = live.filter((p) => p.stage === "signed off").length;
   const toCheck = live.filter((p) => p.stage === "checked" || p.stage === "scanned").length;
   const notBack = live.filter((p) => p.stage === "made" || p.stage === "printed").length;
-  const toApprove = counts.home && counts.by.made > 0;
-  const toPrint = !counts.home && counts.by.made > 0;
+  // nothing prints before the pack is approved (the engine refuses it): a class's papers are approved on this screen too, in the signer's name
+  const toApprove = counts.by.made > 0;
   const printed = live.length > 0 && counts.by.made === 0;
   const qrs = live.filter((p) => p.stage === "made" || p.stage === "printed").map((p) => p.qr);
   // printed and not yet back: what the day "Given on" is said for (with the spares, which are given out too)
@@ -144,10 +146,12 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
   const ordered = GROUPS.flatMap((grp) => copies.filter((p) => groupOf(p) === grp.key).map((p) => ({ p, grp })));
   const shown = ordered.slice((page - 1) * PAGE, page * PAGE);
   const later = ordered.length > page * PAGE;
-  const mainId = toApprove ? "approve" : toPrint ? "print" : shown.find((s) => s.grp.key !== "replaced" && s.grp.key !== "children" && s.grp.key !== "read")?.p.id;
+  const mainId = toApprove ? "approve" : printed && qrs.length ? "print" : shown.find((s) => s.grp.key === "judge" || s.grp.key === "check" || s.grp.key === "signoff")?.p.id;
 
   const columns = (grp: Group): Column<PaperListRow>[] => [
-    { key: "roll", label: "Sr. No.", num: true, width: "6rem", value: (p) => p.roll_no },
+    // each copy opens its own paper from its Sr. No., whatever its group: no row is a dead end (a copy being read, or replaced, has no other way in)
+    { key: "roll", label: "Sr. No.", num: true, width: "6rem", value: (p) => p.roll_no, cell: (p) => (p.roll_no ? <Link href={paperHref(key, p.roll_no)}>{p.roll_no}</Link> : null) },
+    { key: "score", label: "Score", num: true, width: "8rem", value: (p) => (p.scored ? `${p.right} of ${p.scored}` : null), cell: (p) => <Score p={p} /> },
     {
       key: "level",
       label: "Level",
@@ -181,7 +185,7 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
               <button type="submit" data-signoff="" className={`btn ${main ? "" : "secondary"}`} data-ux={main}>Sign it off</button>
             </form>
           );
-        if (grp === "results") return <Link href={p.child_id ? `/growth/${p.child_id}` : "/growth"} className="btn secondary" data-child-link="">The child</Link>;
+        if (grp === "results") return <Link href={p.child_id ? `/growth/${p.child_id}` : "/children"} className="btn secondary" data-child-link="">The child</Link>;
         if (grp === "made")
           return kind === "focus" && p.roll_no ? (
             <Link href={paperHref(key, p.roll_no)} className="btn secondary" data-edit-paper="">Edit this paper</Link>
@@ -208,6 +212,9 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
       stage={`${a.band ? g.name(a.band) : "Assessment"} · ${live.length} papers`}
       title={named.name}
       purpose="Where this assessment stands, and each child's copy. A copy is its own row with its own action; there is no button over all of them."
+      next={{ href: "/children", label: "Children" }}
+      // with nothing of its own to press, the one main action is the way back to the list
+      action={mainId ? undefined : <Link href="/children/assessments" className="btn">All assessments</Link>}
       rail={
         <Rail
           cards={<ApprovalLedger packs={packs} />}
@@ -229,16 +236,14 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
       <p className="b-caption my-2">
         {wait.words}. {wait.action.label}.
       </p>
-      {toApprove || toPrint || printed ? (
+      {toApprove || printed ? (
         <section className="b-card my-4" data-kind="assessment" aria-label="This pack">
           <h2 className="b-card-h"><KindTile kind="assessment" /> {second?.words === "waits for you" ? `The ${second.name.toLowerCase()}: ${second.rolls.length} new ${second.rolls.length === 1 ? "copy" : "copies"}` : toApprove ? "This pack" : "The pack"}</h2>
           <p>
             {second?.words === "waits for you" ? `${madeWords(second)} ` : ""}
             {toApprove
               ? `Nothing prints without your approval. This approves ${approvesWords(live.filter((p) => p.stage === "made").length, sparesWaiting) || "nothing more"}, this pack only.`
-              : toPrint
-                ? "The pack is ready to print."
-                : "The pack is printed."}
+              : "The pack is printed."}
           </p>
           <div className="flex flex-wrap items-center gap-2">
             {toApprove ? (
@@ -257,7 +262,8 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
           </div>
           {out.length ? (
             <div className="mt-3">
-              <p data-testid="given">{card.given ? `Given on ${dateWords(card.given.on)}, said by ${card.given.by}.` : "Not said to be given yet."}</p>
+              {/* a paper in says it was given, though no one said the day (the old card's words, kept: `standing` counts it given) */}
+              <p data-testid="given">{card.given ? `Given on ${dateWords(card.given.on)}, said by ${card.given.by}.` : where.inn ? "Papers are in, so it was given; no one said the day." : "Not said to be given yet."}</p>
               <form action={givenOnThis} className="mt-1 flex flex-wrap items-end gap-2">
                 <input type="hidden" name="key" value={key} />
                 {[...out.map((c) => c.qr), ...card.spares.map((c) => c.qr)].map((qr) => (
@@ -302,7 +308,7 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
           <span><b>{a.skills.join(", ") || a.title}</b></span>
           <span className="b-muted">{a.topics.map((t) => topicNames.find((x) => x.code === t)?.name ?? t).join(" · ")}</span>
           <span className="b-muted">{levelsSaid}</span>
-          {a.set ? <Link href={`/skill-sets/${a.set}`}>Open the skill</Link> : null}
+          {a.set ? <Link href={`/setup/skill-sets/${a.set}`}>Open the skill</Link> : null}
           {a.week ? <span className="b-muted">{weekWords(a.week)}</span> : null}
           <RenameForm assessmentKey={key} name={named.name} back={assessmentHref(key)} />
         </section>
@@ -313,7 +319,8 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
           <DataTable
             label="Children with no paper"
             columns={[
-              { key: "roll", label: "Sr. No.", num: true, width: "6rem", value: (r: (typeof noPaper)[number]) => r.roll },
+              // the row opens the child, where a paper of her own is made: a row of this table is never a dead end
+              { key: "roll", label: "Sr. No.", num: true, width: "6rem", value: (r: (typeof noPaper)[number]) => r.roll, cell: (r: (typeof noPaper)[number]) => (classOf && r.roll ? <Link href={`/children/${classOf}/${encodeURIComponent(r.roll)}`}>{r.roll}</Link> : r.roll) },
               { key: "why", label: "Why", value: (r: (typeof noPaper)[number]) => r.why },
               { key: "state", label: "State", status: true, width: "10rem", value: () => "No paper", cell: () => <StatusChip state="noPaper" words="No paper" /> },
             ]}
@@ -323,6 +330,7 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
           />
         </section>
       ) : null}
+      <ExtraCopies extras={copiesAll.rows.filter((p) => p.extra)} keyOf={key} />
       {spares.length ? (
         <section aria-label="Spare copies" className="mb-4" data-spares>
           <h2 className="mb-2">Spare copies <span className="b-muted">{spares.length}</span></h2>
@@ -331,7 +339,7 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
             label="Spare copies"
             columns={[
               { key: "level", label: "Level", width: "10rem", value: (r: (typeof spares)[number]) => r.difficulty },
-              { key: "paper", label: "Paper", value: (r: (typeof spares)[number]) => r.qr_code },
+              { key: "paper", label: "Paper", value: (r: (typeof spares)[number]) => r.qr_code, cell: (r: (typeof spares)[number]) => <Link href={`/worksheets/${r.qr_code}`}>{r.qr_code}</Link> },
               { key: "state", label: "State", status: true, width: "10rem", value: (r: (typeof spares)[number]) => r.print_status, cell: (r: (typeof spares)[number]) => <StatusChip state={r.print_status === "new" ? "toApprove" : "done"} words={r.print_status === "new" ? "To approve" : "Printed"} /> },
             ]}
             rows={spares}

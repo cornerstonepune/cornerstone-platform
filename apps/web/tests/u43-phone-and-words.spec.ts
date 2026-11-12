@@ -11,6 +11,7 @@
  */
 import { expect, test, type Browser, type Page } from "@playwright/test";
 import postgres from "postgres";
+import { paperAt } from "./paper-screen";
 import { aClass, aReadPaper, aPerson, forgetPerson } from "./rows";
 import { SIGNED_IN } from "../playwright.config";
 import { isoWeek } from "../lib/week";
@@ -74,32 +75,33 @@ test.beforeAll(async ({ browser }) => {
     values (${tenant}, ${QR.spare}, ${ws.id}, ${SECTION}, to_date(${THIS}, 'IYYY-"W"IW'), 'practice', 'new')`;
   await aPerson(sql, { ...EDUCATOR, password: PASSWORD });
   const [read] = await sql<{ id: string }[]>`select id from sheet_instance where qr_code = ${QR.asha}`;
+  // the read paper's own screen under Assessments, and the class picture's address (/children/<id>)
+  const paper = (await paperAt({ sheet: read.id }));
+  const [{ id: classId }] = await sql<{ id: string }[]>`select id from school_class where label = ${SECTION} limit 1`;
   const [item] = await sql<{ item_key: string }[]>`select item_key from item where id = ${ws.item_ids[0]}`;
   const pages = [
     "/setup/needs-doing",
     "/",
     "/library",
-    `/library/${item.item_key}`,
-    "/worksheets",
+    `/setup/question-bank/${item.item_key}`,
     "/worksheets/taxonomy",
     `/worksheets/${ws.code}`,
     `/worksheets/${QR.asha}`,
     `/worksheets/${QR.home}`,
-    `/skill-sets/${skill.set}`,
-    "/skill-sets/approve",
-    "/asks",
-    "/papers",
-    `/papers/approve?section=${SECTION}&week=${THIS}&kind=practice`,
-    "/papers/make",
+    `/setup/skill-sets/${skill.set}`,
+    "/setup/skills/approve",
+    "/setup/curriculum",
+    "/children/assessments",
+    `/children/assessments?class=${SECTION}&week=${THIS}&kind=practice`,
     "/make",
     `/make/${SECTION}`,
     `/make/${SECTION}/week`,
     `/make/custom?child=${kids.Asha}`,
     "/capture",
-    `/capture/${read.id}`,
-    "/capture/check",
-    "/growth",
-    `/growth/class/${SECTION}`,
+    paper,
+    "/children",
+    `/children/${classId}?view=topic`,
+    `/children/${classId}?view=matrix`,
     `/growth/${kids.Asha}`,
     `/growth/${kids.Asha}/report`,
     `/growth/${kids.Bina}/parent`,

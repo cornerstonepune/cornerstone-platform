@@ -3,8 +3,8 @@
  * "just go ahead and build the whole flow and get it live properly - only when I see it and interact with it on the
  * dashboard can I suggest changes."
  *
- * Today → Assessments (upload box on top, one count per assessment, filters) → Papers to approve → Print and give →
- * Upload papers → Check answers → Marking (the papers read) → Class results → the Assessment card → Curriculum (Maths,
+ * Today → Assessments (upload box on top, one count per assessment, filters) → Print and give →
+ * Upload papers → Marking (the papers read) → Class results → the assessment screen → Curriculum (Maths,
  * then English) → Staff and School. On every page: each table's head sits over its columns, a status is an icon and a
  * word, a filter row is there, every row opens something, and nothing says "This page could not load". A class of the
  * test's own, three children and four papers, is kept (evidence is append-only), as the other specs' are.
@@ -104,9 +104,9 @@ test("an educator with one class and one subject: top menu, only hers, no Class 
   await expect(page.locator("#bar-subject, #bar-class, [data-viewing]"), "no universal Class or Subject selector").toHaveCount(0);
   // the bar carries sign out; the door's row of pages has the rest
   await expect(page.locator("[data-bar]").first().getByRole("button", { name: "Sign out" })).toBeVisible();
-  await page.goto("/papers");
+  await page.goto("/children/assessments");
   const pagesOfChildren = await doorPages(page);
-  for (const name of ["Papers to approve", "Check answers", "Parent reports"]) await expect(pagesOfChildren.getByRole("link", { name }), name).toBeVisible();
+  for (const name of ["Assessments", "Upload papers", "Parent reports"]) await expect(pagesOfChildren.getByRole("link", { name }), name).toBeVisible();
   await page.goto("/setup/needs-doing");
   // What needs doing: groups, each folded into a table of red/amber/green rows, one action on each row that opens that item
   await page.locator("details[data-group]").evaluateAll((els) => els.forEach((e) => ((e as HTMLDetailsElement).open = true)));
@@ -136,8 +136,8 @@ test("an admin: the same top menu, and no Viewing control", async ({ page }) => 
   await theBar(page, DOORS);
   await expect(page.locator("[data-viewing], #bar-subject, #bar-class")).toHaveCount(0);
   // a door's other pages fold behind one button at the end of the trail, not more items on the bar (one nav row, #690)
-  await page.goto("/papers");
-  await expect((await doorPages(page)).getByRole("link")).toHaveText(["Children", "Assessments", "Papers to approve", "Upload papers", "Check answers", "Parent reports", "Across classes"]);
+  await page.goto("/children/assessments");
+  await expect((await doorPages(page)).getByRole("link")).toHaveText(["Children", "Assessments", "Upload papers", "Parent reports", "Across classes"]);
 });
 
 /** The page opened, with nothing broken on it. */
@@ -209,7 +209,7 @@ test("What needs doing opens, and its first action leads on", async ({ page }) =
 });
 
 test("Assessments: the two blocks on top, one row per assessment, filters", async ({ page }) => {
-  await wholePage(page, "/papers", /Assessments/, { chips: true });
+  await wholePage(page, "/children/assessments?view=table", /Assessments/, { chips: true });
   const box = await page.getByRole("region", { name: "Read an assessment" }).boundingBox();
   const table = await page.locator(".data-table").first().boundingBox();
   expect(box && table && box.y < table.y, "the upload box is above the table").toBe(true);
@@ -221,20 +221,13 @@ test("Assessments: the two blocks on top, one row per assessment, filters", asyn
   await expect(page).not.toHaveURL(/class=/);
 });
 
-test("Papers to approve: one table, the pack's approval the one action", async ({ page }) => {
-  await wholePage(page, `/papers/approve?section=${SECTION}&week=${THIS}&kind=assessment`, /Papers to approve/, { chips: true });
-  await expect(page.locator("[data-ux=action] button")).toBeVisible();
-  await expect(page.locator("[data-ux=next]")).toHaveAttribute("href", "/papers");
-});
-
 test("Print and give: the classes as a table, a class's children as a table", async ({ page }) => {
   await wholePage(page, "/make", /Home assessments/, { chips: true });
   await wholePage(page, `/make/${SECTION}`, /./, { chips: true });
 });
 
-test("Upload papers, Check answers, Marking", async ({ page }) => {
+test("Upload papers, and the papers read", async ({ page }) => {
   await wholePage(page, "/capture", /Upload papers/, { chips: true });
-  await wholePage(page, "/capture/check", /Check answers/, { chips: true });
   // Marking: the papers read, by class, and one child's
   await page.goto(`/capture?by=child&class=${SECTION}`);
   await expect(page.getByText("This page could not load")).toHaveCount(0);
@@ -245,7 +238,8 @@ test("Class results, its class and a child", async ({ page }) => {
   await voiceSwitch(sql, true);
   // a class's topics, a topic opened (goals/res_results_by_topic.yaml); this class has nothing signed off yet, so its
   // skills are named once as not assessed. Its children, one by one, each in a status chip, and a child opened.
-  await wholePage(page, `/growth?class=${SECTION}`, /Class picture/, { chips: false, filter: false });
+  const [{ id: classId }] = await sql<{ id: string }[]>`select id from school_class where label = ${SECTION} limit 1`;
+  await wholePage(page, `/children/${classId}?view=topic`, /Class picture/, { chips: false, filter: false });
   await page.locator("tr[data-topic]").first().getByRole("link").first().click();
   await expect(page.getByText("This page could not load")).toHaveCount(0);
   await page.getByRole("link", { name: "Show as a table" }).click();
@@ -257,21 +251,17 @@ test("Class results, its class and a child", async ({ page }) => {
   await expect(page.locator("main")).toContainText("Bina");
 });
 
-test("the Assessment card, opened from its row", async ({ page }) => {
-  await page.goto(`/papers?class=${SECTION}`);
-  // a list with one assessment opens it by itself, and a click on its name would then close it: open it only if it is shut
-  const toggle = page.locator("tr[data-assessment] a[aria-expanded]").first();
-  await expect(toggle).toBeVisible();
-  if ((await toggle.getAttribute("aria-expanded")) !== "true") await toggle.click();
-  await expect(toggle).toHaveAttribute("aria-expanded", "true");
-  const card = page.getByRole("link", { name: /Open its card/ });
-  await expect(card).toBeVisible();
-  await card.click();
+test("the assessment screen, opened from its row", async ({ page }) => {
+  await page.goto(`/children/assessments?class=${SECTION}&view=table`);
+  const row = page.locator("a[data-assessment-row]").first();
+  const href = (await row.getAttribute("href"))!;
+  await row.click();
+  // the assessment's own screen, its copies drawn, before its tables are read (not the list still on screen)
+  await expect(page).toHaveURL(new RegExp(`${href.replace(/[.?]/g, "\\$&")}$`));
+  await expect(page.locator('section[aria-label$=" copies"]:not([data-spares]) table').first()).toBeVisible();
   await expect(page.getByText("This page could not load")).toHaveCount(0);
-  await expect(page.getByTestId("stage")).toHaveText(/its card/i);
-  await tablesRead(page, "card");
-  await expect(page.locator("[data-filterbar]").first()).toBeVisible();
-  await statusesSaid(page, "card");
+  await tablesRead(page, "assessment");
+  await statusesSaid(page, "assessment");
 });
 
 test("Curriculum, Maths then English, and Staff and School", async ({ page }) => {
@@ -295,7 +285,7 @@ test("Curriculum, Maths then English, and Staff and School", async ({ page }) =>
 });
 
 test("the flow is one chain: each page's next step opens the following page", async ({ page }) => {
-  const chain = ["/setup/needs-doing", "/papers/approve", "/papers", "/capture", "/capture/check", "/growth"];
+  const chain = ["/setup/needs-doing", "/capture"];
   for (const path of chain) {
     await page.goto(path);
     await expect(page.getByText("This page could not load"), path).toHaveCount(0);

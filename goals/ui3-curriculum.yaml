@@ -21,13 +21,13 @@ says:
   - words: "If there are edits, some changes, tagging, etc., or definitions that need to be changed, one can do that."
     proved_by: "apps/web/tests/u17-curriculum.spec.ts::a topic is marked taught from its row on What needs doing, in the person's name, for one class"
   - words: "Most of the things come as a long list of items, and some of the views are not useful."
-    proved_by: "apps/web/tests/u17-curriculum.spec.ts::each question the engine drafted is one line until it is opened"
+    proved_by: "apps/web/tests/u24-no-long-lists.spec.ts::the questions answered are folded under one line until opened"
   - words: "Most of the things come as a long list of items, and some of the views are not useful."
     proved_by: "apps/web/tests/u17-curriculum.spec.ts::the question bank finds a question by its words, within the choices made"
   - words: "I think we can make a few of these changes: better UI, better navigation, and better linking."
     proved_by: "apps/web/tests/u17-curriculum.spec.ts::every page says the tab it is under, above its title, and the menu marks that tab"
   - words: "I can't seem to actually find where I go and check the papers or questions for which human validation is required."
-    proved_by: "apps/web/tests/u17-curriculum.spec.ts::a class's papers are approved under Assessments, and Worksheets is the library alone"
+    proved_by: "apps/web/tests/u81-assessments-list.spec.ts::the row's one action opens the next item: an answer waiting for a person comes before printing and uploading"
 manual:
   - "Website only: Vercel deploys it on merge. No migration and no update-live."
 scenarios: []

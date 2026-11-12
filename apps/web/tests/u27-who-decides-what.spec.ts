@@ -68,7 +68,7 @@ async function signedIn(browser: Browser): Promise<Page> {
 test("an educator approves a skill, in their own name", async ({ browser }) => {
   const page = await signedIn(browser);
   try {
-    await page.goto(`/skill-sets/${draft}`);
+    await page.goto(`/setup/skill-sets/${draft}`);
     await page.getByRole("button", { name: /^Approve, as / }).click();
     await expect(page).toHaveURL(/approved=1/);
     const [now] = await sql<{ status: string; ratified_by: string }[]>`select status, ratified_by from skill where code = ${draft}`;
@@ -84,10 +84,14 @@ test("an educator's approval of another class's pack is refused in words, and no
   // since 27 Oct 2026 a class's papers are its own educators' and the coordinator's (goals/own_who_sees_answers.yaml)
   const page = await signedIn(browser);
   try {
-    await page.goto(`/papers/approve?section=${OTHER}&week=${WEEK}&kind=practice`);
-    await expect(page.getByRole("main")).toContainText("not one of your classes");
-    // what the page shows instead is the educator's own class: nothing of the other class is offered
+    // the list, asked for the other class's week, holds none of its assessments, and its assessment's own screen is not found:
+    // nothing of the other class is offered, and no Approve the pack to press
+    await page.goto(`/children/assessments?class=${OTHER}&week=${WEEK}&kind=practice`);
+    await expect(page.locator("tr[data-assessment]").filter({ hasText: OTHER })).toHaveCount(0);
     await expect(page.locator(`form input[value="${OTHER}"]`)).toHaveCount(0);
+    await page.goto(`/children/assessments/${encodeURIComponent(`practice~${OTHER}~${WEEK}~`)}`);
+    await expect(page.getByText("This page could not be found.")).toBeVisible();
+    await expect(page.getByRole("button", { name: "Approve the pack" })).toHaveCount(0);
     const [{ n }] = await sql<{ n: number }[]>`
       select count(*)::int as n from sheet_instance where child_id = any(${Object.values(other)}::uuid[]) and approved_by = ${EDUCATOR.email}`;
     expect(n).toBe(0);
@@ -100,7 +104,7 @@ test("an educator's approval of another class's pack is refused in words, and no
 
 test("the coordinator takes any decision", async ({ page }) => {
   try {
-    await page.goto(`/skill-sets/${draft}`);
+    await page.goto(`/setup/skill-sets/${draft}`);
     await page.getByRole("button", { name: /^Approve, as / }).click();
     await expect(page).toHaveURL(/approved=1/);
     const [now] = await sql<{ status: string }[]>`select status from skill where code = ${draft}`;

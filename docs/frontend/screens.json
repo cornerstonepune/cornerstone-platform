@@ -3013,6 +3013,27 @@
           "text": "The right answer is",
           "data": "data-change-key-field",
           "pending": "proved in u77-paper-tools and u78-whose-paper against papers whose reads carry the doubt the control answers; the shared inventory fixture has none"
+        },
+        {
+          "t": "button",
+          "label": "Yes, the child wrote … (the reader's guess, or the spot-check)",
+          "note": "one press confirms what the reader thinks the child wrote; held back until a person says whose page it is",
+          "text": "Yes, the child wrote",
+          "data": "data-confirm-read",
+          "pending": "proved in u77-paper-tools and u78-whose-paper against papers whose reads carry the doubt the control answers; the shared inventory fixture has none"
+        },
+        {
+          "t": "button",
+          "label": "Open the page at full size",
+          "note": "the picture is a link to the page as photographed, at its own size, in a new tab",
+          "text": "Open the page at full size",
+          "data": "data-page-full",
+          "drive": {
+            "click": "Open the page at full size",
+            "expect": {
+              "popup": true
+            }
+          }
         }
       ],
       "rail": [

@@ -2,7 +2,8 @@
  * U33 — one count for one thing (goals/ux2-one-count-one-thing.yaml). Nimish, 2026-10-15: "You really need to run a
  * thorough UI/UX skill here." The audit found the same number said three ways: "Grade 1 · G2-C" on a Grade 2 class's
  * papers, 12 class papers to approve on Today and 18 on Assessments, the bank 21,250, 28,705 and 28,717 on three pages,
- * the worksheet library 1,872 above its list and 2,738 in its pager.
+ * the worksheet library 1,872 above its list and 2,738 in its pager. (That list page is retired: each skill's worksheets are
+ * listed on its own skill set's page, and its count went with it.)
  *
  * A Grade 2 class of the test's own (tests/rows.ts) is given a Grade 1 worksheet as class practice: a copy for each of
  * its two children and one spare, as the engine prints a pack. Its papers and their week are taken away after.
@@ -53,39 +54,39 @@ test.afterAll(async () => {
 
 const ours = (page: Page) => page.getByRole("table").locator("tbody tr").filter({ hasText: CLASS });
 
-test("a class paper carries its class's grade, a spare copy too", async ({ page }) => {
-  const [{ band }] = await sql<{ band: string }[]>`select class_band(tenant_id, ${CLASS}) as band from child_now where section = ${CLASS} limit 1`;
-  expect(band, "the class's grade, the database's one rule").toBe("G2");
-  await page.goto(`/papers?class=${CLASS}`);
-  await expect(ours(page)).toHaveCount(1);
-  await expect(ours(page)).toContainText(`Grade 2 · ${CLASS}`);
-  // the class's one assessment, opened by itself: its two children's copies, and the spare with them, the class's too
-  // (goals/ux5-papers-grouped.yaml)
-  await expect(page.getByRole("table", { name: /: each copy$/ }).locator("tbody tr")).toHaveCount(2);
-  await expect(page.locator("[data-spares]"), "a spare copy is the class's too").toContainText("1 spare copy, with the pack");
-});
-
 test("the class papers Today counts are the copies the pages it opens show waiting", async ({ page }) => {
   await page.goto(`/setup/needs-doing?kind=classpaper&class=${CLASS}`);
   const item = page.locator("tr[data-kind=classpaper]").filter({ hasText: `${CLASS} · class practice` });
   await expect(item).toContainText("2 papers");
 
   // Assessments: the two children's copies wait to be approved; the spare rides with them, counted apart
-  await page.goto(`/papers?class=${CLASS}`);
+  await page.goto(`/children/assessments?class=${CLASS}&view=table`);
   // made, none yet printed: the next thing is to print them (a class's papers are approved as they are printed)
-  await expect(ours(page).locator("[data-action=print]")).toHaveText("Print");
-  await expect(ours(page).locator('[data-status="next"]')).toHaveCount(1);
-  const status = page.locator('[data-filterbar] select[name="status"] option[value="print"]');
-  await expect(status, "the class's assessment waiting to be printed").toHaveText(/^Approved, to print \(1\)$/);
+  await expect(ours(page)).toHaveCount(1);
+  await expect(ours(page).locator('td[data-label="Waits for"]')).toHaveText(/Waits for print/);
+  await expect(ours(page).locator("[data-assessment-next]")).toHaveText("Print");
+  // the stage "Approved, to print" holds the class's one assessment
+  await page.goto(`/children/assessments?class=${CLASS}&view=table&status=print`);
+  await expect(page.locator('[data-filterbar] select[name="status"] option[value="print"]')).toHaveText("Approved, to print");
+  await expect(ours(page), "the class's assessment waiting to be printed").toHaveCount(1);
 
-  // the approve page Today's line opens: two copies to approve, the spare among the spare copies, the button counting
-  // them as Today does (goals/ux5-papers-grouped.yaml)
+  // the papers Today's line opens, and the assessment's own screen: two copies to approve, the spare among the spare
+  // copies, the approval counting them as Today does (goals/ux5-papers-grouped.yaml)
   await page.goto(`/setup/needs-doing?kind=classpaper&class=${CLASS}`);
-  await page.locator("tr[data-kind=classpaper]").filter({ hasText: `${CLASS} · class practice` }).getByRole("link").click();
-  // (the spare is a row of the pack's table, named as one: goals/uxn4-papers-to-approve.yaml)
-  await expect(page.getByRole("main").locator("tbody").getByText("to approve", { exact: true })).toHaveCount(3);
-  await expect(page.getByRole("main").locator("tbody tr").filter({ hasText: "Spare copy" })).toHaveCount(1);
-  await expect(page.getByRole("button", { name: "Approve 2 papers and 1 spare" })).toBeEnabled();
+  // each link followed at its own address, the whole page waited for
+  const line = page.locator("tr[data-kind=classpaper]").filter({ hasText: `${CLASS} · class practice` }).getByRole("link");
+  await expect(line).toHaveAttribute("href", new RegExp(`^/children/assessments\\?class=${CLASS}&`));
+  await page.goto((await line.getAttribute("href"))!);
+  const card = page.locator("[data-kcard]").filter({ hasText: CLASS });
+  await expect(card).toHaveCount(1);
+  await page.goto((await card.getAttribute("href"))!);
+  await expect(page.getByRole("region", { name: "Not printed yet, 2 copies" }).locator("tbody tr")).toHaveCount(2);
+  const spares = page.getByRole("region", { name: "Spare copies" }).locator("tbody tr");
+  await expect(spares).toHaveCount(1);
+  await expect(spares).toContainText("To approve");
+  const pack = page.getByRole("region", { name: "This pack" });
+  await expect(pack).toContainText("This approves 2 papers and 1 spare, this pack only.");
+  await expect(pack.getByRole("button", { name: "Approve the pack" })).toBeEnabled();
 });
 
 test("the question bank is one number wherever it is named", async ({ page }) => {
@@ -111,23 +112,4 @@ test("the question bank is one number wherever it is named", async ({ page }) =>
   await expect(grades.first()).toBeVisible();
   const counts = await grades.locator("td:nth-child(2)").allInnerTexts();
   expect(counts.reduce((n, c) => n + number(c), 0), "Curriculum's grades add up to the bank").toBe(bank);
-});
-
-test("the worksheet library's total, pager and list are the same worksheets", async ({ page }) => {
-  await page.goto("/worksheets");
-  const library = page.locator("#library");
-  const aside = await library.locator(".panel-head").first().innerText();
-  const total = number(aside.split("worksheets")[0]);
-  expect(total).toBeGreaterThan(0);
-  const pager = library.getByText(/\d[\d,]* of [\d,]+/).first();
-  await expect(pager, "the pager counts what the total counts").toContainText(`of ${total.toLocaleString("en-IN")}`);
-  // the last page lists what is left: nothing is counted that the list never shows (read once the list has streamed in)
-  const list = library.getByRole("table", { name: "Worksheets", exact: true }).locator("tbody tr");
-  await expect(list.first()).toBeVisible();
-  const per = await list.count();
-  const last = Math.ceil(total / per);
-  await page.goto(`/worksheets?page=${last}#library`);
-  await expect(page.locator("#library").getByRole("table", { name: "Worksheets", exact: true }).locator("tbody tr")).toHaveCount(
-    total - per * (last - 1),
-  );
 });

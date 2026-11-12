@@ -3,7 +3,7 @@ import { DataTable } from "@/components/data-table";
 import { Panel } from "@/components/parts";
 import { Question, kindWords } from "@/components/question";
 import type { Column } from "@/lib/ux-rules";
-import { kindsInWords } from "../../../worksheets/library";
+import { kindsInWords } from "@/lib/worksheet-kinds";
 import { sheetWords } from "../../../worksheets/[qr]/library-sheet";
 import type { levelExamples, skillKinds, skillMistakes } from "@/lib/queries-skills";
 import type { worksheets } from "@/lib/queries-worksheets";
@@ -22,7 +22,7 @@ const ALL_ON_ONE_PAGE = 500;
 export function KindsPanel({ kinds, words }: { kinds: Kind[]; words: Words }) {
   const columns: Column<Kind>[] = [
     { key: "kind", label: "Kind", value: (k) => kindWords(words, k.fmt) },
-    { key: "example", label: "For example", value: (k) => k.item_key, cell: (k) => <Link href={`/library/${k.item_key}`} className="text-basalt no-underline"><Question it={k as unknown as Example} /></Link> },
+    { key: "example", label: "For example", value: (k) => k.item_key, cell: (k) => <Link href={`/setup/question-bank/${k.item_key}`} className="text-basalt no-underline"><Question it={k as unknown as Example} /></Link> },
     { key: "n", label: "Questions", value: (k) => k.n, num: true },
   ];
   return (

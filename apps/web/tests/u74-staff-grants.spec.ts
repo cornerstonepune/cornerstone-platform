@@ -5,7 +5,7 @@
  *   1 a grant is given from today and listed, and nothing else of the person changes        5 a class that is not on the list is refused, nothing changes
  *   2 a subject role asks for a subject, a class role does not                                6 an educator cannot change grants
  *   3 a clash is answered in the table's own words and stands only with a reason              7 no name or email is in the address
- *   4 ending keeps the row, marks it Ended and is logged                                      8 the old /staff answers 308 to Staff and classes
+ *   4 ending keeps the row, marks it Ended and is logged
  *   9 the filter row finds a person
  * Rows are the test's own (two people and two classes with a random label, children named from tests/fake-names.ts), made once per run.
  */
@@ -32,8 +32,12 @@ test.beforeAll(async () => {
   two = (await aPerson(sql, TWO)).id;
 });
 test.afterAll(async () => {
-  // a grant is never deleted: whatever this file gave is ended, so the people and classes of later specs are as they were
-  await sql`update staff_role_grant set valid_to = current_date where staff_id in (${one}::uuid, ${two}::uuid) and (valid_to is null or valid_to > current_date)`;
+  // a grant is never deleted: whatever this file gave is ended, so the people and classes of later specs are as they were. Ended on the
+  // school's day, never the server's: a grant given "from today" is dated by the school's clock, which runs 5½ hours ahead of the
+  // server's UTC, so between midnight and 05:30 at school `current_date` fell before its start and the end broke valid_to >= valid_from
+  // (main's run 43094652851). A grant that starts later still is ended on its first day.
+  const day = await today();
+  await sql`update staff_role_grant set valid_to = greatest(valid_from, ${day}::date) where staff_id in (${one}::uuid, ${two}::uuid) and (valid_to is null or valid_to > ${day}::date)`;
   await forgetPerson(sql, ONE.email);
   await forgetPerson(sql, TWO.email);
   await sql.end();
@@ -153,15 +157,6 @@ test("7. no name or email is in the address, before or after a grant is given or
   await expect(form.getByRole("status")).toContainText("Given from today.");
   const url = decodeURIComponent(page.url()).toLowerCase();
   for (const bad of [TWO.name, TWO.email, "grants person", "@"]) expect(url).not.toContain(bad.toLowerCase());
-});
-
-test("8. the old Staff address answers 308 to Staff and classes, and keeps the filter it was given", async ({ request }) => {
-  for (const [from, to] of [["/staff", "/setup/staff"], ["/staff?q=grants", "/setup/staff?q=grants"]]) {
-    const res = await request.get(from, { maxRedirects: 0 });
-    expect(res.status(), from).toBe(308);
-    const at = new URL(res.headers().location, "http://x");
-    expect(at.pathname + at.search, from).toBe(to);
-  }
 });
 
 test("9. the filter row finds a person on Staff and classes", async ({ page }) => {

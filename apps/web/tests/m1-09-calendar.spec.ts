@@ -128,7 +128,7 @@ test("in the Week view no future cell carries a chip, and today's day head is ma
 
 // UI-14 (#526): one source of colour and type for the whole site, so a page outside the shell has the tokens too.
 test("the school's tokens load on every page: a page outside the shell has them and reads in Source Sans 3", async ({ page }) => {
-  await page.goto("/papers");
+  await page.goto("/children/assessments");
   const outside = await page.evaluate(() => ({
     token: getComputedStyle(document.documentElement).getPropertyValue("--state-ok").trim(),
     font: getComputedStyle(document.body).fontFamily,

@@ -46,12 +46,15 @@ async function as(browser: Browser, email: string): Promise<Page> {
 const topicRow = (page: Page, code = TOPIC) => page.locator(`tr[data-topic="${code}"]`);
 const skillRow = (page: Page, code = SKILL) => page.locator(`tr[data-skill="${code}"]`);
 const childRow = (page: Page, who: string) => page.locator(`tr[data-child="${kids[who]}"]`);
+/** A class's picture, By topic (with the topic and skill open, if named): the class results. */
+const picture = async (section: string, open = "") => {
+  const [{ id }] = await sql<{ id: string }[]>`select id from school_class where label = ${section} limit 1`;
+  return `/children/${id}?view=topic${open}`;
+};
 
-test("class results open on the educator's own class: subjects, then topics, folded, each topic counted in words", async ({ browser }) => {
+test("class results of the educator's own class: subjects, then topics, folded, each topic counted in words", async ({ browser }) => {
   const page = await as(browser, MINE.email);
-  await page.goto("/growth");
-  // the old address opens the By topic tab of the educator's own class picture
-  await expect(page).toHaveURL(/\/children\/[0-9a-f-]{36}\?view=topic$/);
+  await page.goto(await picture(A));
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Class picture");
   await expect(page.locator("main")).toContainText(A);
   // grouped by subject, then a row per topic
@@ -74,7 +77,7 @@ test("class results open on the educator's own class: subjects, then topics, fol
 
 test("a topic opens to its skills and a skill to its children, each with level and state", async ({ browser }) => {
   const page = await as(browser, MINE.email);
-  await page.goto("/growth");
+  await page.goto(await picture(A));
   await topicRow(page).getByRole("link", { name: topicName }).click();
   await expect(topicRow(page).getByRole("link", { name: topicName })).toHaveAttribute("aria-expanded", "true");
   const skill = skillRow(page);
@@ -102,7 +105,7 @@ test("a topic opens to its skills and a skill to its children, each with level a
 
 test("an opened topic says its assessments by kind: the class assessment, home assessments and for how many children, practice", async ({ browser }) => {
   const page = await as(browser, MINE.email);
-  await page.goto(`/growth?class=${A}&topic=${TOPIC}`);
+  await page.goto(await picture(A, `&topic=${TOPIC}`));
   const flow = page.getByTestId("topic-papers");
   await expect(flow).toContainText("1 class assessment, for 2 children");
   await expect(flow).toContainText("2 home assessments, for 1 child");
@@ -151,14 +154,13 @@ test("an assessment opens the child's written page in place", async ({ browser }
   await page.context().close();
 });
 
-test("a teacher of another class is refused the class and its children, in words, and opens on their own", async ({ browser }) => {
+test("a teacher of another class is refused the class and its children, in words, and sees their own", async ({ browser }) => {
   const page = await as(browser, OTHER.email);
-  await page.goto("/growth");
-  // it opens on their own class's picture, and no other class is offered
-  await expect(page).toHaveURL(/\/children\/[0-9a-f-]{36}\?view=topic$/);
+  await page.goto(await picture(B));
+  // their own class's picture, and no other class is offered
   await expect(page.locator("main")).toContainText(B);
   await expect(page.locator("main")).not.toContainText(A);
-  for (const url of [`/growth?class=${A}`, `/growth?class=${A}&topic=${TOPIC}&skill=${SKILL}`, `/growth/${kids.Asha}`]) {
+  for (const url of [await picture(A), await picture(A, `&topic=${TOPIC}&skill=${SKILL}`), `/growth/${kids.Asha}`]) {
     await page.goto(url);
     await expect(page.getByText(/is not one of your classes/), url).toBeVisible();
     await expect(page.getByText("Asha"), url).toHaveCount(0);
@@ -184,9 +186,9 @@ test("class results, an open topic, an open skill and a child's page each open w
   }
   const [{ id: child }] = await sql<{ id: string }[]>`select id from child_now where section = ${BIG} order by roll_order(roll_no) limit 1`;
   const urls = [
-    `/growth?class=${BIG}`,
-    `/growth?class=${BIG}&topic=${TOPIC}`,
-    `/growth?class=${BIG}&topic=${TOPIC}&skill=${SKILL}`,
+    await picture(BIG),
+    await picture(BIG, `&topic=${TOPIC}`),
+    await picture(BIG, `&topic=${TOPIC}&skill=${SKILL}`),
     `/growth/${child}`,
   ];
   const median = async (url: string) => {
@@ -205,7 +207,7 @@ test("class results, an open topic, an open skill and a child's page each open w
   // to being no slower than the site's other most-used pages, as u65 holds What needs doing.
   const [{ classes }] = await sql<{ classes: number }[]>`select count(distinct section)::int as classes from child_now where active`;
   let others = 0;
-  if (classes >= 30) for (const u of ["/setup/needs-doing", "/papers", "/capture/check"]) others = Math.max(others, await median(u));
+  if (classes >= 30) for (const u of ["/setup/needs-doing", "/children/assessments"]) others = Math.max(others, await median(u));
   for (const url of urls) {
     const ms = await median(url);
     console.log(`u71 | ${url} | ${ms} ms${others ? ` (the slowest other page: ${others} ms)` : ""}`);

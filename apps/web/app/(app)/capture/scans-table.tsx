@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { DataTable } from "@/components/data-table";
 import { StatusChip, type State } from "@/components/status-chip";
 import type { Scan } from "@/lib/queries-scans";
@@ -13,9 +14,10 @@ const stateOf = (s: Scan): State =>
 // held and came to in columns, its state as a chip, "Read again" at the end; under a row, what a person must act on: the
 // pages given to a child, the pages with no code (goals/ux9a-no-guessed-pages.yaml) and what the file lacks, by class and
 // roll number, never a name (goals/l11-a-scan-is-read-whole.yaml).
-export function ScansTable({ scans, from }: { scans: Scan[]; from: string }) {
+export function ScansTable({ scans, from, belongs }: { scans: Scan[]; from: string; belongs?: (file: string) => ReactNode }) {
   const columns: Column<Scan>[] = [
     { key: "file", label: "File", value: (s) => s.file, cell: (s) => <strong className="break-all">{s.file}</strong> },
+    ...(belongs ? [{ key: "belongs", label: "Belongs to", value: (s: Scan) => s.file, cell: (s: Scan) => belongs(s.file) }] : []),
     { key: "when", label: "Read on", width: "10rem", value: (s) => s.when },
     { key: "pages", label: "Pages", num: true, width: "5rem", value: (s) => s.pages, cell: (s) => (s.pages === null ? null : `${s.pages} ${s.pages === 1 ? "page" : "pages"}`) },
     { key: "copies", label: "Copies read", num: true, width: "6.5rem", value: (s) => s.read },

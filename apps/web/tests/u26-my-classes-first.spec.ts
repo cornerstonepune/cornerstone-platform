@@ -9,6 +9,7 @@
 import { expect, test, type Browser, type Page } from "@playwright/test";
 import postgres from "postgres";
 import { aClass, aPerson, forgetPerson } from "./rows";
+import { voiceSwitch } from "./k2-rows";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -18,10 +19,15 @@ const LINKED = { email: "u26-linked@cornerstone.test", name: "U26 Linked", role:
 const UNLINKED = { email: "u26-unlinked@cornerstone.test", name: "U26 Unlinked", role: "educator", classes: [] };
 const PASSWORD = "u26-a-long-test-password";
 let other: Record<string, string>;
+// each class's id, the class picture's address (`/children/<id>`)
+const id: Record<string, string> = {};
 
 test.beforeAll(async () => {
+  // the class pictures (Children) are behind the educator screens' switch (UI-3b): on for this file, off again after
+  await voiceSwitch(sql, true);
   await aClass(sql, MINE, "G2", ["Aarav", "Bela"]);
   other = await aClass(sql, OTHER, "G3", ["Chirag", "Dia"]);
+  for (const label of [MINE, OTHER]) [{ id: id[label] }] = await sql<{ id: string }[]>`select id from school_class where label = ${label} limit 1`;
   for (const person of [LINKED, UNLINKED]) await aPerson(sql, { ...person, password: PASSWORD });
   // a class practice made for the other class and not yet approved: Today and the menu count it for whoever sees it
   const [{ id: tenant }] = await sql<{ id: string }[]>`select id from tenant limit 1`;
@@ -36,6 +42,7 @@ test.beforeAll(async () => {
   }
 });
 test.afterAll(async () => {
+  await voiceSwitch(sql, false);
   for (const person of [LINKED, UNLINKED]) await forgetPerson(sql, person.email);
   await sql.end();
 });
@@ -55,11 +62,11 @@ test("an educator's pages open on their own class, and another class's pages, ch
   const page = await signedIn(browser, LINKED.email);
   try {
     // where the pages start: their own class
-    await page.goto("/growth?view=children");
+    await page.goto("/children");
     await expect(page.getByRole("main")).toContainText("Aarav");
     await expect(page.getByRole("main")).not.toContainText("Chirag");
     // another class's pages, by address, are refused in words, and show nothing of it (goals/own_who_sees_answers.yaml)
-    for (const href of [`/growth/class/${OTHER}`, `/make/${OTHER}`, `/growth/${other.Chirag}`]) {
+    for (const href of [`/children/${id[OTHER]}?view=matrix`, `/make/${OTHER}`, `/growth/${other.Chirag}`]) {
       await page.goto(href);
       await expect(page.getByRole("main"), href).toContainText("not one of your classes");
       await expect(page.getByRole("main"), href).not.toContainText("Chirag");
@@ -80,11 +87,11 @@ test("an educator's pages open on their own class, and another class's pages, ch
 test("the coordinator sees every class", async ({ page }) => {
   await page.goto(`/setup/needs-doing?kind=classpaper&class=${OTHER}`);
   await expect(page.getByRole("main")).toContainText(OTHER);
-  await page.goto(`/growth?view=children&class=${MINE}`);
+  await page.goto(`/children?cls=${id[MINE]}`);
   await expect(page.getByRole("main")).toContainText("Aarav");
-  await page.goto(`/growth?view=children&class=${OTHER}`);
+  await page.goto(`/children?cls=${id[OTHER]}`);
   await expect(page.getByRole("main")).toContainText("Chirag");
-  await page.goto(`/growth/class/${OTHER}`);
+  await page.goto(`/children/${id[OTHER]}?view=matrix`);
   await expect(page.getByRole("main")).not.toContainText("not one of your classes");
 });
 
@@ -92,9 +99,9 @@ test("an educator linked to no class sees no class's children until the coordina
   const page = await signedIn(browser, UNLINKED.email);
   try {
     // no class is theirs: none is on the list, and a class's page is refused in words
-    await page.goto("/growth?view=children");
+    await page.goto("/children");
     for (const c of [MINE, OTHER]) await expect(page.locator("[data-filterbar] select[name=class] option", { hasText: c })).toHaveCount(0);
-    await page.goto(`/growth/class/${MINE}`);
+    await page.goto(`/children/${id[MINE]}?view=matrix`);
     await expect(page.getByRole("main")).toContainText("not one of your classes");
   } finally {
     await page.context().close();

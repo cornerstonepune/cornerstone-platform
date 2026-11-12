@@ -120,7 +120,7 @@ export async function curriculumRows(scope: Scope): Promise<{ rows: CurriculumRo
               depth: 3,
               label: s.learning_objective,
               sub: s.name,
-              href: `/skill-sets/${s.code}`,
+              href: `/setup/skill-sets/${s.code}`,
               draft: s.status !== "ratified",
               off: !taught(band, s.code),
               topic: s.topic_code ?? undefined,

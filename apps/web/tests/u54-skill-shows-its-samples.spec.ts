@@ -5,7 +5,7 @@
  * have the questions also there. How will the educator approve without having sample questions?"
  *
  * The rows are the loader's own (`engine load` fills `english_sample` from supabase/seed/english/). At 1440 px, from
- * Approve the skills: an English draft opened by its name shows, under each level, its samples grouped by kind, three of
+ * Skills to approve (/setup/skills/approve, narrowed to the skill's grade, subject and topic): an English draft opened by its name shows, under each level, its samples grouped by kind, three of
  * each, with the right answer and each likely wrong answer's mistake in words; a kind a person reads says so and shows its
  * rubric; the approval sits under the samples. A skill with no samples says so in words. Everything changed is put back.
  */
@@ -56,9 +56,13 @@ async function shot(page: Page, name: string) {
   await page.screenshot({ path: path.join(SHOTS, `${name}.png`), fullPage: true });
 }
 
-test("an English skill opened from Approve the skills shows each level's samples by kind, with the right answer and named mistakes", async ({ page }) => {
-  await page.goto("/skill-sets/approve");
-  await page.locator(`[data-row="${skill.code}"]`).getByRole("rowheader").getByRole("link", { name: skill.name }).click();
+test("an English skill opened from Skills to approve shows each level's samples by kind, with the right answer and named mistakes", async ({ page }) => {
+  // narrowed to the skill's grade, subject and topic: the list shows ten rows a page
+  const [f] = await sql<{ grade: string; subject: string; topic: string }[]>`
+    select s.grade, t.subject_code as subject, s.topic_code as topic
+    from skill s join topic t on t.tenant_id = s.tenant_id and t.code = s.topic_code where s.code = ${skill.code}`;
+  await page.goto(`/setup/skills/approve?${new URLSearchParams(f)}`);
+  await page.locator(`[data-row="${skill.code}"]`).getByRole("link", { name: skill.name }).click();
   await expect(page).toHaveURL(new RegExp(`/setup/skill-sets/${skill.code}$`));
 
   const levels = [...new Set(samples.map((s) => s.difficulty))];

@@ -23,6 +23,8 @@ import { childLevels, childTopicPapers } from "@/lib/queries-results";
 import { ParentReportPanel } from "./report-panel";
 import { GradeClassPanel } from "./grade-class";
 import { reportOf } from "@/lib/queries-reports";
+import { paperScreensOf } from "@/lib/queries-assessment-extras";
+import { sql } from "@/lib/db";
 
 type Props = { params: Promise<{ id: string }>; searchParams: Promise<Record<string, string | undefined>> };
 const MACHINE = ["correct", "wrong", "blank"];
@@ -52,6 +54,11 @@ export default async function ChildPage({ params, searchParams }: Props) {
     childLevels(id),
   ]));
   if (!child) notFound();
+  // each paper opens its own screen under Assessments; the class, its picture under Children
+  const [screens, [cls]] = await deadline(Promise.all([
+    paperScreensOf([...new Set([...sheets.map((x) => x.id), ...pending.map((p) => p.paper_id)])], me),
+    sql<{ id: string }[]>`select id::text from school_class where label = ${child.section} limit 1`,
+  ]));
 
   const machine = pending.filter((p) => MACHINE.includes(p.status));
   const person = pending.filter((p) => !MACHINE.includes(p.status));
@@ -81,10 +88,12 @@ export default async function ChildPage({ params, searchParams }: Props) {
   });
   const back = (
     <>
-      <Link href={`/growth/class/${encodeURIComponent(child.section)}`} className="chip">
-        ← {child.section}
-      </Link>
-      <Link href="/growth" className="chip">
+      {cls ? (
+        <Link href={`/children/${cls.id}`} className="chip">
+          ← {child.section}
+        </Link>
+      ) : null}
+      <Link href="/children" className="chip">
         All classes
       </Link>
     </>
@@ -98,7 +107,7 @@ export default async function ChildPage({ params, searchParams }: Props) {
     const latest = waits.length ? [] : await deadline(classLatest(child.section));
     const order = (code: string) => (latest.includes(code) ? latest.indexOf(code) : latest.length);
     const first = [...checks].sort((a, b) => order(a.key) - order(b.key)).slice(0, FIRST);
-    const step = firstStep(child.first_name, waits, `/papers?child=${id}`, {
+    const step = firstStep(child.first_name, waits, `/children/assessments?child=${id}`, {
       skills: first.map((c) => c.skill),
       n: rules.checkSize,
       href: checkHref(child.section, [id], first.map((c) => ({ skill: c.key, level: c.level, n: c.n }))),
@@ -203,7 +212,7 @@ export default async function ChildPage({ params, searchParams }: Props) {
                           <div className="note mt-1">
                             {p.status === "needs_teacher" ? "Not a number the marker can check — read the work and decide." : "The handwriting could not be read."}
                           </div>
-                          <Link href={`/capture/${p.paper_id}#a-${p.id}`} className="mt-1 inline-block text-[12.5px]">
+                          <Link href={`${screens.get(p.paper_id) ?? "/children/assessments"}?answer=${p.id}#a-${p.id}`} className="mt-1 inline-block text-[12.5px]">
                             Open the whole paper
                           </Link>
                         </div>
@@ -242,7 +251,7 @@ export default async function ChildPage({ params, searchParams }: Props) {
           <div className="grid content-start gap-[18px] self-start xl:sticky xl:top-6">
             <FocusPanel childId={id} name={child.first_name} staff={staffNames} draw={readDraw(q.draw)} />
 
-            <TheirPapers childId={id} sheets={sheets} failed={papers.length - read.length} staff={staffNames} />
+            <TheirPapers childId={id} sheets={sheets} screens={screens} failed={papers.length - read.length} staff={staffNames} />
 
             <GradeClassPanel me={me} child={child} q={q} staff={staffNames} />
 

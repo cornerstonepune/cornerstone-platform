@@ -11,11 +11,11 @@ goal: >
 # The guard (the same photograph on two children's copies) and the score after sign-off are held by the criteria below.
 says:
   - words: "I think we should have a very clear mechanism for marking this per child."
-    proved_by: "apps/web/tests/s44-whose-paper.spec.ts::checking runs per child: a next-child step only when this child is done, and a list of the file's children with answers left"
+    proved_by: "apps/web/tests/u78-whose-paper.spec.ts::a child's papers are walked from paper to paper, oldest first, and a paper says what it says skill by skill"
   - words: "When the questions also come, the educator is able to see that now this paper is for this child. Otherwise it's very hard for me to even understand whether you are capturing the right image and showing it there."
-    proved_by: "apps/web/tests/s44-whose-paper.spec.ts::beside the crop, the page's own proof: the page with the crop outlined, the printed code, the copy and the page"
+    proved_by: "apps/web/tests/u78-whose-paper.spec.ts::beside the picture, the page's own proof: the crop outlined, the printed code, the copy and the page"
   - words: "That mark, this as right, what we're putting on top: why are we putting it on top? It should be in that same box where we are asking whether it is what the child wrote. It should just be right there."
-    proved_by: "apps/web/tests/s44-whose-paper.spec.ts::the Yes button is in the answer box, under the sentence it answers; nothing sits above the card but the progress line"
+    proved_by: "apps/web/tests/u78-whose-paper.spec.ts::the Yes button is in the answer box, under the sentence it answers"
 manual: []
 scenarios: []
 criteria:
@@ -23,7 +23,7 @@ criteria:
     run: cd packages/engine && uv run pytest -q -p no:cacheprovider -o addopts= tests/test_whose_paper.py
     expect: "passed"
   - name: the screens, on the copy, at 1440 px, and the score after sign-off
-    run: cd apps/web && npx playwright test tests/s44-whose-paper.spec.ts
+    run: cd apps/web && npx playwright test tests/u78-whose-paper.spec.ts
     expect: "passed"
   - name: the code sits where the map says; every promise has its command; lint
     run: bin/check

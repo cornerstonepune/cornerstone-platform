@@ -46,11 +46,9 @@ export const GROUPS: readonly Door[] = [
     icon: "child",
     screen: "children",
     pages: [
-      { href: "/children", label: "Children", match: ["/children", "/k2", "/growth"] },
-      { href: "/papers", label: "Assessments", match: ["/papers", "/children/assessments", "/make", "/home", "/worksheets/CS"] },
-      { href: "/papers/approve", label: "Papers to approve", match: ["/papers/approve"] },
+      { label: "Children", href: "/children", match: ["/children", "/growth"], guide: false },
+      { href: "/children/assessments", label: "Assessments", match: ["/children/assessments", "/make", "/worksheets/CS"] },
       { href: "/capture", label: "Upload papers", match: ["/capture"] },
-      { href: "/capture/check", label: "Check answers", match: ["/capture/check"] },
       { href: "/children/reports", label: "Parent reports", match: ["/children/reports"] },
       { href: "/across", label: "Across classes", match: ["/across"] },
     ],
@@ -65,27 +63,22 @@ export const GROUPS: readonly Door[] = [
     pages: [
       // What needs doing moved here from Today (UI-7b): its controls (a topic taught, the groups of tasks) are not on Today's screens
       { href: "/setup/needs-doing", label: "What needs doing", match: ["/setup/needs-doing"], group: "Skills and questions" },
-      { href: "/", label: "Curriculum", match: ["/", "/curriculum", "/skill-sets", "/worksheets", "/asks", "/educator/activity", "/setup"], group: "Curriculum" },
+      { href: "/", label: "Curriculum", match: ["/", "/skill-sets", "/worksheets", "/setup"], group: "Curriculum" },
       // the new screens (UI-11), beside the old pages until those are retired one at a time (UI-11b); then these take the old names
       { label: "All the curriculum", href: "/setup/curriculum", match: ["/setup/curriculum"], guide: false, group: "Curriculum" },
-      { label: "Browse the curriculum", href: "/curriculum/browse", match: ["/curriculum/browse"], guide: false, group: "Curriculum" },
-      { label: "What is filled", href: "/curriculum/fill", match: ["/curriculum/fill"], guide: false, group: "Curriculum" },
-      { label: "Check the drafted parts", href: "/curriculum/fill/walk", match: ["/curriculum/fill/walk"], guide: false, group: "Curriculum" },
-      { label: "Skills offered", href: "/curriculum/offers", match: ["/curriculum/offers"], guide: false, group: "Curriculum" },
-      { label: "Approve skills one by one", href: "/setup/skills/approve", match: ["/setup/skills"], guide: false, group: "Skills and questions" },
-      { href: "/skill-sets/approve", label: "Skills to approve", match: ["/skill-sets/approve"], group: "Skills and questions" },
+      { label: "Skills to approve", href: "/setup/skills/approve", match: ["/setup/skills"], guide: false, group: "Skills and questions" },
       { label: "Bank of questions", href: "/setup/question-bank", match: ["/setup/question-bank"], guide: false, group: "Skills and questions" },
       { href: "/library", label: "Question bank", match: ["/library", "/worksheets/taxonomy"], group: "Skills and questions" },
       { href: "/setup/staff", label: "Staff", match: ["/setup/staff"], group: "The school" },
-      { href: "/setup/classes", label: "School", match: ["/setup/classes", "/school"], group: "The school" },
-      { label: "How it works", href: "/setup/how-it-works", match: ["/setup/how-it-works", "/workflows"], guide: false, group: "The school" },
+      { href: "/setup/classes", label: "School", match: ["/setup/classes"], group: "The school" },
+      { label: "How it works", href: "/setup/how-it-works", match: ["/setup/how-it-works"], guide: false, group: "The school" },
     ],
   },
 ];
 
 const reach = (path: string, m: string) => (m === "/" ? (path === "/" ? 1 : -1) : path === m || path.startsWith(`${m}/`) || (m === "/worksheets/CS" && path.startsWith(m)) ? m.length : -1);
 
-/** The page and door a path belongs to: the longest matching prefix, so /papers/approve is its own page of Children. */
+/** The page and door a path belongs to: the longest matching prefix, so /children/assessments is its own page of Children. */
 export function locate(address: string): { door: Door; page: MenuPage } | undefined {
   const path = address.split(/[?#]/)[0];
   let best: { door: Door; page: MenuPage; at: number } | undefined;

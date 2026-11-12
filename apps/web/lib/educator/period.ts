@@ -12,7 +12,16 @@ export const isLesson = (p: Pick<Period, "kind">) => p.kind !== "fixed" && p.kin
 
 /** A day with nothing to draw, and what it says instead. */
 export const isBlank = (d: Pick<Day, "kind" | "periods">) => d.kind === "holiday" || d.kind === "none" || d.periods.length === 0;
-export const blankWords = (d: Pick<Day, "kind" | "note">) => (d.kind === "holiday" ? `${E.dayKind.holiday}${d.note ? `: ${d.note}` : ""}` : E.dayKind.none);
+/** Why a day has no lesson, in the school's words: a holiday (with its note), no school day on record, a teaching day outside every
+ *  fortnight (a buffer week: its note first), or a fortnight's day with nothing planned. */
+export const blankWords = (d: Pick<Day, "kind" | "note"> & Partial<Pick<Day, "fortnight">>) =>
+  d.kind === "holiday"
+    ? `${E.dayKind.holiday}${d.note ? `: ${d.note}` : ""}.`
+    : d.kind === "none"
+      ? E.dayKind.none
+      : d.fortnight
+        ? E.dayKind.noLessons
+        : `${d.note ? `${d.note}. ` : ""}${E.dayKind.noFortnight}`;
 
 /** A day in the address: YYYY-MM-DD and a real date, or nothing. */
 export const isDay = (s: string | undefined): s is string => !!s && /^\d{4}-\d{2}-\d{2}$/.test(s) && !Number.isNaN(Date.parse(`${s}T00:00:00Z`));

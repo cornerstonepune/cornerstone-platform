@@ -75,9 +75,9 @@ const CODES = /\b(R\d{1,2}|X[12]|M_[A-Z0-9_]+|[A-Z]{3}\.[A-Z0-9]+\.[A-Z0-9]+)\b/
 
 test("an educator picks the kind, the children and the way, sees every paper, makes them, and prints them as one", async ({ page }) => {
   // the maker opens from Assessments' first way to make one (goals/ui2-assessments.yaml), for a class
-  await page.goto("/papers");
-  await page.getByRole("region", { name: "Make an assessment" }).getByRole("link", { name: /^For a class/ }).click();
-  await expect(page).toHaveURL(/\/papers\/make\?/);
+  await page.goto("/children/assessments");
+  await page.getByRole("region", { name: "Make an assessment" }).getByRole("button", { name: /^For a class/ }).click();
+  await expect(page).toHaveURL(/\/children\/assessments\?make=class/);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Make papers");
   const form = page.getByRole("form", { name: "Choose the papers" });
   await form.getByLabel("Class").selectOption(SECTION);
@@ -100,15 +100,16 @@ test("an educator picks the kind, the children and the way, sees every paper, ma
   await expect(papers.getByRole("list").first().getByRole("listitem")).toHaveCount(5);
   await expect(papers).not.toContainText(CODES);
 
-  await papers.getByRole("button", { name: "Make and approve 2 class assessment papers" }).click();
-  await expect(page.getByText("2 papers made and approved in your name.")).toBeVisible();
-  const made = await sql<{ name: string; kind: string; approved_by: string; items: string }[]>`
+  await papers.getByRole("button", { name: "Make 2 class assessment papers" }).click();
+  // made at Created and opened on its own screen, where the pack is approved
+  await expect(page).toHaveURL(/\/children\/assessments\/[^/]+$/);
+  const made = await sql<{ name: string; kind: string; approved_by: string | null; items: string }[]>`
     select p.first_name as name, si.kind, si.approved_by, t.item_ids::text as items
     from sheet_instance si join sheet_template t on t.id = si.sheet_template_id join pii.child p on p.child_id = si.child_id
     where si.section = ${SECTION} order by p.first_name`;
   expect(made.map((m) => [m.name, m.kind, m.approved_by])).toEqual([
-    ["Asha", "assessment", TEST_STAFF.email],
-    ["Bina", "assessment", TEST_STAFF.email],
+    ["Asha", "assessment", null],
+    ["Bina", "assessment", null],
   ]);
   expect(made[0].items).toBe(made[1].items); // one paper for all: the same questions on both copies
 
@@ -122,25 +123,22 @@ test("an educator picks the kind, the children and the way, sees every paper, ma
   await expect(how).not.toContainText("own checked papers");
   await page.goBack();
 
-  // printed as one PDF
-  const pdf = await page.request.get((await page.getByRole("link", { name: "Print them all" }).getAttribute("href"))!);
-  expect(pdf.status()).toBe(200);
+  // approved on its own screen, in the educator's name, then printed as one PDF
+  await page.getByRole("button", { name: "Approve the pack" }).click();
+  const pdf = await page.request.get((await page.getByRole("link", { name: "Print", exact: true }).getAttribute("href"))!);
+  expect(pdf.status(), await pdf.text()).toBe(200);
   expect(pdf.headers()["content-type"]).toContain("application/pdf");
   expect((await pdf.body()).subarray(0, 4).toString()).toBe("%PDF");
 
-  // and in Assessments, ready to hand out
-  await page.getByRole("link", { name: "See them in Assessments" }).click();
-  // the assessment just made, opened by itself to its copies (goals/ux5-papers-grouped.yaml)
+  // and in Assessments, ready to hand out: each copy's next step is to put it in once written on
+  await page.goto(`/children/assessments?class=${SECTION}&view=table`);
   await expect(page.locator("tr[data-assessment]")).toHaveCount(1);
   await expect(page.locator("tr[data-assessment]")).toContainText("Class assessment");
-  const list = page.getByRole("table", { name: /: each copy$/ });
-  await expect(list.locator("tbody tr")).toHaveCount(2);
-  // approved, so printed: each copy's next step is to put it in once written on
-  for (const row of await list.locator("tbody tr").all()) await expect(row.locator("[data-action=upload]")).toBeVisible();
+  await expect(page.locator("[data-assessment-next]")).toHaveText(/Upload/);
 });
 
 test("each child's own next step is shown child by child, and a child with nothing to go on can be given a skill", async ({ page }) => {
-  await page.goto(`/papers/make?class=${SECTION}`);
+  await page.goto(`/children/assessments?make=class&class=${SECTION}`);
   const form = page.getByRole("form", { name: "Choose the papers" });
   await form.getByRole("radio", { name: /Home assessment/ }).check();
   await form.getByRole("radio", { name: /Each child's own next step/ }).check();
@@ -151,7 +149,7 @@ test("each child's own next step is shown child by child, and a child with nothi
   await expect(row("Asha")).toContainText("the same mistake more than once");
   await expect(row("Chetan")).toContainText("cannot be made");
   await expect(row("Chetan")).toContainText("no next step to go on yet");
-  await expect(page.getByRole("button", { name: /Make and approve/ })).toBeDisabled();
+  await expect(page.getByRole("button", { name: /^Make \d+ / })).toBeDisabled();
   // the widest the screen gets — a change for every child — still fits a phone: the table scrolls, not the page
   await page.setViewportSize({ width: 400, height: 860 });
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
@@ -165,17 +163,20 @@ test("each child's own next step is shown child by child, and a child with nothi
   const [{ home }] = await sql<{ home: number }[]>`select value::int as home from config where key = 'assemble.items_per_sheet'`;
   await expect(row("Chetan")).toContainText(`${home} questions`);
   await expect(row("Asha")).toContainText("the same mistake more than once"); // the others stay their own
-  await page.getByRole("button", { name: "Make and approve 3 home assessment papers" }).click();
-  await expect(page.getByText("3 papers made and approved in your name.")).toBeVisible();
-  const [{ n }] = await sql<{ n: number }[]>`
-    select count(*)::int as n from sheet_instance where section = ${SECTION} and kind = 'focus' and approved_by = ${TEST_STAFF.email}`;
-  expect(n).toBe(3);
+  await page.getByRole("button", { name: "Make 3 home assessment papers" }).click();
+  // made at Created, approved by no one; the pack is approved on its own screen, in the educator's name
+  await expect(page).toHaveURL(/\/children\/assessments\/[^/]+$/);
+  const count = (approved: boolean) => sql<{ n: number }[]>`
+    select count(*)::int as n from sheet_instance where section = ${SECTION} and kind = 'focus' and coalesce(approved_by = ${TEST_STAFF.email}, false) = ${approved}`;
+  expect((await count(false))[0].n).toBe(3);
+  await page.getByRole("button", { name: "Approve the pack" }).click();
+  await expect.poll(async () => (await count(true))[0].n).toBe(3);
 });
 
 /** Asha and Bina, the same skill with different questions, seen and not yet made. */
 async function seen(page: Page, kind: RegExp) {
   await clearUp();
-  await page.goto(`/papers/make?class=${SECTION}`);
+  await page.goto(`/children/assessments?make=class&class=${SECTION}`);
   const form = page.getByRole("form", { name: "Choose the papers" });
   await form.getByRole("radio", { name: kind }).check();
   await form.getByRole("radio", { name: /Same skill, different questions/ }).check();
@@ -189,17 +190,17 @@ async function seen(page: Page, kind: RegExp) {
 test("a choice changed after the papers are seen stops Make until they are seen again", async ({ page }) => {
   // the papers made are the papers shown: a kind picked after seeing them was made as the old kind, silently
   const form = await seen(page, /Class practice/);
-  await expect(page.getByRole("button", { name: "Make and approve 2 class practice papers" })).toBeEnabled();
+  await expect(page.getByRole("button", { name: "Make 2 class practice papers" })).toBeEnabled();
   await form.getByRole("radio", { name: /Class assessment/ }).check();
-  await expect(page.getByRole("button", { name: /Make and approve/ })).toBeDisabled();
+  await expect(page.getByRole("button", { name: /^Make \d+ / })).toBeDisabled();
   await expect(page.getByRole("status").filter({ hasText: "You changed what to make" })).toBeVisible();
   await form.getByRole("button", { name: "See the papers" }).click();
-  await expect(page.getByRole("button", { name: "Make and approve 2 class assessment papers" })).toBeEnabled();
+  await expect(page.getByRole("button", { name: "Make 2 class assessment papers" })).toBeEnabled();
 });
 
 test("a batch the engine refuses comes back as the educator chose it, the children they picked", async ({ page }) => {
   await clearUp();
-  await page.goto(`/papers/make?class=${SECTION}`);
+  await page.goto(`/children/assessments?make=class&class=${SECTION}`);
   const form = page.getByRole("form", { name: "Choose the papers" });
   await form.getByRole("radio", { name: /Home assessment/ }).check();
   await form.getByRole("radio", { name: /Each child's own next step/ }).check();
@@ -210,7 +211,7 @@ test("a batch the engine refuses comes back as the educator chose it, the childr
   // assessment in a week no longer is: goals/home-assessment-remake.yaml); the map is derived, and rebuilt after
   await sql`delete from child_skill_state where child_id = ${ids.Asha}`;
   try {
-    await page.getByRole("button", { name: "Make and approve 2 home assessment papers" }).click();
+    await page.getByRole("button", { name: "Make 2 home assessment papers" }).click();
     await expect(page.getByText("no next step to go on yet").first()).toBeVisible();
     // Chetan stays unticked and unplanned: a refused batch came back planned for the whole class
     await expect(form.getByRole("checkbox", { name: "Chetan" })).not.toBeChecked();
@@ -229,7 +230,7 @@ test("an engine that does not answer is said on the maker, and the same form sen
   try {
     await tx`begin`;
     await tx`lock table item_exposure in access exclusive mode`;
-    await page.getByRole("button", { name: "Make and approve 2 class practice papers" }).click();
+    await page.getByRole("button", { name: "Make 2 class practice papers" }).click();
     // the make gives up after the engine's 30 s, and says the papers may have been made; the plan, after the page's 8 s
     await expect(page.getByText("may only have been slow")).toBeVisible({ timeout: 60_000 });
     await expect(page.getByText(/The engine did not answer within \d+ seconds/)).toBeVisible({ timeout: 20_000 });
@@ -239,8 +240,8 @@ test("an engine that does not answer is said on the maker, and the same form sen
     tx.release();
   }
   await page.reload();
-  await page.getByRole("button", { name: "Make and approve 2 class practice papers" }).click();
-  await expect(page.getByText(/2 papers made and approved in your name|These 2 papers were made before/)).toBeVisible({ timeout: 60_000 });
+  await page.getByRole("button", { name: "Make 2 class practice papers" }).click();
+  await expect(page).toHaveURL(/\/children\/assessments\/[^/]+$/, { timeout: 60_000 });
   const [{ n }] = await sql<{ n: number }[]>`
     select count(*)::int as n from sheet_instance where section = ${SECTION} and kind = 'practice'`;
   expect(n, "sent twice, made once").toBe(2);

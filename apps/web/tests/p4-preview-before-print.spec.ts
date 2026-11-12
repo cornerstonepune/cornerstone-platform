@@ -10,7 +10,8 @@
  * papers the test makes are removed.
  */
 import { aChildIn } from "./rows";
-import { expect, test, type Locator, type Page } from "@playwright/test";
+import { landedOn } from "./paper-screen";
+import { expect, test, type Locator } from "@playwright/test";
 import postgres from "postgres";
 
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -67,7 +68,6 @@ async function printed(qr: string): Promise<string[]> {
 /** The questions on screen in `where`, in order, by their bank keys. */
 const shown = (where: Locator) => where.locator("li[data-item]").evaluateAll((li) => li.map((x) => x.getAttribute("data-item")!));
 const nothing = { sheets: 0, templates: 0, seen: 0 };
-const qrIn = (page: Page, key: string) => new URL(page.url()).searchParams.get(key)!;
 
 let child = "";
 test.beforeAll(async () => {
@@ -99,8 +99,7 @@ test("the child's page shows the home assessment's questions before it prints, a
 
   // printing after a preview prints exactly the questions previewed, never a fresh draw
   await panel.getByRole("button", { name: "Approve this home assessment" }).click();
-  await expect(page).toHaveURL(/\/papers\/review\/CS[0-9A-F]{6}$/);
-  expect(await printed(page.url().split("/").pop()!)).toEqual(other);
+  expect(await printed(await landedOn(page, sql, child))).toEqual(other);
 });
 
 test("a class's home assessments show each child's questions before approval, and different questions make no paper", async ({ page }) => {
@@ -141,12 +140,11 @@ test("a paper chosen for one child and Make papers show different questions with
   expect(await written(child)).toEqual(nothing);
   await paper.screenshot({ path: `${SHOTS}/3-a-paper-for-one-child.png` });
   await paper.getByRole("button", { name: "Approve and print" }).click();
-  await expect(page).toHaveURL(/\/papers\/review\/CS[0-9A-F]{6}$/);
-  expect(await printed(page.url().split("/").pop()!)).toEqual(other);
+  expect(await printed(await landedOn(page, sql, child))).toEqual(other);
 
   // one paper for the whole class, in Make papers: its questions once, then different ones, then made as shown
   await clearUp(child);
-  await page.goto(`/papers/make?class=${SECTION}&of=${SECTION}&kind=practice&way=same&picked=1&c=${child}&a=${ASK}`);
+  await page.goto(`/children/assessments?make=class&class=${SECTION}&of=${SECTION}&kind=practice&way=same&picked=1&c=${child}&a=${ASK}`);
   const papers = page.getByRole("region", { name: "The papers" });
   const all = papers.getByRole("list", { name: "3-digit − 3-digit · Easy" }).first();
   await expect(all.getByRole("listitem")).toHaveCount(4);
@@ -158,7 +156,9 @@ test("a paper chosen for one child and Make papers show different questions with
   expect(after).not.toEqual(before);
   expect(await written(child)).toEqual(nothing);
   await papers.locator(".panel").screenshot({ path: `${SHOTS}/4-make-papers.png` });
-  await papers.getByRole("button", { name: "Make and approve 1 class practice paper" }).click();
-  await expect(page).toHaveURL(/made=CS[0-9A-F]{6}/);
-  expect(await printed(qrIn(page, "made"))).toEqual(after);
+  await papers.getByRole("button", { name: "Make 1 class practice paper" }).click();
+  // made at Created, shown as it was previewed, and the assessment opened (it is approved on its own screen)
+  await expect(page).toHaveURL(/\/children\/assessments\/[^/]+$/);
+  const [made] = await sql<{ qr: string }[]>`select qr_code as qr from sheet_instance where child_id = ${child}::uuid and print_status <> 'void' order by created_at desc limit 1`;
+  expect(await printed(made.qr)).toEqual(after);
 });

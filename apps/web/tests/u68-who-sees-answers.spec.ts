@@ -11,6 +11,7 @@ import { createHmac } from "node:crypto";
 import { expect, test, type Browser, type Page } from "@playwright/test";
 import postgres from "postgres";
 import { aClass, aPerson, aReadPaper, forgetPerson } from "./rows";
+import { paperScreenOf } from "../lib/queries-assessment-extras";
 
 test.describe.configure({ mode: "serial" });
 test.use({ viewport: { width: 1440, height: 900 } });
@@ -21,7 +22,21 @@ const FILE = "u67-achal-upload.pdf";
 const ACHAL = { email: "u67-achal@cornerstone.test", name: "U67 Achal", role: "educator", classes: [A] };
 const NEHA = { email: "u67-neha@cornerstone.test", name: "U67 Neha", role: "educator", classes: [N] };
 const NOT_YOURS = "This paper belongs to another class";
-type Paper = { sheet: string; capture: string; results: string[]; child: string };
+/** The paper screen of a paper of another class is not found for her, said in words, and names nothing of it. (The status
+ *  is 200, not 404: the loading screen streams first (app/(app)/loading.tsx) and Next cannot change a status once sent.) */
+const refused = async (page: Page, url: string, A_: string) => {
+  await page.goto(url);
+  await expect(page.getByText("This page could not be found."), url).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Check the answers" }), url).toHaveCount(0);
+  await expect(page.locator("body")).not.toContainText(A_);
+};
+/** The paper screen opens on the paper itself: its own heading, and no refusal. */
+const opens = async (page: Page, url: string) => {
+  await page.goto(url);
+  await expect(page.getByRole("heading", { name: "Check the answers" }), url).toBeVisible();
+  await expect(page.getByText("This page could not be found."), url).toHaveCount(0);
+};
+type Paper = { sheet: string; capture: string; results: string[]; child: string; screen: string };
 let mine: Paper; // Achal's class, put in by Achal
 let crossed: Paper; // Neha's class, put in by Achal
 let hers: Paper; // Neha's class, put in by nobody known
@@ -44,7 +59,9 @@ test.beforeAll(async () => {
       reads: [{ status: "correct", read: "1" }, { status: "needs_teacher", read: "7" }],
     });
     await sql`update capture set uploaded_by = ${by}::uuid where id = ${p.capture}`;
-    return { ...p, child };
+    // its paper screen, as the coordinator (who sees every class) is sent to it
+    const { href: screen } = (await paperScreenOf({ sheet: p.sheet }, { role: "coordinator", classes: [], subjects: [], id: undefined }))!;
+    return { ...p, child, screen };
   };
   mine = await paper("CSU67A01", a.Asha, achal);
   crossed = await paper("CSU67X01", n.Neel, achal);
@@ -88,19 +105,16 @@ async function figures(page: Page) {
   const menu = page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" }).getByRole("link", { name: /^Today/ }).getByTestId("waiting");
   const badge = (await menu.count()) ? number(await menu.innerText()) : 0;
   const todo = (await page.locator(".b-att").evaluateAll((els) => els.filter((e) => /do now|this week/i.test(e.textContent ?? "")).map((e) => Number((e.querySelector(".b-n")?.textContent ?? "0").trim())))).reduce((x, y) => x + y, 0);
-  await open(page, "/papers");
-  const assessments = number(await page.getByRole("link", { name: /answers to check/ }).first().innerText());
-  await open(page, "/capture/check");
-  const counted = page.locator('[data-count="answers to check"]');
-  const check = (await counted.count()) ? number(await counted.first().innerText()) : 0;
-  const listed = (await page.locator('tr[data-assessment] > td[data-label="Answers left"]').allInnerTexts()).reduce((x, t) => x + number(t), 0);
+  await open(page, "/children/assessments?view=table");
+  // "N answers to judge" says how many wait for a person, row by row
+  const listed = (await page.locator('tr[data-assessment] td[data-label="Waits for"]').allInnerTexts()).reduce((x, t) => x + number(/(\d+) answers? to judge/.exec(t)?.[1] ?? "0"), 0);
   const classes = await page.locator("tr[data-assessment]").evaluateAll((els) => els.map((e) => e.getAttribute("data-assessment")!.split("~")[1]));
-  return { badge, todo, assessments, check, listed, classes };
+  return { badge, todo, listed, classes };
 }
 
 test("curriculum, skills and the question bank stay open to an educator of another class", async ({ browser }) => {
   const neha = await as(browser, NEHA.email);
-  for (const url of ["/", "/skill-sets/ADD.2D2D", "/library", "/skill-sets/approve"]) {
+  for (const url of ["/", "/setup/skill-sets/ADD.2D2D", "/library", "/setup/skills/approve"]) {
     await open(neha, url);
     await expect(neha.getByText(/not one of your classes|belongs to another class/i), url).toHaveCount(0);
   }
@@ -109,11 +123,11 @@ test("curriculum, skills and the question bank stay open to an educator of anoth
 
 test("an educator of another class sees none of the paper, and its link and its sign-off are refused in words", async ({ browser }) => {
   const neha = await as(browser, NEHA.email);
-  // the lists: Check answers, Assessments, Upload papers, the search
-  await open(neha, "/capture/check");
+  // the lists: Assessments, Upload papers, the search
+  await open(neha, "/children/assessments?view=table");
   const classes = await neha.locator("tr[data-assessment]").evaluateAll((els) => els.map((e) => e.getAttribute("data-assessment")!.split("~")[1]));
   expect(classes, "only her class's papers wait for her").toEqual([N]);
-  await open(neha, "/papers");
+  await open(neha, "/children/assessments?view=table");
   await expect(neha.locator("main")).not.toContainText(A);
   // the file Achal put in holds a paper of her class: she sees the file, counted by her copy alone
   await open(neha, "/capture");
@@ -121,22 +135,24 @@ test("an educator of another class sees none of the paper, and its link and its 
   await expect(line.locator('td[data-label="Copies read"]')).toHaveText("1");
   await expect(line.locator('td[data-label="Answers"]')).toHaveText("2");
   // the links: the paper, one of its answers, its scan, its child
-  await open(neha, `/capture/${mine.sheet}`);
-  await expect(neha.getByText(NOT_YOURS)).toBeVisible();
-  await open(neha, `/capture/check?id=${mine.results[1]}`);
-  await expect(neha.getByText(NOT_YOURS)).toBeVisible();
+  await refused(neha, mine.screen, A);
+  await refused(neha, `${mine.screen}?answer=${mine.results[1]}`, A);
   expect((await neha.request.get(`/api/scan/${mine.capture}/1`)).status(), "its scan").toBe(403);
   await open(neha, `/growth/${mine.child}`);
   await expect(neha.getByText("This child's class is not one of your classes")).toBeVisible();
-  // the sign-off: her own paper's form, sent with Achal's paper in it, is refused in words and changes nothing
-  await open(neha, `/capture/${hers.sheet}`);
-  const form = neha.locator("form:has(input[name=paper_id])").filter({ has: neha.locator("input[name=child_id]") }).first();
-  await form.evaluate((f, p) => {
-    (f.querySelector("input[name=paper_id]") as HTMLInputElement).value = p.sheet;
-    (f.querySelector("input[name=child_id]") as HTMLInputElement).value = p.child;
-  }, mine);
-  await form.locator("button[type=submit]").click();
-  await expect(neha.getByText(NOT_YOURS)).toBeVisible();
+  // the sign-off: her own paper's form (offered once nothing is left to judge on it), sent with Achal's paper in it, is refused in words and changes nothing
+  await sql`update item_result set status = 'wrong' where capture_id = ${hers.capture} and status = 'needs_teacher'`;
+  try {
+    await open(neha, hers.screen);
+    const form = neha.locator("form:has(input[name=paper_id])").first();
+    await form.evaluate((f, p) => {
+      (f.querySelector("input[name=paper_id]") as HTMLInputElement).value = p.sheet;
+    }, mine);
+    await form.locator("button[type=submit]").click();
+    await expect(neha.getByText(NOT_YOURS)).toBeVisible();
+  } finally {
+    await sql`update item_result set status = 'needs_teacher' where capture_id = ${hers.capture} and raw_read::jsonb ->> 'child_answer' = '7'`;
+  }
   const [{ n }] = await sql<{ n: number }[]>`select count(*)::int as n from item_result where capture_id = ${mine.capture} and state = 'confirmed'`;
   expect(n, "nothing of Achal's paper was signed").toBe(0);
   await neha.context().close();
@@ -150,35 +166,29 @@ test("for each person the counts in the menu, What needs doing and Assessments a
   ] as const) {
     const f = await figures(p);
     expect(f.badge, `${who}: the menu's figure is Today's strip`).toBe(f.todo);
-    expect(f.assessments, `${who}: Assessments says what Check answers says`).toBe(f.check);
     if (waiting !== null) {
       // an educator's list is one page: every answer the figure counts is a line of it, and no more
-      expect(f.check, `${who}: their own answers, not everyone's`).toBe(waiting);
-      expect(f.listed, `${who}: the list behind the figure`).toBe(f.check);
+      expect(f.listed, `${who}: their own answers, not everyone's`).toBe(waiting);
     } else {
-      expect(f.check, "the coordinator's figure counts every class's").toBeGreaterThanOrEqual(3);
+      expect(f.listed, "the coordinator's list counts every class's").toBeGreaterThanOrEqual(3);
     }
   }
 });
 
 test("the educator who uploaded a paper of another class sees it, and the coordinator sees both", async ({ browser, page }) => {
   const achal = await as(browser, ACHAL.email);
-  await open(achal, "/capture/check");
+  await open(achal, "/children/assessments?view=table");
   const classes = await achal.locator("tr[data-assessment]").evaluateAll((els) => els.map((e) => e.getAttribute("data-assessment")!.split("~")[1]));
   expect(classes.sort(), "his class, and the paper of another class he put in").toEqual([A, N]);
-  await open(achal, `/capture/${crossed.sheet}`);
-  await expect(achal.getByText(NOT_YOURS)).toHaveCount(0);
-  await open(achal, `/capture/${hers.sheet}`);
-  await expect(achal.getByText(NOT_YOURS), "a paper of that class he did not put in").toBeVisible();
+  await opens(achal, crossed.screen); // the paper of another class he put in opens
+  // a paper of that class he did not put in: not found, and nothing of it named
+  await refused(achal, hers.screen, N);
   await open(achal, "/capture");
   await expect(achal.locator("tr", { hasText: FILE }).locator('td[data-label="Copies read"]'), "his file, both its copies").toHaveText("2");
   await achal.context().close();
-  for (const p of [mine, crossed, hers]) {
-    await open(page, `/capture/${p.sheet}`);
-    await expect(page.getByText(NOT_YOURS)).toHaveCount(0);
-  }
+  for (const p of [mine, crossed, hers]) await opens(page, p.screen);
   for (const section of [A, N]) {
-    await open(page, `/papers?class=${section}`);
+    await open(page, `/children/assessments?view=table&class=${section}`);
     await expect(page.locator("main")).toContainText(section);
   }
 });

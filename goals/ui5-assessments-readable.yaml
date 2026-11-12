@@ -13,7 +13,7 @@ goal: >
 # children is 30 rows; there is no topic.
 says:
   - words: "This cannot be just such a freaking long list of stuff. Need to make it more readable."
-    proved_by: "apps/web/tests/u22-assessments-readable.spec.ts::Assessments opens on one row for each assessment, its copies counted by stage"
+    proved_by: "apps/web/tests/u22-assessments-readable.spec.ts::a topic keeps the assessments on its skills, and an assessment opens its copies"
   - words: "the assessment page needs to have the filter and the view by topic and all"
     proved_by: "apps/web/tests/u22-assessments-readable.spec.ts::a topic keeps the assessments on its skills, and an assessment opens its copies"
 manual:

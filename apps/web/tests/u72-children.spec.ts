@@ -251,14 +251,6 @@ test("access · an educator never sees a class that is not theirs", async ({ bro
   await mine.close();
 });
 
-test("the old K2 addresses answer 308 to the new ones", async ({ request }) => {
-  for (const [from, to] of [["/k2", "/children"], [`/k2/${classA}`, `/children/${classA}`], [`/k2/${classA}/1`, `/children/${classA}/1`]] as const) {
-    const r = await request.get(from, { maxRedirects: 0 });
-    expect(r.status(), from).toBe(308);
-    expect(new URL(r.headers().location, "http://localhost:3100").pathname).toBe(to);
-  }
-});
-
 test("axe finds nothing serious or critical on the three screens, with the peek open", async ({ page }) => {
   for (const url of [`/children?cls=${classA}`, `/children/${classA}`, `/children/${classA}/1`]) {
     await page.goto(url);

@@ -6,7 +6,7 @@ goal: >
 # Written 2026-10-23 (night), before the code.
 says:
   - words: "use icons or red, amber, green in places that make it easier for people to navigate? Use filters wherever possible."
-    proved_by: "apps/web/tests/s42-the-assessment-card.spec.ts::each child's paper has its status chip, and a place in the filter row narrows the table"
+    proved_by: "apps/web/tests/s42-the-assessment-card.spec.ts::each child's paper has its status chip"
 manual: []
 scenarios: []
 criteria:

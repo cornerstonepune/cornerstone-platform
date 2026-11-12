@@ -1,7 +1,7 @@
 /**
- * U42 — Curriculum, the question bank and the worksheets open on the educator's grade (goals/ux6-curriculum-for-the-
- * educator.yaml). Nimish, 2026-10-15: "Most of the pages just have a long list for no reason. All these things should
- * be expandable and collapsible. They should have the right set of columns which are important. It should be
+ * U42 — Curriculum and the question bank open on the educator's grade (goals/ux6-curriculum-for-the-educator.yaml; the
+ * worksheet library's own page is retired, each skill's worksheets now on its skill set's page). Nimish, 2026-10-15:
+ * "Most of the pages just have a long list for no reason. All these things should be expandable and collapsible. They should have the right set of columns which are important. It should be
  * teacher-specific."
  *
  * Two Grade 2 classes of the test's own, made once and kept (evidence is append-only): Asha in the educator's class and
@@ -112,7 +112,7 @@ test("the question bank opens on the educator's grade, every grade one tap away"
   await expect(questions.locator(".panel-head")).toContainText(`of ${n.toLocaleString("en-IN")}`);
   await expect(questions.locator(".panel-head")).toContainText(grade.name);
   // every question listed is at a level of the class's grade
-  const keys = await questions.locator("table tbody tr td:first-child a").evaluateAll((as) => as.map((a) => a.getAttribute("href")!.replace("/library/", "")));
+  const keys = await questions.locator("table tbody tr td:first-child a").evaluateAll((as) => as.map((a) => a.getAttribute("href")!.replace("/setup/question-bank/", "")));
   expect(keys.length).toBeGreaterThan(0);
   const off = await sql<{ item_key: string }[]>`
     select i.item_key from item i
@@ -141,25 +141,4 @@ test("the bank's stock columns are every member of staff's, beside the educator'
   const stock = page.getByRole("table", { name: "Questions by skill set and level" });
   await expect(stock.locator("thead th")).toHaveText(["Skill set", "Grade", "Kinds of question", ...order, "All"]);
   await expect(page.getByText(/\d removed/).first()).toBeVisible();
-});
-
-test("the worksheets open on the educator's grade, the counts and the list the same worksheets", async ({ browser }) => {
-  const page = await asEducator(browser);
-  await page.goto("/worksheets");
-  const library = page.locator("#library");
-  const grid = library.getByRole("table", { name: "Worksheets by skill and level" });
-  await expect(library.locator(".panel-head").first()).toContainText(grade.name);
-  await expect(grid.locator("tbody tr").first()).toBeVisible();
-  // the grid's counts add up to the pager's, and each worksheet listed is of the grade
-  const cells = await grid.locator("tbody td.num a").allInnerTexts();
-  const sum = cells.reduce((a, c) => a + number(c), 0);
-  expect(sum).toBeGreaterThan(0);
-  await expect(library.getByText(new RegExp(`of ${sum.toLocaleString("en-IN")}$`))).toBeVisible();
-  const codes = await library.getByRole("table", { name: "Worksheets", exact: true }).locator("tbody tr td:first-child").allInnerTexts();
-  const off = await sql<{ code: string }[]>`
-    select code from sheet_template where source = 'library' and code = any(${codes}) and band <> ${grade.code}`;
-  expect(off.map((r) => r.code), "a worksheet of another grade").toEqual([]);
-  await library.getByRole("link", { name: "Every grade", exact: true }).click();
-  await expect(library.locator(".panel-head").first()).not.toContainText(grade.name);
-  await page.context().close();
 });

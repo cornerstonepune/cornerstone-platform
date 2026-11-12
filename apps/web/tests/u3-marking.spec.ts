@@ -16,7 +16,6 @@ import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import postgres from "postgres";
-import { doorPages } from "./door-pages";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -131,7 +130,8 @@ async function counts(where = sql`true`): Promise<Counts> {
            count(*) filter (where ${STANDING} = 'waiting')::int as waiting
     from item_result r join capture c on c.id = r.capture_id join sheet_instance si on si.id = c.sheet_instance_id
     join child_now ch on ch.id = si.child_id join sheet_template t on t.id = si.sheet_template_id
-    where c.superseded_by is null and ${where}`;
+    -- a voided copy is no paper of the class's: Upload papers and the Assessments list both leave it out
+    where c.superseded_by is null and si.print_status <> 'void' and ${where}`;
   return c;
 }
 
@@ -146,24 +146,6 @@ test.beforeAll(async () => {
   kids = await testClass();
 });
 test.afterAll(async () => sql.end());
-
-test("marking is one area, and says how many papers are in and where every answer stands", async ({ page }) => {
-  await page.goto("/capture");
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Upload papers");
-  const menu = await doorPages(page);
-  // Marking sits inside Assessments (goals/u9-papers.yaml, goals/ui1-menu-and-today.yaml)
-  await expect(menu.getByRole("link", { name: "Upload papers" })).toHaveAttribute("aria-current", "page");
-  await page.keyboard.press("Escape");
-  // one sentence says it (goals/ux5b-make-and-marking.yaml), where five tiles stood
-  expect(await shown(page.getByRole("region", { name: "Answers to check" }))).toEqual(await counts());
-
-  // checking answers is inside Marking, not a page of its own
-  await page.locator("[data-ux=action]").getByRole("link", { name: /^check \d+ answers/i }).click();
-  await expect(page).toHaveURL(/\/capture\/check/);
-  await expect((await doorPages(page)).getByRole("link", { name: "Check answers" })).toHaveAttribute("aria-current", "page");
-  await page.getByRole("link", { name: "← Upload papers" }).click();
-  await expect(page).toHaveURL(/\/capture$/);
-});
 
 test("by class, by child and by worksheet, each count is where the engine says each answer stands", async ({ page }) => {
   // by class: the test's class, as its papers were made
@@ -204,14 +186,21 @@ test("by class, by child and by worksheet, each count is where the engine says e
 
 test("the queue of answers to check sits inside marking with its count, one click away", async ({ page }) => {
   const [{ n }] = await sql<{ n: number }[]>`
-    select count(*)::int as n from item_result r join capture c on c.id = r.capture_id
-    where c.superseded_by is null and r.status in ('unreadable', 'needs_teacher')`;
+    select count(*)::int as n from item_result r join capture c on c.id = r.capture_id join sheet_instance si on si.id = c.sheet_instance_id
+    where c.superseded_by is null and si.print_status <> 'void' and r.status in ('unreadable', 'needs_teacher')`;
   expect(n).toBeGreaterThanOrEqual(3);
   await page.goto("/capture");
   const queue = page.getByRole("region", { name: "Answers to check" });
   await expect(queue.getByTestId("waiting")).toHaveText(String(n));
-  await page.locator("[data-ux=action]").getByRole("link", { name: /^check \d+ answers/i }).click();
-  await expect(page.getByText(`${n} answers left to check`)).toBeVisible();
+  const check = page.locator("[data-ux=action]").getByRole("link", { name: /^check \d+ answers/i });
+  // it opens the assessments with answers to check (the old queue page is retired): each card says how many of its
+  // answers wait to be judged, and together they are the count (opened at the link's own address, the whole page waited for)
+  await expect(check).toHaveAttribute("href", "/children/assessments?status=check");
+  await page.goto((await check.getAttribute("href"))!);
+  const chips = page.locator('[data-block="KanbanBoard"] [data-kcard] [data-block="StatusChip"]');
+  await expect(chips.first()).toBeVisible();
+  const judged = (await chips.allInnerTexts()).reduce((x, t) => x + Number(/(\d+) answers? to judge/.exec(t)?.[1] ?? 0), 0);
+  expect(judged, "the answers the list it opens says wait").toBe(n);
 });
 
 test("a paper shows its score once nothing on it waits", async ({ page }) => {
@@ -226,9 +215,12 @@ test("a paper shows its score once nothing on it waits", async ({ page }) => {
 });
 
 test("every marking view fits a phone, with the class's own papers on it", async ({ page }) => {
-  const [{ paper }] = await sql<{ paper: string }[]>`select id as paper from sheet_instance where qr_code = 'U3TEST-1'`;
   await page.setViewportSize({ width: 400, height: 860 });
-  for (const url of ["/capture?by=class", "/capture?by=child", "/capture?by=worksheet", "/capture?worksheet=U3-A", `/capture?child=${kids.Dev}`, `/capture/${paper}`]) {
+  // one paper opens on its own screen under Assessments: the address is the one Marking's own link to it gives
+  await page.goto(`/capture?child=${kids.Dev}`);
+  const paper = await page.getByRole("row").filter({ hasText: "U3 paper A" }).getByRole("link", { name: "U3 paper A", exact: true }).getAttribute("href");
+  expect(paper, "U3 paper A links to its own screen").toBeTruthy();
+  for (const url of ["/capture?by=class", "/capture?by=child", "/capture?by=worksheet", "/capture?worksheet=U3-A", `/capture?child=${kids.Dev}`, paper!]) {
     await page.goto(url, { waitUntil: "networkidle" });
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
     expect(overflow, `${url} must not scroll sideways`).toBeLessThanOrEqual(1);

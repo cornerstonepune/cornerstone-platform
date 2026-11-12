@@ -7,7 +7,7 @@ import { randomUUID } from "node:crypto";
 import postgres from "postgres";
 import { aPerson, forgetPerson } from "./rows";
 
-const ROUTES = ["/", "/worksheets", "/library", "/capture", "/growth", "/home", "/skill-sets/SUB.2D2D"];
+const ROUTES = ["/", "/library", "/capture", "/children", "/setup/skill-sets/SUB.2D2D"];
 
 for (const route of ROUTES) {
   test(`no session: ${route} sends you to sign in`, async ({ page }) => {
@@ -23,7 +23,7 @@ for (const route of ROUTES) {
 // never shown). Now nothing without a good session gets that far (goals/p0-every-page-checks-who-asks.yaml).
 test("no session: a page's server payload, asked for past its layout, is turned away before the page renders", async ({ request }) => {
   const holding = ["", { children: ["(app)", { children: ["__PAGE__", {}] }] }, null, null, true];
-  const res = await request.get("/worksheets", {
+  const res = await request.get("/library", {
     headers: { RSC: "1", "Next-Router-State-Tree": encodeURIComponent(JSON.stringify(holding)) },
     maxRedirects: 0,
   });

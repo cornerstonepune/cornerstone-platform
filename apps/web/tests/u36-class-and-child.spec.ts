@@ -22,6 +22,7 @@ const SECTION = "U36-CLASS";
 const DEVS = "CSD36D01";
 const ELAS = ["CSE1A001", "CSE1A002"];
 let kids: Record<string, string> = {};
+let classId = "";
 const STATES: [string, string, string, string, number, number][] = [
   ["Asha", "R24", "NUM.OPS.02", "patterned_error", 6, 2],
   ["Asha", "R22", "NUM.OPS.01", "secure", 10, 10],
@@ -31,6 +32,7 @@ const STATES: [string, string, string, string, number, number][] = [
 
 test.beforeAll(async () => {
   kids = await aClass(sql, SECTION, "G2", ["Asha", "Bina", "Chetan", "Dev", "Ela"]);
+  [{ id: classId }] = await sql<{ id: string }[]>`select id from school_class where label = ${SECTION} limit 1`;
   const [{ tenant_id }] = await sql<{ tenant_id: string }[]>`select tenant_id from child_now where id = ${kids.Asha}`;
   await sql`delete from child_skill_state where child_id in ${sql(Object.values(kids))}`;
   for (const [who, rung, skill, state, n, right] of STATES) {
@@ -72,8 +74,7 @@ async function offScreen(scope: Locator, width: number): Promise<string[]> {
 }
 
 test("a class shows its standing once: by topic, or one topic's skills in its place", async ({ page }) => {
-  await page.goto(`/growth/class/${SECTION}`);
-  await expect(page).toHaveURL(/\/children\/[0-9a-f-]{36}\?view=matrix$/);
+  await page.goto(`/children/${classId}?view=matrix`);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Class picture");
   await expect(page.getByRole("main")).toContainText(SECTION);
   // by topic: the one table of where each child stands
@@ -102,7 +103,7 @@ test("a class shows its standing once: by topic, or one topic's skills in its pl
 
 test("every check is one line, its names folded, and every action is on screen", async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 800 });
-  await page.goto(`/growth/class/${SECTION}`);
+  await page.goto(`/children/${classId}?view=matrix`);
   const checks = page.getByRole("region", { name: "Checks that would place them" });
   await expect(checks).toBeVisible();
   // 2-digit + 2-digit: Bina has one answer, Chetan, Dev and Ela none; Asha is secure on it and is not in it
@@ -135,7 +136,7 @@ test("every check is one line, its names folded, and every action is on screen",
 
   // on a phone, each check's button is on screen too
   await page.setViewportSize({ width: 400, height: 860 });
-  await page.goto(`/growth/class/${SECTION}`);
+  await page.goto(`/children/${classId}?view=matrix`);
   await expect(checks).toBeVisible();
   expect(await offScreen(checks, 400)).toEqual([]);
 });
@@ -197,7 +198,7 @@ test("a child with no answers gets one sentence and one action", async ({ page }
   const names = await sql<{ name: string }[]>`select name from skill where code in ${sql(lines.map((a) => a.split("~")[0]))}`;
   for (const { name } of names) await expect(sentence).toContainText(name);
   await first.click();
-  await expect(page).toHaveURL(/\/papers\/make\?/);
+  await expect(page).toHaveURL(/\/children\/assessments\?make=/);
   const plan = page.getByRole("table", { name: "Each child's paper" });
   await expect(plan.locator("tbody tr")).toHaveCount(1);
   await expect(plan.locator(`tr[data-child="${kids.Chetan}"]`)).toBeVisible();
@@ -214,5 +215,5 @@ test("a child with no answers gets one sentence and one action", async ({ page }
   await expect(sentence).toHaveText(`Ela has no checked answers yet: 2 papers made for Ela wait to be approved or read.`);
   await expect(main.getByRole("region").filter({ hasNot: page.locator("#grade-class") })).toHaveCount(1);
   await expect(actions).toHaveCount(1);
-  await expect(main.getByRole("link", { name: "See Ela’s 2 papers →" })).toHaveAttribute("href", `/papers?child=${kids.Ela}`);
+  await expect(main.getByRole("link", { name: "See Ela’s 2 papers →" })).toHaveAttribute("href", `/children/assessments?child=${kids.Ela}`);
 });

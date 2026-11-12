@@ -8,7 +8,7 @@ import type { Subject } from "@/components/period-row";
 // What the timetable screens read and the one rule about who may act (UI-6, docs/frontend/SPEC.md "Timetable").
 // Nothing is decided here: the clashes, moves and states are the engine's and the database's; this reads them.
 
-/** The coordinator is the member of staff whose access group gives every staff row (the same test as `requireStaffEditor`). */
+/** The coordinator is the member of staff whose access group gives every staff row (`my_reach('staff') = 'all'`, the database's one rule). */
 export const isCoordinator = cache(async (): Promise<boolean> => {
   const [r] = await sql<{ all: boolean }[]>`select public.my_reach('staff') = 'all' as all`;
   return r?.all === true;

@@ -38,7 +38,7 @@ test("1. the four shells, the old menu and the second icon file are gone, and no
 });
 
 test("1. every existing page renders inside AppFrame (the bar, the trail, one main)", async ({ page }) => {
-  for (const route of ["/today", "/papers", "/growth", "/timetable", "/children", "/library", "/setup/classes", "/curriculum/browse", "/guide"]) {
+  for (const route of ["/today", "/children/assessments", "/timetable", "/children", "/library", "/setup/classes", "/setup/curriculum", "/guide"]) {
     await page.goto(route);
     await expect(page.locator("[data-frame] [data-bar]").first(), route).toBeVisible();
     await expect(page.getByRole("main"), route).toHaveCount(1);
@@ -48,7 +48,7 @@ test("1. every existing page renders inside AppFrame (the bar, the trail, one ma
 
 test("2. at 1440 the four doors are the bar's own; at 400 they are a bottom tab bar of 44 px or more with the chosen door in clay", async ({ browser }) => {
   const wide = await (await signedInAs(browser, "coordinator", { width: 1440, height: 900 })).newPage();
-  await wide.goto("/growth");
+  await wide.goto("/children");
   const top = wide.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" });
   await expect(top).toBeVisible();
   expect((await top.getByRole("link").allInnerTexts()).map((t) => t.replace(/\s*\d[\d,]*$/, "").trim())).toEqual(["Today", "Timetable", "Children", "Setup"]);
@@ -56,7 +56,7 @@ test("2. at 1440 the four doors are the bar's own; at 400 they are a bottom tab 
   expect((await wide.locator("[data-bar]").first().locator("div").first().boundingBox())?.height).toBe(BAR_HEIGHT_PX);
 
   const phone = await (await signedInAs(browser, "coordinator", { width: 400, height: 900 })).newPage();
-  await phone.goto("/growth");
+  await phone.goto("/children");
   const tabs = phone.locator("nav[data-bar=doors]");
   await expect(tabs).toBeVisible();
   const links = tabs.getByRole("link");
@@ -114,7 +114,7 @@ async function walk(page: Page) {
 }
 
 test("6. the trail is two levels (the door, then the thing); an Activity opened from Today lights Today, opened cold it lights Setup", async ({ page }) => {
-  await page.goto("/papers");
+  await page.goto("/children/assessments");
   const trail = page.locator("[data-trail]");
   await expect(trail.getByRole("listitem")).toHaveCount(2);
   await expect(trail.getByRole("link")).toHaveText("Children");

@@ -16,7 +16,7 @@ says:
   - words: "Is the queue shrinking? I'm not too sure if we need that right now here. It should come in some other part."
     proved_by: "apps/web/tests/u65-what-needs-doing-walk.spec.ts::the queue-shrinking trend is off What needs doing, its data and function kept, and parked in the notes"
   - words: "Honestly, I don't understand the purpose of this teaching page... there's this laundry list with some topic flow, and finally, when I click it, it goes to the assessments page only. I really don't think this is useful."
-    proved_by: "apps/web/tests/u65-what-needs-doing-walk.spec.ts::Teaching is not in the menu and its old address opens What needs doing"
+    proved_by: "apps/web/tests/u65-what-needs-doing-walk.spec.ts::Teaching is not in the menu"
 manual:
   - "Website only: Vercel deploys it on merge. No migration and no update-live."
   - "The topic's flow strip (skills ready, baseline, home papers, practice) and a topic's class-result colour had no page that owns them: they are not shown anywhere now; `teaching()` and `topicFlow()` are kept, tested, and named in docs/notes/nav3-what-needs-doing.md."

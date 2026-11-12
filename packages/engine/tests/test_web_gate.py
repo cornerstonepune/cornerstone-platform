@@ -15,9 +15,9 @@ from engine.core import db
 
 WEB = db.REPO_ROOT / "apps" / "web"
 APP = WEB / "app"
-# `deciding(kind)` (lib/decides.ts, goals/f1c-who-decides-what.yaml) and `requireStaffEditor()` (lib/auth.ts, UI-15) are
-# checks because their first line is `requireStaff()`; a test below holds each to that
-CHECKS = re.compile(r"\b(?:requireStaff|currentStaff|deciding|requireStaffEditor)\(")
+# `deciding(kind)` (lib/decides.ts, goals/f1c-who-decides-what.yaml) is a check because its first line is `requireStaff()`;
+# a test below holds it to that
+CHECKS = re.compile(r"\b(?:requireStaff|currentStaff|deciding)\(")
 # The doors a person with no session must be able to open: signing in, and setting a password they have forgotten
 # (goals/auth-email-password.yaml). Each of the last four is held by the link it is given instead of a session — a
 # token only its owner's email carried, checked by `emailFor` — and a signed-in person must still be able to finish a
@@ -80,7 +80,7 @@ def test_a_door_open_to_anyone_for_a_forgotten_password_is_held_by_its_link():
     assert BY_LINK.search(body), "setNewPassword sets a password without checking the link"
 
 
-@pytest.mark.parametrize("file, name", [("decides.ts", "deciding"), ("auth.ts", "requireStaffEditor")])
+@pytest.mark.parametrize("file, name", [("decides.ts", "deciding")])
 def test_a_check_built_on_requirestaff_checks_who_is_asking_before_anything_else(file, name):
     src = (WEB / "lib" / file).read_text()
     (body,) = re.findall(rf"^export async function {name}\(.*?\{{\n(.*?)^\}}", src, re.M | re.S)

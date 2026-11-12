@@ -57,7 +57,7 @@ async function open(page: Page, url: string) {
 }
 
 test("the top bar has no Viewing, Class or Subject control, for a coordinator or an educator, and an educator still sees only her own class", async ({ page, browser }) => {
-  for (const url of ["/setup/needs-doing", "/papers", "/growth"]) {
+  for (const url of ["/setup/needs-doing", "/children/assessments", "/children"]) {
     await open(page, url);
     await expect(page.locator("[data-viewing], #bar-subject, #bar-class"), url).toHaveCount(0);
     await expect(page.getByRole("banner"), url).not.toContainText("Viewing");
@@ -155,7 +155,7 @@ test("the queue-shrinking trend is off What needs doing, its data and function k
   expect(note).toMatch(/Is the queue shrinking/);
 });
 
-test("Teaching is not in the menu and its old address opens What needs doing", async ({ page }) => {
+test("Teaching is not in the menu", async ({ page }) => {
   await open(page, "/setup/needs-doing");
   const top = page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" }).getByRole("link");
   const names = (await top.allInnerTexts()).map((n) => n.replace(/\s*\d[\d,]*$/, "").trim());
@@ -163,11 +163,6 @@ test("Teaching is not in the menu and its old address opens What needs doing", a
   test.info().annotations.push({ type: "top-level menu items", description: `${names.length}: ${names.join(", ")}` });
   expect(names).toEqual(["Today", "Timetable", "Children", "Setup"]);
   await expect(page.locator("[data-bar]").first().getByRole("link", { name: "Teaching" })).toHaveCount(0);
-  for (const old of ["/taught", "/taught?subject=NUM", "/taught?topic=MUL"]) {
-    await page.goto(old);
-    await expect(page, old).toHaveURL(/\/setup\/needs-doing(\?|$)/);
-    await expect(page.getByRole("heading", { level: 1 }).first()).toContainText("What needs doing");
-  }
 });
 
 test("What needs doing opens in under a second, as the other pages do", async ({ page }) => {
@@ -184,7 +179,7 @@ test("What needs doing opens in under a second, as the other pages do", async ({
     return ms.sort((a, b) => a - b)[1];
   };
   const times: Record<string, number> = {};
-  for (const url of ["/setup/needs-doing", "/papers", "/growth", "/", "/capture/check", "/skill-sets/approve"]) times[url] = await median(url);
+  for (const url of ["/setup/needs-doing", "/children/assessments", "/children", "/", "/setup/skills/approve"]) times[url] = await median(url);
   test.info().annotations.push({ type: "load time, ms (median of 3, warm)", description: JSON.stringify(times) });
   console.log("load time ms", JSON.stringify(times));
   // On the seeded copy, one second (Nimish: nothing slow). Once the other specs have filled the copy with test classes every

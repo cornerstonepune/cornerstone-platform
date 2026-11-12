@@ -21,7 +21,7 @@ import { signOffPaper } from "../actions";
 import { EditPaper } from "./edit-paper";
 import { AnswerPanel } from "./answer-panel";
 import { Lanes } from "./lanes";
-import { keysOn, proofOf, unnamedOn } from "./answer-data";
+import { keysOn, pageLost, proofOf, unnamedOn } from "./answer-data";
 
 const safeDecode = (v: string) => {
   try {
@@ -71,7 +71,9 @@ export default async function PaperPage({ params, searchParams }: Props) {
   const scan = await deadline(scanFacts(sheet.id));
   const pick = answers.find((x) => x.id === q.answer) ?? answers.find((x) => markOf(x) === "judge");
   const none = Promise.resolve(undefined);
-  const [names, skills, siblings, unnamed, keys, proof] = await deadline(
+  // the answer in view is the one picked, else the first to judge, else the first: its page's photograph is asked for alongside the rest
+  const seen = pick ?? answers[0];
+  const [names, skills, siblings, unnamed, keys, proof, lost] = await deadline(
     Promise.all([
       misconceptionNames(),
       setSkills(),
@@ -79,14 +81,19 @@ export default async function PaperPage({ params, searchParams }: Props) {
       pick ? unnamedOn(pick.capture_id) : none,
       pick ? keysOn(pick.capture_id) : none,
       pick ? proofOf(pick.capture_id, pick.file_page) : none,
+      seen ? pageLost(seen.capture_id, seen.page ?? 1) : none,
     ]),
   );
   const marks = answers.map((a) => ({ a, m: markOf(a) }));
   const count = (m: Mark) => marks.filter((x) => x.m === m).length;
   // the child's other papers, oldest first: this one's place among them, and the way to the paper before and after
   const at = siblings.findIndex((x) => x.id === sheet.id);
-  const around = await deadline(paperScreensOf([siblings[at - 1]?.id, siblings[at + 1]?.id].filter((x): x is string => !!x), me));
-  const [before, after] = [around.get(siblings[at - 1]?.id ?? ""), around.get(siblings[at + 1]?.id ?? "")];
+  const around = await deadline(paperScreensOf(siblings.filter((x) => x.id !== sheet.id).map((x) => x.id), me));
+  // a paper's address is its assessment and Sr. No.: a twin copy at the same address is an extra, never a way on, so the way on skips it
+  const own = paperHref(key, roll);
+  const ways = siblings.map((x) => around.get(x.id)).map((h) => (h && h !== own ? h : undefined));
+  const before = ways.slice(0, at).filter(Boolean).pop();
+  const after = ways.slice(at + 1).find(Boolean);
   const skillName = Object.fromEntries(skills.map((x) => [x.code, x.name]));
   const judging = marks.filter((x) => x.m === "judge");
   // the answer in view: the one picked in the table, else the first for you to judge
@@ -117,10 +124,12 @@ export default async function PaperPage({ params, searchParams }: Props) {
       ),
     },
   ];
-  const src = focus ? `/api/scan/${focus.a.capture_id}/${focus.a.file_page}` : answers[0] ? `/api/scan/${answers[0].capture_id}/${answers[0].file_page}` : undefined;
+  const src = lost ? undefined : focus ? `/api/scan/${focus.a.capture_id}/${focus.a.file_page}` : answers[0] ? `/api/scan/${answers[0].capture_id}/${answers[0].file_page}` : undefined;
   // the answers still for you to judge, after the one in view, in the order they sit on the page: the way on, so a paper is walked answer by answer
   const others = judging.filter((x) => marks.indexOf(x) > marks.findIndex((m) => m.a.id === focus?.a.id));
   const nextJudge = others.length ? { href: `${paperHref(key, roll)}?answer=${others[0].a.id}#a-${others[0].a.id}`, left: others.length } : undefined;
+  // the region is outlined only where it is the question's own: a box another question shares, or none, says so in words instead
+  const outlined = focus?.a.box?.length === 4 && focus.a.answer_state !== "not_found";
   const nothingLeft = judging.length === 0 && answers.length > 0;
 
   return (
@@ -128,6 +137,7 @@ export default async function PaperPage({ params, searchParams }: Props) {
       stage={`${sheet.band ? g.name(sheet.band) : "Assessment"} · Sr. No. ${roll}${level ? ` · ${level}` : ""}`}
       title="Check the answers"
       purpose="The page as photographed, and each answer as the engine read it. Say what the child wrote where it was unsure; the engine marks it."
+      next={nextJudge ? { href: nextJudge.href, label: "The next answer to judge" } : next ? { href: paperHref(key, next.roll_no ?? ""), label: "The next paper to check" } : { href: assessmentHref(key), label: "Back to the assessment" }}
       rail={
         <Rail
           cards={
@@ -178,7 +188,14 @@ export default async function PaperPage({ params, searchParams }: Props) {
         <EmptyState>Nothing has been read from this paper yet. When the scan is read, each answer appears here.</EmptyState>
       ) : (
         <div className="b-split">
-          <PageImage src={src} box={focus?.a.answer_state !== "not_found" ? focus?.a.box : null} caption={focus ? `The child's page as photographed. Question ${qLabel(focus.a, marks.indexOf(focus))} is outlined.` : "The child's page as photographed"} />
+          {lost ? (
+            <figure data-page-not-found={seen?.page ?? 1} className="b-card">
+              <p>{lost}</p>
+              <figcaption className="b-muted">Its answers wait for you. Scan page {seen?.page ?? 1} again and send it to be read.</figcaption>
+            </figure>
+          ) : (
+          <PageImage src={src} box={outlined ? focus?.a.box : null} caption={!focus ? "The child's page as photographed" : outlined ? `The child's page as photographed. Question ${qLabel(focus.a, marks.indexOf(focus))} is outlined.` : `We could not find question ${qLabel(focus.a, marks.indexOf(focus))} on this page: it is somewhere on this page.`} />
+          )}
           <DataTable label="The answers" columns={columns} rows={marks} rowKey={(x) => x.a.id} more={{ page: 1, href: () => paperHref(key, roll) }} />
         </div>
       )}

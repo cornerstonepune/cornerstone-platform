@@ -43,8 +43,6 @@ const NOT_BY_CLICK: Record<string, string> = {
   "/children/[class]": "the Children table lists children and opens their peek; the class picture is its toggle, drawn only for a person with a class",
   "/children/[class]/[roll]": "a child's page, opened from the peek of a child in the table",
   "/refused": "where an action sends a person it refused",
-  "/papers/review/[qr]": "where making a paper sends the maker; a link on a child's page once a paper is approved",
-  "/papers/card": "opened by a button of the paper's own form",
   "/children/assessments/[key]": "a link on an assessment's row, which needs an assessment of the class (tests/u73-assessments.spec.ts opens it with rows)",
   "/children/assessments/[key]/[roll]": "a child's copy on that assessment (tests/u73-assessments.spec.ts opens it with rows)",
   "/make/[section]/week": "opened by the make form's choice of a class and a week",
@@ -52,7 +50,7 @@ const NOT_BY_CLICK: Record<string, string> = {
   "/setup/activities/[code]": "a link of a period or of the materials list, which need a timetable's rows",
   "/setup/objectives/[code]": "a link of an activity, which needs a timetable's rows",
   "/setup/skills/[code]": "a link of an objective, which needs a timetable's rows",
-  "/setup/skill-sets/[code]": "a skill's row on Curriculum or Skills to approve (their links still name the old address, which answers 308 to this one)",
+  "/setup/skill-sets/[code]": "a skill's row on Curriculum or Skills to approve, past the rows a test database holds",
   "/record": "opened from a period or from Notes, both of which need a K2 class the test database does not hold with the voice switch on",
   "/period/[id]": "a link of a day of the timetable, which needs a timetable's rows",
   "/notes/[id]": "a card or a row of Notes, which needs a recorded note",
@@ -66,10 +64,10 @@ const NOT_BY_CLICK: Record<string, string> = {
 
 test("5. GROUPS are exactly Today, Timetable, Children, Setup, and every route belongs to a door or sits outside the bar by name", () => {
   expect(GROUPS.map((g) => g.label)).toEqual(["Today", "Timetable", "Children", "Setup"]);
-  expect(doorOf("/papers/approve")?.key).toBe("children");
-  expect(doorOf("/capture/check")?.key).toBe("children");
-  expect(doorOf("/growth/class/2B")?.key).toBe("children");
-  for (const r of ["/library", "/curriculum/browse", "/skill-sets/approve", "/school"]) expect(doorOf(r)?.key, r).toBe("setup");
+  expect(doorOf("/children/assessments")?.key).toBe("children");
+  expect(doorOf("/children/assessments/x~y~z~w/1")?.key).toBe("children");
+  expect(doorOf("/growth/x")?.key).toBe("children");
+  for (const r of ["/library", "/setup/curriculum", "/setup/skills/approve", "/setup/classes"]) expect(doorOf(r)?.key, r).toBe("setup");
   expect(doorOf("/timetable/rules")?.key).toBe("timetable");
   // the pages outside the bar: help, feedback, the password, the refusal page
   const outside = routes().filter((r) => !doorOf(r.replace(/\[[^\]]+\]/g, "x")));

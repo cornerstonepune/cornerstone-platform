@@ -38,7 +38,7 @@ export function PacksTable({ rows, page, pageHref }: { rows: PackLine[]; page: n
       label: "",
       keep: true,
       value: (p) => p.section,
-      cell: (p) => <Link href={`/papers/approve?section=${encodeURIComponent(p.section)}&week=${encodeURIComponent(p.week)}&kind=${p.kind}`}>Look over and approve</Link>,
+      cell: (p) => <Link href={`/children/assessments?class=${encodeURIComponent(p.section)}&week=${encodeURIComponent(p.week)}&kind=${p.kind}`}>Look over and approve</Link>,
     },
   ];
   return (

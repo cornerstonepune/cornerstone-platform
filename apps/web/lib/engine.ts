@@ -37,12 +37,15 @@ export class EngineDown extends Error {}
 export const ENGINE_RESTARTING = "The engine is restarting. Try again in a minute.";
 const DOOR_WITHOUT_ENGINE = new Set([502, 503, 504]);
 
+/** What a person is told when the engine took longer than the page could wait (a slow answer, not a restart). */
+export const ENGINE_SLOW = "The engine did not answer in time. Try again in a minute.";
+
 async function reached(call: Promise<Response>): Promise<Response> {
   let res: Response;
   try {
     res = await call;
-  } catch {
-    throw new EngineDown(ENGINE_RESTARTING);
+  } catch (e) {
+    throw new EngineDown(e instanceof Error && e.name === "TimeoutError" ? ENGINE_SLOW : ENGINE_RESTARTING);
   }
   if (DOOR_WITHOUT_ENGINE.has(res.status)) throw new EngineDown(ENGINE_RESTARTING);
   return res;
@@ -113,13 +116,18 @@ function said(headline: string, detail = ""): Response {
 /** A POST whose whole answer the caller reads, status and body — for a call where a refusal is
  *  itself the answer, such as the engine saying in words why it would not take a correction. */
 export async function engineSend<P extends PostPath>(path: P, body: BodyOf<P>): Promise<Response> {
+  return engineSendWithin(path, body, ENGINE_WAIT_MS);
+}
+
+/** The same, giving up after `waitMs`: for a read a page can do without (Today's), so a slow engine is a sentence, not a hung page. */
+export async function engineSendWithin<P extends PostPath>(path: P, body: BodyOf<P>, waitMs: number): Promise<Response> {
   return reached(
     fetch(`${base()}${path}`, {
       method: "POST",
       headers: { "X-Engine-Key": key(), "content-type": "application/json" },
       body: JSON.stringify(body),
       cache: "no-store",
-      signal: AbortSignal.timeout(ENGINE_WAIT_MS),
+      signal: AbortSignal.timeout(waitMs),
     }),
   );
 }

@@ -17,9 +17,11 @@ const QUIET = "U50-QUIET";
 const EDUCATOR = { email: "u50-educator@cornerstone.test", name: "U50 Educator", role: "educator", classes: [BUSY, QUIET] };
 const PASSWORD = "u50-a-long-test-password";
 let kids: Record<string, string> = {};
+let busy = ""; // U50-BUSY's id: the class picture of the educator's first class is /children/<id>?view=topic
 
 test.beforeAll(async () => {
   kids = await aClass(sql, BUSY, "G2", ["Asha", "Bina"]);
+  [{ id: busy }] = await sql<{ id: string }[]>`select id from school_class where label = ${BUSY} limit 1`;
   await aClass(sql, QUIET, "G2", ["Cara", "Dev"]);
   const [{ id: tenant }] = await sql<{ id: string }[]>`select id from tenant limit 1`;
   const [{ n }] = await sql<{ n: number }[]>`select count(*)::int as n from evidence_event where child_id = ${kids.Asha}`;
@@ -63,21 +65,19 @@ async function asEducator(browser: Browser): Promise<Page> {
 }
 
 
-// Children (UI-3b) keeps the rule: no topic chips on the list. The old addresses of the list still land on it.
-test("Children has no topic chips; an old address of the list lands on Children", async ({ browser }) => {
+// Children (UI-3b) keeps the rule: no topic chips on the list, every class or one.
+test("Children has no topic chips, with a class chosen too", async ({ browser }) => {
   const page = await asEducator(browser);
-  await page.goto("/growth?view=children");
-  await expect(page).toHaveURL(/\/children$/);
+  await page.goto("/children");
   await expect(page.getByRole("navigation", { name: "Topic" })).toHaveCount(0);
-  await page.goto(`/growth?view=children&class=${BUSY}`);
-  await expect(page).toHaveURL(/\/children\?cls=[0-9a-f-]{36}$/);
+  await page.goto(`/children?cls=${busy}`);
   await expect(page.getByRole("navigation", { name: "Topic" })).toHaveCount(0);
   await page.context().close();
 });
 
 test("in the menu only Today carries a count", async ({ browser }) => {
   const page = await asEducator(browser);
-  for (const path of ["/setup/needs-doing", "/", "/growth"]) {
+  for (const path of ["/setup/needs-doing", "/", `/children/${busy}?view=topic`]) {
     await page.goto(path);
     const menu = page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" });
     // Asha's waiting answers make Assessments and Today non-zero, so a count elsewhere would show
@@ -143,7 +143,7 @@ test("Curriculum shows each skill in a row with its levels and status; the bank'
 
 test("under a page's title there is one line, never a paragraph", async ({ browser }) => {
   const page = await asEducator(browser);
-  for (const path of ["/setup/needs-doing", "/", "/growth"]) {
+  for (const path of ["/setup/needs-doing", "/", `/children/${busy}?view=topic`]) {
     await page.goto(path);
     const sub = page.locator("header p");
     expect(await sub.count(), `${path}: at most one line under the title`).toBeLessThanOrEqual(1);
