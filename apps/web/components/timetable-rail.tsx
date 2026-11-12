@@ -23,7 +23,9 @@ export function timetableEdges(here: Here, o: { fn?: number; classId?: string; c
     { key: "rules", screen: "rules", href: "/timetable/rules", label: "Timetable rules", icon: "checklist", line: "what the draft reads", coordinator: true },
     { key: "materials", screen: "materials", href: "/educator/materials", label: "Materials", icon: "materials", line: "what to lay out" },
   ];
-  return all.filter((e) => e.key !== here && (o.coordinator || !e.coordinator)).map(({ key: _k, coordinator: _c, ...e }) => e);
+  return all
+    .filter((e) => e.key !== here && (o.coordinator || !e.coordinator))
+    .map((e): Edge => ({ screen: e.screen, href: e.href, label: e.label, icon: e.icon, line: e.line }));
 }
 
 /** The rail of a page of the Timetable door: the door's other pages, then whatever the page adds (`edges` after them, `cards`, `facts`). */
