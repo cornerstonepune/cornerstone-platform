@@ -3,6 +3,10 @@ import { BrandMark } from "@/components/brand-mark";
 import type { Session } from "@/lib/auth";
 import { AttentionStrip } from "@/components/attention-strip";
 import { Cards } from "@/components/cards";
+import { StatTiles } from "@/components/stat-tile";
+import { DetailPanel } from "@/components/detail-panel";
+import { SubjectMix, SubjectTag } from "@/components/subject-tag";
+import { levelState, scaleLook } from "@/lib/state-scale";
 import { CaptureBar } from "@/components/capture-bar";
 import { ChildGraph } from "@/components/child-graph";
 import { DataTable } from "@/components/data-table";
@@ -64,7 +68,19 @@ export function sampleOf(name: string, q: Record<string, string | undefined>, me
         { key: "notes", label: "Notes", value: (r) => r.state, status: true, cell: (r) => <StatusChip state={r.state} words={r.note || undefined} round /> },
       ]} />;
     case "FilterBar":
-      return <FilterBar action="/setup/blocks" keep={{ open: "FilterBar" }} filters={[{ name: "class", label: "Class", value: q.class, all: "All", options: [["K2 Red", "K2 Red"], ["K2 Blue", "K2 Blue"]] }]} search={{ name: "find", value: q.find, placeholder: "Search this table" }} />;
+      return (
+        <FilterBar
+          action="/setup/blocks"
+          keep={{ open: "FilterBar" }}
+          filters={[
+            { name: "class", label: "Class", value: q.class, all: "All", options: [["K2 Red", "K2 Red"], ["K2 Blue", "K2 Blue"]] },
+            { name: "week", label: "Week", value: q.week, all: "Any week", options: [["A", "Week A"], ["B", "Week B"]] },
+            { name: "state", label: "State", value: q.state, all: "Any state", options: [["late", "Late"], ["done", "Done"]] },
+            { name: "kind", label: "Kind", value: q.kind, all: "Any kind", options: [["class", "For a class"], ["child", "For a child"]] },
+          ]}
+          search={{ name: "find", value: q.find, placeholder: "Search this table" }}
+        />
+      );
     case "ClassGrid":
       return <div className="b-sample"><GridSample mode="button" /><GridSample mode="link" /></div>;
     case "Stepper":
@@ -121,7 +137,7 @@ export function sampleOf(name: string, q: Record<string, string | undefined>, me
       return <KeyValue rows={[{ label: "Class", value: "K2 Red" }, { label: "Sr. No.", value: "01", num: true }, { label: "Educator", value: "Asha Almond" }, { label: "Since", value: "June 2026" }]} />;
     case "Cards":
       return <Cards cards={[
-        { kind: "activity", title: "Counting in tens with bundles", line: "Numeracy · 40 minutes", href: "/setup/blocks?open=Cards", link: "Open the activity" },
+        { kind: "activity", title: "Counting in tens with bundles", line: "Numeracy · 40 minutes", href: "/setup/blocks?open=Cards", link: "Open the activity", status: { state: "toConfirm" }, count: { n: 12, words: "children" } },
         { kind: "objective", title: "Counts objects to 100", line: "3 skills", href: "/setup/blocks?open=Cards", link: "Open the objective" },
         { kind: "skill", title: "Counting in tens", line: "14 children seen", href: "/setup/blocks?open=Cards", link: "Open the skill" },
       ]} />;
@@ -158,12 +174,70 @@ export function sampleOf(name: string, q: Record<string, string | undefined>, me
       return <PeekSample first={q.peek} />;
     case "BrandMark":
       return <BrandMark size="large" />;
+    case "StatTile":
+      return (
+        <StatTiles
+          label="This week"
+          stats={[
+            { id: "lessons", n: 30, line: "lessons" },
+            { id: "moved", n: 2, line: "moved by hand", tone: "wait" },
+            { id: "clashes", n: 1, line: "clash not accepted", tone: "act" },
+            { id: "done", n: 18, line: "taught and confirmed", tone: "ok", href: "/setup/blocks?open=StatTile" },
+          ]}
+        />
+      );
+    case "DetailPanel":
+      return (
+        <DetailPanel
+          open={{
+            key: "lesson:sample",
+            kind: "period",
+            title: "Counting in tens with bundles",
+            line: "08:45–09:30 · K2 Red · Numeracy",
+            full: "/setup/blocks?open=DetailPanel",
+            closeHref: "/setup/blocks?open=DetailPanel",
+            tab: q.tab,
+            tabs: [
+              {
+                key: "activity",
+                label: "Activity",
+                body: (
+                  <ol className="b-levels" data-block-part="rubric">
+                    {["Counts with help", "Counts ones", "Bundles tens with help", "Counts in tens alone"].map((w, n) => (
+                      <li key={n} className="b-level" data-level={n} data-state={scaleLook(levelState(n, 4))}>
+                        <b className="b-num">{n}</b>
+                        <span>{w}</span>
+                      </li>
+                    ))}
+                  </ol>
+                ),
+              },
+              { key: "children", label: "Children", body: <p className="b-muted">The class form: each child by Sr. No.</p> },
+              { key: "materials", label: "Materials", body: <ul className="list-disc pl-[var(--space-4)]"><li>Bundles of ten sticks · 12</li><li>Number cards 1–100</li></ul> },
+              { key: "history", label: "History", body: <p className="b-muted">Not done with this class yet.</p> },
+            ],
+          }}
+          summary={{ title: "This week", stats: [] }}
+          inline
+        />
+      );
+    case "SubjectTag":
+      return (
+        <div className="grid gap-[var(--space-3)]">
+          <div className="b-keyrow">
+            <SubjectTag look="numeracy" words="Numeracy" />
+            <SubjectTag look="language" words="Language" />
+            <SubjectTag look="arts" words="Arts" />
+          </div>
+          <SubjectMix label="Lessons by subject" parts={[{ look: "numeracy", words: "Numeracy", n: 12 }, { look: "language", words: "Language", n: 10 }, { look: "arts", words: "Arts", n: 8 }]} />
+        </div>
+      );
     case "AppFrame":
-      // the real frame, as the pages wear it; `contain: layout` keeps its phone tab bar (fixed to the screen) inside the sample
+      // the real frame, as the pages wear it (the sidebar at the left); `contain: layout` keeps anything fixed to the screen inside the sample
       return (
         <div style={{ contain: "layout", overflow: "hidden", border: "1px solid var(--line)" }}>
           <AppFrame me={me} waiting={0}>
-            <p className="b-muted" style={{ padding: "var(--space-3)" }}>A page sits here, under the bar.</p>
+            <p className="b-muted" style={{ padding: "var(--space-3)" }}>A page sits here, under the bar, beside the menu.</p>
           </AppFrame>
         </div>
       );

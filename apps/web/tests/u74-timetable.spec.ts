@@ -3,6 +3,7 @@
  * Done-when line of specs/UI-6/spec.md that a browser can check, as the coordinator (the signed-in test user) and as the
  * educator (read-only). The class "U74" and its two fortnights are the test's own (tests/timetable-rows.ts).
  */
+import { menu } from "./menu";
 import { expect, test, type Page } from "@playwright/test";
 import postgres from "postgres";
 import { timetableSwitch } from "./educator-screens";
@@ -252,12 +253,12 @@ test("Fortnight, moving: accepting a clash needs a reason ('Say why' otherwise),
   expect(a.reason).toBe("Sports day is on purpose");
 });
 
-test("Timetable rules: the page sits under Timetable in the menu, not Setup", async ({ page }) => {
-  expect(locate("/timetable/rules")?.door.key).toBe("timetable");
+test("Timetable rules: the page sits under School in the menu, the coordinator's (page charter A1)", async ({ page }) => {
+  expect(locate("/timetable/rules")?.section.key).toBe("school");
   expect(locate("/timetable/rules")?.page.label).toBe("Timetable rules");
   await page.goto(`/timetable/rules?class=${f.klass}`);
   await expect(page.getByRole("heading", { name: "Timetable rules", level: 1 })).toBeVisible();
-  await expect(page.locator("header, nav").getByText("Timetable rules").first()).toBeVisible();
+  await expect((await menu(page)).getByRole("link", { name: "Timetable rules" })).toBeVisible();
 });
 
 test("Timetable rules: every edit shows who and when, and the history fold lists it", async ({ page }) => {

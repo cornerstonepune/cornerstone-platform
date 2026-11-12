@@ -7,6 +7,7 @@
  */
 import { aChildIn } from "./rows";
 import { expect, type Page, test } from "@playwright/test";
+import { menu as theMenu, sectionNames, SECTIONS } from "./menu";
 import postgres from "postgres";
 import { isoWeek } from "../lib/week";
 import { dayIn } from "../lib/school-clock";
@@ -79,12 +80,12 @@ test.afterAll(async () => {
 
 test("the menu is the teacher's week, and says where they are", async ({ page }) => {
   await page.goto("/setup/needs-doing");
-  const menu = page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" });
-  // four doors (lib/menu.ts); the one count of what waits follows the first name
-  await expect(menu.getByRole("link")).toHaveText([/^Today/, /^Timetable/, /^Children/, /^Setup/]);
+  const menu = await theMenu(page);
+  // the sections of the sidebar (lib/menu.ts), in the order of the educator's jobs; the one count of what waits follows Today
+  expect(await sectionNames(menu)).toEqual([...SECTIONS.coordinator]);
   for (const [label, heading] of [
-    ["Setup", "Setup"],
-    ["Children", "Children"],
+    ["Curriculum", "Curriculum"],
+    ["Class picture", "Children"],
     ["Today", "Today, the school"],
   ]) {
     await menu.getByRole("link", { name: new RegExp(`^${label}\\b`) }).click();

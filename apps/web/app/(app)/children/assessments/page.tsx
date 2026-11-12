@@ -183,11 +183,12 @@ export default async function AssessmentsPage({ searchParams }: Props) {
         action={HERE}
         keep={{ view: q.view, t: byTopic ? q.t : undefined }}
         filters={[
+          // page charter B6: Class, Subject and Week in the row; Topic, Kind and Stage behind "More filters"
           { name: "class", label: "Class", value: f.class, all: "Every class", options: options.classes.map((c) => [c, c] as const) },
-          { name: "topic", label: "Topic", value: f.topic, all: "Every topic", options: taught.map((x) => [x.code, x.name] as const) },
           { name: "subject", label: "Subject", value: f.subject, all: "Every subject", options: subjects.map((s) => [s.code, s.label] as const) },
-          { name: "kind", label: "Kind", value: f.kind, all: "Any kind", options: Object.entries(KIND_WORDS) },
           { name: "week", label: "Week", value: f.week, all: "Every week", options: options.weeks.map((w) => [w, weekWords(w)] as const) },
+          { name: "topic", label: "Topic", value: f.topic, all: "Every topic", options: taught.map((x) => [x.code, x.name] as const) },
+          { name: "kind", label: "Kind", value: f.kind, all: "Any kind", options: Object.entries(KIND_WORDS) },
           { name: "status", label: "Stage", value: f.status, all: "Any stage", options: Object.entries(STAGE_WORDS) },
         ]}
         search={{ name: "q", value: f.q, placeholder: "Find an assessment" }}

@@ -7,12 +7,12 @@
     "Outside the bar"
   ],
   "blocks": {
-    "AppFrame": "top bar (BrandMark, a link to Today; four doors with their icons, search, acting-as), trail, main column, rail (Connected to; Capture here) in a surface box; on a phone the four doors are a bottom tab bar (icon above word, the chosen door filled in brand clay)",
+    "AppFrame": "top bar (BrandMark, a link to Today; search, the person and acting-as, help, sign out); the menu a left sidebar grouped by the educator's jobs (My day, Timetable, Children, Assessments, School for the coordinator), folding to icons, a drawer behind the Menu button on a phone (page charter A1); trail, main column, and the right side: the DetailPanel, or the old rail on pages not yet moved",
     "AttentionStrip": "three tiles filled with their state's tint: do now (red) · this week (amber) · done (green); number, icon+word, one sentence; each a link; no border, no shadow",
     "PeriodRow": "time · the subject's icon tile and colour edge · name · subject and one fact · state chip; the row is the link, a panel with shadow-card; the current period carries the action outline; fixed parts of the day are a quiet sand row",
     "StatusChip": "pill: icon + word + colour from the STATES rows, on its tint; on a tinted cell (a subject cell, a child's square) the chip sits on the panel colour with a 1 px ring in its state colour, because a state's fill and a subject's fill can be near each other",
     "DataTable": "≤10 rows then grouped/paged; needs-you first; numbers right, status centred; FilterBar built in at 6+ rows; on a phone it scrolls sideways in its own box; inside a card with shadow-card; where children are listed it can be grouped (a group heading with its count, the same rows under it)",
-    "FilterBar": "dropdowns + compact search over any table of 6+ rows; filters in the address",
+    "FilterBar": "dropdowns + compact search over any table of 6+ rows, in one row: the first three dropdowns, the rest behind More filters (page charter A4); filters in the address",
     "ClassGrid": "a tinted square per child by Sr. No., radius-card: Sr. No., the child's initials disc, the name, and the state's icon + word on the state's tint; not seen = an untinted square with a dashed ring; tap = open ChildPeek (on the confirm screen: change the mark); 8 columns at 1440, 3 on a phone",
     "Stepper": "the steps of a thing; done green, waiting amber, late red, rest quiet",
     "Details": "a fold that opens on click, eye icon; never hides the main action",
@@ -30,11 +30,14 @@
     "EmptyState": "nothing to show, with the next step",
     "Form": "a short form of labelled fields; one main button",
     "KeyValue": "facts as label: value pairs, five lines at most",
-    "Cards": "two to three panels side by side, each with a header tinted in its kind's colour (kind tile + title) and a few lines and one link",
+    "Cards": "two to three panels side by side, each with a header tinted in its kind's colour (kind tile + title), at most two chips (one status, one whole count: page charter A3), a few lines and one link",
     "KindTile": "a 32 px tile, radius-control, filled with a kind's tint and holding that kind's icon in its colour (period slate, child teal, activity indigo, objective violet, skill orchid, assessment sky, note stone); every rail link, card header and timeline entry starts with one",
     "BrandMark": "the school's logo (Cornerstone Gurukul) as one of the four official files, drawn as given: `lockup-colour` on a light ground, `lockup-for-dark-backgrounds` on a dark ground, `mark` alone where the space is small on a light ground, `mark-on-white-tile` where it is small on a dark ground and for the tab and app icon; accessible name 'Cornerstone Gurukul'; never recoloured, stretched, rotated, filtered or shadowed, never inside a card; clear space on every side at least a quarter of the mark's height",
     "KanbanBoard": "what moves through stages, one lane per stage, each lane headed by its state's icon, word and count; each card a link (kind tile, one line, one fact, a state chip); lanes scroll sideways in their own box on a phone; offered next to the table of the same things by a Table | Board toggle (segmented tabs, the address carries the tab); a lane with no card says so in words",
-    "ChildPeek": "one child's recent history in a panel, opened by tapping a child anywhere a child is listed: initials disc, Sr. No., name, class; the child's state counts as chips; then notes, observations, papers, state changes and corrections newest first, each with a kind tile, one line, who and when; Close and 'Open the child' (the one way to the child's own page); the top of the rail on a wide screen, a sheet over the bottom on a phone; Escape closes it and focus returns to the child that opened it"
+    "ChildPeek": "one child's recent history in a panel, opened by tapping a child anywhere a child is listed: initials disc, Sr. No., name, class; the child's state counts as chips; then notes, observations, papers, state changes and corrections newest first, each with a kind tile, one line, who and when; Close and 'Open the child' (the one way to the child's own page); the top of the rail on a wide screen, a sheet over the bottom on a phone; Escape closes it and focus returns to the child that opened it",
+    "StatTile": "a big whole number and one line saying what it counts, its top edge in a state colour when it has one; a row of three or four is a page's summary, and the DetailPanel's when nothing is chosen (page charter A3)",
+    "DetailPanel": "the right side of a page (page charter A2): a thing chosen on the page opens here in tabs, the same tabs for the same kind of thing; the address carries ?open=<kind>:<id> and tab=; a close button and Escape close it and focus returns to the thing; Open full page goes to its own address; with nothing chosen it shows the page's stat tiles, never a list of links; on a phone an open panel is a sheet over the page",
+    "SubjectTag": "a subject's icon, word and colour on any block (page charter A3), the colour from the school's subject rows (timetable.subject_looks); with SubjectMix, a bar of whole counts split by subject"
   },
   "element_kinds": {
     "link": "click lands on the target screen: its h1 equals the target's title (or matches its pattern); Back returns",
@@ -4708,23 +4711,17 @@
       "t": "link",
       "label": "Today",
       "to": "today-educator",
-      "note": "a coordinator lands on Today, the school; on a phone the four doors are a bottom tab bar, the same four links"
+      "note": "the school's logo, a link to Today (a coordinator lands on Today, the school)"
     },
     {
       "t": "link",
-      "label": "Timetable",
-      "to": "timetable"
+      "label": "A page of the menu",
+      "note": "every line of the sidebar (apps/web/lib/menu.ts, page charter A1): My day, Timetable, Children, Assessments, and School for the coordinator; the page you are on is marked, the section of the walk lit, and only Today carries a count"
     },
     {
-      "t": "link",
-      "label": "Children",
-      "to": "children"
-    },
-    {
-      "t": "link",
-      "label": "Setup",
-      "to": "setup",
-      "note": "shown to the coordinator group only"
+      "t": "button",
+      "label": "Menu",
+      "effect": "folds the sidebar to its icons and back (kept for the next page); on a phone, opens the menu as a drawer"
     },
     {
       "t": "field",

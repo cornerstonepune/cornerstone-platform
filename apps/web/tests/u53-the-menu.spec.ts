@@ -1,42 +1,40 @@
 /**
- * U53 — The menu is the educator's week (goals/uxn3-the-menu.yaml). Nimish, 2026-10-22: "make sure that the navigation and
- * all the menu items are perfect", "complete, in the order of the educator's week". Each step of the week is a menu item
- * named as its page is titled; the current page is marked; only Today carries a count; nothing in it names a subject.
+ * U53 — The menu is the educator's week (goals/uxn3-the-menu.yaml), since the page charter (A1, 12 Nov 2026) a sidebar grouped by the
+ * educator's jobs. Nimish, 2026-10-22: "make sure that the navigation and all the menu items are perfect", "complete, in the order of the
+ * educator's week". Each step of the week is a menu item named as its page is titled; the current page is marked; only Today carries a
+ * count; nothing in it names a subject.
  */
 import { expect, test } from "@playwright/test";
+import { litSection, menu, sectionNames, SECTIONS } from "./menu";
 
-const GROUPS = ["Today", "Timetable", "Children", "Setup"];
-// every page of the week, with the door it is in and the words of its own title (or its tab)
+// every page of the week, with the section it is in and the words of its line in the menu
 const PAGES = [
-  ["/today", "Today", "Today"],
-  ["/setup/needs-doing", "Setup", "What needs doing"],
-  ["/timetable/rules", "Timetable", "Timetable rules"],
-  ["/children/assessments", "Children", "Assessments"],
-  ["/capture", "Children", "Upload papers"],
-  ["/", "Setup", "Curriculum"],
-  ["/library", "Setup", "Question bank"],
+  ["/today", "My day", "Today"],
+  ["/setup/needs-doing", "My day", "What needs doing"],
+  ["/timetable/rules", "School", "Timetable rules"],
+  ["/children/assessments", "Assessments", "Assessments"],
+  ["/capture", "Assessments", "Upload papers"],
+  ["/setup/curriculum", "School", "Curriculum"],
+  ["/setup/question-bank", "Assessments", "Question bank"],
 ] as const;
 
+// the titles below are the ones goals/uxn3-the-menu.yaml names; since the page charter (A1) they prove the sidebar's five sections and Today's one count
 test("the menu lists the four groups in order, and each page is marked and titled by its own words", async ({ page }) => {
-  // the door's pages are the page's rail on a wide screen (the Timetable door); the fold is the narrow-width fallback, read at 900 px
-  await page.setViewportSize({ width: 900, height: 900 });
   await page.goto("/today");
-  const menu = page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" });
-  const names = (await menu.getByRole("link").allInnerTexts()).map((n) => n.replace(/\s*\d[\d,]*$/, "").trim());
-  expect(names).toEqual(GROUPS);
-  for (const [path, group, label] of PAGES) {
+  expect(await sectionNames(await menu(page))).toEqual([...SECTIONS.coordinator]);
+  for (const [path, section, label] of PAGES) {
     await page.goto(path);
-    await expect(menu.locator("[aria-current=page]"), path).toHaveText(new RegExp(`^${group}`));
-    // the page is marked in the door's row of pages, and says the same words in its title or its stage line
-    await expect(page.getByRole("navigation", { name: "Pages in this section" }).locator("[aria-current=page]"), path).toHaveText(label);
+    await expect(litSection(page), path).toHaveText(section);
+    await expect((await menu(page)).locator("[aria-current=page]"), path).toHaveText(new RegExp(`^${label}`));
   }
 });
 
 test("only What needs doing carries a count, and no word of the menu names a subject", async ({ page }) => {
   await page.goto("/children");
-  const menu = page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" });
-  expect(await menu.getByTestId("waiting").count()).toBeLessThanOrEqual(1);
-  expect(await page.locator("[data-bar]").first().innerText()).not.toMatch(/\b(maths|english|hindi|science|evs)\b/i);
+  const nav = await menu(page);
+  expect(await nav.getByTestId("waiting").count()).toBeLessThanOrEqual(1);
+  expect(await nav.getByTestId("waiting").count()).toBe(await nav.getByRole("link", { name: /^Today/ }).getByTestId("waiting").count());
+  for (const text of [await nav.innerText(), await page.locator("[data-bar]").first().innerText()]) expect(text).not.toMatch(/\b(maths|english|hindi|science|evs)\b/i);
 });
 
 test("no step of the week is a dead end: each page of the menu ends on a next step or opens one", async ({ page }) => {

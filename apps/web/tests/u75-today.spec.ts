@@ -4,6 +4,7 @@
  * (Monday 23 November 2026 is a teaching day of week A); the page takes the day in its address, so the test needs no clock.
  */
 import { expect, test, type Browser } from "@playwright/test";
+import { menu } from "./menu";
 import postgres from "postgres";
 import { loadFortnight10, timetableSwitch } from "./educator-screens";
 import { SECTION, aK2Note, k2Class, voiceSwitch } from "./k2-rows";
@@ -130,11 +131,12 @@ test.describe("the page", () => {
       const p = await ctx.newPage();
       await p.goto("/today");
       const strip = await p.locator(".b-att").evaluateAll((els) => els.filter((e) => /do now|this week/i.test(e.textContent ?? "")).map((e) => Number((e.querySelector(".b-n")?.textContent ?? "0").trim())));
-      const badge = p.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" }).getByRole("link", { name: /^Today/ }).getByTestId("waiting");
+      const nav = await menu(p);
+      const badge = nav.getByRole("link", { name: /^Today/ }).getByTestId("waiting");
       expect(strip.reduce((a, b) => a + b, 0)).toBeGreaterThan(0);
       expect(Number((await badge.innerText()).replace(/\D/g, ""))).toBe(strip.reduce((a, b) => a + b, 0));
-      // no other door carries a count
-      await expect(p.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" }).getByTestId("waiting")).toHaveCount(1);
+      // no other line of the menu carries a count
+      await expect(nav.getByTestId("waiting")).toHaveCount(1);
       await ctx.close();
     } finally {
       await sql`update pii.educator_note set status = 'confirmed' where id = ${note}`;

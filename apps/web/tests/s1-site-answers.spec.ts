@@ -8,7 +8,7 @@
  */
 import { expect, test, type Page } from "@playwright/test";
 import postgres from "postgres";
-import { doorPages } from "./door-pages";
+import { menu as theMenu } from "./menu";
 
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 test.afterAll(async () => sql.end());
@@ -29,15 +29,15 @@ async function whileLocked(table: "item" | "config", work: () => Promise<void>):
 const COULD_NOT_LOAD = "This page could not load";
 
 async function menu(page: Page, label: string) {
-  await page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" }).getByRole("link", { name: new RegExp(`^${label}\\b`) }).click();
+  await (await theMenu(page)).getByRole("link", { name: new RegExp(`^${label}\\b`) }).click();
 }
 
 test("a click shows the page is loading at once, and a database that does not answer is said in words within 12 s", async ({ page }) => {
-  // the Setup door opens Setup (UI-5), which does not read the question bank; the Curriculum page, one click on, does
+  // Setup (UI-5) does not read the question bank; the Curriculum page, one click on in the sidebar, does
   await page.goto("/setup", { waitUntil: "networkidle" });
   await whileLocked("item", async () => {
     const clicked = Date.now();
-    await (await doorPages(page)).getByRole("link", { name: "Curriculum", exact: true }).click();
+    await (await theMenu(page)).getByRole("link", { name: "Curriculum", exact: true }).click();
     await expect(page.getByRole("status", { name: "Loading this page" })).toBeVisible({ timeout: 1_500 });
     await expect(page.getByRole("heading", { name: COULD_NOT_LOAD })).toBeVisible({ timeout: 12_000 });
     expect(Date.now() - clicked).toBeLessThan(12_000);
@@ -60,8 +60,8 @@ test("when the staff check cannot reach the database, the page says so instead o
 // Now only the menu pages are fetched ahead — Next 16 asks for a page's outline and its loading
 // screen separately, so at most two small requests each.
 test("opening the Skill Map loads nothing ahead but the menu pages", async ({ page }) => {
-  // the four doors (lib/menu.ts) and the logo link are what the bar pre-loads, beside the menu pages that still stand
-  const MENU = ["/today", "/setup/needs-doing", "/timetable", "/children", "/", "/setup", "/make", "/library", "/capture", "/setup/how-it-works"];
+  // the first page of each section of the sidebar (lib/menu.ts) and the logo link are what the frame pre-loads, beside the menu pages that still stand
+  const MENU = ["/today", "/timetable", "/children", "/children/assessments", "/across", "/", "/setup", "/make", "/library", "/capture", "/setup/how-it-works"];
   const background: string[] = [];
   page.on("request", (r) => {
     if (r.resourceType() !== "document" && r.headers()["rsc"] === "1") background.push(new URL(r.url()).pathname);
@@ -76,8 +76,8 @@ test("every menu page opens within three seconds of its click", async ({ page })
   await page.goto("/", { waitUntil: "networkidle" });
   for (const [label, heading] of [
     ["Today", "Today, the school"],
-    ["Children", "Children"],
-    ["Setup", "Setup"],
+    ["Class picture", "Children"],
+    ["Curriculum", "Curriculum"],
   ]) {
     const clicked = Date.now();
     await menu(page, label);

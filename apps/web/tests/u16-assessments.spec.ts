@@ -123,6 +123,7 @@ test("every assessment's stage, class and week are said in words", async ({ page
   await expect(copy).toHaveCount(1);
   await expect(copy).toContainText("Answers to judge");
   await page.goto(`/children/assessments?class=${SECTION}&view=table`);
+  await filters.locator("details[data-more-filters] summary").click(); // one row: the stage is behind More filters (page charter A4)
   await filters.locator('select[name="status"]').selectOption("check");
   await expect(page).toHaveURL(/status=check/);
   await expect(page.locator("tr[data-assessment]").filter({ hasText: "U16 paper" })).toHaveCount(1);

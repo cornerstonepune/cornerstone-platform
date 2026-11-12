@@ -33,8 +33,8 @@ are in `apps/web/lib/voice-words.ts` and every icon in `apps/web/lib/icons.tsx`,
    (`PURPOSE_MAX`).
 5. **One count, one meaning.** Computed once, the same on every page and in the menu. Only What needs doing (once Today) has a count.
 6. **The school's words.** Educator, regroup, Easy/Medium/Hard/Advance. No taxonomy, rung or kind on an educator's screen.
-7. **Phone and desktop.** Desktop first at 1440 px (above). On a phone the four doors are a tab bar at the foot (icon above
-   word, 44 px or taller, the chosen door's icon in brand clay and its word in ink), the bar keeps the mark, the search and
+7. **Phone and desktop.** Desktop first at 1440 px (above). On a phone the menu is a drawer behind the bar's Menu button (a
+   modal: Escape closes it, each line 44 px or taller), the bar keeps the mark, the search and
    the person, and a table scrolls sideways in its own box or becomes a list; it must not break there. A screen marked
    `phone_gate` also passes the phone gate list above.
 8. **Setup out of the way.** Statistics, question counts, old scans and reader statistics sit behind a "details" link.
@@ -46,16 +46,19 @@ are in `apps/web/lib/voice-words.ts` and every icon in `apps/web/lib/icons.tsx`,
 10. **A status is an icon, a word and a colour.** Never colour alone. One chip (`StatusChip`), one map of the school's
    states to green (done, right), amber (waiting on someone or something) and red (needs the educator now), and a quiet
    grey for a state with nothing to do. Red is rare. A state is added to `STATES` before a page uses it.
-11. **The bar is for getting around.** One bar across the whole screen, 72 px high (the wireframes' bar), and no sidebar (the rail beside a page
-   holds what is connected to it, never the menu): the school's logo (BrandMark, 48 px high, a link to Today), the four doors (Today,
-   Timetable, Children, Setup, each with its icon; Setup is every member of staff's while `mayUse(me, "setup")` says so, and
-   the coordinator group's alone once the roles split), the search, acting as (the coordinator's), help and sign out. There is one nav row: the lit door's other pages fold behind one button at the end of the trail ("Setup pages"), never a
-   second row under the bar (#690). The Timetable door's pages are also the page's rail ("Connected to", each with an icon and a second line), and there the fold is the narrow-width fallback only.
-   Nothing caps the width: the bar, the main column and the footer use the whole screen with the token gutters (24 px); only a running paragraph (the purpose line) keeps a readable line length (62 ch), never a table, grid, list or the page itself (U81). The one count in the site is on Today.
-   The search is a typeahead of at most five suggestions with no results page; what is typed travels in a POST body, never
-   in an address or a log. Everything in the bar is at least 44 px tall. Nothing in a shared block or the bar names a
-   subject. The door lit is the door the walk started from. Above a page's title is its trail: the door, then the thing,
-   and the browser's Back for the rest. A control whose target screen is not built is not drawn (`lib/built.ts`).
+11. **The bar and the sidebar are for getting around** (page charter A1, Nimish 12 Nov 2026, replacing the four doors of #690). One bar
+   across the whole screen, 72 px high: the school's logo (BrandMark, 48 px high, a link to Today), the search, the person and acting as
+   (the coordinator's), help and sign out, and nothing else. The menu is a **left sidebar** under the bar, always there from 701 px, folding
+   to its icons (kept for the next page) and a drawer on a phone, grouped by the educator's jobs: My day, Timetable, Children, Assessments,
+   and School for the coordinator (a view, never a permission: `lib/access.ts` still says what anyone may open). A page's line is marked
+   `aria-current="page"`; the section lit is the one the walk started from. The right side of a page is its **detail panel** (A2), never
+   a list of links: a page not yet moved to it keeps its rail until its own screen's pull request.
+   Nothing caps the width: the bar, the main column and the footer use the whole width beside the sidebar with the token gutters (24 px);
+   only a running paragraph (the purpose line) keeps a readable line length (62 ch), never a table, grid, list or the page itself (U81). The
+   one count in the site is on Today. The search is a typeahead of at most five suggestions with no results page; what is typed travels in a
+   POST body, never in an address or a log. Everything in the bar and the sidebar is at least 44 px tall. Nothing in a shared block, the bar
+   or the sidebar names a subject. Above a page's title is its trail: the section, then the thing, and the browser's Back for the rest. A
+   control whose target screen is not built is not drawn (`lib/built.ts`).
 12. **A person sees their own.** What a person sees is what their staff row names: its classes and subjects, every class when
    none is named. Each page carries its own filters (`FilterBar`) for what only it needs, starting at that scope. A view,
    never a permission (`lib/viewing.ts`, `lib/access.ts`). **Acting as** replaces the old "Viewing" control: a coordinator
@@ -76,19 +79,19 @@ are in `apps/web/lib/voice-words.ts` and every icon in `apps/web/lib/icons.tsx`,
 | Monday | read the class | Children (the class picture, and a child) |
 | Setup, apart | | Curriculum; Question bank |
 
-The menu is four doors on the bar (`apps/web/lib/menu.ts`; the old side menus are gone), and the table above is how the week
-runs through them. A page's door is the `group` of the screen that replaces it in `docs/frontend/screens.json`; its pages fold
-behind the "<door> pages" button at the end of the trail:
+The menu is the sidebar (`apps/web/lib/menu.ts`, page charter A1), and the table above is how the week runs through it:
 
-| Door | Its pages (behind "<door> pages" at the end of the trail) |
-|---|---|
-| Today | Today (`/today`: the periods, the strip of what waits, which carries the one count); Notes |
-| Timetable | Materials, Timetable, Timetable rules |
-| Children | Children (the class pictures), Assessments, Upload papers, Parent reports, Across classes |
-| Setup | What needs doing, Curriculum, All the curriculum, Skills to approve, Bank of questions, Question bank, Staff, School, How it works |
+| Section | Its pages, in this order | Who |
+|---|---|---|
+| My day | Today (`/today`, which carries the one count) · Notes to confirm · What needs doing (until it joins the coordinator's Today, B1b) | everyone; What needs doing the coordinator's |
+| Timetable | Week · Fortnight · Materials (Time by subject, B3, once the engine reads it) | everyone |
+| Children | Class picture · Parent reports | everyone |
+| Assessments | Assessments · Upload papers (until it joins an assessment, B6) · Question bank | everyone |
+| School | Across classes · Curriculum · Skills to approve · Staff · Classes · Timetable rules · How it works | the coordinator |
 
-Help, the Guide, Report a problem and the password sit outside the bar: the "?" and the person in the bar, and a link at the foot.
-The lit door and page are marked, no word of the menu names a subject. Held by `apps/web/tests/u53-the-menu.spec.ts`.
+Help, the Guide, Report a problem and the password sit outside the menu: the "?" and the person in the bar, and a link at the foot.
+The page and its section are marked, no word of the menu names a subject. Held by `apps/web/tests/u53-the-menu.spec.ts`, `u13-frame.spec.ts`
+(2, 2b, 6) and `u75-setup-nav.spec.ts`.
 
 ## The blocks (`apps/web/components/`)
 
@@ -97,11 +100,15 @@ The lit door and page are marked, no word of the menu names a subject. Held by `
 | `Screen` (`components/app-frame.tsx`, inside AppFrame) | Every page. Props: `stage`, `title`, `purpose` (one line, 140 characters at most), `action` (the one main action), `next` (the next-step link), `details` (optional link to setup and numbers), `rail` (optional: what the page is connected to, and Capture here). `action` and `next` are required, so a page cannot leave them out. |
 | `DataTable` | Every table. Props: `columns` (with a `value` for each cell, which is what empty-column hiding reads), `rows` (needs-you first), `rowKey`, and `more`: either `{ by, href? }` to group, or `{ page, href }` to page. `more` is required, so a table that can pass 10 rows always has a way to the rest. A column says how it aligns (`num` right, `status` centred, else left) and may fix its `width`. `extras` adds a row's data attributes and a full-width row under it (an assessment opened to its copies). On a phone it is a list of labelled cards. |
 | `StatusChip` | A state in a row or a heading: icon, word, green, amber or red. The states, words and tones are in `STATES`; add one there first. |
-| `FilterBar` | The filter row over a table: `filters` (a dropdown each: name, label, value, "all" words, options), `search`, `keep` (what the page holds while filtering). A GET form: the filters are in the address. |
+| `FilterBar` | The filter row over a table: `filters` (a dropdown each: name, label, value, "all" words, options), `search`, `keep` (what the page holds while filtering). One row (charter A4): the first `FILTERS_IN_ROW` (3) dropdowns, the rest behind "More filters", which says how many are on. A GET form: the filters are in the address. |
+| `Cards` | Compact cards: a title, one line, at most two chips (one `status`, one whole `count`: charter A3), one link. |
+| `DetailPanel` | The right side of a page (charter A2). `open`: the thing chosen (its `key` `<kind>:<id>`, as the address's `?open=` says it; its tabs, the same for the same kind; its actions; its full page) or none, and then `summary`: three or four `StatTile`s. Closes on × and Escape, focus back on the thing. First page on it: the Timetable's week (`components/lesson-panel.tsx`). |
+| `StatTile` | A big whole number and one line (charter A3); a row of them is `StatTiles`. Never a sentence with a number in it. |
+| `SubjectTag` | A subject's icon, word and colour on any block, the colour from the school's subject rows (`lib/subject-looks.ts`); `SubjectMix` splits a count by subject. |
 | `EmptyState` | Nothing to show. On a `Screen` page the shell supplies the next step. |
 | `Count` | A number of things waiting. Give it the same `of` and value wherever it appears; the bar's badge carries the same `data-count`. |
 
-Rules and constants: `apps/web/lib/ux-rules.ts`; the menu: `apps/web/lib/menu.ts`. The frame (bar, trail, rail, bottom doors) is `AppFrame`; the inventory test that drives every screen is `apps/web/tests/u70-inventory.spec.ts`. The first page on the blocks is `/capture/check`; copy it.
+Rules and constants: `apps/web/lib/ux-rules.ts`; the menu: `apps/web/lib/menu.ts`. The frame (bar, sidebar, trail) is `AppFrame`; the one state scale (green secure, amber practising, red needs help, grey not seen; rubric levels 0–3 on it) is `lib/state-scale.ts`; the inventory test that drives every screen is `apps/web/tests/u70-inventory.spec.ts`. The first page on the blocks is `/capture/check`; copy it.
 
 ## How the build holds the rules
 

@@ -364,7 +364,9 @@ export default async function AssessmentPage({ params, searchParams }: Props) {
       {shown.length === 0 ? (
         <EmptyState>No copies yet. The copies appear here, one row each, when the pack is made.</EmptyState>
       ) : (
-        <div className="grid gap-4">
+        // one column that never grows past the page's (minmax(0, 1fr)): a grid item is as wide as its content by default, so a wide table
+        // widened the column under the rail instead of scrolling in its own box
+        <div className="grid grid-cols-[minmax(0,1fr)] gap-4">
           {GROUPS.map((grp) => {
             const rows = shown.filter((s) => s.grp.key === grp.key).map((s) => s.p);
             if (!rows.length) return null;

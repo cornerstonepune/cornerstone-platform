@@ -18,7 +18,7 @@ import { aChildIn } from "./rows";
 import { expect, test } from "@playwright/test";
 import postgres from "postgres";
 import { paperScreenOf } from "../lib/queries-assessment-extras";
-import { doorPages } from "./door-pages";
+import { litSection, menu } from "./menu";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -96,14 +96,12 @@ test.afterAll(async () => sql.end());
 
 test("one Assessments in the menu for marking and making, and a row opens the paper where its work is", async ({ page }) => {
   await page.goto("/children/assessments");
-  // Assessments is one page of the Children door: the door is lit, the page is marked in its row, and there is no Marking or Make papers
-  const menu = page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" });
-  const pagesRow = await doorPages(page);
-  await expect(menu.getByRole("link", { name: "Children" })).toHaveAttribute("aria-current", "page");
+  // Assessments is a section of the sidebar: it is lit, its page is marked, and there is no Marking or Make papers
+  const pagesRow = await menu(page);
+  await expect(litSection(page)).toHaveText("Assessments");
   await expect(pagesRow.getByRole("link", { name: "Assessments", exact: true })).toHaveAttribute("aria-current", "page");
   await expect(pagesRow.getByRole("link", { name: "Marking" })).toHaveCount(0);
   await expect(pagesRow.getByRole("link", { name: "Make papers" })).toHaveCount(0);
-  await page.keyboard.press("Escape");
   // making, reading a scan and the queue of answers to check are all here
   await expect(page.getByRole("region", { name: "Read an assessment" })).toBeVisible();
   await expect(page.getByRole("complementary", { name: "Rail" }).getByRole("link", { name: "Answers to check" })).toHaveAttribute("href", /^\/children\/assessments\/[^/?]+\/[^/?]+$/);
@@ -112,9 +110,8 @@ test("one Assessments in the menu for marking and making, and a row opens the pa
   // the pages it merged are still Assessments
   for (const path of ["/make"]) {
     await page.goto(path);
-    await expect(menu.getByRole("link", { name: "Children" })).toHaveAttribute("aria-current", "page");
-    await expect((await doorPages(page)).getByRole("link", { name: "Assessments", exact: true })).toHaveAttribute("aria-current", "page");
-    await page.keyboard.press("Escape");
+    await expect(litSection(page)).toHaveText("Assessments");
+    await expect((await menu(page)).getByRole("link", { name: "Assessments", exact: true })).toHaveAttribute("aria-current", "page");
   }
 
   // a scanned paper, an answer waiting: on its assessment, the copy opens to check its answers

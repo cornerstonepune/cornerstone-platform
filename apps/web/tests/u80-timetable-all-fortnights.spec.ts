@@ -11,12 +11,12 @@
  */
 import { expect, test, type Browser, type Page } from "@playwright/test";
 import postgres from "postgres";
-import { GROUPS } from "../lib/menu";
+import { SECTIONS } from "../lib/menu";
 import { timetableSwitch } from "./educator-screens";
 import { sessionFor } from "./inventory-fixtures";
 import { aPerson, personAsStored } from "./rows";
 import { timetableRows, type Fixture } from "./timetable-rows";
-import { doorPages } from "./door-pages";
+import { menu } from "./menu";
 
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -105,19 +105,26 @@ test("the coordinator opens a fortnight still in planning: its grid, its state i
   await expect(picker.locator("optgroup")).toHaveAttribute("label", "Planning");
   await expect(picker.locator(`option[value='${PLANNED}']`)).toContainText("Drafted");
   await expect(picker.locator(`option[value='${PLANNED}']`)).toContainText(/\d{2}-[A-Z][a-z]{2} to \d{2}-[A-Z][a-z]{2}/);
-  // the tools that change a plan are links to the pages that already do it, in the rail; this page changes nothing
+  // this page changes nothing: no Go live, no moves; the panel's summary is numbers, never links (page charter A2)
+  await expect(page.getByRole("link", { name: "Moves by hand" })).toHaveCount(0); // the moves are made on the fortnight page
+  await expect(page.getByRole("button", { name: /go live/i })).toHaveCount(0);
+  // every lesson in the grid is a click that opens it in the panel (page charter A2); the coordinator's Move there opens the fortnight
+  // page with that lesson chosen to move
+  const blocks = page.locator(`${GRID} [data-open-key^="lesson:"]`);
+  await expect(blocks).toHaveCount(lessons);
+  const one = blocks.first();
+  expect(await one.getAttribute("href")).toMatch(/[?&]open=lesson(:|%3A)[0-9a-f-]{36}(&|$)/);
+  await one.click();
+  await expect(one).toHaveAttribute("aria-expanded", "true");
+  const move = page.locator("[data-panel-move]");
+  expect(await move.getAttribute("href")).toMatch(new RegExp(`^/timetable/fortnight/${PLANNED}\\?class=${f.klass}&from=\\d{4}-\\d\\d-\\d\\d(~|%7E)[0-9a-f-]{36}$`));
+  await move.click();
+  await expect(page.getByRole("heading", { name: `Fortnight ${PLANNED}`, level: 1 })).toBeVisible();
+  await expect(page.locator(`${GRID} [data-pick][aria-pressed=true]`)).toHaveCount(1);
+  // the tools that change a plan are links to the pages that already do it, on the fortnight page (page charter C: Fortnight)
   const rail = page.locator("[data-rail]");
   for (const [name, href] of [["Draft from the rules", `/timetable/draft?fn=${PLANNED}`], ["Timetable rules", "/timetable/rules"]])
     await expect(rail.getByRole("link", { name }), name).toHaveAttribute("href", href);
-  await expect(rail.getByRole("link", { name: "Moves by hand" })).toHaveCount(0); // the moves are made on the fortnight page
-  await expect(page.getByRole("button", { name: /go live/i })).toHaveCount(0);
-  // every lesson in the grid is a click that chooses it (the coordinator's), opening the fortnight page with that lesson chosen to move
-  await expect(page.locator(`${GRID} [data-pick]`)).toHaveCount(lessons);
-  const one = page.locator(`${GRID} [data-pick]`).first();
-  expect(await one.getAttribute("href")).toMatch(new RegExp(`^/timetable/fortnight/${PLANNED}\\?class=${f.klass}&from=\\d{4}-\\d\\d-\\d\\d(~|%7E)[0-9a-f-]{36}$`));
-  await one.click();
-  await expect(page.getByRole("heading", { name: `Fortnight ${PLANNED}`, level: 1 })).toBeVisible();
-  await expect(page.locator(`${GRID} [data-pick][aria-pressed=true]`)).toHaveCount(1);
   await expect(page.getByText(NOT_FOUND)).toHaveCount(0);
   await page.context().close();
 });
@@ -152,6 +159,10 @@ test("with the switch on (as live today): the fortnight under way is Live, the l
     await edu.goto(`/timetable?class=${f.klass}&fn=7401`);
     await expect(edu.locator("[data-block=FortnightGrid]")).toBeVisible();
     await expect(edu.locator("[data-pick]")).toHaveCount(0); // an educator chooses nothing to move
+    await expect(edu.getByRole("link", { name: "Draft from the rules" })).toHaveCount(0); // nor drafts
+    await edu.locator('[data-block=FortnightGrid] [data-open-key^="lesson:"]').first().click();
+    await expect(edu.locator("[data-panel-title]")).toBeVisible();
+    await expect(edu.locator("[data-panel-move]")).toHaveCount(0); // the lesson opens, with no Move in it
     await expect(edu.locator("[data-fortnight-state]")).toHaveCount(0); // the state of a plan is the coordinator's
     await edu.context().close();
   } finally {
@@ -196,25 +207,24 @@ test("an educator with nothing live reads a plain page, never not found, and see
     await expect(page.locator("[data-section=planning]")).toHaveCount(0);
     await expect(page.locator("select[name=fn]")).toHaveCount(0);
   }
-  await expect(page.locator("[data-bar] [data-door=timetable]").first()).toBeVisible(); // the menu stays
+  await expect(page.locator("[data-sidebar]").getByRole("list", { name: "Timetable" })).toBeVisible(); // the menu stays
   await page.context().close();
 });
 
-test("the tabs that led nowhere are gone: no Your day, no This week; the Timetable door opens the Timetable", async ({ page }) => {
-  const pages = GROUPS.flatMap((d) => d.pages);
+test("the tabs that led nowhere are gone: no Your day, no This week; the Timetable's first page opens the Timetable", async ({ page }) => {
+  const pages = SECTIONS.flatMap((d) => d.pages);
   expect(pages.filter((p) => ["Your day", "This week"].includes(p.label))).toEqual([]);
   expect(pages.filter((p) => p.href === "/educator" || p.href === "/educator/week")).toEqual([]);
-  expect(GROUPS.find((d) => d.key === "timetable")?.href).toBe("/timetable");
-  // the door's pages fold behind "<door> pages" (one nav row, #690 step B): opened, they hold no Your day and no This week
+  expect(SECTIONS.find((d) => d.key === "timetable")?.pages[0].href).toBe("/timetable");
+  // the sidebar holds no Your day and no This week, at any width
   await page.goto("/today");
-  await expect((await doorPages(page)).getByRole("link", { name: "Your day" })).toHaveCount(0);
-  // on a wide screen the door's pages are in the page's rail; the fold is the narrow-width fallback, so it is read at 900 px
+  await expect((await menu(page)).getByRole("link", { name: "Your day" })).toHaveCount(0);
   await page.setViewportSize({ width: 900, height: 800 });
   await page.goto("/timetable");
-  const row = await doorPages(page);
-  await expect(row.getByRole("link", { name: "This week" })).toHaveCount(0);
-  await expect(row.getByRole("link", { name: "Timetable", exact: true })).toBeVisible();
-  await page.keyboard.press("Escape");
-  await page.locator("[data-bar] [data-door=timetable]").first().click();
+  const nav = await menu(page);
+  await expect(nav.getByRole("link", { name: "This week" })).toHaveCount(0);
+  await expect(nav.getByRole("link", { name: "Week", exact: true })).toBeVisible();
+  await page.goto("/today");
+  await (await menu(page)).getByRole("link", { name: "Week", exact: true }).click();
   await expect(page).toHaveURL(/\/timetable$/);
 });

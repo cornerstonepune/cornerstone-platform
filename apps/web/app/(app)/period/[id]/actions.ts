@@ -19,6 +19,7 @@ export async function chooseActivity(sessionId: string, activity: string, reason
   const res = await engineSend("/timetable/lesson/edit", { actor: me.email, session_id: sessionId, activity_code: activity, reason: reason.trim() || null });
   if (!res.ok) return { error: await refusal(res, "That was not done.") };
   revalidatePath(`/period/${sessionId}`);
+  revalidatePath("/timetable");
   return { done: "The activity is chosen." };
 }
 
@@ -39,4 +40,17 @@ export async function saveLessonForm(sessionId: string, classId: string, day: st
   revalidatePath(`/period/${sessionId}`);
   const marked = Object.values(f.lists).reduce((n, l) => n + l.length, 0);
   return { done: marked ? `Saved: ${marked} marked${f.rest ? ", the rest as expected" : ""}.` : f.rest ? "Saved: everyone as expected." : "Saved." };
+}
+
+/** The coordinator changes the lesson's words (`/timetable/lesson/edit` with `text`); past planning the engine asks a reason. */
+export async function editLesson(sessionId: string, text: string, reason: string): Promise<Result> {
+  const me = await requireStaff();
+  if (!UUID.test(sessionId)) return { error: "That is not a lesson." };
+  if (!(await isCoordinator())) return { error: "Only the coordinator edits a lesson." };
+  if (!text.trim()) return { error: "Say what the lesson is." };
+  const res = await engineSend("/timetable/lesson/edit", { actor: me.email, session_id: sessionId, text: text.trim(), reason: reason.trim() || null });
+  if (!res.ok) return { error: await refusal(res, "That was not done.") };
+  revalidatePath(`/period/${sessionId}`);
+  revalidatePath("/timetable");
+  return { done: "The lesson is changed." };
 }

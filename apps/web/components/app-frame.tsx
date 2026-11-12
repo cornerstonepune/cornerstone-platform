@@ -1,11 +1,12 @@
 import type { ReactNode } from "react";
 import Link from "@/components/link";
 import { BrandMark } from "./brand-mark";
-import { BottomDoors, HelpLink, TopDoors } from "./frame/doors";
+import { HelpLink } from "./frame/help-link";
+import { MenuDrawer, Sidebar } from "./frame/sidebar";
 import { ActingAsSwitch, AccountLink, Person } from "./frame/person";
 import { MapLink, ReportLink } from "./frame/foot-links";
 import { SearchBox } from "./frame/search-box";
-import { WalkProvider, type FrameDoor } from "./frame/walk";
+import { WalkProvider, type FrameSection } from "./frame/walk";
 import { Body, PageHeader, classesSaid } from "./parts";
 import { Icon, type IconName as Icon_ } from "@/lib/icons";
 import { KeyValue } from "@/components/key-value";
@@ -13,40 +14,42 @@ import type { Kind } from "@/components/kind-tile";
 import { signOut } from "@/lib/auth-actions";
 import type { Session } from "@/lib/auth";
 import { mayUse } from "@/lib/access";
-import { GROUPS } from "@/lib/menu";
-import { isBuilt, screenHref } from "@/lib/built";
+import { FOLD_COOKIE, sectionsFor } from "@/lib/menu";
+import { screenHref } from "@/lib/built";
 import { actingAsEducator } from "@/lib/acting-view";
+import { cookies } from "next/headers";
 
-// AppFrame (docs/frontend/SPEC.md §5, UI-13): the one frame of every signed-in page. The bar across the top (the school's logo, a
-// link to Today; the four doors; search; acting as; help; sign out), the trail and the main column below it, and on a phone
-// the four doors at the foot. The page itself is `Screen`, which holds the title, the one main action, the rail and the next
-// step. Nimish, 24 Oct 2026: "the menu can be on the top" — there is no sidebar. Nothing here names a subject.
+// AppFrame (docs/frontend/SPEC.md §5, UI-13; docs/frontend/page-charter.md A1): the one frame of every signed-in page. The bar across
+// the top keeps only the school's logo (a link to Today), search, the person and Acting as, help and sign out; the menu is the sidebar
+// at the left (folding to icons; a drawer behind the menu button on a phone), grouped by the educator's jobs; the main column and its
+// foot fill the rest of the width. The page itself is `Screen`, which holds the title, the one main action, the right side and the next
+// step. Nothing here names a subject.
 
-/** A door opens its screen once that screen is built (lib/built.ts), and the first page of the door until then. */
-function doorsFor(me: Session, acting: boolean, waiting: number): FrameDoor[] {
-  // Setup is every member of staff's today (lib/access.ts, ux9c-one-role); acting as an educator is a view that puts it away
-  const setup = mayUse(me, "setup") && !acting;
-  return GROUPS.filter((d) => !d.setup || setup).map((d) => ({
-    key: d.key,
-    label: d.label,
-    icon: d.icon,
-    href: (isBuilt(d.screen) ? screenHref(d.screen) : null) ?? d.href,
-    count: d.key === "today" && waiting ? waiting : undefined,
+/** The sidebar a person sees: School and the coordinator's own lines are the coordinator's (an admin's too), and put away while she
+ *  acts as an educator. Only Today carries a count (docs/ux-rules.md rule 5). */
+function sectionsOf(me: Session, acting: boolean, waiting: number): FrameSection[] {
+  const coordinator = (me.role === "coordinator" || me.role === "admin") && !acting;
+  return sectionsFor(coordinator).map((s) => ({
+    key: s.key,
+    label: s.label,
+    icon: s.icon,
+    pages: s.pages.map((p) => ({ href: p.href, label: p.label, count: p.href === "/today" && waiting ? waiting : undefined })),
   }));
 }
 
 export async function AppFrame({ me, waiting, children }: { me: Session; waiting: number; children: ReactNode }) {
   const acting = await actingAsEducator(me);
-  const doors = doorsFor(me, acting, waiting);
+  const sections = sectionsOf(me, acting, waiting);
+  const folded = (await cookies()).get(FOLD_COOKIE)?.value === "icons";
   return (
-    <WalkProvider doors={doors}>
-      <div data-block="AppFrame" data-frame className="flex min-h-dvh flex-col bg-[var(--ground)] pb-[var(--space-7)] text-[var(--ink)] min-[701px]:pb-0">
+    <WalkProvider sections={sections}>
+      <div data-block="AppFrame" data-frame className="flex min-h-dvh flex-col bg-[var(--ground)] text-[var(--ink)]">
         <header data-bar className="relative z-30 border-b border-[var(--line)] bg-[var(--panel)] print:hidden">
           <div className="flex h-[72px] w-full items-center gap-[var(--space-3)] px-[var(--space-3)] min-[701px]:gap-[var(--space-4)] md:px-[var(--space-4)]">
+            <MenuDrawer />
             <Link href="/today" prefetch className="flex shrink-0 items-center no-underline">
               <BrandMark />
             </Link>
-            <TopDoors />
             <div className="ml-auto flex min-w-0 items-center gap-[var(--space-2)] max-[700px]:flex-1 max-[700px]:justify-end">
               <SearchBox />
               <Person name={me.name}>
@@ -67,14 +70,18 @@ export async function AppFrame({ me, waiting, children }: { me: Session; waiting
             </div>
           </div>
         </header>
-        <main className="flex w-full min-w-0 flex-1 flex-col">{children}</main>
-        <footer className="w-full px-[var(--space-3)] py-[var(--space-3)] text-[length:var(--text-label)] md:px-[var(--space-4)] print:hidden">
-          <span className="flex flex-wrap gap-x-[var(--space-4)]">
-            <ReportLink />
-            {mayUse(me, "the_map") ? <MapLink /> : null}
-          </span>
-        </footer>
-        <BottomDoors />
+        <div className="flex min-w-0 flex-1">
+          <Sidebar folded={folded} />
+          <div className="flex min-w-0 flex-1 flex-col">
+            <main className="flex w-full min-w-0 flex-1 flex-col">{children}</main>
+            <footer className="w-full px-[var(--space-3)] py-[var(--space-3)] text-[length:var(--text-label)] md:px-[var(--space-4)] print:hidden">
+              <span className="flex flex-wrap gap-x-[var(--space-4)]">
+                <ReportLink />
+                {mayUse(me, "the_map") ? <MapLink /> : null}
+              </span>
+            </footer>
+          </div>
+        </div>
       </div>
     </WalkProvider>
   );
@@ -159,12 +166,11 @@ export function RailFacts({ title, rows }: { title: string; rows: readonly { lab
   );
 }
 
-/** `doorRail`: the rail holds the lit door's other pages, so the fold at the end of the trail is put away where the rail sits beside the page. */
-export function Rail({ edges = [], capture, peek, facts, cards, boxes = [], doorRail }: { edges?: Edge[]; capture?: ReactNode; peek?: ReactNode; facts?: ReactNode; cards?: ReactNode; boxes?: { title: string; body: ReactNode }[]; doorRail?: boolean }) {
+export function Rail({ edges = [], capture, peek, facts, cards, boxes = [] }: { edges?: Edge[]; capture?: ReactNode; peek?: ReactNode; facts?: ReactNode; cards?: ReactNode; boxes?: { title: string; body: ReactNode }[] }) {
   const drawn = edges.map((e) => ({ ...e, href: e.href ?? screenHref(e.screen, e.params) ?? e.fallback ?? null })).filter((e): e is typeof e & { href: string } => e.href !== null);
   if (!drawn.length && !capture && !peek && !facts && !cards && !boxes.length) return null;
   return (
-    <aside aria-label="Rail" data-rail data-door-rail={doorRail ? "" : undefined} className="grid content-start gap-[var(--space-4)]">
+    <aside aria-label="Rail" data-rail className="grid content-start gap-[var(--space-4)]">
       {peek}
       {drawn.length ? (
         <section aria-label="Connected to" className={BOX}>
@@ -227,6 +233,7 @@ export function Screen({
   next,
   details,
   rail,
+  panel,
   children,
 }: {
   stage: string;
@@ -241,12 +248,22 @@ export function Screen({
   next?: To | null;
   details?: To;
   rail?: ReactNode;
+  /** The DetailPanel (page charter A2): the right side of a page moved onto the charter; it takes the rail's place. */
+  panel?: ReactNode;
   children: ReactNode;
 }) {
   // the wireframes' `.page`: the main column (trail, title, purpose, the action, the page) and the rail beside it from the top
   return (
     <Body>
-      <div className={rail ? "grid gap-[var(--space-4)] min-[1000px]:grid-cols-[minmax(0,1fr)_320px] min-[1000px]:gap-[var(--space-5)]" : undefined}>
+      <div
+        className={
+          panel
+            ? "grid items-start gap-[var(--space-4)] min-[1000px]:grid-cols-[minmax(0,1fr)_320px] min-[1600px]:grid-cols-[minmax(0,1fr)_380px] min-[1000px]:gap-[var(--space-4)]"
+            : rail
+              ? "grid gap-[var(--space-4)] min-[1000px]:grid-cols-[minmax(0,1fr)_320px] min-[1000px]:gap-[var(--space-5)]"
+              : undefined
+        }
+      >
         <div className="min-w-0">
           <PageHeader stage={stage} icon={icon} title={title} sub={purpose} inColumn chip={stageChip} />
           <div className={action !== undefined || details ? "mb-[var(--space-3)] flex flex-wrap items-center gap-3" : undefined} data-ux={action !== undefined ? "action" : undefined}>
@@ -266,7 +283,7 @@ export function Screen({
             </nav>
           ) : null}
         </div>
-        {rail}
+        {panel ?? rail}
       </div>
     </Body>
   );

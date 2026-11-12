@@ -16,6 +16,7 @@
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { expect, test, type Page } from "@playwright/test";
+import { menu } from "./menu";
 import postgres from "postgres";
 import { paperAt } from "./paper-screen";
 import { aClass, aReadPaper } from "./rows";
@@ -220,8 +221,8 @@ test("the top bar: the menu button is full-size, the student search is a compact
   for (const url of ["/setup/needs-doing", "/children/assessments", "/children", "/"]) {
     await open(page, url);
     expect((await page.locator("[data-bar]").first().locator("div").first().boundingBox())!.height, `${url}: the bar`).toBe(BAR_HEIGHT_PX);
-    for (const door of await page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" }).getByRole("link").all())
-      expect((await door.boundingBox())!.height, `${url}: a door`).toBeGreaterThanOrEqual(TOP_BAR_MIN_PX);
+    for (const door of await (await menu(page)).getByRole("link").all())
+      expect((await door.boundingBox())!.height, `${url}: a line of the menu`).toBeGreaterThanOrEqual(TOP_BAR_MIN_PX);
     await expect(page.locator("[data-viewing]"), `${url}: no Viewing control in the bar`).toHaveCount(0);
     const search = page.getByRole("search", { name: "Find a child or paper" }).getByRole("combobox");
     const box = (await search.boundingBox())!;
@@ -260,6 +261,8 @@ test("Assessments is a table of aligned columns with the one filter row, and a s
   // the filter row is in the same place, and a filter shows itself and clears in one click
   const filters = page.locator("[data-filterbar]");
   await expect(filters).toBeVisible();
+  // one row (page charter A4): the first three dropdowns, the rest behind More filters
+  await filters.locator("details[data-more-filters] summary").click();
   await filters.locator('select[name="kind"]').selectOption("assessment");
   await expect(page).toHaveURL(/kind=assessment/);
   await expect(page.locator("[data-active-filters]")).toContainText("Kind: Class assessment");

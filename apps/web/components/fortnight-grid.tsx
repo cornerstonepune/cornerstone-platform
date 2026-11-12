@@ -3,14 +3,15 @@ import { ICON_SIZE, Icon } from "@/lib/icons";
 import type { Subject } from "./period-row";
 import { StatusChip, type State } from "./status-chip";
 
-/** A lesson as a block. `href`: where a plain click goes, the lesson's activity page (none when it has none: then the block is not a link and
+/** A lesson as a block. `openKey`: the block opens the page's detail panel (page charter A2) at `href`, without scrolling, and `selected` marks
+ *  the one open (a ring, and `aria-expanded` read with the panel beside it). `href`: where a plain click goes, the lesson's activity page (none when it has none: then the block is not a link and
  *  says nothing more). `pick`: the coordinator's click, choosing this block as the lesson to move or the one to swap it with; the activity link
  *  then sits on the block as its own small link. `picked`: this is the lesson chosen to move. `note`: the rule's words, when a clash is on it. */
-export type FCell = { subject: Exclude<Subject, "fixed">; activity: string; href?: string; pick?: string; picked?: boolean; chip?: State; now?: boolean; moved?: boolean; clash?: boolean; note?: string };
+export type FCell = { subject: Exclude<Subject, "fixed">; activity: string; href?: string; pick?: string; picked?: boolean; chip?: State; now?: boolean; moved?: boolean; clash?: boolean; note?: string; openKey?: string; selected?: boolean };
 /** A free slot (a lesson period with no lesson that day): offered only while a lesson is chosen to move, as a place to move it to. */
 export type FSlot = { slot: string; label: string };
 export type FRow = { band: string } | { time: string; cells: readonly (FCell | FSlot | null)[] };
-const SUBJECT = { numeracy: "Numeracy", language: "Language", arts: "Arts" } as const;
+export const SUBJECT = { numeracy: "Numeracy", language: "Language", arts: "Arts" } as const;
 
 /** Days across, periods down; each cell filled with its subject's tint, a 3 px top edge in the subject colour, the subject's
  *  icon and word and the activity; fixed parts of the day are full-width sand bands; today's head is the action colour;
@@ -70,6 +71,12 @@ function Cell({ c }: { c: FCell }) {
         <Link href={c.pick} className={cls} data-pick aria-pressed={c.picked ?? false} data-press {...common}>{inside}</Link>
         {c.href ? <Link href={c.href} className="b-open" data-activity-link>Activity</Link> : null}
       </div>
+    );
+  if (c.href && c.openKey)
+    return (
+      <Link href={c.href} scroll={false} className={`${cls}${c.selected ? " b-selected" : ""}`} data-press data-open-key={c.openKey} aria-expanded={c.selected ?? false} aria-controls={c.selected ? "detail-panel" : undefined} {...common}>
+        {inside}
+      </Link>
     );
   if (c.href) return <Link href={c.href} className={cls} data-press {...common}>{inside}</Link>;
   return <div className={cls} {...common}>{inside}</div>;

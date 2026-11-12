@@ -18,463 +18,541 @@
   <section class="wf" data-viewport="1440" aria-label="Laptop, 1440 px">
     <div class="frame">
       <header class="bar">
+        <button class="barbtn menubtn press" data-bar="2" type="button" aria-label="Menu" aria-haspopup="dialog"><i class="ic" data-icon="menu"></i></button>
         <a class="brand" data-bar="0" href="#today" aria-label="Cornerstone Gurukul, go to Today">
           <img class="wide on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-colour.svg" alt="">
           <img class="wide on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-for-dark-backgrounds.svg" alt="">
           <img class="small on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark.svg" alt="">
           <img class="small on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark-on-white-tile.svg" alt="">
         </a>
-        <ul class="doors" aria-label="Doors">
-          <li><a class="door" data-bar="0" href="#today"><i class="ic" data-icon="today"></i>Today <span class="badge num" data-source="pii.educator_note.status pii.educator_note.received_at" aria-label="7 notes to confirm">7</span></a></li>
-          <li><a class="door" data-bar="1" href="#timetable"><i class="ic" data-icon="timetable"></i>Timetable</a></li>
-          <li><a class="door" data-bar="2" href="#children" aria-current="page"><i class="ic" data-icon="children"></i>Children</a></li>
-          <li><a class="door" data-bar="3" href="#setup"><i class="ic" data-icon="setup"></i>Setup</a></li>
-        </ul>
-        <label class="search"><i class="ic s" data-icon="search"></i><span class="vh">Search</span><input data-bar="4" type="search" placeholder="Sr. No., name or activity"></label>
-        <button class="barbtn press" data-bar="5" type="button" role="switch" aria-checked="false"><i class="ic" data-icon="acting-as"></i><span class="w">Acting as</span></button>
-        <a class="barbtn" data-bar="6" href="#help" aria-label="Help for this page"><i class="ic" data-icon="help"></i></a>
-        <button class="barbtn press" data-bar="7" type="button"><i class="ic" data-icon="sign-out"></i><span class="w">Sign out</span></button>
+        <label class="search"><i class="ic s" data-icon="search"></i><span class="vh">Search</span><input data-bar="3" type="search" placeholder="Sr. No., name or activity"></label>
+        <button class="barbtn press" data-bar="4" type="button" role="switch" aria-checked="false"><i class="ic" data-icon="acting-as"></i><span class="w">Acting as</span></button>
+        <a class="barbtn" data-bar="5" href="#help" aria-label="Help for this page"><i class="ic" data-icon="help"></i></a>
+        <button class="barbtn press" data-bar="6" type="button"><i class="ic" data-icon="sign-out"></i><span class="w">Sign out</span></button>
       </header>
-      <ol class="trail" aria-label="Trail">
-        <li aria-current="page">Children</li>
-      </ol>
-      <div class="page">
-        <main class="main">
-          <div class="head">
-            <p class="eyebrow"><i class="ic s" data-icon="children"></i>All classes · <span class="num" data-source="enrolment.child_id">117</span> children</p>
-            <h1 class="title">Children</h1>
-            <p class="purpose">Your children in one table: how each is doing, last seen, notes waiting. Search, filter, open a child.</p>
-          </div>
-          <div class="filters" data-block="FilterBar">
-            <label class="sel"><i class="ic s" data-icon="search"></i><span class="vh">Search</span><input data-el="0" type="search" placeholder="Name or Sr. No." data-source="pii.child.first_name pii.child.last_name enrolment.roll_no"></label>
-            <label class="sel"><i class="ic s" data-icon="filter"></i>Class <select data-el="1" data-source="school_class.section"><option>All</option><option>K2 Red</option><option>K2 Blue</option></select></label>
-            <label class="sel">Show <select data-el="2" data-source="child_skill_state.state"><option>Needs attention</option><option>All</option></select></label>
-            <label class="sel"><i class="ic s" data-icon="group"></i>Group by <select data-el="11" data-source="child_skill_state.state school_class.section"><option>None: one table in Sr. No. order</option><option>Class</option><option selected>How they are doing</option><option>Needs attention</option></select></label>
-            <button class="btn press" data-el="3" type="button" aria-label="Remove the filter: Needs attention"><i class="ic" data-icon="clear"></i>Needs attention</button>
-            <button class="btn press" data-el="4" type="button">Clear</button>
-            <a class="btn btn-main press" data-el="7" href="#picture"><i class="ic" data-icon="child"></i>Class picture grid</a>
-          </div>
-          <p class="caption">Grouped by how they are doing. With "None", the same rows sit in one table, in Sr. No. order, with no headings.</p>
-          <div class="groups">
-          <section class="grp" data-state="ok" aria-label="Secure on most skills seen, 4 children">
-            <h3 class="grp-h"><i class="ic s" data-icon="secure"></i>Secure on most skills seen <span class="count num">4</span></h3>
-            <div class="table-box" data-block="DataTable">
-              <table class="table">
-                <thead><tr><th>Sr. No. and name</th><th>Class</th><th>How they are doing</th><th>Last seen</th><th class="st">Notes waiting</th><th class="st">Absences noted</th></tr></thead>
-                <tbody>
-              <tr>
-                <td data-source="pii.child.first_name pii.child.last_name enrolment.roll_no"><button class="nchip press" data-el="5" type="button"><span class="no num" data-source="enrolment.roll_no">05</span><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Eli Eel</span></button></td>
-                <td data-source="school_class.section grade.name">K2 Red</td>
-                <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="6 secure, 3 practising, 7 not seen yet"><i data-state="ok" style="--n: 6"></i><i data-state="wait" style="--n: 3"></i><i data-state="unseen" style="--n: 7"></i></div><span class="muted">6 secure · 3 practising · 7 not seen</span></td>
-                <td data-source="child_skill_state.last_seen">Mon</td>
-                <td class="st" data-source="pii.note_claim.child_id"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>1 to confirm</span></td>
-                <td class="st" data-source="activity_observation.outcome activity_observation.observed_at session.school_day_id"><span class="days" role="img" aria-label="Absences noted, last 7 school days: none Monday, none Tuesday, none Wednesday, no lesson Thursday, none Friday, none Monday, none Tuesday"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span> <span class="muted">none</span></td>
-              </tr>
-              <tr>
-                <td data-source="pii.child.first_name pii.child.last_name enrolment.roll_no"><button class="nchip press" data-el="5" type="button"><span class="no num" data-source="enrolment.roll_no">03</span><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Cal Crow</span></button></td>
-                <td data-source="school_class.section grade.name">K2 Red</td>
-                <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="7 secure, 4 practising, 5 not seen yet"><i data-state="ok" style="--n: 7"></i><i data-state="wait" style="--n: 4"></i><i data-state="unseen" style="--n: 5"></i></div><span class="muted">7 secure · 4 practising · 5 not seen</span></td>
-                <td data-source="child_skill_state.last_seen">Tue</td>
-                <td class="st" data-source="pii.note_claim.child_id"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>1 to confirm</span></td>
-                <td class="st" data-source="activity_observation.outcome activity_observation.observed_at session.school_day_id"><span class="days" role="img" aria-label="Absences noted, last 7 school days: none Monday, none Tuesday, absent Wednesday, no lesson Thursday, none Friday, none Monday, none Tuesday"><i></i><i></i><i data-state="quiet"><i class="ic s" data-icon="absent"></i></i><i></i><i></i><i></i><i></i></span> <span class="chip" data-state="quiet"><i class="ic s" data-icon="absent"></i>1 noted</span></td>
-              </tr>
-              <tr>
-                <td data-source="pii.child.first_name pii.child.last_name enrolment.roll_no"><button class="nchip press" data-el="5" type="button"><span class="no num" data-source="enrolment.roll_no">08</span><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Hazel Hare</span></button></td>
-                <td data-source="school_class.section grade.name">K2 Blue</td>
-                <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="8 secure, 3 practising, 5 not seen yet"><i data-state="ok" style="--n: 8"></i><i data-state="wait" style="--n: 3"></i><i data-state="unseen" style="--n: 5"></i></div><span class="muted">8 secure · 3 practising · 5 not seen</span></td>
-                <td data-source="child_skill_state.last_seen">Thu</td>
-                <td class="st" data-source="pii.note_claim.child_id"><span class="muted">none</span></td>
-                <td class="st" data-source="activity_observation.outcome activity_observation.observed_at session.school_day_id"><span class="days" role="img" aria-label="Absences noted, last 7 school days: none Monday, none Tuesday, none Wednesday, no lesson Thursday, none Friday, none Monday, none Tuesday"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span> <span class="muted">none</span></td>
-              </tr>
-              <tr>
-                <td data-source="pii.child.first_name pii.child.last_name enrolment.roll_no"><button class="nchip press" data-el="5" type="button"><span class="no num" data-source="enrolment.roll_no">18</span><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Rex Rook</span></button></td>
-                <td data-source="school_class.section grade.name">K2 Red</td>
-                <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="6 secure, 4 practising, 6 not seen yet"><i data-state="ok" style="--n: 6"></i><i data-state="wait" style="--n: 4"></i><i data-state="unseen" style="--n: 6"></i></div><span class="muted">6 secure · 4 practising · 6 not seen</span></td>
-                <td data-source="child_skill_state.last_seen">Wed</td>
-                <td class="st" data-source="pii.note_claim.child_id"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>1 to confirm</span></td>
-                <td class="st" data-source="activity_observation.outcome activity_observation.observed_at session.school_day_id"><span class="days" role="img" aria-label="Absences noted, last 7 school days: none Monday, none Tuesday, none Wednesday, no lesson Thursday, none Friday, none Monday, none Tuesday"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span> <span class="muted">none</span></td>
-              </tr>
-                </tbody>
-              </table>
-            </div>
-          </section>
-          <section class="grp" data-state="wait" aria-label="Practising on most skills seen, 5 children">
-            <h3 class="grp-h"><i class="ic s" data-icon="practising"></i>Practising on most skills seen <span class="count num">5</span></h3>
-            <div class="table-box" data-block="DataTable">
-              <table class="table">
-                <thead><tr><th>Sr. No. and name</th><th>Class</th><th>How they are doing</th><th>Last seen</th><th class="st">Notes waiting</th><th class="st">Absences noted</th></tr></thead>
-                <tbody>
-              <tr>
-                <td data-source="pii.child.first_name pii.child.last_name enrolment.roll_no"><button class="nchip press" data-el="5" type="button"><span class="no num" data-source="enrolment.roll_no">06</span><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Finn Fox</span></button></td>
-                <td data-source="school_class.section grade.name">K2 Red</td>
-                <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="0 secure, 2 practising, 14 not seen yet"><i data-state="ok" style="--n: 0"></i><i data-state="wait" style="--n: 2"></i><i data-state="unseen" style="--n: 14"></i></div><span class="muted">0 secure · 2 practising · 14 not seen</span></td>
-                <td data-source="child_skill_state.last_seen">3 weeks ago</td>
-                <td class="st" data-source="pii.note_claim.child_id"><span class="muted">none</span></td>
-                <td class="st" data-source="activity_observation.outcome activity_observation.observed_at session.school_day_id"><span class="days" role="img" aria-label="Absences noted, last 7 school days: none Monday, absent Tuesday, none Wednesday, no lesson Thursday, absent Friday, none Monday, none Tuesday"><i></i><i data-state="quiet"><i class="ic s" data-icon="absent"></i></i><i></i><i></i><i data-state="quiet"><i class="ic s" data-icon="absent"></i></i><i></i><i></i></span> <span class="chip" data-state="quiet"><i class="ic s" data-icon="absent"></i>2 noted</span></td>
-              </tr>
-              <tr>
-                <td data-source="pii.child.first_name pii.child.last_name enrolment.roll_no"><button class="nchip press" data-el="5" type="button"><span class="no num" data-source="enrolment.roll_no">09</span><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Ivy Ibis</span></button></td>
-                <td data-source="school_class.section grade.name">K2 Blue</td>
-                <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="2 secure, 5 practising, 9 not seen yet"><i data-state="ok" style="--n: 2"></i><i data-state="wait" style="--n: 5"></i><i data-state="unseen" style="--n: 9"></i></div><span class="muted">2 secure · 5 practising · 9 not seen</span></td>
-                <td data-source="child_skill_state.last_seen">Tue</td>
-                <td class="st" data-source="pii.note_claim.child_id"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>2 to confirm</span></td>
-                <td class="st" data-source="activity_observation.outcome activity_observation.observed_at session.school_day_id"><span class="days" role="img" aria-label="Absences noted, last 7 school days: none Monday, none Tuesday, none Wednesday, no lesson Thursday, none Friday, none Monday, none Tuesday"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span> <span class="muted">none</span></td>
-              </tr>
-              <tr>
-                <td data-source="pii.child.first_name pii.child.last_name enrolment.roll_no"><button class="nchip press" data-el="5" type="button"><span class="no num" data-source="enrolment.roll_no">12</span><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Lou Lynx</span></button></td>
-                <td data-source="school_class.section grade.name">K2 Blue</td>
-                <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="3 secure, 4 practising, 10 not seen yet"><i data-state="ok" style="--n: 3"></i><i data-state="wait" style="--n: 4"></i><i data-state="unseen" style="--n: 10"></i></div><span class="muted">3 secure · 4 practising · 10 not seen</span></td>
-                <td data-source="child_skill_state.last_seen">Wed</td>
-                <td class="st" data-source="pii.note_claim.child_id"><span class="muted">none</span></td>
-                <td class="st" data-source="activity_observation.outcome activity_observation.observed_at session.school_day_id"><span class="days" role="img" aria-label="Absences noted, last 7 school days: none Monday, none Tuesday, none Wednesday, no lesson Thursday, none Friday, absent Monday, none Tuesday"><i></i><i></i><i></i><i></i><i></i><i data-state="quiet"><i class="ic s" data-icon="absent"></i></i><i></i></span> <span class="chip" data-state="quiet"><i class="ic s" data-icon="absent"></i>1 noted</span></td>
-              </tr>
-              <tr>
-                <td data-source="pii.child.first_name pii.child.last_name enrolment.roll_no"><button class="nchip press" data-el="5" type="button"><span class="no num" data-source="enrolment.roll_no">15</span><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Otto Owl</span></button></td>
-                <td data-source="school_class.section grade.name">K2 Blue</td>
-                <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="1 secure, 3 practising, 12 not seen yet"><i data-state="ok" style="--n: 1"></i><i data-state="wait" style="--n: 3"></i><i data-state="unseen" style="--n: 12"></i></div><span class="muted">1 secure · 3 practising · 12 not seen</span></td>
-                <td data-source="child_skill_state.last_seen">2 weeks ago</td>
-                <td class="st" data-source="pii.note_claim.child_id"><span class="muted">none</span></td>
-                <td class="st" data-source="activity_observation.outcome activity_observation.observed_at session.school_day_id"><span class="days" role="img" aria-label="Absences noted, last 7 school days: absent Monday, none Tuesday, none Wednesday, no lesson Thursday, none Friday, none Monday, absent Tuesday"><i data-state="quiet"><i class="ic s" data-icon="absent"></i></i><i></i><i></i><i></i><i></i><i></i><i data-state="quiet"><i class="ic s" data-icon="absent"></i></i></span> <span class="chip" data-state="quiet"><i class="ic s" data-icon="absent"></i>2 noted</span></td>
-              </tr>
-              <tr>
-                <td data-source="pii.child.first_name pii.child.last_name enrolment.roll_no"><button class="nchip press" data-el="5" type="button"><span class="no num" data-source="enrolment.roll_no">17</span><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Quin Quail</span></button></td>
-                <td data-source="school_class.section grade.name">K2 Red</td>
-                <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="2 secure, 6 practising, 8 not seen yet"><i data-state="ok" style="--n: 2"></i><i data-state="wait" style="--n: 6"></i><i data-state="unseen" style="--n: 8"></i></div><span class="muted">2 secure · 6 practising · 8 not seen</span></td>
-                <td data-source="child_skill_state.last_seen">Mon</td>
-                <td class="st" data-source="pii.note_claim.child_id"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>1 to confirm</span></td>
-                <td class="st" data-source="activity_observation.outcome activity_observation.observed_at session.school_day_id"><span class="days" role="img" aria-label="Absences noted, last 7 school days: none Monday, none Tuesday, none Wednesday, no lesson Thursday, none Friday, none Monday, none Tuesday"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span> <span class="muted">none</span></td>
-              </tr>
-                </tbody>
-              </table>
-            </div>
-          </section>
-          <section class="grp" data-state="unseen" aria-label="Not seen yet on any skill, 1 child">
-            <h3 class="grp-h"><i class="ic s" data-icon="not-seen"></i>Not seen yet on any skill <span class="count num">1</span></h3>
-            <div class="table-box" data-block="DataTable">
-              <table class="table">
-                <thead><tr><th>Sr. No. and name</th><th>Class</th><th>How they are doing</th><th>Last seen</th><th class="st">Notes waiting</th><th class="st">Absences noted</th></tr></thead>
-                <tbody>
-              <tr>
-                <td data-source="pii.child.first_name pii.child.last_name enrolment.roll_no"><button class="nchip press" data-el="5" type="button"><span class="no num" data-source="enrolment.roll_no">21</span><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Uri Urial</span></button></td>
-                <td data-source="school_class.section grade.name">K2 Red</td>
-                <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="0 secure, 0 practising, 16 not seen yet"><i data-state="ok" style="--n: 0"></i><i data-state="wait" style="--n: 0"></i><i data-state="unseen" style="--n: 16"></i></div><span class="muted">0 secure · 0 practising · 16 not seen</span></td>
-                <td data-source="child_skill_state.last_seen">3 weeks ago</td>
-                <td class="st" data-source="pii.note_claim.child_id"><span class="muted">none</span></td>
-                <td class="st" data-source="activity_observation.outcome activity_observation.observed_at session.school_day_id"><span class="days" role="img" aria-label="Absences noted, last 7 school days: none Monday, none Tuesday, absent Wednesday, no lesson Thursday, none Friday, none Monday, none Tuesday"><i></i><i></i><i data-state="quiet"><i class="ic s" data-icon="absent"></i></i><i></i><i></i><i></i><i></i></span> <span class="chip" data-state="quiet"><i class="ic s" data-icon="absent"></i>1 noted</span></td>
-              </tr>
-                </tbody>
-              </table>
-            </div>
-          </section>
-          </div>
-          <p><a data-el="10" href="#children?page=2">Later →</a></p>
-          <div class="cards">
-            <article class="card" data-kind="child">
-              <div class="card-h"><span class="tile"><i class="ic" data-icon="class"></i></span>The whole class, all skills</div>
-              <div class="card-b stack">
-                <div class="sbar" role="img" aria-label="410 secure, 590 practising, 872 not seen yet">
-                  <i data-state="ok" style="--n: 410"></i><i data-state="wait" style="--n: 590"></i><i data-state="unseen" style="--n: 872"></i>
-                </div>
-                <div class="keyrow" data-source="child_skill_state.state">
-                  <span class="chip" data-state="ok"><i class="ic s" data-icon="secure"></i>410 secure</span>
-                  <span class="chip" data-state="wait"><i class="ic s" data-icon="practising"></i>590 practising</span>
-                  <span class="chip" data-state="unseen"><i class="ic s" data-icon="not-seen"></i>872 not seen yet</span>
-                </div>
-                <span class="caption">Every child on every skill. Not seen yet is an enrolled child with no state on a skill.</span>
-              </div>
-            </article>
-            <article class="card" data-kind="child">
-              <div class="card-h"><span class="tile"><i class="ic" data-icon="child"></i></span>Needing attention<span class="count num" data-source="child_skill_state.child_id">3</span></div>
-              <div class="card-b">
-                <ul class="nchips" data-source="child_skill_state.state child_skill_state.last_seen">
-                  <li><button class="nchip press" data-el="5" type="button"><span class="no num">06</span><span data-el="6">Finn Fox</span></button></li>
-                  <li><button class="nchip press" data-el="5" type="button"><span class="no num">15</span><span data-el="6">Otto Owl</span></button></li>
-                  <li><button class="nchip press" data-el="5" type="button"><span class="no num">21</span><span data-el="6">Uri Urial</span></button></li>
-                </ul>
-                <span class="caption">Not seen for two weeks or more</span>
-              </div>
-            </article>
-          </div>
-          <div class="card">
-            <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: when no class is linked to you</div>
-            <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="not-seen"></i><b>No class linked to you</b><span class="muted">The coordinator links you to the classes you teach.</span></div></div>
-          </div>
-          <div class="card">
-            <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: when no child matches</div>
-            <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="not-seen"></i><b>No child matches</b><span class="muted">Check the spelling, or clear the filters.</span><button class="btn press" data-el="4" type="button">Clear</button></div></div>
-          </div>
-        </main>
-        <aside class="rail" aria-label="Connected to">
-            <aside class="peek" data-block="ChildPeek" aria-label="Recent history of Eli Eel">
-              <div class="peek-h">
-                <span class="disc" aria-hidden="true">EE</span>
-                <span class="who"><b data-source="pii.child.first_name pii.child.last_name">Eli Eel</b><span class="muted"><span class="num" data-source="enrolment.roll_no">05</span> · K2 Red</span></span>
-                <button class="barbtn press" data-el="12" type="button" aria-label="Close"><i class="ic" data-icon="close"></i></button>
-              </div>
-              <div class="keyrow" data-source="child_skill_state.state"><span class="chip" data-state="ok"><i class="ic s" data-icon="secure"></i>6 secure</span><span class="chip" data-state="wait"><i class="ic s" data-icon="practising"></i>3 practising</span><span class="chip" data-state="unseen"><i class="ic s" data-icon="not-seen"></i>7 not seen yet</span></div>
-              <ol class="timeline">
-        <li class="tli"><span class="tile" data-kind="note"><i class="ic" data-icon="note"></i></span><div><b>Counts on from 30 in tens, with bundles</b><p>Voice note · confirmed by Asha Almond</p></div><span class="caption num" data-source="pii.educator_note.received_at">09-Nov</span></li>
-        <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><b>Counting in tens with bundles: as expected</b><p>Observed in the period · Asha Almond</p></div><span class="caption num" data-source="activity_observation.observed_at">06-Nov</span></li>
-        <li class="tli"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><div><b>Paper, sheet 3</b><p>4 right, 1 wrong with working, 1 blank · signed off by Bina Basil</p></div><span class="caption num" data-source="item_result.confirmed_at">05-Nov</span></li>
-        <li class="tli"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><div><b>Counting in tens: now practising</b><p>The state changed after a second day seen</p></div><span class="caption num" data-source="evidence_event.observed_at">04-Nov</span></li>
-        <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="history"></i></span><div><b>A mark corrected: below became as expected</b><p>A new entry that replaces the first · Asha Almond</p></div><span class="caption num" data-source="change_log.at">03-Nov</span></li>
-              </ol>
-              <a class="btn press" data-el="13" href="#child">Open Eli</a>
-            </aside>
-          <section class="rail-box">
-            <h2>Connected to</h2>
-            <ul class="rlist">
-              <li><a class="ritem" data-el="8" href="#assessments"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><span>Assessments<small>grades 1 to 4</small></span></a></li>
-              <li><a class="ritem" data-el="9" href="#notes"><span class="tile" data-kind="note"><i class="ic" data-icon="note"></i></span><span>Notes<small><span class="num" data-source="pii.educator_note.status">7</span> to confirm</small></span></a></li>
+      <div class="shell">
+        <nav class="side" aria-label="Menu">
+          <button class="sidefold press" data-bar="2" type="button" aria-label="Fold the menu to icons" aria-expanded="true"><i class="ic" data-icon="collapse"></i></button>
+          <div class="sidegroup">
+            <h2 class="sideh" id="side-today"><i class="ic s" data-icon="today"></i>My day</h2>
+            <ul aria-labelledby="side-today">
+              <li><a class="sidelink" data-bar="1" href="#today">Today <span class="badge num" data-source="pii.educator_note.status pii.educator_note.received_at" aria-label="7 notes to confirm">7</span></a></li>
+              <li><a class="sidelink" data-bar="1" href="#notes">Notes to confirm</a></li>
+              <li><a class="sidelink" data-bar="1" href="#needs-doing">What needs doing</a></li>
             </ul>
-          </section>
-          <section class="rail-box">
-            <h2>Latest notes, any child</h2>
-            <ol class="timeline">
-              <li class="tli"><span class="tile" data-kind="note"><i class="ic" data-icon="note"></i></span><div><b data-source="pii.educator_note.status">Eli Eel · to confirm</b><p><span data-source="pii.educator_note.route">By voice</span> · <span data-source="pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="pii.educator_note.received_at">09-Nov</span></li>
-              <li class="tli"><span class="tile" data-kind="note"><i class="ic" data-icon="note"></i></span><div><b data-source="pii.educator_note.status">Ivy Ibis · to confirm</b><p><span data-source="pii.educator_note.route">By form</span> · <span data-source="pii.staff.name">Bina Basil</span></p></div><span class="caption num" data-source="pii.educator_note.received_at">08-Nov</span></li>
-              <li class="tli"><span class="tile" data-kind="note"><i class="ic" data-icon="note"></i></span><div><b data-source="pii.educator_note.status">Cal Crow · confirmed</b><p><span data-source="pii.educator_note.route">By voice</span> · <span data-source="pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="pii.educator_note.received_at">06-Nov</span></li>
-            </ol>
-          </section>
-        </aside>
+          </div>
+          <div class="sidegroup">
+            <h2 class="sideh" id="side-timetable"><i class="ic s" data-icon="week"></i>Timetable</h2>
+            <ul aria-labelledby="side-timetable">
+              <li><a class="sidelink" data-bar="1" href="#timetable">Week</a></li>
+              <li><a class="sidelink" data-bar="1" href="#fortnight">Fortnight</a></li>
+              <li><a class="sidelink" data-bar="1" href="#materials">Materials</a></li>
+            </ul>
+          </div>
+          <div class="sidegroup" data-lit>
+            <h2 class="sideh" id="side-children"><i class="ic s" data-icon="child"></i>Children</h2>
+            <ul aria-labelledby="side-children">
+              <li><a class="sidelink" data-bar="1" href="#children" aria-current="page">Class picture</a></li>
+              <li><a class="sidelink" data-bar="1" href="#reports">Parent reports</a></li>
+            </ul>
+          </div>
+          <div class="sidegroup">
+            <h2 class="sideh" id="side-assessments"><i class="ic s" data-icon="assessment"></i>Assessments</h2>
+            <ul aria-labelledby="side-assessments">
+              <li><a class="sidelink" data-bar="1" href="#assessments">Assessments</a></li>
+              <li><a class="sidelink" data-bar="1" href="#upload">Upload papers</a></li>
+              <li><a class="sidelink" data-bar="1" href="#bank">Question bank</a></li>
+            </ul>
+          </div>
+          <div class="sidegroup">
+            <h2 class="sideh" id="side-school"><i class="ic s" data-icon="setup"></i>School</h2>
+            <ul aria-labelledby="side-school">
+              <li><a class="sidelink" data-bar="1" href="#across">Across classes</a></li>
+              <li><a class="sidelink" data-bar="1" href="#curriculum">Curriculum</a></li>
+              <li><a class="sidelink" data-bar="1" href="#skills-approve">Skills to approve</a></li>
+              <li><a class="sidelink" data-bar="1" href="#staff">Staff</a></li>
+              <li><a class="sidelink" data-bar="1" href="#classes">Classes</a></li>
+              <li><a class="sidelink" data-bar="1" href="#rules">Timetable rules</a></li>
+              <li><a class="sidelink" data-bar="1" href="#map">How it works</a></li>
+            </ul>
+          </div>
+        </nav>
+        <div class="shellmain">
+        <ol class="trail" aria-label="Trail">
+          <li aria-current="page">Children</li>
+        </ol>
+        <div class="page">
+          <main class="main">
+            <div class="head">
+              <p class="eyebrow"><i class="ic s" data-icon="children"></i>All classes · <span class="num" data-source="enrolment.child_id">117</span> children</p>
+              <h1 class="title">Children</h1>
+              <p class="purpose">Your children in one table: how each is doing, last seen, notes waiting. Search, filter, open a child.</p>
+            </div>
+            <div class="filters" data-block="FilterBar">
+              <label class="sel"><i class="ic s" data-icon="search"></i><span class="vh">Search</span><input data-el="0" type="search" placeholder="Name or Sr. No." data-source="pii.child.first_name pii.child.last_name enrolment.roll_no"></label>
+              <label class="sel"><i class="ic s" data-icon="filter"></i>Class <select data-el="1" data-source="school_class.section"><option>All</option><option>K2 Red</option><option>K2 Blue</option></select></label>
+              <label class="sel">Show <select data-el="2" data-source="child_skill_state.state"><option>Needs attention</option><option>All</option></select></label>
+              <label class="sel"><i class="ic s" data-icon="group"></i>Group by <select data-el="11" data-source="child_skill_state.state school_class.section"><option>None: one table in Sr. No. order</option><option>Class</option><option selected>How they are doing</option><option>Needs attention</option></select></label>
+              <button class="btn press" data-el="3" type="button" aria-label="Remove the filter: Needs attention"><i class="ic" data-icon="clear"></i>Needs attention</button>
+              <button class="btn press" data-el="4" type="button">Clear</button>
+              <a class="btn btn-main press" data-el="7" href="#picture"><i class="ic" data-icon="child"></i>Class picture grid</a>
+            </div>
+            <p class="caption">Grouped by how they are doing. With "None", the same rows sit in one table, in Sr. No. order, with no headings.</p>
+            <div class="groups">
+            <section class="grp" data-state="ok" aria-label="Secure on most skills seen, 4 children">
+              <h3 class="grp-h"><i class="ic s" data-icon="secure"></i>Secure on most skills seen <span class="count num">4</span></h3>
+              <div class="table-box" data-block="DataTable">
+                <table class="table">
+                  <thead><tr><th>Sr. No. and name</th><th>Class</th><th>How they are doing</th><th>Last seen</th><th class="st">Notes waiting</th><th class="st">Absences noted</th></tr></thead>
+                  <tbody>
+                <tr>
+                  <td data-source="pii.child.first_name pii.child.last_name enrolment.roll_no"><button class="nchip press" data-el="5" type="button"><span class="no num" data-source="enrolment.roll_no">05</span><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Eli Eel</span></button></td>
+                  <td data-source="school_class.section grade.name">K2 Red</td>
+                  <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="6 secure, 3 practising, 7 not seen yet"><i data-state="ok" style="--n: 6"></i><i data-state="wait" style="--n: 3"></i><i data-state="unseen" style="--n: 7"></i></div><span class="muted">6 secure · 3 practising · 7 not seen</span></td>
+                  <td data-source="child_skill_state.last_seen">Mon</td>
+                  <td class="st" data-source="pii.note_claim.child_id"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>1 to confirm</span></td>
+                  <td class="st" data-source="activity_observation.outcome activity_observation.observed_at session.school_day_id"><span class="days" role="img" aria-label="Absences noted, last 7 school days: none Monday, none Tuesday, none Wednesday, no lesson Thursday, none Friday, none Monday, none Tuesday"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span> <span class="muted">none</span></td>
+                </tr>
+                <tr>
+                  <td data-source="pii.child.first_name pii.child.last_name enrolment.roll_no"><button class="nchip press" data-el="5" type="button"><span class="no num" data-source="enrolment.roll_no">03</span><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Cal Crow</span></button></td>
+                  <td data-source="school_class.section grade.name">K2 Red</td>
+                  <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="7 secure, 4 practising, 5 not seen yet"><i data-state="ok" style="--n: 7"></i><i data-state="wait" style="--n: 4"></i><i data-state="unseen" style="--n: 5"></i></div><span class="muted">7 secure · 4 practising · 5 not seen</span></td>
+                  <td data-source="child_skill_state.last_seen">Tue</td>
+                  <td class="st" data-source="pii.note_claim.child_id"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>1 to confirm</span></td>
+                  <td class="st" data-source="activity_observation.outcome activity_observation.observed_at session.school_day_id"><span class="days" role="img" aria-label="Absences noted, last 7 school days: none Monday, none Tuesday, absent Wednesday, no lesson Thursday, none Friday, none Monday, none Tuesday"><i></i><i></i><i data-state="quiet"><i class="ic s" data-icon="absent"></i></i><i></i><i></i><i></i><i></i></span> <span class="chip" data-state="quiet"><i class="ic s" data-icon="absent"></i>1 noted</span></td>
+                </tr>
+                <tr>
+                  <td data-source="pii.child.first_name pii.child.last_name enrolment.roll_no"><button class="nchip press" data-el="5" type="button"><span class="no num" data-source="enrolment.roll_no">08</span><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Hazel Hare</span></button></td>
+                  <td data-source="school_class.section grade.name">K2 Blue</td>
+                  <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="8 secure, 3 practising, 5 not seen yet"><i data-state="ok" style="--n: 8"></i><i data-state="wait" style="--n: 3"></i><i data-state="unseen" style="--n: 5"></i></div><span class="muted">8 secure · 3 practising · 5 not seen</span></td>
+                  <td data-source="child_skill_state.last_seen">Thu</td>
+                  <td class="st" data-source="pii.note_claim.child_id"><span class="muted">none</span></td>
+                  <td class="st" data-source="activity_observation.outcome activity_observation.observed_at session.school_day_id"><span class="days" role="img" aria-label="Absences noted, last 7 school days: none Monday, none Tuesday, none Wednesday, no lesson Thursday, none Friday, none Monday, none Tuesday"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span> <span class="muted">none</span></td>
+                </tr>
+                <tr>
+                  <td data-source="pii.child.first_name pii.child.last_name enrolment.roll_no"><button class="nchip press" data-el="5" type="button"><span class="no num" data-source="enrolment.roll_no">18</span><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Rex Rook</span></button></td>
+                  <td data-source="school_class.section grade.name">K2 Red</td>
+                  <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="6 secure, 4 practising, 6 not seen yet"><i data-state="ok" style="--n: 6"></i><i data-state="wait" style="--n: 4"></i><i data-state="unseen" style="--n: 6"></i></div><span class="muted">6 secure · 4 practising · 6 not seen</span></td>
+                  <td data-source="child_skill_state.last_seen">Wed</td>
+                  <td class="st" data-source="pii.note_claim.child_id"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>1 to confirm</span></td>
+                  <td class="st" data-source="activity_observation.outcome activity_observation.observed_at session.school_day_id"><span class="days" role="img" aria-label="Absences noted, last 7 school days: none Monday, none Tuesday, none Wednesday, no lesson Thursday, none Friday, none Monday, none Tuesday"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span> <span class="muted">none</span></td>
+                </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+            <section class="grp" data-state="wait" aria-label="Practising on most skills seen, 5 children">
+              <h3 class="grp-h"><i class="ic s" data-icon="practising"></i>Practising on most skills seen <span class="count num">5</span></h3>
+              <div class="table-box" data-block="DataTable">
+                <table class="table">
+                  <thead><tr><th>Sr. No. and name</th><th>Class</th><th>How they are doing</th><th>Last seen</th><th class="st">Notes waiting</th><th class="st">Absences noted</th></tr></thead>
+                  <tbody>
+                <tr>
+                  <td data-source="pii.child.first_name pii.child.last_name enrolment.roll_no"><button class="nchip press" data-el="5" type="button"><span class="no num" data-source="enrolment.roll_no">06</span><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Finn Fox</span></button></td>
+                  <td data-source="school_class.section grade.name">K2 Red</td>
+                  <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="0 secure, 2 practising, 14 not seen yet"><i data-state="ok" style="--n: 0"></i><i data-state="wait" style="--n: 2"></i><i data-state="unseen" style="--n: 14"></i></div><span class="muted">0 secure · 2 practising · 14 not seen</span></td>
+                  <td data-source="child_skill_state.last_seen">3 weeks ago</td>
+                  <td class="st" data-source="pii.note_claim.child_id"><span class="muted">none</span></td>
+                  <td class="st" data-source="activity_observation.outcome activity_observation.observed_at session.school_day_id"><span class="days" role="img" aria-label="Absences noted, last 7 school days: none Monday, absent Tuesday, none Wednesday, no lesson Thursday, absent Friday, none Monday, none Tuesday"><i></i><i data-state="quiet"><i class="ic s" data-icon="absent"></i></i><i></i><i></i><i data-state="quiet"><i class="ic s" data-icon="absent"></i></i><i></i><i></i></span> <span class="chip" data-state="quiet"><i class="ic s" data-icon="absent"></i>2 noted</span></td>
+                </tr>
+                <tr>
+                  <td data-source="pii.child.first_name pii.child.last_name enrolment.roll_no"><button class="nchip press" data-el="5" type="button"><span class="no num" data-source="enrolment.roll_no">09</span><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Ivy Ibis</span></button></td>
+                  <td data-source="school_class.section grade.name">K2 Blue</td>
+                  <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="2 secure, 5 practising, 9 not seen yet"><i data-state="ok" style="--n: 2"></i><i data-state="wait" style="--n: 5"></i><i data-state="unseen" style="--n: 9"></i></div><span class="muted">2 secure · 5 practising · 9 not seen</span></td>
+                  <td data-source="child_skill_state.last_seen">Tue</td>
+                  <td class="st" data-source="pii.note_claim.child_id"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>2 to confirm</span></td>
+                  <td class="st" data-source="activity_observation.outcome activity_observation.observed_at session.school_day_id"><span class="days" role="img" aria-label="Absences noted, last 7 school days: none Monday, none Tuesday, none Wednesday, no lesson Thursday, none Friday, none Monday, none Tuesday"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span> <span class="muted">none</span></td>
+                </tr>
+                <tr>
+                  <td data-source="pii.child.first_name pii.child.last_name enrolment.roll_no"><button class="nchip press" data-el="5" type="button"><span class="no num" data-source="enrolment.roll_no">12</span><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Lou Lynx</span></button></td>
+                  <td data-source="school_class.section grade.name">K2 Blue</td>
+                  <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="3 secure, 4 practising, 10 not seen yet"><i data-state="ok" style="--n: 3"></i><i data-state="wait" style="--n: 4"></i><i data-state="unseen" style="--n: 10"></i></div><span class="muted">3 secure · 4 practising · 10 not seen</span></td>
+                  <td data-source="child_skill_state.last_seen">Wed</td>
+                  <td class="st" data-source="pii.note_claim.child_id"><span class="muted">none</span></td>
+                  <td class="st" data-source="activity_observation.outcome activity_observation.observed_at session.school_day_id"><span class="days" role="img" aria-label="Absences noted, last 7 school days: none Monday, none Tuesday, none Wednesday, no lesson Thursday, none Friday, absent Monday, none Tuesday"><i></i><i></i><i></i><i></i><i></i><i data-state="quiet"><i class="ic s" data-icon="absent"></i></i><i></i></span> <span class="chip" data-state="quiet"><i class="ic s" data-icon="absent"></i>1 noted</span></td>
+                </tr>
+                <tr>
+                  <td data-source="pii.child.first_name pii.child.last_name enrolment.roll_no"><button class="nchip press" data-el="5" type="button"><span class="no num" data-source="enrolment.roll_no">15</span><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Otto Owl</span></button></td>
+                  <td data-source="school_class.section grade.name">K2 Blue</td>
+                  <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="1 secure, 3 practising, 12 not seen yet"><i data-state="ok" style="--n: 1"></i><i data-state="wait" style="--n: 3"></i><i data-state="unseen" style="--n: 12"></i></div><span class="muted">1 secure · 3 practising · 12 not seen</span></td>
+                  <td data-source="child_skill_state.last_seen">2 weeks ago</td>
+                  <td class="st" data-source="pii.note_claim.child_id"><span class="muted">none</span></td>
+                  <td class="st" data-source="activity_observation.outcome activity_observation.observed_at session.school_day_id"><span class="days" role="img" aria-label="Absences noted, last 7 school days: absent Monday, none Tuesday, none Wednesday, no lesson Thursday, none Friday, none Monday, absent Tuesday"><i data-state="quiet"><i class="ic s" data-icon="absent"></i></i><i></i><i></i><i></i><i></i><i></i><i data-state="quiet"><i class="ic s" data-icon="absent"></i></i></span> <span class="chip" data-state="quiet"><i class="ic s" data-icon="absent"></i>2 noted</span></td>
+                </tr>
+                <tr>
+                  <td data-source="pii.child.first_name pii.child.last_name enrolment.roll_no"><button class="nchip press" data-el="5" type="button"><span class="no num" data-source="enrolment.roll_no">17</span><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Quin Quail</span></button></td>
+                  <td data-source="school_class.section grade.name">K2 Red</td>
+                  <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="2 secure, 6 practising, 8 not seen yet"><i data-state="ok" style="--n: 2"></i><i data-state="wait" style="--n: 6"></i><i data-state="unseen" style="--n: 8"></i></div><span class="muted">2 secure · 6 practising · 8 not seen</span></td>
+                  <td data-source="child_skill_state.last_seen">Mon</td>
+                  <td class="st" data-source="pii.note_claim.child_id"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>1 to confirm</span></td>
+                  <td class="st" data-source="activity_observation.outcome activity_observation.observed_at session.school_day_id"><span class="days" role="img" aria-label="Absences noted, last 7 school days: none Monday, none Tuesday, none Wednesday, no lesson Thursday, none Friday, none Monday, none Tuesday"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span> <span class="muted">none</span></td>
+                </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+            <section class="grp" data-state="unseen" aria-label="Not seen yet on any skill, 1 child">
+              <h3 class="grp-h"><i class="ic s" data-icon="not-seen"></i>Not seen yet on any skill <span class="count num">1</span></h3>
+              <div class="table-box" data-block="DataTable">
+                <table class="table">
+                  <thead><tr><th>Sr. No. and name</th><th>Class</th><th>How they are doing</th><th>Last seen</th><th class="st">Notes waiting</th><th class="st">Absences noted</th></tr></thead>
+                  <tbody>
+                <tr>
+                  <td data-source="pii.child.first_name pii.child.last_name enrolment.roll_no"><button class="nchip press" data-el="5" type="button"><span class="no num" data-source="enrolment.roll_no">21</span><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Uri Urial</span></button></td>
+                  <td data-source="school_class.section grade.name">K2 Red</td>
+                  <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="0 secure, 0 practising, 16 not seen yet"><i data-state="ok" style="--n: 0"></i><i data-state="wait" style="--n: 0"></i><i data-state="unseen" style="--n: 16"></i></div><span class="muted">0 secure · 0 practising · 16 not seen</span></td>
+                  <td data-source="child_skill_state.last_seen">3 weeks ago</td>
+                  <td class="st" data-source="pii.note_claim.child_id"><span class="muted">none</span></td>
+                  <td class="st" data-source="activity_observation.outcome activity_observation.observed_at session.school_day_id"><span class="days" role="img" aria-label="Absences noted, last 7 school days: none Monday, none Tuesday, absent Wednesday, no lesson Thursday, none Friday, none Monday, none Tuesday"><i></i><i></i><i data-state="quiet"><i class="ic s" data-icon="absent"></i></i><i></i><i></i><i></i><i></i></span> <span class="chip" data-state="quiet"><i class="ic s" data-icon="absent"></i>1 noted</span></td>
+                </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+            </div>
+            <p><a data-el="10" href="#children?page=2">Later →</a></p>
+            <div class="cards">
+              <article class="card" data-kind="child">
+                <div class="card-h"><span class="tile"><i class="ic" data-icon="class"></i></span>The whole class, all skills</div>
+                <div class="card-b stack">
+                  <div class="sbar" role="img" aria-label="410 secure, 590 practising, 872 not seen yet">
+                    <i data-state="ok" style="--n: 410"></i><i data-state="wait" style="--n: 590"></i><i data-state="unseen" style="--n: 872"></i>
+                  </div>
+                  <div class="keyrow" data-source="child_skill_state.state">
+                    <span class="chip" data-state="ok"><i class="ic s" data-icon="secure"></i>410 secure</span>
+                    <span class="chip" data-state="wait"><i class="ic s" data-icon="practising"></i>590 practising</span>
+                    <span class="chip" data-state="unseen"><i class="ic s" data-icon="not-seen"></i>872 not seen yet</span>
+                  </div>
+                  <span class="caption">Every child on every skill. Not seen yet is an enrolled child with no state on a skill.</span>
+                </div>
+              </article>
+              <article class="card" data-kind="child">
+                <div class="card-h"><span class="tile"><i class="ic" data-icon="child"></i></span>Needing attention<span class="count num" data-source="child_skill_state.child_id">3</span></div>
+                <div class="card-b">
+                  <ul class="nchips" data-source="child_skill_state.state child_skill_state.last_seen">
+                    <li><button class="nchip press" data-el="5" type="button"><span class="no num">06</span><span data-el="6">Finn Fox</span></button></li>
+                    <li><button class="nchip press" data-el="5" type="button"><span class="no num">15</span><span data-el="6">Otto Owl</span></button></li>
+                    <li><button class="nchip press" data-el="5" type="button"><span class="no num">21</span><span data-el="6">Uri Urial</span></button></li>
+                  </ul>
+                  <span class="caption">Not seen for two weeks or more</span>
+                </div>
+              </article>
+            </div>
+            <div class="card">
+              <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: when no class is linked to you</div>
+              <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="not-seen"></i><b>No class linked to you</b><span class="muted">The coordinator links you to the classes you teach.</span></div></div>
+            </div>
+            <div class="card">
+              <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: when no child matches</div>
+              <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="not-seen"></i><b>No child matches</b><span class="muted">Check the spelling, or clear the filters.</span><button class="btn press" data-el="4" type="button">Clear</button></div></div>
+            </div>
+          </main>
+          <aside class="rail" aria-label="Connected to">
+              <aside class="peek" data-block="ChildPeek" aria-label="Recent history of Eli Eel">
+                <div class="peek-h">
+                  <span class="disc" aria-hidden="true">EE</span>
+                  <span class="who"><b data-source="pii.child.first_name pii.child.last_name">Eli Eel</b><span class="muted"><span class="num" data-source="enrolment.roll_no">05</span> · K2 Red</span></span>
+                  <button class="barbtn press" data-el="12" type="button" aria-label="Close"><i class="ic" data-icon="close"></i></button>
+                </div>
+                <div class="keyrow" data-source="child_skill_state.state"><span class="chip" data-state="ok"><i class="ic s" data-icon="secure"></i>6 secure</span><span class="chip" data-state="wait"><i class="ic s" data-icon="practising"></i>3 practising</span><span class="chip" data-state="unseen"><i class="ic s" data-icon="not-seen"></i>7 not seen yet</span></div>
+                <ol class="timeline">
+          <li class="tli"><span class="tile" data-kind="note"><i class="ic" data-icon="note"></i></span><div><b>Counts on from 30 in tens, with bundles</b><p>Voice note · confirmed by Asha Almond</p></div><span class="caption num" data-source="pii.educator_note.received_at">09-Nov</span></li>
+          <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><b>Counting in tens with bundles: as expected</b><p>Observed in the period · Asha Almond</p></div><span class="caption num" data-source="activity_observation.observed_at">06-Nov</span></li>
+          <li class="tli"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><div><b>Paper, sheet 3</b><p>4 right, 1 wrong with working, 1 blank · signed off by Bina Basil</p></div><span class="caption num" data-source="item_result.confirmed_at">05-Nov</span></li>
+          <li class="tli"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><div><b>Counting in tens: now practising</b><p>The state changed after a second day seen</p></div><span class="caption num" data-source="evidence_event.observed_at">04-Nov</span></li>
+          <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="history"></i></span><div><b>A mark corrected: below became as expected</b><p>A new entry that replaces the first · Asha Almond</p></div><span class="caption num" data-source="change_log.at">03-Nov</span></li>
+                </ol>
+                <a class="btn press" data-el="13" href="#child">Open Eli</a>
+              </aside>
+            <section class="rail-box">
+              <h2>Connected to</h2>
+              <ul class="rlist">
+                <li><a class="ritem" data-el="8" href="#assessments"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><span>Assessments<small>grades 1 to 4</small></span></a></li>
+                <li><a class="ritem" data-el="9" href="#notes"><span class="tile" data-kind="note"><i class="ic" data-icon="note"></i></span><span>Notes<small><span class="num" data-source="pii.educator_note.status">7</span> to confirm</small></span></a></li>
+              </ul>
+            </section>
+            <section class="rail-box">
+              <h2>Latest notes, any child</h2>
+              <ol class="timeline">
+                <li class="tli"><span class="tile" data-kind="note"><i class="ic" data-icon="note"></i></span><div><b data-source="pii.educator_note.status">Eli Eel · to confirm</b><p><span data-source="pii.educator_note.route">By voice</span> · <span data-source="pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="pii.educator_note.received_at">09-Nov</span></li>
+                <li class="tli"><span class="tile" data-kind="note"><i class="ic" data-icon="note"></i></span><div><b data-source="pii.educator_note.status">Ivy Ibis · to confirm</b><p><span data-source="pii.educator_note.route">By form</span> · <span data-source="pii.staff.name">Bina Basil</span></p></div><span class="caption num" data-source="pii.educator_note.received_at">08-Nov</span></li>
+                <li class="tli"><span class="tile" data-kind="note"><i class="ic" data-icon="note"></i></span><div><b data-source="pii.educator_note.status">Cal Crow · confirmed</b><p><span data-source="pii.educator_note.route">By voice</span> · <span data-source="pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="pii.educator_note.received_at">06-Nov</span></li>
+              </ol>
+            </section>
+          </aside>
+        </div>
+        </div>
       </div>
-      <nav class="tabbar" aria-label="Doors">
-        <a class="tab" data-bar="0" href="#today"><i class="ic" data-icon="today"></i>Today</a>
-        <a class="tab" data-bar="1" href="#timetable"><i class="ic" data-icon="timetable"></i>Timetable</a>
-        <a class="tab" data-bar="2" href="#children" aria-current="page"><i class="ic" data-icon="children"></i>Children</a>
-        <a class="tab" data-bar="3" href="#setup"><i class="ic" data-icon="setup"></i>Setup</a>
-      </nav>
     </div>
   </section>
   <section class="wf" data-viewport="400" aria-label="Phone, 400 px">
     <div class="frame">
       <header class="bar">
+        <button class="barbtn menubtn press" data-bar="2" type="button" aria-label="Menu" aria-haspopup="dialog"><i class="ic" data-icon="menu"></i></button>
         <a class="brand" data-bar="0" href="#today" aria-label="Cornerstone Gurukul, go to Today">
           <img class="wide on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-colour.svg" alt="">
           <img class="wide on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-for-dark-backgrounds.svg" alt="">
           <img class="small on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark.svg" alt="">
           <img class="small on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark-on-white-tile.svg" alt="">
         </a>
-        <ul class="doors" aria-label="Doors">
-          <li><a class="door" data-bar="0" href="#today"><i class="ic" data-icon="today"></i>Today <span class="badge num" data-source="pii.educator_note.status pii.educator_note.received_at" aria-label="7 notes to confirm">7</span></a></li>
-          <li><a class="door" data-bar="1" href="#timetable"><i class="ic" data-icon="timetable"></i>Timetable</a></li>
-          <li><a class="door" data-bar="2" href="#children" aria-current="page"><i class="ic" data-icon="children"></i>Children</a></li>
-          <li><a class="door" data-bar="3" href="#setup"><i class="ic" data-icon="setup"></i>Setup</a></li>
-        </ul>
-        <label class="search"><i class="ic s" data-icon="search"></i><span class="vh">Search</span><input data-bar="4" type="search" placeholder="Sr. No., name or activity"></label>
-        <button class="barbtn press" data-bar="5" type="button" role="switch" aria-checked="false"><i class="ic" data-icon="acting-as"></i><span class="w">Acting as</span></button>
-        <a class="barbtn" data-bar="6" href="#help" aria-label="Help for this page"><i class="ic" data-icon="help"></i></a>
-        <button class="barbtn press" data-bar="7" type="button"><i class="ic" data-icon="sign-out"></i><span class="w">Sign out</span></button>
+        <label class="search"><i class="ic s" data-icon="search"></i><span class="vh">Search</span><input data-bar="3" type="search" placeholder="Sr. No., name or activity"></label>
+        <button class="barbtn press" data-bar="4" type="button" role="switch" aria-checked="false"><i class="ic" data-icon="acting-as"></i><span class="w">Acting as</span></button>
+        <a class="barbtn" data-bar="5" href="#help" aria-label="Help for this page"><i class="ic" data-icon="help"></i></a>
+        <button class="barbtn press" data-bar="6" type="button"><i class="ic" data-icon="sign-out"></i><span class="w">Sign out</span></button>
       </header>
-      <ol class="trail" aria-label="Trail">
-        <li aria-current="page">Children</li>
-      </ol>
-      <div class="page">
-        <main class="main">
-          <div class="head">
-            <p class="eyebrow"><i class="ic s" data-icon="children"></i>All classes · <span class="num" data-source="enrolment.child_id">117</span> children</p>
-            <h1 class="title">Children</h1>
-            <p class="purpose">Your children in one table: how each is doing, last seen, notes waiting. Search, filter, open a child.</p>
-          </div>
-          <div class="filters" data-block="FilterBar">
-            <label class="sel"><i class="ic s" data-icon="search"></i><span class="vh">Search</span><input data-el="0" type="search" placeholder="Name or Sr. No." data-source="pii.child.first_name pii.child.last_name enrolment.roll_no"></label>
-            <label class="sel"><i class="ic s" data-icon="filter"></i>Class <select data-el="1" data-source="school_class.section"><option>All</option><option>K2 Red</option><option>K2 Blue</option></select></label>
-            <label class="sel">Show <select data-el="2" data-source="child_skill_state.state"><option>Needs attention</option><option>All</option></select></label>
-            <label class="sel"><i class="ic s" data-icon="group"></i>Group by <select data-el="11" data-source="child_skill_state.state school_class.section"><option>None: one table in Sr. No. order</option><option>Class</option><option selected>How they are doing</option><option>Needs attention</option></select></label>
-            <button class="btn press" data-el="3" type="button" aria-label="Remove the filter: Needs attention"><i class="ic" data-icon="clear"></i>Needs attention</button>
-            <button class="btn press" data-el="4" type="button">Clear</button>
-            <a class="btn btn-main press" data-el="7" href="#picture"><i class="ic" data-icon="child"></i>Class picture grid</a>
-          </div>
-          <p class="caption">Grouped by how they are doing. With "None", the same rows sit in one table, in Sr. No. order, with no headings.</p>
-          <div class="groups">
-          <section class="grp" data-state="ok" aria-label="Secure on most skills seen, 4 children">
-            <h3 class="grp-h"><i class="ic s" data-icon="secure"></i>Secure on most skills seen <span class="count num">4</span></h3>
-            <div class="table-box" data-block="DataTable">
-              <table class="table">
-                <thead><tr><th>Sr. No. and name</th><th>Class</th><th>How they are doing</th><th>Last seen</th><th class="st">Notes waiting</th><th class="st">Absences noted</th></tr></thead>
-                <tbody>
-              <tr>
-                <td data-source="pii.child.first_name pii.child.last_name enrolment.roll_no"><button class="nchip press" data-el="5" type="button"><span class="no num" data-source="enrolment.roll_no">05</span><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Eli Eel</span></button></td>
-                <td data-source="school_class.section grade.name">K2 Red</td>
-                <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="6 secure, 3 practising, 7 not seen yet"><i data-state="ok" style="--n: 6"></i><i data-state="wait" style="--n: 3"></i><i data-state="unseen" style="--n: 7"></i></div><span class="muted">6 secure · 3 practising · 7 not seen</span></td>
-                <td data-source="child_skill_state.last_seen">Mon</td>
-                <td class="st" data-source="pii.note_claim.child_id"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>1 to confirm</span></td>
-                <td class="st" data-source="activity_observation.outcome activity_observation.observed_at session.school_day_id"><span class="days" role="img" aria-label="Absences noted, last 7 school days: none Monday, none Tuesday, none Wednesday, no lesson Thursday, none Friday, none Monday, none Tuesday"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span> <span class="muted">none</span></td>
-              </tr>
-              <tr>
-                <td data-source="pii.child.first_name pii.child.last_name enrolment.roll_no"><button class="nchip press" data-el="5" type="button"><span class="no num" data-source="enrolment.roll_no">03</span><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Cal Crow</span></button></td>
-                <td data-source="school_class.section grade.name">K2 Red</td>
-                <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="7 secure, 4 practising, 5 not seen yet"><i data-state="ok" style="--n: 7"></i><i data-state="wait" style="--n: 4"></i><i data-state="unseen" style="--n: 5"></i></div><span class="muted">7 secure · 4 practising · 5 not seen</span></td>
-                <td data-source="child_skill_state.last_seen">Tue</td>
-                <td class="st" data-source="pii.note_claim.child_id"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>1 to confirm</span></td>
-                <td class="st" data-source="activity_observation.outcome activity_observation.observed_at session.school_day_id"><span class="days" role="img" aria-label="Absences noted, last 7 school days: none Monday, none Tuesday, absent Wednesday, no lesson Thursday, none Friday, none Monday, none Tuesday"><i></i><i></i><i data-state="quiet"><i class="ic s" data-icon="absent"></i></i><i></i><i></i><i></i><i></i></span> <span class="chip" data-state="quiet"><i class="ic s" data-icon="absent"></i>1 noted</span></td>
-              </tr>
-              <tr>
-                <td data-source="pii.child.first_name pii.child.last_name enrolment.roll_no"><button class="nchip press" data-el="5" type="button"><span class="no num" data-source="enrolment.roll_no">08</span><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Hazel Hare</span></button></td>
-                <td data-source="school_class.section grade.name">K2 Blue</td>
-                <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="8 secure, 3 practising, 5 not seen yet"><i data-state="ok" style="--n: 8"></i><i data-state="wait" style="--n: 3"></i><i data-state="unseen" style="--n: 5"></i></div><span class="muted">8 secure · 3 practising · 5 not seen</span></td>
-                <td data-source="child_skill_state.last_seen">Thu</td>
-                <td class="st" data-source="pii.note_claim.child_id"><span class="muted">none</span></td>
-                <td class="st" data-source="activity_observation.outcome activity_observation.observed_at session.school_day_id"><span class="days" role="img" aria-label="Absences noted, last 7 school days: none Monday, none Tuesday, none Wednesday, no lesson Thursday, none Friday, none Monday, none Tuesday"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span> <span class="muted">none</span></td>
-              </tr>
-              <tr>
-                <td data-source="pii.child.first_name pii.child.last_name enrolment.roll_no"><button class="nchip press" data-el="5" type="button"><span class="no num" data-source="enrolment.roll_no">18</span><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Rex Rook</span></button></td>
-                <td data-source="school_class.section grade.name">K2 Red</td>
-                <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="6 secure, 4 practising, 6 not seen yet"><i data-state="ok" style="--n: 6"></i><i data-state="wait" style="--n: 4"></i><i data-state="unseen" style="--n: 6"></i></div><span class="muted">6 secure · 4 practising · 6 not seen</span></td>
-                <td data-source="child_skill_state.last_seen">Wed</td>
-                <td class="st" data-source="pii.note_claim.child_id"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>1 to confirm</span></td>
-                <td class="st" data-source="activity_observation.outcome activity_observation.observed_at session.school_day_id"><span class="days" role="img" aria-label="Absences noted, last 7 school days: none Monday, none Tuesday, none Wednesday, no lesson Thursday, none Friday, none Monday, none Tuesday"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span> <span class="muted">none</span></td>
-              </tr>
-                </tbody>
-              </table>
-            </div>
-          </section>
-          <section class="grp" data-state="wait" aria-label="Practising on most skills seen, 5 children">
-            <h3 class="grp-h"><i class="ic s" data-icon="practising"></i>Practising on most skills seen <span class="count num">5</span></h3>
-            <div class="table-box" data-block="DataTable">
-              <table class="table">
-                <thead><tr><th>Sr. No. and name</th><th>Class</th><th>How they are doing</th><th>Last seen</th><th class="st">Notes waiting</th><th class="st">Absences noted</th></tr></thead>
-                <tbody>
-              <tr>
-                <td data-source="pii.child.first_name pii.child.last_name enrolment.roll_no"><button class="nchip press" data-el="5" type="button"><span class="no num" data-source="enrolment.roll_no">06</span><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Finn Fox</span></button></td>
-                <td data-source="school_class.section grade.name">K2 Red</td>
-                <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="0 secure, 2 practising, 14 not seen yet"><i data-state="ok" style="--n: 0"></i><i data-state="wait" style="--n: 2"></i><i data-state="unseen" style="--n: 14"></i></div><span class="muted">0 secure · 2 practising · 14 not seen</span></td>
-                <td data-source="child_skill_state.last_seen">3 weeks ago</td>
-                <td class="st" data-source="pii.note_claim.child_id"><span class="muted">none</span></td>
-                <td class="st" data-source="activity_observation.outcome activity_observation.observed_at session.school_day_id"><span class="days" role="img" aria-label="Absences noted, last 7 school days: none Monday, absent Tuesday, none Wednesday, no lesson Thursday, absent Friday, none Monday, none Tuesday"><i></i><i data-state="quiet"><i class="ic s" data-icon="absent"></i></i><i></i><i></i><i data-state="quiet"><i class="ic s" data-icon="absent"></i></i><i></i><i></i></span> <span class="chip" data-state="quiet"><i class="ic s" data-icon="absent"></i>2 noted</span></td>
-              </tr>
-              <tr>
-                <td data-source="pii.child.first_name pii.child.last_name enrolment.roll_no"><button class="nchip press" data-el="5" type="button"><span class="no num" data-source="enrolment.roll_no">09</span><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Ivy Ibis</span></button></td>
-                <td data-source="school_class.section grade.name">K2 Blue</td>
-                <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="2 secure, 5 practising, 9 not seen yet"><i data-state="ok" style="--n: 2"></i><i data-state="wait" style="--n: 5"></i><i data-state="unseen" style="--n: 9"></i></div><span class="muted">2 secure · 5 practising · 9 not seen</span></td>
-                <td data-source="child_skill_state.last_seen">Tue</td>
-                <td class="st" data-source="pii.note_claim.child_id"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>2 to confirm</span></td>
-                <td class="st" data-source="activity_observation.outcome activity_observation.observed_at session.school_day_id"><span class="days" role="img" aria-label="Absences noted, last 7 school days: none Monday, none Tuesday, none Wednesday, no lesson Thursday, none Friday, none Monday, none Tuesday"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span> <span class="muted">none</span></td>
-              </tr>
-              <tr>
-                <td data-source="pii.child.first_name pii.child.last_name enrolment.roll_no"><button class="nchip press" data-el="5" type="button"><span class="no num" data-source="enrolment.roll_no">12</span><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Lou Lynx</span></button></td>
-                <td data-source="school_class.section grade.name">K2 Blue</td>
-                <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="3 secure, 4 practising, 10 not seen yet"><i data-state="ok" style="--n: 3"></i><i data-state="wait" style="--n: 4"></i><i data-state="unseen" style="--n: 10"></i></div><span class="muted">3 secure · 4 practising · 10 not seen</span></td>
-                <td data-source="child_skill_state.last_seen">Wed</td>
-                <td class="st" data-source="pii.note_claim.child_id"><span class="muted">none</span></td>
-                <td class="st" data-source="activity_observation.outcome activity_observation.observed_at session.school_day_id"><span class="days" role="img" aria-label="Absences noted, last 7 school days: none Monday, none Tuesday, none Wednesday, no lesson Thursday, none Friday, absent Monday, none Tuesday"><i></i><i></i><i></i><i></i><i></i><i data-state="quiet"><i class="ic s" data-icon="absent"></i></i><i></i></span> <span class="chip" data-state="quiet"><i class="ic s" data-icon="absent"></i>1 noted</span></td>
-              </tr>
-              <tr>
-                <td data-source="pii.child.first_name pii.child.last_name enrolment.roll_no"><button class="nchip press" data-el="5" type="button"><span class="no num" data-source="enrolment.roll_no">15</span><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Otto Owl</span></button></td>
-                <td data-source="school_class.section grade.name">K2 Blue</td>
-                <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="1 secure, 3 practising, 12 not seen yet"><i data-state="ok" style="--n: 1"></i><i data-state="wait" style="--n: 3"></i><i data-state="unseen" style="--n: 12"></i></div><span class="muted">1 secure · 3 practising · 12 not seen</span></td>
-                <td data-source="child_skill_state.last_seen">2 weeks ago</td>
-                <td class="st" data-source="pii.note_claim.child_id"><span class="muted">none</span></td>
-                <td class="st" data-source="activity_observation.outcome activity_observation.observed_at session.school_day_id"><span class="days" role="img" aria-label="Absences noted, last 7 school days: absent Monday, none Tuesday, none Wednesday, no lesson Thursday, none Friday, none Monday, absent Tuesday"><i data-state="quiet"><i class="ic s" data-icon="absent"></i></i><i></i><i></i><i></i><i></i><i></i><i data-state="quiet"><i class="ic s" data-icon="absent"></i></i></span> <span class="chip" data-state="quiet"><i class="ic s" data-icon="absent"></i>2 noted</span></td>
-              </tr>
-              <tr>
-                <td data-source="pii.child.first_name pii.child.last_name enrolment.roll_no"><button class="nchip press" data-el="5" type="button"><span class="no num" data-source="enrolment.roll_no">17</span><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Quin Quail</span></button></td>
-                <td data-source="school_class.section grade.name">K2 Red</td>
-                <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="2 secure, 6 practising, 8 not seen yet"><i data-state="ok" style="--n: 2"></i><i data-state="wait" style="--n: 6"></i><i data-state="unseen" style="--n: 8"></i></div><span class="muted">2 secure · 6 practising · 8 not seen</span></td>
-                <td data-source="child_skill_state.last_seen">Mon</td>
-                <td class="st" data-source="pii.note_claim.child_id"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>1 to confirm</span></td>
-                <td class="st" data-source="activity_observation.outcome activity_observation.observed_at session.school_day_id"><span class="days" role="img" aria-label="Absences noted, last 7 school days: none Monday, none Tuesday, none Wednesday, no lesson Thursday, none Friday, none Monday, none Tuesday"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span> <span class="muted">none</span></td>
-              </tr>
-                </tbody>
-              </table>
-            </div>
-          </section>
-          <section class="grp" data-state="unseen" aria-label="Not seen yet on any skill, 1 child">
-            <h3 class="grp-h"><i class="ic s" data-icon="not-seen"></i>Not seen yet on any skill <span class="count num">1</span></h3>
-            <div class="table-box" data-block="DataTable">
-              <table class="table">
-                <thead><tr><th>Sr. No. and name</th><th>Class</th><th>How they are doing</th><th>Last seen</th><th class="st">Notes waiting</th><th class="st">Absences noted</th></tr></thead>
-                <tbody>
-              <tr>
-                <td data-source="pii.child.first_name pii.child.last_name enrolment.roll_no"><button class="nchip press" data-el="5" type="button"><span class="no num" data-source="enrolment.roll_no">21</span><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Uri Urial</span></button></td>
-                <td data-source="school_class.section grade.name">K2 Red</td>
-                <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="0 secure, 0 practising, 16 not seen yet"><i data-state="ok" style="--n: 0"></i><i data-state="wait" style="--n: 0"></i><i data-state="unseen" style="--n: 16"></i></div><span class="muted">0 secure · 0 practising · 16 not seen</span></td>
-                <td data-source="child_skill_state.last_seen">3 weeks ago</td>
-                <td class="st" data-source="pii.note_claim.child_id"><span class="muted">none</span></td>
-                <td class="st" data-source="activity_observation.outcome activity_observation.observed_at session.school_day_id"><span class="days" role="img" aria-label="Absences noted, last 7 school days: none Monday, none Tuesday, absent Wednesday, no lesson Thursday, none Friday, none Monday, none Tuesday"><i></i><i></i><i data-state="quiet"><i class="ic s" data-icon="absent"></i></i><i></i><i></i><i></i><i></i></span> <span class="chip" data-state="quiet"><i class="ic s" data-icon="absent"></i>1 noted</span></td>
-              </tr>
-                </tbody>
-              </table>
-            </div>
-          </section>
-          </div>
-          <p><a data-el="10" href="#children?page=2">Later →</a></p>
-          <div class="cards">
-            <article class="card" data-kind="child">
-              <div class="card-h"><span class="tile"><i class="ic" data-icon="class"></i></span>The whole class, all skills</div>
-              <div class="card-b stack">
-                <div class="sbar" role="img" aria-label="410 secure, 590 practising, 872 not seen yet">
-                  <i data-state="ok" style="--n: 410"></i><i data-state="wait" style="--n: 590"></i><i data-state="unseen" style="--n: 872"></i>
-                </div>
-                <div class="keyrow" data-source="child_skill_state.state">
-                  <span class="chip" data-state="ok"><i class="ic s" data-icon="secure"></i>410 secure</span>
-                  <span class="chip" data-state="wait"><i class="ic s" data-icon="practising"></i>590 practising</span>
-                  <span class="chip" data-state="unseen"><i class="ic s" data-icon="not-seen"></i>872 not seen yet</span>
-                </div>
-                <span class="caption">Every child on every skill. Not seen yet is an enrolled child with no state on a skill.</span>
-              </div>
-            </article>
-            <article class="card" data-kind="child">
-              <div class="card-h"><span class="tile"><i class="ic" data-icon="child"></i></span>Needing attention<span class="count num" data-source="child_skill_state.child_id">3</span></div>
-              <div class="card-b">
-                <ul class="nchips" data-source="child_skill_state.state child_skill_state.last_seen">
-                  <li><button class="nchip press" data-el="5" type="button"><span class="no num">06</span><span data-el="6">Finn Fox</span></button></li>
-                  <li><button class="nchip press" data-el="5" type="button"><span class="no num">15</span><span data-el="6">Otto Owl</span></button></li>
-                  <li><button class="nchip press" data-el="5" type="button"><span class="no num">21</span><span data-el="6">Uri Urial</span></button></li>
-                </ul>
-                <span class="caption">Not seen for two weeks or more</span>
-              </div>
-            </article>
-          </div>
-          <div class="card">
-            <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: when no class is linked to you</div>
-            <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="not-seen"></i><b>No class linked to you</b><span class="muted">The coordinator links you to the classes you teach.</span></div></div>
-          </div>
-          <div class="card">
-            <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: when no child matches</div>
-            <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="not-seen"></i><b>No child matches</b><span class="muted">Check the spelling, or clear the filters.</span><button class="btn press" data-el="4" type="button">Clear</button></div></div>
-          </div>
-        </main>
-        <aside class="rail" aria-label="Connected to">
-            <aside class="peek" data-block="ChildPeek" aria-label="Recent history of Eli Eel">
-              <div class="peek-h">
-                <span class="disc" aria-hidden="true">EE</span>
-                <span class="who"><b data-source="pii.child.first_name pii.child.last_name">Eli Eel</b><span class="muted"><span class="num" data-source="enrolment.roll_no">05</span> · K2 Red</span></span>
-                <button class="barbtn press" data-el="12" type="button" aria-label="Close"><i class="ic" data-icon="close"></i></button>
-              </div>
-              <div class="keyrow" data-source="child_skill_state.state"><span class="chip" data-state="ok"><i class="ic s" data-icon="secure"></i>6 secure</span><span class="chip" data-state="wait"><i class="ic s" data-icon="practising"></i>3 practising</span><span class="chip" data-state="unseen"><i class="ic s" data-icon="not-seen"></i>7 not seen yet</span></div>
-              <ol class="timeline">
-        <li class="tli"><span class="tile" data-kind="note"><i class="ic" data-icon="note"></i></span><div><b>Counts on from 30 in tens, with bundles</b><p>Voice note · confirmed by Asha Almond</p></div><span class="caption num" data-source="pii.educator_note.received_at">09-Nov</span></li>
-        <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><b>Counting in tens with bundles: as expected</b><p>Observed in the period · Asha Almond</p></div><span class="caption num" data-source="activity_observation.observed_at">06-Nov</span></li>
-        <li class="tli"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><div><b>Paper, sheet 3</b><p>4 right, 1 wrong with working, 1 blank · signed off by Bina Basil</p></div><span class="caption num" data-source="item_result.confirmed_at">05-Nov</span></li>
-        <li class="tli"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><div><b>Counting in tens: now practising</b><p>The state changed after a second day seen</p></div><span class="caption num" data-source="evidence_event.observed_at">04-Nov</span></li>
-        <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="history"></i></span><div><b>A mark corrected: below became as expected</b><p>A new entry that replaces the first · Asha Almond</p></div><span class="caption num" data-source="change_log.at">03-Nov</span></li>
-              </ol>
-              <a class="btn press" data-el="13" href="#child">Open Eli</a>
-            </aside>
-          <section class="rail-box">
-            <h2>Connected to</h2>
-            <ul class="rlist">
-              <li><a class="ritem" data-el="8" href="#assessments"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><span>Assessments<small>grades 1 to 4</small></span></a></li>
-              <li><a class="ritem" data-el="9" href="#notes"><span class="tile" data-kind="note"><i class="ic" data-icon="note"></i></span><span>Notes<small><span class="num" data-source="pii.educator_note.status">7</span> to confirm</small></span></a></li>
+      <div class="shell">
+        <nav class="side" aria-label="Menu">
+          <button class="sidefold press" data-bar="2" type="button" aria-label="Fold the menu to icons" aria-expanded="true"><i class="ic" data-icon="collapse"></i></button>
+          <div class="sidegroup">
+            <h2 class="sideh" id="side-today"><i class="ic s" data-icon="today"></i>My day</h2>
+            <ul aria-labelledby="side-today">
+              <li><a class="sidelink" data-bar="1" href="#today">Today <span class="badge num" data-source="pii.educator_note.status pii.educator_note.received_at" aria-label="7 notes to confirm">7</span></a></li>
+              <li><a class="sidelink" data-bar="1" href="#notes">Notes to confirm</a></li>
+              <li><a class="sidelink" data-bar="1" href="#needs-doing">What needs doing</a></li>
             </ul>
-          </section>
-          <section class="rail-box">
-            <h2>Latest notes, any child</h2>
-            <ol class="timeline">
-              <li class="tli"><span class="tile" data-kind="note"><i class="ic" data-icon="note"></i></span><div><b data-source="pii.educator_note.status">Eli Eel · to confirm</b><p><span data-source="pii.educator_note.route">By voice</span> · <span data-source="pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="pii.educator_note.received_at">09-Nov</span></li>
-              <li class="tli"><span class="tile" data-kind="note"><i class="ic" data-icon="note"></i></span><div><b data-source="pii.educator_note.status">Ivy Ibis · to confirm</b><p><span data-source="pii.educator_note.route">By form</span> · <span data-source="pii.staff.name">Bina Basil</span></p></div><span class="caption num" data-source="pii.educator_note.received_at">08-Nov</span></li>
-              <li class="tli"><span class="tile" data-kind="note"><i class="ic" data-icon="note"></i></span><div><b data-source="pii.educator_note.status">Cal Crow · confirmed</b><p><span data-source="pii.educator_note.route">By voice</span> · <span data-source="pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="pii.educator_note.received_at">06-Nov</span></li>
-            </ol>
-          </section>
-        </aside>
+          </div>
+          <div class="sidegroup">
+            <h2 class="sideh" id="side-timetable"><i class="ic s" data-icon="week"></i>Timetable</h2>
+            <ul aria-labelledby="side-timetable">
+              <li><a class="sidelink" data-bar="1" href="#timetable">Week</a></li>
+              <li><a class="sidelink" data-bar="1" href="#fortnight">Fortnight</a></li>
+              <li><a class="sidelink" data-bar="1" href="#materials">Materials</a></li>
+            </ul>
+          </div>
+          <div class="sidegroup" data-lit>
+            <h2 class="sideh" id="side-children"><i class="ic s" data-icon="child"></i>Children</h2>
+            <ul aria-labelledby="side-children">
+              <li><a class="sidelink" data-bar="1" href="#children" aria-current="page">Class picture</a></li>
+              <li><a class="sidelink" data-bar="1" href="#reports">Parent reports</a></li>
+            </ul>
+          </div>
+          <div class="sidegroup">
+            <h2 class="sideh" id="side-assessments"><i class="ic s" data-icon="assessment"></i>Assessments</h2>
+            <ul aria-labelledby="side-assessments">
+              <li><a class="sidelink" data-bar="1" href="#assessments">Assessments</a></li>
+              <li><a class="sidelink" data-bar="1" href="#upload">Upload papers</a></li>
+              <li><a class="sidelink" data-bar="1" href="#bank">Question bank</a></li>
+            </ul>
+          </div>
+          <div class="sidegroup">
+            <h2 class="sideh" id="side-school"><i class="ic s" data-icon="setup"></i>School</h2>
+            <ul aria-labelledby="side-school">
+              <li><a class="sidelink" data-bar="1" href="#across">Across classes</a></li>
+              <li><a class="sidelink" data-bar="1" href="#curriculum">Curriculum</a></li>
+              <li><a class="sidelink" data-bar="1" href="#skills-approve">Skills to approve</a></li>
+              <li><a class="sidelink" data-bar="1" href="#staff">Staff</a></li>
+              <li><a class="sidelink" data-bar="1" href="#classes">Classes</a></li>
+              <li><a class="sidelink" data-bar="1" href="#rules">Timetable rules</a></li>
+              <li><a class="sidelink" data-bar="1" href="#map">How it works</a></li>
+            </ul>
+          </div>
+        </nav>
+        <div class="shellmain">
+        <ol class="trail" aria-label="Trail">
+          <li aria-current="page">Children</li>
+        </ol>
+        <div class="page">
+          <main class="main">
+            <div class="head">
+              <p class="eyebrow"><i class="ic s" data-icon="children"></i>All classes · <span class="num" data-source="enrolment.child_id">117</span> children</p>
+              <h1 class="title">Children</h1>
+              <p class="purpose">Your children in one table: how each is doing, last seen, notes waiting. Search, filter, open a child.</p>
+            </div>
+            <div class="filters" data-block="FilterBar">
+              <label class="sel"><i class="ic s" data-icon="search"></i><span class="vh">Search</span><input data-el="0" type="search" placeholder="Name or Sr. No." data-source="pii.child.first_name pii.child.last_name enrolment.roll_no"></label>
+              <label class="sel"><i class="ic s" data-icon="filter"></i>Class <select data-el="1" data-source="school_class.section"><option>All</option><option>K2 Red</option><option>K2 Blue</option></select></label>
+              <label class="sel">Show <select data-el="2" data-source="child_skill_state.state"><option>Needs attention</option><option>All</option></select></label>
+              <label class="sel"><i class="ic s" data-icon="group"></i>Group by <select data-el="11" data-source="child_skill_state.state school_class.section"><option>None: one table in Sr. No. order</option><option>Class</option><option selected>How they are doing</option><option>Needs attention</option></select></label>
+              <button class="btn press" data-el="3" type="button" aria-label="Remove the filter: Needs attention"><i class="ic" data-icon="clear"></i>Needs attention</button>
+              <button class="btn press" data-el="4" type="button">Clear</button>
+              <a class="btn btn-main press" data-el="7" href="#picture"><i class="ic" data-icon="child"></i>Class picture grid</a>
+            </div>
+            <p class="caption">Grouped by how they are doing. With "None", the same rows sit in one table, in Sr. No. order, with no headings.</p>
+            <div class="groups">
+            <section class="grp" data-state="ok" aria-label="Secure on most skills seen, 4 children">
+              <h3 class="grp-h"><i class="ic s" data-icon="secure"></i>Secure on most skills seen <span class="count num">4</span></h3>
+              <div class="table-box" data-block="DataTable">
+                <table class="table">
+                  <thead><tr><th>Sr. No. and name</th><th>Class</th><th>How they are doing</th><th>Last seen</th><th class="st">Notes waiting</th><th class="st">Absences noted</th></tr></thead>
+                  <tbody>
+                <tr>
+                  <td data-source="pii.child.first_name pii.child.last_name enrolment.roll_no"><button class="nchip press" data-el="5" type="button"><span class="no num" data-source="enrolment.roll_no">05</span><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Eli Eel</span></button></td>
+                  <td data-source="school_class.section grade.name">K2 Red</td>
+                  <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="6 secure, 3 practising, 7 not seen yet"><i data-state="ok" style="--n: 6"></i><i data-state="wait" style="--n: 3"></i><i data-state="unseen" style="--n: 7"></i></div><span class="muted">6 secure · 3 practising · 7 not seen</span></td>
+                  <td data-source="child_skill_state.last_seen">Mon</td>
+                  <td class="st" data-source="pii.note_claim.child_id"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>1 to confirm</span></td>
+                  <td class="st" data-source="activity_observation.outcome activity_observation.observed_at session.school_day_id"><span class="days" role="img" aria-label="Absences noted, last 7 school days: none Monday, none Tuesday, none Wednesday, no lesson Thursday, none Friday, none Monday, none Tuesday"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span> <span class="muted">none</span></td>
+                </tr>
+                <tr>
+                  <td data-source="pii.child.first_name pii.child.last_name enrolment.roll_no"><button class="nchip press" data-el="5" type="button"><span class="no num" data-source="enrolment.roll_no">03</span><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Cal Crow</span></button></td>
+                  <td data-source="school_class.section grade.name">K2 Red</td>
+                  <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="7 secure, 4 practising, 5 not seen yet"><i data-state="ok" style="--n: 7"></i><i data-state="wait" style="--n: 4"></i><i data-state="unseen" style="--n: 5"></i></div><span class="muted">7 secure · 4 practising · 5 not seen</span></td>
+                  <td data-source="child_skill_state.last_seen">Tue</td>
+                  <td class="st" data-source="pii.note_claim.child_id"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>1 to confirm</span></td>
+                  <td class="st" data-source="activity_observation.outcome activity_observation.observed_at session.school_day_id"><span class="days" role="img" aria-label="Absences noted, last 7 school days: none Monday, none Tuesday, absent Wednesday, no lesson Thursday, none Friday, none Monday, none Tuesday"><i></i><i></i><i data-state="quiet"><i class="ic s" data-icon="absent"></i></i><i></i><i></i><i></i><i></i></span> <span class="chip" data-state="quiet"><i class="ic s" data-icon="absent"></i>1 noted</span></td>
+                </tr>
+                <tr>
+                  <td data-source="pii.child.first_name pii.child.last_name enrolment.roll_no"><button class="nchip press" data-el="5" type="button"><span class="no num" data-source="enrolment.roll_no">08</span><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Hazel Hare</span></button></td>
+                  <td data-source="school_class.section grade.name">K2 Blue</td>
+                  <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="8 secure, 3 practising, 5 not seen yet"><i data-state="ok" style="--n: 8"></i><i data-state="wait" style="--n: 3"></i><i data-state="unseen" style="--n: 5"></i></div><span class="muted">8 secure · 3 practising · 5 not seen</span></td>
+                  <td data-source="child_skill_state.last_seen">Thu</td>
+                  <td class="st" data-source="pii.note_claim.child_id"><span class="muted">none</span></td>
+                  <td class="st" data-source="activity_observation.outcome activity_observation.observed_at session.school_day_id"><span class="days" role="img" aria-label="Absences noted, last 7 school days: none Monday, none Tuesday, none Wednesday, no lesson Thursday, none Friday, none Monday, none Tuesday"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span> <span class="muted">none</span></td>
+                </tr>
+                <tr>
+                  <td data-source="pii.child.first_name pii.child.last_name enrolment.roll_no"><button class="nchip press" data-el="5" type="button"><span class="no num" data-source="enrolment.roll_no">18</span><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Rex Rook</span></button></td>
+                  <td data-source="school_class.section grade.name">K2 Red</td>
+                  <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="6 secure, 4 practising, 6 not seen yet"><i data-state="ok" style="--n: 6"></i><i data-state="wait" style="--n: 4"></i><i data-state="unseen" style="--n: 6"></i></div><span class="muted">6 secure · 4 practising · 6 not seen</span></td>
+                  <td data-source="child_skill_state.last_seen">Wed</td>
+                  <td class="st" data-source="pii.note_claim.child_id"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>1 to confirm</span></td>
+                  <td class="st" data-source="activity_observation.outcome activity_observation.observed_at session.school_day_id"><span class="days" role="img" aria-label="Absences noted, last 7 school days: none Monday, none Tuesday, none Wednesday, no lesson Thursday, none Friday, none Monday, none Tuesday"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span> <span class="muted">none</span></td>
+                </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+            <section class="grp" data-state="wait" aria-label="Practising on most skills seen, 5 children">
+              <h3 class="grp-h"><i class="ic s" data-icon="practising"></i>Practising on most skills seen <span class="count num">5</span></h3>
+              <div class="table-box" data-block="DataTable">
+                <table class="table">
+                  <thead><tr><th>Sr. No. and name</th><th>Class</th><th>How they are doing</th><th>Last seen</th><th class="st">Notes waiting</th><th class="st">Absences noted</th></tr></thead>
+                  <tbody>
+                <tr>
+                  <td data-source="pii.child.first_name pii.child.last_name enrolment.roll_no"><button class="nchip press" data-el="5" type="button"><span class="no num" data-source="enrolment.roll_no">06</span><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Finn Fox</span></button></td>
+                  <td data-source="school_class.section grade.name">K2 Red</td>
+                  <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="0 secure, 2 practising, 14 not seen yet"><i data-state="ok" style="--n: 0"></i><i data-state="wait" style="--n: 2"></i><i data-state="unseen" style="--n: 14"></i></div><span class="muted">0 secure · 2 practising · 14 not seen</span></td>
+                  <td data-source="child_skill_state.last_seen">3 weeks ago</td>
+                  <td class="st" data-source="pii.note_claim.child_id"><span class="muted">none</span></td>
+                  <td class="st" data-source="activity_observation.outcome activity_observation.observed_at session.school_day_id"><span class="days" role="img" aria-label="Absences noted, last 7 school days: none Monday, absent Tuesday, none Wednesday, no lesson Thursday, absent Friday, none Monday, none Tuesday"><i></i><i data-state="quiet"><i class="ic s" data-icon="absent"></i></i><i></i><i></i><i data-state="quiet"><i class="ic s" data-icon="absent"></i></i><i></i><i></i></span> <span class="chip" data-state="quiet"><i class="ic s" data-icon="absent"></i>2 noted</span></td>
+                </tr>
+                <tr>
+                  <td data-source="pii.child.first_name pii.child.last_name enrolment.roll_no"><button class="nchip press" data-el="5" type="button"><span class="no num" data-source="enrolment.roll_no">09</span><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Ivy Ibis</span></button></td>
+                  <td data-source="school_class.section grade.name">K2 Blue</td>
+                  <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="2 secure, 5 practising, 9 not seen yet"><i data-state="ok" style="--n: 2"></i><i data-state="wait" style="--n: 5"></i><i data-state="unseen" style="--n: 9"></i></div><span class="muted">2 secure · 5 practising · 9 not seen</span></td>
+                  <td data-source="child_skill_state.last_seen">Tue</td>
+                  <td class="st" data-source="pii.note_claim.child_id"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>2 to confirm</span></td>
+                  <td class="st" data-source="activity_observation.outcome activity_observation.observed_at session.school_day_id"><span class="days" role="img" aria-label="Absences noted, last 7 school days: none Monday, none Tuesday, none Wednesday, no lesson Thursday, none Friday, none Monday, none Tuesday"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span> <span class="muted">none</span></td>
+                </tr>
+                <tr>
+                  <td data-source="pii.child.first_name pii.child.last_name enrolment.roll_no"><button class="nchip press" data-el="5" type="button"><span class="no num" data-source="enrolment.roll_no">12</span><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Lou Lynx</span></button></td>
+                  <td data-source="school_class.section grade.name">K2 Blue</td>
+                  <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="3 secure, 4 practising, 10 not seen yet"><i data-state="ok" style="--n: 3"></i><i data-state="wait" style="--n: 4"></i><i data-state="unseen" style="--n: 10"></i></div><span class="muted">3 secure · 4 practising · 10 not seen</span></td>
+                  <td data-source="child_skill_state.last_seen">Wed</td>
+                  <td class="st" data-source="pii.note_claim.child_id"><span class="muted">none</span></td>
+                  <td class="st" data-source="activity_observation.outcome activity_observation.observed_at session.school_day_id"><span class="days" role="img" aria-label="Absences noted, last 7 school days: none Monday, none Tuesday, none Wednesday, no lesson Thursday, none Friday, absent Monday, none Tuesday"><i></i><i></i><i></i><i></i><i></i><i data-state="quiet"><i class="ic s" data-icon="absent"></i></i><i></i></span> <span class="chip" data-state="quiet"><i class="ic s" data-icon="absent"></i>1 noted</span></td>
+                </tr>
+                <tr>
+                  <td data-source="pii.child.first_name pii.child.last_name enrolment.roll_no"><button class="nchip press" data-el="5" type="button"><span class="no num" data-source="enrolment.roll_no">15</span><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Otto Owl</span></button></td>
+                  <td data-source="school_class.section grade.name">K2 Blue</td>
+                  <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="1 secure, 3 practising, 12 not seen yet"><i data-state="ok" style="--n: 1"></i><i data-state="wait" style="--n: 3"></i><i data-state="unseen" style="--n: 12"></i></div><span class="muted">1 secure · 3 practising · 12 not seen</span></td>
+                  <td data-source="child_skill_state.last_seen">2 weeks ago</td>
+                  <td class="st" data-source="pii.note_claim.child_id"><span class="muted">none</span></td>
+                  <td class="st" data-source="activity_observation.outcome activity_observation.observed_at session.school_day_id"><span class="days" role="img" aria-label="Absences noted, last 7 school days: absent Monday, none Tuesday, none Wednesday, no lesson Thursday, none Friday, none Monday, absent Tuesday"><i data-state="quiet"><i class="ic s" data-icon="absent"></i></i><i></i><i></i><i></i><i></i><i></i><i data-state="quiet"><i class="ic s" data-icon="absent"></i></i></span> <span class="chip" data-state="quiet"><i class="ic s" data-icon="absent"></i>2 noted</span></td>
+                </tr>
+                <tr>
+                  <td data-source="pii.child.first_name pii.child.last_name enrolment.roll_no"><button class="nchip press" data-el="5" type="button"><span class="no num" data-source="enrolment.roll_no">17</span><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Quin Quail</span></button></td>
+                  <td data-source="school_class.section grade.name">K2 Red</td>
+                  <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="2 secure, 6 practising, 8 not seen yet"><i data-state="ok" style="--n: 2"></i><i data-state="wait" style="--n: 6"></i><i data-state="unseen" style="--n: 8"></i></div><span class="muted">2 secure · 6 practising · 8 not seen</span></td>
+                  <td data-source="child_skill_state.last_seen">Mon</td>
+                  <td class="st" data-source="pii.note_claim.child_id"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>1 to confirm</span></td>
+                  <td class="st" data-source="activity_observation.outcome activity_observation.observed_at session.school_day_id"><span class="days" role="img" aria-label="Absences noted, last 7 school days: none Monday, none Tuesday, none Wednesday, no lesson Thursday, none Friday, none Monday, none Tuesday"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span> <span class="muted">none</span></td>
+                </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+            <section class="grp" data-state="unseen" aria-label="Not seen yet on any skill, 1 child">
+              <h3 class="grp-h"><i class="ic s" data-icon="not-seen"></i>Not seen yet on any skill <span class="count num">1</span></h3>
+              <div class="table-box" data-block="DataTable">
+                <table class="table">
+                  <thead><tr><th>Sr. No. and name</th><th>Class</th><th>How they are doing</th><th>Last seen</th><th class="st">Notes waiting</th><th class="st">Absences noted</th></tr></thead>
+                  <tbody>
+                <tr>
+                  <td data-source="pii.child.first_name pii.child.last_name enrolment.roll_no"><button class="nchip press" data-el="5" type="button"><span class="no num" data-source="enrolment.roll_no">21</span><span data-el="6" data-source="pii.child.first_name pii.child.last_name">Uri Urial</span></button></td>
+                  <td data-source="school_class.section grade.name">K2 Red</td>
+                  <td data-source="child_skill_state.state"><div class="sbar" role="img" aria-label="0 secure, 0 practising, 16 not seen yet"><i data-state="ok" style="--n: 0"></i><i data-state="wait" style="--n: 0"></i><i data-state="unseen" style="--n: 16"></i></div><span class="muted">0 secure · 0 practising · 16 not seen</span></td>
+                  <td data-source="child_skill_state.last_seen">3 weeks ago</td>
+                  <td class="st" data-source="pii.note_claim.child_id"><span class="muted">none</span></td>
+                  <td class="st" data-source="activity_observation.outcome activity_observation.observed_at session.school_day_id"><span class="days" role="img" aria-label="Absences noted, last 7 school days: none Monday, none Tuesday, absent Wednesday, no lesson Thursday, none Friday, none Monday, none Tuesday"><i></i><i></i><i data-state="quiet"><i class="ic s" data-icon="absent"></i></i><i></i><i></i><i></i><i></i></span> <span class="chip" data-state="quiet"><i class="ic s" data-icon="absent"></i>1 noted</span></td>
+                </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+            </div>
+            <p><a data-el="10" href="#children?page=2">Later →</a></p>
+            <div class="cards">
+              <article class="card" data-kind="child">
+                <div class="card-h"><span class="tile"><i class="ic" data-icon="class"></i></span>The whole class, all skills</div>
+                <div class="card-b stack">
+                  <div class="sbar" role="img" aria-label="410 secure, 590 practising, 872 not seen yet">
+                    <i data-state="ok" style="--n: 410"></i><i data-state="wait" style="--n: 590"></i><i data-state="unseen" style="--n: 872"></i>
+                  </div>
+                  <div class="keyrow" data-source="child_skill_state.state">
+                    <span class="chip" data-state="ok"><i class="ic s" data-icon="secure"></i>410 secure</span>
+                    <span class="chip" data-state="wait"><i class="ic s" data-icon="practising"></i>590 practising</span>
+                    <span class="chip" data-state="unseen"><i class="ic s" data-icon="not-seen"></i>872 not seen yet</span>
+                  </div>
+                  <span class="caption">Every child on every skill. Not seen yet is an enrolled child with no state on a skill.</span>
+                </div>
+              </article>
+              <article class="card" data-kind="child">
+                <div class="card-h"><span class="tile"><i class="ic" data-icon="child"></i></span>Needing attention<span class="count num" data-source="child_skill_state.child_id">3</span></div>
+                <div class="card-b">
+                  <ul class="nchips" data-source="child_skill_state.state child_skill_state.last_seen">
+                    <li><button class="nchip press" data-el="5" type="button"><span class="no num">06</span><span data-el="6">Finn Fox</span></button></li>
+                    <li><button class="nchip press" data-el="5" type="button"><span class="no num">15</span><span data-el="6">Otto Owl</span></button></li>
+                    <li><button class="nchip press" data-el="5" type="button"><span class="no num">21</span><span data-el="6">Uri Urial</span></button></li>
+                  </ul>
+                  <span class="caption">Not seen for two weeks or more</span>
+                </div>
+              </article>
+            </div>
+            <div class="card">
+              <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: when no class is linked to you</div>
+              <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="not-seen"></i><b>No class linked to you</b><span class="muted">The coordinator links you to the classes you teach.</span></div></div>
+            </div>
+            <div class="card">
+              <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: when no child matches</div>
+              <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="not-seen"></i><b>No child matches</b><span class="muted">Check the spelling, or clear the filters.</span><button class="btn press" data-el="4" type="button">Clear</button></div></div>
+            </div>
+          </main>
+          <aside class="rail" aria-label="Connected to">
+              <aside class="peek" data-block="ChildPeek" aria-label="Recent history of Eli Eel">
+                <div class="peek-h">
+                  <span class="disc" aria-hidden="true">EE</span>
+                  <span class="who"><b data-source="pii.child.first_name pii.child.last_name">Eli Eel</b><span class="muted"><span class="num" data-source="enrolment.roll_no">05</span> · K2 Red</span></span>
+                  <button class="barbtn press" data-el="12" type="button" aria-label="Close"><i class="ic" data-icon="close"></i></button>
+                </div>
+                <div class="keyrow" data-source="child_skill_state.state"><span class="chip" data-state="ok"><i class="ic s" data-icon="secure"></i>6 secure</span><span class="chip" data-state="wait"><i class="ic s" data-icon="practising"></i>3 practising</span><span class="chip" data-state="unseen"><i class="ic s" data-icon="not-seen"></i>7 not seen yet</span></div>
+                <ol class="timeline">
+          <li class="tli"><span class="tile" data-kind="note"><i class="ic" data-icon="note"></i></span><div><b>Counts on from 30 in tens, with bundles</b><p>Voice note · confirmed by Asha Almond</p></div><span class="caption num" data-source="pii.educator_note.received_at">09-Nov</span></li>
+          <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><b>Counting in tens with bundles: as expected</b><p>Observed in the period · Asha Almond</p></div><span class="caption num" data-source="activity_observation.observed_at">06-Nov</span></li>
+          <li class="tli"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><div><b>Paper, sheet 3</b><p>4 right, 1 wrong with working, 1 blank · signed off by Bina Basil</p></div><span class="caption num" data-source="item_result.confirmed_at">05-Nov</span></li>
+          <li class="tli"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><div><b>Counting in tens: now practising</b><p>The state changed after a second day seen</p></div><span class="caption num" data-source="evidence_event.observed_at">04-Nov</span></li>
+          <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="history"></i></span><div><b>A mark corrected: below became as expected</b><p>A new entry that replaces the first · Asha Almond</p></div><span class="caption num" data-source="change_log.at">03-Nov</span></li>
+                </ol>
+                <a class="btn press" data-el="13" href="#child">Open Eli</a>
+              </aside>
+            <section class="rail-box">
+              <h2>Connected to</h2>
+              <ul class="rlist">
+                <li><a class="ritem" data-el="8" href="#assessments"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><span>Assessments<small>grades 1 to 4</small></span></a></li>
+                <li><a class="ritem" data-el="9" href="#notes"><span class="tile" data-kind="note"><i class="ic" data-icon="note"></i></span><span>Notes<small><span class="num" data-source="pii.educator_note.status">7</span> to confirm</small></span></a></li>
+              </ul>
+            </section>
+            <section class="rail-box">
+              <h2>Latest notes, any child</h2>
+              <ol class="timeline">
+                <li class="tli"><span class="tile" data-kind="note"><i class="ic" data-icon="note"></i></span><div><b data-source="pii.educator_note.status">Eli Eel · to confirm</b><p><span data-source="pii.educator_note.route">By voice</span> · <span data-source="pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="pii.educator_note.received_at">09-Nov</span></li>
+                <li class="tli"><span class="tile" data-kind="note"><i class="ic" data-icon="note"></i></span><div><b data-source="pii.educator_note.status">Ivy Ibis · to confirm</b><p><span data-source="pii.educator_note.route">By form</span> · <span data-source="pii.staff.name">Bina Basil</span></p></div><span class="caption num" data-source="pii.educator_note.received_at">08-Nov</span></li>
+                <li class="tli"><span class="tile" data-kind="note"><i class="ic" data-icon="note"></i></span><div><b data-source="pii.educator_note.status">Cal Crow · confirmed</b><p><span data-source="pii.educator_note.route">By voice</span> · <span data-source="pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="pii.educator_note.received_at">06-Nov</span></li>
+              </ol>
+            </section>
+          </aside>
+        </div>
+        </div>
       </div>
-      <nav class="tabbar" aria-label="Doors">
-        <a class="tab" data-bar="0" href="#today"><i class="ic" data-icon="today"></i>Today</a>
-        <a class="tab" data-bar="1" href="#timetable"><i class="ic" data-icon="timetable"></i>Timetable</a>
-        <a class="tab" data-bar="2" href="#children" aria-current="page"><i class="ic" data-icon="children"></i>Children</a>
-        <a class="tab" data-bar="3" href="#setup"><i class="ic" data-icon="setup"></i>Setup</a>
-      </nav>
     </div>
   </section>
   </section>

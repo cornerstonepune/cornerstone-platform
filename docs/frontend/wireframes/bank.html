@@ -18,231 +18,309 @@
   <section class="wf" data-viewport="1440" aria-label="Laptop, 1440 px">
     <div class="frame">
       <header class="bar">
+        <button class="barbtn menubtn press" data-bar="2" type="button" aria-label="Menu" aria-haspopup="dialog"><i class="ic" data-icon="menu"></i></button>
         <a class="brand" data-bar="0" href="#today" aria-label="Cornerstone Gurukul, go to Today">
           <img class="wide on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-colour.svg" alt="">
           <img class="wide on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-for-dark-backgrounds.svg" alt="">
           <img class="small on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark.svg" alt="">
           <img class="small on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark-on-white-tile.svg" alt="">
         </a>
-        <ul class="doors" aria-label="Doors">
-          <li><a class="door" data-bar="0" href="#today"><i class="ic" data-icon="today"></i>Today <span class="badge num" data-source="pii.educator_note.status pii.educator_note.received_at" aria-label="7 notes to confirm">7</span></a></li>
-          <li><a class="door" data-bar="1" href="#timetable"><i class="ic" data-icon="timetable"></i>Timetable</a></li>
-          <li><a class="door" data-bar="2" href="#children"><i class="ic" data-icon="children"></i>Children</a></li>
-          <li><a class="door" data-bar="3" href="#setup" aria-current="page"><i class="ic" data-icon="setup"></i>Setup</a></li>
-        </ul>
-        <label class="search"><i class="ic s" data-icon="search"></i><span class="vh">Search</span><input data-bar="4" type="search" placeholder="Sr. No., name or activity"></label>
-        <button class="barbtn press" data-bar="5" type="button" role="switch" aria-checked="false"><i class="ic" data-icon="acting-as"></i><span class="w">Acting as</span></button>
-        <a class="barbtn" data-bar="6" href="#help" aria-label="Help for this page"><i class="ic" data-icon="help"></i></a>
-        <button class="barbtn press" data-bar="7" type="button"><i class="ic" data-icon="sign-out"></i><span class="w">Sign out</span></button>
+        <label class="search"><i class="ic s" data-icon="search"></i><span class="vh">Search</span><input data-bar="3" type="search" placeholder="Sr. No., name or activity"></label>
+        <button class="barbtn press" data-bar="4" type="button" role="switch" aria-checked="false"><i class="ic" data-icon="acting-as"></i><span class="w">Acting as</span></button>
+        <a class="barbtn" data-bar="5" href="#help" aria-label="Help for this page"><i class="ic" data-icon="help"></i></a>
+        <button class="barbtn press" data-bar="6" type="button"><i class="ic" data-icon="sign-out"></i><span class="w">Sign out</span></button>
       </header>
-      <ol class="trail" aria-label="Trail">
-        <li><a data-trail href="#setup">Setup</a></li>
-        <li><i class="ic s" data-icon="trail"></i></li>
-        <li aria-current="page">Question bank</li>
-      </ol>
-      <div class="page">
-        <main class="main">
-          <div class="head">
-            <p class="eyebrow"><i class="ic s" data-icon="checklist"></i>Grades 1 to 4 · <span class="num" data-source="item.status">1,284</span> ready</p>
-            <h1 class="title">Question bank</h1>
-            <p class="purpose">What is in the bank for the skills taught in your classes, by level. Open a question to read it as it prints.</p>
+      <div class="shell">
+        <nav class="side" aria-label="Menu">
+          <button class="sidefold press" data-bar="2" type="button" aria-label="Fold the menu to icons" aria-expanded="true"><i class="ic" data-icon="collapse"></i></button>
+          <div class="sidegroup">
+            <h2 class="sideh" id="side-today"><i class="ic s" data-icon="today"></i>My day</h2>
+            <ul aria-labelledby="side-today">
+              <li><a class="sidelink" data-bar="1" href="#today">Today <span class="badge num" data-source="pii.educator_note.status pii.educator_note.received_at" aria-label="7 notes to confirm">7</span></a></li>
+              <li><a class="sidelink" data-bar="1" href="#notes">Notes to confirm</a></li>
+              <li><a class="sidelink" data-bar="1" href="#needs-doing">What needs doing</a></li>
+            </ul>
           </div>
-          <div class="cards" data-block="Cards">
-            <article class="card" data-kind="assessment"><div class="card-h"><span class="tile"><i class="ic" data-icon="assessment"></i></span>What the bank is</div><div class="card-b">
-              <details class="details" data-block="Details"><summary data-el="0"><i class="ic s" data-icon="details"></i>Read what the bank is</summary><div><p>Every question a paper can print. A model drafts a question; code checks its answer; a person reads it before it is ready. A removed question is kept with its reason and never printed again.</p></div></details>
-            </div></article>
-            <article class="card" data-kind="assessment"><div class="card-h"><span class="tile"><i class="ic" data-icon="checklist"></i></span>What is in the bank</div><div class="card-b">
-              <div class="keyrow" data-source="item.status"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i><span class="num">1,284</span> ready</span><span class="chip" data-state="quiet"><i class="ic s" data-icon="to-do"></i><span class="num">37</span> removed</span></div>
-              <div class="lbars" data-block="LevelBars" data-source="item.difficulty item.status">
-                <div class="lbar"><span>Easy</span><i style="--n: 38"></i><span class="num">488</span></div>
-                <div class="lbar"><span>Medium</span><i style="--n: 33"></i><span class="num">421</span></div>
-                <div class="lbar"><span>Hard</span><i style="--n: 20"></i><span class="num">259</span></div>
-                <div class="lbar"><span>Advance</span><i style="--n: 9"></i><span class="num">116</span></div>
-              </div>
-            </div></article>
+          <div class="sidegroup">
+            <h2 class="sideh" id="side-timetable"><i class="ic s" data-icon="week"></i>Timetable</h2>
+            <ul aria-labelledby="side-timetable">
+              <li><a class="sidelink" data-bar="1" href="#timetable">Week</a></li>
+              <li><a class="sidelink" data-bar="1" href="#fortnight">Fortnight</a></li>
+              <li><a class="sidelink" data-bar="1" href="#materials">Materials</a></li>
+            </ul>
           </div>
-          <div class="filters" data-block="FilterBar">
-            <label class="sel"><i class="ic s" data-icon="filter"></i>Grade <select data-el="1" data-source="grade.name"><option>Grade 1</option><option>Grade 2</option><option>Grade 3</option><option>Grade 4</option></select></label>
-            <label class="sel">Skill <select data-el="2" data-source="skill.name"><option>All skills taught</option><option>Adds within 20</option><option>Tens and ones to 99</option></select></label>
-            <label class="sel">Difficulty <select data-el="3" data-source="difficulty.code"><option>All</option><option>Easy</option><option>Medium</option><option>Hard</option><option>Advance</option></select></label>
-            <label class="sel">Kind <select data-el="4" data-source="item.fmt"><option>Any kind</option><option>One-step word problem</option><option>Number sentence</option></select></label>
-            <label class="sel">Status <select data-el="5" data-source="item.status"><option>Ready to print</option><option>Removed</option></select></label>
-            <label class="sel"><i class="ic s" data-icon="search"></i><span class="vh">Search</span><input data-el="6" type="search" placeholder="Words or code" data-source="item.stem item.item_key"></label>
+          <div class="sidegroup">
+            <h2 class="sideh" id="side-children"><i class="ic s" data-icon="child"></i>Children</h2>
+            <ul aria-labelledby="side-children">
+              <li><a class="sidelink" data-bar="1" href="#children">Class picture</a></li>
+              <li><a class="sidelink" data-bar="1" href="#reports">Parent reports</a></li>
+            </ul>
           </div>
-          <div class="table-box" data-block="DataTable">
-            <table class="table">
-              <thead><tr><th>Question</th><th>Skill</th><th>Level</th><th>Kind</th><th class="st">Status</th></tr></thead>
-              <tbody>
-                  <tr><td data-source="item.stem item.item_key"><a data-el="7" href="#question">7 + 5 = ___</a><span class="caption num" data-source="item.item_key"> N1-ADD-014</span></td><td data-source="skill.name item.skill_codes">Adds within 20</td><td data-source="item.difficulty">Easy</td><td data-source="item.fmt">fill the blank</td><td class="st" data-source="item.status"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>ready</span></td></tr>
-                  <tr><td data-source="item.stem item.item_key"><a data-el="7" href="#question">Ria has 8 shells and finds 6 more. How many now?</a><span class="caption num" data-source="item.item_key"> N1-ADD-022</span></td><td data-source="skill.name item.skill_codes">Adds within 20</td><td data-source="item.difficulty">Medium</td><td data-source="item.fmt">word problem</td><td class="st" data-source="item.status"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>ready</span></td></tr>
-                  <tr><td data-source="item.stem item.item_key"><a data-el="7" href="#question">15 − 7 = ___ (exchange a ten if you need to)</a><span class="caption num" data-source="item.item_key"> N1-SUB-031</span></td><td data-source="skill.name item.skill_codes">Subtracts within 20</td><td data-source="item.difficulty">Medium</td><td data-source="item.fmt">fill the blank</td><td class="st" data-source="item.status"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>ready</span></td></tr>
-                  <tr><td data-source="item.stem item.item_key"><a data-el="7" href="#question">Circle the number sentence that matches the picture</a><span class="caption num" data-source="item.item_key"> N1-SUB-040</span></td><td data-source="skill.name item.skill_codes">Subtracts within 20</td><td data-source="item.difficulty">Easy</td><td data-source="item.fmt">choose one</td><td class="st" data-source="item.status"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>ready</span></td></tr>
-                  <tr><td data-source="item.stem item.item_key"><a data-el="7" href="#question">How many tens and ones in 47?</a><span class="caption num" data-source="item.item_key"> N1-PV-008</span></td><td data-source="skill.name item.skill_codes">Tens and ones to 99</td><td data-source="item.difficulty">Easy</td><td data-source="item.fmt">fill the blank</td><td class="st" data-source="item.status"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>ready</span></td></tr>
-                  <tr><td data-source="item.stem item.item_key"><a data-el="7" href="#question">Make 63 with the fewest bundles and sticks</a><span class="caption num" data-source="item.item_key"> N1-PV-019</span></td><td data-source="skill.name item.skill_codes">Tens and ones to 99</td><td data-source="item.difficulty">Hard</td><td data-source="item.fmt">show your working</td><td class="st" data-source="item.status"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>ready</span></td></tr>
-                  <tr><td data-source="item.stem item.item_key"><a data-el="7" href="#question">Which is more: 5 tens or 48 ones? Say why.</a><span class="caption num" data-source="item.item_key"> N1-PV-027</span></td><td data-source="skill.name item.skill_codes">Tens and ones to 99</td><td data-source="item.difficulty">Advance</td><td data-source="item.fmt">explain</td><td class="st" data-source="item.status"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>ready</span></td></tr>
-                  <tr><td data-source="item.stem item.item_key"><a data-el="7" href="#question">Which ribbon is longer? Tick it.</a><span class="caption num" data-source="item.item_key"> N1-MEA-005</span></td><td data-source="skill.name item.skill_codes">Compares lengths</td><td data-source="item.difficulty">Easy</td><td data-source="item.fmt">choose one</td><td class="st" data-source="item.status"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>ready</span></td></tr>
-                  <tr><td data-source="item.stem item.item_key"><a data-el="7" href="#question">The pencil is ___ cubes long</a><span class="caption num" data-source="item.item_key"> N1-MEA-012</span></td><td data-source="skill.name item.skill_codes">Measures with cubes</td><td data-source="item.difficulty">Medium</td><td data-source="item.fmt">fill the blank</td><td class="st" data-source="item.status"><span class="chip" data-state="quiet"><i class="ic s" data-icon="to-do"></i>removed</span></td></tr>
-                  <tr><td data-source="item.stem item.item_key"><a data-el="7" href="#question">Find the missing number: 9 + ___ = 16</a><span class="caption num" data-source="item.item_key"> N1-ADD-030</span></td><td data-source="skill.name item.skill_codes">Adds within 20</td><td data-source="item.difficulty">Hard</td><td data-source="item.fmt">fill the blank</td><td class="st" data-source="item.status"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>ready</span></td></tr>
-              </tbody>
-            </table>
+          <div class="sidegroup" data-lit>
+            <h2 class="sideh" id="side-assessments"><i class="ic s" data-icon="assessment"></i>Assessments</h2>
+            <ul aria-labelledby="side-assessments">
+              <li><a class="sidelink" data-bar="1" href="#assessments">Assessments</a></li>
+              <li><a class="sidelink" data-bar="1" href="#upload">Upload papers</a></li>
+              <li><a class="sidelink" data-bar="1" href="#bank" aria-current="page">Question bank</a></li>
+            </ul>
           </div>
-          <div class="toolbar"><span class="caption">Grade 1 · 1 to 10 of <span class="num" data-source="item.id">412</span></span><a data-el="8" href="#bank">Later →</a></div>
-          <details class="details" data-block="Details"><summary data-el="9"><i class="ic s" data-icon="details"></i>Statistics (counts and worksheets by topic)</summary><div>
+          <div class="sidegroup">
+            <h2 class="sideh" id="side-school"><i class="ic s" data-icon="setup"></i>School</h2>
+            <ul aria-labelledby="side-school">
+              <li><a class="sidelink" data-bar="1" href="#across">Across classes</a></li>
+              <li><a class="sidelink" data-bar="1" href="#curriculum">Curriculum</a></li>
+              <li><a class="sidelink" data-bar="1" href="#skills-approve">Skills to approve</a></li>
+              <li><a class="sidelink" data-bar="1" href="#staff">Staff</a></li>
+              <li><a class="sidelink" data-bar="1" href="#classes">Classes</a></li>
+              <li><a class="sidelink" data-bar="1" href="#rules">Timetable rules</a></li>
+              <li><a class="sidelink" data-bar="1" href="#map">How it works</a></li>
+            </ul>
+          </div>
+        </nav>
+        <div class="shellmain">
+        <ol class="trail" aria-label="Trail">
+          <li><a data-trail href="#setup">Setup</a></li>
+          <li><i class="ic s" data-icon="trail"></i></li>
+          <li aria-current="page">Question bank</li>
+        </ol>
+        <div class="page">
+          <main class="main">
+            <div class="head">
+              <p class="eyebrow"><i class="ic s" data-icon="checklist"></i>Grades 1 to 4 · <span class="num" data-source="item.status">1,284</span> ready</p>
+              <h1 class="title">Question bank</h1>
+              <p class="purpose">What is in the bank for the skills taught in your classes, by level. Open a question to read it as it prints.</p>
+            </div>
+            <div class="cards" data-block="Cards">
+              <article class="card" data-kind="assessment"><div class="card-h"><span class="tile"><i class="ic" data-icon="assessment"></i></span>What the bank is</div><div class="card-b">
+                <details class="details" data-block="Details"><summary data-el="0"><i class="ic s" data-icon="details"></i>Read what the bank is</summary><div><p>Every question a paper can print. A model drafts a question; code checks its answer; a person reads it before it is ready. A removed question is kept with its reason and never printed again.</p></div></details>
+              </div></article>
+              <article class="card" data-kind="assessment"><div class="card-h"><span class="tile"><i class="ic" data-icon="checklist"></i></span>What is in the bank</div><div class="card-b">
+                <div class="keyrow" data-source="item.status"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i><span class="num">1,284</span> ready</span><span class="chip" data-state="quiet"><i class="ic s" data-icon="to-do"></i><span class="num">37</span> removed</span></div>
+                <div class="lbars" data-block="LevelBars" data-source="item.difficulty item.status">
+                  <div class="lbar"><span>Easy</span><i style="--n: 38"></i><span class="num">488</span></div>
+                  <div class="lbar"><span>Medium</span><i style="--n: 33"></i><span class="num">421</span></div>
+                  <div class="lbar"><span>Hard</span><i style="--n: 20"></i><span class="num">259</span></div>
+                  <div class="lbar"><span>Advance</span><i style="--n: 9"></i><span class="num">116</span></div>
+                </div>
+              </div></article>
+            </div>
+            <div class="filters" data-block="FilterBar">
+              <label class="sel"><i class="ic s" data-icon="filter"></i>Grade <select data-el="1" data-source="grade.name"><option>Grade 1</option><option>Grade 2</option><option>Grade 3</option><option>Grade 4</option></select></label>
+              <label class="sel">Skill <select data-el="2" data-source="skill.name"><option>All skills taught</option><option>Adds within 20</option><option>Tens and ones to 99</option></select></label>
+              <label class="sel">Difficulty <select data-el="3" data-source="difficulty.code"><option>All</option><option>Easy</option><option>Medium</option><option>Hard</option><option>Advance</option></select></label>
+              <label class="sel">Kind <select data-el="4" data-source="item.fmt"><option>Any kind</option><option>One-step word problem</option><option>Number sentence</option></select></label>
+              <label class="sel">Status <select data-el="5" data-source="item.status"><option>Ready to print</option><option>Removed</option></select></label>
+              <label class="sel"><i class="ic s" data-icon="search"></i><span class="vh">Search</span><input data-el="6" type="search" placeholder="Words or code" data-source="item.stem item.item_key"></label>
+            </div>
             <div class="table-box" data-block="DataTable">
               <table class="table">
-                <thead><tr><th>Skill</th><th class="n">Questions</th><th class="n">Times used</th><th class="n">Right first time</th><th class="n">Worksheets printed</th></tr></thead>
+                <thead><tr><th>Question</th><th>Skill</th><th>Level</th><th>Kind</th><th class="st">Status</th></tr></thead>
                 <tbody>
-                  <tr><td data-source="skill.name">Adds within 20</td><td class="n num" data-source="item.skill_codes">164</td><td class="n num" data-source="item_result.item_id">2,310</td><td class="n num" data-source="item_result.state">71%</td><td class="n num" data-source="sheet_template.item_ids">58</td></tr>
-                  <tr><td data-source="skill.name">Tens and ones to 99</td><td class="n num" data-source="item.skill_codes">132</td><td class="n num" data-source="item_result.item_id">1,804</td><td class="n num" data-source="item_result.state">64%</td><td class="n num" data-source="sheet_template.item_ids">41</td></tr>
-                  <tr><td data-source="skill.name">Subtracts within 20</td><td class="n num" data-source="item.skill_codes">118</td><td class="n num" data-source="item_result.item_id">1,422</td><td class="n num" data-source="item_result.state">58%</td><td class="n num" data-source="sheet_template.item_ids">36</td></tr>
+                    <tr><td data-source="item.stem item.item_key"><a data-el="7" href="#question">7 + 5 = ___</a><span class="caption num" data-source="item.item_key"> N1-ADD-014</span></td><td data-source="skill.name item.skill_codes">Adds within 20</td><td data-source="item.difficulty">Easy</td><td data-source="item.fmt">fill the blank</td><td class="st" data-source="item.status"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>ready</span></td></tr>
+                    <tr><td data-source="item.stem item.item_key"><a data-el="7" href="#question">Ria has 8 shells and finds 6 more. How many now?</a><span class="caption num" data-source="item.item_key"> N1-ADD-022</span></td><td data-source="skill.name item.skill_codes">Adds within 20</td><td data-source="item.difficulty">Medium</td><td data-source="item.fmt">word problem</td><td class="st" data-source="item.status"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>ready</span></td></tr>
+                    <tr><td data-source="item.stem item.item_key"><a data-el="7" href="#question">15 − 7 = ___ (exchange a ten if you need to)</a><span class="caption num" data-source="item.item_key"> N1-SUB-031</span></td><td data-source="skill.name item.skill_codes">Subtracts within 20</td><td data-source="item.difficulty">Medium</td><td data-source="item.fmt">fill the blank</td><td class="st" data-source="item.status"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>ready</span></td></tr>
+                    <tr><td data-source="item.stem item.item_key"><a data-el="7" href="#question">Circle the number sentence that matches the picture</a><span class="caption num" data-source="item.item_key"> N1-SUB-040</span></td><td data-source="skill.name item.skill_codes">Subtracts within 20</td><td data-source="item.difficulty">Easy</td><td data-source="item.fmt">choose one</td><td class="st" data-source="item.status"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>ready</span></td></tr>
+                    <tr><td data-source="item.stem item.item_key"><a data-el="7" href="#question">How many tens and ones in 47?</a><span class="caption num" data-source="item.item_key"> N1-PV-008</span></td><td data-source="skill.name item.skill_codes">Tens and ones to 99</td><td data-source="item.difficulty">Easy</td><td data-source="item.fmt">fill the blank</td><td class="st" data-source="item.status"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>ready</span></td></tr>
+                    <tr><td data-source="item.stem item.item_key"><a data-el="7" href="#question">Make 63 with the fewest bundles and sticks</a><span class="caption num" data-source="item.item_key"> N1-PV-019</span></td><td data-source="skill.name item.skill_codes">Tens and ones to 99</td><td data-source="item.difficulty">Hard</td><td data-source="item.fmt">show your working</td><td class="st" data-source="item.status"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>ready</span></td></tr>
+                    <tr><td data-source="item.stem item.item_key"><a data-el="7" href="#question">Which is more: 5 tens or 48 ones? Say why.</a><span class="caption num" data-source="item.item_key"> N1-PV-027</span></td><td data-source="skill.name item.skill_codes">Tens and ones to 99</td><td data-source="item.difficulty">Advance</td><td data-source="item.fmt">explain</td><td class="st" data-source="item.status"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>ready</span></td></tr>
+                    <tr><td data-source="item.stem item.item_key"><a data-el="7" href="#question">Which ribbon is longer? Tick it.</a><span class="caption num" data-source="item.item_key"> N1-MEA-005</span></td><td data-source="skill.name item.skill_codes">Compares lengths</td><td data-source="item.difficulty">Easy</td><td data-source="item.fmt">choose one</td><td class="st" data-source="item.status"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>ready</span></td></tr>
+                    <tr><td data-source="item.stem item.item_key"><a data-el="7" href="#question">The pencil is ___ cubes long</a><span class="caption num" data-source="item.item_key"> N1-MEA-012</span></td><td data-source="skill.name item.skill_codes">Measures with cubes</td><td data-source="item.difficulty">Medium</td><td data-source="item.fmt">fill the blank</td><td class="st" data-source="item.status"><span class="chip" data-state="quiet"><i class="ic s" data-icon="to-do"></i>removed</span></td></tr>
+                    <tr><td data-source="item.stem item.item_key"><a data-el="7" href="#question">Find the missing number: 9 + ___ = 16</a><span class="caption num" data-source="item.item_key"> N1-ADD-030</span></td><td data-source="skill.name item.skill_codes">Adds within 20</td><td data-source="item.difficulty">Hard</td><td data-source="item.fmt">fill the blank</td><td class="st" data-source="item.status"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>ready</span></td></tr>
                 </tbody>
               </table>
             </div>
-            <p class="caption">By taxonomy: the same counts by question kind (taxonomy_case), on this fold only.</p>
-          </div></details>
-          <div class="card">
-            <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: when a skill has no questions</div>
-            <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="not-seen"></i><b>No questions for this skill yet</b><span class="muted">The next bank run drafts them; a person reads each before it is ready.</span></div></div>
-          </div>
-        </main>
-        <aside class="rail" aria-label="Connected to">
-          <section class="rail-box">
-            <h2>Connected to</h2>
-            <ul class="rlist">
-              <li><a class="ritem" data-el="10" href="#skill"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><span><span data-source="skill.name">Tens and ones to 99</span><small>the skill</small></span></a></li>
-              <li><a class="ritem" data-el="10" href="#skill"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><span><span data-source="skill.name">Adds within 20</span><small>the skill</small></span></a></li>
-            </ul>
-          </section>
-          <section class="rail-box">
-            <h2>Changed lately</h2>
-            <ol class="timeline">
-              <li class="tli"><span class="tile" data-kind="assessment"><i class="ic" data-icon="history"></i></span><div><b>Wording corrected</b><p><span data-source="item.item_key">N1-SUB-031</span> · <span data-source="pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="change_log.at">8-Nov</span></li>
-              <li class="tli"><span class="tile" data-kind="assessment"><i class="ic" data-icon="clear"></i></span><div><b>Removed: two right answers</b><p><span data-source="item.item_key">N1-MEA-012</span> · <span data-source="pii.staff.name">Bina Basil</span></p></div><span class="caption num" data-source="change_log.at">5-Nov</span></li>
-            </ol>
-          </section>
-        </aside>
+            <div class="toolbar"><span class="caption">Grade 1 · 1 to 10 of <span class="num" data-source="item.id">412</span></span><a data-el="8" href="#bank">Later →</a></div>
+            <details class="details" data-block="Details"><summary data-el="9"><i class="ic s" data-icon="details"></i>Statistics (counts and worksheets by topic)</summary><div>
+              <div class="table-box" data-block="DataTable">
+                <table class="table">
+                  <thead><tr><th>Skill</th><th class="n">Questions</th><th class="n">Times used</th><th class="n">Right first time</th><th class="n">Worksheets printed</th></tr></thead>
+                  <tbody>
+                    <tr><td data-source="skill.name">Adds within 20</td><td class="n num" data-source="item.skill_codes">164</td><td class="n num" data-source="item_result.item_id">2,310</td><td class="n num" data-source="item_result.state">71%</td><td class="n num" data-source="sheet_template.item_ids">58</td></tr>
+                    <tr><td data-source="skill.name">Tens and ones to 99</td><td class="n num" data-source="item.skill_codes">132</td><td class="n num" data-source="item_result.item_id">1,804</td><td class="n num" data-source="item_result.state">64%</td><td class="n num" data-source="sheet_template.item_ids">41</td></tr>
+                    <tr><td data-source="skill.name">Subtracts within 20</td><td class="n num" data-source="item.skill_codes">118</td><td class="n num" data-source="item_result.item_id">1,422</td><td class="n num" data-source="item_result.state">58%</td><td class="n num" data-source="sheet_template.item_ids">36</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <p class="caption">By taxonomy: the same counts by question kind (taxonomy_case), on this fold only.</p>
+            </div></details>
+            <div class="card">
+              <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: when a skill has no questions</div>
+              <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="not-seen"></i><b>No questions for this skill yet</b><span class="muted">The next bank run drafts them; a person reads each before it is ready.</span></div></div>
+            </div>
+          </main>
+          <aside class="rail" aria-label="Connected to">
+            <section class="rail-box">
+              <h2>Connected to</h2>
+              <ul class="rlist">
+                <li><a class="ritem" data-el="10" href="#skill"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><span><span data-source="skill.name">Tens and ones to 99</span><small>the skill</small></span></a></li>
+                <li><a class="ritem" data-el="10" href="#skill"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><span><span data-source="skill.name">Adds within 20</span><small>the skill</small></span></a></li>
+              </ul>
+            </section>
+            <section class="rail-box">
+              <h2>Changed lately</h2>
+              <ol class="timeline">
+                <li class="tli"><span class="tile" data-kind="assessment"><i class="ic" data-icon="history"></i></span><div><b>Wording corrected</b><p><span data-source="item.item_key">N1-SUB-031</span> · <span data-source="pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="change_log.at">8-Nov</span></li>
+                <li class="tli"><span class="tile" data-kind="assessment"><i class="ic" data-icon="clear"></i></span><div><b>Removed: two right answers</b><p><span data-source="item.item_key">N1-MEA-012</span> · <span data-source="pii.staff.name">Bina Basil</span></p></div><span class="caption num" data-source="change_log.at">5-Nov</span></li>
+              </ol>
+            </section>
+          </aside>
+        </div>
+        </div>
       </div>
-      <nav class="tabbar" aria-label="Doors">
-        <a class="tab" data-bar="0" href="#today"><i class="ic" data-icon="today"></i>Today</a>
-        <a class="tab" data-bar="1" href="#timetable"><i class="ic" data-icon="timetable"></i>Timetable</a>
-        <a class="tab" data-bar="2" href="#children"><i class="ic" data-icon="children"></i>Children</a>
-        <a class="tab" data-bar="3" href="#setup" aria-current="page"><i class="ic" data-icon="setup"></i>Setup</a>
-      </nav>
     </div>
   </section>
   <section class="wf" data-viewport="400" aria-label="Phone, 400 px">
     <div class="frame">
       <header class="bar">
+        <button class="barbtn menubtn press" data-bar="2" type="button" aria-label="Menu" aria-haspopup="dialog"><i class="ic" data-icon="menu"></i></button>
         <a class="brand" data-bar="0" href="#today" aria-label="Cornerstone Gurukul, go to Today">
           <img class="wide on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-colour.svg" alt="">
           <img class="wide on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-for-dark-backgrounds.svg" alt="">
           <img class="small on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark.svg" alt="">
           <img class="small on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark-on-white-tile.svg" alt="">
         </a>
-        <ul class="doors" aria-label="Doors">
-          <li><a class="door" data-bar="0" href="#today"><i class="ic" data-icon="today"></i>Today <span class="badge num" data-source="pii.educator_note.status pii.educator_note.received_at" aria-label="7 notes to confirm">7</span></a></li>
-          <li><a class="door" data-bar="1" href="#timetable"><i class="ic" data-icon="timetable"></i>Timetable</a></li>
-          <li><a class="door" data-bar="2" href="#children"><i class="ic" data-icon="children"></i>Children</a></li>
-          <li><a class="door" data-bar="3" href="#setup" aria-current="page"><i class="ic" data-icon="setup"></i>Setup</a></li>
-        </ul>
-        <label class="search"><i class="ic s" data-icon="search"></i><span class="vh">Search</span><input data-bar="4" type="search" placeholder="Sr. No., name or activity"></label>
-        <button class="barbtn press" data-bar="5" type="button" role="switch" aria-checked="false"><i class="ic" data-icon="acting-as"></i><span class="w">Acting as</span></button>
-        <a class="barbtn" data-bar="6" href="#help" aria-label="Help for this page"><i class="ic" data-icon="help"></i></a>
-        <button class="barbtn press" data-bar="7" type="button"><i class="ic" data-icon="sign-out"></i><span class="w">Sign out</span></button>
+        <label class="search"><i class="ic s" data-icon="search"></i><span class="vh">Search</span><input data-bar="3" type="search" placeholder="Sr. No., name or activity"></label>
+        <button class="barbtn press" data-bar="4" type="button" role="switch" aria-checked="false"><i class="ic" data-icon="acting-as"></i><span class="w">Acting as</span></button>
+        <a class="barbtn" data-bar="5" href="#help" aria-label="Help for this page"><i class="ic" data-icon="help"></i></a>
+        <button class="barbtn press" data-bar="6" type="button"><i class="ic" data-icon="sign-out"></i><span class="w">Sign out</span></button>
       </header>
-      <ol class="trail" aria-label="Trail">
-        <li><a data-trail href="#setup">Setup</a></li>
-        <li><i class="ic s" data-icon="trail"></i></li>
-        <li aria-current="page">Question bank</li>
-      </ol>
-      <div class="page">
-        <main class="main">
-          <div class="head">
-            <p class="eyebrow"><i class="ic s" data-icon="checklist"></i>Grades 1 to 4 · <span class="num" data-source="item.status">1,284</span> ready</p>
-            <h1 class="title">Question bank</h1>
-            <p class="purpose">What is in the bank for the skills taught in your classes, by level. Open a question to read it as it prints.</p>
+      <div class="shell">
+        <nav class="side" aria-label="Menu">
+          <button class="sidefold press" data-bar="2" type="button" aria-label="Fold the menu to icons" aria-expanded="true"><i class="ic" data-icon="collapse"></i></button>
+          <div class="sidegroup">
+            <h2 class="sideh" id="side-today"><i class="ic s" data-icon="today"></i>My day</h2>
+            <ul aria-labelledby="side-today">
+              <li><a class="sidelink" data-bar="1" href="#today">Today <span class="badge num" data-source="pii.educator_note.status pii.educator_note.received_at" aria-label="7 notes to confirm">7</span></a></li>
+              <li><a class="sidelink" data-bar="1" href="#notes">Notes to confirm</a></li>
+              <li><a class="sidelink" data-bar="1" href="#needs-doing">What needs doing</a></li>
+            </ul>
           </div>
-          <div class="cards" data-block="Cards">
-            <article class="card" data-kind="assessment"><div class="card-h"><span class="tile"><i class="ic" data-icon="assessment"></i></span>What the bank is</div><div class="card-b">
-              <details class="details" data-block="Details"><summary data-el="0"><i class="ic s" data-icon="details"></i>Read what the bank is</summary><div><p>Every question a paper can print. A model drafts a question; code checks its answer; a person reads it before it is ready. A removed question is kept with its reason and never printed again.</p></div></details>
-            </div></article>
-            <article class="card" data-kind="assessment"><div class="card-h"><span class="tile"><i class="ic" data-icon="checklist"></i></span>What is in the bank</div><div class="card-b">
-              <div class="keyrow" data-source="item.status"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i><span class="num">1,284</span> ready</span><span class="chip" data-state="quiet"><i class="ic s" data-icon="to-do"></i><span class="num">37</span> removed</span></div>
-              <div class="lbars" data-block="LevelBars" data-source="item.difficulty item.status">
-                <div class="lbar"><span>Easy</span><i style="--n: 38"></i><span class="num">488</span></div>
-                <div class="lbar"><span>Medium</span><i style="--n: 33"></i><span class="num">421</span></div>
-                <div class="lbar"><span>Hard</span><i style="--n: 20"></i><span class="num">259</span></div>
-                <div class="lbar"><span>Advance</span><i style="--n: 9"></i><span class="num">116</span></div>
-              </div>
-            </div></article>
+          <div class="sidegroup">
+            <h2 class="sideh" id="side-timetable"><i class="ic s" data-icon="week"></i>Timetable</h2>
+            <ul aria-labelledby="side-timetable">
+              <li><a class="sidelink" data-bar="1" href="#timetable">Week</a></li>
+              <li><a class="sidelink" data-bar="1" href="#fortnight">Fortnight</a></li>
+              <li><a class="sidelink" data-bar="1" href="#materials">Materials</a></li>
+            </ul>
           </div>
-          <div class="filters" data-block="FilterBar">
-            <label class="sel"><i class="ic s" data-icon="filter"></i>Grade <select data-el="1" data-source="grade.name"><option>Grade 1</option><option>Grade 2</option><option>Grade 3</option><option>Grade 4</option></select></label>
-            <label class="sel">Skill <select data-el="2" data-source="skill.name"><option>All skills taught</option><option>Adds within 20</option><option>Tens and ones to 99</option></select></label>
-            <label class="sel">Difficulty <select data-el="3" data-source="difficulty.code"><option>All</option><option>Easy</option><option>Medium</option><option>Hard</option><option>Advance</option></select></label>
-            <label class="sel">Kind <select data-el="4" data-source="item.fmt"><option>Any kind</option><option>One-step word problem</option><option>Number sentence</option></select></label>
-            <label class="sel">Status <select data-el="5" data-source="item.status"><option>Ready to print</option><option>Removed</option></select></label>
-            <label class="sel"><i class="ic s" data-icon="search"></i><span class="vh">Search</span><input data-el="6" type="search" placeholder="Words or code" data-source="item.stem item.item_key"></label>
+          <div class="sidegroup">
+            <h2 class="sideh" id="side-children"><i class="ic s" data-icon="child"></i>Children</h2>
+            <ul aria-labelledby="side-children">
+              <li><a class="sidelink" data-bar="1" href="#children">Class picture</a></li>
+              <li><a class="sidelink" data-bar="1" href="#reports">Parent reports</a></li>
+            </ul>
           </div>
-          <div class="table-box" data-block="DataTable">
-            <table class="table">
-              <thead><tr><th>Question</th><th>Skill</th><th>Level</th><th>Kind</th><th class="st">Status</th></tr></thead>
-              <tbody>
-                  <tr><td data-source="item.stem item.item_key"><a data-el="7" href="#question">7 + 5 = ___</a><span class="caption num" data-source="item.item_key"> N1-ADD-014</span></td><td data-source="skill.name item.skill_codes">Adds within 20</td><td data-source="item.difficulty">Easy</td><td data-source="item.fmt">fill the blank</td><td class="st" data-source="item.status"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>ready</span></td></tr>
-                  <tr><td data-source="item.stem item.item_key"><a data-el="7" href="#question">Ria has 8 shells and finds 6 more. How many now?</a><span class="caption num" data-source="item.item_key"> N1-ADD-022</span></td><td data-source="skill.name item.skill_codes">Adds within 20</td><td data-source="item.difficulty">Medium</td><td data-source="item.fmt">word problem</td><td class="st" data-source="item.status"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>ready</span></td></tr>
-                  <tr><td data-source="item.stem item.item_key"><a data-el="7" href="#question">15 − 7 = ___ (exchange a ten if you need to)</a><span class="caption num" data-source="item.item_key"> N1-SUB-031</span></td><td data-source="skill.name item.skill_codes">Subtracts within 20</td><td data-source="item.difficulty">Medium</td><td data-source="item.fmt">fill the blank</td><td class="st" data-source="item.status"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>ready</span></td></tr>
-                  <tr><td data-source="item.stem item.item_key"><a data-el="7" href="#question">Circle the number sentence that matches the picture</a><span class="caption num" data-source="item.item_key"> N1-SUB-040</span></td><td data-source="skill.name item.skill_codes">Subtracts within 20</td><td data-source="item.difficulty">Easy</td><td data-source="item.fmt">choose one</td><td class="st" data-source="item.status"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>ready</span></td></tr>
-                  <tr><td data-source="item.stem item.item_key"><a data-el="7" href="#question">How many tens and ones in 47?</a><span class="caption num" data-source="item.item_key"> N1-PV-008</span></td><td data-source="skill.name item.skill_codes">Tens and ones to 99</td><td data-source="item.difficulty">Easy</td><td data-source="item.fmt">fill the blank</td><td class="st" data-source="item.status"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>ready</span></td></tr>
-                  <tr><td data-source="item.stem item.item_key"><a data-el="7" href="#question">Make 63 with the fewest bundles and sticks</a><span class="caption num" data-source="item.item_key"> N1-PV-019</span></td><td data-source="skill.name item.skill_codes">Tens and ones to 99</td><td data-source="item.difficulty">Hard</td><td data-source="item.fmt">show your working</td><td class="st" data-source="item.status"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>ready</span></td></tr>
-                  <tr><td data-source="item.stem item.item_key"><a data-el="7" href="#question">Which is more: 5 tens or 48 ones? Say why.</a><span class="caption num" data-source="item.item_key"> N1-PV-027</span></td><td data-source="skill.name item.skill_codes">Tens and ones to 99</td><td data-source="item.difficulty">Advance</td><td data-source="item.fmt">explain</td><td class="st" data-source="item.status"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>ready</span></td></tr>
-                  <tr><td data-source="item.stem item.item_key"><a data-el="7" href="#question">Which ribbon is longer? Tick it.</a><span class="caption num" data-source="item.item_key"> N1-MEA-005</span></td><td data-source="skill.name item.skill_codes">Compares lengths</td><td data-source="item.difficulty">Easy</td><td data-source="item.fmt">choose one</td><td class="st" data-source="item.status"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>ready</span></td></tr>
-                  <tr><td data-source="item.stem item.item_key"><a data-el="7" href="#question">The pencil is ___ cubes long</a><span class="caption num" data-source="item.item_key"> N1-MEA-012</span></td><td data-source="skill.name item.skill_codes">Measures with cubes</td><td data-source="item.difficulty">Medium</td><td data-source="item.fmt">fill the blank</td><td class="st" data-source="item.status"><span class="chip" data-state="quiet"><i class="ic s" data-icon="to-do"></i>removed</span></td></tr>
-                  <tr><td data-source="item.stem item.item_key"><a data-el="7" href="#question">Find the missing number: 9 + ___ = 16</a><span class="caption num" data-source="item.item_key"> N1-ADD-030</span></td><td data-source="skill.name item.skill_codes">Adds within 20</td><td data-source="item.difficulty">Hard</td><td data-source="item.fmt">fill the blank</td><td class="st" data-source="item.status"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>ready</span></td></tr>
-              </tbody>
-            </table>
+          <div class="sidegroup" data-lit>
+            <h2 class="sideh" id="side-assessments"><i class="ic s" data-icon="assessment"></i>Assessments</h2>
+            <ul aria-labelledby="side-assessments">
+              <li><a class="sidelink" data-bar="1" href="#assessments">Assessments</a></li>
+              <li><a class="sidelink" data-bar="1" href="#upload">Upload papers</a></li>
+              <li><a class="sidelink" data-bar="1" href="#bank" aria-current="page">Question bank</a></li>
+            </ul>
           </div>
-          <div class="toolbar"><span class="caption">Grade 1 · 1 to 10 of <span class="num" data-source="item.id">412</span></span><a data-el="8" href="#bank">Later →</a></div>
-          <details class="details" data-block="Details"><summary data-el="9"><i class="ic s" data-icon="details"></i>Statistics (counts and worksheets by topic)</summary><div>
+          <div class="sidegroup">
+            <h2 class="sideh" id="side-school"><i class="ic s" data-icon="setup"></i>School</h2>
+            <ul aria-labelledby="side-school">
+              <li><a class="sidelink" data-bar="1" href="#across">Across classes</a></li>
+              <li><a class="sidelink" data-bar="1" href="#curriculum">Curriculum</a></li>
+              <li><a class="sidelink" data-bar="1" href="#skills-approve">Skills to approve</a></li>
+              <li><a class="sidelink" data-bar="1" href="#staff">Staff</a></li>
+              <li><a class="sidelink" data-bar="1" href="#classes">Classes</a></li>
+              <li><a class="sidelink" data-bar="1" href="#rules">Timetable rules</a></li>
+              <li><a class="sidelink" data-bar="1" href="#map">How it works</a></li>
+            </ul>
+          </div>
+        </nav>
+        <div class="shellmain">
+        <ol class="trail" aria-label="Trail">
+          <li><a data-trail href="#setup">Setup</a></li>
+          <li><i class="ic s" data-icon="trail"></i></li>
+          <li aria-current="page">Question bank</li>
+        </ol>
+        <div class="page">
+          <main class="main">
+            <div class="head">
+              <p class="eyebrow"><i class="ic s" data-icon="checklist"></i>Grades 1 to 4 · <span class="num" data-source="item.status">1,284</span> ready</p>
+              <h1 class="title">Question bank</h1>
+              <p class="purpose">What is in the bank for the skills taught in your classes, by level. Open a question to read it as it prints.</p>
+            </div>
+            <div class="cards" data-block="Cards">
+              <article class="card" data-kind="assessment"><div class="card-h"><span class="tile"><i class="ic" data-icon="assessment"></i></span>What the bank is</div><div class="card-b">
+                <details class="details" data-block="Details"><summary data-el="0"><i class="ic s" data-icon="details"></i>Read what the bank is</summary><div><p>Every question a paper can print. A model drafts a question; code checks its answer; a person reads it before it is ready. A removed question is kept with its reason and never printed again.</p></div></details>
+              </div></article>
+              <article class="card" data-kind="assessment"><div class="card-h"><span class="tile"><i class="ic" data-icon="checklist"></i></span>What is in the bank</div><div class="card-b">
+                <div class="keyrow" data-source="item.status"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i><span class="num">1,284</span> ready</span><span class="chip" data-state="quiet"><i class="ic s" data-icon="to-do"></i><span class="num">37</span> removed</span></div>
+                <div class="lbars" data-block="LevelBars" data-source="item.difficulty item.status">
+                  <div class="lbar"><span>Easy</span><i style="--n: 38"></i><span class="num">488</span></div>
+                  <div class="lbar"><span>Medium</span><i style="--n: 33"></i><span class="num">421</span></div>
+                  <div class="lbar"><span>Hard</span><i style="--n: 20"></i><span class="num">259</span></div>
+                  <div class="lbar"><span>Advance</span><i style="--n: 9"></i><span class="num">116</span></div>
+                </div>
+              </div></article>
+            </div>
+            <div class="filters" data-block="FilterBar">
+              <label class="sel"><i class="ic s" data-icon="filter"></i>Grade <select data-el="1" data-source="grade.name"><option>Grade 1</option><option>Grade 2</option><option>Grade 3</option><option>Grade 4</option></select></label>
+              <label class="sel">Skill <select data-el="2" data-source="skill.name"><option>All skills taught</option><option>Adds within 20</option><option>Tens and ones to 99</option></select></label>
+              <label class="sel">Difficulty <select data-el="3" data-source="difficulty.code"><option>All</option><option>Easy</option><option>Medium</option><option>Hard</option><option>Advance</option></select></label>
+              <label class="sel">Kind <select data-el="4" data-source="item.fmt"><option>Any kind</option><option>One-step word problem</option><option>Number sentence</option></select></label>
+              <label class="sel">Status <select data-el="5" data-source="item.status"><option>Ready to print</option><option>Removed</option></select></label>
+              <label class="sel"><i class="ic s" data-icon="search"></i><span class="vh">Search</span><input data-el="6" type="search" placeholder="Words or code" data-source="item.stem item.item_key"></label>
+            </div>
             <div class="table-box" data-block="DataTable">
               <table class="table">
-                <thead><tr><th>Skill</th><th class="n">Questions</th><th class="n">Times used</th><th class="n">Right first time</th><th class="n">Worksheets printed</th></tr></thead>
+                <thead><tr><th>Question</th><th>Skill</th><th>Level</th><th>Kind</th><th class="st">Status</th></tr></thead>
                 <tbody>
-                  <tr><td data-source="skill.name">Adds within 20</td><td class="n num" data-source="item.skill_codes">164</td><td class="n num" data-source="item_result.item_id">2,310</td><td class="n num" data-source="item_result.state">71%</td><td class="n num" data-source="sheet_template.item_ids">58</td></tr>
-                  <tr><td data-source="skill.name">Tens and ones to 99</td><td class="n num" data-source="item.skill_codes">132</td><td class="n num" data-source="item_result.item_id">1,804</td><td class="n num" data-source="item_result.state">64%</td><td class="n num" data-source="sheet_template.item_ids">41</td></tr>
-                  <tr><td data-source="skill.name">Subtracts within 20</td><td class="n num" data-source="item.skill_codes">118</td><td class="n num" data-source="item_result.item_id">1,422</td><td class="n num" data-source="item_result.state">58%</td><td class="n num" data-source="sheet_template.item_ids">36</td></tr>
+                    <tr><td data-source="item.stem item.item_key"><a data-el="7" href="#question">7 + 5 = ___</a><span class="caption num" data-source="item.item_key"> N1-ADD-014</span></td><td data-source="skill.name item.skill_codes">Adds within 20</td><td data-source="item.difficulty">Easy</td><td data-source="item.fmt">fill the blank</td><td class="st" data-source="item.status"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>ready</span></td></tr>
+                    <tr><td data-source="item.stem item.item_key"><a data-el="7" href="#question">Ria has 8 shells and finds 6 more. How many now?</a><span class="caption num" data-source="item.item_key"> N1-ADD-022</span></td><td data-source="skill.name item.skill_codes">Adds within 20</td><td data-source="item.difficulty">Medium</td><td data-source="item.fmt">word problem</td><td class="st" data-source="item.status"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>ready</span></td></tr>
+                    <tr><td data-source="item.stem item.item_key"><a data-el="7" href="#question">15 − 7 = ___ (exchange a ten if you need to)</a><span class="caption num" data-source="item.item_key"> N1-SUB-031</span></td><td data-source="skill.name item.skill_codes">Subtracts within 20</td><td data-source="item.difficulty">Medium</td><td data-source="item.fmt">fill the blank</td><td class="st" data-source="item.status"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>ready</span></td></tr>
+                    <tr><td data-source="item.stem item.item_key"><a data-el="7" href="#question">Circle the number sentence that matches the picture</a><span class="caption num" data-source="item.item_key"> N1-SUB-040</span></td><td data-source="skill.name item.skill_codes">Subtracts within 20</td><td data-source="item.difficulty">Easy</td><td data-source="item.fmt">choose one</td><td class="st" data-source="item.status"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>ready</span></td></tr>
+                    <tr><td data-source="item.stem item.item_key"><a data-el="7" href="#question">How many tens and ones in 47?</a><span class="caption num" data-source="item.item_key"> N1-PV-008</span></td><td data-source="skill.name item.skill_codes">Tens and ones to 99</td><td data-source="item.difficulty">Easy</td><td data-source="item.fmt">fill the blank</td><td class="st" data-source="item.status"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>ready</span></td></tr>
+                    <tr><td data-source="item.stem item.item_key"><a data-el="7" href="#question">Make 63 with the fewest bundles and sticks</a><span class="caption num" data-source="item.item_key"> N1-PV-019</span></td><td data-source="skill.name item.skill_codes">Tens and ones to 99</td><td data-source="item.difficulty">Hard</td><td data-source="item.fmt">show your working</td><td class="st" data-source="item.status"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>ready</span></td></tr>
+                    <tr><td data-source="item.stem item.item_key"><a data-el="7" href="#question">Which is more: 5 tens or 48 ones? Say why.</a><span class="caption num" data-source="item.item_key"> N1-PV-027</span></td><td data-source="skill.name item.skill_codes">Tens and ones to 99</td><td data-source="item.difficulty">Advance</td><td data-source="item.fmt">explain</td><td class="st" data-source="item.status"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>ready</span></td></tr>
+                    <tr><td data-source="item.stem item.item_key"><a data-el="7" href="#question">Which ribbon is longer? Tick it.</a><span class="caption num" data-source="item.item_key"> N1-MEA-005</span></td><td data-source="skill.name item.skill_codes">Compares lengths</td><td data-source="item.difficulty">Easy</td><td data-source="item.fmt">choose one</td><td class="st" data-source="item.status"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>ready</span></td></tr>
+                    <tr><td data-source="item.stem item.item_key"><a data-el="7" href="#question">The pencil is ___ cubes long</a><span class="caption num" data-source="item.item_key"> N1-MEA-012</span></td><td data-source="skill.name item.skill_codes">Measures with cubes</td><td data-source="item.difficulty">Medium</td><td data-source="item.fmt">fill the blank</td><td class="st" data-source="item.status"><span class="chip" data-state="quiet"><i class="ic s" data-icon="to-do"></i>removed</span></td></tr>
+                    <tr><td data-source="item.stem item.item_key"><a data-el="7" href="#question">Find the missing number: 9 + ___ = 16</a><span class="caption num" data-source="item.item_key"> N1-ADD-030</span></td><td data-source="skill.name item.skill_codes">Adds within 20</td><td data-source="item.difficulty">Hard</td><td data-source="item.fmt">fill the blank</td><td class="st" data-source="item.status"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>ready</span></td></tr>
                 </tbody>
               </table>
             </div>
-            <p class="caption">By taxonomy: the same counts by question kind (taxonomy_case), on this fold only.</p>
-          </div></details>
-          <div class="card">
-            <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: when a skill has no questions</div>
-            <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="not-seen"></i><b>No questions for this skill yet</b><span class="muted">The next bank run drafts them; a person reads each before it is ready.</span></div></div>
-          </div>
-        </main>
-        <aside class="rail" aria-label="Connected to">
-          <section class="rail-box">
-            <h2>Connected to</h2>
-            <ul class="rlist">
-              <li><a class="ritem" data-el="10" href="#skill"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><span><span data-source="skill.name">Tens and ones to 99</span><small>the skill</small></span></a></li>
-              <li><a class="ritem" data-el="10" href="#skill"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><span><span data-source="skill.name">Adds within 20</span><small>the skill</small></span></a></li>
-            </ul>
-          </section>
-          <section class="rail-box">
-            <h2>Changed lately</h2>
-            <ol class="timeline">
-              <li class="tli"><span class="tile" data-kind="assessment"><i class="ic" data-icon="history"></i></span><div><b>Wording corrected</b><p><span data-source="item.item_key">N1-SUB-031</span> · <span data-source="pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="change_log.at">8-Nov</span></li>
-              <li class="tli"><span class="tile" data-kind="assessment"><i class="ic" data-icon="clear"></i></span><div><b>Removed: two right answers</b><p><span data-source="item.item_key">N1-MEA-012</span> · <span data-source="pii.staff.name">Bina Basil</span></p></div><span class="caption num" data-source="change_log.at">5-Nov</span></li>
-            </ol>
-          </section>
-        </aside>
+            <div class="toolbar"><span class="caption">Grade 1 · 1 to 10 of <span class="num" data-source="item.id">412</span></span><a data-el="8" href="#bank">Later →</a></div>
+            <details class="details" data-block="Details"><summary data-el="9"><i class="ic s" data-icon="details"></i>Statistics (counts and worksheets by topic)</summary><div>
+              <div class="table-box" data-block="DataTable">
+                <table class="table">
+                  <thead><tr><th>Skill</th><th class="n">Questions</th><th class="n">Times used</th><th class="n">Right first time</th><th class="n">Worksheets printed</th></tr></thead>
+                  <tbody>
+                    <tr><td data-source="skill.name">Adds within 20</td><td class="n num" data-source="item.skill_codes">164</td><td class="n num" data-source="item_result.item_id">2,310</td><td class="n num" data-source="item_result.state">71%</td><td class="n num" data-source="sheet_template.item_ids">58</td></tr>
+                    <tr><td data-source="skill.name">Tens and ones to 99</td><td class="n num" data-source="item.skill_codes">132</td><td class="n num" data-source="item_result.item_id">1,804</td><td class="n num" data-source="item_result.state">64%</td><td class="n num" data-source="sheet_template.item_ids">41</td></tr>
+                    <tr><td data-source="skill.name">Subtracts within 20</td><td class="n num" data-source="item.skill_codes">118</td><td class="n num" data-source="item_result.item_id">1,422</td><td class="n num" data-source="item_result.state">58%</td><td class="n num" data-source="sheet_template.item_ids">36</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <p class="caption">By taxonomy: the same counts by question kind (taxonomy_case), on this fold only.</p>
+            </div></details>
+            <div class="card">
+              <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: when a skill has no questions</div>
+              <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="not-seen"></i><b>No questions for this skill yet</b><span class="muted">The next bank run drafts them; a person reads each before it is ready.</span></div></div>
+            </div>
+          </main>
+          <aside class="rail" aria-label="Connected to">
+            <section class="rail-box">
+              <h2>Connected to</h2>
+              <ul class="rlist">
+                <li><a class="ritem" data-el="10" href="#skill"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><span><span data-source="skill.name">Tens and ones to 99</span><small>the skill</small></span></a></li>
+                <li><a class="ritem" data-el="10" href="#skill"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><span><span data-source="skill.name">Adds within 20</span><small>the skill</small></span></a></li>
+              </ul>
+            </section>
+            <section class="rail-box">
+              <h2>Changed lately</h2>
+              <ol class="timeline">
+                <li class="tli"><span class="tile" data-kind="assessment"><i class="ic" data-icon="history"></i></span><div><b>Wording corrected</b><p><span data-source="item.item_key">N1-SUB-031</span> · <span data-source="pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="change_log.at">8-Nov</span></li>
+                <li class="tli"><span class="tile" data-kind="assessment"><i class="ic" data-icon="clear"></i></span><div><b>Removed: two right answers</b><p><span data-source="item.item_key">N1-MEA-012</span> · <span data-source="pii.staff.name">Bina Basil</span></p></div><span class="caption num" data-source="change_log.at">5-Nov</span></li>
+              </ol>
+            </section>
+          </aside>
+        </div>
+        </div>
       </div>
-      <nav class="tabbar" aria-label="Doors">
-        <a class="tab" data-bar="0" href="#today"><i class="ic" data-icon="today"></i>Today</a>
-        <a class="tab" data-bar="1" href="#timetable"><i class="ic" data-icon="timetable"></i>Timetable</a>
-        <a class="tab" data-bar="2" href="#children"><i class="ic" data-icon="children"></i>Children</a>
-        <a class="tab" data-bar="3" href="#setup" aria-current="page"><i class="ic" data-icon="setup"></i>Setup</a>
-      </nav>
     </div>
   </section>
 </div>

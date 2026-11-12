@@ -7,7 +7,7 @@ import { expect, test } from "@playwright/test";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { buildTasks, KINDS, sectionsOf, TODO_GROUPS, type Kind, type Sources } from "../lib/todo";
-import { GROUPS, doorOf, locate } from "../lib/menu";
+import { SECTIONS, locate, sectionOf } from "../lib/menu";
 
 const SRC: Sources = {
   skills: [{ code: "NUM.OPS.01", name: "Add within 20", subject: "NUM", topic: "ADDSUB", topicName: "Addition", gradeWords: "Grade 1", levels: 4 }],
@@ -61,13 +61,14 @@ test("every group's home and every row's link names a page that exists", () => {
 });
 
 test("a group's home is a page of the menu, and a row opens a page of the group that does that work", () => {
-  for (const g of TODO_GROUPS) expect(locate(g.home)?.door, g.home).toBeDefined();
-  for (const t of tasks) expect(locate(t.href.split(/[?#]/)[0])?.door, t.href).toBeDefined();
+  for (const g of TODO_GROUPS) expect(locate(g.home)?.section, g.home).toBeDefined();
+  for (const t of tasks) expect(locate(t.href.split(/[?#]/)[0])?.section, t.href).toBeDefined();
 });
 
 test("Teaching is not in the menu, and nothing links to its address", () => {
-  expect(GROUPS.map((g) => g.label)).not.toContain("Teaching");
-  expect(doorOf("/taught")).toBeUndefined();
+  expect(SECTIONS.map((g) => g.label)).not.toContain("Teaching");
+  expect(SECTIONS.flatMap((g) => g.pages.map((p) => p.label))).not.toContain("Teaching");
+  expect(sectionOf("/taught")).toBeUndefined();
   const links: string[] = [];
   const walk = (dir: string) =>
     readdirSync(dir, { withFileTypes: true }).forEach((d) => {

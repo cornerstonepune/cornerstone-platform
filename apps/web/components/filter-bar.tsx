@@ -6,7 +6,8 @@ import { useRef } from "react";
 // The one filter row over every table (docs/ux-rules.md, rule 9): dropdown filters, a compact search, the filters that
 // are on shown beside them with a × each, and one click to clear them all. In the same place on every page, between the
 // page's heading and its table. It is a plain GET form: the filters are in the address, so a filtered list can be sent to
-// a colleague, and a page needs no script of its own. Choosing a dropdown shows the result at once.
+// a colleague, and a page needs no script of its own. Choosing a dropdown shows the result at once. One row (page charter A4): the first
+// `shown` dropdowns sit in it and the rest wait behind "More filters", which says how many of them are on; a phone may wrap the row.
 export type Filter = {
   name: string;
   label: string;
@@ -23,11 +24,15 @@ export type Filter = {
   groups?: readonly { label: string; values: readonly string[] }[];
 };
 
+/** The dropdowns a filter row shows before "More filters" (page charter A4: one row). */
+export const FILTERS_IN_ROW = 3;
+
 export function FilterBar({
   action,
   filters,
   search,
   keep = {},
+  shown = FILTERS_IN_ROW,
 }: {
   /** The page's own path. */
   action: string;
@@ -35,10 +40,14 @@ export function FilterBar({
   search?: { name: string; value?: string; placeholder: string; label?: string };
   /** What the page keeps while filtering (a chosen week, a tab) and never shows as a filter. */
   keep?: Record<string, string | undefined>;
+  /** How many dropdowns sit in the row before "More filters". */
+  shown?: number;
 }) {
   const form = useRef<HTMLFormElement>(null);
   const on = [
-    ...filters.flatMap((f) => (f.value && !f.required && !f.starting ? [{ name: f.name, label: `${f.label}: ${f.options.find(([v]) => v === f.value)?.[1] ?? f.value}` }] : [])),
+    ...filters.flatMap((f) =>
+      f.value && !f.required && !f.starting ? [{ name: f.name, label: `${f.label}: ${f.options.find(([v]) => v === f.value)?.[1] ?? f.value}` }] : [],
+    ),
     ...(search?.value ? [{ name: search.name, label: `Search: “${search.value}”` }] : []),
   ];
   const href = (without: string[]) => {
@@ -50,48 +59,89 @@ export function FilterBar({
     return s ? `${action}?${s}` : action;
   };
   const control = "min-h-[40px] border border-[var(--line-control)] bg-[var(--panel)] px-3 !text-[15px] text-[var(--ink)]";
-  return (
-    <section data-block="FilterBar" data-filterbar aria-label="Filters" className="mb-3">
-      <form ref={form} action={action} method="get" role="search" className="flex flex-wrap items-center gap-2">
-        {Object.entries(keep).map(([k, v]) => (v ? <input key={k} type="hidden" name={k} value={v} /> : null))}
-        {filters.map((f) => (
-          <label key={f.name} className="flex max-w-full min-w-0 items-center gap-2 text-[13px] text-[var(--ink-muted)]">
-            <span>{f.label}</span>
-            <select data-filter="" name={f.name} defaultValue={f.value ?? ""} onChange={() => form.current?.requestSubmit()} className={`select ${control} !w-auto max-w-full min-w-0`}>
-              {f.required ? null : <option value="">{f.all}</option>}
-              {f.groups
-                ? [
-                    ...f.groups.map((g) => (
-                      <optgroup key={g.label} label={g.label}>
-                        {f.options.filter(([v]) => g.values.includes(v)).map(([v, words]) => (
-                          <option key={v} value={v}>
-                            {words}
-                          </option>
-                        ))}
-                      </optgroup>
-                    )),
-                    ...f.options.filter(([v]) => !f.groups!.some((g) => g.values.includes(v))).map(([v, words]) => (
+  const moreOn = filters.slice(shown).filter((f) => f.value && !f.required && !f.starting).length;
+  const drop = (f: Filter) => (
+    <label key={f.name} className="flex max-w-full min-w-0 items-center gap-2 text-[13px] text-[var(--ink-muted)]">
+      <span>{f.label}</span>
+      <select
+        data-filter=""
+        name={f.name}
+        defaultValue={f.value ?? ""}
+        onChange={() => form.current?.requestSubmit()}
+        className={`select ${control} !w-auto max-w-full min-w-0`}
+      >
+        {f.required ? null : <option value="">{f.all}</option>}
+        {f.groups
+          ? [
+              ...f.groups.map((g) => (
+                <optgroup key={g.label} label={g.label}>
+                  {f.options
+                    .filter(([v]) => g.values.includes(v))
+                    .map(([v, words]) => (
                       <option key={v} value={v}>
                         {words}
                       </option>
-                    )),
-                  ]
-                : f.options.map(([v, words]) => (
-                    <option key={v} value={v}>
-                      {words}
-                    </option>
-                  ))}
-            </select>
-          </label>
-        ))}
+                    ))}
+                </optgroup>
+              )),
+              ...f.options
+                .filter(([v]) => !f.groups!.some((g) => g.values.includes(v)))
+                .map(([v, words]) => (
+                  <option key={v} value={v}>
+                    {words}
+                  </option>
+                )),
+            ]
+          : f.options.map(([v, words]) => (
+              <option key={v} value={v}>
+                {words}
+              </option>
+            ))}
+      </select>
+    </label>
+  );
+  return (
+    <section data-block="FilterBar" data-filterbar aria-label="Filters" className="mb-3">
+      <form ref={form} action={action} method="get" role="search" className="relative flex flex-wrap items-center gap-2">
+        {Object.entries(keep).map(([k, v]) => (v ? <input key={k} type="hidden" name={k} value={v} /> : null))}
+        {filters.slice(0, shown).map(drop)}
+        {filters.length > shown ? (
+          // as tall as the row's dropdowns (stretched to the line), so the row reads as one line, tops and all; on a phone its list hangs
+          // from the row's left edge (the form), not from the button, which can sit at the right of the screen
+          <details data-more-filters className="relative flex self-stretch max-[767px]:static" open={moreOn > 0 || undefined}>
+            <summary className="inline-flex min-h-[40px] self-stretch cursor-pointer items-center gap-2 whitespace-nowrap rounded-[var(--radius-control)] border border-[var(--line-control)] bg-[var(--panel)] px-3 text-[15px] text-[var(--ink)]">
+              More filters{moreOn ? ` (${moreOn} on)` : ""}
+            </summary>
+            <div className="absolute left-0 top-full z-30 mt-1 grid w-max grid-cols-[minmax(0,1fr)] max-w-[min(92vw,420px)] gap-2 rounded-[var(--radius-card)] bg-[var(--panel)] p-[var(--space-3)] shadow-[var(--shadow-card)]">
+              {filters.slice(shown).map(drop)}
+            </div>
+          </details>
+        ) : null}
         {search ? (
           <label className="relative ml-auto flex items-center">
             <span className="sr-only">{search.label ?? "Search the list"}</span>
-            <svg width="15" height="15" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.7" className="pointer-events-none absolute left-3 text-[var(--ink-muted)]">
+            <svg
+              width="15"
+              height="15"
+              viewBox="0 0 16 16"
+              aria-hidden="true"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.7"
+              className="pointer-events-none absolute left-3 text-[var(--ink-muted)]"
+            >
               <circle cx="7" cy="7" r="4.6" />
               <path d="M10.6 10.6L14 14" />
             </svg>
-            <input data-filter="" type="search" name={search.name} defaultValue={search.value ?? ""} placeholder={search.placeholder} autoComplete="off" className={`input ${control} !pl-9 !w-[240px] focus:!w-[340px]`} />
+            <input
+              data-filter=""
+              type="search"
+              name={search.name}
+              defaultValue={search.value ?? ""}
+              placeholder={search.placeholder}
+              autoComplete="off"
+              className={`input ${control} !pl-9 !w-[240px] focus:!w-[340px]`}
+            />
           </label>
         ) : null}
         <noscript>
@@ -104,7 +154,12 @@ export function FilterBar({
         <ul data-active-filters aria-label="Filters on" className="mt-2 flex flex-wrap items-center gap-2 text-[13px]">
           {on.map((a) => (
             <li key={a.name}>
-              <Link href={href([a.name])} data-chip aria-label={`Remove filter ${a.label}`} className="inline-flex min-h-8 items-center gap-2 border border-[var(--line-control)] bg-[var(--surface)] px-3 text-[var(--ink)] no-underline hover:border-[var(--ink)]">
+              <Link
+                href={href([a.name])}
+                data-chip
+                aria-label={`Remove filter ${a.label}`}
+                className="inline-flex min-h-8 items-center gap-2 border border-[var(--line-control)] bg-[var(--surface)] px-3 text-[var(--ink)] no-underline hover:border-[var(--ink)]"
+              >
                 {a.label}
                 <span aria-hidden="true">×</span>
               </Link>

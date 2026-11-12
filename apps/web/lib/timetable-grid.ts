@@ -22,6 +22,9 @@ export function gridOf(weeks: readonly Week[], show: {
     clashes: readonly Clash[];
     /** where a click on a lesson goes: the page of its activity (called only for a lesson that has one; a lesson with none is not a link) */
     open?: (day: string, periodId: string) => string;
+    /** the page's detail panel (page charter A2): every lesson's block opens its lesson there, whether it has an activity or not; the open
+     *  one is marked. Given this, `open` and `pick` are not drawn on the blocks (the coordinator's Move is in the panel). */
+    select?: (day: string, periodId: string) => { href: string; key: string; selected: boolean } | undefined;
     /** the coordinator's click on a lesson or a free slot: choosing it as the lesson to move, or as the place to move it to (none for an educator) */
     pick?: (day: string, periodId: string) => string;
     /** the lesson chosen to move, if any: its block is marked, and every free slot then offers itself as a place to move it to */
@@ -35,6 +38,14 @@ export function gridOf(weeks: readonly Week[], show: {
   const open = show.clashes.filter((c) => !c.accepted);
   const clashAt = (day: string, period: string) => open.find((c) => c.places.some((p) => p.class === classId && p.date === day && p.period === period));
   const placed: { day: string; periodId: string; cell: FCell }[] = [];
+  // a block opens the page's panel when the page has one, else its lesson page (with an activity) and the coordinator's pick
+  const selectOrOpen = (day: string, p: { period_id: string; activity: unknown }): Pick<FCell, "href" | "pick" | "openKey" | "selected"> => {
+    if (show.select) {
+      const o = show.select(day, p.period_id);
+      return o ? { href: o.href, openKey: o.key, selected: o.selected } : {};
+    }
+    return { href: p.activity && show.open ? show.open(day, p.period_id) : undefined, pick: show.pick?.(day, p.period_id) };
+  };
   const rows: FRow[] = starts.map((start) => {
     const at = days.map((d) => d.periods.find((p) => p.starts_at === start) ?? null);
     const label = at.find((p) => p)?.label ?? start;
@@ -52,8 +63,7 @@ export function gridOf(weeks: readonly Week[], show: {
         const cell: FCell = {
           subject: subjectLook(show.looks, p.subject),
           activity: p.name,
-          href: p.activity && show.open ? show.open(days[i].day, p.period_id) : undefined,
-          pick: show.pick?.(days[i].day, p.period_id),
+          ...selectOrOpen(days[i].day, p),
           picked: show.picked ? show.picked.day === days[i].day && show.picked.periodId === p.period_id : undefined,
           moved: p.state === "moved",
           clash: clash !== undefined,

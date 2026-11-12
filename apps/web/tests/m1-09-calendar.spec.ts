@@ -15,6 +15,7 @@
  *    period as a blank cell), the stacked days on a phone (the phone opens the Day view, one day at a time: u75 and u78).
  */
 import { expect, test, type Page } from "@playwright/test";
+import { litSection, menu } from "./menu";
 import postgres from "postgres";
 import { loadFortnight10, tapsAreBig, timetableSwitch } from "./educator-screens";
 import { SECTION, k2Class } from "./k2-rows";
@@ -83,29 +84,35 @@ test("the Week view is a grid: a column a day, a row a period, a holiday named; 
   await tapsAreBig(page);
 });
 
-// The title is the goal's proof by name (goals/m1-09c-educator-calendar.yaml), so it stays. What it proves now: a block's own link opens the
-// lesson page (the activity in full, in the school's words), where it once opened a period page; the coordinator's click on the block
-// itself chooses it to move, on the fortnight page.
+// The title is the goal's proof by name (goals/m1-09c-educator-calendar.yaml), so it stays. What it proves now (page charter A2): a block
+// opens its lesson in the panel on the right (the activity's name, its tabs), and the panel's Open full page is the lesson page (the
+// activity in full, in the school's words); the coordinator's Move is in the panel, never on the block.
 test("any block opens its period: the school's words and the activity", async ({ page }) => {
   await timetableSwitch(sql, true);
   await page.goto(at("day"));
-  const block = page.locator(`${GRID} .b-cell-w`).filter({ hasText: "General Awareness" });
-  await block.locator("[data-activity-link]").click();
+  const block = page.locator(`${GRID} [data-open-key]`).filter({ hasText: "General Awareness" });
+  await block.click();
+  const panel = page.locator("[data-block=DetailPanel][data-panel=open]");
+  await expect(panel.locator("[data-panel-title]")).toContainText("Insects");
+  await expect(panel.getByRole("tab")).toHaveText(["Activity", "Children", "Materials", "History"]);
+  await panel.getByRole("link", { name: "Open full page" }).click();
   await expect(page).toHaveURL(/\/period\//); // the lesson's own page, not the curriculum editor
   await expect(page.getByRole("heading", { level: 1 })).toContainText("Insects"); // the page is named by its activity
   await expect(page.getByText("Insects").first()).toBeVisible(); // the activity the planner names for the lesson
 });
 
+// the title is the one goals/m1-09c-educator-calendar.yaml names; since the page charter (A1) it proves the sidebar on a desktop and the drawer on a phone
 test("her menu marks where she is: the Timetable door on a desktop, and tabs at the foot of a phone that open it", async ({ page }) => {
   await timetableSwitch(sql, true);
   await page.goto(at("week"));
-  await expect(page.locator("[data-bar] [data-door=timetable]").first()).toHaveAttribute("aria-current", "page");
+  await expect((await menu(page)).getByRole("link", { name: "Week", exact: true })).toHaveAttribute("aria-current", "page");
+  await expect(litSection(page)).toHaveText("Timetable");
   await page.setViewportSize({ width: 390, height: 900 });
   await page.goto("/today");
-  const tabs = page.locator("nav[data-bar=doors]");
-  await expect(tabs).toBeVisible();
-  await expect(tabs.getByRole("link", { name: "Today" })).toHaveAttribute("aria-current", "page");
-  await tabs.getByRole("link", { name: "Timetable" }).click();
+  const drawer = await menu(page);
+  await expect(drawer).toBeVisible();
+  await expect(drawer.getByRole("link", { name: /^Today/ })).toHaveAttribute("aria-current", "page");
+  await drawer.getByRole("link", { name: "Week", exact: true }).click();
   await expect(page).toHaveURL(/\/timetable/);
 });
 

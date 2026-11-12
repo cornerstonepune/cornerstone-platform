@@ -18,145 +18,223 @@
   <section class="wf" data-viewport="1440" aria-label="Laptop, 1440 px">
     <div class="frame">
       <header class="bar">
+        <button class="barbtn menubtn press" data-bar="2" type="button" aria-label="Menu" aria-haspopup="dialog"><i class="ic" data-icon="menu"></i></button>
         <a class="brand" data-bar="0" href="#today" aria-label="Cornerstone Gurukul, go to Today">
           <img class="wide on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-colour.svg" alt="">
           <img class="wide on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-for-dark-backgrounds.svg" alt="">
           <img class="small on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark.svg" alt="">
           <img class="small on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark-on-white-tile.svg" alt="">
         </a>
-        <ul class="doors" aria-label="Doors">
-          <li><a class="door" data-bar="0" href="#today"><i class="ic" data-icon="today"></i>Today <span class="badge num" data-source="pii.educator_note.status pii.educator_note.received_at" aria-label="7 notes to confirm">7</span></a></li>
-          <li><a class="door" data-bar="1" href="#timetable"><i class="ic" data-icon="timetable"></i>Timetable</a></li>
-          <li><a class="door" data-bar="2" href="#children"><i class="ic" data-icon="children"></i>Children</a></li>
-          <li><a class="door" data-bar="3" href="#setup" aria-current="page"><i class="ic" data-icon="setup"></i>Setup</a></li>
-        </ul>
-        <label class="search"><i class="ic s" data-icon="search"></i><span class="vh">Search</span><input data-bar="4" type="search" placeholder="Sr. No., name or activity"></label>
-        <button class="barbtn press" data-bar="5" type="button" role="switch" aria-checked="false"><i class="ic" data-icon="acting-as"></i><span class="w">Acting as</span></button>
-        <a class="barbtn" data-bar="6" href="#help" aria-label="Help for this page"><i class="ic" data-icon="help"></i></a>
-        <button class="barbtn press" data-bar="7" type="button"><i class="ic" data-icon="sign-out"></i><span class="w">Sign out</span></button>
+        <label class="search"><i class="ic s" data-icon="search"></i><span class="vh">Search</span><input data-bar="3" type="search" placeholder="Sr. No., name or activity"></label>
+        <button class="barbtn press" data-bar="4" type="button" role="switch" aria-checked="false"><i class="ic" data-icon="acting-as"></i><span class="w">Acting as</span></button>
+        <a class="barbtn" data-bar="5" href="#help" aria-label="Help for this page"><i class="ic" data-icon="help"></i></a>
+        <button class="barbtn press" data-bar="6" type="button"><i class="ic" data-icon="sign-out"></i><span class="w">Sign out</span></button>
       </header>
-      <ol class="trail" aria-label="Trail">
-        <li aria-current="page">Setup</li>
-      </ol>
-      <div class="page">
-        <main class="main">
-          <div class="head">
-            <p class="eyebrow"><i class="ic s" data-icon="setup"></i>Changed rarely · <span data-source="campus.name">Main campus</span> · <span data-source="academic_year.label">2026–27</span></p>
-            <h1 class="title">Setup</h1>
-            <p class="purpose">The curriculum, the skills, the question bank, staff, classes and the school. Statistics and old scans sit behind details links.</p>
+      <div class="shell">
+        <nav class="side" aria-label="Menu">
+          <button class="sidefold press" data-bar="2" type="button" aria-label="Fold the menu to icons" aria-expanded="true"><i class="ic" data-icon="collapse"></i></button>
+          <div class="sidegroup">
+            <h2 class="sideh" id="side-today"><i class="ic s" data-icon="today"></i>My day</h2>
+            <ul aria-labelledby="side-today">
+              <li><a class="sidelink" data-bar="1" href="#today">Today <span class="badge num" data-source="pii.educator_note.status pii.educator_note.received_at" aria-label="7 notes to confirm">7</span></a></li>
+              <li><a class="sidelink" data-bar="1" href="#notes">Notes to confirm</a></li>
+              <li><a class="sidelink" data-bar="1" href="#needs-doing">What needs doing</a></li>
+            </ul>
           </div>
-          <div class="cards" data-block="Cards">
-            <article class="card" data-kind="activity"><div class="card-h"><span class="tile"><i class="ic" data-icon="activity"></i></span>Curriculum</div><div class="card-b"><span class="muted"><span class="num" data-source="activity.id">212</span> activities (K2) · <span class="num" data-source="skill.id">486</span> skills (grades 1 to 4)</span><div class="keyrow" data-source="curriculum_proposal.status"><span class="chip" data-state="wait"><i class="ic s" data-icon="from-draft"></i>14 drafted parts to check</span></div><a class="btn btn-main press" data-el="0" href="#curriculum">Open the curriculum</a></div></article>
-            <article class="card" data-kind="skill"><div class="card-h"><span class="tile"><i class="ic" data-icon="skill"></i></span>Skills to approve</div><div class="card-b"><span class="muted">Read each skill's levels; approve one at a time. How many wait is shown on that page only.</span><a class="" data-el="1" href="#skills-approve">Open Skills to approve</a></div></article>
-            <article class="card" data-kind="assessment"><div class="card-h"><span class="tile"><i class="ic" data-icon="checklist"></i></span>Question bank</div><div class="card-b"><span class="muted"><span class="num" data-source="item.status">3,140</span> ready · <span class="num" data-source="item.status">62</span> removed</span><a class="" data-el="2" href="#bank">Open Question bank</a></div></article>
-            <article class="card" data-kind="period"><div class="card-h"><span class="tile"><i class="ic" data-icon="educator"></i></span>Staff</div><div class="card-b"><span class="muted"><span class="num" data-source="staff.active">7</span> staff · <span class="num" data-source="staff_role_grant.valid_to">11</span> grants open</span><a class="" data-el="3" href="#staff">Open Staff</a></div></article>
-            <article class="card" data-kind="child"><div class="card-h"><span class="tile"><i class="ic" data-icon="class"></i></span>Classes and children</div><div class="card-b"><span class="muted"><span class="num" data-source="school_class.id">6</span> classes · <span class="num" data-source="enrolment.child_id enrolment.to_date">117</span> children</span><a class="" data-el="4" href="#classes">Open Classes and children</a></div></article>
-            <article class="card" data-kind="period"><div class="card-h"><span class="tile"><i class="ic" data-icon="fortnight"></i></span>School</div><div class="card-b">
+          <div class="sidegroup">
+            <h2 class="sideh" id="side-timetable"><i class="ic s" data-icon="week"></i>Timetable</h2>
+            <ul aria-labelledby="side-timetable">
+              <li><a class="sidelink" data-bar="1" href="#timetable">Week</a></li>
+              <li><a class="sidelink" data-bar="1" href="#fortnight">Fortnight</a></li>
+              <li><a class="sidelink" data-bar="1" href="#materials">Materials</a></li>
+            </ul>
+          </div>
+          <div class="sidegroup">
+            <h2 class="sideh" id="side-children"><i class="ic s" data-icon="child"></i>Children</h2>
+            <ul aria-labelledby="side-children">
+              <li><a class="sidelink" data-bar="1" href="#children">Class picture</a></li>
+              <li><a class="sidelink" data-bar="1" href="#reports">Parent reports</a></li>
+            </ul>
+          </div>
+          <div class="sidegroup">
+            <h2 class="sideh" id="side-assessments"><i class="ic s" data-icon="assessment"></i>Assessments</h2>
+            <ul aria-labelledby="side-assessments">
+              <li><a class="sidelink" data-bar="1" href="#assessments">Assessments</a></li>
+              <li><a class="sidelink" data-bar="1" href="#upload">Upload papers</a></li>
+              <li><a class="sidelink" data-bar="1" href="#bank">Question bank</a></li>
+            </ul>
+          </div>
+          <div class="sidegroup" data-lit>
+            <h2 class="sideh" id="side-school"><i class="ic s" data-icon="setup"></i>School</h2>
+            <ul aria-labelledby="side-school">
+              <li><a class="sidelink" data-bar="1" href="#across">Across classes</a></li>
+              <li><a class="sidelink" data-bar="1" href="#curriculum" aria-current="page">Curriculum</a></li>
+              <li><a class="sidelink" data-bar="1" href="#skills-approve">Skills to approve</a></li>
+              <li><a class="sidelink" data-bar="1" href="#staff">Staff</a></li>
+              <li><a class="sidelink" data-bar="1" href="#classes">Classes</a></li>
+              <li><a class="sidelink" data-bar="1" href="#rules">Timetable rules</a></li>
+              <li><a class="sidelink" data-bar="1" href="#map">How it works</a></li>
+            </ul>
+          </div>
+        </nav>
+        <div class="shellmain">
+        <ol class="trail" aria-label="Trail">
+          <li aria-current="page">Setup</li>
+        </ol>
+        <div class="page">
+          <main class="main">
+            <div class="head">
+              <p class="eyebrow"><i class="ic s" data-icon="setup"></i>Changed rarely · <span data-source="campus.name">Main campus</span> · <span data-source="academic_year.label">2026–27</span></p>
+              <h1 class="title">Setup</h1>
+              <p class="purpose">The curriculum, the skills, the question bank, staff, classes and the school. Statistics and old scans sit behind details links.</p>
+            </div>
+            <div class="cards" data-block="Cards">
+              <article class="card" data-kind="activity"><div class="card-h"><span class="tile"><i class="ic" data-icon="activity"></i></span>Curriculum</div><div class="card-b"><span class="muted"><span class="num" data-source="activity.id">212</span> activities (K2) · <span class="num" data-source="skill.id">486</span> skills (grades 1 to 4)</span><div class="keyrow" data-source="curriculum_proposal.status"><span class="chip" data-state="wait"><i class="ic s" data-icon="from-draft"></i>14 drafted parts to check</span></div><a class="btn btn-main press" data-el="0" href="#curriculum">Open the curriculum</a></div></article>
+              <article class="card" data-kind="skill"><div class="card-h"><span class="tile"><i class="ic" data-icon="skill"></i></span>Skills to approve</div><div class="card-b"><span class="muted">Read each skill's levels; approve one at a time. How many wait is shown on that page only.</span><a class="" data-el="1" href="#skills-approve">Open Skills to approve</a></div></article>
+              <article class="card" data-kind="assessment"><div class="card-h"><span class="tile"><i class="ic" data-icon="checklist"></i></span>Question bank</div><div class="card-b"><span class="muted"><span class="num" data-source="item.status">3,140</span> ready · <span class="num" data-source="item.status">62</span> removed</span><a class="" data-el="2" href="#bank">Open Question bank</a></div></article>
+              <article class="card" data-kind="period"><div class="card-h"><span class="tile"><i class="ic" data-icon="educator"></i></span>Staff</div><div class="card-b"><span class="muted"><span class="num" data-source="staff.active">7</span> staff · <span class="num" data-source="staff_role_grant.valid_to">11</span> grants open</span><a class="" data-el="3" href="#staff">Open Staff</a></div></article>
+              <article class="card" data-kind="child"><div class="card-h"><span class="tile"><i class="ic" data-icon="class"></i></span>Classes and children</div><div class="card-b"><span class="muted"><span class="num" data-source="school_class.id">6</span> classes · <span class="num" data-source="enrolment.child_id enrolment.to_date">117</span> children</span><a class="" data-el="4" href="#classes">Open Classes and children</a></div></article>
+              <article class="card" data-kind="period"><div class="card-h"><span class="tile"><i class="ic" data-icon="fortnight"></i></span>School</div><div class="card-b">
+                <dl class="kv" data-block="KeyValue">
+                  <dt>Campus</dt><dd data-source="campus.name">Main campus</dd>
+                  <dt>Year</dt><dd data-source="academic_year.label academic_year.starts_on academic_year.ends_on">2026–27, 1-Jun to 30-Apr</dd>
+                  <dt>Fortnights</dt><dd class="num" data-source="fortnight.number fortnight.kind">20 teaching, 3 holiday</dd>
+                </dl>
+              </div></article>
+            </div>
+            <h2 class="title-section">Changed lately</h2>
+            <ol class="timeline" data-block="Timeline">
+              <li class="tli"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><div><b data-source="change_log.table_name change_log.op">Skill levels approved: Place value to 1000</b><p>By <span data-source="change_log.staff_id pii.staff.name">Esha Elder</span></p></div><span class="caption num" data-source="change_log.at">9-Nov</span></li>
+              <li class="tli"><span class="tile" data-kind="child"><i class="ic" data-icon="moved"></i></span><div><b data-source="change_log.table_name change_log.op">A child moved class: Sr. No. 21, K2 Blue to K2 Red</b><p>By <span data-source="change_log.staff_id pii.staff.name">Esha Elder</span></p></div><span class="caption num" data-source="change_log.at">2-Nov</span></li>
+              <li class="tli"><span class="tile" data-kind="assessment"><i class="ic" data-icon="fix-this"></i></span><div><b data-source="change_log.table_name change_log.op">A question's wording corrected</b><p>By <span data-source="change_log.staff_id pii.staff.name">Esha Elder</span> · the old key kept</p></div><span class="caption num" data-source="change_log.at">30-Oct</span></li>
+              <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="educator"></i></span><div><b data-source="change_log.table_name change_log.op">A grant added: Gopal Ginger, Grade 2, Language</b><p>By <span data-source="change_log.staff_id pii.staff.name">Esha Elder</span></p></div><span class="caption num" data-source="change_log.at">28-Oct</span></li>
+            </ol>
+            <p class="caption">Staff only: <a data-el="5" href="#blocks">the blocks gallery</a>, the parts every page is built from.</p>
+          </main>
+          <aside class="rail" aria-label="Connected to">
+            <section class="rail-box">
+              <h2>Waiting in set-up</h2>
               <dl class="kv" data-block="KeyValue">
-                <dt>Campus</dt><dd data-source="campus.name">Main campus</dd>
-                <dt>Year</dt><dd data-source="academic_year.label academic_year.starts_on academic_year.ends_on">2026–27, 1-Jun to 30-Apr</dd>
-                <dt>Fortnights</dt><dd class="num" data-source="fortnight.number fortnight.kind">20 teaching, 3 holiday</dd>
+                <dt>Drafted parts to check</dt><dd class="num" data-source="curriculum_proposal.status">14</dd>
+                <dt>Offers of a skill to an activity</dt><dd class="num" data-source="curriculum_proposal.kind curriculum_proposal.status">6</dd>
+                <dt>Questions removed this term</dt><dd class="num" data-source="item.status item.updated_at">9</dd>
               </dl>
-            </div></article>
-          </div>
-          <h2 class="title-section">Changed lately</h2>
-          <ol class="timeline" data-block="Timeline">
-            <li class="tli"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><div><b data-source="change_log.table_name change_log.op">Skill levels approved: Place value to 1000</b><p>By <span data-source="change_log.staff_id pii.staff.name">Esha Elder</span></p></div><span class="caption num" data-source="change_log.at">9-Nov</span></li>
-            <li class="tli"><span class="tile" data-kind="child"><i class="ic" data-icon="moved"></i></span><div><b data-source="change_log.table_name change_log.op">A child moved class: Sr. No. 21, K2 Blue to K2 Red</b><p>By <span data-source="change_log.staff_id pii.staff.name">Esha Elder</span></p></div><span class="caption num" data-source="change_log.at">2-Nov</span></li>
-            <li class="tli"><span class="tile" data-kind="assessment"><i class="ic" data-icon="fix-this"></i></span><div><b data-source="change_log.table_name change_log.op">A question's wording corrected</b><p>By <span data-source="change_log.staff_id pii.staff.name">Esha Elder</span> · the old key kept</p></div><span class="caption num" data-source="change_log.at">30-Oct</span></li>
-            <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="educator"></i></span><div><b data-source="change_log.table_name change_log.op">A grant added: Gopal Ginger, Grade 2, Language</b><p>By <span data-source="change_log.staff_id pii.staff.name">Esha Elder</span></p></div><span class="caption num" data-source="change_log.at">28-Oct</span></li>
-          </ol>
-          <p class="caption">Staff only: <a data-el="5" href="#blocks">the blocks gallery</a>, the parts every page is built from.</p>
-        </main>
-        <aside class="rail" aria-label="Connected to">
-          <section class="rail-box">
-            <h2>Waiting in set-up</h2>
-            <dl class="kv" data-block="KeyValue">
-              <dt>Drafted parts to check</dt><dd class="num" data-source="curriculum_proposal.status">14</dd>
-              <dt>Offers of a skill to an activity</dt><dd class="num" data-source="curriculum_proposal.kind curriculum_proposal.status">6</dd>
-              <dt>Questions removed this term</dt><dd class="num" data-source="item.status item.updated_at">9</dd>
-            </dl>
-          </section>
-        </aside>
+            </section>
+          </aside>
+        </div>
+        </div>
       </div>
-      <nav class="tabbar" aria-label="Doors">
-        <a class="tab" data-bar="0" href="#today"><i class="ic" data-icon="today"></i>Today</a>
-        <a class="tab" data-bar="1" href="#timetable"><i class="ic" data-icon="timetable"></i>Timetable</a>
-        <a class="tab" data-bar="2" href="#children"><i class="ic" data-icon="children"></i>Children</a>
-        <a class="tab" data-bar="3" href="#setup" aria-current="page"><i class="ic" data-icon="setup"></i>Setup</a>
-      </nav>
     </div>
   </section>
   <section class="wf" data-viewport="400" aria-label="Phone, 400 px">
     <div class="frame">
       <header class="bar">
+        <button class="barbtn menubtn press" data-bar="2" type="button" aria-label="Menu" aria-haspopup="dialog"><i class="ic" data-icon="menu"></i></button>
         <a class="brand" data-bar="0" href="#today" aria-label="Cornerstone Gurukul, go to Today">
           <img class="wide on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-colour.svg" alt="">
           <img class="wide on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-lockup-for-dark-backgrounds.svg" alt="">
           <img class="small on-light" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark.svg" alt="">
           <img class="small on-dark" src="../../brand/cornerstone-logo/SVG-vector/Cornerstone-logo-mark-on-white-tile.svg" alt="">
         </a>
-        <ul class="doors" aria-label="Doors">
-          <li><a class="door" data-bar="0" href="#today"><i class="ic" data-icon="today"></i>Today <span class="badge num" data-source="pii.educator_note.status pii.educator_note.received_at" aria-label="7 notes to confirm">7</span></a></li>
-          <li><a class="door" data-bar="1" href="#timetable"><i class="ic" data-icon="timetable"></i>Timetable</a></li>
-          <li><a class="door" data-bar="2" href="#children"><i class="ic" data-icon="children"></i>Children</a></li>
-          <li><a class="door" data-bar="3" href="#setup" aria-current="page"><i class="ic" data-icon="setup"></i>Setup</a></li>
-        </ul>
-        <label class="search"><i class="ic s" data-icon="search"></i><span class="vh">Search</span><input data-bar="4" type="search" placeholder="Sr. No., name or activity"></label>
-        <button class="barbtn press" data-bar="5" type="button" role="switch" aria-checked="false"><i class="ic" data-icon="acting-as"></i><span class="w">Acting as</span></button>
-        <a class="barbtn" data-bar="6" href="#help" aria-label="Help for this page"><i class="ic" data-icon="help"></i></a>
-        <button class="barbtn press" data-bar="7" type="button"><i class="ic" data-icon="sign-out"></i><span class="w">Sign out</span></button>
+        <label class="search"><i class="ic s" data-icon="search"></i><span class="vh">Search</span><input data-bar="3" type="search" placeholder="Sr. No., name or activity"></label>
+        <button class="barbtn press" data-bar="4" type="button" role="switch" aria-checked="false"><i class="ic" data-icon="acting-as"></i><span class="w">Acting as</span></button>
+        <a class="barbtn" data-bar="5" href="#help" aria-label="Help for this page"><i class="ic" data-icon="help"></i></a>
+        <button class="barbtn press" data-bar="6" type="button"><i class="ic" data-icon="sign-out"></i><span class="w">Sign out</span></button>
       </header>
-      <ol class="trail" aria-label="Trail">
-        <li aria-current="page">Setup</li>
-      </ol>
-      <div class="page">
-        <main class="main">
-          <div class="head">
-            <p class="eyebrow"><i class="ic s" data-icon="setup"></i>Changed rarely · <span data-source="campus.name">Main campus</span> · <span data-source="academic_year.label">2026–27</span></p>
-            <h1 class="title">Setup</h1>
-            <p class="purpose">The curriculum, the skills, the question bank, staff, classes and the school. Statistics and old scans sit behind details links.</p>
+      <div class="shell">
+        <nav class="side" aria-label="Menu">
+          <button class="sidefold press" data-bar="2" type="button" aria-label="Fold the menu to icons" aria-expanded="true"><i class="ic" data-icon="collapse"></i></button>
+          <div class="sidegroup">
+            <h2 class="sideh" id="side-today"><i class="ic s" data-icon="today"></i>My day</h2>
+            <ul aria-labelledby="side-today">
+              <li><a class="sidelink" data-bar="1" href="#today">Today <span class="badge num" data-source="pii.educator_note.status pii.educator_note.received_at" aria-label="7 notes to confirm">7</span></a></li>
+              <li><a class="sidelink" data-bar="1" href="#notes">Notes to confirm</a></li>
+              <li><a class="sidelink" data-bar="1" href="#needs-doing">What needs doing</a></li>
+            </ul>
           </div>
-          <div class="cards" data-block="Cards">
-            <article class="card" data-kind="activity"><div class="card-h"><span class="tile"><i class="ic" data-icon="activity"></i></span>Curriculum</div><div class="card-b"><span class="muted"><span class="num" data-source="activity.id">212</span> activities (K2) · <span class="num" data-source="skill.id">486</span> skills (grades 1 to 4)</span><div class="keyrow" data-source="curriculum_proposal.status"><span class="chip" data-state="wait"><i class="ic s" data-icon="from-draft"></i>14 drafted parts to check</span></div><a class="btn btn-main press" data-el="0" href="#curriculum">Open the curriculum</a></div></article>
-            <article class="card" data-kind="skill"><div class="card-h"><span class="tile"><i class="ic" data-icon="skill"></i></span>Skills to approve</div><div class="card-b"><span class="muted">Read each skill's levels; approve one at a time. How many wait is shown on that page only.</span><a class="" data-el="1" href="#skills-approve">Open Skills to approve</a></div></article>
-            <article class="card" data-kind="assessment"><div class="card-h"><span class="tile"><i class="ic" data-icon="checklist"></i></span>Question bank</div><div class="card-b"><span class="muted"><span class="num" data-source="item.status">3,140</span> ready · <span class="num" data-source="item.status">62</span> removed</span><a class="" data-el="2" href="#bank">Open Question bank</a></div></article>
-            <article class="card" data-kind="period"><div class="card-h"><span class="tile"><i class="ic" data-icon="educator"></i></span>Staff</div><div class="card-b"><span class="muted"><span class="num" data-source="staff.active">7</span> staff · <span class="num" data-source="staff_role_grant.valid_to">11</span> grants open</span><a class="" data-el="3" href="#staff">Open Staff</a></div></article>
-            <article class="card" data-kind="child"><div class="card-h"><span class="tile"><i class="ic" data-icon="class"></i></span>Classes and children</div><div class="card-b"><span class="muted"><span class="num" data-source="school_class.id">6</span> classes · <span class="num" data-source="enrolment.child_id enrolment.to_date">117</span> children</span><a class="" data-el="4" href="#classes">Open Classes and children</a></div></article>
-            <article class="card" data-kind="period"><div class="card-h"><span class="tile"><i class="ic" data-icon="fortnight"></i></span>School</div><div class="card-b">
+          <div class="sidegroup">
+            <h2 class="sideh" id="side-timetable"><i class="ic s" data-icon="week"></i>Timetable</h2>
+            <ul aria-labelledby="side-timetable">
+              <li><a class="sidelink" data-bar="1" href="#timetable">Week</a></li>
+              <li><a class="sidelink" data-bar="1" href="#fortnight">Fortnight</a></li>
+              <li><a class="sidelink" data-bar="1" href="#materials">Materials</a></li>
+            </ul>
+          </div>
+          <div class="sidegroup">
+            <h2 class="sideh" id="side-children"><i class="ic s" data-icon="child"></i>Children</h2>
+            <ul aria-labelledby="side-children">
+              <li><a class="sidelink" data-bar="1" href="#children">Class picture</a></li>
+              <li><a class="sidelink" data-bar="1" href="#reports">Parent reports</a></li>
+            </ul>
+          </div>
+          <div class="sidegroup">
+            <h2 class="sideh" id="side-assessments"><i class="ic s" data-icon="assessment"></i>Assessments</h2>
+            <ul aria-labelledby="side-assessments">
+              <li><a class="sidelink" data-bar="1" href="#assessments">Assessments</a></li>
+              <li><a class="sidelink" data-bar="1" href="#upload">Upload papers</a></li>
+              <li><a class="sidelink" data-bar="1" href="#bank">Question bank</a></li>
+            </ul>
+          </div>
+          <div class="sidegroup" data-lit>
+            <h2 class="sideh" id="side-school"><i class="ic s" data-icon="setup"></i>School</h2>
+            <ul aria-labelledby="side-school">
+              <li><a class="sidelink" data-bar="1" href="#across">Across classes</a></li>
+              <li><a class="sidelink" data-bar="1" href="#curriculum" aria-current="page">Curriculum</a></li>
+              <li><a class="sidelink" data-bar="1" href="#skills-approve">Skills to approve</a></li>
+              <li><a class="sidelink" data-bar="1" href="#staff">Staff</a></li>
+              <li><a class="sidelink" data-bar="1" href="#classes">Classes</a></li>
+              <li><a class="sidelink" data-bar="1" href="#rules">Timetable rules</a></li>
+              <li><a class="sidelink" data-bar="1" href="#map">How it works</a></li>
+            </ul>
+          </div>
+        </nav>
+        <div class="shellmain">
+        <ol class="trail" aria-label="Trail">
+          <li aria-current="page">Setup</li>
+        </ol>
+        <div class="page">
+          <main class="main">
+            <div class="head">
+              <p class="eyebrow"><i class="ic s" data-icon="setup"></i>Changed rarely · <span data-source="campus.name">Main campus</span> · <span data-source="academic_year.label">2026–27</span></p>
+              <h1 class="title">Setup</h1>
+              <p class="purpose">The curriculum, the skills, the question bank, staff, classes and the school. Statistics and old scans sit behind details links.</p>
+            </div>
+            <div class="cards" data-block="Cards">
+              <article class="card" data-kind="activity"><div class="card-h"><span class="tile"><i class="ic" data-icon="activity"></i></span>Curriculum</div><div class="card-b"><span class="muted"><span class="num" data-source="activity.id">212</span> activities (K2) · <span class="num" data-source="skill.id">486</span> skills (grades 1 to 4)</span><div class="keyrow" data-source="curriculum_proposal.status"><span class="chip" data-state="wait"><i class="ic s" data-icon="from-draft"></i>14 drafted parts to check</span></div><a class="btn btn-main press" data-el="0" href="#curriculum">Open the curriculum</a></div></article>
+              <article class="card" data-kind="skill"><div class="card-h"><span class="tile"><i class="ic" data-icon="skill"></i></span>Skills to approve</div><div class="card-b"><span class="muted">Read each skill's levels; approve one at a time. How many wait is shown on that page only.</span><a class="" data-el="1" href="#skills-approve">Open Skills to approve</a></div></article>
+              <article class="card" data-kind="assessment"><div class="card-h"><span class="tile"><i class="ic" data-icon="checklist"></i></span>Question bank</div><div class="card-b"><span class="muted"><span class="num" data-source="item.status">3,140</span> ready · <span class="num" data-source="item.status">62</span> removed</span><a class="" data-el="2" href="#bank">Open Question bank</a></div></article>
+              <article class="card" data-kind="period"><div class="card-h"><span class="tile"><i class="ic" data-icon="educator"></i></span>Staff</div><div class="card-b"><span class="muted"><span class="num" data-source="staff.active">7</span> staff · <span class="num" data-source="staff_role_grant.valid_to">11</span> grants open</span><a class="" data-el="3" href="#staff">Open Staff</a></div></article>
+              <article class="card" data-kind="child"><div class="card-h"><span class="tile"><i class="ic" data-icon="class"></i></span>Classes and children</div><div class="card-b"><span class="muted"><span class="num" data-source="school_class.id">6</span> classes · <span class="num" data-source="enrolment.child_id enrolment.to_date">117</span> children</span><a class="" data-el="4" href="#classes">Open Classes and children</a></div></article>
+              <article class="card" data-kind="period"><div class="card-h"><span class="tile"><i class="ic" data-icon="fortnight"></i></span>School</div><div class="card-b">
+                <dl class="kv" data-block="KeyValue">
+                  <dt>Campus</dt><dd data-source="campus.name">Main campus</dd>
+                  <dt>Year</dt><dd data-source="academic_year.label academic_year.starts_on academic_year.ends_on">2026–27, 1-Jun to 30-Apr</dd>
+                  <dt>Fortnights</dt><dd class="num" data-source="fortnight.number fortnight.kind">20 teaching, 3 holiday</dd>
+                </dl>
+              </div></article>
+            </div>
+            <h2 class="title-section">Changed lately</h2>
+            <ol class="timeline" data-block="Timeline">
+              <li class="tli"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><div><b data-source="change_log.table_name change_log.op">Skill levels approved: Place value to 1000</b><p>By <span data-source="change_log.staff_id pii.staff.name">Esha Elder</span></p></div><span class="caption num" data-source="change_log.at">9-Nov</span></li>
+              <li class="tli"><span class="tile" data-kind="child"><i class="ic" data-icon="moved"></i></span><div><b data-source="change_log.table_name change_log.op">A child moved class: Sr. No. 21, K2 Blue to K2 Red</b><p>By <span data-source="change_log.staff_id pii.staff.name">Esha Elder</span></p></div><span class="caption num" data-source="change_log.at">2-Nov</span></li>
+              <li class="tli"><span class="tile" data-kind="assessment"><i class="ic" data-icon="fix-this"></i></span><div><b data-source="change_log.table_name change_log.op">A question's wording corrected</b><p>By <span data-source="change_log.staff_id pii.staff.name">Esha Elder</span> · the old key kept</p></div><span class="caption num" data-source="change_log.at">30-Oct</span></li>
+              <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="educator"></i></span><div><b data-source="change_log.table_name change_log.op">A grant added: Gopal Ginger, Grade 2, Language</b><p>By <span data-source="change_log.staff_id pii.staff.name">Esha Elder</span></p></div><span class="caption num" data-source="change_log.at">28-Oct</span></li>
+            </ol>
+            <p class="caption">Staff only: <a data-el="5" href="#blocks">the blocks gallery</a>, the parts every page is built from.</p>
+          </main>
+          <aside class="rail" aria-label="Connected to">
+            <section class="rail-box">
+              <h2>Waiting in set-up</h2>
               <dl class="kv" data-block="KeyValue">
-                <dt>Campus</dt><dd data-source="campus.name">Main campus</dd>
-                <dt>Year</dt><dd data-source="academic_year.label academic_year.starts_on academic_year.ends_on">2026–27, 1-Jun to 30-Apr</dd>
-                <dt>Fortnights</dt><dd class="num" data-source="fortnight.number fortnight.kind">20 teaching, 3 holiday</dd>
+                <dt>Drafted parts to check</dt><dd class="num" data-source="curriculum_proposal.status">14</dd>
+                <dt>Offers of a skill to an activity</dt><dd class="num" data-source="curriculum_proposal.kind curriculum_proposal.status">6</dd>
+                <dt>Questions removed this term</dt><dd class="num" data-source="item.status item.updated_at">9</dd>
               </dl>
-            </div></article>
-          </div>
-          <h2 class="title-section">Changed lately</h2>
-          <ol class="timeline" data-block="Timeline">
-            <li class="tli"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><div><b data-source="change_log.table_name change_log.op">Skill levels approved: Place value to 1000</b><p>By <span data-source="change_log.staff_id pii.staff.name">Esha Elder</span></p></div><span class="caption num" data-source="change_log.at">9-Nov</span></li>
-            <li class="tli"><span class="tile" data-kind="child"><i class="ic" data-icon="moved"></i></span><div><b data-source="change_log.table_name change_log.op">A child moved class: Sr. No. 21, K2 Blue to K2 Red</b><p>By <span data-source="change_log.staff_id pii.staff.name">Esha Elder</span></p></div><span class="caption num" data-source="change_log.at">2-Nov</span></li>
-            <li class="tli"><span class="tile" data-kind="assessment"><i class="ic" data-icon="fix-this"></i></span><div><b data-source="change_log.table_name change_log.op">A question's wording corrected</b><p>By <span data-source="change_log.staff_id pii.staff.name">Esha Elder</span> · the old key kept</p></div><span class="caption num" data-source="change_log.at">30-Oct</span></li>
-            <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="educator"></i></span><div><b data-source="change_log.table_name change_log.op">A grant added: Gopal Ginger, Grade 2, Language</b><p>By <span data-source="change_log.staff_id pii.staff.name">Esha Elder</span></p></div><span class="caption num" data-source="change_log.at">28-Oct</span></li>
-          </ol>
-          <p class="caption">Staff only: <a data-el="5" href="#blocks">the blocks gallery</a>, the parts every page is built from.</p>
-        </main>
-        <aside class="rail" aria-label="Connected to">
-          <section class="rail-box">
-            <h2>Waiting in set-up</h2>
-            <dl class="kv" data-block="KeyValue">
-              <dt>Drafted parts to check</dt><dd class="num" data-source="curriculum_proposal.status">14</dd>
-              <dt>Offers of a skill to an activity</dt><dd class="num" data-source="curriculum_proposal.kind curriculum_proposal.status">6</dd>
-              <dt>Questions removed this term</dt><dd class="num" data-source="item.status item.updated_at">9</dd>
-            </dl>
-          </section>
-        </aside>
+            </section>
+          </aside>
+        </div>
+        </div>
       </div>
-      <nav class="tabbar" aria-label="Doors">
-        <a class="tab" data-bar="0" href="#today"><i class="ic" data-icon="today"></i>Today</a>
-        <a class="tab" data-bar="1" href="#timetable"><i class="ic" data-icon="timetable"></i>Timetable</a>
-        <a class="tab" data-bar="2" href="#children"><i class="ic" data-icon="children"></i>Children</a>
-        <a class="tab" data-bar="3" href="#setup" aria-current="page"><i class="ic" data-icon="setup"></i>Setup</a>
-      </nav>
     </div>
   </section>
 </div>

@@ -3,7 +3,6 @@ import { sql } from "./db";
 import { stateWords } from "./fortnight-words";
 import { dateWords } from "./week";
 import { EngineDown, engineSend } from "./engine";
-import type { Subject } from "@/components/period-row";
 
 // What the timetable screens read and the one rule about who may act (UI-6, docs/frontend/SPEC.md "Timetable").
 // Nothing is decided here: the clashes, moves and states are the engine's and the database's; this reads them.
@@ -36,14 +35,8 @@ export async function fortnightNumber(n: number): Promise<Fn | null> {
   return r ?? null;
 }
 
-/** The three subject colours the grid has, by subject: the school's own row (config `timetable.subject_looks`, a subject's
- *  code to "numeracy", "language" or "arts"). A subject with no entry is drawn as arts, so no code here names a subject. */
-export type Looks = Record<string, Exclude<Subject, "fixed">>;
-export const subjectLooks = cache(async (): Promise<Looks> => {
-  const [r] = await sql<{ value: Looks }[]>`select value from config where key = 'timetable.subject_looks'`;
-  return r?.value && typeof r.value === "object" ? r.value : {};
-});
-export const subjectLook = (looks: Looks, code: string | null): Exclude<Subject, "fixed"> => (code && looks[code]) || "arts";
+// the subject colours are every block's (lib/subject-looks.ts); the timetable reads them from there
+export { subjectLooks, subjectLook, type Looks } from "./subject-looks";
 
 export type FnRow = Fn & { moves: number };
 /** Every teaching fortnight of the academic year `f` belongs to, oldest first, each with how many hand moves it has had. */

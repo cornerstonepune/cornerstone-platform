@@ -6,6 +6,7 @@
  * nothing is seeded behind the app's back except the one skill set these tests edit and restore.
  */
 import { expect, type Page, test } from "@playwright/test";
+import { menu } from "./menu";
 import postgres from "postgres";
 import { libraryOf, restoreLibrary } from "./library-state";
 import { forgetFlags } from "./rows";
@@ -69,11 +70,11 @@ test("a teacher can reach every section from the menu, and the menu says where t
   await page.goto("/");
   const sections = [
     ["Today", "Today, the school"],
-    ["Setup", "Setup"],
-    ["Children", "Children"],
+    ["Curriculum", "Curriculum"],
+    ["Class picture", "Children"],
   ];
   for (const [label, heading] of sections) {
-    const group = page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" }).getByRole("link", { name: new RegExp(`^${label}\\b`) });
+    const group = (await menu(page)).getByRole("link", { name: new RegExp(`^${label}\\b`) });
     await group.click();
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(heading);
     await expect(group).toHaveAttribute(

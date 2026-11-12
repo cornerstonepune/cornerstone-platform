@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 import postgres from "postgres";
 import { aClass, aReadPaper, aWorksheet } from "./rows";
 import { voiceSwitch } from "./k2-rows";
-import { doorPages } from "./door-pages";
+import { menu, sectionNames, SECTIONS } from "./menu";
 
 // Every screen must render its heading at a laptop and at a phone, with no console error and no
 // sideways scroll. A teacher on a phone in a corridor is a real case.
@@ -71,16 +71,16 @@ for (const { name, width, height } of SIZES) {
 
 test("every section is reachable from the menu", async ({ page }) => {
   await page.goto("/");
-  const groups = page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" });
-  for (const label of ["Today", "Timetable", "Children", "Setup"]) await expect(groups.getByRole("link", { name: label })).toBeVisible();
-  // and every page of a door from the row of pages under the bar
-  for (const [door, labels] of [
-    ["Children", ["Children", "Upload papers"]],
-    ["Setup", ["Curriculum", "Question bank", "Staff", "School"]],
+  const nav = await menu(page);
+  expect(await sectionNames(nav)).toEqual([...SECTIONS.coordinator]);
+  // and every page of a section, from the sidebar, under its section's heading
+  for (const [section, labels] of [
+    ["Children", ["Class picture", "Parent reports"]],
+    ["Assessments", ["Assessments", "Upload papers", "Question bank"]],
+    ["School", ["Curriculum", "Staff", "Classes"]],
   ] as const) {
-    await groups.getByRole("link", { name: door }).click();
-    const row = await doorPages(page);
-    for (const label of labels) await expect(row.getByRole("link", { name: label, exact: true })).toBeVisible();
+    const list = nav.getByRole("list", { name: section });
+    for (const label of labels) await expect(list.getByRole("link", { name: label, exact: true })).toBeVisible();
   }
 });
 
@@ -88,7 +88,7 @@ test("every section is reachable from the menu", async ({ page }) => {
 test("a menu item stays readable while the pointer is on it", async ({ page }) => {
   await page.goto("/");
   const bar = await page.getByRole("banner").first().evaluate((el) => getComputedStyle(el).backgroundColor);
-  for (const item of await page.getByRole("banner").first().getByRole("navigation", { name: "Sections" }).getByRole("link").all()) {
+  for (const item of await (await menu(page)).getByRole("link").all()) {
     await item.hover();
     const colour = await item.evaluate((el) => getComputedStyle(el).color);
     expect(colour, (await item.textContent()) ?? "").not.toBe(bar);
@@ -96,10 +96,12 @@ test("a menu item stays readable while the pointer is on it", async ({ page }) =
 });
 
 test("the menu marks where you are", async ({ page }) => {
-  // the question bank is a page of Setup: the group and its tab are both marked
-  await page.goto("/library");
-  await expect(page.locator("[data-bar]").first().getByRole("navigation", { name: "Sections" }).getByRole("link", { name: "Setup" })).toHaveAttribute("aria-current", "page");
-  await expect((await doorPages(page)).getByRole("link", { name: "Question bank" })).toHaveAttribute("aria-current", "page");
+  // the question bank is a page of Assessments: the section is lit and its page is marked, at its old address too
+  for (const at of ["/setup/question-bank", "/library"]) {
+    await page.goto(at);
+    await expect(page.locator("[data-sidebar] [data-section-group=assessments]")).toHaveAttribute("data-lit", "");
+    await expect((await menu(page)).getByRole("link", { name: "Question bank" }), at).toHaveAttribute("aria-current", "page");
+  }
 });
 
 // A child's page reads in the school's own words: no rung, skill-set or mistake code reaches a teacher, and every skill

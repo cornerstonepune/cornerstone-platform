@@ -2,8 +2,8 @@ import { Rail, type Edge } from "@/components/app-frame";
 import type { ReactNode } from "react";
 
 // The Timetable door's other pages, as the wireframes draw them: "Connected to" in the right rail of every page of the door, each
-// with its icon and a second line (docs/frontend/wireframes/timetable.html, fortnight.html). The lit door's fold at the end of the
-// trail ("Timetable pages") stays for a narrow screen only, where the rail sits below the page (components/frame/doors.tsx).
+// with its icon and a second line (docs/frontend/wireframes/timetable.html, fortnight.html). The page charter (A2) moves these links to the
+// sidebar; the pages that still draw this rail keep it until their own screen's PR (the week grid already has its detail panel instead).
 export type Here = "grid" | "fortnight" | "draft" | "rules" | "materials";
 
 /** The door's pages other than `here`. `fn`: the fortnight in view (its number); `classId`: the class in view. The coordinator's pages
@@ -29,5 +29,5 @@ export function timetableEdges(here: Here, o: { fn?: number; classId?: string; c
 
 /** The rail of a page of the Timetable door: the door's other pages, then whatever the page adds (`edges` after them, `cards`, `facts`). */
 export function TimetableRail({ here, fn, classId, coordinator, edges = [], cards, facts }: { here: Here; fn?: number; classId?: string; coordinator: boolean; edges?: Edge[]; cards?: ReactNode; facts?: ReactNode }) {
-  return <Rail doorRail edges={[...timetableEdges(here, { fn, classId, coordinator }), ...edges]} cards={cards} facts={facts} />;
+  return <Rail edges={[...timetableEdges(here, { fn, classId, coordinator }), ...edges]} cards={cards} facts={facts} />;
 }
