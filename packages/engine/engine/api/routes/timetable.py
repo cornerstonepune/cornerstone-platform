@@ -1,7 +1,7 @@
 """The educator's timetable (M1-06 part 2): her day, her week, one period. Only wiring: what is read is
 `k2_day`'s. From the site with the engine's key and her email as `actor`, as the voice routes are; every call refuses
 while `educator.timetable_enabled` is off unless she is the staff preview (`w2_print/educator_gate.py`), and answers
-only for a class she holds."""
+only for a class she holds. The school's coordinators (`educator_gate.sees_all`) read any class they name, switched on or off."""
 
 import datetime as dt
 
@@ -41,7 +41,8 @@ def _gate(conn, body: Ask):
         if not educator_gate.switched_on(conn):
             raise HTTPException(status_code=403, detail="The timetable is not switched on.") from no
         raise _refused(no) from no
-    if not educator_gate.open_to(conn, staff):
+    # the school's coordinators read every class's timetable, switched on or off (issue #691); everyone else as before
+    if not (educator_gate.open_to(conn, staff) or educator_gate.sees_all(conn, staff)):
         raise HTTPException(status_code=403, detail="The timetable is not switched on.")
     return staff
 
@@ -51,6 +52,14 @@ def _mine(conn, body: Ask, on: dt.date, staff=None) -> tuple[dict, list[dict]]:
     staff = staff or _gate(conn, body)
     try:
         classes = k2_day.my_classes(conn, staff, on)
+        # a coordinator naming a class not in the list (none held, or no lesson that day) is given it: read-only, as above
+        if (
+            body.class_id
+            and all(c["id"] != body.class_id for c in classes)
+            and educator_gate.sees_all(conn, staff)
+        ):
+            one = educator_gate.a_class(conn, staff, body.class_id)
+            classes = classes + [one] if one else classes
         return k2_day.chosen(classes, body.class_id), classes
     except k2_day.Refused as no:
         raise _refused(no) from no

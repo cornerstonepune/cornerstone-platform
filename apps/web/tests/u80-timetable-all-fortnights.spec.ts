@@ -132,6 +132,10 @@ test("with the switch on (as live today): the fortnight under way is Live, the l
     expect(res?.status()).toBe(200);
     await expect(page.getByText(NOT_FOUND)).toHaveCount(0);
     await expect(page.locator("[data-fortnight-state=planning]")).toContainText("Drafted: planning, educators can already open it");
+    // the coordinator holds no class, yet reads the class's grid with the switch on (Nimish's yes, 12 Nov: the engine lets the
+    // school's coordinators read every class's timetable, read-only)
+    await expect(page.locator(`${GRID} a.b-cell`)).toHaveCount(await lessonsIn(PLANNED));
+    await expect(page.getByText("could not be read just now")).toHaveCount(0);
     await expect(page.locator("[data-section=live] [data-live-fortnight]")).toHaveCount(1);
     await expect(page.locator("[data-section=live] [data-live-fortnight='7401']")).toContainText("live, educators see it"); // the fixture's fortnight runs today
     await expect(page.locator(`[data-section=planning] [data-planning-fortnight="${PLANNED}"]`)).toBeVisible();
