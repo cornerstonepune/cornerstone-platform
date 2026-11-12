@@ -10,6 +10,7 @@ from typing import Any
 from engine.core import db, settings
 from engine.w2_print import educator_gate as gate
 from engine.w2_print import fortnight_cycle as fc
+from engine.w2_print import tt_heads
 
 SWITCH = gate.SWITCH
 
@@ -60,7 +61,8 @@ _ROWS = """
 select d.on_date, d.kind as day_kind, d.note, f.number, f.starts_on, f.ends_on,
   w.week,
   p.id::text as period_id, p.starts_at, p.ends_at, p.label, p.fixed, coalesce(s.kind, 'empty') as kind, s.subject_code,
-  coalesce(s.text, '') as text, fr.text as slot_text, s.state, pe.text as line, pe.id::text as entry_id, a.id::text as activity_id, a.code, a.name
+  coalesce(s.text, '') as text, fr.text as slot_text, s.state, pe.text as line, pe.id::text as entry_id, a.id::text as activity_id, a.code, a.name,
+  s.activity_code is not null as chosen
 from school_day d
 left join fortnight f on f.academic_year_id = %(year)s and d.on_date between f.starts_on and f.ends_on
 left join lateral (select case when f.id is null then null when d.on_date - f.starts_on < 7 then 'A' else 'B' end as week) w on true
@@ -76,7 +78,8 @@ left join lateral (
     r.week_code, r.weekday, r.period_id
   limit 1) fr on true
 left join plan_entry pe on pe.id = s.plan_entry_id
-left join activity a on a.id = pe.activity_id
+left join activity a on a.id = coalesce(
+  (select x.id from activity x where x.tenant_id = s.tenant_id and x.code = s.activity_code), pe.activity_id)
 where d.campus_id = %(campus)s and d.on_date = any(%(days)s)
 order by d.on_date, p.starts_at
 """
@@ -86,13 +89,18 @@ def _hm(t: dt.time | None) -> str | None:
     return t.strftime("%H:%M") if t else None
 
 
-def _period(r: dict) -> dict:
-    act = {"id": r["activity_id"], "code": r["code"], "name": r["name"]} if r["activity_id"] else None
+def _period(r: dict, listed: list[dict] | None = None) -> dict:
+    act = (
+        {"id": r["activity_id"], "code": r["code"], "name": r["name"], "chosen": bool(r["chosen"])}
+        if r["activity_id"]
+        else None
+    )
     return {
         "period_id": r["period_id"], "starts_at": _hm(r["starts_at"]), "ends_at": _hm(r["ends_at"]),
         "label": r["label"], "fixed": r["fixed"], "kind": r["kind"], "subject": r["subject_code"],
         "name": r["label"] if r["fixed"] else (r["slot_text"] or r["label"]),
         "text": r["text"] or "", "line": r["line"], "plan_entry_id": r["entry_id"], "state": r["state"] or "planned", "activity": act,
+        "head": tt_heads.head_of(listed or [], r["subject_code"], r["kind"], r["text"]),
     }  # fmt: skip
 
 
@@ -113,6 +121,7 @@ def days(conn: db.Conn, klass: dict, dates: list[dt.date]) -> list[dict]:
         "grade": klass["grade"],
         "days": dates,
     }
+    listed = tt_heads.heads(conn)
     for r in conn.execute(_ROWS, query).fetchall():
         if r["on_date"] not in got:
             got[r["on_date"]] = _empty_day(r["on_date"], r["day_kind"], r["note"]) | {
@@ -121,7 +130,7 @@ def days(conn: db.Conn, klass: dict, dates: list[dt.date]) -> list[dict]:
                 if r["number"] else None,
             }  # fmt: skip
         if r["period_id"]:
-            got[r["on_date"]]["periods"].append(_period(r))
+            got[r["on_date"]]["periods"].append(_period(r, listed))
     for d in got.values():
         _ends(d["periods"])
     return [got.get(d) or _empty_day(d) for d in dates]
@@ -173,6 +182,39 @@ def _plan_lines(conn: db.Conn, entry_id: str | None) -> list[str]:
     ]
 
 
+def _activity_detail(conn: db.Conn, klass: dict, code: str) -> dict | None:
+    """What a teacher opens a lesson to see (CP-39): the activity's steps, objectives, skills, materials and the four rubric
+    levels (0 to 3). The words are the school's own rows; nothing is made up, and what a row lacks stays empty."""
+    a = conn.execute(
+        "select a.id, a.code, a.name, a.strand, a.steps, a.objective, a.materials, a.level_0, a.level_1, a.level_2, a.level_3"
+        " from activity a join school_class c on c.tenant_id = a.tenant_id where c.id = %s and a.code = %s",
+        (klass["id"], code),
+    ).fetchone()
+    if a is None:
+        return None
+    pick = lambda sql: [r["v"] for r in conn.execute(sql, (a["code"], klass["id"])).fetchall()]  # noqa: E731
+    return {
+        "code": a["code"], "name": a["name"], "group": a["strand"], "steps": a["steps"] or "",
+        "outcome": a["objective"] or "",
+        "objectives": pick(
+            "select lo.title as v from activity_objective ao join school_class c on c.tenant_id = ao.tenant_id"
+            " join learning_objective lo on lo.tenant_id = ao.tenant_id and lo.code = ao.lo_code"
+            " where ao.activity_code = %s and c.id = %s order by lo.code"
+        ),
+        "skills": pick(
+            "select rs.name as v from activity_skill k join school_class c on c.tenant_id = k.tenant_id"
+            " join registry_skill rs on rs.tenant_id = k.tenant_id and rs.code = k.skill_code"
+            " where k.activity_code = %s and c.id = %s order by rs.code"
+        ),
+        "materials_text": a["materials"] or "",
+        "materials": pick(
+            "select m.material_code as v from activity_material m join school_class c on c.tenant_id = m.tenant_id"
+            " where m.activity_code = %s and c.id = %s order by m.ord"
+        ),
+        "levels": [a["level_0"] or "", a["level_1"] or "", a["level_2"] or "", a["level_3"] or ""],
+    }  # fmt: skip
+
+
 def period(conn: db.Conn, klass: dict, classes: list[dict], on: dt.date, period_id: str) -> dict:
     """One period of one day, with the planner lines for its subject in this fortnight. The activity's own text is the
     activity page's (`/activity`): here it is only who it is."""
@@ -186,4 +228,7 @@ def period(conn: db.Conn, klass: dict, classes: list[dict], on: dt.date, period_
         **head,
         **one,
         "plan_lines": _plan_lines(conn, one["plan_entry_id"]),
+        "activity_detail": _activity_detail(conn, klass, one["activity"]["code"])
+        if one["activity"]
+        else None,
     }

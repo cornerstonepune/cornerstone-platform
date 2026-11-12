@@ -382,6 +382,7 @@
  "school_day.school_day_pkey": "PRIMARY KEY (id)",
  "school_day.school_day_tenant_id_campus_id_on_date_key": "UNIQUE (tenant_id, campus_id, on_date)",
  "school_day.school_day_tenant_id_fkey": "FOREIGN KEY (tenant_id) REFERENCES tenant(id) ON DELETE CASCADE",
+ "session.session_activity_code_fkey": "FOREIGN KEY (tenant_id, activity_code) REFERENCES activity(tenant_id, code)",
  "session.session_kind_check": "CHECK ((kind = ANY (ARRAY['fixed'::text, 'subject'::text, 'specialist'::text])))",
  "session.session_led_by_staff_id_fkey": "FOREIGN KEY (led_by_staff_id) REFERENCES staff(id)",
  "session.session_period_id_fkey": "FOREIGN KEY (period_id) REFERENCES period(id)",

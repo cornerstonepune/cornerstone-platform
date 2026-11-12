@@ -499,6 +499,35 @@
       "seed_once": true
     },
     {
+      "key": "timetable.heads",
+      "description": "The heads a K2 lesson can have and the activity groups each head takes (CP-39): one list for the timetable and the activities. `code` is what `session.subject_code` holds; `groups` are the `activity.strand` values offered to a lesson of that head (none: the lesson takes no activity); `fixed_text` names a fixed lesson that is of this head though it has no subject code (the words its text begins with). An activity's head is worked out from its group here, never stored.",
+      "value": [
+        {"code": "math", "label": "Maths", "groups": ["Maths", "Block Room"]},
+        {"code": "english", "label": "English", "groups": ["English"]},
+        {"code": "phonics", "label": "Phonics", "groups": ["English"]},
+        {"code": "reading", "label": "Reading time", "groups": ["English"]},
+        {"code": "hindi", "label": "Hindi", "groups": ["Hindi"]},
+        {"code": "story", "label": "Story", "groups": ["Story Telling"]},
+        {"code": "rhymes", "label": "Rhymes", "groups": ["Rhymes & Songs"]},
+        {"code": "rhymes_dance", "label": "Rhymes and dance", "groups": ["Rhymes & Songs", "Dance"]},
+        {"code": "music", "label": "Music", "groups": ["Music"]},
+        {"code": "music_guest", "label": "Music (guest)", "groups": ["Music"]},
+        {"code": "art", "label": "Arts and crafts", "groups": ["Arts & Crafts"]},
+        {"code": "clay", "label": "Clay", "groups": ["Clay"]},
+        {"code": "pe", "label": "Physical education", "groups": ["GMS"]},
+        {"code": "general_awareness", "label": "General awareness", "groups": ["Science & Geo", "BOB"]},
+        {"code": "practical_life", "label": "Practical life", "groups": ["PLS"]},
+        {"code": "fine_motor", "label": "Fine motor", "groups": ["FMS"]},
+        {"code": "me_time", "label": "Me time", "groups": []},
+        {"code": "routine", "label": "Routine", "groups": []},
+        {"code": "cleanup", "label": "Cleanup", "groups": []},
+        {"code": "memory_drawing", "label": "Memory drawing", "groups": []},
+        {"code": "projects", "label": "Projects", "groups": []},
+        {"code": "circle_time", "label": "Circle Time", "groups": ["Circle Time", "VE", "Assembly"], "fixed_text": "Circle Time"}
+      ],
+      "seed_once": true
+    },
+    {
       "key": "children.attention_days",
       "description": "How many days a child may go without a confirmed note before the children screen marks that child as needing attention. The screen reads it (issue 565, frontend request, 14 days to start); the engine does not use it.",
       "value": 14,
