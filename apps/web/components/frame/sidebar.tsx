@@ -1,7 +1,7 @@
 "use client";
 
 import NextLink from "next/link";
-import { useEffect, useId, useRef, useState } from "react";
+import { Suspense, use, useEffect, useId, useRef, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Icon } from "@/lib/icons";
 import { FOLD_COOKIE, locate } from "@/lib/menu";
@@ -16,19 +16,36 @@ import { useWalk, type FrameSection } from "./walk";
 const link =
   "flex min-h-[var(--tap)] items-center gap-[var(--space-2)] rounded-[var(--radius-control)] px-[var(--space-2)] text-[length:var(--text-body)] no-underline hover:bg-[var(--surface)] focus-visible:outline-2 focus-visible:outline-[var(--focus)]";
 
-/** The count is the link's description, not its name: the badge is drawn in the link, its words sit beside it (aria-describedby). */
-function Count({ n, id }: { n?: number; id: string }) {
-  if (!n) return null;
+/** The count is the link's description, not its name: the badge is drawn in the link, its words sit beside it (aria-describedby,
+ *  on a span that is always there, so the reference never dangles). It arrives after the page (`useWalk().waiting`). */
+function Count({ id }: { id: string }) {
   return (
     <>
-      <span data-testid="waiting" data-count="Today" aria-hidden="true" className="ml-auto min-w-[20px] rounded-[var(--radius-pill)] bg-[var(--state-late)] px-[5px] text-center text-[length:var(--text-label)] text-[var(--panel)] tabular-nums">
-        {n.toLocaleString("en-IN")}
-      </span>
+      <Suspense fallback={null}>
+        <Badge />
+      </Suspense>
       <span id={id} className="sr-only">
-        {n.toLocaleString("en-IN")} waiting
+        <Suspense fallback={null}>
+          <Words />
+        </Suspense>
       </span>
     </>
   );
+}
+
+function Badge() {
+  const n = use(useWalk().waiting);
+  if (!n) return null;
+  return (
+    <span data-testid="waiting" data-count="Today" aria-hidden="true" className="ml-auto min-w-[20px] rounded-[var(--radius-pill)] bg-[var(--state-late)] px-[5px] text-center text-[length:var(--text-label)] text-[var(--panel)] tabular-nums">
+      {n.toLocaleString("en-IN")}
+    </span>
+  );
+}
+
+function Words() {
+  const n = use(useWalk().waiting);
+  return n ? <>{n.toLocaleString("en-IN")} waiting</> : null;
 }
 
 /** The page of the menu an address is: its path and, on the timetable, its view. */
@@ -60,11 +77,11 @@ function Open({ sections, lit, here, idp }: { sections: readonly FrameSection[];
                     prefetch={i === 0 ? undefined : false}
                     data-menu-section={s.key}
                     aria-current={on ? "page" : undefined}
-                    aria-describedby={p.count ? id : undefined}
+                    aria-describedby={p.counted ? id : undefined}
                     className={`${link} ${on ? "bg-[var(--surface)] font-medium text-[var(--ink)] shadow-[inset_3px_0_0_var(--brand-clay)]" : "text-[var(--ink)]"}`}
                   >
                     {p.label}
-                    <Count n={p.count} id={id} />
+                    {p.counted ? <Count id={id} /> : null}
                   </NextLink>
                 </li>
               );

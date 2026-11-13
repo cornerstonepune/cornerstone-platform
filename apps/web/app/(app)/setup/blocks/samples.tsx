@@ -236,7 +236,7 @@ export function sampleOf(name: string, q: Record<string, string | undefined>, me
       // the real frame, as the pages wear it (the sidebar at the left); `contain: layout` keeps anything fixed to the screen inside the sample
       return (
         <div style={{ contain: "layout", overflow: "hidden", border: "1px solid var(--line)" }}>
-          <AppFrame me={me} waiting={0}>
+          <AppFrame me={me} waiting={Promise.resolve(0)}>
             <p className="b-muted" style={{ padding: "var(--space-3)" }}>A page sits here, under the bar, beside the menu.</p>
           </AppFrame>
         </div>

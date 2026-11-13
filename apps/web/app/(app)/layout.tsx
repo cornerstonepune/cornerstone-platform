@@ -9,5 +9,8 @@ export const dynamic = "force-dynamic";
 // count on the site: the badge on the Today door, the strip's do-now plus this-week (lib/today-data.ts `todayBadge`).
 export default async function AppLayout({ children }: LayoutProps<"/">) {
   const me = await requireStaff();
-  return <AppFrame me={me} waiting={await deadline(todayBadge(me))}>{children}</AppFrame>;
+  // started, not waited for: the page streams at once and the badge arrives when the count does (a count that fails or runs past
+  // its deadline shows none, as before)
+  const waiting = deadline(todayBadge(me)).catch(() => 0);
+  return <AppFrame me={me} waiting={waiting}>{children}</AppFrame>;
 }

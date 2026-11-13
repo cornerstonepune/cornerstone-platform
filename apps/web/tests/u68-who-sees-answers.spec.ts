@@ -104,8 +104,10 @@ const number = (t: string | null) => Number((t ?? "").replace(/\D/g, "") || 0);
 async function figures(page: Page) {
   await open(page, "/today");
   const menu = (await theMenu(page)).getByRole("link", { name: /^Today/ }).getByTestId("waiting");
-  const badge = (await menu.count()) ? number(await menu.innerText()) : 0;
   const todo = (await page.locator(".b-att").evaluateAll((els) => els.filter((e) => /do now|this week/i.test(e.textContent ?? "")).map((e) => Number((e.querySelector(".b-n")?.textContent ?? "0").trim())))).reduce((x, y) => x + y, 0);
+  // the badge streams in after the page: wait for it to arrive (when anything waits) before it is read
+  if (todo) await expect(menu).toBeVisible();
+  const badge = (await menu.count()) ? number(await menu.innerText()) : 0;
   await open(page, "/children/assessments?view=table");
   // "N answers to judge" says how many wait for a person, row by row
   const listed = (await page.locator('tr[data-assessment] td[data-label="Waits for"]').allInnerTexts()).reduce((x, t) => x + number(/(\d+) answers? to judge/.exec(t)?.[1] ?? "0"), 0);
