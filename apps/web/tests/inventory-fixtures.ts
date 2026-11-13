@@ -14,6 +14,7 @@ import { assessmentFixtures } from "./inventory-assessments";
 import { correctedPair, seedSetupContent, setupContentAddresses, setupContentChecks } from "./inventory-setup-content";
 import { seedTeaching, type Teaching } from "./inventory-teaching";
 import { markCorrected, typedNoteWritten, VOICE, voiceGone, voiceRest } from "./inventory-voice";
+import { LESSON_DAY, todayGone, todayRest } from "./inventory-today";
 
 export const SECTION = "U70A";
 export const EDUCATOR = { email: "u70-educator@cornerstone.test", name: "Inventory Educator", role: "educator", classes: [SECTION], subjects: ["NUM"] };
@@ -225,6 +226,14 @@ async function quiet() {
 // ---- the voice screens (UI-3a), made in inventory-voice.ts ----
 FIXTURES["voice-rest"] = () => voiceRest(aside, SECTION, EDUCATOR);
 FIXTURES["voice-gone"] = () => voiceGone(aside);
+// ---- the two Todays (page charter B1, B1b), made in inventory-today.ts ----
+FIXTURES["today-rest"] = () => todayRest(aside, SECTION, EDUCATOR);
+FIXTURES["today-gone"] = () => todayGone(aside);
+/** The educator's Today on the fixture class's lesson day: the lesson in the panel, its tabs and its links drawn. */
+ADDRESSES["today-lesson"] = async () => `/today?day=${LESSON_DAY}`;
+/** The school's Today with its "Answers to check" row open on the right (the inventory's assessments leave answers to check). */
+ADDRESSES["today-wait"] = async () => "/today?open=wait:group-answers";
+
 /** The confirm screen on a note already confirmed, where "Correct this note" is drawn. */
 ADDRESSES["confirmed-note"] = async () => `/notes/${VOICE.done}`;
 CHECKS["typed-note-written"] = () => typedNoteWritten(aside, SECTION);

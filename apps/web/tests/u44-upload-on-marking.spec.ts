@@ -1,5 +1,5 @@
 /**
- * U44 — a scan put in on Marking (goals/n8-upload-on-marking.yaml, ADR 0092). Nimish, 2026-10-21: "Teachers can directly
+ * U44 — a scan put in on an assessment's Upload tab on the Assessments board (goals/n8-upload-on-marking.yaml, ADR 0092; page charter B6). Nimish, 2026-10-21: "Teachers can directly
  * just put in the assessments, like the PDF copy or scanned copy of the assessments, there. Then the analysis can happen,
  * and there it says we have a proper understanding of how many questions have been evaluated, how many questions need
  * validation from the teacher."
@@ -58,10 +58,14 @@ test.afterAll(async () => {
   await sql.end();
 });
 
-test("a scan put in on Marking is read, and its run says what was found and what waits", async ({ page }) => {
+// The Upload papers page is retired (page charter B6): a scan is put in on the Upload tab of an assessment's panel on the board, with the
+// same server action and engine call, and what the file came to is the board's Reading view.
+test("a scan put in on an assessment's Upload tab is read, and its run says what was found and what waits", async ({ page }) => {
   test.setTimeout(180_000);
-  await page.goto("/capture");
-  const panel = page.getByRole("region", { name: "Read a scan" });
+  await page.goto(`/children/assessments?class=${CLASS}`);
+  await page.locator("[data-kcard]").first().click();
+  await page.locator("[data-block=DetailPanel]").getByRole("tab", { name: "Upload" }).click();
+  const panel = page.locator("[data-block=DetailPanel]").getByRole("region", { name: "Upload papers" });
   await panel.getByLabel("Choose scans").setInputFiles([scan, notAScan]);
 
   // each file's own line: how much has gone, and what the engine said; the one it refuses does not stop the other
@@ -73,14 +77,20 @@ test("a scan put in on Marking is read, and its run says what was found and what
     "the engine would not take it: marks.txt is not a PDF or a photo (JPG, PNG or HEIC)",
   );
 
-  // the file's run, refreshed by the page while it is read: its pages from the start
-  const table = panel.getByRole("table", { name: "Scans read last" });
+  // the file's run, on the board's Reading view: its pages from the start
+  await page.goto("/children/assessments?view=reading");
+  const table = page.getByRole("region", { name: "Read a scan" }).getByRole("table", { name: "Scans read last" });
   const run = table.getByRole("row").filter({ hasText: FILE }).first();
   await expect(run).toContainText(`${pages} pages`);
   const [f] = await sql<{ id: string; trigger: string; pages: number }[]>`
     select id, trigger, (result ->> 'pages')::int as pages from flow_run where flow = 'read-scan' and trigger like ${`%${FILE}`}`;
   expect(f).toMatchObject({ trigger: `e2e@cornerstone.test: ${FILE}`, pages });
-  await expect(run).not.toContainText("reading now", { timeout: 120_000 });
+  await expect
+    .poll(async () => {
+      await page.reload();
+      return run.innerText();
+    }, { timeout: 120_000, intervals: [3_000] })
+    .not.toContain("reading now");
 
   // what the reading came to, as the reader writes it: each child's copy read by its code, the blank page by its number
   const [t] = await sql<{ id: string; items: string[] }[]>`select id, item_ids as items from sheet_template where code = ${WORKSHEET}`;

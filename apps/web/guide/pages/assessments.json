@@ -1,34 +1,34 @@
 {
   "menu": "/children/assessments",
   "forWhat": [
-    "Make an assessment, read one that came back, and follow each one from made to results in.",
-    "Each assessment is one row. The row's button is always the next thing to do.",
-    "An assessment opens to each child's copy. A child's paper opens to their answers: checking them and signing off happen there."
+    "Move each assessment from made to results, and see what is stuck.",
+    "The board has four lanes: To approve and print, With the children, To read and check, and Results in. Each card is one assessment, with its one next button.",
+    "Choose a card and the assessment opens on the right: each child's copy, uploading its papers, the answers to check, and its results."
   ],
   "layout": [
     {
-      "area": "Make an assessment",
-      "shows": "Four tiles: [[For a class]], [[For each child]], [[For one child]] and [[A ready-made worksheet]]."
-    },
-    {
-      "area": "Read an assessment",
-      "shows": "A box to drop scans or photos, and a field for a Google Drive link with the button [[Read it]]."
+      "area": "Title and main button",
+      "shows": "[[Make an assessment]] opens four choices: [[For a class]], [[For each child]], [[For one child]] and [[A ready-made worksheet]]."
     },
     {
       "area": "Filter row",
-      "shows": "Class, Topic, Subject, Kind, Week and Stage, and a search box."
+      "shows": "Class, Subject and Week, with Topic, Kind and Stage under More filters, and a search box."
     },
     {
       "area": "Views",
       "shows": "[[Board]], [[Table]], [[By topic]] and [[Reading]]. Reading lists the files read lately and what each one lacks."
     },
     {
-      "area": "Assessments table",
-      "shows": "One row per assessment: its name, class, papers back, what it waits for, and the next button."
+      "area": "Board",
+      "shows": "Four lanes of cards. A card shows the topic and class, the date and how many papers are back, one status, and the next button."
+    },
+    {
+      "area": "Right side",
+      "shows": "With no card chosen: papers waiting to check, answers to judge, and papers with checks overdue. With a card chosen: the tabs Copies, Upload, Check and Results, and [[Open full page]]."
     },
     {
       "area": "An assessment's page",
-      "shows": "Its steps, the pack to approve and print, and [[Each child’s copy]], one row per child with its own button."
+      "shows": "Its steps, the pack to approve and print, the upload box, and [[Each child’s copy]], one row per child with its own button."
     }
   ],
   "jobs": [
@@ -75,6 +75,27 @@
       ]
     },
     {
+      "id": "upload",
+      "title": "Upload and read papers",
+      "steps": [
+        "Photograph or scan the papers, in page order.",
+        "On the board, choose the assessment's card and open its Upload tab.",
+        "Drop the files in [[Choose scans or drop them here]], or paste a Google Drive link and press [[Read it]].",
+        "Each PDF is read on its own. Photos chosen together are read as one paper.",
+        "Every page is matched to its child by the code printed on it.",
+        "When reading is done, open the Check tab for what the engine was not sure of."
+      ]
+    },
+    {
+      "id": "whose-page",
+      "title": "A page with no code that can be read",
+      "steps": [
+        "Open the view [[Reading]]. The file's row says which page had no code it could read.",
+        "Press the button with the child's name to say whose page it is. The page is then read as theirs.",
+        "The engine never guesses whose page it is."
+      ]
+    },
+    {
       "id": "check",
       "title": "Check and sign off a child's paper",
       "steps": [
@@ -90,9 +111,9 @@
       "id": "follow",
       "title": "Follow an assessment",
       "steps": [
-        "Find its row. The filter row and search help when the list is long.",
-        "Press the row's next button: [[Approve]], [[Print]], [[Upload]], [[Check … answers]], [[Sign off … papers]] or [[See results]].",
-        "Press the assessment's name to see each child's copy and where it stands."
+        "Find its card on the board. The filter row and search help when the board is long.",
+        "Press the card's next button: [[Approve]], [[Print]], [[Upload]], [[Check … answers]], [[Sign off … papers]] or [[See results]].",
+        "Press the card itself to see the assessment on the right, or [[Open full page]] for its own page."
       ]
     },
     {
@@ -159,6 +180,11 @@
       "label": "Save the name",
       "does": "Gives the assessment a new name.",
       "doesNot": "The older names are kept, not deleted."
+    },
+    {
+      "label": "Read again",
+      "does": "Reads a file again.",
+      "doesNot": "Answers a person has checked stay as they were left."
     }
   ]
 }

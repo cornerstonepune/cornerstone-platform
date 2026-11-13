@@ -70,7 +70,7 @@ async function asEducator(browser: Browser): Promise<Page> {
 
 test("a paper is named by what it tests on every page an educator opens it from", async ({ browser }) => {
   const page = await asEducator(browser);
-  for (const path of ["/capture", `/growth/${kids.Asha}`, `/worksheets/${QR.read}`, `/children/assessments?class=${SECTION}&week=${THIS}&kind=practice&view=table`]) {
+  for (const path of [`/growth/${kids.Asha}`, `/worksheets/${QR.read}`, `/children/assessments?class=${SECTION}&week=${THIS}&kind=practice&view=table`]) {
     await page.goto(path);
     const main = page.locator("main");
     // the page itself first: a "not" passes at once on the loading screen

@@ -7,7 +7,7 @@ import { randomUUID } from "node:crypto";
 import postgres from "postgres";
 import { aPerson, forgetPerson } from "./rows";
 
-const ROUTES = ["/", "/library", "/capture", "/children", "/setup/skill-sets/SUB.2D2D"];
+const ROUTES = ["/", "/library", "/children/assessments", "/children", "/setup/skill-sets/SUB.2D2D"];
 
 for (const route of ROUTES) {
   test(`no session: ${route} sends you to sign in`, async ({ page }) => {

@@ -7,7 +7,7 @@ from pathlib import Path
 import typer
 
 from engine.core import db
-from engine.w3_read import external, legacy, marking, profiles, reread
+from engine.w3_read import external, legacy, marking, profiles, reread, whose_paper
 from engine.w3_read.cli_file import register as register_file
 from engine.w3_read.cli_learn import register as register_learn
 from engine.w3_read.cli_voice import voice_app
@@ -283,6 +283,19 @@ def read_coverage() -> None:
         typer.echo("  every paper signed off · every sheet scored")
     else:
         raise typer.Exit(1)
+
+
+@read_app.command("tell-pages")
+def read_tell_pages(
+    captures: list[str] = typer.Argument(None, help="capture ids; default every live capture"),
+) -> None:
+    """Every page of a scan not told yet — its picture and printed code — drawn once and kept (`whose_paper.tell_untold`),
+    so the paper screen reads whose paper it is from rows. A read tells its own pages; each engine deploy runs this for
+    files read before that, and it is quick when nothing is left."""
+    with db.connect() as conn:
+        n = whose_paper.tell_untold(conn, captures or None)
+        conn.commit()
+    typer.echo(f"pages told: {n}")
 
 
 @read_app.command("ink")

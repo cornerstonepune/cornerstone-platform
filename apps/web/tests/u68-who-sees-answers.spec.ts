@@ -104,7 +104,11 @@ const number = (t: string | null) => Number((t ?? "").replace(/\D/g, "") || 0);
 async function figures(page: Page) {
   await open(page, "/today");
   const menu = (await theMenu(page)).getByRole("link", { name: /^Today/ }).getByTestId("waiting");
-  const todo = (await page.locator(".b-att").evaluateAll((els) => els.filter((e) => /do now|this week/i.test(e.textContent ?? "")).map((e) => Number((e.querySelector(".b-n")?.textContent ?? "0").trim())))).reduce((x, y) => x + y, 0);
+  // Today's notes tile (page charter B1, B1b: notes to confirm, or notes unconfirmed past their time) is the menu's one figure; the page
+  // streams, so its tiles are waited for before they are read (a person whose notes cannot be read has no notes tile)
+  await page.locator("main [data-block=StatTiles]").first().waitFor();
+  const tile = page.locator("main [data-stat=notes] .b-stat-n, main [data-stat=late] .b-stat-n");
+  const todo = (await tile.count()) ? number(await tile.first().innerText()) : 0;
   // the badge streams in after the page: wait for it to arrive (when anything waits) before it is read
   if (todo) await expect(menu).toBeVisible();
   const badge = (await menu.count()) ? number(await menu.innerText()) : 0;
@@ -126,14 +130,14 @@ test("curriculum, skills and the question bank stay open to an educator of anoth
 
 test("an educator of another class sees none of the paper, and its link and its sign-off are refused in words", async ({ browser }) => {
   const neha = await as(browser, NEHA.email);
-  // the lists: Assessments, Upload papers, the search
+  // the lists: Assessments, its Reading view, the search
   await open(neha, "/children/assessments?view=table");
   const classes = await neha.locator("tr[data-assessment]").evaluateAll((els) => els.map((e) => e.getAttribute("data-assessment")!.split("~")[1]));
   expect(classes, "only her class's papers wait for her").toEqual([N]);
   await open(neha, "/children/assessments?view=table");
   await expect(neha.locator("main")).not.toContainText(A);
   // the file Achal put in holds a paper of her class: she sees the file, counted by her copy alone
-  await open(neha, "/capture");
+  await open(neha, "/children/assessments?view=reading");
   const line = neha.locator("tr", { hasText: FILE });
   await expect(line.locator('td[data-label="Copies read"]')).toHaveText("1");
   await expect(line.locator('td[data-label="Answers"]')).toHaveText("2");
@@ -168,7 +172,7 @@ test("for each person the counts in the menu, What needs doing and Assessments a
     ["the coordinator", page, null],
   ] as const) {
     const f = await figures(p);
-    expect(f.badge, `${who}: the menu's figure is Today's strip`).toBe(f.todo);
+    expect(f.badge, `${who}: the menu's figure is Today's notes tile`).toBe(f.todo);
     if (waiting !== null) {
       // an educator's list is one page: every answer the figure counts is a line of it, and no more
       expect(f.listed, `${who}: their own answers, not everyone's`).toBe(waiting);
@@ -186,7 +190,7 @@ test("the educator who uploaded a paper of another class sees it, and the coordi
   await opens(achal, crossed.screen); // the paper of another class he put in opens
   // a paper of that class he did not put in: not found, and nothing of it named
   await refused(achal, hers.screen, N);
-  await open(achal, "/capture");
+  await open(achal, "/children/assessments?view=reading");
   await expect(achal.locator("tr", { hasText: FILE }).locator('td[data-label="Copies read"]'), "his file, both its copies").toHaveText("2");
   await achal.context().close();
   for (const p of [mine, crossed, hers]) await opens(page, p.screen);

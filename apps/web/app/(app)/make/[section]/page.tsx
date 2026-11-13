@@ -83,7 +83,7 @@ export default async function ClassHomePapers({ params, searchParams }: Props) {
           </Link>
         )
       }
-      next={{ href: "/capture", label: "Upload papers" }}
+      next={{ href: "/children/assessments", label: "Assessments" }}
       details={proposed.length ? { href: `${here}/week`, label: "What the class did this week" } : undefined}
     >
       {one(q.approved) ? <Notice tone="neem">Approved {one(q.approved)}, in your name. They print as each child&rsquo;s home assessment.</Notice> : null}

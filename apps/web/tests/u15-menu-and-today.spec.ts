@@ -109,14 +109,15 @@ test("the menu is four groups, and only What needs doing carries the count of wh
   const menu = await theMenu(page);
   expect(await sectionNames(menu)).toEqual([...SECTIONS.coordinator]);
   expect(await menu.getByTestId("waiting").count(), "one count, on one group at most (none while nothing waits)").toBeLessThanOrEqual(1);
-  // the count is the strip's do-now and this-week, which never overlap
-  const strip = await page.locator(".b-att").evaluateAll((els) => els.filter((e) => /do now|this week/i.test(e.textContent ?? "")).map((e) => Number((e.querySelector(".b-n")?.textContent ?? "0").trim())));
-  // the badge streams in after the page (the layout does not wait for the count): waited for, then held to the strip
-  const total = strip.reduce((a, b) => a + b, 0);
+  // the count is Today's notes tile (page charter B1b: notes unconfirmed past their time)
+  await page.locator("#waiting-h").waitFor(); // the page streams: its tiles are drawn with its list
+  const tile = page.locator("main [data-stat=late] .b-stat-n");
+  // the badge streams in after the page (the layout does not wait for the count): waited for, then held to the tile
+  const total = (await tile.count()) ? Number((await tile.innerText()).replace(/\D/g, "")) : 0;
   const shown = menu.getByRole("link", { name: /^Today/ }).getByTestId("waiting");
-  if (total) await expect(shown, "the group's count is the strip's").toHaveText(total.toLocaleString("en-IN"));
+  if (total) await expect(shown, "the group's count is the notes tile's").toHaveText(total.toLocaleString("en-IN"));
   else await expect(shown, "nothing waits, so no count").toHaveCount(0);
-  expect(await badge(page), "the group's count is the strip's").toBe(total);
+  expect(await badge(page), "the group's count is the notes tile's").toBe(total);
   for (const [group, heading] of [["Curriculum", "Curriculum"], ["Class picture", "Children"], ["Today", "Today, the school"]]) {
     await menu.getByRole("link", { name: new RegExp(`^${group}\\b`) }).click();
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(heading);

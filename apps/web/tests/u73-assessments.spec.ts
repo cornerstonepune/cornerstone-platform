@@ -95,14 +95,13 @@ test("every row of Assessments is named topic · skill · level · kind · class
 
 test("each tile's number equals the rows behind it, and each lane's cards the table's rows at its steps (10)", async ({ page }) => {
   await page.goto(`/children/assessments?view=table&class=${SECTION}`);
-  const tile = async (word: string) => Number(await page.locator("[data-block=AttentionStrip] a").filter({ hasText: word }).locator(".b-n").innerText());
+  // the right side's tiles (page charter B6): the answers to judge are the rows' own, added up
+  const tile = async (id: string) => Number(await page.locator(`[data-block=DetailPanel] [data-stat="${id}"] .b-stat-n`).innerText());
   const rows = page.getByRole("table", { name: "Every assessment" }).locator("tbody tr");
   await expect(rows.first()).toBeVisible(); // the page streams: its rows are read once they are there
   const next = await rows.locator('td[data-label="Next"] a').allInnerTexts();
   const waits = await rows.locator('td[data-label="Waits for"]').allInnerTexts();
-  expect(await tile("do now")).toBe(waits.filter((w) => /answers? to judge/i.test(w)).length);
-  expect(await tile("this week")).toBe(next.filter((n) => /^(Approve|Sign off)/.test(n)).length);
-  expect(await tile("done")).toBe(waits.filter((w) => /results in/i.test(w)).length);
+  expect(await tile("to-judge")).toBe(waits.reduce((n, w) => n + Number(/(\d+) answers? to judge/i.exec(w)?.[1] ?? 0), 0));
   await page.goto(`/children/assessments?view=board&class=${SECTION}`);
   await expect(page.locator("[data-lane]").first()).toBeVisible();
   const lanes = await page.locator("[data-lane] .b-count").allInnerTexts();
@@ -159,6 +158,7 @@ test("Make from the Assessments screen makes the papers at Created, approved by 
   await aClass(sql, MAKE, "G2", ["Eli", "Finn"]);
   await sql`delete from sheet_instance where section = ${MAKE}`;
   await page.goto("/children/assessments");
+  await page.locator("[data-make-open]").click();
   await page.getByRole("button", { name: "For a class" }).click();
   await expect(page).toHaveURL(/make=class/);
   const form = page.getByRole("form", { name: "Choose the papers" });

@@ -89,7 +89,7 @@ const pages = () => [
   "/children/assessments",
   `/children/assessments?class=${SECTION}&week=${THIS}&kind=practice`,
   `/make/${SECTION}`,
-  "/capture",
+  "/children/assessments?view=reading",
   paper,
   "/children",
   `/children/${classId}?view=topic`,

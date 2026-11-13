@@ -38,8 +38,9 @@ def _pdf(path, pages):
     return path
 
 
-def _copy(conn, folder, k, code, pages, texts, section="TESTWHOSE"):
-    """A child, their paper printed with `code`, and the copy `k` of the scan cut from `texts`."""
+def _copy(conn, folder, k, code, pages, texts, section="TESTWHOSE", told=True):
+    """A child, their paper printed with `code`, and the copy `k` of the scan cut from `texts`: read, so its pages are
+    told as a read tells them (`legacy.import_scan`), unless `told` is False (a file read before pages were told)."""
     tenant = conn.execute("select id from tenant where slug = %s", (db.tenant_slug(),)).fetchone()["id"]
     child = rows.a_child_in(conn, section, "G1", str(k), tenant)
     template = conn.execute(
@@ -51,10 +52,13 @@ def _copy(conn, folder, k, code, pages, texts, section="TESTWHOSE"):
         (tenant, template, child, code),
     ).fetchone()["id"]
     path = _pdf(folder / f"copy{k:02d}-p1-{code}.pdf", texts)
-    return conn.execute(
+    capture = conn.execute(
         "insert into capture (tenant_id, path, pages, sheet_instance_id, qr_read) values (%s,%s,%s,%s,%s) returning id",
         (tenant, str(path), pages, sheet, code),
     ).fetchone()["id"]
+    if told:
+        W.record(conn, capture)
+    return capture
 
 
 def test_a_page_says_which_copy_of_the_file_and_which_page_of_the_copy_it_is(conn, tmp_path):
@@ -155,10 +159,39 @@ def test_a_page_is_told_once_and_the_card_never_draws_a_photograph_again(conn, t
     assert W.proof(conn, a, 2)["problem"] is None
 
 
-def test_a_page_read_before_its_rows_existed_is_told_on_its_first_card_and_kept(conn, tmp_path, monkeypatch):
-    a = _copy(conn, tmp_path / "scan-h", 1, "CS00000A", 1, ["CS00000A"])
-    assert W.proof(conn, a, 1)["code"] == "CS00000A"  # no row yet: told now, and kept
-    monkeypatch.setattr(
-        W.render_pdf, "photo", lambda *_a, **_k: (_ for _ in ()).throw(AssertionError("drawn twice"))
-    )
-    assert W.proof(conn, a, 1)["code"] == "CS00000A"
+def _never_drawn(monkeypatch):
+    def drawn(*_args, **_kw):
+        raise AssertionError("a card drew a photograph")
+
+    monkeypatch.setattr(W.render_pdf, "photo", drawn)
+
+
+def test_a_card_never_draws_a_photograph_even_of_a_page_not_yet_told(conn, tmp_path, monkeypatch):
+    """The paper screen's GET took 3.6 s on CI (p6, 13 Nov 2026): a page not told yet was told on its first card, by
+    drawing it and every page of every other copy in its file, during the request. A card reads rows and nothing else;
+    a page not told is shown with no code and no notice until it is told (`record`, `tell_untold`)."""
+    folder = tmp_path / "scan-h"
+    a = _copy(conn, folder, 1, "CS00000A", 1, ["CS00000A"], told=False)
+    _copy(conn, folder, 2, "CS00000B", 2, ["CS00000A", "page two of b"], told=False)
+    _never_drawn(monkeypatch)
+    p = W.proof(conn, a, 1)
+    assert (p["code"], p["problem"], p["copies"]) == (None, None, 2)
+    left = conn.execute("select page_prints from capture where id = %s", (a,)).fetchone()["page_prints"]
+    assert left == {}, "a GET wrote nothing"
+
+
+def test_the_pages_not_yet_told_are_told_once_by_the_engine_as_its_own_role(conn, tmp_path, monkeypatch):
+    """Files read before every read told its pages are told once (`engine read tell-pages`, run by each engine deploy),
+    as `app_engine`, which may add a page's telling and nothing more; told twice, nothing is drawn again."""
+    folder = tmp_path / "scan-i"
+    a = _copy(conn, folder, 1, "CS00000A", 1, ["CS00000A"], told=False)
+    b = _copy(conn, folder, 2, "CS00000B", 2, ["CS00000A", "page two of b"], told=False)
+    conn.execute("set role app_engine")
+    try:
+        assert W.tell_untold(conn, [a, b]) == 3
+        _never_drawn(monkeypatch)
+        assert W.tell_untold(conn, [a, b]) == 0
+        p = W.proof(conn, b, 1)
+    finally:
+        conn.execute("reset role")
+    assert p["code"] == "CS00000A" and p["problem"]["kind"] == W.SAME

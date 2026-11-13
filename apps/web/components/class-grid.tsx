@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "@/components/link";
 import { ICON_SIZE, Icon, type IconName } from "@/lib/icons";
 
 export type Look = "ok" | "wait" | "quiet" | "unseen";
@@ -31,7 +32,7 @@ export function ClassGrid({ cells, label, onTap, showName = true }: { cells: rea
             {onTap || !c.href ? (
               <button type="button" {...common} onClick={() => onTap?.(c.key)}>{inner}</button>
             ) : (
-              <a href={c.href} {...common}>{inner}</a>
+              <Link href={c.href} scroll={false} {...common}>{inner}</Link>
             )}
           </li>
         );

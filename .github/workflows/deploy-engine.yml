@@ -194,6 +194,14 @@ jobs:
         run: |
           S="ssh -i $HOME/.ssh/server -o ConnectTimeout=15 ubuntu@$HOST"
           $S 'sudo docker exec deploy-engine-1 engine load --settings'
+      - name: every page of every scan told once — its picture and printed code — so no screen draws a photograph
+        if: steps.plan.outputs.go == 'yes'
+        env: { HOST: "${{ secrets.LIGHTSAIL_HOST }}" }
+        # A read tells its own pages (`whose_paper.record`); this tells the files read before it did, and finds nothing
+        # to do after. The paper screen drew them on a GET instead: 3.6 s on CI (p6, 13 Nov 2026).
+        run: |
+          S="ssh -i $HOME/.ssh/server -o ConnectTimeout=15 ubuntu@$HOST"
+          $S 'sudo docker exec deploy-engine-1 engine read tell-pages'
       - name: the papers the engine marks against — each as its file now says
         if: steps.plan.outputs.go == 'yes'
         env: { HOST: "${{ secrets.LIGHTSAIL_HOST }}" }

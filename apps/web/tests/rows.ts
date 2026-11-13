@@ -128,6 +128,13 @@ export async function aWorksheet(sql: Sql, w: Worksheet): Promise<{ template: st
   return { template: t.id, items: t.item_ids };
 }
 
+/** The pages of these captures told as a read tells them (`engine read tell-pages`): each page's picture and printed
+ *  code kept, so the paper screen says whose paper a page is from rows. A test's own papers are rows, not reads; a
+ *  page left untold shows no code and no notice. */
+export function pagesTold(captures: string[]): void {
+  execFileSync(path.resolve(__dirname, "../../../bin/engine"), ["read", "tell-pages", ...captures], { env: process.env });
+}
+
 /** One answer as the reader left it: its status, what it read, and why it held it, if it did; `checkedBy`, the person
  *  who said what the child wrote. */
 /** `box` and `boxes`: where the reading says it came from, and how many of the question's own printed boxes it was cut

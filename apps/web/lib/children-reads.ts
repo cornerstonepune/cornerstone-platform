@@ -18,12 +18,6 @@ export async function attentionDays(): Promise<number> {
   const [r] = await sql<{ days: number | null }[]>`select (select (value)::text::int from config where key = 'children.attention_days') as days`;
   return r.days ?? Number.POSITIVE_INFINITY;
 }
-/** How many times seen makes a practising child "close to secure" on a skill: the school's setting `children.close_to_secure_seen`.
- *  Without the row there is no such cluster (no number is assumed here). */
-export async function closeToSecureSeen(): Promise<number | null> {
-  const [r] = await sql<{ n: number | null }[]>`select (select (value)::text::int from config where key = 'children.close_to_secure_seen') as n`;
-  return r.n ?? null;
-}
 /** School days the strip of absences shows. */
 export const STRIP_DAYS = 7;
 

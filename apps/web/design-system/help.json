@@ -6,52 +6,43 @@
       "eyebrow": "Wednesday 18-Nov · K2 Red · Fortnight 9, week A",
       "group": "Today",
       "route": "/today",
-      "purpose": "Your periods in order. Tap one for what to teach, how, and what to lay out. After it, record a note.",
+      "purpose": "Your lessons in order. Choose one to see what to teach, how and what to lay out; mark the class on the lesson.",
       "does": [
         {
-          "label": "do now tile"
+          "label": "Open my next lesson"
         },
         {
-          "label": "this week tile"
+          "label": "lessons today tile"
         },
         {
-          "label": "done today tile"
+          "label": "notes to confirm tile"
         },
         {
-          "label": "each period row"
+          "label": "papers to check tile"
         },
         {
-          "label": "Confirm the first"
+          "label": "each lesson block"
         },
         {
-          "label": "Class picture"
+          "label": "panel: Close"
         },
         {
-          "label": "This fortnight"
+          "label": "panel: Open full page"
+        },
+        {
+          "label": "Activity"
+        },
+        {
+          "label": "Children"
         },
         {
           "label": "Materials"
         },
         {
-          "label": "Board"
+          "label": "History"
         },
         {
-          "label": "List"
-        },
-        {
-          "label": "each note card on the board"
-        },
-        {
-          "label": "each period card on the board"
-        },
-        {
-          "label": "each Sr. No. in Your class"
-        },
-        {
-          "label": "Close"
-        },
-        {
-          "label": "Open the child"
+          "label": "Mark the class"
         }
       ]
     },
@@ -61,46 +52,34 @@
       "eyebrow": "Wednesday 18-Nov · every class",
       "group": "Today",
       "route": "/today",
-      "purpose": "What waits on you, each with its own button. Then the week ahead.",
+      "purpose": "What waits on you, one row each with its own button. Choose a row to see the work behind it on the right.",
       "does": [
         {
-          "label": "do now tile"
+          "label": "Open the first"
         },
         {
-          "label": "this week tile"
+          "label": "notes unconfirmed tile"
         },
         {
-          "label": "sessions done tile"
+          "label": "papers to check tile"
         },
         {
-          "label": "each heat-grid cell"
+          "label": "each waiting row"
         },
         {
-          "label": "clash row"
+          "label": "each row's action"
         },
         {
-          "label": "draft row"
+          "label": "panel: Close"
         },
         {
-          "label": "late notes row"
+          "label": "panel: Open full page"
         },
         {
-          "label": "sessions not done row"
+          "label": "What waits"
         },
         {
-          "label": "materials row"
-        },
-        {
-          "label": "each new activity next week"
-        },
-        {
-          "label": "Fortnight 9"
-        },
-        {
-          "label": "Staff and classes"
-        },
-        {
-          "label": "Timetable"
+          "label": "each row behind it"
         }
       ]
     },
@@ -577,46 +556,13 @@
       "eyebrow": "K2 Red · 24 children",
       "group": "Children",
       "route": "/children/[class]",
-      "purpose": "Each square a child by Sr. No., shown on one skill at a time. Tap a child. Change the skill from the rail.",
+      "purpose": "Where every child in the class stands on a skill, or on every skill at once. Choose the skill, then a child.",
       "does": [
         {
           "label": "skill"
         },
         {
-          "label": "domain"
-        },
-        {
-          "label": "each square (and each child chip in a cluster)"
-        },
-        {
-          "label": "Show: each skill seen"
-        },
-        {
-          "label": "a child"
-        },
-        {
-          "label": "Record a note"
-        },
-        {
-          "label": "Assessments"
-        },
-        {
-          "label": "Voice note"
-        },
-        {
-          "label": "Photo"
-        },
-        {
           "label": "Show as a table"
-        },
-        {
-          "label": "group by"
-        },
-        {
-          "label": "Close"
-        },
-        {
-          "label": "Open the child"
         },
         {
           "label": "Picture"
@@ -626,6 +572,36 @@
         },
         {
           "label": "Matrix"
+        },
+        {
+          "label": "each child's card"
+        },
+        {
+          "label": "panel: Skills"
+        },
+        {
+          "label": "panel: Notes"
+        },
+        {
+          "label": "panel: Papers"
+        },
+        {
+          "label": "panel: Report"
+        },
+        {
+          "label": "panel: Open full page"
+        },
+        {
+          "label": "panel: Close"
+        },
+        {
+          "label": "panel: Add a note about this child"
+        },
+        {
+          "label": "panel: each paper"
+        },
+        {
+          "label": "panel: Parent reports"
         }
       ]
     },
@@ -635,10 +611,34 @@
       "eyebrow": "K2 Red · Sr. No. 12 · the child's name",
       "group": "Children",
       "route": "/children/[class]/[roll]",
-      "purpose": "Each skill this child was seen on, coloured by how secure it is and sized by how often. Every mark opens the note or paper behind it.",
+      "purpose": "The child chosen on the class picture, opened full page: each skill coloured by where they stand, what was seen, their papers and their report.",
       "does": [
         {
+          "label": "Back to the class"
+        },
+        {
+          "label": "Skills"
+        },
+        {
+          "label": "Notes"
+        },
+        {
+          "label": "Papers"
+        },
+        {
+          "label": "Report"
+        },
+        {
+          "label": "Add a note about this child"
+        },
+        {
           "label": "each graph node"
+        },
+        {
+          "label": "each skill row"
+        },
+        {
+          "label": "Against every skill"
         },
         {
           "label": "skill for the trend"
@@ -647,34 +647,13 @@
           "label": "details on each timeline entry"
         },
         {
-          "label": "a timeline entry's activity"
-        },
-        {
-          "label": "a timeline entry's paper"
-        },
-        {
-          "label": "each skill row"
-        },
-        {
           "label": "more entries"
         },
         {
-          "label": "each skill"
+          "label": "each paper"
         },
         {
-          "label": "Back to the class"
-        },
-        {
-          "label": "Add a note about this child"
-        },
-        {
-          "label": "Reports"
-        },
-        {
-          "label": "Voice note"
-        },
-        {
-          "label": "Photo"
+          "label": "Parent reports"
         }
       ]
     },
@@ -684,16 +663,10 @@
       "eyebrow": "Grades 1 to 4 · your classes",
       "group": "Children",
       "route": "/children/assessments",
-      "purpose": "Each one goes through seven steps. Its row shows the step it waits at and the one thing to do next.",
+      "purpose": "Move each assessment from made to results, and see what is stuck. Choose a card to see its copies, upload its papers and check them.",
       "does": [
         {
-          "label": "do now tile"
-        },
-        {
-          "label": "this week tile"
-        },
-        {
-          "label": "results in tile"
+          "label": "Make an assessment"
         },
         {
           "label": "Make: For a class"
@@ -708,40 +681,10 @@
           "label": "Make: A ready-made worksheet"
         },
         {
-          "label": "Read: choose scans or drop them"
+          "label": "class · subject · week, and under More filters topic · kind · stage (and, on Reading, Show: by day, by kind of question, by how sure)"
         },
         {
-          "label": "a Google Drive link"
-        },
-        {
-          "label": "Read it"
-        },
-        {
-          "label": "class · topic · subject · kind · week · stage (and, on Reading, Show: by day, by kind of question, by how sure)"
-        },
-        {
-          "label": "each assessment row"
-        },
-        {
-          "label": "each row's next action"
-        },
-        {
-          "label": "Answers to check"
-        },
-        {
-          "label": "Pack to approve"
-        },
-        {
-          "label": "A child with results in"
-        },
-        {
-          "label": "The skills tested"
-        },
-        {
-          "label": "Question bank"
-        },
-        {
-          "label": "Photo"
+          "label": "More filters"
         },
         {
           "label": "Board"
@@ -750,22 +693,70 @@
           "label": "Table"
         },
         {
-          "label": "each card on the board"
-        },
-        {
-          "label": "Later →"
-        },
-        {
           "label": "By topic"
         },
         {
           "label": "Reading"
         },
         {
+          "label": "each card on the board"
+        },
+        {
+          "label": "each card's next action"
+        },
+        {
+          "label": "papers waiting to check tile"
+        },
+        {
+          "label": "answers to judge tile"
+        },
+        {
+          "label": "overdue checks tile"
+        },
+        {
+          "label": "panel: Copies · Upload · Check · Results"
+        },
+        {
+          "label": "panel: Close the panel"
+        },
+        {
+          "label": "panel: the next action"
+        },
+        {
+          "label": "panel: Open full page"
+        },
+        {
+          "label": "panel: each child's copy"
+        },
+        {
+          "label": "panel Upload: choose scans or drop them"
+        },
+        {
+          "label": "panel Upload: a Google Drive link"
+        },
+        {
+          "label": "Read it"
+        },
+        {
+          "label": "panel Check: Check this paper"
+        },
+        {
+          "label": "panel Results: The child"
+        },
+        {
+          "label": "each assessment row"
+        },
+        {
+          "label": "each row's next action"
+        },
+        {
           "label": "rename: name this assessment"
         },
         {
           "label": "Save the name"
+        },
+        {
+          "label": "Later →"
         },
         {
           "label": "each topic"

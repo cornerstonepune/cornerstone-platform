@@ -156,19 +156,23 @@ test("the list is ten assessments to a page, newest first", async ({ page }) => 
   await expect(rows).toHaveCount(2);
 });
 
-test("two equal blocks side by side above the list: the four ways to make one, and one box to read a scan", async ({ page }) => {
-  await page.goto(`${LIST}?view=table`);
-  const make = await page.getByRole("region", { name: "Make an assessment" }).boundingBox();
-  const readBox = await page.getByRole("region", { name: "Read an assessment" }).boundingBox();
+// Page charter B6: the two blocks above the list are gone. Make an assessment is the page's one primary action, above the list, the four
+// ways behind it; reading a scan is an assessment's Upload tab: one drop zone, the Drive link and one button.
+test("Make an assessment sits above the list with the four ways behind it, and an assessment's Upload tab reads a scan", async ({ page }) => {
+  await page.goto(`${LIST}?view=table&class=${SECTION}`);
+  const make = await page.locator("[data-make]").boundingBox();
   const list = await page.locator("table").first().boundingBox();
-  expect(make && readBox && list).toBeTruthy();
-  expect(Math.abs(make!.y - readBox!.y), "same top").toBeLessThan(2);
-  expect(readBox!.x, "side by side").toBeGreaterThan(make!.x + make!.width - 2);
-  expect(list!.y, "the list is below both").toBeGreaterThan(Math.max(make!.y + make!.height, readBox!.y + readBox!.height) - 2);
-  // the four ways to make one are in the left block; the right has one drop zone, the Drive link and one button
+  expect(make && list).toBeTruthy();
+  expect(list!.y, "the list is below it").toBeGreaterThan(make!.y + make!.height - 2);
+  await page.locator("[data-make-open]").click();
   for (const w of ["For a class", "For each child", "For one child", "A ready-made worksheet"]) await expect(page.getByRole("region", { name: "Make an assessment" }).getByRole("button", { name: w })).toBeVisible();
-  const rb = page.getByRole("region", { name: "Read an assessment" });
+  await page.goto(`${LIST}?class=${SECTION}`);
+  await page.locator("[data-kcard]").first().click();
+  const panel = page.locator("[data-block=DetailPanel]");
+  await panel.getByRole("tab", { name: "Upload" }).click();
+  const rb = panel.getByRole("region", { name: "Upload papers" });
   await expect(rb.getByLabel("Choose scans")).toHaveCount(1);
   await expect(rb.getByLabel("Link to the scan on Google Drive")).toBeVisible();
   await expect(rb.getByRole("button", { name: "Read it" })).toBeVisible();
 });
+

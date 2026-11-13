@@ -35,48 +35,51 @@ def copy_of(path: str) -> tuple[str, int | None]:
 
 def _told(path, page_no: int) -> tuple[str, str | None] | None:
     """(the page's picture as `same_page.fingerprint` gives it, the code printed on it as `sorting.qr_of` reads it), from
-    one drawing of the photograph; None where the file or page is not there. The same photograph put in two copies gives
-    the same fingerprint; two photographs of one paper never do."""
+    one drawing of the photograph; None where the file or page is not there, or cannot be drawn. The same photograph put
+    in two copies gives the same fingerprint; two photographs of one paper never do."""
     full = Path(path).expanduser()
     if not full.exists():
         return None
-    with pymupdf.open(full) as doc:
-        if not 1 <= page_no <= len(doc):
-            return None
+    try:
+        with pymupdf.open(full) as doc:
+            if not 1 <= page_no <= len(doc):
+                return None
+    except pymupdf.FileDataError:
+        return None
     img = render_pdf.photo(full, page_no)[0]
-    return same_page.fingerprint(img), sorting.qr_of(img)
+    return None if img is None else (same_page.fingerprint(img), sorting.qr_of(img))
 
 
-def pages_told(conn, wanted: list[tuple]) -> dict[tuple, tuple[str, str | None]]:
-    """{(capture id, file page): (fingerprint, printed code)} for each (capture id, path, file page) wanted: read from
-    the scan's `page_prints` ({file page: {print, code}}; CP-27 group 6: once the table `capture_page`), and a page not
-    told yet (a file read before it was kept) told now and kept. A page once told is never changed (the database refuses
-    it). A page's photograph is drawn once in its life, never on a card (docs/notes/perf-slow-site.md: 8 seconds a click)."""
-    ids = list({str(c) for c, _, _ in wanted})
-    rows = conn.execute(
-        "select c.id::text as capture_id, p.key::int as file_page, p.value ->> 'print' as print,"
-        " p.value ->> 'code' as code from capture c cross join jsonb_each(c.page_prints) p"
-        " where c.id = any(%s::uuid[])",
-        (ids,),
-    ).fetchall()
-    told = {(r["capture_id"], r["file_page"]): (r["print"], r["code"]) for r in rows}
-    for c, path, page in wanted:
-        if (str(c), page) in told or (fact := _told(path, page)) is None:
+def record(conn, capture_id) -> int:
+    """Every page of a capture not told yet drawn once, told and kept, as its file is read (`legacy.import_scan`), so
+    its cards read whose paper it is from rows. A page once told is never changed (the database refuses it). Returns
+    how many pages it told."""
+    cap = conn.execute("select path, pages from capture where id = %s", (capture_id,)).fetchone()
+    if not cap:
+        return 0
+    told, n = same_page.told(conn, [capture_id]), 0
+    for page in range(1, (cap["pages"] or 0) + 1):
+        if (str(capture_id), page) in told or (fact := _told(cap["path"], page)) is None:
             continue
         conn.execute(
             "update capture set page_prints = page_prints || jsonb_build_object(%s::text,"
             " jsonb_build_object('print', %s::text, 'code', %s::text)) where id = %s and not page_prints ? %s::text",
-            (page, *fact, c, str(page)),
+            (page, *fact, capture_id, str(page)),
         )
-        told[(str(c), page)] = fact
-    return told
+        n += 1
+    return n
 
 
-def record(conn, capture_id) -> None:
-    """Every page of a capture told and kept, as it is read (`copies._read_copy`), so its first card is as quick as any."""
-    cap = conn.execute("select path, pages from capture where id = %s", (capture_id,)).fetchone()
-    if cap:
-        pages_told(conn, [(capture_id, cap["path"], q) for q in range(1, (cap["pages"] or 0) + 1)])
+def tell_untold(conn, ids: list | None = None) -> int:
+    """Every live capture (or those named) with a page not told yet, told (`record`): the files read before every read
+    told its pages, once (`engine read tell-pages`, run by each engine deploy). Returns how many pages it told."""
+    named = "" if ids is None else " and c.id = any(%s::uuid[])"
+    rows = conn.execute(
+        "select id from capture c where c.superseded_by is null"
+        " and (select count(*) from jsonb_object_keys(c.page_prints)) < coalesce(c.pages, 0)" + named,
+        () if ids is None else ([str(i) for i in ids],),
+    ).fetchall()
+    return sum(record(conn, r["id"]) for r in rows)
 
 
 def verdict(code, filed_code, same_as: list[int]) -> dict | None:
@@ -119,12 +122,8 @@ def proof(conn, capture_id, file_page: int) -> dict | None:
     sibs = _siblings(conn, folder, capture_id)
     nums = [n for s in sibs if (n := copy_of(s["path"])[1])] + ([k] if k else [])
     others = [s for s in sibs if s["child_id"] != cap["child_id"] and copy_of(s["path"])[1]]
-    told = pages_told(conn, [(capture_id, cap["path"], file_page)])
+    told = same_page.told(conn, [capture_id, *(s["id"] for s in others)])  # rows only: a card never draws
     mine, code = told.get((str(capture_id), file_page), (None, None))
-    if mine:
-        told |= pages_told(
-            conn, [(s["id"], s["path"], q) for s in others for q in range(1, (s["pages"] or 0) + 1)]
-        )
     same_as = sorted({
         n for s in others if (n := copy_of(s["path"])[1])
         and any(told.get((str(s["id"]), q), (None,))[0] == mine for q in range(1, (s["pages"] or 0) + 1))

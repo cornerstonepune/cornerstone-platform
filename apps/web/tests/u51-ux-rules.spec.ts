@@ -138,7 +138,6 @@ const ROUTES = (): [string, string][] => [
   ["/make", "/make"],
   ["/make/[section]", `/make/${SECTION}`],
   ["/make/[section]/week", `/make/${SECTION}/week`],
-  ["/capture", "/capture"],
   ["/children/assessments/[key]/[roll]", paper],
   ["/children/assessments/[key]/[roll]?answer", `${paper}?answer=${answer}#a-${answer}`],
   ["/children", "/children"],

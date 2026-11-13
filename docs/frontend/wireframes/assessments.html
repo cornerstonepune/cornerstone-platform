@@ -6,7 +6,10 @@
 <title>Wireframe: Assessments (assessments)</title>
 <link rel="stylesheet" href="kit.css">
 </head>
-<!-- Wireframe of screens.json "assessments" (/children/assessments). Drawn as the coordinator. Ten assessments; the tiles count rows (2 to judge, 3 this week, 2 results in) and the four lanes hold 3 + 1 + 4 + 2 = the table's 10. The step an assessment waits at follows apps/web/lib/assessment-steps.ts (actionOf): approval first for a home assessment, then answers to check, sign-off, print, upload, reading. The Board is the chosen view; Table follows.
+<!-- Wireframe of screens.json "assessments" (/children/assessments), page charter B6: a Board. Drawn as the coordinator with one card
+     chosen (Subtraction, Grade 4 · 4A), so the right side is that assessment in its tabs (Copies · Upload · Check · Results); the three
+     numbers it shows with nothing chosen are drawn under the board. Ten assessments: the four lanes hold 3 + 1 + 3 + 2 cards, a card's
+     lane is the step it waits at (apps/web/lib/assessment-steps.ts actionOf). The Upload papers page is retired into the Upload tab.
      data-el = index in screens.json assessments.elements; data-bar = index in screens.json bar; data-source = target
      table.column; data-gap = what the target tables cannot give. Both frames hold the same markup: the phone layout
      comes from kit.css container queries, as it will on the site. Fake names only (none are needed on this screen). -->
@@ -60,7 +63,6 @@
             <h2 class="sideh" id="side-assessments"><i class="ic s" data-icon="assessment"></i>Assessments</h2>
             <ul aria-labelledby="side-assessments">
               <li><a class="sidelink" data-bar="1" href="#assessments" aria-current="page">Assessments</a></li>
-              <li><a class="sidelink" data-bar="1" href="#upload">Upload papers</a></li>
               <li><a class="sidelink" data-bar="1" href="#bank">Question bank</a></li>
             </ul>
           </div>
@@ -86,148 +88,146 @@
         <div class="page">
           <main class="main">
             <div class="head">
-              <p class="eyebrow"><i class="ic s" data-icon="assessment"></i>Grades 1 to 4 · all classes · <span class="num" data-source="sheet_instance.key">10</span> assessments</p>
+              <p class="eyebrow"><i class="ic s" data-icon="assessment"></i>Grades 1 to 4 · your classes</p>
               <h1 class="title">Assessments</h1>
-              <p class="purpose">Each one goes through seven steps. Its row shows the step it waits at and the one thing to do next.</p>
+              <p class="purpose">Move each assessment from made to results, and see what is stuck. Choose a card to see its copies, upload its papers and check them.</p>
             </div>
-            <div class="strip" data-block="AttentionStrip">
-              <a class="att press" data-state="late" data-el="0" href="#paper" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="n">2</span><span class="w"><i class="ic s" data-icon="late"></i>Do now</span><span class="muted">Assessments with answers for you to judge.</span></a>
-              <a class="att press" data-state="wait" data-el="1" href="#assessment" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at approval.decision"><span class="n">3</span><span class="w"><i class="ic s" data-icon="to-confirm"></i>This week</span><span class="muted">Packs to approve and papers to sign off.</span></a>
-              <a class="att press" data-state="ok" data-el="2" href="#assessment" data-source="item_result.confirmed_at"><span class="n">2</span><span class="w"><i class="ic s" data-icon="done"></i>Results in</span><span class="muted">Assessments with every paper confirmed.</span></a>
-            </div>
-            <div class="cards" data-block="Cards">
-              <article class="card" data-kind="assessment"><div class="card-h"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span>Make an assessment</div><div class="card-b">
-                <span class="muted">It starts at Created and opens so you can see it.</span>
-                <button class="btn press" data-el="3" type="button"><i class="ic" data-icon="class"></i>For a class</button>
-                <button class="btn press" data-el="4" type="button"><i class="ic" data-icon="children"></i>For each child</button>
-                <button class="btn press" data-el="5" type="button"><i class="ic" data-icon="child"></i>For one child</button>
-                <button class="btn press" data-el="6" type="button"><i class="ic" data-icon="form"></i>A ready-made worksheet</button>
-              </div></article>
-              <article class="card" data-kind="assessment"><div class="card-h"><span class="tile" data-kind="assessment"><i class="ic" data-icon="upload"></i></span>Read an assessment</div><div class="card-b">
-                <label class="drop" data-block="DropZone"><i class="ic l" data-icon="upload"></i><span>Choose scans or drop them here (pdf, jpg, png, heic). The QR names the sheet.</span><input data-el="7" type="file" accept="application/pdf,image/*" multiple></label>
-                <div class="field"><label for="drive">Or paste a Google Drive link</label><input data-el="8" id="drive" type="url" placeholder="https://drive.google.com/…"></div>
-                <div><button class="btn press" data-el="9" type="button">Read it</button></div>
-              </div></article>
-            </div>
+            <details class="more" open><summary class="btn btn-main press" data-el="0"><i class="ic" data-icon="assessment"></i>Make an assessment</summary><div class="more-box">
+              <button class="btn press" data-el="1" type="button"><i class="ic" data-icon="class"></i>For a class</button>
+              <button class="btn press" data-el="2" type="button"><i class="ic" data-icon="children"></i>For each child</button>
+              <button class="btn press" data-el="3" type="button"><i class="ic" data-icon="child"></i>For one child</button>
+              <button class="btn press" data-el="4" type="button"><i class="ic" data-icon="form"></i>A ready-made worksheet</button>
+            </div></details>
             <div class="filters" data-block="FilterBar">
-              <label class="sel"><i class="ic s" data-icon="filter"></i>Class <select data-el="10" data-source="school_class.section grade.name"><option>All</option><option>Grade 1</option><option>Grade 2</option><option>Grade 3</option><option>Grade 4</option></select></label>
-              <label class="sel">Topic <select data-el="10" data-source="topic.name"><option>All</option><option>Addition &amp; subtraction</option><option>Place value</option><option>Reading</option></select></label>
-              <label class="sel">Subject <select data-el="10" data-source="subject.name"><option>All</option><option>Numeracy</option><option>Language</option></select></label>
-              <label class="sel">Kind <select data-el="10" data-source="sheet_instance.kind"><option>All</option><option>Assessment</option><option>Home assessment</option><option>Practice</option></select></label>
-              <label class="sel">Week <select data-el="10" data-source="sheet_instance.week"><option>This fortnight</option><option>This week</option><option>Last week</option></select></label>
-              <label class="sel">Stage <select data-el="10" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><option>All</option><option>Created</option><option>Approved</option><option>Printed</option><option>Uploaded</option><option>Read</option><option>Checked</option><option>Results in</option></select></label>
+              <label class="sel"><i class="ic s" data-icon="filter"></i>Class <select data-el="5" data-source="school_class.section grade.name"><option>Every class</option><option>Grade 2 · 2A</option><option>Grade 4 · 4A</option></select></label>
+              <label class="sel">Subject <select data-el="5" data-source="subject.name"><option>Every subject</option><option>Numeracy</option><option>Language</option></select></label>
+              <label class="sel">Week <select data-el="5" data-source="sheet_instance.week"><option>Every week</option><option>week of 9 Nov</option><option>week of 2 Nov</option></select></label>
+              <details class="more"><summary class="sel" data-el="6">More filters</summary><div class="more-box">
+                <label class="sel">Topic <select data-el="5" data-source="topic.name"><option>Every topic</option><option>Place value</option></select></label>
+                <label class="sel">Kind <select data-el="5" data-source="sheet_instance.kind"><option>Any kind</option><option>Class assessment</option><option>Home assessment</option></select></label>
+                <label class="sel">Stage <select data-el="5" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><option>Any stage</option><option>Read, to check</option></select></label>
+              </div></details>
+              <label class="search"><i class="ic s" data-icon="search"></i><span class="vh">Find an assessment</span><input data-el="5" type="search" placeholder="Find an assessment"></label>
             </div>
             <div class="toolbar">
-              <div class="seg" role="tablist" aria-label="View"><a role="tab" data-el="19" aria-selected="true" href="#board"><i class="ic s" data-icon="board"></i>Board</a><a role="tab" data-el="20" aria-selected="false" href="#table"><i class="ic s" data-icon="table"></i>Table</a><a role="tab" data-el="23" aria-selected="false" href="#topic"><i class="ic s" data-icon="table"></i>By topic</a><a role="tab" data-el="24" aria-selected="false" href="#reading"><i class="ic s" data-icon="table"></i>Reading</a></div>
+              <div class="seg" role="tablist" aria-label="View"><a role="tab" data-el="7" aria-selected="true" href="#board"><i class="ic s" data-icon="board"></i>Board</a><a role="tab" data-el="8" aria-selected="false" href="#table"><i class="ic s" data-icon="table"></i>Table</a><a role="tab" data-el="9" aria-selected="false" href="#topic"><i class="ic s" data-icon="table"></i>By topic</a><a role="tab" data-el="10" aria-selected="false" href="#reading"><i class="ic s" data-icon="table"></i>Reading</a></div>
             </div>
             <h2 class="title-small">Board: who has the paper</h2>
             <div class="kanban" data-block="KanbanBoard" style="--lanes: 4">
               <section class="lane" data-state="wait" aria-label="To approve and print">
                 <h3 class="lane-h"><i class="ic s" data-icon="to-confirm"></i>To approve and print <span class="count num">3</span></h3>
                 <ul class="lane-b">
-                <li><a class="kcard press" data-kind="assessment" data-el="21" href="#assessment" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><span><b>Reading · Retelling a story · Home assessment · Grade 3 · 10-Nov-2026</b><span class="sub"><span data-source="grade.name">Grade 3</span> · <span class="num" data-source="capture.sheet_instance_id capture.status">20 of 26</span> papers back · Next: Approve</span></span><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>Waits for approval</span></a></li>
-                <li><a class="kcard press" data-kind="assessment" data-el="21" href="#assessment" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><span><b>Addition &amp; subtraction · 2-digit + 2-digit · Easy · Home assessment · Grade 1 · 16-Nov-2026</b><span class="sub"><span data-source="grade.name">Grade 1</span> · <span class="num" data-source="capture.sheet_instance_id capture.status">0 of 22</span> papers back · Next: Approve</span></span><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>Waits for approval</span></a></li>
-                <li><a class="kcard press" data-kind="assessment" data-el="21" href="#assessment" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><span><b>Fractions · Halves and quarters · Easy · Assessment · Grade 2 · 17-Nov-2026</b><span class="sub"><span data-source="grade.name">Grade 2</span> · <span class="num" data-source="capture.sheet_instance_id capture.status">0 of 24</span> papers back · Next: Print</span></span><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>Waits for print</span></a></li>
+                <li><a class="kcard press" data-kind="assessment" data-el="11" href="#assessments" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><span><b><span data-source="topic.name">Reading</span> · <span data-source="grade.name school_class.section">Grade 3 · 3B</span></b><span class="sub"><span class="num" data-source="sheet_instance.created_at">10-Nov-2026</span> · <span class="num">0 of 24</span> papers back</span></span><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>Waits for approval</span></a><a class="btn press" data-el="12" href="#assessments">Approve</a></li>
+                <li><a class="kcard press" data-kind="assessment" data-el="11" href="#assessments" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><span><b><span data-source="topic.name">Addition &amp; subtraction</span> · <span data-source="grade.name school_class.section">Grade 2 · 2A</span></b><span class="sub"><span class="num" data-source="sheet_instance.created_at">11-Nov-2026</span> · <span class="num">0 of 26</span> papers back</span></span><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>Waits for approval</span></a><a class="btn press" data-el="12" href="#assessments">Approve</a></li>
+                <li><a class="kcard press" data-kind="assessment" data-el="11" href="#assessments" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><span><b><span data-source="topic.name">Fractions</span> · <span data-source="grade.name school_class.section">Grade 2 · 2B</span></b><span class="sub"><span class="num" data-source="sheet_instance.created_at">12-Nov-2026</span> · <span class="num">0 of 25</span> papers back</span></span><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>Waits for print</span></a><a class="btn press" data-el="12" href="#assessments">Print</a></li>
                 </ul>
               </section>
               <section class="lane" data-state="quiet" aria-label="With the children">
                 <h3 class="lane-h"><i class="ic s" data-icon="to-do"></i>With the children <span class="count num">1</span></h3>
                 <ul class="lane-b">
-                <li><a class="kcard press" data-kind="assessment" data-el="21" href="#assessment" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><span><b>Multiplication · Times tables 2, 5 and 10 · Medium · Assessment · Grade 3 · 13-Nov-2026</b><span class="sub"><span data-source="grade.name">Grade 3</span> · <span class="num" data-source="capture.sheet_instance_id capture.status">0 of 25</span> papers back · Next: Upload</span></span><span class="chip" data-state="quiet"><i class="ic s" data-icon="to-do"></i>With the children</span></a></li>
+                <li><a class="kcard press" data-kind="assessment" data-el="11" href="#assessments" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><span><b><span data-source="topic.name">Multiplication</span> · <span data-source="grade.name school_class.section">Grade 3 · 3A</span></b><span class="sub"><span class="num" data-source="sheet_instance.created_at">9-Nov-2026</span> · <span class="num">0 of 27</span> papers back</span></span><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>With the children</span></a><a class="btn press" data-el="12" href="#assessments">Upload</a></li>
                 </ul>
               </section>
               <section class="lane" data-state="wait" aria-label="To read and check">
-                <h3 class="lane-h"><i class="ic s" data-icon="to-confirm"></i>To read and check <span class="count num">4</span></h3>
+                <h3 class="lane-h"><i class="ic s" data-icon="to-confirm"></i>To read and check <span class="count num">3</span></h3>
                 <ul class="lane-b">
-                <li><a class="kcard press" data-kind="assessment" data-el="21" href="#assessment" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><span><b>Subtraction · Exchange and regroup · Hard · Assessment · Grade 4 · 9-Nov-2026</b><span class="sub"><span data-source="grade.name">Grade 4</span> · <span class="num" data-source="capture.sheet_instance_id capture.status">23 of 23</span> papers back · Next: Check 3 answers</span></span><span class="chip" data-state="late"><i class="ic s" data-icon="late"></i>3 answers to judge</span></a></li>
-                <li><a class="kcard press" data-kind="assessment" data-el="21" href="#assessment" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><span><b>Comprehension · Finding the main idea · Medium · Assessment · Grade 2 · 9-Nov-2026</b><span class="sub"><span data-source="grade.name">Grade 2</span> · <span class="num" data-source="capture.sheet_instance_id capture.status">24 of 24</span> papers back · Next: Check 5 answers</span></span><span class="chip" data-state="late"><i class="ic s" data-icon="late"></i>5 answers to judge</span></a></li>
-                <li><a class="kcard press" data-kind="assessment" data-el="21" href="#assessment" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><span><b>Place value · Hundreds, tens and ones · Medium · Assessment · Grade 2 · 6-Nov-2026</b><span class="sub"><span data-source="grade.name">Grade 2</span> · <span class="num" data-source="capture.sheet_instance_id capture.status">24 of 24</span> papers back · Next: Sign off 24 papers</span></span><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To sign off</span></a></li>
-                <li><a class="kcard press" data-kind="assessment" data-el="21" href="#assessment" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><span><b>Writing · Sentences with capitals · Easy · Home assessment · Grade 1 · 9-Nov-2026</b><span class="sub"><span data-source="grade.name">Grade 1</span> · <span class="num" data-source="capture.sheet_instance_id capture.status">18 of 22</span> papers back · Next: See reading</span></span><span class="chip" data-state="quiet"><i class="ic s" data-icon="heard"></i>Being read</span></a></li>
+                <li><a class="kcard press" data-kind="assessment" data-el="11" href="#assessments" aria-expanded="true" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><span><b><span data-source="topic.name">Subtraction</span> · <span data-source="grade.name school_class.section">Grade 4 · 4A</span></b><span class="sub"><span class="num" data-source="sheet_instance.created_at">9-Nov-2026</span> · <span class="num">22 of 28</span> papers back</span></span><span class="chip" data-state="late"><i class="ic s" data-icon="fix-this"></i>3 answers to judge</span></a><a class="btn btn-main press" data-el="12" href="#assessments">Check 3 answers</a></li>
+                <li><a class="kcard press" data-kind="assessment" data-el="11" href="#assessments" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><span><b><span data-source="topic.name">Comprehension</span> · <span data-source="grade.name school_class.section">Grade 2 · 2A</span></b><span class="sub"><span class="num" data-source="sheet_instance.created_at">6-Nov-2026</span> · <span class="num">24 of 26</span> papers back</span></span><span class="chip" data-state="late"><i class="ic s" data-icon="fix-this"></i>5 answers to judge</span></a><a class="btn press" data-el="12" href="#assessments">Check 5 answers</a></li>
+                <li><a class="kcard press" data-kind="assessment" data-el="11" href="#assessments" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><span><b><span data-source="topic.name">Place value</span> · <span data-source="grade.name school_class.section">Grade 2 · 2B</span></b><span class="sub"><span class="num" data-source="sheet_instance.created_at">5-Nov-2026</span> · <span class="num">25 of 25</span> papers back</span></span><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To sign off</span></a><a class="btn press" data-el="12" href="#assessments">Sign off 24 papers</a></li>
                 </ul>
               </section>
               <section class="lane" data-state="ok" aria-label="Results in">
                 <h3 class="lane-h"><i class="ic s" data-icon="done"></i>Results in <span class="count num">2</span></h3>
                 <ul class="lane-b">
-                <li><a class="kcard press" data-kind="assessment" data-el="21" href="#assessment" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><span><b>Addition &amp; subtraction · 2-digit + 2-digit · Easy · Assessment · Grade 1 · 2-Nov-2026</b><span class="sub"><span data-source="grade.name">Grade 1</span> · <span class="num" data-source="capture.sheet_instance_id capture.status">22 of 22</span> papers back · Next: See results</span></span><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Results in</span></a></li>
-                <li><a class="kcard press" data-kind="assessment" data-el="21" href="#assessment" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><span><b>Term 1 spelling check</b><span class="sub"><span data-source="grade.name">Grade 2</span> · <span class="num" data-source="capture.sheet_instance_id capture.status">24 of 24</span> papers back · Next: See results</span></span><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Results in</span></a></li>
+                <li><a class="kcard press" data-kind="assessment" data-el="11" href="#assessments" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><span><b><span data-source="topic.name">Addition &amp; subtraction</span> · <span data-source="grade.name school_class.section">Grade 1 · 1A</span></b><span class="sub"><span class="num" data-source="sheet_instance.created_at">2-Nov-2026</span> · <span class="num">23 of 23</span> papers back</span></span><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Results in</span></a><a class="btn press" data-el="12" href="#assessments">See results</a></li>
+                <li><a class="kcard press" data-kind="assessment" data-el="11" href="#assessments" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><span><b><span data-source="topic.name">Term 1 spelling check</span> · <span data-source="grade.name school_class.section">Grade 4 · 4B</span></b><span class="sub"><span class="num" data-source="sheet_instance.created_at">30-Oct-2026</span> · <span class="num">28 of 28</span> papers back</span></span><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Results in</span></a><a class="btn press" data-el="12" href="#assessments">See results</a></li>
                 </ul>
               </section>
             </div>
-            <p class="caption">Lanes are who has the paper. A lane's count is the table's rows at its steps: Created and Approved, Printed, Uploaded and Read and Checked, Results in.</p>
+            <p class="caption">A card is one assessment: its topic and class, its date and how many papers are back, one chip, one next button. Choosing it opens it on the right.</p>
+            <h2 class="title-small">With no card chosen, the right side is three numbers</h2>
+            <aside class="dpanel" data-block="DetailPanel" aria-label="What waits">
+              <h2 class="dpanel-eyebrow">What waits</h2>
+              <ul class="stats" data-block="StatTiles" aria-label="What waits">
+                <li><a class="stat" data-state="wait" data-el="13" href="#assessments"><b class="num" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at">9</b><span>papers waiting to check</span></a></li>
+                <li><a class="stat" data-state="late" data-el="14" href="#paper"><b class="num" data-source="item_result.status">8</b><span>answers to judge</span></a></li>
+                <li><a class="stat" data-state="late" data-el="15" href="#across"><b class="num" data-source="item_result.status capture.created_at">2</b><span>papers with checks overdue (over 48 hours)</span></a></li>
+              </ul>
+            </aside>
             <h2 class="title-small">Table: every assessment</h2>
             <div class="table-box" data-block="DataTable">
               <table class="table">
                 <thead><tr><th>Assessment</th><th>Class</th><th class="n">Papers back</th><th class="st">Waits for</th><th class="st">Next</th></tr></thead>
                 <tbody>
                 <tr>
-                  <td><a data-el="11" href="#assessment" data-source="topic.name skill.name sheet_template.difficulty sheet_instance.kind grade.name sheet_instance.created_at">Subtraction · Exchange and regroup · Hard · Assessment · Grade 4 · 9-Nov-2026</a><form class="toolbar"><input data-el="25" type="text" aria-label="Name this assessment" value="Subtraction · Exchange and regroup · Hard · Assessment · Grade 4 · 9-Nov-2026"><button data-el="26" type="submit" class="btn press">Save the name</button></form></td>
+                  <td><a data-el="26" href="#assessment" data-source="topic.name skill.name sheet_template.difficulty sheet_instance.kind grade.name sheet_instance.created_at">Subtraction · Exchange and regroup · Hard · Assessment · Grade 4 · 9-Nov-2026</a><form class="toolbar"><input data-el="28" type="text" aria-label="Name this assessment" value="Subtraction · Exchange and regroup · Hard · Assessment · Grade 4 · 9-Nov-2026"><button data-el="29" type="submit" class="btn press">Save the name</button></form></td>
                   <td data-source="grade.name school_class.section">Grade 4</td>
                   <td class="n" data-source="capture.sheet_instance_id capture.status">23 of 23</td>
                   <td class="st" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="chip" data-state="late"><i class="ic s" data-icon="late"></i>3 answers to judge</span></td>
-                  <td class="st"><a class="btn btn-main press" data-el="12" href="#assessment">Check 3 answers</a></td>
+                  <td class="st"><a class="btn btn-main press" data-el="27" href="#assessment">Check 3 answers</a></td>
                 </tr>
                 <tr>
-                  <td><a data-el="11" href="#assessment" data-source="topic.name skill.name sheet_template.difficulty sheet_instance.kind grade.name sheet_instance.created_at">Comprehension · Finding the main idea · Medium · Assessment · Grade 2 · 9-Nov-2026</a></td>
+                  <td><a data-el="26" href="#assessment" data-source="topic.name skill.name sheet_template.difficulty sheet_instance.kind grade.name sheet_instance.created_at">Comprehension · Finding the main idea · Medium · Assessment · Grade 2 · 9-Nov-2026</a></td>
                   <td data-source="grade.name school_class.section">Grade 2</td>
                   <td class="n" data-source="capture.sheet_instance_id capture.status">24 of 24</td>
                   <td class="st" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="chip" data-state="late"><i class="ic s" data-icon="late"></i>5 answers to judge</span></td>
-                  <td class="st"><a class="btn press" data-el="12" href="#assessment">Check 5 answers</a></td>
+                  <td class="st"><a class="btn press" data-el="27" href="#assessment">Check 5 answers</a></td>
                 </tr>
                 <tr>
-                  <td><a data-el="11" href="#assessment" data-source="topic.name skill.name sheet_template.difficulty sheet_instance.kind grade.name sheet_instance.created_at">Reading · Retelling a story · Home assessment · Grade 3 · 10-Nov-2026</a></td>
+                  <td><a data-el="26" href="#assessment" data-source="topic.name skill.name sheet_template.difficulty sheet_instance.kind grade.name sheet_instance.created_at">Reading · Retelling a story · Home assessment · Grade 3 · 10-Nov-2026</a></td>
                   <td data-source="grade.name school_class.section">Grade 3</td>
                   <td class="n" data-source="capture.sheet_instance_id capture.status">20 of 26</td>
                   <td class="st" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>Waits for approval</span></td>
-                  <td class="st"><a class="btn press" data-el="12" href="#assessment">Approve</a></td>
+                  <td class="st"><a class="btn press" data-el="27" href="#assessment">Approve</a></td>
                 </tr>
                 <tr>
-                  <td><a data-el="11" href="#assessment" data-source="topic.name skill.name sheet_template.difficulty sheet_instance.kind grade.name sheet_instance.created_at">Addition &amp; subtraction · 2-digit + 2-digit · Easy · Home assessment · Grade 1 · 16-Nov-2026</a></td>
+                  <td><a data-el="26" href="#assessment" data-source="topic.name skill.name sheet_template.difficulty sheet_instance.kind grade.name sheet_instance.created_at">Addition &amp; subtraction · 2-digit + 2-digit · Easy · Home assessment · Grade 1 · 16-Nov-2026</a></td>
                   <td data-source="grade.name school_class.section">Grade 1</td>
                   <td class="n" data-source="capture.sheet_instance_id capture.status">0 of 22</td>
                   <td class="st" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>Waits for approval</span></td>
-                  <td class="st"><a class="btn press" data-el="12" href="#assessment">Approve</a></td>
+                  <td class="st"><a class="btn press" data-el="27" href="#assessment">Approve</a></td>
                 </tr>
                 <tr>
-                  <td><a data-el="11" href="#assessment" data-source="topic.name skill.name sheet_template.difficulty sheet_instance.kind grade.name sheet_instance.created_at">Place value · Hundreds, tens and ones · Medium · Assessment · Grade 2 · 6-Nov-2026</a></td>
+                  <td><a data-el="26" href="#assessment" data-source="topic.name skill.name sheet_template.difficulty sheet_instance.kind grade.name sheet_instance.created_at">Place value · Hundreds, tens and ones · Medium · Assessment · Grade 2 · 6-Nov-2026</a></td>
                   <td data-source="grade.name school_class.section">Grade 2</td>
                   <td class="n" data-source="capture.sheet_instance_id capture.status">24 of 24</td>
                   <td class="st" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To sign off</span></td>
-                  <td class="st"><a class="btn press" data-el="12" href="#assessment">Sign off 24 papers</a></td>
+                  <td class="st"><a class="btn press" data-el="27" href="#assessment">Sign off 24 papers</a></td>
                 </tr>
                 <tr>
-                  <td><a data-el="11" href="#assessment" data-source="topic.name skill.name sheet_template.difficulty sheet_instance.kind grade.name sheet_instance.created_at">Fractions · Halves and quarters · Easy · Assessment · Grade 2 · 17-Nov-2026</a></td>
+                  <td><a data-el="26" href="#assessment" data-source="topic.name skill.name sheet_template.difficulty sheet_instance.kind grade.name sheet_instance.created_at">Fractions · Halves and quarters · Easy · Assessment · Grade 2 · 17-Nov-2026</a></td>
                   <td data-source="grade.name school_class.section">Grade 2</td>
                   <td class="n" data-source="capture.sheet_instance_id capture.status">0 of 24</td>
                   <td class="st" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>Waits for print</span></td>
-                  <td class="st"><a class="btn press" data-el="12" href="#assessment">Print</a></td>
+                  <td class="st"><a class="btn press" data-el="27" href="#assessment">Print</a></td>
                 </tr>
                 <tr>
-                  <td><a data-el="11" href="#assessment" data-source="topic.name skill.name sheet_template.difficulty sheet_instance.kind grade.name sheet_instance.created_at">Writing · Sentences with capitals · Easy · Home assessment · Grade 1 · 9-Nov-2026</a></td>
+                  <td><a data-el="26" href="#assessment" data-source="topic.name skill.name sheet_template.difficulty sheet_instance.kind grade.name sheet_instance.created_at">Writing · Sentences with capitals · Easy · Home assessment · Grade 1 · 9-Nov-2026</a></td>
                   <td data-source="grade.name school_class.section">Grade 1</td>
                   <td class="n" data-source="capture.sheet_instance_id capture.status">18 of 22</td>
                   <td class="st" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="chip" data-state="quiet"><i class="ic s" data-icon="heard"></i>Being read</span></td>
-                  <td class="st"><a class="btn press" data-el="12" href="#assessment">See reading</a></td>
+                  <td class="st"><a class="btn press" data-el="27" href="#assessment">See reading</a></td>
                 </tr>
                 <tr>
-                  <td><a data-el="11" href="#assessment" data-source="topic.name skill.name sheet_template.difficulty sheet_instance.kind grade.name sheet_instance.created_at">Multiplication · Times tables 2, 5 and 10 · Medium · Assessment · Grade 3 · 13-Nov-2026</a></td>
+                  <td><a data-el="26" href="#assessment" data-source="topic.name skill.name sheet_template.difficulty sheet_instance.kind grade.name sheet_instance.created_at">Multiplication · Times tables 2, 5 and 10 · Medium · Assessment · Grade 3 · 13-Nov-2026</a></td>
                   <td data-source="grade.name school_class.section">Grade 3</td>
                   <td class="n" data-source="capture.sheet_instance_id capture.status">0 of 25</td>
                   <td class="st" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="chip" data-state="quiet"><i class="ic s" data-icon="to-do"></i>With the children</span></td>
-                  <td class="st"><a class="btn press" data-el="12" href="#assessment">Upload</a></td>
+                  <td class="st"><a class="btn press" data-el="27" href="#assessment">Upload</a></td>
                 </tr>
                 <tr>
-                  <td><a data-el="11" href="#assessment" data-source="topic.name skill.name sheet_template.difficulty sheet_instance.kind grade.name sheet_instance.created_at">Addition &amp; subtraction · 2-digit + 2-digit · Easy · Assessment · Grade 1 · 2-Nov-2026</a></td>
+                  <td><a data-el="26" href="#assessment" data-source="topic.name skill.name sheet_template.difficulty sheet_instance.kind grade.name sheet_instance.created_at">Addition &amp; subtraction · 2-digit + 2-digit · Easy · Assessment · Grade 1 · 2-Nov-2026</a></td>
                   <td data-source="grade.name school_class.section">Grade 1</td>
                   <td class="n" data-source="capture.sheet_instance_id capture.status">22 of 22</td>
                   <td class="st" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Results in</span></td>
-                  <td class="st"><a class="btn press" data-el="12" href="#assessment">See results</a></td>
+                  <td class="st"><a class="btn press" data-el="27" href="#assessment">See results</a></td>
                 </tr>
                 <tr>
-                  <td><a data-el="11" href="#assessment" data-gap="The name an educator chose for an assessment: assessment_name today, not one of the 77">Term 1 spelling check</a></td>
+                  <td><a data-el="26" href="#assessment" data-gap="The name an educator chose for an assessment: assessment_name today, not one of the 77">Term 1 spelling check</a></td>
                   <td data-source="grade.name school_class.section">Grade 2</td>
                   <td class="n" data-source="capture.sheet_instance_id capture.status">24 of 24</td>
                   <td class="st" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Results in</span></td>
-                  <td class="st"><a class="btn press" data-el="12" href="#assessment">See results</a></td>
+                  <td class="st"><a class="btn press" data-el="27" href="#assessment">See results</a></td>
                 </tr>
                 </tbody>
               </table>
@@ -237,41 +237,44 @@
               <table class="table">
                 <thead><tr><th>Topic</th><th>Subject</th><th class="n">Assessments</th><th class="n">Waiting on you</th></tr></thead>
                 <tbody>
-                <tr><td><a data-el="27" href="#assessments">▸ Subtraction</a></td><td>Maths</td><td class="n">3</td><td class="n">1</td></tr>
+                <tr><td><a data-el="31" href="#assessments">▸ Subtraction</a></td><td>Maths</td><td class="n">3</td><td class="n">1</td></tr>
                 </tbody>
               </table>
             </div>
             <h2 class="title-small">Reading: how the reader is doing, and the files read lately</h2>
-            <div class="toolbar"><select data-el="10" aria-label="Show"><option>By day</option><option>By kind of question</option><option>By how sure it was</option></select><span class="caption">Papers read on 9-Nov-2026: 41 answers checked, the reader right on 93%.</span></div>
+            <div class="toolbar"><select data-el="5" aria-label="Show"><option>By day</option><option>By kind of question</option><option>By how sure it was</option></select><span class="caption">Papers read on 9-Nov-2026: 41 answers checked, the reader right on 93%.</span></div>
             <div class="table-box" data-block="DataTable">
               <table class="table">
                 <thead><tr><th>File</th><th>Read on</th><th class="n">Copies read</th><th class="st">Status</th><th class="st"></th></tr></thead>
                 <tbody>
-                <tr><td>Grade 4 subtraction scan.pdf</td><td>9-Nov-2026</td><td class="n">23</td><td class="st"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>done</span></td><td class="st"><button data-el="28" type="button" class="btn press">Read again</button></td></tr>
+                <tr><td>Grade 4 subtraction scan.pdf</td><td>9-Nov-2026</td><td class="n">23</td><td class="st"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>done</span></td><td class="st"><button data-el="32" type="button" class="btn press">Read again</button></td></tr>
                 </tbody>
               </table>
             </div>
-            <div class="toolbar"><span class="caption">Assessments 1 to 10 of 12, newest week first. The tiles and the board count all twelve.</span><a data-el="22" href="#assessments">Later →</a></div>
+            <div class="toolbar"><span class="caption">Assessments 1 to 10 of 12, newest week first. The tiles and the board count all twelve.</span><a data-el="30" href="#assessments">Later →</a></div>
             <div class="card">
               <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: no assessments yet</div>
               <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="assessment"></i><b>No assessments yet</b><span class="muted">Make one with a button under "Make an assessment" above, and it appears here at Created.</span></div></div>
             </div>
           </main>
-          <aside class="rail" aria-label="Connected to">
-            <section class="rail-box">
-              <h2>Connected to</h2>
-              <ul class="rlist">
-  <li><a class="ritem" data-el="13" href="#paper"><span class="tile" data-kind="assessment"><i class="ic" data-icon="correct"></i></span><span>Answers to check<small data-source="item_result.status">8 answers to judge</small></span></a></li>
-  <li><a class="ritem" data-el="14" href="#assessment"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><span>Pack to approve<small data-source="sheet_instance.approved_at">Retelling a story, Grade 3</small></span></a></li>
-  <li><a class="ritem" data-el="15" href="#child"><span class="tile" data-kind="child"><i class="ic" data-icon="child"></i></span><span>A child with results in<small data-source="enrolment.roll_no item_result.confirmed_at">Sr. No. 04, Grade 1</small></span></a></li>
-  <li><a class="ritem" data-el="16" href="#skill"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><span>The skills tested<small data-source="skill.name">Exchange and regroup and 7 more</small></span></a></li>
-  <li><a class="ritem" data-el="17" href="#bank"><span class="tile" data-kind="skill"><i class="ic" data-icon="checklist"></i></span><span>Question bank<small data-source="item.skill_codes">the questions these are made from</small></span></a></li>
-              </ul>
-            </section>
-            <section class="rail-box" data-block="CaptureBar">
-              <h2>Capture here</h2>
-              <div class="capture"><label class="btn btn-capture press"><i class="ic" data-icon="photo"></i>Photo<input class="vh" data-el="18" type="file" accept="image/*" capture="environment"></label></div>
-            </section>
+          <aside class="dpanel" data-block="DetailPanel" aria-labelledby="as-panel-h">
+            <header class="dpanel-head"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><div><h2 class="dpanel-title" id="as-panel-h"><span data-source="topic.name">Subtraction</span> · <span data-source="grade.name school_class.section">Grade 4 · 4A</span></h2><p class="muted"><span class="num" data-source="sheet_instance.created_at">9-Nov-2026</span> · 22 of 28 papers back</p></div><a class="barbtn" data-el="17" href="#assessments" aria-label="Close the panel"><i class="ic" data-icon="close"></i></a></header>
+            <div class="dpanel-actions"><a class="btn btn-main press" data-el="18" href="#paper">Check 3 answers</a><a data-el="19" href="#assessment">Open full page</a></div>
+            <div class="tabs" role="tablist" aria-label="Details"><button class="tabbtn" role="tab" type="button" aria-selected="true" data-el="16">Copies</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="16">Upload</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="16">Check</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="16">Results</button></div>
+            <h3 class="label">Copies</h3>
+            <ul class="rlist">
+              <li><a data-el="20" href="#paper" data-source="enrolment.roll_no">Sr. No. 4</a> <span class="chip" data-state="late"><i class="ic s" data-icon="fix-this"></i>for you to judge</span></li>
+              <li><a data-el="20" href="#paper" data-source="enrolment.roll_no">Sr. No. 7</a> <span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>to sign off</span></li>
+              <li><a data-el="20" href="#paper" data-source="enrolment.roll_no">Sr. No. 9</a> <span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>with the children</span></li>
+            </ul>
+            <h3 class="label">Upload</h3>
+            <label class="drop" data-block="DropZone"><i class="ic l" data-icon="upload"></i><span>Choose scans or drop them here (pdf, jpg, png, heic). The QR names the sheet.</span><input data-el="21" class="vh" type="file" multiple></label>
+            <div class="field"><label for="drive-1440">Or a Google Drive link</label><input data-el="22" id="drive-1440" type="url" placeholder="https://drive.google.com/…"></div>
+            <div><button class="btn press" data-el="23" type="button">Read it</button></div>
+            <h3 class="label">Check</h3>
+            <ul class="rlist"><li><span data-source="enrolment.roll_no">Sr. No. 4</span> · <span class="num" data-source="item_result.status">3</span> answers to judge <a class="btn press" data-el="24" href="#paper">Check this paper</a></li></ul>
+            <h3 class="label">Results</h3>
+            <ul class="rlist"><li><span data-source="enrolment.roll_no">Sr. No. 2</span> · <span class="num" data-source="item_result.status">8 of 10</span> <a data-el="25" href="#child">The child</a></li></ul>
           </aside>
         </div>
         </div>
@@ -323,7 +326,6 @@
             <h2 class="sideh" id="side-assessments"><i class="ic s" data-icon="assessment"></i>Assessments</h2>
             <ul aria-labelledby="side-assessments">
               <li><a class="sidelink" data-bar="1" href="#assessments" aria-current="page">Assessments</a></li>
-              <li><a class="sidelink" data-bar="1" href="#upload">Upload papers</a></li>
               <li><a class="sidelink" data-bar="1" href="#bank">Question bank</a></li>
             </ul>
           </div>
@@ -349,148 +351,146 @@
         <div class="page">
           <main class="main">
             <div class="head">
-              <p class="eyebrow"><i class="ic s" data-icon="assessment"></i>Grades 1 to 4 · all classes · <span class="num" data-source="sheet_instance.key">10</span> assessments</p>
+              <p class="eyebrow"><i class="ic s" data-icon="assessment"></i>Grades 1 to 4 · your classes</p>
               <h1 class="title">Assessments</h1>
-              <p class="purpose">Each one goes through seven steps. Its row shows the step it waits at and the one thing to do next.</p>
+              <p class="purpose">Move each assessment from made to results, and see what is stuck. Choose a card to see its copies, upload its papers and check them.</p>
             </div>
-            <div class="strip" data-block="AttentionStrip">
-              <a class="att press" data-state="late" data-el="0" href="#paper" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="n">2</span><span class="w"><i class="ic s" data-icon="late"></i>Do now</span><span class="muted">Assessments with answers for you to judge.</span></a>
-              <a class="att press" data-state="wait" data-el="1" href="#assessment" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at approval.decision"><span class="n">3</span><span class="w"><i class="ic s" data-icon="to-confirm"></i>This week</span><span class="muted">Packs to approve and papers to sign off.</span></a>
-              <a class="att press" data-state="ok" data-el="2" href="#assessment" data-source="item_result.confirmed_at"><span class="n">2</span><span class="w"><i class="ic s" data-icon="done"></i>Results in</span><span class="muted">Assessments with every paper confirmed.</span></a>
-            </div>
-            <div class="cards" data-block="Cards">
-              <article class="card" data-kind="assessment"><div class="card-h"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span>Make an assessment</div><div class="card-b">
-                <span class="muted">It starts at Created and opens so you can see it.</span>
-                <button class="btn press" data-el="3" type="button"><i class="ic" data-icon="class"></i>For a class</button>
-                <button class="btn press" data-el="4" type="button"><i class="ic" data-icon="children"></i>For each child</button>
-                <button class="btn press" data-el="5" type="button"><i class="ic" data-icon="child"></i>For one child</button>
-                <button class="btn press" data-el="6" type="button"><i class="ic" data-icon="form"></i>A ready-made worksheet</button>
-              </div></article>
-              <article class="card" data-kind="assessment"><div class="card-h"><span class="tile" data-kind="assessment"><i class="ic" data-icon="upload"></i></span>Read an assessment</div><div class="card-b">
-                <label class="drop" data-block="DropZone"><i class="ic l" data-icon="upload"></i><span>Choose scans or drop them here (pdf, jpg, png, heic). The QR names the sheet.</span><input data-el="7" type="file" accept="application/pdf,image/*" multiple></label>
-                <div class="field"><label for="drive">Or paste a Google Drive link</label><input data-el="8" id="drive" type="url" placeholder="https://drive.google.com/…"></div>
-                <div><button class="btn press" data-el="9" type="button">Read it</button></div>
-              </div></article>
-            </div>
+            <details class="more" open><summary class="btn btn-main press" data-el="0"><i class="ic" data-icon="assessment"></i>Make an assessment</summary><div class="more-box">
+              <button class="btn press" data-el="1" type="button"><i class="ic" data-icon="class"></i>For a class</button>
+              <button class="btn press" data-el="2" type="button"><i class="ic" data-icon="children"></i>For each child</button>
+              <button class="btn press" data-el="3" type="button"><i class="ic" data-icon="child"></i>For one child</button>
+              <button class="btn press" data-el="4" type="button"><i class="ic" data-icon="form"></i>A ready-made worksheet</button>
+            </div></details>
             <div class="filters" data-block="FilterBar">
-              <label class="sel"><i class="ic s" data-icon="filter"></i>Class <select data-el="10" data-source="school_class.section grade.name"><option>All</option><option>Grade 1</option><option>Grade 2</option><option>Grade 3</option><option>Grade 4</option></select></label>
-              <label class="sel">Topic <select data-el="10" data-source="topic.name"><option>All</option><option>Addition &amp; subtraction</option><option>Place value</option><option>Reading</option></select></label>
-              <label class="sel">Subject <select data-el="10" data-source="subject.name"><option>All</option><option>Numeracy</option><option>Language</option></select></label>
-              <label class="sel">Kind <select data-el="10" data-source="sheet_instance.kind"><option>All</option><option>Assessment</option><option>Home assessment</option><option>Practice</option></select></label>
-              <label class="sel">Week <select data-el="10" data-source="sheet_instance.week"><option>This fortnight</option><option>This week</option><option>Last week</option></select></label>
-              <label class="sel">Stage <select data-el="10" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><option>All</option><option>Created</option><option>Approved</option><option>Printed</option><option>Uploaded</option><option>Read</option><option>Checked</option><option>Results in</option></select></label>
+              <label class="sel"><i class="ic s" data-icon="filter"></i>Class <select data-el="5" data-source="school_class.section grade.name"><option>Every class</option><option>Grade 2 · 2A</option><option>Grade 4 · 4A</option></select></label>
+              <label class="sel">Subject <select data-el="5" data-source="subject.name"><option>Every subject</option><option>Numeracy</option><option>Language</option></select></label>
+              <label class="sel">Week <select data-el="5" data-source="sheet_instance.week"><option>Every week</option><option>week of 9 Nov</option><option>week of 2 Nov</option></select></label>
+              <details class="more"><summary class="sel" data-el="6">More filters</summary><div class="more-box">
+                <label class="sel">Topic <select data-el="5" data-source="topic.name"><option>Every topic</option><option>Place value</option></select></label>
+                <label class="sel">Kind <select data-el="5" data-source="sheet_instance.kind"><option>Any kind</option><option>Class assessment</option><option>Home assessment</option></select></label>
+                <label class="sel">Stage <select data-el="5" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><option>Any stage</option><option>Read, to check</option></select></label>
+              </div></details>
+              <label class="search"><i class="ic s" data-icon="search"></i><span class="vh">Find an assessment</span><input data-el="5" type="search" placeholder="Find an assessment"></label>
             </div>
             <div class="toolbar">
-              <div class="seg" role="tablist" aria-label="View"><a role="tab" data-el="19" aria-selected="true" href="#board"><i class="ic s" data-icon="board"></i>Board</a><a role="tab" data-el="20" aria-selected="false" href="#table"><i class="ic s" data-icon="table"></i>Table</a><a role="tab" data-el="23" aria-selected="false" href="#topic"><i class="ic s" data-icon="table"></i>By topic</a><a role="tab" data-el="24" aria-selected="false" href="#reading"><i class="ic s" data-icon="table"></i>Reading</a></div>
+              <div class="seg" role="tablist" aria-label="View"><a role="tab" data-el="7" aria-selected="true" href="#board"><i class="ic s" data-icon="board"></i>Board</a><a role="tab" data-el="8" aria-selected="false" href="#table"><i class="ic s" data-icon="table"></i>Table</a><a role="tab" data-el="9" aria-selected="false" href="#topic"><i class="ic s" data-icon="table"></i>By topic</a><a role="tab" data-el="10" aria-selected="false" href="#reading"><i class="ic s" data-icon="table"></i>Reading</a></div>
             </div>
             <h2 class="title-small">Board: who has the paper</h2>
             <div class="kanban" data-block="KanbanBoard" style="--lanes: 4">
               <section class="lane" data-state="wait" aria-label="To approve and print">
                 <h3 class="lane-h"><i class="ic s" data-icon="to-confirm"></i>To approve and print <span class="count num">3</span></h3>
                 <ul class="lane-b">
-                <li><a class="kcard press" data-kind="assessment" data-el="21" href="#assessment" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><span><b>Reading · Retelling a story · Home assessment · Grade 3 · 10-Nov-2026</b><span class="sub"><span data-source="grade.name">Grade 3</span> · <span class="num" data-source="capture.sheet_instance_id capture.status">20 of 26</span> papers back · Next: Approve</span></span><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>Waits for approval</span></a></li>
-                <li><a class="kcard press" data-kind="assessment" data-el="21" href="#assessment" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><span><b>Addition &amp; subtraction · 2-digit + 2-digit · Easy · Home assessment · Grade 1 · 16-Nov-2026</b><span class="sub"><span data-source="grade.name">Grade 1</span> · <span class="num" data-source="capture.sheet_instance_id capture.status">0 of 22</span> papers back · Next: Approve</span></span><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>Waits for approval</span></a></li>
-                <li><a class="kcard press" data-kind="assessment" data-el="21" href="#assessment" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><span><b>Fractions · Halves and quarters · Easy · Assessment · Grade 2 · 17-Nov-2026</b><span class="sub"><span data-source="grade.name">Grade 2</span> · <span class="num" data-source="capture.sheet_instance_id capture.status">0 of 24</span> papers back · Next: Print</span></span><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>Waits for print</span></a></li>
+                <li><a class="kcard press" data-kind="assessment" data-el="11" href="#assessments" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><span><b><span data-source="topic.name">Reading</span> · <span data-source="grade.name school_class.section">Grade 3 · 3B</span></b><span class="sub"><span class="num" data-source="sheet_instance.created_at">10-Nov-2026</span> · <span class="num">0 of 24</span> papers back</span></span><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>Waits for approval</span></a><a class="btn press" data-el="12" href="#assessments">Approve</a></li>
+                <li><a class="kcard press" data-kind="assessment" data-el="11" href="#assessments" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><span><b><span data-source="topic.name">Addition &amp; subtraction</span> · <span data-source="grade.name school_class.section">Grade 2 · 2A</span></b><span class="sub"><span class="num" data-source="sheet_instance.created_at">11-Nov-2026</span> · <span class="num">0 of 26</span> papers back</span></span><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>Waits for approval</span></a><a class="btn press" data-el="12" href="#assessments">Approve</a></li>
+                <li><a class="kcard press" data-kind="assessment" data-el="11" href="#assessments" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><span><b><span data-source="topic.name">Fractions</span> · <span data-source="grade.name school_class.section">Grade 2 · 2B</span></b><span class="sub"><span class="num" data-source="sheet_instance.created_at">12-Nov-2026</span> · <span class="num">0 of 25</span> papers back</span></span><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>Waits for print</span></a><a class="btn press" data-el="12" href="#assessments">Print</a></li>
                 </ul>
               </section>
               <section class="lane" data-state="quiet" aria-label="With the children">
                 <h3 class="lane-h"><i class="ic s" data-icon="to-do"></i>With the children <span class="count num">1</span></h3>
                 <ul class="lane-b">
-                <li><a class="kcard press" data-kind="assessment" data-el="21" href="#assessment" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><span><b>Multiplication · Times tables 2, 5 and 10 · Medium · Assessment · Grade 3 · 13-Nov-2026</b><span class="sub"><span data-source="grade.name">Grade 3</span> · <span class="num" data-source="capture.sheet_instance_id capture.status">0 of 25</span> papers back · Next: Upload</span></span><span class="chip" data-state="quiet"><i class="ic s" data-icon="to-do"></i>With the children</span></a></li>
+                <li><a class="kcard press" data-kind="assessment" data-el="11" href="#assessments" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><span><b><span data-source="topic.name">Multiplication</span> · <span data-source="grade.name school_class.section">Grade 3 · 3A</span></b><span class="sub"><span class="num" data-source="sheet_instance.created_at">9-Nov-2026</span> · <span class="num">0 of 27</span> papers back</span></span><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>With the children</span></a><a class="btn press" data-el="12" href="#assessments">Upload</a></li>
                 </ul>
               </section>
               <section class="lane" data-state="wait" aria-label="To read and check">
-                <h3 class="lane-h"><i class="ic s" data-icon="to-confirm"></i>To read and check <span class="count num">4</span></h3>
+                <h3 class="lane-h"><i class="ic s" data-icon="to-confirm"></i>To read and check <span class="count num">3</span></h3>
                 <ul class="lane-b">
-                <li><a class="kcard press" data-kind="assessment" data-el="21" href="#assessment" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><span><b>Subtraction · Exchange and regroup · Hard · Assessment · Grade 4 · 9-Nov-2026</b><span class="sub"><span data-source="grade.name">Grade 4</span> · <span class="num" data-source="capture.sheet_instance_id capture.status">23 of 23</span> papers back · Next: Check 3 answers</span></span><span class="chip" data-state="late"><i class="ic s" data-icon="late"></i>3 answers to judge</span></a></li>
-                <li><a class="kcard press" data-kind="assessment" data-el="21" href="#assessment" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><span><b>Comprehension · Finding the main idea · Medium · Assessment · Grade 2 · 9-Nov-2026</b><span class="sub"><span data-source="grade.name">Grade 2</span> · <span class="num" data-source="capture.sheet_instance_id capture.status">24 of 24</span> papers back · Next: Check 5 answers</span></span><span class="chip" data-state="late"><i class="ic s" data-icon="late"></i>5 answers to judge</span></a></li>
-                <li><a class="kcard press" data-kind="assessment" data-el="21" href="#assessment" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><span><b>Place value · Hundreds, tens and ones · Medium · Assessment · Grade 2 · 6-Nov-2026</b><span class="sub"><span data-source="grade.name">Grade 2</span> · <span class="num" data-source="capture.sheet_instance_id capture.status">24 of 24</span> papers back · Next: Sign off 24 papers</span></span><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To sign off</span></a></li>
-                <li><a class="kcard press" data-kind="assessment" data-el="21" href="#assessment" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><span><b>Writing · Sentences with capitals · Easy · Home assessment · Grade 1 · 9-Nov-2026</b><span class="sub"><span data-source="grade.name">Grade 1</span> · <span class="num" data-source="capture.sheet_instance_id capture.status">18 of 22</span> papers back · Next: See reading</span></span><span class="chip" data-state="quiet"><i class="ic s" data-icon="heard"></i>Being read</span></a></li>
+                <li><a class="kcard press" data-kind="assessment" data-el="11" href="#assessments" aria-expanded="true" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><span><b><span data-source="topic.name">Subtraction</span> · <span data-source="grade.name school_class.section">Grade 4 · 4A</span></b><span class="sub"><span class="num" data-source="sheet_instance.created_at">9-Nov-2026</span> · <span class="num">22 of 28</span> papers back</span></span><span class="chip" data-state="late"><i class="ic s" data-icon="fix-this"></i>3 answers to judge</span></a><a class="btn btn-main press" data-el="12" href="#assessments">Check 3 answers</a></li>
+                <li><a class="kcard press" data-kind="assessment" data-el="11" href="#assessments" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><span><b><span data-source="topic.name">Comprehension</span> · <span data-source="grade.name school_class.section">Grade 2 · 2A</span></b><span class="sub"><span class="num" data-source="sheet_instance.created_at">6-Nov-2026</span> · <span class="num">24 of 26</span> papers back</span></span><span class="chip" data-state="late"><i class="ic s" data-icon="fix-this"></i>5 answers to judge</span></a><a class="btn press" data-el="12" href="#assessments">Check 5 answers</a></li>
+                <li><a class="kcard press" data-kind="assessment" data-el="11" href="#assessments" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><span><b><span data-source="topic.name">Place value</span> · <span data-source="grade.name school_class.section">Grade 2 · 2B</span></b><span class="sub"><span class="num" data-source="sheet_instance.created_at">5-Nov-2026</span> · <span class="num">25 of 25</span> papers back</span></span><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To sign off</span></a><a class="btn press" data-el="12" href="#assessments">Sign off 24 papers</a></li>
                 </ul>
               </section>
               <section class="lane" data-state="ok" aria-label="Results in">
                 <h3 class="lane-h"><i class="ic s" data-icon="done"></i>Results in <span class="count num">2</span></h3>
                 <ul class="lane-b">
-                <li><a class="kcard press" data-kind="assessment" data-el="21" href="#assessment" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><span><b>Addition &amp; subtraction · 2-digit + 2-digit · Easy · Assessment · Grade 1 · 2-Nov-2026</b><span class="sub"><span data-source="grade.name">Grade 1</span> · <span class="num" data-source="capture.sheet_instance_id capture.status">22 of 22</span> papers back · Next: See results</span></span><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Results in</span></a></li>
-                <li><a class="kcard press" data-kind="assessment" data-el="21" href="#assessment" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><span><b>Term 1 spelling check</b><span class="sub"><span data-source="grade.name">Grade 2</span> · <span class="num" data-source="capture.sheet_instance_id capture.status">24 of 24</span> papers back · Next: See results</span></span><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Results in</span></a></li>
+                <li><a class="kcard press" data-kind="assessment" data-el="11" href="#assessments" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><span><b><span data-source="topic.name">Addition &amp; subtraction</span> · <span data-source="grade.name school_class.section">Grade 1 · 1A</span></b><span class="sub"><span class="num" data-source="sheet_instance.created_at">2-Nov-2026</span> · <span class="num">23 of 23</span> papers back</span></span><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Results in</span></a><a class="btn press" data-el="12" href="#assessments">See results</a></li>
+                <li><a class="kcard press" data-kind="assessment" data-el="11" href="#assessments" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><span><b><span data-source="topic.name">Term 1 spelling check</span> · <span data-source="grade.name school_class.section">Grade 4 · 4B</span></b><span class="sub"><span class="num" data-source="sheet_instance.created_at">30-Oct-2026</span> · <span class="num">28 of 28</span> papers back</span></span><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Results in</span></a><a class="btn press" data-el="12" href="#assessments">See results</a></li>
                 </ul>
               </section>
             </div>
-            <p class="caption">Lanes are who has the paper. A lane's count is the table's rows at its steps: Created and Approved, Printed, Uploaded and Read and Checked, Results in.</p>
+            <p class="caption">A card is one assessment: its topic and class, its date and how many papers are back, one chip, one next button. Choosing it opens it on the right.</p>
+            <h2 class="title-small">With no card chosen, the right side is three numbers</h2>
+            <aside class="dpanel" data-block="DetailPanel" aria-label="What waits">
+              <h2 class="dpanel-eyebrow">What waits</h2>
+              <ul class="stats" data-block="StatTiles" aria-label="What waits">
+                <li><a class="stat" data-state="wait" data-el="13" href="#assessments"><b class="num" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at">9</b><span>papers waiting to check</span></a></li>
+                <li><a class="stat" data-state="late" data-el="14" href="#paper"><b class="num" data-source="item_result.status">8</b><span>answers to judge</span></a></li>
+                <li><a class="stat" data-state="late" data-el="15" href="#across"><b class="num" data-source="item_result.status capture.created_at">2</b><span>papers with checks overdue (over 48 hours)</span></a></li>
+              </ul>
+            </aside>
             <h2 class="title-small">Table: every assessment</h2>
             <div class="table-box" data-block="DataTable">
               <table class="table">
                 <thead><tr><th>Assessment</th><th>Class</th><th class="n">Papers back</th><th class="st">Waits for</th><th class="st">Next</th></tr></thead>
                 <tbody>
                 <tr>
-                  <td><a data-el="11" href="#assessment" data-source="topic.name skill.name sheet_template.difficulty sheet_instance.kind grade.name sheet_instance.created_at">Subtraction · Exchange and regroup · Hard · Assessment · Grade 4 · 9-Nov-2026</a><form class="toolbar"><input data-el="25" type="text" aria-label="Name this assessment" value="Subtraction · Exchange and regroup · Hard · Assessment · Grade 4 · 9-Nov-2026"><button data-el="26" type="submit" class="btn press">Save the name</button></form></td>
+                  <td><a data-el="26" href="#assessment" data-source="topic.name skill.name sheet_template.difficulty sheet_instance.kind grade.name sheet_instance.created_at">Subtraction · Exchange and regroup · Hard · Assessment · Grade 4 · 9-Nov-2026</a><form class="toolbar"><input data-el="28" type="text" aria-label="Name this assessment" value="Subtraction · Exchange and regroup · Hard · Assessment · Grade 4 · 9-Nov-2026"><button data-el="29" type="submit" class="btn press">Save the name</button></form></td>
                   <td data-source="grade.name school_class.section">Grade 4</td>
                   <td class="n" data-source="capture.sheet_instance_id capture.status">23 of 23</td>
                   <td class="st" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="chip" data-state="late"><i class="ic s" data-icon="late"></i>3 answers to judge</span></td>
-                  <td class="st"><a class="btn btn-main press" data-el="12" href="#assessment">Check 3 answers</a></td>
+                  <td class="st"><a class="btn btn-main press" data-el="27" href="#assessment">Check 3 answers</a></td>
                 </tr>
                 <tr>
-                  <td><a data-el="11" href="#assessment" data-source="topic.name skill.name sheet_template.difficulty sheet_instance.kind grade.name sheet_instance.created_at">Comprehension · Finding the main idea · Medium · Assessment · Grade 2 · 9-Nov-2026</a></td>
+                  <td><a data-el="26" href="#assessment" data-source="topic.name skill.name sheet_template.difficulty sheet_instance.kind grade.name sheet_instance.created_at">Comprehension · Finding the main idea · Medium · Assessment · Grade 2 · 9-Nov-2026</a></td>
                   <td data-source="grade.name school_class.section">Grade 2</td>
                   <td class="n" data-source="capture.sheet_instance_id capture.status">24 of 24</td>
                   <td class="st" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="chip" data-state="late"><i class="ic s" data-icon="late"></i>5 answers to judge</span></td>
-                  <td class="st"><a class="btn press" data-el="12" href="#assessment">Check 5 answers</a></td>
+                  <td class="st"><a class="btn press" data-el="27" href="#assessment">Check 5 answers</a></td>
                 </tr>
                 <tr>
-                  <td><a data-el="11" href="#assessment" data-source="topic.name skill.name sheet_template.difficulty sheet_instance.kind grade.name sheet_instance.created_at">Reading · Retelling a story · Home assessment · Grade 3 · 10-Nov-2026</a></td>
+                  <td><a data-el="26" href="#assessment" data-source="topic.name skill.name sheet_template.difficulty sheet_instance.kind grade.name sheet_instance.created_at">Reading · Retelling a story · Home assessment · Grade 3 · 10-Nov-2026</a></td>
                   <td data-source="grade.name school_class.section">Grade 3</td>
                   <td class="n" data-source="capture.sheet_instance_id capture.status">20 of 26</td>
                   <td class="st" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>Waits for approval</span></td>
-                  <td class="st"><a class="btn press" data-el="12" href="#assessment">Approve</a></td>
+                  <td class="st"><a class="btn press" data-el="27" href="#assessment">Approve</a></td>
                 </tr>
                 <tr>
-                  <td><a data-el="11" href="#assessment" data-source="topic.name skill.name sheet_template.difficulty sheet_instance.kind grade.name sheet_instance.created_at">Addition &amp; subtraction · 2-digit + 2-digit · Easy · Home assessment · Grade 1 · 16-Nov-2026</a></td>
+                  <td><a data-el="26" href="#assessment" data-source="topic.name skill.name sheet_template.difficulty sheet_instance.kind grade.name sheet_instance.created_at">Addition &amp; subtraction · 2-digit + 2-digit · Easy · Home assessment · Grade 1 · 16-Nov-2026</a></td>
                   <td data-source="grade.name school_class.section">Grade 1</td>
                   <td class="n" data-source="capture.sheet_instance_id capture.status">0 of 22</td>
                   <td class="st" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>Waits for approval</span></td>
-                  <td class="st"><a class="btn press" data-el="12" href="#assessment">Approve</a></td>
+                  <td class="st"><a class="btn press" data-el="27" href="#assessment">Approve</a></td>
                 </tr>
                 <tr>
-                  <td><a data-el="11" href="#assessment" data-source="topic.name skill.name sheet_template.difficulty sheet_instance.kind grade.name sheet_instance.created_at">Place value · Hundreds, tens and ones · Medium · Assessment · Grade 2 · 6-Nov-2026</a></td>
+                  <td><a data-el="26" href="#assessment" data-source="topic.name skill.name sheet_template.difficulty sheet_instance.kind grade.name sheet_instance.created_at">Place value · Hundreds, tens and ones · Medium · Assessment · Grade 2 · 6-Nov-2026</a></td>
                   <td data-source="grade.name school_class.section">Grade 2</td>
                   <td class="n" data-source="capture.sheet_instance_id capture.status">24 of 24</td>
                   <td class="st" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To sign off</span></td>
-                  <td class="st"><a class="btn press" data-el="12" href="#assessment">Sign off 24 papers</a></td>
+                  <td class="st"><a class="btn press" data-el="27" href="#assessment">Sign off 24 papers</a></td>
                 </tr>
                 <tr>
-                  <td><a data-el="11" href="#assessment" data-source="topic.name skill.name sheet_template.difficulty sheet_instance.kind grade.name sheet_instance.created_at">Fractions · Halves and quarters · Easy · Assessment · Grade 2 · 17-Nov-2026</a></td>
+                  <td><a data-el="26" href="#assessment" data-source="topic.name skill.name sheet_template.difficulty sheet_instance.kind grade.name sheet_instance.created_at">Fractions · Halves and quarters · Easy · Assessment · Grade 2 · 17-Nov-2026</a></td>
                   <td data-source="grade.name school_class.section">Grade 2</td>
                   <td class="n" data-source="capture.sheet_instance_id capture.status">0 of 24</td>
                   <td class="st" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>Waits for print</span></td>
-                  <td class="st"><a class="btn press" data-el="12" href="#assessment">Print</a></td>
+                  <td class="st"><a class="btn press" data-el="27" href="#assessment">Print</a></td>
                 </tr>
                 <tr>
-                  <td><a data-el="11" href="#assessment" data-source="topic.name skill.name sheet_template.difficulty sheet_instance.kind grade.name sheet_instance.created_at">Writing · Sentences with capitals · Easy · Home assessment · Grade 1 · 9-Nov-2026</a></td>
+                  <td><a data-el="26" href="#assessment" data-source="topic.name skill.name sheet_template.difficulty sheet_instance.kind grade.name sheet_instance.created_at">Writing · Sentences with capitals · Easy · Home assessment · Grade 1 · 9-Nov-2026</a></td>
                   <td data-source="grade.name school_class.section">Grade 1</td>
                   <td class="n" data-source="capture.sheet_instance_id capture.status">18 of 22</td>
                   <td class="st" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="chip" data-state="quiet"><i class="ic s" data-icon="heard"></i>Being read</span></td>
-                  <td class="st"><a class="btn press" data-el="12" href="#assessment">See reading</a></td>
+                  <td class="st"><a class="btn press" data-el="27" href="#assessment">See reading</a></td>
                 </tr>
                 <tr>
-                  <td><a data-el="11" href="#assessment" data-source="topic.name skill.name sheet_template.difficulty sheet_instance.kind grade.name sheet_instance.created_at">Multiplication · Times tables 2, 5 and 10 · Medium · Assessment · Grade 3 · 13-Nov-2026</a></td>
+                  <td><a data-el="26" href="#assessment" data-source="topic.name skill.name sheet_template.difficulty sheet_instance.kind grade.name sheet_instance.created_at">Multiplication · Times tables 2, 5 and 10 · Medium · Assessment · Grade 3 · 13-Nov-2026</a></td>
                   <td data-source="grade.name school_class.section">Grade 3</td>
                   <td class="n" data-source="capture.sheet_instance_id capture.status">0 of 25</td>
                   <td class="st" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="chip" data-state="quiet"><i class="ic s" data-icon="to-do"></i>With the children</span></td>
-                  <td class="st"><a class="btn press" data-el="12" href="#assessment">Upload</a></td>
+                  <td class="st"><a class="btn press" data-el="27" href="#assessment">Upload</a></td>
                 </tr>
                 <tr>
-                  <td><a data-el="11" href="#assessment" data-source="topic.name skill.name sheet_template.difficulty sheet_instance.kind grade.name sheet_instance.created_at">Addition &amp; subtraction · 2-digit + 2-digit · Easy · Assessment · Grade 1 · 2-Nov-2026</a></td>
+                  <td><a data-el="26" href="#assessment" data-source="topic.name skill.name sheet_template.difficulty sheet_instance.kind grade.name sheet_instance.created_at">Addition &amp; subtraction · 2-digit + 2-digit · Easy · Assessment · Grade 1 · 2-Nov-2026</a></td>
                   <td data-source="grade.name school_class.section">Grade 1</td>
                   <td class="n" data-source="capture.sheet_instance_id capture.status">22 of 22</td>
                   <td class="st" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Results in</span></td>
-                  <td class="st"><a class="btn press" data-el="12" href="#assessment">See results</a></td>
+                  <td class="st"><a class="btn press" data-el="27" href="#assessment">See results</a></td>
                 </tr>
                 <tr>
-                  <td><a data-el="11" href="#assessment" data-gap="The name an educator chose for an assessment: assessment_name today, not one of the 77">Term 1 spelling check</a></td>
+                  <td><a data-el="26" href="#assessment" data-gap="The name an educator chose for an assessment: assessment_name today, not one of the 77">Term 1 spelling check</a></td>
                   <td data-source="grade.name school_class.section">Grade 2</td>
                   <td class="n" data-source="capture.sheet_instance_id capture.status">24 of 24</td>
                   <td class="st" data-source="sheet_instance.approved_at sheet_instance.printed_at capture.status item_result.status item_result.confirmed_at"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Results in</span></td>
-                  <td class="st"><a class="btn press" data-el="12" href="#assessment">See results</a></td>
+                  <td class="st"><a class="btn press" data-el="27" href="#assessment">See results</a></td>
                 </tr>
                 </tbody>
               </table>
@@ -500,41 +500,44 @@
               <table class="table">
                 <thead><tr><th>Topic</th><th>Subject</th><th class="n">Assessments</th><th class="n">Waiting on you</th></tr></thead>
                 <tbody>
-                <tr><td><a data-el="27" href="#assessments">▸ Subtraction</a></td><td>Maths</td><td class="n">3</td><td class="n">1</td></tr>
+                <tr><td><a data-el="31" href="#assessments">▸ Subtraction</a></td><td>Maths</td><td class="n">3</td><td class="n">1</td></tr>
                 </tbody>
               </table>
             </div>
             <h2 class="title-small">Reading: how the reader is doing, and the files read lately</h2>
-            <div class="toolbar"><select data-el="10" aria-label="Show"><option>By day</option><option>By kind of question</option><option>By how sure it was</option></select><span class="caption">Papers read on 9-Nov-2026: 41 answers checked, the reader right on 93%.</span></div>
+            <div class="toolbar"><select data-el="5" aria-label="Show"><option>By day</option><option>By kind of question</option><option>By how sure it was</option></select><span class="caption">Papers read on 9-Nov-2026: 41 answers checked, the reader right on 93%.</span></div>
             <div class="table-box" data-block="DataTable">
               <table class="table">
                 <thead><tr><th>File</th><th>Read on</th><th class="n">Copies read</th><th class="st">Status</th><th class="st"></th></tr></thead>
                 <tbody>
-                <tr><td>Grade 4 subtraction scan.pdf</td><td>9-Nov-2026</td><td class="n">23</td><td class="st"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>done</span></td><td class="st"><button data-el="28" type="button" class="btn press">Read again</button></td></tr>
+                <tr><td>Grade 4 subtraction scan.pdf</td><td>9-Nov-2026</td><td class="n">23</td><td class="st"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>done</span></td><td class="st"><button data-el="32" type="button" class="btn press">Read again</button></td></tr>
                 </tbody>
               </table>
             </div>
-            <div class="toolbar"><span class="caption">Assessments 1 to 10 of 12, newest week first. The tiles and the board count all twelve.</span><a data-el="22" href="#assessments">Later →</a></div>
+            <div class="toolbar"><span class="caption">Assessments 1 to 10 of 12, newest week first. The tiles and the board count all twelve.</span><a data-el="30" href="#assessments">Later →</a></div>
             <div class="card">
               <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: no assessments yet</div>
               <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="assessment"></i><b>No assessments yet</b><span class="muted">Make one with a button under "Make an assessment" above, and it appears here at Created.</span></div></div>
             </div>
           </main>
-          <aside class="rail" aria-label="Connected to">
-            <section class="rail-box">
-              <h2>Connected to</h2>
-              <ul class="rlist">
-  <li><a class="ritem" data-el="13" href="#paper"><span class="tile" data-kind="assessment"><i class="ic" data-icon="correct"></i></span><span>Answers to check<small data-source="item_result.status">8 answers to judge</small></span></a></li>
-  <li><a class="ritem" data-el="14" href="#assessment"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><span>Pack to approve<small data-source="sheet_instance.approved_at">Retelling a story, Grade 3</small></span></a></li>
-  <li><a class="ritem" data-el="15" href="#child"><span class="tile" data-kind="child"><i class="ic" data-icon="child"></i></span><span>A child with results in<small data-source="enrolment.roll_no item_result.confirmed_at">Sr. No. 04, Grade 1</small></span></a></li>
-  <li><a class="ritem" data-el="16" href="#skill"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><span>The skills tested<small data-source="skill.name">Exchange and regroup and 7 more</small></span></a></li>
-  <li><a class="ritem" data-el="17" href="#bank"><span class="tile" data-kind="skill"><i class="ic" data-icon="checklist"></i></span><span>Question bank<small data-source="item.skill_codes">the questions these are made from</small></span></a></li>
-              </ul>
-            </section>
-            <section class="rail-box" data-block="CaptureBar">
-              <h2>Capture here</h2>
-              <div class="capture"><label class="btn btn-capture press"><i class="ic" data-icon="photo"></i>Photo<input class="vh" data-el="18" type="file" accept="image/*" capture="environment"></label></div>
-            </section>
+          <aside class="dpanel" data-block="DetailPanel" aria-labelledby="as-panel-h">
+            <header class="dpanel-head"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><div><h2 class="dpanel-title" id="as-panel-h"><span data-source="topic.name">Subtraction</span> · <span data-source="grade.name school_class.section">Grade 4 · 4A</span></h2><p class="muted"><span class="num" data-source="sheet_instance.created_at">9-Nov-2026</span> · 22 of 28 papers back</p></div><a class="barbtn" data-el="17" href="#assessments" aria-label="Close the panel"><i class="ic" data-icon="close"></i></a></header>
+            <div class="dpanel-actions"><a class="btn btn-main press" data-el="18" href="#paper">Check 3 answers</a><a data-el="19" href="#assessment">Open full page</a></div>
+            <div class="tabs" role="tablist" aria-label="Details"><button class="tabbtn" role="tab" type="button" aria-selected="true" data-el="16">Copies</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="16">Upload</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="16">Check</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="16">Results</button></div>
+            <h3 class="label">Copies</h3>
+            <ul class="rlist">
+              <li><a data-el="20" href="#paper" data-source="enrolment.roll_no">Sr. No. 4</a> <span class="chip" data-state="late"><i class="ic s" data-icon="fix-this"></i>for you to judge</span></li>
+              <li><a data-el="20" href="#paper" data-source="enrolment.roll_no">Sr. No. 7</a> <span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>to sign off</span></li>
+              <li><a data-el="20" href="#paper" data-source="enrolment.roll_no">Sr. No. 9</a> <span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>with the children</span></li>
+            </ul>
+            <h3 class="label">Upload</h3>
+            <label class="drop" data-block="DropZone"><i class="ic l" data-icon="upload"></i><span>Choose scans or drop them here (pdf, jpg, png, heic). The QR names the sheet.</span><input data-el="21" class="vh" type="file" multiple></label>
+            <div class="field"><label for="drive-400">Or a Google Drive link</label><input data-el="22" id="drive-400" type="url" placeholder="https://drive.google.com/…"></div>
+            <div><button class="btn press" data-el="23" type="button">Read it</button></div>
+            <h3 class="label">Check</h3>
+            <ul class="rlist"><li><span data-source="enrolment.roll_no">Sr. No. 4</span> · <span class="num" data-source="item_result.status">3</span> answers to judge <a class="btn press" data-el="24" href="#paper">Check this paper</a></li></ul>
+            <h3 class="label">Results</h3>
+            <ul class="rlist"><li><span data-source="enrolment.roll_no">Sr. No. 2</span> · <span class="num" data-source="item_result.status">8 of 10</span> <a data-el="25" href="#child">The child</a></li></ul>
           </aside>
         </div>
         </div>

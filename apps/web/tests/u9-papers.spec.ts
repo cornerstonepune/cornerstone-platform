@@ -103,8 +103,9 @@ test("one Assessments in the menu for marking and making, and a row opens the pa
   await expect(pagesRow.getByRole("link", { name: "Marking" })).toHaveCount(0);
   await expect(pagesRow.getByRole("link", { name: "Make papers" })).toHaveCount(0);
   // making, reading a scan and the queue of answers to check are all here
-  await expect(page.getByRole("region", { name: "Read an assessment" })).toBeVisible();
-  await expect(page.getByRole("complementary", { name: "Rail" }).getByRole("link", { name: "Answers to check" })).toHaveAttribute("href", /^\/children\/assessments\/[^/?]+\/[^/?]+$/);
+  // (page charter B6: the answers to judge are the right side's tile, opening the first paper with one; reading a scan is an assessment's Upload tab)
+  await expect(page.locator('[data-block=DetailPanel] [data-stat="to-judge"]')).toHaveAttribute("href", /^\/children\/assessments(\/[^/?]+\/[^/?]+|\?status=check)$/);
+  await page.locator("[data-make-open]").click();
   await page.getByRole("region", { name: "Make an assessment" }).getByRole("button", { name: /For a class/ }).click();
   await expect(page).toHaveURL(/\/children\/assessments\?make=class$/);
   // the pages it merged are still Assessments

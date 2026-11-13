@@ -141,7 +141,7 @@ Period, record, confirm, notes, children, class picture, child, activity, object
 3. The journey `e2e/an-educators-tuesday.spec.ts` passes: Today → the lit period → Type the marks → a note written with one activity_observation per named child and none for a child not mentioned → Confirm → Class picture shows the change → the child → the skill → trail back to Today; axe at each step; at 1440 and 400.
 4. A correction from Notes writes a superseding activity_observation row and never updates the old one (database assertion).
 5. The period → note link: a note confirmed from a period carries that session's id, and the period page lists its notes. This line waits for CP-25 (to be scoped: `activity_observation.session_id` is free today); the slice starts and merges without it, and the line is proved when CP-25 lands.
-6. Every one of the 153 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
+6. Every one of the 154 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
 7. the session's name: a period with no activity shows no capture controls and the words 'Nothing to record here'
 8. the session's name: a lesson with an activity shows every child enrolled that day as a card (Sr. No. + first name)
 9. the session's name: the level choices show the activity's own words, 'Not written' where a level has none
@@ -169,14 +169,14 @@ Period, record, confirm, notes, children, class picture, child, activity, object
 31. Children: tapping a row opens ChildPeek for that child; the peek's 'Open the child' lands on the child; the toggle opens the class picture grid and the picture's toggle returns here
 32. Children: grouping by class, by how they are doing or by needs attention puts a heading and a count over each group, the counts sum to the rows, and a child is in exactly one group; groups are computed, never stored
 33. Children: tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page
-34. Class picture: each square shows the Sr. No. and the child's name read from pii by child_id, and no photo (DOM scan)
-35. Class picture: the stack bar's counts equal the squares by state
-36. Class picture: the squares are in Sr. No. order, 8 per row at 1440, 3 at 400
-37. Class picture: an empty square's title reads 'not seen yet', never 'not secure'
-38. Class picture: grouping by state puts a heading and a count over each group; the counts sum to the squares and equal the stack bar; a child is in exactly one group
-39. Class picture: a cluster's count equals the chips in it; clusters are computed by code from child_skill_state and evidence_event, never by a model, and a child may be in several clusters
-40. Class picture: tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page
-41. Where this child is: a paper's result and a voice note appear on one timeline in date order
+34. Class picture: the primary action is the skill chooser: All skills or one skill anyone in the class was seen on; the address carries it
+35. Class picture: with no child chosen the panel shows four stat tiles, secure · practising · needs help · not seen, on the one state scale; they count every child once and equal the cards by state
+36. Class picture: the class is a grid of child cards in Sr. No. order, each showing the Sr. No. and the first name read from pii by child_id, coloured by the child's state on the chosen skill; a child's card is never red
+37. Class picture: choosing a child opens the child panel on the right with tabs Skills · Notes · Papers · Report; Skills lists each skill seen in its state's colour; Escape closes it and focus returns to the card
+38. Class picture: the child's page (/children/[class]/[roll]) is that panel opened full page, with the same tabs
+39. Class picture: names come only through pii.read_child for the classes the person may see: an educator never sees a child of another class, on the picture or the child's page
+40. Where this child is: the page is the class picture's child panel opened full page: the same tabs, Skills · Notes · Papers · Report, and the address is by class and Sr. No.
+41. Where this child is: a paper's result and a voice note appear on one timeline in date order (Notes)
 42. Where this child is: a correction shows as a new entry that names the entry it replaces
 43. Where this child is: the header shows the child's name beside the Sr. No., read from pii by child_id; the address is by Sr. No. and carries no name; no photo (DOM scan)
 44. Where this child is: the graph's node count equals the skills the child was seen on, and each node's state equals the table's
@@ -224,19 +224,21 @@ Assessments, one assessment and one child's paper as node pages on the blocks; t
 3. `lib/assessment-steps.ts` STEPS and STEP_WORDS and `lib/queries-papers.ts` exported names are unchanged (a test imports them and compares to the committed list).
 4. The journey `e2e/a-paper-comes-back.spec.ts` passes: make a class assessment → approve the pack (per pack, the pack-level button; no all-packs button exists on any screen: `u62` kept) → upload a fixture scan → the paper shows right / wrong / blank / for you to judge with the fixture's counts → say what the child wrote for the one to judge → sign off → the child's timeline shows the paper result beside a voice note; axe at each step.
 5. No approve-all control exists on any screen (the `ux.approveAll` list in workflows.json is empty at the end of this slice).
-6. Every one of the 73 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
-7. Assessments: the four old pages answer 308 to this one or to the Assessment node
-8. Assessments: every row's name is built topic · skill · level · kind · class · day (regex)
-9. Assessments: no approve-all control anywhere
-10. Assessments: each tile's number equals the rows behind it
-11. Assessments: each board lane's card count equals the table rows at the lane's steps
-12. {the built name}: Approve acts on this pack only; no control acts on more than one pack or more than one row
-13. {the built name}: the stepper's amber step equals the status word in the list
-14. {the built name}: a replaced copy shows 'replaced by a newer one' and no action
-15. {the built name}: the papers bar's three counts sum to the number of copies
-16. Check the answers: right, wrong and blank are three different chips and three counts; a wrong-with-working reason is shown with its wrong chip
-17. Check the answers: a person's answer writes a read_correction row and never overwrites the engine's read
-18. Check the answers: Sign off is absent while any answer is 'for you to judge', and acts on one paper
+6. Every one of the 77 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
+7. Assessments: the four lanes are To approve and print · With the children · To read and check · Results in, and each card is in the lane of its next step
+8. Assessments: a card shows its topic and class, its date and n of m papers back, one status chip and one next-action button, and no stage words repeated
+9. Assessments: the filter row holds Class · Subject · Week and More filters
+10. Assessments: the primary action under the title is Make an assessment
+11. Assessments: choosing a card opens the assessment on the right with the tabs Copies · Upload · Check · Results; the assessment's and a child's paper's own addresses still open
+12. Assessments: with nothing chosen the right side shows papers waiting to check · answers to judge · overdue checks
+13. Assessments: /capture answers 308 to the board and the menu has no Upload papers; a scan put in on the Upload tab is read
+14. {the built name}: Approve acts on this pack only; no control acts on more than one pack or more than one row
+15. {the built name}: the stepper's amber step equals the status word in the list
+16. {the built name}: a replaced copy shows 'replaced by a newer one' and no action
+17. {the built name}: the papers bar's three counts sum to the number of copies
+18. Check the answers: right, wrong and blank are three different chips and three counts; a wrong-with-working reason is shown with its wrong chip
+19. Check the answers: a person's answer writes a read_correction row and never overwrites the engine's read
+20. Check the answers: Sign off is absent while any answer is 'for you to judge', and acts on one paper
 
 ### Out of scope
 
@@ -341,16 +343,18 @@ The educator's Today (the day, the attention strip, notes to confirm, the class)
 3. The skills-to-approve count (109 on the live copy) does not appear on either Today, on Setup's cards or on Curriculum; it is the eyebrow of Skills to approve only (test).
 4. `/today` serves the educator's version to the own-classes group and the school's version to the everything group; the special educator gets the version the role→group rows say, with no code naming the role (test with the access fixture).
 5. The educator's journey and the coordinator's journey both start from Today and pass.
-6. Every one of the 29 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
-7. Today: an educator sees only sessions of classes their grant names (the access fixture's second educator sees a different list)
-8. Today: each tile's number equals the count of rows the tile opens
-9. Today: the lit row is the session whose period contains the current time; before 08:30 none is lit
-10. Today: each board lane's card count equals the tile of the same name; a lane with no card says so in words
-11. Today: tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page
+6. Every one of the 21 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
+7. Today: the three tiles read lessons today, notes to confirm and papers to check, and each number is the count of what it opens
+8. Today: the lessons are blocks in time order, each with time, subject colour and word, activity name, and done / now / next
+9. Today: choosing a block opens its lesson in the right panel with the tabs Activity · Children · Materials · History; with none chosen it is the lesson now or next
+10. Today: on a holiday the next school day's lessons show under one line saying why and when the fortnight starts
+11. Today: an educator sees only the lessons of classes their grant names
 12. Today, the school: only the 'everything' group sees this version; an educator at /today sees the educator's
-13. Today, the school: each waiting row leads to the screen that does the work and the work is listed there
-14. Today, the school: no ranking of people anywhere on the page
-15. Today, the school: the heat grid has one cell per class per teaching day and a dashed cell per holiday
+13. Today, the school: the tiles are notes unconfirmed past their time, papers to check and approvals waiting, each the count of the rows behind it
+14. Today, the school: each waiting row has one action, which leads to the screen that does the work; What needs doing's groups (skills aside) are each a row
+15. Today, the school: a row opens in the right panel with the rows behind it; Escape closes it
+16. Today, the school: no ranking of people anywhere on the page
+17. Today, the school: /setup/needs-doing still opens
 
 ### Out of scope
 

@@ -225,75 +225,69 @@ done. Wireframes of all of them: (see docs/notes/frontend-landscape.md).
 #### Today `/today`
 Who: educator · Phase: Core · Backend: CP-8 · CP-10 · Old page today: part · Slice: UI-7
 Eyebrow: Wednesday 18-Nov · K2 Red · Fortnight 9, week A
-Purpose: Your periods in order. Tap one for what to teach, how, and what to lay out. After it, record a note.
+Purpose: Your lessons in order. Choose one to see what to teach, how and what to lay out; mark the class on the lesson.
 Blocks, in order:
-- **AttentionStrip**: do now = notes unconfirmed past 48 h; this week = notes waiting to confirm that are younger than 48 h (the two never overlap); done = periods finished of planned, children seen this fortnight
-- **KanbanBoard**: what waits on me, by Table | Board toggle: Do now (notes past 48 h) · This week (notes waiting, younger than 48 h) · Done (periods taught and confirmed today); the List is the periods below
-- **PeriodRow**: one per session of the day, from `session` for my class; fixed parts of the day included, greyed
-- **Cards**: Notes to confirm (count, oldest) · Your class (children not seen this fortnight on the skill being taught)
-- **ChildPeek**: the child chosen from 'Your class'
-Rail (Connected to): This fortnight · Materials
-Main action: the current period · Next step: Timetable
-Data: session × plan_entry × activity for my class on this school_day; pii.educator_note status counts and ages (note status words are a config list); child_skill_state not-seen per child on the skill being taught (an open enrolment with no state row)
-Empty: No sessions today (a holiday or no timetable live): say which, link to the fortnight · Phone: same order; the strip stacks; the record button is one tap from the period
+- **StatTile**: three tiles above the lessons: lessons today (of the day shown) · notes to confirm (unconfirmed past 48 h and younger, which never overlap; the bar's one count) · papers to check (What needs doing's answers to check and papers to sign off)
+- **PeriodRow**: the day's lessons as a timeline of subject-coloured blocks (tinted): time, the subject's colour and word (config timetable.subject_looks), the activity's name, and done / now / next; a block opens the lesson in the DetailPanel
+- **DetailPanel**: the lesson chosen, else the lesson now or next, in the lesson panel's tabs Activity · Children · Materials · History (components/lesson-panel.tsx, as the timetable opens it); the Children tab sends to the lesson page, where the class is marked; closed, the day's summary (taught, still to teach)
+- **EmptyState**: the engine's reason for no day (switched off, no class held, could not be read)
+Rail (Connected to): none
+Main action: Open my next lesson · Next step: Timetable
+Data: session × period × activity for my class on the day shown (school_day), its state; subject.code to its look (config); pii.educator_note status counts and ages; sheet_instance answers waiting to be checked; the next teaching day or fortnight when the day has no lesson
+Empty: No lesson on the day (a holiday, a day in no fortnight): say why in the school's words and when lessons start again, and show that next school day's lessons; no day at all (switched off, no class held): the engine's words · Phone: same order; the tiles wrap two across; the panel sits under the day
 Folds in: /today (What needs doing), /educator (K2 Today)
-Every control on the screen (16), and what the test does with each:
-- **link** do now tile → Confirm what the reader heard (`/notes/[id]`) (the oldest unconfirmed note; absent (grey 0) when none)
-- **link** this week tile → Notes (`/notes`)
-- **link** done today tile → Class picture (`/children/[class]`)
-- **row** each period row → the session's name (`/period/[id]`) (a fixed part of the day opens its period page with 'Nothing to record here')
-- **link** Confirm the first → Confirm what the reader heard (`/notes/[id]`)
-- **link** Class picture → Class picture (`/children/[class]`)
-- **link** rail: This fortnight → Timetable (`/timetable`)
-- **link** rail: Materials → Materials, this fortnight (`/timetable/materials`)
-- **tab** Board (what waits on me as lanes; the address carries the tab)
-- **tab** List (what waits on me as the tiles and the period rows)
-- **row** each note card on the board → Confirm what the reader heard (`/notes/[id]`)
-- **row** each period card on the board → the session's name (`/period/[id]`)
-- **peek** each Sr. No. in Your class: opens ChildPeek for that child
-- **button** peek: Close: closes ChildPeek; focus returns to the child that opened it
-- **link** peek: Open the child → Where this child is (`/children/[class]/[roll]`) (the one way from a list to the child's own page)
-- **child_name** the name in the peek (the child's name beside the Sr. No., read from pii by child_id)
+Every control on the screen (12), and what the test does with each:
+- **link** Open my next lesson → the session's name (`/period/[id]`) (the lesson now, else the next; a sentence instead when none is left)
+- **link** lessons today tile → Timetable (`/timetable`) (opens the day shown in the timetable's Day view)
+- **link** notes to confirm tile → Notes (`/notes`)
+- **link** papers to check tile → Assessments (`/children/assessments`)
+- **row** each lesson block → Today (`/today`) (opens the lesson in the right panel; the address carries open=lesson:<session>)
+- **link** panel: Close → Today (`/today`) (the address carries open=none; the right side is the day's summary)
+- **link** panel: Open full page → the session's name (`/period/[id]`)
+- **tab** Activity
+- **tab** Children
+- **tab** Materials
+- **tab** History
+- **link** Mark the class → the session's name (`/period/[id]`) (in the Children tab, for a lesson with an activity: marking is on the lesson page (B4))
 Done when (on top of the ten generic checks):
-- an educator sees only sessions of classes their grant names (the access fixture's second educator sees a different list)
-- each tile's number equals the count of rows the tile opens
-- the lit row is the session whose period contains the current time; before 08:30 none is lit
-- each board lane's card count equals the tile of the same name; a lane with no card says so in words
-- tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page
+- the three tiles read lessons today, notes to confirm and papers to check, and each number is the count of what it opens
+- the lessons are blocks in time order, each with time, subject colour and word, activity name, and done / now / next
+- choosing a block opens its lesson in the right panel with the tabs Activity · Children · Materials · History; with none chosen it is the lesson now or next
+- on a holiday the next school day's lessons show under one line saying why and when the fortnight starts
+- an educator sees only the lessons of classes their grant names
 
 
 #### Today, the school `/today`
-Who: coordinator · Phase: Core · Backend: CP-6 · CP-12 · CP-22 · CP-10 · Old page today: no · Slice: UI-7
+Who: coordinator · Phase: Core · Backend: CP-6 · CP-12 · CP-22 · CP-10 · Old page today: yes · Slice: UI-7
 Eyebrow: Wednesday 18-Nov · every class
-Purpose: What waits on you, each with its own button. Then the week ahead.
+Purpose: What waits on you, one row each with its own button. Choose a row to see the work behind it on the right.
 Blocks, in order:
-- **AttentionStrip**: do now = clashes not accepted + notes unconfirmed past 48 h across classes; this week = drafts to approve, materials lines without quantity; done = sessions done of planned last week
-- **HeatGrid**: last week, class × day
-- **DataTable**: the waiting rows: clash, draft, late notes, sessions not done, materials; each row's own button
-- **Cards**: Next week (events from school_day and fortnight) · New activities next week (plan_entry not taught before) · Does the system have what it needs (activities with steps/levels, materials with quantities, consent on file)
-Rail (Connected to): Fortnight 9 · Staff and classes · Timetable
-Main action: the first red row · Next step: Fortnight
-Data: fortnight state; timetable clashes; sessions by state last week; educator_note status by class; materials_line without quantity; consent counts
-Empty: Nothing waits on you: say so in one line, keep the heat grid and next week · Phone: strip stacks; heat grid scrolls sideways in its own box
-Every control on the screen (13), and what the test does with each:
-- **link** do now tile → Fortnight 9 (`/timetable/fortnight/[n]`)
-- **link** this week tile → Fortnight 9 (`/timetable/fortnight/[n]`)
-- **link** sessions done tile → Staff and classes (`/setup/staff`)
-- **cell** each heat-grid cell → Timetable (`/timetable`) (opens that class's day)
-- **row** clash row → Fortnight 9 (`/timetable/fortnight/[n]`) [coordinator only; absent and refused for others]
-- **row** draft row → Draft from the rules (`/timetable/draft`) [coordinator only; absent and refused for others]
-- **row** late notes row → Notes (`/notes`)
-- **row** sessions not done row → Staff and classes (`/setup/staff`)
-- **row** materials row → Materials, this fortnight (`/timetable/materials`)
-- **link** each new activity next week → the activity's name (`/setup/activities/[code]`)
-- **link** rail: Fortnight 9 → Fortnight 9 (`/timetable/fortnight/[n]`)
-- **link** rail: Staff and classes → Staff and classes (`/setup/staff`)
-- **link** rail: Timetable → Timetable (`/timetable`)
+- **StatTile**: notes unconfirmed past their time (the bar's one count) · papers to check · approvals waiting (class papers, home assessments, parent reports, timetable drafts; skills to approve are not counted on Today). Classes in session now waits on an engine read (one count of the classes whose lesson holds the current time)
+- **DetailPanel**: a waiting row opened: the rows behind it, each with its own action; nothing chosen: last week (lessons done of planned, the heat grid), next week, and whether the system has what it needs
+- **HeatGrid**: last week, class × day, in the panel's summary; cells are not links
+- **EmptyState**: nothing waits on you, or why it could not be read
+Rail (Connected to): none
+Main action: Open the first thing waiting on me · Next step: Timetable
+Data: fortnight state; timetable clashes; sessions by state last week; educator_note status by class; materials_line without quantity; consent counts; What needs doing's tasks (sheet_instance answers to check, class papers, home assessments, parent reports)
+Empty: Nothing waits on you: say so in one line, keep last week and next week in the panel · Phone: tiles wrap; rows stack their action under the words; the panel sits under the list
+Folds in: /setup/needs-doing (What needs doing, page charter Part C)
+Every control on the screen (9), and what the test does with each:
+- **link** Open the first (the first row that has its own page, red first; a sentence instead when nothing waits)
+- **link** notes unconfirmed tile → Notes (`/notes`)
+- **link** papers to check tile → Assessments (`/children/assessments`)
+- **row** each waiting row → Today, the school (`/today`) (opens the row in the right panel; the address carries open=wait:<key>. The rows are the school's counts (clashes, late notes, drafts, lessons not done, materials) and What needs doing's groups but skills)
+- **link** each row's action (the row's one action: opens the work itself on the page that does it)
+- **link** panel: Close → Today, the school (`/today`)
+- **link** panel: Open full page (the page that holds all of the row's work)
+- **tab** What waits
+- **link** each row behind it (the task's own action, as What needs doing's row had it)
 Done when (on top of the ten generic checks):
 - only the 'everything' group sees this version; an educator at /today sees the educator's
-- each waiting row leads to the screen that does the work and the work is listed there
+- the tiles are notes unconfirmed past their time, papers to check and approvals waiting, each the count of the rows behind it
+- each waiting row has one action, which leads to the screen that does the work; What needs doing's groups (skills aside) are each a row
+- a row opens in the right panel with the rows behind it; Escape closes it
 - no ranking of people anywhere on the page
-- the heat grid has one cell per class per teaching day and a dashed cell per holiday
+- /setup/needs-doing still opens
 
 
 #### the session's name `/period/[id]`
@@ -663,78 +657,77 @@ Done when (on top of the ten generic checks):
 #### Class picture `/children/[class]`
 Who: both · Phase: Core · Backend: CP-13 · CP-9 · Old page today: yes (/k2/[class]) · Slice: UI-3
 Eyebrow: K2 Red · 24 children
-Purpose: Each square a child by Sr. No., shown on one skill at a time. Tap a child. Change the skill from the rail.
+Purpose: Where every child in the class stands on a skill, or on every skill at once. Choose the skill, then a child.
 Blocks, in order:
-- **FilterBar**: skill (the skills anyone was seen on) · domain · group by (state on this skill · class)
-- **ClassGrid**: state on the chosen skill; not seen = dashed; tap = open ChildPeek; with a group heading and count when grouped
-- **StackBar**: the class on this skill with counts
-- **Spark**: secure over six fortnights
-- **Cards**: Clusters: children who share a place on this topic (for example secure here, ready for the next skill), each with its count and its children as chips that open ChildPeek
-- **ChildPeek**: the child chosen in the grid
-Rail (Connected to): Show: each skill seen · a child · Record a note · Assessments (grades 1–4: Class results folds here) · Capture here: voice, photo
-Main action: a child · Next step: the skill
-Data: child_skill_state (kind 'observed' for K2, 'written' for grades 1–4) for the class by skill; flow_run (the nightly graph run's row) finished_at for the date; evidence_event for clusters
-Empty: No child seen yet: the grid of dashed squares with 'not seen yet, nothing more' · Phone: 3 columns of squares (a name and a state word do not fit a 44 px square; SPEC §2 rule 10)
+- **FilterBar**: the primary action: Skill, All skills or one skill anyone in the class was seen on (with how many were seen on it)
+- **ClassGrid**: the class as child cards (Sr. No. + first name) in Sr. No. order, each coloured by the child's state on the chosen skill on the one state scale (on every skill: the state that most needs the educator); not seen = dashed; never red; a tap opens the child in the panel
+- **DetailPanel**: nothing chosen: four stat tiles, secure · practising · needs help · not seen, each child counted once; a child chosen: the child panel, tabs Skills (each skill seen as a coloured row) · Notes · Papers · Report, with Open full page
+Rail (Connected to): none
+Main action: the skill · Next step: a child
+Data: child_skill_state (kind 'observed' for K2, 'written' for grades 1–4) for the class by skill, read through child_state.colour; flow_run (the nightly graph run's row) finished_at for the date; for the child chosen: activity_observation, item_result, sheet_instance and parent_note
+Empty: No child seen yet: every card dashed, 'not seen yet', and the tiles all in not seen · Phone: 3 columns of cards; the tiles under the grid; a chosen child's panel covers the page as a sheet, × or Escape closes it
 Folds in: /growth (Class results), /growth/class/[section]
 Every control on the screen (17), and what the test does with each:
-- **filter** skill
-- **filter** domain
-- **peek** each square (and each child chip in a cluster): opens ChildPeek for that child
-- **child_name** each square (the name beside the Sr. No.)
-- **link** rail: Show: each skill seen → Class picture (`/children/[class]`) (same screen, the skill filter changes)
-- **link** rail: a child → Where this child is (`/children/[class]/[roll]`)
-- **link** rail: Record a note → Record a note (`/record`)
-- **link** rail: Assessments → Assessments (`/children/assessments`)
-- **link** capture: Voice note → Record a note (`/record`)
-- **link** capture: Photo → Record a note (`/record`)
+- **filter** skill (the page's one primary action: All skills, or one skill anyone in the class was seen on; the address carries it)
 - **link** Show as a table → Children (`/children`) (the toggle between the class picture grid and the table of children)
-- **filter** group by (state on this skill / class; a heading and a count per group)
-- **button** peek: Close: closes ChildPeek; focus returns to the child that opened it
-- **link** peek: Open the child → Where this child is (`/children/[class]/[roll]`) (the one way from a list to the child's own page)
 - **tab** Picture (the class picture; the three views of a class are tabs of this screen (UI-3e, carrying /growth and /growth/class/[section]))
 - **tab** By topic (topics as rows: who is secure, practising or needs help; a topic opens its skills, a skill its children)
 - **tab** Matrix (each child against each topic; a topic opens its skills)
+- **cell** each child's card: opens the child in the panel on the right; the address carries open=child:<Sr. No.>, never a name
+- **child_name** the first name on each child's card (read from pii by child_id, only for the children the person may see)
+- **child_name** the panel's title (the child's name beside the Sr. No., read from pii by child_id)
+- **tab** panel: Skills (each skill the child was seen on, a row coloured by the state, with the engine's words and times seen)
+- **tab** panel: Notes (notes confirmed, corrections and what was seen, newest first)
+- **tab** panel: Papers (each paper made for the child or read from them)
+- **tab** panel: Report (the parent report's state in the school's words)
+- **link** panel: Open full page → Where this child is (`/children/[class]/[roll]`)
+- **link** panel: Close → Class picture (`/children/[class]`) (closes the panel; Escape too; focus returns to the child's card)
+- **link** panel: Add a note about this child → Record a note (`/record`)
+- **link** panel: each paper → Check the answers (`/children/assessments/[key]/[roll]`) (in the Papers tab)
+- **link** panel: Parent reports → Reports (`/children/reports`) (in the Report tab)
 Done when (on top of the ten generic checks):
-- each square shows the Sr. No. and the child's name read from pii by child_id, and no photo (DOM scan)
-- the stack bar's counts equal the squares by state
-- the squares are in Sr. No. order, 8 per row at 1440, 3 at 400
-- an empty square's title reads 'not seen yet', never 'not secure'
-- grouping by state puts a heading and a count over each group; the counts sum to the squares and equal the stack bar; a child is in exactly one group
-- a cluster's count equals the chips in it; clusters are computed by code from child_skill_state and evidence_event, never by a model, and a child may be in several clusters
-- tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page
+- the primary action is the skill chooser: All skills or one skill anyone in the class was seen on; the address carries it
+- with no child chosen the panel shows four stat tiles, secure · practising · needs help · not seen, on the one state scale; they count every child once and equal the cards by state
+- the class is a grid of child cards in Sr. No. order, each showing the Sr. No. and the first name read from pii by child_id, coloured by the child's state on the chosen skill; a child's card is never red
+- choosing a child opens the child panel on the right with tabs Skills · Notes · Papers · Report; Skills lists each skill seen in its state's colour; Escape closes it and focus returns to the card
+- the child's page (/children/[class]/[roll]) is that panel opened full page, with the same tabs
+- names come only through pii.read_child for the classes the person may see: an educator never sees a child of another class, on the picture or the child's page
 
 
 #### Where this child is `/children/[class]/[roll]`
 Who: both · Phase: Core · Backend: CP-13 · CP-14 · Old page today: part (/k2/[class]/[roll], /growth/[id]) · Slice: UI-3
 Eyebrow: K2 Red · Sr. No. 12 · the child's name
-Purpose: Each skill this child was seen on, coloured by how secure it is and sized by how often. Every mark opens the note or paper behind it.
+Purpose: The child chosen on the class picture, opened full page: each skill coloured by where they stand, what was seen, their papers and their report.
 Blocks, in order:
-- **ChildGraph**: the ChildGraph: the child at the centre, a ring per domain, a node per skill seen (state tint, state word, size by times seen); notes and papers both feed it
-- **Trend**: level per sitting on the skill chosen
-- **Timeline**: every observation and paper result, newest last; details: observed by (role), confirmed by, clocks, route, counts toward secure?
-- **DataTable**: skill · state · named days · last seen · ready next (CP-14, confirmed links only)
-Rail (Connected to): each skill · Back to the class · Add a note about this child · Reports (Next) · Capture here: voice, photo
-Main action: Add a note · Next step: the class
+- **DetailPanel**: the class picture's child panel opened full page: tabs Skills · Notes · Papers · Report
+- **ChildGraph**: in Skills: the child at the centre, a ring per domain, a node per skill seen (state tint, state word, size by times seen); notes and papers both feed it
+- **DataTable**: in Skills: skill · state · times seen, then skill · named days · last seen · ready next (CP-14, confirmed links only)
+- **Trend**: in Skills: level per sitting on the skill chosen
+- **Timeline**: in Notes: every observation and paper result, newest last; details: observed by (role), confirmed by, clocks, route, counts toward secure?
+Rail (Connected to): none
+Main action: Back to the class · Next step: the class
 Data: child_skill_state (kind observed for K2, written for grades 1–4, with named_days); activity_observation (+note words); evidence_event / item_result for papers; skill_link_confirmed (a view over activity_skill and approval)
-Empty: Not seen yet on any skill: the graph is the child alone with 'not seen yet' · Phone: the graph is replaced by the list of skills (name, times seen, state chip), then the trend, then the timeline
+Empty: Not seen yet on any skill: the graph is the child alone with 'not seen yet' · Phone: the tabs across the top; in Skills the graph is replaced by the list of skills (name, times seen, state chip), then the trend
 Folds in: /growth/[id], /k2/[class]/[roll]
-Every control on the screen (14), and what the test does with each:
-- **child_name** the page header (the child's name beside the Sr. No. in the eyebrow and the trail)
+Every control on the screen (15), and what the test does with each:
+- **child_name** the page header (the child's name beside the Sr. No. in the eyebrow and the panel's title)
+- **link** Back to the class → Class picture (`/children/[class]`) (the class picture with this child open in the panel)
+- **tab** Skills
+- **tab** Notes
+- **tab** Papers
+- **tab** Report
+- **link** Add a note about this child → Record a note (`/record`)
 - **link** each graph node → the skill's name (`/setup/skills/[code]`)
-- **filter** skill for the trend (the trend redraws; the address carries it)
-- **fold** details on each timeline entry
-- **link** a timeline entry's activity → the activity's name (`/setup/activities/[code]`)
-- **link** a timeline entry's paper → Check the answers (`/children/assessments/[key]/[roll]`)
 - **link** each skill row → the skill's name (`/setup/skills/[code]`)
-- **link** page: more entries → Where this child is (`/children/[class]/[roll]`) (older entries, ten at a time)
-- **link** rail: each skill → the skill's name (`/setup/skills/[code]`)
-- **link** rail: Back to the class → Class picture (`/children/[class]`)
-- **link** rail: Add a note about this child → Record a note (`/record`)
-- **link** rail: Reports → Reports (`/children/reports`)
-- **link** capture: Voice note → Record a note (`/record`)
-- **link** capture: Photo → Record a note (`/record`)
+- **link** Against every skill → Class picture (`/children/[class]`) (the class's Matrix)
+- **filter** skill for the trend (the trend redraws; the address carries it)
+- **fold** details on each timeline entry (in the Notes tab)
+- **link** page: more entries → Where this child is (`/children/[class]/[roll]`) (older entries, ten at a time, in the Notes tab)
+- **link** each paper → Check the answers (`/children/assessments/[key]/[roll]`) (in the Papers tab)
+- **link** Parent reports → Reports (`/children/reports`) (in the Report tab)
 Done when (on top of the ten generic checks):
-- a paper's result and a voice note appear on one timeline in date order
+- the page is the class picture's child panel opened full page: the same tabs, Skills · Notes · Papers · Report, and the address is by class and Sr. No.
+- a paper's result and a voice note appear on one timeline in date order (Notes)
 - a correction shows as a new entry that names the entry it replaces
 - the header shows the child's name beside the Sr. No., read from pii by child_id; the address is by Sr. No. and carries no name; no photo (DOM scan)
 - the graph's node count equals the skills the child was seen on, and each node's state equals the table's
@@ -744,56 +737,61 @@ Done when (on top of the ten generic checks):
 
 
 #### Assessments `/children/assessments`
-Who: both · Phase: Core · Backend: none · Old page today: yes (/papers, /capture) · Slice: UI-4
+Who: both · Phase: Core · Backend: none · Old page today: yes (/papers, /capture retired into it) · Slice: UI-4
 Eyebrow: Grades 1 to 4 · your classes
-Purpose: Each one goes through seven steps. Its row shows the step it waits at and the one thing to do next.
+Purpose: Move each assessment from made to results, and see what is stuck. Choose a card to see its copies, upload its papers and check them.
 Blocks, in order:
-- **AttentionStrip**: do now = answers for you to judge; this week = packs to approve, papers to sign off; done = results in
-- **Cards**: Make an assessment (for a class · for each child · for one child · a ready-made worksheet) · Read an assessment (DropZone)
-- **FilterBar**: class · topic · subject · kind · week · stage
-- **DataTable**: assessment (built name) · class · papers back · waits for (chip) · next
-- **KanbanBoard**: the assessments as lanes by Table | Board toggle, the seven steps grouped by who has the paper: To approve and print (Created, Approved) · With the children (Printed) · To read and check (Uploaded, Read, Checked) · Results in; each card an assessment, its next action beside it
-Rail (Connected to): Answers to check · Pack to approve · A child with results in · The skills tested · Question bank · Capture here: photo
-Main action: Check answers · Next step: an assessment
-Data: existing queries-papers (assessmentList, paperList), STEP_WORDS, STATUS_WORDS
-Empty: No assessments yet: Make one · Phone: the table scrolls sideways in its own box; the drop zone becomes 'take photos'
+- **FilterBar**: one row: class · subject · week, and More filters (topic · kind · stage) · search
+- **KanbanBoard**: four lanes by who has the paper: To approve and print (Created, Approved) · With the children (Printed) · To read and check (Uploaded, Read, Checked) · Results in; each card compact: topic and class, date · n of m papers back, one status chip, one next-action button
+- **DetailPanel**: card chosen: the assessment in tabs Copies (each child's copy and its state) · Upload (DropZone, Drive link) · Check (answers waiting) · Results, with Open full page; nothing chosen: StatTiles papers waiting to check · answers to judge · overdue checks
+- **DataTable**: the Table view: assessment (built name) · class · papers back · waits for (chip) · next
+Rail (Connected to): none
+Main action: Make an assessment · Next step: an assessment
+Data: existing queries-papers (assessmentList, paperList), queries-across (overdue checks), queries-scans, STEP_WORDS
+Empty: No assessments yet: Make one · Phone: the lanes scroll sideways in their own box; the panel covers the page as a sheet when a card is chosen
 Folds in: /papers, /papers/make, /capture, /capture/[id]
-Every control on the screen (29), and what the test does with each:
-- **link** do now tile → Check the answers (`/children/assessments/[key]/[roll]`) (the first paper with answers to judge)
-- **link** this week tile → {the built name} (`/children/assessments/[key]`) (the first pack to approve)
-- **link** results in tile → {the built name} (`/children/assessments/[key]`)
+Every control on the screen (33), and what the test does with each:
+- **fold** Make an assessment (the page's one primary action, under the title; opens the four ways in)
 - **button** Make: For a class → {the built name} (`/children/assessments/[key]`): creates the assessment at step Created, then opens it
 - **button** Make: For each child → {the built name} (`/children/assessments/[key]`): creates the assessment at step Created, then opens it
 - **button** Make: For one child → {the built name} (`/children/assessments/[key]`): creates the assessment at step Created, then opens it
 - **button** Make: A ready-made worksheet → {the built name} (`/children/assessments/[key]`): creates the assessment at step Created, then opens it
-- **upload** Read: choose scans or drop them: pdf/jpg/png/heic; the QR names the sheet; a paper appears at Uploaded; a file with no QR shows 'could not find the QR' and nothing is written
-- **field** a Google Drive link (a non-Drive address shows a message)
-- **button** Read it: the Drive file is fetched and read as above
-- **filter** class · topic · subject · kind · week · stage (and, on Reading, Show: by day, by kind of question, by how sure)
-- **row** each assessment row → {the built name} (`/children/assessments/[key]`)
-- **link** each row's next action → {the built name} (`/children/assessments/[key]`) (lands on the step's action)
-- **link** rail: Answers to check → Check the answers (`/children/assessments/[key]/[roll]`)
-- **link** rail: Pack to approve → {the built name} (`/children/assessments/[key]`)
-- **link** rail: A child with results in → Where this child is (`/children/[class]/[roll]`)
-- **link** rail: The skills tested → the skill's name (`/setup/skills/[code]`)
-- **link** rail: Question bank → Question bank (`/setup/question-bank`)
-- **upload** capture: Photo: same as Read
+- **filter** class · subject · week, and under More filters topic · kind · stage (and, on Reading, Show: by day, by kind of question, by how sure)
+- **fold** More filters (topic · kind · stage; says how many are on)
 - **tab** Board (the assessments as lanes; the address carries the tab)
 - **tab** Table (the assessments as rows)
-- **row** each card on the board → {the built name} (`/children/assessments/[key]`)
-- **link** page: Later → → Assessments (`/children/assessments`) (the next ten assessments)
 - **tab** By topic (every topic a row with its count, closed until opened; the address carries the topic)
 - **tab** Reading (how the reader is doing, and the files read lately)
+- **row** each card on the board → Assessments (`/children/assessments`) (opens the assessment in the panel on the right (open=assessment:<id>))
+- **link** each card's next action → {the built name} (`/children/assessments/[key]`) (approve and print open the assessment; upload, check, sign off and results open the panel's tab)
+- **link** papers waiting to check tile → Assessments (`/children/assessments`) (the panel with nothing chosen)
+- **link** answers to judge tile → Check the answers (`/children/assessments/[key]/[roll]`) (the first paper with answers to judge)
+- **link** overdue checks tile (papers with answers waiting over the across.check_overdue_hours setting; opens Across classes)
+- **tab** panel: Copies · Upload · Check · Results (a card chosen; the address carries the tab)
+- **link** panel: Close the panel → Assessments (`/children/assessments`)
+- **link** panel: the next action → {the built name} (`/children/assessments/[key]`)
+- **link** panel: Open full page → {the built name} (`/children/assessments/[key]`) (the assessment's own address: the panel opened full page)
+- **link** panel: each child's copy → Check the answers (`/children/assessments/[key]/[roll]`) (by Sr. No., on the Copies, Check and Results tabs)
+- **upload** panel Upload: choose scans or drop them: pdf/jpg/png/heic; the QR names the sheet; a paper appears at Uploaded; a file with no QR shows 'could not find the QR' and nothing is written
+- **field** panel Upload: a Google Drive link (a non-Drive address shows a message)
+- **button** Read it: the Drive file is fetched and read as above
+- **link** panel Check: Check this paper → Check the answers (`/children/assessments/[key]/[roll]`)
+- **link** panel Results: The child → Where this child is (`/children/[class]/[roll]`)
+- **row** each assessment row → {the built name} (`/children/assessments/[key]`)
+- **link** each row's next action → {the built name} (`/children/assessments/[key]`) (lands on the step's action)
 - **field** rename: name this assessment (one on each row; the built name shows until a name is chosen)
 - **button** Save the name: the name is the educator's own and is kept as a row of the history log, the older names stay
+- **link** page: Later → → Assessments (`/children/assessments`) (the next ten assessments)
 - **link** each topic → Assessments (`/children/assessments`) (opens the topic's assessments beneath it)
 - **button** Read again: the file is read again with the reader as it now is; the page says in words when the engine no longer keeps it
 Done when (on top of the ten generic checks):
-- the four old pages answer 308 to this one or to the Assessment node
-- every row's name is built topic · skill · level · kind · class · day (regex)
-- no approve-all control anywhere
-- each tile's number equals the rows behind it
-- each board lane's card count equals the table rows at the lane's steps
+- the four lanes are To approve and print · With the children · To read and check · Results in, and each card is in the lane of its next step
+- a card shows its topic and class, its date and n of m papers back, one status chip and one next-action button, and no stage words repeated
+- the filter row holds Class · Subject · Week and More filters
+- the primary action under the title is Make an assessment
+- choosing a card opens the assessment on the right with the tabs Copies · Upload · Check · Results; the assessment's and a child's paper's own addresses still open
+- with nothing chosen the right side shows papers waiting to check · answers to judge · overdue checks
+- /capture answers 308 to the board and the menu has no Upload papers; a scan put in on the Upload tab is read
 
 
 #### {the built name} `/children/assessments/[key]`

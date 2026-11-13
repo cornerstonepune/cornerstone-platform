@@ -14,7 +14,7 @@ from datetime import UTC, datetime, timedelta
 
 from engine.core import db
 
-MENU = ("/", "/worksheets", "/library", "/capture", "/growth", "/home")
+MENU = ("/", "/worksheets", "/library", "/children/assessments", "/growth", "/home")
 WEB = db.REPO_ROOT / "apps" / "web"
 
 

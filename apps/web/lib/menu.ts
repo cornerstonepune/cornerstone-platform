@@ -3,9 +3,10 @@
 // belongs to one section by its `match`, the longest matching prefix winning. Pure, so a test can read it. Nothing here names a subject
 // (docs/ux-rules.md rule 6).
 //
-// Two pages the charter merges away still stand until their screen's own PR absorbs them, so they keep a line in the section they will
-// end in: Upload papers (into an assessment, B6) and What needs doing (into the coordinator's Today, B1b). Time by subject (B3) sits
-// between the Fortnight and Materials, as the charter orders the Timetable section.
+// One page the charter merges away still stands, so it keeps a line in the section it ends in: What needs doing (its kinds of work are
+// now the coordinator's Today's "waiting on you" rows, B1b; the page stays at its address for its filters and the mark-taught form, which
+// Today does not carry). Upload papers is gone into the assessment it belongs to (B6). Time by subject (B3) sits between the Fortnight and
+// Materials, as the charter orders the Timetable section.
 import type { IconName } from "./icons";
 
 /** `guide: false`: the page has no page of the Guide yet (packages/engine/tests/test_guide.py reads the entries written
@@ -53,7 +54,6 @@ export const SECTIONS: readonly Section[] = [
     icon: "assessment",
     pages: [
       { href: "/children/assessments", label: "Assessments", match: ["/children/assessments", "/make", "/worksheets/CS"] },
-      { href: "/capture", label: "Upload papers", match: ["/capture"] },
       { href: "/setup/question-bank", label: "Question bank", match: ["/setup/question-bank", "/library", "/worksheets/taxonomy"] },
     ],
   },

@@ -21,7 +21,7 @@ export const READER_VIEWS = [
 export type ReaderView = "day" | (typeof READER_VIEWS)[number][0];
 
 /** `base`: the page the table is on (the filter and the pager write their state into its address); the upload page by default. */
-export function ReaderTable({ r, words, view, page, keep, base = "/capture" }: { r: ReaderReport; words: Record<string, string>; view: ReaderView; page: number; keep: Record<string, string | undefined>; base?: string }) {
+export function ReaderTable({ r, words, view, page, keep, base = "/children/assessments" }: { r: ReaderReport; words: Record<string, string>; view: ReaderView; page: number; keep: Record<string, string | undefined>; base?: string }) {
   // days come newest first; each day's move is against the day read before it
   const days = r.days.map((d, i) => {
     const now = share(d.right, d.stood_behind);

@@ -61,7 +61,7 @@ test("when the staff check cannot reach the database, the page says so instead o
 // screen separately, so at most two small requests each.
 test("opening the Skill Map loads nothing ahead but the menu pages", async ({ page }) => {
   // the first page of each section of the sidebar (lib/menu.ts) and the logo link are what the frame pre-loads, beside the menu pages that still stand
-  const MENU = ["/today", "/timetable", "/children", "/children/assessments", "/across", "/", "/setup", "/make", "/library", "/capture", "/setup/how-it-works"];
+  const MENU = ["/today", "/timetable", "/children", "/children/assessments", "/across", "/", "/setup", "/make", "/library", "/setup/how-it-works"];
   const background: string[] = [];
   page.on("request", (r) => {
     if (r.resourceType() !== "document" && r.headers()["rsc"] === "1") background.push(new URL(r.url()).pathname);
