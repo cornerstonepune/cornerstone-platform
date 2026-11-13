@@ -103,17 +103,21 @@ export type LevelsSaved = { confirmation_id: string; written: number; evidence_w
 //   save: { actor, class_id, session_id, day?, marks: ChildMark[], rest_level? } → LevelsSaved; 403 not allowed, 404 lesson not in the class,
 //         409 the lesson has no activity, 422 a child not enrolled or a level not one of the four. `rest_level` marks every enrolled child with
 //         no mark yet; a child already marked keeps theirs.
-//   read: { actor, class_id, session_id } → { activity_code, marks: MarkRead[] }. Neither is gated on the voice switch; a coordinator may mark.
+//   read: { actor, class_id, session_id } → LevelRead. Neither is gated on the voice switch; a coordinator may mark.
 const LEVEL_SAVE = "/lesson/level";
 const LEVEL_READ = "/lesson/level/read";
 const untyped = (path: string, body: Record<string, unknown>) => engineSend(path as never, body as never);
 
-/** Today's marks of a lesson, one per child marked; none while the engine has no such read (404), so the page draws every child unmarked. */
-export async function lessonLevels(me: Pick<Session, "email">, q: { class_id: string; session_id: string }): Promise<MarkRead[]> {
+/** The last earlier lesson of this class on this activity that has marks: how many children were at each level, and absent or not willing. */
+export type LevelHistory = { session_id: string; day: string; counts: Record<"0" | "1" | "2" | "3" | "absent" | "not_willing", number> };
+/** A lesson's levels as the engine reads them (CP-49 v1): the children enrolled in the class on the lesson's day (the same set the save
+ *  accepts, by Sr. No.), their marks today, and the last time. No names: the page adds the ones the person may see. */
+export type LevelRead = { activity_code: string | null; roll: { child_id: string; sr_no: number }[]; marks: MarkRead[]; last: LevelHistory | null };
+
+export async function lessonLevels(me: Pick<Session, "email">, q: { class_id: string; session_id: string }): Promise<LevelRead> {
   const res = await untyped(LEVEL_READ, { actor: me.email, ...q });
-  if (res.status === 404) return [];
   if (!res.ok) throw new EngineDown(`The engine refused that (${res.status}).`);
-  return ((await res.json()) as { marks: MarkRead[] }).marks;
+  return (await res.json()) as LevelRead;
 }
 
 /** Save marks for children of a lesson in one call, and with `rest_level` every child not yet marked: the engine decides who may, and says why not. */

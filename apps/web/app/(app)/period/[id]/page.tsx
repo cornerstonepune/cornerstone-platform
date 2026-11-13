@@ -7,6 +7,9 @@ import { EmptyState } from "@/components/empty-state";
 import { PeekChip, PeekHost } from "@/components/peek-names";
 import { Rail, Screen, type Edge } from "@/components/app-frame";
 import { outcomeWords } from "@/components/outcome-states";
+import { StackBar } from "@/components/stack-bar";
+import { levelState } from "@/lib/state-scale";
+import { dayWords } from "@/lib/today";
 import { requireStaff } from "@/lib/auth";
 import { openTo } from "@/lib/educator/data";
 import { lessonView } from "@/lib/lesson-view";
@@ -47,9 +50,9 @@ export default async function Period({ params, searchParams }: { params: Promise
       </Screen>
     );
   }
-  const v = await lessonView(me, id);
+  const v = await lessonView(me, id, true);
   if (!v) notFound();
-  const { a, klass, mine, coordinator, full, offers, rolls, roster, childOf, marked, last, named, period, planner, objective } = v;
+  const { a, klass, mine, coordinator, full, offers, rolls, roster, levels: read, last, named, period, planner, objective } = v;
   const record = `/record?session=${id}`;
   const day = `/timetable?view=day&class=${s.class_id}&day=${s.day}`;
   // the activity's own page returns to this day when it is left (its `back`)
@@ -61,7 +64,10 @@ export default async function Period({ params, searchParams }: { params: Promise
   ];
   const levels = full?.levels ?? [];
   // the cards: Sr. No. and first name (only the names the person may see; a child they may not is a number alone)
-  const kids: Child[] = rolls.flatMap((roll) => (childOf[roll] ? [{ roll, id: childOf[roll], first: roster?.[roll]?.first ?? "", initials: roster?.[roll]?.initials ?? "" }] : []));
+  const kids: Child[] = (read?.roll ?? []).map(({ child_id, sr_no }) => {
+    const roll = String(sr_no);
+    return { roll, id: child_id, first: roster?.[roll]?.first ?? "", initials: roster?.[roll]?.initials ?? "" };
+  });
   const panel = a ? (
     <DetailPanel
       inline
@@ -113,6 +119,18 @@ export default async function Period({ params, searchParams }: { params: Promise
             key: "history",
             label: "History",
             body: (
+              read?.last ? (
+                <Part title={`Last time this class did it, ${dayWords(read.last.day)}`}>
+                  <div data-level-history>
+                    <StackBar
+                      parts={[
+                        ...[0, 1, 2, 3].map((n) => ({ state: levelState(n, 4), n: read.last!.counts[String(n) as "0"] ?? 0, words: `Level ${n}${levels[n] ? `: ${levels[n]}` : ""}` })),
+                        { state: "notSeenYet" as const, n: (read.last.counts.absent ?? 0) + (read.last.counts.not_willing ?? 0), words: "Absent or not willing" },
+                      ]}
+                    />
+                  </div>
+                </Part>
+              ) : (
               <LastTimePart
                 v={v}
                 after={
@@ -133,6 +151,7 @@ export default async function Period({ params, searchParams }: { params: Promise
                   ) : null
                 }
               />
+              )
             ),
           },
         ],
@@ -174,7 +193,7 @@ export default async function Period({ params, searchParams }: { params: Promise
               <Link href={`/children/${s.class_id}`}>The class</Link>
             </nav>
             {kids.length ? (
-              <ChildLevels sessionId={id} classId={s.class_id} day={s.day} klass={klass} kids={kids} levels={levels.length ? levels : ["", "", "", ""]} saved={marked} />
+              <ChildLevels sessionId={id} classId={s.class_id} day={s.day} klass={klass} kids={kids} levels={levels.length ? levels : ["", "", "", ""]} saved={read?.marks ?? []} />
             ) : (
               <p className="text-[var(--ink-muted)]" data-no-roll>
                 No child is on this class&apos;s roll for this day.
