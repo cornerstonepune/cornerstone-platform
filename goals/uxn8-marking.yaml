@@ -8,9 +8,9 @@ goal: >
 # Written 2026-10-23 (night), before the code.
 says:
   - words: "for teachers, in most of the places, can we use tables instead of a lot of places where the tags ... are never aligned"
-    proved_by: "apps/web/tests/u3-marking.spec.ts::by class, by child and by worksheet, each count is where the engine says each answer stands"
+    proved_by: "apps/web/tests/u3-marking.spec.ts::the class's answers waiting for a person are where the engine says they stand: the board's tile and its cards' chips"
   - words: "use icons or red, amber, green in places that make it easier for people to navigate? Use filters wherever possible."
-    proved_by: "apps/web/tests/u3-marking.spec.ts::a paper shows its score once nothing on it waits"
+    proved_by: "apps/web/tests/u87-assessments-board.spec.ts::B6 right side, card chosen: the assessment panel with Copies · Upload · Check · Results"
   - words: "is there just one view that we can have? It simply shows just one table, which can have a toggle around confidence levels"
     proved_by: "apps/web/tests/u10-tables-read-straight.spec.ts::how the reader is doing is one table, by day first, by kind or by how sure at a choice in the filter row"
 manual: []

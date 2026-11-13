@@ -10,7 +10,10 @@ const nextConfig: NextConfig = {
   distDir: process.env.NEXT_DIST_DIR || ".next",
   turbopack: { root: repo },
   // No old address is redirected (11 Nov 2026, "leave everything old behind"): nothing printed or sent names a page of this site
-  // (a paper's QR is its sheet id, notifications carry no link), so a retired page's address simply no longer exists.
+  // (a paper's QR is its sheet id, notifications carry no link), so a retired page's address simply no longer exists. One exception,
+  // asked for with the page charter's B6 (Upload papers deleted into the assessment it belongs to): the Upload papers address answers 308
+  // to the Assessments board, where each assessment's Upload tab now is.
+  redirects: async () => [{ source: "/capture", destination: "/children/assessments", permanent: true }],
   outputFileTracingRoot: repo,
 };
 

@@ -65,26 +65,22 @@ test.afterAll(async () => {
   await sql.end();
 });
 
-test("the upload box is at the top of Assessments and Marking", async ({ page }) => {
-  for (const path of ["/children/assessments", "/capture"]) {
-    await page.goto(path);
-    if (path === "/children/assessments") {
-      // Assessments: the upload box is one of its two blocks above the list (goals/asm_assessments_page.yaml)
-      const block = page.getByRole("region", { name: "Read an assessment" });
-      await expect(block.locator("input[type=file]")).toHaveCount(1);
-      await expect(block.getByText("Choose scans or drop them here")).toBeVisible();
-      continue;
-    }
-    // the page itself, past its loading screen, and the upload box drawn on it
-    const box = page.getByText("Choose scans or drop them here").first();
-    await expect(box, path).toBeVisible();
-    const upload = (await box.boundingBox())!;
-    const h1 = (await page.getByRole("heading", { level: 1 }).boundingBox())!;
-    expect(upload.y, path).toBeGreaterThan(h1.y);
-    // above everything else the page holds: the first panel under the heading
-    const firstPanel = await page.locator("main .panel").first().evaluate((el) => !!el.querySelector('input[type=file]'));
-    expect(firstPanel, `${path}: the upload is the first panel`).toBe(true);
-  }
+// The Upload papers page is retired (page charter B6): papers are uploaded inside the assessment they belong to, on its Upload tab on the
+// board and on its own page once its pack is printed.
+test("the upload box is inside the assessment: its Upload tab on the board, and its own page once printed", async ({ page }) => {
+  await page.goto(`/children/assessments?class=${SECTION}`);
+  // the printed class assessment is with the children: its card's next action is Upload, which opens that tab of its panel
+  await page.locator('[data-lane="children"] [data-card-next]', { hasText: "Upload" }).first().click();
+  const panel = page.locator("[data-block=DetailPanel]");
+  await expect(panel.getByRole("tab", { name: "Upload" })).toHaveAttribute("aria-selected", "true");
+  const tab = panel.getByRole("region", { name: "Upload papers" });
+  await expect(tab.locator("input[type=file]")).toHaveCount(1);
+  await expect(tab.getByText("Choose scans or drop them here")).toBeVisible();
+  // the assessment's own page: the same box, under its pack
+  await page.goto(card("assessment"));
+  const own = page.getByRole("region", { name: "Upload this assessment's papers" });
+  await expect(own.locator("input[type=file]")).toHaveCount(1);
+  await expect(own.getByText("Choose scans or drop them here")).toBeVisible();
 });
 
 test("the card moves from Made to Results, always showing its next step", async ({ page }) => {

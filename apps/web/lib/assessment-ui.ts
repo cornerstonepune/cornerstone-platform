@@ -10,6 +10,15 @@ export const assessmentHref = (key: string) => `/children/assessments/${encodeUR
 /** One child's copy of it, by the Sr. No. */
 export const paperHref = (key: string, roll: string) => `${assessmentHref(key)}/${encodeURIComponent(roll)}`;
 
+/** An assessment as the board's address names it in `?open=assessment:<id>` (page charter A2): a short fingerprint of its key (FNV-1a,
+ *  eight hex digits), since a key can hold characters an `open=` id does not (a set of chosen areas is written as JSON). The board finds
+ *  the row whose key has it; the full page keeps the key itself. */
+export function openIdOf(key: string): string {
+  let h = 0x811c9dc5;
+  for (let i = 0; i < key.length; i++) h = Math.imul(h ^ key.charCodeAt(i), 0x01000193) >>> 0;
+  return h.toString(16).padStart(8, "0");
+}
+
 /** The board's lanes: who has the paper. A lane is the table's rows whose next action is one of its kinds. */
 export const LANES: readonly { key: string; label: string; state: State; kinds: readonly Action["kind"][]; empty: string }[] = [
   { key: "approve", label: "To approve and print", state: "toApprove", kinds: ["approve", "print"], empty: "Nothing to approve or print" },

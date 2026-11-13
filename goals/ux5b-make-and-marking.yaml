@@ -22,9 +22,9 @@ says:
   - words: "Most of the pages just have a long list for no reason."
     proved_by: "apps/web/tests/u38-make-and-marking.spec.ts::the children already approved are rows of the table, after the ones waiting, each with who approved it"
   - words: "They should have the right set of columns which are important."
-    proved_by: "apps/web/tests/u38-make-and-marking.spec.ts::Marking says in one sentence what waits, and each child is one line with the next step their papers need"
+    proved_by: "apps/web/tests/u38-make-and-marking.spec.ts::each read paper is a card with what waits on it, and its Check tab opens the paper that needs the next step"
   - words: "All these things should be expandable and collapsible."
-    proved_by: "apps/web/tests/u38-make-and-marking.spec.ts::the coordinator sees every class in one table, and one class when it is chosen"
+    proved_by: "apps/web/tests/u87-assessments-board.spec.ts::B6 right side, card chosen: the assessment panel with Copies · Upload · Check · Results"
 manual: []
 scenarios: []
 criteria:

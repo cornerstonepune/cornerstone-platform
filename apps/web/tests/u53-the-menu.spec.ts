@@ -13,7 +13,6 @@ const PAGES = [
   ["/setup/needs-doing", "My day", "What needs doing"],
   ["/timetable/rules", "School", "Timetable rules"],
   ["/children/assessments", "Assessments", "Assessments"],
-  ["/capture", "Assessments", "Upload papers"],
   ["/setup/curriculum", "School", "Curriculum"],
   ["/setup/question-bank", "Assessments", "Question bank"],
 ] as const;

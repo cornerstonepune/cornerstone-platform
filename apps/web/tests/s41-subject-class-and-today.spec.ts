@@ -76,7 +76,7 @@ type P = import("@playwright/test").Page;
 const find = (page: P) => page.getByRole("search", { name: "Find a child or paper" });
 
 test("every screen opens with the search in the bar, above the heading, and no Class or Subject box (goals/nav3_what_needs_doing.yaml)", async ({ page }) => {
-  for (const path of ["/setup/needs-doing", "/", "/children/assessments", "/children", "/capture", `/growth/${kids.Asha}`]) {
+  for (const path of ["/setup/needs-doing", "/", "/children/assessments", "/children", `/growth/${kids.Asha}`]) {
     await page.goto(path);
     await expect(page.locator("[data-viewing], #bar-subject, #bar-class"), path).toHaveCount(0);
     await expect(find(page).getByRole("combobox"), path).toBeVisible();

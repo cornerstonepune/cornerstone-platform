@@ -219,6 +219,9 @@
   .b-kcard b { font-weight: 600; }
   .b-kcard .b-sub { display: block; font-size: var(--text-label); font-weight: 400; color: var(--ink-muted); }
   .b-kcard [data-status] { grid-column: 2; justify-self: start; }
+  .b-kcard.b-selected { box-shadow: 0 0 0 3px var(--action); }
+  .b-kitem { display: grid; gap: var(--space-1); }
+  .b-kitem .b-kact { justify-self: start; }
   .b-lane-empty { padding: var(--space-3) var(--space-2); color: var(--ink-muted); font-size: var(--text-label); }
   .b-nchips { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
   .b-nchip { display: inline-flex; align-items: center; gap: var(--space-1); min-height: var(--tap); padding: 0 var(--space-2); border: 0; border-radius: var(--radius-pill); background: var(--cb, var(--kind-child-bg)); color: var(--c, var(--kind-child)); font-size: var(--text-label); font-weight: 600; cursor: pointer; }

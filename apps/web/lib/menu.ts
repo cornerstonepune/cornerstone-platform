@@ -3,8 +3,8 @@
 // belongs to one section by its `match`, the longest matching prefix winning. Pure, so a test can read it. Nothing here names a subject
 // (docs/ux-rules.md rule 6).
 //
-// Two pages the charter merges away still stand until their screen's own PR absorbs them, so they keep a line in the section they will
-// end in: Upload papers (into an assessment, B6) and What needs doing (into the coordinator's Today, B1b). Time by subject (B3) is not
+// One page the charter merges away still stands until its screen's own PR absorbs it, so it keeps a line in the section it will
+// end in: What needs doing (into the coordinator's Today, B1b); Upload papers is gone into the assessment it belongs to (B6). Time by subject (B3) is not
 // listed: it needs an engine read first, and a control whose screen is not built is not drawn.
 import type { IconName } from "./icons";
 
@@ -52,7 +52,6 @@ export const SECTIONS: readonly Section[] = [
     icon: "assessment",
     pages: [
       { href: "/children/assessments", label: "Assessments", match: ["/children/assessments", "/make", "/worksheets/CS"] },
-      { href: "/capture", label: "Upload papers", match: ["/capture"] },
       { href: "/setup/question-bank", label: "Question bank", match: ["/setup/question-bank", "/library", "/worksheets/taxonomy"] },
     ],
   },

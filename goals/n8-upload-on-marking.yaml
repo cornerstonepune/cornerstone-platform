@@ -23,7 +23,7 @@ says:
   - words: "Then the analysis can happen"
     proved_by: "packages/engine/tests/test_upload.py::test_a_page_with_no_readable_code_is_kept_by_its_page_number"
   - words: "there it says we have a proper understanding of how many questions have been evaluated, how many questions need validation from the teacher."
-    proved_by: "apps/web/tests/u44-upload-on-marking.spec.ts::a scan put in on Marking is read, and its run says what was found and what waits"
+    proved_by: "apps/web/tests/u44-upload-on-marking.spec.ts::a scan put in on an assessment's Upload tab is read, and its run says what was found and what waits"
 manual:
   - "On live, once deployed: on Marking, choose a class's scanned PDF of 30–60 MB from a phone; the bar fills, the run appears under Read a scan with its pages, copies and children, and once read its answers settled and waiting."
   - "On live, once deployed: photograph a two-page paper on an iPhone (HEIC) and put both photos in; one PDF of two pages is read."

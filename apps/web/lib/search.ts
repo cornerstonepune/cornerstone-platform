@@ -4,6 +4,7 @@ import { seesClass, seesSheet } from "./reach";
 import { grades } from "./queries";
 import { weekWords } from "./week";
 import { weekSql } from "./queries-papers";
+import { openIdOf } from "./assessment-ui";
 
 // The search in the bar (goals/s1-subject-class-and-today.yaml, docs/frontend/screens.json `bar`): a typeahead, not a page of
 // results. It finds a child, an assessment or a paper code, and offers at most five. What is typed is posted (app/api/search),
@@ -47,7 +48,9 @@ export async function suggest(me: Session, typed: string): Promise<Hit[]> {
     ...papers.map((p) => ({ label: `Paper ${p.qr}`, href: `/worksheets/${p.qr}` })),
     ...children.map((c) => ({ label: `${c.name} · ${said(c.band, c.section)} · Sr. No. ${c.roll_no}`, href: `/growth/${c.id}` })),
     ...assessments.map((a) => {
-      const to = new URLSearchParams({ class: a.section, kind: a.kind, set: a.set, ...(a.week ? { week: a.week } : {}) });
+      // the board, narrowed to the class and week, with the assessment open in its panel (page charter B6)
+      const key = [a.kind, a.section, a.week ?? "", a.set].join("~");
+      const to = new URLSearchParams({ class: a.section, kind: a.kind, ...(a.week ? { week: a.week } : {}), open: `assessment:${openIdOf(key)}` });
       return { label: `Assessment · ${a.name} · ${said(a.band, a.section)} · ${weekWords(a.week)}`, href: `/children/assessments?${to}` };
     }),
   ];

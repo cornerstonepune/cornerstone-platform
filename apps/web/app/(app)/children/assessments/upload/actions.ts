@@ -7,36 +7,43 @@ import { sees } from "@/lib/reach";
 import { EngineDown, engineSend, uploadTicket } from "@/lib/engine";
 
 const UUID = /^[0-9a-f-]{36}$/;
+const BOARD = "/children/assessments";
+
+/** Back to where the scan was put in (page charter B6: the board with an assessment's Upload tab open, or the assessment's own page),
+ *  with what the engine said: an address outside the Assessments board is never followed. */
+function back(from: FormDataEntryValue | null, said: Record<string, string | number> = {}): string {
+  const at = new URL(String(from ?? BOARD), "http://site");
+  const url = at.origin === "http://site" && (at.pathname === BOARD || at.pathname.startsWith(`${BOARD}/`)) ? at : new URL(BOARD, "http://site");
+  for (const k of ["read", "why", "pages"]) url.searchParams.delete(k);
+  for (const [k, v] of Object.entries(said)) url.searchParams.set(k, String(v));
+  return `${url.pathname}${url.search}#read-scan`;
+}
 
 /** A scan, by its Drive link, read without anyone at a terminal (N8, `POST /read/file`).
  *
  * The link is all that travels: the engine fetches the file into its own inbox, sorts the pages by
  * the code on each and reads every box on every copy printed for a child, after it has answered —
- * the papers appear on this page as they are read. The engine says in words why it will not take a
+ * the papers appear on the board as they are read. The engine says in words why it will not take a
  * link, and that is what the person sees. */
 export async function readScan(formData: FormData): Promise<void> {
   const me = await deciding("papers");
-  // back to the page it was read from: Papers, or the scans and the reader's accuracy (goals/u9-papers.yaml)
-  const from = String(formData.get("from") ?? "");
-  const page = from === "/children/assessments" ? from : "/capture";
+  const from = formData.get("from");
   const url = String(formData.get("url") ?? "")
     .trim()
     .slice(0, 400);
-  if (!/^https:\/\/drive\.google\.com\//.test(url)) redirect(`${page}?read=not-a-link#read-scan`);
+  if (!/^https:\/\/drive\.google\.com\//.test(url)) redirect(back(from, { read: "not-a-link" }));
   try {
     const res = await engineSend("/read/file", { url, actor: me.email });
     if (!res.ok) {
       const why = ((await res.json().catch(() => ({}))) as { detail?: string }).detail ?? "";
-      redirect(`${page}?read=refused&why=${encodeURIComponent(why.slice(0, 200))}#read-scan`);
+      redirect(back(from, { read: "refused", why: why.slice(0, 200) }));
     }
     const { pages } = (await res.json()) as { pages: number };
-    revalidatePath("/capture");
-    revalidatePath("/children/assessments");
-    revalidatePath("/children/assessments");
-    redirect(`${page}?read=started&pages=${Number(pages) || 0}#read-scan`);
+    revalidatePath(BOARD, "layout");
+    redirect(back(from, { read: "started", pages: Number(pages) || 0 }));
   } catch (e) {
     if (!(e instanceof EngineDown)) throw e;
-    redirect(`${page}?read=engine#read-scan`);
+    redirect(back(from, { read: "engine" }));
   }
 }
 
@@ -45,27 +52,25 @@ export async function readScan(formData: FormData): Promise<void> {
  *  read as nobody's — the engine never guesses a page's child. The engine says in words why it will not. */
 export async function givePage(formData: FormData): Promise<void> {
   const me = await deciding("papers");
-  const from = String(formData.get("from") ?? "");
-  const page = from === "/children/assessments" ? from : "/capture";
+  const from = formData.get("from");
   const run = String(formData.get("run") ?? "");
   const child = String(formData.get("child") ?? "");
   const n = Number(formData.get("page"));
-  if (!UUID.test(run) || !UUID.test(child) || !Number.isInteger(n) || n < 1) redirect(`${page}#read-scan`);
+  if (!UUID.test(run) || !UUID.test(child) || !Number.isInteger(n) || n < 1) redirect(back(from));
   // a page of a file the person put in, or given to a child they see
   if (!(await sees(me, [{ run }])) && !(await sees(me, [{ child }]))) redirect("/refused?kind=papers&paper=1");
   try {
     const res = await engineSend(`/read/run/${run}/page`, { page: n, child_id: child, by: me.email });
     if (!res.ok) {
       const why = ((await res.json().catch(() => ({}))) as { detail?: string }).detail ?? "";
-      redirect(`${page}?read=refused&why=${encodeURIComponent(why.slice(0, 200))}#read-scan`);
+      redirect(back(from, { read: "refused", why: why.slice(0, 200) }));
     }
   } catch (e) {
     if (!(e instanceof EngineDown)) throw e;
-    redirect(`${page}?read=engine#read-scan`);
+    redirect(back(from, { read: "engine" }));
   }
-  revalidatePath("/capture");
-  revalidatePath("/children/assessments");
-  redirect(`${page}?read=given&pages=${n}#read-scan`);
+  revalidatePath(BOARD, "layout");
+  redirect(back(from, { read: "given", pages: n }));
 }
 
 /** A file already sent, read afresh (goals/ck2-photograph-is-its-page.yaml, `POST /read/run/{id}/again`): the engine reads
@@ -73,24 +78,22 @@ export async function givePage(formData: FormData): Promise<void> {
  *  — the file is the one the engine keeps — and says in words why it will not (still being read, no longer kept). */
 export async function readAgain(formData: FormData): Promise<void> {
   const me = await deciding("papers");
-  const from = String(formData.get("from") ?? "");
-  const page = from === "/children/assessments" ? from : "/capture";
+  const from = formData.get("from");
   const run = String(formData.get("run") ?? "");
-  if (!UUID.test(run)) redirect(`${page}#read-scan`);
+  if (!UUID.test(run)) redirect(back(from));
   await mustSee(me, "papers", [{ run }]);
   try {
     const res = await engineSend(`/read/run/${run}/again`, { by: me.email });
     if (!res.ok) {
       const why = ((await res.json().catch(() => ({}))) as { detail?: string }).detail ?? "";
-      redirect(`${page}?read=refused&why=${encodeURIComponent(why.slice(0, 200))}#read-scan`);
+      redirect(back(from, { read: "refused", why: why.slice(0, 200) }));
     }
     const { pages } = (await res.json()) as { pages: number };
-    revalidatePath("/capture");
-    revalidatePath("/children/assessments");
-    redirect(`${page}?read=again&pages=${Number(pages) || 0}#read-scan`);
+    revalidatePath(BOARD, "layout");
+    redirect(back(from, { read: "again", pages: Number(pages) || 0 }));
   } catch (e) {
     if (!(e instanceof EngineDown)) throw e;
-    redirect(`${page}?read=engine#read-scan`);
+    redirect(back(from, { read: "engine" }));
   }
 }
 

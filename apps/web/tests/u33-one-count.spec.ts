@@ -77,9 +77,11 @@ test("the class papers Today counts are the copies the pages it opens show waiti
   const line = page.locator("tr[data-kind=classpaper]").filter({ hasText: `${CLASS} · class practice` }).getByRole("link");
   await expect(line).toHaveAttribute("href", new RegExp(`^/children/assessments\\?class=${CLASS}&`));
   await page.goto((await line.getAttribute("href"))!);
-  const card = page.locator("[data-kcard]").filter({ hasText: CLASS });
+  // the card opens its panel on the board; its next action, Print, is the assessment's own screen (page charter B6)
+  const card = page.locator("[data-lane] li").filter({ hasText: CLASS });
   await expect(card).toHaveCount(1);
-  await page.goto((await card.getAttribute("href"))!);
+  await expect(card.locator("[data-card-next]")).toHaveText("Print");
+  await page.goto((await card.locator("[data-card-next]").getAttribute("href"))!);
   await expect(page.getByRole("region", { name: "Not printed yet, 2 copies" }).locator("tbody tr")).toHaveCount(2);
   const spares = page.getByRole("region", { name: "Spare copies" }).locator("tbody tr");
   await expect(spares).toHaveCount(1);

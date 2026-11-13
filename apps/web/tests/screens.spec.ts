@@ -12,7 +12,6 @@ const ROUTES: [string, string][] = [
   ["/", "Curriculum"],
   ["/library", "Question bank"],
   ["/children/assessments", "Assessments"],
-  ["/capture", "Upload papers"],
   // Class results are the By topic tab of the class picture (UI-3i, #684); `:class` is the test's own class
   ["/children/:class?view=topic", "Class picture"],
 ];
@@ -76,7 +75,7 @@ test("every section is reachable from the menu", async ({ page }) => {
   // and every page of a section, from the sidebar, under its section's heading
   for (const [section, labels] of [
     ["Children", ["Class picture", "Parent reports"]],
-    ["Assessments", ["Assessments", "Upload papers", "Question bank"]],
+    ["Assessments", ["Assessments", "Question bank"]],
     ["School", ["Curriculum", "Staff", "Classes"]],
   ] as const) {
     const list = nav.getByRole("list", { name: section });
@@ -131,7 +130,7 @@ test("a child's page is in words, with the answers behind each skill", async ({ 
 // The approval screen is reached by opening a paper, so it has no fixed path to list above. It is
 // the one screen a teacher stands at with a photograph, and the one that must survive a phone.
 for (const { name, width, height } of SIZES) {
-  test(`${name} /capture/<paper>`, async ({ page }, testInfo) => {
+  test(`${name} a paper, from its assessment on the board`, async ({ page }, testInfo) => {
     const errors: string[] = [];
     // The page images come from the engine, which is not running in CI. A missing image is a
     // broken <img>, not a broken screen, so those are the one thing not counted here.
@@ -144,12 +143,11 @@ for (const { name, width, height } of SIZES) {
         errors.push(`${m.text()} ${m.location().url}`),
     );
     await page.setViewportSize({ width, height });
-    await page.goto("/capture?class=SCREENS-TEST", { waitUntil: "networkidle" });
-    // Capture & Mark lists students, each class a line the coordinator opens; a student lists their papers (Nimish,
-    // 2026-09-22; goals/ux5b-make-and-marking.yaml).
-    await page.locator(`a[href="/capture?child=${kavya}"]`).first().click();
-    await expect(page).toHaveURL(/child=/); // the student's own papers, not the list still on screen
-    await page.getByRole("table").first().getByRole("link").first().click();
+    // the board's card opens the assessment on the right; its Check tab lists the paper with answers waiting (page charter B6: the
+    // Upload papers page, which listed a student's papers, is retired into the assessment)
+    await page.goto("/children/assessments?class=SCREENS-TEST", { waitUntil: "networkidle" });
+    await page.locator('[data-lane="check"] [data-card-next]').first().click();
+    await page.locator("[data-block=DetailPanel] [data-check] [data-check-paper]").first().click();
     // the paper opens on its own screen (the old /capture/<sheet> is retired): the h1 says what is done here and the
     // line above it names which paper, by its grade and Sr. No.
     await expect(page).toHaveURL(/\/children\/assessments\/[^/]+\/[^/?#]+/);

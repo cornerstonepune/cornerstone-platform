@@ -124,10 +124,11 @@ test("Home assessments and Marking open on the educator's own class", async ({ b
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(`${SECTION} · home assessments`);
   // one class: nothing to go back to
   await expect(page.getByRole("link", { name: "← Every class" })).toHaveCount(0);
-  await page.goto("/capture");
-  // their one class is the table, and the Class filter says so
-  await expect(page.getByRole("table", { name: `Each child · ${SECTION}` })).toBeVisible();
-  await expect(page.locator("[data-filterbar] select[name=class]")).toHaveValue(SECTION);
+  // marking is the Assessments board now (page charter B6): every card on it is of their one class
+  await page.goto("/children/assessments");
+  const titles = await page.locator("[data-kcard] b").allInnerTexts();
+  expect(titles.length).toBeGreaterThan(0);
+  for (const t of titles) expect(t).toContain(SECTION);
   await page.context().close();
 });
 
@@ -180,39 +181,38 @@ test("the children already approved are rows of the table, after the ones waitin
   await page.context().close();
 });
 
-test("Marking says in one sentence what waits, and each child is one line with the next step their papers need", async ({ browser }) => {
+// The Upload papers page's one sentence and its table of children are retired (page charter B6): each read paper is a card of the
+// board, its chip saying what waits, and its panel's Check tab the next step, one press from the paper.
+test("each read paper is a card with what waits on it, and its Check tab opens the paper that needs the next step", async ({ browser }) => {
   const page = await asEducator(browser);
-  await page.goto("/capture");
-  await expect(page.getByRole("region", { name: "Where every answer stands" })).toHaveCount(0);
-  const top = page.getByRole("region", { name: "Answers to check" });
-  await expect(top).toContainText(
-    "3 papers in: 5 answers settled by the engine, 0 checked by a person, 2 waiting for you to check; 2 papers to sign off.",
-  );
-  await expect(page.locator("[data-ux=action]").getByRole("link", { name: /^check 2 answers/i })).toHaveAttribute("href", "/children/assessments?status=check");
-  const table = page.getByRole("table", { name: `Each child · ${SECTION}` });
-  await expect(table).toBeVisible();
-  await expect(table.locator("thead th")).toHaveText(["Class", "Roll", "Child", "Paper", "Waiting", "Status", "Next step"]);
-  expect(await table.locator("tbody tr").evaluateAll((trs) => trs.map((t) => t.querySelectorAll("td")[2].textContent?.trim()))).toEqual(["Asha", "Bina", "Dev"]);
-  const cells = (who: string) => table.locator("tbody tr").filter({ hasText: who }).locator("td");
-  await expect(cells("Asha").nth(3).getByRole("link")).toHaveAttribute("href", await screenOf(sheet.asha.id));
-  await expect(cells("Asha").nth(3)).toHaveText(sheet.asha.title);
-  await expect(cells("Asha").nth(4)).toHaveText("2");
-  await expect(cells("Asha").nth(6).getByRole("link")).toHaveText("Check 2 answers →");
-  await expect(cells("Asha").nth(6).getByRole("link")).toHaveAttribute("href", await screenOf(sheet.asha.id));
-  await expect(cells("Bina").nth(4)).toHaveText("0");
-  await expect(cells("Bina").nth(6).getByRole("link")).toHaveText("Sign off →");
-  await expect(cells("Bina").nth(6).getByRole("link")).toHaveAttribute("href", await screenOf(sheet.bina.id));
-  await expect(cells("Dev").nth(5)).toContainText("signed off");
-  await expect(cells("Dev").nth(6).getByRole("link")).toHaveCount(0);
+  await page.goto("/children/assessments");
+  const toJudge = page.locator('[data-lane="check"] li').filter({ hasText: "2 answers to judge" });
+  await expect(toJudge).toHaveCount(1);
+  await expect(toJudge.locator("[data-card-next]")).toHaveText("Check 2 answers");
+  await toJudge.locator("[data-card-next]").click();
+  const ashaAt = await screenOf(sheet.asha.id);
+  const asha = page.locator("[data-block=DetailPanel] [data-check] [data-copy]").filter({ has: page.locator(`[data-check-paper][href="${ashaAt}"]`) });
+  await expect(asha).toHaveCount(1);
+  await expect(asha).toContainText("2 answers to judge");
+  // every paper of the class, by the panel of the card it is on: Asha's answers to judge, Bina's to sign off (nothing waits), Dev's signed off
+  await page.goto("/children/assessments");
+  const groups = new Map<string, string>();
+  for (const href of await page.locator("[data-kcard]").evaluateAll((as) => as.map((a) => a.getAttribute("href")!))) {
+    await page.goto(href);
+    for (const c of await page.locator("[data-block=DetailPanel] [data-copies] [data-copy]").all())
+      groups.set((await c.locator("a").first().getAttribute("href")) ?? "", (await c.getAttribute("data-group")) ?? "");
+  }
+  expect(groups.get(ashaAt)).toBe("judge");
+  expect(groups.get(await screenOf(sheet.bina.id))).toBe("signoff");
+  expect(groups.get(await screenOf(sheet.dev.id))).toBe("results");
   await page.context().close();
 });
 
-test("the coordinator sees every class in one table, and one class when it is chosen", async ({ page }) => {
-  // every class is one table, a class column in it; a class chosen opens where it is, in the filter row
-  await page.goto(`/capture?class=${SECTION}`);
+test("the coordinator sees every class on one board, and one class when it is chosen", async ({ page }) => {
+  await page.goto(`/children/assessments?class=${SECTION}`);
   await expect(page.locator("[data-active-filters]")).toContainText(`Class: ${SECTION}`);
-  await expect(page.getByRole("table", { name: `Each child · ${SECTION}` })).toBeVisible();
-  await expect(page.getByRole("table", { name: /^Each child/ })).toHaveCount(1);
-  await page.goto("/capture");
-  await expect(page.getByRole("table", { name: "Each child" }).locator("thead th").first()).toHaveText("Class");
+  for (const t of await page.locator("[data-kcard] b").allInnerTexts()) expect(t).toContain(SECTION);
+  await page.goto("/children/assessments");
+  await expect(page.locator("[data-filterbar] select[name=class]")).toHaveValue("");
 });
+

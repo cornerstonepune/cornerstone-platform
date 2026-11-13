@@ -61,13 +61,23 @@ test.afterAll(async () => {
 
 test("a page whose code cannot be read is listed by its number, read as no child's, and given to one in one tap", async ({ page }) => {
   test.setTimeout(240_000);
-  await page.goto("/capture");
-  const panel = page.getByRole("region", { name: "Read a scan" });
-  await panel.getByLabel("Choose scans").setInputFiles([scan]);
-  const table = panel.getByRole("table", { name: "Scans read last" });
+  // put in on an assessment's Upload tab (page charter B6: the Upload papers page is retired); what it came to is the Reading view
+  await page.goto(`/children/assessments?class=${CLASS}`);
+  await page.locator("[data-kcard]").first().click();
+  await page.locator("[data-block=DetailPanel]").getByRole("tab", { name: "Upload" }).click();
+  const upload = page.locator("[data-block=DetailPanel]").getByRole("region", { name: "Upload papers" });
+  await upload.getByLabel("Choose scans").setInputFiles([scan]);
+  await expect(upload.getByRole("list", { name: "Scans sent" })).toContainText(`${pages} pages found`, { timeout: 60_000 });
+  await page.goto("/children/assessments?view=reading");
+  const table = page.getByRole("region", { name: "Read a scan" }).getByRole("table", { name: "Scans read last" });
   const run = table.getByRole("row").filter({ hasText: FILE }).first();
   await expect(run).toContainText(`${pages} pages`, { timeout: 60_000 });
-  await expect(run).not.toContainText("reading now", { timeout: 120_000 });
+  await expect
+    .poll(async () => {
+      await page.reload();
+      return run.innerText();
+    }, { timeout: 120_000, intervals: [3_000] })
+    .not.toContain("reading now");
   const [f] = await sql<{ id: string }[]>`select id from flow_run where flow = 'read-scan' and trigger like ${`%${FILE}`}`;
 
   // what the sorting came to, as the engine writes it: Ana's copy without its first page, which is nobody's
@@ -96,6 +106,7 @@ test("a page whose code cannot be read is listed by its number, read as no child
 
   await whose.getByRole("button", { name: `${CLASS} · roll 1 (a page short)` }).click();
   await expect(page).toHaveURL(/read=given/);
+  await expect(page.getByRole("status").filter({ hasText: "Page 1 is being read now as the paper of the child you gave it to." })).toBeVisible();
   const [{ given }] = await sql<{ given: { page: number; child_id: string; by: string }[] }[]>`
     select result -> 'given' as given from flow_run where id = ${f.id}`;
   expect(given.map((g) => [g.page, g.child_id, g.by])).toEqual([[1, kids.Ana, "e2e@cornerstone.test"]]);
