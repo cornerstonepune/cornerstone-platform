@@ -107,6 +107,56 @@ RUNS = {
             ]
         ],
     },
+    # CP-48 K2 fill (Nimish, 13 Nov: no queue, a machine link is marked and revertible)
+    "map_propose_objectives": {
+        "spends": True,
+        "commands": [
+            [
+                "engine",
+                "curriculum",
+                "propose",
+                "--stage",
+                "draft",
+                "--version",
+                "3",
+                "--validate-version",
+                "2",
+                "--kind",
+                "objective",
+                "--apply",
+                "--by",
+                BY,
+            ]
+        ],
+    },
+    "map_lo_skills": {
+        "spends": True,
+        "commands": [
+            [
+                "engine",
+                "curriculum",
+                "propose",
+                "--stage",
+                "draft",
+                "--version",
+                "3",
+                "--validate-version",
+                "2",
+                "--kind",
+                "lo_skill",
+                "--apply",
+                "--by",
+                BY,
+            ]
+        ],
+    },
+    "map_apply": {
+        "spends": False,
+        "commands": [
+            ["engine", "curriculum", "apply", "--kind", k, "--fill", "--apply", "--by", BY]
+            for k in ("skill", "objective", "lo_skill")
+        ],
+    },
     "draft_tranche": {
         "spends": True,
         "commands": [["engine", "curriculum", "draft", "--stage", "draft", "--tranche", "--by", BY]],

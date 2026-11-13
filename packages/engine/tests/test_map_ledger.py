@@ -182,7 +182,9 @@ def test_the_ledger_is_never_edited_or_deleted_and_a_person_answers_with_a_new_r
     assert {(r["kind"], r["subject_code"]) for r in waiting} == {
         ("objective", "ACT-KX-0102"),
         ("levels", "ACT-KX-0102"),
-        ("objective", "ACT-KX-0103"),
+    }  # ACT-KX-0103's objective "x" is no sentence: refused by code, never waiting (CP-48)
+    assert ("objective", "ACT-KX-0103") in {
+        (r["kind"], r["subject_code"]) for r in map_ledger.standing(conn, t, "rejected")
     }
     map_ledger.settle(conn, t, waiting[0]["id"], True, lead, "reads well")
     assert {r["id"] for r in map_ledger.standing(conn, t, "approved")} == {waiting[0]["id"]}
@@ -450,3 +452,21 @@ def test_a_proposal_of_another_kind_is_never_listed_settled_or_applied(conn, mon
     listed = CliRunner().invoke(cli.app, ["curriculum", "review"])
     assert listed.exit_code == 0 and "a/bank/key" not in listed.output
     assert "mislevelled" not in listed.output and "new_mistake" not in listed.output
+
+
+def test_fill_also_makes_the_links_waiting_for_a_person_marked_machine_but_never_a_none(conn, tmp_path):
+    """CP-48 (Nimish, 12-13 Nov: no queue): `fill` makes a waiting objective too, as the machine's; without it, not."""
+    t = _band(conn)
+    lead = _staff(conn, t)
+    map_ledger.record(conn, t, _made(conn, tmp_path, t), lead)
+    plain = map_ledger.apply(conn, t, lead, write=False, kind="objective")
+    assert plain == [], "a waiting objective is not made without fill"
+    filled = map_ledger.apply(conn, t, lead, write=True, kind="objective", fill=True)
+    assert len(filled) == 1 and filled[0].startswith("ACT-KX-0102 → ")
+    row = conn.execute(
+        "select source from activity_objective where tenant_id = %s and activity_code = 'ACT-KX-0102'", (t,)
+    ).fetchall()
+    assert [r["source"] for r in row] == ["machine"]
+    assert map_ledger.apply(conn, t, lead, write=True, kind="levels", fill=True) == [], "new level words wait"
+    none = {"kind": "skill", "proposal": {"skills": []}}
+    assert map_ledger._names(none) is False  # type: ignore[arg-type]

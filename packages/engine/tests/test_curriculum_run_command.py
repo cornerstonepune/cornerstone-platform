@@ -169,6 +169,7 @@ def test_no_run_can_carry_a_flag_that_changes_a_limit_only_the_known_ones_with_t
         "--estimate",  # counts and prices; it calls nothing
         "--kind",  # limits apply to one kind of proposal
         "--apply",  # records the proposals (only with --by); it raises no limit
+        "--fill",  # applies a machine link waiting for a person too (CP-48); it raises no limit
     }  # no --limit: the size is a row
     for run in cmd.RUNS:
         for c in lines(run, staff=STAFF):
@@ -246,3 +247,14 @@ def test_the_screens_go_on_by_signed_switch_commands_and_recording_is_its_own_ru
         "a child's voice is never switched on as part of another run"
     )
     assert lines("switch_status", staff=STAFF) == ["engine read voice status"]
+
+
+def test_the_k2_fill_runs_propose_objectives_and_objective_skills_and_apply_every_kind_marked_machine():
+    (obj,) = lines("map_propose_objectives")
+    assert "--kind objective" in obj and "--stage draft" in obj and "--by someone@school.invalid" in obj
+    (lo,) = lines("map_lo_skills")
+    assert "--kind lo_skill" in lo and "--by someone@school.invalid" in lo
+    applied = lines("map_apply")
+    assert [c.split("--kind ")[1].split()[0] for c in applied] == ["skill", "objective", "lo_skill"]
+    assert all("--fill" in c and "--apply" in c for c in applied)
+    assert cmd.RUNS["map_apply"]["spends"] is False and cmd.RUNS["map_propose_objectives"]["spends"] is True

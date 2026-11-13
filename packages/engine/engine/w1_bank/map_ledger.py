@@ -295,6 +295,14 @@ def _winners(rows: list[DictRow]) -> dict[tuple[str, str], uuid.UUID]:
     return win
 
 
+def _names(p: DictRow) -> bool:
+    """A proposal that links something: skills named, or an objective named or written."""
+    body = p["proposal"]
+    if p["kind"] in ("skill", "lo_skill"):
+        return bool(body.get("skills"))
+    return p["kind"] == "objective" and bool(body.get("objective_code") or body.get("objective_text"))
+
+
 def apply(
     conn: db.Conn,
     tenant: db.Id,
@@ -302,16 +310,21 @@ def apply(
     write: bool,
     only: uuid.UUID | str | None = None,
     kind: str | None = None,
+    fill: bool = False,
 ) -> list[str]:
     """Every proposal that passed on its own or that a person approved, each made, its link naming the proposal,
     each change in the edit history as the machine's, run by that member of staff (ids, never a name); written only
-    when `write`. `kind` limits it to one kind of proposal (page_part, material, skill, ...)."""
+    when `write`. `kind` limits it to one kind of proposal (page_part, material, skill, ...). `fill` (Nimish, 12-13 Nov:
+    no queue, a machine link is marked and can be undone) also makes a link waiting for a person, unless it names
+    nothing (a "none" stays unmade: there is nothing to link)."""
     version = conn.execute(
         "select max(number) as n from curriculum_version where tenant_id = %s", (tenant,)
     ).fetchone()
     done: list[str] = []
     # a drafted page part waiting for a person is written too, tagged check_me: K2 has no empty part (D-071)
-    doubtful = [p for p in standing(conn, tenant, "needs_person") if p["kind"] == "page_part"]
+    doubtful = [
+        p for p in standing(conn, tenant, "needs_person") if p["kind"] == "page_part" or (fill and _names(p))
+    ]
     win = _winners(standing(conn, tenant))
     for p in [*standing(conn, tenant, "auto_passed"), *standing(conn, tenant, "approved"), *doubtful]:
         if (only is not None and str(p["id"]) != str(only)) or (kind is not None and p["kind"] != kind):
