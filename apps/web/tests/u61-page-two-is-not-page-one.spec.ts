@@ -15,7 +15,7 @@ import { mkdirSync, mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import postgres from "postgres";
-import { aClass, aReadPaper } from "./rows";
+import { aClass, aReadPaper, pagesTold } from "./rows";
 import { paperScreenOf } from "../lib/queries-assessment-extras";
 
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
@@ -26,7 +26,7 @@ let work: { id: string; item_ids: string[] };
 let dir: string;
 
 /** A pdf of pages that each print `texts[i]` in large letters: synthetic, so two of the same text are one photograph. */
-function pdf(name: string, texts: string[]): string {
+function pdf(name: string, texts: string[]): { file: string; pages: number } {
   const out = path.join(dir, name);
   execFileSync(PY, [
     "-I",
@@ -43,15 +43,17 @@ function pdf(name: string, texts: string[]): string {
     out,
     ...texts,
   ]);
-  return out;
+  return { file: out, pages: texts.length };
 }
 
 const PAGE1 = "Equal groups|Page one|Questions 1 to 8";
 const PAGE2 = "Equal groups|Page two|Questions 9 to 12";
 
-/** One paper of four answers, two on each page, the way the reader leaves them; `page2` rewrites the last two. */
-async function aPaper(who: string, qr: string, file: string, page2: (id: string) => Promise<void>): Promise<string> {
-  const { sheet, results } = await aReadPaper(sql, {
+/** One paper of four answers, two on each page, the way the reader leaves them; `page2` rewrites the last two. Its file's
+ *  pages are told as a read tells them (`legacy.import_scan`: the capture holds the file's pages, each fingerprinted once),
+ *  since the screen says a page is page 1 again only from the fingerprints a read kept, never by drawing on a GET. */
+async function aPaper(who: string, qr: string, { file, pages }: { file: string; pages: number }, page2: (id: string) => Promise<void>): Promise<string> {
+  const { sheet, capture, results } = await aReadPaper(sql, {
     qr,
     child: kids[who],
     template: work.id,
@@ -69,6 +71,8 @@ async function aPaper(who: string, qr: string, file: string, page2: (id: string)
     await sql`update item_result set raw_read = (raw_read::jsonb || ${sql.json(at)})::text where id = ${id}`;
   }
   await page2(results.slice(2).join(","));
+  await sql`update capture set pages = ${pages} where id = ${capture}`;
+  pagesTold([capture]);
   return sheet;
 }
 

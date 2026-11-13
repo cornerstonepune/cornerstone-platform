@@ -56,10 +56,25 @@ test("an educator put on the staff list signs in, and a decision carries their n
 });
 
 // goals/ux10-declutter.yaml: Children had a second "find a child" box beside the bar at the top; the bar's search finds a
-// child by name or roll without the name entering an address (s41-subject-class-and-today.spec.ts), so the page has one way.
+// child by name or roll without the name entering an address (s41-subject-class-and-today.spec.ts), so the page has no box of
+// its own to find a child. The table's own filter stays (specs/UI-3b/spec.md, Done when 4, approved after that goal was
+// retired: "searching a Sr. No. or part of a name narrows the rows"; u72-children.spec.ts test 4): it narrows the rows in
+// view, in the filter row, and is the only search in the page. Children is drawn only while the school's voice screens are on
+// (`voice.screens_enabled`); switched off it shows one line and no table, so the switch is turned on for this test and put back
+// as it was found: with it off, the test would pass on a page that draws nothing.
 test("Children has no second box to find a child: the bar at the top finds them", async ({ page }) => {
-  await page.goto("/children");
-  await expect(page.getByRole("search", { name: "Find a child or paper" }).getByRole("combobox")).toBeVisible();
-  await expect(page.getByRole("searchbox", { name: "Find a child" })).toHaveCount(0);
-  await expect(page.getByRole("main").getByRole("searchbox")).toHaveCount(0);
+  const [was] = await sql<{ on: boolean }[]>`select (value)::text = 'true' as on from config where key = 'voice.screens_enabled'`;
+  await sql`update config set value = 'true'::jsonb where key = 'voice.screens_enabled'`;
+  try {
+    await page.goto("/children");
+    await expect(page.getByRole("table").first(), "the page draws its table, not the switched-off line").toBeVisible();
+    await expect(page.getByRole("search", { name: "Find a child or paper" }).getByRole("combobox")).toBeVisible();
+    await expect(page.getByRole("searchbox", { name: "Find a child" })).toHaveCount(0);
+    const boxes = page.getByRole("main").getByRole("searchbox");
+    await expect(boxes).toHaveCount(1);
+    await expect(boxes).toHaveAccessibleName("Search by name or Sr. No.");
+    await expect(page.locator("[data-filterbar]").getByRole("searchbox"), "the one search is the table's filter").toHaveCount(1);
+  } finally {
+    await sql`update config set value = ${was?.on ? sql`'true'::jsonb` : sql`'false'::jsonb`} where key = 'voice.screens_enabled'`;
+  }
 });
