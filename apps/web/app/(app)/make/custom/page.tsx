@@ -98,7 +98,7 @@ export default async function CustomPaper({ searchParams }: Props) {
                 <>
                   {plan.areas.map((a) => (
                     <div key={`${a.skill_set}~${a.level}`} className="mb-4">
-                      <h3 className="mb-1 text-[14px]">
+                      <h3 className="mb-1 text-[length:var(--text-label)]">
                         {a.name} · {a.level}
                       </h3>
                       <Questions name={a.name} level={a.level} questions={a.questions} />

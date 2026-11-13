@@ -20,7 +20,7 @@ test.afterAll(async () => sql.end());
 test("a topic waiting to be marked taught is a row with its own button, in the group that opens Curriculum", async ({ page }) => {
   await page.goto(workAt("taught"));
   const group = panel(page);
-  await expect(group.locator("a[data-panel-full]")).toHaveAttribute("href", "/");
+  await expect(group.locator("a[data-panel-full]")).toHaveAttribute("href", "/setup/curriculum/skills");
   const rows = group.locator("tr[data-kind=taught]");
   expect(await rows.count()).toBeGreaterThan(0);
   for (const row of await rows.all()) await expect(row.getByRole("button", { name: "Mark as taught" })).toHaveCount(1);
@@ -29,7 +29,7 @@ test("a topic waiting to be marked taught is a row with its own button, in the g
 });
 
 test("Curriculum's next step is What needs doing", async ({ page }) => {
-  await page.goto("/");
+  await page.goto("/setup/curriculum/skills");
   await page.locator("[data-ux=next]").click();
   await expect(page).toHaveURL(/\/today$/);
 });

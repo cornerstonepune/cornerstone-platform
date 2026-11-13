@@ -29,7 +29,7 @@ export function PageHeader({ stage, title, sub, icon, inColumn, chip }: { stage:
         <div className="mb-1">{chip}</div>
       ) : null}
       <h1 className="text-[24px] leading-tight md:text-[30px]">{title}</h1>
-      <p className="mt-1 max-w-[62ch] text-[15px] leading-[1.5] text-[var(--ink-muted)] md:text-[16px]">{sub}</p>
+      <p className="mt-1 max-w-[62ch] text-[length:var(--text-body)] leading-[1.5] text-[var(--ink-muted)] md:text-[16px]">{sub}</p>
     </header>
   );
 }
@@ -46,7 +46,7 @@ export function Panel({ title, aside, label, id, children }: { title: string; as
     <section className={`panel${id ? " scroll-mt-6" : ""}`} aria-label={label} id={id}>
       <div className="panel-head">
         <h2 className="text-[16px]">{title}</h2>
-        {aside ? <div className="fact text-[11px] text-basalt/55">{aside}</div> : null}
+        {aside ? <div className="fact text-[length:var(--text-caption)] text-basalt/55">{aside}</div> : null}
       </div>
       <div className="panel-body">{children}</div>
     </section>
@@ -103,7 +103,7 @@ export function NotYet({ what, when, facts }: { what: string[]; when: string; fa
   return (
     <div className="grid gap-[18px] md:grid-cols-[1fr_300px]">
       <Panel title="What this screen will show">
-        <ul className="grid gap-2 text-[14px]">
+        <ul className="grid gap-2 text-[length:var(--text-label)]">
           {what.map((w) => (
             <li key={w} className="flex gap-3">
               <span className="mt-[9px] h-[2px] w-4 shrink-0 bg-basalt/25" />

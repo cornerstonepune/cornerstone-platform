@@ -62,7 +62,7 @@ export function Signals({ nodes }: { nodes: MapNode[] }) {
           ) : null,
         )}
       </div>
-      <ul className="mt-2 flex flex-wrap gap-x-5 gap-y-1 text-[13px]">
+      <ul className="mt-2 flex flex-wrap gap-x-5 gap-y-1 text-[length:var(--text-label)]">
         {parts.map(([w, n, bg]) => (
           <li key={w} data-signal={w} className="flex items-center gap-2">
             <span className={`inline-block h-3 w-3 rounded-sm ${bg}`} />
@@ -133,7 +133,7 @@ export function GoingWell({
       {items.length ? (
         items.map((i) => (
           <li key={i.key} className="border-l-4 border-l-neem bg-neem/8 p-3">
-            <div className="font-heading text-[15px]">{i.head}</div>
+            <div className="font-heading text-[length:var(--text-body)]">{i.head}</div>
             <div className="mt-1 text-[13.5px] text-basalt/75">{i.body}</div>
           </li>
         ))
@@ -148,10 +148,10 @@ export function GoingWell({
 
 function ExampleCard({ e, name }: { e: Example; name: string }) {
   return (
-    <div className="mt-2 grid grid-cols-3 gap-2 text-center text-[13px]">
+    <div className="mt-2 grid grid-cols-3 gap-2 text-center text-[length:var(--text-label)]">
       <div className="bg-chalk p-2">
         <div className="label mb-1">Question</div>
-        <div className="font-heading text-[14px]">{e.question}</div>
+        <div className="font-heading text-[length:var(--text-label)]">{e.question}</div>
       </div>
       <div className="bg-terracotta/10 p-2">
         <div className="label mb-1">{name} wrote</div>
@@ -186,8 +186,8 @@ export function WorkingOn({ name, report }: { name: string; report: Report }) {
           className="border-l-4 border-l-terracotta bg-terracotta/6 p-3"
         >
           <div className="flex items-baseline justify-between gap-3">
-            <span className="font-heading text-[15px]">{f.name}</span>
-            <span className="fact shrink-0 text-[12px] text-basalt/60">
+            <span className="font-heading text-[length:var(--text-body)]">{f.name}</span>
+            <span className="fact shrink-0 text-[length:var(--text-caption)] text-basalt/60">
               {plural(f.times, "time")}
             </span>
           </div>
@@ -286,7 +286,7 @@ export function NextSteps({
   return (
     <div className="grid gap-[18px] md:grid-cols-2">
       <section aria-label="In class" className="panel p-4">
-        <h3 className="mb-3 text-[15px]">In class — for the educator</h3>
+        <h3 className="mb-3 text-[length:var(--text-body)]">In class — for the educator</h3>
         <ol className="grid list-decimal gap-3 pl-5 text-[13.5px]">
           {educator.map((e) => (
             <li key={e.key}>
@@ -302,7 +302,7 @@ export function NextSteps({
         </a>
       </section>
       <section aria-label="At home" className="panel p-4">
-        <h3 className="mb-3 text-[15px]">At home — for parents</h3>
+        <h3 className="mb-3 text-[length:var(--text-body)]">At home — for parents</h3>
         <ol className="grid list-decimal gap-3 pl-5 text-[13.5px]">
           {parent.map((p) => (
             <li key={p.key}>{p.body}</li>

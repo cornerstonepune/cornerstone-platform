@@ -61,7 +61,7 @@ export const SECTIONS: readonly Section[] = [
     icon: "setup",
     pages: [
       { href: "/across", label: "Across classes", match: ["/across"] },
-      { href: "/setup/curriculum", label: "Curriculum", match: ["/setup/curriculum", "/", "/skill-sets", "/worksheets", "/setup"] },
+      { href: "/setup/curriculum", label: "Curriculum", match: ["/setup/curriculum", "/skill-sets", "/worksheets", "/setup"] },
       { label: "Skills to approve", href: "/setup/skills/approve", match: ["/setup/skills"], guide: false },
       { href: "/setup/staff", label: "Staff", match: ["/setup/staff"] },
       { href: "/setup/classes", label: "Classes", match: ["/setup/classes"] },

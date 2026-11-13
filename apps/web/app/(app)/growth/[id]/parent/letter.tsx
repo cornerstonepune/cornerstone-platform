@@ -129,11 +129,11 @@ export function Letter({
   return (
     <article
       data-testid="parent-report"
-      className="relative mx-auto max-w-[800px] bg-chalk px-6 py-8 text-[15px] leading-[1.65] shadow-[var(--shadow-card)] [-webkit-print-color-adjust:exact] [print-color-adjust:exact] md:px-12 md:py-10 print:max-w-none print:bg-transparent print:p-0 print:shadow-none"
+      className="relative mx-auto max-w-[800px] bg-chalk px-6 py-8 text-[length:var(--text-body)] leading-[1.65] shadow-[var(--shadow-card)] [-webkit-print-color-adjust:exact] [print-color-adjust:exact] md:px-12 md:py-10 print:max-w-none print:bg-transparent print:p-0 print:shadow-none"
     >
       {note.approved_by ? null : (
         <p
-          className="mb-6 border border-dashed border-terracotta/60 bg-terracotta/8 p-2 text-center text-[13px] text-terracotta"
+          className="mb-6 border border-dashed border-terracotta/60 bg-terracotta/8 p-2 text-center text-[length:var(--text-label)] text-terracotta"
           data-testid="draft-mark"
         >
           Draft — an educator checks and approves this before it goes to {name}
@@ -152,7 +152,7 @@ export function Letter({
             {classOf(f.grade, band, section)}
           </div>
         </div>
-        <div className="text-right text-[13px] text-basalt/70">
+        <div className="text-right text-[length:var(--text-label)] text-basalt/70">
           {f.from === f.to ? dateWords(f.from) : `${dateWords(f.from)} – ${dateWords(f.to)}`}
           <br />
           {f.answers} answers, each checked by an educator
@@ -177,7 +177,7 @@ export function Letter({
                     ✓
                   </span>
                   <div>
-                    <div className="flex flex-wrap items-center gap-x-2 gap-y-1 font-heading text-[15px]">
+                    <div className="flex flex-wrap items-center gap-x-2 gap-y-1 font-heading text-[length:var(--text-body)]">
                       <span>{s?.skill}</span>
                       {s?.answered ? (
                         <Dots right={s.right ?? 0} of={s.answered} />
@@ -196,7 +196,7 @@ export function Letter({
                     </div>
                     <div className="text-basalt/80">{put(c.sentence)}</div>
                     <div
-                      className="text-[13px] text-basalt/60"
+                      className="text-[length:var(--text-label)] text-basalt/60"
                       data-testid="count"
                     >
                       {s?.recent
@@ -206,7 +206,7 @@ export function Letter({
                           : null}
                     </div>
                     {s?.not_yet ? (
-                      <div className="text-[13px] text-basalt/60">
+                      <div className="text-[length:var(--text-label)] text-basalt/60">
                         Why not yet secure: {s.not_yet}.
                       </div>
                     ) : null}
@@ -230,22 +230,22 @@ export function Letter({
                 <li key={w.id} className="break-inside-avoid">
                   <p>{put(w.explanation)}</p>
                   {ex ? (
-                    <div className="mt-2 grid max-w-[600px] grid-cols-[minmax(0,2fr)_minmax(0,1fr)_minmax(0,1fr)] gap-[2px] text-center text-[13px]">
+                    <div className="mt-2 grid max-w-[600px] grid-cols-[minmax(0,2fr)_minmax(0,1fr)_minmax(0,1fr)] gap-[2px] text-center text-[length:var(--text-label)]">
                       <div className="bg-lime px-4 py-2 text-left">
                         <div className="label">Question</div>
-                        <div className="font-heading text-[15px]">
+                        <div className="font-heading text-[length:var(--text-body)]">
                           {ex.question}
                         </div>
                       </div>
                       <div className="bg-terracotta/10 px-4 py-2">
                         <div className="label">{name} wrote</div>
-                        <div className="font-heading text-[15px] text-terracotta">
+                        <div className="font-heading text-[length:var(--text-body)] text-terracotta">
                           {ex.wrote ?? "—"}
                         </div>
                       </div>
                       <div className="bg-neem/10 px-4 py-2">
                         <div className="label">The answer</div>
-                        <div className="font-heading text-[15px] text-neem">
+                        <div className="font-heading text-[length:var(--text-body)] text-neem">
                           {ex.right ?? "—"}
                         </div>
                       </div>

@@ -40,7 +40,7 @@ export async function Proposals() {
   if (rows === null)
     return (
       <Panel title="What children's answers propose">
-        <p className="text-[14px]">The engine could not be reached, so the proposals cannot be shown just now.</p>
+        <p className="text-[length:var(--text-label)]">The engine could not be reached, so the proposals cannot be shown just now.</p>
       </Panel>
     );
   return (
@@ -86,7 +86,7 @@ export async function Proposals() {
           </table>
         </div>
       ) : (
-        <p className="text-[14px]">No question is far off its level in the answers people have confirmed.</p>
+        <p className="text-[length:var(--text-label)]">No question is far off its level in the answers people have confirmed.</p>
       )}
     </Panel>
   );
@@ -97,12 +97,12 @@ function NewMistakes({ rows }: { rows: NewMistake[] }) {
   const sign = (op: string) => (op === "-" ? "−" : op);
   return (
     <div className="mb-4 grid gap-3">
-      <p className="text-[14px]">
+      <p className="text-[length:var(--text-label)]">
         Children wrote these wrong answers and no named mistake explains them. The same way of working gives every one
         of them, on different questions. Name it to have it recognised from now on, or reject it.
       </p>
       {rows.map((p) => (
-        <form key={p.id} action={decideProposal} className="grid gap-2 border-b pb-3 text-[14px]">
+        <form key={p.id} action={decideProposal} className="grid gap-2 border-b pb-3 text-[length:var(--text-label)]">
           <input type="hidden" name="id" value={p.id} />
           <p>
             <strong>{p.evidence.words}</strong>

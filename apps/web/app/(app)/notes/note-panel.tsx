@@ -80,7 +80,7 @@ export function noteOpened(n: NoteRead, o: { tab?: string; closeHref?: string; f
     full: o.full,
     closeHref: o.closeHref,
     actions: (
-      <div className="flex flex-wrap items-center gap-3 text-[14px]" data-note-head>
+      <div className="flex flex-wrap items-center gap-3 text-[length:var(--text-label)]" data-note-head>
         <span className="font-medium">{n.klass}</span>
         <Late draft={draft} zone={n.zone} />
         {note?.typed ? null : n.recording ? <audio controls preload="none" src={`/api/voice/${id}`} aria-label={W.confirm.play} className="h-9 max-w-full" /> : null}
@@ -96,7 +96,7 @@ export function noteOpened(n: NoteRead, o: { tab?: string; closeHref?: string; f
             {note && note.problems.length && draft.status !== "confirmed" ? (
               <ol className="mb-4 grid gap-2" aria-label="What the reader flagged" data-flagged>
                 {note.problems.map((p) => (
-                  <li key={p} className="border border-[var(--state-late)] bg-[var(--state-late-bg)] px-3 py-2 text-[15px]">
+                  <li key={p} className="border border-[var(--state-late)] bg-[var(--state-late-bg)] px-3 py-2 text-[length:var(--text-body)]">
                     {p}
                   </li>
                 ))}

@@ -27,7 +27,7 @@ export function EditForm({
     <form
       action={editParentReport}
       data-testid="edit-report"
-      className="mx-auto grid max-w-[800px] gap-5 bg-chalk px-6 py-8 text-[14px] shadow-[var(--shadow-card)] md:px-12"
+      className="mx-auto grid max-w-[800px] gap-5 bg-chalk px-6 py-8 text-[length:var(--text-label)] shadow-[var(--shadow-card)] md:px-12"
     >
       <input type="hidden" name="child_id" value={id} />
       <input type="hidden" name="note_id" value={note.id} />
@@ -82,7 +82,7 @@ export function EditForm({
           />
         ))}
       </fieldset>
-      <p className="text-[13px] text-basalt/65">
+      <p className="text-[length:var(--text-label)] text-basalt/65">
         Your words are checked against {name}&apos;s answers as the draft was:
         no number the answers do not hold, no other child&apos;s name, the
         school&apos;s own words. Saving keeps the earlier draft.

@@ -48,7 +48,7 @@ export function HomeTable({ rows, week, section, draws, differentFor, page, page
               {each ? null : ` · ${a.questions.length} questions`}
             </a>
             <details className="mt-1">
-              <summary className="cursor-pointer text-[13px]">Its questions</summary>
+              <summary className="cursor-pointer text-[length:var(--text-label)]">Its questions</summary>
               <Questions name={a.name} level={a.level} questions={a.questions} />
             </details>
           </>

@@ -96,7 +96,7 @@ test("make papers says which skills a class has not been taught, and still offer
 });
 
 test("curriculum says taught and assessed as two words", async ({ page }) => {
-  await page.goto("/?details=1");
+  await page.goto("/setup/curriculum/skills?details=1");
   const table = page.getByRole("table", { name: "The curriculum, grade by grade" });
   await expect(table.getByRole("columnheader", { name: "Assessed", exact: true })).toBeVisible();
   await expect(table.getByRole("columnheader", { name: "Taught", exact: true }), "answers are not a person's word").toHaveCount(0);

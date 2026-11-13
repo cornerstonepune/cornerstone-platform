@@ -203,10 +203,10 @@ export default async function ChildPage({ params, searchParams }: Props) {
                           <div className="label">
                             {fmtDate(p.date)} · {p.paper} · page {p.page} · question {p.slot}
                           </div>
-                          <div className="mt-1 text-[14px] leading-snug">{p.question}</div>
-                          <div className="mt-2 flex flex-wrap items-baseline gap-x-2 text-[13px]">
+                          <div className="mt-1 text-[length:var(--text-label)] leading-snug">{p.question}</div>
+                          <div className="mt-2 flex flex-wrap items-baseline gap-x-2 text-[length:var(--text-label)]">
                             <span className="label">child wrote</span>
-                            {p.read ? <span className="fact text-[15px]">{p.read}</span> : <span className="text-basalt/45">nothing</span>}
+                            {p.read ? <span className="fact text-[length:var(--text-body)]">{p.read}</span> : <span className="text-basalt/45">nothing</span>}
                           </div>
                           {p.working ? <div className="mt-1 text-[12.5px] text-basalt/62">{p.working}</div> : null}
                           <div className="note mt-1">

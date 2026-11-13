@@ -86,7 +86,7 @@ async function TopicOpen({ me, o, states }: { me: Session; o: Open; states: Stat
   const none = skills.filter((s) => s.children <= s.spread.none);
   return (
     <div className="grid gap-3 py-2 pl-5">
-      <p data-testid="topic-papers" className="text-[13px] text-basalt/80">
+      <p data-testid="topic-papers" className="text-[length:var(--text-label)] text-basalt/80">
         {papers.length ? papersWords(papers) : "No checked paper in this topic yet."}
       </p>
       {none.length ? (

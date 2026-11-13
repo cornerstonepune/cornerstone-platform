@@ -295,9 +295,9 @@ async function asEducator(browser: Browser): Promise<Page> {
 }
 
 test("12. the page is absent for an educator and linked only from Setup's details", async ({ page, browser }) => {
-  await page.goto("/");
+  await page.goto("/setup/curriculum/skills");
   expect(await page.locator('a[href="/setup/blocks"]').count()).toBe(0);
-  await page.goto("/?details=1");
+  await page.goto("/setup/curriculum/skills?details=1");
   await expect(page.locator('a[href="/setup/blocks"]')).toHaveCount(1);
   // no other page of the site names it
   const named: string[] = [];
@@ -315,7 +315,7 @@ test("12. the page is absent for an educator and linked only from Setup's detail
   await expect(edu.getByText("This page could not be found")).toBeVisible();
   await expect(edu.getByRole("heading", { name: "The blocks" })).toHaveCount(0);
   expect(await edu.locator("[data-section], [data-fold]").count()).toBe(0);
-  await edu.goto("/?details=1");
+  await edu.goto("/setup/curriculum/skills?details=1");
   expect(await edu.locator('a[href="/setup/blocks"]').count()).toBe(0);
   await edu.context().close();
 });

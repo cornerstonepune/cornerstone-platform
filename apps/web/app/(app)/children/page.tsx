@@ -134,13 +134,13 @@ function ChildrenRail({ notes, first }: { notes: { toConfirm: number; latest: La
         notes ? (
           <section aria-label="Latest notes, any child" data-latest-notes className="grid gap-[var(--space-1)] rounded-[var(--radius-card)] bg-[var(--surface)] p-[var(--space-3)]">
             <h2 className="mb-[var(--space-1)] text-[length:var(--text-eyebrow)] text-[var(--ink-muted)] uppercase">Latest notes, any child</h2>
-            <p data-notes-count className="text-[14px]">
+            <p data-notes-count className="text-[length:var(--text-label)]">
               {notesHref ? <Link href={notesHref} className="text-[var(--link)] underline">Notes</Link> : "Notes"} · {notes.toConfirm} to confirm
             </p>
             {notes.latest.length > 0 ? (
               <ul className="grid gap-[var(--space-2)]">
                 {notes.latest.map((n) => (
-                  <li key={n.id} className="text-[13px]">
+                  <li key={n.id} className="text-[length:var(--text-label)]">
                     <b>{n.who}</b> · {n.state === "to_confirm" ? "to confirm" : "confirmed"}
                     <br />
                     <span className="b-muted">
@@ -151,7 +151,7 @@ function ChildrenRail({ notes, first }: { notes: { toConfirm: number; latest: La
                 ))}
               </ul>
             ) : (
-              <p className="b-muted text-[13px]">No note has come in yet.</p>
+              <p className="b-muted text-[length:var(--text-label)]">No note has come in yet.</p>
             )}
           </section>
         ) : null

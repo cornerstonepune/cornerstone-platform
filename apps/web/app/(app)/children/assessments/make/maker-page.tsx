@@ -23,7 +23,7 @@ function Choice({ name, value, words, line, checked }: { name: string; value: st
     <label className="flex cursor-pointer gap-2 border border-basalt/14 p-2 has-[:checked]:border-basalt">
       <input type="radio" name={name} value={value} defaultChecked={checked} className="mt-[3px]" />
       <span>
-        <span className="block text-[14px] font-medium">{words}</span>
+        <span className="block text-[length:var(--text-label)] font-medium">{words}</span>
         <span className="note block">{line}</span>
       </span>
     </label>
@@ -113,7 +113,7 @@ export default async function Maker({ searchParams }: Props) {
                     <legend className="label mb-2">Children</legend>
                     <div className="grid gap-1 sm:grid-cols-2">
                       {roll.map((c) => (
-                        <label key={c.id} className="flex items-center gap-2 text-[14px]">
+                        <label key={c.id} className="flex items-center gap-2 text-[length:var(--text-label)]">
                           <input type="checkbox" name="c" value={c.id} defaultChecked={ticked.has(c.id)} />
                           <span className="fact w-6 text-basalt/55">{c.roll_no}</span> {c.first_name}
                         </label>

@@ -16,7 +16,7 @@ export function MoveButton({ childId, name, roll, targets, today, back }: { chil
         <form action={moveFromClass} className="mt-2 grid gap-2" aria-label={`Move ${name}`}>
           <input type="hidden" name="child_id" value={childId} />
           <input type="hidden" name="back" value={back} />
-          <label className="grid gap-1 text-[14px]">
+          <label className="grid gap-1 text-[length:var(--text-label)]">
             To class
             <select name="section" required defaultValue="">
               <option value="" disabled>
@@ -29,11 +29,11 @@ export function MoveButton({ childId, name, roll, targets, today, back }: { chil
               ))}
             </select>
           </label>
-          <label className="grid gap-1 text-[14px]">
+          <label className="grid gap-1 text-[length:var(--text-label)]">
             Sr. No. there
             <input name="roll" required defaultValue={roll} pattern="[A-Za-z0-9\-]{1,8}" />
           </label>
-          <label className="grid gap-1 text-[14px]">
+          <label className="grid gap-1 text-[length:var(--text-label)]">
             From
             <input name="from" type="date" required defaultValue={today} />
           </label>

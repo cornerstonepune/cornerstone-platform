@@ -20,7 +20,7 @@ export default async function SetupPage() {
   const me = await requireStaff();
   const coordinator = await namesMayShow();
   const [counts, o, changes] = await Promise.all([coordinator ? setupCounts() : null, setupOverview(me.email), coordinator ? changedLately() : []]);
-  const curriculum = screenHref("curriculum") ?? "/";
+  const curriculum = screenHref("curriculum") ?? "/setup/curriculum";
   const cards = [
     {
       kind: "activity" as const,

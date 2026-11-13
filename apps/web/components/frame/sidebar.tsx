@@ -1,7 +1,7 @@
 "use client";
 
 import NextLink from "next/link";
-import { Suspense, use, useEffect, useId, useRef, useState } from "react";
+import { Suspense, use, useEffect, useId, useRef, useState, type CSSProperties } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Icon } from "@/lib/icons";
 import { FOLD_COOKIE, locate } from "@/lib/menu";
@@ -11,10 +11,24 @@ import { useWalk, type FrameSection } from "./walk";
 // jobs. It folds to its icons (one per section, opening the section's first page) and the fold is kept in a cookie, so the next page
 // draws it the same way from the server with no jump. On a phone it is a drawer: the menu button at the left of the bar opens it as a
 // modal dialog (focus moves in and stays; Escape, the close button, the backdrop or a link close it, and focus returns to the button).
-// The page you are on is marked `aria-current="page"`; the section of the walk is lit. Only Today carries a count (docs/ux-rules.md rule 5).
+// The page you are on is marked `aria-current="page"` and filled with its section's tint; the section of the walk is lit. Only Today carries a count (docs/ux-rules.md rule 5).
 
 const link =
-  "flex min-h-[var(--tap)] items-center gap-[var(--space-2)] rounded-[var(--radius-control)] px-[var(--space-2)] text-[length:var(--text-body)] no-underline hover:bg-[var(--surface)] focus-visible:outline-2 focus-visible:outline-[var(--focus)]";
+  "flex min-h-[var(--tap)] items-center gap-[var(--space-2)] rounded-[var(--radius-control)] px-[var(--space-2)] text-[length:var(--text-body)] no-underline transition-colors duration-100 hover:bg-[var(--panel)] focus-visible:outline-2 focus-visible:outline-[var(--focus)]";
+
+// Each section has its own colour, from the tokens (13 Nov 2026, "the left panel is bleak"): its icon sits in a tile of that colour and the
+// page you are on is filled with its tint. One formula for every section, so a new section is one line here.
+const HUE: Record<string, string> = {
+  today: "var(--brand-clay)",
+  timetable: "var(--subject-numeracy)",
+  children: "var(--kind-child)",
+  assessments: "var(--kind-objective)",
+  school: "var(--brand-olive)",
+};
+const hue = (key: string) => ({ "--sc": HUE[key] ?? "var(--ink-muted)" }) as CSSProperties;
+const TILE =
+  "inline-flex size-[28px] shrink-0 items-center justify-center rounded-[var(--radius-control)] bg-[color-mix(in_srgb,var(--sc)_14%,var(--panel))] text-[var(--sc)]";
+const ON = "bg-[color-mix(in_srgb,var(--sc)_12%,var(--panel))] font-semibold text-[var(--sc)]";
 
 /** The count is the link's description, not its name: the badge is drawn in the link, its words sit beside it (aria-describedby,
  *  on a span that is always there, so the reference never dangles). It arrives after the page (`useWalk().waiting`). */
@@ -60,9 +74,11 @@ function Open({ sections, lit, here, idp }: { sections: readonly FrameSection[];
   return (
     <ul className="grid gap-[var(--space-3)]">
       {sections.map((s) => (
-        <li key={s.key} data-section-group={s.key} data-lit={s.key === lit ? "" : undefined}>
-          <h2 id={`${idp}-${s.key}`} className={`flex items-center font-sans gap-[var(--space-1)] px-[var(--space-2)] pb-[var(--space-1)] text-[length:var(--text-eyebrow)] tracking-[0.08em] uppercase ${s.key === lit ? "text-[var(--ink)]" : "text-[var(--ink-muted)]"}`}>
-            <Icon name={s.icon} size={16} />
+        <li key={s.key} data-section-group={s.key} data-lit={s.key === lit ? "" : undefined} style={hue(s.key)}>
+          <h2 id={`${idp}-${s.key}`} className={`flex items-center font-sans gap-[var(--space-2)] px-[var(--space-1)] pb-[var(--space-1)] text-[length:var(--text-label)] font-semibold ${s.key === lit ? "text-[var(--ink)]" : "text-[var(--ink-muted)]"}`}>
+            <span className={TILE} aria-hidden="true">
+              <Icon name={s.icon} size={16} />
+            </span>
             {s.label}
           </h2>
           <ul aria-labelledby={`${idp}-${s.key}`} className="grid gap-[2px]">
@@ -78,7 +94,7 @@ function Open({ sections, lit, here, idp }: { sections: readonly FrameSection[];
                     data-menu-section={s.key}
                     aria-current={on ? "page" : undefined}
                     aria-describedby={p.counted ? id : undefined}
-                    className={`${link} ${on ? "bg-[var(--surface)] font-medium text-[var(--ink)] shadow-[inset_3px_0_0_var(--brand-clay)]" : "text-[var(--ink)]"}`}
+                    className={`${link} pl-[calc(var(--space-2)+28px+var(--space-2)-var(--space-1))] ${on ? ON : "text-[var(--ink)]"}`}
                   >
                     {p.label}
                     {p.counted ? <Count id={id} /> : null}
@@ -98,16 +114,18 @@ function Folded({ sections, lit }: { sections: readonly FrameSection[]; lit?: st
   return (
     <ul className="grid gap-[var(--space-1)]">
       {sections.map((s) => (
-        <li key={s.key} data-section-group={s.key} data-lit={s.key === lit ? "" : undefined}>
+        <li key={s.key} data-section-group={s.key} data-lit={s.key === lit ? "" : undefined} style={hue(s.key)}>
           <NextLink
             href={s.pages[0].href}
             data-menu-section={s.key}
             aria-label={s.label}
             title={s.label}
             aria-current={s.key === lit ? "true" : undefined}
-            className={`${link} justify-center ${s.key === lit ? "bg-[var(--surface)] text-[var(--brand-clay)]" : "text-[var(--ink-muted)]"}`}
+            className={`${link} justify-center ${s.key === lit ? "bg-[color-mix(in_srgb,var(--sc)_12%,var(--panel))]" : ""}`}
           >
-            <Icon name={s.icon} size={24} />
+            <span className={TILE} aria-hidden="true">
+              <Icon name={s.icon} size={18} />
+            </span>
           </NextLink>
         </li>
       ))}
@@ -131,7 +149,7 @@ export function Sidebar({ folded: start }: { folded: boolean }) {
     <div
       data-sidebar
       data-folded={folded ? "" : undefined}
-      className={`sticky top-0 hidden max-h-dvh shrink-0 self-start overflow-y-auto border-r border-[var(--line)] bg-[var(--panel)] p-[var(--space-2)] min-[701px]:block print:hidden ${folded ? "w-[72px]" : "w-[224px]"}`}
+      className={`sticky top-0 hidden max-h-dvh shrink-0 self-start overflow-y-auto border-r border-[var(--line)] bg-[var(--menu)] p-[var(--space-2)] min-[701px]:block print:hidden ${folded ? "w-[72px]" : "w-[240px]"}`}
     >
       <button
         type="button"
@@ -188,7 +206,7 @@ export function MenuDrawer() {
           // a click on the backdrop (the dialog itself, outside its panel) closes it; a link inside closes it by changing the page
           if (e.target === box.current) box.current.close();
         }}
-        className="m-0 h-dvh max-h-dvh w-[min(85vw,320px)] max-w-none bg-[var(--panel)] p-[var(--space-3)] text-[var(--ink)] shadow-[var(--shadow-card)] backdrop:bg-black/40 min-[701px]:hidden"
+        className="m-0 h-dvh max-h-dvh w-[min(85vw,320px)] max-w-none bg-[var(--menu)] p-[var(--space-3)] text-[var(--ink)] shadow-[var(--shadow-card)] backdrop:bg-black/40 min-[701px]:hidden"
       >
         <div className="mb-[var(--space-3)] flex items-center justify-between">
           <span className="text-[length:var(--text-label)] tracking-[0.08em] text-[var(--ink-muted)] uppercase">Menu</span>

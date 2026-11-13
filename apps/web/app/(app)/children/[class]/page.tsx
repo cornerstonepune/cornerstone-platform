@@ -60,13 +60,13 @@ export default async function Picture({ params, searchParams }: { params: Promis
       action={
         <>
           <FilterBar action={`/children/${classId}`} keep={{ open: sp.open, tab: sp.tab }} filters={[{ name: "skill", label: "Skill", value: skill?.code, all: "All skills", starting: true, options: p.skills.map((s) => [s.code, `${s.name} · ${s.seen} seen`] as const) }]} />
-          <Link href="/children" className="text-[13px]">Show as a table</Link>
+          <Link href="/children" className="text-[length:var(--text-label)]">Show as a table</Link>
         </>
       }
       panel={
         <DetailPanel
           open={chosen ? childOpened(chosen, { tab: sp.tab, closeHref: here({}), full: `/children/${classId}/${encodeURIComponent(chosen.roll)}`, note: "/today" }) : null}
-          summary={{ title: `The class on ${shown}`, stats: tiles, after: <p className="b-label b-muted">Choose a child in the grid to see them here.</p> }}
+          summary={{ title: `The class on ${shown}`, stats: tiles }}
         />
       }
     >

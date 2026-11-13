@@ -14,7 +14,7 @@ test.afterAll(async () => {
 
 test("the library reads case by case, each case with the worksheets that hold it", async ({ page }) => {
   // the bare worksheet library is retired; the cases are reached from Curriculum's details, beside every question in the bank
-  await page.goto("/?details=1");
+  await page.goto("/setup/curriculum/skills?details=1");
   await page.getByRole("link", { name: "Every case, with its worksheets" }).click();
   await expect(page.getByRole("heading", { name: "Worksheets by taxonomy" })).toBeVisible();
 

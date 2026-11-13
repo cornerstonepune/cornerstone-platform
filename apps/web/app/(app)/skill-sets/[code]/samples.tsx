@@ -62,7 +62,7 @@ export function LevelSamples({ samples, level, editing }: { samples: SampleRow[]
         const rubric = of.find((s) => s.rubric)?.rubric;
         return (
           <section key={k} data-kind={k} aria-label={of[0].kind_words} className="grid gap-2 bg-lime p-3">
-            <h5 className="text-[14px] font-semibold">
+            <h5 className="text-[length:var(--text-label)] font-semibold">
               {of[0].kind_words}
               {of[0].open ? <span className="font-normal text-basalt/70"> · a person reads every answer</span> : null}
             </h5>
@@ -73,7 +73,7 @@ export function LevelSamples({ samples, level, editing }: { samples: SampleRow[]
             </ol>
             {editing ? <Opened editing={editing} level={level} kind={k} of={of} /> : null}
             {of[0].open && rubric ? (
-              <details className="text-[13px]">
+              <details className="text-[length:var(--text-label)]">
                 <summary className="cursor-pointer">What a person reads the answer against: {rubric.name}</summary>
                 <ul className="mt-2 grid gap-2">
                   {rubric.criteria.map((c) => (

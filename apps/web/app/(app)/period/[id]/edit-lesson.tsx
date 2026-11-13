@@ -19,11 +19,11 @@ export function EditLesson({ sessionId, text }: { sessionId: string; text: strin
         go(async () => setSaid(await editLesson(sessionId, words, reason)));
       }}
     >
-      <label className="grid gap-1 text-[13px] text-[var(--ink-muted)]">
+      <label className="grid gap-1 text-[length:var(--text-label)] text-[var(--ink-muted)]">
         What the lesson is
         <input className="input" value={words} onChange={(e) => setWords(e.target.value)} name="text" />
       </label>
-      <label className="grid gap-1 text-[13px] text-[var(--ink-muted)]">
+      <label className="grid gap-1 text-[length:var(--text-label)] text-[var(--ink-muted)]">
         Reason (asked once the fortnight is past planning)
         <input className="input" value={reason} onChange={(e) => setReason(e.target.value)} name="reason" />
       </label>

@@ -53,9 +53,9 @@ export function AnswerTable({ rows, names, signedOff = true }: { rows: AnswerRow
             <tr key={a.id ?? i}>
               <td className="fact whitespace-nowrap">{fmtDate(a.date)}</td>
               <td className="fact">{a.slot}</td>
-              <td className="max-w-[300px] text-[13px]">
+              <td className="max-w-[300px] text-[length:var(--text-label)]">
                 {a.question}
-                {a.working ? <div className="mt-1 text-[12px] text-basalt/55">{a.working}</div> : null}
+                {a.working ? <div className="mt-1 text-[length:var(--text-caption)] text-basalt/55">{a.working}</div> : null}
               </td>
               <td className="num">{a.read || <span className="text-basalt/62">reader saw nothing</span>}</td>
               {signedOff ? (

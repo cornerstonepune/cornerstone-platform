@@ -100,6 +100,5 @@ New asks for the backend. None needs a new table; the wireframes mark each with 
 
 - Decided 9 Nov 2026 (frontend orchestrator): the class grid is 8 columns at 1440 and 3 on a phone (SPEC §2 rule 10,
   §5). `picture.done_when`, `picture.phone` and `skill.phone` in `screens.json` say so.
-- Revision 1's spacing scale lives in `docs/frontend/spacing.json`, not `tokens.json`, because the site's copy of
-  `tokens.json` is held byte for byte by UI-14 and revision 1 changes no app code (DESIGN.md §1).
+- Revision 1's spacing scale moved into `tokens.json` on 13 Nov 2026, when the site adopted it (DESIGN.md §1).
 - `specs/CP-27/target-tables.md` says 77, and the first version of this file said 75: 77 is right.

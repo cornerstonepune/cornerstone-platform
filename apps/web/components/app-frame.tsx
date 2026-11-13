@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { isValidElement, type ReactNode } from "react";
 import Link from "@/components/link";
 import { BrandMark } from "./brand-mark";
 import { HelpLink } from "./frame/help-link";
@@ -8,6 +8,7 @@ import { MapLink, ReportLink } from "./frame/foot-links";
 import { SearchBox } from "./frame/search-box";
 import { WalkProvider, type FrameSection } from "./frame/walk";
 import { Body, PageHeader, classesSaid } from "./parts";
+import { DetailPanel } from "./detail-panel";
 import { Icon, type IconName as Icon_ } from "@/lib/icons";
 import { KeyValue } from "@/components/key-value";
 import type { Kind } from "@/components/kind-tile";
@@ -250,7 +251,19 @@ export function Screen({
   panel?: ReactNode;
   children: ReactNode;
 }) {
-  // the wireframes' `.page`: the main column (trail, title, purpose, the action, the page) and the rail beside it from the top
+  // the wireframes' `.page`: the main column (trail, title, purpose, the action, the page) and the rail beside it from the top. A
+  // DetailPanel with nothing chosen is not a column: it is the band under the title, and the page takes the full width.
+  // Its numbers are the band; its other facts (a chart, a timeline, what changed lately) sit at the page's foot, under the work, so the list a
+  // person came for starts on the first screen (13 Nov 2026).
+  type Closed = { open?: unknown; summary: { title: string; stats: readonly unknown[]; after?: ReactNode } };
+  const closed = isValidElement<Closed>(panel) && panel.type === DetailPanel && !panel.props.open ? panel.props : null;
+  const band = closed ? <DetailPanel summary={{ ...closed.summary, after: undefined } as Parameters<typeof DetailPanel>[0]["summary"]} /> : null;
+  const foot = closed?.summary.after ? (
+    <section aria-label={closed.summary.title || "More about this page"} data-panel-more className="b-summary-more mt-[var(--space-5)]">
+      {closed.summary.after}
+    </section>
+  ) : null;
+  if (closed) panel = undefined;
   return (
     <Body>
       <div
@@ -267,12 +280,14 @@ export function Screen({
           <div className={action !== undefined || details ? "mb-[var(--space-3)] flex flex-wrap items-center gap-3" : undefined} data-ux={action !== undefined ? "action" : undefined}>
             {action}
             {details ? (
-              <Link href={details.href} className="ml-auto text-[13px]" data-ux="details">
+              <Link href={details.href} className="ml-auto text-[length:var(--text-label)]" data-ux="details">
                 {details.label}
               </Link>
             ) : null}
           </div>
+          {band}
           {children}
+          {foot}
           {next ? (
             <nav className="mt-[var(--space-4)] border-t border-[var(--line)] pt-[var(--space-3)]" aria-label="Next step">
               <Link href={next.href} className="chip" data-ux="next">

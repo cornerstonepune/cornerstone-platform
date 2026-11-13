@@ -21,7 +21,7 @@ const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 test.afterAll(async () => sql.end());
 
 test("every step of the map is drawn in its workflow, with what it is doing now and where it hands on", async ({ page }) => {
-  await page.goto("/");
+  await page.goto("/setup/curriculum/skills");
   await page.locator("[data-frame]").getByRole("link", { name: "How it works" }).first().click();
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("How it works");
   for (const w of MAP.workflows) {

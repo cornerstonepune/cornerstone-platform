@@ -25,7 +25,7 @@ export function Correct({ marks, back }: { marks: Mark[]; back: string }) {
       }}
     >
       <input type="hidden" name="back" value={back} />
-      <label className="grid gap-1 text-[14px]">
+      <label className="grid gap-1 text-[length:var(--text-label)]">
         Child
         <select name="observation" className="select" required>
           {marks.map((m) => (
@@ -35,7 +35,7 @@ export function Correct({ marks, back }: { marks: Mark[]; back: string }) {
           ))}
         </select>
       </label>
-      <label className="grid gap-1 text-[14px]">
+      <label className="grid gap-1 text-[length:var(--text-label)]">
         New mark
         <select name="outcome" className="select" required defaultValue={OUTCOMES.find(([k]) => k !== marks[0].outcome)?.[0]}>
           {OUTCOMES.map(([k, w]) => (
@@ -45,7 +45,7 @@ export function Correct({ marks, back }: { marks: Mark[]; back: string }) {
           ))}
         </select>
       </label>
-      <label className="grid gap-1 text-[14px]">
+      <label className="grid gap-1 text-[length:var(--text-label)]">
         Why
         <input name="reason" className="input" required maxLength={300} />
       </label>
@@ -53,7 +53,7 @@ export function Correct({ marks, back }: { marks: Mark[]; back: string }) {
         Correct this note
       </button>
       {said ? (
-        <p role="alert" className="text-[14px] text-terracotta">
+        <p role="alert" className="text-[length:var(--text-label)] text-terracotta">
           {said}
         </p>
       ) : null}

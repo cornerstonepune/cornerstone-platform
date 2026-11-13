@@ -76,7 +76,7 @@ export async function EditPaper({ qr, assessment, roll, sp }: { qr: string; asse
         </Notice>
       ) : null}
       {one(sp.error) ? <Notice tone="terracotta">{one(sp.error)}</Notice> : null}
-      <div data-summary className="mb-3 flex flex-wrap items-center gap-3 text-[14px]">
+      <div data-summary className="mb-3 flex flex-wrap items-center gap-3 text-[length:var(--text-label)]">
         <StatusChip state={STATE[r.state][0]} words={STATE[r.state][1]} />
         <span data-count-questions={n}>{`${n} ${n === 1 ? "question" : "questions"}`}</span>
         <span className="text-basalt/70">{r.covers.map((c) => `${c.name} · ${c.level} (${c.n})`).join(" · ")}</span>
@@ -139,7 +139,7 @@ export async function EditPaper({ qr, assessment, roll, sp }: { qr: string; asse
           <FilterBar action={here} filters={filters} shown={filters.length} />
           {chosen ? (
             <Panel title="See it" label="The chosen question">
-              <div className="text-[14px]" data-item={chosen.item_key}>
+              <div className="text-[length:var(--text-label)]" data-item={chosen.item_key}>
                 <Printed q={chosen} />
               </div>
               <p className="note mt-2">
@@ -151,7 +151,7 @@ export async function EditPaper({ qr, assessment, roll, sp }: { qr: string; asse
               ) : (
                 <form action={changeThisPaper} className="mt-3 flex flex-wrap items-center gap-2">
                   {hidden({ item_id: chosen.id, what: "add" })}
-                  <label className="flex items-center gap-2 text-[13px]">
+                  <label className="flex items-center gap-2 text-[length:var(--text-label)]">
                     Put it
                     <select name="at" defaultValue="" className="select !w-auto">
                       <option value="">at the end</option>

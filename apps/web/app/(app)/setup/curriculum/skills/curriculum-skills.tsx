@@ -3,7 +3,7 @@ import { DataTable } from "@/components/data-table";
 import { StatusChip } from "@/components/status-chip";
 import { type SkillLine, statusOf } from "@/lib/curriculum-list";
 import type { Column } from "@/lib/ux-rules";
-import { switchTopic } from "./topic-actions";
+import { switchTopic } from "@/app/(app)/topic-actions";
 
 // The curriculum, a skill to a row (goals/uxn2-curriculum-table.yaml). Nimish, 2026-10-22: "the tags of subject names and
 // all are never aligned, like on the curriculum page ... Can we use tables more for easier viewing". Grade, subject, topic
@@ -23,7 +23,7 @@ function Say({ line }: { line: SkillLine }) {
         <select
           name="class"
           aria-label="Class"
-          className="select py-0 text-[12px]"
+          className="select py-0 text-[length:var(--text-caption)]"
           defaultValue={classes[0]}
         >
           {classes.map((c) => (
@@ -35,7 +35,7 @@ function Say({ line }: { line: SkillLine }) {
       )}
       <button
         type="submit"
-        className="btn secondary whitespace-nowrap text-[12px]"
+        className="btn secondary whitespace-nowrap text-[length:var(--text-caption)]"
       >
         {classes.length === 1
           ? `Say it is taught in ${classes[0]}`

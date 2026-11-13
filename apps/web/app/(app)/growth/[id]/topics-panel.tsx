@@ -85,7 +85,7 @@ export function TopicsPanel({
         ) : null,
     },
     { key: "state", label: "State", status: true, width: "9rem", keep: true, value: (r) => topicStanding(r.skills, states), cell: (r) => <StandingChip standing={topicStanding(r.skills, states)} states={states} /> },
-    { key: "note", label: "Strength or weakness", value: (r) => r.note, cell: (r) => (r.note ? <span className="text-[13px]">{r.note}</span> : null) },
+    { key: "note", label: "Strength or weakness", value: (r) => r.note, cell: (r) => (r.note ? <span className="text-[length:var(--text-label)]">{r.note}</span> : null) },
   ];
   return (
     <Panel id="topics" label="What their answers show" title="What their answers show" aside="topic by topic, from checked answers only">
@@ -157,7 +157,7 @@ function TopicOpen({ name, row, answers, names, states, papers }: { name: string
                 </div>
                 {/* the pages the child wrote, opened here: the photograph is the check on every number above it */}
                 <details className="mt-2">
-                  <summary className="cursor-pointer text-[13px] text-basalt/80 underline underline-offset-2">See the child’s page</summary>
+                  <summary className="cursor-pointer text-[length:var(--text-label)] text-basalt/80 underline underline-offset-2">See the child’s page</summary>
                   <div className="mt-2 grid gap-2">
                     {p.pages.map((n) => (
                       // eslint-disable-next-line @next/next/no-img-element

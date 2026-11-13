@@ -67,11 +67,11 @@ export async function questionOpened(me: Session, key: string, o: { tab?: string
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src={`/api/question/${it.item_key}`} alt="The question as it prints on a paper" className="w-full max-w-[560px] border border-[var(--line)] bg-[var(--panel)]" />
       <section aria-label="Answer">
-        <h3 className="mb-[var(--space-1)] text-[14px]">Answer</h3>
+        <h3 className="mb-[var(--space-1)] text-[length:var(--text-label)]">Answer</h3>
         <Answers it={it} rubric />
       </section>
       <section aria-label="Wrong answers it catches">
-        <h3 className="mb-[var(--space-1)] text-[14px]">Wrong answers it catches</h3>
+        <h3 className="mb-[var(--space-1)] text-[length:var(--text-label)]">Wrong answers it catches</h3>
         {caught.length ? (
           <ul className="grid gap-2 text-[13.5px]" data-caught="">
             {caught.map((c) => (
@@ -89,7 +89,7 @@ export async function questionOpened(me: Session, key: string, o: { tab?: string
         )}
       </section>
       {it.corrected_from_key ? (
-        <p className="text-[14px]">
+        <p className="text-[length:var(--text-label)]">
           This wording replaced an earlier one.{" "}
           <Link href={`${BANK}/${it.corrected_from_key}`} data-original-link="">
             See the original wording
@@ -98,7 +98,7 @@ export async function questionOpened(me: Session, key: string, o: { tab?: string
       ) : null}
       {papers ? (
         <section aria-label="How it has done on papers" className="grid gap-2">
-          <h3 className="text-[14px]">How it has done on papers · {papers}</h3>
+          <h3 className="text-[length:var(--text-label)]">How it has done on papers · {papers}</h3>
           <StackBar
             parts={[
               { state: "right", n: done.right },
@@ -125,7 +125,7 @@ export async function questionOpened(me: Session, key: string, o: { tab?: string
     <div className="grid gap-[var(--space-4)]">
       {canCorrect ? (
         <form action={correctItem} className="grid max-w-[640px] gap-3" data-block="Form">
-          <h3 className="text-[15px]">Correct the wording</h3>
+          <h3 className="text-[length:var(--text-body)]">Correct the wording</h3>
           <input type="hidden" name="item_key" value={it.item_key} />
           <input type="hidden" name="base" value={BANK} />
           <label className="field">
@@ -143,7 +143,7 @@ export async function questionOpened(me: Session, key: string, o: { tab?: string
         </form>
       ) : null}
       <form action={flagItem} className="grid max-w-[640px] gap-3" data-block="Form">
-        <h3 className="text-[15px]">Remove it</h3>
+        <h3 className="text-[length:var(--text-body)]">Remove it</h3>
         <input type="hidden" name="item_key" value={it.item_key} />
         <input type="hidden" name="base" value={BANK} />
         <input type="hidden" name="back" value={o.back} />

@@ -39,7 +39,7 @@ function Notes({ c }: { c: ChildPanel }) {
   const seen = c.history.filter((e) => e.kind !== "assessment");
   return (
     <div className="grid gap-[var(--space-2)]">
-      <ul className="grid gap-1 text-[13px]" data-notes-counts>
+      <ul className="grid gap-1 text-[length:var(--text-label)]" data-notes-counts>
         <li>Notes confirmed · {c.summary.notes}</li>
         <li>Corrections · {c.summary.corrections}</li>
         <li>Newest entry · {c.summary.newest ? dateWords(c.summary.newest) : "none yet"}</li>

@@ -133,7 +133,7 @@ export default async function SkillsToApprove({ searchParams }: { searchParams: 
         Read the first skill
       </Link>
     ) : (
-      <p className="text-[14px]">{tab === "levels" ? "Levels most children are secure at." : "Read, then approve one at a time."}</p>
+      <p className="text-[length:var(--text-label)]">{tab === "levels" ? "Levels most children are secure at." : "Read, then approve one at a time."}</p>
     );
 
   // what a wrong answer counts against, read and approved beside the list (the summary on the right): never with a skill open, so the
@@ -141,10 +141,10 @@ export default async function SkillsToApprove({ searchParams }: { searchParams: 
   const chargesBox = charges.rows.length ? (
     <div className="mt-[var(--space-3)]">
       <Details summary="What a wrong answer counts against" name="charges">
-        <p className="mb-2 text-[14px]">
+        <p className="mb-2 text-[length:var(--text-label)]">
           A wrong answer counts against the part of the skill that broke. {charges.rows.length} belong to something other than the sum they happen in.
         </p>
-        <ul className="grid gap-1 text-[13px]">
+        <ul className="grid gap-1 text-[length:var(--text-label)]">
           {charges.rows.map((r) => (
             <li key={`${r.kind}-${r.code}`}>
               On a {kindWords(words, r.kind)}, <b>{r.mistake.toLowerCase()}</b> counts against <b>{r.skill}</b>.
@@ -153,12 +153,12 @@ export default async function SkillsToApprove({ searchParams }: { searchParams: 
         </ul>
       </Details>
       {q.table === "0" ? (
-        <p role="status" className="mt-2 text-[13px] text-[var(--ink-muted)]">
+        <p role="status" className="mt-2 text-[length:var(--text-label)] text-[var(--ink-muted)]">
           The table was not approved: it changed since this page was opened. Read it again, then approve.
         </p>
       ) : null}
       {q.table === "1" ? (
-        <p role="status" className="mt-2 text-[13px] text-[var(--ink-muted)]">
+        <p role="status" className="mt-2 text-[length:var(--text-label)] text-[var(--ink-muted)]">
           What a wrong answer counts against is approved, in your name.
         </p>
       ) : null}
@@ -218,11 +218,10 @@ export default async function SkillsToApprove({ searchParams }: { searchParams: 
             ],
             after: (
               <>
-                <p className="b-label b-muted">Choose a skill to read its levels and approve it here.</p>
                 {chargesBox}
                 {lately.length ? (
                   <section aria-label="Approved lately" className="mt-[var(--space-3)]">
-                    <h3 className="mb-[var(--space-1)] text-[14px]">Approved lately</h3>
+                    <h3 className="mb-[var(--space-1)] text-[length:var(--text-label)]">Approved lately</h3>
                     <Timeline
                       entries={lately.map((c) => ({
                         kind: c.kind,
@@ -248,12 +247,12 @@ export default async function SkillsToApprove({ searchParams }: { searchParams: 
         </Link>
       </nav>
       {q.approved === "0" ? (
-        <p role="status" className="mb-3 text-[13px] text-[var(--ink-muted)]">
+        <p role="status" className="mb-3 text-[length:var(--text-label)] text-[var(--ink-muted)]">
           Nothing was approved: it changed since this page was opened. Read it again, then approve.
         </p>
       ) : null}
       {q.approved === "1" ? (
-        <p role="status" className="mb-3 text-[13px] text-[var(--ink-muted)]">
+        <p role="status" className="mb-3 text-[length:var(--text-label)] text-[var(--ink-muted)]">
           Approved, in your name.{chosen ? " The next skill is open." : ""}
         </p>
       ) : null}
@@ -304,7 +303,7 @@ export default async function SkillsToApprove({ searchParams }: { searchParams: 
             <div className="grid gap-4" data-block="DataTable">
               {bySubject.map(([name, group]) => (
                 <section key={name} aria-label={name} data-subject={name}>
-                  <h2 className="mb-1 flex items-center gap-2 text-[15px]">
+                  <h2 className="mb-1 flex items-center gap-2 text-[length:var(--text-body)]">
                     {name}
                     <span className="b-count b-num">{rows.filter((x) => (x.subject_name ?? "Other") === name).length}</span>
                   </h2>
@@ -319,7 +318,7 @@ export default async function SkillsToApprove({ searchParams }: { searchParams: 
                 </section>
               ))}
               {pages > 1 ? (
-                <nav className="flex items-center gap-3 text-[13px]" aria-label="Skills waiting for approval pages">
+                <nav className="flex items-center gap-3 text-[length:var(--text-label)]" aria-label="Skills waiting for approval pages">
                   {shown > 1 ? (
                     <Link href={back(shown - 1)} className="chip">
                       ← Earlier

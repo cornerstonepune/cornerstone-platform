@@ -80,7 +80,7 @@ test("a row opens its tasks on the right, ten to a page, each with its own actio
   expect(await rows.count()).toBeGreaterThan(0);
   expect(await rows.count()).toBeLessThanOrEqual(10);
   for (const row of await rows.all()) await expect(row.getByRole("button", { name: "Mark as taught" })).toHaveCount(1);
-  await expect(panel(page).locator("[data-panel-full]")).toHaveAttribute("href", "/");
+  await expect(panel(page).locator("[data-panel-full]")).toHaveAttribute("href", "/setup/curriculum/skills");
   await page.keyboard.press("Escape");
   await expect(page).not.toHaveURL(/open=/);
 });

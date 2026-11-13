@@ -42,7 +42,7 @@ export function ApprovalLedger({ packs }: { packs: Pack[] }) {
   return (
     <section aria-label="The approval ledger" data-rail-part="ledger">
       <h2 className="mb-[var(--space-1)] text-[length:var(--text-eyebrow)] text-[var(--ink-muted)] uppercase">The approval ledger</h2>
-      <ul className="grid gap-[var(--space-2)] text-[14px]">
+      <ul className="grid gap-[var(--space-2)] text-[length:var(--text-label)]">
         {packs.map((p) => (
           <li key={p.name} data-pack="">
             <b>{p.name}</b>

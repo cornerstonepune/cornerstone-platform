@@ -71,7 +71,7 @@ export default async function LibraryPage({ searchParams }: Props) {
       />
       <Body>
         <Panel title="What the bank is">
-          <div className="grid max-w-[820px] gap-2 text-[14px] leading-relaxed">
+          <div className="grid max-w-[820px] gap-2 text-[length:var(--text-label)] leading-relaxed">
             <p>
               The question bank is every question the engine has made and checked: {n(totals.bank)} today, at{" "}
               {order.slice(0, -1).join(", ")} and {order.at(-1)}. {n(totals.active)} of them are of the {grid.length} skills taught in a class, the ones a
@@ -91,7 +91,7 @@ export default async function LibraryPage({ searchParams }: Props) {
         </Panel>
         <div className="h-[18px]" />
         {q.error ? (
-          <p role="alert" className="mb-3 text-[14px]">
+          <p role="alert" className="mb-3 text-[length:var(--text-label)]">
             {q.error}
           </p>
         ) : null}
@@ -116,7 +116,7 @@ export default async function LibraryPage({ searchParams }: Props) {
                       <td className="min-w-[180px]">
                         <Link href={link({ set: r.code, difficulty: undefined, fmt: undefined })}>{r.name}</Link>
                       </td>
-                      <td className="text-[12px] text-basalt/62">{r.fmts.map((f) => kindWords(words, f)).join(" · ")}</td>
+                      <td className="text-[length:var(--text-caption)] text-basalt/62">{r.fmts.map((f) => kindWords(words, f)).join(" · ")}</td>
                       <td className="num">{n(r.n)}</td>
                     </tr>
                   ))}
@@ -149,7 +149,7 @@ export default async function LibraryPage({ searchParams }: Props) {
                         <Link href={link({ set: r.code, difficulty: undefined, fmt: undefined })}>{r.name}</Link>
                       </td>
                       <td className="num whitespace-nowrap">{g.name(r.band)}</td>
-                      <td className="min-w-[180px] text-[12px] text-basalt/62">
+                      <td className="min-w-[180px] text-[length:var(--text-caption)] text-basalt/62">
                         {r.fmts.map((f) => kindWords(words, f)).join(" · ")}
                       </td>
                       {order.map((d) => {
@@ -281,7 +281,7 @@ export default async function LibraryPage({ searchParams }: Props) {
             )}
 
             {pages > 1 ? (
-              <nav className="mt-4 flex flex-wrap items-center gap-4 text-[13px]" aria-label="Pages of questions">
+              <nav className="mt-4 flex flex-wrap items-center gap-4 text-[length:var(--text-label)]" aria-label="Pages of questions">
                 {page > 1 ? <Link href={link({ page: String(page - 1) })}>← Previous {PER_PAGE}</Link> : null}
                 <span className="fact text-basalt/55">
                   page {n(page)} of {n(pages)}

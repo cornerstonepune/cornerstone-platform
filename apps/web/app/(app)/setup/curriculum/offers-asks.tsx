@@ -39,7 +39,7 @@ export async function Offers({ offers, page, href, back, reviews }: { offers: Of
   return (
     <section className="mt-6" aria-label="Offers waiting" data-offers>
       <h2 className="mb-2 text-[16px]">Offers waiting</h2>
-      <p className="mb-2 text-[13px] text-[var(--ink-muted)]">Skills the machine offers for an activity the examples did not show. Yes adds the skill to that activity; No closes the offer.</p>
+      <p className="mb-2 text-[length:var(--text-label)] text-[var(--ink-muted)]">Skills the machine offers for an activity the examples did not show. Yes adds the skill to that activity; No closes the offer.</p>
       <DataTable label="Offers" columns={columns} rows={offers} rowKey={(o) => o.id} more={{ page, href }} extras={{ attrs: (o) => ({ "data-offer": o.id }) }} />
     </section>
   );
@@ -75,7 +75,7 @@ export function Asks({ all, me, page, href, back, empty }: { all: Ask[]; me: { n
               <input type="hidden" name="code" value={a.code} />
               <input type="hidden" name="answer" value="corrected" />
               <input type="hidden" name="back" value={back} />
-              <label className="grid gap-1 text-[13px]">
+              <label className="grid gap-1 text-[length:var(--text-label)]">
                 <span>What it should say<span className="sr-only"> ({a.code})</span></span>
                 <textarea name="correction" rows={2} className="border border-[var(--line)] p-2" data-ask-correction />
               </label>
@@ -89,12 +89,12 @@ export function Asks({ all, me, page, href, back, empty }: { all: Ask[]; me: { n
   return (
     <section className="mt-6" aria-label="Questions to answer" id="asks" data-asks>
       <h2 className="mb-2 text-[16px]">Questions to answer</h2>
-      <p className="mb-2 text-[13px] text-[var(--ink-muted)]">What the engine drafted about the curriculum and wants a person to agree with or correct. Your name goes on the answer.</p>
-      {empty ? <p role="status" className="mb-2 text-[13px] text-[var(--ink-muted)]">A correction needs its words: write what it should say.</p> : null}
+      <p className="mb-2 text-[length:var(--text-label)] text-[var(--ink-muted)]">What the engine drafted about the curriculum and wants a person to agree with or correct. Your name goes on the answer.</p>
+      {empty ? <p role="status" className="mb-2 text-[length:var(--text-label)] text-[var(--ink-muted)]">A correction needs its words: write what it should say.</p> : null}
       {mineFirst.length ? (
         <DataTable label="Questions waiting" columns={columns} rows={mineFirst} rowKey={(a) => a.code} more={{ page, href }} extras={{ attrs: (a) => ({ "data-ask": a.code }) }} />
       ) : (
-        <p className="text-[14px]">Every question is answered.</p>
+        <p className="text-[length:var(--text-label)]">Every question is answered.</p>
       )}
       {answered.length ? (
         <div className="mt-3">

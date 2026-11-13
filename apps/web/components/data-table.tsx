@@ -54,7 +54,7 @@ export function DataTable<T>({
       <div className="grid gap-4" data-block="DataTable">
         {groupRows(rows, by).map((g) => (
           <section key={g.name} aria-label={g.name}>
-            <h3 className="mb-1 text-[14px]">
+            <h3 className="mb-1 text-[length:var(--text-label)]">
               {g.name}
               {counted ? (
                 <>
@@ -88,7 +88,7 @@ export function DataTable<T>({
     <div data-block="DataTable">
       <Grid label={label} cols={cols} rows={p.rows} rowKey={rowKey} extras={extras} sort={sort} dense={dense} />
       {p.pages > 1 ? (
-        <nav className="mt-2 flex items-center gap-3 text-[13px]" aria-label={`${label} pages`}>
+        <nav className="mt-2 flex items-center gap-3 text-[length:var(--text-label)]" aria-label={`${label} pages`}>
           {p.page > 1 ? <Link href={more.href(p.page - 1)} className="chip">← Earlier</Link> : null}
           <span>Page {p.page} of {p.pages}</span>
           {p.page < p.pages ? <Link href={more.href(p.page + 1)} className="chip">Later →</Link> : null}

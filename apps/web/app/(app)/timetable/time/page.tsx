@@ -117,7 +117,6 @@ export default async function TimeBySubjectPage({ searchParams }: Props) {
               { id: "within", n: counts.within, line: "within the target", tone: counts.within ? "ok" : undefined },
               { id: "off", n: counts.off, line: "over or short", tone: counts.off ? "act" : undefined },
             ],
-            after: <p className="b-label b-muted">Choose a part of a week&apos;s column to see those lessons here.</p>,
           }}
         />
       }

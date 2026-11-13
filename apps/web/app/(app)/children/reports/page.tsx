@@ -145,7 +145,6 @@ export default async function ReportsScreen({ searchParams }: Props) {
             />
           </section>
         ) : null}
-        <p className="b-label b-muted">Choose a child to read and approve their report here.</p>
       </>
     ),
   };

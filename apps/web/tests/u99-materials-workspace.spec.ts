@@ -60,7 +60,8 @@ test("with nothing chosen the right side counts the days shown: lines, to confir
   await expect(stat(page, "lines")).toHaveText(String(lines));
   await expect(stat(page, "to confirm")).toHaveText(String(await page.locator('li[data-line] [data-chip="toConfirm"]').count()));
   await expect(stat(page, "days")).toHaveText(String(await page.locator("#lines [data-day]").count()));
-  await expect(page.locator("[data-panel=summary]")).toContainText("Choose a line to see it here.");
+  // nothing chosen: no right column, the numbers are the band under the title (13 Nov 2026)
+  await expect(page.locator("aside.b-dpanel")).toHaveCount(0);
 });
 
 test("choosing a line opens its detail on the right: how many, where it is kept, the activity that needs it; the address carries it", async ({ page }) => {

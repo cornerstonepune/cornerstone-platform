@@ -41,12 +41,10 @@ export default async function AcrossPage({ searchParams }: { searchParams: Promi
       { id: "missing", n: a.missing.length, line: `papers not back over ${a.days} days`, tone: a.missing.length ? ("wait" as const) : undefined },
       { id: "struggling", n: a.struggling.length, line: "children needing help in two or more subjects", tone: a.struggling.length ? ("act" as const) : undefined },
     ],
-    after: (
-      <p className="b-label b-muted">
-        Choose a class to see the rows behind its numbers.
-        {a.subjects < 2 ? ` Only ${a.subjects === 1 ? "one subject has" : "no subject has"} children's results so far, so no child can need help in two.` : ""}
-      </p>
-    ),
+    after:
+      a.subjects < 2 ? (
+        <p className="b-label b-muted">{`Only ${a.subjects === 1 ? "one subject has" : "no subject has"} children's results so far, so no child can need help in two.`}</p>
+      ) : null,
   };
   return (
     <Screen

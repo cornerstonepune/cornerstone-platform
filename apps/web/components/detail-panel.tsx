@@ -9,8 +9,8 @@ import { PanelReturn, PanelShell, PanelTabs } from "./detail-panel-client";
 // DetailPanel (docs/frontend/page-charter.md A2): the right side of a page. Choosing a thing on the page (a lesson block, a child, a paper)
 // opens its detail here, in tabs, without leaving the page; the address carries `?open=<kind>:<id>` (and `tab=`), so it can be linked,
 // reloaded, and opened full page at the thing's own address. Close (the ×, or Escape) and you are where you were, focus back on the thing.
-// With nothing chosen it is the page's summary: three or four stat tiles, never a list of links (the sidebar holds those). On a phone an
-// open panel covers the page as a sheet; the summary sits under the page.
+// With nothing chosen there is no right column: the page's summary (its few numbers, never a list of links) is a band under the title, and
+// the page takes the full width. On a phone an open panel covers the page as a sheet.
 export type PanelTab = { key: string; label: string; body: ReactNode };
 export type Opened = {
   /** `<kind>:<id>`, as the address says it; the thing on the page that opened it carries the same `data-open-key`. */
@@ -42,16 +42,18 @@ export function parseOpen(v: string | undefined): { kind: string; id: string } |
 
 /** `inline`: drawn where it stands, never as a sheet over the page, and it takes no focus (the blocks gallery's sample). */
 export function DetailPanel({ open, summary, inline }: { open?: Opened | null; summary: { title: string; stats: readonly Stat[]; after?: ReactNode }; inline?: boolean }) {
+  // Nothing chosen: no right column (Nimish, 13 Nov 2026: "the right panel is as useless as it gets"). The page's few numbers and its extra
+  // facts sit in one band under the title, across the page's width; Screen draws this band there (components/app-frame.tsx).
   if (!open)
     return (
-      <aside data-block="DetailPanel" data-panel="summary" aria-labelledby="panel-summary-h" className="b-dpanel">
-        <h2 id="panel-summary-h" className="b-dpanel-eyebrow">
-          {summary.title}
+      <section data-block="DetailPanel" data-panel="summary" aria-labelledby="panel-summary-h" className="b-summary">
+        <h2 id="panel-summary-h" className="sr-only">
+          {summary.title || "Summary"}
         </h2>
-        <StatTiles label={summary.title} stats={summary.stats} />
-        {summary.after}
+        {summary.stats.length ? <StatTiles label={summary.title || "Summary"} stats={summary.stats} /> : null}
+        {summary.after ? <div className="b-summary-more">{summary.after}</div> : null}
         <PanelReturn />
-      </aside>
+      </section>
     );
   const tab = open.tabs.some((t) => t.key === open.tab) ? open.tab! : open.tabs[0]?.key;
   return (

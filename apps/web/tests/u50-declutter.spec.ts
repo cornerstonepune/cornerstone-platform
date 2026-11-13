@@ -94,7 +94,7 @@ test("Curriculum shows each skill in a row with its levels and status; the bank'
   browser,
 }) => {
   const page = await asEducator(browser);
-  await page.goto("/");
+  await page.goto("/setup/curriculum/skills");
   const table = page.getByRole("table", { name: "The curriculum" });
   // grade, subject, topic, skill, the school's levels and one status: aligned columns, never a tree to open
   await expect(table.getByRole("columnheader")).toHaveCount(6);

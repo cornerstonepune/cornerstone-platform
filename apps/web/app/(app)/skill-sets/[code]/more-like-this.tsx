@@ -18,7 +18,7 @@ function HowMany({ most }: { most: number }) {
 /** Under an English sample: make more like it. */
 export function EnglishMore({ code, level, kind, ord, most }: { code: string; level: string; kind: string; ord: number; most: number }) {
   return (
-    <details className="text-[13px]">
+    <details className="text-[length:var(--text-label)]">
       <summary className="cursor-pointer">Make more like this</summary>
       <form action={moreEnglish} className="mt-2 flex flex-wrap items-center gap-2">
         <input type="hidden" name="code" value={code} />
@@ -40,7 +40,7 @@ export async function MathsMore({ code, level }: { code: string; level: string }
   const [{ most }] = await sql<{ most: number }[]>`
     select coalesce((select value::int from config where key = 'generate.max_per_request'), 20) as most`;
   return (
-    <details className="text-[13px]" data-more={level}>
+    <details className="text-[length:var(--text-label)]" data-more={level}>
       <summary className="cursor-pointer">More questions like a sample</summary>
       <form action={moreMaths} className="mt-2 grid gap-2">
         <input type="hidden" name="code" value={code} />

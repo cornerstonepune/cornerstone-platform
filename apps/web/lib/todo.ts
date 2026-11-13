@@ -158,7 +158,7 @@ export const TODO_GROUPS: readonly Group[] = [
   { key: "notes", title: W.groups.notes, of: ["to confirm", "to confirm"], kinds: ["note"], home: "/notes" },
   { key: "skills", title: "Skills to approve", of: ["skill", "skills"], kinds: ["skill"], home: "/setup/skills/approve" },
   { key: "asks", title: "Questions to answer", of: ["question", "questions"], kinds: ["ask"], home: "/setup/curriculum#asks" },
-  { key: "taught", title: "Topics to mark as taught", of: ["topic", "topics"], kinds: ["taught"], home: "/" },
+  { key: "taught", title: "Topics to mark as taught", of: ["topic", "topics"], kinds: ["taught"], home: "/setup/curriculum/skills" },
   { key: "generate", title: "Assessments to make", of: ["assessment", "assessments"], kinds: ["generate"], home: "/children/assessments?make=class" },
   { key: "classpapers", title: "Class papers to approve", of: ["class paper", "class papers"], kinds: ["classpaper"], home: "/children/assessments?status=print" },
   { key: "scans", title: "Papers to read again", of: ["scan", "scans"], kinds: ["empty"], home: "/children/assessments?view=reading" },

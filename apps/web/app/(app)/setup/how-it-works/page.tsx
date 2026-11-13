@@ -50,8 +50,8 @@ export default async function HowItWorks() {
                 <h2 id={`wf-${w.code}`} className="text-[18px]">
                   {w.code} · {w.name}
                 </h2>
-                <p className="text-[14px] text-basalt/80">
-                  {w.does} <span className="fact text-[12px] text-basalt/80">{w.folder ?? "no code yet"}</span>
+                <p className="text-[length:var(--text-label)] text-basalt/80">
+                  {w.does} <span className="fact text-[length:var(--text-caption)] text-basalt/80">{w.folder ?? "no code yet"}</span>
                 </p>
               </div>
               <div className="grid gap-[12px] lg:grid-cols-2">
@@ -68,7 +68,7 @@ export default async function HowItWorks() {
             <ul className="grid gap-2 text-[13.5px]">
               {SHARED.map((p) => (
                 <li key={p.code}>
-                  <b>{p.name}</b> <span className="fact text-[12px] text-basalt/80">{p.folder}</span> — {p.does}
+                  <b>{p.name}</b> <span className="fact text-[length:var(--text-caption)] text-basalt/80">{p.folder}</span> — {p.does}
                   {!p.subject.any ? <span className="text-basalt/80"> One subject only: {p.subject.note}</span> : null}
                 </li>
               ))}
@@ -82,7 +82,7 @@ export default async function HowItWorks() {
             <ul className="grid gap-2 text-[13.5px]">
               {HANDOVERS.map((h) => (
                 <li key={`${h.from}-${h.to}`}>
-                  <span className="fact text-[12px]">{h.from}</span> → <span className="fact text-[12px]">{h.to}</span>: {h.why}
+                  <span className="fact text-[length:var(--text-caption)]">{h.from}</span> → <span className="fact text-[length:var(--text-caption)]">{h.to}</span>: {h.why}
                 </li>
               ))}
             </ul>
@@ -107,15 +107,15 @@ function StepCard({ s, m }: { s: Step; m: Measure | undefined }) {
         <StatusChip state={built.state} words={built.words} />
         <StatusChip state={s.subject.any ? "done" : "waiting"} words={s.subject.any ? "any subject" : "one subject only"} />
       </div>
-      <p className="mt-2 text-[14px] leading-snug">{s.does}</p>
+      <p className="mt-2 text-[length:var(--text-label)] leading-snug">{s.does}</p>
       <p className="mt-1 text-[12.5px] text-basalt/80">Who: {s.who}</p>
       {m ? (
-        <p className="mt-3 text-[14px]" data-measure={s.code}>
+        <p className="mt-3 text-[length:var(--text-label)]" data-measure={s.code}>
           <span className="font-heading text-[22px]">{m.n.toLocaleString("en-IN")}</span> {m.words}
           {m.when ? <span className="text-basalt/80"> · last {dateWords(m.when)}</span> : null}
         </p>
       ) : (
-        <p className="mt-3 text-[13px] text-basalt/80">Nothing to count yet.</p>
+        <p className="mt-3 text-[length:var(--text-label)] text-basalt/80">Nothing to count yet.</p>
       )}
       <p className="mt-2 text-[12.5px] text-basalt/80">
         Takes <span className="fact">{s.takes.join(", ")}</span> · gives <span className="fact">{s.gives.join(", ")}</span>

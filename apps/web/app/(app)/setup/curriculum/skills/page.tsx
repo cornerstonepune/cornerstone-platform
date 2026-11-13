@@ -53,7 +53,7 @@ export default async function CurriculumPage({ searchParams }: Props) {
       ) as [string, string][],
     );
     if (n > 1) p.set("page", String(n));
-    return p.size ? `/?${p}` : "/";
+    return p.size ? `/setup/curriculum/skills?${p}` : "/setup/curriculum/skills";
   };
   const count = (st: string) => lines.filter((l) => statusOf(l) === st).length;
   const grades = [
@@ -91,7 +91,7 @@ export default async function CurriculumPage({ searchParams }: Props) {
       }
       next={{ href: "/today", label: "Today" }}
       details={{
-        href: details ? "/" : "/?details=1",
+        href: details ? "/setup/curriculum/skills" : "/setup/curriculum/skills?details=1",
         label: details ? "Hide question bank details" : "Question bank details",
       }}
     >
@@ -142,7 +142,7 @@ export default async function CurriculumPage({ searchParams }: Props) {
       ) : (
         <>
           <FilterBar
-            action="/"
+            action="/setup/curriculum/skills"
             filters={[
               {
                 name: "grade",

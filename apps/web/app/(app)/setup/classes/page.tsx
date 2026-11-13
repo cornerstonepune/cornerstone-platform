@@ -65,7 +65,7 @@ export default async function ClassesPage({ searchParams }: Props) {
       stage={`The school · ${total} children`}
       title="Classes and children"
       purpose="Each class, its grade, its children by Sr. No., and who teaches it. Move a child to another class; every change is kept with who made it."
-      action={<p className="m-0 text-[14px]">Move a child: open the class, then press Move on the child&rsquo;s row.</p>}
+      action={<p className="m-0 text-[length:var(--text-label)]">Move a child: open the class, then press Move on the child&rsquo;s row.</p>}
       panel={
         <DetailPanel
           open={
@@ -73,7 +73,7 @@ export default async function ClassesPage({ searchParams }: Props) {
               ? classOpened(open, { children, log, targets, today, back: here({ open: `class:${open.id}` }), picture: screenHref("picture", { class: open.id }), tab: q.tab, closeHref: here() })
               : null
           }
-          summary={{ title: "The school's classes", stats, after: <p className="b-label b-muted">Choose a class to see its children and moves here.</p> }}
+          summary={{ title: "The school's classes", stats }}
         />
       }
     >
@@ -88,7 +88,7 @@ export default async function ClassesPage({ searchParams }: Props) {
       {shown.length ? (
         <DataTable label="Classes" columns={columns} rows={shown} rowKey={(c) => c.id} limit={Math.max(1, shown.length)} more={{ page: 1, href: () => HERE }} />
       ) : (
-        <p className="text-[13px] text-[var(--ink-muted)] mt-2">No class matches these filters.</p>
+        <p className="text-[length:var(--text-label)] text-[var(--ink-muted)] mt-2">No class matches these filters.</p>
       )}
     </Screen>
   );

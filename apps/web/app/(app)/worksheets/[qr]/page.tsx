@@ -54,7 +54,7 @@ export default async function PaperPage({ params }: Props) {
         sub={`Printed code ${p.qr_code}: the printed page, how it was made, and its answer key.`}
       />
       <Body>
-        <Link href={back} className="mb-4 inline-block text-[13px]">
+        <Link href={back} className="mb-4 inline-block text-[length:var(--text-label)]">
           ← {p.section && p.week ? `${p.section}'s papers, ${weekWords(p.week)}` : "Every paper"}
         </Link>
         <div className="grid gap-[18px] lg:grid-cols-[minmax(0,1fr)_400px]">

@@ -26,16 +26,13 @@ token (`var(--state-ok)`); nobody types a hex. `wireframes/kit.mjs` writes them 
 rest, loaded by next/font on the site; wireframes fall back to Georgia and the system sans (no font host, ever).
 Tabular figures (`.num`) in every column of numbers.
 
-**Spacing** (revision 1, Nimish, 9 Nov 2026, issue #546: "more spacing"): `--space-0`…`--space-7` = 4 / 6 / 12 / 20 / 32 / 48 / 64 / 96, from
-`docs/frontend/spacing.json`; `--tap` 44 (least size of anything tappable). `space-0` is the hairline inside a chart or a
+**Spacing** (revision 1, Nimish, 9 Nov 2026, issue #546: "more spacing"; on the site since 13 Nov 2026): `--space-0`…`--space-7` = 4 / 6 / 12 / 20 / 32 / 48 / 64 / 96, in
+`tokens.json`; `--tap` 44 (least size of anything tappable). `space-0` is the hairline inside a chart or a
 strip (the segments of a bar, the days of a week); `space-1` between an icon and its word; `space-2` between rows and
 chips; `space-3` inside a card and the phone gutter; `space-4` between blocks, between groups of children and the main
 column's padding; `space-5` above a section and between the main column and the rail; `space-6` under the title block;
 `space-7` page bottom. **Every gap, padding and margin in the kit is one of these tokens (or 0 or auto): `check.mjs` fails
-a typed length in `components.css`.** `tokens.json` still holds the old scale (4 / 8 / 16 / 24 / 32 / 48 / 64) on purpose:
-`apps/web/design-system/tokens.json` must stay byte for byte equal to it (UI-14), and this revision changes no app code.
-The builder who adopts revision 1 copies `spacing.json`'s values into `tokens.json` `spacing`, runs
-`node apps/web/scripts/tokens.mjs`, deletes `spacing.json` and the `spacingTokens` lines of `kit.mjs` in the same commit.
+a typed length in `components.css`.** The site and the kit read the same scale from `tokens.json` (13 Nov 2026; `spacing.json` is gone).
 **Radii** `--radius-card` 14 (cards, rows, cells, squares, the rail box), `--radius-control` 10 (buttons, inputs, tiles),
 `--radius-pill` (chips, the badge). **Shadow** `--shadow-card`, the one elevation, replacing a card's border; never on a
 chip, text, a tinted square or the logo. **Motion** `.press`: scale `--press-scale` in `--press-transition` on `:active`;
@@ -65,11 +62,13 @@ phone (≤700 px wide): Menu button, mark, search, person; the sidebar is a draw
 - **Bar**: the BrandMark links to Today; search; the person and acting-as (coordinator); help; sign out. Its items, with the sidebar's
   lines and the Menu button, are `screens.json` `bar`, in that order.
 - **Sidebar**: the sections of `apps/web/lib/menu.ts` (My day, Timetable, Children, Assessments, School for the coordinator), each a
-  heading and its pages; the page you are on `aria-current="page"` with a `brand-clay` edge; the section of the walk lit. It folds to one
+  heading with its icon in a tile of the section's colour (My day clay, Timetable numeracy blue, Children child teal, Assessments
+  objective violet, School olive) on the `menu` ground; the page you are on `aria-current="page"`, filled with its section's tint; the
+  section of the walk lit. It folds to one
   icon per section (a cookie keeps the fold); on a phone it is a drawer. Only Today carries a count.
 - **Trail**: the section, then the thing (two levels) plus the browser's Back.
 - **DetailPanel** (right): what a page's thing is, in tabs; the same tabs for the same kind (a lesson: Activity · Children · Materials ·
-  History). Escape or × closes it and focus returns to the thing. With nothing chosen: the page's stat tiles. A page not yet moved to the
+  History). Escape or × closes it and focus returns to the thing. With nothing chosen: no panel; the page's stat pills are a band under the title and its other facts sit at its foot (13 Nov 2026). A page not yet moved to the
   charter keeps its old **rail** (ChildPeek, "Connected to", Capture here) until its own screen's pull request.
 - **Phone**: the switch is a container query on `.frame` in the kit, a 700 px media query on the site.
 
@@ -213,8 +212,7 @@ same names, and the same two widths.
 
 | File | What it is |
 |---|---|
-| `spacing.json` | the revision 1 spacing scale (§1), until the site adopts it into `tokens.json` |
-| `wireframes/kit.mjs` | writes `kit.css` from `tokens.json`, `spacing.json`, the icon map and `components.css` |
+| `wireframes/kit.mjs` | writes `kit.css` from `tokens.json`, the icon map and `components.css` |
 | `wireframes/components.css` | the blocks' rules, tokens only (the source; edit this, then run kit.mjs) |
 | `wireframes/kit.css` | generated; the one stylesheet every wireframe links |
 | `wireframes/schema.mjs` | replays `supabase/migrations` to know every table's columns today |

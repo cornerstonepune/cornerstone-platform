@@ -28,8 +28,8 @@ export function SkillLine({ s, of, answers, names, states }: { s: ChildSkill; of
               keeps: {mistakeName(names, s.repeating_misconception, null, s.skill_code)}
             </span>
           ) : null}
-          {blank ? <span className="text-[12px] text-basalt/62">{blank} left blank</span> : null}
-          <span className="ml-auto text-[12px] text-basalt/55">last seen {fmtDate(s.last_seen)}</span>
+          {blank ? <span className="text-[length:var(--text-caption)] text-basalt/62">{blank} left blank</span> : null}
+          <span className="ml-auto text-[length:var(--text-caption)] text-basalt/55">last seen {fmtDate(s.last_seen)}</span>
         </summary>
         <div className="border-t border-basalt/12">
           {answers.length ? <AnswerTable rows={answers} names={names} /> : <p className="note p-3">The answers are on papers not yet re-read.</p>}

@@ -67,9 +67,9 @@ export function LessonForm({ rolls, roster, levels, klass, sessionId, classId, d
         </span>
       </button>
       <fieldset className="grid gap-2" data-levels>
-        <legend className="mb-1 text-[13px] text-[var(--ink-muted)]">{W.level.label}</legend>
+        <legend className="mb-1 text-[length:var(--text-label)] text-[var(--ink-muted)]">{W.level.label}</legend>
         {W.level.values.map((n) => (
-          <label key={n} className="flex items-start gap-2 text-[14px]">
+          <label key={n} className="flex items-start gap-2 text-[length:var(--text-label)]">
             <input type="radio" name="level" value={n} checked={level === n} onChange={() => setLevel(n)} className="mt-1" />
             <span>
               <b>{n}</b>

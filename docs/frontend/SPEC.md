@@ -98,7 +98,7 @@ is added. The fonts and every colour are in `docs/frontend/tokens.json`, which t
 `apps/web/design-system/tokens.json`.
 
 **Space and shape**: 4 / 6 / 12 / 20 / 32 / 48 / 64 / 96 px, the more generous scale of wireframe revision 1 (Nimish, 9 Nov
-2026, issue 546; `docs/frontend/spacing.json`, which the site adopts into `tokens.json` when it is built); 44 px tap. Three shapes, each with a meaning: a card (14 px corners:
+2026, issue 546; in `tokens.json` since 13 Nov 2026); 44 px tap. Three shapes, each with a meaning: a card (14 px corners:
 cards, period rows, timetable cells, a child's square, the rail box), a control (10 px: buttons, inputs, tabs, icon tiles),
 a pill (a state chip, the count badge, a name chip). One elevation, `shadow-card`, a faint ring and a soft shadow under a
 card, a period row and the chosen tab; it replaces the card's border. No other shadow, no gradient; hairlines separate rows

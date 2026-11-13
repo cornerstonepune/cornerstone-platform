@@ -75,7 +75,7 @@ async function gradeQuestions(): Promise<number> {
 
 test("Curriculum opens on the educator's grade, every other grade closed", async ({ browser }) => {
   const page = await asEducator(browser);
-  await page.goto("/?details=1");
+  await page.goto("/setup/curriculum/skills?details=1");
   const rows = curriculum(page).locator('tbody tr[data-depth="0"]');
   await expect(rows.first()).toBeVisible();
   for (const row of await rows.all()) {
@@ -95,11 +95,11 @@ test("Curriculum opens on the educator's grade, every other grade closed", async
 test("Curriculum counts the children assessed in the educator's own class", async ({ browser, page }) => {
   const children = (p: Page) => curriculum(p).locator(`tbody tr[data-row="${grade.code}"] td`).nth(-2);
   const educator = await asEducator(browser);
-  await educator.goto("/?details=1");
+  await educator.goto("/setup/curriculum/skills?details=1");
   await expect(children(educator), "Asha alone: Kavi is in another class").toHaveText("1");
   await educator.context().close();
   // the coordinator's count is every class's
-  await page.goto("/?details=1");
+  await page.goto("/setup/curriculum/skills?details=1");
   expect(number(await children(page).innerText())).toBeGreaterThanOrEqual(2);
 });
 

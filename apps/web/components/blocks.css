@@ -250,11 +250,14 @@
   .b-pending { color: var(--ink-muted); border: 1px dashed var(--line-control); border-radius: var(--radius-control); padding: 0 var(--space-2); }
 
   /* ---------- StatTile (page charter A3): a big number and one line ---------- */
-  .b-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
-  .b-stat { display: grid; gap: var(--space-1); min-height: var(--tap); padding: var(--space-3); border-radius: var(--radius-card); background: var(--panel); box-shadow: var(--shadow-card); border-top: 3px solid var(--c, var(--line)); color: var(--ink); text-decoration: none; }
-  a.b-stat:hover { background: var(--surface); }
-  .b-stat-n { font-size: var(--text-title-section); font-weight: 600; line-height: 1.1; font-variant-numeric: tabular-nums; }
-  .b-stat-l { font-size: var(--text-label); color: var(--ink-muted); }
+  /* One look for every number on the site (13 Nov 2026): a compact pill, the figure in its state's colour, its words beside it. Never the
+     big-number card ("the hero-metric template"); a row of them wraps. */
+  .b-stats { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
+  .b-stat { display: inline-flex; align-items: baseline; gap: var(--space-1); min-height: var(--tap); padding: var(--space-1) var(--space-3); align-content: center; border: 1px solid var(--line); border-radius: var(--radius-pill); background: var(--panel); color: var(--ink); text-decoration: none; }
+  a.b-stat:hover { border-color: var(--line-control); background: var(--surface); }
+  .b-stat[data-state="late"], .b-stat[data-state="wait"] { border-color: color-mix(in srgb, var(--c) 35%, var(--line)); background: color-mix(in srgb, var(--cb) 45%, var(--panel)); }
+  .b-stat-n { font-size: var(--text-title-small); font-weight: 600; line-height: 1.1; font-variant-numeric: tabular-nums; color: var(--c, var(--ink)); }
+  .b-stat-l { font-size: var(--text-body); color: var(--ink-muted); }
 
   /* ---------- Card chips: one status and one count at most ---------- */
   .b-card-chips { display: inline-flex; gap: var(--space-1); margin-left: auto; align-items: center; }
@@ -263,6 +266,11 @@
   .b-machine { display: inline-flex; align-items: center; gap: var(--space-1); color: var(--ink-muted); vertical-align: middle; }
 
   /* ---------- DetailPanel (page charter A2): the right side, a thing's detail in tabs ---------- */
+  /* The page's summary band (a DetailPanel with nothing chosen, 13 Nov 2026): its numbers as one row of compact tiles, its extra facts beside
+     them, under the title and across the page's width. */
+  .b-summary { display: grid; gap: var(--space-3); margin-bottom: var(--space-4); }
+  .b-summary-more { display: grid; gap: var(--space-3); grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); align-items: start; }
+  .b-summary-more:empty { display: none; }
   .b-dpanel { display: grid; align-content: start; gap: var(--space-3); padding: var(--space-3); border-radius: var(--radius-card); background: var(--panel); box-shadow: var(--shadow-card); min-width: 0; }
   .b-dpanel-eyebrow { font-size: var(--text-eyebrow); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-muted); }
   .b-dpanel-head { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: var(--space-2); align-items: start; }

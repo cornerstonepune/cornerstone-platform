@@ -81,7 +81,7 @@ export function Recorder({ classId, say, sessionId, opens, typed }: { classId: s
 
   return (
     <section className="panel grid w-full max-w-xl gap-4 p-5 max-[699px]:!border-0 max-[699px]:!bg-transparent max-[699px]:!p-0" aria-label={W.record.title} data-recorder={stage}>
-      <p className="text-[15px] text-basalt/80">{say}</p>
+      <p className="text-[length:var(--text-body)] text-basalt/80">{say}</p>
       <div className="flex flex-wrap items-center gap-3">
         {stage === "recording" ? (
           <button type="button" className="btn !min-h-14 gap-2 !px-6 text-[17px]" onClick={() => rec.current?.stop()} data-stop>
@@ -105,7 +105,7 @@ export function Recorder({ classId, say, sessionId, opens, typed }: { classId: s
           </>
         )}
         {stage === "recording" ? (
-          <span className="inline-flex items-center gap-2 text-[14px] text-terracotta" role="status">
+          <span className="inline-flex items-center gap-2 text-[length:var(--text-label)] text-terracotta" role="status">
             <span className="h-2.5 w-2.5 rounded-full bg-terracotta" />
             {W.record.recording}
           </span>
@@ -113,7 +113,7 @@ export function Recorder({ classId, say, sessionId, opens, typed }: { classId: s
       </div>
       {url ? <audio controls src={url} className="w-full" data-playback /> : null}
       {said ? (
-        <p role="alert" className="grid gap-2 text-[15px] text-terracotta">
+        <p role="alert" className="grid gap-2 text-[length:var(--text-body)] text-terracotta">
           {said}
           {typed}
         </p>

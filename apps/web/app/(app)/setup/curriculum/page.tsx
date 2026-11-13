@@ -127,6 +127,7 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
       stage="School"
       title="Curriculum"
       purpose="Every activity and skill of every grade, with where its words and links came from. Choose one to read or edit it on the right."
+      details={{ href: "/setup/curriculum/skills", label: "Every skill, with its levels and where it is taught" }}
       action={
         <FilterBar
           action={HERE}
@@ -149,7 +150,6 @@ export default async function Curriculum({ searchParams }: { searchParams: Promi
             stats,
             after: (
               <>
-                <p className="b-label b-muted">Choose an activity or a skill in the list to see it here.</p>
                 {open.length ? (
                   <p className="b-label">
                     {open.length} {open.length === 1 ? "question waits" : "questions wait"} for a person. <a href="#asks" className="underline">Read them</a>

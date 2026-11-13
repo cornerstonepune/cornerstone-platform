@@ -73,7 +73,7 @@ export function WorksheetsPanel({ s, shown, shownLevel, words }: { s: SkillSet; 
           <Link href={`/worksheets/${w.code}`}>
             {w.difficulty} · {sheetWords(w.code)}
           </Link>{" "}
-          <span className="fact text-[11px] text-basalt/45">{w.code}</span>
+          <span className="fact text-[length:var(--text-caption)] text-basalt/45">{w.code}</span>
         </>
       ),
     },

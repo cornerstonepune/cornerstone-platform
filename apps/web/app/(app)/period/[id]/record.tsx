@@ -28,7 +28,7 @@ export function TypeMarks({ classId, sessionId, main }: { classId: string; sessi
       >
         Type the marks
       </button>
-      {said ? <p role="alert" className="text-[14px] text-terracotta">{said}</p> : null}
+      {said ? <p role="alert" className="text-[length:var(--text-label)] text-terracotta">{said}</p> : null}
     </>
   );
 }
@@ -67,7 +67,7 @@ export function AddPhoto({ classId, sessionId }: { classId: string; sessionId: s
         <input type="file" accept="image/jpeg,image/png,image/heic" className="sr-only" disabled={pending || !ready} onChange={(e) => e.target.files?.[0] && send(e.target.files[0])} />
       </label>
       <PhotoRule />
-      {said ? <p role="status" className="text-[14px]">{said}</p> : null}
+      {said ? <p role="status" className="text-[length:var(--text-label)]">{said}</p> : null}
     </div>
   );
 }

@@ -184,9 +184,7 @@ export default async function MaterialsPage({ searchParams }: { searchParams: Pr
               <Link href="/educator/materials/review" data-notes-review className="inline-flex min-h-[var(--tap)] items-center">
                 {W.putOn}, or set aside
               </Link>
-            ) : (
-              <p className="b-label b-muted">Choose a line to see it here.</p>
-            ),
+            ) : null,
           }}
         />
       }

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // kit.mjs: writes kit.css from docs/frontend/tokens.json (every colour, type, radius, shadow and motion value) and
-// docs/frontend/spacing.json (the spacing scale, revision 1),
+// docs/frontend/tokens.json spacing (revision 1, adopted 13 Nov 2026),
 // the icon map in apps/web/lib/icons.tsx (plus the kit's added concepts, below), and components.css (the blocks).
 // No colour is typed by hand: each value comes from tokens.json, light and dark.
 //   node docs/frontend/wireframes/kit.mjs            regenerate kit.css
@@ -14,7 +14,6 @@ import { fileURLToPath } from "node:url";
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(HERE, "../../..");
 const TOKENS = join(ROOT, "docs/frontend/tokens.json");
-const SPACING = join(ROOT, "docs/frontend/spacing.json");
 const ICONS_TSX = join(ROOT, "apps/web/lib/icons.tsx");
 const OUT = join(HERE, "kit.css");
 
@@ -40,11 +39,8 @@ export function iconMap() {
 }
 
 const tokens = () => JSON.parse(readFileSync(TOKENS, "utf8"));
-// Revision 1's spacing scale (spacing.json) stands in for tokens.json's space-1…space-7; `tap` stays tokens.json's.
-export const spacingTokens = () => {
-  const own = JSON.parse(readFileSync(SPACING, "utf8")).tokens;
-  return [...own, ...tokens().spacing.tokens.filter((s) => !/^space-\d+$/.test(s.name))];
-};
+// The spacing scale (revision 1, issue 546), adopted into tokens.json on 13 Nov 2026.
+export const spacingTokens = () => tokens().spacing.tokens;
 const light = (v) => (typeof v === "string" ? v : v.light);
 const dark = (v) => (typeof v === "string" ? v : v.dark);
 
@@ -66,7 +62,7 @@ export function tokensCss() {
   const transition = press.match(/transition:\s*([^;]+)/)[1].trim();
   const themeLight = `${colour(light)}\n${shadow(light)}\n  --show-on-light: block;\n  --show-on-dark: none;\n  color-scheme: light;`;
   const themeDark = `${colour(dark)}\n${shadow(dark)}\n  --show-on-light: none;\n  --show-on-dark: block;\n  color-scheme: dark;`;
-  return `/* ===== tokens: generated from docs/frontend/tokens.json v${t.version} and spacing.json by kit.mjs; do not edit ===== */
+  return `/* ===== tokens: generated from docs/frontend/tokens.json v${t.version} by kit.mjs; do not edit ===== */
 :root {
   --font-sans: ${fam.sans};
   --font-serif: ${fam.serif};

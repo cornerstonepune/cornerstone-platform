@@ -204,7 +204,6 @@ export default async function TimetablePage({ searchParams }: Props) {
             after: (
               <>
                 <SubjectMix label="Lessons by subject" parts={mix} percent />
-                <p className="b-label b-muted">Choose a lesson in the grid to see it here.</p>
                 {changed.length ? (
                   <section aria-label="Changed this fortnight" data-rail-part="changed">
                     <h3 className="b-label b-muted">Changed this fortnight</h3>

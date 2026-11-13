@@ -76,7 +76,7 @@ export function AnswerPanel({
         </p>
       ) : null}
       {proof ? (
-        <div className="mt-2 text-[13px]" aria-label="Whose paper this page is">
+        <div className="mt-2 text-[length:var(--text-label)]" aria-label="Whose paper this page is">
           <p><span className="label">Paper</span> <b>{proof.printed_with}</b> · <span className="label">Code on this page</span> {proof.code ? <b>{proof.code}</b> : "none could be read"}</p>
           <p>{proof.copy ? `Copy ${proof.copy}${proof.copies ? ` of ${proof.copies}` : ""} in this file · ` : ""}page {proof.page} of {proof.pages}</p>
           {proof.problem ? (

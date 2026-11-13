@@ -38,7 +38,7 @@ export function classOpened(
     <EmptyState>No child is in {c.label} yet.</EmptyState>
   );
   const moves = o.log.length ? (
-    <ul className="grid gap-[var(--space-1)] text-[14px]" data-moves aria-label={`${c.label}: moves`}>
+    <ul className="grid gap-[var(--space-1)] text-[length:var(--text-label)]" data-moves aria-label={`${c.label}: moves`}>
       {o.log.map((l) => (
         <li key={l.id}>
           Sr. No. {l.roll} moved from {l.from} to {l.to}. By {l.by || "the school"} · {shortDate(l.at)}.

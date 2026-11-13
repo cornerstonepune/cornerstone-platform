@@ -81,21 +81,21 @@ export function Board({
         <ActivityPicker w={w} setW={setW} activities={activities} />
         <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
           <div className="flex items-center gap-2" role="group" aria-label={W.level.label}>
-            <span className="text-[13px] text-basalt/70">{W.level.label}</span>
+            <span className="text-[length:var(--text-label)] text-basalt/70">{W.level.label}</span>
             {W.level.values.map((n) => (
               <button key={n} type="button" aria-pressed={w.level === n} onClick={() => setW({ ...w, level: n })} className={`chip min-w-11 justify-center ${w.level === n ? "on" : ""}`}>
                 {n}
               </button>
             ))}
           </div>
-          <label className="flex items-center gap-2 text-[13px] text-basalt/70">
+          <label className="flex items-center gap-2 text-[length:var(--text-label)] text-basalt/70">
             {W.day.label}
             <input type="date" className="input !w-auto" value={w.day} max={today} onChange={(e) => setW({ ...w, day: e.target.value, dayPicked: true })} />
           </label>
         </div>
       </section>
       <section className="panel grid gap-3 p-4" aria-label={W.confirm.children}>
-        {fixing ? <p className="text-[14px] font-medium text-terracotta">{W.problems.stranger_fix(fixing)}</p> : null}
+        {fixing ? <p className="text-[length:var(--text-label)] font-medium text-terracotta">{W.problems.stranger_fix(fixing)}</p> : null}
         <ClassGrid label={`${klass}, by Sr. No.`} showName={!!roster} onTap={tap} cells={enrolled.map((roll) => cellOf(roll, w.marks[roll], w.rest, roster?.[roll]))} />
         {picking ? (
           <div className="flex flex-wrap items-center gap-2" role="group" aria-label={`Mark #${picking}`} data-picker={picking} onKeyDown={(e) => e.key === "Escape" && setPicking(null)}>
@@ -126,8 +126,8 @@ export function Board({
               const out = gone.includes(l.section);
               return (
                 <li key={l.section} className={`panel grid content-start gap-2 p-3 ${out ? "opacity-60" : ""}`} data-claim={l.section} data-removed={out ? "" : undefined}>
-                  <p className={`text-[15px] ${out ? "line-through" : ""}`}>&ldquo;{l.words}&rdquo;</p>
-                  <div className="flex flex-wrap items-center gap-2 text-[13px] text-[var(--ink-muted)]">
+                  <p className={`text-[length:var(--text-body)] ${out ? "line-through" : ""}`}>&ldquo;{l.words}&rdquo;</p>
+                  <div className="flex flex-wrap items-center gap-2 text-[length:var(--text-label)] text-[var(--ink-muted)]">
                     <span>Read as:</span>
                     {l.numbers.map((n) => (
                       <span key={n} className="chip" data-read-as={n}>
@@ -154,14 +154,14 @@ export function Board({
         </section>
       ) : null}
       <div className="flex flex-wrap items-center gap-3 border-t border-basalt/12 py-3" data-count-strip>
-        <span className="text-[15px] font-medium" data-count-line>
+        <span className="text-[length:var(--text-body)] font-medium" data-count-line>
           {countLine(w, enrolled)}
         </span>
         <button type="button" className="btn ml-auto" disabled={problems.length > 0 || pending} onClick={submit} data-submit>
           {button}
         </button>
         {said ? (
-          <p role="alert" className="w-full text-[14px] text-terracotta">
+          <p role="alert" className="w-full text-[length:var(--text-label)] text-terracotta">
             {said}
           </p>
         ) : null}
@@ -181,7 +181,7 @@ function ProblemRow({ p, w, setW, fixing, setFixing }: { p: Problem; w: Work; se
   return (
     <li className="flex flex-wrap items-center gap-3 border border-terracotta/35 bg-terracotta/8 px-3 py-2" data-problem={p.kind}>
       <StatusChip state="fixThis" round />
-      <span className="min-w-[12rem] flex-1 text-[15px]">{p.text}</span>
+      <span className="min-w-[12rem] flex-1 text-[length:var(--text-body)]">{p.text}</span>
       {p.kind === "stranger" ? (
         <>
           <button type="button" className="btn secondary" aria-pressed={fixing === p.roll} onClick={() => setFixing(fixing === p.roll ? null : p.roll)}>
@@ -216,7 +216,7 @@ function ActivityPicker({ w, setW, activities }: { w: Work; setW: (w: Work) => v
   return (
     <div className="grid gap-2">
       <div className="flex flex-wrap items-center gap-3">
-        <span className="text-[13px] text-basalt/70">{W.activity.label}</span>
+        <span className="text-[length:var(--text-label)] text-basalt/70">{W.activity.label}</span>
         {chosen ? (
           <span className="text-[16px] font-medium" data-activity={chosen.code}>
             {activityWords(chosen)}
@@ -246,7 +246,7 @@ function ActivityPicker({ w, setW, activities }: { w: Work; setW: (w: Work) => v
             ))}
           </div>
         ) : (
-          <p className="text-[14px] text-basalt/70">{W.activity.noMatch}</p>
+          <p className="text-[length:var(--text-label)] text-basalt/70">{W.activity.noMatch}</p>
         )
       ) : null}
     </div>

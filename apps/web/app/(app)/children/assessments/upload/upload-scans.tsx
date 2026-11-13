@@ -90,10 +90,10 @@ export function UploadScans({ reading }: { reading: boolean }) {
           setOver(false);
           void put([...e.dataTransfer.files]);
         }}
-        className={`block cursor-pointer rounded border-2 border-dashed p-4 text-center text-[14px] ${over ? "border-bamboo bg-chalk" : "border-line"}`}
+        className={`block cursor-pointer rounded border-2 border-dashed p-4 text-center text-[length:var(--text-label)] ${over ? "border-bamboo bg-chalk" : "border-line"}`}
       >
         <span className="font-semibold">Choose scans or drop them here</span>
-        <span className="block text-[13px] text-ink-soft">A PDF, or photos of one paper&apos;s pages (JPG, PNG or HEIC), taken in page order.</span>
+        <span className="block text-[length:var(--text-label)] text-ink-soft">A PDF, or photos of one paper&apos;s pages (JPG, PNG or HEIC), taken in page order.</span>
         <input
           type="file"
           multiple
@@ -107,7 +107,7 @@ export function UploadScans({ reading }: { reading: boolean }) {
         />
       </label>
       {sent.length ? (
-        <ul aria-label="Scans sent" className="mt-2 grid gap-2 text-[13px]">
+        <ul aria-label="Scans sent" className="mt-2 grid gap-2 text-[length:var(--text-label)]">
           {sent.map((s, i) => (
             <li key={i} className="min-w-0">
               <p>
