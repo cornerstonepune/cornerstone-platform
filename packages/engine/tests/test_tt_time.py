@@ -4,6 +4,7 @@ within its standing time until a test changes a lesson). Each test works in a tr
 
 import datetime as dt
 import os
+import uuid
 
 import pytest
 from fastapi.testclient import TestClient
@@ -107,3 +108,147 @@ def test_the_route_answers_a_coordinator_for_a_class_or_a_grade_and_refuses_the_
             assert client.post("/timetable/time", headers=h, json=teacher).status_code in (403,)
     finally:
         app.dependency_overrides.clear()
+
+
+# Charter B3 (`/timetable/time-by-subject`): the same minutes a week at a time, with each subject's share of the range and the
+# share the frame rules give it. The world's frame per fortnight: maths and English ten periods each, music two (Wednesdays).
+WEEK_A, WEEK_B = A, A + dt.timedelta(7)
+
+
+def _by_week(c, w, a=A, b=B):
+    return tt_time.weeks_by_subject(c, [w["class"]], a, b)
+
+
+def _totals(out):
+    return {r["subject_code"]: r for r in out["totals"]}
+
+
+def test_each_week_has_its_minutes_by_subject_from_the_lessons_held_a_fixed_lesson_none(world):
+    c, w = world
+    # a fixed lesson that names a subject still gives that subject no minutes
+    c.execute(
+        "update session set subject_code = 'math' where id = %s", (tw.session_at(c, w, A, "circle")["id"],)
+    )
+    out = _by_week(c, w)
+    weeks = {x["week_start"]: {s["subject_code"]: s["minutes"] for s in x["subjects"]} for x in out["weeks"]}
+    assert list(weeks) == [WEEK_A.isoformat(), WEEK_B.isoformat()]
+    assert weeks[WEEK_A.isoformat()] == {"math": 5 * 25, "english": 5 * 25, "music": 25}
+    # week B's Tuesday is a holiday: its lessons are not counted
+    assert weeks[WEEK_B.isoformat()] == {"math": 4 * 25, "english": 4 * 25, "music": 25}
+    assert {k: v["minutes"] for k, v in _totals(out).items()} == {"math": 225, "english": 225, "music": 50}
+
+
+def test_the_shares_make_a_whole_and_a_timetable_kept_to_the_frame_is_within_its_target(world):
+    c, w = world
+    totals = _totals(_by_week(c, w))
+    assert sum(r["share"] for r in totals.values()) == pytest.approx(1, abs=1e-3)
+    for r in totals.values():
+        assert r["target_share"] == pytest.approx(r["share"], abs=1e-3) and r["status"] == "within"
+    assert totals["math"]["label"] and list(totals)[-1] == "music"  # most minutes first
+
+
+def test_a_subject_the_rules_give_no_time_has_no_target_and_no_status_and_none_is_invented(world):
+    c, w = world
+    c.execute("update session set subject_code = 'art' where id = %s", (tw.session_at(c, w, A, "p2")["id"],))
+    art = _totals(_by_week(c, w))["art"]
+    assert art["minutes"] == 25 and art["target_share"] is None and art["status"] is None
+    c.execute("delete from timetable_rule where school_class_id = %s and kind = 'frame'", (w["class"],))
+    assert all(r["target_share"] is None and r["status"] is None for r in _totals(_by_week(c, w)).values())
+
+
+def test_lessons_turned_from_one_subject_into_another_make_one_short_and_the_other_over(world):
+    c, w = world
+    for d in (A, A + dt.timedelta(1), A + dt.timedelta(2)):
+        c.execute(
+            "update session set subject_code = 'english' where id = %s", (tw.session_at(c, w, d, "p1")["id"],)
+        )
+    totals = _totals(_by_week(c, w))
+    assert totals["math"]["status"] == "short" and totals["english"]["status"] == "over"
+    assert totals["music"]["status"] == "within"
+
+
+def test_every_week_of_the_range_is_listed_even_one_with_no_lessons(world):
+    c, w = world
+    out = _by_week(c, w, A - dt.timedelta(7), B + dt.timedelta(3))
+    assert [x["week_start"] for x in out["weeks"]] == [
+        (A + dt.timedelta(7 * n)).isoformat() for n in (-1, 0, 1, 2)
+    ]
+    assert out["weeks"][0]["subjects"] == [] and out["weeks"][-1]["subjects"] == []
+
+
+def _second_class(c, w) -> str:
+    """Another class of the grade in the same year, with the world class's lessons and frame copied."""
+    k = db.one(
+        c,
+        "insert into school_class (tenant_id, campus_id, academic_year_id, grade_code, section)"
+        " values (%s, %s, %s, 'K2', %s) returning id",
+        (w["tenant"], w["campus"], w["year"], f"H{uuid.uuid4().hex[:5]}"),
+    )["id"]
+    c.execute(
+        "insert into session (tenant_id, school_class_id, school_day_id, period_id, subject_code, kind, text)"
+        " select tenant_id, %s, school_day_id, period_id, subject_code, kind, text from session where school_class_id = %s",
+        (k, w["class"]),
+    )
+    c.execute(
+        "insert into timetable_rule (tenant_id, school_class_id, kind, period_id, week_code, weekday, cell, subject_code,"
+        " text, valid_from) select tenant_id, %s, kind, period_id, week_code, weekday, cell, subject_code, text,"
+        " valid_from from timetable_rule where school_class_id = %s",
+        (k, w["class"]),
+    )
+    return str(k)
+
+
+@pytest.fixture
+def api(world, monkeypatch):
+    c, _ = world
+    monkeypatch.setenv("ENGINE_KEY", KEY)
+    app.dependency_overrides[deps.get_conn] = lambda: (yield c)
+    try:
+        with TestClient(app) as client:
+            yield client
+    finally:
+        app.dependency_overrides.clear()
+
+
+def _ask(client, who, **more):
+    body = {"actor": who["email"], "from": A.isoformat(), "to": B.isoformat()} | more
+    return client.post("/timetable/time-by-subject", headers={"X-Engine-Key": KEY}, json=body)
+
+
+def test_the_b3_route_answers_a_coordinator_for_one_class_or_every_class_of_the_grade(world, api):
+    c, w = world
+    other = _second_class(c, w)
+    me = w["staff"]["coordinator"]
+    one = _ask(api, me, class_id=str(w["class"]))
+    assert one.status_code == 200, one.text
+    assert [k["id"] for k in one.json()["classes"]] == [str(w["class"])]
+    every = _ask(api, me, class_id=None, grade="K2").json()
+    assert {k["id"] for k in every["classes"]} == {str(w["class"]), other}
+    assert _totals(every)["math"]["minutes"] == 2 * _totals(one.json())["math"]["minutes"]
+    assert _ask(api, me, class_id=str(w["class"]), to=(A - dt.timedelta(1)).isoformat()).status_code == 422
+
+
+def test_the_b3_route_gives_an_educator_her_own_classes_and_refuses_another(world, api):
+    c, w = world
+    other = _second_class(c, w)
+    c.execute(
+        "insert into config (tenant_id, key, value) values (%s, 'educator.timetable_enabled', 'true')"
+        " on conflict (tenant_id, key) do update set value = excluded.value",
+        (w["tenant"],),
+    )
+    me = w["staff"]["educator"]
+    mine = _ask(api, me, class_id=None, grade="K2")
+    assert mine.status_code == 200, mine.text
+    assert [k["id"] for k in mine.json()["classes"]] == [str(w["class"])]
+    assert _ask(api, me, class_id=other).status_code == 403
+
+
+def test_the_b3_route_works_with_only_the_grants_the_engine_holds_live(world, api):
+    """Live the engine reaches the database as `app_engine`; a read it is not granted fails there and nowhere else."""
+    c, w = world
+    me = w["staff"]["coordinator"]
+    owner = _ask(api, me, class_id=str(w["class"])).json()
+    c.execute("set local role app_engine")
+    engine = _ask(api, me, class_id=str(w["class"]))
+    assert engine.status_code == 200, engine.text
+    assert engine.json() == owner

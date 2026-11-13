@@ -6,7 +6,7 @@ only for a class she holds. The school's coordinators (`educator_gate.sees_all`)
 import datetime as dt
 
 from fastapi import APIRouter, Depends, HTTPException
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 from engine.api.deps import get_conn, require_engine_key
 from engine.w2_print import educator_gate, k2_day, tt_time
@@ -138,3 +138,33 @@ def time_by_subject(body: TimeAsk, conn=Depends(get_conn, scope="function")):
         klass, _ = _mine(conn, Ask(actor=body.actor, class_id=body.class_id), body.start, staff)
         ids = [klass["id"]]
     return tt_time.time_by_subject(conn, ids, body.start, body.end)
+
+
+class WeeksAsk(BaseModel):
+    actor: str
+    class_id: str | None = None  # none: every class of the grade she may read
+    grade: str | None = None
+    from_: dt.date = Field(alias="from")
+    to: dt.date
+
+
+@keyed.post("/timetable/time-by-subject")
+def weeks_by_subject(body: WeeksAsk, conn=Depends(get_conn, scope="function")):
+    """Page charter B3: one class's lesson minutes by subject a week at a time, or every class she may read (a coordinator:
+    every class of the grade with lessons in the range; anyone else: the classes she holds), with each subject's share of
+    the range beside the share the timetable rules give it. The same gate as every other timetable read."""
+    staff = _gate(conn, Ask(actor=body.actor), reads=True)
+    if body.to < body.from_ or (body.to - body.from_).days > 400:
+        raise HTTPException(status_code=422, detail="Give a start and an end, at most 400 days apart.")
+    if body.class_id:
+        classes = [_mine(conn, Ask(actor=body.actor, class_id=body.class_id), body.from_, staff)[0]]
+    elif educator_gate.sees_all(conn, staff):
+        classes = tt_time.classes_with_lessons(conn, body.grade, body.from_, body.to)
+    else:
+        classes = [c for c in k2_day.my_classes(conn, staff, body.to) if body.grade in (None, c["grade"])]
+    if not classes:
+        raise HTTPException(status_code=403, detail="No class of yours has lessons in these days.")
+    out = tt_time.weeks_by_subject(conn, [c["id"] for c in classes], body.from_, body.to)
+    return out | {
+        "classes": [{"id": str(c["id"]), "grade": c["grade"], "section": c["section"]} for c in classes]
+    }
