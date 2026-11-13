@@ -66,7 +66,7 @@ export default async function ReviewPage({ searchParams }: { searchParams: Promi
   const today = await schoolToday();
   const q = await searchParams;
   return (
-    <Screen stage={E.area} title={W.reviewTitle} purpose={W.reviewPurpose} action={<span />} next={{ href: "/educator/materials", label: W.classList }}>
+    <Screen stage={E.area} title={W.reviewTitle} purpose={W.reviewPurpose} action={<span />} next={{ href: "/timetable/materials", label: W.classList }}>
       {notes === null ? (
         <EmptyState>{W.notReviewer}</EmptyState>
       ) : notes.length === 0 ? (

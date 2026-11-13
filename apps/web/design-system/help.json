@@ -334,13 +334,16 @@
       "eyebrow": "16-Nov to 27-Nov",
       "group": "Timetable",
       "route": "/timetable/fortnight/[n]",
-      "purpose": "Its state, its plan lines, and what changed when the draft went live. Frozen once it starts; a move after that is a hand move, kept with who made it.",
+      "purpose": "Its lessons as blocks, week A and week B. Choose a lesson to move it; its state, the rules in conflict, the moves, the draft and the rules are on the right.",
       "does": [
         {
-          "label": "each plan line"
+          "label": "class"
         },
         {
-          "label": "each hand move"
+          "label": "Previous / next fortnight"
+        },
+        {
+          "label": "each lesson block"
         },
         {
           "label": "Approve"
@@ -352,16 +355,28 @@
           "label": "Go live"
         },
         {
-          "label": "The grid"
+          "label": "Conflicts / Moves / Draft / Rules"
         },
         {
-          "label": "each activity in the plan"
+          "label": "Accept the clash"
         },
         {
-          "label": "Materials"
+          "label": "Move"
         },
         {
-          "label": "Draft"
+          "label": "Undo the last move"
+        },
+        {
+          "label": "Moved by hand"
+        },
+        {
+          "label": "Make a draft"
+        },
+        {
+          "label": "Open the draft as a grid"
+        },
+        {
+          "label": "Timetable rules (and each unmet rule)"
         }
       ]
     },
@@ -439,22 +454,31 @@
       "eyebrow": "K2 Red · Fortnight 9",
       "group": "Timetable",
       "route": "/timetable/materials",
-      "purpose": "Built from the activities in the plan. Each line knows which activity needs it. Set a quantity, remove a line, add from the catalogue.",
+      "purpose": "Built from the activities in the plan, day by day. Choose a line to see how many, which activity needs it, and to change it.",
       "does": [
         {
           "label": "day / week / fortnight"
         },
         {
-          "label": "quantity (each line)"
+          "label": "each line"
         },
         {
-          "label": "Remove (each line)"
+          "label": "quantity (in the line's panel)"
+        },
+        {
+          "label": "Save"
+        },
+        {
+          "label": "Remove (in the line's panel)"
         },
         {
           "label": "Add from the catalogue"
         },
         {
-          "label": "each line's activity"
+          "label": "Add"
+        },
+        {
+          "label": "the line's activity"
         },
         {
           "label": "My class / School list"
@@ -463,10 +487,13 @@
           "label": "Notes to read"
         },
         {
-          "label": "each activity in the plan"
+          "label": "Fill the quantities"
         },
         {
-          "label": "Fortnight 9"
+          "label": "How many / Activity"
+        },
+        {
+          "label": "Close the panel"
         },
         {
           "label": "Photo"

@@ -295,7 +295,7 @@ The timetable's day, week and fortnight views and the timetable rules, the fortn
 3. The plan routes the backend exposes (the fortnight move, the timetable link apply and the timetable generate routes) check only that the actor is on the staff list, so the website checks the coordinator group itself before calling each: an educator's request to each is answered 403 by the web layer (test, one per route).
 4. Go live updates sessions in place and lists every changed session on the fortnight page; a hand move after freeze is kept with who and why and shows amber on the grid (database and DOM).
 5. The journey `e2e/the-coordinators-fortnight.spec.ts` passes: Today (coordinator) → the red clash row → Moves → accept with a reason → Fortnight → Approve → Go live → Timetable shows the change as educator; axe at each step.
-6. Every one of the 41 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
+6. Every one of the 46 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
 7. Timetable: a hand move shows an amber outline and its details name who and why
 8. Timetable: an educator never sees an accept-clash control; a clash cell is red for both roles
 9. Timetable: the grid's cells equal the session rows for the day shown (count and names)
@@ -310,15 +310,19 @@ The timetable's day, week and fortnight views and the timetable rules, the fortn
 18. Fortnight 9: Approve and Go live exist for the 'everything' group only and their requests are refused for others
 19. Fortnight 9: a frozen fortnight shows no Approve, Go live or edit control
 20. Fortnight 9: the what-changed table lists every session the go-live updated, and nothing else
-21. Draft from the rules: the draft shown equals the slots the generator wrote (count and cells)
-22. Draft from the rules: every unmet rule row names a rule row that exists
-23. Draft from the rules: Make a draft never changes a live fortnight's sessions (count unchanged before and after)
-24. Time by subject: a range chooser offers Week, Fortnight, Month and Quarter, and the dates shown are whole weeks ending today
-25. Time by subject: a class chooser offers one class, and every class of the grade for the coordinator
-26. Time by subject: each week is a stacked column of its subjects' minutes in the subject colours; the ring shows the whole range
-27. Time by subject: the table gives each subject its minutes, % of teaching time, the school's target and a Within / Over / Short chip, the chip only when the rules give a target
-28. Time by subject: choosing a part of a week's column opens that week's lessons of that subject in the detail panel
-29. Time by subject: the menu lists Time by subject under Timetable, between the Fortnight and Materials
+21. Fortnight 9: the right panel holds the fortnight's state stepper in the engine's words with the next step, and there is no rail
+22. Fortnight 9: the rules in conflict are the panel's Conflicts tab, each accepted there with a reason
+23. Fortnight 9: Draft and Rules are tabs of the panel: Make a draft and the rules the draft reads are there
+24. Fortnight 9: moving a lesson is chosen on the grid and made, undone and listed in the panel's Moves tab
+25. Draft from the rules: the draft shown equals the slots the generator wrote (count and cells)
+26. Draft from the rules: every unmet rule row names a rule row that exists
+27. Draft from the rules: Make a draft never changes a live fortnight's sessions (count unchanged before and after)
+28. Time by subject: a range chooser offers Week, Fortnight, Month and Quarter, and the dates shown are whole weeks ending today
+29. Time by subject: a class chooser offers one class, and every class of the grade for the coordinator
+30. Time by subject: each week is a stacked column of its subjects' minutes in the subject colours; the ring shows the whole range
+31. Time by subject: the table gives each subject its minutes, % of teaching time, the school's target and a Within / Over / Short chip, the chip only when the rules give a target
+32. Time by subject: choosing a part of a week's column opens that week's lessons of that subject in the detail panel
+33. Time by subject: the menu lists Time by subject under Timetable, between the Fortnight and Materials
 
 ### Out of scope
 
@@ -402,9 +406,12 @@ The class's materials list for a fortnight, the school's list, the notes the sys
 
 1. The screen passes the ten generic checks and every element behaves as its kind says.
 2. A line with no quantity shows the amber 'to confirm' chip; approval is possible only for the signed-in educator's own class (the other class's Approve is absent and refused).
-3. Every one of the 10 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
+3. Every one of the 14 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
 4. Materials, this fortnight: a line with no quantity carries the amber 'to confirm' chip
 5. Materials, this fortnight: approval (CP-17) exists only for the signed-in educator's own class and is refused for another
+6. Materials, this fortnight: the lines are grouped by the day each is needed, on the left
+7. Materials, this fortnight: choosing a line opens its detail on the right: how many, the activity that needs it, and Save and Remove
+8. Materials, this fortnight: the coordinator's school list is a tab of the same page
 
 ### Out of scope
 

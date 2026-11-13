@@ -26,7 +26,16 @@ test.afterAll(async () => {
   await sql.end();
 });
 
-const open = (page: Page, span = "fortnight") => page.goto(`/educator/materials?class=${klass}&day=${TUESDAY}&span=${span}`);
+// the class list is the Timetable's Materials (page charter C: the lines by day on the left, a line's detail and its changes on the right);
+// its old address opens it
+const open = (page: Page, span = "fortnight") => page.goto(`/timetable/materials?class=${klass}&day=${TUESDAY}&span=${span}`);
+const panel = (page: Page) => page.locator("[data-block=DetailPanel][data-panel=open]");
+/** Choose a line on the left: its detail opens on the right. */
+const choose = async (page: Page, item: string) => {
+  await line(page, item).locator("[data-open-key]").click();
+  await expect(panel(page).locator("[data-panel-title]")).toHaveText(item);
+  return panel(page);
+};
 // Each test starts from the plan: a line is never deleted (its edits point at it), so the class's lines go back to the
 // plan's quantities, the plan's lines back on the list and lines she added off it.
 test.beforeEach(async () => {
@@ -37,26 +46,32 @@ test.beforeEach(async () => {
     where l.list_id in (select id from materials_list where school_class_id = ${klass})`;
 });
 
-const line = (page: Page, item: string) => page.locator("tr[data-line]").filter({ hasText: item });
+const line = (page: Page, item: string) => page.locator("li[data-line]").filter({ hasText: item });
 
 test("while the timetable is switched off the class list is not found", async ({ page }) => {
   await timetableSwitch(sql, false);
   await open(page);
   await expect(page.getByText("This page could not be found.")).toBeVisible();
+  await page.goto(`/educator/materials?class=${klass}&day=${TUESDAY}&span=fortnight`);
+  await expect(page.getByText("This page could not be found.")).toBeVisible();
 });
 
+// the title is the one goals/m1-09m-materials.yaml names; the "table a day" is now a group a day on the left, each line's detail on the right
 test("the class list is a table a day, each line tied to its activity, its quantity never guessed and where it is kept", async ({ page }) => {
   await timetableSwitch(sql, true);
   await open(page);
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Materials");
-  await expect(page.locator("#lines h3")).toHaveCount(3); // a table a day
-  await expect(line(page, "Craft paper").locator('input[name="quantity"]')).toHaveValue("2");
-  await expect(line(page, "Craft paper").locator("[data-home]")).toHaveAttribute("data-home", "school");
-  await expect(line(page, "Dustbin").locator("[data-home]")).toHaveAttribute("data-home", "class");
-  await expect(line(page, "Beads").locator('input[name="quantity"]')).toHaveValue(""); // the plan gives none
-  await expect(line(page, "Beads").locator("[data-home]")).toHaveAttribute("data-home", "none");
-  await expect(line(page, "Dustbin").getByRole("link", { name: "Proper Use Of Dustbin" })).toHaveAttribute("href", /\/setup\/activities\/ACT-K2-0287/);
-  await expect(page.locator("[data-summary]")).toContainText("1 without a quantity");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Materials, this fortnight");
+  await expect(page.locator("#lines [data-day] h3")).toHaveCount(3); // a group a day
+  await expect((await choose(page, "Craft paper")).locator('input[name="quantity"]')).toHaveValue("2");
+  await expect(panel(page).locator("[data-home]")).toHaveAttribute("data-home", "school");
+  await expect((await choose(page, "Beads")).locator('input[name="quantity"]')).toHaveValue(""); // the plan gives none
+  await expect(panel(page).locator("[data-home]")).toHaveAttribute("data-home", "none");
+  await choose(page, "Dustbin");
+  await expect(panel(page).locator("[data-home]")).toHaveAttribute("data-home", "class");
+  await panel(page).getByRole("tab", { name: "Activity" }).click();
+  await expect(panel(page).getByRole("link", { name: "Proper Use Of Dustbin" })).toHaveAttribute("href", /ACT-K2-0287/);
+  await page.goto(`/timetable/materials?class=${klass}&day=${TUESDAY}&span=fortnight`); // nothing chosen: the panel counts the lines
+  await expect(page.locator('[data-panel=summary] [data-stat="to confirm"] .b-stat-n')).toHaveText("1");
   await expect(page.getByRole("button", { name: /WhatsApp|Send/ })).toHaveCount(0);
   await tapsAreBig(page);
   await shoot(page, "5-materials");
@@ -65,10 +80,11 @@ test("the class list is a table a day, each line tied to its activity, its quant
 test("a quantity she sets is kept, a line removed is gone, an item added from the catalogue is on the list", async ({ page }) => {
   await timetableSwitch(sql, true);
   await open(page);
-  await line(page, "Beads").locator('input[name="quantity"]').fill("3");
-  await line(page, "Beads").getByRole("button", { name: "Save" }).click();
-  await expect(line(page, "Beads").locator('input[name="quantity"]')).toHaveValue("3");
-  await line(page, "Dustbin").getByRole("button", { name: /Remove/ }).click();
+  await (await choose(page, "Beads")).locator('input[name="quantity"]').fill("3");
+  await panel(page).getByRole("button", { name: "Save" }).click();
+  await expect(line(page, "Beads")).toContainText("3");
+  await expect(panel(page).locator('input[name="quantity"]')).toHaveValue("3");
+  await (await choose(page, "Dustbin")).getByRole("button", { name: /Remove/ }).click();
   await expect(line(page, "Dustbin")).toHaveCount(0);
   // an item of this run's own, so a line she added on an earlier run is never in the way
   const name = `Placeholder glue ${Date.now()}`;
@@ -78,7 +94,8 @@ test("a quantity she sets is kept, a line removed is gone, an item added from th
   await page.locator("[data-add]").getByRole("button", { name: "Add" }).click();
   await expect(line(page, name)).toHaveCount(1);
   await page.reload();
-  await expect(line(page, "Beads").locator('input[name="quantity"]')).toHaveValue("3");
+  await expect(line(page, "Beads")).toContainText("3"); // kept: the list says it after a reload
+  await expect(line(page, "Beads").locator('[data-chip="toConfirm"]')).toHaveCount(0);
 });
 
 test("the school's list and the notes to read are the coordinator's: anyone else is told so, the coordinator sees them", async ({ page }) => {

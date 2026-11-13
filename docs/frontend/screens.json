@@ -1287,41 +1287,50 @@
         "CP-6",
         "CP-22"
       ],
-      "exists": "no",
+      "exists": "yes",
       "eyebrow": "16-Nov to 27-Nov",
       "title": "Fortnight 9",
-      "purpose": "Its state, its plan lines, and what changed when the draft went live. Frozen once it starts; a move after that is a hand move, kept with who made it.",
+      "purpose": "Its lessons as blocks, week A and week B. Choose a lesson to move it; its state, the rules in conflict, the moves, the draft and the rules are on the right.",
       "blocks": [
         [
-          "Stepper",
-          "drafted · approved · live · frozen"
+          "FilterBar",
+          "class (coordinator) · previous / next fortnight"
         ],
         [
-          "Cards",
-          "State (chip + who/when) · Plan lines (plan_entry, each an activity link) · Hand moves (who, why, when)"
+          "FortnightGrid",
+          "the whole fortnight, week A and week B; subject colours; moved/clash outlines; the coordinator chooses a lesson, then the lesson or free slot to swap it with"
+        ],
+        [
+          "DetailPanel",
+          "the page's own right side, never closed (page charter C): at its top the Stepper of the fortnight's states in the engine's words (Drafted · Frozen · Aligned · Approved · List sent), the coordinator's next step (Freeze / Align / Approve) and Go live with what changed; then tabs Conflicts (each rule in conflict, accepted with a reason by the coordinator) · Moves (the move being made, Undo the last move, every hand move with who and why) · Draft (coordinator: Make a draft for this fortnight, each class's last draft, this class's unmet rules) · Rules (what the draft reads, the Timetable rules)"
         ],
         [
           "DataTable",
-          "coordinator: what changed at go-live, session by session"
-        ],
-        [
-          "Form",
-          "coordinator: Approve · Go live (main, one at a time)"
+          "coordinator: what changed at go-live, session by session, in the panel"
         ]
       ],
       "elements": [
         {
-          "t": "link",
-          "label": "each plan line",
-          "to": "activity"
-        },
-        {
-          "t": "link",
-          "label": "each hand move",
-          "to": "fortnight",
+          "t": "filter",
+          "label": "class",
           "roles": [
             "coordinator"
           ]
+        },
+        {
+          "t": "link",
+          "label": "Previous / next fortnight",
+          "to": "fortnight"
+        },
+        {
+          "t": "cell",
+          "label": "each lesson block",
+          "to": "fortnight",
+          "data": "data-pick",
+          "roles": [
+            "coordinator"
+          ],
+          "note": "the first click chooses the lesson to move (the panel opens on Moves), the second the lesson or free slot to swap it with; an educator's block opens its activity"
         },
         {
           "t": "button",
@@ -1329,6 +1338,7 @@
           "roles": [
             "coordinator"
           ],
+          "note": "at the top of the panel; Freeze and Align are the same button for the step the engine takes next",
           "effect": "approval row written; the stepper moves to approved; Go live appears; Approve disappears",
           "drive": {
             "click": "Approve",
@@ -1346,7 +1356,7 @@
           "roles": [
             "coordinator"
           ],
-          "note": "needed once the fortnight is frozen; the engine says so in words when it is missing"
+          "note": "Go live, a move and an accepted clash each take one; Go live needs it once the fortnight is frozen, and the engine says so in words"
         },
         {
           "t": "button",
@@ -1368,45 +1378,79 @@
           }
         },
         {
-          "t": "link",
-          "label": "rail: The grid",
-          "to": "timetable"
+          "t": "tab",
+          "label": "Conflicts / Moves / Draft / Rules",
+          "note": "the panel's tabs; the address carries the tab (tab=); Draft is the coordinator's"
+        },
+        {
+          "t": "button",
+          "label": "Accept the clash",
+          "roles": [
+            "coordinator"
+          ],
+          "effect": "with a reason the clash is accepted, kept with who and why; with none the page says Say why and accepts nothing"
+        },
+        {
+          "t": "button",
+          "label": "Move",
+          "roles": [
+            "coordinator"
+          ],
+          "effect": "the two lessons are swapped by the engine and kept with who and why; a clash it makes shows on the grid at once"
+        },
+        {
+          "t": "button",
+          "label": "Undo the last move",
+          "roles": [
+            "coordinator"
+          ],
+          "effect": "a new move back, never a deletion"
+        },
+        {
+          "t": "fold",
+          "label": "Moved by hand",
+          "note": "every hand move of this class in this fortnight: from, to, who, when, why"
+        },
+        {
+          "t": "button",
+          "label": "Make a draft",
+          "roles": [
+            "coordinator"
+          ],
+          "effect": "a draft for every class of the year for this fortnight, kept as a run; it never touches the lessons until Go live"
         },
         {
           "t": "link",
-          "label": "rail: each activity in the plan",
-          "to": "activity"
-        },
-        {
-          "t": "link",
-          "label": "rail: Materials",
-          "to": "materials"
-        },
-        {
-          "t": "link",
-          "label": "rail: Draft",
+          "label": "Open the draft as a grid",
           "to": "draft",
+          "roles": [
+            "coordinator"
+          ]
+        },
+        {
+          "t": "link",
+          "label": "Timetable rules (and each unmet rule)",
+          "to": "rules",
           "roles": [
             "coordinator"
           ]
         }
       ],
-      "rail": [
-        "The grid",
-        "every activity in the plan",
-        "Materials",
-        "Draft (coordinator)"
-      ],
+      "rail": [],
       "capture": [],
-      "main": "Approve / Go live (coordinator) · Open the grid (educator)",
+      "main": "The next step (Freeze, Align, Approve) or Go live, at the top of the panel (coordinator) · read the grid (educator)",
       "next": "Timetable",
-      "data": "fortnight + fortnight.state (CP-6; each step's yes is an approval row); plan_entry; session diffs at go-live (CP-22); approval ledger",
-      "empty": "No plan lines yet: link to the planner upload",
-      "phone": "stepper wraps to two rows",
+      "data": "fortnight + fortnight.state (CP-6; each step's yes is an approval row); session for the fortnight's days; the clashes of the rules on those days; change_log moves; timetable_run drafts; the timetable_rule rows the draft reads; session diffs at go-live (CP-22)",
+      "empty": "Nothing placed for this class: the coordinator makes a draft from the Draft tab",
+      "phone": "the panel follows the grid; the stepper wraps to two rows",
       "done_when": [
         "Approve and Go live exist for the 'everything' group only and their requests are refused for others",
         "a frozen fortnight shows no Approve, Go live or edit control",
-        "the what-changed table lists every session the go-live updated, and nothing else"
+        "the what-changed table lists every session the go-live updated, and nothing else",
+        "the right panel holds the fortnight's state stepper in the engine's words with the next step, and there is no rail",
+        "the rules in conflict are the panel's Conflicts tab, each accepted there with a reason",
+        "Draft and Rules are tabs of the panel: Make a draft and the rules the draft reads are there",
+        "moving a lesson is chosen on the grid and made, undone and listed in the panel's Moves tab"
       ]
     },
     {
@@ -1599,22 +1643,26 @@
         "CP-17",
         "CP-18"
       ],
-      "exists": "yes (/educator/materials)",
+      "exists": "yes (/educator/materials opens it)",
       "eyebrow": "K2 Red · Fortnight 9",
       "title": "Materials, this fortnight",
-      "purpose": "Built from the activities in the plan. Each line knows which activity needs it. Set a quantity, remove a line, add from the catalogue.",
+      "purpose": "Built from the activities in the plan, day by day. Choose a line to see how many, which activity needs it, and to change it.",
       "blocks": [
         [
           "FilterBar",
-          "day · week · fortnight"
+          "class · day / week / fortnight · Notes to read"
+        ],
+        [
+          "List",
+          "the lines grouped by the day each is needed: item, how many (or the amber 'to confirm' chip), the activity; a line opens its detail on the right"
+        ],
+        [
+          "DetailPanel",
+          "a line chosen: tabs How many (the quantity with Save, where it is kept, its source, the day; Remove) · Activity (the activity that needs it, a link, and what else it needs in these days); nothing chosen: StatTiles lines · to confirm · days"
         ],
         [
           "DataTable",
-          "item · quantity (editable) · for which activity (link) · source"
-        ],
-        [
-          "Cards",
-          "School list (coordinator) · Notes to read (notes the system could not match to an item)"
+          "School list (coordinator, a tab): each item once with the classes it comes from; Notes to read (a filter)"
         ]
       ],
       "elements": [
@@ -1623,23 +1671,40 @@
           "label": "day / week / fortnight"
         },
         {
+          "t": "link",
+          "label": "each line",
+          "to": "materials",
+          "data": "data-open-key",
+          "note": "opens the line in the detail panel on the right (?open=line:<id>)"
+        },
+        {
           "t": "field",
-          "label": "quantity (each line)",
+          "label": "quantity (in the line's panel)",
           "effect": "a number; saving writes materials_line_edit with who; the amber 'to confirm' chip clears"
         },
         {
           "t": "button",
-          "label": "Remove (each line)",
-          "effect": "the line is marked removed with who, never deleted"
+          "label": "Save",
+          "effect": "keeps the quantity the field holds"
         },
         {
           "t": "button",
+          "label": "Remove (in the line's panel)",
+          "effect": "the line is marked removed with who, never deleted"
+        },
+        {
+          "t": "field",
           "label": "Add from the catalogue",
           "effect": "a picker of material_item; never free text"
         },
         {
+          "t": "button",
+          "label": "Add",
+          "effect": "the item chosen is a new line of the class's list"
+        },
+        {
           "t": "link",
-          "label": "each line's activity",
+          "label": "the line's activity",
           "to": "activity"
         },
         {
@@ -1653,17 +1718,24 @@
         {
           "t": "filter",
           "label": "Notes to read",
-          "note": "shows only the lines the system could not read"
+          "note": "shows only the notes the system could not read"
         },
         {
           "t": "link",
-          "label": "rail: each activity in the plan",
-          "to": "activity"
+          "label": "Fill the quantities",
+          "to": "materials",
+          "note": "the page's one main action, under the title: the first line still to confirm, opened on the right"
+        },
+        {
+          "t": "tab",
+          "label": "How many / Activity",
+          "note": "the line panel's tabs; the address carries the tab"
         },
         {
           "t": "link",
-          "label": "rail: Fortnight 9",
-          "to": "fortnight"
+          "label": "Close the panel",
+          "to": "materials",
+          "note": "the × or Escape; focus goes back to the line"
         },
         {
           "t": "upload",
@@ -1671,21 +1743,21 @@
           "effect": "a photo attaches to the list, never to a child"
         }
       ],
-      "rail": [
-        "every activity in the plan",
-        "Fortnight 9"
-      ],
+      "rail": [],
       "capture": [
         "photo"
       ],
       "main": "Fill the quantities",
-      "next": "Fortnight 9",
+      "next": "The day",
       "data": "materials_list, materials_line, activity_material, material_item",
       "empty": "No plan lines with materials",
-      "phone": "the table scrolls sideways in its own box",
+      "phone": "the list is one column; a chosen line's panel is a sheet over it",
       "done_when": [
         "a line with no quantity carries the amber 'to confirm' chip",
-        "approval (CP-17) exists only for the signed-in educator's own class and is refused for another"
+        "approval (CP-17) exists only for the signed-in educator's own class and is refused for another",
+        "the lines are grouped by the day each is needed, on the left",
+        "choosing a line opens its detail on the right: how many, the activity that needs it, and Save and Remove",
+        "the coordinator's school list is a tab of the same page"
       ]
     },
     {

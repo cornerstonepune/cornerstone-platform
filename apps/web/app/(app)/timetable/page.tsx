@@ -294,7 +294,7 @@ export default async function TimetablePage({ searchParams }: Props) {
       <Cards
         cards={[
           { kind: "period", title: `Fortnight ${fn.number}`, line: `${stateWords(fn.state)} · ${dateWords(fn.starts_on)} to ${dateWords(fn.ends_on)}`, href: `/timetable/fortnight/${fn.number}`, link: "Open the fortnight" },
-          { kind: "activity", title: "Materials for this fortnight", line: "What the plan needs, line by line.", href: "/educator/materials", link: "Open materials" },
+          { kind: "activity", title: "Materials for this fortnight", line: "What the plan needs, line by line.", href: "/timetable/materials", link: "Open materials" },
         ]}
       />
     </Screen>
