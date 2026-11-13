@@ -2547,7 +2547,8 @@
       "rest": {
         "fixture": "assessments-rest",
         "after": "assessments-gone"
-      }
+      },
+      "rail": []
     },
     {
       "id": "assessment",
