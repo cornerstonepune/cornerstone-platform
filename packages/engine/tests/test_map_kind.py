@@ -102,3 +102,26 @@ def test_the_score_that_switched_the_proposer_on_is_on_record():
     )
     for number in ("245", "0.80", "0.732", "0.854", "0.784", "0.673"):
         assert number in row, number
+
+
+# CP-48 K2 fill: an objective run and an objective → skill run, each stopped only by its own kind's history.
+
+
+def test_an_objective_run_asks_for_activities_with_no_objective_even_after_their_skill_run(conn):
+    _, b = world(conn)
+    done = {("skill", "ACT-KX-0102", "")}
+    objective = cli_map.to_propose(b, done, "objective")
+    assert "ACT-KX-0102" in objective and "ACT-KX-0201" in objective, "a skill proposal does not stop it"
+    assert "ACT-KX-0102" not in cli_map.to_propose(b, {("objective", "ACT-KX-0102", "")}, "objective")
+
+
+def test_an_objective_to_skill_run_asks_no_proposer_and_keeps_only_its_links():
+    from dataclasses import replace
+
+    from tests.test_map_replay import prop
+
+    assert cli_map.to_propose(None, set(), "lo_skill") == []  # type: ignore[arg-type]
+    base = prop("A", ["NUM.CNT.01"], "auto_passed")
+    made = [replace(base, kind=k) for k in ("skill", "objective", "lo_skill")]
+    assert [p.kind for p in cli_map.only_kind(made, "lo_skill")] == ["lo_skill"]
+    assert [p.kind for p in cli_map.only_kind(made, "objective")] == ["objective"]

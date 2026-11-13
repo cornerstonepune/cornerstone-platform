@@ -12,16 +12,22 @@ from engine.w1_bank.map_agents import PROPOSE, Band, Proposal, kinds_missing
 
 def to_propose(b: Band, done: set, kind: str = "") -> list[str]:
     """The activities the proposer is called for: those with a gap that nothing has been proposed for yet; with `kind`,
-    only those whose gap is of that kind (`skill`: no skill link at all)."""
-    todo = [
-        c for c in sorted(b.gaps) if not any((k, c, "") in done for k in ("skill", "objective", "levels"))
-    ]
+    only those whose gap is of that kind (`skill`: no skill link; `objective`: no objective). `lo_skill` asks no proposer:
+    its links are made by code (`map_agents.propose_lo_skills`)."""
+    if kind == "lo_skill":
+        return []
+    asked = (
+        (kind,) if kind else ("skill", "objective", "levels")
+    )  # one kind's run is not stopped by another's
+    todo = [c for c in sorted(b.gaps) if not any((k, c, "") in done for k in asked)]
     return [c for c in todo if kind in kinds_missing(b.gaps[c])] if kind else todo
 
 
 def only_kind(made: list[Proposal], kind: str) -> list[Proposal]:
     """What a run for one kind records: that kind's proposals (a skill's offers are skills), nothing else."""
-    wanted = {"skill": {"skill", "skill_offer"}}.get(kind)
+    wanted = {"skill": {"skill", "skill_offer"}, "objective": {"objective"}, "lo_skill": {"lo_skill"}}.get(
+        kind
+    )
     return [p for p in made if p.kind in wanted] if wanted else made
 
 

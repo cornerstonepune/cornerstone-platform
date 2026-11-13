@@ -14,6 +14,7 @@ LEVELS = ("level_0", "level_1", "level_2", "level_3")
 Reply = dict[str, object]
 # The kinds whose words a person must read: nothing exists to score new words against (the gold set holds codes).
 NEW_WORDS = frozenset({"levels"})
+OBJECTIVE_WORDS = 4  # a new objective is a sentence ("The children will ..."), never a word or two
 
 
 @dataclass(frozen=True)
@@ -78,6 +79,8 @@ def _objective(proposal: dict[str, object], gap: Gap, known: Known) -> list[str]
         return [f"invented code {code}: not an objective of this band"]
     if code in gap.objectives:
         return [f"{code} is already linked"]
+    if text and len(text.split()) < OBJECTIVE_WORDS:
+        return [f"'{text}' is not an objective: one plain sentence of what the children will do"]
     return []
 
 

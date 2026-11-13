@@ -3,12 +3,15 @@ class's fortnight plan; linking gives it the activity it names. The rules live i
 `plan_link_apply`, `plan_link_undo`); these commands only count, call and print, fortnight by fortnight. `cli_timetable`
 mounts them. Plan-line text is the school's curriculum text; no person's name is read or printed."""
 
+import uuid
 from collections import Counter
 from uuid import UUID
 
 import typer
 
+from engine.adapters import llm
 from engine.core import db, settings
+from engine.w2_print import plan_match
 
 BY = "engine timetable link"
 REASONS = ("no_match", "several_matches", "ready_to_link")
@@ -101,7 +104,67 @@ def unmatched(fortnight: int | None = FORTNIGHT, band: str | None = BAND) -> Non
         typer.echo("every plan line has an activity")
 
 
+def _asker(conn: db.Conn, version: int | None, stage: str | None) -> plan_match.Ask:
+    def ask(variables: dict[str, object], about: str) -> dict[str, object]:
+        return llm.generate(conn, plan_match.PURPOSE, variables, version=version, stage=stage, about=about)
+
+    return ask
+
+
+def match(
+    apply: bool = typer.Option(False, "--apply", help="record the answers and link the lines (needs --by)"),
+    by: str = typer.Option("", "--by", help="the member of staff running it, by email (kept as an id)"),
+    band: str | None = BAND,
+    version: int = typer.Option(0, "--version", help="the prompt version (0: the active one)"),
+    stage: str = typer.Option("", "--stage", help="the campaign stage that pays for the calls"),
+    gold: bool = typer.Option(
+        False, "--gold", help="ask for the school's own exact links and score; writes nothing"
+    ),
+    estimate: bool = typer.Option(False, "--estimate", help="count the lines to ask about; no call"),
+) -> None:
+    """CP-48: each plan line the exact-name rule left, matched by a model to one shortlisted activity, or none."""
+    if apply and (gold or not by.strip()):
+        raise typer.BadParameter("--apply needs --by, and is never a --gold run")
+    with db.connect() as conn:
+        tenant = db.one(conn, "select id from tenant where slug = %s", (db.tenant_slug(),))["id"]
+        band = _band(conn, band)
+        todo = plan_match.lines(conn, tenant, band, gold=gold)
+        asked = [x for x in todo if plan_match.shortlist(conn, tenant, band, x)]
+        typer.echo(f"{band}: {len(todo)} distinct lines, {len(asked)} with a shortlist (one call each)")
+        if estimate:
+            return
+        staff = db.one(conn, "select public.staff_of_email(%s) as id", (by,))["id"] if apply else None
+        if apply and staff is None:
+            raise typer.BadParameter("no one member of staff has the email given to --by")
+        ask, run, made = _asker(conn, version or None, stage or None), uuid.uuid4(), []
+        prompt = f"{plan_match.PURPOSE} v{version or 'active'}"
+        for x in todo:
+            try:
+                a = plan_match.answer(conn, tenant, band, x, ask)
+            except llm.LLMSchemaError as e:
+                a = plan_match.Answer(
+                    x, plan_match.shortlist(conn, tenant, band, x), problems=[f"reply refused: {e}"]
+                )
+            made.append(a)
+            typer.echo(f"  {x.key}: {x.text[:60]!r} -> {a.activity or 'none'} {a.problems or ''}")
+            if apply and staff is not None:
+                plan_match.record(conn, tenant, run, a, staff, prompt)
+                plan_match.link(conn, run, a, f"machine:{plan_match.PURPOSE}")
+        if gold:
+            typer.echo(f"gold: {plan_match.score(made, plan_match.gold_links(conn, tenant, band))}")
+            conn.commit()  # the flow_run rows: what was spent
+            return
+        linked = sum(a.activity is not None and not a.problems for a in made)
+        typer.echo(f"{len(made)} lines: {linked} matched, {sum(not a.activity for a in made)} none,"
+                   f" {sum(bool(a.problems) for a in made)} refused")  # fmt: skip
+        conn.commit()
+        typer.echo(
+            f"run {run} (undo: engine timetable link-undo {run})" if apply else "dry run: nothing linked"
+        )
+
+
 def mount(app: typer.Typer) -> None:
+    app.command("match")(match)
     app.command("link")(link)
     app.command("link-undo")(link_undo)
     app.command("unmatched")(unmatched)

@@ -38,6 +38,7 @@ RUNS = {
                 "skill",
                 "--estimate",
             ],
+            ["engine", "timetable", "match", "--estimate"],
         ],
     },
     "map_probe": {
@@ -107,6 +108,66 @@ RUNS = {
             ]
         ],
     },
+    # CP-48 K2 fill (Nimish, 13 Nov: no queue, a machine link is marked and revertible)
+    "map_propose_objectives": {
+        "spends": True,
+        "commands": [
+            [
+                "engine",
+                "curriculum",
+                "propose",
+                "--stage",
+                "draft",
+                "--version",
+                "3",
+                "--validate-version",
+                "2",
+                "--kind",
+                "objective",
+                "--apply",
+                "--by",
+                BY,
+            ]
+        ],
+    },
+    "map_lo_skills": {
+        "spends": True,
+        "commands": [
+            [
+                "engine",
+                "curriculum",
+                "propose",
+                "--stage",
+                "draft",
+                "--version",
+                "3",
+                "--validate-version",
+                "2",
+                "--kind",
+                "lo_skill",
+                "--apply",
+                "--by",
+                BY,
+            ]
+        ],
+    },
+    "plan_match_gold": {
+        "spends": True,
+        "commands": [["engine", "timetable", "match", "--gold", "--version", "1", "--stage", "draft"]],
+    },
+    "plan_match": {
+        "spends": True,
+        "commands": [
+            ["engine", "timetable", "match", "--version", "1", "--stage", "draft", "--apply", "--by", BY]
+        ],
+    },
+    "map_apply": {
+        "spends": False,
+        "commands": [
+            ["engine", "curriculum", "apply", "--kind", k, "--fill", "--apply", "--by", BY]
+            for k in ("skill", "skill_offer", "objective", "lo_skill")
+        ],
+    },
     "draft_tranche": {
         "spends": True,
         "commands": [["engine", "curriculum", "draft", "--stage", "draft", "--tranche", "--by", BY]],
@@ -120,6 +181,8 @@ RUNS = {
         "commands": [["engine", "curriculum", "materials", "--stage", "draft", "--by", BY]],
     },
     "review": {"spends": False, "commands": [["engine", "curriculum", "review"]]},
+    # CP-48: each link of K2's chain, n of m (read only)
+    "chain": {"spends": False, "commands": [["engine", "chain"]]},
     # the screens go on by a logged, signed command, never by hand on live (10 Nov, the founder: all screens on)
     "switch_status": {"spends": False, "commands": [["engine", "read", "voice", "status"]]},
     "switch_screens_on": {

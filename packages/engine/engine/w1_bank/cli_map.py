@@ -36,6 +36,7 @@ from engine.w1_bank.map_agents import (
 from engine.w1_bank.map_eval import Scored, score, split
 from engine.w1_bank.map_scope import estimate, estimate_line, only_kind, to_propose
 
+KINDS = ("", "skill", "objective", "lo_skill")  # what `propose --kind` takes; "" is every kind
 PURPOSE = "curriculum_map"  # its bars: eval.curriculum_map.*
 RECORDED = typer.Option(None, "--recorded", help="Replies a file holds, in place of the model (no key here)")
 APPLY = typer.Option(False, "--apply", help="Write it. Without this, nothing is written")
@@ -111,13 +112,13 @@ def propose_(
     validate_version: int = typer.Option(0, "--validate-version", help="The validator's (0: the active one)"),
     estimate_only: bool = typer.Option(False, "--estimate", help="Count the gaps and price them; no call"),
     kind: str = typer.Option(
-        "", "--kind", help="Only activities with this gap, and only its proposals: skill"
+        "", "--kind", help="Only activities with this gap, and only its proposals: skill, objective, lo_skill"
     ),
 ) -> None:
     """Propose for every gap of the band not already proposed, and record where each went."""
     _needs_by(write, by)
-    if kind not in ("", "skill"):
-        raise typer.BadParameter("--kind takes skill (or nothing: every kind)")
+    if kind not in KINDS:
+        raise typer.BadParameter("--kind takes skill, objective or lo_skill (or nothing: every kind)")
     with db.connect() as conn:
         tenant = _tenant(conn)
         staff = staff_of(conn, by) if write else None
@@ -134,7 +135,7 @@ def propose_(
             made = only_kind(
                 [
                     *propose(b, todo, ask, rules, map_ledger.asked(conn, tenant)),
-                    *([] if kind else propose_lo_skills(b, ask, rules, pairs)),
+                    *(propose_lo_skills(b, ask, rules, pairs) if kind in ("", "lo_skill") else []),
                 ],
                 kind,
             )
@@ -190,12 +191,17 @@ def apply_(
     kind: str = typer.Option(
         "", "--kind", help="Only this kind of proposal (page_part, material, skill, ...)"
     ),
+    fill: bool = typer.Option(
+        False, "--fill", help="Also a link waiting for a person (machine-marked, revertible); never a 'none'"
+    ),
 ) -> None:
-    """Make every proposal that passed on its own or that a person approved."""
+    """Make every proposal that passed on its own or that a person approved; with --fill, also those waiting."""
     _needs_by(write, by)
     with db.connect() as conn:
         tenant = _tenant(conn)
-        done = map_ledger.apply(conn, tenant, staff_of(conn, by) if write else "", write, kind=kind or None)
+        done = map_ledger.apply(
+            conn, tenant, staff_of(conn, by) if write else "", write, kind=kind or None, fill=fill
+        )
         for d in done:
             typer.echo(f"  {d}")
         if write:
