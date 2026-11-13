@@ -287,7 +287,7 @@ jobs:
   # built from this repository alone — the engine job's `bin/testdb fresh`. Until 2026-10-01 these ran on a laptop
   # against a copy of live, some leaned on live's classes, and none ran here. A spec builds the rows it needs
   # (tests/rows.ts); one that skips itself fails this job (goals/p1-browser-tests-in-ci.yaml).
-  # The browser specs cut across three runners by Playwright's own --shard, each runner with its own database and servers,
+  # The browser specs cut across four runners by Playwright's own --shard, each runner with its own database and servers,
   # so the specs that share rows or lock tables still run one at a time on their runner (workers: 1). One runner took 24
   # minutes on 2026-10-23, 6 installing Chromium, 4 building the database and 14 testing, one after another
   # (goals/ci-browser-shards.yaml). Each runner now builds its database while it installs, as the engine shards do.
@@ -301,9 +301,9 @@ jobs:
     strategy:
       fail-fast: false
       # SHARDS below and in the browser job must be this list's length
-      matrix: { shard: [1, 2, 3] }
+      matrix: { shard: [1, 2, 3, 4] }
     env:
-      SHARDS: 3
+      SHARDS: 4
       DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/postgres
       TEST_DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/postgres
     steps:
@@ -381,7 +381,7 @@ jobs:
     if: always()
     runs-on: ubuntu-24.04
     env:
-      SHARDS: 3
+      SHARDS: 4
       DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/postgres
       TEST_DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/postgres
     steps:
