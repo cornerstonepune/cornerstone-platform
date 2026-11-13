@@ -110,7 +110,7 @@
       "eyebrow": "Period · 09:15 · K2 Red · Numeracy",
       "group": "Today",
       "route": "/period/[id]",
-      "purpose": "the activity's objective in one line",
+      "purpose": "the activity's objective in one line; 'No activity for this lesson yet' when it has none",
       "does": [
         {
           "label": "Record a note"
@@ -125,34 +125,43 @@
           "label": "each Sr. No. named under the last-time bar"
         },
         {
-          "label": "The steps, short"
+          "label": "Close"
         },
         {
-          "label": "Lay out"
+          "label": "Open the child"
         },
         {
-          "label": "Watch for"
+          "label": "each child's card"
         },
         {
-          "label": "The activity"
+          "label": "each level choice (0–3, Absent, Not willing)"
         },
         {
-          "label": "each learning objective"
+          "label": "Level for the rest"
+        },
+        {
+          "label": "Mark the rest at level n"
+        },
+        {
+          "label": "Activity"
+        },
+        {
+          "label": "Rubric"
         },
         {
           "label": "Materials"
         },
         {
-          "label": "Its place in the fortnight"
+          "label": "History"
+        },
+        {
+          "label": "Mark against the expected level"
+        },
+        {
+          "label": "Choose another activity"
         },
         {
           "label": "The class"
-        },
-        {
-          "label": "Close"
-        },
-        {
-          "label": "Open the child"
         }
       ]
     },
@@ -318,7 +327,7 @@
           "label": "Previous / next day or week"
         },
         {
-          "label": "Today"
+          "label": "Open today"
         },
         {
           "label": "each day head"
@@ -327,7 +336,7 @@
           "label": "this / next fortnight"
         },
         {
-          "label": "each grid cell"
+          "label": "each lesson block"
         },
         {
           "label": "a moved cell's details (who, why, when)"
@@ -337,18 +346,6 @@
         },
         {
           "label": "Materials card"
-        },
-        {
-          "label": "Fortnight 9"
-        },
-        {
-          "label": "Materials"
-        },
-        {
-          "label": "Today's period"
-        },
-        {
-          "label": "Rules"
         }
       ]
     },

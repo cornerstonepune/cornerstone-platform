@@ -31,15 +31,6 @@ test("Timetable: a legend names Done, Moved by hand and Clash; the rail lists wh
   await expect(page.getByRole("region", { name: "Changed this fortnight" })).toBeVisible(); // a part of the rail, not a second side column (u13-frame: one aside, the rail)
 });
 
-test("Timetable: lessons by subject counts the class's sessions for the fortnight, subject by subject", async ({ page }) => {
-  await page.goto(`/timetable?fn=${HERE}&class=${f.klass}`);
-  const rows = await sql<{ code: string; n: number }[]>`
-    select s.subject_code as code, count(*)::int as n from session s join school_day d on d.id = s.school_day_id join fortnight g on d.on_date between g.starts_on and g.ends_on
-    where s.school_class_id = ${f.klass} and g.id = ${f.here} and s.kind <> 'fixed' and s.subject_code is not null group by 1`;
-  expect(rows.length).toBeGreaterThan(0);
-  for (const r of rows) await expect(page.locator(`[data-subject-row="${r.code}"]`)).toContainText(String(r.n));
-});
-
 test("Fortnight: the page is the grid of the whole fortnight, its state steps are on it, and there are no cards, no plan-lines table and no board of fortnights", async ({ page }) => {
   await page.goto(`/timetable/fortnight/${HERE}?class=${f.klass}`);
   const grid = page.locator("[data-block=FortnightGrid]");

@@ -446,6 +446,7 @@ a { color: var(--link); text-decoration: underline; text-underline-offset: 3px; 
 .sbar { display: flex; height: 14px; gap: var(--space-0); border-radius: 5px; overflow: hidden; }
 .sbar i { flex: var(--n) 0 0; background: var(--c); }
 .sbar i[data-state="unseen"] { background: var(--line); }
+.sbar i[data-subject] { background: var(--s); }
 .keyrow { display: flex; flex-wrap: wrap; gap: var(--space-2); }
 .lbars { display: grid; gap: var(--space-2); }
 .lbar { display: grid; grid-template-columns: 72px 1fr 32px; gap: var(--space-2); align-items: center; }

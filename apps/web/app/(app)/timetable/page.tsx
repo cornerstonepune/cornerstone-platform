@@ -5,7 +5,6 @@ import { Screen } from "@/components/app-frame";
 import { GridRefused } from "@/components/grid-refused";
 import { TimetableRail } from "@/components/timetable-rail";
 import { Cards } from "@/components/cards";
-import { DataTable } from "@/components/data-table";
 import { Details } from "@/components/details";
 import { EmptyState } from "@/components/empty-state";
 import { FilterBar } from "@/components/filter-bar";
@@ -16,10 +15,9 @@ import { Timeline, type Seen } from "@/components/timeline";
 import { DetailPanel, parseOpen, type Opened } from "@/components/detail-panel";
 import { lessonPanel } from "@/components/lesson-panel";
 import { SubjectMix } from "@/components/subject-tag";
-import { SUBJECT } from "@/components/fortnight-grid";
 import { lessonIds, lessonView } from "@/lib/lesson-view";
-import type { Column } from "@/lib/ux-rules";
 import { requireStaff } from "@/lib/auth";
+import { choices } from "@/lib/choices";
 import { chipOf } from "@/lib/educator/chip";
 import { mondayOf, nowAtSchool, schoolDay, shortDate, whenIs } from "@/lib/educator/clock";
 import { weekOrNull } from "@/lib/educator/data";
@@ -27,7 +25,6 @@ import { isDay, isLesson } from "@/lib/educator/period";
 import { dateWords } from "@/lib/week";
 import { stateWords } from "@/lib/fortnight-words";
 import { gridOf, moveInto } from "@/lib/timetable-grid";
-import { subjectsAgainstRule, type SubjectRow } from "@/lib/timetable-subjects";
 import { classesOf, subjectLooks, clashesOf, fortnightAfter, fortnightAt, fortnightNumber, fortnightsOfYear, isCoordinator, liveIds, liveWords, movesOf, noSchoolOn, switchedOn, yearFor, type Fn } from "@/lib/timetable-ui";
 import { schoolToday } from "@/lib/voice-page";
 import { DayOnPhone } from "./day-on-phone";
@@ -38,13 +35,6 @@ const HERE = "/timetable";
 const VIEWS = ["day", "week", "fortnight"] as const;
 type View = (typeof VIEWS)[number];
 const addDays = (d: string, n: number) => new Date(Date.parse(`${d}T00:00:00Z`) + n * 86_400_000).toISOString().slice(0, 10);
-
-const SUBJECT_COLUMNS: Column<SubjectRow>[] = [
-  { key: "subject", label: "Subject", value: (r) => r.name },
-  { key: "placed", label: "Lessons placed", value: (r) => r.placed, num: true },
-  { key: "rule", label: "The rule", value: (r) => r.rule },
-  { key: "against", label: "Against the rule", value: (r) => r.against?.note ?? "", status: true, cell: (r) => (r.against ? <StatusChip state={r.against.state} words={r.against.note} compact round /> : <span className="tt-note">–</span>) },
-];
 
 // The timetable: the fortnight is the unit. Week A and week B, each period a block; a moved period is marked with who and why,
 // and a clash is red until the coordinator accepts it (docs/frontend/SPEC.md, Timetable). The sessions are the engine's
@@ -158,14 +148,14 @@ export default async function TimetablePage({ searchParams }: Props) {
   });
   const lessons = grid.rows.some((r) => "cells" in r && r.cells.some((c) => c));
   const movedHere = grid.placed.filter((x) => x.cell.moved).map((x) => ({ day: x.day, periodId: x.periodId, cell: x.cell, move: moveInto(moves, x.day, x.periodId) }));
-  const open = clashes.filter((c) => !c.accepted).length;
+  // the clashes of the days shown (page charter B2: the panel counts the week shown, not the whole fortnight)
+  const open = clashes.filter((c) => !c.accepted && c.places.some((p) => p.class === klass.id && shownDays.includes(p.date))).length;
   const lessonCount = grid.placed.length;
   const holidayCount = grid.holidays.length;
   // Day view: what comes next (the period running now, else the next one; a day gone by says so), as the old Your day page did
   const dayPeriods = view === "day" ? (weeks.flatMap((w) => w.days).find((d) => d.day === focus)?.periods ?? []).filter(isLesson) : [];
   const dayWhen = whenIs(focus, today);
   const nextPeriod = view === "day" ? (dayPeriods.find((p) => chipOf(p, { now, day: dayWhen }) === "doNow") ?? (dayWhen === "past" ? undefined : dayPeriods.find((p) => dayWhen === "future" || p.starts_at > now))) : undefined;
-  const bySubject = await subjectsAgainstRule(klass.id, fn.starts_on, fn.ends_on);
   const changed: Seen[] = [
     ...clashes.filter((c) => !c.accepted).map((c) => ({ kind: "period" as const, title: c.detail, line: "Not yet accepted", when: "clash" })),
     ...moves.slice(0, 4).map((m) => ({ kind: "period" as const, title: m.undo ? "A move was undone" : "A lesson was moved by hand", line: `${m.who}${m.why ? `: ${m.why}` : ""}`, when: dateWords(m.at.slice(0, 10)) })),
@@ -185,7 +175,11 @@ export default async function TimetablePage({ searchParams }: Props) {
         clash: chosen!.cell.note,
       })
     : null;
-  const mix = (Object.keys(SUBJECT) as (keyof typeof SUBJECT)[]).map((look) => ({ look, words: SUBJECT[look], n: grid.placed.filter((x) => x.cell.subject === look).length }));
+  // the share of the lessons shown by subject: each subject of the blocks by its own name (the subject rows), in its colour
+  const names = new Map((await choices()).subjects.map((s) => [s.code, s.label]));
+  const mix = [...Map.groupBy(grid.placed, (x) => x.code ?? "").entries()]
+    .map(([code, xs]) => ({ look: xs[0].cell.subject, words: names.get(code) ?? (code || "No subject"), n: xs.length }))
+    .sort((a, b) => b.n - a.n || a.words.localeCompare(b.words));
   const spanWords = view === "day" ? "This day" : view === "week" ? "This week" : "This fortnight";
 
   return (
@@ -209,7 +203,7 @@ export default async function TimetablePage({ searchParams }: Props) {
             ],
             after: (
               <>
-                <SubjectMix label="Lessons by subject" parts={mix} />
+                <SubjectMix label="Lessons by subject" parts={mix} percent />
                 <p className="b-label b-muted">Choose a lesson in the grid to see it here.</p>
                 {changed.length ? (
                   <section aria-label="Changed this fortnight" data-rail-part="changed">
@@ -303,12 +297,6 @@ export default async function TimetablePage({ searchParams }: Props) {
           { kind: "activity", title: "Materials for this fortnight", line: "What the plan needs, line by line.", href: "/educator/materials", link: "Open materials" },
         ]}
       />
-      <h2 className="tt-h">This fortnight, lessons by subject</h2>
-      {bySubject.length ? (
-        <DataTable label="Lessons by subject" columns={SUBJECT_COLUMNS} rows={bySubject} rowKey={(r) => r.code} limit={bySubject.length} more={{ page: 1, href: () => "#" }} extras={{ attrs: (r) => ({ "data-subject-row": r.code }) }} />
-      ) : (
-        <p className="tt-empty">No lessons placed in this fortnight.</p>
-      )}
     </Screen>
   );
 }
