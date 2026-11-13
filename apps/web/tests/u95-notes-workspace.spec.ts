@@ -81,8 +81,11 @@ test("choosing a note opens it on the right with its marks: the address names it
   await expect(panel(page).locator("[data-roll='5']")).toHaveAttribute("data-cell-mark", "below");
   await expect(panel(page).getByRole("button", { name: "Confirm this note" })).toHaveCount(1);
   await panel(page).getByRole("tab", { name: "Children" }).click();
-  // a note's children are its read claims, kept once it is confirmed (the last test names them); this one is still a draft
-  await expect(panel(page).getByRole("tabpanel", { name: "Children" })).toContainText("No child is named in this note yet.");
+  // the children a note names are the ones its marks name (rolls 3 and 5), listed as the list lists them, a draft or confirmed
+  const kids = panel(page).getByRole("tabpanel", { name: "Children" });
+  await expect(kids).toContainText("03");
+  await expect(kids).toContainText("05");
+  await expect(kids).not.toContainText("No child is named in this note yet.");
   await page.keyboard.press("Escape");
   await expect(page).not.toHaveURL(/open=/);
   await expect(page.locator("[data-block=DetailPanel][data-panel=summary]")).toBeVisible();
