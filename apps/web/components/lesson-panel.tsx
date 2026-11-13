@@ -14,9 +14,10 @@ import { LessonForm } from "@/app/(app)/period/[id]/lesson-form";
 // the same lesson the lesson page reads (lib/lesson-view.ts) and the class form of that page (#715). The coordinator's Move, Edit and Choose
 // an activity sit at the top of the panel, never inside the timetable's blocks. Words of the levels are the activity's own; their colours
 // are the site's one state scale. Names only where the lesson page already shows them (the class's own educator's roster).
+const NOT_WRITTEN = "Not written";
 const H = "text-[length:var(--text-label)] font-semibold text-[var(--ink-muted)] uppercase tracking-[0.08em]";
 
-function Part({ title, children }: { title: string; children: ReactNode }) {
+export function Part({ title, children }: { title: string; children: ReactNode }) {
   return (
     <section className="grid gap-[var(--space-1)]" aria-label={title}>
       <h3 className={H}>{title}</h3>
@@ -25,45 +26,83 @@ function Part({ title, children }: { title: string; children: ReactNode }) {
   );
 }
 
+/** What the activity is for, in a line (the activity's page part, or the engine's outcome). */
+export const OutcomePart = ({ v }: { v: LessonView }) => (
+  <Part title="What it is for">
+    <p data-part="outcome">{v.objective?.text || v.full?.outcome || "Not written yet."}</p>
+  </Part>
+);
+
+/** The steps as numbered bullets when the page part has them, else the school's text as written. */
+export const StepsPart = ({ v }: { v: LessonView }) => (
+  <Part title="The steps">
+    {v.steps?.items.length ? (
+      <ol className="list-decimal pl-[var(--space-4)]" data-part="steps">
+        {v.steps.items.map((i) => (
+          <li key={i}>{i}</li>
+        ))}
+      </ol>
+    ) : (
+      <p className="whitespace-pre-line">{v.steps?.text || v.full?.steps || "No steps written yet."}</p>
+    )}
+  </Part>
+);
+
+export const WatchPart = ({ v }: { v: LessonView }) => (
+  <Part title="Watch for">
+    <p>{v.thinking?.text || "Nothing written yet."}</p>
+  </Part>
+);
+
+/** The rubric: each level a row in the state scale's colour with the activity's own words; a level with none says "Not written". */
+export function RubricRows({ levels }: { levels: readonly string[] }) {
+  if (!levels.some(Boolean)) return <p>The levels are not written for this activity.</p>;
+  return (
+    <ol className="b-levels" data-block="Rubric" data-part="levels">
+      {levels.map((w, n) => (
+        <li key={n} className="b-level" data-level={n} data-state={scaleLook(levelState(n, levels.length))}>
+          <b className="b-num">{n}</b>
+          <span>{w || NOT_WRITTEN}</span>
+        </li>
+      ))}
+    </ol>
+  );
+}
+
+/** What to lay out: the page part's items with their quantities, else the school's text. */
+export const MaterialsPart = ({ v }: { v: LessonView }) =>
+  v.page?.materials.items.length ? (
+    <ul className="list-disc pl-[var(--space-4)]" data-part="materials">
+      {v.page.materials.items.map((m) => (
+        <li key={m.name}>
+          {m.name}
+          {m.quantity ? ` · ${m.quantity}${m.unit ? ` ${m.unit}` : ""}` : ""}
+        </li>
+      ))}
+    </ul>
+  ) : (
+    <p className="whitespace-pre-line">{v.page?.materials.text || v.full?.materials_text || "Nothing listed."}</p>
+  );
+
+/** The last time this class did the activity: its day and how many children showed what. */
+export const LastTimePart = ({ v, after }: { v: LessonView; after?: ReactNode }) => (
+  <Part title={v.last ? `Last time this class did it, ${v.last.day}` : "Last time this class did it"}>
+    {v.last ? <StackBar parts={OUTCOME_ORDER.map(([k, state]) => ({ state, n: v.last!.counts[k] ?? 0, words: outcomeWords(k) }))} /> : <p className="text-[var(--ink-muted)]">Not run with this class yet.</p>}
+    {after}
+  </Part>
+);
+
 /** The lesson as the panel opens it. `move`: the coordinator's address for choosing this lesson to move; `moved`: who moved it and why. */
 export function lessonPanel(v: LessonView, o: { key: string; closeHref: string; tab?: string; move?: string; moved?: string; clash?: string }): Opened {
-  const { s, a, full, steps, thinking, objective, page, last, offers, coordinator, mine, rolls, roster, klass, planner } = v;
+  const { s, a, full, offers, coordinator, mine, rolls, roster, klass, planner } = v;
   const levels = full?.levels ?? [];
   const activity = a ? (
     <>
-      <Part title="What it is for">
-        <p data-part="outcome">{objective?.text || full?.outcome || "Not written yet."}</p>
-      </Part>
-      <Part title="The steps">
-        {steps?.items.length ? (
-          <ol className="list-decimal pl-[var(--space-4)]" data-part="steps">
-            {steps.items.map((i) => (
-              <li key={i}>{i}</li>
-            ))}
-          </ol>
-        ) : (
-          <p className="whitespace-pre-line">{steps?.text || full?.steps || "No steps written yet."}</p>
-        )}
-      </Part>
-      <Part title="Watch for">
-        <p>{thinking?.text || "Nothing written yet."}</p>
-      </Part>
+      <OutcomePart v={v} />
+      <StepsPart v={v} />
+      <WatchPart v={v} />
       <Part title="The rubric">
-        {levels.some(Boolean) ? (
-          <ol className="b-levels" data-block="Rubric" data-part="levels">
-            {levels.map((w, n) => {
-              const state = levelState(n, levels.length);
-              return (
-                <li key={n} className="b-level" data-level={n} data-state={scaleLook(state)}>
-                  <b className="b-num">{n}</b>
-                  <span>{w || "Not written."}</span>
-                </li>
-              );
-            })}
-          </ol>
-        ) : (
-          <p>The levels are not written for this activity.</p>
-        )}
+        <RubricRows levels={levels} />
       </Part>
       {planner.length ? (
         <Part title="The planner's lines">
@@ -90,23 +129,10 @@ export function lessonPanel(v: LessonView, o: { key: string; closeHref: string; 
         {!a ? "Nothing can be marked until the lesson has an activity." : !v.voice ? "Marking a class is not switched on yet." : "Only this class's own educator marks it here."}
       </p>
     );
-  const materials = page?.materials.items.length ? (
-    <ul className="list-disc pl-[var(--space-4)]" data-part="materials">
-      {page.materials.items.map((m) => (
-        <li key={m.name}>
-          {m.name}
-          {m.quantity ? ` · ${m.quantity}${m.unit ? ` ${m.unit}` : ""}` : ""}
-        </li>
-      ))}
-    </ul>
-  ) : (
-    <p className="whitespace-pre-line">{page?.materials.text || full?.materials_text || "Nothing listed."}</p>
-  );
+  const materials = <MaterialsPart v={v} />;
   const history = (
     <>
-      <Part title={last ? `Last time this class did it, ${last.day}` : "Last time this class did it"}>
-        {last ? <StackBar parts={OUTCOME_ORDER.map(([k, state]) => ({ state, n: last.counts[k] ?? 0, words: outcomeWords(k) }))} /> : <p className="text-[var(--ink-muted)]">Not done with this class yet.</p>}
-      </Part>
+      <LastTimePart v={v} />
       {o.moved ? (
         <Part title="Moved">
           <p data-moved-detail>

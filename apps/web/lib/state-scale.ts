@@ -25,3 +25,6 @@ export const scaleTone = (s: ScaleState): Tone => TONES[SCALE.indexOf(s)];
 
 /** The `data-state` a block's rules read (components/blocks.css) for a scale state. */
 export const scaleLook = (s: ScaleState): (typeof LOOKS)[number] => LOOKS[SCALE.indexOf(s)];
+
+/** The `data-state` of a child's square marked at level `n` of `count`: a rubric level is never red (levelState never gives needs help). */
+export const levelLook = (n: number, count: number) => scaleLook(levelState(n, count)) as Exclude<(typeof LOOKS)[number], "late">;

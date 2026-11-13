@@ -56,7 +56,7 @@ const initials = (name: string) =>
 
 /** The children by id, for those of a class the person may see: Sr. No., name (read through pii.read_child, which logs who asked)
  *  and class. A child outside their reach is left out, never named. */
-export const childrenByIds = cache(async (me: Pick<Session, "email" | "role" | "classes" | "subjects" | "id">, ids: string[]): Promise<Record<string, Peeked & { id: string; classId: string }>> => {
+export const childrenByIds = cache(async (me: Pick<Session, "email" | "role" | "classes" | "subjects" | "id">, ids: string[]): Promise<Record<string, Peeked & { id: string; classId: string; first: string }>> => {
   if (!ids.length) return {};
   const rows = await sql<{ id: string; roll_no: string; section: string; class_id: string; first_name: string; last_name: string | null }[]>`
     select c.id, c.roll_no, c.section, c.class_id, n.first_name, n.last_name
@@ -65,17 +65,20 @@ export const childrenByIds = cache(async (me: Pick<Session, "email" | "role" | "
   return Object.fromEntries(
     rows.map((r) => {
       const name = [r.first_name, r.last_name].filter(Boolean).join(" ");
-      return [r.id, { id: r.id, classId: r.class_id, no: r.roll_no.padStart(2, "0"), initials: initials(name), name, className: r.section }];
+      return [r.id, { id: r.id, classId: r.class_id, no: r.roll_no.padStart(2, "0"), initials: initials(name), name, first: r.first_name, className: r.section }];
     }),
   );
 });
 
-/** The class's children by Sr. No. (no leading zero): initials and name, for the squares of the confirm board. Read through the same audited
+/** The class's children now: each one's id and Sr. No. (an id is no name: the lesson's grid saves its marks by it, CP-49). */
+export const classChildren = cache(async (classId: string) => sql<{ id: string; roll_no: string }[]>`select id::text, roll_no from child_now where class_id = ${classId} and active`);
+
+/** The class's children by Sr. No. (no leading zero): initials, name and first name, for the squares of the confirm board and the lesson's grid. Read through the same audited
  *  function as every other name (`pii.read_child`), and only for the children a person may see. */
-export const rosterOf = cache(async (me: Pick<Session, "email" | "role" | "classes" | "subjects" | "id">, classId: string): Promise<Record<string, { name: string; initials: string }>> => {
-  const ids = await sql<{ id: string; roll_no: string }[]>`select id::text, roll_no from child_now where class_id = ${classId} and active`;
+export const rosterOf = cache(async (me: Pick<Session, "email" | "role" | "classes" | "subjects" | "id">, classId: string): Promise<Record<string, { name: string; initials: string; first: string }>> => {
+  const ids = await classChildren(classId);
   const named = await childrenByIds(me, ids.map((r) => r.id));
-  return Object.fromEntries(ids.flatMap((r) => (named[r.id] ? [[String(Number(r.roll_no)), { name: named[r.id].name, initials: named[r.id].initials }] as const] : [])));
+  return Object.fromEntries(ids.flatMap((r) => (named[r.id] ? [[String(Number(r.roll_no)), { name: named[r.id].name, initials: named[r.id].initials, first: named[r.id].first }] as const] : [])));
 });
 
 /** The activities' names by code. */

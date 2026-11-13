@@ -6,7 +6,8 @@
 <title>Wireframe: Period (period)</title>
 <link rel="stylesheet" href="kit.css">
 </head>
-<!-- Wireframe of screens.json "period" (/period/[id]), drawn as an educator. The session is a taught lesson with an activity; the fixed-part variant is the inset.
+<!-- Wireframe of screens.json "period" (/period/[id]), drawn as an educator (page charter B4, CP-49): the class as child cards marked against the
+     activity's rubric on the left, the activity in tabs on the right. The lesson with no activity and the fixed part of the day are the inset.
      data-el = index in screens.json period.elements; data-bar = index in screens.json bar; data-source = target
      table.column; data-gap = what the target tables cannot give. Both frames hold the same markup: the phone layout
      comes from kit.css container queries, as it will on the site. Names are from fake-names.json. -->
@@ -90,79 +91,108 @@
               <h1 class="title" data-source="activity.name">Counting in tens with bundles</h1>
               <p class="purpose" data-source="activity.objective">Counts in tens up to 100 with bundles, and says how many without recounting.</p>
             </div>
-            <div class="cards" data-block="Cards">
-              <article class="card" data-kind="note"><div class="card-h"><span class="tile"><i class="ic" data-icon="note"></i></span>Record a note</div><div class="card-b"><span class="muted">Say what happened and who, by Sr. No.</span><a class="btn btn-main press" data-el="0" href="#record?session=this"><i class="ic" data-icon="record"></i>Record a note</a></div></article>
-              <article class="card" data-kind="note"><div class="card-h"><span class="tile"><i class="ic" data-icon="note"></i></span>Type the marks</div><div class="card-b"><span class="muted">No voice: mark the children by hand.</span><a class="btn press" data-el="1" href="#record?session=this&amp;mode=type">Type the marks instead</a></div></article>
-              <article class="card" data-kind="activity"><div class="card-h"><span class="tile"><i class="ic" data-icon="activity"></i></span>The activity</div><div class="card-b"><span class="muted"><span data-source="subject.name">Numeracy</span> · <span class="num" data-source="activity_observation.activity_code">40</span> minutes</span><a class="btn press" data-el="2" href="#activity">Open the activity</a></div></article>
-            </div>
-            <div class="card" data-block="StackBar">
-              <div class="card-h"><i class="ic s" data-icon="class"></i>Last time this ran, <span data-source="school_day.on_date">Tue 3 Nov</span>: <span class="num" data-source="activity_observation.child_id">22</span> children named</div>
+            <div class="keyrow"><a class="btn btn-main press" data-el="0" href="#record?session=this"><i class="ic" data-icon="record"></i>Record a note</a><a class="press" data-el="2" href="#activity">Open the activity</a><a class="press" data-el="1" href="#record?session=this&amp;mode=type">Type the marks instead</a><a class="press" data-el="17" href="#picture">The class</a></div>
+            <h2>Mark the class</h2>
+            <ol class="cgrid" data-block="ClassGrid" aria-label="K2 Red, by Sr. No.">
+              <li><button class="sq press" type="button" data-state="ok" data-el="7">
+                <span class="top"><span class="no num" data-source="enrolment.roll_no">#01</span><span class="disc" aria-hidden="true">AA</span></span>
+                <span class="nm" data-el="18" data-source="pii.child.first_name">Alba</span>
+                <span class="st" data-gap="the level each child showed in this lesson: the CP-49 store the engine is building"><i class="ic s" data-icon="done"></i>3 · Counts in tens alone</span>
+              </button></li>
+              <li><button class="sq press" type="button" data-state="wait" data-el="7">
+                <span class="top"><span class="no num" data-source="enrolment.roll_no">#02</span><span class="disc" aria-hidden="true">BB</span></span>
+                <span class="nm" data-el="18" data-source="pii.child.first_name">Bea</span>
+                <span class="st" data-gap="the level each child showed in this lesson: the CP-49 store the engine is building"><i class="ic s" data-icon="to-confirm"></i>2 · Bundles tens with help</span>
+              </button></li>
+              <li><button class="sq press" type="button" data-state="unseen" data-el="7">
+                <span class="top"><span class="no num" data-source="enrolment.roll_no">#03</span><span class="disc" aria-hidden="true">CC</span></span>
+                <span class="nm" data-el="18" data-source="pii.child.first_name">Cal</span>
+                <span class="st" data-gap="the level each child showed in this lesson: the CP-49 store the engine is building"><i class="ic s" data-icon="not-seen"></i>Not marked</span>
+              </button></li>
+              <li><button class="sq press" type="button" data-state="wait" data-el="7">
+                <span class="top"><span class="no num" data-source="enrolment.roll_no">#04</span><span class="disc" aria-hidden="true">DD</span></span>
+                <span class="nm" data-el="18" data-source="pii.child.first_name">Dot</span>
+                <span class="st" data-gap="the level each child showed in this lesson: the CP-49 store the engine is building"><i class="ic s" data-icon="to-confirm"></i>1 · Counts ones</span>
+              </button></li>
+              <li><button class="sq press" type="button" data-state="quiet" data-el="7">
+                <span class="top"><span class="no num" data-source="enrolment.roll_no">#05</span><span class="disc" aria-hidden="true">EE</span></span>
+                <span class="nm" data-el="18" data-source="pii.child.first_name">Eli</span>
+                <span class="st" data-gap="the level each child showed in this lesson: the CP-49 store the engine is building"><i class="ic s" data-icon="to-do"></i>0 · Counts with help</span>
+              </button></li>
+              <li><button class="sq press" type="button" data-state="quiet" data-el="7">
+                <span class="top"><span class="no num" data-source="enrolment.roll_no">#06</span><span class="disc" aria-hidden="true">FF</span></span>
+                <span class="nm" data-el="18" data-source="pii.child.first_name">Finn</span>
+                <span class="st" data-gap="the level each child showed in this lesson: the CP-49 store the engine is building"><i class="ic s" data-icon="absent"></i>Absent</span>
+              </button></li>
+              <li><button class="sq press" type="button" data-state="wait" data-el="7">
+                <span class="top"><span class="no num" data-source="enrolment.roll_no">#07</span><span class="disc" aria-hidden="true">GG</span></span>
+                <span class="nm" data-el="18" data-source="pii.child.first_name">Gus</span>
+                <span class="st" data-gap="the level each child showed in this lesson: the CP-49 store the engine is building"><i class="ic s" data-icon="to-confirm"></i>2 · Bundles tens with help</span>
+              </button></li>
+              <li><button class="sq press" type="button" data-state="unseen" data-el="7">
+                <span class="top"><span class="no num" data-source="enrolment.roll_no">#08</span><span class="disc" aria-hidden="true">HH</span></span>
+                <span class="nm" data-el="18" data-source="pii.child.first_name">Hazel</span>
+                <span class="st" data-gap="the level each child showed in this lesson: the CP-49 store the engine is building"><i class="ic s" data-icon="not-seen"></i>Not marked</span>
+              </button></li>
+            </ol>
+            <div class="card" role="group" aria-label="Level for #03">
+              <div class="card-h">#03: what did they show?</div>
               <div class="card-b stack">
-                <div class="sbar" role="img" aria-label="3 above, 13 as expected, 4 below, 1 not willing, 1 absent">
-                  <i data-state="ok" style="--n: 3"></i><i data-state="ok" style="--n: 13"></i><i data-state="wait" style="--n: 4"></i><i data-state="wait" style="--n: 1"></i><i data-state="quiet" style="--n: 1"></i>
-                </div>
-                <div class="keyrow" data-source="activity_observation.outcome config.key config.value">
-                  <span class="chip" data-state="ok"><i class="ic s" data-icon="above"></i>3 above</span><span class="chip" data-state="ok"><i class="ic s" data-icon="as-expected"></i>13 as expected</span><span class="chip" data-state="wait"><i class="ic s" data-icon="below"></i>4 below</span><span class="chip" data-state="wait"><i class="ic s" data-icon="not-willing"></i>1 not willing</span><span class="chip" data-state="quiet"><i class="ic s" data-icon="absent"></i>1 absent</span>
-                </div>
-                <div class="groups">
-                  <section class="grp" data-state="wait" aria-label="Below, 4 children"><h3 class="grp-h"><i class="ic s" data-icon="below"></i>Below <span class="count num">4</span></h3><ul class="nchips"><li><button class="nchip press" data-el="3" type="button" aria-label="Sr. No. 03, open the history"><span class="no" data-source="enrolment.roll_no">03</span></button></li><li><button class="nchip press" data-el="3" type="button" aria-label="Sr. No. 05, open the history"><span class="no" data-source="enrolment.roll_no">05</span></button></li><li><button class="nchip press" data-el="3" type="button" aria-label="Sr. No. 12, open the history"><span class="no" data-source="enrolment.roll_no">12</span></button></li><li><button class="nchip press" data-el="3" type="button" aria-label="Sr. No. 17, open the history"><span class="no" data-source="enrolment.roll_no">17</span></button></li></ul></section>
-                  <section class="grp" data-state="wait" aria-label="Not willing, 1 child"><h3 class="grp-h"><i class="ic s" data-icon="not-willing"></i>Not willing <span class="count num">1</span></h3><ul class="nchips"><li><button class="nchip press" data-el="3" type="button" aria-label="Sr. No. 06, open the history"><span class="no" data-source="enrolment.roll_no">06</span></button></li></ul></section>
-                </div>
-                <span class="caption">Sr. No. only. Tap one to see that child's recent history.</span>
-                </div>
-            </div>
-            <div class="card" data-block="StackBar">
-              <div class="card-h"><i class="ic s" data-icon="skill"></i>The class on this activity's skills: <span class="num" data-source="child_skill_state.child_id">21</span> of <span class="num" data-source="enrolment.child_id">24</span> children seen</div>
-              <div class="card-b stack">
-                <div class="sbar" role="img" aria-label="10 secure, 7 practising, 4 emerging, 3 not seen yet"><i data-state="ok" style="--n: 10"></i><i data-state="wait" style="--n: 7"></i><i data-state="quiet" style="--n: 4"></i><i data-state="unseen" style="--n: 3"></i></div>
-                <div class="keyrow" data-source="child_skill_state.state"><span class="chip" data-state="ok"><i class="ic s" data-icon="secure"></i>10 secure</span><span class="chip" data-state="wait"><i class="ic s" data-icon="practising"></i>7 practising</span><span class="chip" data-state="quiet"><i class="ic s" data-icon="emerging"></i>4 emerging</span><span class="chip" data-state="unseen"><i class="ic s" data-icon="not-seen"></i>3 not seen yet</span></div>
-                <span class="caption">Counted from each child's state on the skills this activity builds</span>
+                <ol class="levels">
+                  <li><button class="level press" type="button" data-state="quiet" data-el="8"><b class="num">0</b><span data-source="activity.level_0">Counts with help</span></button></li>
+                  <li><button class="level press" type="button" data-state="wait" data-el="8"><b class="num">1</b><span data-source="activity.level_1">Counts ones</span></button></li>
+                  <li><button class="level press" type="button" data-state="wait" data-el="8"><b class="num">2</b><span data-source="activity.level_2">Not written</span></button></li>
+                  <li><button class="level press" type="button" data-state="ok" data-el="8"><b class="num">3</b><span data-source="activity.level_3">Counts in tens alone</span></button></li>
+                </ol>
+                <div class="keyrow"><button class="chip press" type="button" data-el="8"><i class="ic s" data-icon="absent"></i>Absent</button><button class="chip press" type="button" data-el="8"><i class="ic s" data-icon="not-willing"></i>Not willing</button></div>
               </div>
             </div>
-            <details class="details" data-block="Details" open><summary data-el="4"><i class="ic s" data-icon="details"></i>The steps, short</summary><div><ol data-source="activity.steps_list">
-              <li>Give each pair a handful of sticks and some rubber bands.</li>
-              <li>Bundle ten sticks. Say "one ten".</li>
-              <li>Count the bundles in tens, then add loose sticks.</li>
-            </ol></div></details>
-            <details class="details" data-block="Details"><summary data-el="5"><i class="ic s" data-icon="details"></i>Lay out</summary><div><dl class="kv" data-block="KeyValue">
-              <dt data-source="material_item.name">Bundling sticks</dt><dd class="num" data-source="activity_material.quantity">200</dd>
-              <dt data-source="material_item.name">Rubber bands</dt><dd class="num" data-source="activity_material.quantity">30</dd>
-              <dt data-source="material_item.name">Number cards 0 to 9</dt><dd class="num" data-source="activity_material.quantity">1 set</dd>
-            </dl></div></details>
-            <details class="details" data-block="Details"><summary data-el="6"><i class="ic s" data-icon="details"></i>Watch for</summary><div><p data-source="activity.thinking">A child who counts each stick by ones instead of bundling. Ask: "How many tens do you have?"</p></div></details>
+            <div class="keyrow"><label>Level for the rest <select data-el="9"><option>2 · Bundles tens with help</option></select></label><button class="btn press" type="button" data-el="10">Mark the rest at level 2</button><span class="muted"><span class="num">2</span> not marked</span></div>
+            <details class="details" data-block="Details"><summary data-el="15"><i class="ic s" data-icon="details"></i>Mark against the expected level</summary><div><p class="muted">The class form: as expected, above, below, not willing, absent; for the class's own educator.</p></div></details>
+            <details class="details" data-block="Details"><summary data-el="16"><i class="ic s" data-icon="details"></i>Choose another activity</summary><div><p class="muted">The coordinator's list of activities of this lesson's kind.</p></div></details>
             <div class="card">
-              <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: when the period is a fixed part of the day (settling in, fruit, lunch)</div>
-              <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="not-seen"></i><b>Nothing to record here</b><span class="muted">Settling in is a fixed part of the day.</span></div></div>
+              <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: a lesson with no activity yet, and a fixed part of the day</div>
+              <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="not-seen"></i><b>No activity for this lesson yet</b><span class="muted">The coordinator chooses one; nothing can be marked until then.</span></div><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="not-seen"></i><b>Nothing to record here</b><span class="muted">Settling in is a fixed part of the day.</span></div></div>
             </div>
           </main>
-          <aside class="rail" aria-label="Connected to">
+          <aside class="rail" aria-label="This activity">
+            <aside class="dpanel" data-block="DetailPanel" aria-label="The activity">
+              <header class="dpanel-head"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><h2 class="dpanel-title" data-source="activity.name">Counting in tens with bundles</h2><p class="muted">K2 Red</p></div></header>
+              <div class="tabs" role="tablist" aria-label="Details"><button class="tabbtn" role="tab" type="button" aria-selected="true" data-el="11">Activity</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="12">Rubric</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="13">Materials</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="14">History</button></div>
+              <div role="tabpanel" class="stack">
+                <h3>What it is for</h3><p data-source="activity.objective">Counts in tens up to 100 with bundles.</p>
+                <h3>The steps</h3><ol data-source="activity.steps_list">
+                  <li>Give each pair a handful of sticks and some rubber bands.</li>
+                  <li>Bundle ten sticks. Say "one ten".</li>
+                  <li>Count the bundles in tens, then add loose sticks.</li>
+                </ol>
+                <h3>Lay out</h3><dl class="kv" data-block="KeyValue">
+                  <dt data-source="material_item.name">Bundling sticks</dt><dd class="num" data-source="activity_material.quantity">200</dd>
+                  <dt data-source="material_item.name">Rubber bands</dt><dd class="num" data-source="activity_material.quantity">30</dd>
+                </dl>
+                <h3>Watch for</h3><p data-source="activity.thinking">A child who counts each stick by ones instead of bundling. Ask: "How many tens do you have?"</p>
+              </div>
+              <div class="card" data-block="StackBar">
+                <div class="card-h">Inset, the History tab: last time this class did it, <span data-source="school_day.on_date">Tue 3 Nov</span></div>
+                <div class="card-b stack">
+                  <div class="sbar" role="img" aria-label="3 above, 13 as expected, 4 below"><i data-state="ok" style="--n: 3"></i><i data-state="ok" style="--n: 13"></i><i data-state="wait" style="--n: 4"></i></div>
+                  <ul class="nchips"><li><button class="nchip press" data-el="3" type="button" aria-label="Sr. No. 03, open the history"><span class="no" data-source="enrolment.roll_no">03</span></button></li><li><button class="nchip press" data-el="3" type="button" aria-label="Sr. No. 05, open the history"><span class="no" data-source="enrolment.roll_no">05</span></button></li></ul>
+                  <span class="caption">Sr. No. only. Tap one to see that child's recent history.</span>
+                </div>
+              </div>
+            </aside>
             <aside class="peek" data-block="ChildPeek" aria-label="Recent history of one child">
             <div class="peek-h">
               <span class="disc" aria-hidden="true">CC</span>
-              <span class="who"><b data-el="14" data-source="pii.child.first_name pii.child.last_name">Cal Crow</b><span class="muted"><span class="num" data-source="enrolment.roll_no">03</span> · K2 Red</span></span>
-              <button class="barbtn press" data-el="12" type="button" aria-label="Close"><i class="ic" data-icon="close"></i></button>
+              <span class="who"><b data-el="6" data-source="pii.child.first_name pii.child.last_name">Cal Crow</b><span class="muted"><span class="num" data-source="enrolment.roll_no">03</span> · K2 Red</span></span>
+              <button class="barbtn press" data-el="4" type="button" aria-label="Close"><i class="ic" data-icon="close"></i></button>
             </div>
-            <div class="keyrow" data-source="child_skill_state.state"><span class="chip" data-state="ok"><i class="ic s" data-icon="secure"></i>2 secure</span><span class="chip" data-state="wait"><i class="ic s" data-icon="practising"></i>4 practising</span><span class="chip" data-state="quiet"><i class="ic s" data-icon="emerging"></i>3 emerging</span><span class="chip" data-state="unseen"><i class="ic s" data-icon="not-seen"></i>2 not seen yet</span></div>
             <ol class="timeline">
               <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><b>Counting in tens with bundles: below</b><p>Observed in the period · <span data-source="pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="activity_observation.observed_at">3-Nov</span></li>
               <li class="tli"><span class="tile" data-kind="note"><i class="ic" data-icon="note"></i></span><div><b>Lost count after fifteen</b><p>Voice note · confirmed by <span data-source="pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="pii.educator_note.received_at">28-Oct</span></li>
-              <li class="tli"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><div><b>Paper, sheet 2</b><p>3 right, 1 wrong with working, 2 blank · signed off by <span data-source="pii.staff.name">Bina Basil</span></p></div><span class="caption num" data-source="item_result.confirmed_at">26-Oct</span></li>
-              <li class="tli"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><div><b>Counting to 20: now practising</b><p>The state changed after a second day seen</p></div><span class="caption num" data-source="evidence_event.observed_at">20-Oct</span></li>
-              <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="history"></i></span><div><b>A mark corrected: as expected became below</b><p>A new entry that replaces the first · <span data-source="pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="change_log.at">14-Oct</span></li>
             </ol>
-            <a class="btn press" data-el="13" href="#child">Open Cal</a>
-          </aside>
-          <section class="rail-box">
-              <h2>Connected to</h2>
-              <ul class="rlist">
-                <li><a class="ritem" data-el="7" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><span><span data-source="activity.name">Counting in tens with bundles</span><small>the activity</small></span></a></li>
-                <li><a class="ritem" data-el="8" href="#objective"><span class="tile" data-kind="objective"><i class="ic" data-icon="objective"></i></span><span><span data-source="learning_objective.title">Counts objects to 100</span><small>the objective</small></span></a></li>
-                <li><a class="ritem" data-el="8" href="#objective"><span class="tile" data-kind="objective"><i class="ic" data-icon="objective"></i></span><span><span data-source="learning_objective.title">Says how many without recounting</span><small>the objective</small></span></a></li>
-                <li><a class="ritem" data-el="9" href="#materials"><span class="tile" data-kind="note"><i class="ic" data-icon="materials"></i></span><span>Materials<small><span class="num" data-source="activity_material.material_code">3</span> things to lay out</small></span></a></li>
-                <li><a class="ritem" data-el="10" href="#timetable"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span><span>Its place in the fortnight<small>fortnight <span class="num" data-source="fortnight.number">6</span>, Tuesday</small></span></a></li>
-                <li><a class="ritem" data-el="11" href="#picture"><span class="tile" data-kind="child"><i class="ic" data-icon="class"></i></span><span><span data-source="grade.name">K2</span> <span data-source="school_class.section">Red</span><small>the class picture</small></span></a></li>
-              </ul>
-            </section>
+            <a class="btn press" data-el="5" href="#child">Open Cal</a>
+            </aside>
           </aside>
         </div>
         </div>
@@ -244,79 +274,108 @@
               <h1 class="title" data-source="activity.name">Counting in tens with bundles</h1>
               <p class="purpose" data-source="activity.objective">Counts in tens up to 100 with bundles, and says how many without recounting.</p>
             </div>
-            <div class="cards" data-block="Cards">
-              <article class="card" data-kind="note"><div class="card-h"><span class="tile"><i class="ic" data-icon="note"></i></span>Record a note</div><div class="card-b"><span class="muted">Say what happened and who, by Sr. No.</span><a class="btn btn-main press" data-el="0" href="#record?session=this"><i class="ic" data-icon="record"></i>Record a note</a></div></article>
-              <article class="card" data-kind="note"><div class="card-h"><span class="tile"><i class="ic" data-icon="note"></i></span>Type the marks</div><div class="card-b"><span class="muted">No voice: mark the children by hand.</span><a class="btn press" data-el="1" href="#record?session=this&amp;mode=type">Type the marks instead</a></div></article>
-              <article class="card" data-kind="activity"><div class="card-h"><span class="tile"><i class="ic" data-icon="activity"></i></span>The activity</div><div class="card-b"><span class="muted"><span data-source="subject.name">Numeracy</span> · <span class="num" data-source="activity_observation.activity_code">40</span> minutes</span><a class="btn press" data-el="2" href="#activity">Open the activity</a></div></article>
-            </div>
-            <div class="card" data-block="StackBar">
-              <div class="card-h"><i class="ic s" data-icon="class"></i>Last time this ran, <span data-source="school_day.on_date">Tue 3 Nov</span>: <span class="num" data-source="activity_observation.child_id">22</span> children named</div>
+            <div class="keyrow"><a class="btn btn-main press" data-el="0" href="#record?session=this"><i class="ic" data-icon="record"></i>Record a note</a><a class="press" data-el="2" href="#activity">Open the activity</a><a class="press" data-el="1" href="#record?session=this&amp;mode=type">Type the marks instead</a><a class="press" data-el="17" href="#picture">The class</a></div>
+            <h2>Mark the class</h2>
+            <ol class="cgrid" data-block="ClassGrid" aria-label="K2 Red, by Sr. No.">
+              <li><button class="sq press" type="button" data-state="ok" data-el="7">
+                <span class="top"><span class="no num" data-source="enrolment.roll_no">#01</span><span class="disc" aria-hidden="true">AA</span></span>
+                <span class="nm" data-el="18" data-source="pii.child.first_name">Alba</span>
+                <span class="st" data-gap="the level each child showed in this lesson: the CP-49 store the engine is building"><i class="ic s" data-icon="done"></i>3 · Counts in tens alone</span>
+              </button></li>
+              <li><button class="sq press" type="button" data-state="wait" data-el="7">
+                <span class="top"><span class="no num" data-source="enrolment.roll_no">#02</span><span class="disc" aria-hidden="true">BB</span></span>
+                <span class="nm" data-el="18" data-source="pii.child.first_name">Bea</span>
+                <span class="st" data-gap="the level each child showed in this lesson: the CP-49 store the engine is building"><i class="ic s" data-icon="to-confirm"></i>2 · Bundles tens with help</span>
+              </button></li>
+              <li><button class="sq press" type="button" data-state="unseen" data-el="7">
+                <span class="top"><span class="no num" data-source="enrolment.roll_no">#03</span><span class="disc" aria-hidden="true">CC</span></span>
+                <span class="nm" data-el="18" data-source="pii.child.first_name">Cal</span>
+                <span class="st" data-gap="the level each child showed in this lesson: the CP-49 store the engine is building"><i class="ic s" data-icon="not-seen"></i>Not marked</span>
+              </button></li>
+              <li><button class="sq press" type="button" data-state="wait" data-el="7">
+                <span class="top"><span class="no num" data-source="enrolment.roll_no">#04</span><span class="disc" aria-hidden="true">DD</span></span>
+                <span class="nm" data-el="18" data-source="pii.child.first_name">Dot</span>
+                <span class="st" data-gap="the level each child showed in this lesson: the CP-49 store the engine is building"><i class="ic s" data-icon="to-confirm"></i>1 · Counts ones</span>
+              </button></li>
+              <li><button class="sq press" type="button" data-state="quiet" data-el="7">
+                <span class="top"><span class="no num" data-source="enrolment.roll_no">#05</span><span class="disc" aria-hidden="true">EE</span></span>
+                <span class="nm" data-el="18" data-source="pii.child.first_name">Eli</span>
+                <span class="st" data-gap="the level each child showed in this lesson: the CP-49 store the engine is building"><i class="ic s" data-icon="to-do"></i>0 · Counts with help</span>
+              </button></li>
+              <li><button class="sq press" type="button" data-state="quiet" data-el="7">
+                <span class="top"><span class="no num" data-source="enrolment.roll_no">#06</span><span class="disc" aria-hidden="true">FF</span></span>
+                <span class="nm" data-el="18" data-source="pii.child.first_name">Finn</span>
+                <span class="st" data-gap="the level each child showed in this lesson: the CP-49 store the engine is building"><i class="ic s" data-icon="absent"></i>Absent</span>
+              </button></li>
+              <li><button class="sq press" type="button" data-state="wait" data-el="7">
+                <span class="top"><span class="no num" data-source="enrolment.roll_no">#07</span><span class="disc" aria-hidden="true">GG</span></span>
+                <span class="nm" data-el="18" data-source="pii.child.first_name">Gus</span>
+                <span class="st" data-gap="the level each child showed in this lesson: the CP-49 store the engine is building"><i class="ic s" data-icon="to-confirm"></i>2 · Bundles tens with help</span>
+              </button></li>
+              <li><button class="sq press" type="button" data-state="unseen" data-el="7">
+                <span class="top"><span class="no num" data-source="enrolment.roll_no">#08</span><span class="disc" aria-hidden="true">HH</span></span>
+                <span class="nm" data-el="18" data-source="pii.child.first_name">Hazel</span>
+                <span class="st" data-gap="the level each child showed in this lesson: the CP-49 store the engine is building"><i class="ic s" data-icon="not-seen"></i>Not marked</span>
+              </button></li>
+            </ol>
+            <div class="card" role="group" aria-label="Level for #03">
+              <div class="card-h">#03: what did they show?</div>
               <div class="card-b stack">
-                <div class="sbar" role="img" aria-label="3 above, 13 as expected, 4 below, 1 not willing, 1 absent">
-                  <i data-state="ok" style="--n: 3"></i><i data-state="ok" style="--n: 13"></i><i data-state="wait" style="--n: 4"></i><i data-state="wait" style="--n: 1"></i><i data-state="quiet" style="--n: 1"></i>
-                </div>
-                <div class="keyrow" data-source="activity_observation.outcome config.key config.value">
-                  <span class="chip" data-state="ok"><i class="ic s" data-icon="above"></i>3 above</span><span class="chip" data-state="ok"><i class="ic s" data-icon="as-expected"></i>13 as expected</span><span class="chip" data-state="wait"><i class="ic s" data-icon="below"></i>4 below</span><span class="chip" data-state="wait"><i class="ic s" data-icon="not-willing"></i>1 not willing</span><span class="chip" data-state="quiet"><i class="ic s" data-icon="absent"></i>1 absent</span>
-                </div>
-                <div class="groups">
-                  <section class="grp" data-state="wait" aria-label="Below, 4 children"><h3 class="grp-h"><i class="ic s" data-icon="below"></i>Below <span class="count num">4</span></h3><ul class="nchips"><li><button class="nchip press" data-el="3" type="button" aria-label="Sr. No. 03, open the history"><span class="no" data-source="enrolment.roll_no">03</span></button></li><li><button class="nchip press" data-el="3" type="button" aria-label="Sr. No. 05, open the history"><span class="no" data-source="enrolment.roll_no">05</span></button></li><li><button class="nchip press" data-el="3" type="button" aria-label="Sr. No. 12, open the history"><span class="no" data-source="enrolment.roll_no">12</span></button></li><li><button class="nchip press" data-el="3" type="button" aria-label="Sr. No. 17, open the history"><span class="no" data-source="enrolment.roll_no">17</span></button></li></ul></section>
-                  <section class="grp" data-state="wait" aria-label="Not willing, 1 child"><h3 class="grp-h"><i class="ic s" data-icon="not-willing"></i>Not willing <span class="count num">1</span></h3><ul class="nchips"><li><button class="nchip press" data-el="3" type="button" aria-label="Sr. No. 06, open the history"><span class="no" data-source="enrolment.roll_no">06</span></button></li></ul></section>
-                </div>
-                <span class="caption">Sr. No. only. Tap one to see that child's recent history.</span>
-                </div>
-            </div>
-            <div class="card" data-block="StackBar">
-              <div class="card-h"><i class="ic s" data-icon="skill"></i>The class on this activity's skills: <span class="num" data-source="child_skill_state.child_id">21</span> of <span class="num" data-source="enrolment.child_id">24</span> children seen</div>
-              <div class="card-b stack">
-                <div class="sbar" role="img" aria-label="10 secure, 7 practising, 4 emerging, 3 not seen yet"><i data-state="ok" style="--n: 10"></i><i data-state="wait" style="--n: 7"></i><i data-state="quiet" style="--n: 4"></i><i data-state="unseen" style="--n: 3"></i></div>
-                <div class="keyrow" data-source="child_skill_state.state"><span class="chip" data-state="ok"><i class="ic s" data-icon="secure"></i>10 secure</span><span class="chip" data-state="wait"><i class="ic s" data-icon="practising"></i>7 practising</span><span class="chip" data-state="quiet"><i class="ic s" data-icon="emerging"></i>4 emerging</span><span class="chip" data-state="unseen"><i class="ic s" data-icon="not-seen"></i>3 not seen yet</span></div>
-                <span class="caption">Counted from each child's state on the skills this activity builds</span>
+                <ol class="levels">
+                  <li><button class="level press" type="button" data-state="quiet" data-el="8"><b class="num">0</b><span data-source="activity.level_0">Counts with help</span></button></li>
+                  <li><button class="level press" type="button" data-state="wait" data-el="8"><b class="num">1</b><span data-source="activity.level_1">Counts ones</span></button></li>
+                  <li><button class="level press" type="button" data-state="wait" data-el="8"><b class="num">2</b><span data-source="activity.level_2">Not written</span></button></li>
+                  <li><button class="level press" type="button" data-state="ok" data-el="8"><b class="num">3</b><span data-source="activity.level_3">Counts in tens alone</span></button></li>
+                </ol>
+                <div class="keyrow"><button class="chip press" type="button" data-el="8"><i class="ic s" data-icon="absent"></i>Absent</button><button class="chip press" type="button" data-el="8"><i class="ic s" data-icon="not-willing"></i>Not willing</button></div>
               </div>
             </div>
-            <details class="details" data-block="Details" open><summary data-el="4"><i class="ic s" data-icon="details"></i>The steps, short</summary><div><ol data-source="activity.steps_list">
-              <li>Give each pair a handful of sticks and some rubber bands.</li>
-              <li>Bundle ten sticks. Say "one ten".</li>
-              <li>Count the bundles in tens, then add loose sticks.</li>
-            </ol></div></details>
-            <details class="details" data-block="Details"><summary data-el="5"><i class="ic s" data-icon="details"></i>Lay out</summary><div><dl class="kv" data-block="KeyValue">
-              <dt data-source="material_item.name">Bundling sticks</dt><dd class="num" data-source="activity_material.quantity">200</dd>
-              <dt data-source="material_item.name">Rubber bands</dt><dd class="num" data-source="activity_material.quantity">30</dd>
-              <dt data-source="material_item.name">Number cards 0 to 9</dt><dd class="num" data-source="activity_material.quantity">1 set</dd>
-            </dl></div></details>
-            <details class="details" data-block="Details"><summary data-el="6"><i class="ic s" data-icon="details"></i>Watch for</summary><div><p data-source="activity.thinking">A child who counts each stick by ones instead of bundling. Ask: "How many tens do you have?"</p></div></details>
+            <div class="keyrow"><label>Level for the rest <select data-el="9"><option>2 · Bundles tens with help</option></select></label><button class="btn press" type="button" data-el="10">Mark the rest at level 2</button><span class="muted"><span class="num">2</span> not marked</span></div>
+            <details class="details" data-block="Details"><summary data-el="15"><i class="ic s" data-icon="details"></i>Mark against the expected level</summary><div><p class="muted">The class form: as expected, above, below, not willing, absent; for the class's own educator.</p></div></details>
+            <details class="details" data-block="Details"><summary data-el="16"><i class="ic s" data-icon="details"></i>Choose another activity</summary><div><p class="muted">The coordinator's list of activities of this lesson's kind.</p></div></details>
             <div class="card">
-              <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: when the period is a fixed part of the day (settling in, fruit, lunch)</div>
-              <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="not-seen"></i><b>Nothing to record here</b><span class="muted">Settling in is a fixed part of the day.</span></div></div>
+              <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: a lesson with no activity yet, and a fixed part of the day</div>
+              <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="not-seen"></i><b>No activity for this lesson yet</b><span class="muted">The coordinator chooses one; nothing can be marked until then.</span></div><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="not-seen"></i><b>Nothing to record here</b><span class="muted">Settling in is a fixed part of the day.</span></div></div>
             </div>
           </main>
-          <aside class="rail" aria-label="Connected to">
+          <aside class="rail" aria-label="This activity">
+            <aside class="dpanel" data-block="DetailPanel" aria-label="The activity">
+              <header class="dpanel-head"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><h2 class="dpanel-title" data-source="activity.name">Counting in tens with bundles</h2><p class="muted">K2 Red</p></div></header>
+              <div class="tabs" role="tablist" aria-label="Details"><button class="tabbtn" role="tab" type="button" aria-selected="true" data-el="11">Activity</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="12">Rubric</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="13">Materials</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="14">History</button></div>
+              <div role="tabpanel" class="stack">
+                <h3>What it is for</h3><p data-source="activity.objective">Counts in tens up to 100 with bundles.</p>
+                <h3>The steps</h3><ol data-source="activity.steps_list">
+                  <li>Give each pair a handful of sticks and some rubber bands.</li>
+                  <li>Bundle ten sticks. Say "one ten".</li>
+                  <li>Count the bundles in tens, then add loose sticks.</li>
+                </ol>
+                <h3>Lay out</h3><dl class="kv" data-block="KeyValue">
+                  <dt data-source="material_item.name">Bundling sticks</dt><dd class="num" data-source="activity_material.quantity">200</dd>
+                  <dt data-source="material_item.name">Rubber bands</dt><dd class="num" data-source="activity_material.quantity">30</dd>
+                </dl>
+                <h3>Watch for</h3><p data-source="activity.thinking">A child who counts each stick by ones instead of bundling. Ask: "How many tens do you have?"</p>
+              </div>
+              <div class="card" data-block="StackBar">
+                <div class="card-h">Inset, the History tab: last time this class did it, <span data-source="school_day.on_date">Tue 3 Nov</span></div>
+                <div class="card-b stack">
+                  <div class="sbar" role="img" aria-label="3 above, 13 as expected, 4 below"><i data-state="ok" style="--n: 3"></i><i data-state="ok" style="--n: 13"></i><i data-state="wait" style="--n: 4"></i></div>
+                  <ul class="nchips"><li><button class="nchip press" data-el="3" type="button" aria-label="Sr. No. 03, open the history"><span class="no" data-source="enrolment.roll_no">03</span></button></li><li><button class="nchip press" data-el="3" type="button" aria-label="Sr. No. 05, open the history"><span class="no" data-source="enrolment.roll_no">05</span></button></li></ul>
+                  <span class="caption">Sr. No. only. Tap one to see that child's recent history.</span>
+                </div>
+              </div>
+            </aside>
             <aside class="peek" data-block="ChildPeek" aria-label="Recent history of one child">
             <div class="peek-h">
               <span class="disc" aria-hidden="true">CC</span>
-              <span class="who"><b data-el="14" data-source="pii.child.first_name pii.child.last_name">Cal Crow</b><span class="muted"><span class="num" data-source="enrolment.roll_no">03</span> · K2 Red</span></span>
-              <button class="barbtn press" data-el="12" type="button" aria-label="Close"><i class="ic" data-icon="close"></i></button>
+              <span class="who"><b data-el="6" data-source="pii.child.first_name pii.child.last_name">Cal Crow</b><span class="muted"><span class="num" data-source="enrolment.roll_no">03</span> · K2 Red</span></span>
+              <button class="barbtn press" data-el="4" type="button" aria-label="Close"><i class="ic" data-icon="close"></i></button>
             </div>
-            <div class="keyrow" data-source="child_skill_state.state"><span class="chip" data-state="ok"><i class="ic s" data-icon="secure"></i>2 secure</span><span class="chip" data-state="wait"><i class="ic s" data-icon="practising"></i>4 practising</span><span class="chip" data-state="quiet"><i class="ic s" data-icon="emerging"></i>3 emerging</span><span class="chip" data-state="unseen"><i class="ic s" data-icon="not-seen"></i>2 not seen yet</span></div>
             <ol class="timeline">
               <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><b>Counting in tens with bundles: below</b><p>Observed in the period · <span data-source="pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="activity_observation.observed_at">3-Nov</span></li>
               <li class="tli"><span class="tile" data-kind="note"><i class="ic" data-icon="note"></i></span><div><b>Lost count after fifteen</b><p>Voice note · confirmed by <span data-source="pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="pii.educator_note.received_at">28-Oct</span></li>
-              <li class="tli"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><div><b>Paper, sheet 2</b><p>3 right, 1 wrong with working, 2 blank · signed off by <span data-source="pii.staff.name">Bina Basil</span></p></div><span class="caption num" data-source="item_result.confirmed_at">26-Oct</span></li>
-              <li class="tli"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><div><b>Counting to 20: now practising</b><p>The state changed after a second day seen</p></div><span class="caption num" data-source="evidence_event.observed_at">20-Oct</span></li>
-              <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="history"></i></span><div><b>A mark corrected: as expected became below</b><p>A new entry that replaces the first · <span data-source="pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="change_log.at">14-Oct</span></li>
             </ol>
-            <a class="btn press" data-el="13" href="#child">Open Cal</a>
-          </aside>
-          <section class="rail-box">
-              <h2>Connected to</h2>
-              <ul class="rlist">
-                <li><a class="ritem" data-el="7" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><span><span data-source="activity.name">Counting in tens with bundles</span><small>the activity</small></span></a></li>
-                <li><a class="ritem" data-el="8" href="#objective"><span class="tile" data-kind="objective"><i class="ic" data-icon="objective"></i></span><span><span data-source="learning_objective.title">Counts objects to 100</span><small>the objective</small></span></a></li>
-                <li><a class="ritem" data-el="8" href="#objective"><span class="tile" data-kind="objective"><i class="ic" data-icon="objective"></i></span><span><span data-source="learning_objective.title">Says how many without recounting</span><small>the objective</small></span></a></li>
-                <li><a class="ritem" data-el="9" href="#materials"><span class="tile" data-kind="note"><i class="ic" data-icon="materials"></i></span><span>Materials<small><span class="num" data-source="activity_material.material_code">3</span> things to lay out</small></span></a></li>
-                <li><a class="ritem" data-el="10" href="#timetable"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span><span>Its place in the fortnight<small>fortnight <span class="num" data-source="fortnight.number">6</span>, Tuesday</small></span></a></li>
-                <li><a class="ritem" data-el="11" href="#picture"><span class="tile" data-kind="child"><i class="ic" data-icon="class"></i></span><span><span data-source="grade.name">K2</span> <span data-source="school_class.section">Red</span><small>the class picture</small></span></a></li>
-              </ul>
-            </section>
+            <a class="btn press" data-el="5" href="#child">Open Cal</a>
+            </aside>
           </aside>
         </div>
         </div>
