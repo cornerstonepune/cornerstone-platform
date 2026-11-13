@@ -99,7 +99,7 @@ export default async function FortnightPage({ params, searchParams }: Props) {
       stage={`${span} · ${klass.grade} ${klass.section}`}
       stageChip={chip}
       title={`Fortnight ${fn.number}`}
-      purpose="Its lessons as blocks, week A and week B. Choose a lesson to move it; its state, the rules in conflict, the moves, the draft and the rules are on the right."
+      purpose="Its lessons as blocks, weeks A and B. Choose one to move it; its state, conflicts, moves, draft and rules are on the right."
       next={{ href: `/timetable?fn=${fn.number}&class=${klass.id}`, label: "Timetable" }}
       panel={<DetailPanel inline open={panel} summary={{ title: "", stats: [] }} />}
     >

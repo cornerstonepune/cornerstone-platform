@@ -420,7 +420,7 @@ Done when (on top of the ten generic checks):
 #### Fortnight 9 `/timetable/fortnight/[n]`
 Who: both · Phase: Core · Backend: CP-6 · CP-22 · Old page today: yes · Slice: UI-6
 Eyebrow: 16-Nov to 27-Nov
-Purpose: Its lessons as blocks, week A and week B. Choose a lesson to move it; its state, the rules in conflict, the moves, the draft and the rules are on the right.
+Purpose: Its lessons as blocks, weeks A and B. Choose one to move it; its state, conflicts, moves, draft and rules are on the right.
 Blocks, in order:
 - **FilterBar**: class (coordinator) · previous / next fortnight
 - **FortnightGrid**: the whole fortnight, week A and week B; subject colours; moved/clash outlines; the coordinator chooses a lesson, then the lesson or free slot to swap it with
