@@ -45,7 +45,7 @@ async function expectRows(page: Page, codes: string[]) {
   expect(shown.sort()).toEqual([...codes].sort());
 }
 
-test("each waiting skill is one row, and its levels are read in the panel on the right", async ({ page }) => {
+test("each waiting skill is one row, with its levels", async ({ page }) => {
   await onlyThese(async () => {
     await page.goto("/setup/skills/approve");
     await expectRows(page, DRAFTS);
