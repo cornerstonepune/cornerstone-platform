@@ -83,11 +83,11 @@ test("an assessment opens into its papers in roll order, and finishing a paper o
   }
   // her paper is done, and the next paper to check is Bina's, of the same assessment
   await page.goto(page.url());
-  const next = page.getByRole("complementary", { name: "Rail" }).getByRole("link", { name: /The next paper to check/ });
+  const next = page.getByRole("navigation", { name: "Where this paper leads" }).getByRole("link", { name: /The next paper to check/ });
   await expect(next).toBeVisible();
   await next.click();
   await expect(page.getByRole("heading", { name: "Check the answers" })).toBeVisible();
-  await expect(page.getByText("Sr. No. 2")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Sr. No. 2's paper" })).toBeVisible();
 });
 
 test("the three signals stay three on the paper: a wrong and a blank the engine held are said apart", async ({ page }) => {

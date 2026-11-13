@@ -79,7 +79,7 @@ test("a paper is named by what it tests on every page an educator opens it from"
   }
   // the assessment's own screen, reached from its paper's screen, is titled by what it tests too
   await page.goto(paper);
-  await page.getByRole("complementary", { name: "Rail" }).getByRole("link", { name: "The assessment" }).click();
+  await page.getByRole("navigation", { name: "Where this paper leads" }).getByRole("link", { name: "The assessment" }).click();
   await expect(page.getByRole("heading", { level: 1 })).toContainText(NAME);
   await expect(page.locator("main")).not.toContainText(code);
   await page.context().close();
@@ -98,7 +98,8 @@ test("a paper with no date says nothing of one", async ({ browser }) => {
   await page.goto(paper);
   // the page itself first: a "not" passes at once on the loading screen
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Check the answers");
-  await expect(page.locator("main header")).not.toContainText(/Sat\s*—/);
+  // the page's own header and the panel's: neither names a day
+  await expect(page.locator("main header").filter({ hasText: /Sat\s*—/ })).toHaveCount(0);
   await expect(page.locator("main")).not.toContainText(/sat\s*—/i);
   await page.context().close();
 });
