@@ -1356,6 +1356,12 @@
         },
         {
           "label": "panel: each objective"
+        },
+        {
+          "label": "× on a filter chip"
+        },
+        {
+          "label": "Clear"
         }
       ]
     },

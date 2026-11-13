@@ -1124,7 +1124,7 @@ Main action: the filter row (grade · subject · origin) · Next step: an activi
 Data: activity, activity_part_source (school | drafted | person), activity_objective.source, activity_skill.source, learning_objective.source, learning_objective_skill.source, skill, skill_level, curriculum_proposal (offers), ask
 Empty: none · Phone: the table scrolls sideways in its own box
 Folds in: /, /curriculum/browse, /curriculum/fill, /curriculum/offers, /asks
-Every control on the screen (30), and what the test does with each:
+Every control on the screen (32), and what the test does with each:
 - **filter** Grade
 - **filter** Subject
 - **filter** Origin (sheet, machine or person (CP-48): the list keeps what carries that origin; the panel's lists follow it)
@@ -1155,6 +1155,8 @@ Every control on the screen (30), and what the test does with each:
 - **field** panel: the slips [coordinator only; absent and refused for others]
 - **button** panel: Save [coordinator only; absent and refused for others] (the engine writes the person's words in place of the machine's; the part's origin becomes person and the machine symbol goes from it)
 - **link** panel: each objective → Curriculum (`/setup/curriculum`) [coordinator only; absent and refused for others] (opens the objective in the same panel: open=objective:<code>)
+- **button** × on a filter chip: removes that filter from the address
+- **button** Clear: removes every filter and the search
 Done when (on top of the ten generic checks):
 - one list carries activities (K2) and skills (grades 1–4) under one filter row
 - Curriculum shows no count of skills to approve; that number is the eyebrow of Skills to approve and appears nowhere else

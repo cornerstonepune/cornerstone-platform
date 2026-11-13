@@ -4193,6 +4193,20 @@
           "roles": [
             "coordinator"
           ]
+        },
+        {
+          "t": "button",
+          "label": "× on a filter chip",
+          "effect": "removes that filter from the address",
+          "text": "Remove filter",
+          "when": "filtered",
+          "data": "data-chip"
+        },
+        {
+          "t": "button",
+          "label": "Clear",
+          "effect": "removes every filter and the search",
+          "when": "filtered"
         }
       ],
       "rail": [],

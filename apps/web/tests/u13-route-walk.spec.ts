@@ -53,7 +53,6 @@ const NOT_BY_CLICK: Record<string, string> = {
   "/setup/skill-sets/[code]": "a skill's row on Curriculum or Skills to approve, past the rows a test database holds",
   "/period/[id]": "a link of a day of the timetable, which needs a timetable's rows",
   "/notes/[id]": "a card or a row of Notes, which needs a recorded note",
-  "/educator/materials": "the old address of Materials: it opens /timetable/materials, which the menu links (tests/u99-materials-workspace.spec.ts opens it)",
   "/timetable/fortnight/[n]": "a link of the timetable page's Fortnight card, which needs a fortnight's rows (tests/u74-timetable.spec.ts opens it with rows)",
   "/growth/[id]": "a child's name on a class's page: the class list is click two, a class's page click three, so a child's page is click four. It only counted as reached while the static page /growth/reports (which matches the pattern /growth/[^/]+) was in the app",
   "/growth/[id]/parent": "a link on a child's page (click four)",

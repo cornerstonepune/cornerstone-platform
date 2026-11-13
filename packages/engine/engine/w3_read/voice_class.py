@@ -71,6 +71,19 @@ def _claims(conn: db.Conn, ids: list[Any]) -> dict[Any, list[dict]]:
     return out
 
 
+def _marked(conn: db.Conn, ids: list[Any]) -> dict[Any, list[str]]:
+    """The children each confirmed note names: those of its observations that no later correction replaced. A note
+    names them by its marks, whether or not the reader kept a claim line for each."""
+    out: dict[Any, set[str]] = defaultdict(set)
+    for o in conn.execute(
+        "select o.note_id, o.child_id from activity_observation o where o.note_id = any(%s)"
+        " and not exists (select 1 from activity_observation s where s.supersedes = o.id)",
+        (ids,),
+    ).fetchall():
+        out[o["note_id"]].add(str(o["child_id"]))
+    return {k: sorted(v) for k, v in out.items()}
+
+
 def class_notes(conn: db.Conn, email: str, class_id: str, day: dt.date | None = None) -> dict:
     """Her notes for one class received on a day, and, over all her notes still waiting in the class, how many notes
     wait on each child. Only her own notes, only for a class she holds."""
@@ -114,6 +127,7 @@ def _listing(conn: db.Conn, notes: list[dict], day: dt.date) -> dict:
 
     confirmed = [n["id"] for n in notes if n["status"] == "confirmed"]
     claims = _claims(conn, confirmed) if confirmed else {}
+    marked = _marked(conn, confirmed) if confirmed else {}
     shown: list[dict] = []
     waiting: dict[str, int] = defaultdict(int)
     for n in notes:
@@ -135,7 +149,7 @@ def _listing(conn: db.Conn, notes: list[dict], day: dt.date) -> dict:
             else "fix_this" if found is not None and found.blocked
             else "to_confirm"
         )  # fmt: skip
-        kids = sorted({c for line in claims.get(n["id"], []) for c in line["children"]})
+        kids = marked.get(n["id"], [])
         shown.append({
             "note_id": str(n["id"]), "class_id": str(n["class_id"]), "class": labels[n["class_id"]],
             "status": n["status"], "state": state, "typed": typed, "photos": len(n["photo_keys"]),
