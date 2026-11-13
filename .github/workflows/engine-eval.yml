@@ -32,7 +32,7 @@ permissions:
 
 jobs:
   score:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4  # read_with_examples only: the second reader and its measure, from this branch
