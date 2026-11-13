@@ -28,7 +28,7 @@ env:
 
 jobs:
   update:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 120
     env:
       LIVE: "${{ secrets.LIVE_DATABASE_URL }}"

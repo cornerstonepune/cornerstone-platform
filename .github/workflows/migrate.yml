@@ -27,7 +27,7 @@ concurrency: { group: migrate-live, cancel-in-progress: false }
 jobs:
   push:
     if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions: { contents: read, statuses: write }
     env:
       # the commit CI passed on; `github.sha` is whatever main holds when this starts, which can be a later merge
