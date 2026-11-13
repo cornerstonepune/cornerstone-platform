@@ -181,12 +181,12 @@ built.
 
 | Block | What it is |
 |---|---|
-| AppFrame | top bar (BrandMark, a link to Today; four doors with their icons, search, acting-as), trail, main column, rail (Connected to; Capture here) in a surface box; on a phone the four doors are a bottom tab bar (icon above word, the chosen door filled in brand clay) |
+| AppFrame | top bar (BrandMark, a link to Today; search, the person and acting-as, help, sign out); the menu a left sidebar grouped by the educator's jobs (My day, Timetable, Children, Assessments, School for the coordinator), folding to icons, a drawer behind the Menu button on a phone (page charter A1); trail, main column, and the right side: the DetailPanel, or the old rail on pages not yet moved |
 | AttentionStrip | three tiles filled with their state's tint: do now (red) · this week (amber) · done (green); number, icon+word, one sentence; each a link; no border, no shadow |
 | PeriodRow | time · the subject's icon tile and colour edge · name · subject and one fact · state chip; the row is the link, a panel with shadow-card; the current period carries the action outline; fixed parts of the day are a quiet sand row |
 | StatusChip | pill: icon + word + colour from the STATES rows, on its tint; on a tinted cell (a subject cell, a child's square) the chip sits on the panel colour with a 1 px ring in its state colour, because a state's fill and a subject's fill can be near each other |
 | DataTable | ≤10 rows then grouped/paged; needs-you first; numbers right, status centred; FilterBar built in at 6+ rows; on a phone it scrolls sideways in its own box; inside a card with shadow-card; where children are listed it can be grouped (a group heading with its count, the same rows under it) |
-| FilterBar | dropdowns + compact search over any table of 6+ rows; filters in the address |
+| FilterBar | dropdowns + compact search over any table of 6+ rows, in one row: the first three dropdowns, the rest behind More filters (page charter A4); filters in the address |
 | ClassGrid | a tinted square per child by Sr. No., radius-card: Sr. No., the child's initials disc, the name, and the state's icon + word on the state's tint; not seen = an untinted square with a dashed ring; tap = open ChildPeek (on the confirm screen: change the mark); 8 columns at 1440, 3 on a phone |
 | Stepper | the steps of a thing; done green, waiting amber, late red, rest quiet |
 | Details | a fold that opens on click, eye icon; never hides the main action |
@@ -204,11 +204,14 @@ built.
 | EmptyState | nothing to show, with the next step |
 | Form | a short form of labelled fields; one main button |
 | KeyValue | facts as label: value pairs, five lines at most |
-| Cards | two to three panels side by side, each with a header tinted in its kind's colour (kind tile + title) and a few lines and one link |
+| Cards | two to three panels side by side, each with a header tinted in its kind's colour (kind tile + title), at most two chips (one status, one whole count: page charter A3), a few lines and one link |
 | KindTile | a 32 px tile, radius-control, filled with a kind's tint and holding that kind's icon in its colour (period slate, child teal, activity indigo, objective violet, skill orchid, assessment sky, note stone); every rail link, card header and timeline entry starts with one |
 | BrandMark | the school's logo (Cornerstone Gurukul) as one of the four official files, drawn as given: `lockup-colour` on a light ground, `lockup-for-dark-backgrounds` on a dark ground, `mark` alone where the space is small on a light ground, `mark-on-white-tile` where it is small on a dark ground and for the tab and app icon; accessible name 'Cornerstone Gurukul'; never recoloured, stretched, rotated, filtered or shadowed, never inside a card; clear space on every side at least a quarter of the mark's height |
 | KanbanBoard | what moves through stages, one lane per stage, each lane headed by its state's icon, word and count; each card a link (kind tile, one line, one fact, a state chip); lanes scroll sideways in their own box on a phone; offered next to the table of the same things by a Table | Board toggle (segmented tabs, the address carries the tab); a lane with no card says so in words |
 | ChildPeek | one child's recent history in a panel, opened by tapping a child anywhere a child is listed: initials disc, Sr. No., name, class; the child's state counts as chips; then notes, observations, papers, state changes and corrections newest first, each with a kind tile, one line, who and when; Close and 'Open the child' (the one way to the child's own page); the top of the rail on a wide screen, a sheet over the bottom on a phone; Escape closes it and focus returns to the child that opened it |
+| StatTile | a big whole number and one line saying what it counts, its top edge in a state colour when it has one; a row of three or four is a page's summary, and the DetailPanel's when nothing is chosen (page charter A3) |
+| DetailPanel | the right side of a page (page charter A2): a thing chosen on the page opens here in tabs, the same tabs for the same kind of thing; the address carries ?open=<kind>:<id> and tab=; a close button and Escape close it and focus returns to the thing; Open full page goes to its own address; with nothing chosen it shows the page's stat tiles, never a list of links; on a phone an open panel is a sheet over the page |
+| SubjectTag | a subject's icon, word and colour on any block (page charter A3), the colour from the school's subject rows (timetable.subject_looks); with SubjectMix, a bar split by subject, its key in whole counts or in whole percents adding to 100 |
 
 ## 6. Every screen
 
@@ -273,11 +276,11 @@ Main action: the first red row · Next step: Fortnight
 Data: fortnight state; timetable clashes; sessions by state last week; educator_note status by class; materials_line without quantity; consent counts
 Empty: Nothing waits on you: say so in one line, keep the heat grid and next week · Phone: strip stacks; heat grid scrolls sideways in its own box
 Every control on the screen (13), and what the test does with each:
-- **link** do now tile → Moves by hand (`/timetable/moves`)
+- **link** do now tile → Fortnight 9 (`/timetable/fortnight/[n]`)
 - **link** this week tile → Fortnight 9 (`/timetable/fortnight/[n]`)
 - **link** sessions done tile → Staff and classes (`/setup/staff`)
 - **cell** each heat-grid cell → Timetable (`/timetable`) (opens that class's day)
-- **row** clash row → Moves by hand (`/timetable/moves`) [coordinator only; absent and refused for others]
+- **row** clash row → Fortnight 9 (`/timetable/fortnight/[n]`) [coordinator only; absent and refused for others]
 - **row** draft row → Draft from the rules (`/timetable/draft`) [coordinator only; absent and refused for others]
 - **row** late notes row → Notes (`/notes`)
 - **row** sessions not done row → Staff and classes (`/setup/staff`)
@@ -296,37 +299,42 @@ Done when (on top of the ten generic checks):
 #### the session's name `/period/[id]`
 Who: educator · Phase: Core · Backend: CP-8 · Old page today: yes (/educator/period) · Slice: UI-3
 Eyebrow: Period · 09:15 · K2 Red · Numeracy
-Purpose: the activity's objective in one line
+Purpose: the activity's objective in one line; 'No activity for this lesson yet' when it has none
 Blocks, in order:
-- **Cards**: actions: Record a note (main) · Type the marks · Open the activity
-- **StackBar**: last time this activity ran: above / as expected / below / not willing / absent, with the children below or not willing named by Sr. No.
-- **Details**: The steps, short (open) · Lay out (materials with quantities) · Watch for (the thinking)
-Rail (Connected to): The activity · its learning objectives · Materials · Its place in the fortnight · The class
+- **ClassGrid**: the class that day as child cards (Sr. No. + first name), each coloured by the level marked today on the state scale (grey until marked, never red); a tap opens the level choices: the activity's own four level words ('Not written' where none), Absent, Not willing; 'Mark the rest at level n'
+- **DetailPanel**: the right side, never closed: tabs Activity (outcome, numbered steps, lay out, watch for, objectives and skills) · Rubric (the four levels as coloured rows with their words) · Materials · History (last time this class did it, how many at each, the children named by Sr. No.)
+- **Details**: Mark against the expected level (the CP-40 class form, for the class's own educator) · Choose another activity (coordinator)
+Rail (Connected to): The day · The class
 Main action: Record a note · Next step: the next period
-Data: session → plan_entry → activity (+activity_material, activity_objective); activity_observation of this activity for this class, last session (the five outcome words are a config list)
-Empty: A fixed part of the day: 'Nothing to record here' · Phone: actions first, then the fold; the record button fills the width
+Data: session → plan_entry → activity (+activity_material, activity_objective); activity_observation of this activity for this class, last session (the five outcome words are a config list); the class's roll that day (POST /voice/class) and today's levels (CP-49, POST /lesson/level/read)
+Empty: A fixed part of the day: 'Nothing to record here'; a lesson with no activity: 'No activity for this lesson yet' and, for the coordinator, Choose an activity · Phone: the grid three cards across, the level choices under it, the panel's tabs below; no sideways scroll
 Folds in: /educator/period/[id]
-Every control on the screen (15), and what the test does with each:
+Every control on the screen (19), and what the test does with each:
 - **link** Record a note → Record a note (`/record`) (opens Record with this period's session preselected)
 - **link** Type the marks instead → Record a note (`/record`) (opens Record on its typing path, session preselected)
 - **link** Open the activity → the activity's name (`/setup/activities/[code]`)
 - **peek** each Sr. No. named under the last-time bar: opens ChildPeek for that child
-- **fold** The steps, short (open by default)
-- **fold** Lay out
-- **fold** Watch for
-- **link** rail: The activity → the activity's name (`/setup/activities/[code]`)
-- **link** rail: each learning objective → the objective's title (`/setup/objectives/[code]`)
-- **link** rail: Materials → Materials, this fortnight (`/timetable/materials`)
-- **link** rail: Its place in the fortnight → Timetable (`/timetable`)
-- **link** rail: The class → Class picture (`/children/[class]`)
 - **button** peek: Close: closes ChildPeek; focus returns to the child that opened it
 - **link** peek: Open the child → Where this child is (`/children/[class]/[roll]`) (the one way from a list to the child's own page)
 - **child_name** the name in the peek (the child's name beside the Sr. No., read from pii by child_id)
+- **cell** each child's card: opens the level choices for that child; focus moves to them, Escape closes them and returns it to the card
+- **button** each level choice (0–3, Absent, Not willing): saves that child's level for this lesson; the card takes the level's colour and word
+- **field** Level for the rest
+- **button** Mark the rest at level n: every child not yet marked is saved at level n in one save; a child already marked keeps theirs
+- **tab** Activity
+- **tab** Rubric
+- **tab** Materials
+- **tab** History
+- **fold** Mark against the expected level (the class's own educator only)
+- **fold** Choose another activity (coordinator only)
+- **link** The class → Class picture (`/children/[class]`)
+- **child_name** the first name on each child's card (read from pii by child_id, only for the children the person may see)
 Done when (on top of the ten generic checks):
 - a period with no activity shows no capture controls and the words 'Nothing to record here'
-- the last-time bar's segments sum to the number of children named in the last session's observations
-- the steps fold is open on load and the others closed
-- tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page
+- a lesson with an activity shows every child enrolled that day as a card (Sr. No. + first name)
+- the level choices show the activity's own words, 'Not written' where a level has none
+- the panel's tabs are Activity · Rubric · Materials · History
+- tapping a child in the History tab opens ChildPeek with that child's recent history newest first; Escape closes it and focus returns
 
 
 #### Record a note `/record`
@@ -399,29 +407,26 @@ Who: both · Phase: Core · Backend: CP-22 · Old page today: part (/educator/we
 Eyebrow: K2 Red
 Purpose: The fortnight is the unit. Week A and week B, each period a block; a moved period is marked, a clash is red until the coordinator accepts it.
 Blocks, in order:
-- **FilterBar**: class (coordinator only) · Day / Week / Fortnight view · this / next fortnight
-- **FortnightGrid**: from the timetable_rule rows in force + the dated session rows; subject colours; moved/clash outlines; a cell is the period's link
+- **FilterBar**: class (coordinator only) · Day / Week / Fortnight view · this / next fortnight · previous / next arrows
+- **FortnightGrid**: from the timetable_rule rows in force + the dated session rows; days across, periods down, time printed once; subject colours; fixed periods as bands; moved/clash outlines; a block opens its lesson in the DetailPanel and holds no button
+- **DetailPanel**: nothing chosen: StatTiles for the days shown (lessons · moved by hand · clashes not accepted) and SubjectMix in percent (each subject's whole share of the lessons shown, adding to 100), then what changed this fortnight; a block chosen: the lesson panel of B4 (tabs Activity · Children · Materials · History, Open full page = /period/<id>), the coordinator's Move / Edit / Choose activity at its top
 - **Cards**: Fortnight 9: state · Materials for this fortnight
-Rail (Connected to): Fortnight 9 · Materials · Today's period · Rules (coordinator)
+Rail (Connected to): none
 Main action: Open today · Next step: Fortnight
-Data: timetable_rule rows (kind slot) valid today; session for the fortnight's days; period times; school_day kinds
+Data: timetable_rule rows (kind slot) valid today; session for the fortnight's days; period times; school_day kinds; subject labels; the clashes of the rules on the days shown; change_log moves
 Empty: No timetable live for this class: coordinator sees 'Make a draft' · Phone: Day view by default; week scrolls sideways in its box
 Folds in: /educator (day), /educator/week
-Every control on the screen (14), and what the test does with each:
+Every control on the screen (10), and what the test does with each:
 - **filter** class (the coordinator always; an educator only when she holds more than one class)
 - **tab** Day / Week / Fortnight (Day by default at 400 px)
 - **link** Previous / next day or week → Timetable (`/timetable`) (Day view steps a school day (weekends skipped), Week view a week; the fortnight follows the day)
-- **link** Today → Timetable (`/timetable`) (opens today in the Day view)
+- **link** Open today → Timetable (`/timetable`) (the page's one main action, under the title: today in the Day view)
 - **link** each day head → Timetable (`/timetable`) (opens that day in the Day view; earlier and later days are reached the same way)
 - **filter** this / next fortnight
-- **cell** each grid cell → the session's name (`/period/[id]`)
+- **cell** each lesson block → Timetable (`/timetable`) (opens the lesson in the detail panel on the right (?open=lesson:<id>); its Open full page is the lesson page)
 - **fold** a moved cell's details (who, why, when) (opens on click, tap or Enter; never by hover alone)
 - **link** Fortnight 9 card → Fortnight 9 (`/timetable/fortnight/[n]`)
 - **link** Materials card → Materials, this fortnight (`/timetable/materials`)
-- **link** rail: Fortnight 9 → Fortnight 9 (`/timetable/fortnight/[n]`)
-- **link** rail: Materials → Materials, this fortnight (`/timetable/materials`)
-- **link** rail: Today's period → the session's name (`/period/[id]`)
-- **link** rail: Rules → Timetable rules (`/timetable/rules`) [coordinator only; absent and refused for others]
 Done when (on top of the ten generic checks):
 - a hand move shows an amber outline and its details name who and why
 - an educator never sees an accept-clash control; a clash cell is red for both roles
@@ -429,6 +434,9 @@ Done when (on top of the ten generic checks):
 - a period running now carries Do now, a recorded one Done, one over and not recorded Late, and no period still to come has a chip
 - a holiday day is named in words under the grid
 - stepping to the next or previous school day skips the weekend and crosses into the next or earlier fortnight
+- a block opens its lesson in the right panel with the lesson's tabs; the coordinator's Move, Edit and Choose activity are in the panel and no block holds a button
+- with nothing chosen the panel shows the days shown: lessons, the share of each subject in whole percents adding to 100, moved by hand and clashes not accepted
+- no table of lessons by subject on this page (that is Time by subject, B3)
 
 
 #### Fortnight 9 `/timetable/fortnight/[n]`
@@ -446,7 +454,7 @@ Data: fortnight + fortnight.state (CP-6; each step's yes is an approval row); pl
 Empty: No plan lines yet: link to the planner upload · Phone: stepper wraps to two rows
 Every control on the screen (9), and what the test does with each:
 - **link** each plan line → the activity's name (`/setup/activities/[code]`)
-- **link** each hand move → Moves by hand (`/timetable/moves`) [coordinator only; absent and refused for others]
+- **link** each hand move → Fortnight 9 (`/timetable/fortnight/[n]`) [coordinator only; absent and refused for others]
 - **button** Approve: approval row written; the stepper moves to approved; Go live appears; Approve disappears [coordinator only; absent and refused for others]
 - **field** reason [coordinator only; absent and refused for others] (needed once the fortnight is frozen; the engine says so in words when it is missing)
 - **button** Go live: every class's placed draft goes live and the sessions are updated in place; the what-changed table lists every session it moved or removed, and nothing else [coordinator only; absent and refused for others]
@@ -469,8 +477,8 @@ Blocks, in order:
 - **FortnightGrid**: the draft, every class, tabs per class
 - **DataTable**: rules not met: the rule in the school's words · where · what the draft did instead
 - **Cards**: Next: hand moves · then Approve on the fortnight
-Rail (Connected to): Rules · Fortnight 10 · Moves by hand
-Main action: Make a draft · Next step: Moves by hand
+Rail (Connected to): Rules · Fortnight 10
+Main action: Make a draft · Next step: Fortnight 10
 Data: engine command (FET) → draft slots; unmet rules report
 Empty: No rules for this grade yet: link to Rules · Phone: read-only; the button is desktop
 Every control on the screen (9), and what the test does with each:
@@ -479,40 +487,14 @@ Every control on the screen (9), and what the test does with each:
 - **tab** each class (the grid shows that class)
 - **cell** each grid cell → the session's name (`/period/[id]`) (a draft cell opens read-only)
 - **link** each unmet rule's rule name → Timetable rules (`/timetable/rules`)
-- **link** Next: hand moves → Moves by hand (`/timetable/moves`)
+- **link** Next: hand moves → Fortnight 9 (`/timetable/fortnight/[n]`)
 - **link** rail: Rules → Timetable rules (`/timetable/rules`)
 - **link** rail: Fortnight 10 → Fortnight 9 (`/timetable/fortnight/[n]`)
-- **link** rail: Moves by hand → Moves by hand (`/timetable/moves`)
+- **link** rail: Fortnight 10, move then approve → Fortnight 9 (`/timetable/fortnight/[n]`)
 Done when (on top of the ten generic checks):
 - the draft shown equals the slots the generator wrote (count and cells)
 - every unmet rule row names a rule row that exists
 - Make a draft never changes a live fortnight's sessions (count unchanged before and after)
-
-
-#### Moves by hand `/timetable/moves`
-Who: coordinator · Phase: Core · Backend: CP-12 · Old page today: no · Slice: UI-6
-Eyebrow: Fortnight 10 · draft
-Purpose: Move a period; the clash it makes shows at once; only the coordinator accepts one, with a reason.
-Blocks, in order:
-- **FortnightGrid**: drag or pick-and-place; a moved cell amber; a clash red
-- **DataTable**: moves made: what · from · to · who · why · clash accepted?
-- **Form**: accept this clash: reason (required) · Accept
-Rail (Connected to): Fortnight 10 · The grid · Rules
-Main action: Accept the clash · Next step: Fortnight: Approve
-Data: session moves kept with staff id and reason; clash detection from the engine
-Empty: No moves yet · Phone: read-only
-Every control on the screen (7), and what the test does with each:
-- **cell** pick a cell, then a target cell: the session moves; the source and target cells redraw; a clash shows red; a move row appears with who
-- **button** Undo the last move: the move is reversed as a new move row, never deleted
-- **field** reason (required: empty shows 'Say why' and accepts nothing)
-- **button** Accept the clash: the clash is marked accepted with the reason and who; the cell's outline turns amber
-- **link** rail: Fortnight 10 → Fortnight 9 (`/timetable/fortnight/[n]`)
-- **link** rail: The grid → Timetable (`/timetable`)
-- **link** rail: Rules → Timetable rules (`/timetable/rules`)
-Done when (on top of the ten generic checks):
-- a move changes only its own fortnight's sessions
-- as educator the page is read-only: no pick, no Accept, and the requests are refused
-- every move is listed with who made it and when, and an undo is a new row
 
 
 #### Timetable rules `/timetable/rules`
@@ -566,6 +548,35 @@ Every control on the screen (10), and what the test does with each:
 Done when (on top of the ten generic checks):
 - a line with no quantity carries the amber 'to confirm' chip
 - approval (CP-17) exists only for the signed-in educator's own class and is refused for another
+
+
+#### Time by subject `/timetable/time`
+Who: both · Phase: Core · Backend: CP-41 · Old page today: no · Slice: UI-6
+Eyebrow: K2 Red · 06-Jul-2026 to 17-Jul-2026
+Purpose: How much teaching time each subject gets, beside what the timetable rules intend.
+Blocks, in order:
+- **FilterBar**: Week / Fortnight / Month / Quarter · class (one class, or every class of a grade for the coordinator)
+- **StackBar**: a column per week, split by subject in the subject colours; a part opens that week's lessons of that subject
+- **DataTable**: subject · minutes · % of teaching time · the school's target · Within / Over / Short
+- **DetailPanel**: nothing chosen: minutes taught · subjects · within the target · over or short; a part chosen: that week's lessons of that subject
+Rail (Connected to): minutes taught · subjects · within the target · over or short
+Main action: Choose the range · Next step: Timetable
+Data: session.subject_code session.kind period.starts_at period.ends_at school_day.on_date school_day.kind timetable_rule.subject_code timetable_rule.cell subject.label config.value
+Empty: No lessons in these days for the class: say so; an educator whose timetable is not open yet is told that · Phone: the columns scroll sideways in their box; the ring sits under them; the table is a list
+Every control on the screen (6), and what the test does with each:
+- **tab** Week / Fortnight / Month / Quarter (the range: whole weeks ending with today (1, 2, 4 or 13); the address carries it; the page's primary action)
+- **filter** class (one class the person may read, or (the coordinator) every class of a grade; the engine's own list of the classes she may read)
+- **cell** each part of a week's column (opens that week's lessons of that subject in the detail panel; the address carries it (open=period:<week>~<subject>))
+- **link** panel: each lesson → the session's name (`/period/[id]`)
+- **link** panel: Close (closes the panel back to the range's numbers)
+- **tab** panel: Lessons (the one tab of the panel: the lessons of the part chosen)
+Done when (on top of the ten generic checks):
+- a range chooser offers Week, Fortnight, Month and Quarter, and the dates shown are whole weeks ending today
+- a class chooser offers one class, and every class of the grade for the coordinator
+- each week is a stacked column of its subjects' minutes in the subject colours; the ring shows the whole range
+- the table gives each subject its minutes, % of teaching time, the school's target and a Within / Over / Short chip, the chip only when the rules give a target
+- choosing a part of a week's column opens that week's lessons of that subject in the detail panel
+- the menu lists Time by subject under Timetable, between the Fortnight and Materials
 
 
 ### Children
@@ -1376,10 +1387,9 @@ test or a script named in it. The generic checks apply to every screen a slice b
 
 The bar is on every signed-in screen and is driven once per run, not once per screen (its controls are outside each screen's count):
 
-- **link** Today → Today (`/today`) (a coordinator lands on Today, the school; on a phone the four doors are a bottom tab bar, the same four links)
-- **link** Timetable → Timetable (`/timetable`)
-- **link** Children → Children (`/children`)
-- **link** Setup → Setup (`/setup`) (shown to the coordinator group only)
+- **link** Today → Today (`/today`) (the school's logo, a link to Today (a coordinator lands on Today, the school))
+- **link** A page of the menu (every line of the sidebar (apps/web/lib/menu.ts, page charter A1): My day, Timetable, Children, Assessments, and School for the coordinator; the page you are on is marked, the section of the walk lit, and only Today carries a count)
+- **button** Menu: folds the sidebar to its icons and back (kept for the next page); on a phone, opens the menu as a drawer
 - **field** Search (a typeahead of at most five suggestions (children within the person's classes, activities, skills, assessments); choosing one opens it; there is no results page; the typed term goes in a POST body only, never an address or a log line)
 - **switch** Acting as (coordinator only: shows the site as an educator would see it; a view, never a permission)
 - **link** ? → Start here (`/guide`) (opens the guide at this page's section)
@@ -1411,7 +1421,7 @@ What the test does with each kind of control:
 | UI-3 Node pages: the K2 walk | Period, record, confirm, notes, children, class picture, child, activity, objective and skill as node pages on the blocks, each walking to its neighbours through the rail and back through the trail; the old routes redirect. | the session's name, Record a note, Confirm what the reader heard, Notes, Children, Class picture, Where this child is, the activity's name, the objective's title, the skill's name, the skill set's outcome (what the child can do) | UI-2; the K2 switch (a config row) on for the pages behind it |
 | UI-4 Node pages: assessments | Assessments, one assessment and one child's paper as node pages on the blocks; the seven old assessment pages and Class results fold in; the queries and the seven steps are unchanged. | Assessments, {the built name}, Check the answers | UI-2 |
 | UI-5 The coordinator's views: staff, classes and setup | Staff and grants, classes and children and the Setup home; the small writes that exist today (a grant, a child move) through their own rows. Search is the bar's typeahead (UI-13); there is no results page. | Staff and classes, Classes and children, Setup | UI-2 for the views; CP-1 merged for moving a child |
-| UI-6 Timetable, rules and the fortnight's actions | The timetable's day, week and fortnight views and the timetable rules, the fortnight node with Approve and Go live, the draft from the rules with its unmet rules, and moves by hand with clashes accepted by the coordinator only. Until this merges the bar's Timetable door opens the page that exists today. | Timetable, Timetable rules, Fortnight 9, Draft from the rules, Moves by hand | CP-6, CP-11, CP-12 and CP-22 merged |
+| UI-6 Timetable, rules and the fortnight's actions | The timetable's day, week and fortnight views and the timetable rules, the fortnight node with Approve and Go live, the draft from the rules with its unmet rules, and, on the fortnight page, moves by hand with clashes accepted by the coordinator only. Until this merges the bar's Timetable door opens the page that exists today. | Timetable, Timetable rules, Fortnight 9, Draft from the rules, Time by subject | CP-6, CP-11, CP-12 and CP-22 merged |
 | UI-7 Today, both kinds | The educator's Today (the day, the attention strip, notes to confirm, the class) and the coordinator's Today (what waits, last week's heat grid, next week), composed from the blocks over the queries that exist; What needs doing folds in and its count moves to Setup where it belongs. | Today, Today, the school | UI-3 and UI-5; UI-6 for the coordinator's clash and draft rows (rows for a backend not yet merged simply do not appear) |
 | UI-8 Reports | Each child's report, line by line, in the educator's words: two approvals per line, consent on file, then sent. The parent's copy says educator, Easy / Medium / Hard / Advance, no rung and no code. | Reports | CP-19 merged (Next) |
 | UI-9 Materials | The class's materials list for a fortnight, the school's list, the notes the system could not read, and the educator's approval of her own class's list. | Materials, this fortnight | CP-17 and CP-18 merged (Later) |

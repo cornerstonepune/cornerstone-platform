@@ -141,64 +141,65 @@ Period, record, confirm, notes, children, class picture, child, activity, object
 3. The journey `e2e/an-educators-tuesday.spec.ts` passes: Today → the lit period → Type the marks → a note written with one activity_observation per named child and none for a child not mentioned → Confirm → Class picture shows the change → the child → the skill → trail back to Today; axe at each step; at 1440 and 400.
 4. A correction from Notes writes a superseding activity_observation row and never updates the old one (database assertion).
 5. The period → note link: a note confirmed from a period carries that session's id, and the period page lists its notes. This line waits for CP-25 (to be scoped: `activity_observation.session_id` is free today); the slice starts and merges without it, and the line is proved when CP-25 lands.
-6. Every one of the 149 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
+6. Every one of the 153 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
 7. the session's name: a period with no activity shows no capture controls and the words 'Nothing to record here'
-8. the session's name: the last-time bar's segments sum to the number of children named in the last session's observations
-9. the session's name: the steps fold is open on load and the others closed
-10. the session's name: tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page
-11. Record a note: Send writes exactly one educator_note with this session's id and nothing in activity_observation
-12. Record a note: at 400 px the Start button is the full width and at least 56 px tall
-13. Record a note: a denied microphone shows the typed path as the main action instead of an error
-14. Confirm what the reader heard: Confirm writes one activity_observation per marked child, none for an unmarked child, all with one confirmation_id
-15. Confirm what the reader heard: a changed or removed claim is kept as changed/removed in note_claim (reader accuracy)
-16. Confirm what the reader heard: no control confirms more than one note
-17. Confirm what the reader heard: a child's square is never red, whatever the mark
-18. Confirm what the reader heard: a child's name on a claim line opens ChildPeek; a square still changes the mark and never opens the peek
-19. Confirm what the reader heard: tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page
-20. Notes: a correction writes a superseding row with a reason and never updates the old one
-21. Notes: the coordinator sees every class, an educator their own (access fixture)
-22. Notes: a note left unconfirmed past 48 hours carries the red 'late' chip and sorts first
-23. Notes: each board lane's card count equals the rows of the table in that state
-24. Notes: tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page
-25. Children: for a signed-in educator the table lists their own children; a coordinator sees every class, with a class filter
-26. Children: the class column and the class filter appear only when the person has several classes
-27. Children: the how-they-are-doing bar's segments are secure, practising and not seen, and sum to the child's skill count; never a red segment
-28. Children: searching a Sr. No. or part of a name narrows the rows and writes itself into the address; a reload keeps it
-29. Children: the absences-noted column shows the last 7 school days that had a confirmed lesson for the class: a noted absence is a grey 'absent' cell with its word, a day with no confirmed lesson is blank and never reads 'present'; the column head says 'absences noted'
-30. Children: tapping a row opens ChildPeek for that child; the peek's 'Open the child' lands on the child; the toggle opens the class picture grid and the picture's toggle returns here
-31. Children: grouping by class, by how they are doing or by needs attention puts a heading and a count over each group, the counts sum to the rows, and a child is in exactly one group; groups are computed, never stored
-32. Children: tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page
-33. Class picture: each square shows the Sr. No. and the child's name read from pii by child_id, and no photo (DOM scan)
-34. Class picture: the stack bar's counts equal the squares by state
-35. Class picture: the squares are in Sr. No. order, 8 per row at 1440, 3 at 400
-36. Class picture: an empty square's title reads 'not seen yet', never 'not secure'
-37. Class picture: grouping by state puts a heading and a count over each group; the counts sum to the squares and equal the stack bar; a child is in exactly one group
-38. Class picture: a cluster's count equals the chips in it; clusters are computed by code from child_skill_state and evidence_event, never by a model, and a child may be in several clusters
-39. Class picture: tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page
-40. Where this child is: a paper's result and a voice note appear on one timeline in date order
-41. Where this child is: a correction shows as a new entry that names the entry it replaces
-42. Where this child is: the header shows the child's name beside the Sr. No., read from pii by child_id; the address is by Sr. No. and carries no name; no photo (DOM scan)
-43. Where this child is: the graph's node count equals the skills the child was seen on, and each node's state equals the table's
-44. Where this child is: a table equivalent sits beside the graph: the DataTable lists the same skills with the same state words and times seen, the graph's SVG has role=img and an aria-label that names the counts by state, and axe reports no violation on it
-45. Where this child is: keyboard order: Tab reaches the graph's nodes one by one, in the order of the table's rows (domain, then skill), each with a visible focus ring and each opening that skill; no node is reachable by pointer only, and every node's link target is at least 44 × 44 px
-46. Where this child is: on a phone (400 px) the graph is not drawn: the list of skills shows each skill's name, times seen and its state chip (icon + word), each row a link of at least 44 px height, in the same order as the table
-47. the activity's name: a drafted part carries the 'drafted' badge until Keep, Edit or Send back; an educator sees the badge but not the three buttons
-48. the activity's name: every edit writes a change_log row with who
-49. the objective's title: no number, percentage or state is shown for the objective itself (DOM scan)
-50. the skill's name: a prerequisite or next skill is shown only when its link is confirmed (a proposed link in the fixture does not appear)
-51. the skill's name: the spark's last value equals the grid's secure count
-52. the skill's name: the grid's squares equal the class's enrolment in Sr. No. order
-53. the skill's name: grouping by state puts a heading and a count over each group and the counts sum to the squares
-54. the skill's name: a cluster's count equals the chips in it; clusters are computed by code, never by a model
-55. the skill's name: tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page
-56. the skill's name: a coordinator changes a level's sentence and the change is logged with who and why, taking only that level out of approved; an educator is shown the sentences and no way to change them
-57. the skill set's outcome (what the child can do): the screen is keyed by the skill set's code, not by a registry skill's code
-58. the skill set's outcome (what the child can do): each registry skill the set points at is a card that opens the skill screen; a set with none says so and invents nothing
-59. the skill set's outcome (what the child can do): each level shows its sentence, its approval and a real question from the bank (or says there is none); a coordinator approves one level and the others still wait
-60. the skill set's outcome (what the child can do): a coordinator saves which grade each level belongs to; an educator is shown the grades and no way to change them
-61. the skill set's outcome (what the child can do): an English skill shows how each level is asked and its sample questions; a coordinator approves a way of asking and changes a sample
-62. the skill set's outcome (what the child can do): a coordinator asks for more questions like a level's example, and stops a kind of question at one level or at every level
-63. the skill set's outcome (what the child can do): the old address /skill-sets/<code> answers 308 to this one, query kept
+8. the session's name: a lesson with an activity shows every child enrolled that day as a card (Sr. No. + first name)
+9. the session's name: the level choices show the activity's own words, 'Not written' where a level has none
+10. the session's name: the panel's tabs are Activity · Rubric · Materials · History
+11. the session's name: tapping a child in the History tab opens ChildPeek with that child's recent history newest first; Escape closes it and focus returns
+12. Record a note: Send writes exactly one educator_note with this session's id and nothing in activity_observation
+13. Record a note: at 400 px the Start button is the full width and at least 56 px tall
+14. Record a note: a denied microphone shows the typed path as the main action instead of an error
+15. Confirm what the reader heard: Confirm writes one activity_observation per marked child, none for an unmarked child, all with one confirmation_id
+16. Confirm what the reader heard: a changed or removed claim is kept as changed/removed in note_claim (reader accuracy)
+17. Confirm what the reader heard: no control confirms more than one note
+18. Confirm what the reader heard: a child's square is never red, whatever the mark
+19. Confirm what the reader heard: a child's name on a claim line opens ChildPeek; a square still changes the mark and never opens the peek
+20. Confirm what the reader heard: tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page
+21. Notes: a correction writes a superseding row with a reason and never updates the old one
+22. Notes: the coordinator sees every class, an educator their own (access fixture)
+23. Notes: a note left unconfirmed past 48 hours carries the red 'late' chip and sorts first
+24. Notes: each board lane's card count equals the rows of the table in that state
+25. Notes: tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page
+26. Children: for a signed-in educator the table lists their own children; a coordinator sees every class, with a class filter
+27. Children: the class column and the class filter appear only when the person has several classes
+28. Children: the how-they-are-doing bar's segments are secure, practising and not seen, and sum to the child's skill count; never a red segment
+29. Children: searching a Sr. No. or part of a name narrows the rows and writes itself into the address; a reload keeps it
+30. Children: the absences-noted column shows the last 7 school days that had a confirmed lesson for the class: a noted absence is a grey 'absent' cell with its word, a day with no confirmed lesson is blank and never reads 'present'; the column head says 'absences noted'
+31. Children: tapping a row opens ChildPeek for that child; the peek's 'Open the child' lands on the child; the toggle opens the class picture grid and the picture's toggle returns here
+32. Children: grouping by class, by how they are doing or by needs attention puts a heading and a count over each group, the counts sum to the rows, and a child is in exactly one group; groups are computed, never stored
+33. Children: tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page
+34. Class picture: each square shows the Sr. No. and the child's name read from pii by child_id, and no photo (DOM scan)
+35. Class picture: the stack bar's counts equal the squares by state
+36. Class picture: the squares are in Sr. No. order, 8 per row at 1440, 3 at 400
+37. Class picture: an empty square's title reads 'not seen yet', never 'not secure'
+38. Class picture: grouping by state puts a heading and a count over each group; the counts sum to the squares and equal the stack bar; a child is in exactly one group
+39. Class picture: a cluster's count equals the chips in it; clusters are computed by code from child_skill_state and evidence_event, never by a model, and a child may be in several clusters
+40. Class picture: tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page
+41. Where this child is: a paper's result and a voice note appear on one timeline in date order
+42. Where this child is: a correction shows as a new entry that names the entry it replaces
+43. Where this child is: the header shows the child's name beside the Sr. No., read from pii by child_id; the address is by Sr. No. and carries no name; no photo (DOM scan)
+44. Where this child is: the graph's node count equals the skills the child was seen on, and each node's state equals the table's
+45. Where this child is: a table equivalent sits beside the graph: the DataTable lists the same skills with the same state words and times seen, the graph's SVG has role=img and an aria-label that names the counts by state, and axe reports no violation on it
+46. Where this child is: keyboard order: Tab reaches the graph's nodes one by one, in the order of the table's rows (domain, then skill), each with a visible focus ring and each opening that skill; no node is reachable by pointer only, and every node's link target is at least 44 × 44 px
+47. Where this child is: on a phone (400 px) the graph is not drawn: the list of skills shows each skill's name, times seen and its state chip (icon + word), each row a link of at least 44 px height, in the same order as the table
+48. the activity's name: a drafted part carries the 'drafted' badge until Keep, Edit or Send back; an educator sees the badge but not the three buttons
+49. the activity's name: every edit writes a change_log row with who
+50. the objective's title: no number, percentage or state is shown for the objective itself (DOM scan)
+51. the skill's name: a prerequisite or next skill is shown only when its link is confirmed (a proposed link in the fixture does not appear)
+52. the skill's name: the spark's last value equals the grid's secure count
+53. the skill's name: the grid's squares equal the class's enrolment in Sr. No. order
+54. the skill's name: grouping by state puts a heading and a count over each group and the counts sum to the squares
+55. the skill's name: a cluster's count equals the chips in it; clusters are computed by code, never by a model
+56. the skill's name: tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page
+57. the skill's name: a coordinator changes a level's sentence and the change is logged with who and why, taking only that level out of approved; an educator is shown the sentences and no way to change them
+58. the skill set's outcome (what the child can do): the screen is keyed by the skill set's code, not by a registry skill's code
+59. the skill set's outcome (what the child can do): each registry skill the set points at is a card that opens the skill screen; a set with none says so and invents nothing
+60. the skill set's outcome (what the child can do): each level shows its sentence, its approval and a real question from the bank (or says there is none); a coordinator approves one level and the others still wait
+61. the skill set's outcome (what the child can do): a coordinator saves which grade each level belongs to; an educator is shown the grades and no way to change them
+62. the skill set's outcome (what the child can do): an English skill shows how each level is asked and its sample questions; a coordinator approves a way of asking and changes a sample
+63. the skill set's outcome (what the child can do): a coordinator asks for more questions like a level's example, and stops a kind of question at one level or at every level
+64. the skill set's outcome (what the child can do): the old address /skill-sets/<code> answers 308 to this one, query kept
 
 ### Out of scope
 
@@ -283,7 +284,7 @@ The timetable for everyone, and for the coordinator the fortnight's work: the ru
 
 ### What
 
-The timetable's day, week and fortnight views and the timetable rules, the fortnight node with Approve and Go live, the draft from the rules with its unmet rules, and moves by hand with clashes accepted by the coordinator only. Until this merges the bar's Timetable door opens the page that exists today.
+The timetable's day, week and fortnight views and the timetable rules, the fortnight node with Approve and Go live, the draft from the rules with its unmet rules, and, on the fortnight page, moves by hand with clashes accepted by the coordinator only. Until this merges the bar's Timetable door opens the page that exists today.
 
 ### Done when
 
@@ -292,24 +293,30 @@ The timetable's day, week and fortnight views and the timetable rules, the fortn
 3. The plan routes the backend exposes (the fortnight move, the timetable link apply and the timetable generate routes) check only that the actor is on the staff list, so the website checks the coordinator group itself before calling each: an educator's request to each is answered 403 by the web layer (test, one per route).
 4. Go live updates sessions in place and lists every changed session on the fortnight page; a hand move after freeze is kept with who and why and shows amber on the grid (database and DOM).
 5. The journey `e2e/the-coordinators-fortnight.spec.ts` passes: Today (coordinator) → the red clash row → Moves → accept with a reason → Fortnight → Approve → Go live → Timetable shows the change as educator; axe at each step.
-6. Every one of the 46 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
+6. Every one of the 41 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
 7. Timetable: a hand move shows an amber outline and its details name who and why
 8. Timetable: an educator never sees an accept-clash control; a clash cell is red for both roles
 9. Timetable: the grid's cells equal the session rows for the day shown (count and names)
 10. Timetable: a period running now carries Do now, a recorded one Done, one over and not recorded Late, and no period still to come has a chip
 11. Timetable: a holiday day is named in words under the grid
 12. Timetable: stepping to the next or previous school day skips the weekend and crosses into the next or earlier fortnight
-13. Timetable rules: the page sits under Timetable in the menu, not Setup
-14. Timetable rules: every edit shows who and when, and the history fold lists it
-15. Fortnight 9: Approve and Go live exist for the 'everything' group only and their requests are refused for others
-16. Fortnight 9: a frozen fortnight shows no Approve, Go live or edit control
-17. Fortnight 9: the what-changed table lists every session the go-live updated, and nothing else
-18. Draft from the rules: the draft shown equals the slots the generator wrote (count and cells)
-19. Draft from the rules: every unmet rule row names a rule row that exists
-20. Draft from the rules: Make a draft never changes a live fortnight's sessions (count unchanged before and after)
-21. Moves by hand: a move changes only its own fortnight's sessions
-22. Moves by hand: as educator the page is read-only: no pick, no Accept, and the requests are refused
-23. Moves by hand: every move is listed with who made it and when, and an undo is a new row
+13. Timetable: a block opens its lesson in the right panel with the lesson's tabs; the coordinator's Move, Edit and Choose activity are in the panel and no block holds a button
+14. Timetable: with nothing chosen the panel shows the days shown: lessons, the share of each subject in whole percents adding to 100, moved by hand and clashes not accepted
+15. Timetable: no table of lessons by subject on this page (that is Time by subject, B3)
+16. Timetable rules: the page sits under Timetable in the menu, not Setup
+17. Timetable rules: every edit shows who and when, and the history fold lists it
+18. Fortnight 9: Approve and Go live exist for the 'everything' group only and their requests are refused for others
+19. Fortnight 9: a frozen fortnight shows no Approve, Go live or edit control
+20. Fortnight 9: the what-changed table lists every session the go-live updated, and nothing else
+21. Draft from the rules: the draft shown equals the slots the generator wrote (count and cells)
+22. Draft from the rules: every unmet rule row names a rule row that exists
+23. Draft from the rules: Make a draft never changes a live fortnight's sessions (count unchanged before and after)
+24. Time by subject: a range chooser offers Week, Fortnight, Month and Quarter, and the dates shown are whole weeks ending today
+25. Time by subject: a class chooser offers one class, and every class of the grade for the coordinator
+26. Time by subject: each week is a stacked column of its subjects' minutes in the subject colours; the ring shows the whole range
+27. Time by subject: the table gives each subject its minutes, % of teaching time, the school's target and a Within / Over / Short chip, the chip only when the rules give a target
+28. Time by subject: choosing a part of a week's column opens that week's lessons of that subject in the detail panel
+29. Time by subject: the menu lists Time by subject under Timetable, between the Fortnight and Materials
 
 ### Out of scope
 

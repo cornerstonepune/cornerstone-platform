@@ -238,7 +238,8 @@
         "timetable",
         "rules",
         "fortnight",
-        "draft"
+        "draft",
+        "time"
       ],
       "done_when": [
         "Every screen of this slice passes the ten generic checks and every element in its list behaves as its kind says, as educator (read-only) and as coordinator.",
@@ -1726,6 +1727,90 @@
       "done_when": [
         "a line with no quantity carries the amber 'to confirm' chip",
         "approval (CP-17) exists only for the signed-in educator's own class and is refused for another"
+      ]
+    },
+    {
+      "id": "time",
+      "route": "/timetable/time",
+      "group": "Timetable",
+      "who": "both",
+      "phase": "Core",
+      "backend": [
+        "CP-41"
+      ],
+      "exists": "no",
+      "eyebrow": "K2 Red · 06-Jul-2026 to 17-Jul-2026",
+      "title": "Time by subject",
+      "purpose": "How much teaching time each subject gets, beside what the timetable rules intend.",
+      "blocks": [
+        [
+          "FilterBar",
+          "Week / Fortnight / Month / Quarter · class (one class, or every class of a grade for the coordinator)"
+        ],
+        [
+          "StackBar",
+          "a column per week, split by subject in the subject colours; a part opens that week's lessons of that subject"
+        ],
+        [
+          "DataTable",
+          "subject · minutes · % of teaching time · the school's target · Within / Over / Short"
+        ],
+        [
+          "DetailPanel",
+          "nothing chosen: minutes taught · subjects · within the target · over or short; a part chosen: that week's lessons of that subject"
+        ]
+      ],
+      "elements": [
+        {
+          "t": "tab",
+          "label": "Week / Fortnight / Month / Quarter",
+          "note": "the range: whole weeks ending with today (1, 2, 4 or 13); the address carries it; the page's primary action"
+        },
+        {
+          "t": "filter",
+          "label": "class",
+          "note": "one class the person may read, or (the coordinator) every class of a grade; the engine's own list of the classes she may read"
+        },
+        {
+          "t": "cell",
+          "label": "each part of a week's column",
+          "note": "opens that week's lessons of that subject in the detail panel; the address carries it (open=period:<week>~<subject>)"
+        },
+        {
+          "t": "link",
+          "label": "panel: each lesson",
+          "to": "period"
+        },
+        {
+          "t": "link",
+          "label": "panel: Close",
+          "note": "closes the panel back to the range's numbers"
+        },
+        {
+          "t": "tab",
+          "label": "panel: Lessons",
+          "note": "the one tab of the panel: the lessons of the part chosen"
+        }
+      ],
+      "rail": [
+        "minutes taught",
+        "subjects",
+        "within the target",
+        "over or short"
+      ],
+      "capture": [],
+      "main": "Choose the range",
+      "next": "Timetable",
+      "data": "session.subject_code session.kind period.starts_at period.ends_at school_day.on_date school_day.kind timetable_rule.subject_code timetable_rule.cell subject.label config.value",
+      "empty": "No lessons in these days for the class: say so; an educator whose timetable is not open yet is told that",
+      "phone": "the columns scroll sideways in their box; the ring sits under them; the table is a list",
+      "done_when": [
+        "a range chooser offers Week, Fortnight, Month and Quarter, and the dates shown are whole weeks ending today",
+        "a class chooser offers one class, and every class of the grade for the coordinator",
+        "each week is a stacked column of its subjects' minutes in the subject colours; the ring shows the whole range",
+        "the table gives each subject its minutes, % of teaching time, the school's target and a Within / Over / Short chip, the chip only when the rules give a target",
+        "choosing a part of a week's column opens that week's lessons of that subject in the detail panel",
+        "the menu lists Time by subject under Timetable, between the Fortnight and Materials"
       ]
     },
     {
