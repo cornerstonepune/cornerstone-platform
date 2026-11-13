@@ -38,6 +38,8 @@ from engine.w1_bank.map_check import (  # noqa: F401 — Proposal and Rules are 
 from engine.w1_bank.map_eval import lo_skill_pairs
 
 PROPOSE = "curriculum_map_propose"
+# a link a person chose: from the school's sheets or added by hand (CP-48: the sheets' links read 'school', not 'person')
+CHOSEN = ("school", "person")
 VALIDATE = "curriculum_map_validate"
 Ask = Callable[
     [str, str, dict[str, object]], Reply
@@ -153,7 +155,7 @@ def read_band(conn: db.Conn, tenant: db.Id, band: str, hide: frozenset[str] = fr
         if r["activity_code"] in hide:
             continue
         skills[r["activity_code"]].add(r["skill_code"])
-        if r["source"] == "person":
+        if r["source"] in CHOSEN:
             person[r["activity_code"]].add(r["skill_code"])
             families[strand[r["activity_code"]]].add(r["domain"])
     objectives: dict[str, set[str]] = defaultdict(set)
@@ -164,7 +166,7 @@ def read_band(conn: db.Conn, tenant: db.Id, band: str, hide: frozenset[str] = fr
     reg = conn.execute(
         "select r.code, r.domain, r.name from registry_skill r where r.tenant_id = %s and (r.milestones ? %s"
         " or r.code = any(%s))",
-        (tenant, band, sorted({r["skill_code"] for r in links if r["source"] == "person"})),
+        (tenant, band, sorted({r["skill_code"] for r in links if r["source"] in CHOSEN})),
     ).fetchall()
     los = conn.execute(
         "select code from learning_objective where tenant_id = %s and band = %s", (tenant, band)

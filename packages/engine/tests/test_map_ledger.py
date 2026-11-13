@@ -487,3 +487,16 @@ def test_fill_applies_an_offer_only_to_an_activity_no_skill_proposal_names_a_ski
     done = [*map_ledger.apply(conn, t, lead, True, kind="skill", fill=True),
             *map_ledger.apply(conn, t, lead, True, kind="skill_offer", fill=True)]  # fmt: skip
     assert sorted(done) == ["ACT-KX-0101 → NUM.CNT.01", "ACT-KX-0102 → NUM.CNT.02"]
+
+
+def test_the_schools_own_links_are_chosen_links_the_checks_read_families_and_skills_from(conn):
+    """CP-48: after the sheets' links were relabelled 'school' (20270128130000), the band read from them must be the same
+    as when they read 'person'; on live it was not, and every objective-to-skill link was refused as an unknown skill."""
+    t = _band(conn)
+    before = read_band(conn, t, BAND)
+    conn.execute(
+        "update activity_skill set source = 'school' where tenant_id = %s and source = 'person'", (t,)
+    )
+    after = read_band(conn, t, BAND)
+    assert after.known.families == before.known.families and after.known.families
+    assert after.known.skills == before.known.skills and after.person_skills == before.person_skills
