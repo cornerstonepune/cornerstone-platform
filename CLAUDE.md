@@ -116,6 +116,16 @@ files already over are frozen at their size in the map and may only shrink.
     way around the repository burns the context it needs later. Any command written for Nimish must
     work from whatever directory he is in: `bin/engine …` or an absolute path, never `cd x && y`.
 
+14. **Nimish's time is the scarcest thing; never spend it waiting.** Nimish, 2026-11-13: "you're not supposed to waste
+    this kind of time." In practice:
+    - Nothing reaches `main` before its full CI is green on that head; one early merge costs a whole extra run for everyone.
+    - The full browser suite runs once per batch, on CI. A builder runs only its own specs locally, plus `bin/check`,
+      tsc and eslint. One machine's test ports are shared, so local suites queue behind each other.
+    - A builder that has not reported in 45 minutes is checked, and is cut short or finished by the orchestrator.
+    - Batch work that ships together into one PR and one CI run, instead of one PR per page.
+    - When `main` is red, fixing it comes before any new work, and every failure goes into one fix PR.
+    - Every status says plainly what is live, what is blocked, by whom, and when it will move.
+
 ## Language and naming
 
 Python 3.12 (engine), TypeScript (app), SQL (schema). No fourth language. Table names singular
