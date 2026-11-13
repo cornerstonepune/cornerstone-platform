@@ -8,6 +8,7 @@ import { PeekChip, PeekHost } from "@/components/peek-names";
 import { Rail, Screen, type Edge } from "@/components/app-frame";
 import { outcomeWords } from "@/components/outcome-states";
 import { StackBar } from "@/components/stack-bar";
+import { MachineMark } from "@/components/origin";
 import { levelState } from "@/lib/state-scale";
 import { dayWords } from "@/lib/today";
 import { requireStaff } from "@/lib/auth";
@@ -55,8 +56,8 @@ export default async function Period({ params, searchParams }: { params: Promise
   const { a, klass, mine, coordinator, full, offers, rolls, roster, levels: read, last, named, period, planner, objective } = v;
   const record = `/record?session=${id}`;
   const day = `/timetable?view=day&class=${s.class_id}&day=${s.day}`;
-  // the activity's own page returns to this day when it is left (its `back`)
-  const open = a ? `${screenHref("activity", { code: a.code }) ?? `/setup/activities/${encodeURIComponent(a.code)}`}?back=${encodeURIComponent(day)}` : null;
+  // the activity's curriculum page is the coordinator's (page charter B4: an educator never lands on it from a lesson); it returns to this day (its `back`)
+  const open = a && coordinator ? `${screenHref("activity", { code: a.code }) ?? `/setup/activities/${encodeURIComponent(a.code)}`}?back=${encodeURIComponent(day)}` : null;
   // where this lesson leads when it has no activity to show on the right, with the addresses that exist
   const edges: Edge[] = [
     { screen: "timetable", href: day, label: "The day", icon: "fortnight" as const, line: "its place in the timetable" },
@@ -76,6 +77,7 @@ export default async function Period({ params, searchParams }: { params: Promise
         key: `lesson:${id}`,
         kind: "activity",
         title: a.name,
+        mark: a.origin === "machine" ? <MachineMark /> : undefined,
         line: [full?.group, klass].filter(Boolean).join(" · "),
         tabs: [
           {
@@ -186,9 +188,11 @@ export default async function Period({ params, searchParams }: { params: Promise
           <>
             <nav className="mb-4 flex flex-wrap items-center gap-x-4 gap-y-2" aria-label="This lesson">
               {/* the site's Link, as every other: a page change, not a reload that streams the activity's page in again */}
-              <Link href={open!} data-open-activity>
-                Open the activity
-              </Link>
+              {open ? (
+                <Link href={open} data-open-activity>
+                  Open the activity
+                </Link>
+              ) : null}
               {mine ? <Link href={`${record}&typed=1`}>Type the marks instead</Link> : null}
               <Link href={`/children/${s.class_id}`}>The class</Link>
             </nav>

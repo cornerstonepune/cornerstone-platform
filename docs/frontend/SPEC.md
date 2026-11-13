@@ -306,7 +306,7 @@ Folds in: /educator/period/[id]
 Every control on the screen (19), and what the test does with each:
 - **link** Record a note → Record a note (`/record`) (opens Record with this period's session preselected)
 - **link** Type the marks instead → Record a note (`/record`) (opens Record on its typing path, session preselected)
-- **link** Open the activity → the activity's name (`/setup/activities/[code]`)
+- **link** Open the activity → the activity's name (`/setup/activities/[code]`) [coordinator only; absent and refused for others] (the activity's curriculum page, for the coordinator only: an educator never lands on the curriculum editor from a lesson (page charter B4))
 - **peek** each Sr. No. named under the last-time bar: opens ChildPeek for that child
 - **button** peek: Close: closes ChildPeek; focus returns to the child that opened it
 - **link** peek: Open the child → Where this child is (`/children/[class]/[roll]`) (the one way from a list to the child's own page)
@@ -916,32 +916,27 @@ Who: both · Phase: Core · Backend: CP-8 · CP-15 · Old page today: yes (/educ
 Eyebrow: Activity 112 · Numeracy
 Purpose: the objective
 Blocks, in order:
-- **KeyValue**: levels 0–3 as four cells, the school's words
-- **LevelBars**: where the class sat last time, by level
-- **Details**: Steps (open) · How to think about it · Materials
-- **Cards**: Builds toward: objectives (links) · Where each part came from (school / drafted / person) with Keep · Edit · Send back on a drafted part
-Rail (Connected to): each objective · each material · next taught (a period) · the fortnights it is in · Capture here: voice
-Main action: Keep / Edit a drafted part (curriculum team) · Open the period (educator) · Next step: an objective
-Data: activity (+steps, thinking, levels, materials), activity_objective, activity_material, change_log (origin: upload = school, proposal = drafted, person = person) and curriculum_proposal for the source of each part, change_log for each edit
+- **FilterBar**: the primary action: origin (sheet / machine / person); every list on the page follows it
+- **DetailPanel**: Curriculum's activity panel opened full page: tabs Parts (each part with where it came from; the machine's with its symbol and Edit in place) · Objectives (links, with where each link and objective came from) · Skills (with where each link came from) · Taught (LevelBars of the last sitting, taught so far)
+Rail (Connected to): none
+Main action: the origin filter · Next step: Curriculum, with this activity open
+Data: activity (+steps, thinking, levels, materials), activity_part_source (school | drafted | person, shown sheet | machine | person), activity_objective.source, learning_objective.source, activity_skill.source, activity_material, change_log for each edit
 Empty: a part with no text: shown empty and marked, never invented · Phone: levels as a 2×2
 Folds in: /educator/activity/[code], /curriculum/fill/[code], /curriculum/fill/walk
-Every control on the screen (13), and what the test does with each:
-- **fold** Steps (open by default)
-- **fold** How to think about it
-- **fold** Materials
-- **link** each objective → the objective's title (`/setup/objectives/[code]`)
-- **link** each material → Materials, this fortnight (`/timetable/materials`)
-- **button** Keep (a drafted part): the part's source becomes person (a change_log row with who); the 'drafted' badge goes [coordinator only; absent and refused for others]
-- **button** Edit (a part): the part becomes a field; Save writes a change_log row; the source becomes person [coordinator only; absent and refused for others]
-- **button** Send back (a drafted part): the part is emptied and marked; the proposal is rejected [coordinator only; absent and refused for others]
-- **link** capture: Voice note → Record a note (`/record`)
-- **link** rail: each objective → the objective's title (`/setup/objectives/[code]`)
-- **link** rail: each material → Materials, this fortnight (`/timetable/materials`)
-- **link** rail: next taught → the session's name (`/period/[id]`)
-- **link** rail: the fortnights it is in → Fortnight 9 (`/timetable/fortnight/[n]`)
+Every control on the screen (9), and what the test does with each:
+- **filter** Origin (sheet, machine or person (CP-48))
+- **tab** Parts
+- **tab** Objectives
+- **tab** Skills
+- **tab** Taught
+- **fold** Edit (a part the machine made) (no queue: anyone the curriculum's gate lets in edits the machine's words in place)
+- **field** the part's new words (the steps one a line; the thinking an idea and its slips; any other part as text)
+- **button** Save (the part becomes the person's (a change_log row with who); the machine symbol goes from it; a reload from the sheet never writes over it)
+- **link** each objective → the objective's title (`/setup/objectives/[code]`) (in the Objectives tab)
 Done when (on top of the ten generic checks):
-- a drafted part carries the 'drafted' badge until Keep, Edit or Send back; an educator sees the badge but not the three buttons
-- every edit writes a change_log row with who
+- a part the machine made carries the one machine symbol and an Edit in place; no Keep, no Send back, no 'drafted, check me'
+- every edit writes a change_log row with who, and the part's origin becomes person
+- the page is Curriculum's activity panel opened full page; a lesson never links an educator to it (page charter B4)
 
 
 #### the objective's title `/setup/objectives/[code]`
@@ -949,17 +944,18 @@ Who: both · Phase: Core · Backend: none · Old page today: no · Slice: UI-3
 Eyebrow: Learning objective · K2 · Numeracy
 Purpose: An objective names the skills it builds. The system reads a child's state on those skills; it never scores the objective itself.
 Blocks, in order:
-- **Cards**: each skill: name, prerequisite confirmed?, link
-- **DataTable**: activities that build toward it
-Rail (Connected to): each skill · each activity
-Main action: a skill · Next step: an activity
-Data: learning_objective, learning_objective_skill, activity_objective
+- **FilterBar**: the primary action: origin (sheet / machine / person)
+- **DetailPanel**: Curriculum's objective panel opened full page: tabs Skills (each skill a card: name, prerequisite confirmed?, where its link came from, link) · Activities (a table: activity with the machine symbol on a machine link, subject, linked from, last taught)
+Rail (Connected to): none
+Main action: the origin filter · Next step: an activity
+Data: learning_objective (+source), learning_objective_skill.source, activity_objective.source
 Empty: No skill linked yet: shown, no invention · Phone: the table scrolls sideways in its own box
-Every control on the screen (4), and what the test does with each:
+Every control on the screen (5), and what the test does with each:
+- **filter** Origin (sheet, machine or person (CP-48))
+- **tab** Skills
+- **tab** Activities
 - **link** Open the skill (each card) → the skill's name (`/setup/skills/[code]`)
 - **row** each activity row → the activity's name (`/setup/activities/[code]`)
-- **link** rail: each skill → the skill's name (`/setup/skills/[code]`)
-- **link** rail: each activity → the activity's name (`/setup/activities/[code]`)
 Done when (on top of the ten generic checks):
 - no number, percentage or state is shown for the objective itself (DOM scan)
 
@@ -1048,44 +1044,55 @@ Done when (on top of the ten generic checks):
 
 #### Curriculum `/setup/curriculum`
 Who: both · Phase: Core · Backend: CP-15 · Old page today: yes (/, /curriculum/browse, /curriculum/fill) · Slice: UI-11
-Eyebrow: Every grade
-Purpose: Every activity and skill of every grade, with its levels and how much of each page is filled in. Open one to read it.
+Eyebrow: School
+Purpose: Every activity and skill of every grade, with where its words and links came from. Choose one to read or edit it on the right.
 Blocks, in order:
-- **FilterBar**: grade · subject · topic · status · search
-- **DataTable**: activity or skill · grade · subject · topic · levels · filled (school / drafted / person / empty) · status chip
-- **Cards**: Drafts to check (count, link) · Offers waiting (skills offered to activities: Yes / No per row)
-Rail (Connected to): Skills to approve · Question bank · Drafts to check · Offers
-Main action: Check the drafted parts · Next step: an activity
-Data: activity, skill, skill_level, change_log and curriculum_proposal, ask (the source of each part), curriculum_proposal
+- **FilterBar**: the primary action: grade · subject · origin (sheet / machine / person) in the row; topic · status behind More filters; search
+- **DataTable**: activity or skill (the machine symbol on one with anything the machine made or linked) · grade · subject · topic · origin · filled (sheet / machine / person / empty) · status chip (parts not written, levels to approve, complete); a row opens its item in the panel
+- **DetailPanel**: nothing chosen: four stat tiles, parts from the sheet · made by the machine · a person wrote · not written, and the questions waiting; an activity chosen: tabs Parts (each part with where it came from, the machine's with its symbol and an Edit in place) · Objectives · Skills (each link with where it came from) · Taught; an objective: Skills · Activities; a skill of grades 1 to 4: Levels; each with Open full page
+- **DataTable**: below the list: Offers waiting (skills offered to activities: Yes / No per row) · Questions to answer
+Rail (Connected to): none
+Main action: the filter row (grade · subject · origin) · Next step: an activity, in the panel
+Data: activity, activity_part_source (school | drafted | person), activity_objective.source, activity_skill.source, learning_objective.source, learning_objective_skill.source, skill, skill_level, curriculum_proposal (offers), ask
 Empty: none · Phone: the table scrolls sideways in its own box
 Folds in: /, /curriculum/browse, /curriculum/fill, /curriculum/offers, /asks
-Every control on the screen (22), and what the test does with each:
+Every control on the screen (30), and what the test does with each:
 - **filter** Grade
 - **filter** Subject
-- **filter** Topic
-- **filter** Status
+- **filter** Origin (sheet, machine or person (CP-48): the list keeps what carries that origin; the panel's lists follow it)
+- **filter** Topic (behind More filters)
+- **filter** Status (behind More filters: parts not written, levels to approve, complete)
 - **filter** search (matches names and codes, never children)
-- **row** an activity row → the activity's name (`/setup/activities/[code]`)
-- **row** a skill row → the skill set's outcome (what the child can do) (`/setup/skill-sets/[code]`)
-- **link** Check the drafted parts → the activity's name (`/setup/activities/[code]`) (the first activity with a drafted part)
+- **row** an activity row → Curriculum (`/setup/curriculum`) [coordinator only; absent and refused for others] (opens the activity in the panel on the right; the address carries open=activity:<code>)
+- **row** a skill row → Curriculum (`/setup/curriculum`) (opens the skill in the panel on the right; the address carries open=skillset:<code>. The activities (K2) come first, so a grade of skills is chosen to reach one)
 - **button** Yes (an offer): the skill is linked to the activity; the offer closes [coordinator only; absent and refused for others]
 - **button** No (an offer): the offer closes; nothing is linked [coordinator only; absent and refused for others]
 - **link** page: Later → → Curriculum (`/setup/curriculum`)
 - **link** offers page: Later → → Curriculum (`/setup/curriculum`) [coordinator only; absent and refused for others] (the offers table pages on its own, ten a page, and keeps the page of the list)
-- **link** Questions to answer: Read them → Curriculum (`/setup/curriculum`) (the card jumps to the table of questions; it is drawn only while a question waits)
+- **link** Questions to answer: Read them → Curriculum (`/setup/curriculum`) (in the panel's summary: jumps to the table of questions; drawn only while a question waits)
 - **link** Read it in full (a question) (opens the full draft in a new tab)
 - **button** Agree as drafted (a question): the question is answered 'agreed' in the person's name; it leaves the waiting list
 - **field** what it should say (a question)
 - **button** Correct it (a question): the question is answered 'corrected' with the person's words and name; it leaves the waiting list
 - **fold** the answered questions (drawn once a question has been answered: who answered, when and what they said)
 - **link** questions page: Later → → Curriculum (`/setup/curriculum`) (the questions table pages on its own, ten a page)
-- **link** rail: Skills to approve → Skills to approve (`/setup/skills/approve`)
-- **link** rail: Question bank → Question bank (`/setup/question-bank`)
-- **link** rail: Drafts to check → the activity's name (`/setup/activities/[code]`)
+- **link** panel: Close → Curriculum (`/setup/curriculum`) [coordinator only; absent and refused for others] (closes the panel; Escape too; focus returns to the row)
+- **link** panel: Open full page → the activity's name (`/setup/activities/[code]`) [coordinator only; absent and refused for others]
+- **tab** panel: Parts [coordinator only; absent and refused for others] (each part in the school's words with where it came from: sheet, machine (its symbol) or person; empty parts marked)
+- **tab** panel: Objectives [coordinator only; absent and refused for others]
+- **tab** panel: Skills [coordinator only; absent and refused for others]
+- **tab** panel: Taught [coordinator only; absent and refused for others] (where the class sat last time and how often it was taught)
+- **fold** panel: Edit (a part the machine made) [coordinator only; absent and refused for others] (no queue: whoever the curriculum's gate lets in edits the machine's words in place)
+- **field** panel: the idea [coordinator only; absent and refused for others]
+- **field** panel: the slips [coordinator only; absent and refused for others]
+- **button** panel: Save [coordinator only; absent and refused for others] (the engine writes the person's words in place of the machine's; the part's origin becomes person and the machine symbol goes from it)
+- **link** panel: each objective → Curriculum (`/setup/curriculum`) [coordinator only; absent and refused for others] (opens the objective in the same panel: open=objective:<code>)
 Done when (on top of the ten generic checks):
 - one list carries activities (K2) and skills (grades 1–4) under one filter row
 - Curriculum shows no count of skills to approve; that number is the eyebrow of Skills to approve and appears nowhere else
 - Yes / No act on one offer each; no control acts on all offers
+- a Workspace: a row opens its item on the right, in tabs, and the panel opened full page is the item's own address (page charter Part C, A2)
+- anything with origin machine carries the one machine symbol; each list filters by origin (sheet / machine / person); no 'drafted, to check' wording, chip or queue: anyone edits directly (CP-48 Done when 10)
 
 
 #### Skills to approve `/setup/skills/approve`

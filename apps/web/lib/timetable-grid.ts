@@ -24,7 +24,7 @@ export function gridOf(weeks: readonly Week[], show: {
     open?: (day: string, periodId: string) => string;
     /** the page's detail panel (page charter A2): every lesson's block opens its lesson there, whether it has an activity or not; the open
      *  one is marked. Given this, `open` and `pick` are not drawn on the blocks (the coordinator's Move is in the panel). */
-    select?: (day: string, periodId: string) => { href: string; key: string; selected: boolean } | undefined;
+    select?: (day: string, periodId: string) => { href: string; key: string; selected: boolean; machine?: boolean } | undefined;
     /** the coordinator's click on a lesson or a free slot: choosing it as the lesson to move, or as the place to move it to (none for an educator) */
     pick?: (day: string, periodId: string) => string;
     /** the lesson chosen to move, if any: its block is marked, and every free slot then offers itself as a place to move it to */
@@ -39,10 +39,10 @@ export function gridOf(weeks: readonly Week[], show: {
   const clashAt = (day: string, period: string) => open.find((c) => c.places.some((p) => p.class === classId && p.date === day && p.period === period));
   const placed: { day: string; periodId: string; code: string | null; cell: FCell }[] = [];
   // a block opens the page's panel when the page has one, else its lesson page (with an activity) and the coordinator's pick
-  const selectOrOpen = (day: string, p: { period_id: string; activity: unknown }): Pick<FCell, "href" | "pick" | "openKey" | "selected"> => {
+  const selectOrOpen = (day: string, p: { period_id: string; activity: unknown }): Pick<FCell, "href" | "pick" | "openKey" | "selected" | "machine"> => {
     if (show.select) {
       const o = show.select(day, p.period_id);
-      return o ? { href: o.href, openKey: o.key, selected: o.selected } : {};
+      return o ? { href: o.href, openKey: o.key, selected: o.selected, machine: o.machine } : {};
     }
     return { href: p.activity && show.open ? show.open(day, p.period_id) : undefined, pick: show.pick?.(day, p.period_id) };
   };

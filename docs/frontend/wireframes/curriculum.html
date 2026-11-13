@@ -6,10 +6,13 @@
 <title>Wireframe: Curriculum (curriculum)</title>
 <link rel="stylesheet" href="kit.css">
 </head>
-<!-- Wireframe of screens.json "curriculum" (/setup/curriculum), drawn as the coordinator (an educator sees the same list without the Yes / No on offers). One list for activities (K2) and skills (grades 1 to 4), grouped by grade with a count over each group; the filled column is a bar of the page's parts by where each came from (school, drafted, a person, empty). The drafted parts are also a board (DESIGN.md §7 rule 2): lanes by the part's stage, each card a Drafts to check link to its activity. No Table | Board toggle is drawn: the screen's elements list none, so both views are shown, the table first. Offers are one Yes / No per row; nothing acts on all. No count of skills to approve appears here (done_when).
+<!-- Wireframe of screens.json "curriculum" (/setup/curriculum), a Workspace for the coordinator under School (page charter Part C): the
+     filter row (grade, subject, origin; topic and status behind More filters) first; the list of activities and skills on the left, the
+     machine's one symbol on anything the machine made or linked (CP-48); the item chosen on the right in tabs, or with nothing chosen the
+     parts counted by where they came from. No queue: a part the machine made is edited in place. Offers and questions below the list.
      data-el = index in screens.json curriculum.elements; data-bar = index in screens.json bar; data-source = target
      table.column; data-gap = what the target tables cannot give. Both frames hold the same markup: the phone layout
-     comes from kit.css container queries, as it will on the site. Names are from fake-names.json. -->
+     comes from kit.css container queries, as it will on the site. -->
 <body>
 <div class="wf-sheet">
   <header>
@@ -78,156 +81,112 @@
         </nav>
         <div class="shellmain">
         <ol class="trail" aria-label="Trail">
-          <li><a data-trail href="#setup">Setup</a></li>
+          <li><a data-trail href="#setup">School</a></li>
           <li><i class="ic s" data-icon="trail"></i></li>
           <li aria-current="page">Curriculum</li>
         </ol>
         <div class="page">
           <main class="main">
             <div class="head">
-              <p class="eyebrow"><i class="ic s" data-icon="objective"></i>Every grade · <span class="num" data-source="activity.id">212</span> activities · <span class="num" data-source="skill.id">486</span> skills</p>
+              <p class="eyebrow"><i class="ic s" data-icon="setup"></i>School</p>
               <h1 class="title">Curriculum</h1>
-              <p class="purpose">Every activity and skill of every grade, with its levels and how much of each page is filled in. Open one to read it.</p>
+              <p class="purpose">Every activity and skill of every grade, with where its words and links came from. Choose one to read or edit it on the right.</p>
             </div>
             <div class="filters" data-block="FilterBar">
-              <label class="sel"><i class="ic s" data-icon="filter"></i>Grade <select data-el="0" data-source="grade.name"><option>All</option><option>K2</option><option>Grade 1</option><option>Grade 2</option></select></label>
-              <label class="sel">Subject <select data-el="1" data-source="subject.name"><option>All</option><option>Numeracy</option><option>Language</option><option>Arts</option></select></label>
-              <label class="sel">Topic <select data-el="2" data-source="topic.name"><option>All</option><option>Number</option><option>Place value</option></select></label>
-              <label class="sel">Status <select data-el="3" data-source="curriculum_proposal.status skill.status"><option>All</option><option>Drafted parts to check</option><option>Complete</option></select></label>
-              <label class="sel"><i class="ic s" data-icon="search"></i><span class="vh">Search</span><input data-el="4" type="search" placeholder="Name or code" data-source="activity.name activity.code skill.name skill.code"></label>
-              <a class="btn btn-main press" data-el="7" href="#activity"><i class="ic" data-icon="from-draft"></i>Check the drafted parts</a>
+              <label class="sel"><i class="ic s" data-icon="filter"></i>Grade <select data-el="0" data-source="grade.name"><option>Every grade</option><option>K2</option><option>Grade 1</option></select></label>
+              <label class="sel">Subject <select data-el="1" data-source="subject.name"><option>Every subject</option><option>Numeracy</option><option>Language</option></select></label>
+              <label class="sel">Origin <select data-el="2" data-source="activity_objective.source activity_skill.source learning_objective.source change_log.origin"><option>Any origin</option><option>Sheet</option><option>Machine</option><option>Person</option></select></label>
+              <span class="caption">More filters:</span>
+              <label class="sel">Topic <select data-el="3" data-source="topic.name"><option>Every topic</option><option>Number</option></select></label>
+              <label class="sel">Status <select data-el="4" data-source="skill.status activity.level_0"><option>Any status</option><option>Parts not written</option><option>Levels to approve</option><option>Complete</option></select></label>
+              <label class="sel"><i class="ic s" data-icon="search"></i><span class="vh">Search</span><input data-el="5" type="search" placeholder="Name or code" data-source="activity.name activity.code skill.name skill.code"></label>
             </div>
-            <div class="groups">
-              <div class="grp" aria-label="K2 activities, 212">
-                <h3 class="grp-h"><i class="ic s" data-icon="activity"></i>K2 activities <span class="count num" data-source="activity.band">212</span></h3>
-                <div class="table-box" data-block="DataTable">
-                  <table class="table">
-                    <thead><tr><th>Activity or skill</th><th>Grade</th><th>Subject</th><th>Topic</th><th class="n">Levels</th><th>Filled</th><th class="st">Status</th></tr></thead>
-                    <tbody>
+            <div class="table-box" data-block="DataTable">
+              <table class="table">
+                <thead><tr><th>Activity or skill</th><th>Grade</th><th>Subject</th><th>Topic</th><th>Origin</th><th>Filled</th><th class="st">Status</th></tr></thead>
+                <tbody>
                     <tr>
-                      <td><span class="tile" data-kind="activity"><i class="ic s" data-icon="activity"></i></span> <a data-el="5" href="#activity" data-source="activity.name activity.code">Counting in tens with bundles</a></td>
+                      <td><span class="tile" data-kind="activity"><i class="ic s" data-icon="activity"></i></span> <a data-el="6" href="#curriculum?open=activity:1" data-source="activity.name activity.code">Counting in tens with bundles</a> <span class="chip" data-state="quiet" title="Made by the machine"><i class="ic s" data-icon="from-draft"></i><span class="vh">Made by the machine</span></span></td>
                       <td data-source="activity.band grade.name">K2</td>
-                      <td data-source="activity.strand subject.name">Numeracy</td>
-                      <td data-source="activity.objective topic.name">Number to 100</td>
-                      <td class="n num" data-source="activity.level_0 activity.level_1 activity.level_2 activity.level_3">4</td>
-                      <td data-source="change_log.origin curriculum_proposal.status"><div class="sbar" role="img" aria-label="5 parts from the school, 1 by a person, 2 drafted, 0 empty"><i data-state="ok" style="--n: 6"></i><i data-state="wait" style="--n: 2"></i><i data-state="unseen" style="--n: 0"></i></div><span class="muted">5 school · 2 drafted · 1 person · 0 empty</span></td>
-                      <td class="st" data-source="curriculum_proposal.status curriculum_proposal.check_me"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>2 drafted to check</span></td>
+                      <td data-source="activity.strand subject.name"></td>
+                      <td data-source="activity.strand">Numeracy</td>
+                      <td data-source="activity_objective.source activity_skill.source learning_objective.source change_log.origin">Sheet · Machine</td>
+                      <td data-source="change_log.origin activity.level_0 activity.level_1 activity.level_2 activity.level_3">5 sheet · 2 machine · 1 person</td>
+                      <td class="st"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>complete</span></td>
                     </tr>
                     <tr>
-                      <td><span class="tile" data-kind="activity"><i class="ic s" data-icon="activity"></i></span> <a data-el="5" href="#activity" data-source="activity.name activity.code">Story circle: the lost mitten</a></td>
+                      <td><span class="tile" data-kind="activity"><i class="ic s" data-icon="activity"></i></span> <a data-el="6" href="#curriculum?open=activity:1" data-source="activity.name activity.code">Story circle: the lost mitten</a></td>
                       <td data-source="activity.band grade.name">K2</td>
-                      <td data-source="activity.strand subject.name">Language</td>
-                      <td data-source="activity.objective topic.name">Listening</td>
-                      <td class="n num" data-source="activity.level_0 activity.level_1 activity.level_2 activity.level_3">4</td>
-                      <td data-source="change_log.origin curriculum_proposal.status"><div class="sbar" role="img" aria-label="7 parts from the school, 1 by a person, 0 drafted, 0 empty"><i data-state="ok" style="--n: 8"></i><i data-state="wait" style="--n: 0"></i><i data-state="unseen" style="--n: 0"></i></div><span class="muted">7 school · 0 drafted · 1 person · 0 empty</span></td>
-                      <td class="st" data-source="curriculum_proposal.status curriculum_proposal.check_me"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Complete</span></td>
+                      <td data-source="activity.strand subject.name"></td>
+                      <td data-source="activity.strand">Language</td>
+                      <td data-source="activity_objective.source activity_skill.source learning_objective.source change_log.origin">Sheet · Person</td>
+                      <td data-source="change_log.origin activity.level_0 activity.level_1 activity.level_2 activity.level_3">7 sheet · 1 person</td>
+                      <td class="st"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>complete</span></td>
                     </tr>
                     <tr>
-                      <td><span class="tile" data-kind="activity"><i class="ic s" data-icon="activity"></i></span> <a data-el="5" href="#activity" data-source="activity.name activity.code">Leaf printing</a></td>
+                      <td><span class="tile" data-kind="activity"><i class="ic s" data-icon="activity"></i></span> <a data-el="6" href="#curriculum?open=activity:1" data-source="activity.name activity.code">Leaf printing</a></td>
                       <td data-source="activity.band grade.name">K2</td>
-                      <td data-source="activity.strand subject.name">Arts</td>
-                      <td data-source="activity.objective topic.name">Pattern</td>
-                      <td class="n num" data-source="activity.level_0 activity.level_1 activity.level_2 activity.level_3">3</td>
-                      <td data-source="change_log.origin curriculum_proposal.status"><div class="sbar" role="img" aria-label="4 parts from the school, 0 by a person, 0 drafted, 3 empty"><i data-state="ok" style="--n: 4"></i><i data-state="wait" style="--n: 0"></i><i data-state="unseen" style="--n: 3"></i></div><span class="muted">4 school · 0 drafted · 0 person · 3 empty</span></td>
-                      <td class="st" data-source="curriculum_proposal.status curriculum_proposal.check_me"><span class="chip" data-state="quiet"><i class="ic s" data-icon="to-do"></i>3 parts empty</span></td>
+                      <td data-source="activity.strand subject.name"></td>
+                      <td data-source="activity.strand">Arts</td>
+                      <td data-source="activity_objective.source activity_skill.source learning_objective.source change_log.origin">Sheet</td>
+                      <td data-source="change_log.origin activity.level_0 activity.level_1 activity.level_2 activity.level_3">5 sheet · 3 empty</td>
+                      <td class="st"><span class="chip" data-state="quiet"><i class="ic s" data-icon="to-do"></i>3 not written</span></td>
                     </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              <div class="grp" aria-label="Grade 1 skills, 118">
-                <h3 class="grp-h"><i class="ic s" data-icon="skill"></i>Grade 1 skills <span class="count num" data-source="skill.grade">118</span></h3>
-                <div class="table-box" data-block="DataTable">
-                  <table class="table">
-                    <thead><tr><th>Activity or skill</th><th>Grade</th><th>Subject</th><th>Topic</th><th class="n">Levels</th><th>Filled</th><th class="st">Status</th></tr></thead>
-                    <tbody>
-                    <tr>
-                      <td><span class="tile" data-kind="skill"><i class="ic s" data-icon="skill"></i></span> <a data-el="6" href="#skill" data-source="skill.name skill.code">Adds two numbers to 20, crossing ten</a></td>
-                      <td data-source="skill.grade grade.name">Grade 1</td>
-                      <td data-source="topic.subject_code subject.name">Numeracy</td>
-                      <td data-source="skill.topic_code topic.name">Addition</td>
-                      <td class="n num" data-source="skill_level.difficulty skill_level.skill_code">4</td>
-                      <td data-source="change_log.origin curriculum_proposal.status"><div class="sbar" role="img" aria-label="6 parts from the school, 1 by a person, 1 drafted, 0 empty"><i data-state="ok" style="--n: 7"></i><i data-state="wait" style="--n: 1"></i><i data-state="unseen" style="--n: 0"></i></div><span class="muted">6 school · 1 drafted · 1 person · 0 empty</span></td>
-                      <td class="st" data-source="skill.status skill.level_approved"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>1 drafted to check</span></td>
-                    </tr>
-                    <tr>
-                      <td><span class="tile" data-kind="skill"><i class="ic s" data-icon="skill"></i></span> <a data-el="6" href="#skill" data-source="skill.name skill.code">Reads a short sentence aloud</a></td>
-                      <td data-source="skill.grade grade.name">Grade 1</td>
-                      <td data-source="topic.subject_code subject.name">Language</td>
-                      <td data-source="skill.topic_code topic.name">Reading</td>
-                      <td class="n num" data-source="skill_level.difficulty skill_level.skill_code">4</td>
-                      <td data-source="change_log.origin curriculum_proposal.status"><div class="sbar" role="img" aria-label="8 parts from the school, 0 by a person, 0 drafted, 0 empty"><i data-state="ok" style="--n: 8"></i><i data-state="wait" style="--n: 0"></i><i data-state="unseen" style="--n: 0"></i></div><span class="muted">8 school · 0 drafted · 0 person · 0 empty</span></td>
-                      <td class="st" data-source="skill.status skill.level_approved"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Levels approved</span></td>
-                    </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+                <tr>
+                  <td><span class="tile" data-kind="skill"><i class="ic s" data-icon="skill"></i></span> <a data-el="7" href="#curriculum?open=skillset:1" data-source="skill.name skill.code">Adds two two-digit numbers</a></td>
+                  <td data-source="skill.grade grade.name">Grade 2</td>
+                  <td data-source="topic.subject_code subject.name">Numeracy</td>
+                  <td data-source="skill.topic_code topic.name">Addition</td>
+                  <td>Sheet</td>
+                  <td data-source="skill_level.difficulty skill_level.skill_code">3 of 4 levels approved</td>
+                  <td class="st" data-source="skill.status skill.level_approved"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>to approve</span></td>
+                </tr>
+                </tbody>
+              </table>
             </div>
             <p class="caption">Ten rows a page. <a data-el="10" href="#curriculum">Later →</a></p>
-            <h2 class="title-section">The drafted parts, as a board</h2>
-            <div class="kanban" data-block="KanbanBoard" style="--lanes: 3">
-              <section class="lane" data-state="wait" aria-label="Drafted, to check">
-                <h3 class="lane-h"><i class="ic s" data-icon="from-draft"></i>Drafted, to check <span class="count num" data-source="curriculum_proposal.status curriculum_proposal.check_me">3</span></h3>
-                <ul class="lane-b">
-                  <li><a class="kcard press" data-kind="activity" data-el="5" href="#activity" data-source="activity.name curriculum_proposal.about curriculum_proposal.status"><span class="tile"><i class="ic" data-icon="activity"></i></span><span><b>Counting in tens with bundles</b><span class="sub">Steps · How to think about it</span></span><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To check</span></a></li>
-                  <li><a class="kcard press" data-kind="activity" data-el="5" href="#activity" data-source="activity.name curriculum_proposal.about curriculum_proposal.status"><span class="tile"><i class="ic" data-icon="activity"></i></span><span><b>Sorting by size</b><span class="sub">Materials</span></span><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To check</span></a></li>
-                  <li><a class="kcard press" data-kind="activity" data-el="5" href="#activity" data-source="activity.name curriculum_proposal.about curriculum_proposal.status"><span class="tile"><i class="ic" data-icon="activity"></i></span><span><b>Clay pots</b><span class="sub">Levels 2 and 3</span></span><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To check</span></a></li>
-                </ul>
-              </section>
-              <section class="lane" data-state="ok" aria-label="Checked by a person">
-                <h3 class="lane-h"><i class="ic s" data-icon="from-person"></i>Checked by a person <span class="count num" data-source="change_log.origin curriculum_proposal.status">2</span></h3>
-                <ul class="lane-b">
-                  <li><a class="kcard press" data-kind="activity" data-el="5" href="#activity" data-source="activity.name curriculum_proposal.about curriculum_proposal.status"><span class="tile"><i class="ic" data-icon="activity"></i></span><span><b>Story circle: the lost mitten</b><span class="sub">Steps, changed by Asha Almond</span></span><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Checked</span></a></li>
-                  <li><a class="kcard press" data-kind="activity" data-el="5" href="#activity" data-source="activity.name curriculum_proposal.about curriculum_proposal.status"><span class="tile"><i class="ic" data-icon="activity"></i></span><span><b>Rhyme time</b><span class="sub">Materials, kept as drafted</span></span><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Checked</span></a></li>
-                </ul>
-              </section>
-              <section class="lane" data-state="quiet" aria-label="Empty, nobody has written it">
-                <h3 class="lane-h"><i class="ic s" data-icon="to-do"></i>Empty <span class="count num" data-source="activity.steps_list activity.thinking activity.materials">1</span></h3>
-                <ul class="lane-b">
-                  <li><a class="kcard press" data-kind="activity" data-el="5" href="#activity" data-source="activity.name curriculum_proposal.about curriculum_proposal.status"><span class="tile"><i class="ic" data-icon="activity"></i></span><span><b>Leaf printing</b><span class="sub">How to think about it · Levels 2 and 3</span></span><span class="chip" data-state="quiet"><i class="ic s" data-icon="to-do"></i>Empty</span></a></li>
-                </ul>
-              </section>
-            </div>
-            <article class="card" data-kind="skill"><div class="card-h"><span class="tile"><i class="ic" data-icon="skill"></i></span>Offers waiting: a skill offered to an activity <span class="count num" data-source="curriculum_proposal.kind curriculum_proposal.status">3</span></div><div class="card-b">
+            <article class="card" data-kind="skill"><div class="card-h"><span class="tile"><i class="ic" data-icon="skill"></i></span>Offers waiting <span class="count num" data-source="curriculum_proposal.kind curriculum_proposal.status">3</span></div><div class="card-b">
               <ol class="timeline">
-                <li class="tli"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><div><b><span data-source="curriculum_proposal.proposal skill.name">Counts on in tens from any number</span> → <span data-source="curriculum_proposal.about activity.name">Counting in tens with bundles</span></b><p data-source="curriculum_proposal.reason curriculum_proposal.confidence">Both ask the child to count bundles of ten; the reader is fairly sure</p></div><span class="keyrow"><button class="btn press" data-el="8" type="button">Yes</button><button class="btn press" data-el="9" type="button">No</button></span></li>
-                <li class="tli"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><div><b><span data-source="curriculum_proposal.proposal skill.name">Retells a story in order</span> → <span data-source="curriculum_proposal.about activity.name">Story circle: the lost mitten</span></b><p data-source="curriculum_proposal.reason curriculum_proposal.confidence">The activity's steps end with a retelling</p></div><span class="keyrow"><button class="btn press" data-el="8" type="button">Yes</button><button class="btn press" data-el="9" type="button">No</button></span></li>
-                <li class="tli"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><div><b><span data-source="curriculum_proposal.proposal skill.name">Sorts objects by one property</span> → <span data-source="curriculum_proposal.about activity.name">Leaf printing</span></b><p data-source="curriculum_proposal.reason curriculum_proposal.confidence">The leaves are sorted by size before printing</p></div><span class="keyrow"><button class="btn press" data-el="8" type="button">Yes</button><button class="btn press" data-el="9" type="button">No</button></span></li>
+                <li class="tli"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><div><b><span data-source="curriculum_proposal.proposal skill.name">Counts on in tens from any number</span> → <span data-source="curriculum_proposal.about activity.name">Counting in tens with bundles</span></b><p data-source="curriculum_proposal.reason curriculum_proposal.confidence">Both ask the child to count bundles of ten</p></div><span class="keyrow"><button class="btn press" data-el="8" type="button">Yes</button><button class="btn press" data-el="9" type="button">No</button></span></li>
               </ol>
               <p class="caption">Ten offers a page. <a data-el="11" href="#curriculum">Later →</a></p>
             </div></article>
-            <article class="card" data-kind="objective"><div class="card-h"><span class="tile"><i class="ic" data-icon="objective"></i></span>Questions to answer <span class="count num" data-source="ask.answer">3</span> <a data-el="12" href="#curriculum">Read them</a></div><div class="card-b">
+            <article class="card" data-kind="objective" id="asks"><div class="card-h"><span class="tile"><i class="ic" data-icon="objective"></i></span>Questions to answer <span class="count num" data-source="ask.answer">3</span></div><div class="card-b">
               <ol class="timeline">
                 <li class="tli"><span class="tile" data-kind="objective"><i class="ic" data-icon="objective"></i></span><div><b data-source="ask.question">Division prints in a line by default</b><p data-source="ask.drafted ask.why">Drafted as the engine wrote it · for the educator · <a data-el="13" href="#curriculum">Read it in full</a></p><div class="field"><label for="ask-wf">What it should say</label><textarea id="ask-wf" data-el="15" data-source="ask.correction"></textarea></div></div><span class="keyrow"><button class="btn press" data-el="14" type="button">Agree as drafted</button><button class="btn press" data-el="16" type="button">Correct it</button></span></li>
               </ol>
               <p class="caption">Ten questions a page. <a data-el="18" href="#curriculum">Later →</a></p>
-              <details class="details" data-block="Details"><summary data-el="17"><i class="ic s" data-icon="details"></i>Read the 2 answered</summary><div><p data-source="ask.answered_by ask.answered_at ask.correction">Agreed as drafted by Asha Almond, 2 Nov</p></div></details>
+              <details class="details" data-block="Details"><summary data-el="17"><i class="ic s" data-icon="details"></i>Read the 2 answered</summary><div><p data-source="ask.answered_by ask.answered_at ask.correction">Agreed as drafted, 2 Nov</p></div></details>
             </div></article>
-            <div class="card">
-              <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: when no row matches the filters</div>
-              <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="not-seen"></i><b>Nothing matches</b><span class="muted">Change the grade, subject, topic or status. The search matches names and codes, never children.</span></div></div>
-            </div>
           </main>
-          <aside class="rail" aria-label="Connected to">
-            <section class="rail-box">
-              <h2>Connected to</h2>
-              <ul class="rlist">
-                <li><a class="ritem" data-el="19" href="#skills-approve"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><span>Skills to approve<small>read and approve their levels</small></span></a></li>
-                <li><a class="ritem" data-el="20" href="#bank"><span class="tile" data-kind="assessment"><i class="ic" data-icon="checklist"></i></span><span>Question bank<small>grades 1 to 4</small></span></a></li>
-                <li><a class="ritem" data-el="21" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="from-draft"></i></span><span>Drafts to check<small><span class="num" data-source="curriculum_proposal.status curriculum_proposal.check_me">3</span> activities</small></span></a></li>
+          <aside class="rail" aria-label="The curriculum, or the item chosen">
+            <aside class="dpanel" data-block="DetailPanel" aria-label="Inset: nothing chosen">
+              <h2 class="dpanel-eyebrow">Inset, nothing chosen: where the words came from</h2>
+              <ul class="stats" aria-label="Where the words came from">
+                <li><div class="stat"><b class="num" data-source="change_log.origin">1240</b><span>parts from the sheet</span></div></li>
+                <li><div class="stat"><b class="num" data-source="change_log.origin">96</b><span>parts made by the machine</span></div></li>
+                <li><div class="stat"><b class="num" data-source="change_log.origin">14</b><span>parts a person wrote</span></div></li>
+                <li><div class="stat"><b class="num" data-source="activity.steps_list activity.thinking activity.materials">88</b><span>parts not written</span></div></li>
               </ul>
-            </section>
-            <section class="rail-box">
-              <h2>Where the words came from</h2>
-              <dl class="kv" data-block="KeyValue">
-                <dt>The school's documents</dt><dd class="num" data-source="change_log.origin">71%</dd>
-                <dt>A person</dt><dd class="num" data-source="change_log.origin">12%</dd>
-                <dt>Drafted, checked</dt><dd class="num" data-source="change_log.origin curriculum_proposal.status">9%</dd>
-                <dt>Drafted, to check</dt><dd class="num" data-source="curriculum_proposal.status">3%</dd>
-                <dt>Empty</dt><dd class="num" data-source="activity.steps_list activity.thinking activity.materials">5%</dd>
-              </dl>
-            </section>
+              <p class="muted">Choose an activity or a skill in the list to see it here.</p>
+              <p><span class="num" data-source="ask.answer">3</span> questions wait for a person. <a data-el="12" href="#asks">Read them</a></p>
+            </aside>
+            <aside class="dpanel" data-block="DetailPanel" aria-label="The activity chosen">
+              <header class="dpanel-head"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><h2 class="dpanel-title" data-source="activity.name">Counting in tens with bundles</h2><p class="muted"><span class="chip" data-state="quiet" title="Made by the machine"><i class="ic s" data-icon="from-draft"></i><span class="vh">Made by the machine</span></span> <span data-source="activity.strand activity.code">Numeracy · ACT-K2-0112</span></p></div><a class="barbtn" data-el="19" href="#curriculum" aria-label="Close the panel"><i class="ic" data-icon="close"></i></a></header>
+              <div class="dpanel-actions"><a class="press" data-el="20" href="#activity">Open full page</a></div>
+              <div class="tabs" role="tablist" aria-label="Details"><button class="tabbtn" role="tab" type="button" aria-selected="true" data-el="21">Parts</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="22">Objectives</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="23">Skills</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="24">Taught</button></div>
+              <div role="tabpanel" class="stack">
+                <ul class="rlist" aria-label="Where each part came from">
+                  <li><b>Objective</b> <span class="caption" data-source="change_log.origin"><i class="ic s" data-icon="from-school"></i> From the sheet</span><p><span data-source="activity.objective">Counts in tens using bundles of sticks.</span></p></li>
+                  <li><b>How to think about it</b> <span class="caption" data-source="change_log.origin"><span class="chip" data-state="quiet" title="Made by the machine"><i class="ic s" data-icon="from-draft"></i><span class="vh">Made by the machine</span></span> Made by the machine</span><p><span data-source="activity.thinking">A child who counts each stick by ones is not yet seeing a ten as one thing.</span></p><details class="details" data-block="Details"><summary data-el="25"><i class="ic s" data-icon="correct"></i>Edit</summary><div class="stack"><div class="field"><label for="idea-wf">The idea</label><input id="idea-wf" data-el="26" data-source="activity.thinking"></div><div class="field"><label for="slips-wf">One slip a line: the word to watch, a colon, how to see it.</label><textarea id="slips-wf" data-el="27" data-source="activity.thinking"></textarea></div><button class="btn press" data-el="28" type="button">Save</button></div></details></li>
+                  <li><b>Level 0</b> <span class="caption" data-source="change_log.origin"><i class="ic s" data-icon="from-person"></i> A person's words</span><p><span data-source="activity.level_0">Counts sticks one by one.</span></p></li>
+                </ul>
+              </div>
+              <div class="card">
+                <div class="card-h">Inset, the Objectives tab</div>
+                <div class="card-b"><ul class="rlist"><li><a class="press" data-el="29" href="#curriculum?open=objective:1" data-source="learning_objective.title">Counts in tens to 100</a> <span class="chip" data-state="quiet" title="Made by the machine"><i class="ic s" data-icon="from-draft"></i><span class="vh">Made by the machine</span></span> <span class="caption" data-source="activity_objective.source">Linked by: Machine</span> <span class="caption" data-source="learning_objective.source">Made by: Sheet</span></li></ul></div>
+              </div>
+            </aside>
           </aside>
         </div>
         </div>
@@ -297,156 +256,112 @@
         </nav>
         <div class="shellmain">
         <ol class="trail" aria-label="Trail">
-          <li><a data-trail href="#setup">Setup</a></li>
+          <li><a data-trail href="#setup">School</a></li>
           <li><i class="ic s" data-icon="trail"></i></li>
           <li aria-current="page">Curriculum</li>
         </ol>
         <div class="page">
           <main class="main">
             <div class="head">
-              <p class="eyebrow"><i class="ic s" data-icon="objective"></i>Every grade · <span class="num" data-source="activity.id">212</span> activities · <span class="num" data-source="skill.id">486</span> skills</p>
+              <p class="eyebrow"><i class="ic s" data-icon="setup"></i>School</p>
               <h1 class="title">Curriculum</h1>
-              <p class="purpose">Every activity and skill of every grade, with its levels and how much of each page is filled in. Open one to read it.</p>
+              <p class="purpose">Every activity and skill of every grade, with where its words and links came from. Choose one to read or edit it on the right.</p>
             </div>
             <div class="filters" data-block="FilterBar">
-              <label class="sel"><i class="ic s" data-icon="filter"></i>Grade <select data-el="0" data-source="grade.name"><option>All</option><option>K2</option><option>Grade 1</option><option>Grade 2</option></select></label>
-              <label class="sel">Subject <select data-el="1" data-source="subject.name"><option>All</option><option>Numeracy</option><option>Language</option><option>Arts</option></select></label>
-              <label class="sel">Topic <select data-el="2" data-source="topic.name"><option>All</option><option>Number</option><option>Place value</option></select></label>
-              <label class="sel">Status <select data-el="3" data-source="curriculum_proposal.status skill.status"><option>All</option><option>Drafted parts to check</option><option>Complete</option></select></label>
-              <label class="sel"><i class="ic s" data-icon="search"></i><span class="vh">Search</span><input data-el="4" type="search" placeholder="Name or code" data-source="activity.name activity.code skill.name skill.code"></label>
-              <a class="btn btn-main press" data-el="7" href="#activity"><i class="ic" data-icon="from-draft"></i>Check the drafted parts</a>
+              <label class="sel"><i class="ic s" data-icon="filter"></i>Grade <select data-el="0" data-source="grade.name"><option>Every grade</option><option>K2</option><option>Grade 1</option></select></label>
+              <label class="sel">Subject <select data-el="1" data-source="subject.name"><option>Every subject</option><option>Numeracy</option><option>Language</option></select></label>
+              <label class="sel">Origin <select data-el="2" data-source="activity_objective.source activity_skill.source learning_objective.source change_log.origin"><option>Any origin</option><option>Sheet</option><option>Machine</option><option>Person</option></select></label>
+              <span class="caption">More filters:</span>
+              <label class="sel">Topic <select data-el="3" data-source="topic.name"><option>Every topic</option><option>Number</option></select></label>
+              <label class="sel">Status <select data-el="4" data-source="skill.status activity.level_0"><option>Any status</option><option>Parts not written</option><option>Levels to approve</option><option>Complete</option></select></label>
+              <label class="sel"><i class="ic s" data-icon="search"></i><span class="vh">Search</span><input data-el="5" type="search" placeholder="Name or code" data-source="activity.name activity.code skill.name skill.code"></label>
             </div>
-            <div class="groups">
-              <div class="grp" aria-label="K2 activities, 212">
-                <h3 class="grp-h"><i class="ic s" data-icon="activity"></i>K2 activities <span class="count num" data-source="activity.band">212</span></h3>
-                <div class="table-box" data-block="DataTable">
-                  <table class="table">
-                    <thead><tr><th>Activity or skill</th><th>Grade</th><th>Subject</th><th>Topic</th><th class="n">Levels</th><th>Filled</th><th class="st">Status</th></tr></thead>
-                    <tbody>
+            <div class="table-box" data-block="DataTable">
+              <table class="table">
+                <thead><tr><th>Activity or skill</th><th>Grade</th><th>Subject</th><th>Topic</th><th>Origin</th><th>Filled</th><th class="st">Status</th></tr></thead>
+                <tbody>
                     <tr>
-                      <td><span class="tile" data-kind="activity"><i class="ic s" data-icon="activity"></i></span> <a data-el="5" href="#activity" data-source="activity.name activity.code">Counting in tens with bundles</a></td>
+                      <td><span class="tile" data-kind="activity"><i class="ic s" data-icon="activity"></i></span> <a data-el="6" href="#curriculum?open=activity:1" data-source="activity.name activity.code">Counting in tens with bundles</a> <span class="chip" data-state="quiet" title="Made by the machine"><i class="ic s" data-icon="from-draft"></i><span class="vh">Made by the machine</span></span></td>
                       <td data-source="activity.band grade.name">K2</td>
-                      <td data-source="activity.strand subject.name">Numeracy</td>
-                      <td data-source="activity.objective topic.name">Number to 100</td>
-                      <td class="n num" data-source="activity.level_0 activity.level_1 activity.level_2 activity.level_3">4</td>
-                      <td data-source="change_log.origin curriculum_proposal.status"><div class="sbar" role="img" aria-label="5 parts from the school, 1 by a person, 2 drafted, 0 empty"><i data-state="ok" style="--n: 6"></i><i data-state="wait" style="--n: 2"></i><i data-state="unseen" style="--n: 0"></i></div><span class="muted">5 school · 2 drafted · 1 person · 0 empty</span></td>
-                      <td class="st" data-source="curriculum_proposal.status curriculum_proposal.check_me"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>2 drafted to check</span></td>
+                      <td data-source="activity.strand subject.name"></td>
+                      <td data-source="activity.strand">Numeracy</td>
+                      <td data-source="activity_objective.source activity_skill.source learning_objective.source change_log.origin">Sheet · Machine</td>
+                      <td data-source="change_log.origin activity.level_0 activity.level_1 activity.level_2 activity.level_3">5 sheet · 2 machine · 1 person</td>
+                      <td class="st"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>complete</span></td>
                     </tr>
                     <tr>
-                      <td><span class="tile" data-kind="activity"><i class="ic s" data-icon="activity"></i></span> <a data-el="5" href="#activity" data-source="activity.name activity.code">Story circle: the lost mitten</a></td>
+                      <td><span class="tile" data-kind="activity"><i class="ic s" data-icon="activity"></i></span> <a data-el="6" href="#curriculum?open=activity:1" data-source="activity.name activity.code">Story circle: the lost mitten</a></td>
                       <td data-source="activity.band grade.name">K2</td>
-                      <td data-source="activity.strand subject.name">Language</td>
-                      <td data-source="activity.objective topic.name">Listening</td>
-                      <td class="n num" data-source="activity.level_0 activity.level_1 activity.level_2 activity.level_3">4</td>
-                      <td data-source="change_log.origin curriculum_proposal.status"><div class="sbar" role="img" aria-label="7 parts from the school, 1 by a person, 0 drafted, 0 empty"><i data-state="ok" style="--n: 8"></i><i data-state="wait" style="--n: 0"></i><i data-state="unseen" style="--n: 0"></i></div><span class="muted">7 school · 0 drafted · 1 person · 0 empty</span></td>
-                      <td class="st" data-source="curriculum_proposal.status curriculum_proposal.check_me"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Complete</span></td>
+                      <td data-source="activity.strand subject.name"></td>
+                      <td data-source="activity.strand">Language</td>
+                      <td data-source="activity_objective.source activity_skill.source learning_objective.source change_log.origin">Sheet · Person</td>
+                      <td data-source="change_log.origin activity.level_0 activity.level_1 activity.level_2 activity.level_3">7 sheet · 1 person</td>
+                      <td class="st"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>complete</span></td>
                     </tr>
                     <tr>
-                      <td><span class="tile" data-kind="activity"><i class="ic s" data-icon="activity"></i></span> <a data-el="5" href="#activity" data-source="activity.name activity.code">Leaf printing</a></td>
+                      <td><span class="tile" data-kind="activity"><i class="ic s" data-icon="activity"></i></span> <a data-el="6" href="#curriculum?open=activity:1" data-source="activity.name activity.code">Leaf printing</a></td>
                       <td data-source="activity.band grade.name">K2</td>
-                      <td data-source="activity.strand subject.name">Arts</td>
-                      <td data-source="activity.objective topic.name">Pattern</td>
-                      <td class="n num" data-source="activity.level_0 activity.level_1 activity.level_2 activity.level_3">3</td>
-                      <td data-source="change_log.origin curriculum_proposal.status"><div class="sbar" role="img" aria-label="4 parts from the school, 0 by a person, 0 drafted, 3 empty"><i data-state="ok" style="--n: 4"></i><i data-state="wait" style="--n: 0"></i><i data-state="unseen" style="--n: 3"></i></div><span class="muted">4 school · 0 drafted · 0 person · 3 empty</span></td>
-                      <td class="st" data-source="curriculum_proposal.status curriculum_proposal.check_me"><span class="chip" data-state="quiet"><i class="ic s" data-icon="to-do"></i>3 parts empty</span></td>
+                      <td data-source="activity.strand subject.name"></td>
+                      <td data-source="activity.strand">Arts</td>
+                      <td data-source="activity_objective.source activity_skill.source learning_objective.source change_log.origin">Sheet</td>
+                      <td data-source="change_log.origin activity.level_0 activity.level_1 activity.level_2 activity.level_3">5 sheet · 3 empty</td>
+                      <td class="st"><span class="chip" data-state="quiet"><i class="ic s" data-icon="to-do"></i>3 not written</span></td>
                     </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              <div class="grp" aria-label="Grade 1 skills, 118">
-                <h3 class="grp-h"><i class="ic s" data-icon="skill"></i>Grade 1 skills <span class="count num" data-source="skill.grade">118</span></h3>
-                <div class="table-box" data-block="DataTable">
-                  <table class="table">
-                    <thead><tr><th>Activity or skill</th><th>Grade</th><th>Subject</th><th>Topic</th><th class="n">Levels</th><th>Filled</th><th class="st">Status</th></tr></thead>
-                    <tbody>
-                    <tr>
-                      <td><span class="tile" data-kind="skill"><i class="ic s" data-icon="skill"></i></span> <a data-el="6" href="#skill" data-source="skill.name skill.code">Adds two numbers to 20, crossing ten</a></td>
-                      <td data-source="skill.grade grade.name">Grade 1</td>
-                      <td data-source="topic.subject_code subject.name">Numeracy</td>
-                      <td data-source="skill.topic_code topic.name">Addition</td>
-                      <td class="n num" data-source="skill_level.difficulty skill_level.skill_code">4</td>
-                      <td data-source="change_log.origin curriculum_proposal.status"><div class="sbar" role="img" aria-label="6 parts from the school, 1 by a person, 1 drafted, 0 empty"><i data-state="ok" style="--n: 7"></i><i data-state="wait" style="--n: 1"></i><i data-state="unseen" style="--n: 0"></i></div><span class="muted">6 school · 1 drafted · 1 person · 0 empty</span></td>
-                      <td class="st" data-source="skill.status skill.level_approved"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>1 drafted to check</span></td>
-                    </tr>
-                    <tr>
-                      <td><span class="tile" data-kind="skill"><i class="ic s" data-icon="skill"></i></span> <a data-el="6" href="#skill" data-source="skill.name skill.code">Reads a short sentence aloud</a></td>
-                      <td data-source="skill.grade grade.name">Grade 1</td>
-                      <td data-source="topic.subject_code subject.name">Language</td>
-                      <td data-source="skill.topic_code topic.name">Reading</td>
-                      <td class="n num" data-source="skill_level.difficulty skill_level.skill_code">4</td>
-                      <td data-source="change_log.origin curriculum_proposal.status"><div class="sbar" role="img" aria-label="8 parts from the school, 0 by a person, 0 drafted, 0 empty"><i data-state="ok" style="--n: 8"></i><i data-state="wait" style="--n: 0"></i><i data-state="unseen" style="--n: 0"></i></div><span class="muted">8 school · 0 drafted · 0 person · 0 empty</span></td>
-                      <td class="st" data-source="skill.status skill.level_approved"><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Levels approved</span></td>
-                    </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+                <tr>
+                  <td><span class="tile" data-kind="skill"><i class="ic s" data-icon="skill"></i></span> <a data-el="7" href="#curriculum?open=skillset:1" data-source="skill.name skill.code">Adds two two-digit numbers</a></td>
+                  <td data-source="skill.grade grade.name">Grade 2</td>
+                  <td data-source="topic.subject_code subject.name">Numeracy</td>
+                  <td data-source="skill.topic_code topic.name">Addition</td>
+                  <td>Sheet</td>
+                  <td data-source="skill_level.difficulty skill_level.skill_code">3 of 4 levels approved</td>
+                  <td class="st" data-source="skill.status skill.level_approved"><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>to approve</span></td>
+                </tr>
+                </tbody>
+              </table>
             </div>
             <p class="caption">Ten rows a page. <a data-el="10" href="#curriculum">Later →</a></p>
-            <h2 class="title-section">The drafted parts, as a board</h2>
-            <div class="kanban" data-block="KanbanBoard" style="--lanes: 3">
-              <section class="lane" data-state="wait" aria-label="Drafted, to check">
-                <h3 class="lane-h"><i class="ic s" data-icon="from-draft"></i>Drafted, to check <span class="count num" data-source="curriculum_proposal.status curriculum_proposal.check_me">3</span></h3>
-                <ul class="lane-b">
-                  <li><a class="kcard press" data-kind="activity" data-el="5" href="#activity" data-source="activity.name curriculum_proposal.about curriculum_proposal.status"><span class="tile"><i class="ic" data-icon="activity"></i></span><span><b>Counting in tens with bundles</b><span class="sub">Steps · How to think about it</span></span><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To check</span></a></li>
-                  <li><a class="kcard press" data-kind="activity" data-el="5" href="#activity" data-source="activity.name curriculum_proposal.about curriculum_proposal.status"><span class="tile"><i class="ic" data-icon="activity"></i></span><span><b>Sorting by size</b><span class="sub">Materials</span></span><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To check</span></a></li>
-                  <li><a class="kcard press" data-kind="activity" data-el="5" href="#activity" data-source="activity.name curriculum_proposal.about curriculum_proposal.status"><span class="tile"><i class="ic" data-icon="activity"></i></span><span><b>Clay pots</b><span class="sub">Levels 2 and 3</span></span><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To check</span></a></li>
-                </ul>
-              </section>
-              <section class="lane" data-state="ok" aria-label="Checked by a person">
-                <h3 class="lane-h"><i class="ic s" data-icon="from-person"></i>Checked by a person <span class="count num" data-source="change_log.origin curriculum_proposal.status">2</span></h3>
-                <ul class="lane-b">
-                  <li><a class="kcard press" data-kind="activity" data-el="5" href="#activity" data-source="activity.name curriculum_proposal.about curriculum_proposal.status"><span class="tile"><i class="ic" data-icon="activity"></i></span><span><b>Story circle: the lost mitten</b><span class="sub">Steps, changed by Asha Almond</span></span><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Checked</span></a></li>
-                  <li><a class="kcard press" data-kind="activity" data-el="5" href="#activity" data-source="activity.name curriculum_proposal.about curriculum_proposal.status"><span class="tile"><i class="ic" data-icon="activity"></i></span><span><b>Rhyme time</b><span class="sub">Materials, kept as drafted</span></span><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Checked</span></a></li>
-                </ul>
-              </section>
-              <section class="lane" data-state="quiet" aria-label="Empty, nobody has written it">
-                <h3 class="lane-h"><i class="ic s" data-icon="to-do"></i>Empty <span class="count num" data-source="activity.steps_list activity.thinking activity.materials">1</span></h3>
-                <ul class="lane-b">
-                  <li><a class="kcard press" data-kind="activity" data-el="5" href="#activity" data-source="activity.name curriculum_proposal.about curriculum_proposal.status"><span class="tile"><i class="ic" data-icon="activity"></i></span><span><b>Leaf printing</b><span class="sub">How to think about it · Levels 2 and 3</span></span><span class="chip" data-state="quiet"><i class="ic s" data-icon="to-do"></i>Empty</span></a></li>
-                </ul>
-              </section>
-            </div>
-            <article class="card" data-kind="skill"><div class="card-h"><span class="tile"><i class="ic" data-icon="skill"></i></span>Offers waiting: a skill offered to an activity <span class="count num" data-source="curriculum_proposal.kind curriculum_proposal.status">3</span></div><div class="card-b">
+            <article class="card" data-kind="skill"><div class="card-h"><span class="tile"><i class="ic" data-icon="skill"></i></span>Offers waiting <span class="count num" data-source="curriculum_proposal.kind curriculum_proposal.status">3</span></div><div class="card-b">
               <ol class="timeline">
-                <li class="tli"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><div><b><span data-source="curriculum_proposal.proposal skill.name">Counts on in tens from any number</span> → <span data-source="curriculum_proposal.about activity.name">Counting in tens with bundles</span></b><p data-source="curriculum_proposal.reason curriculum_proposal.confidence">Both ask the child to count bundles of ten; the reader is fairly sure</p></div><span class="keyrow"><button class="btn press" data-el="8" type="button">Yes</button><button class="btn press" data-el="9" type="button">No</button></span></li>
-                <li class="tli"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><div><b><span data-source="curriculum_proposal.proposal skill.name">Retells a story in order</span> → <span data-source="curriculum_proposal.about activity.name">Story circle: the lost mitten</span></b><p data-source="curriculum_proposal.reason curriculum_proposal.confidence">The activity's steps end with a retelling</p></div><span class="keyrow"><button class="btn press" data-el="8" type="button">Yes</button><button class="btn press" data-el="9" type="button">No</button></span></li>
-                <li class="tli"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><div><b><span data-source="curriculum_proposal.proposal skill.name">Sorts objects by one property</span> → <span data-source="curriculum_proposal.about activity.name">Leaf printing</span></b><p data-source="curriculum_proposal.reason curriculum_proposal.confidence">The leaves are sorted by size before printing</p></div><span class="keyrow"><button class="btn press" data-el="8" type="button">Yes</button><button class="btn press" data-el="9" type="button">No</button></span></li>
+                <li class="tli"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><div><b><span data-source="curriculum_proposal.proposal skill.name">Counts on in tens from any number</span> → <span data-source="curriculum_proposal.about activity.name">Counting in tens with bundles</span></b><p data-source="curriculum_proposal.reason curriculum_proposal.confidence">Both ask the child to count bundles of ten</p></div><span class="keyrow"><button class="btn press" data-el="8" type="button">Yes</button><button class="btn press" data-el="9" type="button">No</button></span></li>
               </ol>
               <p class="caption">Ten offers a page. <a data-el="11" href="#curriculum">Later →</a></p>
             </div></article>
-            <article class="card" data-kind="objective"><div class="card-h"><span class="tile"><i class="ic" data-icon="objective"></i></span>Questions to answer <span class="count num" data-source="ask.answer">3</span> <a data-el="12" href="#curriculum">Read them</a></div><div class="card-b">
+            <article class="card" data-kind="objective" id="asks"><div class="card-h"><span class="tile"><i class="ic" data-icon="objective"></i></span>Questions to answer <span class="count num" data-source="ask.answer">3</span></div><div class="card-b">
               <ol class="timeline">
                 <li class="tli"><span class="tile" data-kind="objective"><i class="ic" data-icon="objective"></i></span><div><b data-source="ask.question">Division prints in a line by default</b><p data-source="ask.drafted ask.why">Drafted as the engine wrote it · for the educator · <a data-el="13" href="#curriculum">Read it in full</a></p><div class="field"><label for="ask-wf">What it should say</label><textarea id="ask-wf" data-el="15" data-source="ask.correction"></textarea></div></div><span class="keyrow"><button class="btn press" data-el="14" type="button">Agree as drafted</button><button class="btn press" data-el="16" type="button">Correct it</button></span></li>
               </ol>
               <p class="caption">Ten questions a page. <a data-el="18" href="#curriculum">Later →</a></p>
-              <details class="details" data-block="Details"><summary data-el="17"><i class="ic s" data-icon="details"></i>Read the 2 answered</summary><div><p data-source="ask.answered_by ask.answered_at ask.correction">Agreed as drafted by Asha Almond, 2 Nov</p></div></details>
+              <details class="details" data-block="Details"><summary data-el="17"><i class="ic s" data-icon="details"></i>Read the 2 answered</summary><div><p data-source="ask.answered_by ask.answered_at ask.correction">Agreed as drafted, 2 Nov</p></div></details>
             </div></article>
-            <div class="card">
-              <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: when no row matches the filters</div>
-              <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="not-seen"></i><b>Nothing matches</b><span class="muted">Change the grade, subject, topic or status. The search matches names and codes, never children.</span></div></div>
-            </div>
           </main>
-          <aside class="rail" aria-label="Connected to">
-            <section class="rail-box">
-              <h2>Connected to</h2>
-              <ul class="rlist">
-                <li><a class="ritem" data-el="19" href="#skills-approve"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><span>Skills to approve<small>read and approve their levels</small></span></a></li>
-                <li><a class="ritem" data-el="20" href="#bank"><span class="tile" data-kind="assessment"><i class="ic" data-icon="checklist"></i></span><span>Question bank<small>grades 1 to 4</small></span></a></li>
-                <li><a class="ritem" data-el="21" href="#activity"><span class="tile" data-kind="activity"><i class="ic" data-icon="from-draft"></i></span><span>Drafts to check<small><span class="num" data-source="curriculum_proposal.status curriculum_proposal.check_me">3</span> activities</small></span></a></li>
+          <aside class="rail" aria-label="The curriculum, or the item chosen">
+            <aside class="dpanel" data-block="DetailPanel" aria-label="Inset: nothing chosen">
+              <h2 class="dpanel-eyebrow">Inset, nothing chosen: where the words came from</h2>
+              <ul class="stats" aria-label="Where the words came from">
+                <li><div class="stat"><b class="num" data-source="change_log.origin">1240</b><span>parts from the sheet</span></div></li>
+                <li><div class="stat"><b class="num" data-source="change_log.origin">96</b><span>parts made by the machine</span></div></li>
+                <li><div class="stat"><b class="num" data-source="change_log.origin">14</b><span>parts a person wrote</span></div></li>
+                <li><div class="stat"><b class="num" data-source="activity.steps_list activity.thinking activity.materials">88</b><span>parts not written</span></div></li>
               </ul>
-            </section>
-            <section class="rail-box">
-              <h2>Where the words came from</h2>
-              <dl class="kv" data-block="KeyValue">
-                <dt>The school's documents</dt><dd class="num" data-source="change_log.origin">71%</dd>
-                <dt>A person</dt><dd class="num" data-source="change_log.origin">12%</dd>
-                <dt>Drafted, checked</dt><dd class="num" data-source="change_log.origin curriculum_proposal.status">9%</dd>
-                <dt>Drafted, to check</dt><dd class="num" data-source="curriculum_proposal.status">3%</dd>
-                <dt>Empty</dt><dd class="num" data-source="activity.steps_list activity.thinking activity.materials">5%</dd>
-              </dl>
-            </section>
+              <p class="muted">Choose an activity or a skill in the list to see it here.</p>
+              <p><span class="num" data-source="ask.answer">3</span> questions wait for a person. <a data-el="12" href="#asks">Read them</a></p>
+            </aside>
+            <aside class="dpanel" data-block="DetailPanel" aria-label="The activity chosen">
+              <header class="dpanel-head"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><h2 class="dpanel-title" data-source="activity.name">Counting in tens with bundles</h2><p class="muted"><span class="chip" data-state="quiet" title="Made by the machine"><i class="ic s" data-icon="from-draft"></i><span class="vh">Made by the machine</span></span> <span data-source="activity.strand activity.code">Numeracy · ACT-K2-0112</span></p></div><a class="barbtn" data-el="19" href="#curriculum" aria-label="Close the panel"><i class="ic" data-icon="close"></i></a></header>
+              <div class="dpanel-actions"><a class="press" data-el="20" href="#activity">Open full page</a></div>
+              <div class="tabs" role="tablist" aria-label="Details"><button class="tabbtn" role="tab" type="button" aria-selected="true" data-el="21">Parts</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="22">Objectives</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="23">Skills</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="24">Taught</button></div>
+              <div role="tabpanel" class="stack">
+                <ul class="rlist" aria-label="Where each part came from">
+                  <li><b>Objective</b> <span class="caption" data-source="change_log.origin"><i class="ic s" data-icon="from-school"></i> From the sheet</span><p><span data-source="activity.objective">Counts in tens using bundles of sticks.</span></p></li>
+                  <li><b>How to think about it</b> <span class="caption" data-source="change_log.origin"><span class="chip" data-state="quiet" title="Made by the machine"><i class="ic s" data-icon="from-draft"></i><span class="vh">Made by the machine</span></span> Made by the machine</span><p><span data-source="activity.thinking">A child who counts each stick by ones is not yet seeing a ten as one thing.</span></p><details class="details" data-block="Details"><summary data-el="25"><i class="ic s" data-icon="correct"></i>Edit</summary><div class="stack"><div class="field"><label for="idea-wf">The idea</label><input id="idea-wf" data-el="26" data-source="activity.thinking"></div><div class="field"><label for="slips-wf">One slip a line: the word to watch, a colon, how to see it.</label><textarea id="slips-wf" data-el="27" data-source="activity.thinking"></textarea></div><button class="btn press" data-el="28" type="button">Save</button></div></details></li>
+                  <li><b>Level 0</b> <span class="caption" data-source="change_log.origin"><i class="ic s" data-icon="from-person"></i> A person's words</span><p><span data-source="activity.level_0">Counts sticks one by one.</span></p></li>
+                </ul>
+              </div>
+              <div class="card">
+                <div class="card-h">Inset, the Objectives tab</div>
+                <div class="card-b"><ul class="rlist"><li><a class="press" data-el="29" href="#curriculum?open=objective:1" data-source="learning_objective.title">Counts in tens to 100</a> <span class="chip" data-state="quiet" title="Made by the machine"><i class="ic s" data-icon="from-draft"></i><span class="vh">Made by the machine</span></span> <span class="caption" data-source="activity_objective.source">Linked by: Machine</span> <span class="caption" data-source="learning_objective.source">Made by: Sheet</span></li></ul></div>
+              </div>
+            </aside>
           </aside>
         </div>
         </div>

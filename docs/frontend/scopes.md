@@ -141,7 +141,7 @@ Period, record, confirm, notes, children, class picture, child, activity, object
 3. The journey `e2e/an-educators-tuesday.spec.ts` passes: Today → the lit period → Type the marks → a note written with one activity_observation per named child and none for a child not mentioned → Confirm → Class picture shows the change → the child → the skill → trail back to Today; axe at each step; at 1440 and 400.
 4. A correction from Notes writes a superseding activity_observation row and never updates the old one (database assertion).
 5. The period → note link: a note confirmed from a period carries that session's id, and the period page lists its notes. This line waits for CP-25 (to be scoped: `activity_observation.session_id` is free today); the slice starts and merges without it, and the line is proved when CP-25 lands.
-6. Every one of the 154 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
+6. Every one of the 151 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
 7. the session's name: a period with no activity shows no capture controls and the words 'Nothing to record here'
 8. the session's name: a lesson with an activity shows every child enrolled that day as a card (Sr. No. + first name)
 9. the session's name: the level choices show the activity's own words, 'Not written' where a level has none
@@ -183,23 +183,24 @@ Period, record, confirm, notes, children, class picture, child, activity, object
 45. Where this child is: a table equivalent sits beside the graph: the DataTable lists the same skills with the same state words and times seen, the graph's SVG has role=img and an aria-label that names the counts by state, and axe reports no violation on it
 46. Where this child is: keyboard order: Tab reaches the graph's nodes one by one, in the order of the table's rows (domain, then skill), each with a visible focus ring and each opening that skill; no node is reachable by pointer only, and every node's link target is at least 44 × 44 px
 47. Where this child is: on a phone (400 px) the graph is not drawn: the list of skills shows each skill's name, times seen and its state chip (icon + word), each row a link of at least 44 px height, in the same order as the table
-48. the activity's name: a drafted part carries the 'drafted' badge until Keep, Edit or Send back; an educator sees the badge but not the three buttons
-49. the activity's name: every edit writes a change_log row with who
-50. the objective's title: no number, percentage or state is shown for the objective itself (DOM scan)
-51. the skill's name: a prerequisite or next skill is shown only when its link is confirmed (a proposed link in the fixture does not appear)
-52. the skill's name: the spark's last value equals the grid's secure count
-53. the skill's name: the grid's squares equal the class's enrolment in Sr. No. order
-54. the skill's name: grouping by state puts a heading and a count over each group and the counts sum to the squares
-55. the skill's name: a cluster's count equals the chips in it; clusters are computed by code, never by a model
-56. the skill's name: tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page
-57. the skill's name: a coordinator changes a level's sentence and the change is logged with who and why, taking only that level out of approved; an educator is shown the sentences and no way to change them
-58. the skill set's outcome (what the child can do): the screen is keyed by the skill set's code, not by a registry skill's code
-59. the skill set's outcome (what the child can do): each registry skill the set points at is a card that opens the skill screen; a set with none says so and invents nothing
-60. the skill set's outcome (what the child can do): each level shows its sentence, its approval and a real question from the bank (or says there is none); a coordinator approves one level and the others still wait
-61. the skill set's outcome (what the child can do): a coordinator saves which grade each level belongs to; an educator is shown the grades and no way to change them
-62. the skill set's outcome (what the child can do): an English skill shows how each level is asked and its sample questions; a coordinator approves a way of asking and changes a sample
-63. the skill set's outcome (what the child can do): a coordinator asks for more questions like a level's example, and stops a kind of question at one level or at every level
-64. the skill set's outcome (what the child can do): the old address /skill-sets/<code> answers 308 to this one, query kept
+48. the activity's name: a part the machine made carries the one machine symbol and an Edit in place; no Keep, no Send back, no 'drafted, check me'
+49. the activity's name: every edit writes a change_log row with who, and the part's origin becomes person
+50. the activity's name: the page is Curriculum's activity panel opened full page; a lesson never links an educator to it (page charter B4)
+51. the objective's title: no number, percentage or state is shown for the objective itself (DOM scan)
+52. the skill's name: a prerequisite or next skill is shown only when its link is confirmed (a proposed link in the fixture does not appear)
+53. the skill's name: the spark's last value equals the grid's secure count
+54. the skill's name: the grid's squares equal the class's enrolment in Sr. No. order
+55. the skill's name: grouping by state puts a heading and a count over each group and the counts sum to the squares
+56. the skill's name: a cluster's count equals the chips in it; clusters are computed by code, never by a model
+57. the skill's name: tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page
+58. the skill's name: a coordinator changes a level's sentence and the change is logged with who and why, taking only that level out of approved; an educator is shown the sentences and no way to change them
+59. the skill set's outcome (what the child can do): the screen is keyed by the skill set's code, not by a registry skill's code
+60. the skill set's outcome (what the child can do): each registry skill the set points at is a card that opens the skill screen; a set with none says so and invents nothing
+61. the skill set's outcome (what the child can do): each level shows its sentence, its approval and a real question from the bank (or says there is none); a coordinator approves one level and the others still wait
+62. the skill set's outcome (what the child can do): a coordinator saves which grade each level belongs to; an educator is shown the grades and no way to change them
+63. the skill set's outcome (what the child can do): an English skill shows how each level is asked and its sample questions; a coordinator approves a way of asking and changes a sample
+64. the skill set's outcome (what the child can do): a coordinator asks for more questions like a level's example, and stops a kind of question at one level or at every level
+65. the skill set's outcome (what the child can do): the old address /skill-sets/<code> answers 308 to this one, query kept
 
 ### Out of scope
 
@@ -428,16 +429,18 @@ The four existing Setup pages that carry content rather than people, rebuilt on 
 2. Every old route listed under `folds` for these screens answers 308 to the new address.
 3. No approve-all control exists on any of these screens (Skills to approve and the offers act on one row each).
 4. The skills-to-approve count is the eyebrow of Skills to approve and appears on no card, tile, badge or other page.
-5. Every one of the 55 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
+5. Every one of the 63 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
 6. Curriculum: one list carries activities (K2) and skills (grades 1–4) under one filter row
 7. Curriculum: Curriculum shows no count of skills to approve; that number is the eyebrow of Skills to approve and appears nowhere else
 8. Curriculum: Yes / No act on one offer each; no control acts on all offers
-9. Skills to approve: approval is per row; no control approves more than one
-10. Skills to approve: the eyebrow count equals the rows across all pages, and it is the only place the number is shown
-11. Question bank: statistics and taxonomy sit behind the details link, not on the first view (rule 8)
-12. Question bank: the table shows ten rows then pages
-13. {the question as it prints}: a correction keeps the old key in change_log and the old version readable
-14. {the question as it prints}: Remove retires, never deletes (row count unchanged)
+9. Curriculum: a Workspace: a row opens its item on the right, in tabs, and the panel opened full page is the item's own address (page charter Part C, A2)
+10. Curriculum: anything with origin machine carries the one machine symbol; each list filters by origin (sheet / machine / person); no 'drafted, to check' wording, chip or queue: anyone edits directly (CP-48 Done when 10)
+11. Skills to approve: approval is per row; no control approves more than one
+12. Skills to approve: the eyebrow count equals the rows across all pages, and it is the only place the number is shown
+13. Question bank: statistics and taxonomy sit behind the details link, not on the first view (rule 8)
+14. Question bank: the table shows ten rows then pages
+15. {the question as it prints}: a correction keeps the old key in change_log and the old version readable
+16. {the question as it prints}: Remove retires, never deletes (row count unchanged)
 
 ### Out of scope
 

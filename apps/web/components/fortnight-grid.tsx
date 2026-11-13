@@ -2,12 +2,13 @@ import Link from "@/components/link";
 import { ICON_SIZE, Icon } from "@/lib/icons";
 import type { Subject } from "./period-row";
 import { StatusChip, type State } from "./status-chip";
+import { MachineMark } from "./origin";
 
 /** A lesson as a block. `openKey`: the block opens the page's detail panel (page charter A2) at `href`, without scrolling, and `selected` marks
  *  the one open (a ring, and `aria-expanded` read with the panel beside it). `href`: where a plain click goes, the lesson's activity page (none when it has none: then the block is not a link and
  *  says nothing more). `pick`: the coordinator's click, choosing this block as the lesson to move or the one to swap it with; the activity link
  *  then sits on the block as its own small link. `picked`: this is the lesson chosen to move. `note`: the rule's words, when a clash is on it. */
-export type FCell = { subject: Exclude<Subject, "fixed">; activity: string; href?: string; pick?: string; picked?: boolean; chip?: State; now?: boolean; moved?: boolean; clash?: boolean; note?: string; openKey?: string; selected?: boolean };
+export type FCell = { subject: Exclude<Subject, "fixed">; activity: string; href?: string; pick?: string; picked?: boolean; chip?: State; now?: boolean; moved?: boolean; clash?: boolean; note?: string; openKey?: string; selected?: boolean; /** the lesson's activity was linked by the machine (CP-48): the block carries its one symbol */ machine?: boolean };
 /** A free slot (a lesson period with no lesson that day): offered only while a lesson is chosen to move, as a place to move it to. */
 export type FSlot = { slot: string; label: string };
 export type FRow = { band: string } | { time: string; cells: readonly (FCell | FSlot | null)[] };
@@ -59,7 +60,7 @@ function Cell({ c }: { c: FCell }) {
   const inside = (
     <>
       <span className="b-subj"><Icon name={c.subject} size={ICON_SIZE.table} />{SUBJECT[c.subject]}</span>
-      <b>{c.activity}</b>
+      <b>{c.activity}{c.machine ? <> <MachineMark /></> : null}</b>
       {chip ? <StatusChip state={chip} words={c.clash ? "Clash" : c.moved ? "Moved" : undefined} onTint round /> : null}
       {c.note ? <small className="b-note" data-clash-note>{c.note}</small> : null}
     </>

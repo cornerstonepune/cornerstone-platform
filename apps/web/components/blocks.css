@@ -259,6 +259,9 @@
   /* ---------- Card chips: one status and one count at most ---------- */
   .b-card-chips { display: inline-flex; gap: var(--space-1); margin-left: auto; align-items: center; }
 
+  /* ---------- The machine symbol (CP-48): one mark on whatever the machine made or linked ---------- */
+  .b-machine { display: inline-flex; align-items: center; gap: var(--space-1); color: var(--ink-muted); vertical-align: middle; }
+
   /* ---------- DetailPanel (page charter A2): the right side, a thing's detail in tabs ---------- */
   .b-dpanel { display: grid; align-content: start; gap: var(--space-3); padding: var(--space-3); border-radius: var(--radius-card); background: var(--panel); box-shadow: var(--shadow-card); min-width: 0; }
   .b-dpanel-eyebrow { font-size: var(--text-eyebrow); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-muted); }

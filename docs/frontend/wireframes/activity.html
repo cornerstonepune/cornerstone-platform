@@ -3,17 +3,19 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Wireframe: The activity (activity)</title>
+<title>Wireframe: the activity's name (activity)</title>
 <link rel="stylesheet" href="kit.css">
 </head>
-<!-- Wireframe of screens.json "activity" (/setup/activities/[code]), drawn as a coordinator (so Keep, Edit and Send back show; an educator sees the Drafted badge and none of the three buttons). Keep is the one main action here; for an educator the main action is the rail's Next taught.
+<!-- Wireframe of screens.json "activity" (/setup/activities/[code]): Curriculum's activity panel opened full page (page charter Part C, A2).
+     The origin filter first; the tabs Parts · Objectives · Skills · Taught; each part and link says where it came from (sheet, machine
+     with its one symbol, person; CP-48). A part the machine made has Edit in place: no Keep, no Send back, no queue.
      data-el = index in screens.json activity.elements; data-bar = index in screens.json bar; data-source = target
      table.column; data-gap = what the target tables cannot give. Both frames hold the same markup: the phone layout
-     comes from kit.css container queries, as it will on the site. Names are from fake-names.json. -->
+     comes from kit.css container queries, as it will on the site. -->
 <body>
 <div class="wf-sheet">
   <header>
-    <p class="wf-label">activity · The activity · /setup/activities/[code] · laptop 1440 and phone 400 · add data-theme="dark" on &lt;html&gt; for dark</p>
+    <p class="wf-label">activity · the activity's name · /setup/activities/[code] · laptop 1440 and phone 400 · add data-theme="dark" on &lt;html&gt; for dark</p>
   </header>
   <section class="wf" data-viewport="1440" aria-label="Laptop, 1440 px">
     <div class="frame">
@@ -78,115 +80,43 @@
         </nav>
         <div class="shellmain">
         <ol class="trail" aria-label="Trail">
-          <li><a data-trail href="#setup">Setup</a></li>
+          <li><a data-trail href="#setup">School</a></li>
           <li><i class="ic s" data-icon="trail"></i></li>
-          <li><a data-trail href="#activities">Activities</a></li>
+          <li><a data-trail href="#curriculum">Curriculum</a></li>
           <li><i class="ic s" data-icon="trail"></i></li>
-          <li aria-current="page"><span data-source="activity.name">Counting in tens with bundles</span></li>
+          <li aria-current="page" data-source="activity.name">Counting in tens with bundles</li>
         </ol>
         <div class="page">
           <main class="main">
             <div class="head">
-              <p class="eyebrow"><i class="ic s" data-icon="activity"></i>Activity <span class="num" data-source="activity.code">112</span> · <span data-source="activity.strand">Numeracy</span></p>
+              <p class="eyebrow"><i class="ic s" data-icon="activity"></i>Activity <span data-source="activity.code">112</span> · <span data-source="activity.strand">Numeracy</span></p>
               <h1 class="title" data-source="activity.name">Counting in tens with bundles</h1>
-              <p class="purpose" data-source="activity.objective">Counts in tens up to 100 with bundles, and says how many without recounting.</p>
+              <p class="purpose" data-source="activity.objective">Counts in tens using bundles of sticks.</p>
             </div>
-            <dl class="kv cells" data-block="KeyValue" aria-label="The four levels">
-              <div><dt>Level 0</dt><dd data-source="activity.level_0">Counts the sticks one by one.</dd></div>
-              <div><dt>Level 1</dt><dd data-source="activity.level_1">Bundles ten with help.</dd></div>
-              <div><dt>Level 2</dt><dd data-source="activity.level_2">Counts in tens up to 100 with bundles.</dd></div>
-              <div><dt>Level 3</dt><dd data-source="activity.level_3">Says how many without recounting.</dd></div>
-            </dl>
-            <div class="card">
-              <div class="card-h"><i class="ic s" data-icon="class"></i>Where <span data-source="grade.name">K2</span> <span data-source="school_class.section">Red</span> sat last time, <span data-source="school_day.on_date">Tue 3 Nov</span></div>
-              <div class="card-b"><div class="lbars" data-block="LevelBars" data-source="activity_observation.reached_level activity_observation.child_id">
-                <div class="lbar"><span>Level 0</span><i style="--n: 12"></i><span class="num">3</span></div>
-                <div class="lbar"><span>Level 1</span><i style="--n: 42"></i><span class="num">10</span></div>
-                <div class="lbar"><span>Level 2</span><i style="--n: 33"></i><span class="num">8</span></div>
-                <div class="lbar"><span>Level 3</span><i style="--n: 13"></i><span class="num">3</span></div>
-              </div></div>
+            <div class="filters" data-block="FilterBar">
+              <label class="sel">Origin <select data-el="0" data-source="activity_objective.source activity_skill.source change_log.origin"><option>Any origin</option><option>Sheet</option><option>Machine</option><option>Person</option></select></label>
             </div>
-            <div class="card">
-              <div class="card-h"><i class="ic s" data-icon="history"></i>Taught so far</div>
-              <div class="card-b">
-                <dl class="kv cells" aria-label="When it was taught">
-                  <div><dt>Last taught</dt><dd><span data-source="activity_observation.observed_at">Tue 3 Nov</span></dd></div>
-                  <div><dt>Children seen on it</dt><dd class="num" data-source="activity_observation.child_id">24</dd></div>
-                  <div><dt>Times taught</dt><dd class="num" data-source="activity_observation.session_id">5</dd></div>
-                </dl>
-                <p class="caption">What the educator saw, by outcome, across every time it was taught</p>
-                <div class="keyrow" data-source="activity_observation.outcome">
-                  <span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Above <span class="num">3</span></span>
-                  <span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>As expected <span class="num">12</span></span>
-                  <span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>Below <span class="num">6</span></span>
-                  <span class="chip" data-state="quiet"><i class="ic s" data-icon="not-seen"></i>Not willing <span class="num">1</span></span>
-                  <span class="chip" data-state="quiet"><i class="ic s" data-icon="absent"></i>Absent <span class="num">2</span></span>
+            <aside class="dpanel" data-block="DetailPanel" aria-label="The activity, full page">
+              <header class="dpanel-head"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><h2 class="dpanel-title" data-source="activity.name">Counting in tens with bundles</h2><p class="muted"><span class="chip" data-state="quiet" title="Made by the machine"><i class="ic s" data-icon="from-draft"></i><span class="vh">Made by the machine</span></span> <span data-source="activity.strand activity.code">Numeracy · ACT-K2-0112</span></p></div></header>
+              <div class="tabs" role="tablist" aria-label="Details"><button class="tabbtn" role="tab" type="button" aria-selected="true" data-el="1">Parts</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="2">Objectives</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="3">Skills</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="4">Taught</button></div>
+              <div role="tabpanel" class="stack">
+                <ul class="rlist" aria-label="Where each part came from">
+                  <li><b>Objective</b> <span class="caption" data-source="change_log.origin"><i class="ic s" data-icon="from-school"></i> From the sheet</span><p><span data-source="activity.objective">Counts in tens using bundles of sticks.</span></p></li>
+                  <li><b>Steps</b> <span class="caption" data-source="change_log.origin"><span class="chip" data-state="quiet" title="Made by the machine"><i class="ic s" data-icon="from-draft"></i><span class="vh">Made by the machine</span></span> Made by the machine</span><p><span data-source="activity.steps_list">Lay out the bundles · Count them by tens</span></p><details class="details" data-block="Details"><summary data-el="5"><i class="ic s" data-icon="correct"></i>Edit</summary><div class="stack"><div class="field"><label for="steps-wf">One step a line.</label><textarea id="steps-wf" data-el="6" data-source="activity.steps_list"></textarea></div><button class="btn press" data-el="7" type="button">Save</button></div></details></li>
+                  <li><b>Level 3</b> <span class="caption" data-source="change_log.origin"><i class="ic s" data-icon="from-person"></i> A person's words</span><p><span data-source="activity.level_3">Explains why ten ones make a ten.</span></p></li>
+                  <li><b>Level 2</b> <span class="caption" data-source="activity.level_2">Empty: nothing written yet</span></li>
+                </ul>
+              </div>
+              <div class="card">
+                <div class="card-h">Inset, the Objectives, Skills and Taught tabs</div>
+                <div class="card-b stack">
+                  <ul class="rlist"><li><a class="press" data-el="8" href="#objective" data-source="learning_objective.title">Counts in tens to 100</a> <span class="chip" data-state="quiet" title="Made by the machine"><i class="ic s" data-icon="from-draft"></i><span class="vh">Made by the machine</span></span> <span class="caption" data-source="activity_objective.source">Linked by: Machine</span></li></ul>
+                  <ul class="rlist"><li><span data-source="registry_skill.name">Counts on in tens</span> <span class="caption" data-source="activity_skill.source">Linked by: Sheet</span></li></ul>
+                  <div class="lbars" data-block="LevelBars" data-source="activity_observation.reached_level"><span>Level 3 · <span class="num">6</span></span></div>
                 </div>
               </div>
-            </div>
-            <details class="details" data-block="Details" open><summary data-el="0"><i class="ic s" data-icon="details"></i>Steps</summary><div><ol data-source="activity.steps_list">
-              <li>Give each pair a handful of sticks and some rubber bands.</li>
-              <li>Bundle ten sticks. Say "one ten".</li>
-              <li>Count the bundles in tens, then add loose sticks.</li>
-            </ol></div></details>
-            <details class="details" data-block="Details"><summary data-el="1"><i class="ic s" data-icon="details"></i>How to think about it</summary><div><p data-source="activity.thinking">A child who counts each stick by ones is not yet seeing a ten as one thing. Ask: "How many tens do you have?"</p></div></details>
-            <details class="details" data-block="Details"><summary data-el="2"><i class="ic s" data-icon="details"></i>Materials</summary><div><dl class="kv" data-block="KeyValue">
-              <dt><a data-el="4" href="#materials" data-source="material_item.name">Bundling sticks</a></dt><dd class="num" data-source="activity_material.quantity">200</dd>
-              <dt><a data-el="4" href="#materials" data-source="material_item.name">Rubber bands</a></dt><dd class="num" data-source="activity_material.quantity">30</dd>
-              <dt><a data-el="4" href="#materials" data-source="material_item.name">Number cards 0 to 9</a></dt><dd class="num" data-source="activity_material.quantity">1 set</dd>
-            </dl></div></details>
-            <div class="cards" data-block="Cards">
-              <article class="card" data-kind="objective"><div class="card-h"><span class="tile"><i class="ic" data-icon="objective"></i></span>Builds toward</div><div class="card-b">
-                <a data-el="3" href="#objective" data-source="learning_objective.title activity_objective.lo_code">Counts objects to 100</a>
-                <a data-el="3" href="#objective" data-source="learning_objective.title activity_objective.lo_code">Says how many without recounting</a>
-              </div></article>
-              <article class="card" data-kind="activity" data-source="change_log.origin curriculum_proposal.status"><div class="card-h"><span class="tile"><i class="ic" data-icon="activity"></i></span>Where each part came from</div><div class="card-b">
-                <dl class="kv">
-                  <dt>Steps</dt><dd><span class="chip" data-state="ok"><i class="ic s" data-icon="from-school"></i>From the school</span></dd>
-                  <dt>How to think about it</dt><dd><span class="chip" data-state="wait"><i class="ic s" data-icon="from-draft"></i>Drafted</span></dd>
-                  <dt>Materials</dt><dd><span class="chip" data-state="ok"><i class="ic s" data-icon="from-school"></i>From the school</span></dd>
-                  <dt>Levels</dt><dd><span class="chip" data-state="ok"><i class="ic s" data-icon="from-person"></i>Written by a person</span></dd>
-                </dl>
-                <p class="muted">The drafted part needs a person. Coordinators only.</p>
-                <div class="keyrow">
-                  <button class="btn btn-main press" data-el="5" type="button"><i class="ic" data-icon="confirm"></i>Keep</button>
-                  <button class="btn press" data-el="6" type="button"><i class="ic" data-icon="form"></i>Edit</button>
-                  <button class="btn press" data-el="7" type="button"><i class="ic" data-icon="send-back"></i>Send back</button>
-                </div>
-              </div></article>
-            </div>
-            <div class="card">
-              <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: a part with no text</div>
-              <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="not-seen"></i><b>Materials: nothing written yet</b><span class="muted">The part is shown empty and marked. It is never filled in for you.</span><span class="chip" data-state="quiet"><i class="ic s" data-icon="not-seen"></i>Empty</span></div></div>
-            </div>
+            </aside>
           </main>
-          <aside class="rail" aria-label="Connected to">
-            <section class="rail-box">
-              <h2>Connected to</h2>
-              <ul class="rlist">
-  <li><a class="ritem" data-el="9" href="#objective"><span class="tile" data-kind="objective"><i class="ic" data-icon="objective"></i></span><span><span data-source="learning_objective.title">Counts objects to 100</span><small>the objective</small></span></a></li>
-  <li><a class="ritem" data-el="9" href="#objective"><span class="tile" data-kind="objective"><i class="ic" data-icon="objective"></i></span><span><span data-source="learning_objective.title">Says how many without recounting</span><small>the objective</small></span></a></li>
-  <li><a class="ritem" data-el="10" href="#materials"><span class="tile" data-kind="note"><i class="ic" data-icon="materials"></i></span><span><span data-source="material_item.name">Bundling sticks</span><small>to lay out</small></span></a></li>
-  <li><a class="ritem" data-el="10" href="#materials"><span class="tile" data-kind="note"><i class="ic" data-icon="materials"></i></span><span><span data-source="material_item.name">Rubber bands</span><small>to lay out</small></span></a></li>
-  <li><a class="ritem" data-el="10" href="#materials"><span class="tile" data-kind="note"><i class="ic" data-icon="materials"></i></span><span><span data-source="material_item.name">Number cards 0 to 9</span><small>to lay out</small></span></a></li>
-  <li><a class="ritem" data-el="11" href="#period"><span class="tile" data-kind="period"><i class="ic" data-icon="period"></i></span><span><span>Next taught</span><small><span data-source="school_day.on_date">Thu 19-Nov</span>, <span class="num" data-source="period.starts_at">08:45</span> · <span data-source="grade.name">K2</span> <span data-source="school_class.section">Red</span></small></span></a></li>
-  <li><a class="ritem" data-el="12" href="#fortnight"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span><span><span>The fortnights it is in</span><small>fortnights <span class="num" data-source="fortnight.number">6</span> and <span class="num" data-source="fortnight.number">9</span></small></span></a></li>
-              </ul>
-            </section>
-            <section class="rail-box">
-              <h2>Fortnights it is in</h2>
-              <dl class="kv">
-                <dt>Fortnight <span class="num" data-source="fortnight.number">6</span></dt><dd><span class="chip" data-state="ok" data-source="fortnight.state"><i class="ic s" data-icon="done"></i>Taught</span></dd>
-                <dt>Fortnight <span class="num" data-source="fortnight.number">9</span></dt><dd><span class="chip" data-state="wait" data-source="fortnight.state"><i class="ic s" data-icon="period"></i>Coming up</span></dd>
-              </dl>
-            </section>
-            <section class="rail-box" data-block="CaptureBar">
-              <h2>Capture here</h2>
-              <div class="capture">
-                <a class="btn btn-capture press" data-el="8" href="#record?mode=voice"><i class="ic" data-icon="record"></i>Voice note</a>
-              </div>
-            </section>
-          </aside>
         </div>
         </div>
       </div>
@@ -255,115 +185,43 @@
         </nav>
         <div class="shellmain">
         <ol class="trail" aria-label="Trail">
-          <li><a data-trail href="#setup">Setup</a></li>
+          <li><a data-trail href="#setup">School</a></li>
           <li><i class="ic s" data-icon="trail"></i></li>
-          <li><a data-trail href="#activities">Activities</a></li>
+          <li><a data-trail href="#curriculum">Curriculum</a></li>
           <li><i class="ic s" data-icon="trail"></i></li>
-          <li aria-current="page"><span data-source="activity.name">Counting in tens with bundles</span></li>
+          <li aria-current="page" data-source="activity.name">Counting in tens with bundles</li>
         </ol>
         <div class="page">
           <main class="main">
             <div class="head">
-              <p class="eyebrow"><i class="ic s" data-icon="activity"></i>Activity <span class="num" data-source="activity.code">112</span> · <span data-source="activity.strand">Numeracy</span></p>
+              <p class="eyebrow"><i class="ic s" data-icon="activity"></i>Activity <span data-source="activity.code">112</span> · <span data-source="activity.strand">Numeracy</span></p>
               <h1 class="title" data-source="activity.name">Counting in tens with bundles</h1>
-              <p class="purpose" data-source="activity.objective">Counts in tens up to 100 with bundles, and says how many without recounting.</p>
+              <p class="purpose" data-source="activity.objective">Counts in tens using bundles of sticks.</p>
             </div>
-            <dl class="kv cells" data-block="KeyValue" aria-label="The four levels">
-              <div><dt>Level 0</dt><dd data-source="activity.level_0">Counts the sticks one by one.</dd></div>
-              <div><dt>Level 1</dt><dd data-source="activity.level_1">Bundles ten with help.</dd></div>
-              <div><dt>Level 2</dt><dd data-source="activity.level_2">Counts in tens up to 100 with bundles.</dd></div>
-              <div><dt>Level 3</dt><dd data-source="activity.level_3">Says how many without recounting.</dd></div>
-            </dl>
-            <div class="card">
-              <div class="card-h"><i class="ic s" data-icon="class"></i>Where <span data-source="grade.name">K2</span> <span data-source="school_class.section">Red</span> sat last time, <span data-source="school_day.on_date">Tue 3 Nov</span></div>
-              <div class="card-b"><div class="lbars" data-block="LevelBars" data-source="activity_observation.reached_level activity_observation.child_id">
-                <div class="lbar"><span>Level 0</span><i style="--n: 12"></i><span class="num">3</span></div>
-                <div class="lbar"><span>Level 1</span><i style="--n: 42"></i><span class="num">10</span></div>
-                <div class="lbar"><span>Level 2</span><i style="--n: 33"></i><span class="num">8</span></div>
-                <div class="lbar"><span>Level 3</span><i style="--n: 13"></i><span class="num">3</span></div>
-              </div></div>
+            <div class="filters" data-block="FilterBar">
+              <label class="sel">Origin <select data-el="0" data-source="activity_objective.source activity_skill.source change_log.origin"><option>Any origin</option><option>Sheet</option><option>Machine</option><option>Person</option></select></label>
             </div>
-            <div class="card">
-              <div class="card-h"><i class="ic s" data-icon="history"></i>Taught so far</div>
-              <div class="card-b">
-                <dl class="kv cells" aria-label="When it was taught">
-                  <div><dt>Last taught</dt><dd><span data-source="activity_observation.observed_at">Tue 3 Nov</span></dd></div>
-                  <div><dt>Children seen on it</dt><dd class="num" data-source="activity_observation.child_id">24</dd></div>
-                  <div><dt>Times taught</dt><dd class="num" data-source="activity_observation.session_id">5</dd></div>
-                </dl>
-                <p class="caption">What the educator saw, by outcome, across every time it was taught</p>
-                <div class="keyrow" data-source="activity_observation.outcome">
-                  <span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Above <span class="num">3</span></span>
-                  <span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>As expected <span class="num">12</span></span>
-                  <span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>Below <span class="num">6</span></span>
-                  <span class="chip" data-state="quiet"><i class="ic s" data-icon="not-seen"></i>Not willing <span class="num">1</span></span>
-                  <span class="chip" data-state="quiet"><i class="ic s" data-icon="absent"></i>Absent <span class="num">2</span></span>
+            <aside class="dpanel" data-block="DetailPanel" aria-label="The activity, full page">
+              <header class="dpanel-head"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><h2 class="dpanel-title" data-source="activity.name">Counting in tens with bundles</h2><p class="muted"><span class="chip" data-state="quiet" title="Made by the machine"><i class="ic s" data-icon="from-draft"></i><span class="vh">Made by the machine</span></span> <span data-source="activity.strand activity.code">Numeracy · ACT-K2-0112</span></p></div></header>
+              <div class="tabs" role="tablist" aria-label="Details"><button class="tabbtn" role="tab" type="button" aria-selected="true" data-el="1">Parts</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="2">Objectives</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="3">Skills</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="4">Taught</button></div>
+              <div role="tabpanel" class="stack">
+                <ul class="rlist" aria-label="Where each part came from">
+                  <li><b>Objective</b> <span class="caption" data-source="change_log.origin"><i class="ic s" data-icon="from-school"></i> From the sheet</span><p><span data-source="activity.objective">Counts in tens using bundles of sticks.</span></p></li>
+                  <li><b>Steps</b> <span class="caption" data-source="change_log.origin"><span class="chip" data-state="quiet" title="Made by the machine"><i class="ic s" data-icon="from-draft"></i><span class="vh">Made by the machine</span></span> Made by the machine</span><p><span data-source="activity.steps_list">Lay out the bundles · Count them by tens</span></p><details class="details" data-block="Details"><summary data-el="5"><i class="ic s" data-icon="correct"></i>Edit</summary><div class="stack"><div class="field"><label for="steps-wf">One step a line.</label><textarea id="steps-wf" data-el="6" data-source="activity.steps_list"></textarea></div><button class="btn press" data-el="7" type="button">Save</button></div></details></li>
+                  <li><b>Level 3</b> <span class="caption" data-source="change_log.origin"><i class="ic s" data-icon="from-person"></i> A person's words</span><p><span data-source="activity.level_3">Explains why ten ones make a ten.</span></p></li>
+                  <li><b>Level 2</b> <span class="caption" data-source="activity.level_2">Empty: nothing written yet</span></li>
+                </ul>
+              </div>
+              <div class="card">
+                <div class="card-h">Inset, the Objectives, Skills and Taught tabs</div>
+                <div class="card-b stack">
+                  <ul class="rlist"><li><a class="press" data-el="8" href="#objective" data-source="learning_objective.title">Counts in tens to 100</a> <span class="chip" data-state="quiet" title="Made by the machine"><i class="ic s" data-icon="from-draft"></i><span class="vh">Made by the machine</span></span> <span class="caption" data-source="activity_objective.source">Linked by: Machine</span></li></ul>
+                  <ul class="rlist"><li><span data-source="registry_skill.name">Counts on in tens</span> <span class="caption" data-source="activity_skill.source">Linked by: Sheet</span></li></ul>
+                  <div class="lbars" data-block="LevelBars" data-source="activity_observation.reached_level"><span>Level 3 · <span class="num">6</span></span></div>
                 </div>
               </div>
-            </div>
-            <details class="details" data-block="Details" open><summary data-el="0"><i class="ic s" data-icon="details"></i>Steps</summary><div><ol data-source="activity.steps_list">
-              <li>Give each pair a handful of sticks and some rubber bands.</li>
-              <li>Bundle ten sticks. Say "one ten".</li>
-              <li>Count the bundles in tens, then add loose sticks.</li>
-            </ol></div></details>
-            <details class="details" data-block="Details"><summary data-el="1"><i class="ic s" data-icon="details"></i>How to think about it</summary><div><p data-source="activity.thinking">A child who counts each stick by ones is not yet seeing a ten as one thing. Ask: "How many tens do you have?"</p></div></details>
-            <details class="details" data-block="Details"><summary data-el="2"><i class="ic s" data-icon="details"></i>Materials</summary><div><dl class="kv" data-block="KeyValue">
-              <dt><a data-el="4" href="#materials" data-source="material_item.name">Bundling sticks</a></dt><dd class="num" data-source="activity_material.quantity">200</dd>
-              <dt><a data-el="4" href="#materials" data-source="material_item.name">Rubber bands</a></dt><dd class="num" data-source="activity_material.quantity">30</dd>
-              <dt><a data-el="4" href="#materials" data-source="material_item.name">Number cards 0 to 9</a></dt><dd class="num" data-source="activity_material.quantity">1 set</dd>
-            </dl></div></details>
-            <div class="cards" data-block="Cards">
-              <article class="card" data-kind="objective"><div class="card-h"><span class="tile"><i class="ic" data-icon="objective"></i></span>Builds toward</div><div class="card-b">
-                <a data-el="3" href="#objective" data-source="learning_objective.title activity_objective.lo_code">Counts objects to 100</a>
-                <a data-el="3" href="#objective" data-source="learning_objective.title activity_objective.lo_code">Says how many without recounting</a>
-              </div></article>
-              <article class="card" data-kind="activity" data-source="change_log.origin curriculum_proposal.status"><div class="card-h"><span class="tile"><i class="ic" data-icon="activity"></i></span>Where each part came from</div><div class="card-b">
-                <dl class="kv">
-                  <dt>Steps</dt><dd><span class="chip" data-state="ok"><i class="ic s" data-icon="from-school"></i>From the school</span></dd>
-                  <dt>How to think about it</dt><dd><span class="chip" data-state="wait"><i class="ic s" data-icon="from-draft"></i>Drafted</span></dd>
-                  <dt>Materials</dt><dd><span class="chip" data-state="ok"><i class="ic s" data-icon="from-school"></i>From the school</span></dd>
-                  <dt>Levels</dt><dd><span class="chip" data-state="ok"><i class="ic s" data-icon="from-person"></i>Written by a person</span></dd>
-                </dl>
-                <p class="muted">The drafted part needs a person. Coordinators only.</p>
-                <div class="keyrow">
-                  <button class="btn btn-main press" data-el="5" type="button"><i class="ic" data-icon="confirm"></i>Keep</button>
-                  <button class="btn press" data-el="6" type="button"><i class="ic" data-icon="form"></i>Edit</button>
-                  <button class="btn press" data-el="7" type="button"><i class="ic" data-icon="send-back"></i>Send back</button>
-                </div>
-              </div></article>
-            </div>
-            <div class="card">
-              <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: a part with no text</div>
-              <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="not-seen"></i><b>Materials: nothing written yet</b><span class="muted">The part is shown empty and marked. It is never filled in for you.</span><span class="chip" data-state="quiet"><i class="ic s" data-icon="not-seen"></i>Empty</span></div></div>
-            </div>
+            </aside>
           </main>
-          <aside class="rail" aria-label="Connected to">
-            <section class="rail-box">
-              <h2>Connected to</h2>
-              <ul class="rlist">
-  <li><a class="ritem" data-el="9" href="#objective"><span class="tile" data-kind="objective"><i class="ic" data-icon="objective"></i></span><span><span data-source="learning_objective.title">Counts objects to 100</span><small>the objective</small></span></a></li>
-  <li><a class="ritem" data-el="9" href="#objective"><span class="tile" data-kind="objective"><i class="ic" data-icon="objective"></i></span><span><span data-source="learning_objective.title">Says how many without recounting</span><small>the objective</small></span></a></li>
-  <li><a class="ritem" data-el="10" href="#materials"><span class="tile" data-kind="note"><i class="ic" data-icon="materials"></i></span><span><span data-source="material_item.name">Bundling sticks</span><small>to lay out</small></span></a></li>
-  <li><a class="ritem" data-el="10" href="#materials"><span class="tile" data-kind="note"><i class="ic" data-icon="materials"></i></span><span><span data-source="material_item.name">Rubber bands</span><small>to lay out</small></span></a></li>
-  <li><a class="ritem" data-el="10" href="#materials"><span class="tile" data-kind="note"><i class="ic" data-icon="materials"></i></span><span><span data-source="material_item.name">Number cards 0 to 9</span><small>to lay out</small></span></a></li>
-  <li><a class="ritem" data-el="11" href="#period"><span class="tile" data-kind="period"><i class="ic" data-icon="period"></i></span><span><span>Next taught</span><small><span data-source="school_day.on_date">Thu 19-Nov</span>, <span class="num" data-source="period.starts_at">08:45</span> · <span data-source="grade.name">K2</span> <span data-source="school_class.section">Red</span></small></span></a></li>
-  <li><a class="ritem" data-el="12" href="#fortnight"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span><span><span>The fortnights it is in</span><small>fortnights <span class="num" data-source="fortnight.number">6</span> and <span class="num" data-source="fortnight.number">9</span></small></span></a></li>
-              </ul>
-            </section>
-            <section class="rail-box">
-              <h2>Fortnights it is in</h2>
-              <dl class="kv">
-                <dt>Fortnight <span class="num" data-source="fortnight.number">6</span></dt><dd><span class="chip" data-state="ok" data-source="fortnight.state"><i class="ic s" data-icon="done"></i>Taught</span></dd>
-                <dt>Fortnight <span class="num" data-source="fortnight.number">9</span></dt><dd><span class="chip" data-state="wait" data-source="fortnight.state"><i class="ic s" data-icon="period"></i>Coming up</span></dd>
-              </dl>
-            </section>
-            <section class="rail-box" data-block="CaptureBar">
-              <h2>Capture here</h2>
-              <div class="capture">
-                <a class="btn btn-capture press" data-el="8" href="#record?mode=voice"><i class="ic" data-icon="record"></i>Voice note</a>
-              </div>
-            </section>
-          </aside>
         </div>
         </div>
       </div>

@@ -107,7 +107,7 @@ test.describe("Curriculum", () => {
     await gate(sql, "reviewer");
   });
 
-  test("goal: find an activity by a word of its name and open it to read it", async ({ page }) => {
+  test("goal: find an activity by a word of its name and open it to read it, on the right of the list (page charter Part C)", async ({ page }) => {
     await page.goto("/setup/curriculum");
     await expect(page.getByRole("heading", { level: 1 })).toHaveText("Curriculum");
     await page.getByRole("searchbox").fill("Placeholder activity 3");
@@ -115,7 +115,8 @@ test.describe("Curriculum", () => {
     const row = page.locator(`[data-activity-row]`).filter({ hasText: "Placeholder activity 3" }).first();
     await expect(row).toBeVisible();
     await row.click();
-    await expect(page).toHaveURL(new RegExp(`/setup/activities/${k2code(3)}`));
+    await expect(page).toHaveURL(new RegExp(`/setup/curriculum\\?.*open=activity(%3A|:)${k2code(3)}`));
+    await expect(page.locator("[data-block=DetailPanel] [data-panel-title]")).toHaveText("Placeholder activity 3");
   });
 
   test("one list carries activities (K2) and skills (grades 1–4) under one filter row", async ({ page }) => {

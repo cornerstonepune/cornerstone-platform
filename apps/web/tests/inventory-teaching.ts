@@ -1,5 +1,5 @@
 // What the teaching screens (activity, objective, skill) need to show something in the inventory run, built from the test's own
-// rows (UI-3c): an activity with its four levels and a drafted part, an objective it builds toward, two skills linked to both, a
+// rows (UI-3c): an activity with its four levels and a part the machine made, an objective it builds toward, two skills linked to both, a
 // confirmed link between the skills, and children of the fixture class seen on them. Made once; observations are append-only.
 import { execFileSync } from "node:child_process";
 import path from "node:path";
@@ -29,7 +29,7 @@ export async function seedTeaching(sql: Sql, classId: string, educatorEmail: str
     await sql`insert into activity_skill (tenant_id, activity_code, skill_code) values (${tenant}, ${activity}, ${s.code}) on conflict do nothing`;
   }
   linkFixture(skills[0].code, skills[1].code, skills[2].code);
-  // the thinking part is a draft waiting for a person: the coordinator's Keep, Edit and Send back exist only for one
+  // the thinking part is the machine's (CP-48): it carries the machine symbol, and the Edit in place exists only for such a part
   const [marked] = await sql`select 1 from activity_part_source where activity_code = ${activity} and source = 'drafted'`;
   if (!marked)
     await sql`insert into change_log (tenant_id, table_name, row_id, op, after, origin, reason)

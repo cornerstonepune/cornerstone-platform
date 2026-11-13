@@ -119,18 +119,6 @@ export const gap = cache(async (): Promise<Gap[]> => {
   return PART_KEYS.map((p) => rows.find((r) => r.part === p) ?? { part: p, school: 0, drafted: 0, person: 0, empty: 0 });
 });
 
-export type Waiting = { code: string; part: PartKey };
-
-/** The drafted parts waiting for a person (the materials are items, which the page read does not carry: not here), those a checker doubted first, then by activity number and part. */
-export const waiting = cache(async (part?: string): Promise<Waiting[]> => {
-  const band = await screensGrade();
-  return sql<Waiting[]>`
-    select s.activity_code as code, s.part
-    from activity_part_source s join activity a on a.tenant_id = s.tenant_id and a.code = s.activity_code
-    where a.band = ${band} and s.source = 'drafted' and s.part <> 'materials' and btrim(case s.part when 'objective' then a.objective when 'steps' then a.steps when 'thinking' then a.thinking when 'level_0' then a.level_0 when 'level_1' then a.level_1 when 'level_2' then a.level_2 when 'level_3' then a.level_3 else '' end) <> ''
-      ${part ? sql`and s.part = ${part}` : sql``}
-    order by s.check_me desc, s.activity_code, array_position(${sql.array([...PART_KEYS])}::text[], s.part)`;
-});
 
 // ---- the page as the engine reads it (docs/notes/m1-12b-apply-and-edit.md) ----
 export type ActivityPage = { code: string; name: string; section: string; parts: PagePart[] };

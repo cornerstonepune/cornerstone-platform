@@ -967,43 +967,31 @@
       "purpose": "the objective",
       "does": [
         {
-          "label": "Steps"
+          "label": "Origin"
         },
         {
-          "label": "How to think about it"
+          "label": "Parts"
         },
         {
-          "label": "Materials"
+          "label": "Objectives"
         },
         {
-          "label": "each objective"
+          "label": "Skills"
         },
         {
-          "label": "each material"
+          "label": "Taught"
         },
         {
-          "label": "Keep (a drafted part)"
+          "label": "Edit (a part the machine made)"
         },
         {
-          "label": "Edit (a part)"
+          "label": "the part's new words"
         },
         {
-          "label": "Send back (a drafted part)"
-        },
-        {
-          "label": "Voice note"
+          "label": "Save"
         },
         {
           "label": "each objective"
-        },
-        {
-          "label": "each material"
-        },
-        {
-          "label": "next taught"
-        },
-        {
-          "label": "the fortnights it is in"
         }
       ]
     },
@@ -1016,16 +1004,19 @@
       "purpose": "An objective names the skills it builds. The system reads a child's state on those skills; it never scores the objective itself.",
       "does": [
         {
+          "label": "Origin"
+        },
+        {
+          "label": "Skills"
+        },
+        {
+          "label": "Activities"
+        },
+        {
           "label": "Open the skill (each card)"
         },
         {
           "label": "each activity row"
-        },
-        {
-          "label": "each skill"
-        },
-        {
-          "label": "each activity"
         }
       ]
     },
@@ -1145,16 +1136,19 @@
     {
       "id": "curriculum",
       "title": "Curriculum",
-      "eyebrow": "Every grade",
+      "eyebrow": "School",
       "group": "Setup",
       "route": "/setup/curriculum",
-      "purpose": "Every activity and skill of every grade, with its levels and how much of each page is filled in. Open one to read it.",
+      "purpose": "Every activity and skill of every grade, with where its words and links came from. Choose one to read or edit it on the right.",
       "does": [
         {
           "label": "Grade"
         },
         {
           "label": "Subject"
+        },
+        {
+          "label": "Origin"
         },
         {
           "label": "Topic"
@@ -1170,9 +1164,6 @@
         },
         {
           "label": "a skill row"
-        },
-        {
-          "label": "Check the drafted parts"
         },
         {
           "label": "Yes (an offer)"
@@ -1208,13 +1199,37 @@
           "label": "questions page: Later →"
         },
         {
-          "label": "Skills to approve"
+          "label": "panel: Close"
         },
         {
-          "label": "Question bank"
+          "label": "panel: Open full page"
         },
         {
-          "label": "Drafts to check"
+          "label": "panel: Parts"
+        },
+        {
+          "label": "panel: Objectives"
+        },
+        {
+          "label": "panel: Skills"
+        },
+        {
+          "label": "panel: Taught"
+        },
+        {
+          "label": "panel: Edit (a part the machine made)"
+        },
+        {
+          "label": "panel: the idea"
+        },
+        {
+          "label": "panel: the slips"
+        },
+        {
+          "label": "panel: Save"
+        },
+        {
+          "label": "panel: each objective"
         }
       ]
     },

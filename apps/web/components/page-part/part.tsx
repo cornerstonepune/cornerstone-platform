@@ -1,20 +1,27 @@
 import "./page-part.css";
 import { Icon, type IconName } from "@/lib/icons";
 import { PART_WORDS, type PagePart } from "@/lib/page-part";
+import { MachineMark } from "../origin";
 
 // One part of an activity page, drawn the same wherever it is shown (D-075): its name, whose words they are (an icon and a
 // word, never colour alone), and the words themselves: steps as a short list, thinking as an idea with each slip's keyword
-// highlighted and how to spot it, anything else as text. It reads and asks nothing: what a person may do with the part
-// (keep, edit, send back) comes in as `actions`, or `editor` in place of the words (never both: the type says so), from the screen
-// that knows who is asking. A screen with neither shows the part read-only.
+// highlighted and how to spot it, anything else as text. A part the machine made carries the one machine symbol
+// (components/origin.tsx) and waits on nobody (CP-48). It reads and asks nothing: what a person may do with the part (edit) comes
+// in as `actions`, or `editor` in place of the words (never both: the type says so), from the screen that knows who is asking.
+// A screen with neither shows the part read-only.
 const ORIGIN: Record<string, [IconName, string]> = {
-  school: ["from-school", "The school's words"],
-  drafted: ["from-draft", "Drafted, check me"],
-  person: ["from-person", "Kept by a person"],
+  school: ["from-school", "From the sheet"],
+  person: ["from-person", "A person's words"],
 };
 
-/** Where a part's words came from. */
+/** Where a part's words came from: the sheet, the machine (its one symbol) or a person. */
 export function Origin({ part }: { part: PagePart }) {
+  if (part.source === "drafted")
+    return (
+      <span className="pp-origin" data-source="drafted">
+        <MachineMark words />
+      </span>
+    );
   const [icon, words] = ORIGIN[part.source] ?? ORIGIN.school;
   return (
     <span className="pp-origin" data-source={part.source}>
