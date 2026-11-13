@@ -19,6 +19,8 @@ const nextConfig: NextConfig = {
     { source: "/capture", destination: "/children/assessments", permanent: true },
     { source: "/record", has: [{ type: "query", key: "session", value: "(?<session>[0-9a-f-]{36})" }], destination: "/period/:session", permanent: true },
     { source: "/record", destination: "/today", permanent: true },
+    // Materials moved into the Timetable's Materials (page charter Part C); the class, day and span in an old link's query carry over
+    { source: "/educator/materials", destination: "/timetable/materials", permanent: true },
   ],
   outputFileTracingRoot: repo,
 };
