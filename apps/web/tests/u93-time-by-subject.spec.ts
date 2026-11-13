@@ -114,12 +114,23 @@ test("B3 primary action. the range is Week, Fortnight, Month or Quarter: whole w
   await expect(page.locator("[data-range-chooser] [aria-selected=true]")).toHaveText("Fortnight"); // the page opens on a fortnight
   await expect(page.locator("[data-chart=weeks] [data-week]")).toHaveCount(2);
   await expect(page.locator("[data-chart=weeks] [data-week]").first()).toHaveAttribute("data-week", lastMonday);
-  for (const [range, weeks] of [["Week", 1], ["Month", 4], ["Quarter", 13]] as const) {
+  const span = page.locator("[data-from]");
+  await expect(span).toHaveAttribute("data-from", lastMonday);
+  await expect(span).toHaveAttribute("data-to", today);
+  for (const [range, weeks] of [["Month", 4], ["Quarter", 13]] as const) {
     await chooser.getByText(range, { exact: true }).click();
     await expect(page).toHaveURL(new RegExp(`range=${range.toLowerCase()}`));
     await expect(page.locator("[data-chart=weeks] [data-week]")).toHaveCount(weeks);
     await expect(page.locator("[data-chart=weeks] [data-week]").last()).toHaveAttribute("data-week", thisMonday);
+    await expect(span).toHaveAttribute("data-from", plus(thisMonday, -7 * (weeks - 1)));
+    await expect(span).toHaveAttribute("data-to", today);
   }
+  // this week alone: the class's lessons were all last week, so the page says there are none, and invents no column
+  await chooser.getByText("Week", { exact: true }).click();
+  await expect(page).toHaveURL(/range=week/);
+  await expect(span).toHaveAttribute("data-from", thisMonday);
+  await expect(page.locator("[data-no-lessons]")).toBeVisible();
+  await expect(page.locator("[data-chart=weeks]")).toHaveCount(0);
 });
 
 test("B3 primary action. the class is one class, or every class of the grade for the coordinator", async ({ page }) => {

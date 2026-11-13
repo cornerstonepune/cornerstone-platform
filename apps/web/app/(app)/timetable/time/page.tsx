@@ -52,7 +52,7 @@ export default async function TimeBySubjectPage({ searchParams }: Props) {
   if (!data) {
     return (
       <Screen stage="Timetable" title="Time by subject" purpose={purpose} panel={<DetailPanel summary={{ title: "This range", stats: [] }} />}>
-        <div className="tt-filters">{toggle}</div>
+        <div className="tt-filters" data-from={dates.start} data-to={dates.end}>{toggle}</div>
         <EmptyState>
           <span data-no-time>{chosen ? "Your class's timetable is not open to you yet." : "No class has lessons in these days."}</span>
         </EmptyState>
@@ -84,13 +84,14 @@ export default async function TimeBySubjectPage({ searchParams }: Props) {
 
   const columns: Column<SubjectTime>[] = [
     { key: "subject", label: "Subject", value: (r) => r.label, cell: (r) => <SubjectTag look={subjectLook(looks, r.subject)} words={r.label} /> },
-    { key: "minutes", label: "Minutes", value: (r) => r.minutes, num: true },
-    { key: "share", label: "% of teaching time", value: (r) => r.share_pct, num: true, cell: (r) => `${r.share_pct}%` },
-    { key: "target", label: "The school's target", value: (r) => (r.target_share_pct === null ? "No target" : r.target_share_pct), num: true, cell: (r) => (r.target_share_pct === null ? <span className="b-muted">No target</span> : `${r.target_share_pct}%`) },
+    { key: "minutes", label: "Minutes", value: (r) => r.minutes, num: true, width: "5rem" },
+    { key: "share", label: "% of teaching time", value: (r) => r.share_pct, num: true, width: "7rem", cell: (r) => `${r.share_pct}%` },
+    { key: "target", label: "The school's target", width: "7rem", value: (r) => (r.target_share_pct === null ? "No target" : r.target_share_pct), num: true, cell: (r) => (r.target_share_pct === null ? <span className="b-muted">No target</span> : `${r.target_share_pct}%`) },
     {
       key: "against",
       label: "Against the target",
       status: true,
+      width: "7.5rem",
       value: (r) => chipOf(r.status)?.words ?? "",
       cell: (r) => {
         const c = chipOf(r.status);
@@ -121,7 +122,7 @@ export default async function TimeBySubjectPage({ searchParams }: Props) {
         />
       }
     >
-      <div className="tt-filters">
+      <div className="tt-filters" data-from={dates.start} data-to={dates.end}>
         {toggle}
         <FilterBar action={HERE} keep={{ range: q.range }} filters={[{ name: "class", label: "Class", value, required: true, all: "", options }]} />
       </div>
