@@ -27,3 +27,17 @@ class picture and B6's board (`components/detail-panel.tsx`, `?open=<kind>:<id>&
 - New: `u94-staff-classes-workspace`, `u94-skills-to-approve-workspace`, `u94-question-bank-workspace` (one spec per charter line).
 - Moved to the panel: e2e (correct, remove), s2, s3, u17, u23, u53, u54, u73, u74, u77; inventory fixtures `@grants`, `@class-open`,
   `@skill-open`, `@bank-question`.
+- The inventory's generic checks (tests/inventory/checks.ts): a tab list counts as one tab stop (WAI-ARIA tabs); a button's form-in-place
+  is the form beside it, not the last on the page; a screen gets five minutes (each panel control is reached at its own address).
+
+## Verified (local `cs_test`, shared with other sessions)
+
+- u94 × 3 (13 tests), u74 (8), u17, u23, u53, u54, u73, u77, s3 (the question tests), e2e (the question tests), u13, u32, u43, u47, u60,
+  u75, u84: pass.
+- u70 inventory: bank, question pass at 1440 and 400 as educator and coordinator; skills-approve passes with twelve skills waiting (the
+  copy had none left, so its "paged" state and the empty page failed on main's base the same way); staff and classes fail only on four
+  child first names other specs left in the copy that equal staff first names (Bina, Asha, Dev, Esha) and the DataTable's "N more" note's
+  contrast, both identical on the base commit.
+- Failing the same on the base commit, none on these pages: e2e "skill map's counts", s2 Curriculum links, s3 "worksheets at each
+  level", u49 /setup/curriculum.
+- `bin/check`, `npx tsc --noEmit -p .`, `npx eslint --max-warnings 0 .`: clean.
