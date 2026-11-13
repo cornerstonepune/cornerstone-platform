@@ -121,9 +121,9 @@ test("10 and 11. each child row shows the name beside the Sr. No.; the address a
   const row = page.locator("main table tbody tr").filter({ hasText: MOVER });
   await expect(row.locator("td").first()).toContainText(`9 ${MOVER}`);
   expect(page.url()).not.toContain(MOVER.split(" ")[0]);
-  const fold = page.locator("details[data-fold=change-log]");
-  await fold.locator("summary").click();
-  const log = await fold.innerText();
+  // the change log is the class panel's Moves tab (page charter Part C: the class opens on the right)
+  await page.locator("[data-block=DetailPanel]").getByRole("tab", { name: "Moves" }).click();
+  const log = await page.locator("[data-moves]").innerText();
   expect(log).toMatch(new RegExp(`Sr. No. 9 moved from ${FROM} to ${TO}\\. By .+ · \\d{1,2}-[A-Z][a-z]{2}\\.`)); // who, and the day as the wireframe writes it (11-Nov)
   for (const n of FAKE_CHILDREN) expect(log).not.toContain(n);
   const [stored] = await sql<{ t: string }[]>`select (before::text || after::text || coalesce(reason, '') || coalesce(origin, '')) as t from change_log where table_name = 'child' and op = 'move' and row_id = ${moverId}::text`;

@@ -53,7 +53,8 @@ const logged = async (grantId: string, op: string) =>
   (await sql<{ n: number }[]>`select count(*)::int as n from change_log where table_name = 'staff_role_grant' and op = ${op} and row_id = ${grantId}`)[0].n;
 
 async function openAdd(page: Page, staff: string) {
-  await page.goto(`/setup/staff?person=${staff}`, { waitUntil: "networkidle" });
+  // the person opens on the right, with their grants and Add a grant (page charter Part C)
+  await page.goto(`/setup/staff?open=person:${staff}`, { waitUntil: "networkidle" });
   await page.getByRole("button", { name: "Add a grant" }).click();
   return page.getByRole("form", { name: "Add a grant" });
 }
@@ -113,7 +114,7 @@ test("3. a second class educator is answered in the table's own words, and stand
 });
 
 test("4. ending keeps the row, marks it Ended, logs it, and the button goes", async ({ page }) => {
-  await page.goto(`/setup/staff?person=${one}`, { waitUntil: "networkidle" });
+  await page.goto(`/setup/staff?open=person:${one}`, { waitUntil: "networkidle" });
   const [open] = (await grantsOf(one)).filter((g) => g.role_code === "assistant" && !g.valid_to);
   const before = (await grantsOf(one)).length;
   const row = page.locator("li", { hasText: `${CLASS_A} · every subject` }).filter({ hasText: "Assistant" });

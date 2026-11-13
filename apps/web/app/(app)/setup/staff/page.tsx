@@ -1,26 +1,27 @@
-import { Screen, Rail } from "@/components/app-frame";
+import { Screen } from "@/components/app-frame";
 import { DataTable } from "@/components/data-table";
-import { Details } from "@/components/details";
+import { DetailPanel, parseOpen } from "@/components/detail-panel";
 import { FilterBar } from "@/components/filter-bar";
 import Link from "@/components/link";
 import { NotYours } from "@/components/not-yours";
 import { requireStaff } from "@/lib/auth";
-import { screenHref } from "@/lib/built";
 import { givable } from "@/lib/grants";
 import { grantChanges, grantsOf, schoolFacts, shortDate, namesMayShow, staffLines, type StaffLine } from "@/lib/queries-coordinator";
 import { rolesHeld } from "@/lib/queries-staff";
 import { NOT_ADDED } from "@/lib/staff-add";
 import { Notice } from "@/components/parts";
 import { AddPerson } from "./add-person";
-import { AddGrant, EndGrant } from "./grant-forms";
+import { personOpened } from "./person-panel";
 import type { Column } from "@/lib/ux-rules";
 
 type Props = { searchParams: Promise<Record<string, string | undefined>> };
+const HERE = "/setup/staff";
 
-// Staff and classes (docs/frontend/screens.json `staff`, UI-5). Who holds which role for which class, and three numbers per
-// person that the database can stand behind. The rows are in the role's own order then name and cannot be sorted by the
-// numbers (no sort link, no rank, no ordinal, no colour on a number): the school decides what they mean. A person's grants
-// open below the table (?person=<id>); a grant is given or ended here (the engine's routes), never edited or deleted. Names are `pii`: only the 'everything' group sees them.
+// Staff (docs/frontend/screens.json `staff`, UI-5; page charter Part C "Staff · Classes: keep, Workspace"). On the left who holds which
+// role for which class, and three numbers per person that the database can stand behind. The rows are in the role's own order then name
+// and cannot be sorted by the numbers (no sort link, no rank, no ordinal, no colour on a number): the school decides what they mean. A
+// person opens on the right (`?open=person:<id>`; the old `?person=<id>` still opens them) with their Grants and Roles; a grant is given or
+// ended there (the engine's routes), never edited or deleted. Names are `pii`: only the 'everything' group sees them.
 export default async function StaffPage({ searchParams }: Props) {
   const me = await requireStaff();
   if (!(await namesMayShow())) return <NotYours what="Staff" />;
@@ -28,17 +29,37 @@ export default async function StaffPage({ searchParams }: Props) {
   const { lines: all, answered } = await staffLines(me.email);
   const text = q.q?.trim().toLowerCase();
   const shown = all.filter((p) => (!q.role || p.roleLabel === q.role) && (!text || `${p.name} ${p.email}`.toLowerCase().includes(text)));
-  const open = shown.find((p) => p.id === q.person) ?? shown[0];
-  // a person's grants are changed once the coordinator has opened that person (?person=): the first person's are only listed until then
-  const chosen = Boolean(q.person);
-  const [grants, held, options, changes, facts] = await Promise.all([open ? grantsOf(open.id) : Promise.resolve([]), rolesHeld(), open && chosen ? givable(me.email) : Promise.resolve(null), grantChanges(), schoolFacts()]);
+  const want = parseOpen(q.open) ?? (q.person ? { kind: "person", id: q.person } : null);
+  const open = want?.kind === "person" ? all.find((p) => p.id === want.id) : undefined;
+  const [grants, held, options, changes, facts] = await Promise.all([
+    open ? grantsOf(open.id) : Promise.resolve([]),
+    rolesHeld(),
+    open ? givable(me.email) : Promise.resolve(null),
+    grantChanges(),
+    schoolFacts(),
+  ]);
   // a grant is signed with the coordinator's staff id (the engine's give), older ones with a word: the name when the list knows the id
   const names = new Map(all.map((p) => [p.id, p.name]));
   const byName = (by: string) => names.get(by) ?? (/^[0-9a-f]{8}-/i.test(by) ? "a former member of staff" : by);
-  const endable = new Set(options?.roles.map((r) => r.code));
   const roles = [...new Set(all.map((p) => p.roleLabel))];
+  // this address with the filters kept and the panel as asked: the row links and the panel's close keep what the list shows
+  const here = (over: { open?: string } = {}) => {
+    const u = new URLSearchParams(Object.entries({ role: q.role, q: q.q, ...over }).filter((e): e is [string, string] => !!e[1]));
+    return u.size ? `${HERE}?${u}` : HERE;
+  };
   const columns: Column<StaffLine>[] = [
-    { key: "name", label: "Name", width: "11rem", keep: true, value: (p) => p.name, cell: (p) => <Link href={`/setup/staff?person=${p.id}#grants`} data-staff-row aria-current={open?.id === p.id ? "true" : undefined}>{p.name}</Link> },
+    {
+      key: "name",
+      label: "Name",
+      width: "11rem",
+      keep: true,
+      value: (p) => p.name,
+      cell: (p) => (
+        <Link href={here({ open: `person:${p.id}` })} scroll={false} data-staff-row data-open-key={`person:${p.id}`} aria-current={open?.id === p.id ? "true" : undefined}>
+          {p.name}
+        </Link>
+      ),
+    },
     { key: "role", label: "Role", width: "9rem", keep: true, value: (p) => p.roleLabel },
     { key: "class", label: "Class", keep: true, value: (p) => (p.classes ? p.classes.join(", ") : "Every class") },
     { key: "sessions", label: "Sessions done of planned", width: "6.5rem", num: true, value: (p) => (p.planned ? `${p.done} of ${p.planned}` : null) },
@@ -46,14 +67,21 @@ export default async function StaffPage({ searchParams }: Props) {
     { key: "late", label: "Notes late", width: "5rem", num: true, value: (p) => p.notesLate },
     { key: "lines", label: "Lines accepted / changed / removed", width: "8rem", num: true, value: (p) => (p.lines ? `${p.lines.accepted} / ${p.lines.changed} / ${p.lines.removed}` : null) },
   ];
+  // the summary: how many people, and how many hold each of the first three roles in the roles' own order (whole counts, never a rank)
+  const byRole = [...Map.groupBy([...all].sort((a, b) => a.roleOrd - b.roleOrd), (p) => p.roleLabel)].slice(0, 3);
+  const stats = [{ id: "staff", n: all.length, line: "on the staff" }, ...byRole.map(([label, people]) => ({ id: label, n: people.length, line: label }))];
   return (
     <Screen
       stage={`This fortnight${facts.now ? ` · Fortnight ${facts.now.number ?? ""}, ${shortDate(facts.now.from)} to ${shortDate(facts.now.to)}` : ""} · ${all.length} staff`}
       title="Staff and classes"
       purpose="Who teaches which class, and whole counts you can rely on. No score, no ranking: the school decides what they mean."
-      action={<p className="m-0 text-[14px]">Open a person to see what they hold.</p>}
-      next={{ href: screenHref("classes") ?? "/setup/classes", label: "Classes and children" }}
-      rail={<Rail edges={[{ screen: "fortnight", label: "Fortnight", icon: "week" }, { screen: "timetable", label: "Timetable", icon: "week" }, { screen: "classes", label: "Classes and children", icon: "class" }]} />}
+      action={<AddPerson roles={held} />}
+      panel={
+        <DetailPanel
+          open={open ? personOpened(open, { grants, options, byName, tab: q.tab, closeHref: here() }) : null}
+          summary={{ title: "The staff", stats, after: <p className="b-label b-muted">Choose a person to see their grants and roles here.</p> }}
+        />
+      }
     >
       {q.added ? (
         <Notice tone="neem">
@@ -64,32 +92,13 @@ export default async function StaffPage({ searchParams }: Props) {
       {q.denied ? <Notice tone="terracotta">Nothing changed: only the coordinators can change the staff list.</Notice> : null}
       {answered ? null : <p className="text-[13px] text-[var(--ink-muted)] mb-2">The note counts are not available right now.</p>}
       <FilterBar
-        action="/setup/staff"
+        action={HERE}
         filters={[{ name: "role", label: "Role", value: q.role, all: "Every role", options: roles.map((r) => [r, r] as const) }]}
         search={{ name: "q", value: q.q, placeholder: "Find a person" }}
+        keep={{ open: q.open }}
       />
-      <DataTable label="Staff" columns={columns} rows={shown} rowKey={(p) => p.id} counted more={{ by: (p) => p.roleLabel.replace(/ \(.*\)$/, "") }} />
-      <AddPerson roles={held} />
-      {open ? (
-        <div className="mt-6" id="grants">
-          <Details summary={`${open.name}'s grants`} name="grants" open={Boolean(q.person)}>
-            <ul className="grid gap-2">
-              {grants.map((g) => (
-                <li key={g.id}>
-                  {g.roleLabel} · {g.className ?? "every class"} · {g.subject ?? "every subject"} · from {g.from} to {g.to ?? "open"} · granted by {byName(g.by)}
-                  {g.open ? null : " · Ended"}
-                  {chosen && g.open && endable.has(g.roleCode) ? (
-                    <>
-                      {" "}
-                      <EndGrant grantId={g.id} what={`${g.roleLabel}, ${g.className ?? "every class"}`} />
-                    </>
-                  ) : null}
-                </li>
-              ))}
-            </ul>
-            {!chosen ? null : options ? <AddGrant key={open.id} staffId={open.id} options={options} /> : <p className="text-[13px] text-[var(--ink-muted)] mt-2">Changing a grant is not available right now.</p>}
-          </Details>
-        </div>
+      {shown.length ? (
+        <DataTable label="Staff" columns={columns} rows={shown} rowKey={(p) => p.id} counted more={{ by: (p) => p.roleLabel.replace(/ \(.*\)$/, "") }} />
       ) : (
         <p className="text-[13px] text-[var(--ink-muted)] mt-2">Nobody matches these filters.</p>
       )}

@@ -1227,6 +1227,15 @@
       "purpose": "Read each skill's levels and approve them one at a time. What a wrong answer counts against is shown beside it.",
       "does": [
         {
+          "label": "Skills"
+        },
+        {
+          "label": "Levels to review"
+        },
+        {
+          "label": "Read the first skill"
+        },
+        {
           "label": "Grade"
         },
         {
@@ -1239,16 +1248,10 @@
           "label": "Taught"
         },
         {
-          "label": "Skills"
-        },
-        {
-          "label": "Levels to review"
-        },
-        {
           "label": "a skill's name"
         },
         {
-          "label": "Approve (a row)"
+          "label": "Later →"
         },
         {
           "label": "What a wrong answer counts against"
@@ -1257,10 +1260,19 @@
           "label": "Approve this table as written"
         },
         {
-          "label": "Later →"
+          "label": "panel: Close"
         },
         {
-          "label": "Curriculum"
+          "label": "panel: Open full page"
+        },
+        {
+          "label": "panel: Levels"
+        },
+        {
+          "label": "panel: About"
+        },
+        {
+          "label": "Approve (the skill open)"
         }
       ]
     },
@@ -1272,9 +1284,6 @@
       "route": "/setup/question-bank",
       "purpose": "What is in the bank for the skills taught in your classes, by level. Open a question to read it as it prints.",
       "does": [
-        {
-          "label": "What the bank is"
-        },
         {
           "label": "Grade"
         },
@@ -1303,7 +1312,40 @@
           "label": "Statistics (counts and worksheets by topic)"
         },
         {
-          "label": "a skill"
+          "label": "What the bank is"
+        },
+        {
+          "label": "panel: Close"
+        },
+        {
+          "label": "panel: Open full page"
+        },
+        {
+          "label": "panel: The skill"
+        },
+        {
+          "label": "panel: Question"
+        },
+        {
+          "label": "panel: Change"
+        },
+        {
+          "label": "panel: About"
+        },
+        {
+          "label": "the wording"
+        },
+        {
+          "label": "what was wrong"
+        },
+        {
+          "label": "reason for removal"
+        },
+        {
+          "label": "Correct the wording"
+        },
+        {
+          "label": "Remove"
         }
       ]
     },
@@ -1316,19 +1358,25 @@
       "purpose": "The question, its answer, the wrong answers it catches, and where it came from. Correct the wording or remove it.",
       "does": [
         {
-          "label": "About it"
+          "label": "Back to the question bank"
+        },
+        {
+          "label": "panel: The skill"
+        },
+        {
+          "label": "panel: Question"
+        },
+        {
+          "label": "panel: Change"
+        },
+        {
+          "label": "panel: About"
         },
         {
           "label": "the corrected question"
         },
         {
           "label": "the original wording"
-        },
-        {
-          "label": "the skill"
-        },
-        {
-          "label": "the bank"
         },
         {
           "label": "the wording"
@@ -1356,25 +1404,7 @@
       "purpose": "Who teaches which class, and whole counts you can rely on. No score, no ranking: the school decides what they mean.",
       "does": [
         {
-          "label": "each staff row"
-        },
-        {
-          "label": "a person's grants"
-        },
-        {
-          "label": "Add a grant"
-        },
-        {
-          "label": "End a grant"
-        },
-        {
-          "label": "Fortnight 9"
-        },
-        {
-          "label": "Timetable"
-        },
-        {
-          "label": "Classes and children"
+          "label": "Add a person"
         },
         {
           "label": "Role"
@@ -1383,7 +1413,22 @@
           "label": "Find a person (search)"
         },
         {
-          "label": "Add a person"
+          "label": "each staff row"
+        },
+        {
+          "label": "panel: Close"
+        },
+        {
+          "label": "panel: Grants"
+        },
+        {
+          "label": "panel: Roles"
+        },
+        {
+          "label": "Add a grant"
+        },
+        {
+          "label": "End a grant"
         }
       ]
     },
@@ -1396,31 +1441,28 @@
       "purpose": "Each class, its grade, its children by Sr. No., and who teaches it. Move a child to another class; every change is kept with who made it.",
       "does": [
         {
-          "label": "each class row"
-        },
-        {
-          "label": "Move (a child row)"
-        },
-        {
-          "label": "change log"
-        },
-        {
-          "label": "a class's picture"
-        },
-        {
-          "label": "Staff"
-        },
-        {
-          "label": "Class picture"
-        },
-        {
-          "label": "the fortnight"
-        },
-        {
           "label": "Grade"
         },
         {
           "label": "Find a class (search)"
+        },
+        {
+          "label": "each class row"
+        },
+        {
+          "label": "panel: Close"
+        },
+        {
+          "label": "panel: Class picture"
+        },
+        {
+          "label": "panel: Children"
+        },
+        {
+          "label": "panel: Moves"
+        },
+        {
+          "label": "Move (a child row)"
         }
       ]
     },

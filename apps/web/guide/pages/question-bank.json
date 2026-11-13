@@ -19,7 +19,7 @@
     },
     {
       "area": "Questions",
-      "shows": "Search, choices of grade, level and kind, and the list. [[Open]] opens one question."
+      "shows": "Search, choices of grade, level and kind, and the list. Press a question to open it on the right, with its Question, Change and About tabs; Open full page gives it its own address."
     }
   ],
   "jobs": [
@@ -27,8 +27,8 @@
       "id": "correct",
       "title": "Correct a question's wording",
       "steps": [
-        "Find the question and press [[Open]].",
-        "Under [[Correct the wording]], change the words and say what was wrong. Keep the numbers as they are, so the answer cannot change.",
+        "Find the question and press it. It opens on the right.",
+        "On its Change tab, under [[Correct the wording]], change the words and say what was wrong. Keep the numbers as they are, so the answer cannot change.",
         "Press [[Correct the wording]]. The new wording is saved and the old wording will not print again."
       ]
     },
@@ -36,7 +36,7 @@
       "id": "remove",
       "title": "Remove a question",
       "steps": [
-        "Open the question. Under [[Remove it]], say why.",
+        "Open the question. On its Change tab, under [[Remove it]], say why.",
         "Press [[Remove]]. It will not print again. The worksheets it was on are replaced with new ones."
       ]
     },

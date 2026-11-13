@@ -10,15 +10,15 @@
     },
     {
       "area": "Table",
-      "shows": "Name, Role, Class, Sessions done of planned, Notes confirmed, Notes late and Lines accepted / changed / removed, grouped by role. Press a name to open what that person holds."
+      "shows": "Name, Role, Class, Sessions done of planned, Notes confirmed, Notes late and Lines accepted / changed / removed, grouped by role. Press a name to open that person on the right."
     },
     {
       "area": "Add a person",
       "shows": "A button under the table. It opens a form for name, school email and role."
     },
     {
-      "area": "A person's grants",
-      "shows": "Every class and subject the person holds or held: the role, the class, the subject, from and to, and who gave it. With [[Add a grant]] and, on a grant that is still open, [[End a grant]]."
+      "area": "A person, on the right",
+      "shows": "Their Grants tab: every class and subject the person holds or held: the role, the class, the subject, from and to, and who gave it. With [[Add a grant]] and, on a grant that is still open, [[End a grant]]."
     }
   ],
   "jobs": [

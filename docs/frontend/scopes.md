@@ -262,15 +262,17 @@ Staff and grants, classes and children and the Setup home; the small writes that
 2. Every old route listed under `folds` answers 308 to the new address.
 3. `/setup/staff` has no column, sort or text that ranks people: the table cannot be sorted by the three numbers and no ordinal appears (test asserts absence).
 4. A child move writes a child_move row and a new enrolment and deletes nothing; the class picture of both classes reflects it on the next render (database and DOM assertion).
-5. Every one of the 26 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
+5. Every one of the 24 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
 6. Staff and classes: no sort, rank, ordinal or colour grading on the three numbers; the table cannot be sorted by them
 7. Staff and classes: a grant edit is a new row or a valid_to, never a delete (row count never drops)
 8. Staff and classes: no staff name appears unless the viewer is in the everything group (names are pii)
-9. Classes and children: a move closes the enrolment, opens a new one, writes a change_log row and deletes nothing
-10. Classes and children: each child row shows the name beside the Sr. No., read from pii by child_id; the address and the change log's stored text carry no name (DOM scan)
-11. Classes and children: the change log lists the move with who and when
-12. Setup: every setup page is reachable in two clicks from the bar
-13. Setup: an educator sees only the cards their group may open
+9. Staff and classes: a Workspace (page charter Part C): the staff on the left; choosing a person opens them on the right with tabs Grants · Roles, where a grant is given or ended; Escape closes it
+10. Classes and children: a move closes the enrolment, opens a new one, writes a change_log row and deletes nothing
+11. Classes and children: each child row shows the name beside the Sr. No., read from pii by child_id; the address and the change log's stored text carry no name (DOM scan)
+12. Classes and children: the change log lists the move with who and when (the class panel's Moves tab)
+13. Classes and children: a Workspace (page charter Part C): the classes on the left; choosing a class opens it on the right with tabs Children · Moves; Escape closes it
+14. Setup: every setup page is reachable in two clicks from the bar
+15. Setup: an educator sees only the cards their group may open
 
 ### Out of scope
 
@@ -428,16 +430,19 @@ The four existing Setup pages that carry content rather than people, rebuilt on 
 2. Every old route listed under `folds` for these screens answers 308 to the new address.
 3. No approve-all control exists on any of these screens (Skills to approve and the offers act on one row each).
 4. The skills-to-approve count is the eyebrow of Skills to approve and appears on no card, tile, badge or other page.
-5. Every one of the 55 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
+5. Every one of the 71 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
 6. Curriculum: one list carries activities (K2) and skills (grades 1–4) under one filter row
 7. Curriculum: Curriculum shows no count of skills to approve; that number is the eyebrow of Skills to approve and appears nowhere else
 8. Curriculum: Yes / No act on one offer each; no control acts on all offers
-9. Skills to approve: approval is per row; no control approves more than one
+9. Skills to approve: approval is per skill; no control approves more than one
 10. Skills to approve: the eyebrow count equals the rows across all pages, and it is the only place the number is shown
-11. Question bank: statistics and taxonomy sit behind the details link, not on the first view (rule 8)
-12. Question bank: the table shows ten rows then pages
-13. {the question as it prints}: a correction keeps the old key in change_log and the old version readable
-14. {the question as it prints}: Remove retires, never deletes (row count unchanged)
+11. Skills to approve: a Workspace (page charter Part C): one skill at a time on the right, with its levels and its own Approve; an approval comes back with the next skill open
+12. Question bank: statistics and taxonomy sit behind the details link, not on the first view (rule 8)
+13. Question bank: the table shows ten rows then pages
+14. Question bank: a Workspace (page charter Part C): the questions on the left; choosing one opens it on the right with tabs Question · Change · About; Escape closes it
+15. {the question as it prints}: a correction keeps the old key in change_log and the old version readable
+16. {the question as it prints}: Remove retires, never deletes (row count unchanged)
+17. {the question as it prints}: the question's own address is the bank's question panel opened full page, with the same tabs (page charter Part C)
 
 ### Out of scope
 

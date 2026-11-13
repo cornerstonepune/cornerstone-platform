@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import Link from "@/components/link";
 import { Icon } from "@/lib/icons";
+import type { IconName } from "@/lib/icons";
 import { KindTile, type Kind } from "./kind-tile";
 import { StatTiles, type Stat } from "./stat-tile";
 import { PanelReturn, PanelShell, PanelTabs } from "./detail-panel-client";
@@ -15,6 +16,8 @@ export type Opened = {
   /** `<kind>:<id>`, as the address says it; the thing on the page that opened it carries the same `data-open-key`. */
   key: string;
   kind: Kind;
+  /** Another icon in the kind's colour, for a thing that is not one of the seven kinds (a class, a member of staff). */
+  icon?: IconName;
   title: string;
   /** One line of facts under the title. */
   line?: string;
@@ -52,7 +55,7 @@ export function DetailPanel({ open, summary, inline }: { open?: Opened | null; s
   return (
     <PanelShell openKey={open.key} closeHref={open.closeHref} inline={inline}>
       <header className="b-dpanel-head">
-        <KindTile kind={open.kind} />
+        <KindTile kind={open.kind} icon={open.icon} />
         <div className="min-w-0">
           <h2 id="panel-h" tabIndex={-1} data-panel-title className="b-dpanel-title">
             {open.title}
