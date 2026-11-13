@@ -92,10 +92,10 @@
       "purpose": "the activity's objective in one line; 'No activity for this lesson yet' when it has none",
       "does": [
         {
-          "label": "Record a note"
+          "label": "Record"
         },
         {
-          "label": "Type the marks instead"
+          "label": "Type the marks"
         },
         {
           "label": "Open the activity"
@@ -141,22 +141,6 @@
         },
         {
           "label": "The class"
-        }
-      ]
-    },
-    {
-      "id": "record",
-      "title": "Record a note",
-      "eyebrow": "K2 Red · the session's name",
-      "group": "Today",
-      "route": "/record",
-      "purpose": "Say what happened and who, by Sr. number. The reader turns it into marks; you confirm them, one note at a time.",
-      "does": [
-        {
-          "label": "Which period"
-        },
-        {
-          "label": "Start recording"
         },
         {
           "label": "Stop"
@@ -168,16 +152,7 @@
           "label": "Add a photo"
         },
         {
-          "label": "Type the marks"
-        },
-        {
-          "label": "The period"
-        },
-        {
-          "label": "The activity"
-        },
-        {
-          "label": "The class"
+          "label": "History: each recent note of the class"
         }
       ]
     },
@@ -221,6 +196,12 @@
         },
         {
           "label": "Open the child"
+        },
+        {
+          "label": "Marks"
+        },
+        {
+          "label": "Children"
         }
       ]
     },
@@ -230,7 +211,7 @@
       "eyebrow": "K2 Red · this fortnight",
       "group": "Children",
       "route": "/notes",
-      "purpose": "Every note of your classes: waiting, confirmed, left unconfirmed. Open one to confirm it or to correct a confirmed one.",
+      "purpose": "Every note of your classes: waiting, confirmed, left unconfirmed. Choose one to confirm its marks, or to correct a confirmed one.",
       "does": [
         {
           "label": "class"
@@ -260,18 +241,6 @@
           "label": "Later →"
         },
         {
-          "label": "Record a note"
-        },
-        {
-          "label": "Class picture"
-        },
-        {
-          "label": "Today"
-        },
-        {
-          "label": "Voice note"
-        },
-        {
           "label": "Board"
         },
         {
@@ -285,6 +254,24 @@
         },
         {
           "label": "Open the child"
+        },
+        {
+          "label": "panel: Marks"
+        },
+        {
+          "label": "panel: Children"
+        },
+        {
+          "label": "panel: Open full page"
+        },
+        {
+          "label": "panel: Close"
+        },
+        {
+          "label": "panel: Confirm this note"
+        },
+        {
+          "label": "Record on a lesson"
         }
       ]
     },

@@ -98,10 +98,11 @@ export function buildTasks(src: Sources, subjectLabel: (code: string | null) => 
   for (const g of src.generate)
     add("generate", `${g.topic}|${g.section}`, { subject: g.subject, topic: g.topic, topicName: g.topicName }, [g.section], "none yet", `/children/assessments?make=class&topic=${encodeURIComponent(g.topic)}&class=${encodeURIComponent(g.section)}`, "Make one", g.section, [g.section]);
   const klass = new Map((src.voice?.classes ?? []).map((c) => [c.id, classWords(c)]));
-  // with recording off (D-065) a class's row asks to type the marks: no Record, no microphone
+  // with recording off (D-065) a class's row asks to type the marks: no Record, no microphone. Either is done on a lesson (page charter
+  // B4), so the row opens Today, which lists the lessons
   const recording = src.voice?.recording ?? false;
   for (const c of src.voice?.classes ?? [])
-    add("record", c.id, none, [klass.get(c.id)!], "", `/record?class=${c.id}`, recording ? W.record.start : W.typeMarks, klass.get(c.id)!, [klass.get(c.id)!]);
+    add("record", c.id, none, [klass.get(c.id)!], "", "/today", recording ? W.record.start : W.typeMarks, klass.get(c.id)!, [klass.get(c.id)!]);
   for (const n of src.voice?.notes ?? []) {
     const where = klass.get(n.class_id) ?? "";
     add("note", n.id, none, [where, heardAt(n.received_at, src.zone)], "1 note", `/notes/${n.id}`, n.status === "received" ? W.confirm.reading : W.confirm.button, where, where ? [where] : []);

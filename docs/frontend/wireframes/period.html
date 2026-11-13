@@ -90,7 +90,17 @@
               <h1 class="title" data-source="activity.name">Counting in tens with bundles</h1>
               <p class="purpose" data-source="activity.objective">Counts in tens up to 100 with bundles, and says how many without recounting.</p>
             </div>
-            <div class="keyrow"><a class="btn btn-main press" data-el="0" href="#record?session=this"><i class="ic" data-icon="record"></i>Record a note</a><a class="press" data-el="2" href="#activity">Open the activity</a><a class="press" data-el="1" href="#record?session=this&amp;mode=type">Type the marks instead</a><a class="press" data-el="17" href="#picture">The class</a></div>
+            <section class="card" data-block="CaptureBar" aria-label="Record a note">
+              <div class="card-b stack">
+                <p class="muted">Say what happened and who, by Sr. number.</p>
+                <div class="keyrow"><button class="btn btn-main press" type="button" data-el="0"><i class="ic" data-icon="record"></i>Record</button></div>
+                <p class="caption">While recording, then once stopped:</p>
+                <div class="keyrow"><button class="btn press" type="button" data-el="19"><i class="ic" data-icon="stop"></i>Stop</button><button class="btn press" type="button" data-el="20"><i class="ic" data-icon="send"></i>Send</button></div>
+              </div>
+            </section>
+            <div class="keyrow"><a class="press" data-el="2" href="#activity">Open the activity</a><a class="press" data-el="17" href="#picture">The class</a></div>
+            <div class="keyrow"><button class="btn press" type="button" data-el="1"><i class="ic" data-icon="form"></i>Type the marks</button><label class="btn btn-capture press"><i class="ic" data-icon="photo"></i>Add a photo<input class="vh" data-el="21" type="file" accept="image/jpeg,image/png,image/heic"></label></div>
+            <p class="caption">Photograph the work or the board, never a child. Recordings and transcripts are cleared after 48 hours.</p>
             <h2>Mark the class</h2>
             <ol class="cgrid" data-block="ClassGrid" aria-label="K2 Red, by Sr. No.">
               <li><button class="sq press" type="button" data-state="ok" data-el="7">
@@ -177,6 +187,13 @@
                   <div class="sbar" role="img" aria-label="3 above, 13 as expected, 4 below"><i data-state="ok" style="--n: 3"></i><i data-state="ok" style="--n: 13"></i><i data-state="wait" style="--n: 4"></i></div>
                   <ul class="nchips"><li><button class="nchip press" data-el="3" type="button" aria-label="Sr. No. 03, open the history"><span class="no" data-source="enrolment.roll_no">03</span></button></li><li><button class="nchip press" data-el="3" type="button" aria-label="Sr. No. 05, open the history"><span class="no" data-source="enrolment.roll_no">05</span></button></li></ul>
                   <span class="caption">Sr. No. only. Tap one to see that child's recent history.</span>
+                </div>
+              </div>
+              <div class="card" data-block="StackBar">
+                <div class="card-h">Inset, the History tab: not yet seen on this activity, and the class's latest notes</div>
+                <div class="card-b stack">
+                  <div class="sbar" role="img" aria-label="14 seen, 6 not seen yet" data-source="activity_observation.child_id"><i data-state="ok" style="--n: 14"></i><i data-state="unseen" style="--n: 6"></i></div>
+                  <ul class="rlist"><li><a class="press" data-el="22" href="#confirm" data-source="pii.educator_note.received_at">A voice note</a> <span class="muted">· Voice note · 5 children named</span></li><li><a class="press" data-el="22" href="#confirm" data-source="pii.educator_note.received_at">Typed marks</a> <span class="muted">· Form · 2 children named</span></li></ul>
                 </div>
               </div>
             </aside>
@@ -272,7 +289,17 @@
               <h1 class="title" data-source="activity.name">Counting in tens with bundles</h1>
               <p class="purpose" data-source="activity.objective">Counts in tens up to 100 with bundles, and says how many without recounting.</p>
             </div>
-            <div class="keyrow"><a class="btn btn-main press" data-el="0" href="#record?session=this"><i class="ic" data-icon="record"></i>Record a note</a><a class="press" data-el="2" href="#activity">Open the activity</a><a class="press" data-el="1" href="#record?session=this&amp;mode=type">Type the marks instead</a><a class="press" data-el="17" href="#picture">The class</a></div>
+            <section class="card" data-block="CaptureBar" aria-label="Record a note">
+              <div class="card-b stack">
+                <p class="muted">Say what happened and who, by Sr. number.</p>
+                <div class="keyrow"><button class="btn btn-main press" type="button" data-el="0"><i class="ic" data-icon="record"></i>Record</button></div>
+                <p class="caption">While recording, then once stopped:</p>
+                <div class="keyrow"><button class="btn press" type="button" data-el="19"><i class="ic" data-icon="stop"></i>Stop</button><button class="btn press" type="button" data-el="20"><i class="ic" data-icon="send"></i>Send</button></div>
+              </div>
+            </section>
+            <div class="keyrow"><a class="press" data-el="2" href="#activity">Open the activity</a><a class="press" data-el="17" href="#picture">The class</a></div>
+            <div class="keyrow"><button class="btn press" type="button" data-el="1"><i class="ic" data-icon="form"></i>Type the marks</button><label class="btn btn-capture press"><i class="ic" data-icon="photo"></i>Add a photo<input class="vh" data-el="21" type="file" accept="image/jpeg,image/png,image/heic"></label></div>
+            <p class="caption">Photograph the work or the board, never a child. Recordings and transcripts are cleared after 48 hours.</p>
             <h2>Mark the class</h2>
             <ol class="cgrid" data-block="ClassGrid" aria-label="K2 Red, by Sr. No.">
               <li><button class="sq press" type="button" data-state="ok" data-el="7">
@@ -359,6 +386,13 @@
                   <div class="sbar" role="img" aria-label="3 above, 13 as expected, 4 below"><i data-state="ok" style="--n: 3"></i><i data-state="ok" style="--n: 13"></i><i data-state="wait" style="--n: 4"></i></div>
                   <ul class="nchips"><li><button class="nchip press" data-el="3" type="button" aria-label="Sr. No. 03, open the history"><span class="no" data-source="enrolment.roll_no">03</span></button></li><li><button class="nchip press" data-el="3" type="button" aria-label="Sr. No. 05, open the history"><span class="no" data-source="enrolment.roll_no">05</span></button></li></ul>
                   <span class="caption">Sr. No. only. Tap one to see that child's recent history.</span>
+                </div>
+              </div>
+              <div class="card" data-block="StackBar">
+                <div class="card-h">Inset, the History tab: not yet seen on this activity, and the class's latest notes</div>
+                <div class="card-b stack">
+                  <div class="sbar" role="img" aria-label="14 seen, 6 not seen yet" data-source="activity_observation.child_id"><i data-state="ok" style="--n: 14"></i><i data-state="unseen" style="--n: 6"></i></div>
+                  <ul class="rlist"><li><a class="press" data-el="22" href="#confirm" data-source="pii.educator_note.received_at">A voice note</a> <span class="muted">· Voice note · 5 children named</span></li><li><a class="press" data-el="22" href="#confirm" data-source="pii.educator_note.received_at">Typed marks</a> <span class="muted">· Form · 2 children named</span></li></ul>
                 </div>
               </div>
             </aside>

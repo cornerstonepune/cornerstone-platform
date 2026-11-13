@@ -166,7 +166,6 @@
       "what": "Period, record, confirm, notes, children, class picture, child, activity, objective and skill as node pages on the blocks, each walking to its neighbours through the rail and back through the trail; the old routes redirect.",
       "screens": [
         "period",
-        "record",
         "confirm",
         "notes",
         "children",
@@ -628,7 +627,8 @@
       ],
       "exists": "yes (/educator/period)",
       "folds": [
-        "/educator/period/[id]"
+        "/educator/period/[id]",
+        "/record"
       ],
       "eyebrow": "Period · 09:15 · K2 Red · Numeracy",
       "title": "the session's name",
@@ -640,7 +640,11 @@
         ],
         [
           "DetailPanel",
-          "the right side, never closed: tabs Activity (outcome, numbered steps, lay out, watch for, objectives and skills) · Rubric (the four levels as coloured rows with their words) · Materials · History (last time this class did it, how many at each, the children named by Sr. No.)"
+          "the right side, never closed: tabs Activity (outcome, numbered steps, lay out, watch for, objectives and skills) · Rubric (the four levels as coloured rows with their words) · Materials · History (last time this class did it, how many at each, the children named by Sr. No.; who is not yet seen on the activity; the class's latest notes)"
+        ],
+        [
+          "CaptureBar",
+          "the class's own educator only (the merged Record page): Record (main), while recording Stop, then Send; Type the marks; Add a photo with the rule for photos; 'Recordings and transcripts are cleared after 48 hours'"
         ],
         [
           "Details",
@@ -649,16 +653,23 @@
       ],
       "elements": [
         {
-          "t": "link",
-          "label": "Record a note",
-          "to": "record",
-          "note": "opens Record with this period's session preselected"
+          "t": "button",
+          "label": "Record",
+          "effect": "microphone permission asked; the button becomes Stop; the note carries this lesson",
+          "note": "the page's main action for the class's own educator, voice notes and recording on; with recording off Type the marks takes its place",
+          "pending": "checker cannot drive a microphone or file picker"
         },
         {
-          "t": "link",
-          "label": "Type the marks instead",
-          "to": "record",
-          "note": "opens Record on its typing path, session preselected"
+          "t": "button",
+          "label": "Type the marks",
+          "effect": "creates the empty note for this lesson and class and opens it on the confirm screen",
+          "drive": {
+            "click": "Type the marks",
+            "expect": {
+              "url": "^/notes/[0-9a-f-]{36}$",
+              "check": "typed-note-written"
+            }
+          }
         },
         {
           "t": "link",
@@ -742,65 +753,6 @@
           "t": "child_name",
           "label": "the first name on each child's card",
           "note": "read from pii by child_id, only for the children the person may see"
-        }
-      ],
-      "rail": [
-        "The day",
-        "The class"
-      ],
-      "capture": [],
-      "main": "Record a note",
-      "next": "the next period",
-      "data": "session → plan_entry → activity (+activity_material, activity_objective); activity_observation of this activity for this class, last session (the five outcome words are a config list); the class's roll that day (POST /voice/class) and today's levels (CP-49, POST /lesson/level/read)",
-      "empty": "A fixed part of the day: 'Nothing to record here'; a lesson with no activity: 'No activity for this lesson yet' and, for the coordinator, Choose an activity",
-      "phone": "the grid three cards across, the level choices under it, the panel's tabs below; no sideways scroll",
-      "done_when": [
-        "a period with no activity shows no capture controls and the words 'Nothing to record here'",
-        "a lesson with an activity shows every child enrolled that day as a card (Sr. No. + first name)",
-        "the level choices show the activity's own words, 'Not written' where a level has none",
-        "the panel's tabs are Activity · Rubric · Materials · History",
-        "tapping a child in the History tab opens ChildPeek with that child's recent history newest first; Escape closes it and focus returns"
-      ],
-      "phone_gate": true,
-      "rest": {
-        "fixture": "voice-rest",
-        "after": "voice-gone"
-      }
-    },
-    {
-      "id": "record",
-      "route": "/record",
-      "group": "Today",
-      "who": "educator",
-      "phase": "Core",
-      "backend": [
-        "CP-10"
-      ],
-      "exists": "yes (/voice/record)",
-      "eyebrow": "K2 Red · the session's name",
-      "title": "Record a note",
-      "purpose": "Say what happened and who, by Sr. number. The reader turns it into marks; you confirm them, one note at a time.",
-      "blocks": [
-        [
-          "CaptureBar",
-          "Start recording (main) · Add a photo · Type the marks; while recording: Stop, Send; after: 'sent, the reader is listening'"
-        ],
-        [
-          "KeyValue",
-          "activity · class · time; audio and transcript kept 48 h on the private side, then deleted"
-        ]
-      ],
-      "elements": [
-        {
-          "t": "field",
-          "label": "Which period",
-          "note": "preselected when opened from a period, a class or a child; otherwise today's periods for the person's classes; required before Start recording or Type the marks"
-        },
-        {
-          "t": "button",
-          "label": "Start recording",
-          "effect": "microphone permission asked; the button becomes Stop; a timer counts",
-          "pending": "checker cannot drive a microphone or file picker"
         },
         {
           "t": "button",
@@ -811,68 +763,47 @@
         {
           "t": "button",
           "label": "Send",
-          "effect": "one pii.educator_note row with the session id, status received; the page says 'sent, the reader is listening' and links to Notes",
+          "effect": "one pii.educator_note row with this lesson's session id, status received; opens the note being read",
           "pending": "checker cannot drive a microphone or file picker"
         },
         {
           "t": "upload",
           "label": "Add a photo",
-          "effect": "jpg/png/heic accepted; the photo attaches to the session, never to a child",
+          "effect": "jpg/png/heic accepted; the photo hangs on the lesson's note, never on a child",
           "pending": "checker cannot drive a microphone or file picker"
         },
         {
-          "t": "button",
-          "label": "Type the marks",
-          "effect": "creates the empty note for the chosen session and class in this step and opens it on the confirm screen",
-          "drive": {
-            "click": "Type the marks",
-            "expect": {
-              "url": "^/notes/[0-9a-f-]{36}$",
-              "check": "typed-note-written"
-            }
-          }
-        },
-        {
           "t": "link",
-          "label": "rail: The period",
-          "to": "period",
-          "note": "drawn only when a session is chosen"
-        },
-        {
-          "t": "link",
-          "label": "rail: The activity",
-          "to": "activity"
-        },
-        {
-          "t": "link",
-          "label": "rail: The class",
-          "to": "picture"
+          "label": "History: each recent note of the class",
+          "to": "confirm",
+          "note": "the class's notes of the lesson's day and the day before, newest first"
         }
       ],
       "rail": [
-        "The period (when a session is chosen)",
-        "The activity",
+        "The day",
         "The class"
       ],
       "capture": [
         "voice",
         "photo"
       ],
-      "main": "Start recording",
-      "next": "Notes to confirm",
-      "data": "the session; pii.educator_note insert via the engine; config: note retention",
-      "empty": "none",
-      "phone": "this is the phone screen: one button, the activity already known",
+      "main": "Record",
+      "next": "the next period",
+      "data": "session → plan_entry → activity (+activity_material, activity_objective); activity_observation of this activity for this class, last session (the five outcome words are a config list); the class's roll that day (POST /voice/class) and today's levels (CP-49, POST /lesson/level/read); a voice note or typed marks: pii.educator_note insert via the engine, with this session's id; config: note retention; activity_observation of this activity for this class (who is not yet seen); the class's latest notes (POST /voice/class-notes)",
+      "empty": "A fixed part of the day: 'Nothing to record here'; a lesson with no activity: 'No activity for this lesson yet' and, for the coordinator, Choose an activity",
+      "phone": "the grid three cards across, the level choices under it, the panel's tabs below; no sideways scroll",
       "done_when": [
-        "Send writes exactly one educator_note with this session's id and nothing in activity_observation",
-        "at 400 px the Start button is the full width and at least 56 px tall",
-        "a denied microphone shows the typed path as the main action instead of an error"
+        "a period with no activity shows no capture controls and the words 'Nothing to record here'",
+        "a lesson with an activity shows every child enrolled that day as a card (Sr. No. + first name)",
+        "the level choices show the activity's own words, 'Not written' where a level has none",
+        "the panel's tabs are Activity · Rubric · Materials · History",
+        "tapping a child in the History tab opens ChildPeek with that child's recent history newest first; Escape closes it and focus returns",
+        "Record, Stop, Send writes exactly one educator_note with this lesson's session id and nothing in activity_observation",
+        "at 400 px the Record button is the full width of the action row and at least 56 px tall",
+        "a denied microphone shows Type the marks as the main action instead of an error",
+        "the old /record address answers 308: to the lesson its session names, else to Today"
       ],
       "phone_gate": true,
-      "folds": [
-        "/voice/record",
-        "/voice/form"
-      ],
       "rest": {
         "fixture": "voice-rest",
         "after": "voice-gone"
@@ -893,6 +824,10 @@
       "title": "Confirm what the reader heard",
       "purpose": "Left, your words line by line. Right, the class already marked from them. Nothing is ticked for you; 'the rest did as expected' is one switch. Confirm is for this note only.",
       "blocks": [
+        [
+          "DetailPanel",
+          "the Notes panel opened full page (page charter Part C): tabs Marks · Children; the tab is in the address"
+        ],
         [
           "Cards",
           "You said: each claim line with its words → Sr. No.s and the mark as a chip; problems the reader flagged pinned on top in red"
@@ -978,6 +913,18 @@
           "label": "peek: Open the child",
           "to": "child",
           "note": "the one way from a list to the child's own page"
+        },
+        {
+          "t": "tab",
+          "label": "Marks",
+          "text": "Marks",
+          "note": "the panel's first tab: the flagged problems, her words, the class grid, Confirm (Correct on a confirmed note)"
+        },
+        {
+          "t": "tab",
+          "label": "Children",
+          "text": "Children",
+          "note": "the children the note names"
         }
       ],
       "rail": [
@@ -989,7 +936,7 @@
       "main": "Confirm this note",
       "next": "the next note waiting",
       "data": "pii.educator_note + draft claims from the engine (pii.note_claim: flag, outcome, entry_mode, child_id, set when the note is read); activity_observation written at confirm, one row per child, confirmation_id",
-      "empty": "No note waiting: link to Record",
+      "empty": "No note waiting: link to Today, whose lessons are where a note is recorded",
       "phone": "the grid first, then her words; Confirm fixed at the bottom",
       "done_when": [
         "Confirm writes one activity_observation per marked child, none for an unmarked child, all with one confirmation_id",
@@ -1021,7 +968,7 @@
       "exists": "no",
       "eyebrow": "K2 Red · this fortnight",
       "title": "Notes",
-      "purpose": "Every note of your classes: waiting, confirmed, left unconfirmed. Open one to confirm it or to correct a confirmed one.",
+      "purpose": "Every note of your classes: waiting, confirmed, left unconfirmed. Choose one to confirm its marks, or to correct a confirmed one.",
       "blocks": [
         [
           "FilterBar",
@@ -1029,11 +976,15 @@
         ],
         [
           "KanbanBoard",
-          "the notes as lanes by Table | Board toggle: To confirm (late ones first, red; a note still being read or left unconfirmed sits here too) · Confirmed; each card a note"
+          "the left side, Table | Board toggle: To confirm (late ones first, red; a note still being read or left unconfirmed sits here too) · Confirmed; each card a note, opening it in the panel"
         ],
         [
           "DataTable",
-          "when · activity · by voice/form · state chip · children named · its button (Confirm / Open / Correct)"
+          "the left side as rows: when · activity · by voice/form · state chip · children named · its button (Confirm / Open), opening the note in the panel"
+        ],
+        [
+          "DetailPanel",
+          "nothing chosen: StatTiles to confirm · left unconfirmed · confirmed · typed by form, and the notes by class; a note chosen: tabs Marks (the confirm screen's flagged problems, words, class grid, Confirm; Correct on a confirmed note) · Children, with Open full page"
         ],
         [
           "ChildPeek",
@@ -1075,39 +1026,22 @@
         {
           "t": "row",
           "label": "Confirm (a waiting note)",
-          "to": "confirm"
+          "to": "notes",
+          "data": "data-open-key",
+          "effect": "opens the note in the panel on the right; the address carries open=note:<id>"
         },
         {
           "t": "row",
           "label": "Open (a confirmed note)",
-          "to": "confirm",
-          "note": "the confirmed note on the confirm screen, where Correct this note lives"
+          "to": "notes",
+          "data": "data-open-key",
+          "note": "the confirmed note in the panel, where Correct this note lives"
         },
         {
           "t": "link",
           "label": "page: Later →",
           "to": "notes",
           "note": "the next ten rows; the address carries the page"
-        },
-        {
-          "t": "link",
-          "label": "rail: Record a note",
-          "to": "record"
-        },
-        {
-          "t": "link",
-          "label": "rail: Class picture",
-          "to": "picture"
-        },
-        {
-          "t": "link",
-          "label": "rail: Today",
-          "to": "today-educator"
-        },
-        {
-          "t": "link",
-          "label": "capture: Voice note",
-          "to": "record"
         },
         {
           "t": "tab",
@@ -1122,8 +1056,9 @@
         {
           "t": "row",
           "label": "each card on the board",
-          "to": "confirm",
-          "note": "a waiting note's card confirms it; a confirmed note's card opens it"
+          "to": "notes",
+          "data": "data-open-key",
+          "effect": "opens the note in the panel on the right"
         },
         {
           "t": "button",
@@ -1140,27 +1075,65 @@
           "t": "child_name",
           "label": "the name in the peek",
           "note": "the child's name beside the Sr. No., read from pii by child_id"
+        },
+        {
+          "t": "tab",
+          "label": "panel: Marks",
+          "text": "Marks",
+          "note": "what the reader flagged, her words beside the class marked from them, Confirm this note; a confirmed note's Correct this note",
+          "when": "@note-open"
+        },
+        {
+          "t": "tab",
+          "label": "panel: Children",
+          "text": "Children",
+          "note": "the children the note names, each opening ChildPeek",
+          "when": "@note-open"
+        },
+        {
+          "t": "link",
+          "label": "panel: Open full page",
+          "text": "Open full page",
+          "to": "confirm",
+          "when": "@note-open"
+        },
+        {
+          "t": "link",
+          "label": "panel: Close",
+          "to": "notes",
+          "note": "closes the panel; Escape too; focus returns to the note that opened it",
+          "when": "@note-open"
+        },
+        {
+          "t": "button",
+          "label": "panel: Confirm this note",
+          "text": "Confirm this note",
+          "effect": "as on the confirm screen; then the next note waiting opens in the panel, or the panel closes",
+          "when": "@note-open"
+        },
+        {
+          "t": "link",
+          "label": "Record on a lesson",
+          "to": "today-educator",
+          "note": "the main action when no note waits, and the empty state's link: a note is recorded on a lesson (page charter B4)"
         }
       ],
-      "rail": [
-        "Record a note",
-        "Class picture",
-        "Today"
-      ],
-      "capture": [
-        "voice"
-      ],
+      "rail": [],
+      "capture": [],
       "main": "Confirm the oldest",
       "next": "Class picture",
       "data": "pii.educator_note joined to activity_observation counts; pii.educator_note.status (the words are a config list); pii.educator_note.route (by voice / form); pii.note_claim.child_id for the children named",
-      "empty": "No notes yet this fortnight: link to Record",
-      "phone": "the table scrolls sideways in its own box",
+      "empty": "No notes yet this fortnight: link to Today, whose lessons are where a note is recorded",
+      "phone": "the table scrolls sideways in its own box; a note chosen covers the list as a sheet",
       "done_when": [
         "a correction writes a superseding row with a reason and never updates the old one",
         "the coordinator sees every class, an educator their own (access fixture)",
         "a note left unconfirmed past 48 hours carries the red 'late' chip and sorts first",
         "each board lane's card count equals the rows of the table in that state",
-        "tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page"
+        "tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page",
+        "choosing a note opens it in the panel on the right with its marks, the list kept on the left; the address carries open=note:<id>; Escape or × closes it and focus returns",
+        "Confirm this note and Correct this note in the panel write as on the note's own page; a confirm opens the next note waiting in the panel",
+        "/notes/<id> is the panel opened full page, with the same tabs"
       ],
       "rest": {
         "fixture": "voice-rest",
@@ -2026,8 +1999,9 @@
           "t": "link",
           "label": "panel: Add a note about this child",
           "text": "Add a note about this child",
-          "to": "record",
-          "when": "?open=child:1"
+          "to": "today-educator",
+          "when": "?open=child:1",
+          "note": "recording happens on a lesson (page charter B4): Today lists them"
         },
         {
           "t": "link",
@@ -2138,7 +2112,8 @@
           "t": "link",
           "label": "Add a note about this child",
           "text": "Add a note about this child",
-          "to": "record"
+          "to": "today-educator",
+          "note": "recording happens on a lesson (page charter B4): Today lists them"
         },
         {
           "t": "link",
@@ -3226,7 +3201,8 @@
         {
           "t": "link",
           "label": "capture: Voice note",
-          "to": "record"
+          "to": "today-educator",
+          "note": "recording happens on a lesson (page charter B4): Today lists them"
         },
         {
           "t": "link",

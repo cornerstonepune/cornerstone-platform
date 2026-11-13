@@ -116,8 +116,7 @@ function fill(route: string, rows: Rows, over: Record<string, string>): string {
     return encodeURIComponent(given[k]);
   });
   // Classes and children opens one class below its table: the test's own, so the children are the fake ones above and not whatever other specs left in the first
-  // Record opens on the fixture class, so the person holding several classes is not asked which one first
-  return route === "/setup/classes" || route === "/record" ? `${path}?class=${rows.classId}` : path;
+  return route === "/setup/classes" ? `${path}?class=${rows.classId}` : path;
 }
 
 /** The coordinator's own copy of createHmac is not needed: the signed-in file holds the cookie. */
@@ -236,6 +235,8 @@ ADDRESSES["today-wait"] = async () => "/today?open=wait:group-answers";
 
 /** The confirm screen on a note already confirmed, where "Correct this note" is drawn. */
 ADDRESSES["confirmed-note"] = async () => `/notes/${VOICE.done}`;
+/** Notes with the waiting note open in the panel on the right (page charter Part C, "Notes / A note"). */
+ADDRESSES["note-open"] = async () => `/notes?open=note:${VOICE.note}`;
 CHECKS["typed-note-written"] = () => typedNoteWritten(aside, SECTION);
 CHECKS["mark-corrected"] = () => markCorrected(aside);
 

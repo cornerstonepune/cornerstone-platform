@@ -48,12 +48,13 @@ async function withActivity(): Promise<{ session: string; period: string; day: s
   const [{ id: campus }] = await sql<{ id: string }[]>`select campus_id as id from school_class where id = ${klass}`;
   const [{ id: year }] = await sql<{ id: string }[]>`select academic_year_id as id from school_class where id = ${klass}`;
   const [{ id: day }] = await sql<{ id: string }[]>`select id from school_day where tenant_id = ${t} and campus_id = ${campus} and on_date = ${TODAY}`;
-  // the fortnight that holds today, if some other spec made one; else a day-long one of its own
+  // the fortnight that holds today, if some other spec made one; else a day-long one of its own (kept between runs: its day moves to today)
   const [held] = await sql<{ id: string }[]>`select id from fortnight where tenant_id = ${t} and academic_year_id = ${year} and starts_on <= ${TODAY} and ends_on >= ${TODAY} limit 1`;
   const fortnight =
     held?.id ??
     (await sql<{ id: string }[]>`
-      insert into fortnight (tenant_id, academic_year_id, number, kind, starts_on, ends_on, state) values (${t}, ${year}, 7390, 'teaching', ${TODAY}, ${TODAY}, 'planning') returning id`)[0].id;
+      insert into fortnight (tenant_id, academic_year_id, number, kind, starts_on, ends_on, state) values (${t}, ${year}, 7390, 'teaching', ${TODAY}, ${TODAY}, 'planning')
+      on conflict (academic_year_id, number) where number is not null do update set starts_on = excluded.starts_on, ends_on = excluded.ends_on returning id`)[0].id;
   const [{ id: activity }] = await sql<{ id: string }[]>`select id from activity where code = 'ACT-K2-M104-904'`;
   const [{ id: entry }] = await sql<{ id: string }[]>`
     insert into plan_entry (tenant_id, school_class_id, fortnight_id, plan_key, ord, text, source, activity_id, link_rule)
@@ -72,18 +73,20 @@ test("Period: a period that has an activity opens for the educator, with its act
   const { session } = await withActivity();
   await page.goto(`/period/${session}`);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Placeholder sorting activity");
-  await expect(page.getByRole("link", { name: "Record a note" })).toHaveAttribute("href", `/record?session=${session}`);
-  await expect(page.getByRole("link", { name: "Type the marks instead" })).toBeVisible();
+  // recording happens on the lesson (page charter Part C, "Record: merge into B4"): the voice note is the page's action, typing beside it
+  await expect(page.locator("[data-ux=action] [data-record]")).toBeVisible();
+  await expect(page.locator("[data-record-lesson]").getByRole("button", { name: "Type the marks" })).toBeVisible();
   await expect(page.getByRole("link", { name: "Open the activity" })).toBeVisible();
   await expect(page.getByRole("region", { name: "The steps" })).toBeVisible(); // the panel's Activity tab (CP-49)
   await page.getByRole("tab", { name: "History" }).click();
-  await expect(page.getByText("Not run with this class yet.")).toBeVisible();
+  // the class may have done 904 on an earlier day (the rows are kept between runs): either way the tab says when it last ran
+  await expect(page.getByRole("tabpanel", { name: "History" })).toContainText(/Not run with this class yet\.|Last time this class did it/);
 });
 
 test("Period: a period with no activity shows no capture controls and the words 'Nothing to record here'", async ({ page }) => {
   await page.goto(`/period/${lesson}`);
   await expect(page.getByRole("main")).toContainText("Nothing to record here");
-  await expect(page.locator('a[href^="/record"]')).toHaveCount(0);
+  await expect(page.locator('a[href^="/record"], [data-record], [data-record-lesson]')).toHaveCount(0);
   await expect(page.locator("[data-block=CaptureBar], [data-rail-part=capture]")).toHaveCount(0);
 });
 
@@ -105,7 +108,7 @@ test("Period: a period with no lesson in it says so, read only, and opening it m
   const before = (await lessons())[0].n;
   await page.goto(`/period/${empty}?class=${klass}&day=${day}`);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("No lesson here");
-  await expect(page.locator('a[href^="/record"]')).toHaveCount(0);
+  await expect(page.locator('a[href^="/record"], [data-record], [data-record-lesson]')).toHaveCount(0);
   expect((await lessons())[0].n).toBe(before);
 });
 
@@ -115,7 +118,7 @@ test("Period: with voice notes off it still opens, and offers no recording", asy
   await page.goto(`/period/${session}`);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Placeholder sorting activity");
   await expect(page.getByRole("link", { name: "Open the activity" })).toBeVisible();
-  await expect(page.locator('a[href^="/record"]')).toHaveCount(0);
+  await expect(page.locator('a[href^="/record"], [data-record], [data-record-lesson]')).toHaveCount(0);
 });
 
 // Nimish, 11 Nov 2026: "leave everything old behind, no traces of anything old". Nothing printed or sent links the old period address

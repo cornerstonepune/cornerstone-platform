@@ -296,16 +296,17 @@ Eyebrow: Period · 09:15 · K2 Red · Numeracy
 Purpose: the activity's objective in one line; 'No activity for this lesson yet' when it has none
 Blocks, in order:
 - **ClassGrid**: the class that day as child cards (Sr. No. + first name), each coloured by the level marked today on the state scale (grey until marked, never red); a tap opens the level choices: the activity's own four level words ('Not written' where none), Absent, Not willing; 'Mark the rest at level n'
-- **DetailPanel**: the right side, never closed: tabs Activity (outcome, numbered steps, lay out, watch for, objectives and skills) · Rubric (the four levels as coloured rows with their words) · Materials · History (last time this class did it, how many at each, the children named by Sr. No.)
+- **DetailPanel**: the right side, never closed: tabs Activity (outcome, numbered steps, lay out, watch for, objectives and skills) · Rubric (the four levels as coloured rows with their words) · Materials · History (last time this class did it, how many at each, the children named by Sr. No.; who is not yet seen on the activity; the class's latest notes)
+- **CaptureBar**: the class's own educator only (the merged Record page): Record (main), while recording Stop, then Send; Type the marks; Add a photo with the rule for photos; 'Recordings and transcripts are cleared after 48 hours'
 - **Details**: Mark against the expected level (the CP-40 class form, for the class's own educator) · Choose another activity (coordinator)
-Rail (Connected to): The day · The class
-Main action: Record a note · Next step: the next period
-Data: session → plan_entry → activity (+activity_material, activity_objective); activity_observation of this activity for this class, last session (the five outcome words are a config list); the class's roll that day (POST /voice/class) and today's levels (CP-49, POST /lesson/level/read)
+Rail (Connected to): The day · The class · Capture here: voice, photo
+Main action: Record · Next step: the next period
+Data: session → plan_entry → activity (+activity_material, activity_objective); activity_observation of this activity for this class, last session (the five outcome words are a config list); the class's roll that day (POST /voice/class) and today's levels (CP-49, POST /lesson/level/read); a voice note or typed marks: pii.educator_note insert via the engine, with this session's id; config: note retention; activity_observation of this activity for this class (who is not yet seen); the class's latest notes (POST /voice/class-notes)
 Empty: A fixed part of the day: 'Nothing to record here'; a lesson with no activity: 'No activity for this lesson yet' and, for the coordinator, Choose an activity · Phone: the grid three cards across, the level choices under it, the panel's tabs below; no sideways scroll
-Folds in: /educator/period/[id]
-Every control on the screen (19), and what the test does with each:
-- **link** Record a note → Record a note (`/record`) (opens Record with this period's session preselected)
-- **link** Type the marks instead → Record a note (`/record`) (opens Record on its typing path, session preselected)
+Folds in: /educator/period/[id], /record
+Every control on the screen (23), and what the test does with each:
+- **button** Record: microphone permission asked; the button becomes Stop; the note carries this lesson (the page's main action for the class's own educator, voice notes and recording on; with recording off Type the marks takes its place)
+- **button** Type the marks: creates the empty note for this lesson and class and opens it on the confirm screen
 - **link** Open the activity → the activity's name (`/setup/activities/[code]`)
 - **peek** each Sr. No. named under the last-time bar: opens ChildPeek for that child
 - **button** peek: Close: closes ChildPeek; focus returns to the child that opened it
@@ -323,40 +324,20 @@ Every control on the screen (19), and what the test does with each:
 - **fold** Choose another activity (coordinator only)
 - **link** The class → Class picture (`/children/[class]`)
 - **child_name** the first name on each child's card (read from pii by child_id, only for the children the person may see)
+- **button** Stop: recording ends; Send and Record again appear
+- **button** Send: one pii.educator_note row with this lesson's session id, status received; opens the note being read
+- **upload** Add a photo: jpg/png/heic accepted; the photo hangs on the lesson's note, never on a child
+- **link** History: each recent note of the class → Confirm what the reader heard (`/notes/[id]`) (the class's notes of the lesson's day and the day before, newest first)
 Done when (on top of the ten generic checks):
 - a period with no activity shows no capture controls and the words 'Nothing to record here'
 - a lesson with an activity shows every child enrolled that day as a card (Sr. No. + first name)
 - the level choices show the activity's own words, 'Not written' where a level has none
 - the panel's tabs are Activity · Rubric · Materials · History
 - tapping a child in the History tab opens ChildPeek with that child's recent history newest first; Escape closes it and focus returns
-
-
-#### Record a note `/record`
-Who: educator · Phase: Core · Backend: CP-10 · Old page today: yes (/voice/record) · Slice: UI-3
-Eyebrow: K2 Red · the session's name
-Purpose: Say what happened and who, by Sr. number. The reader turns it into marks; you confirm them, one note at a time.
-Blocks, in order:
-- **CaptureBar**: Start recording (main) · Add a photo · Type the marks; while recording: Stop, Send; after: 'sent, the reader is listening'
-- **KeyValue**: activity · class · time; audio and transcript kept 48 h on the private side, then deleted
-Rail (Connected to): The period (when a session is chosen) · The activity · The class · Capture here: voice, photo
-Main action: Start recording · Next step: Notes to confirm
-Data: the session; pii.educator_note insert via the engine; config: note retention
-Empty: none · Phone: this is the phone screen: one button, the activity already known
-Folds in: /voice/record, /voice/form
-Every control on the screen (9), and what the test does with each:
-- **field** Which period (preselected when opened from a period, a class or a child; otherwise today's periods for the person's classes; required before Start recording or Type the marks)
-- **button** Start recording: microphone permission asked; the button becomes Stop; a timer counts
-- **button** Stop: recording ends; Send and Record again appear
-- **button** Send: one pii.educator_note row with the session id, status received; the page says 'sent, the reader is listening' and links to Notes
-- **upload** Add a photo: jpg/png/heic accepted; the photo attaches to the session, never to a child
-- **button** Type the marks: creates the empty note for the chosen session and class in this step and opens it on the confirm screen
-- **link** rail: The period → the session's name (`/period/[id]`) (drawn only when a session is chosen)
-- **link** rail: The activity → the activity's name (`/setup/activities/[code]`)
-- **link** rail: The class → Class picture (`/children/[class]`)
-Done when (on top of the ten generic checks):
-- Send writes exactly one educator_note with this session's id and nothing in activity_observation
-- at 400 px the Start button is the full width and at least 56 px tall
-- a denied microphone shows the typed path as the main action instead of an error
+- Record, Stop, Send writes exactly one educator_note with this lesson's session id and nothing in activity_observation
+- at 400 px the Record button is the full width of the action row and at least 56 px tall
+- a denied microphone shows Type the marks as the main action instead of an error
+- the old /record address answers 308: to the lesson its session names, else to Today
 
 
 #### Confirm what the reader heard `/notes/[id]`
@@ -364,15 +345,16 @@ Who: educator · Phase: Core · Backend: CP-9 · CP-10 · Old page today: yes (/
 Eyebrow: K2 Red · note of 09:15 · Counting to 20
 Purpose: Left, your words line by line. Right, the class already marked from them. Nothing is ticked for you; 'the rest did as expected' is one switch. Confirm is for this note only.
 Blocks, in order:
+- **DetailPanel**: the Notes panel opened full page (page charter Part C): tabs Marks · Children; the tab is in the address
 - **Cards**: You said: each claim line with its words → Sr. No.s and the mark as a chip; problems the reader flagged pinned on top in red
 - **ClassGrid**: the class marked from the note; corner marks ▲ ▼ ✋ ○; tap a square to change a mark
 - **Form**: 'the rest did as expected' switch · Confirm this note (main)
 Rail (Connected to): The period · The activity · The class
 Main action: Confirm this note · Next step: the next note waiting
 Data: pii.educator_note + draft claims from the engine (pii.note_claim: flag, outcome, entry_mode, child_id, set when the note is read); activity_observation written at confirm, one row per child, confirmation_id
-Empty: No note waiting: link to Record · Phone: the grid first, then her words; Confirm fixed at the bottom
+Empty: No note waiting: link to Today, whose lessons are where a note is recorded · Phone: the grid first, then her words; Confirm fixed at the bottom
 Folds in: /voice/notes/[id]
-Every control on the screen (12), and what the test does with each:
+Every control on the screen (14), and what the test does with each:
 - **button** each claim line's × (remove): the claim is marked removed; its children's squares return to unmarked; recorded as her decision
 - **cell** each square: opens the mark picker: above / below / not willing / absent / clear ("as expected" is the one switch for the rest: the engine records an individual child's mark in four lists); the square's corner mark changes; the claim it came from is marked changed
 - **switch** the rest did as expected: every unmarked present child gets as-expected with entry mode group; off removes them
@@ -385,6 +367,8 @@ Every control on the screen (12), and what the test does with each:
 - **peek** each child's name on a claim line: opens ChildPeek for that child
 - **button** peek: Close: closes ChildPeek; focus returns to the child that opened it
 - **link** peek: Open the child → Where this child is (`/children/[class]/[roll]`) (the one way from a list to the child's own page)
+- **tab** Marks (the panel's first tab: the flagged problems, her words, the class grid, Confirm (Correct on a confirmed note))
+- **tab** Children (the children the note names)
 Done when (on top of the ten generic checks):
 - Confirm writes one activity_observation per marked child, none for an unmarked child, all with one confirmation_id
 - a changed or removed claim is kept as changed/removed in note_claim (reader accuracy)
@@ -578,42 +562,48 @@ Done when (on top of the ten generic checks):
 #### Notes `/notes`
 Who: both · Phase: Core · Backend: CP-9 · CP-10 · Old page today: no · Slice: UI-3
 Eyebrow: K2 Red · this fortnight
-Purpose: Every note of your classes: waiting, confirmed, left unconfirmed. Open one to confirm it or to correct a confirmed one.
+Purpose: Every note of your classes: waiting, confirmed, left unconfirmed. Choose one to confirm its marks, or to correct a confirmed one.
 Blocks, in order:
 - **FilterBar**: class · state · week
-- **KanbanBoard**: the notes as lanes by Table | Board toggle: To confirm (late ones first, red; a note still being read or left unconfirmed sits here too) · Confirmed; each card a note
-- **DataTable**: when · activity · by voice/form · state chip · children named · its button (Confirm / Open / Correct)
+- **KanbanBoard**: the left side, Table | Board toggle: To confirm (late ones first, red; a note still being read or left unconfirmed sits here too) · Confirmed; each card a note, opening it in the panel
+- **DataTable**: the left side as rows: when · activity · by voice/form · state chip · children named · its button (Confirm / Open), opening the note in the panel
+- **DetailPanel**: nothing chosen: StatTiles to confirm · left unconfirmed · confirmed · typed by form, and the notes by class; a note chosen: tabs Marks (the confirm screen's flagged problems, words, class grid, Confirm; Correct on a confirmed note) · Children, with Open full page
 - **ChildPeek**: the child chosen from the children-named column
-Rail (Connected to): Record a note · Class picture · Today · Capture here: voice
+Rail (Connected to): none
 Main action: Confirm the oldest · Next step: Class picture
 Data: pii.educator_note joined to activity_observation counts; pii.educator_note.status (the words are a config list); pii.educator_note.route (by voice / form); pii.note_claim.child_id for the children named
-Empty: No notes yet this fortnight: link to Record · Phone: the table scrolls sideways in its own box
-Every control on the screen (19), and what the test does with each:
+Empty: No notes yet this fortnight: link to Today, whose lessons are where a note is recorded · Phone: the table scrolls sideways in its own box; a note chosen covers the list as a sheet
+Every control on the screen (21), and what the test does with each:
 - **filter** class [coordinator only; absent and refused for others] (an educator with one class has no class filter)
 - **filter** state
 - **filter** week
 - **peek** each child named in a note: opens ChildPeek for that child; a name is read from pii by child_id (pii.note_claim.child_id), the chip shows the Sr. No. and the name
 - **button** × on a filter chip: removes that filter from the address
 - **button** Clear: removes every filter
-- **row** Confirm (a waiting note) → Confirm what the reader heard (`/notes/[id]`)
-- **row** Open (a confirmed note) → Confirm what the reader heard (`/notes/[id]`) (the confirmed note on the confirm screen, where Correct this note lives)
+- **row** Confirm (a waiting note) → Notes (`/notes`): opens the note in the panel on the right; the address carries open=note:<id>
+- **row** Open (a confirmed note) → Notes (`/notes`) (the confirmed note in the panel, where Correct this note lives)
 - **link** page: Later → → Notes (`/notes`) (the next ten rows; the address carries the page)
-- **link** rail: Record a note → Record a note (`/record`)
-- **link** rail: Class picture → Class picture (`/children/[class]`)
-- **link** rail: Today → Today (`/today`)
-- **link** capture: Voice note → Record a note (`/record`)
 - **tab** Board (the notes as lanes; the address carries the tab)
 - **tab** Table (the notes as rows)
-- **row** each card on the board → Confirm what the reader heard (`/notes/[id]`) (a waiting note's card confirms it; a confirmed note's card opens it)
+- **row** each card on the board → Notes (`/notes`): opens the note in the panel on the right
 - **button** peek: Close: closes ChildPeek; focus returns to the child that opened it
 - **link** peek: Open the child → Where this child is (`/children/[class]/[roll]`) (the one way from a list to the child's own page)
 - **child_name** the name in the peek (the child's name beside the Sr. No., read from pii by child_id)
+- **tab** panel: Marks (what the reader flagged, her words beside the class marked from them, Confirm this note; a confirmed note's Correct this note)
+- **tab** panel: Children (the children the note names, each opening ChildPeek)
+- **link** panel: Open full page → Confirm what the reader heard (`/notes/[id]`)
+- **link** panel: Close → Notes (`/notes`) (closes the panel; Escape too; focus returns to the note that opened it)
+- **button** panel: Confirm this note: as on the confirm screen; then the next note waiting opens in the panel, or the panel closes
+- **link** Record on a lesson → Today (`/today`) (the main action when no note waits, and the empty state's link: a note is recorded on a lesson (page charter B4))
 Done when (on top of the ten generic checks):
 - a correction writes a superseding row with a reason and never updates the old one
 - the coordinator sees every class, an educator their own (access fixture)
 - a note left unconfirmed past 48 hours carries the red 'late' chip and sorts first
 - each board lane's card count equals the rows of the table in that state
 - tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page
+- choosing a note opens it in the panel on the right with its marks, the list kept on the left; the address carries open=note:<id>; Escape or × closes it and focus returns
+- Confirm this note and Correct this note in the panel write as on the note's own page; a confirm opens the next note waiting in the panel
+- /notes/<id> is the panel opened full page, with the same tabs
 
 
 #### Children `/children`
@@ -682,7 +672,7 @@ Every control on the screen (17), and what the test does with each:
 - **tab** panel: Report (the parent report's state in the school's words)
 - **link** panel: Open full page → Where this child is (`/children/[class]/[roll]`)
 - **link** panel: Close → Class picture (`/children/[class]`) (closes the panel; Escape too; focus returns to the child's card)
-- **link** panel: Add a note about this child → Record a note (`/record`)
+- **link** panel: Add a note about this child → Today (`/today`) (recording happens on a lesson (page charter B4): Today lists them)
 - **link** panel: each paper → Check the answers (`/children/assessments/[key]/[roll]`) (in the Papers tab)
 - **link** panel: Parent reports → Reports (`/children/reports`) (in the Report tab)
 Done when (on top of the ten generic checks):
@@ -716,7 +706,7 @@ Every control on the screen (15), and what the test does with each:
 - **tab** Notes
 - **tab** Papers
 - **tab** Report
-- **link** Add a note about this child → Record a note (`/record`)
+- **link** Add a note about this child → Today (`/today`) (recording happens on a lesson (page charter B4): Today lists them)
 - **link** each graph node → the skill's name (`/setup/skills/[code]`)
 - **link** each skill row → the skill's name (`/setup/skills/[code]`)
 - **link** Against every skill → Class picture (`/children/[class]`) (the class's Matrix)
@@ -934,7 +924,7 @@ Every control on the screen (13), and what the test does with each:
 - **button** Keep (a drafted part): the part's source becomes person (a change_log row with who); the 'drafted' badge goes [coordinator only; absent and refused for others]
 - **button** Edit (a part): the part becomes a field; Save writes a change_log row; the source becomes person [coordinator only; absent and refused for others]
 - **button** Send back (a drafted part): the part is emptied and marked; the proposal is rejected [coordinator only; absent and refused for others]
-- **link** capture: Voice note → Record a note (`/record`)
+- **link** capture: Voice note → Today (`/today`) (recording happens on a lesson (page charter B4): Today lists them)
 - **link** rail: each objective → the objective's title (`/setup/objectives/[code]`)
 - **link** rail: each material → Materials, this fortnight (`/timetable/materials`)
 - **link** rail: next taught → the session's name (`/period/[id]`)
@@ -1416,7 +1406,7 @@ What the test does with each kind of control:
 | UI-14 Tokens, fonts and the existing parts on them | One source of colour, type, shape, elevation and motion for the whole site, in the look Nimish chose on 9 Nov 2026 (the rich draft, B). tokens.css is generated from tokens.json; every colour literal in the app is replaced by a token, including in the blocks that exist today (StatusChip, DataTable, FilterBar, EmptyState, Count) and in the shadcn files from UI-1; the fonts are self-hosted. No page changes shape in this slice. | none (infrastructure) | UI-1, and PR #528 (the logo pack) merged |
 | UI-13 The frame and the inventory test | One navigation for the whole site: the top bar with the school's logo, its four doors, search, acting-as, help and sign out, the trail and the rail (AppFrame), replacing the four shells and the K2 side menu; every existing page reachable from the bar; docs/ux-rules.md brought in line; and the inventory test that reads screens.json and drives every screen like a person, proved here on a small inventory of pages that already exist. | none (infrastructure) | UI-14 |
 | UI-2 The blocks | The school's new blocks of SPEC §5, built once, each with sample data on a staff-only gallery screen (`blocks`) and screenshots in both themes; every chart drawn to scale from its data. AppFrame is built in UI-13 and the existing blocks moved onto the tokens in UI-1. | The blocks | UI-13 |
-| UI-3 Node pages: the K2 walk | Period, record, confirm, notes, children, class picture, child, activity, objective and skill as node pages on the blocks, each walking to its neighbours through the rail and back through the trail; the old routes redirect. | the session's name, Record a note, Confirm what the reader heard, Notes, Children, Class picture, Where this child is, the activity's name, the objective's title, the skill's name, the skill set's outcome (what the child can do) | UI-2; the K2 switch (a config row) on for the pages behind it |
+| UI-3 Node pages: the K2 walk | Period, record, confirm, notes, children, class picture, child, activity, objective and skill as node pages on the blocks, each walking to its neighbours through the rail and back through the trail; the old routes redirect. | the session's name, Confirm what the reader heard, Notes, Children, Class picture, Where this child is, the activity's name, the objective's title, the skill's name, the skill set's outcome (what the child can do) | UI-2; the K2 switch (a config row) on for the pages behind it |
 | UI-4 Node pages: assessments | Assessments, one assessment and one child's paper as node pages on the blocks; the seven old assessment pages and Class results fold in; the queries and the seven steps are unchanged. | Assessments, {the built name}, Check the answers | UI-2 |
 | UI-5 The coordinator's views: staff, classes and setup | Staff and grants, classes and children and the Setup home; the small writes that exist today (a grant, a child move) through their own rows. Search is the bar's typeahead (UI-13); there is no results page. | Staff and classes, Classes and children, Setup | UI-2 for the views; CP-1 merged for moving a child |
 | UI-6 Timetable, rules and the fortnight's actions | The timetable's day, week and fortnight views and the timetable rules, the fortnight node with Approve and Go live, the draft from the rules with its unmet rules, and, on the fortnight page, moves by hand with clashes accepted by the coordinator only. Until this merges the bar's Timetable door opens the page that exists today. | Timetable, Timetable rules, Fortnight 9, Draft from the rules, Time by subject | CP-6, CP-11, CP-12 and CP-22 merged |
