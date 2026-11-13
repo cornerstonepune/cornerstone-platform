@@ -87,10 +87,10 @@ test("the Timetable with nothing chosen has no right column: the week's numbers 
   const timetable = page.locator("[data-sidebar]").getByRole("list", { name: "Timetable" });
   await expect(timetable.getByRole("link")).toHaveText(["Week", "Fortnight", "Time by subject", "Materials"]);
   await expect(timetable.getByRole("link", { name: "Week" })).toHaveAttribute("aria-current", "page");
-  // the band sits above the grid, and the grid takes the page's width (13 Nov 2026: no empty right column)
-  const [grid, band] = [(await page.locator("[data-block=FortnightGrid]").boundingBox())!, (await panel.boundingBox())!];
+  // the band sits above the grid, beside the main action, and the grid reaches the page's right edge (13 Nov 2026: no empty right column)
+  const [grid, band, main] = [(await page.locator("[data-block=FortnightGrid]").boundingBox())!, (await panel.boundingBox())!, (await page.locator("main").boundingBox())!];
   expect(band.y + band.height).toBeLessThanOrEqual(grid.y + 1);
-  expect(Math.abs(grid.x - band.x)).toBeLessThan(2);
+  expect(grid.x + grid.width).toBeGreaterThan(main.x + main.width - 80);
 });
 
 test("the grid is the page: the filter row, the legend, then a subject-coloured block for every lesson, and Live or Planning is a chip", async ({ page }) => {

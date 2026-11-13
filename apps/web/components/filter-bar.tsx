@@ -100,13 +100,13 @@ export function FilterBar({
     </label>
   );
   return (
-    <section data-block="FilterBar" data-filterbar aria-label="Filters" className="mb-[var(--space-4)]">
+    <section data-block="FilterBar" data-filterbar aria-label="Filters" className="mb-[var(--space-3)] min-w-0 max-w-full">
       <form
         ref={form}
         action={action}
         method="get"
         role="search"
-        className="flex flex-wrap items-center gap-[var(--space-2)] rounded-[var(--radius-card)] border border-[var(--line)] bg-[var(--panel)] p-[var(--space-2)] max-[700px]:flex-nowrap max-[700px]:overflow-x-auto [&>*]:shrink-0"
+        className="flex flex-wrap items-center gap-[var(--space-2)] rounded-[var(--radius-card)] border border-[var(--line)] bg-[var(--panel)] p-[var(--space-1)] max-[700px]:flex-nowrap max-[700px]:overflow-x-auto [&>*]:shrink-0"
       >
         {Object.entries(keep).map(([k, v]) => (v ? <input key={k} type="hidden" name={k} value={v} /> : null))}
         {filters.slice(0, shown).map(drop)}

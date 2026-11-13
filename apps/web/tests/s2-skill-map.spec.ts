@@ -47,7 +47,7 @@ async function skillLinks(page: Page, query = "") {
   const hrefs: string[] = [];
   const table = page.getByRole("table", { name: "The curriculum" });
   for (let n = 1; n < 40; n++) {
-    await page.goto(`/?${query}&page=${n}`);
+    await page.goto(`/setup/curriculum/skills?${query}&page=${n}`);
     await table.locator("tbody tr").first().waitFor();
     for (const a of await table.locator("tbody tr a").all())
       hrefs.push((await a.getAttribute("href"))!);

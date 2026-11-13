@@ -148,7 +148,8 @@ test("B2 right, nothing chosen: stat tiles for the week shown: lessons, % by sub
     expect(await tile(page, "moved")).toBe(want.moved);
     expect(await tile(page, "clashes")).toBe(want.clashes);
     // the mini bar: each subject of the week by its name, its whole percent; together 100
-    const mix = panel(page).locator("[data-block=SubjectMix]");
+    // the mini bar is the summary's other fact: at the page's foot since 13 Nov 2026 (no right column with nothing chosen)
+    const mix = page.locator("[data-panel-more] [data-block=SubjectMix]");
     await expect(mix.locator(".b-sbar i")).toHaveCount(want.shares.length);
     for (const s of want.shares) await expect(mix.locator(`[data-subject-share="${s.label}"]`)).toContainText(`${s.pc}%`);
     expect(want.shares.reduce((t, s) => t + s.pc, 0)).toBe(100);

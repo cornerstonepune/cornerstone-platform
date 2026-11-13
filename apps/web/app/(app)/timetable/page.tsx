@@ -249,17 +249,18 @@ export default async function TimetablePage({ searchParams }: Props) {
         <StatusChip state="clash" words="Clash, not yet accepted" round />
         <StatusChip state="doNow" words="Do now" round />
         <StatusChip state="late" words="Late" round />
-        <span className="tt-note">Each block is one lesson; choose it to see the lesson on the right.</span>
+        {/* the count and the clashes on the legend's line, so the grid starts higher (13 Nov 2026) */}
+        <span className="tt-note" data-summary>
+          {lessonCount} lesson{lessonCount === 1 ? "" : "s"}{holidayCount ? ` · ${holidayCount} holiday${holidayCount === 1 ? "" : "s"}` : ""}
+        </span>
+        {open ? <span className="tt-note" data-clashes={open}>{open} clash{open === 1 ? "" : "es"} not accepted yet: red below.</span> : null}
+        <span className="tt-note">Choose a block to see its lesson on the right.</span>
       </div>
-      <p className="tt-note" data-summary>
-        {lessonCount} lesson{lessonCount === 1 ? "" : "s"}{holidayCount ? ` · ${holidayCount} holiday${holidayCount === 1 ? "" : "s"}` : ""}
-      </p>
       {view === "day" ? (
         <p className="tt-note" data-next>
           {nextPeriod ? `Next: ${nextPeriod.starts_at.slice(0, 5)} ${nextPeriod.name}` : dayPeriods.length ? "This day is over." : "No lessons on this day."}
         </p>
       ) : null}
-      {open ? <p className="tt-note" data-clashes={open}>{open} clash{open === 1 ? "" : "es"} not accepted yet: red below.</p> : null}
       {lessons ? (
         <div data-view={view} data-day-count={grid.days.length}>
           <FortnightGrid days={grid.labels} today={shortDate(today)} rows={grid.rows} dayHrefs={grid.days.map((d) => keep({ view: "day", day: d }))} />
