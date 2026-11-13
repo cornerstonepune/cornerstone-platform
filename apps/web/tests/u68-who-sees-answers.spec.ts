@@ -104,7 +104,11 @@ const number = (t: string | null) => Number((t ?? "").replace(/\D/g, "") || 0);
 async function figures(page: Page) {
   await open(page, "/today");
   const menu = (await theMenu(page)).getByRole("link", { name: /^Today/ }).getByTestId("waiting");
-  const todo = (await page.locator(".b-att").evaluateAll((els) => els.filter((e) => /do now|this week/i.test(e.textContent ?? "")).map((e) => Number((e.querySelector(".b-n")?.textContent ?? "0").trim())))).reduce((x, y) => x + y, 0);
+  // Today's notes tile (page charter B1, B1b: notes to confirm, or notes unconfirmed past their time) is the menu's one figure; the page
+  // streams, so its tiles are waited for before they are read (a person whose notes cannot be read has no notes tile)
+  await page.locator("main [data-block=StatTiles]").first().waitFor();
+  const tile = page.locator("main [data-stat=notes] .b-stat-n, main [data-stat=late] .b-stat-n");
+  const todo = (await tile.count()) ? number(await tile.first().innerText()) : 0;
   // the badge streams in after the page: wait for it to arrive (when anything waits) before it is read
   if (todo) await expect(menu).toBeVisible();
   const badge = (await menu.count()) ? number(await menu.innerText()) : 0;
@@ -168,7 +172,7 @@ test("for each person the counts in the menu, What needs doing and Assessments a
     ["the coordinator", page, null],
   ] as const) {
     const f = await figures(p);
-    expect(f.badge, `${who}: the menu's figure is Today's strip`).toBe(f.todo);
+    expect(f.badge, `${who}: the menu's figure is Today's notes tile`).toBe(f.todo);
     if (waiting !== null) {
       // an educator's list is one page: every answer the figure counts is a line of it, and no more
       expect(f.listed, `${who}: their own answers, not everyone's`).toBe(waiting);

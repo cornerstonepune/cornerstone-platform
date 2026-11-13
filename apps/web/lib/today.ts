@@ -2,7 +2,7 @@
 // Nothing here ranks or scores a person: every figure is a whole count of rows (docs/frontend/SPEC.md, Today).
 import { chipOf } from "./educator/chip";
 import { timeOf } from "./educator/period";
-import type { Period, SessionState } from "./educator/types";
+import type { Period } from "./educator/types";
 import type { Period as Row, Subject } from "@/components/period-row";
 import type { State } from "@/components/status-chip";
 
@@ -20,18 +20,37 @@ export function splitNotes(notes: readonly NoteRef[], now: number, hours: number
 /** The lit row: the lesson whose period holds the current time. Before the first period (08:30) none is lit; a break is never lit. */
 export const litPeriod = (periods: readonly Period[], now: string): string | null => periods.find((p) => chipOf(p, { now, day: "today" }) === "doNow")?.period_id ?? null;
 
-const SUBJECT: [RegExp, Subject][] = [
-  [/num|math/i, "numeracy"],
-  [/lang|eng|hin|mar|read|writ|lit/i, "language"],
-];
-const subjectOf = (p: Pick<Period, "kind" | "subject">): Subject => (p.kind === "fixed" || p.kind === "empty" ? "fixed" : (SUBJECT.find(([re]) => re.test(p.subject ?? ""))?.[1] ?? "arts"));
+/** Where a lesson stands in the day, the three words Today's timeline says (page charter B1): taught, running now, or the next to come. */
+export type Mark = "done" | "now" | "next";
+const MARK: Record<Mark, State> = { done: "done", now: "teachingNow", next: "nextUp" };
 
-/** What a period's state chip says: from what was recorded, and "to do" for a lesson still planned. A fixed part of the day has none. */
-const STATE: Record<SessionState, State | undefined> = { planned: "toDo", done: "done", not_done: "notDone", moved: "moved" };
+/** The marks of a day's lessons and the lesson the panel opens on when the address names none: the one now, else the next, else (the
+ *  day over) the last one begun, else the first. `when`: the day shown against the school's today. A lesson is "done" only when the engine
+ *  says it was recorded; none is guessed. */
+export function dayMarks(lessons: readonly Period[], now: string, when: "past" | "today" | "future"): { marks: Record<string, Mark>; chosen: string | null } {
+  const marks: Record<string, Mark> = {};
+  for (const p of lessons) if (p.state === "done") marks[p.period_id] = "done";
+  const lit = when === "today" ? litPeriod(lessons, now) : null;
+  if (lit && !marks[lit]) marks[lit] = "now";
+  const next = when === "past" ? undefined : lessons.find((p) => p.state !== "done" && p.period_id !== lit && (when === "future" || p.starts_at > now));
+  if (next) marks[next.period_id] = "next";
+  const begun = when === "future" ? [] : lessons.filter((p) => when === "past" || p.starts_at <= now);
+  return { marks, chosen: lit ?? next?.period_id ?? begun.at(-1)?.period_id ?? lessons[0]?.period_id ?? null };
+}
 
-/** A period as PeriodRow draws it. `href` is where it opens; the lit one is `now`. */
-export function periodRow(p: Period, lit: string | null, href: string): Row {
-  return { time: timeOf(p), subject: subjectOf(p), name: p.name, fact: p.activity?.name ?? p.line ?? undefined, state: p.kind === "fixed" || p.kind === "empty" ? undefined : STATE[p.state], now: p.period_id === lit, href };
+/** A lesson as Today's timeline draws it: time, the subject's colour and word, the activity's name, its mark. `look`: the subject row's
+ *  colour (lib/subject-looks.ts), `words` its word; `open`: the panel key the row opens, and whether it is the one open. */
+export function lessonRow(p: Period, look: Exclude<Subject, "fixed">, words: string, mark: Mark | undefined, href: string, open?: { key: string; selected: boolean }): Row {
+  return {
+    time: timeOf(p),
+    subject: look,
+    name: p.activity?.name ?? p.name,
+    fact: p.activity ? `${words} · ${p.name}` : `${words} · no activity yet`,
+    state: mark ? MARK[mark] : undefined,
+    now: mark === "now",
+    href,
+    ...(open ? { openKey: open.key, selected: open.selected } : {}),
+  };
 }
 
 /** Periods taught of planned: the lessons only (a break is not planned work). */

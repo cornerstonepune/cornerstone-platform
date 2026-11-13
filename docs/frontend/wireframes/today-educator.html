@@ -6,7 +6,7 @@
 <title>Wireframe: Today (today-educator)</title>
 <link rel="stylesheet" href="kit.css">
 </head>
-<!-- Wireframe of screens.json "today-educator" (/today), drawn as an educator. Its main action is a tap on the current period (the lit row), so no filled button. The 2 + 5 tiles equal the 7 on the Today door.
+<!-- Wireframe of screens.json "today-educator" (/today), drawn as an educator (page charter B1, a Workspace). Its main action is Open my next lesson. Three tiles, then the lessons as subject-coloured blocks marked done / now / next; the lesson now is open in the panel on the right, as nothing is chosen. The 7 notes to confirm are the 7 on the Today door.
      data-el = index in screens.json today-educator.elements; data-bar = index in screens.json bar; data-source = target
      table.column; data-gap = what the target tables cannot give. Both frames hold the same markup: the phone layout
      comes from kit.css container queries, as it will on the site. Names are from fake-names.json. -->
@@ -86,95 +86,43 @@
             <div class="head">
               <p class="eyebrow"><i class="ic s" data-icon="today"></i><span data-source="school_day.on_date">Wednesday 18-Nov</span> · <span data-source="grade.name">K2</span> <span data-source="school_class.section">Red</span> · Fortnight <span class="num" data-source="fortnight.number">9</span>, week <span data-source="plan_entry.week_code">A</span></p>
               <h1 class="title">Today</h1>
-              <p class="purpose">Your periods in order. Tap one for what to teach, how, and what to lay out. After it, record a note.</p>
+              <p class="purpose">Your lessons in order. Choose one to see what to teach, how and what to lay out; mark the class on the lesson.</p>
             </div>
-            <div class="toolbar">
-              <div class="seg" role="tablist" aria-label="View"><a role="tab" data-el="8" aria-selected="true" href="#board"><i class="ic s" data-icon="board"></i>Board</a><a role="tab" data-el="9" aria-selected="false" href="#list"><i class="ic s" data-icon="table"></i>List</a></div>
-            </div>
-            <h2 class="title-small">Board: what waits on me</h2>
-            <div class="kanban" data-block="KanbanBoard" style="--lanes: 3">
-              <section class="lane" data-state="late" aria-label="Do now">
-                <h3 class="lane-h"><i class="ic s" data-icon="late"></i>Do now <span class="count num">2</span></h3>
-                <ul class="lane-b">
-            <li><a class="kcard press" data-kind="note" data-el="10" href="#confirm" data-source="pii.educator_note.received_at pii.educator_note.status"><span class="tile"><i class="ic" data-icon="note"></i></span><span><b>Sorting by size</b><span class="sub" data-source="pii.educator_note.route pii.note_claim.child_id">Voice note · 6 children named</span></span><span class="chip" data-state="late"><i class="ic s" data-icon="late"></i>3 days waiting</span></a></li>
-            <li><a class="kcard press" data-kind="note" data-el="10" href="#confirm" data-source="pii.educator_note.received_at pii.educator_note.status"><span class="tile"><i class="ic" data-icon="note"></i></span><span><b>Leaf printing</b><span class="sub" data-source="pii.educator_note.route pii.note_claim.child_id">Form · 2 children named</span></span><span class="chip" data-state="late"><i class="ic s" data-icon="late"></i>2 days waiting</span></a></li>
-                </ul>
-              </section>
-              <section class="lane" data-state="wait" aria-label="This week">
-                <h3 class="lane-h"><i class="ic s" data-icon="to-confirm"></i>This week <span class="count num">5</span></h3>
-                <ul class="lane-b">
-            <li><a class="kcard press" data-kind="note" data-el="10" href="#confirm" data-source="pii.educator_note.received_at pii.educator_note.status"><span class="tile"><i class="ic" data-icon="note"></i></span><span><b>Retelling a story</b><span class="sub" data-source="pii.educator_note.route pii.note_claim.child_id">Voice note · 4 children named</span></span><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To confirm</span></a></li>
-            <li><a class="kcard press" data-kind="note" data-el="10" href="#confirm" data-source="pii.educator_note.received_at pii.educator_note.status"><span class="tile"><i class="ic" data-icon="note"></i></span><span><b>Counting to 20</b><span class="sub" data-source="pii.educator_note.route pii.note_claim.child_id">Voice note · 7 children named</span></span><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To confirm</span></a></li>
-            <li><a class="kcard press" data-kind="note" data-el="10" href="#confirm" data-source="pii.educator_note.received_at pii.educator_note.status"><span class="tile"><i class="ic" data-icon="note"></i></span><span><b>Rhyme time</b><span class="sub" data-source="pii.educator_note.route pii.note_claim.child_id">Voice note · 3 children named</span></span><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To confirm</span></a></li>
-            <li><a class="kcard press" data-kind="note" data-el="10" href="#confirm" data-source="pii.educator_note.received_at pii.educator_note.status"><span class="tile"><i class="ic" data-icon="note"></i></span><span><b>Clay pots</b><span class="sub" data-source="pii.educator_note.route pii.note_claim.child_id">Form · 2 children named</span></span><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To confirm</span></a></li>
-            <li><a class="kcard press" data-kind="note" data-el="10" href="#confirm" data-source="pii.educator_note.received_at pii.educator_note.status"><span class="tile"><i class="ic" data-icon="note"></i></span><span><b>Counting in tens with bundles</b><span class="sub" data-source="pii.educator_note.route pii.note_claim.child_id">Voice note · 5 children named</span></span><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To confirm</span></a></li>
-
-                </ul>
-              </section>
-              <section class="lane" data-state="ok" aria-label="Done">
-                <h3 class="lane-h"><i class="ic s" data-icon="done"></i>Done <span class="count num">1</span></h3>
-                <ul class="lane-b">
-            <li><a class="kcard press" data-kind="period" data-el="11" href="#period" data-source="session.state session.planned"><span class="tile"><i class="ic" data-icon="period"></i></span><span><b>Counting in tens with bundles</b><span class="sub" data-source="session.subject_code session.state">08:45 · Numeracy · note confirmed</span></span><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Done</span></a></li>
-                </ul>
-              </section>
-            </div>
-            <h2 class="title-small">List: the tiles and your periods</h2>
-            <div class="strip" data-block="AttentionStrip">
-              <a class="att press" data-state="late" data-el="0" href="#confirm" data-source="pii.educator_note.status pii.educator_note.received_at"><span class="n">2</span><span class="w"><i class="ic s" data-icon="late"></i>Do now</span><span class="muted">Notes past 48 hours, still to confirm.</span></a>
-              <a class="att press" data-state="wait" data-el="1" href="#notes" data-source="pii.educator_note.status pii.educator_note.received_at"><span class="n">5</span><span class="w"><i class="ic s" data-icon="to-confirm"></i>This week</span><span class="muted">Notes waiting for you to confirm.</span></a>
-              <a class="att press" data-state="ok" data-el="2" href="#picture" data-source="session.state session.planned child_skill_state.last_seen"><span class="n">1 of 4</span><span class="w"><i class="ic s" data-icon="done"></i>Done today</span><span class="muted">Periods taught. <span class="num">19</span> of <span class="num">24</span> children seen this fortnight.</span></a>
-            </div>
-            <ol class="periods" data-block="PeriodRow" aria-label="Today's periods">
-          <li><a class="prow press" data-subject="fixed" data-el="3" href="#period"><span class="t num" data-source="period.starts_at">08:30</span><span class="stile"><i class="ic" data-icon="break"></i></span><span class="nm"><b data-source="period.label">Settling in</b></span></a></li>
-          <li><a class="prow press" data-subject="numeracy" data-el="3" href="#period"><span class="t num" data-source="period.starts_at">08:45</span><span class="stile"><i class="ic" data-icon="numeracy"></i></span><span class="nm"><b data-source="activity.name">Counting in tens with bundles</b><span data-source="session.subject_code session.state">Numeracy · note confirmed</span></span><span class="chip" data-state="ok" data-source="session.state"><i class="ic s" data-icon="done"></i>Done</span></a></li>
-          <li><a class="prow press" data-subject="language" data-el="3" href="#period" aria-current="time"><span class="t num" data-source="period.starts_at">09:30</span><span class="stile"><i class="ic" data-icon="language"></i></span><span class="nm"><b data-source="activity.name">Story circle: the lost mitten</b><span data-source="session.subject_code session.state">Language · now</span></span><span class="chip" data-state="quiet" data-source="session.state"><i class="ic s" data-icon="to-do"></i>To do</span></a></li>
-          <li><a class="prow press" data-subject="fixed" data-el="3" href="#period"><span class="t num" data-source="period.starts_at">10:15</span><span class="stile"><i class="ic" data-icon="break"></i></span><span class="nm"><b data-source="period.label">Fruit break</b></span></a></li>
-          <li><a class="prow press" data-subject="arts" data-el="3" href="#period"><span class="t num" data-source="period.starts_at">10:30</span><span class="stile"><i class="ic" data-icon="arts"></i></span><span class="nm"><b data-source="activity.name">Leaf printing</b><span data-source="session.subject_code session.state">Arts</span></span><span class="chip" data-state="quiet" data-source="session.state"><i class="ic s" data-icon="to-do"></i>To do</span></a></li>
-          <li><a class="prow press" data-subject="numeracy" data-el="3" href="#period"><span class="t num" data-source="period.starts_at">11:15</span><span class="stile"><i class="ic" data-icon="numeracy"></i></span><span class="nm"><b data-source="activity.name">Sorting by size</b><span data-source="session.subject_code session.state">Numeracy</span></span><span class="chip" data-state="quiet" data-source="session.state"><i class="ic s" data-icon="to-do"></i>To do</span></a></li>
-          <li><a class="prow press" data-subject="fixed" data-el="3" href="#period"><span class="t num" data-source="period.starts_at">12:00</span><span class="stile"><i class="ic" data-icon="break"></i></span><span class="nm"><b data-source="period.label">Lunch</b></span></a></li>
+            <div class="toolbar"><a class="btn press" data-el="0" href="#period"><i class="ic" data-icon="period"></i>Open my next lesson</a></div>
+            <ul class="stats" data-block="StatTiles" aria-label="Your day in numbers">
+              <li><a class="stat press" data-el="1" href="#timetable" data-source="session.state"><b>5</b><span>lessons today</span></a></li>
+              <li><a class="stat press" data-el="2" href="#notes" data-state="late" data-source="pii.educator_note.status pii.educator_note.received_at"><b>7</b><span>notes to confirm</span></a></li>
+              <li><a class="stat press" data-el="3" href="#assessments" data-state="wait" data-source="item_result.status"><b>2</b><span>papers to check</span></a></li>
+            </ul>
+            <ol class="periods" data-block="PeriodRow" aria-label="Today's lessons">
+          <li><a class="prow press" data-subject="numeracy" data-el="4" href="#today-educator"><span class="t num" data-source="period.starts_at">08:45–09:30</span><span class="stile"><i class="ic" data-icon="numeracy"></i></span><span class="nm"><b data-source="activity.name">Counting in tens with bundles</b><span data-source="session.subject_code">Numeracy · Academic 1</span></span><span class="chip" data-state="ok" data-source="session.state"><i class="ic s" data-icon="done"></i>Done</span></a></li>
+          <li><a class="prow press" data-subject="language" data-el="4" href="#today-educator" aria-current="time"><span class="t num" data-source="period.starts_at">09:30–10:15</span><span class="stile"><i class="ic" data-icon="language"></i></span><span class="nm"><b data-source="activity.name">Story circle: the lost mitten</b><span data-source="session.subject_code">Language · Academic 2</span></span><span class="chip" data-state="wait" data-source="session.state"><i class="ic s" data-icon="to-confirm"></i>Teaching now</span></a></li>
+          <li><a class="prow press" data-subject="arts" data-el="4" href="#today-educator"><span class="t num" data-source="period.starts_at">10:30–11:15</span><span class="stile"><i class="ic" data-icon="arts"></i></span><span class="nm"><b data-source="activity.name">Leaf printing</b><span data-source="session.subject_code">Arts · Extracurricular</span></span><span class="chip" data-state="quiet" data-source="session.state"><i class="ic s" data-icon="to-do"></i>Next</span></a></li>
+          <li><a class="prow press" data-subject="numeracy" data-el="4" href="#today-educator"><span class="t num" data-source="period.starts_at">11:15–12:00</span><span class="stile"><i class="ic" data-icon="numeracy"></i></span><span class="nm"><b data-source="activity.name">Sorting by size</b><span data-source="session.subject_code">Numeracy · Academic 3</span></span></a></li>
+          <li><a class="prow press" data-subject="language" data-el="4" href="#today-educator"><span class="t num" data-source="period.starts_at">12:00–12:40</span><span class="stile"><i class="ic" data-icon="language"></i></span><span class="nm"><b data-source="activity.name">Rhyme time</b><span data-source="session.subject_code">Language · Academic 4</span></span></a></li>
             </ol>
-            <div class="cards" data-block="Cards">
-              <article class="card" data-kind="note"><div class="card-h"><span class="tile"><i class="ic" data-icon="note"></i></span>Notes to confirm</div><div class="card-b"><span data-source="pii.educator_note.status"><span class="num">7</span> waiting</span><span class="muted">The oldest came in <span data-source="pii.educator_note.received_at">3 days ago</span>.</span><a class="btn press" data-el="4" href="#confirm"><i class="ic" data-icon="confirm"></i>Confirm the first</a></div></article>
-              <article class="card" data-kind="child"><div class="card-h"><span class="tile"><i class="ic" data-icon="child"></i></span>Your class</div><div class="card-b"><span data-source="child_skill_state.last_seen enrolment.child_id"><span class="num">5</span> children not seen this fortnight on <span data-source="skill.name">Retelling a story</span>, by where each stands</span><div class="groups" data-source="child_skill_state.state child_skill_state.last_seen enrolment.child_id"><section class="grp" data-state="ok" aria-label="Secure, 1 child"><h3 class="grp-h"><i class="ic s" data-icon="secure"></i>Secure <span class="count num">1</span></h3><ul class="nchips"><li><button class="nchip press" data-el="12" type="button" aria-label="Finn Fox, Sr. No. 06"><span class="no num" data-source="enrolment.roll_no">06</span><span data-source="pii.child.first_name pii.child.last_name">Finn Fox</span></button></li></ul></section><section class="grp" data-state="wait" aria-label="Practising, 2 children"><h3 class="grp-h"><i class="ic s" data-icon="practising"></i>Practising <span class="count num">2</span></h3><ul class="nchips"><li><button class="nchip press" data-el="12" type="button" aria-label="Otto Owl, Sr. No. 15"><span class="no num" data-source="enrolment.roll_no">15</span><span data-source="pii.child.first_name pii.child.last_name">Otto Owl</span></button></li><li><button class="nchip press" data-el="12" type="button" aria-label="Uri Urial, Sr. No. 21"><span class="no num" data-source="enrolment.roll_no">21</span><span data-source="pii.child.first_name pii.child.last_name">Uri Urial</span></button></li></ul></section><section class="grp" data-state="quiet" aria-label="Emerging, 1 child"><h3 class="grp-h"><i class="ic s" data-icon="emerging"></i>Emerging <span class="count num">1</span></h3><ul class="nchips"><li><button class="nchip press" data-el="12" type="button" aria-label="Vik Vole, Sr. No. 22"><span class="no num" data-source="enrolment.roll_no">22</span><span data-source="pii.child.first_name pii.child.last_name">Vik Vole</span></button></li></ul></section><section class="grp" data-state="unseen" aria-label="Not seen yet, 1 child"><h3 class="grp-h"><i class="ic s" data-icon="not-seen"></i>Not seen yet <span class="count num">1</span></h3><ul class="nchips"><li><button class="nchip press" data-el="12" type="button" aria-label="Xan Xerus, Sr. No. 24"><span class="no num" data-source="enrolment.roll_no">24</span><span data-source="pii.child.first_name pii.child.last_name">Xan Xerus</span></button></li></ul></section></div><a class="btn press" data-el="5" href="#picture"><i class="ic" data-icon="class"></i>Class picture</a></div></article>
-            </div>
             <div class="card">
-              <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: no sessions today (a holiday, or no timetable live)</div>
-              <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="fortnight"></i><b>No sessions today</b><span class="muted">Diwali break: school is closed. See <a data-el="6" href="#timetable">this fortnight</a>.</span></div></div>
+              <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: a holiday shows the next school day's lessons under one line</div>
+              <div class="card-b"><p data-source="school_day.kind school_day.note fortnight.starts_on">No sessions today. Holiday: Diwali Break. Fortnight 10 starts Monday 23-Nov.</p><span class="muted">The blocks below it are that Monday's, the first marked Next.</span></div>
             </div>
           </main>
-          <aside class="rail" aria-label="Connected to">
-          <aside class="peek" data-block="ChildPeek" aria-label="Recent history of Finn Fox">
-            <div class="peek-h">
-              <span class="disc" aria-hidden="true">FF</span>
-              <span class="who"><b data-el="15" data-source="pii.child.first_name pii.child.last_name">Finn Fox</b><span class="muted"><span class="num" data-source="enrolment.roll_no">06</span> · K2 Red</span></span>
-              <button class="barbtn press" data-el="13" type="button" aria-label="Close"><i class="ic" data-icon="close"></i></button>
-            </div>
-            <div class="keyrow"><span class="chip" data-state="ok"><i class="ic s" data-icon="secure"></i>6 secure</span><span class="chip" data-state="wait"><i class="ic s" data-icon="practising"></i>3 practising</span><span class="chip" data-state="unseen"><i class="ic s" data-icon="not-seen"></i>2 not seen yet</span></div>
-            <ol class="timeline">
-              <li class="tli"><span class="tile" data-kind="note"><i class="ic" data-icon="note"></i></span><div><b>Joined in the story circle and named the characters</b><p><span data-source="pii.educator_note.route">Voice note</span> · confirmed by <span data-source="pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="pii.educator_note.received_at">17-Nov</span></li>
-              <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><b>Counting in tens with bundles: as expected</b><p>Observed in the period · <span data-source="pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="activity_observation.observed_at">16-Nov</span></li>
-              <li class="tli"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><div><b>Paper, sheet 2</b><p><span data-source="item_result.status">5 right, 1 wrong with working, 0 blank</span> · signed off by <span data-source="pii.staff.name">Bina Basil</span></p></div><span class="caption num" data-source="item_result.confirmed_at">13-Nov</span></li>
-              <li class="tli"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><div><b>Retelling a story: now secure</b><p>The state changed after a third day seen · <span data-source="pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="evidence_event.observed_at">12-Nov</span></li>
-              <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="history"></i></span><div><b>A mark corrected: below became as expected</b><p><span data-source="change_log.reason">A new entry that replaces the first</span> · <span data-source="pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="change_log.at">11-Nov</span></li>
-            </ol>
-            <a class="btn press" data-el="14" href="#child">Open Finn</a>
-          </aside>
-            <section class="rail-box">
-              <h2>Connected to</h2>
-              <ul class="rlist">
-  <li><a class="ritem" data-el="6" href="#timetable"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span><span><span>This fortnight</span><small>fortnight <span class="num" data-source="fortnight.number">9</span>, week <span data-source="plan_entry.week_code">A</span></small></span></a></li>
-  <li><a class="ritem" data-el="7" href="#materials"><span class="tile" data-kind="note"><i class="ic" data-icon="materials"></i></span><span><span>Materials</span><small><span class="num" data-source="activity_material.material_code">9</span> things to lay out today</small></span></a></li>
-              </ul>
-            </section>
-            <section class="rail-box" data-block="KeyValue">
-              <h2>Lay out for Story circle</h2>
-              <dl class="kv">
-                <dt data-source="material_item.name">Story cards</dt><dd class="num" data-source="activity_material.quantity material_item.unit">6 sets</dd>
-                <dt data-source="material_item.name">Mitten picture</dt><dd class="num" data-source="activity_material.quantity material_item.unit">1 piece</dd>
-                <dt data-source="material_item.name">Sitting mats</dt><dd class="num" data-source="activity_material.quantity material_item.unit">24 pieces</dd>
-                <dt data-source="material_item.name">Felt mittens</dt><dd class="num" data-source="activity_material.quantity material_item.unit">8 pieces</dd>
-              </dl>
-            </section>
+          <aside class="rail" aria-label="The lesson">
+            <aside class="dpanel" data-block="DetailPanel" aria-label="The lesson">
+              <header class="dpanel-head"><span class="tile" data-kind="period"><i class="ic" data-icon="period"></i></span><div><h2 class="dpanel-title" data-source="activity.name">Story circle: the lost mitten</h2><p class="muted">09:30–10:15 · K2 Red · Academic 2</p></div><a class="barbtn press" data-el="5" href="#today-educator" aria-label="Close the panel"><i class="ic" data-icon="close"></i></a></header>
+              <div class="dpanel-actions"><a data-el="6" href="#period">Open full page</a></div>
+              <div class="tabs" role="tablist" aria-label="Details"><button class="tabbtn" role="tab" type="button" aria-selected="true" data-el="7">Activity</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="8">Children</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="9">Materials</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="10">History</button></div>
+              <div role="tabpanel" class="stack">
+                <h3>What it is for</h3><p data-source="activity.objective">Retells a story in order, naming the characters.</p>
+                <h3>Lay out</h3><dl class="kv" data-block="KeyValue">
+                  <dt data-source="material_item.name">Story cards</dt><dd class="num" data-source="activity_material.quantity">6</dd>
+                  <dt data-source="material_item.name">Sitting mats</dt><dd class="num" data-source="activity_material.quantity">24</dd>
+                </dl>
+              </div>
+              <div class="card">
+                <div class="card-h">Inset, the Children tab</div>
+                <div class="card-b"><span class="muted">The class is marked child by child on the lesson's own page.</span><a class="btn press" data-el="11" href="#period">Mark the class</a></div>
+              </div>
+            </aside>
           </aside>
         </div>
         </div>
@@ -252,95 +200,43 @@
             <div class="head">
               <p class="eyebrow"><i class="ic s" data-icon="today"></i><span data-source="school_day.on_date">Wednesday 18-Nov</span> · <span data-source="grade.name">K2</span> <span data-source="school_class.section">Red</span> · Fortnight <span class="num" data-source="fortnight.number">9</span>, week <span data-source="plan_entry.week_code">A</span></p>
               <h1 class="title">Today</h1>
-              <p class="purpose">Your periods in order. Tap one for what to teach, how, and what to lay out. After it, record a note.</p>
+              <p class="purpose">Your lessons in order. Choose one to see what to teach, how and what to lay out; mark the class on the lesson.</p>
             </div>
-            <div class="toolbar">
-              <div class="seg" role="tablist" aria-label="View"><a role="tab" data-el="8" aria-selected="true" href="#board"><i class="ic s" data-icon="board"></i>Board</a><a role="tab" data-el="9" aria-selected="false" href="#list"><i class="ic s" data-icon="table"></i>List</a></div>
-            </div>
-            <h2 class="title-small">Board: what waits on me</h2>
-            <div class="kanban" data-block="KanbanBoard" style="--lanes: 3">
-              <section class="lane" data-state="late" aria-label="Do now">
-                <h3 class="lane-h"><i class="ic s" data-icon="late"></i>Do now <span class="count num">2</span></h3>
-                <ul class="lane-b">
-            <li><a class="kcard press" data-kind="note" data-el="10" href="#confirm" data-source="pii.educator_note.received_at pii.educator_note.status"><span class="tile"><i class="ic" data-icon="note"></i></span><span><b>Sorting by size</b><span class="sub" data-source="pii.educator_note.route pii.note_claim.child_id">Voice note · 6 children named</span></span><span class="chip" data-state="late"><i class="ic s" data-icon="late"></i>3 days waiting</span></a></li>
-            <li><a class="kcard press" data-kind="note" data-el="10" href="#confirm" data-source="pii.educator_note.received_at pii.educator_note.status"><span class="tile"><i class="ic" data-icon="note"></i></span><span><b>Leaf printing</b><span class="sub" data-source="pii.educator_note.route pii.note_claim.child_id">Form · 2 children named</span></span><span class="chip" data-state="late"><i class="ic s" data-icon="late"></i>2 days waiting</span></a></li>
-                </ul>
-              </section>
-              <section class="lane" data-state="wait" aria-label="This week">
-                <h3 class="lane-h"><i class="ic s" data-icon="to-confirm"></i>This week <span class="count num">5</span></h3>
-                <ul class="lane-b">
-            <li><a class="kcard press" data-kind="note" data-el="10" href="#confirm" data-source="pii.educator_note.received_at pii.educator_note.status"><span class="tile"><i class="ic" data-icon="note"></i></span><span><b>Retelling a story</b><span class="sub" data-source="pii.educator_note.route pii.note_claim.child_id">Voice note · 4 children named</span></span><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To confirm</span></a></li>
-            <li><a class="kcard press" data-kind="note" data-el="10" href="#confirm" data-source="pii.educator_note.received_at pii.educator_note.status"><span class="tile"><i class="ic" data-icon="note"></i></span><span><b>Counting to 20</b><span class="sub" data-source="pii.educator_note.route pii.note_claim.child_id">Voice note · 7 children named</span></span><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To confirm</span></a></li>
-            <li><a class="kcard press" data-kind="note" data-el="10" href="#confirm" data-source="pii.educator_note.received_at pii.educator_note.status"><span class="tile"><i class="ic" data-icon="note"></i></span><span><b>Rhyme time</b><span class="sub" data-source="pii.educator_note.route pii.note_claim.child_id">Voice note · 3 children named</span></span><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To confirm</span></a></li>
-            <li><a class="kcard press" data-kind="note" data-el="10" href="#confirm" data-source="pii.educator_note.received_at pii.educator_note.status"><span class="tile"><i class="ic" data-icon="note"></i></span><span><b>Clay pots</b><span class="sub" data-source="pii.educator_note.route pii.note_claim.child_id">Form · 2 children named</span></span><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To confirm</span></a></li>
-            <li><a class="kcard press" data-kind="note" data-el="10" href="#confirm" data-source="pii.educator_note.received_at pii.educator_note.status"><span class="tile"><i class="ic" data-icon="note"></i></span><span><b>Counting in tens with bundles</b><span class="sub" data-source="pii.educator_note.route pii.note_claim.child_id">Voice note · 5 children named</span></span><span class="chip" data-state="wait"><i class="ic s" data-icon="to-confirm"></i>To confirm</span></a></li>
-
-                </ul>
-              </section>
-              <section class="lane" data-state="ok" aria-label="Done">
-                <h3 class="lane-h"><i class="ic s" data-icon="done"></i>Done <span class="count num">1</span></h3>
-                <ul class="lane-b">
-            <li><a class="kcard press" data-kind="period" data-el="11" href="#period" data-source="session.state session.planned"><span class="tile"><i class="ic" data-icon="period"></i></span><span><b>Counting in tens with bundles</b><span class="sub" data-source="session.subject_code session.state">08:45 · Numeracy · note confirmed</span></span><span class="chip" data-state="ok"><i class="ic s" data-icon="done"></i>Done</span></a></li>
-                </ul>
-              </section>
-            </div>
-            <h2 class="title-small">List: the tiles and your periods</h2>
-            <div class="strip" data-block="AttentionStrip">
-              <a class="att press" data-state="late" data-el="0" href="#confirm" data-source="pii.educator_note.status pii.educator_note.received_at"><span class="n">2</span><span class="w"><i class="ic s" data-icon="late"></i>Do now</span><span class="muted">Notes past 48 hours, still to confirm.</span></a>
-              <a class="att press" data-state="wait" data-el="1" href="#notes" data-source="pii.educator_note.status pii.educator_note.received_at"><span class="n">5</span><span class="w"><i class="ic s" data-icon="to-confirm"></i>This week</span><span class="muted">Notes waiting for you to confirm.</span></a>
-              <a class="att press" data-state="ok" data-el="2" href="#picture" data-source="session.state session.planned child_skill_state.last_seen"><span class="n">1 of 4</span><span class="w"><i class="ic s" data-icon="done"></i>Done today</span><span class="muted">Periods taught. <span class="num">19</span> of <span class="num">24</span> children seen this fortnight.</span></a>
-            </div>
-            <ol class="periods" data-block="PeriodRow" aria-label="Today's periods">
-          <li><a class="prow press" data-subject="fixed" data-el="3" href="#period"><span class="t num" data-source="period.starts_at">08:30</span><span class="stile"><i class="ic" data-icon="break"></i></span><span class="nm"><b data-source="period.label">Settling in</b></span></a></li>
-          <li><a class="prow press" data-subject="numeracy" data-el="3" href="#period"><span class="t num" data-source="period.starts_at">08:45</span><span class="stile"><i class="ic" data-icon="numeracy"></i></span><span class="nm"><b data-source="activity.name">Counting in tens with bundles</b><span data-source="session.subject_code session.state">Numeracy · note confirmed</span></span><span class="chip" data-state="ok" data-source="session.state"><i class="ic s" data-icon="done"></i>Done</span></a></li>
-          <li><a class="prow press" data-subject="language" data-el="3" href="#period" aria-current="time"><span class="t num" data-source="period.starts_at">09:30</span><span class="stile"><i class="ic" data-icon="language"></i></span><span class="nm"><b data-source="activity.name">Story circle: the lost mitten</b><span data-source="session.subject_code session.state">Language · now</span></span><span class="chip" data-state="quiet" data-source="session.state"><i class="ic s" data-icon="to-do"></i>To do</span></a></li>
-          <li><a class="prow press" data-subject="fixed" data-el="3" href="#period"><span class="t num" data-source="period.starts_at">10:15</span><span class="stile"><i class="ic" data-icon="break"></i></span><span class="nm"><b data-source="period.label">Fruit break</b></span></a></li>
-          <li><a class="prow press" data-subject="arts" data-el="3" href="#period"><span class="t num" data-source="period.starts_at">10:30</span><span class="stile"><i class="ic" data-icon="arts"></i></span><span class="nm"><b data-source="activity.name">Leaf printing</b><span data-source="session.subject_code session.state">Arts</span></span><span class="chip" data-state="quiet" data-source="session.state"><i class="ic s" data-icon="to-do"></i>To do</span></a></li>
-          <li><a class="prow press" data-subject="numeracy" data-el="3" href="#period"><span class="t num" data-source="period.starts_at">11:15</span><span class="stile"><i class="ic" data-icon="numeracy"></i></span><span class="nm"><b data-source="activity.name">Sorting by size</b><span data-source="session.subject_code session.state">Numeracy</span></span><span class="chip" data-state="quiet" data-source="session.state"><i class="ic s" data-icon="to-do"></i>To do</span></a></li>
-          <li><a class="prow press" data-subject="fixed" data-el="3" href="#period"><span class="t num" data-source="period.starts_at">12:00</span><span class="stile"><i class="ic" data-icon="break"></i></span><span class="nm"><b data-source="period.label">Lunch</b></span></a></li>
+            <div class="toolbar"><a class="btn press" data-el="0" href="#period"><i class="ic" data-icon="period"></i>Open my next lesson</a></div>
+            <ul class="stats" data-block="StatTiles" aria-label="Your day in numbers">
+              <li><a class="stat press" data-el="1" href="#timetable" data-source="session.state"><b>5</b><span>lessons today</span></a></li>
+              <li><a class="stat press" data-el="2" href="#notes" data-state="late" data-source="pii.educator_note.status pii.educator_note.received_at"><b>7</b><span>notes to confirm</span></a></li>
+              <li><a class="stat press" data-el="3" href="#assessments" data-state="wait" data-source="item_result.status"><b>2</b><span>papers to check</span></a></li>
+            </ul>
+            <ol class="periods" data-block="PeriodRow" aria-label="Today's lessons">
+          <li><a class="prow press" data-subject="numeracy" data-el="4" href="#today-educator"><span class="t num" data-source="period.starts_at">08:45–09:30</span><span class="stile"><i class="ic" data-icon="numeracy"></i></span><span class="nm"><b data-source="activity.name">Counting in tens with bundles</b><span data-source="session.subject_code">Numeracy · Academic 1</span></span><span class="chip" data-state="ok" data-source="session.state"><i class="ic s" data-icon="done"></i>Done</span></a></li>
+          <li><a class="prow press" data-subject="language" data-el="4" href="#today-educator" aria-current="time"><span class="t num" data-source="period.starts_at">09:30–10:15</span><span class="stile"><i class="ic" data-icon="language"></i></span><span class="nm"><b data-source="activity.name">Story circle: the lost mitten</b><span data-source="session.subject_code">Language · Academic 2</span></span><span class="chip" data-state="wait" data-source="session.state"><i class="ic s" data-icon="to-confirm"></i>Teaching now</span></a></li>
+          <li><a class="prow press" data-subject="arts" data-el="4" href="#today-educator"><span class="t num" data-source="period.starts_at">10:30–11:15</span><span class="stile"><i class="ic" data-icon="arts"></i></span><span class="nm"><b data-source="activity.name">Leaf printing</b><span data-source="session.subject_code">Arts · Extracurricular</span></span><span class="chip" data-state="quiet" data-source="session.state"><i class="ic s" data-icon="to-do"></i>Next</span></a></li>
+          <li><a class="prow press" data-subject="numeracy" data-el="4" href="#today-educator"><span class="t num" data-source="period.starts_at">11:15–12:00</span><span class="stile"><i class="ic" data-icon="numeracy"></i></span><span class="nm"><b data-source="activity.name">Sorting by size</b><span data-source="session.subject_code">Numeracy · Academic 3</span></span></a></li>
+          <li><a class="prow press" data-subject="language" data-el="4" href="#today-educator"><span class="t num" data-source="period.starts_at">12:00–12:40</span><span class="stile"><i class="ic" data-icon="language"></i></span><span class="nm"><b data-source="activity.name">Rhyme time</b><span data-source="session.subject_code">Language · Academic 4</span></span></a></li>
             </ol>
-            <div class="cards" data-block="Cards">
-              <article class="card" data-kind="note"><div class="card-h"><span class="tile"><i class="ic" data-icon="note"></i></span>Notes to confirm</div><div class="card-b"><span data-source="pii.educator_note.status"><span class="num">7</span> waiting</span><span class="muted">The oldest came in <span data-source="pii.educator_note.received_at">3 days ago</span>.</span><a class="btn press" data-el="4" href="#confirm"><i class="ic" data-icon="confirm"></i>Confirm the first</a></div></article>
-              <article class="card" data-kind="child"><div class="card-h"><span class="tile"><i class="ic" data-icon="child"></i></span>Your class</div><div class="card-b"><span data-source="child_skill_state.last_seen enrolment.child_id"><span class="num">5</span> children not seen this fortnight on <span data-source="skill.name">Retelling a story</span>, by where each stands</span><div class="groups" data-source="child_skill_state.state child_skill_state.last_seen enrolment.child_id"><section class="grp" data-state="ok" aria-label="Secure, 1 child"><h3 class="grp-h"><i class="ic s" data-icon="secure"></i>Secure <span class="count num">1</span></h3><ul class="nchips"><li><button class="nchip press" data-el="12" type="button" aria-label="Finn Fox, Sr. No. 06"><span class="no num" data-source="enrolment.roll_no">06</span><span data-source="pii.child.first_name pii.child.last_name">Finn Fox</span></button></li></ul></section><section class="grp" data-state="wait" aria-label="Practising, 2 children"><h3 class="grp-h"><i class="ic s" data-icon="practising"></i>Practising <span class="count num">2</span></h3><ul class="nchips"><li><button class="nchip press" data-el="12" type="button" aria-label="Otto Owl, Sr. No. 15"><span class="no num" data-source="enrolment.roll_no">15</span><span data-source="pii.child.first_name pii.child.last_name">Otto Owl</span></button></li><li><button class="nchip press" data-el="12" type="button" aria-label="Uri Urial, Sr. No. 21"><span class="no num" data-source="enrolment.roll_no">21</span><span data-source="pii.child.first_name pii.child.last_name">Uri Urial</span></button></li></ul></section><section class="grp" data-state="quiet" aria-label="Emerging, 1 child"><h3 class="grp-h"><i class="ic s" data-icon="emerging"></i>Emerging <span class="count num">1</span></h3><ul class="nchips"><li><button class="nchip press" data-el="12" type="button" aria-label="Vik Vole, Sr. No. 22"><span class="no num" data-source="enrolment.roll_no">22</span><span data-source="pii.child.first_name pii.child.last_name">Vik Vole</span></button></li></ul></section><section class="grp" data-state="unseen" aria-label="Not seen yet, 1 child"><h3 class="grp-h"><i class="ic s" data-icon="not-seen"></i>Not seen yet <span class="count num">1</span></h3><ul class="nchips"><li><button class="nchip press" data-el="12" type="button" aria-label="Xan Xerus, Sr. No. 24"><span class="no num" data-source="enrolment.roll_no">24</span><span data-source="pii.child.first_name pii.child.last_name">Xan Xerus</span></button></li></ul></section></div><a class="btn press" data-el="5" href="#picture"><i class="ic" data-icon="class"></i>Class picture</a></div></article>
-            </div>
             <div class="card">
-              <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: no sessions today (a holiday, or no timetable live)</div>
-              <div class="card-b"><div class="empty" data-block="EmptyState"><i class="ic l" data-icon="fortnight"></i><b>No sessions today</b><span class="muted">Diwali break: school is closed. See <a data-el="6" href="#timetable">this fortnight</a>.</span></div></div>
+              <div class="card-h"><i class="ic s" data-icon="not-seen"></i>Inset: a holiday shows the next school day's lessons under one line</div>
+              <div class="card-b"><p data-source="school_day.kind school_day.note fortnight.starts_on">No sessions today. Holiday: Diwali Break. Fortnight 10 starts Monday 23-Nov.</p><span class="muted">The blocks below it are that Monday's, the first marked Next.</span></div>
             </div>
           </main>
-          <aside class="rail" aria-label="Connected to">
-          <aside class="peek" data-block="ChildPeek" aria-label="Recent history of Finn Fox">
-            <div class="peek-h">
-              <span class="disc" aria-hidden="true">FF</span>
-              <span class="who"><b data-el="15" data-source="pii.child.first_name pii.child.last_name">Finn Fox</b><span class="muted"><span class="num" data-source="enrolment.roll_no">06</span> · K2 Red</span></span>
-              <button class="barbtn press" data-el="13" type="button" aria-label="Close"><i class="ic" data-icon="close"></i></button>
-            </div>
-            <div class="keyrow"><span class="chip" data-state="ok"><i class="ic s" data-icon="secure"></i>6 secure</span><span class="chip" data-state="wait"><i class="ic s" data-icon="practising"></i>3 practising</span><span class="chip" data-state="unseen"><i class="ic s" data-icon="not-seen"></i>2 not seen yet</span></div>
-            <ol class="timeline">
-              <li class="tli"><span class="tile" data-kind="note"><i class="ic" data-icon="note"></i></span><div><b>Joined in the story circle and named the characters</b><p><span data-source="pii.educator_note.route">Voice note</span> · confirmed by <span data-source="pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="pii.educator_note.received_at">17-Nov</span></li>
-              <li class="tli"><span class="tile" data-kind="activity"><i class="ic" data-icon="activity"></i></span><div><b>Counting in tens with bundles: as expected</b><p>Observed in the period · <span data-source="pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="activity_observation.observed_at">16-Nov</span></li>
-              <li class="tli"><span class="tile" data-kind="assessment"><i class="ic" data-icon="assessment"></i></span><div><b>Paper, sheet 2</b><p><span data-source="item_result.status">5 right, 1 wrong with working, 0 blank</span> · signed off by <span data-source="pii.staff.name">Bina Basil</span></p></div><span class="caption num" data-source="item_result.confirmed_at">13-Nov</span></li>
-              <li class="tli"><span class="tile" data-kind="skill"><i class="ic" data-icon="skill"></i></span><div><b>Retelling a story: now secure</b><p>The state changed after a third day seen · <span data-source="pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="evidence_event.observed_at">12-Nov</span></li>
-              <li class="tli"><span class="tile" data-kind="period"><i class="ic" data-icon="history"></i></span><div><b>A mark corrected: below became as expected</b><p><span data-source="change_log.reason">A new entry that replaces the first</span> · <span data-source="pii.staff.name">Asha Almond</span></p></div><span class="caption num" data-source="change_log.at">11-Nov</span></li>
-            </ol>
-            <a class="btn press" data-el="14" href="#child">Open Finn</a>
-          </aside>
-            <section class="rail-box">
-              <h2>Connected to</h2>
-              <ul class="rlist">
-  <li><a class="ritem" data-el="6" href="#timetable"><span class="tile" data-kind="period"><i class="ic" data-icon="fortnight"></i></span><span><span>This fortnight</span><small>fortnight <span class="num" data-source="fortnight.number">9</span>, week <span data-source="plan_entry.week_code">A</span></small></span></a></li>
-  <li><a class="ritem" data-el="7" href="#materials"><span class="tile" data-kind="note"><i class="ic" data-icon="materials"></i></span><span><span>Materials</span><small><span class="num" data-source="activity_material.material_code">9</span> things to lay out today</small></span></a></li>
-              </ul>
-            </section>
-            <section class="rail-box" data-block="KeyValue">
-              <h2>Lay out for Story circle</h2>
-              <dl class="kv">
-                <dt data-source="material_item.name">Story cards</dt><dd class="num" data-source="activity_material.quantity material_item.unit">6 sets</dd>
-                <dt data-source="material_item.name">Mitten picture</dt><dd class="num" data-source="activity_material.quantity material_item.unit">1 piece</dd>
-                <dt data-source="material_item.name">Sitting mats</dt><dd class="num" data-source="activity_material.quantity material_item.unit">24 pieces</dd>
-                <dt data-source="material_item.name">Felt mittens</dt><dd class="num" data-source="activity_material.quantity material_item.unit">8 pieces</dd>
-              </dl>
-            </section>
+          <aside class="rail" aria-label="The lesson">
+            <aside class="dpanel" data-block="DetailPanel" aria-label="The lesson">
+              <header class="dpanel-head"><span class="tile" data-kind="period"><i class="ic" data-icon="period"></i></span><div><h2 class="dpanel-title" data-source="activity.name">Story circle: the lost mitten</h2><p class="muted">09:30–10:15 · K2 Red · Academic 2</p></div><a class="barbtn press" data-el="5" href="#today-educator" aria-label="Close the panel"><i class="ic" data-icon="close"></i></a></header>
+              <div class="dpanel-actions"><a data-el="6" href="#period">Open full page</a></div>
+              <div class="tabs" role="tablist" aria-label="Details"><button class="tabbtn" role="tab" type="button" aria-selected="true" data-el="7">Activity</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="8">Children</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="9">Materials</button><button class="tabbtn" role="tab" type="button" aria-selected="false" data-el="10">History</button></div>
+              <div role="tabpanel" class="stack">
+                <h3>What it is for</h3><p data-source="activity.objective">Retells a story in order, naming the characters.</p>
+                <h3>Lay out</h3><dl class="kv" data-block="KeyValue">
+                  <dt data-source="material_item.name">Story cards</dt><dd class="num" data-source="activity_material.quantity">6</dd>
+                  <dt data-source="material_item.name">Sitting mats</dt><dd class="num" data-source="activity_material.quantity">24</dd>
+                </dl>
+              </div>
+              <div class="card">
+                <div class="card-h">Inset, the Children tab</div>
+                <div class="card-b"><span class="muted">The class is marked child by child on the lesson's own page.</span><a class="btn press" data-el="11" href="#period">Mark the class</a></div>
+              </div>
+            </aside>
           </aside>
         </div>
         </div>

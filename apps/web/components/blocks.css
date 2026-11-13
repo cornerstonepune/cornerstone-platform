@@ -72,6 +72,10 @@
   .b-prow[aria-current="time"] { box-shadow: 0 0 0 2px var(--action), var(--shadow-card); }
   .b-prow[data-subject="fixed"] { min-height: 40px; background: var(--subject-fixed-bg); box-shadow: none; color: var(--subject-fixed); }
   .b-prow[data-subject="fixed"] .b-nm b { font-weight: 400; }
+  .b-periods[data-tinted] .b-prow { grid-template-columns: 6.5rem 36px minmax(0, 1fr) auto; background: var(--sb); box-shadow: var(--shadow-card), inset 4px 0 0 var(--s); }
+  .b-periods[data-tinted] .b-prow[aria-current="time"] { box-shadow: 0 0 0 2px var(--action), inset 4px 0 0 var(--s); }
+  @media (max-width: 600px) { .b-periods[data-tinted] .b-prow { grid-template-columns: 3.25rem 28px minmax(0, 1fr) auto; gap: 0 var(--space-2); } }
+  .b-prow.b-selected, .b-periods[data-tinted] .b-prow.b-selected { box-shadow: inset 4px 0 0 var(--s), 0 0 0 3px var(--action); }
 
   /* ---------- DataTable skin, FilterBar ---------- */
   .b-table-box { overflow-x: auto; border-radius: var(--radius-card); background: var(--panel); box-shadow: var(--shadow-card); }

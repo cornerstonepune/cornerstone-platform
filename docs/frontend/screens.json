@@ -381,140 +381,128 @@
       "exists": "part",
       "eyebrow": "Wednesday 18-Nov · K2 Red · Fortnight 9, week A",
       "title": "Today",
-      "purpose": "Your periods in order. Tap one for what to teach, how, and what to lay out. After it, record a note.",
+      "purpose": "Your lessons in order. Choose one to see what to teach, how and what to lay out; mark the class on the lesson.",
       "blocks": [
         [
-          "AttentionStrip",
-          "do now = notes unconfirmed past 48 h; this week = notes waiting to confirm that are younger than 48 h (the two never overlap); done = periods finished of planned, children seen this fortnight"
-        ],
-        [
-          "KanbanBoard",
-          "what waits on me, by Table | Board toggle: Do now (notes past 48 h) · This week (notes waiting, younger than 48 h) · Done (periods taught and confirmed today); the List is the periods below"
+          "StatTile",
+          "three tiles above the lessons: lessons today (of the day shown) · notes to confirm (unconfirmed past 48 h and younger, which never overlap; the bar's one count) · papers to check (What needs doing's answers to check and papers to sign off)"
         ],
         [
           "PeriodRow",
-          "one per session of the day, from `session` for my class; fixed parts of the day included, greyed"
+          "the day's lessons as a timeline of subject-coloured blocks (tinted): time, the subject's colour and word (config timetable.subject_looks), the activity's name, and done / now / next; a block opens the lesson in the DetailPanel"
         ],
         [
-          "Cards",
-          "Notes to confirm (count, oldest) · Your class (children not seen this fortnight on the skill being taught)"
+          "DetailPanel",
+          "the lesson chosen, else the lesson now or next, in the lesson panel's tabs Activity · Children · Materials · History (components/lesson-panel.tsx, as the timetable opens it); the Children tab sends to the lesson page, where the class is marked; closed, the day's summary (taught, still to teach)"
         ],
         [
-          "ChildPeek",
-          "the child chosen from 'Your class'"
+          "EmptyState",
+          "the engine's reason for no day (switched off, no class held, could not be read)"
         ]
       ],
       "elements": [
         {
           "t": "link",
-          "label": "do now tile",
-          "to": "confirm",
-          "note": "the oldest unconfirmed note; absent (grey 0) when none"
+          "label": "Open my next lesson",
+          "to": "period",
+          "note": "the lesson now, else the next; a sentence instead when none is left",
+          "when": "@today-lesson"
         },
         {
           "t": "link",
-          "label": "this week tile",
+          "label": "lessons today tile",
+          "text": "lessons",
+          "to": "timetable",
+          "note": "opens the day shown in the timetable's Day view",
+          "when": "@today-lesson"
+        },
+        {
+          "t": "link",
+          "label": "notes to confirm tile",
+          "text": "notes to confirm",
           "to": "notes"
         },
         {
           "t": "link",
-          "label": "done today tile",
-          "to": "picture"
+          "label": "papers to check tile",
+          "text": "papers to check",
+          "to": "assessments"
         },
         {
           "t": "row",
-          "label": "each period row",
+          "label": "each lesson block",
+          "to": "today-educator",
+          "data": "data-open-key",
+          "note": "opens the lesson in the right panel; the address carries open=lesson:<session>",
+          "when": "@today-lesson"
+        },
+        {
+          "t": "link",
+          "label": "panel: Close",
+          "text": "Close the panel",
+          "to": "today-educator",
+          "note": "the address carries open=none; the right side is the day's summary",
+          "when": "@today-lesson",
+          "data": "data-panel-close"
+        },
+        {
+          "t": "link",
+          "label": "panel: Open full page",
+          "text": "Open full page",
           "to": "period",
-          "note": "a fixed part of the day opens its period page with 'Nothing to record here'"
-        },
-        {
-          "t": "link",
-          "label": "Confirm the first",
-          "to": "confirm"
-        },
-        {
-          "t": "link",
-          "label": "Class picture",
-          "to": "picture"
-        },
-        {
-          "t": "link",
-          "label": "rail: This fortnight",
-          "to": "timetable"
-        },
-        {
-          "t": "link",
-          "label": "rail: Materials",
-          "to": "materials"
+          "when": "@today-lesson"
         },
         {
           "t": "tab",
-          "label": "Board",
-          "note": "what waits on me as lanes; the address carries the tab"
+          "label": "Activity",
+          "when": "@today-lesson"
         },
         {
           "t": "tab",
-          "label": "List",
-          "note": "what waits on me as the tiles and the period rows"
+          "label": "Children",
+          "when": "@today-lesson"
         },
         {
-          "t": "row",
-          "label": "each note card on the board",
-          "to": "confirm"
+          "t": "tab",
+          "label": "Materials",
+          "when": "@today-lesson"
         },
         {
-          "t": "row",
-          "label": "each period card on the board",
-          "to": "period"
-        },
-        {
-          "t": "peek",
-          "label": "each Sr. No. in Your class",
-          "effect": "opens ChildPeek for that child",
-          "pending": "UI-3b (#570) and UI-3c (#577) are on main: the children list and its peek are built in a follow-up (UI-7c) that reuses their peek and the activity-to-skill link, not a copy"
-        },
-        {
-          "t": "button",
-          "label": "peek: Close",
-          "effect": "closes ChildPeek; focus returns to the child that opened it",
-          "pending": "UI-3b (#570) and UI-3c (#577) are on main: the children list and its peek are built in a follow-up (UI-7c) that reuses their peek and the activity-to-skill link, not a copy"
+          "t": "tab",
+          "label": "History",
+          "when": "@today-lesson"
         },
         {
           "t": "link",
-          "label": "peek: Open the child",
-          "to": "child",
-          "note": "the one way from a list to the child's own page",
-          "pending": "UI-3b (#570) and UI-3c (#577) are on main: the children list and its peek are built in a follow-up (UI-7c) that reuses their peek and the activity-to-skill link, not a copy"
-        },
-        {
-          "t": "child_name",
-          "label": "the name in the peek",
-          "note": "the child's name beside the Sr. No., read from pii by child_id",
-          "pending": "UI-3b (#570) and UI-3c (#577) are on main: the children list and its peek are built in a follow-up (UI-7c) that reuses their peek and the activity-to-skill link, not a copy"
+          "label": "Mark the class",
+          "to": "period",
+          "note": "in the Children tab, for a lesson with an activity: marking is on the lesson page (B4)",
+          "when": "@today-lesson"
         }
       ],
-      "rail": [
-        "This fortnight",
-        "Materials"
-      ],
+      "rail": [],
       "capture": [],
-      "main": "the current period",
+      "main": "Open my next lesson",
       "next": "Timetable",
-      "data": "session × plan_entry × activity for my class on this school_day; pii.educator_note status counts and ages (note status words are a config list); child_skill_state not-seen per child on the skill being taught (an open enrolment with no state row)",
-      "empty": "No sessions today (a holiday or no timetable live): say which, link to the fortnight",
-      "phone": "same order; the strip stacks; the record button is one tap from the period",
+      "data": "session × period × activity for my class on the day shown (school_day), its state; subject.code to its look (config); pii.educator_note status counts and ages; sheet_instance answers waiting to be checked; the next teaching day or fortnight when the day has no lesson",
+      "empty": "No lesson on the day (a holiday, a day in no fortnight): say why in the school's words and when lessons start again, and show that next school day's lessons; no day at all (switched off, no class held): the engine's words",
+      "phone": "same order; the tiles wrap two across; the panel sits under the day",
       "folds": [
         "/today (What needs doing)",
         "/educator (K2 Today)"
       ],
       "done_when": [
-        "an educator sees only sessions of classes their grant names (the access fixture's second educator sees a different list)",
-        "each tile's number equals the count of rows the tile opens",
-        "the lit row is the session whose period contains the current time; before 08:30 none is lit",
-        "each board lane's card count equals the tile of the same name; a lane with no card says so in words",
-        "tapping a child opens ChildPeek with that child's recent history newest first (notes, observations, papers, state changes), each entry with who and when; Escape closes it and focus returns; its 'Open the child' link lands on the child page"
+        "the three tiles read lessons today, notes to confirm and papers to check, and each number is the count of what it opens",
+        "the lessons are blocks in time order, each with time, subject colour and word, activity name, and done / now / next",
+        "choosing a block opens its lesson in the right panel with the tabs Activity · Children · Materials · History; with none chosen it is the lesson now or next",
+        "on a holiday the next school day's lessons show under one line saying why and when the fortnight starts",
+        "an educator sees only the lessons of classes their grant names"
       ],
-      "phone_gate": true
+      "phone_gate": true,
+      "rest": {
+        "fixture": "today-rest",
+        "after": "today-gone"
+      }
     },
     {
       "id": "today-coordinator",
@@ -528,134 +516,105 @@
         "CP-22",
         "CP-10"
       ],
-      "exists": "no",
+      "exists": "yes",
       "eyebrow": "Wednesday 18-Nov · every class",
       "title": "Today, the school",
-      "purpose": "What waits on you, each with its own button. Then the week ahead.",
+      "purpose": "What waits on you, one row each with its own button. Choose a row to see the work behind it on the right.",
       "blocks": [
         [
-          "AttentionStrip",
-          "do now = clashes not accepted + notes unconfirmed past 48 h across classes; this week = drafts to approve, materials lines without quantity; done = sessions done of planned last week"
+          "StatTile",
+          "notes unconfirmed past their time (the bar's one count) · papers to check · approvals waiting (class papers, home assessments, parent reports, timetable drafts; skills to approve are not counted on Today). Classes in session now waits on an engine read (one count of the classes whose lesson holds the current time)"
+        ],
+        [
+          "DetailPanel",
+          "a waiting row opened: the rows behind it, each with its own action; nothing chosen: last week (lessons done of planned, the heat grid), next week, and whether the system has what it needs"
         ],
         [
           "HeatGrid",
-          "last week, class × day"
+          "last week, class × day, in the panel's summary; cells are not links"
         ],
         [
-          "DataTable",
-          "the waiting rows: clash, draft, late notes, sessions not done, materials; each row's own button"
-        ],
-        [
-          "Cards",
-          "Next week (events from school_day and fortnight) · New activities next week (plan_entry not taught before) · Does the system have what it needs (activities with steps/levels, materials with quantities, consent on file)"
+          "EmptyState",
+          "nothing waits on you, or why it could not be read"
         ]
       ],
       "elements": [
         {
           "t": "link",
-          "label": "do now tile",
-          "to": "fortnight",
-          "text": "left unconfirmed"
+          "label": "Open the first",
+          "text": "Open the first",
+          "note": "the first row that has its own page, red first; a sentence instead when nothing waits"
         },
         {
           "t": "link",
-          "label": "this week tile",
-          "to": "fortnight",
-          "pending": "built: the school's counts come from CP-28's /k2/today-school (backend draft #619); this control is drawn once that route is on main and the inventory has fixtures for it (clashes, drafts, materials lines, last week)",
-          "text": "drafts to approve"
+          "label": "notes unconfirmed tile",
+          "text": "notes unconfirmed past their time",
+          "to": "notes"
         },
         {
           "t": "link",
-          "label": "sessions done tile",
-          "to": "staff",
-          "pending": "built: the school's counts come from CP-28's /k2/today-school (backend draft #619); this control is drawn once that route is on main and the inventory has fixtures for it (clashes, drafts, materials lines, last week)",
-          "text": "planned last week"
-        },
-        {
-          "t": "cell",
-          "label": "each heat-grid cell",
-          "to": "timetable",
-          "note": "opens that class's day",
-          "pending": "built: a cell opens that class's day on the timetable; drawn only with last week's rows from CP-28 (#635/#619), so it waits on that route being on main and a fixture with a taught class"
+          "label": "papers to check tile",
+          "text": "papers to check",
+          "to": "assessments"
         },
         {
           "t": "row",
-          "label": "clash row",
-          "to": "fortnight",
-          "roles": [
-            "coordinator"
-          ],
-          "pending": "built: the school's counts come from CP-28's /k2/today-school (backend draft #619); this control is drawn once that route is on main and the inventory has fixtures for it (clashes, drafts, materials lines, last week)",
-          "text": "the clashes"
-        },
-        {
-          "t": "row",
-          "label": "draft row",
-          "to": "draft",
-          "roles": [
-            "coordinator"
-          ],
-          "pending": "built: the school's counts come from CP-28's /k2/today-school (backend draft #619); this control is drawn once that route is on main and the inventory has fixtures for it (clashes, drafts, materials lines, last week)",
-          "text": "the drafts"
-        },
-        {
-          "t": "row",
-          "label": "late notes row",
-          "to": "notes",
-          "text": "the notes"
-        },
-        {
-          "t": "row",
-          "label": "sessions not done row",
-          "to": "staff",
-          "pending": "built: the school's counts come from CP-28's /k2/today-school (backend draft #619); this control is drawn once that route is on main and the inventory has fixtures for it (clashes, drafts, materials lines, last week)",
-          "text": "open staff and classes"
-        },
-        {
-          "t": "row",
-          "label": "materials row",
-          "to": "materials",
-          "pending": "built: the school's counts come from CP-28's /k2/today-school (backend draft #619); this control is drawn once that route is on main and the inventory has fixtures for it (clashes, drafts, materials lines, last week)",
-          "text": "the materials"
+          "label": "each waiting row",
+          "to": "today-coordinator",
+          "data": "data-wait-open",
+          "note": "opens the row in the right panel; the address carries open=wait:<key>. The rows are the school's counts (clashes, late notes, drafts, lessons not done, materials) and What needs doing's groups but skills"
         },
         {
           "t": "link",
-          "label": "each new activity next week",
-          "to": "activity",
-          "pending": "built: the school's counts come from CP-28's /k2/today-school (backend draft #619); this control is drawn once that route is on main and the inventory has fixtures for it (clashes, drafts, materials lines, last week)"
+          "label": "each row's action",
+          "data": "data-wait-action",
+          "note": "the row's one action: opens the work itself on the page that does it"
         },
         {
           "t": "link",
-          "label": "rail: Fortnight 9",
-          "to": "fortnight"
+          "label": "panel: Close",
+          "text": "Close the panel",
+          "to": "today-coordinator",
+          "when": "@today-wait",
+          "data": "data-panel-close"
         },
         {
           "t": "link",
-          "label": "rail: Staff and classes",
-          "to": "staff"
+          "label": "panel: Open full page",
+          "text": "Open full page",
+          "note": "the page that holds all of the row's work",
+          "when": "@today-wait"
+        },
+        {
+          "t": "tab",
+          "label": "What waits",
+          "when": "@today-wait"
         },
         {
           "t": "link",
-          "label": "rail: Timetable",
-          "to": "timetable"
+          "label": "each row behind it",
+          "data": "data-panel-task",
+          "note": "the task's own action, as What needs doing's row had it",
+          "when": "@today-wait"
         }
       ],
-      "rail": [
-        "Fortnight 9",
-        "Staff and classes",
-        "Timetable"
-      ],
+      "rail": [],
       "capture": [],
-      "main": "the first red row",
-      "next": "Fortnight",
-      "data": "fortnight state; timetable clashes; sessions by state last week; educator_note status by class; materials_line without quantity; consent counts",
-      "empty": "Nothing waits on you: say so in one line, keep the heat grid and next week",
-      "phone": "strip stacks; heat grid scrolls sideways in its own box",
+      "main": "Open the first thing waiting on me",
+      "next": "Timetable",
+      "data": "fortnight state; timetable clashes; sessions by state last week; educator_note status by class; materials_line without quantity; consent counts; What needs doing's tasks (sheet_instance answers to check, class papers, home assessments, parent reports)",
+      "empty": "Nothing waits on you: say so in one line, keep last week and next week in the panel",
+      "phone": "tiles wrap; rows stack their action under the words; the panel sits under the list",
       "done_when": [
         "only the 'everything' group sees this version; an educator at /today sees the educator's",
-        "each waiting row leads to the screen that does the work and the work is listed there",
+        "the tiles are notes unconfirmed past their time, papers to check and approvals waiting, each the count of the rows behind it",
+        "each waiting row has one action, which leads to the screen that does the work; What needs doing's groups (skills aside) are each a row",
+        "a row opens in the right panel with the rows behind it; Escape closes it",
         "no ranking of people anywhere on the page",
-        "the heat grid has one cell per class per teaching day and a dashed cell per holiday"
+        "/setup/needs-doing still opens"
+      ],
+      "folds": [
+        "/setup/needs-doing (What needs doing, page charter Part C)"
       ]
     },
     {

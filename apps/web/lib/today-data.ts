@@ -3,11 +3,13 @@
 import { cache } from "react";
 import { EngineDown, engineSendWithin } from "./engine";
 import type { Day } from "./educator/types";
+import { weekOrNull } from "./educator/data";
+import { isLesson } from "./educator/period";
 import type { Session } from "./auth";
 import { actingAsEducator } from "./acting-view";
 import { sql } from "./db";
 import { reachOf } from "./reach";
-import { tiles as schoolTiles, type School } from "./today-school";
+import type { School } from "./today-school";
 
 /** Which version of Today a person gets: the one for everything, or the one for their own classes. Decided by what the person's
  *  group reaches (`reachOf`, the database's one rule), never by naming a role. A coordinator acting as an educator (the bar's switch)
@@ -89,10 +91,20 @@ export async function nextFortnight(classId: string, after: string): Promise<{ n
   return f ?? null;
 }
 
-/** The id of each class by grade and section as the engine's counts name them: a cell of last week's grid opens that class's day. */
-export async function classIds(): Promise<Record<string, string>> {
-  const rows = await sql<{ id: string; grade: string; section: string | null }[]>`select id::text, grade_code as grade, section from school_class`;
-  return Object.fromEntries(rows.map((r) => [`${r.grade}|${r.section ?? ""}`, r.id]));
+const addDays = (d: string, n: number) => new Date(Date.parse(`${d}T00:00:00Z`) + n * 86_400_000).toISOString().slice(0, 10);
+
+/** The next school day after a day with no lesson on which the class has a lesson (page charter B1: on a holiday, Today shows that day):
+ *  within a fortnight, the first later day of this week or the next that the engine's week (/timetable/week) gives a lesson; outside every
+ *  fortnight, or when none is found, the first day of the class's next teaching fortnight (with its number). Null when neither is on record. */
+export async function nextLessonDay(me: Pick<Session, "email">, d: Pick<Day, "day" | "class" | "fortnight">): Promise<{ day: string; fortnight: number | null } | null> {
+  if (d.fortnight)
+    for (const w of [d.day, addDays(d.day, 7)]) {
+      const week = await weekOrNull(me, { class_id: d.class.id, week_of: w }).catch(() => null);
+      const found = week?.days.find((x) => x.day > d.day && x.kind !== "holiday" && x.kind !== "none" && x.periods.some(isLesson));
+      if (found) return { day: found.day, fortnight: null };
+    }
+  const f = await nextFortnight(d.class.id, d.day);
+  return f ? { day: f.starts_on, fortnight: f.number } : null;
 }
 
 export type Happening = { day: string; what: string };
@@ -119,19 +131,21 @@ export function noteFigures(t: Read<Todo>): { late: number; soon: number } | nul
   return t.down ? null : { late: 0, soon: 0 };
 }
 
-/** The one count on the site, the badge on the bar's Today door: the strip's do-now plus this-week (the two never overlap), computed once
- *  per request. An educator's are her notes; the school's are its strip's two tiles (clashes, late notes, drafts, materials lines). No
- *  badge (0) when the engine could not be read: the page then says so in words instead of counting. */
+/** The school's notes left unconfirmed past the time they may wait: the counts' figure (/k2/today-school), else the notes needing a decision
+ *  (/k2/coordinator) that are left unconfirmed. A refusal of both (notes switched off) is 0; null when neither could be read at all. */
+export async function lateNotes(me: Pick<Session, "email">): Promise<number | null> {
+  const counts = await schoolCounts(me);
+  if (counts.ok) return counts.value.late_notes;
+  const got = await schoolNotes(me);
+  if (got.ok) return got.value.rows.filter((r) => r.state === "left_unconfirmed").length;
+  return counts.down && got.down ? null : 0;
+}
+
+/** The one count on the site, the badge on the bar's Today door, computed once per request: Today's notes tile (page charter B1, B1b).
+ *  An educator's is her notes to confirm (left past their time and still within it, which never overlap); the school's is the notes left
+ *  unconfirmed past their time. No badge (0) when the engine could not be read: the page then says so in words instead of counting. */
 export const todayBadge = cache(async (me: Session): Promise<number> => {
-  if (await schoolVersion(me)) {
-    const counts = await schoolCounts(me);
-    if (counts.ok) {
-      const t = schoolTiles(counts.value);
-      return t.doNow + t.soon;
-    }
-    const got = await schoolNotes(me);
-    return got.ok ? got.value.rows.filter((r) => r.state === "left_unconfirmed").length : 0;
-  }
+  if (await schoolVersion(me)) return (await lateNotes(me)) ?? 0;
   const f = noteFigures(await myNotes(me));
   return f ? f.late + f.soon : 0;
 });

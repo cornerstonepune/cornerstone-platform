@@ -1,117 +1,114 @@
-import { Cards } from "@/components/cards";
-import { Rail, RailFacts, Screen } from "@/components/app-frame";
-import { AttentionStrip, type Attention } from "@/components/attention-strip";
+import Link from "@/components/link";
+import { DetailPanel, type Opened } from "@/components/detail-panel";
 import { EmptyState } from "@/components/empty-state";
-import { KanbanBoard, ViewToggle, type KCard, type Lane } from "@/components/kanban-board";
+import { SUBJECT } from "@/components/fortnight-grid";
+import { lessonPanel } from "@/components/lesson-panel";
 import { PeriodRow } from "@/components/period-row";
+import { Screen } from "@/components/app-frame";
+import { StatTiles, type Stat } from "@/components/stat-tile";
 import type { Session } from "@/lib/auth";
-import { pageOf } from "@/lib/educator/data";
-import { blankWords, isBlank, isLesson, timeOf } from "@/lib/educator/period";
+import { blankWords, isBlank, isLesson } from "@/lib/educator/period";
 import type { Day, Period } from "@/lib/educator/types";
-import { nowAtSchool, schoolToday } from "@/lib/school-clock";
-import { sql } from "@/lib/db";
-import { DOORS, open } from "@/lib/today-doors";
-import { myDay, myNotes, nextFortnight, noteFigures, sessionsOf, type Read, type TodoRow } from "@/lib/today-data";
 import { E } from "@/lib/educator/words";
-import { dayWords, fortnightWords, litPeriod, many, periodRow, periodsDone } from "@/lib/today";
+import { lessonView } from "@/lib/lesson-view";
+import { nowAtSchool, schoolToday } from "@/lib/school-clock";
+import { subjectLook, subjectLooks } from "@/lib/subject-looks";
+import { dayMarks, dayWords, fortnightWords, lessonRow } from "@/lib/today";
+import { myDay, myNotes, nextLessonDay, noteFigures, sessionsOf, type Read } from "@/lib/today-data";
+import { DOORS, open as door } from "@/lib/today-doors";
+import { myTasks, papersToCheck } from "@/lib/today-waiting";
 import { classWords } from "@/lib/voice-types";
 
-// Today, the educator's (docs/frontend/SPEC.md, Today): her periods in order, what waits on her, her class. The tiles and the
-// board's lanes count the same rows, so a tile's number is the number of rows it opens. No score, no ranking, whole counts only.
-const addr = (o: Record<string, string>) => {
-  const q = new URLSearchParams(o).toString();
+// Today, the educator's (page charter B1, a Workspace): three tiles (lessons today, notes to confirm, papers to check), then the day's
+// lessons as a timeline of subject-coloured blocks, each saying done, now or next. A block opens the lesson on the right, in the lesson's
+// own panel (components/lesson-panel.tsx, as the timetable opens it); with none named the panel opens on the lesson now, else the next.
+// A day with no lesson says why in the school's words and shows the next school day's lessons. Whole counts only, no score, no rank.
+const addr = (o: Record<string, string | undefined>) => {
+  const q = new URLSearchParams(Object.entries(o).filter((e): e is [string, string] => !!e[1])).toString();
   return q ? `/today?${q}` : "/today";
 };
-const ageWords = (h: number) => (h >= 48 ? `${Math.floor(h / 24)} days` : `${h} h`);
-const NOTE_STATE: Record<string, KCard["state"]> = { left_unconfirmed: "late", to_confirm: "toConfirm", fix_this: "fixThis", being_read: "reading" };
 
-const noteCard = (r: TodoRow, cls: string): KCard => {
-  const href = open(DOORS.confirm(r.note_id));
-  return { key: r.note_id, kind: "note", title: r.activity_name ?? "A note to confirm", sub: `${cls} · ${ageWords(r.age_hours)} old`, href: href ?? "#", state: NOTE_STATE[r.state] ?? "toConfirm" };
-};
+/** The day whose lessons are shown: the day asked for, or, when it has no lesson, the next school day after it that has one (and when lessons start again). */
+async function shownDay(me: Session, got: Read<Day>, today: string): Promise<{ day: Day | null; why: string | null }> {
+  if (!got.ok) return { day: null, why: null };
+  const d = got.value;
+  if (!isBlank(d) && d.periods.some(isLesson)) return { day: d, why: null };
+  const why = `${d.day === today ? "No sessions today." : "No sessions on this day."} ${blankWords(d)}`;
+  const after = await nextLessonDay(me, d);
+  if (!after) return { day: null, why };
+  const starts = after.fortnight !== null ? E.dayKind.nextFortnight.replace("{n}", String(after.fortnight)).replace("{day}", dayWords(after.day)) : `The next school day is ${dayWords(after.day)}.`;
+  const next = await myDay(me, after.day);
+  return { day: next.ok && next.value.periods.some(isLesson) ? next.value : null, why: `${why} ${starts}` };
+}
 
-export async function EducatorToday({ me, view, day: asked }: { me: Session; view: "list" | "board"; day?: string }) {
-  const [today, now, got, notes] = await Promise.all([schoolToday(), nowAtSchool(), myDay(me, asked), myNotes(me)]);
-  const day = got.ok ? got.value : null;
-  const todo = notes.ok ? notes.value : null;
-  // null when the engine could not be read: the two note tiles and lanes are left out and a sentence says why, never a 0 that is not known
+export async function EducatorToday({ me, day: asked, open, tab }: { me: Session; day?: string; open?: string; tab?: string }) {
+  const [today, now, got, notes, tasks, looks] = await Promise.all([schoolToday(), nowAtSchool(), myDay(me, asked), myNotes(me), myTasks(me), subjectLooks()]);
+  const { day, why } = await shownDay(me, got, today);
+  const lessons = day ? day.periods.filter(isLesson) : [];
+  const sessions = day ? await sessionsOf(day.class.id, day.day) : {};
+  const { marks, chosen } = dayMarks(lessons, now, !day ? "today" : day.day < today ? "past" : day.day > today ? "future" : "today");
+  // the lesson open on the right: the one the address names, none when it says "none", else the one now or next
+  const named = open?.startsWith("lesson:") ? open.slice("lesson:".length) : null;
+  const session = open === "none" ? null : (named && Object.values(sessions).includes(named) ? named : chosen ? sessions[chosen] : null) ?? null;
+  const keep = { day: asked };
+  const rows = lessons.map((p: Period) => {
+    const id = sessions[p.period_id];
+    const look = subjectLook(looks, p.subject);
+    const href = id ? addr({ ...keep, open: `lesson:${id}` }) : (door(DOORS.period(p.period_id, day!.class.id, day!.day)) ?? "#");
+    return lessonRow(p, look, SUBJECT[look], marks[p.period_id], href, id ? { key: `lesson:${id}`, selected: id === session } : undefined);
+  });
+  const v = session ? await lessonView(me, session) : null;
+  const panel = v ? todayPanel(lessonPanel(v, { key: `lesson:${session}`, closeHref: addr({ ...keep, open: "none" }), tab }), session!, !!v.a, session !== named) : null;
   const figures = noteFigures(notes);
-  const cls = day ? classWords(day.class) : "";
-  const stage = [dayWords(day?.day ?? today), cls, day ? fortnightWords(day.fortnight, day.week) : ""].filter(Boolean).join(" · ");
-  const late = todo?.groups.left_unconfirmed.rows ?? [];
-  const soon = ["fix_this", "to_confirm", "being_read"].flatMap((g) => todo?.groups[g as "to_confirm"].rows ?? []).sort((a, b) => Date.parse(a.received_at) - Date.parse(b.received_at));
-  const periods = day && !isBlank(day) ? day.periods : [];
-  const lit = day?.day === today ? litPeriod(periods, now) : null;
-  const { done, planned } = periodsDone(periods);
-  const classId = day?.class.id ?? "";
-  const sessions = day && classId ? await sessionsOf(classId, day.day) : {};
-  // a day with no lesson says when lessons start again: the class's next fortnight
-  const coming = day && isBlank(day) && classId ? await nextFortnight(classId, day.day) : null;
-  const href = (p: Period) => open(DOORS.period(p.period_id, classId, day!.day, sessions[p.period_id])) ?? "#";
-  const tiles: Attention[] = [
-    ...(figures
-      ? [
-          { state: "doNow" as const, n: late.length, sentence: "Notes left unconfirmed past the time they may wait", href: late[0] ? open(DOORS.confirm(late[0].note_id)) : null },
-          { state: "doSoon" as const, n: soon.length, sentence: "Notes waiting for you to confirm", href: soon.length ? open(DOORS.notes()) : null },
-        ]
-      : []),
-    ...(got.ok || !got.down ? [{ state: "done" as const, n: done, sentence: `Periods taught of ${planned} planned today`, href: classId ? open(DOORS.picture(classId)) : null }] : []),
+  const first = lessons.find((p) => marks[p.period_id] === "now") ?? lessons.find((p) => marks[p.period_id] === "next");
+  const firstSession = first ? sessions[first.period_id] : undefined;
+  const stats: Stat[] = [
+    ...(day ? [{ id: "lessons", n: lessons.length, line: day.day === today ? "lessons today" : `lessons on ${dayWords(day.day)}`, href: door(DOORS.timetable()) ? `${door(DOORS.timetable())}?view=day&day=${day.day}` : undefined }] : []),
+    ...(figures ? [{ id: "notes", n: figures.late + figures.soon, line: "notes to confirm", tone: figures.late ? ("act" as const) : figures.soon ? ("wait" as const) : undefined, href: door(DOORS.notes()) ?? undefined }] : []),
+    ...(tasks ? [{ id: "papers", n: papersToCheck(tasks), line: "papers to check", tone: papersToCheck(tasks) ? ("wait" as const) : undefined, href: "/children/assessments?status=check" }] : []),
   ];
-  const next = periods.find((p) => p.period_id === lit) ?? periods.find((p) => isLesson(p) && p.starts_at > now && day?.day === today);
-  // the main action is the period itself: the lit row (or the next) is the one to open, and says so in words here
-  const action = <p className="font-medium">{next ? `${lit === next.period_id ? "Now" : "Next"}: ${next.name}, ${timeOf(next)}` : day && !isBlank(day) ? "No lesson is left today." : "No lesson to open today."}</p>;
-  const noteLanes: Lane[] = [
-    { key: "doNow", label: "Do now", state: "doNow", count: late.length, empty: "No note is waiting past its time.", cards: late.map((r) => noteCard(r, cls)) },
-    { key: "doSoon", label: "This week", state: "doSoon", count: soon.length, empty: "No note is waiting for you.", cards: soon.map((r) => noteCard(r, cls)) },
-  ];
-  const lanes: Lane[] = [
-    ...(figures ? noteLanes : []),
-    { key: "done", label: "Done", state: "done", count: done, empty: "No period is taught and confirmed yet today.", cards: periods.filter((p) => isLesson(p) && p.state === "done").map((p) => ({ key: p.period_id, kind: "period" as const, title: p.name, sub: timeOf(p), href: href(p), state: "done" as const })) },
-  ];
-  const cards = await cardsFor(cls, classId, [...late, ...soon]);
-  const edges = [
-    { screen: "timetable", label: "This fortnight", icon: "fortnight" as const, fallback: "/timetable", line: day?.fortnight ? fortnightWords(day.fortnight, day.week).toLowerCase() : undefined },
-    { screen: "materials", label: "Materials", icon: "checklist" as const, fallback: "/timetable/materials" },
-  ];
-  // "Lay out for <the period lit, or next>": what the educator sets out, from the activity's own page (the engine's /curriculum/page/read)
-  const layOut = next?.activity ? ((await pageOf(me, next.activity.code))?.materials.items ?? []) : [];
-  const facts = layOut.length ? <RailFacts title={`Lay out for ${next!.activity!.name}`} rows={layOut.map((m) => ({ label: m.name, value: [m.quantity, m.unit].filter((x) => x !== null && x !== "").join(" ") }))} /> : undefined;
+  const cls = day ? classWords(day.class) : got.ok ? classWords(got.value.class) : "";
+  const stage = [dayWords(asked ?? today), cls, day && day.day === (asked ?? today) ? fortnightWords(day.fortnight, day.week) : ""].filter(Boolean).join(" · ");
   return (
-    <Screen stage={stage} title="Today" purpose="Your periods in order. Tap one for what to teach, how, and what to lay out. After it, record a note." action={action} next={{ href: open(DOORS.timetable()) ?? "/timetable", label: "Timetable" }} rail={<Rail edges={edges} facts={facts} />}>
-      {tiles.length ? <AttentionStrip tiles={tiles} /> : null}
+    <Screen
+      stage={stage}
+      title="Today"
+      purpose="Your lessons in order. Choose one to see what to teach, how and what to lay out; mark the class on the lesson."
+      action={firstSession ? <Link href={`/period/${firstSession}`} className="btn" data-next-lesson>Open my next lesson</Link> : <p className="font-medium">{lessons.length ? "No lesson is left today." : "No lesson to open today."}</p>}
+      next={{ href: door(DOORS.timetable()) ?? "/timetable", label: "Timetable" }}
+      panel={panel ?? (lessons.length ? <DetailPanel summary={{ title: "Your day", stats: [{ id: "done", n: lessons.filter((p) => marks[p.period_id] === "done").length, line: "taught" }, { id: "left", n: lessons.filter((p) => marks[p.period_id] !== "done").length, line: "still to teach" }], after: <p className="b-label b-muted">Choose a lesson to see it here.</p> }} /> : undefined)}
+    >
+      {stats.length ? <StatTiles label="Your day in numbers" stats={stats} /> : null}
       {notes.ok || !notes.down ? null : <p className="b-muted" data-unread="notes">Your notes could not be read just now. {notes.words}</p>}
-      <div className="my-4">
-        <div className="[&_.b-seg]:gap-2 [&_.b-seg_[role=tab]]:min-h-[44px] [&_.b-seg_[role=tab]]:min-w-[44px]">
-        <ViewToggle current={view} views={[{ key: "list", label: "List", icon: "table", href: addr(asked ? { day: asked } : {}) }, { key: "board", label: "Board", icon: "board", href: addr({ view: "board", ...(asked ? { day: asked } : {}) }) }]} />
-        </div>
+      {tasks ? null : <p className="b-muted" data-unread="papers">Your papers could not be read just now.</p>}
+      <div className="mt-[var(--space-4)] grid gap-[var(--space-3)]">
+        {!got.ok ? <EmptyState>{got.down ? `Your day could not be read just now. ${got.words}` : got.words}</EmptyState> : null}
+        {why ? <p data-day-note className="font-medium">{why}</p> : null}
+        {rows.length ? <PeriodRow tinted label={day && day.day !== today ? `Lessons on ${dayWords(day.day)}` : "Today's lessons"} periods={rows} /> : got.ok && !why ? <EmptyState>No lesson is planned for this day.</EmptyState> : null}
       </div>
-      {view === "board" ? <KanbanBoard lanes={lanes} /> : <PeriodsOrNothing got={got} periods={periods} lit={lit} href={href} today={today} coming={coming} />}
-      {view === "list" && cards.length ? <Cards cards={cards} /> : null}
     </Screen>
   );
 }
 
-/** Her periods, or in words why there are none: a holiday or a day with no school, the engine's own reason for not giving her a day
- *  (switched off, no class held), or that it could not be read just now. Never a blank. */
-function PeriodsOrNothing({ got, periods, lit, href, today, coming }: { got: Read<Day>; periods: Period[]; lit: string | null; href: (p: Period) => string; today: string; coming: { number: number; starts_on: string } | null }) {
-  if (!got.ok) return <EmptyState>{got.down ? `Your day could not be read just now. ${got.words}` : got.words}</EmptyState>;
-  const day = got.value;
-  if (isBlank(day)) {
-    const next = coming ? ` ${E.dayKind.nextFortnight.replace("{n}", String(coming.number)).replace("{day}", dayWords(coming.starts_on))}` : "";
-    return <EmptyState>{`${day.day === today ? "No sessions today." : "No sessions on this day."} ${blankWords(day)}${next}`}</EmptyState>;
-  }
-  return <PeriodRow periods={periods.map((p) => periodRow(p, lit, href(p)))} />;
-}
-
-/** Notes to confirm (how many, how old the oldest) and her class (how many children, to the class picture). */
-async function cardsFor(cls: string, classId: string, notes: TodoRow[]) {
-  const out: React.ComponentProps<typeof Cards>["cards"][number][] = [];
-  const oldest = notes[0];
-  const go = oldest ? open(DOORS.confirm(oldest.note_id)) : null;
-  if (oldest && go) out.push({ kind: "note", title: "Notes to confirm", line: `${many(notes.length, "note")} · the oldest is ${ageWords(Math.max(...notes.map((n) => n.age_hours)))} old`, href: go, link: "Confirm the first" });
-  // her class is her own by construction (`classId` is the class on her staff entry), so the children are counted as the Children screen does
-  const [{ n }] = classId ? await sql<{ n: number }[]>`select count(*)::int as n from child_now where class_id = ${classId}::uuid and active` : [{ n: -1 }];
-  const to = classId ? open(DOORS.picture(classId)) : null;
-  if (n >= 0 && to) out.push({ kind: "child", title: `Your class · ${cls}`, line: many(n, "child", "children"), href: to, link: "Class picture" });
-  return out;
+/** The lesson's panel as Today shows it: the lesson's own tabs, the marking itself left to the lesson's page (page charter B4), so the
+ *  Children tab says where the class is marked. Opened by default (not by the address) it is drawn in place, never as a sheet over the day. */
+function todayPanel(o: Opened, session: string, hasActivity: boolean, inline: boolean) {
+  const tabs = o.tabs.map((t) =>
+    t.key !== "children"
+      ? t
+      : {
+          ...t,
+          body: hasActivity ? (
+            <p className="grid gap-[var(--space-2)]" data-part="mark-on-lesson">
+              <span>The class is marked child by child on the lesson&apos;s own page.</span>
+              <Link href={`/period/${session}`} className="btn secondary w-fit" data-mark-class>
+                Mark the class
+              </Link>
+            </p>
+          ) : (
+            t.body
+          ),
+        },
+  );
+  return <DetailPanel inline={inline} open={{ ...o, tabs }} summary={{ title: "", stats: [] }} />;
 }

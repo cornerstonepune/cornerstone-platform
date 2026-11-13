@@ -6,52 +6,43 @@
       "eyebrow": "Wednesday 18-Nov · K2 Red · Fortnight 9, week A",
       "group": "Today",
       "route": "/today",
-      "purpose": "Your periods in order. Tap one for what to teach, how, and what to lay out. After it, record a note.",
+      "purpose": "Your lessons in order. Choose one to see what to teach, how and what to lay out; mark the class on the lesson.",
       "does": [
         {
-          "label": "do now tile"
+          "label": "Open my next lesson"
         },
         {
-          "label": "this week tile"
+          "label": "lessons today tile"
         },
         {
-          "label": "done today tile"
+          "label": "notes to confirm tile"
         },
         {
-          "label": "each period row"
+          "label": "papers to check tile"
         },
         {
-          "label": "Confirm the first"
+          "label": "each lesson block"
         },
         {
-          "label": "Class picture"
+          "label": "panel: Close"
         },
         {
-          "label": "This fortnight"
+          "label": "panel: Open full page"
+        },
+        {
+          "label": "Activity"
+        },
+        {
+          "label": "Children"
         },
         {
           "label": "Materials"
         },
         {
-          "label": "Board"
+          "label": "History"
         },
         {
-          "label": "List"
-        },
-        {
-          "label": "each note card on the board"
-        },
-        {
-          "label": "each period card on the board"
-        },
-        {
-          "label": "each Sr. No. in Your class"
-        },
-        {
-          "label": "Close"
-        },
-        {
-          "label": "Open the child"
+          "label": "Mark the class"
         }
       ]
     },
@@ -61,46 +52,34 @@
       "eyebrow": "Wednesday 18-Nov · every class",
       "group": "Today",
       "route": "/today",
-      "purpose": "What waits on you, each with its own button. Then the week ahead.",
+      "purpose": "What waits on you, one row each with its own button. Choose a row to see the work behind it on the right.",
       "does": [
         {
-          "label": "do now tile"
+          "label": "Open the first"
         },
         {
-          "label": "this week tile"
+          "label": "notes unconfirmed tile"
         },
         {
-          "label": "sessions done tile"
+          "label": "papers to check tile"
         },
         {
-          "label": "each heat-grid cell"
+          "label": "each waiting row"
         },
         {
-          "label": "clash row"
+          "label": "each row's action"
         },
         {
-          "label": "draft row"
+          "label": "panel: Close"
         },
         {
-          "label": "late notes row"
+          "label": "panel: Open full page"
         },
         {
-          "label": "sessions not done row"
+          "label": "What waits"
         },
         {
-          "label": "materials row"
-        },
-        {
-          "label": "each new activity next week"
-        },
-        {
-          "label": "Fortnight 9"
-        },
-        {
-          "label": "Staff and classes"
-        },
-        {
-          "label": "Timetable"
+          "label": "each row behind it"
         }
       ]
     },
