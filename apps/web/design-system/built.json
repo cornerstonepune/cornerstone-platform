@@ -50,6 +50,10 @@
       "route": "/timetable/materials",
       "built": false
     },
+    "time": {
+      "route": "/timetable/time",
+      "built": false
+    },
     "children": {
       "route": "/children",
       "built": false

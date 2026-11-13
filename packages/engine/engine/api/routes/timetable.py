@@ -124,7 +124,10 @@ class TimeAsk(BaseModel):
 
 @keyed.post("/timetable/time")
 def time_by_subject(body: TimeAsk, conn=Depends(get_conn, scope="function")):
-    """CP-41: a class's (or a whole grade's) lesson minutes by subject over a range, beside the standing timetable's."""
+    """CP-41: a class's (or a whole grade's) lesson minutes by subject over a range, and a week at a time, beside the
+    standing timetable's (page charter B3, Time by subject). `read` names the classes counted; `may_read` the classes she
+    may ask for in these days (a coordinator: every class with lessons; anyone else: the classes she holds), so the page
+    offers no class the engine would refuse."""
     staff = _gate(conn, Ask(actor=body.actor), reads=True)
     if body.end < body.start or (body.end - body.start).days > 400:
         raise HTTPException(status_code=422, detail="Give a start and an end, at most 400 days apart.")
@@ -137,4 +140,14 @@ def time_by_subject(body: TimeAsk, conn=Depends(get_conn, scope="function")):
     else:
         klass, _ = _mine(conn, Ask(actor=body.actor, class_id=body.class_id), body.start, staff)
         ids = [klass["id"]]
-    return tt_time.time_by_subject(conn, ids, body.start, body.end)
+    every = (
+        tt_time.classes_with_lessons(conn, None, body.start, body.end)
+        if educator_gate.sees_all(conn, staff)
+        else k2_day.my_classes(conn, staff, body.end)
+    )
+    out = tt_time.time_by_subject(conn, ids, body.start, body.end)
+    return out | {"read": _said(tt_time.classes_named(conn, ids)), "may_read": _said(every)}
+
+
+def _said(classes: list[dict]) -> list[dict]:
+    return [{"id": str(c["id"]), "grade": c["grade"], "section": c["section"]} for c in classes]

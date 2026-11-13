@@ -1,0 +1,31 @@
+/* Time by subject (page charter B3): the week columns and the ring, in the subject colours (tokens only, never a hex). */
+.ts-charts { display: grid; gap: var(--space-4); align-items: start; }
+@media (min-width: 1100px) { .ts-charts { grid-template-columns: minmax(0, 1fr) 240px; } }
+.ts-weeks, .ts-donut { margin: 0; display: grid; gap: var(--space-2); padding: var(--space-3); border-radius: var(--radius-card); background: var(--panel); box-shadow: var(--shadow-card); }
+.ts-cols { display: flex; align-items: flex-end; gap: var(--space-2); height: 220px; margin: 0; padding: 0; list-style: none; overflow-x: auto; border-bottom: 1px solid var(--line); }
+.ts-col { flex: 1 0 36px; max-width: 96px; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: stretch; gap: var(--space-1); }
+.ts-total { text-align: center; font-size: var(--text-label); color: var(--ink-muted); }
+.ts-stack { display: flex; flex-direction: column-reverse; gap: 2px; height: calc(var(--h) * 160px); min-height: 0; }
+.ts-seg { flex: var(--n) 0 0; min-height: 4px; border-radius: 2px; background: var(--subject-arts); }
+.ts-stack .ts-seg:first-child { border-radius: 0 0 4px 4px; }
+.ts-stack .ts-seg:last-child { border-top-left-radius: 4px; border-top-right-radius: 4px; }
+.ts-seg[data-subject="numeracy"] { background: var(--subject-numeracy); }
+.ts-seg[data-subject="language"] { background: var(--subject-language); }
+.ts-seg[data-subject="arts"] { background: var(--subject-arts); }
+.ts-seg:hover, .ts-seg:focus-visible { outline: 2px solid var(--action); outline-offset: 1px; }
+.ts-seg[aria-current="true"] { outline: 2px solid var(--action); outline-offset: 1px; }
+.ts-wk { text-align: center; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.ts-donut svg { width: 100%; max-width: 200px; justify-self: center; }
+.ts-ring { fill: none; stroke: var(--line); stroke-width: 5; }
+.ts-arc { fill: none; stroke-width: 5; stroke: var(--subject-arts); }
+.ts-arc[data-subject="numeracy"] { stroke: var(--subject-numeracy); }
+.ts-arc[data-subject="language"] { stroke: var(--subject-language); }
+.ts-arc[data-subject="arts"] { stroke: var(--subject-arts); }
+.ts-mid { fill: var(--ink); font-size: 6px; font-weight: 600; text-anchor: middle; }
+.ts-mid-l { fill: var(--ink-muted); font-size: 3px; text-anchor: middle; }
+.ts-key { display: grid; gap: var(--space-1); margin: 0; padding: 0; list-style: none; }
+.ts-key li { display: flex; justify-content: space-between; align-items: center; gap: var(--space-2); }
+.ts-lessons { display: grid; margin: 0; padding: 0; list-style: none; }
+.ts-lessons li { display: grid; gap: 2px; padding-block: var(--space-2); border-top: 1px solid var(--line); }
+.ts-lessons li:first-child { border-top: 0; }
+.ts-lessons a { font-weight: 600; color: var(--action); }

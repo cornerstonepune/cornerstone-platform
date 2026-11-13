@@ -85,7 +85,7 @@ test("the Timetable's right side is its detail panel: with nothing chosen, the w
   await expect(page.locator("[data-rail]")).toHaveCount(0);
   await expect(page.getByRole("region", { name: "Connected to" })).toHaveCount(0);
   const timetable = page.locator("[data-sidebar]").getByRole("list", { name: "Timetable" });
-  await expect(timetable.getByRole("link")).toHaveText(["Week", "Fortnight", "Materials"]);
+  await expect(timetable.getByRole("link")).toHaveText(["Week", "Fortnight", "Time by subject", "Materials"]);
   await expect(timetable.getByRole("link", { name: "Week" })).toHaveAttribute("aria-current", "page");
   // the panel sits beside the grid, to its right, from the top
   const [grid, side] = [(await page.locator("[data-block=FortnightGrid]").boundingBox())!, (await panel.boundingBox())!];

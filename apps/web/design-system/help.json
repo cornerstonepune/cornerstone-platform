@@ -495,6 +495,34 @@
       ]
     },
     {
+      "id": "time",
+      "title": "Time by subject",
+      "eyebrow": "K2 Red · 06-Jul-2026 to 17-Jul-2026",
+      "group": "Timetable",
+      "route": "/timetable/time",
+      "purpose": "How much teaching time each subject gets, beside what the timetable rules intend.",
+      "does": [
+        {
+          "label": "Week / Fortnight / Month / Quarter"
+        },
+        {
+          "label": "class"
+        },
+        {
+          "label": "each part of a week's column"
+        },
+        {
+          "label": "panel: each lesson"
+        },
+        {
+          "label": "panel: Close"
+        },
+        {
+          "label": "panel: Lessons"
+        }
+      ]
+    },
+    {
       "id": "children",
       "title": "Children",
       "eyebrow": "Your classes",

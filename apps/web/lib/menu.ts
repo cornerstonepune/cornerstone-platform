@@ -4,8 +4,8 @@
 // (docs/ux-rules.md rule 6).
 //
 // Two pages the charter merges away still stand until their screen's own PR absorbs them, so they keep a line in the section they will
-// end in: Upload papers (into an assessment, B6) and What needs doing (into the coordinator's Today, B1b). Time by subject (B3) is not
-// listed: it needs an engine read first, and a control whose screen is not built is not drawn.
+// end in: Upload papers (into an assessment, B6) and What needs doing (into the coordinator's Today, B1b). Time by subject (B3) sits
+// between the Fortnight and Materials, as the charter orders the Timetable section.
 import type { IconName } from "./icons";
 
 /** `guide: false`: the page has no page of the Guide yet (packages/engine/tests/test_guide.py reads the entries written
@@ -34,6 +34,7 @@ export const SECTIONS: readonly Section[] = [
     pages: [
       { label: "Week", href: "/timetable", match: ["/timetable"], guide: false },
       { label: "Fortnight", href: "/timetable?view=fortnight", match: ["/timetable/fortnight", "/timetable/draft"], view: "fortnight", guide: false },
+      { label: "Time by subject", href: "/timetable/time", match: ["/timetable/time"], guide: false },
       { label: "Materials", href: "/educator/materials", match: ["/educator/materials", "/timetable/materials"], guide: false },
     ],
   },
