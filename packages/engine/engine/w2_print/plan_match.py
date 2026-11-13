@@ -48,11 +48,18 @@ def words(text: str) -> set[str]:
 
 
 def lines(conn: db.Conn, tenant: db.Id, band: str, gold: bool = False) -> list[Line]:
-    """The band's distinct plan lines not yet linked; with `gold`, those the school linked by exact name (to score)."""
+    """The band's distinct plan lines not yet linked and not yet answered "none" (a run asks only what is still open);
+    with `gold`, those the school linked by exact name (to score)."""
     rows = conn.execute(
         "select pe.plan_key, pe.text, array_agg(pe.id::text order by pe.id) as ids from plan_entry pe"
         " join school_class sc on sc.id = pe.school_class_id and sc.grade_code = %s where pe.tenant_id = %s and"
-        + (" pe.link_rule = 'exact_name'" if gold else " pe.activity_id is null")
+        + (
+            " pe.link_rule = 'exact_name'"
+            if gold
+            else " pe.activity_id is null and not exists (select 1 from"
+            " curriculum_proposal p where p.tenant_id = pe.tenant_id and p.kind = 'plan_link' and p.status = 'auto_passed'"
+            " and p.proposal ->> 'activity' is null and p.proposal -> 'plan_entries' ? pe.id::text)"
+        )
         + " and btrim(pe.text) <> '' group by 1, 2 order by 1, 2",
         (band, tenant),
     ).fetchall()
