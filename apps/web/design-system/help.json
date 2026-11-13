@@ -327,7 +327,7 @@
           "label": "Previous / next day or week"
         },
         {
-          "label": "Today"
+          "label": "Open today"
         },
         {
           "label": "each day head"
@@ -336,7 +336,7 @@
           "label": "this / next fortnight"
         },
         {
-          "label": "each grid cell"
+          "label": "each lesson block"
         },
         {
           "label": "a moved cell's details (who, why, when)"
@@ -346,18 +346,6 @@
         },
         {
           "label": "Materials card"
-        },
-        {
-          "label": "Fortnight 9"
-        },
-        {
-          "label": "Materials"
-        },
-        {
-          "label": "Today's period"
-        },
-        {
-          "label": "Rules"
         }
       ]
     },
