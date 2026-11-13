@@ -224,7 +224,7 @@ Assessments, one assessment and one child's paper as node pages on the blocks; t
 3. `lib/assessment-steps.ts` STEPS and STEP_WORDS and `lib/queries-papers.ts` exported names are unchanged (a test imports them and compares to the committed list).
 4. The journey `e2e/a-paper-comes-back.spec.ts` passes: make a class assessment → approve the pack (per pack, the pack-level button; no all-packs button exists on any screen: `u62` kept) → upload a fixture scan → the paper shows right / wrong / blank / for you to judge with the fixture's counts → say what the child wrote for the one to judge → sign off → the child's timeline shows the paper result beside a voice note; axe at each step.
 5. No approve-all control exists on any screen (the `ux.approveAll` list in workflows.json is empty at the end of this slice).
-6. Every one of the 77 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
+6. Every one of the 85 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
 7. Assessments: the four lanes are To approve and print · With the children · To read and check · Results in, and each card is in the lane of its next step
 8. Assessments: a card shows its topic and class, its date and n of m papers back, one status chip and one next-action button, and no stage words repeated
 9. Assessments: the filter row holds Class · Subject · Week and More filters
@@ -236,9 +236,11 @@ Assessments, one assessment and one child's paper as node pages on the blocks; t
 15. {the built name}: the stepper's amber step equals the status word in the list
 16. {the built name}: a replaced copy shows 'replaced by a newer one' and no action
 17. {the built name}: the papers bar's three counts sum to the number of copies
-18. Check the answers: right, wrong and blank are three different chips and three counts; a wrong-with-working reason is shown with its wrong chip
-19. Check the answers: a person's answer writes a read_correction row and never overwrites the engine's read
-20. Check the answers: Sign off is absent while any answer is 'for you to judge', and acts on one paper
+18. {the built name}: /children/assessments/[key] keeps its address and is the board's assessment panel opened full page (page charter Part C): the same tabs, Copies first; every action the page had is kept
+19. Check the answers: right, wrong and blank are three different chips and three counts; a wrong-with-working reason is shown with its wrong chip
+20. Check the answers: a person's answer writes a read_correction row and never overwrites the engine's read
+21. Check the answers: Sign off is absent while any answer is 'for you to judge', and acts on one paper
+22. Check the answers: /children/assessments/[key]/[roll] keeps its address and is the board's assessment panel opened full page on this child's paper: the same tabs, Check open on the paper; every action the page had is kept
 
 ### Out of scope
 
@@ -262,7 +264,7 @@ Staff and grants, classes and children and the Setup home; the small writes that
 2. Every old route listed under `folds` answers 308 to the new address.
 3. `/setup/staff` has no column, sort or text that ranks people: the table cannot be sorted by the three numbers and no ordinal appears (test asserts absence).
 4. A child move writes a child_move row and a new enrolment and deletes nothing; the class picture of both classes reflects it on the next render (database and DOM assertion).
-5. Every one of the 26 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
+5. Every one of the 39 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
 6. Staff and classes: no sort, rank, ordinal or colour grading on the three numbers; the table cannot be sorted by them
 7. Staff and classes: a grant edit is a new row or a valid_to, never a delete (row count never drops)
 8. Staff and classes: no staff name appears unless the viewer is in the everything group (names are pii)
@@ -271,6 +273,10 @@ Staff and grants, classes and children and the Setup home; the small writes that
 11. Classes and children: the change log lists the move with who and when
 12. Setup: every setup page is reachable in two clicks from the bar
 13. Setup: an educator sees only the cards their group may open
+14. Across every class: a stat tile per class, its number what waits on the class, and a tile for every class in the table
+15. Across every class: one table: stage, overdue checks, papers missing over the school's days, children struggling in two or more subjects, a class to a row
+16. Across every class: a class opens on the right with the rows behind each number; nothing chosen shows the school's three totals
+17. Across every class: the page keeps its job (Nimish locked it 22 Oct): every row the old page listed is in a class's panel
 
 ### Out of scope
 
@@ -343,18 +349,20 @@ The educator's Today (the day, the attention strip, notes to confirm, the class)
 3. The skills-to-approve count (109 on the live copy) does not appear on either Today, on Setup's cards or on Curriculum; it is the eyebrow of Skills to approve only (test).
 4. `/today` serves the educator's version to the own-classes group and the school's version to the everything group; the special educator gets the version the role→group rows say, with no code naming the role (test with the access fixture).
 5. The educator's journey and the coordinator's journey both start from Today and pass.
-6. Every one of the 21 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
+6. Every one of the 29 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
 7. Today: the three tiles read lessons today, notes to confirm and papers to check, and each number is the count of what it opens
 8. Today: the lessons are blocks in time order, each with time, subject colour and word, activity name, and done / now / next
 9. Today: choosing a block opens its lesson in the right panel with the tabs Activity · Children · Materials · History; with none chosen it is the lesson now or next
 10. Today: on a holiday the next school day's lessons show under one line saying why and when the fortnight starts
 11. Today: an educator sees only the lessons of classes their grant names
-12. Today, the school: only the 'everything' group sees this version; an educator at /today sees the educator's
-13. Today, the school: the tiles are notes unconfirmed past their time, papers to check and approvals waiting, each the count of the rows behind it
-14. Today, the school: each waiting row has one action, which leads to the screen that does the work; What needs doing's groups (skills aside) are each a row
-15. Today, the school: a row opens in the right panel with the rows behind it; Escape closes it
-16. Today, the school: no ranking of people anywhere on the page
-17. Today, the school: /setup/needs-doing still opens
+12. Today: what waits on her (What needs doing, merged in) is listed under the day, one row per kind of work, with its filters and count; a row opens its tasks on the right
+13. Today, the school: only the 'everything' group sees this version; an educator at /today sees the educator's
+14. Today, the school: the tiles are notes unconfirmed past their time, papers to check and approvals waiting, each the count of the rows behind it
+15. Today, the school: each waiting row has one action, which leads to the screen that does the work; What needs doing's groups (skills aside) are each a row
+16. Today, the school: a row opens in the right panel with the rows behind it; Escape closes it
+17. Today, the school: no ranking of people anywhere on the page
+18. Today, the school: /setup/needs-doing answers 308 to /today with its query; the menu has no line for it
+19. Today, the school: What needs doing's filters (subject, class, what), its count, its paging and its mark-taught form are Today's, and every spec that drove the old page drives Today
 
 ### Out of scope
 
@@ -378,9 +386,11 @@ Each child's report, line by line, in the educator's words: two approvals per li
 2. A line sends only when the educator's approval, the coordinator's approval and consent are all present; the test tries each missing one and the send is refused.
 3. The rendered parent copy contains none of: 'teacher', a rung code (R\d+), a skill code (NUM\.), 'borrow' (regex test over the PDF text).
 4. The parent's copy and every printed page carry `lockup-colour` in their head, at its clear space, from the official file (the same hash test).
-5. Every one of the 11 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
+5. Every one of the 15 controls listed for these screens in docs/frontend/screens.json behaves as its kind says (docs/frontend/SPEC.md §7), proved by the inventory test and the slice's own tests; the inventory test's completeness check finds no control outside the list and no listed control missing.
 6. Reports: nothing is sent without both approvals and consent (each missing case refused)
-7. Reports: the parent's copy contains 'educator' and the four level words only, no rung or code (regex over the PDF text)
+7. Reports: the list is on the left, one table per stage; a child's name opens their report on the right with Lines, Report and Approvals, and Escape closes it (page charter Part C, the frame's Workspace)
+8. Reports: Save words, Approve and Send work from the panel and come back with the child open, saying what was done
+9. Reports: with nothing chosen the right side counts what waits as stat tiles; consent is the coordinator's alone to see
 
 ### Out of scope
 
