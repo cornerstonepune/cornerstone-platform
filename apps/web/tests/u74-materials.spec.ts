@@ -37,7 +37,8 @@ test.afterAll(async () => {
 });
 
 const open = (page: Page, q = "span=fortnight") => page.goto(`/timetable/materials?class=${klass}&day=${TUESDAY}&${q}`);
-const line = (page: Page, item: string) => page.locator("tr[data-line]").filter({ hasText: item });
+// a line of the list on the left (page charter C: the lines by day; a line's detail and its changes are in the panel on the right)
+const line = (page: Page, item: string) => page.locator("li[data-line]").filter({ hasText: item });
 
 async function asEducator(browser: Browser): Promise<Page> {
   const page = await (await browser.newContext({ storageState: { cookies: [], origins: [] } })).newPage();
@@ -49,18 +50,20 @@ async function asEducator(browser: Browser): Promise<Page> {
   return page;
 }
 
-test("the screen's purpose: the class's lines built from the plan, each with its activity, and nothing here changes anything", async ({ page }) => {
+test("the screen's purpose: the class's lines built from the plan, each with its activity; the list changes nothing, a line's changes are in its panel, and nothing is sent", async ({ page }) => {
   await open(page);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Materials, this fortnight");
   await expect(line(page, "Craft paper")).toContainText("2 sheet");
-  await expect(page.getByRole("button", { name: /Save|Remove|Add|Send|WhatsApp/ })).toHaveCount(0);
+  await expect(page.locator("#lines [data-day]").getByRole("button")).toHaveCount(0); // the lines are links to their detail, never a control
+  await expect(page.getByRole("button", { name: /Save|Remove/ })).toHaveCount(0); // nothing chosen: no line's controls
+  await expect(page.getByRole("button", { name: /Send|WhatsApp/ })).toHaveCount(0);
 });
 
 test("1. the day / week / fortnight filter changes the lines shown", async ({ page }) => {
   await open(page, "span=fortnight");
-  const fortnight = await page.locator("tr[data-line]").count();
+  const fortnight = await page.locator("li[data-line]").count();
   await open(page, "span=day");
-  const day = await page.locator("tr[data-line]").count();
+  const day = await page.locator("li[data-line]").count();
   expect(day).toBeLessThan(fortnight);
 });
 
@@ -70,9 +73,13 @@ test("2. a line with no quantity carries the amber 'to confirm' chip, a line wit
   await expect(line(page, "Craft paper").locator('[data-chip="toConfirm"]')).toHaveCount(0);
 });
 
-test("3. each line's activity is a link to the activity", async ({ page }) => {
+test("3. each line names its activity, and the line's panel links to the activity", async ({ page }) => {
   await open(page);
-  await expect(line(page, "Dustbin").getByRole("link", { name: "Proper Use Of Dustbin" })).toHaveAttribute("href", /ACT-K2-0287/);
+  await expect(line(page, "Dustbin")).toContainText("Proper Use Of Dustbin");
+  await line(page, "Dustbin").locator("[data-open-key]").click();
+  const panel = page.locator("[data-block=DetailPanel][data-panel=open]");
+  await panel.getByRole("tab", { name: "Activity" }).click();
+  await expect(panel.getByRole("link", { name: "Proper Use Of Dustbin" })).toHaveAttribute("href", /ACT-K2-0287/);
 });
 
 test("4. the School list tab is the coordinator's: the educator has none and the address says whose it is", async ({ page, browser }) => {
@@ -95,8 +102,8 @@ test("5. 'Notes to read' shows only the notes the system could not read", async 
     values (${tenant}, gen_random_uuid(), 'materials_note', ${list}, ${sql.json({ text: "Placeholder note: UI-9 lolly sticks" })},
             'needs_person', 'Placeholder: not in the catalogue', ${staff}, 'materials_read')`;
   await open(page, "span=fortnight&show=notes");
-  await expect(page.getByText("UI-9 lolly sticks")).toBeVisible();
-  await expect(page.locator("tr[data-line]")).toHaveCount(0);
+  await expect(page.getByText("UI-9 lolly sticks").first()).toBeVisible(); // a note of an earlier run waits too (notes are append-only)
+  await expect(page.locator("[data-line]")).toHaveCount(0);
 });
 
 test("6. a class that is not hers is not found", async ({ page }) => {

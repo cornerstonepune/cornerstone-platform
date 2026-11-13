@@ -121,10 +121,12 @@ test("the coordinator opens a fortnight still in planning: its grid, its state i
   await move.click();
   await expect(page.getByRole("heading", { name: `Fortnight ${PLANNED}`, level: 1 })).toBeVisible();
   await expect(page.locator(`${GRID} [data-pick][aria-pressed=true]`)).toHaveCount(1);
-  // the tools that change a plan are links to the pages that already do it, on the fortnight page (page charter C: Fortnight)
-  const rail = page.locator("[data-rail]");
-  for (const [name, href] of [["Draft from the rules", `/timetable/draft?fn=${PLANNED}`], ["Timetable rules", "/timetable/rules"]])
-    await expect(rail.getByRole("link", { name }), name).toHaveAttribute("href", href);
+  // the tools that change a plan are on the fortnight page, as tabs of its panel that link the pages that already do it (page charter C)
+  const panel = page.locator("[data-block=DetailPanel]");
+  for (const [tab, name, href] of [["Draft", "Open the draft as a grid", `/timetable/draft?fn=${PLANNED}&class=${f.klass}`], ["Rules", "Timetable rules", `/timetable/rules?class=${f.klass}`]]) {
+    await panel.getByRole("tab", { name: tab }).click();
+    await expect(panel.getByRole("link", { name }), name).toHaveAttribute("href", href);
+  }
   await expect(page.getByText(NOT_FOUND)).toHaveCount(0);
   await page.context().close();
 });

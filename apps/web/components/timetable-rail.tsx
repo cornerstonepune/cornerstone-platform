@@ -20,7 +20,7 @@ export function timetableEdges(here: Here, o: { fn?: number; classId?: string; c
     { key: "fortnight", screen: "fortnight", href: o.fn ? `/timetable/fortnight/${o.fn}${q({ fn: undefined })}` : "/timetable", label: o.fn ? `Fortnight ${o.fn}` : "Fortnights", icon: "fortnight", line: "freeze, move, approve" },
     { key: "draft", screen: "draft", href: `/timetable/draft${q({ class: undefined })}`, label: "Draft from the rules", icon: "from-draft", line: "place a fortnight for a class", coordinator: true },
     { key: "rules", screen: "rules", href: "/timetable/rules", label: "Timetable rules", icon: "checklist", line: "what the draft reads", coordinator: true },
-    { key: "materials", screen: "materials", href: "/educator/materials", label: "Materials", icon: "materials", line: "what to lay out" },
+    { key: "materials", screen: "materials", href: "/timetable/materials", label: "Materials", icon: "materials", line: "what to lay out" },
   ];
   return all
     .filter((e) => e.key !== here && (o.coordinator || !e.coordinator))

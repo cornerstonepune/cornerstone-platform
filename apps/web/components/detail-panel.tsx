@@ -75,7 +75,9 @@ export function DetailPanel({ open, summary, inline }: { open?: Opened | null; s
           ) : null}
         </div>
       ) : null}
-      <PanelTabs tabs={open.tabs.map((t) => ({ key: t.key, label: t.label }))} initial={tab}>
+      {/* keyed by the thing and the tab the page chose: another thing (or a page that opens on another tab, as after a form) starts the tabs
+          and their fields afresh, never with the last thing's tab or typed values; a tab chosen by hand changes only the address */}
+      <PanelTabs key={`${open.key}~${tab}`} tabs={open.tabs.map((t) => ({ key: t.key, label: t.label }))} initial={tab}>
         {open.tabs.map((t) => (
           <div key={t.key} data-tab-body={t.key}>
             {t.body}

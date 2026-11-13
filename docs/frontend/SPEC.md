@@ -418,32 +418,41 @@ Done when (on top of the ten generic checks):
 
 
 #### Fortnight 9 `/timetable/fortnight/[n]`
-Who: both · Phase: Core · Backend: CP-6 · CP-22 · Old page today: no · Slice: UI-6
+Who: both · Phase: Core · Backend: CP-6 · CP-22 · Old page today: yes · Slice: UI-6
 Eyebrow: 16-Nov to 27-Nov
-Purpose: Its state, its plan lines, and what changed when the draft went live. Frozen once it starts; a move after that is a hand move, kept with who made it.
+Purpose: Its lessons as blocks, week A and week B. Choose a lesson to move it; its state, the rules in conflict, the moves, the draft and the rules are on the right.
 Blocks, in order:
-- **Stepper**: drafted · approved · live · frozen
-- **Cards**: State (chip + who/when) · Plan lines (plan_entry, each an activity link) · Hand moves (who, why, when)
-- **DataTable**: coordinator: what changed at go-live, session by session
-- **Form**: coordinator: Approve · Go live (main, one at a time)
-Rail (Connected to): The grid · every activity in the plan · Materials · Draft (coordinator)
-Main action: Approve / Go live (coordinator) · Open the grid (educator) · Next step: Timetable
-Data: fortnight + fortnight.state (CP-6; each step's yes is an approval row); plan_entry; session diffs at go-live (CP-22); approval ledger
-Empty: No plan lines yet: link to the planner upload · Phone: stepper wraps to two rows
-Every control on the screen (9), and what the test does with each:
-- **link** each plan line → the activity's name (`/setup/activities/[code]`)
-- **link** each hand move → Fortnight 9 (`/timetable/fortnight/[n]`) [coordinator only; absent and refused for others]
-- **button** Approve: approval row written; the stepper moves to approved; Go live appears; Approve disappears [coordinator only; absent and refused for others]
-- **field** reason [coordinator only; absent and refused for others] (needed once the fortnight is frozen; the engine says so in words when it is missing)
+- **FilterBar**: class (coordinator) · previous / next fortnight
+- **FortnightGrid**: the whole fortnight, week A and week B; subject colours; moved/clash outlines; the coordinator chooses a lesson, then the lesson or free slot to swap it with
+- **DetailPanel**: the page's own right side, never closed (page charter C): at its top the Stepper of the fortnight's states in the engine's words (Drafted · Frozen · Aligned · Approved · List sent), the coordinator's next step (Freeze / Align / Approve) and Go live with what changed; then tabs Conflicts (each rule in conflict, accepted with a reason by the coordinator) · Moves (the move being made, Undo the last move, every hand move with who and why) · Draft (coordinator: Make a draft for this fortnight, each class's last draft, this class's unmet rules) · Rules (what the draft reads, the Timetable rules)
+- **DataTable**: coordinator: what changed at go-live, session by session, in the panel
+Rail (Connected to): none
+Main action: The next step (Freeze, Align, Approve) or Go live, at the top of the panel (coordinator) · read the grid (educator) · Next step: Timetable
+Data: fortnight + fortnight.state (CP-6; each step's yes is an approval row); session for the fortnight's days; the clashes of the rules on those days; change_log moves; timetable_run drafts; the timetable_rule rows the draft reads; session diffs at go-live (CP-22)
+Empty: Nothing placed for this class: the coordinator makes a draft from the Draft tab · Phone: the panel follows the grid; the stepper wraps to two rows
+Every control on the screen (14), and what the test does with each:
+- **filter** class [coordinator only; absent and refused for others]
+- **link** Previous / next fortnight → Fortnight 9 (`/timetable/fortnight/[n]`)
+- **cell** each lesson block → Fortnight 9 (`/timetable/fortnight/[n]`) [coordinator only; absent and refused for others] (the first click chooses the lesson to move (the panel opens on Moves), the second the lesson or free slot to swap it with; an educator's block opens its activity)
+- **button** Approve: approval row written; the stepper moves to approved; Go live appears; Approve disappears [coordinator only; absent and refused for others] (at the top of the panel; Freeze and Align are the same button for the step the engine takes next)
+- **field** reason [coordinator only; absent and refused for others] (Go live, a move and an accepted clash each take one; Go live needs it once the fortnight is frozen, and the engine says so in words)
 - **button** Go live: every class's placed draft goes live and the sessions are updated in place; the what-changed table lists every session it moved or removed, and nothing else [coordinator only; absent and refused for others]
-- **link** rail: The grid → Timetable (`/timetable`)
-- **link** rail: each activity in the plan → the activity's name (`/setup/activities/[code]`)
-- **link** rail: Materials → Materials, this fortnight (`/timetable/materials`)
-- **link** rail: Draft → Draft from the rules (`/timetable/draft`) [coordinator only; absent and refused for others]
+- **tab** Conflicts / Moves / Draft / Rules (the panel's tabs; the address carries the tab (tab=); Draft is the coordinator's)
+- **button** Accept the clash: with a reason the clash is accepted, kept with who and why; with none the page says Say why and accepts nothing [coordinator only; absent and refused for others]
+- **button** Move: the two lessons are swapped by the engine and kept with who and why; a clash it makes shows on the grid at once [coordinator only; absent and refused for others]
+- **button** Undo the last move: a new move back, never a deletion [coordinator only; absent and refused for others]
+- **fold** Moved by hand (every hand move of this class in this fortnight: from, to, who, when, why)
+- **button** Make a draft: a draft for every class of the year for this fortnight, kept as a run; it never touches the lessons until Go live [coordinator only; absent and refused for others]
+- **link** Open the draft as a grid → Draft from the rules (`/timetable/draft`) [coordinator only; absent and refused for others]
+- **link** Timetable rules (and each unmet rule) → Timetable rules (`/timetable/rules`) [coordinator only; absent and refused for others]
 Done when (on top of the ten generic checks):
 - Approve and Go live exist for the 'everything' group only and their requests are refused for others
 - a frozen fortnight shows no Approve, Go live or edit control
 - the what-changed table lists every session the go-live updated, and nothing else
+- the right panel holds the fortnight's state stepper in the engine's words with the next step, and there is no rail
+- the rules in conflict are the panel's Conflicts tab, each accepted there with a reason
+- Draft and Rules are tabs of the panel: Make a draft and the rules the draft reads are there
+- moving a lesson is chosen on the grid and made, undone and listed in the panel's Moves tab
 
 
 #### Draft from the rules `/timetable/draft`
@@ -501,31 +510,39 @@ Done when (on top of the ten generic checks):
 
 
 #### Materials, this fortnight `/timetable/materials`
-Who: both · Phase: Later · Backend: CP-17 · CP-18 · Old page today: yes (/educator/materials) · Slice: UI-9
+Who: both · Phase: Later · Backend: CP-17 · CP-18 · Old page today: yes (/educator/materials opens it) · Slice: UI-9
 Eyebrow: K2 Red · Fortnight 9
-Purpose: Built from the activities in the plan. Each line knows which activity needs it. Set a quantity, remove a line, add from the catalogue.
+Purpose: Built from the activities in the plan, day by day. Choose a line to see how many, which activity needs it, and to change it.
 Blocks, in order:
-- **FilterBar**: day · week · fortnight
-- **DataTable**: item · quantity (editable) · for which activity (link) · source
-- **Cards**: School list (coordinator) · Notes to read (notes the system could not match to an item)
-Rail (Connected to): every activity in the plan · Fortnight 9 · Capture here: photo
-Main action: Fill the quantities · Next step: Fortnight 9
+- **FilterBar**: class · day / week / fortnight · Notes to read
+- **List**: the lines grouped by the day each is needed: item, how many (or the amber 'to confirm' chip), the activity; a line opens its detail on the right
+- **DetailPanel**: a line chosen: tabs How many (the quantity with Save, where it is kept, its source, the day; Remove) · Activity (the activity that needs it, a link, and what else it needs in these days); nothing chosen: StatTiles lines · to confirm · days
+- **DataTable**: School list (coordinator, a tab): each item once with the classes it comes from; Notes to read (a filter)
+Rail (Connected to): none · Capture here: photo
+Main action: Fill the quantities · Next step: The day
 Data: materials_list, materials_line, activity_material, material_item
-Empty: No plan lines with materials · Phone: the table scrolls sideways in its own box
-Every control on the screen (10), and what the test does with each:
+Empty: No plan lines with materials · Phone: the list is one column; a chosen line's panel is a sheet over it
+Every control on the screen (14), and what the test does with each:
 - **filter** day / week / fortnight
-- **field** quantity (each line): a number; saving writes materials_line_edit with who; the amber 'to confirm' chip clears
-- **button** Remove (each line): the line is marked removed with who, never deleted
-- **button** Add from the catalogue: a picker of material_item; never free text
-- **link** each line's activity → the activity's name (`/setup/activities/[code]`)
+- **link** each line → Materials, this fortnight (`/timetable/materials`) (opens the line in the detail panel on the right (?open=line:<id>))
+- **field** quantity (in the line's panel): a number; saving writes materials_line_edit with who; the amber 'to confirm' chip clears
+- **button** Save: keeps the quantity the field holds
+- **button** Remove (in the line's panel): the line is marked removed with who, never deleted
+- **field** Add from the catalogue: a picker of material_item; never free text
+- **button** Add: the item chosen is a new line of the class's list
+- **link** the line's activity → the activity's name (`/setup/activities/[code]`)
 - **tab** My class / School list [coordinator only; absent and refused for others] (the school-wide view of this screen; the address carries the tab)
-- **filter** Notes to read (shows only the lines the system could not read)
-- **link** rail: each activity in the plan → the activity's name (`/setup/activities/[code]`)
-- **link** rail: Fortnight 9 → Fortnight 9 (`/timetable/fortnight/[n]`)
+- **filter** Notes to read (shows only the notes the system could not read)
+- **link** Fill the quantities → Materials, this fortnight (`/timetable/materials`) (the page's one main action, under the title: the first line still to confirm, opened on the right)
+- **tab** How many / Activity (the line panel's tabs; the address carries the tab)
+- **link** Close the panel → Materials, this fortnight (`/timetable/materials`) (the × or Escape; focus goes back to the line)
 - **upload** capture: Photo: a photo attaches to the list, never to a child
 Done when (on top of the ten generic checks):
 - a line with no quantity carries the amber 'to confirm' chip
 - approval (CP-17) exists only for the signed-in educator's own class and is refused for another
+- the lines are grouped by the day each is needed, on the left
+- choosing a line opens its detail on the right: how many, the activity that needs it, and Save and Remove
+- the coordinator's school list is a tab of the same page
 
 
 #### Time by subject `/timetable/time`

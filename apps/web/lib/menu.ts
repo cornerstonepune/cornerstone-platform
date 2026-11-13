@@ -36,7 +36,7 @@ export const SECTIONS: readonly Section[] = [
       { label: "Week", href: "/timetable", match: ["/timetable"], guide: false },
       { label: "Fortnight", href: "/timetable?view=fortnight", match: ["/timetable/fortnight", "/timetable/draft"], view: "fortnight", guide: false },
       { label: "Time by subject", href: "/timetable/time", match: ["/timetable/time"], guide: false },
-      { label: "Materials", href: "/educator/materials", match: ["/educator/materials", "/timetable/materials"], guide: false },
+      { label: "Materials", href: "/timetable/materials", match: ["/timetable/materials", "/educator/materials"], guide: false },
     ],
   },
   {
