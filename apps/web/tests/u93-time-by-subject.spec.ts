@@ -1,6 +1,6 @@
 /**
- * U87 (page charter B3) — Time by subject, a Dashboard: how much teaching time the class gives each subject, and whether it matches the
- * timetable rules. One test per line of the charter's B3 (and its place in the menu, A1). The class is the spec's own (section U87, grade
+ * U93 (page charter B3) — Time by subject, a Dashboard: how much teaching time the class gives each subject, and whether it matches the
+ * timetable rules. One test per line of the charter's B3 (and its place in the menu, A1). The class is the spec's own (sections T93 and T93B, grade
  * G8, in a year of its own, 2087-88, so no other class or fortnight is counted with it). Last week it had five Maths and five English
  * lessons and one Clay lesson, 25 minutes each; its rules give Maths and English every day and Music on Wednesday, Clay nothing. So Maths
  * and English are within their target, Music is short, and Clay has no target and no chip. The educator is named from tests/fake-names.
@@ -15,7 +15,7 @@ import { aPerson, personAsStored } from "./rows";
 test.describe.configure({ mode: "serial" });
 const sql = postgres(process.env.DATABASE_URL!, { max: 2 });
 const GRADE = "G8";
-const EDUCATOR = { email: "u87-educator@cornerstone.test", name: FAKE_STAFF[1], role: "educator", classes: [], subjects: [] };
+const EDUCATOR = { email: "u93-educator@cornerstone.test", name: FAKE_STAFF[1], role: "educator", classes: [], subjects: [] };
 const HERE = "/timetable/time";
 let klass = "";
 let other = "";
@@ -47,12 +47,12 @@ test.beforeAll(async () => {
     (await sql<{ id: string }[]>`
       insert into school_class (tenant_id, campus_id, academic_year_id, grade_code, section, label) values (${tenant}, ${campus}, ${year}, ${GRADE}, ${section}, ${section})
       on conflict (tenant_id, campus_id, academic_year_id, grade_code, section) do update set section = excluded.section returning id`)[0].id;
-  klass = await aClass("U87");
-  other = await aClass("U87B");
+  klass = await aClass("T93");
+  other = await aClass("T93B");
   const period: Record<string, string> = {};
-  for (const [name, starts, ord] of [["p1", "21:13", 8701], ["p2", "21:43", 8702], ["p3", "22:13", 8703]] as const) {
+  for (const [name, starts, ord] of [["p1", "21:13", 9301], ["p2", "21:43", 9302], ["p3", "22:13", 9303]] as const) {
     const [p] = await sql<{ id: string }[]>`
-      insert into period (tenant_id, grade_code, ord, starts_at, ends_at, label, fixed) values (${tenant}, ${GRADE}, ${ord}, ${starts}::time, ${starts}::time + interval '25 minutes', ${`U87 ${name}`}, false)
+      insert into period (tenant_id, grade_code, ord, starts_at, ends_at, label, fixed) values (${tenant}, ${GRADE}, ${ord}, ${starts}::time, ${starts}::time + interval '25 minutes', ${`T93 ${name}`}, false)
       on conflict (tenant_id, grade_code, starts_at) do update set ends_at = excluded.ends_at, label = excluded.label returning id`;
     period[name] = p.id;
   }
@@ -70,7 +70,7 @@ test.beforeAll(async () => {
       for (const [p, cell, subject] of [["p1", "subject", "math"], ["p2", "subject", "english"], ...(day === 3 ? [["p3", "specialist", "music"]] : [])] as const)
         await sql`
           insert into timetable_rule (tenant_id, school_class_id, kind, period_id, week_code, weekday, cell, subject_code, text, valid_from)
-          values (${tenant}, ${klass}, 'frame', ${period[p]}, ${wk}, ${day}, ${cell}, ${subject}, ${`U87 ${subject}`}, '2026-01-01')`;
+          values (${tenant}, ${klass}, 'frame', ${period[p]}, ${wk}, ${day}, ${cell}, ${subject}, ${`T93 ${subject}`}, '2026-01-01')`;
   for (let n = 0; n < 5; n++) {
     const [day] = await sql<{ id: string }[]>`
       insert into school_day (tenant_id, campus_id, on_date, kind) values (${tenant}, ${campus}, ${plus(lastMonday, n)}::date, 'teaching')
@@ -79,16 +79,16 @@ test.beforeAll(async () => {
     for (const [p, subject] of lessons)
       await sql`
         insert into session (tenant_id, school_class_id, school_day_id, period_id, subject_code, kind, state, planned, text)
-        values (${tenant}, ${klass}, ${day.id}, ${period[p]}, ${subject}, 'subject', 'planned', true, ${`U87 ${subject} lesson ${n + 1}`})`;
+        values (${tenant}, ${klass}, ${day.id}, ${period[p]}, ${subject}, 'subject', 'planned', true, ${`T93 ${subject} lesson ${n + 1}`})`;
     // the second class: one Maths lesson a day, so "every class of the grade" is more than the one class
     await sql`
       insert into session (tenant_id, school_class_id, school_day_id, period_id, subject_code, kind, state, planned, text)
-      values (${tenant}, ${other}, ${day.id}, ${period.p1}, 'math', 'subject', 'planned', true, ${`U87B math lesson ${n + 1}`})`;
+      values (${tenant}, ${other}, ${day.id}, ${period.p1}, 'math', 'subject', 'planned', true, ${`T93B math lesson ${n + 1}`})`;
   }
   if (!(await personAsStored(sql, EDUCATOR.email))) await aPerson(sql, EDUCATOR);
   await sql`
     insert into staff_role_grant (tenant_id, staff_id, role_code, school_class_id, valid_from, granted_by)
-    select ${tenant}, ps.staff_id, 'cover_educator', ${klass}, current_date - 30, 'u87 test' from pii.staff ps
+    select ${tenant}, ps.staff_id, 'cover_educator', ${klass}, current_date - 30, 'u93 test' from pii.staff ps
     where ps.email = ${EDUCATOR.email} and not exists (select 1 from staff_role_grant g where g.staff_id = ps.staff_id and g.school_class_id = ${klass})`;
   const [r] = await sql<{ on: boolean }[]>`select coalesce((select value = 'true'::jsonb from config where key = 'educator.timetable_enabled'), false) as on`;
   wasTimetable = r.on;
@@ -125,7 +125,7 @@ test("B3 primary action. the range is Week, Fortnight, Month or Quarter: whole w
 test("B3 primary action. the class is one class, or every class of the grade for the coordinator", async ({ page }) => {
   await page.goto(`${HERE}?class=${klass}`);
   const choose = page.getByRole("combobox", { name: /Class/ });
-  await expect(choose.locator("option")).toContainText(["All Grade 8", "U87", "U87B"].map((s) => new RegExp(s)));
+  await expect(choose.locator("option")).toContainText(["All Grade 8", "T93", "T93B"].map((s) => new RegExp(s)));
   await expect(row(page, "math")).toContainText("125");
   await choose.selectOption(`all:${GRADE}`);
   await expect(page).toHaveURL(new RegExp(`class=all%3A${GRADE}`));
@@ -139,7 +139,7 @@ test("B3 primary action. an educator chooses only among the classes she holds, w
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Time by subject");
   const options = page.getByRole("combobox", { name: /Class/ }).locator("option");
   await expect(options).toHaveCount(1);
-  await expect(options).toContainText("U87");
+  await expect(options).toContainText("T93");
   await expect(row(page, "math")).toContainText("125");
   await page.context().close();
 });
@@ -181,7 +181,7 @@ test("B3. choosing a part of a week's column opens that week's lessons of that s
   await expect(panel.locator("[data-panel-title]")).toContainText("Maths, week of");
   const lessons = panel.locator("[data-week-lessons] [data-lesson]");
   await expect(lessons).toHaveCount(5);
-  await expect(lessons.first()).toContainText("U87 math lesson 1");
+  await expect(lessons.first()).toContainText("T93 math lesson 1");
   await expect(lessons.first().getByRole("link")).toHaveAttribute("href", /^\/period\/[0-9a-f-]{36}$/);
   await expect(panel).not.toContainText("English");
   await panel.locator("[data-panel-close]").click();

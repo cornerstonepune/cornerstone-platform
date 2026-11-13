@@ -15,7 +15,7 @@ No migration, no new table. The engine read is CP-41's `POST /timetable/time`, e
 - `TEST_DATABASE_URL=… pytest tests/test_tt_time.py` → 13 passed, one of them under `set local role app_engine`.
 - Screen `/timetable/time` (`app/(app)/timetable/time/page.tsx`), in the sidebar under Timetable between the Fortnight and
   Materials; `docs/frontend/screens.json` `time` (slice UI-6) and `docs/frontend/wireframes/time.html` (check.mjs: PASS).
-- Browser proofs: `apps/web/tests/u87-time-by-subject.spec.ts`, one test per charter line.
+- Browser proofs: `apps/web/tests/u93-time-by-subject.spec.ts`, one test per charter line.
 
 ## Handoff
 
