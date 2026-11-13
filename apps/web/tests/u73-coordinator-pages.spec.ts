@@ -39,11 +39,11 @@ const seen = async (page: Page, path: string) => {
   return page.locator("main").innerText();
 };
 
-test("1 and 5. this slice is in the inventory, so u70 drives all three screens as the coordinator", () => {
+test("1 and 5. this slice is in the inventory, so u70 drives its screens as the coordinator (Across classes joined it as a Dashboard, page charter Part C)", () => {
   const inv = loadInventory();
   expect(inv.merged_slices).toContain("UI-5");
   const ids = inv.slices.find((s) => s.id === "UI-5")!.screens;
-  expect(ids.sort()).toEqual(["classes", "setup", "staff"]);
+  expect(ids.sort()).toEqual(["across", "classes", "setup", "staff"]);
 });
 
 test("3 and 6. Staff has nothing that ranks or sorts: no sort link, no aria-sort, no ordinal, no percentage, no grading colour", async ({ page }) => {
